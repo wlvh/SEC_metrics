@@ -81,14 +81,18 @@ SUITE = "tests.vnext.test_historical_model_egress"
 # SEC acquisition suite that covers what the model path imports from it: the
 # gh reader's narrowed environment.
 GH_READER = "tests.vnext.test_historical_source_acquisition.TheGithubReaderPassesGhOnlyWhatItNeeds"
+# The reader the call path uses where gh is not installed - the executor's
+# cloud container, where the owner decided the calls run.
+REST_READER = "tests.vnext.test_historical_source_acquisition.TheRestReaderReadsOnlyThisIssuesComments"
 ORDER = ("TheEgressGateNamesExactlyOneNewCaller", "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite",
-         GH_READER, "OnlyIssue47sOwnAuthorityReachesTheCallPath",
+         GH_READER, REST_READER, "OnlyIssue47sOwnAuthorityReachesTheCallPath",
          "TheApprovalIsReadStrictly", "TheLedgerCannotBeResetByDeletingIt",
          "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys",
          "AMappingIsNotAnAllowanceAndALedgerIsNotAGrant", "OnlyTheRequestsTheApprovalNamesAreClaimed",
          "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted",
          "ASocketOpensOnlyForTheCountedSendItBelongsTo",
          "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener",
+         "TheLiveLedgerNeedsItsPublishedStart",
          "ACompleteAssessmentRegistersOnlyFromItsOwnSlots",
          "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
          "AD02ReviewIsOneCountedCallOnTheSamePath",
@@ -96,7 +100,11 @@ ORDER = ("TheEgressGateNamesExactlyOneNewCaller", "TheFixturesNeverTouchAnAllowa
          # which hold the checks a re-review found no egress case broke alone.
          "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
          "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent",
-         "tests.vnext.test_historical_model_calls.TheApprovalIsRegisteredFromWhatWasPosted")
+         "tests.vnext.test_historical_model_calls.TheApprovalIsRegisteredFromWhatWasPosted",
+         # The model ledger's own start and its export, which the call path
+         # and the executor's container depend on.
+         "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts",
+         "tests.vnext.test_historical_model_calls.TheModelLedgerTravelsToTheBranchAndBack")
 BOUNDARY = ("scripts/vnext/invocation_control.py", "scripts/vnext/ai_adapter.py",
             "tools/check_provider_egress.py")
 BOUND = ("scripts/vnext/historical_model_calls.py", "scripts/vnext/historical_model_egress.py",
@@ -111,11 +119,16 @@ BOUND = ("scripts/vnext/historical_model_calls.py", "scripts/vnext/historical_mo
          # from; and the D04 answer the suite registers, kept apart so the
          # suite loads no checkout code the call is not bound to.
          "scripts/vnext/historical_counted_calls.py", "tests/vnext/d04_synthetic_output.py",
-         "tests/vnext/test_historical_model_calls.py")
+         "tests/vnext/test_historical_model_calls.py",
+         # The start that outlives the container (bound by the call path too),
+         # and the export and restore the executor runs beside it.
+         "scripts/vnext/historical_ledger_start.py", "scripts/vnext/historical_model_export.py",
+         "tools/vnext_historical_model_export.py")
 CALLS = "scripts/vnext/historical_model_calls.py"
 EGRESS = "scripts/vnext/historical_model_egress.py"
 SEC = "scripts/vnext/historical_source_acquisition.py"
 TESTS = "tests/vnext/test_historical_model_egress.py"
+START = "scripts/vnext/historical_ledger_start.py"
 INJECTIONS = [
     ("A_REQUEST_MAY_BE_REDRAWN", CALLS,
      [('        _need(request_digest not in state["requests"],\n'
@@ -154,8 +167,8 @@ INJECTIONS = [
      [('        policy = strict_json_loads(text=path.read_text(encoding="utf-8"))',
        '        policy = json.loads(path.read_text(encoding="utf-8"))')]),
     ("THE_APPROVAL_IS_READ_LAST_KEY_WINS", CALLS,
-     [('        approved = strict_json_loads(text=comment["body"])',
-       '        approved = json.loads(comment["body"])')]),
+     [('        approved = strict_json_loads(text=posted_text(comment["body"]))',
+       '        approved = json.loads(posted_text(comment["body"]))')]),
     ("AN_EDITED_APPROVAL_IS_ACCEPTED", SEC,
      [('          and comment.get("created_at") == comment.get("updated_at"),',
        '          and True,')]),
@@ -281,7 +294,7 @@ INJECTIONS = [
      [("                source_check()\n", ""),
       ("                    before_socket_open=source_check)", "                    )")]),
     ("NO_GITHUB_RECHECK_BEFORE_THE_SOCKET", EGRESS,
-     [("                model_allowance(repo_root=ROOT, delegation_reader=github_comment_reader)\n",
+     [("                model_allowance(repo_root=ROOT, delegation_reader=live_github_reader())\n",
        "")]),
     ("RECORDED_BYTES_ARE_ONLY_REFUSED_AFTER_THE_CLAIM", EGRESS,
      [('        _need(recorded_wire is None, "ISSUE_47_MODEL_RECORDED_BYTES_CANNOT_RUN_LIVE")\n'
@@ -425,6 +438,36 @@ INJECTIONS = [
       ('from vnext import historical_model_egress as egress  # noqa: E402\n',
        'from vnext import historical_model_egress as egress  # noqa: E402\n'
        'sys.pycache_prefix = tempfile.mkdtemp(prefix="issue47-model-bytecode-")\n')]),
+    # The start that outlives the container: the live path checks it before
+    # the ledger exists, and only the earliest, unedited, owner-posted marker
+    # that is this host's own record counts; an export on the branch blocks a
+    # new start even when the marker is gone.
+    ("THE_LIVE_LEDGER_SKIPS_THE_START", CALLS,
+     [("    require_published_model_start(allowance=allowance, reader=reader)\n", "")]),
+    ("AN_EDITED_START_MARKER_COUNTS", START,
+     [('          and comment.get("created_at") == comment.get("updated_at"),\n',
+       "          and True,\n")]),
+    ("A_STRANGERS_START_MARKER_COUNTS", START,
+     [('            if (record is not None and comment.get("author_association") == "OWNER"\n',
+       "            if (record is not None and True\n")]),
+    ("THE_LATEST_START_MARKER_COUNTS", START,
+     [("    first = markers[0]\n", "    first = markers[-1]\n")]),
+    ("THE_START_MARKER_NEED_NOT_BE_THIS_HOST_S", START,
+     [('    _need(kind, first["record"] == record, "STARTED_ELSEWHERE:"',
+       '    _need(kind, True, "STARTED_ELSEWHERE:"')]),
+    ("A_LOST_START_IS_NOT_NOTICED", START,
+     [('        _need(kind, not markers, "STARTED_ELSEWHERE:"',
+       '        _need(kind, True, "STARTED_ELSEWHERE:"')]),
+    ("THE_START_IGNORES_THE_EXPORT", START,
+     [("    _need(kind, not exported_here(kind, allowance=allowance, checkout=checkout),\n",
+       "    _need(kind, True,\n")]),
+    ("THE_EXPORT_NAMES_NO_APPROVAL", "scripts/vnext/historical_model_export.py",
+     [("                     if ledger.live else None),\n", "                     if False else None),\n")]),
+    ("THE_MODEL_START_IS_THE_SEC_START", CALLS,
+     [('    return LedgerKind(record_type="ISSUE_47_MODEL_LEDGER_START", prefix="ISSUE_47_MODEL_LEDGER",\n',
+       '    return LedgerKind(record_type="ISSUE_47_SEC_LEDGER_START", prefix="ISSUE_47_MODEL_LEDGER",\n')]),
+    ("THE_REST_READER_READS_ANY_PATH", SEC,
+     [("    _need(_GITHUB_READABLE.match(str(path)) is not None,\n", "    _need(True,\n")]),
     # The caller is listed in both exact sets; each is broken on its own, so a
     # gate that checked only one of them is seen.
     ("THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER", "tools/check_provider_egress.py",
@@ -459,6 +502,8 @@ GRANTED = "AMappingIsNotAnAllowanceAndALedgerIsNotAGrant"
 SOCKET = "ASocketOpensOnlyForTheCountedSendItBelongsTo"
 LEDGER_UNIT = "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount"
 ALLOWANCE_UNIT = "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent"
+START_CLASS = "TheLiveLedgerNeedsItsPublishedStart"
+START_UNIT = "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts"
 EXPECTED = {
     "A_REQUEST_MAY_BE_REDRAWN": COUNTED, "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP": COUNTED,
     "HTTP_402_DOES_NOT_STOP": LIVE, "UNKNOWN_USAGE_DOES_NOT_STOP": COUNTED,
@@ -514,11 +559,16 @@ EXPECTED = {
     "UNBOUND_CHECKOUT_CODE_MAY_RUN": SOCKET, "CHECKOUT_BYTECODE_MAY_RUN": SOCKET,
     "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED": SOCKET,
     "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE": SOCKET,
+    "THE_LIVE_LEDGER_SKIPS_THE_START": START_CLASS, "AN_EDITED_START_MARKER_COUNTS": START_CLASS,
+    "A_STRANGERS_START_MARKER_COUNTS": START_CLASS, "THE_LATEST_START_MARKER_COUNTS": START_CLASS,
+    "THE_START_MARKER_NEED_NOT_BE_THIS_HOST_S": START_CLASS, "A_LOST_START_IS_NOT_NOTICED": START_CLASS,
+    "THE_START_IGNORES_THE_EXPORT": START_CLASS, "THE_EXPORT_NAMES_NO_APPROVAL": START_CLASS,
+    "THE_MODEL_START_IS_THE_SEC_START": START_UNIT, "THE_REST_READER_READS_ANY_PATH": REST_READER,
 }
 # Dispatch order only: injections whose expected class ran longest in the
 # 2026-09-28 pre-flight start first, so the last to start is a short one. It
 # changes where and when an injection runs, never how it is judged.
-SLOW_FIRST = (LIVE, SOCKET, COMPLETE, COUNTED, D02, LEDGER, NAMED)
+SLOW_FIRST = (LIVE, SOCKET, COMPLETE, COUNTED, D02, LEDGER, START_CLASS, NAMED)
 COPIES_PREFIX = ".verify-copies-"
 
 

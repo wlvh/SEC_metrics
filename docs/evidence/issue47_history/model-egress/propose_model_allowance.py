@@ -43,7 +43,24 @@ HERE = "docs/evidence/issue47_history/model-egress/"
 MEASUREMENT = HERE + "d04-request-measurement.json"
 E01_MEASUREMENT = "docs/evidence/issue47_history/e01-content-confirmed/request-measurement.json"
 D02_MEASUREMENT = "docs/evidence/issue47_history/d02-item-8-review/request-measurement.json"
-LEDGER_ROOT = "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-model-v1"
+# The owner decided on 2026-09-29 that #47's model calls run in the executor's
+# cloud container (issue 47 comment 5882788074), so the ledger root is there,
+# beside the SEC ledger's and nested in neither.
+LEDGER_ROOT = "/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1"
+# What the approval says about where and how the calls run. The gate does not
+# read it; it is there so the owner approves the place as well as the numbers.
+EXECUTION = {
+    "host": ("the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 "
+             "(issue 47 comment 5882788074)"),
+    "provider_key": ("DEEPSEEK_API_KEY from the environment's settings, set by the owner; never "
+                     "in the chat, the repository or a comment; it takes effect in a new session"),
+    "durability": ("the ledger root is lost with the container; a start marker on issue 47 makes "
+                   "a second start of this allowance refuse, and the ledger is exported to the "
+                   "branch after each run; a restored ledger is a record and spending more from "
+                   "it is the owner's decision"),
+    "transport": ("HTTPS to the fixed provider host through the container's egress proxy, which "
+                  "re-terminates TLS: the client verifies the proxy's certificate, not the "
+                  "provider's")}
 # The fixed transport a #47 model allowance must name (historical_model_calls
 # checks every field against its own constants and the adapter's host).
 TRANSPORT = {"provider": "deepseek", "model": "deepseek-flash", "api": "chat_completions",
@@ -142,6 +159,27 @@ def _planned(calls, resolve_period_selection, transport, measured, e01, d02,
     return planned
 
 
+def _stale_bound_files(receipt):
+    """The receipt's bound files that the patch leaves alone and this checkout has changed.
+
+    The receipt is sealed in a tree where the egress patch is applied, so the
+    files the patch creates or changes cannot match here, and neither can the
+    snapshot, which that tree mints for its own bytes (the registration patch
+    and the egress patch both move it). Every other bound file must match byte
+    for byte, or the receipt was sealed for another checkout. The snapshot is
+    held where it can be: the live path refuses a receipt that does not bind
+    the snapshot of the tree it runs in.
+    """
+    import hashlib
+    import re
+    patch = (REPO / HERE / "egress-registration.patch").read_text(encoding="utf-8")
+    touched = set(re.findall(r"^diff --git a/(\S+) b/", patch, re.M))
+    touched.add("requirements/issue_47_v1/baseline_manifest.json")
+    return sorted(path for path, bound in receipt["bound_files"].items()
+                  if path not in touched and (not (REPO / path).is_file() or hashlib.sha256(
+                      (REPO / path).read_bytes()).hexdigest() != bound["sha256"]))
+
+
 def main():
     from vnext import historical_model_calls as calls
     from vnext.ai_adapter import _DEEPSEEK_ENDPOINT_HOST
@@ -163,6 +201,11 @@ def main():
     receipt = json.loads((REPO / calls.WIRING_RECEIPT_PATH).read_text(encoding="utf-8"))
     if not receipt.get("all_checks_passed"):
         raise SystemExit("THE_OFFLINE_VERIFICATION_IS_NOT_SEALED_AS_PASSING")
+    stale = _stale_bound_files(receipt)
+    if stale:
+        # An approval naming this receipt would name one the live path refuses:
+        # the receipt describes other bytes than this checkout's.
+        raise SystemExit("THE_OFFLINE_VERIFICATION_DESCRIBES_OTHER_FILES:" + ",".join(stale))
     transport = {**TRANSPORT, "endpoint_host": _DEEPSEEK_ENDPOINT_HOST}
     planned = _planned(calls, resolve_period_selection, transport, measured, e01, d02,
                        positions)
@@ -181,7 +224,7 @@ def main():
              "grants": grants}
     body = {"record_type": calls.DELEGATION_TYPE, "requirement_id": calls.REQUIREMENT_ID,
             "maximum_additional_provider_paid_sec_calls": [total, total, 0],
-            "budget_root": LEDGER_ROOT, "scope": scope,
+            "budget_root": LEDGER_ROOT, "execution": EXECUTION, "scope": scope,
             "transport": transport,
             "retry_policy": dict(calls.FIXED_RETRY_POLICY),
             "model_wiring_receipt_id": receipt["receipt_id"],

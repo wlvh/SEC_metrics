@@ -1,5 +1,5 @@
 diff --git a/scripts/vnext/ai_adapter.py b/scripts/vnext/ai_adapter.py
-index 9fdfe8a..2256a40 100644
+index 9fdfe8a8..2256a407 100644
 --- a/scripts/vnext/ai_adapter.py
 +++ b/scripts/vnext/ai_adapter.py
 @@ -1061,6 +1061,10 @@ def _scoped_transport_payload(*, policy: TransportPolicy, prepared_request: obje
@@ -15,7 +15,7 @@ index 9fdfe8a..2256a40 100644
          return None
 diff --git a/scripts/vnext/historical_model_egress.py b/scripts/vnext/historical_model_egress.py
 new file mode 100644
-index 0000000..04e2878
+index 00000000..7f78ac33
 --- /dev/null
 +++ b/scripts/vnext/historical_model_egress.py
 @@ -0,0 +1,426 @@
@@ -107,7 +107,7 @@ index 0000000..04e2878
 +        from . import ai_adapter as adapter
 +        from . import invocation_control as control
 +        from .continuous_semantic_calls import usage_error
-+        from .historical_source_acquisition import github_comment_reader
++        from .historical_source_acquisition import live_github_reader
 +        from .sources import resolve_repository_file
 +        # The slot this send is counted in: claimed, logged, open and this
 +        # ledger's. An independent review reached the opener with a transport
@@ -144,7 +144,7 @@ index 0000000..04e2878
 +            if self.ledger.live:
 +                _need(self.recorded_wire is None, "ISSUE_47_MODEL_RECORDED_BYTES_CANNOT_RUN_LIVE")
 +                source_check()
-+                model_allowance(repo_root=ROOT, delegation_reader=github_comment_reader)
++                model_allowance(repo_root=ROOT, delegation_reader=live_github_reader())
 +                with sending(prepared=self.prepared, ledger=self.ledger, path=self.path,
 +                             intent=self.intent, execution_id=execution_id):
 +                    result = adapter._build_repository_transport(policy=self.policy).complete(
@@ -446,7 +446,7 @@ index 0000000..04e2878
 +    write_immutable_bytes(path=path, content=registered_export_bytes(record))
 +    return record, path
 diff --git a/scripts/vnext/invocation_control.py b/scripts/vnext/invocation_control.py
-index 78294a4..2201dbe 100644
+index 78294a49..2201dbe6 100644
 --- a/scripts/vnext/invocation_control.py
 +++ b/scripts/vnext/invocation_control.py
 @@ -232,6 +232,16 @@ def _prepare_successor_invocation_authority_from_requirement(
@@ -477,10 +477,10 @@ index 78294a4..2201dbe 100644
  def _decimal_observation(*, value: object, label: str) -> Optional[str]:
 diff --git a/tests/vnext/test_historical_model_egress.py b/tests/vnext/test_historical_model_egress.py
 new file mode 100644
-index 0000000..e7762bd
+index 00000000..06bcc7af
 --- /dev/null
 +++ b/tests/vnext/test_historical_model_egress.py
-@@ -0,0 +1,1782 @@
+@@ -0,0 +1,1922 @@
 +"""Issue #47's model egress, verified offline in a tree where the registration patch is applied.
 +
 +This suite is part of the patch for independent security review
@@ -617,10 +617,12 @@ index 0000000..e7762bd
 +
 +
 +def reset_ledger(root):
-+    """Start a test ledger afresh: its root, and the anchor and claim-log copy beside it."""
++    """Start a test ledger afresh: its root, and the anchor, claim-log copy and start beside it."""
++    from vnext.historical_ledger_start import start_record_path
 +    shutil.rmtree(root, ignore_errors=True)
 +    calls.HistoricalModelLedger.anchor_path(root).unlink(missing_ok=True)
 +    calls.HistoricalModelLedger.mirror_path(root).unlink(missing_ok=True)
++    start_record_path(root).unlink(missing_ok=True)
 +
 +
 +def _need_ours(path, relative):
@@ -1237,6 +1239,13 @@ index 0000000..e7762bd
 +                         calls.ledger_digest(request, policy))
 +
 +
++def marker_comment(body, *, number=1000000101, created_at="2026-09-29T00:00:00Z"):
++    """A start marker as GitHub returns it: the owner's, unedited."""
++    return {"id": number, "author_association": "OWNER", "body": body,
++            "created_at": created_at, "updated_at": created_at,
++            "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-" + str(number)}
++
++
 +class _LiveOpener(_Isolated):
 +    """The live path's fixture: a key, a GitHub reader, the granted ledger reset; no cases."""
 +
@@ -1246,11 +1255,29 @@ index 0000000..e7762bd
 +        self.reply = None
 +        self.environment = patch.dict(os.environ, {"DEEPSEEK_API_KEY": "offline-test-not-a-secret"})
 +        self.environment.start()
-+        self.reader = patch("vnext.historical_source_acquisition.github_comment_reader",
-+                            side_effect=lambda path: self.comment)
++        # The host's reader, whichever it is (live_github_reader): the
++        # approval by id, and the issue's comment pages the start is read from.
++        self.markers = []
++        self.reader = patch("vnext.historical_source_acquisition.live_github_reader",
++                            return_value=self.github)
 +        self.reader.start()
 +        self.budget = Path(self.allowance["budget_root"])
++        self.fresh_ledger()
++
++    def fresh_ledger(self):
++        """The granted root emptied and started again, and its marker published.
++
++        As the runner's ``start`` and the executor's post of its marker do; a
++        case that needs no start, or another one, undoes it.
++        """
 +        reset_ledger(self.budget)
++        self.started = calls.start_model_ledger(allowance=self.allowance, reader=lambda path: [])
++        self.markers = [marker_comment(self.started["marker_comment_body"])]
++
++    def github(self, path):
++        if "/issues/47/comments?" in path:
++            return [dict(item) for item in self.markers] if path.endswith("page=1") else []
++        return self.comment
 +
 +    def tearDown(self):
 +        self.reader.stop()
@@ -1270,6 +1297,119 @@ index 0000000..e7762bd
 +        allowance, ledger = calls.live_model_ledger()
 +        self.assertTrue(allowance["provenance_verified_against_github"])
 +        return ledger
++
++
++class TheLiveLedgerNeedsItsPublishedStart(_LiveOpener):
++    """The model ledger lives in the container; a new container meets the start it cannot match.
++
++    The owner decided the calls run in the executor's cloud container. The
++    live ledger requires the start published on issue 47 to be this host's
++    (historical_ledger_start), after the allowance and the wiring and before
++    the ledger exists - so before any claim and any socket. Only the earliest
++    marker for the approval counts, only if the owner's account posted it,
++    only if it is unedited, and only if it is this host's own record.
++    """
++
++    def test_an_unpublished_start_opens_nothing(self):
++        self.markers = []
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_LEDGER_START_NOT_PUBLISHED"):
++                calls.live_model_ledger()
++        self.assertEqual([], self.opened)
++        self.assertFalse(self.budget.exists(), "no ledger is created before the start holds")
++
++    def test_a_new_container_meets_the_published_start(self):
++        from vnext.historical_ledger_start import start_record_path
++        start_record_path(self.budget).unlink()
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_STARTED_ELSEWHERE"):
++            calls.live_model_ledger()
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_STARTED_ELSEWHERE"):
++            calls.start_model_ledger(allowance=self.allowance, reader=self.github)
++
++    def test_an_edited_marker_opens_nothing(self):
++        self.markers[0]["updated_at"] = "2026-09-29T00:00:01Z"
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_LEDGER_START_MARKER_EDITED"):
++                calls.live_model_ledger()
++        self.assertEqual([], self.opened)
++        self.assertFalse(self.budget.exists())
++
++    def test_a_marker_the_owner_did_not_post_does_not_count(self):
++        # The issue is public: a stranger's copy of the marker is not a start.
++        self.markers[0]["author_association"] = "CONTRIBUTOR"
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_START_NOT_PUBLISHED"):
++            calls.live_model_ledger()
++
++    def test_an_earlier_start_from_another_host_wins(self):
++        # Another container started the same approval first: its marker is the
++        # earliest, and this host's later one does not make this ledger the start.
++        from vnext.historical_ledger_start import marker_comment_body
++        other = {**self.started["record"], "instance_nonce": "0" * 32}
++        self.markers = [marker_comment(marker_comment_body(calls._model_start(), other),
++                                       number=1000000100, created_at="2026-09-28T23:59:59Z"),
++                        *self.markers]
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_STARTED_ELSEWHERE"):
++            calls.live_model_ledger()
++
++    def test_the_runner_starts_once_and_prints_the_marker_to_post(self):
++        import contextlib
++        reset_ledger(self.budget)
++        self.markers = []
++        printed = io.StringIO()
++        with contextlib.redirect_stdout(printed):
++            self.assertEqual(0, runner.main(["start"]))
++        result = json.loads(printed.getvalue())
++        self.assertEqual("LEDGER_START_WRITTEN", result["status"])
++        self.markers = [marker_comment(result["marker_comment_body"])]
++        allowance, _ = calls.live_model_ledger()
++        self.assertEqual(self.allowance["budget_root"], allowance["budget_root"])
++        again = io.StringIO()
++        with contextlib.redirect_stdout(again):
++            self.assertEqual(2, runner.main(["start"]))
++        self.assertIn("ISSUE_47_MODEL_LEDGER_ALREADY_STARTED_HERE", again.getvalue())
++
++    def test_an_export_blocks_a_later_start_and_restores_only_as_a_record(self):
++        # The second guard end to end, with the tool the executor runs in a
++        # process of its own: the export of this ledger names the approval,
++        # and a start on a checkout that carries it is refused even with no
++        # marker left on the issue - a deleted marker comment. A restore puts
++        # the record back and never the start, so the live path still refuses.
++        import subprocess
++        prepared = self.smallest()
++        self.reply = wire(self.output(prepared), prompt_tokens=reference_prompt_tokens(prepared))
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            egress.execute_historical_semantic(prepared=prepared, ledger=self.live())
++        checkout = self.temporary / "export-checkout"
++        self.addCleanup(shutil.rmtree, checkout, True)
++        out = checkout / calls.MODEL_EXPORT_DIRECTORY
++
++        def tool(command):
++            done = subprocess.run([sys.executable, str(ROOT / "tools/vnext_historical_model_export.py"),
++                                   command, "--export", str(out)],
++                                  cwd=ROOT, capture_output=True, text=True, timeout=600)
++            return done.returncode, json.loads(done.stdout)
++
++        code, exported = tool("export")
++        self.assertEqual((0, "EXPORTED", [1, 1, 0]), (code, exported["status"], exported["counts"]))
++        code, verified = tool("verify")
++        self.assertEqual((0, "VERIFIED", [1, 1, 0]), (code, verified["status"], verified["counts"]))
++        reset_ledger(self.budget)
++        self.markers = []
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_ALREADY_EXPORTED"):
++            calls.start_model_ledger(allowance=self.allowance, reader=self.github, checkout=checkout)
++        code, restored = tool("restore")
++        self.assertEqual((0, "RESTORED", [1, 1, 0], False),
++                         (code, restored["status"], restored["counts"], restored["start_restored"]))
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_NOT_STARTED"):
++            calls.live_model_ledger()
 +
 +
 +class TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener(_LiveOpener):
@@ -1316,7 +1456,7 @@ index 0000000..e7762bd
 +
 +    def test_an_unknown_outcome_stops_the_channel(self):
 +        for error in (OSError("connection reset after send"), TimeoutError("read timed out")):
-+            reset_ledger(self.budget)
++            self.fresh_ledger()
 +            first, second = sorted(self.requests, key=lambda r: len(r.provider_request_body_bytes))[:2]
 +            self.reply = error
 +            with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
@@ -1536,8 +1676,8 @@ index 0000000..e7762bd
 +        self.reply = wire(self.output(prepared))
 +        ledger = self.live()
 +        changed = {**self.comment, "body": self.comment["body"].replace("12", "13")}
-+        with patch("vnext.historical_source_acquisition.github_comment_reader",
-+                   side_effect=lambda path: changed), \
++        with patch("vnext.historical_source_acquisition.live_github_reader",
++                   return_value=lambda path: changed), \
 +                patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
 +            with self.assertRaisesRegex(calls.HistoricalModelCallError,
 +                                        "ISSUE_47_MODEL_SAVED_DELEGATION_DIFFERS_FROM_GITHUB"):
@@ -2264,7 +2404,7 @@ index 0000000..e7762bd
 +if __name__ == "__main__":
 +    unittest.main()
 diff --git a/tools/check_provider_egress.py b/tools/check_provider_egress.py
-index 3ee81a3..6d67ea6 100644
+index 3ee81a39..6d67ea67 100644
 --- a/tools/check_provider_egress.py
 +++ b/tools/check_provider_egress.py
 @@ -66,9 +66,11 @@ ALLOWED_REPOSITORY_TRANSPORT_FACTORIES = {
@@ -2281,10 +2421,10 @@ index 3ee81a3..6d67ea6 100644
          "scripts/vnext/ai_adapter.py",
 diff --git a/tools/vnext_historical_model.py b/tools/vnext_historical_model.py
 new file mode 100644
-index 0000000..c917989
+index 00000000..745750d9
 --- /dev/null
 +++ b/tools/vnext_historical_model.py
-@@ -0,0 +1,181 @@
+@@ -0,0 +1,191 @@
 +#!/usr/bin/env python3
 +"""Run Issue #47's granted model calls, one counted request at a time.
 +
@@ -2302,11 +2442,16 @@ index 0000000..c917989
 +  that succeeded; a request whose slot failed without a stop cannot be drawn
 +  again, so that position is reported incomplete and the others go on.
 +
-+Commands, on the owner's machine that holds the approved ledger root and the
-+provider key, from a #47 runtime tree carrying both patches:
++Commands, in the executor's cloud container that holds the approved ledger
++root (the owner's decision), with the provider key in the environment's
++settings, from a #47 runtime tree carrying both patches:
 +
 +  register-approval --approval-url URL   read the posted approval back from
 +                                         GitHub and write the allowance files
++  start                                  write the ledger's local start record
++                                         and print the marker comment to post
++                                         on issue 47; nothing is called until
++                                         that marker is on GitHub
 +  run --position <company>:<report_end> [--position ...]
 +                                         call every granted request of each
 +                                         position not yet claimed, then
@@ -2439,7 +2584,7 @@ index 0000000..c917989
 +def main(argv=None):
 +    parser = argparse.ArgumentParser(description=__doc__,
 +                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-+    parser.add_argument("command", choices=["register-approval", "run", "status"])
++    parser.add_argument("command", choices=["register-approval", "start", "run", "status"])
 +    parser.add_argument("--approval-url")
 +    parser.add_argument("--position", action="append", type=_position, default=[])
 +    parser.add_argument("--metric", choices=["D04", "E01", "D02"], default="D04")
@@ -2450,9 +2595,14 @@ index 0000000..c917989
 +        parser.error("--position is required for run")
 +    try:
 +        if args.command == "register-approval":
-+            from vnext.historical_source_acquisition import github_comment_reader
++            from vnext.historical_source_acquisition import live_github_reader
 +            result = calls.register_model_approval(repo_root=ROOT, comment_url=args.approval_url,
-+                                                   reader=github_comment_reader)
++                                                   reader=live_github_reader())
++        elif args.command == "start":
++            from vnext.historical_source_acquisition import live_github_reader
++            reader = live_github_reader()
++            allowance = calls.model_allowance(repo_root=ROOT, delegation_reader=reader)
++            result = calls.start_model_ledger(allowance=allowance, reader=reader)
 +        elif args.command == "run":
 +            result = run_positions(positions=args.position, metric_id=args.metric)
 +        else:
@@ -2467,10 +2617,10 @@ index 0000000..c917989
 +if __name__ == "__main__":
 +    sys.exit(main())
 diff --git a/tools/vnext_mint_historical_requirement.py b/tools/vnext_mint_historical_requirement.py
-index a5ae1fc..d6d86a0 100644
+index 9a2ea90b..dd4f2578 100644
 --- a/tools/vnext_mint_historical_requirement.py
 +++ b/tools/vnext_mint_historical_requirement.py
-@@ -261,6 +261,15 @@ RE_RECORDED_FROM_TREE = (
+@@ -265,6 +265,15 @@ RE_RECORDED_FROM_TREE = (
      "scripts/vnext/calculator.py",
      "scripts/vnext/constraints.py",
      "scripts/vnext/projector.py",
