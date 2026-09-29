@@ -1,6 +1,6 @@
 {
  "record_type": "ISSUE_47_SAVED_SOURCE_CI_TIMINGS",
- "what": "Per-case CI seconds of the saved-source tier from the per-case progress lines of three runs, the source of SOURCE_CI_SECONDS in tools/run_fast_tests_v2.py (the mean, rounded, for cases over 30 s). Each case ran on a different runner in each run. Two later runs of the mean-weighted split are recorded under out_of_sample_runs and are not in the mean.",
+ "what": "Per-case CI seconds of the saved-source tier from the per-case progress lines of three runs, the source of SOURCE_CI_SECONDS in tools/run_fast_tests_v2.py (the mean, rounded, for cases over 30 s). Each case ran on a different runner in each run. Two later runs of the mean-weighted split are recorded under out_of_sample_runs and are not in the mean. Two further runs (36504569527, 36505271124) are added to out_of_sample_runs with their job seconds, checkout seconds and margin to the 35-minute cap; runner_factors.out_of_sample_instances measures their six shard instances against the same reference; unweighted_cases records the one case the weights do not cover.",
  "runs": {
   "36479470727": {
    "head": "ef959052",
@@ -989,525 +989,859 @@
      "job_cancelled_at_limit": false
     }
    }
+  },
+  "36504569527": {
+   "head": "7b56f356",
+   "shards": {
+    "0": {
+     "cases_finished": 43,
+     "sum_seconds": 3206.0,
+     "runner_duration_seconds": 1611.237,
+     "runner_status": "PASSED",
+     "job_cancelled_at_limit": false,
+     "job_seconds": 1645,
+     "checkout_seconds": 27,
+     "margin_to_35_minute_cap_seconds": 455
+    },
+    "1": {
+     "cases_finished": 43,
+     "sum_seconds": 2972.3,
+     "runner_duration_seconds": 1492.727,
+     "runner_status": "PASSED",
+     "job_cancelled_at_limit": false,
+     "job_seconds": 1525,
+     "checkout_seconds": 24,
+     "margin_to_35_minute_cap_seconds": 575
+    },
+    "2": {
+     "cases_finished": 43,
+     "sum_seconds": 3569.3,
+     "runner_duration_seconds": 1785.83,
+     "runner_status": "PASSED",
+     "job_cancelled_at_limit": false,
+     "job_seconds": 1821,
+     "checkout_seconds": 26,
+     "margin_to_35_minute_cap_seconds": 279
+    }
+   },
+   "note": "mean weights after merging the base at 76ebe42e (which added the saved-source case tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest with no weight); all 17 checks green; shard jobs 27m25s / 25m25s / 30m21s"
+  },
+  "36505271124": {
+   "head": "009f2e86",
+   "shards": {
+    "0": {
+     "cases_finished": 43,
+     "sum_seconds": 4050.5,
+     "runner_duration_seconds": 2033.877,
+     "runner_status": "PASSED",
+     "job_cancelled_at_limit": false,
+     "job_seconds": 2066,
+     "checkout_seconds": 26,
+     "margin_to_35_minute_cap_seconds": 34
+    },
+    "1": {
+     "cases_finished": 43,
+     "sum_seconds": 2505.0,
+     "runner_duration_seconds": 1259.342,
+     "runner_status": "PASSED",
+     "job_cancelled_at_limit": false,
+     "job_seconds": 1296,
+     "checkout_seconds": 26,
+     "margin_to_35_minute_cap_seconds": 804
+    },
+    "2": {
+     "cases_finished": 43,
+     "sum_seconds": 3848.4,
+     "runner_duration_seconds": 1925.711,
+     "runner_status": "PASSED",
+     "job_cancelled_at_limit": false,
+     "job_seconds": 1983,
+     "checkout_seconds": 50,
+     "margin_to_35_minute_cap_seconds": 117
+    }
+   },
+   "note": "same weights; all 17 checks green; shard jobs 34m26s / 21m36s / 33m03s - shard 0 ended 34 s before the 35-minute job cap on a runner at factor 1.29 (checkout 26 s, tests 2,034 s), the smallest margin of any passing shard in the eight three-shard runs on this branch (the previous smallest was 46 s, shard 2 of run 36485982390)"
   }
  },
  "out_of_sample_per_case_seconds": {
   "tests.vnext.test_annual_amendment_scope": {
    "36492046303": 88.334,
-   "36492131767": 88.927
+   "36492131767": 88.927,
+   "36504569527": 61.544,
+   "36505271124": 49.247
   },
   "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest": {
    "36492046303": 48.643,
-   "36492131767": 65.596
+   "36492131767": 65.596,
+   "36504569527": 84.817,
+   "36505271124": 91.025
   },
   "tests.vnext.test_b03_depreciation_scope.B03ImpairmentSourceMaterialTest": {
    "36492046303": 20.98,
-   "36492131767": 12.566
+   "36492131767": 12.566,
+   "36504569527": 18.057,
+   "36505271124": 23.553
   },
   "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest": {
    "36492046303": 117.202,
-   "36492131767": 116.416
+   "36492131767": 116.416,
+   "36504569527": 88.189,
+   "36505271124": 70.826
   },
   "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest": {
    "36492046303": 63.899,
-   "36492131767": 63.927
+   "36492131767": 63.927,
+   "36504569527": 46.824,
+   "36505271124": 37.593
   },
   "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest": {
    "36492046303": 143.342,
-   "36492131767": 85.907
+   "36492131767": 85.907,
+   "36504569527": 121.56,
+   "36505271124": 150.809
   },
   "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest": {
    "36492046303": 189.175,
-   "36492131767": 114.345
+   "36492131767": 114.345,
+   "36504569527": 160.99,
+   "36505271124": 205.054
   },
   "tests.vnext.test_b06_bond_leases": {
    "36492046303": 70.934,
-   "36492131767": 96.662
+   "36492131767": 96.662,
+   "36504569527": 124.327,
+   "36505271124": 144.685
   },
   "tests.vnext.test_b06_combined_borrowings": {
    "36492046303": 38.176,
-   "36492131767": 50.423
+   "36492131767": 50.423,
+   "36504569527": 65.05,
+   "36505271124": 74.354
   },
   "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected": {
    "36492046303": 62.327,
-   "36492131767": 36.847
+   "36492131767": 36.847,
+   "36504569527": 53.459,
+   "36505271124": 71.611
   },
   "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass": {
    "36492046303": 28.203,
-   "36492131767": 37.121
+   "36492131767": 37.121,
+   "36504569527": 47.599,
+   "36505271124": 55.528
   },
   "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt": {
    "36492046303": 134.264,
-   "36492131767": 133.981
+   "36492131767": 133.981,
+   "36504569527": 92.071,
+   "36505271124": 74.65
   },
   "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy": {
    "36492046303": 42.267,
-   "36492131767": 25.224
+   "36492131767": 25.224,
+   "36504569527": 36.31,
+   "36505271124": 48.399
   },
   "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result": {
    "36492046303": 68.797,
-   "36492131767": 69.009
+   "36492131767": 69.009,
+   "36504569527": 47.241,
+   "36505271124": 38.375
   },
   "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard": {
    "36492046303": 50.898,
-   "36492131767": 30.386
+   "36492131767": 30.386,
+   "36504569527": 43.768,
+   "36505271124": 58.087
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_borrowing_keyword_and_explicit_past_issuance_do_not_block": {
    "36492046303": 16.463,
-   "36492131767": 16.621
+   "36492131767": 16.621,
+   "36504569527": 11.554,
+   "36505271124": 9.504
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_balance_cannot_inherit_an_unspecified_date": {
    "36492046303": 3.176,
-   "36492131767": 4.08
+   "36492131767": 4.08,
+   "36504569527": 5.383,
+   "36505271124": 5.902
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_named_carrying_total_is_reconciled_but_unknown_balance_is_not": {
    "36492046303": 17.737,
-   "36492131767": 10.621
+   "36492131767": 10.621,
+   "36504569527": 15.292,
+   "36505271124": 19.71
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes": {
    "36492046303": 19.46,
-   "36492131767": 19.265
+   "36492131767": 19.265,
+   "36504569527": 13.505,
+   "36505271124": 10.832
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_newer_disclosed_credit_group_is_derived_from_table_members": {
    "36492046303": 7.494,
-   "36492131767": 9.653
+   "36492131767": 9.653,
+   "36504569527": 12.579,
+   "36505271124": 13.8
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements": {
    "36492046303": 17.633,
-   "36492131767": 10.49
+   "36492131767": 10.49,
+   "36504569527": 15.16,
+   "36505271124": 19.344
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_primary_equity_amount_sign_scale_and_unit_conflicts_reject": {
    "36492046303": 17.454,
-   "36492131767": 17.414
+   "36492131767": 17.414,
+   "36504569527": 12.312,
+   "36505271124": 9.896
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic": {
    "36492046303": 10.757,
-   "36492131767": 13.982
+   "36492131767": 13.982,
+   "36504569527": 17.983,
+   "36505271124": 20.043
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary": {
    "36492046303": 8.733,
-   "36492131767": 5.196
+   "36492131767": 5.196,
+   "36504569527": 7.483,
+   "36505271124": 9.61
   },
   "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_zero_clause_cannot_hide_a_positive_balance_or_unsupported_amount": {
    "36492046303": 16.424,
-   "36492131767": 16.505
+   "36492131767": 16.505,
+   "36504569527": 11.461,
+   "36505271124": 9.327
   },
   "tests.vnext.test_b06_financing_inventory": {
    "36492046303": 59.42,
-   "36492131767": 59.467
+   "36492131767": 59.467,
+   "36504569527": 40.156,
+   "36505271124": 32.389
   },
   "tests.vnext.test_b06_inclusive_table": {
    "36492046303": 118.676,
-   "36492131767": 71.937
+   "36492131767": 71.937,
+   "36504569527": 102.404,
+   "36505271124": 136.748
   },
   "tests.vnext.test_b06_note_carrying": {
    "36492046303": 41.863,
-   "36492131767": 25.011
+   "36492131767": 25.011,
+   "36504569527": 36.407,
+   "36505271124": 47.674
   },
   "tests.vnext.test_c02_board_reading": {
    "36492046303": 54.29,
-   "36492131767": 72.48
+   "36492131767": 72.48,
+   "36504569527": 92.685,
+   "36505271124": 105.382
   },
   "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": {
    "36492046303": 165.414,
-   "36492131767": 169.279
+   "36492131767": 169.279,
+   "36504569527": 132.071,
+   "36505271124": 109.314
   },
   "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": {
    "36492046303": 135.345,
-   "36492131767": 183.886
+   "36492131767": 183.886,
+   "36504569527": 230.704,
+   "36505271124": 237.892
   },
   "tests.vnext.test_c04_registration_successor": {
    "36492046303": 10.566,
-   "36492131767": 14.282
+   "36492131767": 14.282,
+   "36504569527": 18.562,
+   "36505271124": 19.422
   },
   "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": {
    "36492046303": 372.844,
-   "36492131767": 379.28
+   "36492131767": 379.28,
+   "36504569527": 291.97,
+   "36505271124": 255.989
   },
   "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": {
    "36492046303": 241.012,
-   "36492131767": 329.064
+   "36492131767": 329.064,
+   "36504569527": 411.208,
+   "36505271124": 417.809
   },
   "tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest": {
    "36492046303": 26.379,
-   "36492131767": 17.039
+   "36492131767": 17.039,
+   "36504569527": 23.443,
+   "36505271124": 26.055
   },
   "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest": {
    "36492046303": 105.43,
-   "36492131767": 148.245
+   "36492131767": 148.245,
+   "36504569527": 191.027,
+   "36505271124": 202.523
   },
   "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest": {
    "36492046303": 53.694,
-   "36492131767": 53.542
+   "36492131767": 53.542,
+   "36504569527": 39.622,
+   "36505271124": 31.392
   },
   "tests.vnext.test_capacity_native_assessment": {
    "36492046303": 23.754,
-   "36492131767": 31.914
+   "36492131767": 31.914,
+   "36504569527": 40.723,
+   "36505271124": 43.44
   },
   "tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewMaterialTest": {
    "36492046303": 9.039,
-   "36492131767": 9.05
+   "36492131767": 9.05,
+   "36504569527": 7.025,
+   "36505271124": 5.821
   },
   "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest": {
    "36492046303": 40.748,
-   "36492131767": 40.987
+   "36492131767": 40.987,
+   "36504569527": 28.751,
+   "36505271124": 23.441
   },
   "tests.vnext.test_capacity_text_results": {
    "36492046303": 26.809,
-   "36492131767": 37.569
+   "36492131767": 37.569,
+   "36504569527": 47.779,
+   "36505271124": 51.956
   },
   "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan": {
    "36492046303": 71.57,
-   "36492131767": 97.945
+   "36492131767": 97.945,
+   "36504569527": 121.851,
+   "36505271124": 120.032
   },
   "tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest": {
    "36492046303": 5.986,
-   "36492131767": 7.887
+   "36492131767": 7.887,
+   "36504569527": 10.316,
+   "36505271124": 11.42
   },
   "tests.vnext.test_continuous_sec_acquisition": {
    "36492046303": 144.499,
-   "36492131767": 192.713
+   "36492131767": 192.713,
+   "36504569527": 241.531,
+   "36505271124": 261.398
   },
   "tests.vnext.test_continuous_semantic_calls": {
    "36492046303": 20.23,
-   "36492131767": 26.818
+   "36492131767": 26.818,
+   "36504569527": 34.355,
+   "36505271124": 36.825
   },
   "tests.vnext.test_d01_byte_reading": {
    "36492046303": 12.43,
-   "36492131767": 7.401
+   "36492131767": 7.401,
+   "36504569527": 10.724,
+   "36505271124": 14.107
   },
   "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest": {
    "36492046303": 204.303,
-   "36492131767": 208.555
+   "36492131767": 208.555,
+   "36504569527": 159.809,
+   "36505271124": 132.833
   },
   "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest": {
    "36492046303": 83.842,
-   "36492131767": 114.587
+   "36492131767": 114.587,
+   "36504569527": 144.028,
+   "36505271124": 146.743
   },
   "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": {
    "36492046303": 278.524,
-   "36492131767": 278.135
+   "36492131767": 278.135,
+   "36504569527": 212.44,
+   "36505271124": 180.558
   },
   "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": {
    "36492046303": 212.09,
-   "36492131767": 214.635
+   "36492131767": 214.635,
+   "36504569527": 151.954,
+   "36505271124": 123.898
   },
   "tests.vnext.test_d04_native_wiring": {
    "36492046303": 42.385,
-   "36492131767": 42.473
+   "36492131767": 42.473,
+   "36504569527": 31.004,
+   "36505271124": 26.194
   },
   "tests.vnext.test_debt_to_equity_reading": {
    "36492046303": 1.122,
-   "36492131767": 1.119
+   "36492131767": 1.119,
+   "36504569527": 1.12,
+   "36505271124": 1.136
   },
   "tests.vnext.test_e01_candidate_reading": {
    "36492046303": 7.044,
-   "36492131767": 9.42
+   "36492131767": 9.42,
+   "36504569527": 10.451,
+   "36505271124": 13.577
   },
   "tests.vnext.test_e01_eight_o_one_reading": {
    "36492046303": 3.538,
-   "36492131767": 2.069
+   "36492131767": 2.069,
+   "36504569527": 2.751,
+   "36505271124": 2.059
   },
   "tests.vnext.test_event_count_reading": {
    "36492046303": 1.921,
-   "36492131767": 1.863
+   "36492131767": 1.863,
+   "36504569527": 1.922,
+   "36505271124": 1.861
   },
   "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients": {
    "36492046303": 14.554,
-   "36492131767": 19.15
+   "36492131767": 19.15,
+   "36504569527": 21.247,
+   "36505271124": 28.211
   },
   "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_excluding_clients": {
    "36492046303": 24.835,
-   "36492131767": 14.694
+   "36492131767": 14.694,
+   "36504569527": 19.167,
+   "36505271124": 15.182
   },
   "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_institutional_and_retail_clients": {
    "36492046303": 28.484,
-   "36492131767": 28.4
+   "36492131767": 28.4,
+   "36504569527": 25.046,
+   "36505271124": 28.747
   },
   "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients": {
    "36492046303": 14.665,
-   "36492131767": 19.253
+   "36492131767": 19.253,
+   "36504569527": 21.231,
+   "36505271124": 28.326
   },
   "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients": {
    "36492046303": 24.811,
-   "36492131767": 14.475
+   "36492131767": 14.475,
+   "36504569527": 19.236,
+   "36505271124": 15.197
   },
   "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_unrelated_exclusion_does_not_change_aum_scope": {
    "36492046303": 28.712,
-   "36492131767": 28.519
+   "36492131767": 28.519,
+   "36504569527": 24.743,
+   "36505271124": 28.551
   },
   "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_hypothetical_table_is_rejected": {
    "36492046303": 14.288,
-   "36492131767": 18.89
+   "36492131767": 18.89,
+   "36504569527": 20.971,
+   "36505271124": 27.859
   },
   "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected": {
    "36492046303": 24.471,
-   "36492131767": 14.341
+   "36492131767": 14.341,
+   "36504569527": 19.229,
+   "36505271124": 15.998
   },
   "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_unrelated_hypothetical_example_preserves_reported_var": {
    "36492046303": 28.085,
-   "36492131767": 28.081
+   "36492131767": 28.081,
+   "36504569527": 24.27,
+   "36505271124": 27.964
   },
   "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition": {
    "36492046303": 34.44,
-   "36492131767": 20.526
+   "36492131767": 20.526,
+   "36504569527": 30.188,
+   "36505271124": 41.323
   },
   "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected": {
    "36492046303": 38.139,
-   "36492131767": 22.756
+   "36492131767": 22.756,
+   "36504569527": 33.421,
+   "36505271124": 45.408
   },
   "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected": {
    "36492046303": 22.618,
-   "36492131767": 29.577
+   "36492131767": 29.577,
+   "36504569527": 37.599,
+   "36505271124": 44.915
   },
   "tests.vnext.test_financial_duration": {
    "36492046303": 10.863,
-   "36492131767": 13.963
+   "36492131767": 13.963,
+   "36504569527": 16.29,
+   "36505271124": 22.374
   },
   "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration": {
    "36492046303": 23.318,
-   "36492131767": 30.742
+   "36492131767": 30.742,
+   "36504569527": 39.287,
+   "36505271124": 45.806
   },
   "tests.vnext.test_fiscal_year_labels": {
    "36492046303": 18.332,
-   "36492131767": 23.511
+   "36492131767": 23.511,
+   "36504569527": 30.329,
+   "36505271124": 34.417
   },
   "tests.vnext.test_going_concern_source": {
    "36492046303": 25.327,
-   "36492131767": 15.02
+   "36492131767": 15.02,
+   "36504569527": 19.658,
+   "36505271124": 16.191
   },
   "tests.vnext.test_governance_reading": {
    "36492046303": 0.754,
-   "36492131767": 0.739
+   "36492131767": 0.739,
+   "36504569527": 0.772,
+   "36505271124": 0.748
   },
   "tests.vnext.test_historical_amendment_note": {
    "36492046303": 102.117,
-   "36492131767": 62.172
+   "36492131767": 62.172,
+   "36504569527": 88.079,
+   "36505271124": 118.924
   },
   "tests.vnext.test_historical_b03_depreciation_scope": {
    "36492046303": 0.313,
-   "36492131767": 0.408
+   "36492131767": 0.408,
+   "36504569527": 0.461,
+   "36505271124": 0.502
   },
   "tests.vnext.test_historical_block_inputs": {
    "36492046303": 49.862,
-   "36492131767": 50.195
+   "36492131767": 50.195,
+   "36504569527": 42.109,
+   "36505271124": 34.788
   },
   "tests.vnext.test_historical_board_composition_filings": {
    "36492046303": 199.531,
-   "36492131767": 123.771
+   "36492131767": 123.771,
+   "36504569527": 170.486,
+   "36505271124": 223.856
   },
   "tests.vnext.test_historical_capacity_results": {
    "36492046303": 37.377,
-   "36492131767": 37.564
+   "36492131767": 37.564,
+   "36504569527": 26.095,
+   "36505271124": 21.458
   },
   "tests.vnext.test_historical_coverage": {
    "36492046303": 92.806,
-   "36492131767": 126.567
+   "36492131767": 126.567,
+   "36504569527": 164.639,
+   "36505271124": 181.502
   },
   "tests.vnext.test_historical_d02_marks": {
    "36492046303": 213.375,
-   "36492131767": 108.997
+   "36492131767": 108.997,
+   "36504569527": 180.624,
+   "36505271124": 227.593
   },
   "tests.vnext.test_historical_da_scope_candidate": {
    "36492046303": 10.722,
-   "36492131767": 6.426
+   "36492131767": 6.426,
+   "36504569527": 8.466,
+   "36505271124": 6.525
   },
   "tests.vnext.test_historical_da_scope_route": {
    "36492046303": 50.46,
-   "36492131767": 30.356
+   "36492131767": 30.356,
+   "36504569527": 42.175,
+   "36505271124": 55.54
   },
   "tests.vnext.test_historical_debt_results": {
    "36492046303": 432.879,
-   "36492131767": 433.876
+   "36492131767": 433.876,
+   "36504569527": 296.938,
+   "36505271124": 243.83
   },
   "tests.vnext.test_historical_event_items": {
    "36492046303": 186.392,
-   "36492131767": 188.078
+   "36492131767": 188.078,
+   "36504569527": 132.79,
+   "36505271124": 108.974
   },
   "tests.vnext.test_historical_event_window": {
    "36492046303": 160.687,
-   "36492131767": 97.315
+   "36492131767": 97.315,
+   "36504569527": 136.67,
+   "36505271124": 179.648
   },
   "tests.vnext.test_historical_filing_inventory": {
    "36492046303": 37.413,
-   "36492131767": 52.57
+   "36492131767": 52.57,
+   "36504569527": 62.517,
+   "36505271124": 66.984
   },
   "tests.vnext.test_historical_financial_results": {
    "36492046303": 169.844,
-   "36492131767": 103.005
+   "36492131767": 103.005,
+   "36504569527": 144.916,
+   "36505271124": 192.912
   },
   "tests.vnext.test_historical_governance_input": {
    "36492046303": 25.223,
-   "36492131767": 25.148
+   "36492131767": 25.148,
+   "36504569527": 22.869,
+   "36505271124": 25.121
   },
   "tests.vnext.test_historical_governance_results": {
    "36492046303": 67.632,
-   "36492131767": 90.672
+   "36492131767": 90.672,
+   "36504569527": 116.4,
+   "36505271124": 127.665
   },
   "tests.vnext.test_historical_governance_text": {
    "36492046303": 53.897,
-   "36492131767": 31.704
+   "36492131767": 31.704,
+   "36504569527": 46.052,
+   "36505271124": 60.033
   },
   "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": {
    "36492046303": 289.932,
-   "36492131767": 150.904
+   "36492131767": 150.904,
+   "36504569527": 247.345,
+   "36505271124": 314.232
   },
   "tests.vnext.test_historical_lodging_results": {
    "36492046303": 58.041,
-   "36492131767": 76.663
+   "36492131767": 76.663,
+   "36504569527": 98.393,
+   "36505271124": 109.636
   },
   "tests.vnext.test_historical_metadata_context": {
    "36492046303": 5.501,
-   "36492131767": 7.637
+   "36492131767": 7.637,
+   "36504569527": 8.143,
+   "36505271124": 9.502
   },
   "tests.vnext.test_historical_period_results": {
    "36492046303": 271.761,
-   "36492131767": 152.953
+   "36492131767": 152.953,
+   "36504569527": 228.588,
+   "36505271124": 295.795
   },
   "tests.vnext.test_historical_predecessor_periods": {
    "36492046303": 159.562,
-   "36492131767": 161.14
+   "36492131767": 161.14,
+   "36504569527": 108.785,
+   "36505271124": 90.93
   },
   "tests.vnext.test_historical_risk_headings": {
    "36492046303": 180.582,
-   "36492131767": 180.907
+   "36492131767": 180.907,
+   "36504569527": 122.181,
+   "36505271124": 100.448
   },
   "tests.vnext.test_historical_sec_session": {
    "36492046303": 542.972,
-   "36492131767": 381.64
+   "36492131767": 381.64,
+   "36504569527": 501.88,
+   "36505271124": 545.428
   },
   "tests.vnext.test_historical_semantic_routes": {
    "36492046303": 254.992,
-   "36492131767": 246.52
+   "36492131767": 246.52,
+   "36504569527": 189.383,
+   "36505271124": 159.592
   },
   "tests.vnext.test_historical_shared_sources": {
    "36492046303": 119.387,
-   "36492131767": 118.74
+   "36492131767": 118.74,
+   "36504569527": 83.959,
+   "36505271124": 70.008
   },
   "tests.vnext.test_historical_source_acquisition": {
    "36492046303": 85.905,
-   "36492131767": 49.267
+   "36492131767": 49.267,
+   "36504569527": 70.227,
+   "36505271124": 87.724
   },
   "tests.vnext.test_historical_structural_results": {
    "36492046303": 36.338,
-   "36492131767": 36.414
+   "36492131767": 36.414,
+   "36504569527": 25.64,
+   "36505271124": 20.473
   },
   "tests.vnext.test_historical_text_boundary": {
    "36492046303": 210.446,
-   "36492131767": 312.023
+   "36492131767": 312.023,
+   "36504569527": 402.752,
+   "36505271124": 436.963
   },
   "tests.vnext.test_instant_balance_amendment": {
    "36492046303": 99.344,
-   "36492131767": 60.13
+   "36492131767": 60.13,
+   "36504569527": 86.711,
+   "36505271124": 116.384
   },
   "tests.vnext.test_lodging_table_source": {
    "36492046303": 45.647,
-   "36492131767": 27.315
+   "36492131767": 27.315,
+   "36504569527": 40.022,
+   "36505271124": 52.188
   },
   "tests.vnext.test_native_assessment_replay": {
    "36492046303": 31.608,
-   "36492131767": 19.261
+   "36492131767": 19.261,
+   "36504569527": 24.198,
+   "36505271124": 20.573
   },
   "tests.vnext.test_normal_accession_results": {
    "36492046303": 120.628,
-   "36492131767": 72.86
+   "36492131767": 72.86,
+   "36504569527": 103.438,
+   "36505271124": 135.431
   },
   "tests.vnext.test_normal_annual_input_v2": {
    "36492046303": 46.165,
-   "36492131767": 46.28
+   "36492131767": 46.28,
+   "36504569527": 33.001,
+   "36505271124": 26.655
   },
   "tests.vnext.test_normal_companyfacts_results": {
    "36492046303": 100.718,
-   "36492131767": 133.541
+   "36492131767": 133.541,
+   "36504569527": 173.326,
+   "36505271124": 193.247
   },
   "tests.vnext.test_normal_history_catalog": {
    "36492046303": 21.762,
-   "36492131767": 22.371
+   "36492131767": 22.371,
+   "36504569527": 21.327,
+   "36505271124": 21.951
   },
   "tests.vnext.test_normal_run_inputs": {
    "36492046303": 41.258,
-   "36492131767": 24.325
+   "36492131767": 24.325,
+   "36504569527": 34.525,
+   "36505271124": 44.877
   },
   "tests.vnext.test_normal_source_requirements": {
    "36492046303": 32.911,
-   "36492131767": 44.224
+   "36492131767": 44.224,
+   "36504569527": 58.794,
+   "36505271124": 61.481
   },
   "tests.vnext.test_normal_zero_ai_results": {
    "36492046303": 118.283,
-   "36492131767": 162.624
+   "36492131767": 162.624,
+   "36504569527": 208.835,
+   "36505271124": 226.669
   },
   "tests.vnext.test_ordinary_income_input": {
    "36492046303": 75.325,
-   "36492131767": 75.065
+   "36492131767": 75.065,
+   "36504569527": 51.952,
+   "36505271124": 41.996
   },
   "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest": {
    "36492046303": 103.963,
-   "36492131767": 103.028
+   "36492131767": 103.028,
+   "36504569527": 89.586,
+   "36505271124": 90.516
   },
   "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals": {
    "36492046303": 16.149,
-   "36492131767": 22.406
+   "36492131767": 22.406,
+   "36504569527": 24.63,
+   "36505271124": 32.973
   },
   "tests.vnext.test_ordinary_special_debt_scope": {
    "36492046303": 63.314,
-   "36492131767": 38.398
+   "36492131767": 38.398,
+   "36504569527": 55.855,
+   "36505271124": 73.305
   },
   "tests.vnext.test_r6_historical_controls": {
    "36492046303": 56.107,
-   "36492131767": 56.188
+   "36492131767": 56.188,
+   "36504569527": 53.531,
+   "36505271124": 62.138
   },
   "tests.vnext.test_r6_regulatory_semantics": {
    "36492046303": 39.408,
-   "36492131767": 23.648
+   "36492131767": 23.648,
+   "36504569527": 34.072,
+   "36505271124": 42.256
   },
   "tests.vnext.test_r6_semantic_review": {
    "36492046303": 28.176,
-   "36492131767": 16.82
+   "36492131767": 16.82,
+   "36504569527": 21.871,
+   "36505271124": 18.422
   },
   "tests.vnext.test_r6_semantic_verification": {
    "36492046303": 16.086,
-   "36492131767": 16.259
+   "36492131767": 16.259,
+   "36504569527": 15.972,
+   "36505271124": 16.412
   },
   "tests.vnext.test_regulatory_fact_review": {
    "36492046303": 149.342,
-   "36492131767": 89.639
+   "36492131767": 89.639,
+   "36504569527": 128.056,
+   "36505271124": 162.767
   },
   "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest": {
    "36492046303": 34.002,
-   "36492131767": 44.38
+   "36492131767": 44.38,
+   "36504569527": 57.082,
+   "36505271124": 63.705
   },
   "tests.vnext.test_risk_signals": {
    "36492046303": 11.385,
-   "36492131767": 14.545
+   "36492131767": 14.545,
+   "36504569527": 17.203,
+   "36505271124": 20.77
   },
   "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest": {
    "36492046303": 21.995,
-   "36492131767": 28.507
+   "36492131767": 28.507,
+   "36504569527": 37.043,
+   "36505271124": 40.93
   },
   "tests.vnext.test_single_readings": {
    "36492046303": 0.594,
-   "36492131767": 0.36
+   "36492131767": 0.36,
+   "36504569527": 0.427,
+   "36505271124": 0.419
   },
   "tests.vnext.test_statement_fact_reading": {
    "36492046303": 0.56,
-   "36492131767": 0.636
+   "36492131767": 0.636,
+   "36504569527": 0.59,
+   "36505271124": 0.568
   },
   "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two": {
    "36492046303": 11.11,
-   "36492131767": 14.748
+   "36492131767": 14.748,
+   "36504569527": 16.995,
+   "36505271124": 19.987
   },
   "tests.vnext.test_text_results": {
    "36492046303": 21.315,
-   "36492131767": 13.221
+   "36492131767": 13.221,
+   "36504569527": 16.243,
+   "36505271124": 13.828
   },
   "tests.vnext.test_text_results_v2": {
    "36492046303": 1.249,
-   "36492131767": 1.279
+   "36492131767": 1.279,
+   "36504569527": 1.21,
+   "36505271124": 1.259
+  },
+  "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest": {
+   "36504569527": 85.615,
+   "36505271124": 76.729
   }
  },
  "tier_totals_out_of_sample": {
   "36492046303": 9668,
-  "36492131767": 8958
+  "36492131767": 8958,
+  "36504569527": 9748,
+  "36505271124": 10404
  },
  "runner_factors": {
   "method": "each case's reference is the geometric mean of its seconds over runs 36485856267, 36485982390, 36492046303 and 36492131767 (the four runs that reached every case); a shard instance's factor is the median over its cases with a reference of at least 60 s of seconds / reference",
@@ -1575,6 +1909,49 @@
   },
   "min": 0.69,
   "max": 1.311,
-  "spread": 1.9
+  "spread": 1.9,
+  "out_of_sample_instances": {
+   "36504569527/0": {
+    "factor": 0.988,
+    "cases_used": 16,
+    "sum_seconds": 3206.0
+   },
+   "36504569527/1": {
+    "factor": 0.754,
+    "cases_used": 18,
+    "sum_seconds": 2972.3
+   },
+   "36504569527/2": {
+    "factor": 1.207,
+    "cases_used": 15,
+    "sum_seconds": 3569.3
+   },
+   "36505271124/0": {
+    "factor": 1.291,
+    "cases_used": 16,
+    "sum_seconds": 4050.5
+   },
+   "36505271124/1": {
+    "factor": 0.621,
+    "cases_used": 18,
+    "sum_seconds": 2505.0
+   },
+   "36505271124/2": {
+    "factor": 1.285,
+    "cases_used": 15,
+    "sum_seconds": 3848.4
+   }
+  },
+  "out_of_sample_note": "the six shard instances of runs 36504569527 and 36505271124, measured against the same four-run reference; they range 0.621 to 1.291, so across all eighteen instances the factor runs 0.621 to 1.311, a spread of 2.1; min/max/spread above describe the first twelve only"
+ },
+ "unweighted_cases": {
+  "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest": {
+   "seconds": {
+    "36504569527": 85.615,
+    "36505271124": 76.729
+   },
+   "weight_used": 30,
+   "note": "added by the base at 76ebe42e after the weights were set; the split places it at the default 30 s, about 50 s below what it takes. Not re-weighted: the error is small next to the runner-speed swing on the same cases (shard 0's 43 cases summed 3,206 s in one of these runs and 4,050 s in the other), and a new table would need its own CI round; the remedy for the swing is the fourth shard (0005)."
+  }
  }
 }

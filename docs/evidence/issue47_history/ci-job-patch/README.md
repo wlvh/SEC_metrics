@@ -134,6 +134,26 @@ the slowest runner and a six-minute checkout land on the same shard. That is
 still the only remedy found; it is a workflow change for the owner or the
 base.
 
+## 2026-09-29: two more green runs, one with 34 seconds to spare
+
+`7b56f356` (run 36504569527) and `009f2e86` (run 36505271124): all 17 checks
+green on both. The saved-source jobs took 27m25s, 25m25s and 30m21s in the
+first and 34m26s, 21m36s and 33m03s in the second. Shard 0 of the second
+ended 34 seconds before the 35-minute cap: checkout 26 seconds, tests 2,034
+seconds, on a runner at factor 1.29 against the same four-run reference. Of
+the eight three-shard runs on this branch, no passing shard came closer (the
+previous smallest margin was 46 seconds). The same 43 shard-0 cases summed
+3,206 seconds in the first run and 4,050 in the second. With these six
+instances the factor runs 0.62 to 1.31 across eighteen, a spread of 2.1
+(`runner_factors.out_of_sample_instances`).
+
+The base added one saved-source case after the weights were set,
+`tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest`. It
+took 85.6 and 76.7 seconds and is placed at the default 30 (`unweighted_cases`).
+It is not re-weighted: its 50-second error is small next to the 844 seconds
+the runner moved the same shard between these two runs, and a new table needs
+its own CI round. The remedy for the runners is still `0005`.
+
 ## The second one was retired, and the file is gone
 
 `0002-raise-capacity-native-runs-cap.patch` used to raise `timeout-minutes` on
