@@ -6861,5 +6861,25 @@
       "compatibility": "new parameters retain default root, response shape and record types; current V14 D03 source/request IDs advance with bound module SHA, while old packets retain original installed identity; external D03 path remains replay-only",
       "downstream_impact": "current unfrozen V14 execution and rule hashes advance; stacked consumer may need its own rebind; no Issue47 branch, ledger, snapshot or PR touched"
     }
+  },
+  "d03_registered_full_review_20260929": {
+    "status": "RECORDED_REGISTERED_EXTERNAL_FIVE_GROUPS_PENDING_COMPANY_REVIEW_AND_SEPARATE_PROCESS_REVALIDATION_PASS",
+    "evidence": "docs/evidence/issue28_continuous/d03-registered-full-review-20260929/README.md",
+    "tested_product_head": "76ebe42ea28eedaac640c70d127475296361d1f3",
+    "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c",
+    "source_root_kind": "RECORDED_LEDGER_OWNED_BASELINE_COPY_NOT_LATER_FILING",
+    "complete_source_unit_count": 17,
+    "completed_group_count": 5,
+    "unresolved_group_count": 1,
+    "company_review_status": "PENDING",
+    "system_approval_eligible": false,
+    "recorded_only": true,
+    "recorded_test_ledger_counts": [5, 5, 0],
+    "separate_process_saved_execution_revalidation": true,
+    "first_attempt_setup_error_preserved": "run-first.log",
+    "native_result_or_run_created": false,
+    "new_real_calls": [0, 0, 0],
+    "new_company_or_390_credit": 0,
+    "limited_independent_review_reused": "PASS_LIMITED_63dad2a2e7b683d3f124c809509d09761dfc572f_NO_NEW_PRODUCT_SOURCE_DIFF"
   }
 }
