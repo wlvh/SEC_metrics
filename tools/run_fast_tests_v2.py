@@ -323,6 +323,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_semantic_bound",)
 # frozen inspector refuses it: Marriott FY2021/FY2022 from the export and FY2025
 # from the checkout; 26 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_lodging_introduction",)
+# C03 on the proxies that declare the first ECD taxonomy release (ecd/2022q4),
+# each set against the next proxy read by the frozen resolver: eleven proxies
+# from the export, 29 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_ecd_release",)
 # Four modules the tier did not run although their records said it did or would:
 # the approved amendment policy asked of two saved 10-K/A filings (38 seconds
 # alone), the two Part III filings' statement-input admission re-verified from

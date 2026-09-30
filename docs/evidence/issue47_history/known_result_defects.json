@@ -1755,6 +1755,44 @@
      "what_it_does_not_assert": "that the coordinate has a correct value. It has none: the withhold says the D&A the value took is not provably the whole of it, and does not supply one. Nor that any batch has re-run under this version."
     }
    ]
+  },
+  {
+   "defect_id": "C03_MARRIOTT_2022_LATER_PROXY_CORRECTS_THE_FIRST_REPORTED_TOTAL",
+   "company_id": "marriott_international",
+   "metric_id": "C03",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The 2023 proxy (ny20006599x500_def14a.htm, the first to report fiscal 2022, ecd/2022q4) reports Anthony G. Capuano's 2022 total as 18,686,271; the route reads it once the ECD release is widened. The 2024, 2025 and 2026 proxies report 18,715,093, and the 2024 proxy says why: 'All Other Compensation for fiscal year 2022 has also been adjusted to reflect an additional $28,822 related to flights Mr. Capuano took to the meetings of an outside board in the second half of 2022', and the pay-versus-performance footnote: 'The amount reported as the Summary Compensation Table Total for Mr. Capuano in 2022 ... have been corrected'.",
+   "root_cause": "The historical C03 route reads the pinned year from the first proxy after it (as first reported, the same point-in-time rule every other metric follows: the target year's own filing). Nothing in the frame asks a later filing whether it still reports the same amount.",
+   "scope_measured": "Every PeoTotalCompAmt in the 33 saved proxies (checkout and the acquisition's export): 103 person-years, 53 of them reported by two or more proxies, 2 with different amounts (c03-first-ecd-release/later-proxies.json).",
+   "found_by": "A cross-proxy scan run before publishing the first-release values (c03-first-ecd-release/later_proxies.py).",
+   "repair_state": "ROOT_CAUSE_MEASURED_AWAITS_THE_CONVENTION_DECISION",
+   "evidence": [
+    "docs/evidence/issue47_history/c03-first-ecd-release/README.md",
+    "docs/evidence/issue47_history/c03-first-ecd-release/later-proxies.json"
+   ],
+   "repair": "Which amount the frame shows is a convention the owner decides: as first reported (the other metrics' rule) or as later reported. Until then the coordinate is withdrawn from the verified outcome; the value is not changed or removed."
+  },
+  {
+   "defect_id": "C03_MACYS_2023_LATER_PROXIES_REPORT_THE_TOTAL_NET_OF_A_CLAWBACK",
+   "company_id": "macys",
+   "metric_id": "C03",
+   "period_end": "2024-02-03",
+   "result_id": null,
+   "same_cause_as": [
+    "C03_MARRIOTT_2022_LATER_PROXY_CORRECTS_THE_FIRST_REPORTED_TOTAL"
+   ],
+   "summary": "Published 11,821,259 (result sha256:bd75145b139fb5114c15a0e6ede7bd2f9876dc6a1a683db113fa8552ba415783, closure ed360ebc, not accepted): Jeff Gennette's fiscal 2023 total in the 2024 proxy (m-20240517xdef14a.htm). The 2025 and 2026 proxies report 11,563,739, and the 2025 proxy's footnote (5) says: 'The amounts for PEO for 2023 reflect repayment of erroneously awarded compensation under the Company's Compensation Clawback Policy as a result of revisions to correct an error to previously issued financial statements.'",
+   "root_cause": "The historical C03 route reads the pinned year from the first proxy after it (as first reported, the same point-in-time rule every other metric follows: the target year's own filing). Nothing in the frame asks a later filing whether it still reports the same amount.",
+   "scope_measured": "Every PeoTotalCompAmt in the 33 saved proxies (checkout and the acquisition's export): 103 person-years, 53 of them reported by two or more proxies, 2 with different amounts (c03-first-ecd-release/later-proxies.json).",
+   "found_by": "The same cross-proxy scan.",
+   "repair_state": "ROOT_CAUSE_MEASURED_AWAITS_THE_CONVENTION_DECISION",
+   "evidence": [
+    "docs/evidence/issue47_history/c03-first-ecd-release/README.md",
+    "docs/evidence/issue47_history/c03-first-ecd-release/later-proxies.json"
+   ],
+   "repair": "Which amount the frame shows is a convention the owner decides: as first reported (the other metrics' rule) or as later reported. Until then the coordinate is withdrawn from the verified outcome; the value is not changed or removed."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

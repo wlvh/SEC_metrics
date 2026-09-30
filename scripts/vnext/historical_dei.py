@@ -42,6 +42,10 @@ question is refused by name, as is any other way of asking it than
 read as a fix. The frozen modules are not changed; Issue #28's generations
 record their bytes.
 
+The executive-compensation (ECD) taxonomy namespace is the same question with
+the same three release suffixes (``ecd/2022q4`` is the 2023 proxies' release)
+and is answered by the same view.
+
 Call relationships: #47's route modules call the frozen readers through
 ``release_aware``. ``unviewed_references`` is the check that they do: it lists
 what a #47 function reaches that can ask the question without a view.
@@ -67,6 +71,17 @@ FROZEN_DEI_NAMESPACE_PATTERNS = (r"https?://xbrl\.sec\.gov/dei/\d{4}",
 # The releases' own suffixes: none (2022 onward), a quarter (2021q4) or a month
 # and day after the year. Anything else is not the SEC's DEI taxonomy.
 DEI_NAMESPACE_PATTERN = r"https?://xbrl\.sec\.gov/dei/\d{4}(?:q[1-4]|-\d{2}-\d{2})?"
+# The same question about the SEC's executive-compensation (ECD) taxonomy, which
+# the frozen C03 resolver and the Part III amendment check ask. Its first
+# release is named with a quarter (``ecd/2022q4``, the 2023 proxies); the
+# frozen readers accept only four digits, so a 2023 proxy's pay-versus-
+# performance facts read as not ECD (C03_ECD_TAXONOMY_REQUIRED). The same three
+# suffixes are accepted and nothing else.
+FROZEN_ECD_NAMESPACE_PATTERNS = (r"https?://xbrl\.sec\.gov/ecd/\d{4}",
+                                 r"https?://xbrl\.sec\.gov/ecd/[0-9]{4}")
+ECD_NAMESPACE_PATTERN = r"https?://xbrl\.sec\.gov/ecd/\d{4}(?:q[1-4]|-\d{2}-\d{2})?"
+_WIDENED = {**{p: DEI_NAMESPACE_PATTERN for p in FROZEN_DEI_NAMESPACE_PATTERNS},
+            **{p: ECD_NAMESPACE_PATTERN for p in FROZEN_ECD_NAMESPACE_PATTERNS}}
 _CONTAINERS = (dict, list, tuple, set, frozenset)
 _ATTRIBUTE_LOADS = ("LOAD_ATTR", "LOAD_METHOD")
 _NAME_LOADS = ("LOAD_GLOBAL", "LOAD_NAME", "LOAD_FAST", "LOAD_DEREF")
@@ -81,8 +96,13 @@ def is_dei_namespace(uri):
     return re.fullmatch(DEI_NAMESPACE_PATTERN, str(uri)) is not None
 
 
+def is_ecd_namespace(uri):
+    """Whether ``uri`` is a release of the SEC's executive-compensation (ECD) taxonomy."""
+    return re.fullmatch(ECD_NAMESPACE_PATTERN, str(uri)) is not None
+
+
 def _frozen_pattern(pattern):
-    return isinstance(pattern, str) and pattern in FROZEN_DEI_NAMESPACE_PATTERNS
+    return isinstance(pattern, str) and pattern in _WIDENED
 
 
 class _ReleaseAwareRe:
@@ -97,7 +117,7 @@ class _ReleaseAwareRe:
 
     def fullmatch(self, pattern, string, flags=0):
         if _frozen_pattern(pattern) and flags == 0:
-            pattern = DEI_NAMESPACE_PATTERN
+            pattern = _WIDENED[pattern]
         return re.fullmatch(pattern, string, flags)
 
     def __getattr__(self, name):
@@ -124,10 +144,10 @@ def _codes(code):
 
 
 def asks_the_dei_question(function):
-    """Whether the function's own code holds one of the frozen DEI namespace patterns."""
+    """Whether the function's own code holds one of the frozen DEI or ECD namespace patterns."""
     return isinstance(function, types.FunctionType) and any(
         pattern in code.co_consts for code in _codes(function.__code__)
-        for pattern in FROZEN_DEI_NAMESPACE_PATTERNS)
+        for pattern in _WIDENED)
 
 
 def _in_package(obj):

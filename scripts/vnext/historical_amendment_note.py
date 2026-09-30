@@ -50,7 +50,7 @@ from datetime import datetime
 
 from .annual_amendment_scope import POLICY, AmendmentScopeError, _source, _words
 from .canonical import content_hash
-from .historical_dei import release_aware
+from .historical_dei import is_ecd_namespace, release_aware
 from .normal_annual_input_v2 import exact_json_value
 
 # The frozen readers this module calls, answering the DEI namespace question
@@ -194,7 +194,7 @@ def read_part_iii_note(*, original, amendment, company_id, cik, refusal):
              and re.match(POLICY["item_heading_pattern"], block["text"], re.I)}
     statements = [block for block in blocks
                   if re.search(POLICY["no_financial_statement_pattern"], block["text"], re.I)]
-    governance = all(re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/[0-9]{4}", fact["concept"][0])
+    governance = all(is_ecd_namespace(fact["concept"][0])
                      for fact in new["non_dei_native_facts"])
     _need(parts == {"PART III", "PART IV"} and items == {"10", "11", "12", "13", "14", "15"}
           and len(statements) == 1 and governance, "PART_III_ONLY_SOURCE_SCOPE_NOT_PROVEN")
