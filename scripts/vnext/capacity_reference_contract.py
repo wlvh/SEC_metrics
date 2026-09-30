@@ -5,7 +5,7 @@ reference must have exactly one owner in the supplied, single-document group.
 The normal B13 validator still checks every derived finding and source unit.
 """
 from copy import deepcopy
-import re
+from html import escape
 
 from .canonical import canonical_json_bytes, content_hash, strict_json_loads, strict_json_file
 
@@ -60,29 +60,38 @@ def _currency_numeric_native_refs(base):
     namespace instead of inferring currency from that id or from a concept name.
     """
     from .capacity_semantic_review import _restore_units
+    from .governance_signals import _FactAttributes
     refs = set()
     for index, unit in enumerate(_restore_units(
             base['units'], base['shared_source_dictionaries'])):
         if unit['kind'] != 'NATIVE_FACTS':
             continue
         payload = unit['payload']
+        parsed_units = {}
         for row in payload['facts']:
             fact = row['fact']
             if fact['tag'].split(':')[-1].casefold() != 'nonfraction' or not fact['unit_ref']:
                 continue
-            declared = payload['units'].get(fact['unit_ref'])
-            if declared is None:
-                continue
-            environment = payload['namespace_environments'].get(
-                declared['namespace_environment_id'], {})
-            measures = re.findall(
-                r'<(?:[A-Za-z_][\w.-]*:)?measure(?:\s[^>]*)?>\s*([^<]+?)\s*'
-                r'</(?:[A-Za-z_][\w.-]*:)?measure\s*>', declared['raw_xml'])
-            for value in measures:
-                name = value.strip()
-                prefix = name.split(':', 1)[0] if ':' in name else ''
-                if environment.get(prefix) == 'http://www.xbrl.org/2003/iso4217':
-                    refs.add((index, fact['ordinal']))
+            unit_ref = fact['unit_ref']
+            if unit_ref not in parsed_units:
+                declared = payload['units'].get(unit_ref)
+                if declared is None:
+                    parsed_units[unit_ref] = None
+                else:
+                    environment = payload['namespace_environments'].get(
+                        declared['namespace_environment_id'], {})
+                    declarations = ''.join(
+                        ' xmlns{}="{}"'.format(':' + prefix if prefix else '',
+                                                escape(uri, quote=True))
+                        for prefix, uri in environment.items())
+                    parser = _FactAttributes()
+                    parser.feed('<div{}>{}</div>'.format(declarations, declared['raw_xml']))
+                    parser.close()
+                    parsed_units[unit_ref] = parser.units.get(unit_ref)
+            normalized = parsed_units[unit_ref]
+            if normalized and any(namespace == 'http://www.xbrl.org/2003/iso4217'
+                                  for namespace, _ in normalized['measures']):
+                refs.add((index, fact['ordinal']))
     return refs
 
 

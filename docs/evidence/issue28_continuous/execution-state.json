@@ -2721,6 +2721,29 @@
       "message_cap_note": "Original source check used three messages; parent follow-up requested the count and caused a fourth. No source reread or test was done in the follow-up.",
       "result_path": "docs/evidence/issue28_continuous/b13-enphase-group1-source-check-20260930/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_GROUP1_SOURCE_ONLY_NO_B13_RESULT_CREDIT"
+    },
+    {
+      "task_name": "review_b13currency_5f8d372",
+      "purpose": "review",
+      "module": "b13_native_currency",
+      "scope_paths": [
+        "scripts/vnext/capacity_reference_contract.py",
+        "tests/vnext/test_capacity_reference_contract.py",
+        "config/ordinary_scalability_exemptions_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/"
+      ],
+      "patch_sha": "5f8d372a36936646fa5ae2732a920ee98aa12118",
+      "spawned_at": "2026-09-30T06:39:02Z",
+      "ended_at": "2026-09-30T07:38:45Z",
+      "tool_calls": 90,
+      "outer_exec_calls": 27,
+      "nested_tool_calls": 63,
+      "ordinary_messages": 2,
+      "combined_tool_cap_exceeded": true,
+      "tool_count_note": "Agent reported 27 outer orchestration calls and 63 nested calls; conservative combined count 90 exceeds the assigned 80 cap. No follow-up to this agent.",
+      "result_path": "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/independent-review-5f8d372/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_INLINE_MEASURE_CURRENCY_NAMESPACE"
     }
   ],
   "ci_capacity_20260922": {
@@ -7721,7 +7744,7 @@
     "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36674903456"
   },
   "b13_native_currency_context_20260930": {
-    "status": "LOCAL_PRODUCT_PATCH_DIRECTED_AND_FAST_PASS_EXACT_SHA_REVIEW_PENDING",
+    "status": "FIRST_PATCH_5F8D372_NEEDS_FIX_INLINE_NAMESPACE_REPAIR_LOCAL_DIRECTED_PASS_INCREMENTAL_REVIEW_PENDING",
     "evidence": "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/README.md",
     "original_failure": "F450_ISO_CURRENCY_TAX_CREDIT_ACCEPTED_AS_CAPACITY_QUALITATIVE_WITH_ZERO_UNRESOLVED_IN_V4",
     "repaired_behavior": "EXPLICIT_V4_AND_SCANNED_SUCCESSOR_REJECT_CURRENCY_NATIVE_EVIDENCE_FOR_POSITIVE_PHYSICAL_FINDING",
@@ -7732,8 +7755,15 @@
     "old_190_191_request_structures_preserved": true,
     "directed_tests": "45/45_PASS_FINAL_CODE",
     "fast_first": "FAILED_141_OF_142_EXACT_SCALABILITY_EXEMPTION_SOURCE_HASH_AND_LINE_STALE",
-    "fast_final": "PASS_142_OF_142_100_562_SECONDS",
+    "first_patch_fast": "PASS_142_OF_142_100_562_SECONDS_BEFORE_P2_REVIEW",
+    "first_limited_independent_review": "NEEDS_FIX_P2_INLINE_MEASURE_NAMESPACE_EXACT_5F8D372A",
+    "repair_scope": "EXISTING_FACT_ATTRIBUTES_UNIT_PARSER_RESOLVES_MEASURE_LOCAL_XMLNS_CURRENCY_PREFIX",
+    "repair_directed_tests": "45/45_PASS_AFTER_REPAIR",
+    "repair_fast": "PASS_142_OF_142_98_151_SECONDS_FINAL_REPAIR_TREE",
+    "repair_original_190_semantics": "PASS_5_FINDINGS_ZERO_UNRESOLVED",
+    "repair_original_192_F450": "REJECTED_NO_REAL_CALL",
     "v14_requirement_closure_hash": "sha256:2aa3d70596676e6795546bd500c9cf4e200f19a7429187b6d2e6919775ad2052",
+    "repair_v14_requirement_closure_hash": "sha256:bbfa542ba61ffaf131968da7d1f90fee802b5804cdabe28edd08b829450f7256",
     "v13_manifest_unchanged": true,
     "provider_sec_refresh_wiring_validated": true,
     "new_real_calls": [0, 0, 0],
