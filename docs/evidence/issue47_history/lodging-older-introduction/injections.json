@@ -1,0 +1,102 @@
+{
+ "ANY_REFUSAL_TRIES_THE_OLDER_FORMS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_refusal_is_raised_unchanged_and_the_older_forms_are_not_tried",
+  "failed_cases": [
+   "test_another_refusal_is_raised_unchanged_and_the_older_forms_are_not_tried"
+  ],
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "modules": [
+   "tests.vnext.test_historical_lodging_introduction"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 27
+ },
+ "A_REPLACEMENT_MAY_MISS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_frozen_pattern_without_the_replaced_text_stops_the_successor",
+  "failed_cases": [
+   "test_a_frozen_pattern_without_the_replaced_text_stops_the_successor"
+  ],
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "modules": [
+   "tests.vnext.test_historical_lodging_introduction"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 27
+ },
+ "A_THIRD_FORM_IS_ACCEPTED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_nothing_else_is_accepted",
+  "failed_cases": [
+   "test_nothing_else_is_accepted"
+  ],
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "modules": [
+   "tests.vnext.test_historical_lodging_introduction"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 28
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 27
+ },
+ "THE_COMMA_IS_NOT_OPTIONAL": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_older_pattern_accepts_the_three_printed_forms_and_the_frozen_one_only_the_newest",
+  "failed_cases": [
+   "test_the_older_pattern_accepts_the_three_printed_forms_and_the_frozen_one_only_the_newest",
+   "test_the_older_reports_resolve_one_table_under_the_older_forms"
+  ],
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "modules": [
+   "tests.vnext.test_historical_lodging_introduction"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 26
+ },
+ "THE_OLDER_FORMS_ARE_ALWAYS_USED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_report_the_frozen_inspector_accepts_is_unchanged",
+  "failed_cases": [
+   "test_a_report_the_frozen_inspector_accepts_is_unchanged",
+   "test_another_refusal_is_raised_unchanged_and_the_older_forms_are_not_tried"
+  ],
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "modules": [
+   "tests.vnext.test_historical_lodging_introduction"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 46
+ },
+ "THE_POLICY_HASH_IS_THE_FROZEN_ONE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_older_reports_resolve_one_table_under_the_older_forms",
+  "failed_cases": [
+   "test_the_older_reports_resolve_one_table_under_the_older_forms",
+   "test_the_policy_changes_one_pattern"
+  ],
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "modules": [
+   "tests.vnext.test_historical_lodging_introduction"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 28
+ },
+ "all_caught": true
+}
