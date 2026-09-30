@@ -435,3 +435,9 @@ consequences worth stating rather than assuming:
 - "PR 52 passed at `27a28d9`" is therefore imprecise on its own. What a run
   tested is a head **and** a base, and where a historical runtime is involved,
   a registration patch as well.
+
+## 2026-09-30: three shards cancelled again, and a third of the table was a guess
+
+Three runs in a row lost a saved-source shard at 35 minutes: `409fc032` (run 36732217875, shards 1 and 2), `58d79aa2` (run 36737846710, shard 1) and `e8da5e96` (run 36742366729, shards 0 and 1). Every case any shard reached passed; nothing failed. The progress lines (`saved-source-timings-2026-09-30.json`) show why it was one shard more than the others: 60 of the 147 cases had no measured weight and sat at the 30-second default, and they are not 30 seconds (the B03 contract-amortization case is 60, the D03 current-source replay 92, the historical DA-scope route 99). In `58d79aa2`, shards 0 and 2 finished in 3,319 and 3,222 case-seconds while shard 1 had 4,074 behind it and eight cases to go.
+
+The table now holds the mean of those three runs for every case (1 to 3 measurements each; the two cases no run reached are local measurements times 1.2). The mean tier is 11,768 case-seconds: balanced, 32.7 minutes a lane over three shards, 24.5 over four. So three shards pass on a typical runner with little room, and not on the slow ones seen (the same shard ran up to 1.2 times as long between these runs). The fourth shard (`0005`) is still the remedy, and still a workflow change for the owner or the base.
