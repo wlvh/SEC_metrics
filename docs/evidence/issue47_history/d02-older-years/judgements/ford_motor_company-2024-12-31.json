@@ -1,0 +1,789 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "ford_motor_company:2024-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading",
+ "reader_note": "The value holds all substantive text of Item 3 (product liability incl. Hill v. Ford and its remand, asbestos, warranty and consumer suits, environmental matters incl. the NJDEP Ringwood complaint, class-action statement, Brazilian tax assessments, the EC/CMA end-of-life vehicle investigation and the NHTSA rearview-camera consent order) plus the whole incorporated Note 24 (guarantees and indemnifications, litigation and claims, warranty and field service actions). Every omitted block is page furniture except the warranty table's year column header, so the table rows in the value carry two unlabeled year columns.",
+ "packet_document_id": "sha256:6de45efcf5d0c6cf7e2c2cef9e2f3a61a9990bb80cf2e756181772160de3257f",
+ "packet_candidate_hash": "sha256:ebb81fb5a6660be0239d71428514b0f3511863b6eb68c7734ba2250917a7c63b",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 554,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 opening: litigation uncertainty, points to Note 24 loss contingencies",
+   "text": "The litigation process is subject to many uncertainties, and the outcome of individual matters is not predictable with assurance. See Note 24 of the Notes to the Financial Statements for a discussion of loss contingencies. Following is a discussion of our significant pending legal proceedings:",
+   "text_sha256": "sha256:2827dc20f3796d920d952837390c5a448e96f3537eee050a4a8a5f90482b2be9",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 555,
+   "verdict": "DISCLOSURE",
+   "why": "label for product liability matters",
+   "text": "PRODUCT LIABILITY MATTERS",
+   "text_sha256": "sha256:753407515bc4955d27c637f29e3d79563f4169c947cc107b6877c56c61ee8e7a",
+   "order": 1,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 556,
+   "verdict": "DISCLOSURE",
+   "why": "product liability suits against Ford",
+   "text": "We are a defendant in numerous actions in state and federal courts within and outside of the United States alleging damages from injuries resulting from (or aggravated by) alleged defects in our vehicles. In many actions, no monetary amount of damages is specified or the specific amount alleged is the jurisdictional minimum. Our experience with litigation alleging a specific amount of damages suggests that such amounts, on average, bear little relation to the actual amount of damages, if any, that we will pay in resolving such matters.",
+   "text_sha256": "sha256:281ba3dcb776401b2301c51bbdd9bdc6e5aa8e5f4d88c69d05f73a7add2176b2",
+   "order": 2,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 557,
+   "verdict": "DISCLOSURE",
+   "why": "assessment of product liability claims",
+   "text": "In addition to pending actions, we assess the likelihood of incidents that likely have occurred but not yet been reported to us. We also take into consideration specific matters that have been raised as claims but have not yet proceeded to litigation. Individual product liability matters that have more than a remote risk of loss and such loss would likely be significant if the matter is resolved unfavorably to us would be described herein. Currently there are no such matters to report.",
+   "text_sha256": "sha256:e5889d7cb745cc2ba3e80ea1171c478a7f87f029979b15238b85f109a8765718",
+   "order": 3,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 558,
+   "verdict": "DISCLOSURE",
+   "why": "lead-in to a pending product liability matter",
+   "text": "Below is a product liability matter currently pending against Ford:",
+   "text_sha256": "sha256:ab7c0f72768a163cffca9b37f15b802135c99d4a753e735758298b454faad84c",
+   "order": 4,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 559,
+   "verdict": "DISCLOSURE",
+   "why": "Hill v. Ford: judgment vacated and remanded, plaintiffs' certiorari petition",
+   "text": "Hill v. Ford. Plaintiffs in this product liability action pending in Georgia state court allege that the roof of a 2002 Ford F-250 involved in a rollover accident was defectively designed. During the first trial in 2018, the judge declared a mistrial, ruled that Ford’s attorneys had violated pre-trial rulings while presenting evidence, and sanctioned Ford by prohibiting Ford from introducing any evidence at the second trial to show that the roof design of the F-250 was not defective. During the second trial in August 2022, a jury found that Pep Boys (the party that sold the tires on the vehicle involved in the rollover accident) was responsible for 30% of the damages, and Ford, as a direct result of the sanctions order prohibiting Ford from presenting its defense, was responsible for 70% of the damages, resulting in $16.8 million in damages being apportioned to Ford. The jury subsequently awarded punitive damages against Ford in the amount of $1.7 billion. We filed post-trial motions seeking a new trial, and on September 14, 2023, the trial court denied our post-trial motions. On October 13, 2023, Ford filed a notice of appeal with the Georgia Court of Appeals, and on November 1, 2024, the Georgia Court of Appeals vacated the trial court’s judgment and remanded the matter for a new trial. On November 7, 2024, the plaintiffs filed their notice of intent to petition the Georgia Supreme Court for a writ of certiorari, and on December 19, 2024, the plaintiffs filed their petition with the Georgia Supreme Court. Ford filed its response to the petition on February 5, 2025.",
+   "text_sha256": "sha256:4e7696ad14c53328c3b4c5c462f2d60e4ea5410171d73ccc8836b3c0abda2e27",
+   "order": 5,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 560,
+   "verdict": "DISCLOSURE",
+   "why": "label for asbestos matters",
+   "text": "ASBESTOS MATTERS",
+   "text_sha256": "sha256:4f24f10ba1692072d29eac5aa42a8622a81877091f1e67988cf6f51c9ffa8e78",
+   "order": 6,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 561,
+   "verdict": "DISCLOSURE",
+   "why": "asbestos personal injury suits against Ford",
+   "text": "Asbestos was used in some brakes, clutches, and other automotive components from the early 1900s. Along with other vehicle manufacturers, we have been the target of asbestos litigation and, as a result, are a defendant in various actions for injuries claimed to have resulted from alleged exposure to Ford parts and other products containing asbestos. Plaintiffs in these personal injury cases allege various health problems as a result of asbestos exposure, either from component parts found in older vehicles, insulation or other asbestos products in our facilities, or asbestos aboard our former maritime fleet. We believe that we are targeted more aggressively in asbestos suits because many previously targeted companies have filed for bankruptcy or emerged from bankruptcy relieved of liability for such claims.",
+   "text_sha256": "sha256:101db558323b0f9a1ce2c856cea1a28ff6fc6dc395275cb295ed291fe2830335",
+   "order": 7,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 564,
+   "verdict": "DISCLOSURE",
+   "why": "asbestos litigation exposure and accrual",
+   "text": "Most of the asbestos litigation we face involves individuals who claim to have worked on the brakes of our vehicles. We are prepared to defend these cases and believe that the scientific evidence confirms our long-standing position that there is no increased risk of asbestos-related disease as a result of exposure to the type of asbestos formerly used in the brakes on our vehicles. The extent of our financial exposure to asbestos litigation remains very difficult to estimate and could include both compensatory and punitive damage awards. The majority of our asbestos cases do not specify a dollar amount for damages; in many of the other cases the dollar amount specified is the jurisdictional minimum, and the vast majority of these cases involve multiple defendants. Some of these cases may also involve multiple plaintiffs, and we may be unable to tell from the pleadings which plaintiffs are making claims against us (as opposed to other defendants). Annual payout and defense costs may become significant in the future. Our accrual for asbestos matters includes probable losses for both asserted and unasserted claims.",
+   "text_sha256": "sha256:932423322556b674f9452c6b82ae0d5ee89cd22c908f7cde18709826071f627d",
+   "order": 8,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 565,
+   "verdict": "DISCLOSURE",
+   "why": "label for consumer matters",
+   "text": "CONSUMER MATTERS",
+   "text_sha256": "sha256:641b0742514ae3ae1fecaa7a6007909ca7e02dc629ab37d7be484c0a3017eef8",
+   "order": 9,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 566,
+   "verdict": "DISCLOSURE",
+   "why": "breach-of-warranty and consumer protection suits",
+   "text": "We provide warranties on the vehicles we sell. Warranties are offered for specific periods of time and/or mileage and vary depending upon the type of product and the geographic location of its sale. Pursuant to these warranties, we will repair, replace, or adjust parts on a vehicle that are defective in factory-supplied materials or workmanship during the specified warranty period. Software updates are increasingly a component of vehicle service and may be performed during warranty coverage repairs, through field service actions, or through over-the-air updates. We are a defendant in numerous actions in state and federal courts alleging breach of warranty and claiming damages based on state and federal consumer protection laws. Remedies under these statutes may include vehicle repurchase, civil penalties, and payment by Ford of the plaintiff’s attorneys’ fees. In some cases, plaintiffs also include an allegation of fraud. Remedies for a fraud claim may include contract rescission, vehicle repurchase, and punitive damages. Annual payout and defense costs may become significant in the future.",
+   "text_sha256": "sha256:7636710515b8abff8ace3afae27f9fe3b910c9f859a927faeb1472abee3efbf3",
+   "order": 10,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 567,
+   "verdict": "DISCLOSURE",
+   "why": "how the cost of warranty litigation is accrued",
+   "text": "The cost of these litigation matters is included in our warranty costs. We accrue obligations for warranty costs at the time of sale using a patterned estimation model that includes historical information regarding the nature, frequency, and average cost of claims for each vehicle line by model year. We reevaluate the adequacy of our accruals on a regular basis.",
+   "text_sha256": "sha256:04b12dcaa5ae99fd86ab5ebb8ec59ac1f1324bdce4fbdf3e102e9a380cd6d4ca",
+   "order": 11,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 568,
+   "verdict": "DISCLOSURE",
+   "why": "vehicle performance suits incl. DPS6 transmissions",
+   "text": "We are currently a defendant in a significant number of litigation matters relating to the performance of vehicles, including those equipped with DPS6 transmissions.",
+   "text_sha256": "sha256:5b6aeafa40169345a1fd8bf7745e782adb62c279bd587b32181d2a761e01ce1a",
+   "order": 12,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 569,
+   "verdict": "DISCLOSURE",
+   "why": "label for environmental matters",
+   "text": "ENVIRONMENTAL MATTERS",
+   "text_sha256": "sha256:37a27643aa0d1d2a476bccd32597a74a2bd2d65dfc06141bf015a86fae063f66",
+   "order": 13,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 570,
+   "verdict": "DISCLOSURE",
+   "why": "PRP remediation notices; threshold for described environmental proceedings",
+   "text": "We have received notices under various federal and state environmental laws that we (along with others) are or may be a potentially responsible party for the costs associated with remediating numerous hazardous substance storage, recycling, or disposal sites in many states and, in some instances, for natural resource damages. We also may have been a generator of hazardous substances at a number of other sites. The amount of any such costs or damages for which we may be held responsible could be significant. Any legal proceeding arising under any federal, state, or local provisions that have been enacted or adopted regulating the discharge of materials into the environment or primarily for the purpose of protecting the environment, in which (i) a governmental authority is a party, and (ii) we believe there is the possibility of monetary sanctions (exclusive of interest and costs) in excess of $1,000,000 is described herein.",
+   "text_sha256": "sha256:9a11dfc8e08ff98751f252bf7451b598ce8e729c335ba1ac83f0e1af66376c1b",
+   "order": 14,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 571,
+   "verdict": "DISCLOSURE",
+   "why": "NJDEP Ringwood complaint; motion to dismiss denied",
+   "text": "On June 16, 2022, the New Jersey Department of Environmental Protection (“NJDEP”) filed a complaint in the Superior Court of New Jersey (Bergen County) seeking natural resource damages and other claims related to the Ringwood Mines/Landfill Site located in Ringwood, New Jersey. On February 21, 2023, the court denied our motion to dismiss. We continue to defend against the NJDEP’s allegations.",
+   "text_sha256": "sha256:7315c9a3ae09fccdcb997ab6c68bc3d634ae4e8041eb5eb51ba8b885b31af911",
+   "order": 15,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 572,
+   "verdict": "DISCLOSURE",
+   "why": "label for class actions",
+   "text": "CLASS ACTIONS",
+   "text_sha256": "sha256:5d887232f3e45765f470ee6460432bf8c1c43482cc0ad2ffca750e6377449b2c",
+   "order": 16,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 573,
+   "verdict": "DISCLOSURE",
+   "why": "class action reporting policy; none to report",
+   "text": "In light of the fact that few of the purported class actions filed against us in the past have been certified by the courts as class actions, in general we list those actions that (i) have been certified as a class action by a court of competent jurisdiction (and any additional purported class actions that raise allegations substantially similar to an existing and certified class), and (ii) have more than a remote risk of loss, and such loss would likely be significant if the action is resolved unfavorably to us. At this time, we have no such class actions filed against us.",
+   "text_sha256": "sha256:15404fb7e1ec31df1e6ec9137b2f038ea9e5cb2fd6f4b019b6849b86f4cace35",
+   "order": 17,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 576,
+   "verdict": "DISCLOSURE",
+   "why": "label for other matters",
+   "text": "OTHER MATTERS",
+   "text_sha256": "sha256:b784db52d37d409efc29417a6fbf7c932078c1f7123059fc63808bcd7712db62",
+   "order": 18,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 577,
+   "verdict": "DISCLOSURE",
+   "why": "Brazilian state and federal tax assessments against Ford Brazil",
+   "text": "Brazilian Tax Matters. One Brazilian state (São Paulo) and the Brazilian federal tax authority currently have outstanding substantial tax assessments against Ford Motor Company Brasil Ltda. (“Ford Brazil”) related to state and federal tax incentives Ford Brazil received for its operations in the Brazilian state of Bahia. The São Paulo assessment is part of a broader conflict among various states in Brazil. The federal legislature enacted laws designed to encourage the states to end that conflict, and in 2017 the states reached an agreement on a framework for resolution. Ford Brazil continues to pursue a resolution under the framework and expects the amount of any remaining assessments by the states to be resolved under that framework. The federal assessments are outside the scope of the legislation.",
+   "text_sha256": "sha256:490b4e5500b184371506876a85ca16224c8874ea3faeb4d0aece1b80ef51e284",
+   "order": 19,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 578,
+   "verdict": "DISCLOSURE",
+   "why": "appeals of the Brazilian assessments, collateral, remote risk",
+   "text": "All of the outstanding assessments have been appealed to the relevant administrative court of each jurisdiction. To proceed with an appeal within the judicial court system, an appellant may be required to post collateral. To date, we have not been required to post any collateral. If we are required to post collateral, which could be in excess of $1 billion, we expect it to be in the form of fixed assets, surety bonds, and/or letters of credit, but we may be required to post cash collateral. Although the ultimate resolution of these matters may take many years, we consider our overall risk of loss to be remote.",
+   "text_sha256": "sha256:6823cf5a79f20975070f4de2caa742263735b5040180ff9417dab1d72960e9ae",
+   "order": 20,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 579,
+   "verdict": "DISCLOSURE",
+   "why": "European Commission and CMA end-of-life vehicle competition investigation",
+   "text": "European Commission and U.K. Competition and Markets Authority Matter. On March 15, 2022, the European Commission (the “Commission”) and the U.K. Competition and Markets Authority (the “CMA”) conducted unannounced inspections at the premises of, and sent formal requests for information to, several companies and associations active in the automotive sector, including Ford. The inspections and requests for information concern possible collusion in relation to the collection, treatment, and recovery of end-of-life cars and vans (“ELVs”). We understand that the scope of the investigations includes determining whether manufacturers and importers of passenger cars and vans agreed to an approach to (i) the compensation of ELV collection, treatment, and recovery companies, and (ii) the use of data relating to the recyclability or recoverability of ELVs in marketing materials, and whether such conduct violates relevant competition laws. If a violation is found, a broad range of remedies is potentially available to the Commission and/or CMA, including imposing a fine and/or the prohibition or restriction of certain business practices. We are continuing to cooperate with the Commission and the CMA.",
+   "text_sha256": "sha256:00616151a9957bb7b44a756d7d5a714d5a73d22fdf290340ad18c9877cfe8c75",
+   "order": 21,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 580,
+   "verdict": "DISCLOSURE",
+   "why": "NHTSA consent order over rearview camera recall, $165m civil penalty",
+   "text": "National Highway Traffic Safety Administration Consent Order. On November 13, 2024, Ford entered into a consent order (the “Consent Order”) with the National Highway Traffic Safety Administration (“NHTSA”) to resolve, without an admission of liability, allegations made by NHTSA following its investigation into whether a recall conducted by Ford in 2020 addressing rearview camera performance was timely under NHTSA’s regulations. The Consent Order includes a $165 million civil penalty, which consists of a $65 million cash payment from Ford, $55 million held in abeyance subject to Ford’s adherence to the terms of the Consent Order, and $45 million that Ford will use to invest in advanced data analytics, a new testing facility, and certain other projects to enhance compliance with NHTSA’s requirements. In addition, during the term of the Consent Order, Ford has agreed to submit a monthly Safety Evaluation List (“SEL”) to NHTSA and to meet with NHTSA each quarter to review and answer NHTSA’s questions about any of the issues on the SEL. Further, Ford has hired an independent third party selected by NHTSA to assess the Company’s adherence to the Consent Order and Vehicle Safety Act over the term of the Consent Order and to report on Ford’s progress to NHTSA. Ford has also committed to review prior recalls over the past three years to ensure that all impacted vehicles were captured. In the event Ford determines that it must add more vehicles to the population, the Company will update the applicable recalls. The term of the Consent Order is three years, and it may be extended for one additional year at NHTSA’s discretion.",
+   "text_sha256": "sha256:c3e729b3ade1dba502f4772ea4111a12e6f39d06b22c2be72a498687a73f9e1e",
+   "order": 22,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3974,
+   "verdict": "DISCLOSURE",
+   "why": "title of the incorporated contingencies note",
+   "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:cf9a2c092c34943183087d55bf9dc84f12e532ee71968709ecb30770ec753df6",
+   "order": 23,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3975,
+   "verdict": "DISCLOSURE",
+   "why": "note overview: guarantees, litigation, warranty",
+   "text": "Commitments and contingencies primarily consist of guarantees and indemnifications, litigation and claims, and warranty and field service actions.",
+   "text_sha256": "sha256:63b6ecff57d0bd65b13c56987efbb9624ff3c11b58d907ce8ee36004d384884a",
+   "order": 24,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3976,
+   "verdict": "DISCLOSURE",
+   "why": "subheading of incorporated note: guarantees and indemnifications",
+   "text": "Guarantees and Indemnifications",
+   "text_sha256": "sha256:5a25b497bd0e026c0a09e90baa143884daa050abfe5ac0e0ce6bab52897b0a64",
+   "order": 25,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3977,
+   "verdict": "DISCLOSURE",
+   "why": "financial guarantee amounts, incorporated note",
+   "text": "Financial Guarantees. Financial guarantees and indemnifications are recorded at fair value at their inception. Subsequent to initial recognition, the guarantee liability is adjusted at each reporting period to reflect the current estimate of expected payments resulting from possible default events over the remaining life of the guarantee. The maximum potential payments for financial guarantees were $535 million and $5,336 million at December 31, 2023 and 2024, respectively. See Note 23 for additional information. The carrying value of recorded liabilities related to financial guarantees was $59 million and $144 million at December 31, 2023 and 2024, respectively.",
+   "text_sha256": "sha256:8e4413aabe3c23103e533e06f97113bab14e859bd7912689ff1492f859aa66fd",
+   "order": 26,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3978,
+   "verdict": "DISCLOSURE",
+   "why": "nature of financial guarantees, incorporated note",
+   "text": "Our financial guarantees consist of debt and lease obligations of certain joint ventures, as well as certain financial obligations of outside third parties, including suppliers, to support our business and economic growth. Expiration dates vary through 2040, and guarantees will terminate on payment and/or cancellation of the underlying obligation. A payment by us would be triggered by failure of the joint venture or other third party to fulfill its obligation covered by the guarantee. In some circumstances, we are entitled to recover from a third party amounts paid by us under the guarantee.",
+   "text_sha256": "sha256:4a9719400e3f68537caad4efb41d1d66b9aa68fe32fd9c45aaec31cb02bf8b8e",
+   "order": 27,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3979,
+   "verdict": "DISCLOSURE",
+   "why": "non-financial guarantees de minimis, incorporated note",
+   "text": "Non-Financial Guarantees. Non-financial guarantees and indemnifications are recorded at fair value at their inception. We regularly review our performance risk under these arrangements, and in the event it becomes probable we will be required to perform under a guarantee or indemnity, the amount of probable payment is recorded. The maximum potential payments and carrying values of recorded liabilities related to non-financial guarantees were de minimis at both December 31, 2023 and 2024.",
+   "text_sha256": "sha256:d756ea68de381bac1b9e2952bd16db321f5a6de5165b7f48c7e7d516f2969e58",
+   "order": 28,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3980,
+   "verdict": "DISCLOSURE",
+   "why": "indemnifications and claims under them, incorporated note",
+   "text": "In the ordinary course of business, we execute contracts involving indemnifications standard in the industry and indemnifications specific to a transaction, such as the sale of a business. These indemnifications might include and are not limited to claims relating to any of the following: environmental, tax, and shareholder matters; intellectual property rights; power generation contracts; governmental regulations and employment-related matters; dealer, supplier, and other commercial contractual relationships; and financial matters, such as securitizations. Performance under these indemnities generally would be triggered by a breach of contract claim brought by a counterparty, including a joint venture or alliance partner, or a third-party claim. While some of these indemnifications are limited in nature, many of them do not limit potential payment. Therefore, we are unable to estimate a maximum amount of future payments that could result from claims made under these unlimited indemnities.",
+   "text_sha256": "sha256:527ec96e211714a5c90b2c4daf2b253a6ef55f3d40a8ac6918f5066397411695",
+   "order": 29,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3985,
+   "verdict": "DISCLOSURE",
+   "why": "subheading: litigation and claims",
+   "text": "Litigation and Claims",
+   "text_sha256": "sha256:ede8913ff3f0c3eff5e0def4a45612c549816e90e100f05f87c2cd7c9a33a700",
+   "order": 30,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3986,
+   "verdict": "DISCLOSURE",
+   "why": "kinds of pending legal actions and claims",
+   "text": "Various legal actions, proceedings, and claims (generally, “matters”) are pending or may be instituted or asserted against us. These include, but are not limited to, matters arising out of alleged defects in our products; product warranties; governmental regulations relating to safety, emissions, and fuel economy or other matters; government incentives; tax matters, including trade and customs; alleged illegal acts resulting in fines or penalties; financial services; employment-related matters; dealer, supplier, and other contractual relationships; intellectual property rights; environmental matters; shareholder or investor matters; and financial reporting matters. Certain of the pending legal actions are, or purport to be, class actions. Some of the matters involve or may involve claims for compensatory, punitive, or antitrust or other treble damages in very large amounts, or demands for field service actions, environmental remediation programs, sanctions, loss of government incentives, assessments, or other relief, which, if granted, would require very large expenditures.",
+   "text_sha256": "sha256:e83d9e4214fca823d6d1aa1040a5c6e1700ac97cc92af1c51a32d2a3d7fe12d4",
+   "order": 31,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3987,
+   "verdict": "DISCLOSURE",
+   "why": "difficulty of estimating exposure to legal matters",
+   "text": "The extent of our financial exposure to these matters is difficult to estimate. Many matters do not specify a dollar amount for damages, and many others specify only a jurisdictional minimum. To the extent an amount is asserted, our historical experience suggests that in most instances the amount asserted is not a reliable indicator of the ultimate outcome.",
+   "text_sha256": "sha256:46dde1099ace1a9b74a880f54836a29bee4c4db4fa1f63764fbaf7f041c34d12",
+   "order": 32,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3988,
+   "verdict": "DISCLOSURE",
+   "why": "accrual policy for legal matters",
+   "text": "We accrue for matters when losses are deemed probable and reasonably estimable. In evaluating matters for accrual and disclosure purposes, we take into consideration factors such as our historical experience with matters of a similar nature, the specific facts and circumstances asserted, the likelihood that we will prevail, and the severity of any potential loss. We reevaluate and update our accruals as matters progress over time.",
+   "text_sha256": "sha256:6389462e69fd1179932524e699fa5b1d4c38127eb3dcdd8e05eec3374b1c31f7",
+   "order": 33,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3989,
+   "verdict": "DISCLOSURE",
+   "why": "accrual for pattern product-defect matters",
+   "text": "For the majority of matters, which generally arise out of alleged defects in our products, we establish an accrual based on our extensive historical experience with similar matters. We do not believe there is a reasonably possible outcome materially in excess of our accrual for these matters.",
+   "text_sha256": "sha256:c042cd3ef7ae9d73be0da8ee4e91c4231aa609fb61b77ce02b185785b7c609f6",
+   "order": 34,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3990,
+   "verdict": "DISCLOSURE",
+   "why": "non-pattern matters; reasonably possible loss up to about $0.4bn",
+   "text": "For the remaining matters, where our historical experience with similar matters is of more limited value (i.e., “non-pattern matters”), we evaluate the matters primarily based on the individual facts and circumstances. For non-pattern matters, we evaluate whether there is a reasonable possibility of a material loss in excess of any accrual that can be estimated. Our estimate of reasonably possible loss in excess of our accruals for all material matters currently reflects indirect tax and regulatory matters, for which we estimate the aggregate risk to be a range of up to about $0.4 billion.",
+   "text_sha256": "sha256:20bff69d0a908b86004fd35ffd95ea37976f2b0b2c87d01e6ab4b8bfbcdb7f0f",
+   "order": 35,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3991,
+   "verdict": "DISCLOSURE",
+   "why": "caveat on outcome of legal matters",
+   "text": "As noted, the litigation process is subject to many uncertainties, and the outcome of individual matters is not predictable with assurance. Our assessments are based on our knowledge and experience, but the ultimate outcome of any matter could require payment substantially in excess of the amount that we have accrued and/or disclosed.",
+   "text_sha256": "sha256:fcb99677a5b9179c8701720ef6eeeed734a43cf1c2f2ea0699d5221e8bfed153",
+   "order": 36,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3996,
+   "verdict": "DISCLOSURE",
+   "why": "subheading: warranty and field service actions",
+   "text": "Warranty and Field Service Actions",
+   "text_sha256": "sha256:6035839415d281672866a7b21490d6552a326af8da79ac564156ed5d672fd222",
+   "order": 37,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3997,
+   "verdict": "DISCLOSURE",
+   "why": "warranty and field service accrual policy, incorporated note",
+   "text": "We accrue the estimated cost of both base warranty coverages and field service actions at the time of sale. We establish our estimate of base warranty obligations using a patterned estimation model, using historical information regarding the nature, frequency, and average cost of claims for each vehicle line by model year. We establish our estimates of field service action obligations using a patterned estimation model, using historical information regarding the nature, frequency, severity, and average cost of claims for each model year. In addition, from time to time, we issue extended warranties at our expense, the estimated cost of which is accrued at the time of issuance. Warranty and field service action obligations are reported in Other liabilities and deferred revenue. We reevaluate the adequacy of our accruals on a regular basis.",
+   "text_sha256": "sha256:a22b608e4fac23fd98dd7391b8c7ad0351553217be573e7fddef00102086662f",
+   "order": 38,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3998,
+   "verdict": "DISCLOSURE",
+   "why": "supplier recoveries, incorporated note",
+   "text": "We recognize the benefit from a recovery of the costs associated with our warranty and field service actions when specifics of the recovery have been agreed with our supplier and the amount of recovery is virtually certain. Recoveries are reported in Trade and other receivables, net and Other assets.",
+   "text_sha256": "sha256:9aa5e2450465f6c8a64230d85a1f393228a5ce09c406b30fda004fc170bedf61",
+   "order": 39,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3999,
+   "verdict": "DISCLOSURE",
+   "why": "introduces the warranty accrual table",
+   "text": "The estimate of our future warranty and field service action costs, net of estimated supplier recoveries, for the years ended December 31 was as follows (in millions):",
+   "text_sha256": "sha256:2acaf2b61cc7373f5a9fb2fcd0f97dd3035fc2b9eba3e9bc0b533f88d965f173",
+   "order": 40,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4001,
+   "verdict": "DISCLOSURE",
+   "why": "warranty table row: beginning balance",
+   "text": "Beginning balance$9,193 $11,504",
+   "text_sha256": "sha256:4ae76698fbc0ba5af93deee3c63c02e87e35d8592fdca239b17705e945002b48",
+   "order": 41,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4002,
+   "verdict": "DISCLOSURE",
+   "why": "warranty table row: payments",
+   "text": "Payments made during the period(4,779)(5,831)",
+   "text_sha256": "sha256:9c09c437339e0e00f5d72a60da21a836f43b9084ca7b4f2837765f226d023b83",
+   "order": 42,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4003,
+   "verdict": "DISCLOSURE",
+   "why": "warranty table row: accrual for warranties issued",
+   "text": "Changes in accrual related to warranties issued during the period4,743 6,294",
+   "text_sha256": "sha256:3561fd6a55127091c4456e077657787960cf7e844f5c15744a83f1759a20b003",
+   "order": 43,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4004,
+   "verdict": "DISCLOSURE",
+   "why": "warranty table row: accrual for pre-existing warranties",
+   "text": "Changes in accrual related to pre-existing warranties2,648 2,690",
+   "text_sha256": "sha256:936c0ca9c43cc395d97bc3041e413c168c3fb1af7cae487892a591ce3017a24b",
+   "order": 44,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4005,
+   "verdict": "DISCLOSURE",
+   "why": "warranty table row: currency translation and other",
+   "text": "Foreign currency translation and other(301)(625)",
+   "text_sha256": "sha256:60205c7b05e2a6c6808d0dd46643cd55e1349c53319a7cd005368dd9f680785d",
+   "order": 45,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4006,
+   "verdict": "DISCLOSURE",
+   "why": "warranty table row: ending balance",
+   "text": "Ending balance$11,504 $14,032",
+   "text_sha256": "sha256:a4108e1b027757d087a78aa0b24a38216be769ae773307d6bf8036e085d1f2d2",
+   "order": 46,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 4007,
+   "verdict": "DISCLOSURE",
+   "why": "reasonably possible field service costs up to about $1.8bn",
+   "text": "Changes to our estimated costs are reported as changes in accrual related to pre-existing warranties in the table above. In addition, our estimate of reasonably possible costs in excess of our accruals for material field service actions and customer satisfaction actions is a range of up to about $1.8 billion in the aggregate.",
+   "text_sha256": "sha256:2130242bc61c2b0a243b3c17a50133bc2cc5cc415bce5f9a1e329b2bd6e4914b",
+   "order": 47,
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 562,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "35",
+   "text_sha256": "sha256:9f14025af0065b30e47e23ebb3b491d39ae8ed17d33739e5ff3827ffb3634953",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 563,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Item 3 (Continued) running head",
+   "text": "Item 3. Legal Proceedings (Continued)",
+   "text_sha256": "sha256:b1b09cfbd5819f772d8a7b860aaef7a7b314259e3e8b3e3753fb411462d97ad4",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 574,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "36",
+   "text_sha256": "sha256:76a50887d8f1c2e9301755428990ad81479ee21c25b43215cf524541e0503269",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 575,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Item 3 (Continued) running head",
+   "text": "Item 3. Legal Proceedings (Continued)",
+   "text_sha256": "sha256:b1b09cfbd5819f772d8a7b860aaef7a7b314259e3e8b3e3753fb411462d97ad4",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3981,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "168",
+   "text_sha256": "sha256:80c3cd40fa35f9088b8741bd8be6153de05f661cfeeb4625ffbf5f4a6c3c02c4",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3982,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+   "text_sha256": "sha256:dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3983,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO THE FINANCIAL STATEMENTS",
+   "text_sha256": "sha256:b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3984,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "note (Continued) running head",
+   "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)",
+   "text_sha256": "sha256:4fbcd6d6e48c05ebd4d418719535890608367b1fb80d7641fc7f9f89b4c7f8a6",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3992,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "169",
+   "text_sha256": "sha256:f57e5cb1f4532c008183057ecc94283801fcb5afe2d1c190e3dfd38c4da08042",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3993,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+   "text_sha256": "sha256:dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3994,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO THE FINANCIAL STATEMENTS",
+   "text_sha256": "sha256:b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3995,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "note (Continued) running head",
+   "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)",
+   "text_sha256": "sha256:4fbcd6d6e48c05ebd4d418719535890608367b1fb80d7641fc7f9f89b4c7f8a6",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 4000,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "the year row of the warranty table inside the incorporated note: table structure that states no matter by itself; without it the value's two columns are unlabelled (recorded)",
+   "text": "20232024",
+   "text_sha256": "sha256:65bac884fb37cbc9a285e5a4385b4f11c87c32b8f954953248afbaa28e88a7dc",
+   "reader_verdict": "COVERED_ELSEWHERE",
+   "reader_why": "year column header of the warranty table; the table's intro and rows are in the value",
+   "adjudication_rule": "NUMERIC_TABLE_HEADER_ROW",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 4008,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "170",
+   "text_sha256": "sha256:734d0759cdb4e0d0a35e4fd73749aee287e4fdcc8648b71a8d6ed591b7d4cb3f",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 4009,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+   "text_sha256": "sha256:dadb3cc8b73d86becf335549a92693c08b563e6fbbb8841ec7536bf08023e808",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 4010,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO THE FINANCIAL STATEMENTS",
+   "text_sha256": "sha256:b05e6c0c91cff2c276d7b0362dafdfc0fd9632c139be06cbb12280b18b2c69fd",
+   "scope": "NOTE_24"
+  },
+  {
+   "kind": "HEADING",
+   "i": 77,
+   "verdict": "NOT_D02",
+   "why": "table-of-contents entry for Item 3",
+   "text": "Item 3Legal Proceedings",
+   "text_sha256": "sha256:ab98be149437c5f6d0fc6dad1e4c85773ea6316ac3b7c6331dae6fba508cb928"
+  },
+  {
+   "kind": "HEADING",
+   "i": 563,
+   "verdict": "REACHED",
+   "why": "Item 3 running head; the asbestos text after it is in the value",
+   "text": "Item 3. Legal Proceedings (Continued)",
+   "text_sha256": "sha256:b1b09cfbd5819f772d8a7b860aaef7a7b314259e3e8b3e3753fb411462d97ad4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 575,
+   "verdict": "REACHED",
+   "why": "Item 3 running head; the other-matters text after it is in the value",
+   "text": "Item 3. Legal Proceedings (Continued)",
+   "text_sha256": "sha256:b1b09cfbd5819f772d8a7b860aaef7a7b314259e3e8b3e3753fb411462d97ad4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2421,
+   "verdict": "NOT_D02",
+   "why": "notes index entry: lease commitments",
+   "text": "Note 17Lease Commitments",
+   "text_sha256": "sha256:452dcfbc1ed62736de20f7d570863c924d48b9dc1d483f87b2cc2595d38c04df"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2423,
+   "verdict": "NOT_D02",
+   "why": "notes index entry: debt and commitments",
+   "text": "Note 18Debt and Commitments",
+   "text_sha256": "sha256:cf3239e696630e80fee9c54cb6b85ea49dc2f2aabcae32480dcd89e01cb7f375"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2435,
+   "verdict": "NOT_D02",
+   "why": "notes index (table of contents) entry for the contingencies note",
+   "text": "Note 24Commitments and Contingencies",
+   "text_sha256": "sha256:b07e733bb5ee4936af26c85e10f83722d2e718e07e01f8914c67312a44c068c5"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3537,
+   "verdict": "NOT_D02",
+   "why": "lease commitments note",
+   "text": "NOTE 17. LEASE COMMITMENTS",
+   "text_sha256": "sha256:550eae134292f72d07ffd17a151efce2d345ae7e2785758f23754653e0c2396b"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3544,
+   "verdict": "NOT_D02",
+   "why": "lease commitments note running head",
+   "text": "NOTE 17. LEASE COMMITMENTS (Continued)",
+   "text_sha256": "sha256:156bc28010202a5f24317cfa3f32dbe67c0573758ab83bd85ee8cb5465720dbf"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3576,
+   "verdict": "NOT_D02",
+   "why": "lease commitments note running head",
+   "text": "NOTE 17. LEASE COMMITMENTS (Continued)",
+   "text_sha256": "sha256:156bc28010202a5f24317cfa3f32dbe67c0573758ab83bd85ee8cb5465720dbf"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3603,
+   "verdict": "NOT_D02",
+   "why": "debt and commitments note",
+   "text": "NOTE 18. DEBT AND COMMITMENTS",
+   "text_sha256": "sha256:4e9dbf7bd9862dd0c611ce9818bc4433f5895be1bf1067e43785bcd8a62505c3"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3609,
+   "verdict": "NOT_D02",
+   "why": "debt and commitments note running head",
+   "text": "NOTE 18. DEBT AND COMMITMENTS (Continued)",
+   "text_sha256": "sha256:71f7b3cdd2b157fc8607c0bfdee7d52d5768a67372c633d016469f40dcc8ce8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3664,
+   "verdict": "NOT_D02",
+   "why": "debt and commitments note running head",
+   "text": "NOTE 18. DEBT AND COMMITMENTS (Continued)",
+   "text_sha256": "sha256:71f7b3cdd2b157fc8607c0bfdee7d52d5768a67372c633d016469f40dcc8ce8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3731,
+   "verdict": "NOT_D02",
+   "why": "debt and commitments note running head",
+   "text": "NOTE 18. DEBT AND COMMITMENTS (Continued)",
+   "text_sha256": "sha256:71f7b3cdd2b157fc8607c0bfdee7d52d5768a67372c633d016469f40dcc8ce8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3748,
+   "verdict": "NOT_D02",
+   "why": "debt and commitments note running head",
+   "text": "NOTE 18. DEBT AND COMMITMENTS (Continued)",
+   "text_sha256": "sha256:71f7b3cdd2b157fc8607c0bfdee7d52d5768a67372c633d016469f40dcc8ce8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3762,
+   "verdict": "NOT_D02",
+   "why": "debt and commitments note running head",
+   "text": "NOTE 18. DEBT AND COMMITMENTS (Continued)",
+   "text_sha256": "sha256:71f7b3cdd2b157fc8607c0bfdee7d52d5768a67372c633d016469f40dcc8ce8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3974,
+   "verdict": "REACHED",
+   "why": "incorporated contingencies note; its content is in the value",
+   "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:cf9a2c092c34943183087d55bf9dc84f12e532ee71968709ecb30770ec753df6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3984,
+   "verdict": "REACHED",
+   "why": "note running head; litigation and claims after it are in the value",
+   "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)",
+   "text_sha256": "sha256:4fbcd6d6e48c05ebd4d418719535890608367b1fb80d7641fc7f9f89b4c7f8a6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3985,
+   "verdict": "REACHED",
+   "why": "litigation and claims subsection; in the value",
+   "text": "Litigation and Claims",
+   "text_sha256": "sha256:ede8913ff3f0c3eff5e0def4a45612c549816e90e100f05f87c2cd7c9a33a700"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3995,
+   "verdict": "REACHED",
+   "why": "note running head; warranty text after it is in the value",
+   "text": "NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)",
+   "text_sha256": "sha256:4fbcd6d6e48c05ebd4d418719535890608367b1fb80d7641fc7f9f89b4c7f8a6"
+  }
+ ]
+}

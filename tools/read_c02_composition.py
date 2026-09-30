@@ -64,22 +64,33 @@ def text_sha256(text):
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def route_selection(*, repo_root: Path, company_id: str, report_end: str):
-    """The governance document and the C02 excerpts the historical route selects."""
+def route_selection(*, repo_root: Path, company_id: str, report_end: str, source_root=None):
+    """The governance document and the C02 excerpts the historical route selects.
+
+    ``source_root`` is where the filings' saved bytes are - this checkout, or
+    for an older year a root restored from the acquisition's export by this
+    checkout (its trust journal knows it); the Spec is this checkout's.
+    """
     from vnext.historical_results import TEXT_SPEC_PATHS
     from vnext.historical_spec_revision import compile_historical_spec_file
     from vnext.historical_text_input import prepare_historical_business_text_input
     from vnext.historical_text_results import prepare_business_text_sources, text_api
+    from vnext.normal_history_plan import checkpoint_replayed_once
     from vnext.normal_period_selection import resolve_period_selection
-    selection = resolve_period_selection(repo_root=repo_root, company_id=company_id,
-                                         report_end=report_end)
-    prepared = prepare_historical_business_text_input(repo_root=repo_root, company_id=company_id,
-                                                      metric_id="C02", period_selection=selection)
-    spec = compile_historical_spec_file(repo_root=repo_root, repo_relative_path=TEXT_SPEC_PATHS["C02"],
-                                        dependency_specs={})
-    api, _ = text_api("C02")
-    candidate = api.create_deterministic_text_candidate(compiled_spec=spec, **prepared["text_arguments"])
-    built = prepare_business_text_sources(metric_id="C02", **prepared["text_arguments"])
+    source_root = repo_root if source_root is None else source_root
+    with checkpoint_replayed_once():
+        selection = resolve_period_selection(repo_root=source_root, company_id=company_id,
+                                             report_end=report_end)
+        prepared = prepare_historical_business_text_input(
+            repo_root=source_root, company_id=company_id, metric_id="C02",
+            period_selection=selection)
+        spec = compile_historical_spec_file(repo_root=repo_root,
+                                            repo_relative_path=TEXT_SPEC_PATHS["C02"],
+                                            dependency_specs={})
+        api, _ = text_api("C02")
+        candidate = api.create_deterministic_text_candidate(compiled_spec=spec,
+                                                            **prepared["text_arguments"])
+        built = prepare_business_text_sources(metric_id="C02", **prepared["text_arguments"])
     governance = [sid for sid in built["proposals"]]
     if len(governance) != 1:
         raise SystemExit("C02_READING_EXPECTS_ONE_GOVERNANCE_DOCUMENT")
@@ -183,7 +194,7 @@ def read_position(*, document, chosen, reading, adjudications=None):
             "adjudicated_blocks": sorted(used)}
 
 
-def governance_accession(*, run_dir: Path, document):
+def governance_accession(*, run_dir: Path, document, source_root=REPO):
     """The filing the judged governance document was read from, from the Run's own records."""
     sys.path.insert(0, str(REPO / "tools"))
     from acceptance_readings import accession_of_document
@@ -196,14 +207,14 @@ def governance_accession(*, run_dir: Path, document):
     if reference is None:
         raise SystemExit("C02_GOVERNANCE_DOCUMENT_NOT_IN_THE_RUN:" + str(run_dir))
     storage = blobs[reference["raw_asset_id"]]["storage_uri"]
-    raw = (REPO / storage).read_bytes()
+    raw = (Path(source_root) / storage).read_bytes()
     if "sha256:" + hashlib.sha256(raw).hexdigest() != reference["raw_asset_id"]:
         raise SystemExit("SAVED_DOCUMENT_BYTES_CHANGED:" + storage)
-    return accession_of_document(repo_root=REPO, document=storage)[0], storage
+    return accession_of_document(repo_root=Path(source_root), document=storage)[0], storage
 
 
 def accepted_position(*, index, closure, company_id, report_end, answer, document, chosen,
-                      candidate):
+                      candidate, source_root=REPO):
     """One position compared with its published result, and the identity it was read against."""
     sys.path.insert(0, str(REPO / "tools"))
     from bind_acceptance_readings import identity_for
@@ -222,7 +233,8 @@ def accepted_position(*, index, closure, company_id, report_end, answer, documen
     payload = run_result["text_payload"]
     published = [item["text"] for item in sorted(payload["items"], key=lambda i: i["order"])]
     selected = [document["blocks"][block]["text"] for block in chosen]
-    accession, storage = governance_accession(run_dir=run_dir, document=document)
+    accession, storage = governance_accession(run_dir=run_dir, document=document,
+                                              source_root=source_root)
     position = {
         "company_id": company_id, "period_end": report_end,
         "governance_accession": accession, "governance_document": storage,

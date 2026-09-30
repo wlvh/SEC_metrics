@@ -64,6 +64,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 READING_DIR = REPO / "docs/evidence/issue47_history/d02-older-years/judgements"
+ADJUDICATION_PATH = REPO / "docs/evidence/issue47_history/d02-older-years/adjudication.json"
 VERDICTS = {"TAKEN": {"DISCLOSURE", "NOT_DISCLOSURE"},
             "SKIPPED": {"CORRECTLY_SKIPPED", "COVERED_ELSEWHERE", "WRONGLY_SKIPPED"},
             "CONTEXT": {"CORRECTLY_SKIPPED", "COVERED_ELSEWHERE", "WRONGLY_SKIPPED"},
@@ -191,6 +192,7 @@ def make_packet(*, document, proposal, candidate):
     rows["context"] = [{"i": j, "text": blocks[j]["text"], "text_sha256": text_sha256(blocks[j]["text"])}
                        for j in sorted(context - chosen - set(scope_of))]
     return {"document_id": document["text_document_id"],
+            "source_reference_id": document["source_reference_id"],
             "ranges": [{key: r[key] for key in ("section_id", "start_block", "end_block_exclusive")}
                        for r in proposal["checked_ranges"]],
             "candidate_hash": candidate["candidate_hash"], **rows}
@@ -244,7 +246,24 @@ def read_position(*, packet, reading):
             "counts": counts, "problems": problems, "covered_elsewhere": covered}
 
 
-def merge_answer(*, packet, answer, reader):
+def load_adjudications(path=ADJUDICATION_PATH):
+    """The executor's decisions on a class of block, keyed by (position, kind, block index).
+
+    A decision is not a reading: it names its rule, and it is bound to the
+    block's text, so it applies to that text only.
+    """
+    if not Path(path).exists():
+        return {}
+    record = json.loads(Path(path).read_text(encoding="utf-8"))
+    table = {}
+    for row in record["decisions"]:
+        if row["rule"] not in record["rules"] or row["verdict"] not in VERDICTS.get(row["kind"], ()):
+            raise SystemExit("D02_ADJUDICATION_INVALID:" + json.dumps(row)[:160])
+        table[(row["position"], row["kind"], row["i"])] = row
+    return table
+
+
+def merge_answer(*, packet, answer, reader, adjudications=None):
     """A reader's answer made into the committed reading: every judged block's text beside it.
 
     The reader returns verdicts by block index; the packet holds the texts.
@@ -266,11 +285,18 @@ def merge_answer(*, packet, answer, reader):
         merged = {"kind": row["kind"], "i": row["i"], "verdict": row["verdict"],
                   "why": row.get("why", ""), "text": block["text"],
                   "text_sha256": block["text_sha256"]}
+        decided = (adjudications or {}).get((packet["position"], row["kind"], row["i"]))
+        if decided is not None:
+            if decided["text_sha256"] != block["text_sha256"]:
+                raise SystemExit("D02_ADJUDICATED_TEXT_CHANGED:" + packet["position"] + ":" + str(key))
+            merged.update(verdict=decided["verdict"], why=decided["why"],
+                          reader_verdict=row["verdict"], reader_why=row.get("why", ""),
+                          adjudication_rule=decided["rule"])
         if row["kind"] == "TAKEN":
             merged["order"] = order
         if "scope" in block:
             merged["scope"] = block["scope"]
-        if row.get("covered_by"):
+        if row.get("covered_by") and merged["verdict"] == "COVERED_ELSEWHERE":
             merged["covered_by"] = row["covered_by"]
         judgements.append(merged)
     rank = {kind: n for n, (kind, _) in enumerate(KINDS)}
@@ -318,10 +344,11 @@ def accepted_position(*, index, closure, source_root, company_id, report_end, an
     references = {r["source_reference_id"]: r for r in records
                   if r.get("record_type") == "SOURCE_REFERENCE"}
     blobs = {r["raw_asset_id"]: r for r in records if r.get("record_type") == "RAW_BLOB"}
-    documents = {r.get("source_reference_id") for r in payload["items"]}
-    if len(documents) != 1:
-        raise SystemExit("D02_RESULT_NAMES_MORE_THAN_ONE_DOCUMENT:" + company_id + ":" + report_end)
-    reference = references[documents.pop()]
+    # The judged document is the route's annual report; the Run must record
+    # the same source reference and its bytes.
+    reference = references.get(packet["source_reference_id"])
+    if reference is None:
+        raise SystemExit("D02_JUDGED_DOCUMENT_NOT_IN_THE_RUN:" + company_id + ":" + report_end)
     storage = blobs[reference["raw_asset_id"]]["storage_uri"]
     raw = (Path(source_root) / storage).read_bytes()
     if "sha256:" + hashlib.sha256(raw).hexdigest() != reference["raw_asset_id"]:
@@ -377,7 +404,8 @@ def main(argv=None):
         answer = json.loads(args.answer.read_text(encoding="utf-8"))
         if answer.get("position") != packet["position"]:
             raise SystemExit("D02_ANSWER_IS_FOR_ANOTHER_POSITION")
-        reading = merge_answer(packet=packet, answer=answer, reader=args.reader)
+        reading = merge_answer(packet=packet, answer=answer, reader=args.reader,
+                               adjudications=load_adjudications())
         company_id, report_end = packet["position"].rsplit(":", 1)
         READING_DIR.mkdir(parents=True, exist_ok=True)
         target = READING_DIR / (company_id + "-" + report_end + ".json")

@@ -1,0 +1,48 @@
+{
+ "record_type": "ISSUE_47_D02_READING_ADJUDICATION",
+ "rules": {
+  "NUMERIC_TABLE_HEADER_ROW": "A skipped block inside an incorporated scope that is only numbers - a table's row of column years - is table structure: it states no matter by itself, so it is not a disclosure the value lacks. The brief counts an incorporated scope's substantive content as disclosure, which leaves a bare header row open to either verdict; the reader chose COVERED_ELSEWHERE citing the table's introduction, which does not state the years, so the decision is the executor's and is recorded as such. What its absence does is leave the table's columns unlabelled in the value - here Ford's warranty roll-forward, a non-litigation table the filing's Item 3 brings in by incorporating the whole note - and the accepted latest-year Ford value has the same shape. The frozen `_substantive` test drops a block with no letters; the route inherits that."
+ },
+ "decisions": [
+  {
+   "position": "ford_motor_company:2021-12-31",
+   "kind": "SKIPPED",
+   "i": 4100,
+   "text": "20202021",
+   "text_sha256": "sha256:cda441a342195d1e0985ad6b53f09014ac0c8d05ad4eba3a47d73f9af217486d",
+   "verdict": "CORRECTLY_SKIPPED",
+   "rule": "NUMERIC_TABLE_HEADER_ROW",
+   "why": "the year row of the warranty table inside the incorporated note: table structure that states no matter by itself; without it the value's two columns are unlabelled (recorded)"
+  },
+  {
+   "position": "ford_motor_company:2022-12-31",
+   "kind": "SKIPPED",
+   "i": 4119,
+   "text": "20212022",
+   "text_sha256": "sha256:f5ae74dcb65f92f2dde0569a46e67ff8f12f406878a6a833e84e9130ee0e77b8",
+   "verdict": "CORRECTLY_SKIPPED",
+   "rule": "NUMERIC_TABLE_HEADER_ROW",
+   "why": "the year row of the warranty table inside the incorporated note: table structure that states no matter by itself; without it the value's two columns are unlabelled (recorded)"
+  },
+  {
+   "position": "ford_motor_company:2023-12-31",
+   "kind": "SKIPPED",
+   "i": 4006,
+   "text": "20222023",
+   "text_sha256": "sha256:b1180f74ece85ea695c1fd1f21545342baea2297bb3f5646882572f532a83414",
+   "verdict": "CORRECTLY_SKIPPED",
+   "rule": "NUMERIC_TABLE_HEADER_ROW",
+   "why": "the year row of the warranty table inside the incorporated note: table structure that states no matter by itself; without it the value's two columns are unlabelled (recorded)"
+  },
+  {
+   "position": "ford_motor_company:2024-12-31",
+   "kind": "SKIPPED",
+   "i": 4000,
+   "text": "20232024",
+   "text_sha256": "sha256:65bac884fb37cbc9a285e5a4385b4f11c87c32b8f954953248afbaa28e88a7dc",
+   "verdict": "CORRECTLY_SKIPPED",
+   "rule": "NUMERIC_TABLE_HEADER_ROW",
+   "why": "the year row of the warranty table inside the incorporated note: table structure that states no matter by itself; without it the value's two columns are unlabelled (recorded)"
+  }
+ ]
+}
