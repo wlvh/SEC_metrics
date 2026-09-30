@@ -58,8 +58,15 @@ def main():
     parser.add_argument("--log", type=Path, required=True)
     parser.add_argument("--chunk", type=int, default=40)
     parser.add_argument("--branch", default="task/sec-history-five-year")
+    # A background task is killed at its time limit, and a kill during a
+    # capture leaves a claimed slot without a terminal - an unknown outcome
+    # the ledger then stops on. Past this many minutes no new chunk starts;
+    # every chunk already ends exported and pushed. (On 2026-09-30 the drive
+    # was killed at the limit while planning, with no request in flight.)
+    parser.add_argument("--stop-after-minutes", type=float, default=None)
     parser.add_argument("companies", nargs="+")
     args = parser.parse_args()
+    started = time.monotonic()
 
     def log(*parts):
         with args.log.open("a", encoding="utf-8") as handle:
@@ -67,6 +74,11 @@ def main():
 
     for company in args.companies:
         while True:
+            if (args.stop_after_minutes is not None
+                    and time.monotonic() - started > 60 * args.stop_after_minutes):
+                log("STOP_FOR_TIME", "no new chunk after", args.stop_after_minutes,
+                    "minutes; next company", company)
+                return 4
             log("ACQUIRE", company, "max-captures", args.chunk)
             acquired = _run(CLI + ["acquire", "--company", company,
                                    "--max-captures", str(args.chunk)])
