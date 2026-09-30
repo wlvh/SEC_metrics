@@ -147,6 +147,34 @@ class B03ContractAmortizationScopeTest(TestCase):
                 'B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NOT_IN_ORIGINAL:depreciation'):
             assess_current_b03_scope(case=changed_component, data_root=ROOT)
 
+        # A textual us-gaap prefix is not proof of the original XBRL concept.
+        depreciation = next(fact for fact in parsed.facts
+            if fact['qualified_name'] == 'us-gaap:Depreciation'
+            and parsed.contexts[fact['context_ref']]['period_start'] == '2025-01-01'
+            and parsed.contexts[fact['context_ref']]['period_end'] == '2025-12-31'
+            and not parsed.contexts[fact['context_ref']]['dimensions'])
+        fact_position = index.fact_positions[depreciation['ordinal']]
+        tag_start = fact_position
+        tag_end = raw.find(b'>', tag_start) + 1
+        self.assertTrue(raw.startswith(b'<ix:nonFraction', tag_start))
+        self.assertTrue(tag_start < tag_end)
+        self.assertIn(b'us-gaap:Depreciation', raw[tag_start:tag_end])
+        spoofed = (raw[:tag_end-1] +
+            b' xmlns:us-gaap="https://example.invalid/not-us-gaap"' +
+            raw[tag_end-1:])
+        with tempfile.TemporaryDirectory(prefix='b03-contract-namespace-') as temporary:
+            root = Path(temporary)
+            path = root/proof['request_repo_relative_path']
+            path.parent.mkdir(parents=True)
+            path.write_bytes(spoofed)
+            altered = deepcopy(case)
+            altered['source_proofs'] = [
+                {**row, 'content_sha256': hashlib.sha256(spoofed).hexdigest()}
+                if row == proof else row for row in case['source_proofs']]
+            with self.assertRaisesRegex(ValueError,
+                    'B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation'):
+                assess_current_b03_scope(case=altered, data_root=root)
+
     def test_unaffected_direct_b03_keeps_positive_source_path(self):
         self.enterContext(original_sources_only())
         for company in ('pfizer', 'southwest_airlines',

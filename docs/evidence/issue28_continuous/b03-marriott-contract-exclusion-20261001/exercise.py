@@ -3,6 +3,7 @@ from contextlib import redirect_stdout
 import hashlib
 from io import StringIO
 import json
+import os
 from pathlib import Path
 import socket
 import sys
@@ -10,7 +11,11 @@ from unittest.mock import patch
 
 CODE_ROOT = Path(__file__).resolve().parents[4]
 LEDGER_ROOT = Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13')
-PRIVATE = Path('/private/tmp/issue28-b03-marriott-excluded-20261001')
+PRIVATE = Path(os.environ.get('ISSUE28_MARRIOTT_PRIVATE_ROOT',
+    '/private/tmp/issue28-b03-marriott-excluded-20261001'))
+SUFFIX = os.environ.get('ISSUE28_MARRIOTT_RECORD_SUFFIX', '')
+BASE_HEAD = os.environ.get('ISSUE28_MARRIOTT_BASE_SHA',
+    '430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e')
 PROCESSING_PARENT = PRIVATE/'sources'
 STATE_ROOT = PRIVATE/'normal-update'
 HERE = Path(__file__).resolve().parent
@@ -79,7 +84,7 @@ def main():
     after = {key: digest(path) for key, path in protected.items()}
     assert before == after and report['calls'] == {'provider':0,'paid':0,'sec':0}
     body = {'record_type': 'ISSUE28_MARRIOTT_B03_CONTRACT_REVENUE_EXCLUSION_PRIVATE_UPDATE',
-        'base_git_head_with_uncommitted_difference': '430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e',
+        'base_git_head_with_uncommitted_difference': BASE_HEAD,
         'tested_module_sha256': digest(CODE_ROOT/
             'scripts/vnext/b03_contract_amortization_scope.py'),
         'tested_v14_manifest_sha256': digest(CODE_ROOT/
@@ -100,7 +105,7 @@ def main():
         'original_protected_hashes_unchanged': before == after,
         'new_real_calls': [0,0,0], 'formal_adoption': False,
         'all390_acceptance': False}
-    (HERE/'exercise.json').write_text(json.dumps(body, ensure_ascii=False,
+    (HERE/('exercise'+SUFFIX+'.json')).write_text(json.dumps(body, ensure_ascii=False,
         indent=2, sort_keys=True)+'\n')
     print(json.dumps({'status': metric['status'], 'result_id': result['result_id'],
         'value': result['value'], 'source_relation': relation['status'],

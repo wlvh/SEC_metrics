@@ -1,6 +1,7 @@
 """Bind only the current V14 B03 source relation; keep V13 unchanged."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -14,7 +15,8 @@ from vnext.continuous_semantic_calls import validate_semantic_rule_bindings
 from vnext.requirement_profile_v1 import validate_execution_authority
 from vnext.requirements import load_requirement_snapshot
 
-BASE = '430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e'
+BASE = os.environ.get('ISSUE28_REBIND_BASE',
+    '430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e')
 MANIFEST = 'requirements/issue_28_v14/baseline_manifest.json'
 MODULE = 'scripts/vnext/b03_contract_amortization_scope.py'
 RECEIPTS = (

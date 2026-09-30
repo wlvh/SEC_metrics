@@ -1,13 +1,17 @@
 """Independent-process replay of the Marriott B03 private success and rows."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import socket
 import sys
 from unittest.mock import patch
 
 CODE_ROOT = Path(__file__).resolve().parents[4]
-STATE = Path('/private/tmp/issue28-b03-marriott-excluded-20261001/normal-update')
+PRIVATE = Path(os.environ.get('ISSUE28_MARRIOTT_PRIVATE_ROOT',
+    '/private/tmp/issue28-b03-marriott-excluded-20261001'))
+STATE = PRIVATE/'normal-update'
+SUFFIX = os.environ.get('ISSUE28_MARRIOTT_RECORD_SUFFIX', '')
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(CODE_ROOT/'scripts'))
 
@@ -22,7 +26,7 @@ def digest(path):
 
 
 def main():
-    previous = strict_json_file(path=HERE/'exercise.json')
+    previous = strict_json_file(path=HERE/('exercise'+SUFFIX+'.json'))
     assert previous['tested_module_sha256'] == digest(CODE_ROOT/
         'scripts/vnext/b03_contract_amortization_scope.py')
     assert previous['tested_v14_manifest_sha256'] == digest(CODE_ROOT/
@@ -81,7 +85,7 @@ def main():
         'watched_private_files_unchanged': before == after,
         'new_real_calls': [0,0,0], 'formal_adoption': False,
         'all390_acceptance': False}
-    (HERE/'cold.json').write_text(json.dumps(body, ensure_ascii=False,
+    (HERE/('cold'+SUFFIX+'.json')).write_text(json.dumps(body, ensure_ascii=False,
         indent=2, sort_keys=True)+'\n')
     print(json.dumps({'result_id': result['result_id'],
         'run_id': manifest['run_id'], 'value': result['value'],

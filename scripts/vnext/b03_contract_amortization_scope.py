@@ -39,6 +39,10 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
                     or context['dimensions'] or context['typed_dimension_count']
                     or str(int(context['entity_identifier'])) != str(int(entity))):
                 continue
+            uri, local_name = metadata.facts[fact['ordinal']]['concept']
+            _need(local_name == selected['source_binding']['concept'].split(':', 1)[1]
+                  and re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri),
+                  'B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:' + role)
             if metadata.units.get(fact['unit_ref']) != {
                     'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
                     'divided': False}:
