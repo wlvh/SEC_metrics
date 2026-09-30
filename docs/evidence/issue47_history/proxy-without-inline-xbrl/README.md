@@ -1,4 +1,4 @@
-# 没有 inline XBRL 的代理：C02 从封面认身份，C03 按名扣留（2026-09-30）
+# 没有 inline XBRL 的代理：C02 从封面认身份（C03 的读法见 proxy-compensation-table）（2026-09-30）
 
 ## 问题
 
@@ -15,20 +15,19 @@
 
 `historical_dei.release_aware_with`：冻结函数的 release-aware 视图，并把它读的某个全局名换成后继；换一个它不读的名字、或换进一个未经视图就会问 DEI 问题的对象，都按名拒绝。
 
-## C03：按名扣留为实现缺口
+## C03：先按名扣留为实现缺口，随后接上代理薪酬表读法
 
-已批定义写"来源：DEF 14A，优先 ecd XBRL facts；候选：CEO / PEO total compensation"。2022 年的代理没有 ECD 事实，它自己的薪酬汇总表（SCT）是已批来源，而本路线还不读——所以这是**实现缺口**，按名 `C03_PROXY_WITHOUT_INLINE_XBRL_TABLE_NOT_READ`（类别 `IMPLEMENTATION_GAP`）扣留，不是披露缺失。其他路由错误照原样抛出。
+已批定义写"来源：DEF 14A，优先 ecd XBRL facts；候选：CEO / PEO total compensation"。2022 年的代理没有 ECD 事实，它自己的薪酬汇总表（SCT）是已批来源。第一步（提交 `0ec71207`）只把未命名错误换成按名扣留 `C03_PROXY_WITHOUT_INLINE_XBRL_TABLE_NOT_READ`（实现缺口）；随后（提交 `825cc5f9`）接上了读法，这个理由码已不再产生，见 `../proxy-compensation-table/`：8 份里 6 份读出 CEO 总薪酬，Marriott 与 Salesforce 因一年两位 CEO 按定义扣留，每个候选都与后来年份代理的 PvP 标签逐位相等。
 
-**这也纠正了此前一个"待所有者决定"的项**：此前记录说"是否用 2023 年起代理的 PvP 标签值作为 FY2021 值"需所有者决定。读已批定义后，首次报告 FY2021 的 2022 年代理自己的 SCT 就是已批来源，读它是实现工作，不需要改口径；用后来年份代理里的重述值才是另一件事。冻结的 SCT 读法（为 10-K/A 第三部分写的）在这 8 份上实测只对 Pfizer 干净：Enphase 金额单元格里 "$" 单独成格，Lumen 的 Total 表头不带 "($)"，Ford 表格有零宽字符单元格，Salesforce 表头分两行，Macy's 没认出表，Paramount 找不到标题；Marriott（2021 年两位 CEO）与 Salesforce（联席 CEO）按已批定义本就应扣留。代理 SCT 读法另列为任务，本轮不做。
+**这也纠正了此前一个"待所有者决定"的项**：此前记录说"是否用 2023 年起代理的 PvP 标签值作为 FY2021 值"需所有者决定。读已批定义后，首次报告 FY2021 的 2022 年代理自己的 SCT 就是已批来源，读它是实现工作，不需要改口径；后来年份代理里的标签值只作独立核对。
 
 ## 实测
 
 - `probe.py` → `probe.json`：在导出恢复的根上走历史路线准备 C02 输入并建候选。六个可达的 FY2021 位置（Marriott 42 条、Ford 74、Paramount 84、Enphase 15、Lumen 46、Macy's 40）全部准备成功，每个输入绑定都带 `proxy_cover_identity`；Pfizer 与 Salesforce 在期间选择处停下（历史分片不一致，需刷新，在延伸批准里）。**这些摘录条数不是内容验收**：选择器是在 10 份 2023 年后的代理上写并核对的，2022 年的版式没读过。运行时检出里还有未提交的 #80 改动（只涉及 D02 路径）。
-- `injections.py` → `injections.json`：14 个注错，13 个由为它写的用例抓到；"输入层不调用名称检查"那一个按设计不被单元用例看见（它的检查是上面的 probe 要求每个绑定都带封面身份），也如实未被抓到。
+- `injections.py` → `injections.json`：第一次 14 个注错，13 个由为它写的用例抓到；"输入层不调用名称检查"那一个按设计不被单元用例看见（它的检查是上面的 probe 要求每个绑定都带封面身份），也如实未被抓到。接上 SCT 读法后，关于 C03 扣留理由的那一个注错随之失效，移到 `../proxy-compensation-table/injections.py`；本脚本余下 13 个在最终代码上重跑。
 - 用例：`tests/vnext/test_historical_proxy_identity.py`（23 例，读导出里的 8 份真实代理与已存 submissions）、`tests/vnext/test_historical_dei.py` 新增 5 例。零 SEC、零模型调用。
 
 ## 没做的
 
 - 定向原生 Run（这六个 C02 位置、这些 C03 位置）要等全帧批次跑完、运行树同步之后。
-- 代理 SCT 读法（C03 的值）。
 - 2022 年代理 C02 摘录的两向阅读。
