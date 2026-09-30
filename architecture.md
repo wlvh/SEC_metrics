@@ -1293,3 +1293,13 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 
 **D04 的单对象上限**。冻结的 D04 来源分组（`r6_semantic_source._group`）拒绝编码后超过 300,000 字节的单个来源对象；这是"放得进一个请求"的代用判据，真实判据在请求构造时由冻结的 `continuous_request_context.measured_groups` 按参考 token 检查。`historical_semantic_source._document_units` 先跑冻结分组；只有它恰好以 `SEMANTIC_SINGLE_SOURCE_OBJECT_EXCEEDS_INPUT_BOUND` 拒绝时，才用 `release_aware_with(_group, POLICY=…)` 与 `release_aware_with(_native_units, _group=…)` 重分这份文档：单对象上限取请求字节上限，其余策略不变，文档条目带 `single_object_bound` 并点名超限单元。
 
+
+### 往年输入的三处读法与一处声明（2026-09-30 下午）
+
+**ECD 第一版命名空间**。`historical_dei._WIDENED` 把冻结代码里问"这是不是 SEC 的某个分类标准"的每个模式映射到接受三种版本写法（无后缀、季度、年后接月日）的模式；原来只有 DEI 的两种写法，现在加上 ECD 的两种（`ecd/\d{4}`、`ecd/[0-9]{4}`）。视图、完备性检查与"改不到的引用按名拒绝"的规则都不变，冻结模块一个字节不改。#47 自己的代码要问 ECD 时用 `is_ecd_namespace`（`historical_amendment_note` 判断 Part III 修订所带的原生事实是否全是治理分类时就用它），否则视图的完备性检查会点名它。
+
+**住宿表引言**。`historical_lodging_results` 先跑冻结的住宿表检查；只有它以"没有唯一匹配表"拒绝、且理由里有引言未证明时，才用新策略把整份检查重跑一遍。新策略与冻结策略只差引言模式，由两处恰好命中一次的替换得到；组件记下 `policy_hash`，读者能看出是哪种写法放行的。
+
+**XBRL 实例的声明**。`historical_source_acquisition._declared_frame` 在规划器、事件声明、治理声明之外再合并 `historical_instance_sources.instance_dependencies`：对每个索引已存的年报 accession，用一个只记录、不读取的 `_Sources` 子类跑冻结的 `auditor_filing`，把它在 `auditor_facts` 角色下要读的每个文件记成 `ACCESSION_XBRL_INSTANCE` 依赖。索引未存的 accession 记为 `ACCESSION_INDEX_NOT_SAVED` 限制，经帧的 `instance_declaration_limitations` 返回。这个类别列在 `historical_sec_resume.TERMINAL_CLASSES` 里：取回实例不会让新的依赖变得可声明，所以恢复保留量按它计。模块本身列在 SEC 接线收据的 `REQUIRED_WIRING_EVIDENCE` 里，因为实时路径只核对收据，不核对 Requirement 闭包。
+
+**覆盖表的规划根**。`tools/vnext_history_coverage.py --source-root <根>` 让期间在给定的根上规划与选择（批次的数据根是从获取导出恢复的根，检出只有最新年份的原件）；缺陷、接受、等 #28 这些登记与 Run 收据仍从仓库读。输出记下 `periods_planned_on`。
