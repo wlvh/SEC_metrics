@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-marriott-b03-failure-isolation-20260930/run.py", line 99, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-marriott-b03-failure-isolation-20260930/run.py", line 51, in main
+    probe.legacy_disabled() as disabled:
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-b01-legacy-exit-20260928/probe.py", line 28, in legacy_disabled
+    assert 'vnext.normal_run_v3' not in sys.modules
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

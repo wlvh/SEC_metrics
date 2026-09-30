@@ -7658,5 +7658,35 @@
     "observed_final_updated_at_utc": "2026-09-29T15:28:18Z",
     "scope": "PRODUCT_PATCH_AND_EXACT_SHA_REVIEW_INCLUDED; LATER_B03_DIRECT_SOURCE_EVIDENCE_COMMIT_NOT_TESTED_BY_THIS_RUN",
     "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36585202684"
+  },
+  "ci_36597295712": {
+    "head": "016d7b25163d824dbafc552a426346d49051ca77",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_succeeded": 16,
+    "jobs_failed": 0,
+    "saved_source_material_shards_succeeded": 3,
+    "observed_final_updated_at_utc": "2026-09-29T17:04:10Z",
+    "scope": "B03_DIRECT_SOURCE_EVIDENCE_AND_PRECEDING_MARRIOTT_PRODUCT_PATCH; NOT_UNIFIED_390_OR_NEW_COMPANY_RESULTS",
+    "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36597295712"
+  },
+  "ordinary_marriott_b03_failure_isolation_20260930": {
+    "status": "SAME_NORMAL_CLI_B01_C04_READY_WHILE_B03_EXECUTION_FAILED_SEPARATE_PROCESS_COLD_READ_PASS",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-marriott-b03-failure-isolation-20260930/README.md",
+    "tested_product_head": "016d7b25163d824dbafc552a426346d49051ca77",
+    "source_snapshot_id": "sha256:517bd322204016d11ec0694654852148538b3e9c3b10138ada4041eacf97b382",
+    "metric_statuses": {"B01": "CANDIDATE_READY", "B03": "EXECUTION_FAILED", "C04": "CANDIDATE_READY"},
+    "company_status": "UPDATES_PARTIAL",
+    "b03_reason": "B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED",
+    "b03_successful_attempt": null,
+    "b01_and_c04_result_ids_match_prior_authentic_source_runs": true,
+    "separate_process_installed_cold_read": "PASS_B01_PUBLISHED_REVENUE_26186000000_C04_PUBLISHED_ZERO_B03_FAILURE_POINTER_NULL",
+    "old_semantic_producer_exports_disabled": 116,
+    "private_state_tree_unchanged_by_cold_read": true,
+    "original_claims_source_log_and_active_unchanged": true,
+    "first_test_setup_failure_preserved": "run-first.log",
+    "new_real_calls": [0, 0, 0],
+    "new_complete_company_or_390_credit": 0,
+    "formal_adoption": false
   }
 }
