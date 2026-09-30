@@ -198,6 +198,27 @@
   "provider": 0,
   "sec": 0
  },
+ "correction_content_rule": {
+  "counts_after_correction": {
+   "admitted": 24,
+   "in_scope": 20,
+   "out_of_scope": 4
+  },
+  "effect_on_withdrawals": "Paramount FY2025 stays withdrawn by block 2257. The predecessor FY2024 instance was block 2010 alone; it is retracted, see known_result_defects.json D02_PARAMOUNT_2024_KEYWORD_PROXY_ADMITS_TRANSACTION_COST_NOTE.",
+  "how_to_read_this_record": "The blocks list and counts above are the census as it was made. The executor wrote the brief's incidental examples ('transaction costs', 'tax') from these earlier classifications; an independent reader of the predecessor FY2024 packet read block 2010 - the same paragraph a year earlier - by content, as disclosure, and the rule was written to decide between the two readings.",
+  "rule": "docs/evidence/issue47_history/d02-older-years/adjudication.json, rule SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE",
+  "what_does_not_move": "Lumen 1670 (legal-fee expensing policy), Pfizer 2175 (a list of estimates), Pfizer 2240 (the means of collecting receivables) and Paramount 2257 (a covenant's EBITDA add-backs) name litigation only as a category and stay out of scope.",
+  "what_moves": [
+   {
+    "block": 2108,
+    "company_id": "paramount_skydance_paramount_global",
+    "now": "IN_SCOPE",
+    "period_end": "2025-12-31",
+    "was": "OUT_OF_SCOPE",
+    "why": "The census judged the paragraph by its topic, transaction-related costs. Its last sentence states a specific legal matter of the registrant with its amount: 'during 2023, we recorded a benefit of $156 million, principally associated with stockholder litigation related to the 2019 merger of Viacom Inc. and CBS Corporation'. Under the rule that is litigation disclosure."
+   }
+  ]
+ },
  "counts": {
   "admitted": 24,
   "in_scope": 19,
