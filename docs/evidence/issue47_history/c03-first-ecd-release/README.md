@@ -42,9 +42,18 @@ DEI 版本放宽（`release_aware` 视图）已经在做同一件事：只把冻
 
 **这里有一个框架层面的盲点**：点时（当时报告的）口径下，框架从不检查任何指标后来是否被重述。C03 只是因为代理之间逐年重复报告、查起来便宜，才先被看见。
 
+## 往年值的独立阅读：跨代理对照
+
+同一个问题反过来就是一份独立阅读：一年的 CEO 总薪酬，除了路线读的那份代理，后来每份代理都会再报一次。`tools/read_c03_across_proxies.py`（不导入路线的任何治理模块）读登记人每份已存代理里该年的 `PeoTotalCompAmt`，只在三件事同时成立时接受：每份代理只报一个总额（占位横线按 `read_governance_facts` 的规则放在一边）、所有代理一致、其中至少一份是结果没有点名的申报——也就是路线没读过的文件确认了这个数。
+
+对全帧批次的 9 个往年 C03 值（`content-acceptance/c03-across-proxies-read-batch.json`）：8 个 MATCH 并进入接受登记（Enphase FY2023/FY2024、Macy's FY2024、Marriott FY2023/FY2024、Paramount FY2023、Pfizer FY2024、Salesforce FY2025，登记 188 → 196）；Macy's FY2023 因两份代理数字不同不读（`PROXIES_REPORT_DIFFERENT_AMOUNTS`）。用例 `tests/vnext/test_c03_across_proxies_reading.py`（6 例，5 秒，saved-source 层）。
+
 ## 注错
 
-`injections.py` → `injections.json`，在隔离克隆里跑。
+- 放宽本身：`injections.py` → `injections.json`，5 个全部由为它写的用例抓到。第一次运行只抓到 4 个（`injections-first-version.json`）：把 Part III 修订检查改回冻结写法没有任何用例看得见——已存的 Part III 修订都不是第一版 ECD。补了一个构造用例（前身修订原件只改那一行命名空间声明，用例里写明是构造的），第二次运行由它抓到。
+- 阅读工具：`reading_injections.py` → `reading-injections.json`，3 个全部被抓。
+
+都在隔离克隆里跑。
 
 ## 不保证的
 
