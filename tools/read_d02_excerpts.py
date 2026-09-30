@@ -93,6 +93,12 @@ CONTEXT_WORDS = re.compile(r"contingenc|legal proceeding|litigation|legal matter
 NUMBERED_NOTE = re.compile(r"^\s*(?:note\s+)?\d{1,2}\s*[.:)\u2014\u2013-]?\s+[A-Za-z]", re.I)
 STATEMENT_CAPTION = re.compile(r"\(\s*notes?\s+\d", re.I)
 CONTEXT_CAP = {"NOTE": 150, "HEADING": 60}
+# Ranges the route reads through the keyword, not whole: Item 8, and where Item 8
+# only points to them, the statements printed after the items
+# (historical_text_results.appended_statements_range). The others are narrow:
+# Item 3 and the note scopes it incorporates, read whole.
+KEYWORD_SECTIONS = ("ITEM_8", "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS")
+WIDE_SECTIONS = ("ITEM_1A",) + KEYWORD_SECTIONS
 NOT_COVERED = ("Item 8 outside the incorporated scopes, except the blocks the keyword "
                "proxy took, the headings naming contingencies, legal proceedings, "
                "litigation or commitments, and the blocks under an Item 8 heading naming "
@@ -139,7 +145,7 @@ def make_packet(*, document, proposal, candidate):
     taken_indices = [claim["block_index"] for claim in taken]
     if sorted(taken_indices) != sorted(by_index) or len(set(taken_indices)) != len(taken_indices):
         raise SystemExit("D02_CANDIDATE_IS_NOT_THE_PROPOSAL")
-    narrow = [r for r in proposal["checked_ranges"] if r["section_id"] not in ("ITEM_1A", "ITEM_8")]
+    narrow = [r for r in proposal["checked_ranges"] if r["section_id"] not in WIDE_SECTIONS]
     scope_of = {}
     for scope in narrow:
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
@@ -171,7 +177,7 @@ def make_packet(*, document, proposal, candidate):
         after = [i for i in taken_indices if i > index]
         section = next((r["section_id"] for r in proposal["checked_ranges"]
                         if r["start_block"] <= index < r["end_block_exclusive"]
-                        and r["section_id"] not in ("ITEM_8",)), None)
+                        and r["section_id"] not in KEYWORD_SECTIONS), None)
         if section is None:
             section = next((r["section_id"] for r in proposal["checked_ranges"]
                             if r["start_block"] <= index < r["end_block_exclusive"]), None)
@@ -181,15 +187,17 @@ def make_packet(*, document, proposal, candidate):
             "next_excerpt_after": min(after) if after else None,
             "distance": (min(after) - index) if after else None})
     item_8 = next((r for r in proposal["checked_ranges"] if r["section_id"] == "ITEM_8"), None)
+    keyword_ranges = [r for r in proposal["checked_ranges"] if r["section_id"] in KEYWORD_SECTIONS]
     context = set()
     for row in rows["headings"]:
         index = row["i"]
-        if (item_8 is None or not item_8["start_block"] <= index < item_8["end_block_exclusive"]
-                or index in scope_of or not CONTEXT_WORDS.search(row["text"])
+        holder = next((r for r in keyword_ranges
+                       if r["start_block"] <= index < r["end_block_exclusive"]), None)
+        if (holder is None or index in scope_of or not CONTEXT_WORDS.search(row["text"])
                 or STATEMENT_CAPTION.search(row["text"])):
             continue
         whole_note = bool(NUMBERED_NOTE.match(row["text"]))
-        stop = min(item_8["end_block_exclusive"],
+        stop = min(holder["end_block_exclusive"],
                    index + 1 + CONTEXT_CAP["NOTE" if whole_note else "HEADING"])
         for j in range(index + 1, stop):
             block = blocks[j]
@@ -267,7 +275,7 @@ def read_position(*, packet, reading):
     counts = {"taken": len(packet["taken"]), "skipped": len(packet["skipped"]),
               "context": len(packet.get("context", ())), "outside": len(packet.get("outside", ())),
               "headings": len(packet["headings"]),
-              "taken_through_item_8": sum(1 for row in packet["taken"] if row["scope"] == "ITEM_8")}
+              "taken_through_item_8": sum(1 for row in packet["taken"] if row["scope"] in KEYWORD_SECTIONS)}
     counts["covered_elsewhere"] = len(covered)
     clean = not any(problems.values())
     return {"verdict": "READING_AGREES" if clean else "READING_DISAGREES",

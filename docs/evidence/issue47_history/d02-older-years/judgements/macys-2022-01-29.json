@@ -1,8 +1,8 @@
 {
  "record_type": "ISSUE_47_D02_READING",
  "position": "macys:2022-01-29",
- "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (its prompt carried the executor's header-row decision; see reader-prompts.md)",
- "reader_note": "The value is the whole of Item 3: the statement that ordinary-course proceedings are not expected to be material, and the California district attorneys' hazardous-waste investigation with the expected $1,925,000 settlement and its reserve. In this filing Item 8 is a 20-block range and the only heading found (a bare 'Commitments', block 5165) lies outside every mapped section, so no financial-statement block (such as the self-insurance claims accrual taken in the later Macy's years) was put before me; I cannot judge what was not shown.",
+ "reader": "two independent subagent readings: a fresh agent given the reader brief and the packet before the outside list existed (its prompt carried the executor's header-row decision), and a second fresh agent that judged only the outside block; see reader-prompts.md",
+ "reader_note": "First reader (TAKEN, HEADING): The value is the whole of Item 3: the statement that ordinary-course proceedings are not expected to be material, and the California district attorneys' hazardous-waste investigation with the expected $1,925,000 settlement and its reserve. In this filing Item 8 is a 20-block range and the only heading found (a bare 'Commitments', block 5165) lies outside every mapped section, so no financial-statement block (such as the self-insurance claims accrual taken in the later Macy's years) was put before me; I cannot judge what was not shown. Second reader (OUTSIDE, after the list was added): The value is the two Item 3 blocks: the general statement that the Company is party to various proceedings incidental to its business with no expected material adverse effect, and the Retail Hazardous Waste Matter (California district attorneys' investigation, expected $1,925,000 settlement and its reserve). The single outside block is a self-insurance accounting policy, not a litigation disclosure, so the value lacks nothing from it.",
  "packet_document_id": "sha256:57f14217d9c2926d676de440b7cedf09b661b512a65db67746d37b58930787f6",
  "packet_candidate_hash": "sha256:c8a35236dcaa0c6bb04718031e098d9e4e60a8ec526da6e8152efd0f0a31a789",
  "judgements": [
@@ -25,6 +25,17 @@
    "text_sha256": "sha256:f4711d39d97485724fa7953c2ded29a80d5d00471232002603b732edf59f076f",
    "order": 1,
    "scope": "ITEM_3"
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 2950,
+   "verdict": "WRONGLY_SKIPPED",
+   "why": "the registrant's self-insurance accrual for its workers' compensation and general liability claims, a loss-contingency accrual arising from claims; the value lacks it because this filing's Item 8 is a pointer page and the statements printed after it are never read",
+   "text": "The Company, through its insurance subsidiary, is self-insured for workers compensation and general liability claims up to certain maximum liability amounts. Although the amounts accrued are actuarially determined based on analysis of historical trends of losses, settlements, litigation costs and other factors, the amounts the Company will ultimately disburse could differ from such accrued amounts.",
+   "text_sha256": "sha256:795024f91393de4b57cde74a9efee944f58e819e734896cb26d69d5be0713d2e",
+   "reader_verdict": "CORRECTLY_SKIPPED",
+   "reader_why": "self-insurance accrual policy for workers comp and general liability; settlements and litigation costs are only actuarial inputs, no legal matter disclosed",
+   "adjudication_rule": "CLAIMS_ACCRUAL_IS_DISCLOSURE"
   },
   {
    "kind": "HEADING",

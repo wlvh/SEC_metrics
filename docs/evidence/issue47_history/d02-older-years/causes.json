@@ -1,0 +1,41 @@
+{
+ "record_type": "ISSUE_47_D02_OLDER_YEAR_DEFECT_CAUSES",
+ "purpose": "Why each wrong block of an older-year D02 reading is wrong in the route, by position. register_defects.py joins this with the acceptance readings: a position the reading found wrong gets one coordinate-level entry in known_result_defects.json naming every wrong block and the cause each block belongs to. A wrong block no cause here names stops the registration.",
+ "causes": {
+  "KEYWORD_PROXY": {
+   "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+   "same_cause_as": ["D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY", "D02_PFIZER_2025_SCOPE_CONTENT_READ"],
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+  },
+  "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY": {
+   "text": "Item 3 incorporates a note's 'Pending Matters' and 'Other Proceedings and Disputes' subheadings; the note calls them 'Principal Proceedings' and 'Other Proceedings, Disputes and Contingencies'. With no quoted caption found the route took the whole note, and the value carries the right-of-way table and the purchase commitments the filing did not incorporate.",
+   "repair": "historical_text_results.unincorporable_captions: a note limited by captions it does not carry is not taken; the coverage records UNRESOLVED_INCORPORATED_CAPTION and the position stops as navigation incomplete.",
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+  },
+  "ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING": {
+   "text": "'Item 4. Mine Safety Disclosures' is the last line of a page, followed by the page number; the frozen heading scan reads that as a contents row, so Item 3 runs on and Item 4's answer 'Not applicable.' is an excerpt.",
+   "repair": "historical_text_results.page_bottom_item_headings: the frozen scan asked again with page numbers blanked.",
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+  },
+  "PAGE_FOOTER_AS_EXCERPT": {
+   "text": "A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour.",
+   "repair": "historical_text_results.page_structure_furniture: a block standing at the same offset from a page number on three pages or more.",
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+  },
+  "ITEM_EIGHT_POINTER_PAGE": {
+   "text": "Item 8 is a pointer page; the financial statements are printed after the form's items and the keyword proxy reads Item 8 only, so the self-insurance claims accrual the later years' values carry is never reached.",
+   "repair_state": "FOUND_BY_READING_REPAIR_BEING_MEASURED"
+  }
+ },
+ "positions": {
+  "lumen_technologies:2021-12-31": {"ITEM_8": "KEYWORD_PROXY", "NOTE_18": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"},
+  "lumen_technologies:2022-12-31": {"ITEM_8": "KEYWORD_PROXY"},
+  "lumen_technologies:2023-12-31": {"ITEM_8": "KEYWORD_PROXY"},
+  "lumen_technologies:2024-12-31": {"ITEM_8": "KEYWORD_PROXY"},
+  "pfizer:2022-12-31": {"ITEM_8": "KEYWORD_PROXY", "NOTE_16_SUB_A": "PAGE_FOOTER_AS_EXCERPT"},
+  "pfizer:2023-12-31": {"ITEM_8": "KEYWORD_PROXY", "ITEM_3": "PAGE_FOOTER_AS_EXCERPT"},
+  "pfizer:2024-12-31": {"ITEM_8": "KEYWORD_PROXY", "ITEM_3": "PAGE_FOOTER_AS_EXCERPT"},
+  "southwest_airlines:2023-12-31": {"ITEM_3": "ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING"},
+  "macys:2022-01-29": {"OUTSIDE": "ITEM_EIGHT_POINTER_PAGE"}
+ }
+}

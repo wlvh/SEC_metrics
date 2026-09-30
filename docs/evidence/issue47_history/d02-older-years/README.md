@@ -22,6 +22,10 @@ the saved annual report (an export-restored root for older years) and lists:
   bold heading, capped. The definition names contingencies notes as a source,
   and only the keyword blocks of such a note reach the value, so this is the
   direction a reading of the excerpts alone cannot see;
+- `outside` - where a filing's Item 8 is a pointer page, the keyword blocks
+  printed after Item 8 and outside every range the route reads. This list was
+  added after the thirty readings (see `reader-prompts.md`); only Macy's FY2021
+  has a block in it;
 - `headings` - every heading-shaped block of the document naming
   contingencies, legal proceedings, litigation or commitments (the
   definition's source words, not the proxy's keyword set).
@@ -44,9 +48,9 @@ take and Item 3 states at 755/756.
 ## What it does not cover
 
 Item 8 outside the incorporated scopes is read only where the keyword proxy
-took a block and under the headings that name the definition's words; a
-litigation disclosure under a heading worded otherwise, or under none, is not
-in the packet. The readers are of the same model family as the executor who
+took a block, under the headings that name the definition's words, and - after
+a pointer-page Item 8 - where the keyword occurs; a litigation disclosure under
+a heading worded otherwise, or under none, is not in the packet. The readers are of the same model family as the executor who
 wrote the rules. The keyword proxy's own decision stays where it is
 (`d02-content-read/keyword-proxy-decision.json`).
 
@@ -75,3 +79,39 @@ wrote the rules. The keyword proxy's own decision stays where it is
   (incorporated-scope content counts) on those nine blocks, because the
   rule's reason - the filing chose to incorporate them - does not hold; the
   executor accepts the departure on that verification.
+- **Macy's FY2022-FY2024: agree.** The one call is a footnote, "2022 includes
+  an income tax benefit from the favorable resolution of state income tax
+  litigation", which the reader judged incidental because the brief listed
+  "tax" among incidental contexts. The executor decided it
+  (`adjudication.json`, SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE): it states the
+  resolution of a specific suit of the registrant's, and litigation named only
+  as a category is what the brief's examples meant. The same rule moved two of
+  the executor's own earlier classifications (Paramount FY2025 block 2108 and
+  FY2024 block 2010, both stating stockholder-litigation settlement amounts),
+  recorded in `known_result_defects.json` and
+  `d02-content-read/keyword-proxy-decision.json`.
+- **Macy's FY2021: disagree.** Its Item 8 is a pointer page and the statements
+  are printed after the signatures, so the keyword proxy read none of them and
+  the value is Item 3 alone. The outside list brought in the self-insurance
+  claims accrual (block 2950) - the paragraph the FY2022-FY2024 values carry
+  and their reader judged DISCLOSURE. The second reader judged it correctly
+  skipped (the legal words read as actuarial inputs); the executor held the
+  paragraph to one answer across the years (CLAIMS_ACCRUAL_IS_DISCLOSURE: the
+  definition names loss contingencies and accruals arising from claims).
+- **Marriott FY2021-FY2022, Paramount FY2021-FY2024, Salesforce FY2025,
+  Southwest FY2021, FY2022 and FY2024: agree.**
+- **Pfizer FY2022-FY2024: disagree.** Each year carries three keyword-proxy
+  blocks that name litigation only as a category (the critical-estimates list,
+  the collection of receivables, uncertain tax positions) and page footers
+  taken as excerpts - the "<year> Form 10-K" block inside the four-block Item 3
+  (FY2023, FY2024) and six copies of the merged footer "Pfizer Inc.2022 Form
+  10-K" inside Note 16A (FY2022).
+- **Southwest FY2023: disagree.** "Item 4. Mine Safety Disclosures" is the last
+  line of a page, followed by the page number; the frozen heading scan reads
+  that as a contents row, Item 3 runs on, and Item 4's "Not applicable." is an
+  excerpt.
+
+The route causes are registered by position (`causes.json`,
+`register_defects.py`); three of them - the page-foot heading, the footers and
+Lumen FY2021's captions - and Macy's pointer page are repaired in
+`../d02-route-repairs/`. The keyword proxy remains the registered decision.
