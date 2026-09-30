@@ -192,6 +192,11 @@ NEW_RULE_FILES = (
     # CIK's names on the filing date. It decides whether a proxy filed before
     # pay-versus-performance is read at all, so both roots check it.
     "scripts/vnext/historical_proxy_identity.py",
+    # C03 from a proxy without inline XBRL: its Summary Compensation Table read
+    # by the row's own arithmetic, and the Spec that names that resolver. It
+    # decides the value those periods publish, so both roots check them.
+    "scripts/vnext/historical_proxy_compensation.py",
+    "catalog/r6/C03_proxy_compensation_table_v1.md",
 )
 
 # One module the parent's authority does not name although its own named code

@@ -82,11 +82,6 @@ INJECTIONS = {
                     or carries_inline_xbrl(source["raw_bytes"])):""",
         """            if source is None:""",
         "test_an_inline_document_that_fails_the_parse_keeps_its_error"),
-    "C03_DOES_NOT_NAME_THE_GAP": (
-        GOVERNANCE,
-        """        return blocked(PROXY_TABLE_NOT_READ, failures, category="IMPLEMENTATION_GAP")""",
-        """        return blocked("C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND", failures)""",
-        "test_the_withhold_names_the_gap_and_the_proxy"),
     "AN_OVERRIDE_MAY_NAME_WHAT_THE_CODE_DOES_NOT_READ": (
         DEI,
         """    if unread:

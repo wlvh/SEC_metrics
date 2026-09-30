@@ -301,12 +301,13 @@ class ACoverThatDoesNotSayItIsRefusedByName(unittest.TestCase):
                       "COVER_ON_INLINE_DOCUMENT")
 
 
-class C03NamesTheProxyTableItDoesNotReadYet(unittest.TestCase):
-    """C03 on a proxy without inline XBRL is an implementation gap, named as one.
+class C03ReadsTheProxyTableWhenTheProxyHasNoEcdFacts(unittest.TestCase):
+    """C03 on a proxy without inline XBRL reads the proxy's own table.
 
     The approved source is the proxy (DEF 14A, ECD facts preferred); a 2022
-    proxy has no ECD facts and its compensation table is not read by this
-    route yet. Before, the frozen parser's router error escaped unnamed.
+    proxy has no ECD facts, so the route reads its Summary Compensation Table
+    (``historical_proxy_compensation``). Before, the frozen parser's router
+    error escaped unnamed.
     """
 
     @classmethod
@@ -334,16 +335,14 @@ class C03NamesTheProxyTableItDoesNotReadYet(unittest.TestCase):
             root=ROOT, reader=Reader(), selection=selection, target=self.target,
             company_id="company", cik=self.row[0],
             period={"period_start": "2021-01-01", "period_end": "2021-12-31", "fiscal_year": 2021},
-            spec=self.spec)
+            spec=self.spec, inventory=_inventory(self.row[0]))
 
-    def test_the_withhold_names_the_gap_and_the_proxy(self):
-        from vnext.historical_governance_results import PROXY_TABLE_NOT_READ
-        _path, resolved, limitation = self._resolve(self.raw)
-        self.assertEqual(PROXY_TABLE_NOT_READ, resolved["result"]["reason_code"])
-        self.assertIsNone(resolved["result"]["value"])
-        self.assertEqual("IMPLEMENTATION_GAP", limitation["category"])
-        self.assertEqual([{"filing": self.row[1], "reason": PROXY_TABLE_NOT_READ}],
-                         limitation["details"])
+    def test_the_proxy_table_answers(self):
+        from vnext.historical_proxy_compensation import SPEC_PATH
+        path, resolved, limitation = self._resolve(self.raw)
+        self.assertEqual(SPEC_PATH, path)
+        self.assertIsNone(limitation)
+        self.assertEqual("24353219", resolved["result"]["value"])
 
     def test_an_inline_document_that_fails_the_parse_keeps_its_error(self):
         from vnext.deterministic_router import DeterministicRouterError

@@ -49,6 +49,8 @@ from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .deterministic_router import DeterministicRouterError, source_set_manifest
 from .historical_proxy_identity import NO_CONTEXTS, carries_inline_xbrl
+from .historical_proxy_compensation import (SPEC_PATH as PROXY_TABLE_SPEC_PATH,
+                                            resolve_proxy_compensation_table)
 from .specs import compile_spec_file
 
 # The frozen readers this module calls, answering the DEI namespace question
@@ -65,8 +67,17 @@ RECORD_TYPE = "HISTORICAL_GOVERNANCE_COMPONENT"
 SPEC_PATHS = {"C03": C03_SPEC_PATH, "C04": C04_V2_SPEC_PATH}
 SUPPORTED_METRICS = tuple(sorted(SPEC_PATHS))
 # C03 for a period whose pinned proxy has no inline XBRL: the ECD facts do not
-# exist and the proxy's compensation table is not yet read by this route.
-PROXY_TABLE_NOT_READ = "C03_PROXY_WITHOUT_INLINE_XBRL_TABLE_NOT_READ"
+# exist and the proxy's Summary Compensation Table is read instead. A year with
+# two chief executives is the definition's limit; a table the reader cannot
+# read in its own terms is this route's gap.
+PROXY_TABLE_STAGE = "PROXY_SUMMARY_COMPENSATION_TABLE"
+PROXY_TABLE_CATEGORIES = {
+    "C03_PROXY_SCT_MORE_THAN_ONE_CHIEF_EXECUTIVE": "METHOD_LIMITATION",
+    "C03_PROXY_SCT_NOT_FOUND": "IMPLEMENTATION_GAP",
+    "C03_PROXY_SCT_NOT_ESTABLISHED": "IMPLEMENTATION_GAP",
+    "C03_PROXY_SCT_ROW_UNREADABLE": "IMPLEMENTATION_GAP",
+    "C03_PROXY_SCT_DOLLAR_NOT_ESTABLISHED": "IMPLEMENTATION_GAP",
+}
 
 
 def _need(condition, reason, category=None):
@@ -223,7 +234,7 @@ def _component(*, root, company_id, metric_id, period_selection, prepared, reade
 
 
 def _compensation_resolution(*, root, reader, selection, target, company_id, cik,
-                             period, spec):
+                             period, spec, inventory):
     """C03 for the pinned period: the proxy's ECD facts, then the report's table.
 
     The same two stages the ordinary route runs and in the same order, because
@@ -267,15 +278,25 @@ def _compensation_resolution(*, root, reader, selection, target, company_id, cik
             failures.append({"filing": proxy["accessionNumber"], "reason": str(error)})
         except DeterministicRouterError as error:
             # A proxy filed before the pay-versus-performance rule has no
-            # inline XBRL, so no ECD facts. Its own compensation table is the
-            # approved source (DEF 14A) and this route does not read it yet:
-            # an implementation gap, named as one, never an absence. Any
-            # other router error is something else and keeps its error.
+            # inline XBRL, so no ECD facts. Its own Summary Compensation Table
+            # is the approved source (DEF 14A) and is read next
+            # (historical_proxy_compensation). Any other router error is
+            # something else and keeps its error.
             if (source is None or str(error) != NO_CONTEXTS
                     or carries_inline_xbrl(source["raw_bytes"])):
                 raise
-            failures.append({"filing": proxy["accessionNumber"],
-                             "reason": PROXY_TABLE_NOT_READ})
+            proxy_spec = compile_spec_file(path=root / PROXY_TABLE_SPEC_PATH, dependency_specs={})
+            proxy_resolved = resolve_proxy_compensation_table(
+                compiled_spec=proxy_spec, **source, filing=proxy, inventory=inventory,
+                company_id=company_id, cik=cik, target=target, fiscal_year=period["fiscal_year"])
+            if proxy_resolved["result"]["value"] is not None:
+                return PROXY_TABLE_SPEC_PATH, proxy_resolved, None
+            chosen = proxy_resolved["selection"]
+            failures.append({"filing": proxy["accessionNumber"], "reason": chosen["reason_code"],
+                             "stage": PROXY_TABLE_STAGE,
+                             "candidates": [{"person_and_position": c["person_and_position"],
+                                             "value": c.get("value"), "reason": c["reason"]}
+                                            for c in chosen["candidates"]]})
     else:
         failures.append({"reason": selection["def14a_status"]})
     table_spec = compile_spec_file(path=root / SCT_SPEC_PATH, dependency_specs={})
@@ -301,8 +322,13 @@ def _compensation_resolution(*, root, reader, selection, target, company_id, cik
                 return blocked("C03_REPORTED_TABLE_UNRESOLVED", failures)
         except _SOURCE_ERRORS as error:
             failures.append({"filing": filing["accessionNumber"], "reason": str(error)})
-    if any(failure.get("reason") == PROXY_TABLE_NOT_READ for failure in failures):
-        return blocked(PROXY_TABLE_NOT_READ, failures, category="IMPLEMENTATION_GAP")
+    proxy_table = [failure for failure in failures if failure.get("stage") == PROXY_TABLE_STAGE]
+    if proxy_table:
+        # The proxy's table was the approved source there was; what it said is
+        # the answer, the annual report's missing table is not.
+        reason = proxy_table[0]["reason"]
+        return blocked(reason, failures, category=PROXY_TABLE_CATEGORIES.get(
+            reason, "SOURCE_OR_IMPLEMENTATION_UNRESOLVED"))
     return blocked("C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND", failures)
 
 
@@ -369,7 +395,7 @@ def resolve_historical_governance_metric(*, repo_root: Path, company_id: str,
     if metric_id == "C03":
         spec_path, resolution, limitation = _compensation_resolution(
             root=root, reader=reader, selection=selection, target=target,
-            company_id=company_id, cik=cik, period=period, spec=spec)
+            company_id=company_id, cik=cik, period=period, spec=spec, inventory=payload)
         spec = compile_spec_file(path=root / spec_path, dependency_specs={})
         return _component(root=root, company_id=company_id, metric_id=metric_id,
                           period_selection=period_selection, prepared=prepared,
