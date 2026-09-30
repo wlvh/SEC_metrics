@@ -23,7 +23,7 @@
 
 ## 用例与注错
 
-`tests/vnext/test_historical_instance_sources.py`（6 例，约 52 秒，saved-source 层）：Marriott 最新两年的实例已存，声明必须等于冻结读取器真实读到的 XML 文件；声明模块单独问时只列实例（经帧合并时规划器的行会胜出，会掩盖多列主文件的错误——第一次注错运行正是这样漏掉的）；索引未存记为限制；读取器不读的同级文件（`_cal.xml`）不算声明依赖；类别是终态。`injections.py` → `injections.json`。
+`tests/vnext/test_historical_instance_sources.py`（6 例，约 52 秒，saved-source 层）：Marriott 最新两年的实例已存，声明必须等于冻结读取器真实读到的 XML 文件；声明模块单独问时只列实例（经帧合并时规划器的行会胜出，会掩盖多列主文件的错误——第一次注错运行正是这样漏掉的）；索引未存记为限制；读取器不读的同级文件（`_cal.xml`）不算声明依赖；类别是终态。`injections.py` → `injections.json`：4 个全部由为它写的用例抓到。第一次运行漏了一个（`injections-first-version.json`）：让声明模块把主文件也记成实例，经帧合并后规划器的行胜出，用例看不见；补了一条直接问模块本身的用例后抓到。
 
 ## 需要所有者决定的
 
