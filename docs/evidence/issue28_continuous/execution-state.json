@@ -2744,6 +2744,27 @@
       "tool_count_note": "Agent reported 27 outer orchestration calls and 63 nested calls; conservative combined count 90 exceeds the assigned 80 cap. No follow-up to this agent.",
       "result_path": "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/independent-review-5f8d372/conclusion.md",
       "verdict": "NEEDS_FIX_P2_INLINE_MEASURE_CURRENCY_NAMESPACE"
+    },
+    {
+      "task_name": "review_b13currencyrepair_717e774",
+      "purpose": "review",
+      "module": "b13_native_currency_inline_repair",
+      "scope_paths": [
+        "scripts/vnext/capacity_reference_contract.py",
+        "tests/vnext/test_capacity_reference_contract.py",
+        "config/ordinary_scalability_exemptions_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/rebind-repair.py"
+      ],
+      "patch_sha": "717e774a78efe6ca656d64d4cf98a41fc886e09d",
+      "spawned_at": "2026-09-30T07:51:26Z",
+      "ended_at": "2026-09-30T08:03:21Z",
+      "tool_calls": 50,
+      "outer_exec_calls": 12,
+      "nested_tool_calls": 38,
+      "ordinary_messages": 1,
+      "result_path": "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/independent-review-repair-717e774/conclusion.md",
+      "verdict": "PASS_INCREMENTAL_INLINE_MEASURE_NAMESPACE_P2_CLOSED_WITH_BOUNDS"
     }
   ],
   "ci_capacity_20260922": {
@@ -7744,7 +7765,7 @@
     "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36674903456"
   },
   "b13_native_currency_context_20260930": {
-    "status": "FIRST_PATCH_5F8D372_NEEDS_FIX_INLINE_NAMESPACE_REPAIR_LOCAL_DIRECTED_PASS_INCREMENTAL_REVIEW_PENDING",
+    "status": "FIRST_PATCH_5F8D372_NEEDS_FIX_REPAIR_717E774_INCREMENTAL_REVIEW_PASS_WITH_BOUNDS",
     "evidence": "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/README.md",
     "original_failure": "F450_ISO_CURRENCY_TAX_CREDIT_ACCEPTED_AS_CAPACITY_QUALITATIVE_WITH_ZERO_UNRESOLVED_IN_V4",
     "repaired_behavior": "EXPLICIT_V4_AND_SCANNED_SUCCESSOR_REJECT_CURRENCY_NATIVE_EVIDENCE_FOR_POSITIVE_PHYSICAL_FINDING",
@@ -7762,6 +7783,7 @@
     "repair_fast": "PASS_142_OF_142_98_151_SECONDS_FINAL_REPAIR_TREE",
     "repair_original_190_semantics": "PASS_5_FINDINGS_ZERO_UNRESOLVED",
     "repair_original_192_F450": "REJECTED_NO_REAL_CALL",
+    "repair_limited_independent_review": "PASS_INCREMENTAL_EXACT_717E774_P2_CLOSED; independent short test 1/1, synthetic inline namespace probe, saved 190 and 192 read-only, binding and exemption checks; no fast or long suite rerun",
     "v14_requirement_closure_hash": "sha256:2aa3d70596676e6795546bd500c9cf4e200f19a7429187b6d2e6919775ad2052",
     "repair_v14_requirement_closure_hash": "sha256:bbfa542ba61ffaf131968da7d1f90fee802b5804cdabe28edd08b829450f7256",
     "v13_manifest_unchanged": true,

@@ -16,4 +16,4 @@
 
 修补增量改用仓库已有`_FactAttributes`原生单位解析器，并将保存单位对象的外层命名空间放入解析包装；解析器会处理`<measure>`自身的`xmlns`声明。`test_v4_currency_native_fact_cannot_be_physical_context`现在同时覆盖外层声明与内联声明的美元事实：每种都单独及与**合成**合法文字事实捆绑拒绝，原无货币文字事实正例仍通过；扫描后继V5亦对内联声明反例拒绝。`repair-directed.log`记录45项指定测试通过，`repair-192.log`和`repair-190.log`分别记录真实保存F450仍被拒及原190回应仍为5条finding/0未决，均无新调用。
 
-修补改变模块字节后，既有精确豁免两处`F`引用的行号再次前进；`exemption-repair-audit.log`逐条核对AST仍为原生事实引用，不增加豁免项。`rebind-repair.py`只同步未冻结V14规则、这两处精确豁免、执行声明和三份现有接线；`binding-repair.log`记录V14闭包通过、V13清单不变。修后固定环境快速套件**142/142通过、98.151秒**（`repair-fast.log`/`.exit`）；第一轮审阅的`NEEDS_FIX`历史结论保留。此修补增量仍需新SHA的限定独审；不把源码测试提升为真实B13模型或公司结果。
+修补改变模块字节后，既有精确豁免两处`F`引用的行号再次前进；`exemption-repair-audit.log`逐条核对AST仍为原生事实引用，不增加豁免项。`rebind-repair.py`只同步未冻结V14规则、这两处精确豁免、执行声明和三份现有接线；`binding-repair.log`记录V14闭包通过、V13清单不变。修后固定环境快速套件**142/142通过、98.151秒**（`repair-fast.log`/`.exit`）；第一轮审阅的`NEEDS_FIX`历史结论保留。精确`717e774a`相对`5f8d372a`的[修补增量独审](independent-review-repair-717e774/conclusion.md)为**PASS**：审阅者独立跑指定短测1项、内联命名空间源解析、原190及192只读负例、V13/V14绑定与两处`F`豁免检查；完整fast和长材料仅读执行方日志，不重复运行。这个结论只关闭前次P2，不提升为真实B13模型或公司结果。
