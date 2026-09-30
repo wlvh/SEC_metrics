@@ -28,13 +28,33 @@ closure:
     python3 tools/read_event_counts.py --runs-root <root> --closure sha256:<...> \
         --case <label>=<company_id>:<report_end> \
         --output docs/evidence/issue47_history/content-acceptance/<name>.json
+
+A year whose 8-Ks only the acquisition saved is read over a root restored from
+its export (``--source-root``). That root keeps the checkout's accession
+materials and holds the acquired files as immutable request attempts, so a
+header is read from the accession materials when they hold it and otherwise
+from the root's request ledger: its latest GET of the header's URL, which must
+have succeeded and whose saved bytes must have the digest the ledger recorded.
+The path read is recorded beside the filing, so the test reads the same bytes
+back out of the export. E01 is not counted over such a root: its keyword rule
+reads every saved document of a filing, and a filing only the acquisition
+saved has its primary document only.
+
+Two things are refused rather than counted. A window that reaches a history
+block stops the reading: this reads the index's recent table, and a count over
+part of a window is not a count of it. A filing in the window whose header
+cannot be read makes the position NOT_READ, even when the count it did make
+happens to equal the published value.
 """
 import argparse
 import collections
+import csv
+import hashlib
 import json
 import re
 import sys
 import unicodedata
+from datetime import date, timedelta
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -50,21 +70,77 @@ def _routes():
     return json.loads((REPO / "catalog/event_routes.json").read_text(encoding="utf-8"))["routes"]
 
 
-def _accession_directory(cik, accession):
+def _accession_directory(cik, accession, root=REPO):
     flat = accession.replace("-", "")
-    found = sorted((REPO / "evidence/accession_materials").glob(
+    found = sorted((root / "evidence/accession_materials").glob(
         "*_" + str(int(cik)) + "_" + flat))
     return found[0] if found else None
 
 
-def header_items(cik, accession):
+def items_of(text):
+    """The item codes an SEC header declares."""
+    return sorted({line.strip() for line in re.findall(r"^<ITEMS>(.+)$", text, re.M)})
+
+
+def header_items(cik, accession, root=REPO):
     """The item codes this filing's own SEC header declares, or None if unsaved."""
-    directory = _accession_directory(cik, accession)
+    directory = _accession_directory(cik, accession, root)
     headers = sorted(directory.glob("*.hdr.sgml")) if directory else []
     if not headers:
         return None
-    text = headers[0].read_text(encoding="utf-8", errors="replace")
-    return sorted({line.strip() for line in re.findall(r"^<ITEMS>(.+)$", text, re.M)})
+    return items_of(headers[0].read_text(encoding="utf-8", errors="replace"))
+
+
+def ledger_rows(root):
+    """A root's request ledger, in order."""
+    with (root / "evidence/requests_log.csv").open(encoding="utf-8", newline="") as opened:
+        return list(csv.DictReader(opened))
+
+
+def latest_saved(*, root, rows, url):
+    """``(bytes, repo_relative_path)`` of the ledger's latest GET of ``url``, or None.
+
+    None when the ledger never asked for it or its latest request failed: a
+    failed latest request is not read around. Saved bytes without the digest
+    the ledger recorded stop the reading.
+    """
+    matching = [row for row in rows if row["source_url"] == url and row["method"] == "GET"]
+    if not matching or matching[-1]["status_code"] != "200" or matching[-1]["error"]:
+        return None
+    data = (root / matching[-1]["repo_relative_path"]).read_bytes()
+    if hashlib.sha256(data).hexdigest() != matching[-1]["content_sha256"]:
+        raise SystemExit("SAVED_BYTES_DIFFER_FROM_THE_LEDGER:" + url)
+    return data, matching[-1]["repo_relative_path"]
+
+
+def restored_root_headers(root):
+    """A header reader over a restored root: ``(cik, accession) -> (items, path or None)``."""
+    from sec_urls import hdr_sgml_url
+    rows = ledger_rows(root)
+
+    def read(cik, accession):
+        items = header_items(cik, accession, root)
+        if items is not None:
+            return items, None
+        saved = latest_saved(root=root, rows=rows,
+                             url=hdr_sgml_url(cik=int(cik), accession=accession))
+        if saved is None:
+            return None, None
+        return items_of(saved[0].decode("utf-8", errors="replace")), saved[1]
+    return read
+
+
+def history_blocks_reached(submissions, start):
+    """The index's history blocks a window starting at ``start`` may reach.
+
+    SEC leaves one day between two blocks' declared ranges and files that
+    day's filings in the older block, so a block reaches through the day after
+    its declared end. A filing dated in the window by either basis was filed on
+    or after ``start`` (its report date is not later than its filing date), so
+    a block ending more than a day before ``start`` holds none of them.
+    """
+    return [item["name"] for item in submissions["filings"]["files"]
+            if (date.fromisoformat(item["filingTo"]) + timedelta(days=1)).isoformat() >= start]
 
 
 def keyword_hit(cik, accession, aliases):
@@ -90,13 +166,17 @@ def filings_in_index(submissions):
     return [dict(zip(columns, values)) for values in zip(*columns.values())]
 
 
-def count_window(*, filings, cik, start, end):
+def count_window(*, filings, cik, start, end, header=None, metrics=None):
     """Per metric, per window basis; plus the filings each basis admitted.
 
     8-K and 8-K/A both: an amendment carrying the item is its own entry in the
-    approved event list keyed by accession.
+    approved event list keyed by accession. ``header`` reads a filing's item
+    codes and the path read, ``(None, None)`` if unsaved; by default the
+    checkout's accession materials, whose path is not recorded.
     """
-    routes = _routes()
+    header = header or (lambda cik, accession: (header_items(cik, accession), None))
+    routes = {metric: route for metric, route in _routes().items()
+              if metrics is None or metric in metrics}
     counts = {basis: collections.Counter() for basis in ("filing_date", "report_date")}
     seen = {basis: [] for basis in counts}
     unreadable = []
@@ -104,15 +184,17 @@ def count_window(*, filings, cik, start, end):
         if not filing["form"].startswith("8-K"):
             continue
         for basis, field in (("filing_date", "filingDate"), ("report_date", "reportDate")):
-            date = filing[field]
-            if not date or not start <= date <= end:
+            day = filing[field]
+            if not day or not start <= day <= end:
                 continue
-            items = header_items(cik, filing["accessionNumber"])
+            items, path = header(cik, filing["accessionNumber"])
             if items is None:
                 unreadable.append(filing["accessionNumber"])
                 continue
-            seen[basis].append({"accession": filing["accessionNumber"], "items": items,
-                                field: date})
+            entry = {"accession": filing["accessionNumber"], "items": items, field: day}
+            if path is not None:
+                entry["header"] = path
+            seen[basis].append(entry)
             for metric, route in routes.items():
                 if set(items) & set(route["direct_item_codes"]):
                     counts[basis][metric] += 1
@@ -123,9 +205,13 @@ def count_window(*, filings, cik, start, end):
     return counts, seen, sorted(set(unreadable))
 
 
-def verdict(*, published, by_filing_date, by_report_date):
+def verdict(*, published, by_filing_date, by_report_date, unreadable=()):
     if published is None:
         return "NO_PUBLISHED_VALUE"
+    if unreadable:
+        # A count that skipped a filing it could not read is not a count of
+        # the window, even when it happens to equal the published value.
+        return "NOT_READ"
     agreeing = [basis for basis, count in (("filing_date", by_filing_date),
                                            ("report_date", by_report_date))
                 if str(count) == str(published)]
@@ -151,13 +237,17 @@ def _fresh_body():
     return {**{key: main[key] for key in kept if key in main}, "same_method_as": OUT}
 
 
-def _case_input(*, company_id, report_end):
+def _case_input(*, company_id, report_end, source_root=REPO):
     from vnext.historical_annual_input import prepare_historical_annual_input
+    from vnext.normal_history_plan import checkpoint_replayed_once
     from vnext.normal_period_selection import resolve_period_selection
-    selection = resolve_period_selection(repo_root=REPO, company_id=company_id,
-                                         report_end=report_end)
-    prepared = prepare_historical_annual_input(repo_root=REPO, company_id=company_id,
-                                               period_selection=selection)
+    # A restored root's saved sources are proved through its acquisition
+    # checkpoint; one replay per ledger state, as a frame's plan does.
+    with checkpoint_replayed_once():
+        selection = resolve_period_selection(repo_root=source_root, company_id=company_id,
+                                             report_end=report_end)
+        prepared = prepare_historical_annual_input(repo_root=source_root, company_id=company_id,
+                                                   period_selection=selection)
     return prepared["original_input"]["table_input"]["target_period"], prepared["entity"]
 
 
@@ -173,10 +263,19 @@ def main():
     parser.add_argument("--case", action="append", type=_case,
                         help="label=company_id:report_end; replaces the default cases")
     parser.add_argument("--output", default=OUT)
+    parser.add_argument("--source-root", type=Path, default=None,
+                        help="a data root holding filings the checkout does not, "
+                             "such as one restored from the acquisition's export")
     arguments = parser.parse_args()
     cases = arguments.case or CASES
     if arguments.case and arguments.output == OUT:
         raise SystemExit("A_CASE_OF_ITS_OWN_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    if arguments.source_root is not None and arguments.output == OUT:
+        raise SystemExit("A_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    source = REPO if arguments.source_root is None else arguments.source_root.resolve()
+    header = None if arguments.source_root is None else restored_root_headers(source)
+    metrics = None if arguments.source_root is None else sorted(
+        metric for metric, route in _routes().items() if not route["keyword_item_rules"])
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
@@ -186,16 +285,22 @@ def main():
                 else _fresh_body())
     positions = {}
     for company_id, report_end, label in cases:
-        period, cik = _case_input(company_id=company_id, report_end=report_end)
+        period, cik = _case_input(company_id=company_id, report_end=report_end,
+                                  source_root=source)
         url = submissions_url(cik=int(cik))
-        saved = saved_source(repo_root=REPO, url=url)
+        saved = saved_source(repo_root=source, url=url)
         if saved is None:
             raise SystemExit("SUBMISSIONS_INDEX_NOT_SAVED:" + url)
         start, end = period["period_start"], period["period_end"]
+        submissions = json.loads(saved["raw"])
+        reached = history_blocks_reached(submissions, start)
+        if reached:
+            raise SystemExit("WINDOW_REACHES_A_HISTORY_BLOCK:" + label + ":" + ",".join(reached))
         counts, seen, unreadable = count_window(
-            filings=filings_in_index(json.loads(saved["raw"])), cik=cik, start=start, end=end)
+            filings=filings_in_index(submissions), cik=cik, start=start, end=end,
+            header=header, metrics=metrics)
         rows = {}
-        for metric in sorted(_routes()):
+        for metric in sorted(metrics or _routes()):
             result = select_receipt(found=index.get((company_id, metric, report_end), []),
                                     closure=arguments.closure)["result"]
             published = (None if result is None or result.get("value") is None
@@ -204,8 +309,9 @@ def main():
                    "by_filing_date": counts["filing_date"][metric],
                    "by_report_date": counts["report_date"][metric]}
             row["verdict"] = verdict(published=published, by_filing_date=row["by_filing_date"],
-                                     by_report_date=row["by_report_date"])
-            if published is not None:
+                                     by_report_date=row["by_report_date"],
+                                     unreadable=unreadable)
+            if published is not None and row["verdict"] != "NOT_READ":
                 identity, refusal = identity_for(
                     position={"company_id": company_id, "metric_id": metric,
                               "period_end": report_end, "published": published,
@@ -224,10 +330,13 @@ def main():
             "submissions_index": saved["proof"]["request_repo_relative_path"],
             "eight_ks_in_window": {basis: len(entries) for basis, entries in seen.items()},
             "headers_not_saved": unreadable, "metrics": rows, "filings": seen,
-            "e01_keyword_rule_note": ("E01's column is the literal alias rule over "
-                                      "every saved document of each 8.01 filing; "
-                                      "it is recorded, and E01 is accepted only "
-                                      "from e01-eight-o-one-read.json")}
+            "e01_keyword_rule_note": (
+                ("E01's column is the literal alias rule over every saved document of "
+                 "each 8.01 filing; it is recorded, and E01 is accepted only from "
+                 "e01-eight-o-one-read.json") if metrics is None else
+                ("E01 is not counted over a restored root: its keyword rule reads every "
+                 "saved document of a filing, and a filing only the acquisition saved "
+                 "has its primary document only"))}
         print(label, {metric: row["verdict"] for metric, row in rows.items()}, flush=True)
     owned = {"per_position", "result", "reader", "requirement_closure_hash", "calls"}
     body = {key: value for key, value in previous.items() if key not in owned}

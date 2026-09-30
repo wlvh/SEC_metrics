@@ -52,6 +52,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from vnext.annual_update import saved_source  # noqa: E402
 from vnext.canonical import sha256_bytes  # noqa: E402
 from vnext.historical_event_sources import EVENT_FORMS  # noqa: E402
+from vnext.historical_instance_sources import DEPENDENCY_CLASS as INSTANCE_CLASS  # noqa: E402
 from vnext.historical_sec_extension import (EXTENSION_BODY_PATH, EXTENSION_DIRECTORY,  # noqa: E402
                                             EXTENSION_ORDINAL, EXTENSION_POLICY_PATH,
                                             EXTENSION_RECORD_PATH, EXTENSION_TYPE,
@@ -175,7 +176,24 @@ def _periods(row):
                    if str(consumer).startswith("period:")})
 
 
-def company_need(*, source_root, company, plan, frame, untrusted, scope):
+def instances_per_accession(frames):
+    """The most XBRL instances one annual accession's saved index names, over every frame.
+
+    An accession whose index is not saved yet cannot name its instances, so the
+    bound for it is measured on the accessions that can. Refused if no index
+    names any: then there is nothing to measure the bound on.
+    """
+    counts = {}
+    for frame in frames.values():
+        for row in frame["requirements"]:
+            if row["dependency_class"] == INSTANCE_CLASS:
+                counts[row["accession"]] = counts.get(row["accession"], 0) + 1
+    if not counts:
+        _stop("EXTENSION_PROPOSAL_NO_SAVED_INDEX_NAMES_AN_INSTANCE")
+    return max(counts.values()), len(counts)
+
+
+def company_need(*, source_root, company, plan, frame, untrusted, scope, per_accession):
     """Due rows the scope admits today, and the named bounds for what it cannot name yet."""
     admitted, refused_serving_window, serving_only_outside = [], [], []
     due = [row for row in frame["requirements"] if row["new_acquisition_required"]]
@@ -200,6 +218,19 @@ def company_need(*, source_root, company, plan, frame, untrusted, scope):
     terms = {"declarable_today": len(admitted),
              "refused_today_only_for_an_out_of_frame_consumer": len(refused_serving_window)}
     notes = {"due_rows_serving_only_a_target_outside_the_window": len(serving_only_outside)}
+    # An annual accession whose index is not saved names its instances only
+    # once the index is fetched; each is bounded by the most any saved index names.
+    indexes = {row["accession"]: row for row in frame["requirements"]
+               if row["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"}
+    unnamed_instances = sorted(
+        item["accession"] for item in frame.get("instance_declaration_limitations", [])
+        if item["reason"] == "ACCESSION_INDEX_NOT_SAVED"
+        and any(scope["earliest_report_end"] <= period <= scope["latest_report_end"]
+                for period in _periods(indexes[item["accession"]])))
+    if unnamed_instances:
+        terms["instances_an_index_not_yet_saved_will_name"] = per_accession * len(unnamed_instances)
+        notes["instances_an_index_not_yet_saved_will_name"] = {
+            "accessions": unnamed_instances, "per_accession": per_accession}
     if untrusted:
         index, filings = submissions(source_root, company["primary_cik"], set(untrusted))
         blocks = len(index["filings"]["files"])
@@ -245,6 +276,7 @@ def company_need(*, source_root, company, plan, frame, untrusted, scope):
             hidden_events[report_end] = 2 * events_in(filings, start, end)
         terms["a_missed_target_s_events"] = sum(hidden_events.values())
         terms["a_missed_target_s_annual_chain"] = 2 * len(hidden)
+        terms["a_missed_target_s_instances"] = per_accession * len(hidden)
         terms["a_missed_target_s_proxy"] = len(hidden)
         notes["missed_targets"] = hidden_events
         # 8-Ks a stale block hides inside a target's window.
@@ -285,8 +317,10 @@ def company_need(*, source_root, company, plan, frame, untrusted, scope):
                               | (set(METADATA) | {"ACCESSION_INSTANCE_DISCOVERY",
                                                   "ANNUAL_PERIOD_IDENTITY",
                                                   "FISCAL_EVENT_FILING",
-                                                  "GOVERNANCE_DISCLOSURE_FILING"}
+                                                  "GOVERNANCE_DISCLOSURE_FILING",
+                                                  INSTANCE_CLASS}
                                  if untrusted else set())
+                              | ({INSTANCE_CLASS} if unnamed_instances else set())
                               | ({"GOVERNANCE_DISCLOSURE_FILING"} if governance else set()))}
 
 
@@ -318,12 +352,14 @@ def main():
         wide = {"purposes": list(first_scope["purposes"]), "company_ids": sorted(measured),
                 "dependency_classes": sorted(set(METADATA) | {
                     "ACCESSION_INSTANCE_DISCOVERY", "ANNUAL_PERIOD_IDENTITY",
-                    "FISCAL_EVENT_FILING", "GOVERNANCE_DISCLOSURE_FILING"}),
+                    "FISCAL_EVENT_FILING", "GOVERNANCE_DISCLOSURE_FILING", INSTANCE_CLASS}),
                 **window}
         wide["grants"] = [{"grant": "PROBE", "company_ids": wide["company_ids"],
                            "dependency_classes": wide["dependency_classes"], **window}]
+        per_accession, measured_accessions = instances_per_accession(frames)
         need = {company_id: company_need(source_root=source_root, company=company, plan=plan,
-                                         frame=frame, untrusted=untrusted, scope=wide)
+                                         frame=frame, untrusted=untrusted, scope=wide,
+                                         per_accession=per_accession)
                 for company_id, (company, plan, frame, untrusted) in measured.items()}
     classes = sorted({name for item in need.values() for name in item["classes"]})
     grants = [{"grant": "X_" + name,
@@ -379,6 +415,8 @@ def main():
            "the_comment_body_to_post": body, "the_comment_body_as_text": text,
            "digest_of_the_body": digest,
            "need_notes": {company_id: item["notes"] for company_id, item in sorted(need.items())},
+           "instances_per_accession": {"bound": per_accession,
+                                       "measured_on_saved_indexes": measured_accessions},
            "verified": checks, "calls": {"provider": 0, "paid": 0, "sec": 0},
            "production_authorized": False}
     OUT.parent.mkdir(parents=True, exist_ok=True)
