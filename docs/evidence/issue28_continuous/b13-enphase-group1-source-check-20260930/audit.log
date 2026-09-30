@@ -1,0 +1,44 @@
+ISSUE28 B13 ENPHASE GROUP 1 / READ-ONLY SOURCE CHECK / 2026-09-30
+Baseline HEAD: 419ddb1d75513a4fa80a7e21f605322ff6f26b0d
+Inputs: calls/0191/semantic-request.json; calls/0191/source.json; batch33-authorization/b13-191-diagnosis/; repository source blob.
+No calls, no retry, no modification of 191/192, no Candidate/Result credit. The pre-existing modified execution-state.json was not touched.
+
+JSON syntax:
+  python3 -m json.tool /Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0191/semantic-request.json >/dev/null  PASS
+  python3 -m json.tool /Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0191/source.json >/dev/null            PASS
+  file SHA256 request=45e4c32e3fe588145d145cac5e2c03981082e60c47fb70744d3569d8d051e5dd
+  file SHA256 source =4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597
+
+Identity and original bytes:
+  canonical source_id recomputed: sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c PASS
+  canonical request_id recomputed: sha256:b08e207fc53e2e26028f33214d0becde2e840d3d0790e833d020b1e1299bfda7 PASS
+  company=enphase_energy, metric=B13, CIK=1463101, target FY2025 (2025-01-01 to 2025-12-31) PASS
+  document accession=0001463101-26-000013, primary=enph-20251231.htm, request/source filing and registrant binding equal PASS
+  source proof attempt, URL, path, size and hash equal document raw-blob record PASS
+  original path=evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm
+  original size=2,973,878 bytes; SHA256=7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112 PASS
+
+Request group exact restoration with capacity_semantic_review._restore_units:
+  VISIBLE_TEXT ordinal 5: B1884-B2381, 498 rows, unit sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad
+    original-source equality PASS; canonical unit id PASS; payload 149813 bytes, sha256 a51a6be0abc513bf11d513afa95a462fbc61baa245ef9769da054e7eca741ead PASS
+    498/498 visible raw byte spans hash-match the original blob PASS
+  VISIBLE_TEXT ordinal 6: B2382-B2708, 327 rows, unit sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7
+    original-source equality PASS; canonical unit id PASS; payload 84408 bytes, sha256 926da62941edd3589b9c0c6e017dc5410fb6d63514c8e443b281a3c38e096357 PASS
+    327/327 visible raw byte spans hash-match the original blob PASS
+  NATIVE_FACTS ordinal 0: F1-F236, 236 rows, unit sha256:2bf0475d01d7cc29295a1d9b6ee635aad231a38d46f85ea407c182c18e098bb6
+    original-source equality PASS; canonical unit id PASS; payload 149823 bytes, sha256 ae5d04ac2cb22a69627785987b2c4f94041e1a566566e464c357b1378e9259d8 PASS
+  NATIVE_FACTS ordinal 1: F237-F451, 215 rows, unit sha256:23c828273501990f075abe76dc8bae989c11d13673b0832f43e4cdf364b106af
+    original-source equality PASS; canonical unit id PASS; payload 149260 bytes, sha256 f34113642ebcabc762d818b12ceb86bc108609a0cc027a014c8d6ba1d3e5efbd PASS
+  Native parser independently produced 1839 source facts; all 451 selected ordinal/fact records equal the original parser's records PASS.
+  Request required-unit list, source order, per-unit census (498/327/236/215), company/period/source/document identity all match PASS.
+
+Semantic check of all 825 visible rows and 451 native rows:
+  Physical manufacturing context: B2377 (US/India manufacturing cost), F449 (US-manufactured-and-sold microinverters).
+  Forecast/procurement: B2011 (contract manufacturer procurement against production forecast, $252.3m obligation).
+  General business/expansion: B2349; no specified physical capacity project.
+  Manufacturing agreement titles only: B2547, B2550, B2553, B2556, B2559, B2576.
+  Nonphysical lookalikes: B1960 office lease; B2263 tax utilization; B2402 subsequent office/workforce restructuring; F450-F451 USD tax-credit benefit; F21-F22 debt conversion ratios; F29-F30 reportable/operating segments.
+  Observed native unit refs: unit 0 {'':73,'number':2,'segment':2,'rate':1,'usd':135,'shares':15,'usdPerShare':8}; unit 1 {'shares':10,'usd':191,'':14}.
+  No explicit FY2025 actual physical output, same-scope available capacity, utilization rate, manufacturing bottleneck, or quantified plant expansion identified in these four units. This is a group-limited reading, not a full-filing absence finding.
+
+Coverage limits: source has 29 units (7 visible, 10 native facts, 12 supplements); this request has four (2 visible, 2 facts). B1884-B2708 are 825/2709 saved visible blocks; F1-F451 are 451/1839 original native facts. The other units and agreement exhibits were not interpreted here. Request has zero required candidates and zero program-owned physical proofs, which was not used as proof of absence. Source semantic coverage, numeric-pair completeness, absence, and freshness flags remain false.
