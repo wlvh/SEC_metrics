@@ -1,0 +1,181 @@
+{
+ "approver_login": "wlvh",
+ "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
+ "delegation_body_sha256": "090c60f25ab0883df25014c9772ab93884b70b2124df142fb92227742a6b75ec",
+ "delegation_record_path": "docs/evidence/issue47_history/acquisition-extension/approval-comment.json",
+ "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5916035631",
+ "extends": {
+  "delegation_body_sha256": "131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5886314727",
+  "ledger_state": {
+   "claim_count": 1130,
+   "claims": {
+    "sha256": "c23650743f5a641fc3c87af3c54e29d07561628a7097cbad4dd41db45c7e08a0",
+    "size": 812668
+   },
+   "cumulative": [
+    0,
+    0,
+    1354
+   ],
+   "export_id": "sha256:817f632dbddee5ff23482a8d56fbe8d6cac3dea60ad5aa3ab8458211f1a557bd",
+   "resumes": {
+    "sha256": "69395248537e98d3b383d3f08ec7e596853d3c434c0e610981d80a8bb81d28f0",
+    "size": 2427
+   }
+  }
+ },
+ "extension_ordinal": 1,
+ "maximum_additional_provider_paid_sec_calls": [
+  0,
+  0,
+  513
+ ],
+ "reclaim": [
+  {
+   "acquisition_kind": "REPLACEMENT_ACQUISITION",
+   "dependency_classes": [
+    "FISCAL_EVENT_FILING"
+   ]
+  },
+  {
+   "acquisition_kind": "SNAPSHOT_REFRESH",
+   "dependency_classes": [
+    "SUBMISSIONS_HISTORY",
+    "SUBMISSIONS_INDEX"
+   ]
+  }
+ ],
+ "repository": "wlvh/SEC_metrics",
+ "requirement_id": "issue_47_v1",
+ "scope": {
+  "company_ids": [
+   "enphase_energy",
+   "ford_motor_company",
+   "jpmorgan_chase",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "dependency_classes": [
+   "ACCESSION_INSTANCE_DISCOVERY",
+   "ACCESSION_XBRL_INSTANCE",
+   "ANNUAL_PERIOD_IDENTITY",
+   "FISCAL_EVENT_FILING",
+   "GOVERNANCE_DISCLOSURE_FILING",
+   "SUBMISSIONS_HISTORY",
+   "SUBMISSIONS_INDEX"
+  ],
+  "earliest_report_end": "2021-12-31",
+  "grants": [
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "ACCESSION_INSTANCE_DISCOVERY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_ACCESSION_INSTANCE_DISCOVERY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "jpmorgan_chase",
+     "lumen_technologies",
+     "macys",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "ACCESSION_XBRL_INSTANCE"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_ACCESSION_XBRL_INSTANCE",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "ANNUAL_PERIOD_IDENTITY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_ANNUAL_PERIOD_IDENTITY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "FISCAL_EVENT_FILING"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_FISCAL_EVENT_FILING",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_GOVERNANCE_DISCLOSURE_FILING",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "SUBMISSIONS_HISTORY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_SUBMISSIONS_HISTORY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "SUBMISSIONS_INDEX"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_SUBMISSIONS_INDEX",
+    "latest_report_end": "2026-01-31"
+   }
+  ],
+  "latest_report_end": "2026-01-31",
+  "purposes": [
+   "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
+  ]
+ }
+}
