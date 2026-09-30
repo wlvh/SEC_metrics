@@ -267,6 +267,26 @@ class ASecondReadingOfOneFactConfirmsItTest(unittest.TestCase):
         self.assertEqual("first.json", merged[0]["evidence"])
         self.assertEqual(["second.json"], merged[0]["confirmed_by"])
 
+    def test_a_result_under_another_spec_is_a_second_acceptance(self):
+        """D01's v1 and v2 results of one filing: the same lines, two identities."""
+        merged = generator._merge_confirmations([
+            self._entry("first.json"),
+            self._entry("second.json", identity={"spec_closure_hash": "sha256:" + "3" * 64}),
+            self._entry("third.json", identity={"spec_closure_hash": "sha256:" + "3" * 64})])
+        self.assertEqual(["CONTENT_B01_X_2023", "CONTENT_B01_X_2023_SPEC_33333333"],
+                         [entry["acceptance_id"] for entry in merged])
+        self.assertEqual(["third.json"], merged[1]["confirmed_by"])
+        self.assertNotIn("confirmed_by", merged[0])
+
+    def test_another_spec_does_not_excuse_another_value_or_filing(self):
+        other_spec = {"spec_closure_hash": "sha256:" + "3" * 64}
+        for change in ({"accepted_value": "6", "identity": other_spec},
+                       {"identity": {**other_spec, "filings": ["0000000000-24-000002"]}}):
+            with self.subTest(change), self.assertRaisesRegex(
+                    generator.RegisterError, "READINGS_DISAGREE_ON_ONE_COORDINATE"):
+                generator._merge_confirmations([self._entry("first.json"),
+                                                self._entry("second.json", **change)])
+
     def test_readings_that_disagree_on_one_coordinate_stop_the_build(self):
         for change in ({"accepted_value": "6"},
                        {"identity": {"filings": ["0000000000-24-000002"]}},

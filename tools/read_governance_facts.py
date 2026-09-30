@@ -258,7 +258,9 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
         source_document: Repository path of the target annual report.
         selection: The pinned period selection (names the prior filing).
         published: ``{"C03": value or None, "C04": value or None}``.
-        event_items: The window's filings with their item codes.
+        event_items: The window's filings with their item codes, or None
+            when no event reading read this position's window - which is
+            not the same as a window with no 8-K, and reads nothing.
     """
     prior = selection.get("prior_filing") or {}
     entry = {"company_id": company_id,
@@ -320,7 +322,8 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
         if not prior_names:
             prior_note = ("NO_SAVED_DOCUMENT_OF_THE_PRIOR_ACCESSION_NAMES_AN_AUDITOR:"
                           + prior_filing["accessionNumber"])
-    four_o_one = [f["accession"] for f in event_items if "4.01" in f["items"]]
+    four_o_one = (None if event_items is None
+                  else [f["accession"] for f in event_items if "4.01" in f["items"]])
 
     # Macy's names the same firm "KPMG LLP" and "KPMG, LLP". A difference of
     # punctuation and case is the same firm - the route's judgement too, so
@@ -332,7 +335,7 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
                  and sorted(map(firm, names["target"])) == sorted(map(firm, prior_names)))
     spelled_differently = same_firm and sorted(names["target"]) != sorted(prior_names)
     value = None
-    if names["target"] and prior_names and not prior_note:
+    if names["target"] and prior_names and not prior_note and four_o_one is not None:
         value = Decimal(0) if (same_firm and not four_o_one) else None
     c04 = published.get("C04")
     entry["C04"] = {"published": c04,
@@ -344,11 +347,31 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
                     "the_two_filings_spell_the_firm_differently": spelled_differently,
                     "read": str(value) if value is not None else None,
                     "why_not_read": (None if value is not None
+                                     else "THE_8K_WINDOW_WAS_NOT_READ" if four_o_one is None
                                      else "PREVIOUS_YEARS_FILING_NOT_READABLE"),
                     "verdict": ("NO_PUBLISHED_VALUE" if c04 is None
                                 else "NOT_READ" if value is None
                                 else "MATCH" if value == Decimal(c04) else "DIFFERS")}
     return entry
+
+
+def window_items(*, events, label):
+    """The 8-K item codes of this position's window, and the reading they are from.
+
+    The window is read by an event-count reading. A position no given reading
+    read gets (None, None): absent from the readings is not a window without
+    item 4.01, and treating it as one would accept a zero nobody checked. Two
+    readings that both read the window must name the same filings; every
+    reading that read it is returned.
+    """
+    found = {path: rows[label]["filings"]["filing_date"]
+             for path, rows in events.items() if label in rows}
+    if not found:
+        return None, None
+    listed = [[(f["accession"], f["items"]) for f in items] for items in found.values()]
+    if any(entry != listed[0] for entry in listed[1:]):
+        raise SystemExit("EVENT_READINGS_DISAGREE_ON_A_WINDOW:" + label)
+    return sorted(found), found[sorted(found)[0]]
 
 
 def _case_input(*, company_id, report_end):
@@ -371,12 +394,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
+    parser.add_argument("--events", action="append",
+                        help="an event-count reading whose windows give the 8-K item "
+                             "codes (default: " + EVENTS + "); may be repeated")
     arguments = parser.parse_args()
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
     index = index_receipts(receipts=receipts)
-    events = json.loads((REPO / EVENTS).read_text(encoding="utf-8"))["per_position"]
+    event_readings = arguments.events or [EVENTS]
+    events = {path: json.loads((REPO / path).read_text(encoding="utf-8"))["per_position"]
+              for path in event_readings}
     previous = json.loads((REPO / OUT).read_text(encoding="utf-8"))
     positions = {}
     for company_id, report_end, label in CASES:
@@ -388,11 +416,11 @@ def main():
                                     closure=arguments.closure)["result"]
             published[metric] = (None if result is None or result.get("value") is None
                                   else str(result["value"]))
+        window_from, event_items = window_items(events=events, label=label)
         entry = read_case(company_id=company_id, label=label, period=period, cik=cik,
                           source_document=document, selection=selection,
-                          published=published,
-                          event_items=events.get(label, {}).get("filings", {}).get(
-                              "filing_date", []))
+                          published=published, event_items=event_items)
+        entry["C04"]["eight_k_window_read_by"] = window_from
         for metric in ("C03", "C04"):
             row = entry[metric]
             if row["published"] is None:
@@ -417,10 +445,11 @@ def main():
         positions[label] = entry
         print(label, "C03", entry["C03"]["verdict"], "C04", entry["C04"]["verdict"], flush=True)
     owned = {"per_position", "read_against_batch", "reader", "requirement_closure_hash",
-             "needed_facts_not_read", "calls"}
+             "needed_facts_not_read", "calls", "eight_k_windows_from"}
     body = {key: value for key, value in previous.items() if key not in owned}
     body.update({"reader": "tools/read_governance_facts.py",
                  "requirement_closure_hash": arguments.closure,
+                 "eight_k_windows_from": event_readings,
                  "needed_facts_not_read": UNREAD, "per_position": positions,
                  "calls": {"provider": 0, "paid": 0, "sec": 0}})
     (REPO / OUT).write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)

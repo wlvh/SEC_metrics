@@ -15,8 +15,16 @@ reading already carries are kept; what the reader owns is regenerated.
 Usage:
     python3 tools/read_single_facts.py --runs-root <flat runs root> \
         --closure sha256:<closure the compared results ran under>
+
+Another year's B12 is read the same way from that year's own filing, into a
+reading of its own, from a data root restored from the acquisition's export:
+
+    python3 tools/read_single_facts.py --runs-root <flat runs root> \
+        --closure sha256:<closure> --rpo-position <company_id>:<period_end> \
+        --source-root <restored data root> --output <reading path>
 """
 import argparse
+import hashlib
 import html
 import json
 import re
@@ -102,10 +110,11 @@ def read_compensation_row(*, text, officer, year):
     return None
 
 
-def _identity(*, index, closure, company_id, metric_id, period_end, published, document):
+def _identity(*, index, closure, company_id, metric_id, period_end, published, document,
+              source=REPO):
     from acceptance_readings import accession_of_document
     from bind_acceptance_readings import identity_for
-    accession, _ = accession_of_document(repo_root=REPO, document=document)
+    accession, _ = accession_of_document(repo_root=source, document=document)
     identity, refusal = identity_for(
         position={"company_id": company_id, "metric_id": metric_id, "period_end": period_end,
                   "published": published, "reading_filings": [accession],
@@ -117,13 +126,67 @@ def _identity(*, index, closure, company_id, metric_id, period_end, published, d
     return identity
 
 
+def _rpo_position(*, key, index, closure, published, source, output):
+    """One year's B12 from that year's own filing, as the default reading reads its year."""
+    from vnext.historical_annual_input import prepare_historical_annual_input
+    from vnext.normal_history_plan import checkpoint_replayed_once
+    from vnext.normal_period_selection import resolve_period_selection
+    company_id, period_end = key.split(":")
+    # A restored root's saved sources are proved through its acquisition
+    # checkpoint; one replay per ledger state, as a frame's plan does.
+    with checkpoint_replayed_once():
+        selection = resolve_period_selection(repo_root=source, company_id=company_id,
+                                             report_end=period_end)
+        prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
+                                                   period_selection=selection)
+    document = prepared["original_input"]["table_input"]["source_repo_relative_path"]
+    raw = (source / document).read_bytes()
+    concept = "us-gaap:RevenueRemainingPerformanceObligation"
+    value, not_taken = read_instant_fact(text=raw.decode("utf-8-sig", errors="replace"),
+                                         concept=concept, period_end=period_end)
+    shown = published(company_id, "B12", period_end)
+    default = json.loads((REPO / RPO).read_text(encoding="utf-8"))
+    body = {key_: default[key_] for key_ in ("record_type", "issue", "what_this_is",
+                                             "what_this_does_not_establish",
+                                             "and_what_the_definition_insists_on",
+                                             "production_authorized")}
+    body.update({
+        "same_method_as": RPO, "reader": "tools/read_single_facts.py",
+        "company_id": company_id, "metric_id": "B12", "period_end": period_end,
+        "read_from": {"document": document, "concept": concept,
+                      "context": "instant " + period_end + ", no explicit members"},
+        "document_sha256": hashlib.sha256(raw).hexdigest(),
+        "published": shown, "read": None if value is None else str(int(value)),
+        "facts_not_taken": not_taken,
+        "verdict": ("NO_PUBLISHED_VALUE" if shown is None else "NOT_READ" if value is None
+                    else "MATCH" if value == Decimal(shown) else "DIFFERS"),
+        "calls": {"provider": 0, "paid": 0, "sec": 0}})
+    if shown is not None:
+        body["checked_identity"] = _identity(index=index, closure=closure,
+                                             company_id=company_id, metric_id="B12",
+                                             period_end=period_end, published=shown,
+                                             document=document, source=source)
+    (REPO / output).write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)
+                               + "\n", encoding="utf-8")
+    print("B12", key, body["verdict"], body["read"])
+    return 0
+
+
 def main():
     from vnext.historical_coverage import select_receipt
     from vnext.historical_run_receipts import collect_run_receipts, index_receipts
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
+    parser.add_argument("--rpo-position", help="<company_id>:<period_end>: read only this "
+                        "position's B12, from its own filing, into --output")
+    parser.add_argument("--output")
+    parser.add_argument("--source-root", type=Path, default=None,
+                        help="a data root holding originals the checkout does not, "
+                             "such as one restored from the acquisition's export")
     arguments = parser.parse_args()
+    if arguments.rpo_position and arguments.output in (None, RPO):
+        raise SystemExit("A_POSITION_OF_ITS_OWN_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
@@ -133,6 +196,13 @@ def main():
         result = select_receipt(found=index.get((company_id, metric_id, period_end), []),
                                 closure=arguments.closure)["result"]
         return None if result is None or result.get("value") is None else str(result["value"])
+
+    if arguments.rpo_position:
+        return _rpo_position(key=arguments.rpo_position, index=index,
+                             closure=arguments.closure, published=published,
+                             source=(REPO if arguments.source_root is None
+                                     else arguments.source_root.resolve()),
+                             output=arguments.output)
 
     rpo = json.loads((REPO / RPO).read_text(encoding="utf-8"))
     # The one saved accession directory holding the document the reading names.

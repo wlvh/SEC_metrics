@@ -32,8 +32,8 @@ sys.path.insert(0, str(REPO / "tools"))
 
 from acceptance_readings import (C02_COMPOSITION, C03_ACROSS_PROXIES, COMPENSATION, CROSS,  # noqa: E402
                                  CROSS_READINGS,
-                                 D01_READINGS, DEBT_TO_EQUITY, E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
-                                 EVENT_READINGS, GOVERNANCE, LODGING, LODGING_READINGS, READINGS, RPO, TEXT, load,
+                                 D01_READINGS, DEBT_TO_EQUITY_READINGS, E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
+                                 EVENT_READINGS, GOVERNANCE, LODGING, LODGING_READINGS, READINGS, RPO_READINGS, TEXT, load,
                                  positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
@@ -183,7 +183,7 @@ HEADINGS_LIMIT = (
 def _read_from(position):
     """The reading-specific locator an entry quotes."""
     path, case, row = position["reading"], position["case"], position["slot"]
-    if path == DEBT_TO_EQUITY:
+    if path in DEBT_TO_EQUITY_READINGS:
         return {"document": case["document"],
                 "debt_rows": case["balance_sheet"]["debt_rows"],
                 "equity_row": case["balance_sheet"]["equity_row"],
@@ -229,7 +229,7 @@ def _read_from(position):
     if path in D01_READINGS:
         return {"headings": len(case["headings_read"]), "accession": case["accession"],
                 "document": case["document"], "heading_shapes": case["heading_shapes"]}
-    if path == RPO:
+    if path in RPO_READINGS:
         return case["read_from"]
     if path == COMPENSATION:
         return {"document": case["document"], "where": case["where"],
@@ -239,7 +239,7 @@ def _read_from(position):
 
 def _method_and_limit(position):
     path, metric = position["reading"], position["metric_id"]
-    if path == DEBT_TO_EQUITY:
+    if path in DEBT_TO_EQUITY_READINGS:
         return DEBT_TO_EQUITY_METHOD, DEBT_TO_EQUITY_LIMIT
     if path in CROSS_READINGS:
         return STATEMENT_METHOD, STATEMENT_LIMIT
@@ -261,7 +261,7 @@ def _method_and_limit(position):
         return TEXT_METHOD, TEXT_LIMIT
     if path in D01_READINGS:
         return HEADINGS_FROM_BYTES_METHOD, HEADINGS_LIMIT
-    if path == RPO:
+    if path in RPO_READINGS:
         return (RPO_METHOD, position["case"]["what_this_does_not_establish"])
     if path == COMPENSATION:
         return COMPENSATION_METHOD, COMPENSATION_LIMIT
@@ -338,8 +338,6 @@ def _accepted(position):
 
 
 def _acceptance_id(position):
-    if position["reading"] == RPO:
-        return "CONTENT_B12_SALESFORCE_2026"
     if position["reading"] == COMPENSATION:
         return "CONTENT_C03_PARAMOUNT_2025"
     if position["reading"] in E01_CANDIDATE_READINGS:
@@ -358,6 +356,24 @@ def _acceptance_id(position):
 _CONFIRMATION_FIELDS = ("company_id", "metric_id", "period_end", "accepted_value")
 
 
+def _differs_in_the_spec_only(first, entry):
+    """Two readings of one coordinate's value, each of a result under another Spec.
+
+    A Spec revision can move a result's identity and not its value: D01's v1 to
+    v2 raised the item bound only, so a coordinate read under v1 and read again
+    under v2 has two results with the same lines. Each reading binds its own
+    result's meaning, so these are two acceptances, not one fact read twice -
+    and not a disagreement either. Anything else that differs (the value, a
+    filing, the period, the unit) still is one, and stops the build.
+    """
+    from vnext.historical_coverage import ACCEPTANCE_IDENTITY_FIELDS
+    first_identity, identity = first["checked_identity"], entry["checked_identity"]
+    return (all(first[field] == entry[field] for field in _CONFIRMATION_FIELDS)
+            and first_identity.get("spec_closure_hash") != identity.get("spec_closure_hash")
+            and all(first_identity.get(field) == identity.get(field)
+                    for field in ACCEPTANCE_IDENTITY_FIELDS if field != "spec_closure_hash"))
+
+
 def _merge_confirmations(entries):
     """One acceptance per identifier; a later reading of the same fact confirms it.
 
@@ -372,6 +388,9 @@ def _merge_confirmations(entries):
     kept, order = {}, []
     for entry in entries:
         identifier = entry["acceptance_id"]
+        if identifier in kept and _differs_in_the_spec_only(kept[identifier], entry):
+            identifier += "_SPEC_" + entry["checked_identity"]["spec_closure_hash"][7:15].upper()
+            entry["acceptance_id"] = identifier
         if identifier not in kept:
             kept[identifier] = entry
             order.append(identifier)

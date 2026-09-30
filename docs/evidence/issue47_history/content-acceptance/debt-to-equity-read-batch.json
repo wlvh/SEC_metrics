@@ -1,0 +1,147 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "definition": "period-end carrying debt, finance leases included, over the parent's stockholders' equity (02_指标定义 B06; catalog/r5/B06_*_v4..v6 keep it)",
+ "per_position": {
+  "salesforce-2025": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:ConvertibleDebtCurrent",
+      "value": "0"
+     },
+     {
+      "caption": "Noncurrent debt",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "8433000000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "61173000000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:ed2c41e6fd5624ae62b2afa29275f3229b82893b43785f606f99911df1de643d",
+     "run_id": "run:historical-period:9ed39cbf7348a9007c55d5c1c2ab6749d92d05335ef2be52a3c67c17d961993c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-25-000006"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-01-31",
+    "period_start": "2025-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "document": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm",
+   "document_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+   "equity": "61173000000",
+   "finance_leases": {
+    "add": "678000000",
+    "concept": "us-gaap:FinanceLeaseLiability",
+    "evidence": [
+     "Accrued expenses and other liabilities",
+     "Other noncurrent liabilities"
+    ],
+    "treatment": "OUTSIDE_THE_DEBT_ROWS"
+   },
+   "period_end": "2025-01-31",
+   "published": "0.1489382570741994016968270315",
+   "read": "0.1489382570741994016968270315",
+   "total_debt": "9111000000",
+   "verdict": "MATCH",
+   "why": null
+  },
+  "southwest-2024": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Current maturities of long-term debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+      "value": "1630000000"
+     },
+     {
+      "caption": "Long-term debt less current maturities",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+      "value": "5069000000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total stockholders' equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "10350000000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:cfa795f8af27edcca2ee40adff0161e73bca4b40262aac0d021f33f1c9a50fa3",
+     "run_id": "run:historical-period:1f76eebc1c5eac781d0e89edcdb4597c0999fa4f71c0468f0e740084e9b2a9b1"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-25-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "southwest_airlines",
+   "document": "evidence/request_attempts/cb/cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0/luv-20241231.htm",
+   "document_sha256": "cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0",
+   "equity": "10350000000",
+   "finance_leases": {
+    "add": "0",
+    "evidence": [
+     "Property and equipment",
+     "Current maturities of long-term debt",
+     "Long-term debt less current maturities"
+    ],
+    "treatment": "INSIDE_THE_DEBT_ROWS"
+   },
+   "period_end": "2024-12-31",
+   "published": "0.6472463768115942028985507246",
+   "read": "0.6472463768115942028985507246",
+   "total_debt": "6699000000",
+   "verdict": "MATCH",
+   "why": null
+  }
+ },
+ "reader": "tools/read_debt_to_equity.py",
+ "record_type": "ISSUE_47_B06_BALANCE_SHEET_READING",
+ "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd"
+}

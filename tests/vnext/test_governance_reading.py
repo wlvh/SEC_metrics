@@ -68,19 +68,51 @@ class ThePlaceholderIsReadAsWhatTheTableSaysItIsTest(unittest.TestCase):
 class TheCommittedReadingRederivesTest(unittest.TestCase):
 
     def test_every_position(self):
-        events = json.loads((ROOT / reader.EVENTS).read_text(encoding="utf-8"))["per_position"]
         for label, row in _committed().items():
+            read_by = row["C04"]["eight_k_window_read_by"]
+            items = None if read_by is None else json.loads((ROOT / read_by[0]).read_text(
+                encoding="utf-8"))["per_position"][label]["filings"]["filing_date"]
             entry = reader.read_case(
                 company_id=row["company_id"], label=label,
                 period={"period_start": row["period"][0], "period_end": row["period"][1]},
                 cik=row["cik"], source_document=row["target_document"],
                 selection={"prior_filing": row["prior_filing"]},
                 published={"C03": row["C03"]["published"], "C04": row["C04"]["published"]},
-                event_items=events.get(label, {}).get("filings", {}).get("filing_date", []))
+                event_items=items)
             with self.subTest(label):
                 for metric in ("C03", "C04"):
                     self.assertEqual({k: v for k, v in row[metric].items()
-                                      if k != "checked_identity"}, entry[metric])
+                                      if k not in ("checked_identity", "eight_k_window_read_by")},
+                                     entry[metric])
+
+    def test_a_window_no_reading_read_is_not_a_window_without_item_4_01(self):
+        """Salesforce FY2026's window is read only by the batch's event reading."""
+        default = json.loads((ROOT / reader.EVENTS).read_text(encoding="utf-8"))["per_position"]
+        self.assertNotIn("salesforce-2026", default)
+        self.assertEqual((None, None), reader.window_items(events={reader.EVENTS: default},
+                                                           label="salesforce-2026"))
+        row = _committed()["salesforce-2026"]
+        entry = reader.read_case(
+            company_id=row["company_id"], label="salesforce-2026",
+            period={"period_start": row["period"][0], "period_end": row["period"][1]},
+            cik=row["cik"], source_document=row["target_document"],
+            selection={"prior_filing": row["prior_filing"]},
+            published={"C03": None, "C04": "0"}, event_items=None)
+        self.assertEqual((None, "THE_8K_WINDOW_WAS_NOT_READ", "NOT_READ"),
+                         (entry["C04"]["read"], entry["C04"]["why_not_read"],
+                          entry["C04"]["verdict"]))
+        # The same firm in both years is not enough on its own.
+        self.assertEqual(entry["C04"]["auditor_named_in_the_target_filing"],
+                         entry["C04"]["auditor_named_in_the_previous_years_filing"])
+
+    def test_two_readings_of_one_window_must_name_the_same_filings(self):
+        rows = {"x": {"filings": {"filing_date": [{"accession": "a", "items": ["2.02"]}]}}}
+        other = {"x": {"filings": {"filing_date": [{"accession": "a", "items": ["4.01"]}]}}}
+        self.assertEqual((["one.json", "two.json"], rows["x"]["filings"]["filing_date"]),
+                         reader.window_items(events={"one.json": rows, "two.json": rows},
+                                             label="x"))
+        with self.assertRaisesRegex(SystemExit, "EVENT_READINGS_DISAGREE_ON_A_WINDOW"):
+            reader.window_items(events={"one.json": rows, "two.json": other}, label="x")
 
     def test_every_recorded_identity_was_recorded_when_the_reading_was_made(self):
         for label, row in _committed().items():

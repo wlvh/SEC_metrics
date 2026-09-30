@@ -10612,6 +10612,72 @@
    "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_B06_SALESFORCE_2025",
+   "accepted_value": "0.1489382570741994016968270315",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:ed2c41e6fd5624ae62b2afa29275f3229b82893b43785f606f99911df1de643d",
+     "run_id": "run:historical-period:9ed39cbf7348a9007c55d5c1c2ab6749d92d05335ef2be52a3c67c17d961993c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-25-000006"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-01-31",
+    "period_start": "2025-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2025-01-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:ConvertibleDebtCurrent",
+      "value": "0"
+     },
+     {
+      "caption": "Noncurrent debt",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "8433000000"
+     }
+    ],
+    "document": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm",
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "61173000000"
+    },
+    "finance_leases": {
+     "add": "678000000",
+     "concept": "us-gaap:FinanceLeaseLiability",
+     "evidence": [
+      "Accrued expenses and other liabilities",
+      "Other noncurrent liabilities"
+     ],
+     "treatment": "OUTSIDE_THE_DEBT_ROWS"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_B06_SALESFORCE_2026",
    "accepted_value": "0.2531872442595786412363464205",
    "checked_identity": {
@@ -10673,6 +10739,72 @@
       "Other noncurrent liabilities"
      ],
      "treatment": "OUTSIDE_THE_DEBT_ROWS"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B06_SOUTHWEST_2024",
+   "accepted_value": "0.6472463768115942028985507246",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:cfa795f8af27edcca2ee40adff0161e73bca4b40262aac0d021f33f1c9a50fa3",
+     "run_id": "run:historical-period:1f76eebc1c5eac781d0e89edcdb4597c0999fa4f71c0468f0e740084e9b2a9b1"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-25-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "southwest_airlines",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Current maturities of long-term debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+      "value": "1630000000"
+     },
+     {
+      "caption": "Long-term debt less current maturities",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+      "value": "5069000000"
+     }
+    ],
+    "document": "evidence/request_attempts/cb/cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0/luv-20241231.htm",
+    "equity_row": {
+     "caption": "Total stockholders' equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "10350000000"
+    },
+    "finance_leases": {
+     "add": "0",
+     "evidence": [
+      "Property and equipment",
+      "Current maturities of long-term debt",
+      "Long-term debt less current maturities"
+     ],
+     "treatment": "INSIDE_THE_DEBT_ROWS"
     }
    },
    "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
@@ -17130,6 +17262,46 @@
    "what_this_does_not_establish": "what is established is that the row under the approved scope carries this value. It does not establish that the scope is the right scope, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_B12_SALESFORCE_2025",
+   "accepted_value": "63400000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:b08d8bc11ae86e0cd8bcecd97ae8895c16e4a666117b24e71e11f33b413fa7f9",
+     "run_id": "run:historical-period:34a18ff6ac0745dac932b64bb0d056533d04c5a6403c1e858e35e816e299d88c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-25-000006"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-01-31",
+    "period_start": "2025-01-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json",
+   "method": "the filing's own inline XBRL fact for remaining performance obligation at the period end, undimensioned, against the accession-instance value the route published.",
+   "metric_id": "B12",
+   "period_end": "2025-01-31",
+   "read_from": {
+    "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+    "context": "instant 2025-01-31, no explicit members",
+    "document": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm"
+   },
+   "what_this_does_not_establish": "that RPO is a good substitute for ARR, which is a product question the approved definition already answers by naming it a substitute. It establishes that the published figure is the registrant's own reported remaining performance obligation at the period end."
+  },
+  {
    "acceptance_id": "CONTENT_B12_SALESFORCE_2026",
    "accepted_value": "72400000000",
    "checked_identity": {
@@ -22376,9 +22548,9 @@
    "accepted_value": "9601958",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:8da2152b36f5b6a2cf482f65d6f397985579163d4e214d17ce2fe640a9862187",
-     "run_id": "run:historical-period:2b4d3fedc9e5dd23c4f3a88a368e5d9f39a65dfb6c52896a4b17e79997a4cf19"
+     "run_id": "run:historical-period:062e3bb10d857641b966b8666cd96297361248ff6f07376dfb2b732cf77f735d"
     },
     "checked_against_the_reading": [
      "value",
@@ -22570,9 +22742,9 @@
    "accepted_value": "27519558",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:12d4387c28331e371b91d4d358483fd5d799573d1d287107106db3f50769584e",
-     "run_id": "run:historical-period:f33945160d95879f24aae87e03656c4c8a5fbb301c43d4ad9d63c76525671c31"
+     "run_id": "run:historical-period:f93729bb891723d1c02a1a296b91851c7f745324ca7496612163a2fee51e5057"
     },
     "checked_against_the_reading": [
      "value",
@@ -22740,9 +22912,9 @@
    "accepted_value": "24936641",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:3fc4086f85f22108b13b6a652cc52242602a54cd1b44b08de1b19717e4c53903",
-     "run_id": "run:historical-period:ec9ffa2ec8811464b0c962dd97558096ef343122316c720cf15412d76171b1f8"
+     "run_id": "run:historical-period:754cf8dc61783c680daa921487d4df7d5fb393cdaec1e48019c685d4746af6b9"
     },
     "checked_against_the_reading": [
      "value",
@@ -22907,9 +23079,9 @@
    "accepted_value": "14104067",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:04fdb8c7b0b0c2933fa2848d5c9d2c07cae8b674b84df3bf1daaa92a8b4ece7d",
-     "run_id": "run:historical-period:a6c22fc33d796ee93f7321705aee6e46d15a1e31fb2ea8de87fa0ac8dbb13d41"
+     "run_id": "run:historical-period:58d1cf6c1701a74acad8bc8fec5990ef74f5e6f9e254434036bef8b2fc9bf38e"
     },
     "checked_against_the_reading": [
      "value",
@@ -23073,9 +23245,9 @@
    "accepted_value": "22970926",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:36f15c51f12ac59297989b1bd8b201397765bce8232871633f8668d5aaf7b16e",
-     "run_id": "run:historical-period:4adc6007a2fee68c0cde96d9090e0a1c6075955813a470234ba3e5f257cef746"
+     "run_id": "run:historical-period:15d508b6585826428d26bd4087dae80f40cd855da62d6fc0de8c667addd490b7"
     },
     "checked_against_the_reading": [
      "value",
@@ -23579,9 +23751,9 @@
    "accepted_value": "27585301",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:2d294ea4ea7b7a883dfd1c3105b66b84472859dc3d91b02e973b1df683d60544",
-     "run_id": "run:historical-period:cf87052445d7e9eb5a5be9d5cb2a1507796d68da5d99a23b5b5106f442387b79"
+     "run_id": "run:historical-period:8c03a4c9edfa6ff02f5b700229adbd255b6c98f394632e022c8e57d022641427"
     },
     "checked_against_the_reading": [
      "value",
@@ -23680,9 +23852,9 @@
    "accepted_value": "49379252",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:965d6f4719b70e609e4c507bb25eab026e6c4c1e5ab9d56e0e0884025f9cbad9",
-     "run_id": "run:historical-period:77434e1bfce78b41d9b6e11d88d5346fc28462ffb761c6318973c8cf4fd5cdfd"
+     "run_id": "run:historical-period:dc903574e07bc01dbdf01e7a2bcf76f4d97a49fb7e5c94200ec5bd4bce262465"
     },
     "checked_against_the_reading": [
      "value",
@@ -23725,9 +23897,9 @@
    "accepted_value": "16587882",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:dd4ec66fa3482fdb3086c3c5d04fd3186d048862fdff2023699ff74e3cc587d5",
-     "run_id": "run:historical-period:e13bbfce0cee0f489154156948ee8cc7f5f3ff910d15025efd3266be4cc583fd"
+     "run_id": "run:historical-period:b3efd186bce1eb5a30bfac1abad0ddb8640489b0c89b17ff67774bede01342dd"
     },
     "checked_against_the_reading": [
      "value",
@@ -23782,9 +23954,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
-     "result_id": "sha256:dc39cddaf98acc8cc9c39b7525d0acc3ad9d8ef7241c9113a89c7626f1fad408",
-     "run_id": "run:historical-period:61fc40b14a749d49364ab5b5b7617d015b0e4534a83acb712375fea00b750123"
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:ec720093267eda6422bbc507c8c2060a27aed570f32fb0714a46401041b7516f",
+     "run_id": "run:historical-period:c3b9ede36dcf7ee80f9697d03c3ca62737f37b95a228be9c553460b47c07616e"
     },
     "checked_against_the_reading": [
      "value",
@@ -23832,9 +24004,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
-     "result_id": "sha256:204287910b1533af0784a367442167a2cefbff164e77288e258e825414efba17",
-     "run_id": "run:historical-period:465e59f97dd98cb69b4d73d6f3e9d67c67b0dec30ef66b28c84a63e49fd51aa6"
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:7c7e9ac90806df4d40cc66eee890b08f18929674426dc1c84dd81acf071bbbf6",
+     "run_id": "run:historical-period:27714e48d6c05e13a02a9a18999841f43217dbad1bef4784e7e0277e3286b595"
     },
     "checked_against_the_reading": [
      "value",
@@ -23893,9 +24065,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
-     "result_id": "sha256:7c5431068f5f8d2ed191b9eebf0e261ce4957adb01f9248d202e231bea423c30",
-     "run_id": "run:historical-period:80a75a24ed055ecc0cd1e5c8618595ebe6ad4cd7734f0c8885ba7e9a26031965"
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:e814332e3c60c89edfd3e59ed44077d6430f008e633356b60cb6d334e31939d1",
+     "run_id": "run:historical-period:73334baba52fc5d88e7bf99918ff72bb041be8c20d0e7fbc918f03efdad32b46"
     },
     "checked_against_the_reading": [
      "value",
@@ -23956,9 +24128,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
-     "result_id": "sha256:55b0c0614545a26c813e6f88e0902c19c7527ed53117d7f90d1a87a02a92f306",
-     "run_id": "run:historical-period:d6afd469632d2850997723af2920867fba4cac710faedc43e92f600d5dbd7342"
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:6ccbdebf07ce9eb5d14e35d4d9977594456575bbf75b34a352e3306362f531f0",
+     "run_id": "run:historical-period:4f1d7e24ad336fb6ecc3d474f517eac2ce2dff571858307579189a49ed0e4cd3"
     },
     "checked_against_the_reading": [
      "value",
@@ -24013,9 +24185,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
      "result_id": "sha256:77dc141eaf548783ca940471db8e3ce15cbab1a2431ebf06722df6d35d3d01c8",
-     "run_id": "run:historical-period:8574776f9d5c182799fdf5e3472793476c4d8780ca6478fb4e5a71e1b364483e"
+     "run_id": "run:historical-period:7541dd071beeab2da1d4cf3b004079b6127623175757c61b024c342dd435afd0"
     },
     "checked_against_the_reading": [
      "value",
@@ -24067,9 +24239,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
-     "result_id": "sha256:0f583d42abefdaebea6ca3ee7dad30277c8b18a75cf6130b7e56d4645f08ef0d",
-     "run_id": "run:historical-period:35f5274349271e132d37116333b834b254742424f30fbc7d7c68333ce8860c8b"
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:7628ee5db43b899105922b8fc8e8e15e7af387ac2f3755216e38522396ccbe94",
+     "run_id": "run:historical-period:eff4ba47ceed68cd78aaa15329ecf4b65a2fbfbbd83a9a1cebbbc2ce1e8de8af"
     },
     "checked_against_the_reading": [
      "value",
@@ -24116,13 +24288,68 @@
    "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C04_SALESFORCE_2026",
+   "accepted_value": "0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:4518df4b90b0b4ef9ee83e5b377b811d2c9bd19e74eb390ebd390fbcd66fe6b5",
+     "run_id": "run:historical-period:66c459ffd25abe6d521bd4250b711768047fe203049a6bd21990261ca9b919ff"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-25-000002",
+     "0001108524-25-000006",
+     "0001108524-25-000027",
+     "0001108524-25-000033",
+     "0001108524-25-000040",
+     "0001108524-25-000083",
+     "0001108524-25-000168",
+     "0001108524-25-000207",
+     "0001108524-25-000234",
+     "0001108524-26-000060",
+     "0001193125-25-020881",
+     "0001193125-25-126271",
+     "0001193125-25-145772"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+    "unit": "flag",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+   "method": "the auditor named by dei:AuditorName in this year's 10-K and in the previous year's, plus any 8-K in the window carrying item 4.01. Zero means the same auditor in both years and no such filing.",
+   "metric_id": "C04",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "auditor_last_year": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_this_year": [
+     "Ernst & Young LLP"
+    ],
+    "eight_k_item_4_01_in_window": []
+   },
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C04_SOUTHWEST_2025",
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080",
-     "result_id": "sha256:2171ae2f78349dafc0eca33c372693916c7b43de7c1e1c1908c1685ea071bdb6",
-     "run_id": "run:historical-period:628de98926242719cb328e558a8c0e7872916a927e1bf767de13b1d3a02a3f0e"
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:e51b497eb57a0684c10b2c61853eb7af14bf7fffd24406605552e530205bd42f",
+     "run_id": "run:historical-period:7f15ff040ea19b7a104c115ab56cc43cbd889874fef204f0dc8a96e90e152b0a"
     },
     "checked_against_the_reading": [
      "value",
@@ -24403,6 +24630,51 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_ENPHASE_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:616b39a80a967e6223e9b8b913970bc38f53dc44c0f67b6501bf55bac8f4639c",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:a7bfe37757f6cc2c16de216e14c8cf9df395f3634a6d07e7638645099a79691a",
+     "run_id": "run:historical-period:abcb1bb4d054e5b97048c0c8e2c2cfd141e249363918893e48f214cc0869e4da"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001463101-26-000013",
+    "document": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+    "heading_shapes": {
+     "BOLD:STANDALONE": 60
+    },
+    "headings": 60
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_FORD_2021",
    "accepted_value": "sha256:14e12d89d79f16a3857b260f661693a978fa736db4c1069782f943917c0ae804",
    "checked_identity": {
@@ -24618,6 +24890,52 @@
    },
    "company_id": "ford_motor_company",
    "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000037996-26-000015",
+    "document": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 26,
+     "BOLD:STANDALONE": 4
+    },
+    "headings": 30
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_FORD_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:11323cf2c56ce7d7568a190385b4b4699062cb2030d9a4a1d65590160cecf90e",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:4ddaf86c6bc23429ed6bb3c53b4771f8bfeb7fbef9c697c93f7e7ce3e5e31ee3",
+     "run_id": "run:historical-period:7e4ff77fea7406cc9bc1f9cdffd10c733f8bcaa18ab2220c1d2f2fdb08cc028a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "37996"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000037996-26-000015"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "ford_motor_company",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
    "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
    "metric_id": "D01",
    "period_end": "2025-12-31",
@@ -24863,6 +25181,52 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_LUMEN_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:7d61d3f83b7f312984af82b4218ecf4fbb29b63f1c92f068e1421375f76147cc",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:524f56f87e2130a44823d6c14dfcede1e4bb824a7f88a79c33e325452e8e0c48",
+     "run_id": "run:historical-period:00866967a2f73c488418a36bc7dd8879811ad5172824cba4309609eb23fb7a17"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "18926"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000018926-26-000014"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "lumen_technologies",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000018926-26-000014",
+    "document": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 5,
+     "BOLD:STANDALONE": 45
+    },
+    "headings": 50
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_MACYS_2022",
    "accepted_value": "sha256:8216dc058a3698395e9c00f63b91b681bdc1886abb9ef18c6a94e4311c86d011",
    "checked_identity": {
@@ -25089,6 +25453,51 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_MACYS_2026_SPEC_06BE2BD2",
+   "accepted_value": "sha256:dece7dd5cc2d9c881900f70859cf7e75fbb3fb1669145eddbfad62e4974e01ac",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:388e4f50c391ab2734d51d82172ceae5ee736827e55186d51fa42faf195fc30e",
+     "run_id": "run:historical-period:030a0257450533ab4d99c9ef669a373c8ad36232c54d7fd2e3d3e590ebd9f402"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-021721"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "accession": "0001628280-26-021721",
+    "document": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+    "heading_shapes": {
+     "BOLD:STANDALONE": 36
+    },
+    "headings": 36
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_MARRIOTT_2021",
    "accepted_value": "sha256:912abc187a5d0306a74604764aea0682e9524ac0d7032b3b93a62fc7e8f9c8b6",
    "checked_identity": {
@@ -25230,6 +25639,53 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_MARRIOTT_2023_SPEC_06BE2BD2",
+   "accepted_value": "sha256:9c2c2595c34cab3ce3e6cea6d59e691b33e56cf85d6f816f2ef5445b072c279e",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:f3037e091608ac8cbcd27586a8c57d1c91d265f75c05ec8850ba3cfec8b54ddc",
+     "run_id": "run:historical-period:dfc40ed37a507e4530a8e0fc2c67982277e945bd57e21d6005eb8c4d098da670"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-24-004372"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "accession": "0001628280-24-004372",
+    "document": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 31,
+     "BOLD:STANDALONE": 2,
+     "UNDERLINE:STANDALONE": 4
+    },
+    "headings": 37
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_MARRIOTT_2024",
    "accepted_value": "sha256:abf9d8f659dfd52e75a9cc00c5464a11f8d6ab35d38d8f5694e62b854b9eb53b",
    "checked_identity": {
@@ -25277,6 +25733,53 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_MARRIOTT_2024_SPEC_06BE2BD2",
+   "accepted_value": "sha256:abf9d8f659dfd52e75a9cc00c5464a11f8d6ab35d38d8f5694e62b854b9eb53b",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:0a13be5e7f486733f0a8fd42dbb6039552ce9f52816ba1a48026bc1f5ec2e7af",
+     "run_id": "run:historical-period:8b6143356b09768c6d2cc5369501d15eeada1f5914eaeb74cb865749540694a2"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-25-004818"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "accession": "0001628280-25-004818",
+    "document": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 33,
+     "BOLD:STANDALONE": 2,
+     "UNDERLINE:STANDALONE": 4
+    },
+    "headings": 39
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_MARRIOTT_2025",
    "accepted_value": "sha256:f4446a72c30119297c080db082fc7c1a84e82bc698df5d079c934ee6142cc17c",
    "checked_identity": {
@@ -25308,6 +25811,53 @@
    },
    "company_id": "marriott_international",
    "evidence": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 32,
+     "BOLD:STANDALONE": 2,
+     "UNDERLINE:STANDALONE": 4
+    },
+    "headings": 38
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_MARRIOTT_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:f4446a72c30119297c080db082fc7c1a84e82bc698df5d079c934ee6142cc17c",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:372f8e82e98f8a9ed3a8e0c3887a106fb89cd6cbfe0c6c3f5cc0cf2f0d75068f",
+     "run_id": "run:historical-period:7ae13ecddb009f49731e4e71a483724706d837b99c76126ce3a9e85d23203c51"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001048286-26-000007"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
    "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
    "metric_id": "D01",
    "period_end": "2025-12-31",
@@ -25508,6 +26058,52 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_PARAMOUNT_2024_SPEC_06BE2BD2",
+   "accepted_value": "sha256:a9f74b62f75070dad9c568917027b1dd48c2d8ce0b679196511c836682a50e42",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:3c404f8fbcbfd91cfcbca45bb4a649d8612daa33f29280a9791e078bf96e7de3",
+     "run_id": "run:historical-period:1e3e3cf933e3cd30baea0f699b8c86e27b16da321af2570f2fe00cb41e4e7b30"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "813828"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-25-000005"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "accession": "0000813828-25-000005",
+    "document": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 1,
+     "BOLD:STANDALONE": 58
+    },
+    "headings": 51
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_PARAMOUNT_2025",
    "accepted_value": "sha256:b8020d7fdfe4377d9b509366af52b4351b45ba948f8c2dc05643538cce76733f",
    "checked_identity": {
@@ -25539,6 +26135,52 @@
    },
    "company_id": "paramount_skydance_paramount_global",
    "evidence": "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0002041610-26-000011",
+    "document": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 1,
+     "BOLD:STANDALONE": 37
+    },
+    "headings": 38
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_PARAMOUNT_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:b8020d7fdfe4377d9b509366af52b4351b45ba948f8c2dc05643538cce76733f",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:62ba054cfa72cd336c1f1ef584e1b2281f8a6c3c2aa93f1e23b5682dc71b8b6b",
+     "run_id": "run:historical-period:9714231fff3adbebdc497b785be4a666ca57718ab6cf2992deada25e4ea127f1"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "2041610"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0002041610-26-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
    "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
    "metric_id": "D01",
    "period_end": "2025-12-31",
@@ -25734,6 +26376,51 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_PFIZER_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:6da31a109c5618bcac5e811e2f11eeaf79e0b9c9484e8b4d907102c8e351f24c",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:0e5e340efb51ed7711a1f0ebb869214b325fab770d79697d5419fa3b4f76409d",
+     "run_id": "run:historical-period:3da645452326fdd4bfca1c79b7886bebd09d6c662f753ecbc39f637b302cdc15"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-26-000026"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000078003-26-000026",
+    "document": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+    "heading_shapes": {
+     "BOLD:STANDALONE": 28
+    },
+    "headings": 28
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_SALESFORCE_2025",
    "accepted_value": "sha256:299cb32cea9f5d31c441d683592316af6d528360b277bd7db5b712c52e444a9e",
    "checked_identity": {
@@ -25810,6 +26497,51 @@
    },
    "company_id": "salesforce",
    "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "accession": "0001108524-26-000060",
+    "document": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+    "heading_shapes": {
+     "BOLD:STANDALONE": 49
+    },
+    "headings": 43
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_SALESFORCE_2026_SPEC_06BE2BD2",
+   "accepted_value": "sha256:0e12c5cc20986f05377efdb5f0a510c8fa0449adea0bd133be62bb8b10f080cf",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:343976b408af6f7901dd32fe196a4d24484ab092965b828b4260dd44ad2af2da",
+     "run_id": "run:historical-period:c7bee7da727a8b61fb63f2b600fb4243eca672b6ff7f6fec496ceafdb2716643"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-26-000060"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
    "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
    "metric_id": "D01",
    "period_end": "2026-01-31",
@@ -26035,6 +26767,51 @@
    },
    "company_id": "southwest_airlines",
    "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000092380-26-000004",
+    "document": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+    "heading_shapes": {
+     "BOLD:STANDALONE": 38
+    },
+    "headings": 34
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_SOUTHWEST_2025_SPEC_06BE2BD2",
+   "accepted_value": "sha256:c1ab06b4248b405c0a7e5f74ae91775bfe7b045df0f2804e018a733faf4038d4",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:3b24c3e1d0a706a46fc20531029f74902d458a8c7c351767cbb579e4a10f471b",
+     "run_id": "run:historical-period:55039577ae98ece84df920ff402a86f836384ab8b92733c8580b371df1df0405"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-26-000004"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "southwest_airlines",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
    "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
    "metric_id": "D01",
    "period_end": "2025-12-31",
@@ -44436,9 +45213,12 @@
   "docs/evidence/issue47_history/content-acceptance/d01-older-years-read.json",
   "docs/evidence/issue47_history/content-acceptance/d01-older-years-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/d01-southwest-page-split-read.json",
+  "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json",
@@ -44501,6 +45281,12 @@
    "positions_examined": 11,
    "positions_examined_is_null_because": null
   },
+  "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json": {
+   "acceptances_contributed": 12,
+   "content_sha256": "sha256:bd7443daff9dbd574d1388f9af5a2152ad45c9403ce179ff7e80c2af682f5b0e",
+   "positions_examined": 12,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json": {
    "acceptances_contributed": 3,
    "content_sha256": "sha256:f1d4016b35abb4b1e2de97304682c744dbe9422a3df7ef3d1e5eeec6391a5dac",
@@ -44541,6 +45327,12 @@
    "acceptances_contributed": 8,
    "content_sha256": "sha256:1990f2d6e988f338b2ec9a20e640dedefc2d205d7479662329b6a303248c92c2",
    "positions_examined": 8,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json": {
+   "acceptances_contributed": 2,
+   "content_sha256": "sha256:8a46717840bed6b5eaefcc1f217298aecaeade4b09d0bbbdae5b0e7fc1b8dd83",
+   "positions_examined": 2,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json": {
@@ -44586,8 +45378,8 @@
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/governance-read.json": {
-   "acceptances_contributed": 15,
-   "content_sha256": "sha256:19f8b411f640e47764df04f7222d5c51af52269c388f196cc5620808df7441ea",
+   "acceptances_contributed": 16,
+   "content_sha256": "sha256:4940ae447287400132856c47cc5a2f10df3ab6025dddcbe087f34e0fc32839d9",
    "positions_examined": 8,
    "positions_examined_is_null_because": null
   },
@@ -44614,6 +45406,12 @@
    "content_sha256": "sha256:9d6492b4a53d42b742e08e7af7a9fd83e7c084ffff18d14d302b243a7d7259c8",
    "positions_examined": 2,
    "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:5a08b16b315bdfe8cd0f027b5df8f4ac5d11f5895b16ab63ae2cdd02d930866f",
+   "positions_examined": null,
+   "positions_examined_is_null_because": "this reading's shape carries no per_position map"
   },
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json": {
    "acceptances_contributed": 1,

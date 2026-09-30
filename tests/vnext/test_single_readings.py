@@ -3,6 +3,7 @@
 Each of these grants acceptances and none had committed code before
 tools/read_lodging_table.py and tools/read_single_facts.py.
 """
+import hashlib
 import json
 import unittest
 from decimal import Decimal
@@ -63,6 +64,21 @@ class TheRemainingPerformanceObligationTest(unittest.TestCase):
         self.assertEqual(row["facts_not_taken"], not_taken)
         self.assertEqual({("2025-01-31", ()), ("2026-01-31", ("crm:InformaticaInc.Member",))},
                          {(entry["instant"], tuple(entry["members"])) for entry in not_taken})
+
+
+    def test_another_year_is_read_from_its_own_filing(self):
+        """Salesforce FY2025, from the filing only the acquisition's export holds."""
+        row = _load("rpo-read-batch.json")
+        raw = saved_bytes(repo_root=ROOT, relative=row["read_from"]["document"])
+        self.assertEqual(row["document_sha256"], hashlib.sha256(raw).hexdigest())
+        value, not_taken = single.read_instant_fact(
+            text=raw.decode("utf-8-sig", errors="replace"),
+            concept="us-gaap:RevenueRemainingPerformanceObligation", period_end=row["period_end"])
+        self.assertEqual((Decimal(row["read"]), row["facts_not_taken"]), (value, not_taken))
+        self.assertEqual(("MATCH", row["published"]), (row["verdict"], str(int(value))))
+        # The later filing reports the same year-end again as its comparative.
+        self.assertIn({"instant": row["period_end"], "members": [], "value": "63400000000.0"},
+                      _load("rpo-read.json")["facts_not_taken"])
 
 
 class TheCompensationTableTest(unittest.TestCase):

@@ -475,9 +475,11 @@ def main():
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
     parser.add_argument("--position", required=True, action="append",
-                        help="<company_id>:<period_end>")
+                        help="<company_id>:<period_end>[=<judgements file>]; a position that "
+                             "names a judgements file reads its judgements from that file")
     parser.add_argument("--out", required=True)
-    parser.add_argument("--judgements", type=Path)
+    parser.add_argument("--judgements", type=Path,
+                        help="the judgements file of every position that names none")
     parser.add_argument("--source-root", type=Path, default=REPO,
                         help="where the filings' saved bytes are (default: this checkout)")
     arguments = parser.parse_args()
@@ -486,16 +488,34 @@ def main():
         for receipt in collect_run_receipts(runs_root=root)["receipts"]:
             receipts.append({**receipt, "_runs_root": str(root)})
     index = index_receipts(receipts=receipts)
-    judgements = (json.loads(arguments.judgements.read_text(encoding="utf-8"))
-                  if arguments.judgements else {})
+    loaded = {}
+
+    def judgements_in(path):
+        if path is None:
+            return {}
+        if path not in loaded:
+            loaded[path] = json.loads(Path(path).read_text(encoding="utf-8"))
+        return loaded[path]
     positions = {}
     for requested in arguments.position:
-        company_id, period_end = requested.split(":")
+        # A reading may cover positions whose judgements were recorded in
+        # different files (a filing read before a repair and after it keeps
+        # both records), so a position can name the one it is read under; the
+        # row records which file that was.
+        coordinate, _, named = requested.partition("=")
+        company_id, period_end = coordinate.split(":")
         label = company_id.split("_")[0] + "-" + period_end[:4]
+        if label in positions:
+            raise SystemExit("A_POSITION_IS_READ_TWICE:" + label)
+        path = named or (str(arguments.judgements) if arguments.judgements else None)
+        recorded = judgements_in(path)
+        if named and label not in recorded:
+            raise SystemExit("THE_NAMED_JUDGEMENTS_FILE_HAS_NO_ENTRY:" + label + ":" + named)
         positions[label] = read_position(index=index, closure=arguments.closure,
                                          company_id=company_id, period_end=period_end,
-                                         judgements=judgements.get(label, {}),
+                                         judgements=recorded.get(label, {}),
                                          source_root=arguments.source_root)
+        positions[label]["judgements_file"] = path
         row = positions[label]
         print(label, row["verdict"], "read", len(row["headings_read"]),
               "published", row["published_lines"],

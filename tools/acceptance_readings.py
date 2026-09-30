@@ -99,16 +99,26 @@ HEADINGS_OLDER_YEARS_BATCH = EVIDENCE + "d01-older-years-read-batch.json"
 # Southwest's two reports whose headings run over a page, read against the
 # results after the page-split join (their batch results differ, above).
 HEADINGS_SOUTHWEST_PAGE_SPLIT = EVIDENCE + "d01-southwest-page-split-read.json"
+# The batch's latest-year results, read again: D01's Spec moved from v1 to v2 (the
+# item bound only), so the results carry another identity than the ones read before.
+HEADINGS_LATEST_YEARS_BATCH = EVIDENCE + "d01-latest-years-read-batch.json"
 D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
                 HEADINGS_PARAMOUNT_PREDECESSOR, HEADINGS_OLDER_YEARS, HEADINGS_OLDER_YEARS_BATCH,
-                HEADINGS_SOUTHWEST_PAGE_SPLIT)
+                HEADINGS_SOUTHWEST_PAGE_SPLIT, HEADINGS_LATEST_YEARS_BATCH)
 RPO = EVIDENCE + "rpo-read.json"
+# Another year's B12, read the same way from that year's own filing.
+RPO_BATCH = EVIDENCE + "rpo-read-batch.json"
+RPO_READINGS = (RPO, RPO_BATCH)
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
+# The same reading of the 41-period batch's older years, over a restored root.
+DEBT_TO_EQUITY_BATCH = EVIDENCE + "debt-to-equity-read-batch.json"
+DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH)
 READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
-            TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION,
+            TEXT, *D01_READINGS, *RPO_READINGS, COMPENSATION, *DEBT_TO_EQUITY_READINGS,
+            C02_COMPOSITION,
             *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES)
 # The company periods the readings cover are data, not code: tools/ is scanned
 # as production Python for identity literals and fixed dates.
@@ -406,7 +416,7 @@ def positions(*, repo_root: Path, path: str, body):
                 metric_id="C02", period_end=case["period_end"],
                 published=case["value_sha256"], verdict=case["verdict"],
                 filings=[case["governance_accession"]]))
-    elif path == DEBT_TO_EQUITY:
+    elif path in DEBT_TO_EQUITY_READINGS:
         for label, case in sorted(body["per_position"].items()):
             if case.get("published") is None:
                 continue
@@ -415,9 +425,10 @@ def positions(*, repo_root: Path, path: str, body):
                 reading=path, label=label, slot=case, company_id=case["company_id"],
                 metric_id="B06", period_end=case["period_end"], published=case["published"],
                 verdict=case["verdict"], filings=[accession]))
-    elif path == RPO:
+    elif path in RPO_READINGS:
         found.append(_position(
-            reading=path, label="salesforce-2026", slot=body,
+            reading=path, label=body["company_id"].split("_")[0] + "-" + body["period_end"][:4],
+            slot=body,
             company_id=body["company_id"], metric_id=body["metric_id"],
             period_end=body["period_end"], published=body["published"],
             verdict=body["verdict"]))

@@ -26,8 +26,13 @@ re-derived from the saved filing and this output.
 Usage:
     python3 tools/read_debt_to_equity.py --runs-root <flat runs root> \
         --closure sha256:<closure> [--position <company_id>:<period_end> ...]
+
+A filing the checkout does not hold is read from a data root restored from the
+acquisition's export (``--source-root``), into a reading of its own
+(``--output``); the reading records the document's digest.
 """
 import argparse
+import hashlib
 import html
 import json
 import re
@@ -90,8 +95,10 @@ def balance_sheet(*, text, period_end):
         rows = _ROW.findall(table)
         captions = [_plain(row) for row in rows]
         joined = " | ".join(captions)
-        if not (re.search(r"total liabilities", joined, re.I)
-                and re.search(r"equity", joined, re.I)):
+        # Southwest's statement heads the section "LIABILITIES AND STOCKHOLDERS'
+        # EQUITY" and totals it without a caption, so either phrase marks it.
+        if not (re.search(r"total liabilities|liabilities and (?:stock|share)holders",
+                          joined, re.I) and re.search(r"equity", joined, re.I)):
             continue
         debt, equity = [], None
         for row, caption in zip(rows, captions):
@@ -177,12 +184,22 @@ def main():
     from vnext.historical_annual_input import prepare_historical_annual_input
     from vnext.historical_coverage import select_receipt
     from vnext.historical_run_receipts import collect_run_receipts, index_receipts
+    from vnext.normal_history_plan import checkpoint_replayed_once
     from vnext.normal_period_selection import resolve_period_selection
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
     parser.add_argument("--position", action="append")
+    parser.add_argument("--output", default=OUT)
+    parser.add_argument("--source-root", type=Path, default=None,
+                        help="a data root holding originals the checkout does not, "
+                             "such as one restored from the acquisition's export")
     arguments = parser.parse_args()
+    # One reading compares its positions with results of one closure, and a
+    # source root's filings are read into a reading of their own.
+    if arguments.source_root is not None and arguments.output == OUT:
+        raise SystemExit("A_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    source = REPO if arguments.source_root is None else arguments.source_root.resolve()
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
@@ -190,13 +207,18 @@ def main():
     body = {}
     for key in arguments.position or POSITIONS:
         company_id, period_end = key.split(":")
-        selection = resolve_period_selection(repo_root=REPO, company_id=company_id,
-                                             report_end=period_end)
-        prepared = prepare_historical_annual_input(repo_root=REPO, company_id=company_id,
-                                                   period_selection=selection)
+        # A restored root's saved sources are proved through its acquisition
+        # checkpoint; one replay per ledger state, as a frame's plan does.
+        with checkpoint_replayed_once():
+            selection = resolve_period_selection(repo_root=source, company_id=company_id,
+                                                 report_end=period_end)
+            prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
+                                                       period_selection=selection)
         document = prepared["original_input"]["table_input"]["source_repo_relative_path"]
-        text = (REPO / document).read_text(encoding="utf-8-sig", errors="replace")
+        raw = (source / document).read_bytes()
+        text = raw.decode("utf-8-sig", errors="replace")
         row = read_filing(text=text, period_end=period_end)
+        row["document_sha256"] = hashlib.sha256(raw).hexdigest()
         result = select_receipt(found=index.get((company_id, "B06", period_end), []),
                                 closure=arguments.closure)["result"]
         published = None if result is None or result.get("value") is None else str(result["value"])
@@ -207,7 +229,7 @@ def main():
                             else "MATCH" if Decimal(row["read"]) == Decimal(published)
                             else "DIFFERS"))
         if published is not None:
-            accession, _ = accession_of_document(repo_root=REPO, document=document)
+            accession, _ = accession_of_document(repo_root=source, document=document)
             identity, refusal = identity_for(
                 position={"company_id": company_id, "metric_id": "B06", "period_end": period_end,
                           "published": published, "reading_filings": [accession],
@@ -221,7 +243,7 @@ def main():
         # id reads CONTENT_B06_MACYS_2026 rather than carrying the key's colon.
         body[company_id.split("_")[0] + "-" + period_end[:4]] = row
         print(key, row["verdict"], row["read"], row["published"], flush=True)
-    (REPO / OUT).write_text(json.dumps(
+    (REPO / arguments.output).write_text(json.dumps(
         {"record_type": "ISSUE_47_B06_BALANCE_SHEET_READING",
          "reader": "tools/read_debt_to_equity.py", "requirement_closure_hash": arguments.closure,
          "definition": "period-end carrying debt, finance leases included, over the parent's "
