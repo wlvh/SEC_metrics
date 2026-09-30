@@ -60,11 +60,13 @@ EXTENSION_DIRECTORY = "docs/evidence/issue47_history/acquisition-extension"
 EXTENSION_RECORD_PATH = EXTENSION_DIRECTORY + "/approval-comment.json"
 EXTENSION_BODY_PATH = EXTENSION_DIRECTORY + "/approval-comment-body.json"
 # What the owner approves, byte for byte: the body
-# tools/propose_historical_extension.py wrote to EXTENSION_BODY_PATH (cap 471;
-# the independent review's findings fixed before it was pinned). A proposal
+# tools/propose_historical_extension.py wrote to EXTENSION_BODY_PATH (cap 513:
+# the 471 first pinned, the independent review's findings fixed before that,
+# plus the annual accessions' XBRL instances C04 and B06 read - 40 declarable
+# today and 2 bounded by the most instances any saved index names). A proposal
 # edited after the approval must not move what the approval means, so the
 # digest is pinned here rather than read from the proposal.
-EXTENSION_BODY_SHA256 = "a819e7b370b76bc908a2972125e9ea3f6816692671fae757da205c399e1a6ab2"
+EXTENSION_BODY_SHA256 = "090c60f25ab0883df25014c9772ab93884b70b2124df142fb92227742a6b75ec"
 REQUIRED_EXTENSION_FIELDS = ("requirement_id", "repository", "approver_login",
                              "extension_ordinal", "delegation_url",
                              "delegation_body_sha256", "delegation_record_path", "extends",

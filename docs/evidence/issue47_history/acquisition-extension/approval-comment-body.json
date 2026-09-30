@@ -1,21 +1,54 @@
 {
  "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
  "cap_arithmetic": {
+  "enphase_energy": {
+   "declarable_today": 4,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
+  "ford_motor_company": {
+   "declarable_today": 4,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
   "jpmorgan_chase": {
    "a_missed_target_s_annual_chain": 2,
    "a_missed_target_s_events": 62,
+   "a_missed_target_s_instances": 1,
    "a_missed_target_s_proxy": 1,
-   "declarable_today": 178,
+   "declarable_today": 181,
    "events_a_stale_block_hides": 6,
+   "instances_an_index_not_yet_saved_will_name": 1,
    "metadata_refresh_beyond_the_declared_rows": 70,
    "proxies_of_targets_without_a_governance_plan": 4,
    "refused_today_only_for_an_out_of_frame_consumer": 2
   },
+  "lumen_technologies": {
+   "declarable_today": 4,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
+  "macys": {
+   "declarable_today": 4,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
+  "marriott_international": {
+   "declarable_today": 5,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
+  "paramount_skydance_paramount_global": {
+   "declarable_today": 4,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
   "pfizer": {
    "a_missed_target_s_annual_chain": 0,
    "a_missed_target_s_events": 0,
+   "a_missed_target_s_instances": 0,
    "a_missed_target_s_proxy": 0,
-   "declarable_today": 2,
+   "declarable_today": 6,
    "events_a_stale_block_hides": 8,
    "metadata_refresh_beyond_the_declared_rows": 3,
    "proxies_of_targets_without_a_governance_plan": 1,
@@ -24,15 +57,16 @@
   "salesforce": {
    "a_missed_target_s_annual_chain": 0,
    "a_missed_target_s_events": 0,
+   "a_missed_target_s_instances": 0,
    "a_missed_target_s_proxy": 0,
-   "declarable_today": 2,
+   "declarable_today": 6,
    "events_a_stale_block_hides": 12,
    "metadata_refresh_beyond_the_declared_rows": 5,
    "proxies_of_targets_without_a_governance_plan": 3,
    "refused_today_only_for_an_out_of_frame_consumer": 0
   },
   "southwest_airlines": {
-   "declarable_today": 110,
+   "declarable_today": 114,
    "proxies_of_targets_without_a_governance_plan": 0,
    "refused_today_only_for_an_out_of_frame_consumer": 0
   }
@@ -63,7 +97,7 @@
  "maximum_additional_provider_paid_sec_calls": [
   0,
   0,
-  471
+  513
  ],
  "production_authorized": false,
  "reclaim": [
@@ -85,13 +119,20 @@
  "requirement_id": "issue_47_v1",
  "scope": {
   "company_ids": [
+   "enphase_energy",
+   "ford_motor_company",
    "jpmorgan_chase",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
    "pfizer",
    "salesforce",
    "southwest_airlines"
   ],
   "dependency_classes": [
    "ACCESSION_INSTANCE_DISCOVERY",
+   "ACCESSION_XBRL_INSTANCE",
    "ANNUAL_PERIOD_IDENTITY",
    "FISCAL_EVENT_FILING",
    "GOVERNANCE_DISCLOSURE_FILING",
@@ -111,6 +152,26 @@
     ],
     "earliest_report_end": "2021-12-31",
     "grant": "X_ACCESSION_INSTANCE_DISCOVERY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "jpmorgan_chase",
+     "lumen_technologies",
+     "macys",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "ACCESSION_XBRL_INSTANCE"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_ACCESSION_XBRL_INSTANCE",
     "latest_report_end": "2026-01-31"
    },
    {
