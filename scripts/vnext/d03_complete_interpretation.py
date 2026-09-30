@@ -22,6 +22,21 @@ def _need(condition, reason):
         raise ValueError(reason)
 
 
+def _finding_needs_review(finding, context_only):
+    # V6 materializes context_only_source_indices as OTHER_MEANING findings.
+    # Their subject/time placeholders do not describe an action. An explicit
+    # unresolved item or an action whose subject/time is unknown still blocks.
+    if finding['kind'] == 'UNRESOLVED':
+        return True
+    if (finding['kind'] == 'OTHER_MEANING'
+            and finding.get('reported_status') == 'NOT_AN_ACTION_STATEMENT'
+            and len(finding['evidence']) == 1):
+        reference = finding['evidence'][0]
+        if (finding['unit_id'], reference['source_index']) in context_only:
+            return False
+    return finding['subject'] == 'UNRESOLVED' or finding['timing'] == 'UNRESOLVED'
+
+
 def validate_complete_interpretation(*, prepared_input, response_bytes_by_request,
                                      repo_root=ROOT):
     """Return source-linked model proposals; do not create Candidate/Result/Run."""
@@ -45,6 +60,7 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
     _need(len(originals) == len(groups),
           'D03_COMPLETE_INTERPRETATION_GROUP_SET_CHANGED')
     rows = []
+    context_only_by_group = []
     for original, group in zip(originals, groups):
         _need(original['request_id'] == group['original_request_id'],
               'D03_COMPLETE_INTERPRETATION_ORIGINAL_REQUEST_CHANGED')
@@ -60,6 +76,10 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
             _need(not original['source_statement_facts'] and request == original,
                   'D03_COMPLETE_INTERPRETATION_UNSAFE_ORIGINAL_REQUEST')
             checked = validate_response(request=request, raw_response=raw)
+        context_only = {(unit['unit_id'], index)
+            for unit in checked.get('provider_response', {}).get('units', [])
+            for index in unit.get('context_only_source_indices', [])}
+        context_only_by_group.append(context_only)
         rows.append({'group_index': group['group_index'],
             'request_id': request['request_id'],
             'unit_ids': group['unit_ids'],
@@ -67,10 +87,9 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
             'source_anchor_successor': group['source_anchor_successor'],
             'findings': checked['findings'],
             'unresolved': checked['unresolved']})
-    unresolved = [row['group_index'] for row in rows if row['unresolved']
-        or any(finding['kind'] == 'UNRESOLVED'
-               or finding['subject'] == 'UNRESOLVED'
-               or finding['timing'] == 'UNRESOLVED'
+    unresolved = [row['group_index'] for row, context_only in
+        zip(rows, context_only_by_group) if row['unresolved']
+        or any(_finding_needs_review(finding, context_only)
                for finding in row['findings'])]
     proposals = [finding for row in rows for finding in row['findings']
         if finding['kind'] == 'CURRENT_REGULATORY_ACTION'

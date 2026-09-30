@@ -7800,5 +7800,41 @@
       "compatibility": "V13 byte-identical; V1-V3 request generation unchanged; V4 prior190 response retains zero unresolved; default shared interfaces and result record shapes unchanged",
       "downstream_impact": "stacked PR may need its own V14 parent binding refresh; #47 branch/worktree/ledger/snapshot/PR not operated"
     }
+  },
+  "ci_36687688194": {
+    "head": "43d0445f8f2a326a73ac0f50f359a49e5e9d657e",
+    "run_id": 36687688194,
+    "conclusion": "SUCCESS",
+    "jobs_successful": 16,
+    "jobs_total": 16,
+    "updated_at_utc": "2026-09-30T08:38:46Z",
+    "scope": "previous head B13 currency guard and independent review receipt; does not cover following D03 difference"
+  },
+  "d03_context_only_summary_20260930": {
+    "status": "CODE_AND_DIRECTED_VALIDATION_COMPLETE_EXACT_SHA_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d03-context-only-summary-20260930/README.md",
+    "trigger": "V6_HOST_MATERIALIZED_OTHER_MEANING_CONTEXT_PLACEHOLDER_MISCOUNTED_AS_BUSINESS_UNRESOLVED",
+    "saved_marriott_source_id": "sha256:e9ee4912fd17edc2069f7570bbe979ddde2a687b1acb3ef18cd42219619ecbe6",
+    "old_predicate_false_unresolved_groups": [
+      0,
+      1
+    ],
+    "repaired_unresolved_groups": [],
+    "resulting_branch": "ABSENCE_RULE_NOT_APPROVED",
+    "explicit_model_other_without_context_and_real_uncertainty_still_unresolved": true,
+    "semantic_classification_verified": false,
+    "provider_execution_verified": false,
+    "native_result_or_run_created": false,
+    "directed_tests": "2/2_PASS",
+    "fast_selectors": "142/142_PASS_101_348_SECONDS",
+    "saved_source_selector": "1/1_PASS_22_768_SECONDS",
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_head_ci": "PENDING_AFTER_PUSH",
+    "shared_default_bindings_changed": false,
+    "issue47_operated": false
   }
 }
