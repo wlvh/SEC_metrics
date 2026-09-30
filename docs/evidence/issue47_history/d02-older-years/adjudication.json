@@ -1,7 +1,8 @@
 {
  "record_type": "ISSUE_47_D02_READING_ADJUDICATION",
  "rules": {
-  "NUMERIC_TABLE_HEADER_ROW": "A skipped block inside an incorporated scope that is only numbers - a table's row of column years - is table structure: it states no matter by itself, so it is not a disclosure the value lacks. The brief counts an incorporated scope's substantive content as disclosure, which leaves a bare header row open to either verdict; the reader chose COVERED_ELSEWHERE citing the table's introduction, which does not state the years, so the decision is the executor's and is recorded as such. What its absence does is leave the table's columns unlabelled in the value - here Ford's warranty roll-forward, a non-litigation table the filing's Item 3 brings in by incorporating the whole note - and the accepted latest-year Ford value has the same shape. The frozen `_substantive` test drops a block with no letters; the route inherits that."
+  "NUMERIC_TABLE_HEADER_ROW": "A skipped block inside an incorporated scope that is only numbers - a table's row of column years - is table structure: it states no matter by itself, so it is not a disclosure the value lacks. The brief counts an incorporated scope's substantive content as disclosure, which leaves a bare header row open to either verdict; the reader chose COVERED_ELSEWHERE citing the table's introduction, which does not state the years, so the decision is the executor's and is recorded as such. What its absence does is leave the table's columns unlabelled in the value - here Ford's warranty roll-forward, a non-litigation table the filing's Item 3 brings in by incorporating the whole note - and the accepted latest-year Ford value has the same shape. The frozen `_substantive` test drops a block with no letters; the route inherits that.",
+  "SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE": "An Item 8 block that states a specific legal matter of the registrant - a named suit, claim, investigation, settlement or resolution, or an amount charged or received for one - is litigation disclosure even where the paragraph's topic is something else (a tax footnote, transaction-related items, discontinued operations). A block that names litigation only as a category - in a definition, an accounting policy, a list of estimates, the means of collecting a receivable, a covenant's add-backs - is not. This is the brief's own governing test (incidental versus a disclosure of the registrant's legal matters); the brief's examples of incidental contexts ('transaction costs', 'tax') came from the executor's earlier classifications and overreach where such a paragraph states a specific matter. The Paramount reader read by content; the Macy's reader read the example. Applied to every reading and to the earlier registered classifications, it moves two of the executor's own: Paramount's 2108 (FY2025) and 2010 (FY2024) state stockholder-litigation settlement amounts and are disclosure."
  },
  "decisions": [
   {
@@ -43,6 +44,36 @@
    "verdict": "CORRECTLY_SKIPPED",
    "rule": "NUMERIC_TABLE_HEADER_ROW",
    "why": "the year row of the warranty table inside the incorporated note: table structure that states no matter by itself; without it the value's two columns are unlabelled (recorded)"
+  },
+  {
+   "position": "macys:2023-01-28",
+   "kind": "TAKEN",
+   "i": 1484,
+   "text": "(a)2022 includes an income tax benefit from the favorable resolution of state income tax litigation.",
+   "text_sha256": "sha256:45703b95e6a7452fbc368c79ea1b99033d10033facbde461e1b11bc864db7234",
+   "verdict": "DISCLOSURE",
+   "rule": "SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE",
+   "why": "states the favorable resolution of the registrant's state income tax litigation - a specific resolved legal matter, not litigation named as a category"
+  },
+  {
+   "position": "macys:2024-02-03",
+   "kind": "TAKEN",
+   "i": 1467,
+   "text": "(a)2022 includes an income tax benefit from the favorable resolution of state income tax litigation.",
+   "text_sha256": "sha256:45703b95e6a7452fbc368c79ea1b99033d10033facbde461e1b11bc864db7234",
+   "verdict": "DISCLOSURE",
+   "rule": "SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE",
+   "why": "states the favorable resolution of the registrant's state income tax litigation - a specific resolved legal matter, not litigation named as a category"
+  },
+  {
+   "position": "macys:2025-02-01",
+   "kind": "TAKEN",
+   "i": 1445,
+   "text": "(a)2022 includes an income tax benefit from the favorable resolution of state income tax litigation.",
+   "text_sha256": "sha256:45703b95e6a7452fbc368c79ea1b99033d10033facbde461e1b11bc864db7234",
+   "verdict": "DISCLOSURE",
+   "rule": "SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE",
+   "why": "states the favorable resolution of the registrant's state income tax litigation - a specific resolved legal matter, not litigation named as a category"
   }
  ]
 }

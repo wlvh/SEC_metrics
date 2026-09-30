@@ -15,7 +15,8 @@ is about, and Item 3 statements such as "we are not currently party to any
 material legal proceedings" or a sentence that incorporates a note by
 reference.
 
-Each block has `i` (its index in the document). Each packet has four lists.
+Each block has `i` (its index in the document). Each packet has four lists,
+and a fifth where it applies.
 
 1. **taken** - the blocks in the published value, in its order, each with the
    `scope` it came from: `ITEM_3`; a scope starting with `NOTE_` (a note or a
@@ -49,7 +50,14 @@ Each block has `i` (its index in the document). Each packet has four lists.
    paragraph describing a lawsuit, claim or investigation that no taken block
    describes is `WRONGLY_SKIPPED`; if a taken block (in Item 3, say)
    describes the same matter, it is `COVERED_ELSEWHERE` with `covered_by`.
-4. **headings** - heading-shaped blocks anywhere in the document that name
+4. **outside** (present only where it applies) - keyword blocks that sit
+   after Item 8 and outside every range the route reads. They appear where a
+   filing's Item 8 is only a page pointing to financial statements printed
+   later, so the statements were never read. Judge them as skipped blocks:
+   `CORRECTLY_SKIPPED` if not D02 content, `COVERED_ELSEWHERE` with
+   `covered_by` if a taken block states the matter, `WRONGLY_SKIPPED` if it is
+   D02 content the value lacks.
+5. **headings** - heading-shaped blocks anywhere in the document that name
    contingencies, legal proceedings, litigation or commitments, each with its
    `section`, and the index of and distance to the next taken block after it.
    Verdicts:
@@ -71,7 +79,7 @@ Each block has `i` (its index in the document). Each packet has four lists.
 {"position": "<company>:<report_end>",
  "reader_note": "<two or three sentences: what the value covers, anything notable>",
  "judgements": [
-   {"kind": "TAKEN" | "SKIPPED" | "CONTEXT" | "HEADING", "i": <int>,
+   {"kind": "TAKEN" | "SKIPPED" | "CONTEXT" | "OUTSIDE" | "HEADING", "i": <int>,
     "verdict": "<one of the verdicts for that kind>",
     "why": "<a short phrase>",
     "covered_by": [<int>, ...]}   <- only with COVERED_ELSEWHERE

@@ -57,7 +57,7 @@ class ACompleteReadingTest(unittest.TestCase):
     def test_every_block_judged_right_agrees(self):
         answer = reader.read_position(packet=packet(), reading=reading())
         self.assertEqual("READING_AGREES", answer["verdict"])
-        self.assertEqual({"taken": 2, "skipped": 1, "context": 0, "headings": 1,
+        self.assertEqual({"taken": 2, "skipped": 1, "context": 0, "outside": 0, "headings": 1,
                           "taken_through_item_8": 1, "covered_elsewhere": 0}, answer["counts"])
 
     def test_a_wrong_block_on_either_side_disagrees(self):

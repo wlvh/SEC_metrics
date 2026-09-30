@@ -16,7 +16,9 @@ every block a reader has to judge:
 
 A note Item 3 does not incorporate is still a source the definition names, so
 a heading in Item 8 that names contingencies, legal proceedings or litigation
-also brings the blocks under it (``context``).
+also brings the blocks under it (``context``). Where the filing's Item 8 is a
+cross-reference page, its statements sit after it, outside every range the
+route reads; the keyword blocks there are brought in too (``outside``).
 
 A reading is data: one judgement per packet block, bound to the block's text
 by SHA-256. Taken blocks are DISCLOSURE or NOT_DISCLOSURE; skipped and context
@@ -27,10 +29,12 @@ packet block the reading does not judge, a judgement whose block is not in the
 packet, or one whose text changed stops the reading: a reading that did not
 see a block is never read as agreeing with it.
 
-What it does not cover, and says so in every answer: Item 8 outside the
-incorporated scopes is read only where the keyword proxy took a block and
-where a heading names one of the words. A contingency disclosure under a
-heading worded otherwise, or under none, in the rest of Item 8 is not in the
+What it does not cover, and says so in every answer (``NOT_COVERED``): the
+rest of Item 8. Inside Item 8 the packet holds the blocks the keyword proxy
+took, the named headings and the blocks under an Item 8 heading that names
+contingencies, legal proceedings, litigation or legal matters; after Item 8,
+the keyword blocks outside every range. A contingency disclosure under a
+heading worded otherwise, or under none, elsewhere in Item 8 is not in the
 packet (the proxy's registered decision, d02-content-read/keyword-proxy-decision.json).
 
 Against published results (``--runs-root`` and ``--closure``) the reading
@@ -68,9 +72,10 @@ ADJUDICATION_PATH = REPO / "docs/evidence/issue47_history/d02-older-years/adjudi
 VERDICTS = {"TAKEN": {"DISCLOSURE", "NOT_DISCLOSURE"},
             "SKIPPED": {"CORRECTLY_SKIPPED", "COVERED_ELSEWHERE", "WRONGLY_SKIPPED"},
             "CONTEXT": {"CORRECTLY_SKIPPED", "COVERED_ELSEWHERE", "WRONGLY_SKIPPED"},
+            "OUTSIDE": {"CORRECTLY_SKIPPED", "COVERED_ELSEWHERE", "WRONGLY_SKIPPED"},
             "HEADING": {"REACHED", "NOT_D02", "MISSED"}}
 KINDS = (("TAKEN", "taken"), ("SKIPPED", "skipped"), ("CONTEXT", "context"),
-         ("HEADING", "headings"))
+         ("OUTSIDE", "outside"), ("HEADING", "headings"))
 # The approved definition's sources: Item 3, legal proceedings, contingencies
 # notes; commitments because the notes are titled "Commitments and
 # Contingencies". Not the proxy's _LEGAL set.
@@ -88,6 +93,11 @@ CONTEXT_WORDS = re.compile(r"contingenc|legal proceeding|litigation|legal matter
 NUMBERED_NOTE = re.compile(r"^\s*(?:note\s+)?\d{1,2}\s*[.:)\u2014\u2013-]?\s+[A-Za-z]", re.I)
 STATEMENT_CAPTION = re.compile(r"\(\s*notes?\s+\d", re.I)
 CONTEXT_CAP = {"NOTE": 150, "HEADING": 60}
+NOT_COVERED = ("Item 8 outside the incorporated scopes, except the blocks the keyword "
+               "proxy took, the headings naming contingencies, legal proceedings, "
+               "litigation or commitments, and the blocks under an Item 8 heading naming "
+               "contingencies, legal proceedings, litigation or legal matters; after Item 8, "
+               "keyword blocks outside every range are read")
 
 
 def text_sha256(text):
@@ -191,6 +201,23 @@ def make_packet(*, document, proposal, candidate):
             context.add(j)
     rows["context"] = [{"i": j, "text": blocks[j]["text"], "text_sha256": text_sha256(blocks[j]["text"])}
                        for j in sorted(context - chosen - set(scope_of))]
+    # The keyword proxy scans only the Item 8 range. Where a filing's Item 8 is a
+    # cross-reference page (Macy's FY2021: "Information called for by this item
+    # is set forth in the Company's Consolidated Financial Statements"), the
+    # statements sit after it, outside every range, and nothing reads them. The
+    # keyword blocks there are brought in, found with the route's own keyword so
+    # that "the proxy would have taken it had it looked" is the question asked.
+    from vnext.text_business_candidates import _LEGAL
+    ranges = proposal["checked_ranges"]
+    item_8_end = item_8["end_block_exclusive"] if item_8 is not None else None
+    rows["outside"] = [
+        {"i": block["block_index"], "text": block["text"],
+         "text_sha256": text_sha256(block["text"])}
+        for block in blocks
+        if item_8_end is not None and block["block_index"] >= item_8_end
+        and not any(r["start_block"] <= block["block_index"] < r["end_block_exclusive"]
+                    for r in ranges)
+        and block["block_index"] not in chosen and _LEGAL.search(block["text"])]
     return {"document_id": document["text_document_id"],
             "source_reference_id": document["source_reference_id"],
             "ranges": [{key: r[key] for key in ("section_id", "start_block", "end_block_exclusive")}
@@ -238,7 +265,8 @@ def read_position(*, packet, reading):
     if unread:
         raise SystemExit("D02_PACKET_BLOCKS_NOT_JUDGED:" + reading["position"] + ":" + str(unread[:8]))
     counts = {"taken": len(packet["taken"]), "skipped": len(packet["skipped"]),
-              "context": len(packet.get("context", ())), "headings": len(packet["headings"]),
+              "context": len(packet.get("context", ())), "outside": len(packet.get("outside", ())),
+              "headings": len(packet["headings"]),
               "taken_through_item_8": sum(1 for row in packet["taken"] if row["scope"] == "ITEM_8")}
     counts["covered_elsewhere"] = len(covered)
     clean = not any(problems.values())
@@ -423,7 +451,7 @@ def main(argv=None):
                   **make_packet(document=document, proposal=proposal, candidate=candidate)}
         Path(args.output).write_text(json.dumps(packet, ensure_ascii=False, indent=1) + "\n",
                                      encoding="utf-8")
-        print(args.position[0], {key: len(packet[key]) for key in ("taken", "skipped", "context", "headings")})
+        print(args.position[0], {key: len(packet[key]) for key in ("taken", "skipped", "context", "outside", "headings")})
         return 0
     if bool(args.runs_root) != bool(args.closure) or bool(args.closure) != bool(args.acceptance_output):
         raise SystemExit("RUNS_ROOT_CLOSURE_AND_ACCEPTANCE_OUTPUT_GO_TOGETHER")
@@ -448,8 +476,7 @@ def main(argv=None):
         answer["document_id"] = packet["document_id"]
         answer["candidate_hash"] = packet["candidate_hash"]
         answer["reading_sha256"] = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
-        answer["not_covered"] = ("Item 8 outside the incorporated scopes, except the "
-                                 "blocks the keyword proxy took and the named headings")
+        answer["not_covered"] = NOT_COVERED
         report[reading["position"]] = answer
         if index is not None:
             label = company_id.split("_")[0] + "-" + report_end[:4]
@@ -461,9 +488,7 @@ def main(argv=None):
     if args.acceptance_output:
         body = {"record_type": "ISSUE_47_D02_EXCERPTS_READ", "reader": "tools/read_d02_excerpts.py",
                 "requirement_closure_hash": args.closure, "per_position": accepted,
-                "not_covered": ("Item 8 outside the incorporated scopes is read only where the "
-                                "keyword proxy took a block and where a heading names "
-                                "contingencies, legal proceedings, litigation or commitments"),
+                "not_covered": NOT_COVERED,
                 "calls": {"provider": 0, "paid": 0, "sec": 0}}
         (REPO / args.acceptance_output).write_text(
             json.dumps(body, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")

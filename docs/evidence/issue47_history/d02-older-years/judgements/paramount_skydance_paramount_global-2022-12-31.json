@@ -1,0 +1,704 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "paramount_skydance_paramount_global:2022-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading",
+ "reader_note": "The value is Item 3's incorporation sentence plus the whole Note 20 'Legal Matters' caption (merger stockholder suits, former-CEO investigation with the securities class action settlement and state AG resolution, stock-offering suit, TV station antitrust suit, DOJ suit that blocked the Simon & Schuster sale, asbestos and other claims); only page furniture inside the caption was left out. The one keyword Item 8 block states the 2022 $211M charge for the stockholder litigation, an amount the note itself does not give, so I read it as a disclosure. The four litigation headings before Item 8 repeat note captions whose content is in the value.",
+ "packet_document_id": "sha256:3e76198be14ec0083f507d9a7bba8ac3569f4667e3cb1ea736b526a0b91bf7cb",
+ "packet_candidate_hash": "sha256:9e8ed21950ac92c7e02735cafe44adedd88dba4b4c902e1334ea9fe48196ce5d",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 402,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 sentence incorporating Note 20 'Legal Matters' by reference",
+   "text": "The information set forth under the caption “Legal Matters” in Note 20 to the consolidated financial statements in “Item 8. Financial Statements and Supplementary Data — Notes to Consolidated Financial Statements” is incorporated herein by reference.",
+   "text_sha256": "sha256:f74abaddb5804ce8d3456983d439f2c4cec509a3e745c51da0929ee5374b0197",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2103,
+   "verdict": "DISCLOSURE",
+   "why": "states a 2022 $211M charge for the Stockholder Matters litigation (the Russia reserve part is not legal)",
+   "text": "In 2022, in addition to the above-mentioned restructuring charges, we recorded charges for other corporate matters of $257 million, consisting of $211 million associated with litigation described under Legal Matters—Stockholder Matters in Note 20 and $46 million recorded following Russia’s invasion of Ukraine in the first quarter of 2022, principally to reserve against amounts due from counterparties in Russia, Belarus and Ukraine.",
+   "text_sha256": "sha256:8453c7e7e276326dd10cf152d023187914b821d8a19a4ac8aedc08f01b54744c",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2883,
+   "verdict": "DISCLOSURE",
+   "why": "caption label of the incorporated Legal Matters caption",
+   "text": "Legal Matters",
+   "text_sha256": "sha256:52f4a9fffc9e4eafcae8d14dcec9f32de0be5d5700fc71a9f5b68f6f314f1532",
+   "order": 2,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2884,
+   "verdict": "DISCLOSURE",
+   "why": "'General' label for the general litigation statement",
+   "text": "General",
+   "text_sha256": "sha256:c910d474dcd724bff83ddedeb06bf1eceaf9fb3af7c76bb282be057f36e6dffa",
+   "order": 3,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2885,
+   "verdict": "DISCLOSURE",
+   "why": "general statement on lawsuits, investigations and inquiries against the company",
+   "text": "On an ongoing basis, we vigorously defend ourselves in numerous lawsuits and proceedings and respond to various investigations and inquiries from federal, state, local and international authorities (collectively, “Litigation’’). Litigation may be brought against us without merit, is inherently uncertain and always difficult to predict. However, based on our understanding and evaluation of the relevant facts and circumstances, we believe that the following matters are not likely, in the aggregate, to result in a material adverse effect on our business, financial condition and results of operations.",
+   "text_sha256": "sha256:3a0e0c391bee4e792a382b3695caed3419397c79176fd21da9f512f69b4c7e5a",
+   "order": 4,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2886,
+   "verdict": "DISCLOSURE",
+   "why": "label for stockholder matters",
+   "text": "Stockholder Matters",
+   "text_sha256": "sha256:69ab747559c3cf90c74adbcda71d9c348a48dcf9d82af3fff7d61612e84c3847",
+   "order": 5,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2887,
+   "verdict": "DISCLOSURE",
+   "why": "case label for the merger litigation",
+   "text": "Litigation Relating to the Merger",
+   "text_sha256": "sha256:7ecef085d48c58fc7b22d212308eacab3e2744a33400cceb4499617faf682606",
+   "order": 6,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2888,
+   "verdict": "DISCLOSURE",
+   "why": "CBS stockholder derivative/class actions, trial scheduled",
+   "text": "Beginning in February 2020, three purported CBS stockholders filed separate derivative and/or putative class action lawsuits in the Court of Chancery of the State of Delaware. In March 2020, the Court consolidated the three lawsuits and appointed Bucks County Employees’ Retirement Fund and International Union of Operating Engineers of Eastern Pennsylvania and Delaware as co-lead plaintiffs for the consolidated action. In April 2020, the lead plaintiffs filed a Verified Consolidated Class Action and Derivative Complaint (as used in this paragraph, the “Complaint”) against Shari E. Redstone, NAI, Sumner M. Redstone National Amusements Trust, members of the CBS Board of Directors (comprised of Candace K. Beinecke, Barbara M. Byrne, Gary L. Countryman, Brian Goldner, Linda M. Griego, Robert N. Klieger, Martha L. Minow, Susan Schuman, Frederick O. Terrell and Strauss Zelnick), former CBS President and Acting Chief Executive Officer Joseph Ianniello and the Company as nominal defendant. The Complaint alleges breaches of fiduciary duties to CBS stockholders in connection with the negotiation and approval of an Agreement and Plan of Merger, dated as of August 13, 2019, between CBS and Viacom (as amended, the “Merger Agreement”). The Complaint also alleges waste and unjust enrichment in connection with Mr. Ianniello’s compensation. The Complaint seeks unspecified damages, costs and expenses, as well as other relief. In June 2020, the defendants filed motions to dismiss. In January 2021, the Court dismissed one disclosure claim, while allowing all other claims against the defendants to proceed. In December 2022, the Court dismissed the fiduciary duty claim against Mr. Klieger. Discovery on the surviving claims is proceeding. A six-day trial is scheduled to begin in June 2023. We believe that the remaining claims are without merit and we intend to defend against them vigorously.",
+   "text_sha256": "sha256:1ade4bfca566582ce7fee960f05124fb1bd37eae53619227e6a1d0c61783b6eb",
+   "order": 7,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2893,
+   "verdict": "DISCLOSURE",
+   "why": "Viacom stockholder class actions, trial scheduled",
+   "text": "Beginning in November 2019, four purported Viacom stockholders filed separate putative class action lawsuits in the Court of Chancery of the State of Delaware. In January 2020, the Court consolidated the four lawsuits. In February 2020, the Court appointed California Public Employees’ Retirement System (“CalPERS”) as lead plaintiff for the consolidated action. Subsequently, in February 2020, CalPERS, together with Park Employees’ and Retirement Board Employees’ Annuity and Benefit Fund of Chicago and Louis M. Wilen, filed a First Amended Verified Class Action Complaint (as used in this paragraph, the “Complaint”) against NAI, NAI Entertainment Holdings LLC, Shari E. Redstone, the members of the special transaction committee of the Viacom Board of Directors (comprised of Thomas J. May, Judith A. McHale, Ronald L. Nelson and Nicole Seligman) and our President and Chief Executive Officer and director, Robert M. Bakish. The Complaint alleges breaches of fiduciary duties to Viacom stockholders in connection with the negotiation and approval of the Merger Agreement. The Complaint seeks unspecified damages, costs and expenses, as well as other relief. In May 2020, the defendants filed motions to dismiss. In December 2020, the Court dismissed the claims against Mr. Bakish, while allowing the claims against the remaining defendants to proceed. Discovery on the surviving claims is proceeding. A six-day trial is scheduled to begin in July 2023. We believe that the remaining claims are without merit and we intend to defend against them vigorously.",
+   "text_sha256": "sha256:ceb9d6bc6eb727d0905af47fff2cc9c606bbaf02aa2d4eeb99d349be48ab8a2b",
+   "order": 8,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2894,
+   "verdict": "DISCLOSURE",
+   "why": "label for investigation-related matters",
+   "text": "Investigation-Related Matters",
+   "text_sha256": "sha256:60a2af061df2ad40115bcc818a583431536745364cfe39ce50699b39992cb993",
+   "order": 9,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2895,
+   "verdict": "DISCLOSURE",
+   "why": "board investigation of former CEO allegations",
+   "text": "As announced in August 2018, the CBS Board of Directors retained two law firms to conduct a full investigation of the allegations in press reports about CBS’ former Chairman of the Board, President and Chief Executive Officer, Leslie Moonves, CBS News and cultural issues at CBS. In December 2018, the CBS Board of Directors announced the completion of its investigation, certain findings of the investigation and the CBS Board of Directors’ determination with respect to the termination of Mr. Moonves’ employment.",
+   "text_sha256": "sha256:4e87680df56f4362794783b2d7ba3408240cf0b492eb2c3772ff33fbcfd5db4a",
+   "order": 10,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2896,
+   "verdict": "DISCLOSURE",
+   "why": "CBS federal securities class action settled for $14.75M",
+   "text": "In August 2018 and in October 2018, Gene Samit and John Lantz, respectively, filed putative class action lawsuits in the U.S. District Court for the Southern District of New York, individually and on behalf of others similarly situated, for claims that are similar to those alleged in the amended complaint described below. In November 2018, the Court entered an order consolidating the two actions. Subsequently, in November 2018, the Court appointed Construction Laborers Pension Trust for Southern California as the lead plaintiff of the consolidated action. In February 2019, the lead plaintiff filed a consolidated amended putative class action complaint against CBS, certain current and former senior executives and members of the CBS Board of Directors. The consolidated action is stated to be on behalf of purchasers of CBS Class A Common Stock and Class B Common Stock between September 26, 2016 and December 4, 2018. This action seeks to recover damages arising during this time period allegedly caused by the defendants’ purported violations of the federal securities laws, including by allegedly making materially false and misleading statements or failing to disclose material information, and seeks costs and expenses as well as remedies under Sections 10(b) and 20(a) of the Securities Exchange Act of 1934 and Rule 10b-5 promulgated thereunder. In April 2019, the defendants filed motions to dismiss this action, which the Court granted in part and denied in part in January 2020. With the exception of one statement made by Mr. Moonves at an industry event in November 2017, in which he allegedly was acting as the agent of CBS, all claims as to all other allegedly false and misleading statements were dismissed. We reached an agreement with the plaintiffs to settle the lawsuit for $14.75 million, which was paid by our insurers. The settlement, which includes no admission of liability or wrongdoing by the Company, was granted final approval by the Court in November 2022.",
+   "text_sha256": "sha256:0a8a7c9fe0a5d8918282f26ded6e50f3dd29a0f111024fe24370d9420b740c5a",
+   "order": 11,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2897,
+   "verdict": "DISCLOSURE",
+   "why": "regulator subpoenas and state AG resolution, first part",
+   "text": "We also received subpoenas or requests for information from the New York County District Attorney’s Office, the New York City Commission on Human Rights, the New York State Attorney General’s Office and the United States Securities and Exchange Commission (the “SEC”) regarding the subject matter of the CBS Board of Directors’ investigation and related matters, including with respect to CBS’ related public disclosures. In November 2022, we entered into an Assurance of Discontinuance with the Investor Protection Bureau of the New",
+   "text_sha256": "sha256:edd4ffe0e7ea8f0cb67160adb12310174f9e029173d8c8c6550b7daffd472ab9",
+   "order": 12,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2902,
+   "verdict": "DISCLOSURE",
+   "why": "continuation: $7.25M payment, SEC termination letter",
+   "text": "York State Attorney General’s Office to resolve that matter. After credits for the settlement amount to be paid in the consolidated federal securities class action discussed above, and certain financial commitments to human resources-related programs made by CBS in connection with an earlier resolution with the Civil Rights Bureau of the New York State Attorney General’s Office, the Company has made a payment of $7.25 million, which by agreement with the Investor Protection Bureau will be distributed in connection with the federal securities class action settlement discussed above. The resolution with the Investor Protection Bureau includes no admission of liability or wrongdoing by the Company. In December 2022, we received a termination letter from the SEC, indicating that it does not intend to recommend an enforcement action against the Company. We may continue to receive additional related regulatory and investigative inquiries from these and other entities in the future.",
+   "text_sha256": "sha256:bb52bb513cf03b70b35409dc751e7d21eb35402dff6e1e76f2f38eb48a501f44",
+   "order": 13,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2903,
+   "verdict": "DISCLOSURE",
+   "why": "case label for stock offerings litigation",
+   "text": "Litigation Related to Stock Offerings",
+   "text_sha256": "sha256:43eef07b7fc9edd7c4bb9b16de4beb2b9629c54c087442ae5dbff220d65933d3",
+   "order": 14,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2904,
+   "verdict": "DISCLOSURE",
+   "why": "securities class action over 2021 offerings, claims against company dismissed",
+   "text": "In August 2021, Camelot Event Driven Fund filed a putative securities class action lawsuit in New York Supreme Court, County of New York, and in November 2021, an amended complaint was filed that, among other changes, added an additional named plaintiff (as used in this paragraph, the “Complaint”). The Complaint is purportedly on behalf of investors who purchased shares of the Company’s Class B Common Stock and 5.75% Series A Mandatory Convertible Preferred Stock pursuant to public securities offerings completed in March 2021, and was filed against the Company, certain senior executives, members of our Board of Directors, and the underwriters involved in the offerings. The Complaint asserts violations of federal securities law and alleges that the offering documents contained material misstatements and omissions, including through an alleged failure to adequately disclose certain total return swap transactions involving Archegos Capital Management referenced to our securities and related alleged risks to the Company’s stock price. In December 2021, the plaintiffs filed a stipulation seeking the voluntary dismissal without prejudice of the outside director defendants from the lawsuit, which the Court subsequently ordered. On the same date, the defendants filed motions to dismiss the lawsuit, which were heard in January 2023. On February 7, 2023, the Court dismissed all claims against the Company while allowing the claims against the underwriters to proceed.",
+   "text_sha256": "sha256:36cd5b814ffd0ae1b2023b112df8c894cbcc93d2de18cf541459648fb7906a13",
+   "order": 15,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2905,
+   "verdict": "DISCLOSURE",
+   "why": "case label for TV station owners litigation",
+   "text": "Litigation Related to Television Station Owners",
+   "text_sha256": "sha256:4dbae4766129a1027aa2034b8e75263a8222c26c3290ce68cd3ea50ea3402d2b",
+   "order": 16,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2906,
+   "verdict": "DISCLOSURE",
+   "why": "antitrust class action naming the company, settlement in principle",
+   "text": "In September 2019, the Company was added as a defendant in a multi-district putative class action lawsuit filed in the United States District Court for the Northern District of Illinois. The lawsuit was filed by parties that claim to have purchased broadcast television spot advertising beginning about January 2014 on television stations owned by one or more of the defendant television station owners and alleges the sharing of allegedly competitively sensitive information among such television stations in alleged violation of the Sherman Antitrust Act. The action, which names the Company among fourteen total defendants, seeks monetary damages, attorneys’ fees, costs and interest as well as injunctions against the allegedly unlawful conduct. In October 2019, the Company and other defendants filed a motion to dismiss the matter, which was denied by the Court in November 2020. We have reached an agreement in principle with the plaintiffs to settle the lawsuit. The settlement, which will include no admission of liability or wrongdoing by the Company, will be subject to Court approval.",
+   "text_sha256": "sha256:5aebba243ce3cd0a1a92bfb2ab2a9cd8de0294795df36bcc79b7bb568996ed8b",
+   "order": 17,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2907,
+   "verdict": "DISCLOSURE",
+   "why": "case label for Simon & Schuster sale litigation",
+   "text": "Litigation Related to the Proposed Sale of Simon & Schuster",
+   "text_sha256": "sha256:f3a9f4d5f02580baecb1aa2b4aba6c4447396ae61dff769f264c1bcc619e2aa0",
+   "order": 18,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2908,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ suit blocked the sale; termination fee received",
+   "text": "In November 2021, the U.S. Department of Justice filed suit in the U.S. District Court for the District of Columbia to block our sale of the Simon & Schuster business to Penguin Random House pursuant to a Share Purchase Agreement (the “Purchase Agreement”), dated November 24, 2020, between the Company, certain of its subsidiaries, Penguin Random House and Bertelsmann SE & Co. KGaA. In October 2022, following a bench trial, the Court blocked the sale. In November 2022, we terminated the Purchase Agreement and subsequently received a $200 million termination fee.",
+   "text_sha256": "sha256:330a559edefacee9259e246c8b4c878c90a3b45194e977832df7f16079d7f706",
+   "order": 19,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2913,
+   "verdict": "DISCLOSURE",
+   "why": "label for claims related to former businesses",
+   "text": "Claims Related to Former Businesses",
+   "text_sha256": "sha256:a549be0c7a101681877568ee41f26ce1c72743b7b9afaea485a5b9f2f6480f67",
+   "order": 20,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2914,
+   "verdict": "DISCLOSURE",
+   "why": "'Asbestos' matter label",
+   "text": "Asbestos",
+   "text_sha256": "sha256:6b210ed7077c2ff578b1dde1a4078123e262932220e508053ea0a91086b2cf4c",
+   "order": 21,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2915,
+   "verdict": "DISCLOSURE",
+   "why": "asbestos personal-injury lawsuits against the company",
+   "text": "We are a defendant in lawsuits claiming various personal injuries related to asbestos and other materials, which allegedly occurred as a result of exposure caused by various products manufactured by Westinghouse, a predecessor, generally prior to the early 1970s. Westinghouse was neither a producer nor a manufacturer of asbestos. We are typically named as one of a large number of defendants in both state and federal cases. In the majority of asbestos lawsuits, the plaintiffs have not identified which of our products is the basis of a claim. Claims against us in which a product has been identified most commonly relate to allegations of exposure to asbestos-containing insulating material used in conjunction with turbines and electrical equipment.",
+   "text_sha256": "sha256:41c29b196e591951d852aba658defcb4f0977ec6e022bfe46d8b79542a054ea7",
+   "order": 22,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2916,
+   "verdict": "DISCLOSURE",
+   "why": "pending asbestos claim counts and settlement/defense costs",
+   "text": "Claims are frequently filed and/or settled in groups, which may make the amount and timing of settlements, and the number of pending claims, subject to significant fluctuation from period to period. We do not report as pending those claims on inactive, stayed, deferred or similar dockets that some jurisdictions have established for claimants who allege minimal or no impairment. As of December 31, 2022, we had pending approximately 21,580 asbestos claims, as compared with approximately 27,770 as of December 31, 2021 and 30,710 as of December 31, 2020. During 2022, we received approximately 2,840 new claims and closed or moved to an inactive docket approximately 9,030 claims. We report claims as closed when we become aware that a dismissal order has been entered by a court or when we have reached agreement with the claimants on the material terms of a settlement. Settlement costs depend on the seriousness of the injuries that form the basis of the claims, the quality of evidence supporting the claims and other factors. Our total costs for the years 2022 and 2021 for settlement and defense of asbestos claims after insurance recoveries and net of tax were approximately $57 million and $63 million, respectively. Our costs for settlement and defense of asbestos claims may vary year to year and insurance proceeds are not always recovered in the same period as the insured portion of the expenses.",
+   "text_sha256": "sha256:f92e721d4906ece316c947cd691f8989e0f9cde249fbc6515b682685169a9c5b",
+   "order": 23,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2917,
+   "verdict": "DISCLOSURE",
+   "why": "asbestos claim types, loss accrual policy and liability estimate",
+   "text": "Filings include claims for individuals suffering from mesothelioma, a rare cancer, the risk of which is allegedly increased by exposure to asbestos; lung cancer, a cancer which may be caused by various factors, one of which is alleged to be asbestos exposure; other cancers, and conditions that are substantially less serious, including claims brought on behalf of individuals who are asymptomatic as to an allegedly asbestos-related disease. The predominant number of pending claims against us are non-cancer claims. It is difficult to predict future asbestos liabilities, as events and circumstances may impact the estimate of our asbestos liabilities, including, among others, the number and types of claims and average cost to resolve such claims. We record an accrual for a loss contingency when it is both probable that a liability has been incurred and when the amount of the loss can be reasonably estimated. Our liability estimate is based upon many factors, including the number of outstanding claims, estimated average cost per claim, the breakdown of claims by disease type, historic claim filings, costs per claim of resolution and the filing of new claims, as well as consultation with a third party firm on trends that may impact our future asbestos liability. While we believe that our accrual for matters related to our predecessor operations, including environmental and asbestos, are adequate, there can be no assurance that circumstances will not change in future periods, and as a result our actual liabilities may be higher or lower than our accrual.",
+   "text_sha256": "sha256:097b09dc4430c280817d504765f2a9654bd7a468d3693fb2a645556414c9c0fd",
+   "order": 24,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2918,
+   "verdict": "DISCLOSURE",
+   "why": "'Other' label for environmental and other claims",
+   "text": "Other",
+   "text_sha256": "sha256:f97e9da0e3b879f0a9df979ae260a5f7e1371edb127c1862d4f861981166cdc1",
+   "order": 25,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2919,
+   "verdict": "DISCLOSURE",
+   "why": "environmental cleanup, toxic tort and product liability claims",
+   "text": "From time to time, we receive claims from federal and state environmental regulatory agencies and other entities asserting that we are or may be liable for environmental cleanup costs and related damages principally relating to our historical and predecessor operations. In addition, from time to time we receive personal injury claims including toxic tort and product liability claims (other than asbestos) arising from our historical operations and predecessors.",
+   "text_sha256": "sha256:1443db8fdf9969f7f17a2e8077fb5cf1bdf262d76ce3cf04fb8d64b73a2589c9",
+   "order": 26,
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2889,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "II-102",
+   "text_sha256": "sha256:cc63b5ca8cb84e21f490b14bcf67661e2688eab3b138f8fafd4c2d1b10d5a637",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2890,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+   "text_sha256": "sha256:3fc76baada90e82a6ee97fbd30235877a2a57c5df8b19ab38ee40aba5c0b9b45",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2891,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2892,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2898,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "II-103",
+   "text_sha256": "sha256:fbb441a0993b2e25cbd26c47b6286843b6c9b3c171837809f24e30652a0e2a16",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2899,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+   "text_sha256": "sha256:3fc76baada90e82a6ee97fbd30235877a2a57c5df8b19ab38ee40aba5c0b9b45",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2900,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2901,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2909,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "II-104",
+   "text_sha256": "sha256:5663f573240a79950d2be9fbc9efc59fc8985a08be129d8ec1a22b10813c9b71",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2910,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+   "text_sha256": "sha256:3fc76baada90e82a6ee97fbd30235877a2a57c5df8b19ab38ee40aba5c0b9b45",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2911,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2912,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2920,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "II-105",
+   "text_sha256": "sha256:784677cea11c951ef4c16d63adab94085add09979ad8f8eb700106601dd4a36b",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2921,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+   "text_sha256": "sha256:3fc76baada90e82a6ee97fbd30235877a2a57c5df8b19ab38ee40aba5c0b9b45",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2922,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2923,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_20_CAPTION_2883"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2860,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "commitments subheading of Note 20, not incorporated",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2861,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "nature of programming and purchase commitments",
+   "text": "Our commitments not recorded on the balance sheet primarily consist of programming and talent commitments and purchase obligations for goods and services resulting from our normal course of business.",
+   "text_sha256": "sha256:62b2acee05ef04db883d611beae75c23dce235b6f88b1e64962d7694fe2c73ff"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2862,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "programming and purchase commitment amounts",
+   "text": "Our programming and talent commitments, estimated to aggregate to $33.73 billion as of December 31, 2022, include $29.50 billion for sports programming rights and $4.23 billion relating to the production and licensing of television and film programming, including talent contracts. We also have committed purchase obligations which include agreements to purchase goods or services in the future that totaled $1.73 billion as of December 31, 2022.",
+   "text_sha256": "sha256:b6c6c10a5f65292101d673473a76a2ea73f5be76eb2b4ccec5812257a48326f8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2863,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "other contractual obligations incl. tax liability",
+   "text": "Other long-term contractual obligations recorded on the Consolidated Balance Sheet include program liabilities, participations, residuals, and a tax liability resulting from federal tax legislation enacted in December 2017. This tax liability reflects the remaining tax on the Company’s historical accumulated foreign earnings and profits, which is payable to the IRS in 2024 and 2025.",
+   "text_sha256": "sha256:92da8f375e65d6418c54ed8b887aa82c5a6505168068a715ee9b7b8d2236282a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2864,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lead-in to commitments payment table",
+   "text": "At December 31, 2022, commitments for programming and talent and purchase obligations not recorded on the balance sheet, and other long-term contractual obligations recorded on the balance sheet were payable as follows:",
+   "text_sha256": "sha256:1202204494ebd70f93a03a7f66eaa3c8676c27dcd2dd31b6a885a72b8ec9d84b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2865,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table header",
+   "text": "Payments Due by Period",
+   "text_sha256": "sha256:07f8d6d8af8dcc2e514a12d65c84a34f5c3b4b7f2739cdc5ac5c0f008176cb5b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2866,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table header fragment",
+   "text": "2028 and",
+   "text_sha256": "sha256:7deba737728bb6b5dbec7792b6c0cbc215f289c85671e91c348c67c9604ebab3"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2867,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column years",
+   "text": "Total20232024202520262027Thereafter",
+   "text_sha256": "sha256:1d08067211d77b5e2bd46d55cca82bf7aa31bfa82d87c5c4604cecf0896d7468"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2868,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table row label",
+   "text": "Off-Balance Sheet Arrangements",
+   "text_sha256": "sha256:357f9e38560a72e2c116b047dc623dcea4982f5bfca25163aa537df0fda5abf7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2869,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "programming commitments table row",
+   "text": "Programming and talent commitments $33,729 $4,233 $3,990 $3,004 $2,890 $2,632 $16,980",
+   "text_sha256": "sha256:8d69515c11b8b63feef0959a8a95ed3779793ce55db408093e5741e9638f7040"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2870,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "purchase obligations table row",
+   "text": "Purchase obligations $1,729 $693 $561 $258 $145 $21 $51",
+   "text_sha256": "sha256:cd8983912b2921308784425d45da5faeb83766ad096014b20b7a6337e9a14eff"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2871,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table row label",
+   "text": "On-Balance Sheet Arrangements",
+   "text_sha256": "sha256:2589e2f17c360c152acb560532e7a17e5be4632d08f6fac069be095d604b526c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2872,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "other contractual obligations table row",
+   "text": "Other long-term contractual obligations $2,287 $— $1,288 $683 $255 $53 $8",
+   "text_sha256": "sha256:cc153708462234a31729b9f154e0c160cc764f44ba8a5c0f64c44047bb819c19"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2873,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease commitments cross-reference",
+   "text": "We also have long-term lease commitments for office space, equipment, transponders and studio facilities, which are recorded on the Consolidated Balance Sheet at December 31, 2022. See Note 11 for details of our operating lease commitments.",
+   "text_sha256": "sha256:c2c5adfc48ea9c94b96ab076e3fcb252572989a40767e612f5ecfe7432cf55ae"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2874,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantees subheading",
+   "text": "Guarantees",
+   "text_sha256": "sha256:5ca778bb76e1199247652bf00429d8570ac620ccc8677eef47bed9c990383963"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2875,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "letters of credit and surety bonds",
+   "text": "Letters of Credit and Surety Bonds. At December 31, 2022, we had outstanding letters of credit and surety bonds of $178 million that were not recorded on the Consolidated Balance Sheet. Letters of credit and surety bonds are primarily used as security against non-performance in the normal course of business.",
+   "text_sha256": "sha256:3c8df262f4badb76deb2b7878b45b5fc43b0c1152a1b8a356b2f41aa12ae67a0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2876,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "cash-flow guarantee on a divested property",
+   "text": "CBS Television City. In connection with the sale of CBS Television City property and sound stage operation (“CBS Television City”) in 2019, we guaranteed a specified level of cash flows to be generated by the business during the first five years following the completion of the sale. Included in “Other current liabilities” and “Other liabilities” on the Consolidated Balance Sheet at December 31, 2022 is a liability totaling $51 million, reflecting the present value of the remaining estimated amount payable under the guarantee obligation.",
+   "text_sha256": "sha256:1b653e3e93f3da466a174e369de24f7f591d8ad3854cbc136a219342f5df2267"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2877,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "II-101",
+   "text_sha256": "sha256:bcbd4c0d7d9d22e3a30cc7e4ac2d72292e898e4983d897c945079579ca7a2cfa"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2878,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running header",
+   "text": "PARAMOUNT GLOBAL AND SUBSIDIARIES",
+   "text_sha256": "sha256:3fc76baada90e82a6ee97fbd30235877a2a57c5df8b19ab38ee40aba5c0b9b45"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2879,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2880,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2881,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease guarantees of a former business and accrual sufficiency",
+   "text": "Lease Guarantees. We have certain indemnification obligations with respect to leases primarily associated with the previously discontinued operations of Famous Players. These lease commitments totaled $20 million at December 31, 2022, and are presented within “Other liabilities” on the Consolidated Balance Sheet. The amount of lease commitments varies over time depending on the expiration or termination of individual underlying leases, or the related indemnification obligation, and foreign exchange rates, among other things. We may also have exposure for certain other expenses related to the leases, such as property taxes and common area maintenance. We believe our accrual is sufficient to meet any future obligations based on our consideration of available financial information, the lessees’ historical performance in meeting their lease obligations and the underlying economic factors impacting the lessees’ business models.",
+   "text_sha256": "sha256:33647f032fa595e14654dcd078ca38e97be0c09219aff125907aad587c769d2d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2882,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "indemnification obligations, no lawsuit or claim described",
+   "text": "In the course of our business, we both provide and receive indemnities which are intended to allocate certain risks associated with business transactions. Similarly, we may remain contingently liable for various obligations of a business that has been divested in the event that a third party does not live up to its obligations under an indemnification obligation. We record a liability for our indemnification obligations and other contingent liabilities when probable and reasonably estimable.",
+   "text_sha256": "sha256:8a466a21ea2679a521feb096b13286a94b90b78bb3cae4629d65ca6640bbdd0a"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1315,
+   "verdict": "NOT_D02",
+   "why": "litigation heading before Item 8 (MD&A area), outside D02 sources; same matter in value at 2887",
+   "text": "Litigation Relating to the Merger",
+   "text_sha256": "sha256:7ecef085d48c58fc7b22d212308eacab3e2744a33400cceb4499617faf682606"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1326,
+   "verdict": "NOT_D02",
+   "why": "heading before Item 8 (MD&A area); same matter in value at 2903",
+   "text": "Litigation Related to Stock Offerings",
+   "text_sha256": "sha256:43eef07b7fc9edd7c4bb9b16de4beb2b9629c54c087442ae5dbff220d65933d3"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1333,
+   "verdict": "NOT_D02",
+   "why": "heading before Item 8 (MD&A area); same matter in value at 2905",
+   "text": "Litigation Related to Television Station Owners",
+   "text_sha256": "sha256:4dbae4766129a1027aa2034b8e75263a8222c26c3290ce68cd3ea50ea3402d2b"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1335,
+   "verdict": "NOT_D02",
+   "why": "heading before Item 8 (MD&A area); same matter in value at 2907",
+   "text": "Litigation Related to the Proposed Sale of Simon & Schuster",
+   "text_sha256": "sha256:f3a9f4d5f02580baecb1aa2b4aba6c4447396ae61dff769f264c1bcc619e2aa0"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1558,
+   "verdict": "NOT_D02",
+   "why": "balance sheet caption",
+   "text": "Commitments and contingencies (Note 20)",
+   "text_sha256": "sha256:b18c2b099bf24aa05420ecf5ae6a39384eb87cedb21c1af01a730f2eabf8c6b2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2859,
+   "verdict": "REACHED",
+   "why": "Note 20 heading; its incorporated Legal Matters caption is in the value",
+   "text": "20) COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:2c61dbcf264910a397d1c63455ad0172108016f4ee5ac349e0b6dcf0166fd7e1"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2860,
+   "verdict": "NOT_D02",
+   "why": "purchase and programming commitments subheading",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2869,
+   "verdict": "NOT_D02",
+   "why": "contractual commitments table row",
+   "text": "Programming and talent commitments $33,729 $4,233 $3,990 $3,004 $2,890 $2,632 $16,980",
+   "text_sha256": "sha256:8d69515c11b8b63feef0959a8a95ed3779793ce55db408093e5741e9638f7040"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2887,
+   "verdict": "REACHED",
+   "why": "merger litigation caption, taken with its paragraphs",
+   "text": "Litigation Relating to the Merger",
+   "text_sha256": "sha256:7ecef085d48c58fc7b22d212308eacab3e2744a33400cceb4499617faf682606"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2903,
+   "verdict": "REACHED",
+   "why": "stock offerings caption, taken with its paragraph",
+   "text": "Litigation Related to Stock Offerings",
+   "text_sha256": "sha256:43eef07b7fc9edd7c4bb9b16de4beb2b9629c54c087442ae5dbff220d65933d3"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2905,
+   "verdict": "REACHED",
+   "why": "TV station owners caption, taken with its paragraph",
+   "text": "Litigation Related to Television Station Owners",
+   "text_sha256": "sha256:4dbae4766129a1027aa2034b8e75263a8222c26c3290ce68cd3ea50ea3402d2b"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2907,
+   "verdict": "REACHED",
+   "why": "Simon & Schuster caption, taken with its paragraph",
+   "text": "Litigation Related to the Proposed Sale of Simon & Schuster",
+   "text_sha256": "sha256:f3a9f4d5f02580baecb1aa2b4aba6c4447396ae61dff769f264c1bcc619e2aa0"
+  }
+ ]
+}
