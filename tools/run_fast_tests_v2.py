@@ -444,6 +444,11 @@ SOURCE_TESTS += ("tests.vnext.test_d03_current_source_replay.D03CurrentSourceRep
 SOURCE_TESTS += ("tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",)
 SOURCE_TESTS += ("tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_saved_marriott_context_only_stays_unapproved_without_fake_unresolved",)
+# D02 excerpt readings: exact coverage of the packet, a covered-elsewhere
+# verdict that must cite an excerpt, Pfizer FY2025's packet built from the saved
+# filing with the two registered keyword errors in front of the reader, and each
+# committed reading's excerpts rendering the value it accepted. About 80 seconds.
+SOURCE_TESTS += ("tests.vnext.test_d02_excerpt_reading",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

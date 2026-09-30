@@ -123,9 +123,12 @@ composed value is published there.
 The pinned route withheld on any answer (`is not None`), so after the merge
 it would have withheld a value #28 publishes for the same filing - the one
 disagreement this port exists to prevent. It now withholds only when the
-answer blocks, and keeps a proved answer on the result's record
-(`selection.depreciation_scope.contract_amortization`). Nothing is added and
-nothing is recomputed.
+answer blocks, and keeps a proved answer in the route's selection
+(`selection.depreciation_scope.contract_amortization`). The Run's records do
+not store the selection: every replay - the freeze, and a cold read in another
+process - derives it again from the filing, so the question is asked again
+each time rather than read back. Nothing is added to D&A and the value is not
+recomputed.
 
 Measured on the saved filings (`scripts/vnext/historical_zero_ai_results.py`
 at a21ad181): Marriott FY2025 publishes 0.1756281982738868097456656229 and

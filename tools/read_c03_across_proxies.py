@@ -14,8 +14,8 @@ another year is set aside as read_governance_facts sets it aside.
 
 A year two proxies report differently (c03-first-ecd-release/: Marriott
 corrects its 2022 total, Macy's reports fiscal 2023 net of a clawback) is not
-chosen between by this reading. The owner chose how (owner-decisions-2026-09-30/
-c03-convention.json, answer A: a year's value is the value as first reported),
+chosen between by this reading. The owner chose how (the c03-convention.json
+decision record, answer A: a year's value is the value as first reported),
 so when that record says A the year is read as its first report: the earliest
 proxy's single total, which must be the filing the result names, with every
 later amount recorded beside it. That value is confirmed only by the route's
@@ -49,7 +49,20 @@ from acceptance_readings import (EXPORT, EXPORT_MEMBER_PREFIX, _export_members, 
 from read_governance_facts import contexts_of, peo_totals, peo_totals_for  # noqa: E402
 
 _CIK = re.compile(r'name="dei:EntityCentralIndexKey"[^>]*>(?:<[^>]+>)*\s*([0-9]+)')
-DECISION = "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json"
+def _decision_path():
+    """The owner's C03 convention record, found by its name among the decision records.
+
+    The decision directories are named for the day each decision was made; the
+    code names the record, not the day, and there must be exactly one.
+    """
+    found = sorted((REPO / "docs/evidence/issue47_history").glob(
+        "owner-decisions-*/c03-convention.json"))
+    if len(found) != 1:
+        raise SystemExit("C03_CONVENTION_DECISION_IS_NOT_ONE_FILE:" + str(len(found)))
+    return str(found[0].relative_to(REPO))
+
+
+DECISION = _decision_path()
 
 
 def _number(value):

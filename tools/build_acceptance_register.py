@@ -317,7 +317,7 @@ C03_ACROSS_PROXIES_LIMIT = (
  "c03-first-ecd-release/), nor " + COMMON)
 C03_FIRST_REPORTED_METHOD = (
  "a year the saved proxies report differently, read as the owner decided a year is "
- "read - as first reported (owner-decisions-2026-09-30/c03-convention.json, answer "
+ "read - as first reported (the owner's c03-convention.json decision record, answer "
  "A): the earliest proxy's single ecd:PeoTotalCompAmt for the year, read by "
  "tools/read_c03_across_proxies.py, which imports none of the route's governance "
  "modules; that proxy must be the filing the result names, and every later amount "
