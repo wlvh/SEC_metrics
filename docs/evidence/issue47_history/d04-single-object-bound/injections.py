@@ -41,7 +41,7 @@ INJECTIONS = {
     "THE_WIDER_BOUND_IS_NOT_RECORDED": (
         SOURCE,
         """    return visible, native, coverage, {"single_object_bound": {""",
-        """    return visible, native, coverage, {} or {"single_object_bound": {""",
+        """    return visible, native, coverage, {} if True else {"single_object_bound": {""",
         "test_the_document_says_which_bound_admitted_it_and_names_the_unit"),
     "THE_UNIT_LIMIT_IS_WIDENED_TOO": (
         SOURCE,

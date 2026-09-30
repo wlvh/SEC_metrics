@@ -1291,3 +1291,5 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 
 **D02 的附注导航**。`historical_text_results.note_references` 把冻结 `_note_references` 原样跑在给它看的文本上：页码置空（`page_number_blocks`：纯数字块，旁边是重复≥3 次的页脚，同一页脚同侧有 ±1 的数字），"(18) 标题"呈现为"18) 标题"；结果点名的摘录换回申报原文。D02 的冻结准备经 `_D02_PREPARATION = release_aware_with(prepare_business_text_sources, legal_risk_candidates=_D02_LEGAL_SCAN)` 用它，`referenced_note_candidates` 也用它。`historical_dei.overrides_of(view)` 读出一个覆盖视图替换了哪些名字，供用例核对这条替换链。
 
+**D04 的单对象上限**。冻结的 D04 来源分组（`r6_semantic_source._group`）拒绝编码后超过 300,000 字节的单个来源对象；这是"放得进一个请求"的代用判据，真实判据在请求构造时由冻结的 `continuous_request_context.measured_groups` 按参考 token 检查。`historical_semantic_source._document_units` 先跑冻结分组；只有它恰好以 `SEMANTIC_SINGLE_SOURCE_OBJECT_EXCEEDS_INPUT_BOUND` 拒绝时，才用 `release_aware_with(_group, POLICY=…)` 与 `release_aware_with(_native_units, _group=…)` 重分这份文档：单对象上限取请求字节上限，其余策略不变，文档条目带 `single_object_bound` 并点名超限单元。
+
