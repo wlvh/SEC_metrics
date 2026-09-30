@@ -1,0 +1,76 @@
+{
+ "ANY_REPORTED_VALUE_BRIDGES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_product_revenue_over_total_revenue_is_withheld",
+  "failed_cases": [
+   "test_product_revenue_over_total_revenue_is_withheld",
+   "test_total_revenue_over_product_revenue_is_withheld"
+  ],
+  "file": "scripts/vnext/historical_results.py",
+  "modules": [
+   "tests.vnext.test_historical_paired_measure"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "A_PAIR_ON_TWO_CONCEPTS_IS_NEVER_ASKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_product_revenue_over_total_revenue_is_withheld",
+  "failed_cases": [
+   "test_a_value_the_filing_reports_differently_is_not_a_bridge",
+   "test_product_revenue_over_total_revenue_is_withheld",
+   "test_total_revenue_over_product_revenue_is_withheld",
+   "test_two_concepts_the_target_filing_shows_are_one_quantity_are_kept"
+  ],
+  "file": "scripts/vnext/historical_results.py",
+  "modules": [
+   "tests.vnext.test_historical_paired_measure"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 4
+ },
+ "EVERY_CONCEPT_LIST_IS_A_PAIR": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_routes_that_read_one_quantity_twice",
+  "failed_cases": [
+   "test_the_routes_that_read_one_quantity_twice"
+  ],
+  "file": "scripts/vnext/historical_results.py",
+  "modules": [
+   "tests.vnext.test_historical_paired_measure"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "THE_BRIDGE_IS_LOOKED_FOR_IN_THE_PRIOR_FILING": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_two_concepts_the_target_filing_shows_are_one_quantity_are_kept",
+  "failed_cases": [
+   "test_a_value_the_filing_reports_differently_is_not_a_bridge",
+   "test_product_revenue_over_total_revenue_is_withheld",
+   "test_total_revenue_over_product_revenue_is_withheld",
+   "test_two_concepts_the_target_filing_shows_are_one_quantity_are_kept"
+  ],
+  "file": "scripts/vnext/historical_results.py",
+  "modules": [
+   "tests.vnext.test_historical_paired_measure"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "all_caught": true
+}

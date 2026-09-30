@@ -350,6 +350,45 @@ def _acceptance_id(position):
             + position["label"].upper().replace("-", "_"))
 
 
+# What a second reading of one fact must agree on to confirm it rather than
+# make a second grant: the coordinate, the value, and the identity fields the
+# coverage matches an acceptance on. Where and when the identity was bound
+# (bound_from, established_by) are provenance, which two readings made against
+# different batches legitimately differ on.
+_CONFIRMATION_FIELDS = ("company_id", "metric_id", "period_end", "accepted_value")
+
+
+def _merge_confirmations(entries):
+    """One acceptance per identifier; a later reading of the same fact confirms it.
+
+    A batch reading re-reads positions an earlier reading already accepted,
+    because it reads every statement metric of a filing to reach the one that
+    was unread. The same fact read twice is one acceptance with a second
+    witness, not two grants - two would double-count it. It is the same fact
+    only if the coordinate, the value and the recorded identity (without when
+    it was recorded) all agree; otherwise the readings disagree about one
+    coordinate, which is a finding, and the build stops.
+    """
+    kept, order = {}, []
+    for entry in entries:
+        identifier = entry["acceptance_id"]
+        if identifier not in kept:
+            kept[identifier] = entry
+            order.append(identifier)
+            continue
+        first = kept[identifier]
+        from vnext.historical_coverage import ACCEPTANCE_IDENTITY_FIELDS
+        same = (all(first[field] == entry[field] for field in _CONFIRMATION_FIELDS)
+                and all(first["checked_identity"].get(field) == entry["checked_identity"].get(field)
+                        for field in ACCEPTANCE_IDENTITY_FIELDS))
+        if not same:
+            raise RegisterError("ACCEPTANCE_ID_NOT_UNIQUE:" + identifier
+                                + ":READINGS_DISAGREE_ON_ONE_COORDINATE:" + first["evidence"]
+                                + ":" + entry["evidence"])
+        first.setdefault("confirmed_by", []).append(entry["evidence"])
+    return [kept[identifier] for identifier in order]
+
+
 def build_register(*, repo_root: Path):
     """The register the readings under ``repo_root`` support. Reads no Run."""
     entries, readings = [], {}
@@ -385,10 +424,7 @@ def build_register(*, repo_root: Path):
                 None if isinstance(examined, dict)
                 else "this reading's shape carries no per_position map",
             "acceptances_contributed": contributed}
-    identifiers = collections.Counter(entry["acceptance_id"] for entry in entries)
-    duplicated = sorted(key for key, count in identifiers.items() if count > 1)
-    if duplicated:
-        raise RegisterError("ACCEPTANCE_ID_NOT_UNIQUE:" + ",".join(duplicated))
+    entries = _merge_confirmations(entries)
     return {
      "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER", "schema_version": 2,
      "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

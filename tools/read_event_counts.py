@@ -62,6 +62,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 OUT = "docs/evidence/issue47_history/content-acceptance/event-count-read.json"
+EVENT_FORMS = ("8-K", "8-K/A")
 from acceptance_readings import reading_cases  # noqa: E402
 CASES = reading_cases("event_counts")
 
@@ -181,7 +182,10 @@ def count_window(*, filings, cik, start, end, header=None, metrics=None):
     seen = {basis: [] for basis in counts}
     unreadable = []
     for filing in filings:
-        if not filing["form"].startswith("8-K"):
+        # Form 8-K and its amendment, as the approved event routes count them.
+        # A prefix test also admitted 8-K12B and 8-K12B/A - a successor's
+        # registration 8-K - which no event route reads.
+        if filing["form"] not in EVENT_FORMS:
             continue
         for basis, field in (("filing_date", "filingDate"), ("report_date", "reportDate")):
             day = filing[field]
@@ -292,6 +296,17 @@ def main():
         if saved is None:
             raise SystemExit("SUBMISSIONS_INDEX_NOT_SAVED:" + url)
         start, end = period["period_start"], period["period_end"]
+        # This counts the fiscal year's window. A result that measured another
+        # window - a successor's registered events reach back into the
+        # predecessor's year - is not a count of this one, and is not compared.
+        measured = {(result["period_start"], result["period_end"])
+                    for metric in sorted(_routes())
+                    for result in [select_receipt(found=index.get((company_id, metric, report_end), []),
+                                                  closure=arguments.closure)["result"]]
+                    if result is not None and result.get("value") is not None}
+        if measured - {(start, end)}:
+            raise SystemExit("RESULT_WINDOW_IS_NOT_THE_FISCAL_WINDOW:" + label + ":"
+                             + json.dumps(sorted(measured)))
         submissions = json.loads(saved["raw"])
         reached = history_blocks_reached(submissions, start)
         if reached:
