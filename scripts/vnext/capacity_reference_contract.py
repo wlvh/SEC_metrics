@@ -5,6 +5,7 @@ reference must have exactly one owner in the supplied, single-document group.
 The normal B13 validator still checks every derived finding and source unit.
 """
 from copy import deepcopy
+import re
 
 from .canonical import canonical_json_bytes, content_hash, strict_json_loads, strict_json_file
 
@@ -50,6 +51,39 @@ def _owners(base):
             need(key not in owners, 'B13_REFERENCE_AMBIGUOUS_SOURCE')
             owners[key] = index
     return owners
+
+
+def _currency_numeric_native_refs(base):
+    """Identify exact native facts measured in an ISO currency, not physical units.
+
+    Unit ids such as ``usd`` are filing-local. Resolve the original measure's
+    namespace instead of inferring currency from that id or from a concept name.
+    """
+    from .capacity_semantic_review import _restore_units
+    refs = set()
+    for index, unit in enumerate(_restore_units(
+            base['units'], base['shared_source_dictionaries'])):
+        if unit['kind'] != 'NATIVE_FACTS':
+            continue
+        payload = unit['payload']
+        for row in payload['facts']:
+            fact = row['fact']
+            if fact['tag'].split(':')[-1].casefold() != 'nonfraction' or not fact['unit_ref']:
+                continue
+            declared = payload['units'].get(fact['unit_ref'])
+            if declared is None:
+                continue
+            environment = payload['namespace_environments'].get(
+                declared['namespace_environment_id'], {})
+            measures = re.findall(
+                r'<(?:[A-Za-z_][\w.-]*:)?measure(?:\s[^>]*)?>\s*([^<]+?)\s*'
+                r'</(?:[A-Za-z_][\w.-]*:)?measure\s*>', declared['raw_xml'])
+            for value in measures:
+                name = value.strip()
+                prefix = name.split(':', 1)[0] if ':' in name else ''
+                if environment.get(prefix) == 'http://www.xbrl.org/2003/iso4217':
+                    refs.add((index, fact['ordinal']))
+    return refs
 
 
 def upgrade_request(base, *, compact=False, role_labels=False, relevance_scope=False):
@@ -162,6 +196,7 @@ def restore_response(*, request, raw_response):
         rows[index] = {k: deepcopy(v) for k, v in row.items() if k != 'unit_index'}
         rows[index].update(unit_id=base['units'][index]['unit_id'], findings=[])
     seen = set()
+    currency_numeric_refs = None
     required_keys = set()
     if version in {RELEVANCE_VERSION, SCANNED_VERSION}:
         unit_indices = {unit['unit_id']: index for index, unit in enumerate(base['units'])}
@@ -192,6 +227,15 @@ def restore_response(*, request, raw_response):
                  'B13_TWO_STAGE_FINDING_OUTSIDE_SCAN')
         indices = {owners[key] for key in references}
         need(len(indices) == 1, 'B13_REFERENCE_CROSS_UNIT_FINDING')
+        if (version in {RELEVANCE_VERSION, SCANNED_VERSION}
+                and finding['kind'] in {'CAPACITY_QUALITATIVE', 'PLANNED_CAPACITY',
+                                        'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'}
+                and all(key[0] == 'NATIVE_FACT' for key in references)):
+            if currency_numeric_refs is None:
+                currency_numeric_refs = _currency_numeric_native_refs(base)
+            need(not any((owners[key], key[-1]) in currency_numeric_refs
+                         for key in references),
+                 'B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE')
         if version in {RELEVANCE_VERSION, SCANNED_VERSION} and \
                 finding['kind'] in request['response_protocol']['required_only_exclusion_kinds']:
             need(any((key[0], owners[key], key[-1]) in required_keys

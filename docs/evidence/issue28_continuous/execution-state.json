@@ -7709,5 +7709,44 @@
     "new_real_calls": [0, 0, 0],
     "new_complete_company_or_390_credit": 0,
     "formal_adoption": false
+  },
+  "ci_36674903456": {
+    "head": "e646f9cdac3fa2b57096892eb7f4fbd1deebb805",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_succeeded": 16,
+    "jobs_failed": 0,
+    "observed_final_updated_at_utc": "2026-09-30T06:09:28Z",
+    "scope": "B13_GROUP1_SOURCE_CHECK_EVIDENCE_ONLY; LATER_CURRENCY_GUARD_PRODUCT_DIFF_NOT_COVERED",
+    "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36674903456"
+  },
+  "b13_native_currency_context_20260930": {
+    "status": "LOCAL_PRODUCT_PATCH_DIRECTED_AND_FAST_PASS_EXACT_SHA_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/b13-native-currency-context-20260930/README.md",
+    "original_failure": "F450_ISO_CURRENCY_TAX_CREDIT_ACCEPTED_AS_CAPACITY_QUALITATIVE_WITH_ZERO_UNRESOLVED_IN_V4",
+    "repaired_behavior": "EXPLICIT_V4_AND_SCANNED_SUCCESSOR_REJECT_CURRENCY_NATIVE_EVIDENCE_FOR_POSITIVE_PHYSICAL_FINDING",
+    "authentic_192_request_and_source_hashes_preserved": true,
+    "positive_controls": ["SYNTHETIC_NONCURRENCY_NATIVE_NARRATIVE_F451", "EMPTY_OPTIONAL_FINDING_SET"],
+    "negative_controls": ["AUTHENTIC_192_F450_ONLY", "AUTHENTIC_192_F449_WITH_F450_SAME_FINDING", "SYNTHETIC_F450_WITH_SYNTHETIC_F451_SAME_FINDING"],
+    "historical_190_current_semantic_revalidation": "PASS_5_FINDINGS_ZERO_UNRESOLVED_NO_TERMINAL_CHANGE",
+    "old_190_191_request_structures_preserved": true,
+    "directed_tests": "45/45_PASS_FINAL_CODE",
+    "fast_first": "FAILED_141_OF_142_EXACT_SCALABILITY_EXEMPTION_SOURCE_HASH_AND_LINE_STALE",
+    "fast_final": "PASS_142_OF_142_100_562_SECONDS",
+    "v14_requirement_closure_hash": "sha256:2aa3d70596676e6795546bd500c9cf4e200f19a7429187b6d2e6919775ad2052",
+    "v13_manifest_unchanged": true,
+    "provider_sec_refresh_wiring_validated": true,
+    "new_real_calls": [0, 0, 0],
+    "native_company_result_created": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "files_and_functions": {
+        "scripts/vnext/capacity_reference_contract.py": ["_currency_numeric_native_refs", "restore_response"],
+        "config/ordinary_scalability_exemptions_v1.json": ["two exact source-reference F syntax exemptions"],
+        "requirements/issue_28_v14/baseline_manifest.json": ["current unfrozen V14 rule and execution bindings"]
+      },
+      "compatibility": "V13 byte-identical; V1-V3 request generation unchanged; V4 prior190 response retains zero unresolved; default shared interfaces and result record shapes unchanged",
+      "downstream_impact": "stacked PR may need its own V14 parent binding refresh; #47 branch/worktree/ledger/snapshot/PR not operated"
+    }
   }
 }
