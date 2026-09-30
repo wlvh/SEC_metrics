@@ -136,6 +136,88 @@ class CapacityReferenceContractTest(unittest.TestCase):
         restore_response(request=required_request,
             raw_response=canonical_json_bytes(value=required_response))
 
+    def test_v4_currency_native_fact_cannot_be_physical_context(self):
+        from vnext.capacity_semantic_review import requests_from_source
+        source, _ = quantity_source('<p>Our products are sold worldwide.</p>')
+        document = source['units'][0]['document_id']
+        environment = {'xbrli': 'http://www.xbrl.org/2003/instance',
+                       'money': 'http://www.xbrl.org/2003/iso4217'}
+        narrative = ('Our contract manufacturers currently have sufficient '
+                     'production capacity for anticipated demand.')
+        payload = {'facts': [
+            {'fact': {'ordinal': 450, 'qualified_name': 'x:AccountingAmount',
+                      'text': '238.7', 'context_ref': 'c', 'unit_ref': 'credit',
+                      'scale': '6', 'sign': '', 'tag': 'ix:nonfraction'},
+             'attributes': {}, 'expanded_concept': ['urn:test', 'AccountingAmount'],
+             'namespace_environment_id': 'env'},
+            {'fact': {'ordinal': 451, 'qualified_name': 'x:OperationsNarrativeTextBlock',
+                      'text': narrative, 'context_ref': 'c', 'unit_ref': '',
+                      'scale': '0', 'sign': '', 'tag': 'ix:nonnumeric'},
+             'attributes': {}, 'expanded_concept': ['urn:test', 'OperationsNarrativeTextBlock'],
+             'namespace_environment_id': 'env'},
+            {'fact': {'ordinal': 452, 'qualified_name': 'x:AnotherAccountingAmount',
+                      'text': '157.5', 'context_ref': 'c', 'unit_ref': 'inline',
+                      'scale': '6', 'sign': '', 'tag': 'ix:nonfraction'},
+             'attributes': {}, 'expanded_concept': ['urn:test', 'AnotherAccountingAmount'],
+             'namespace_environment_id': 'outer'}],
+            'contexts': {},
+            'units': {'credit': {'raw_xml': '<xbrli:unit id="credit">'
+                      '<xbrli:measure>money:USD</xbrli:measure></xbrli:unit>',
+                      'namespace_environment_id': 'env'},
+                      'inline': {'raw_xml': '<xbrli:unit id="inline">'
+                      '<xbrli:measure xmlns:money="http://www.xbrl.org/2003/iso4217">'
+                      'money:USD</xbrli:measure></xbrli:unit>',
+                      'namespace_environment_id': 'outer'}},
+            'namespace_environments': {'env': environment,
+                                       'outer': {'xbrli': environment['xbrli']}}}
+        native = _seal_unit(document, 'NATIVE_FACTS', payload, 1)
+        source['units'].append(native)
+        source['required_unit_ids'] = [unit['unit_id'] for unit in source['units']]
+        source['documents'][0]['source_unit_ids'] = source['required_unit_ids']
+        source['capacity_navigation'] = []
+        source['native_capacity_role_assessments'] = []
+        source['semantic_source_id'] = content_hash(value={k: v for k, v in source.items()
+                                                     if k != 'semantic_source_id'})
+        source = program_source(source)
+        request = upgrade_request(requests_from_source(source)[0], compact=True,
+                                  role_labels=True, relevance_scope=True)
+        books = request['response_protocol']['classification_codebooks']
+        response = {'units': [{'unit_index': index, 'reviewed': True,
+                    'unresolved': [], 'calculation_limits': []}
+                    for index in range(len(request['units']))], 'findings': []}
+        self.assertEqual(validate_response(request=request,
+            raw_response=canonical_json_bytes(value=response), source=source)['unresolved'], [])
+        row = ['physical_capacity_context', books['subject'].index('TARGET_REGISTRANT'),
+               books['timing'].index('CURRENT_REPORT'), ['F451'],
+               'The narrative reports current contract-manufacturer capacity.']
+        response['findings'] = [row]
+        self.assertEqual(validate_response(request=request,
+            raw_response=canonical_json_bytes(value=response), source=source)['unresolved'], [])
+        for label in ('physical_capacity_context', 'planned_physical_capacity'):
+            for references in (['F450'], ['F450', 'F451'],
+                               ['F452'], ['F452', 'F451']):
+                bad = deepcopy(response)
+                bad['findings'][0][0] = label
+                bad['findings'][0][3] = references
+                with self.subTest(label=label, references=references), self.assertRaisesRegex(
+                        ValueError, 'B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE'):
+                    validate_response(request=request,
+                        raw_response=canonical_json_bytes(value=bad), source=source)
+        from vnext.capacity_two_stage import scan_request, validate_scan, interpretation_request
+        scan = scan_request(request)
+        scan_raw = canonical_json_bytes(value={'units_reviewed': list(range(len(request['units']))),
+            'candidate_refs': ['F452'], 'unresolved_refs': []})
+        scan_result = validate_scan(request=request, scan_request_value=scan,
+                                    raw_response=scan_raw)
+        interpretation = interpretation_request(request=request, scan_result=scan_result,
+            scan_raw_response=scan_raw)
+        bad = deepcopy(response)
+        bad['findings'][0][3] = ['F452']
+        with self.assertRaisesRegex(ValueError,
+                'B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE'):
+            restore_response(request=interpretation,
+                raw_response=canonical_json_bytes(value=bad))
+
     def test_meaningful_role_candidate_cannot_claim_live_without_new_authority(self):
         from types import SimpleNamespace
         from vnext.continuous_semantic_calls import execute_capacity_assessment
