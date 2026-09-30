@@ -1,10 +1,11 @@
 """Where each content reading keeps its per-position conclusions.
 
-Eight shapes: a statement read keyed by label with one row per metric, a
+Nine shapes: a statement read keyed by label with one row per metric, a
 lodging table keyed by label, an event window with its filing list, E01's
 item 8.01 reading over the same windows, governance rows beside a period, a D02
-text reading, the D01 heading readings (one shape, three files), and two
-single-coordinate readings. The acceptance register and the identity binder both have to walk
+text reading, the D01 heading readings (one shape, three files), an older
+year's C03 read across every proxy that reports it, and two single-coordinate
+readings. The acceptance register and the identity binder both have to walk
 them, and walking them twice with two sets of rules is how the two would come
 to disagree about which positions exist. So the walk is here, once.
 
@@ -55,6 +56,10 @@ E01_CANDIDATES = EVIDENCE + "e01-content-confirmed-read.json"
 # tools/read_c02_composition.py.
 C02_COMPOSITION = EVIDENCE + "c02-composition-read.json"
 GOVERNANCE = EVIDENCE + "governance-read.json"
+# An older year's C03, read from every saved proxy that tags it (a year is
+# reported again by each later proxy) by tools/read_c03_across_proxies.py; one
+# file per closure its positions compare.
+C03_ACROSS_PROXIES = (EVIDENCE + "c03-across-proxies-read-batch.json",)
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
 # imports none of the route's text modules: one reading for the 30-metric
@@ -81,7 +86,7 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
             TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION,
-            E01_CANDIDATES)
+            E01_CANDIDATES, *C03_ACROSS_PROXIES)
 # The company periods the readings cover are data, not code: tools/ is scanned
 # as production Python for identity literals and fixed dates.
 POSITIONS = "docs/evidence/issue47_history/reading-producers/positions.json"
@@ -305,6 +310,17 @@ def positions(*, repo_root: Path, path: str, body):
                     metric_id=metric, period_end=PERIODS[label],
                     published=row["published"], verdict=row.get("verdict"),
                     filings=named, window=case.get("period"), case=case))
+    elif path in C03_ACROSS_PROXIES:
+        # The filings named are the ones the result names that the reading also
+        # opened; the later proxies that confirm the value are the reading's
+        # own, listed in the slot, and a binding cannot require the result to
+        # name them.
+        for label, case in sorted(body["per_position"].items()):
+            found.append(_position(
+                reading=path, label=label, slot=case, company_id=case["company_id"],
+                metric_id="C03", period_end=case["period_end"], published=case["published"],
+                verdict=case["verdict"], filings=case["opened_filings_the_result_names"],
+                window=case["period"]))
     elif path == TEXT:
         # Every position this reading holds was read whole and accepted; the
         # sets found wrong are recorded as defects, not here. It names the

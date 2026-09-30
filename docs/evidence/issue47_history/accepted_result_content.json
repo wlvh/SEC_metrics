@@ -6698,6 +6698,127 @@
    "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_ENPHASE_2023",
+   "accepted_value": "19527534",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:b25db0a0e62cf45f36e67833f9c9cc21d7c9bee788e08fc330052d5b59161b53",
+     "run_id": "run:historical-period:80c27323362a12fb8d4800c3f6ca9bf40efe9a2151a6aac9a6e73ae9a1dbfe51"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-24-000049"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001463101-24-000049",
+      "document": "evidence/request_attempts/1c/1c8339b97e3eda141ae574a36ddc34c496e306ed2f497775a615d9aa4b15865a/enph-20240404.htm",
+      "named_by_the_result": true,
+      "sha256": "1c8339b97e3eda141ae574a36ddc34c496e306ed2f497775a615d9aa4b15865a",
+      "values": [
+       19527534
+      ]
+     },
+     {
+      "accession": "0001463101-25-000041",
+      "document": "evidence/request_attempts/97/975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1/enph-20250404.htm",
+      "named_by_the_result": false,
+      "sha256": "975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1",
+      "values": [
+       19527534
+      ]
+     },
+     {
+      "accession": "0001463101-26-000026",
+      "document": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+      "named_by_the_result": false,
+      "sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+      "values": [
+       19527534
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C03_ENPHASE_2024",
+   "accepted_value": "12630005",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:f642c3fa9f43ec276efa678c96c78be32f3bc82c34a50d9739e1e4ed5aff5b04",
+     "run_id": "run:historical-period:a582e6fc079e31436be648c6ba7fbb222ddf17b1a8a68e7a1c91cd7e7b0db133"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-25-000041"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001463101-25-000041",
+      "document": "evidence/request_attempts/97/975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1/enph-20250404.htm",
+      "named_by_the_result": true,
+      "sha256": "975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1",
+      "values": [
+       12630005
+      ]
+     },
+     {
+      "accession": "0001463101-26-000026",
+      "document": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+      "named_by_the_result": false,
+      "sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+      "values": [
+       12630005
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_ENPHASE_2025",
    "accepted_value": "9601958",
    "checked_identity": {
@@ -6833,6 +6954,62 @@
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_MACYS_2025",
+   "accepted_value": "16452108",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:c6ed2dc9ba0ba3582d8c895892642b01ebdaeefd75beb338c65ca1aa5cf17924",
+     "run_id": "run:historical-period:b6f7153568f33f4bb764dfd0b3979c9e31103765a1fedd13bf3879e431665fbc"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001558370-25-004270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-02-01",
+    "period_start": "2024-02-04",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2025-02-01",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001104659-26-037752",
+      "document": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+      "named_by_the_result": false,
+      "sha256": "3b501eec7b59a3dabbe9da4a206a6b3e61469c426650f9c16432c03e66703d06",
+      "values": [
+       16452108
+      ]
+     },
+     {
+      "accession": "0001558370-25-004270",
+      "document": "evidence/request_attempts/bb/bbfcb511624c779d505125fdcdda492a1bd098615f02481dc097e6d6be59fb99/m-20250516xdef14a.htm",
+      "named_by_the_result": true,
+      "sha256": "bbfcb511624c779d505125fdcdda492a1bd098615f02481dc097e6d6be59fb99",
+      "values": [
+       16452108
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_MACYS_2026",
    "accepted_value": "14104067",
    "checked_identity": {
@@ -6878,6 +7055,127 @@
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_MARRIOTT_2023",
+   "accepted_value": "22664045",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:01f16d2b10c0c455b66cbd5b62de2e83987cfe0ca265a48e34b730939dccfa44",
+     "run_id": "run:historical-period:28c2a03703204fa55ceaeb103eb0f1c78d3c288aa46bb0ec879528c7da30ad97"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-24-015465"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001140361-24-015465",
+      "document": "evidence/request_attempts/a2/a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954/ny20015439x1_def14a.htm",
+      "named_by_the_result": true,
+      "sha256": "a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+      "values": [
+       22664045
+      ]
+     },
+     {
+      "accession": "0001140361-25-010600",
+      "document": "evidence/request_attempts/d1/d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43/ny20039208x771_def14a.htm",
+      "named_by_the_result": false,
+      "sha256": "d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43",
+      "values": [
+       22664045
+      ]
+     },
+     {
+      "accession": "0001140361-26-011590",
+      "document": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+      "named_by_the_result": false,
+      "sha256": "fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+      "values": [
+       22664045
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C03_MARRIOTT_2024",
+   "accepted_value": "21934093",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:5a3c7614892f29477f3f4482c8436ddf90b0b617ae85a2bcf9cffd27a5662239",
+     "run_id": "run:historical-period:691fae78e74541876fc72d47900d54c482d174eaa95495347a79133db67852ac"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-25-010600"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001140361-25-010600",
+      "document": "evidence/request_attempts/d1/d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43/ny20039208x771_def14a.htm",
+      "named_by_the_result": true,
+      "sha256": "d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43",
+      "values": [
+       21934093
+      ]
+     },
+     {
+      "accession": "0001140361-26-011590",
+      "document": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+      "named_by_the_result": false,
+      "sha256": "fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+      "values": [
+       21934093
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_MARRIOTT_2025",
    "accepted_value": "22970926",
    "checked_identity": {
@@ -6921,6 +7219,73 @@
     ]
    },
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C03_PARAMOUNT_2023",
+   "accepted_value": "31257129",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:a11d6d04ed759e68dfac13183b7658748c47b8d1c13241d3e2f682bdece137a7",
+     "run_id": "run:historical-period:555000039495609f8335d5a4974abc279c7f07ef574992cbf799f265997d3cdb"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001193125-24-105026"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001140361-25-021135",
+      "document": "evidence/accession_materials/paramount_skydance_paramount_global_813828_000114036125021135/ny20047871x1_def14a.htm",
+      "named_by_the_result": false,
+      "placeholders_set_aside": [
+       {
+        "members": [
+         "para:ChrisMcCarthyMember"
+        ],
+        "same_person_paid_as_peo_in": [
+         "2024"
+        ],
+        "shown": "—"
+       }
+      ],
+      "sha256": "67f6aa6db3d49465672a425e411c7c8dc77d445dc779453ac3a723929a40b3b8",
+      "values": [
+       31257129
+      ]
+     },
+     {
+      "accession": "0001193125-24-105026",
+      "document": "evidence/request_attempts/65/655b8420b5e23e022242d3d6f268c21caf179d6d8acab7941e8e6ff3980abeb9/d558817ddef14a.htm",
+      "named_by_the_result": true,
+      "sha256": "655b8420b5e23e022242d3d6f268c21caf179d6d8acab7941e8e6ff3980abeb9",
+      "values": [
+       31257129
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_C03_PARAMOUNT_2025",
@@ -6969,6 +7334,62 @@
    "what_this_does_not_establish": "that the Summary Compensation Table total is the right pay signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_PFIZER_2024",
+   "accepted_value": "24648727",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:d2510e608f30a8a96df2836baef4b6d1d53b081a4a67cbfeada8bf1b07957923",
+     "run_id": "run:historical-period:1c50e37f019b1e3e3888bb4a0c69f5e9c900ca96b1347db812317bfabb02b7b0"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-25-000062"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "pfizer",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0000078003-25-000062",
+      "document": "evidence/request_attempts/c0/c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db/pfe-20250313.htm",
+      "named_by_the_result": true,
+      "sha256": "c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db",
+      "values": [
+       24648727
+      ]
+     },
+     {
+      "accession": "0000078003-26-000033",
+      "document": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+      "named_by_the_result": false,
+      "sha256": "f53e7ec13d217b5f0d5868af1d55fa9465b22daa40a2a34ff6dc653d8bad0e6e",
+      "values": [
+       24648727
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_PFIZER_2025",
    "accepted_value": "27585301",
    "checked_identity": {
@@ -7012,6 +7433,62 @@
     ]
    },
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C03_SALESFORCE_2025",
+   "accepted_value": "55074656",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:ade4b3712d833507ab854e1ca916d390af2c2c4e8d302882c51ce8f61a1f26d8",
+     "run_id": "run:historical-period:df534ed390e52cd5ace3f01812c5790836e2d69ef4672c2895e926c518db0ac3"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-25-000009"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-01-31",
+    "period_start": "2024-02-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant that tags it (a pay-versus-performance table reports each of its years again in every later proxy), by tools/read_c03_across_proxies.py, which imports none of the route's governance modules: accepted only when each proxy reports exactly one total, all of them agree, and at least one of them is a filing the result does not name, so a document the route did not read confirms the value. A placeholder dash for a person paid as PEO in another year is set aside, with the evidence.",
+   "metric_id": "C03",
+   "period_end": "2025-01-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001108524-25-000009",
+      "document": "evidence/request_attempts/a9/a9b831d4ea792c0709428a3626e9e4ba56acc0368ab95c1eaa121edf8f30ac59/crm-20250424.htm",
+      "named_by_the_result": true,
+      "sha256": "a9b831d4ea792c0709428a3626e9e4ba56acc0368ab95c1eaa121edf8f30ac59",
+      "values": [
+       55074656
+      ]
+     },
+     {
+      "accession": "0001108524-26-000085",
+      "document": "evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+      "named_by_the_result": false,
+      "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf",
+      "values": [
+       55074656
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_C03_SALESFORCE_2026",
@@ -12746,7 +13223,8 @@
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
-  "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json"
+  "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json",
+  "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
@@ -12766,6 +13244,12 @@
    "acceptances_contributed": 10,
    "content_sha256": "sha256:69030611b2bd430688071a4622bd65e2998f87a93d79380b2d3b0e41e9d6365a",
    "positions_examined": 10,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json": {
+   "acceptances_contributed": 8,
+   "content_sha256": "sha256:f9f5afcb9c3f9023881ea5174cbf92bd4f2cf92aa87f87c6c5af55f5478562b0",
+   "positions_examined": 9,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/cross-source-read-older-years.json": {

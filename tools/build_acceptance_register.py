@@ -30,7 +30,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (C02_COMPOSITION, COMPENSATION, CROSS, CROSS_READINGS,  # noqa: E402
+from acceptance_readings import (C02_COMPOSITION, C03_ACROSS_PROXIES, COMPENSATION, CROSS,  # noqa: E402
+                                 CROSS_READINGS,
                                  D01_READINGS, DEBT_TO_EQUITY, E01_CANDIDATES, E01_EIGHT_O_ONES,
                                  EVENT_READINGS, GOVERNANCE, LODGING, READINGS, RPO, TEXT, load,
                                  positions)
@@ -221,6 +222,8 @@ def _read_from(position):
         return {"auditor_this_year": row["auditor_named_in_the_target_filing"],
                 "auditor_last_year": row["auditor_named_in_the_previous_years_filing"],
                 "eight_k_item_4_01_in_window": row["eight_k_item_4_01_in_window"]}
+    if path in C03_ACROSS_PROXIES:
+        return {"proxies": case["proxies_reporting_the_target_period"]}
     if path == TEXT:
         return {"excerpts": case["excerpts"], "chars": case["chars"]}
     if path in D01_READINGS:
@@ -252,6 +255,8 @@ def _method_and_limit(position):
         return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
     if path == GOVERNANCE:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
+    if path in C03_ACROSS_PROXIES:
+        return C03_ACROSS_PROXIES_METHOD, C03_ACROSS_PROXIES_LIMIT
     if path == TEXT:
         return TEXT_METHOD, TEXT_LIMIT
     if path in D01_READINGS:
@@ -296,6 +301,18 @@ DEBT_TO_EQUITY_LIMIT = (
 RPO_METHOD = ("the filing's own inline XBRL fact for remaining performance "
               "obligation at the period end, undimensioned, against the "
               "accession-instance value the route published.")
+C03_ACROSS_PROXIES_METHOD = (
+ "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant "
+ "that tags it (a pay-versus-performance table reports each of its years again in "
+ "every later proxy), by tools/read_c03_across_proxies.py, which imports none of "
+ "the route's governance modules: accepted only when each proxy reports exactly one "
+ "total, all of them agree, and at least one of them is a filing the result does "
+ "not name, so a document the route did not read confirms the value. A placeholder "
+ "dash for a person paid as PEO in another year is set aside, with the evidence.")
+C03_ACROSS_PROXIES_LIMIT = (
+ "that the amount first reported is the amount the frame should show where a later "
+ "proxy reports another (such a year is not accepted here; see "
+ "c03-first-ecd-release/), nor " + COMMON)
 COMPENSATION_METHOD = ("the Summary Compensation Table's own CEO row, read off the "
                        "table. Its five components sum to its total, so the number "
                        "is confirmed by the table's arithmetic as well as by "
