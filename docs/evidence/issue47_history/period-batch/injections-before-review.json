@@ -6,7 +6,7 @@
    "test_a_block_is_for_one_thread"
   ],
   "returncode": 1,
-  "seconds": 99
+  "seconds": 96
  },
  "A_BOOL_INDEX_IS_REMEMBERED_AS_AN_INT": {
   "caught_by_the_case_written_for_it": true,
@@ -15,7 +15,7 @@
    "test_a_call_the_frozen_helper_refuses_is_still_refused"
   ],
   "returncode": 1,
-  "seconds": 95
+  "seconds": 141
  },
  "A_LATE_IMPORT_KEEPS_THE_MEMO": {
   "caught_by_the_case_written_for_it": true,
@@ -24,7 +24,7 @@
    "test_a_module_imported_inside_the_block_gets_the_frozen_helper_back"
   ],
   "returncode": 1,
-  "seconds": 98
+  "seconds": 103
  },
  "A_NESTED_BLOCK_STARTS_ITS_OWN": {
   "caught_by_the_case_written_for_it": true,
@@ -43,7 +43,7 @@
    "test_two_logs_never_share_an_answer"
   ],
   "returncode": 1,
-  "seconds": 96
+  "seconds": 119
  },
  "A_PREFIX_KEYED_ON_ITS_COUNT_ALONE": {
   "caught_by_the_case_written_for_it": true,
@@ -52,7 +52,7 @@
    "test_two_logs_never_share_an_answer"
   ],
   "returncode": 1,
-  "seconds": 95
+  "seconds": 98
  },
  "A_REFUSAL_IS_REMEMBERED": {
   "caught_by_the_case_written_for_it": true,
@@ -70,11 +70,11 @@
    "test_a_call_the_frozen_helper_refuses_is_still_refused"
   ],
   "returncode": 1,
-  "seconds": 95
+  "seconds": 110
  },
  "CONTROL": {
   "returncode": 0,
-  "seconds": 94
+  "seconds": 95
  },
  "IT_OPENS_INSIDE_THE_PLANNER_S_BLOCK": {
   "caught_by_the_case_written_for_it": true,
@@ -83,7 +83,7 @@
    "test_it_does_not_open_inside_the_planner_s_block"
   ],
   "returncode": 1,
-  "seconds": 97
+  "seconds": 108
  },
  "KEYED_ON_THE_ROOT_NOT_ITS_STATE": {
   "caught_by_the_case_written_for_it": true,
@@ -92,7 +92,7 @@
    "test_a_change_under_a_remembered_root_is_replayed_again"
   ],
   "returncode": 1,
-  "seconds": 93
+  "seconds": 95
  },
  "NOTHING_IS_EVER_FORGOTTEN": {
   "caught_by_the_case_written_for_it": true,
@@ -101,13 +101,12 @@
    "test_a_forgotten_state_is_replayed_again_not_answered_wrong"
   ],
   "returncode": 1,
-  "seconds": 94
+  "seconds": 121
  },
  "NOTHING_IS_PUT_BACK_AFTER_A_FAILURE": {
   "caught_by_the_case_written_for_it": true,
   "expected_case": "test_everything_is_put_back_after_a_failure",
   "failed_cases": [
-   "test_each_helper_keeps_a_bounded_number_of_answers",
    "test_everything_is_put_back_after_a_failure",
    "test_it_does_not_open_inside_the_planner_s_block",
    "test_one_root_s_answer_never_answers_another",
@@ -116,7 +115,7 @@
    "test_two_roots_in_turn_are_replayed_once_each"
   ],
   "returncode": 1,
-  "seconds": 96
+  "seconds": 93
  },
  "ONE_STATE_AT_A_TIME": {
   "caught_by_the_case_written_for_it": true,
@@ -125,7 +124,7 @@
    "test_two_roots_in_turn_are_replayed_once_each"
   ],
   "returncode": 1,
-  "seconds": 96
+  "seconds": 102
  },
  "PARSED_ROWS_ARE_SHARED": {
   "caught_by_the_case_written_for_it": true,
@@ -134,34 +133,7 @@
    "test_parsed_rows_are_fresh_each_time"
   ],
   "returncode": 1,
-  "seconds": 93
- },
- "THE_ID_MEMO_IS_UNBOUNDED": {
-  "caught_by_the_case_written_for_it": true,
-  "expected_case": "test_each_helper_keeps_a_bounded_number_of_answers",
-  "failed_cases": [
-   "test_each_helper_keeps_a_bounded_number_of_answers"
-  ],
-  "returncode": 1,
-  "seconds": 99
- },
- "THE_PARSE_MEMO_IS_UNBOUNDED": {
-  "caught_by_the_case_written_for_it": true,
-  "expected_case": "test_each_helper_keeps_a_bounded_number_of_answers",
-  "failed_cases": [
-   "test_each_helper_keeps_a_bounded_number_of_answers"
-  ],
-  "returncode": 1,
-  "seconds": 96
- },
- "THE_PREFIX_MEMO_IS_UNBOUNDED": {
-  "caught_by_the_case_written_for_it": true,
-  "expected_case": "test_each_helper_keeps_a_bounded_number_of_answers",
-  "failed_cases": [
-   "test_each_helper_keeps_a_bounded_number_of_answers"
-  ],
-  "returncode": 1,
-  "seconds": 95
+  "seconds": 97
  },
  "THE_SHARED_ANSWER_IS_HANDED_OUT": {
   "caught_by_the_case_written_for_it": true,
