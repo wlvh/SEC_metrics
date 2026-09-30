@@ -11,8 +11,8 @@
    "failed_cases": [
     "test_it_is_withheld_by_name_and_still_carries_b01"
    ],
-   "suite_result": "Ran 1 test in 23.988s FAILED (failures=1)",
-   "seconds": 26
+   "suite_result": "Ran 1 test in 17.972s FAILED (failures=1)",
+   "seconds": 19
   },
   {
    "id": "EVERY_KEPT_TOTAL_IS_WITHHELD",
@@ -24,8 +24,8 @@
    "failed_cases": [
     "test_where_the_filing_proves_the_input_the_result_is_the_chain_s"
    ],
-   "suite_result": "Ran 1 test in 17.510s FAILED (failures=1)",
-   "seconds": 19
+   "suite_result": "Ran 1 test in 12.489s FAILED (failures=1)",
+   "seconds": 13
   },
   {
    "id": "THE_RETAKEN_TOTAL_IS_NOT_ASKED",
@@ -37,8 +37,8 @@
    "failed_cases": [
     "test_a_retaken_total_is_asked_too"
    ],
-   "suite_result": "Ran 1 test in 43.545s FAILED (failures=1)",
-   "seconds": 45
+   "suite_result": "Ran 1 test in 31.115s FAILED (failures=1)",
+   "seconds": 32
   },
   {
    "id": "ANOTHER_PERIOD_S_FACT_IS_ASKED",
@@ -50,8 +50,8 @@
    "failed_cases": [
     "test_the_proof_is_the_measured_period_s_fact"
    ],
-   "suite_result": "Ran 1 test in 31.374s FAILED (failures=1)",
-   "seconds": 33
+   "suite_result": "Ran 1 test in 22.391s FAILED (failures=1)",
+   "seconds": 23
   },
   {
    "id": "THE_COMPOSITION_IS_NOT_ASKED",
@@ -59,11 +59,11 @@
    "edit": "the route publishes a kept composition without asking #28's question",
    "why_it_matters": "a D&A the filing shows is not the whole of it would be published",
    "outcome": "CAUGHT",
-   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_it_is_withheld_by_name_and_still_carries_b01",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01",
    "failed_cases": [
-    "test_it_is_withheld_by_name_and_still_carries_b01"
+    "test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01"
    ],
-   "suite_result": "Ran 1 test in 13.156s FAILED (failures=2)",
+   "suite_result": "Ran 1 test in 13.341s FAILED (failures=1)",
    "seconds": 14
   },
   {
@@ -76,8 +76,34 @@
    "failed_cases": [
     "test_a_direct_total_is_not_its_question"
    ],
-   "suite_result": "Ran 1 test in 25.650s FAILED (failures=1)",
-   "seconds": 27
+   "suite_result": "Ran 1 test in 18.109s FAILED (failures=1)",
+   "seconds": 19
+  },
+  {
+   "id": "THE_BLOCKED_FLAG_IS_NOT_READ",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "the route withholds on any answer, including #28's proved revenue deduction",
+   "why_it_matters": "an amortization the filing's own rows prove is not D&A would withhold a correct value, and the pinned route would disagree with #28 on the same filing",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_a_proved_revenue_deduction_keeps_the_composition",
+   "failed_cases": [
+    "test_a_proved_revenue_deduction_keeps_the_composition"
+   ],
+   "suite_result": "Ran 1 test in 11.089s FAILED (failures=2)",
+   "seconds": 12
+  },
+  {
+   "id": "THE_PROOF_IS_NOT_KEPT_ON_RECORD",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "a kept composition drops #28's proof that the separate line is a revenue deduction",
+   "why_it_matters": "the reader could not see why an amortization the filing states was left out of D&A",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_it_is_the_answer_of_28_s_own_check",
+   "failed_cases": [
+    "test_it_is_the_answer_of_28_s_own_check"
+   ],
+   "suite_result": "Ran 1 test in 15.233s FAILED (errors=1)",
+   "seconds": 16
   },
   {
    "id": "THE_ANSWER_IS_NOT_CARRIED",
@@ -85,12 +111,12 @@
    "edit": "the withheld result drops #28's answer",
    "why_it_matters": "the reader could not see which amortization, amount and fact withheld it",
    "outcome": "CAUGHT",
-   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_it_is_the_answer_of_28_s_own_check",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01",
    "failed_cases": [
-    "test_it_is_the_answer_of_28_s_own_check"
+    "test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01"
    ],
-   "suite_result": "Ran 1 test in 22.559s FAILED (errors=1)",
-   "seconds": 24
+   "suite_result": "Ran 1 test in 15.561s FAILED (errors=1)",
+   "seconds": 16
   }
  ],
  "calls": [

@@ -107,3 +107,45 @@ both are withdrawn by coordinate
   (`injections.json`; run in a clone of the branch holding the same files).
 
 Zero SEC or provider calls.
+
+## After #28 proved the relation (base 3d7adf92, merged a21ad181)
+
+#28 then proved from the filing's own income-statement rows that Marriott's
+separate line is a gross-to-net revenue deduction (commit `7bb17621`, reviewed
+in `8076926a`): wherever the fact appears - consolidated and on each operating
+segment - its cell sits in the row between "Gross fee revenues" and "Net fee
+revenues", the displayed deduction is negative, gross plus deduction equals
+net, and the displayed deduction at the fact's scale equals the tagged fact.
+A revenue deduction is not D&A, so its check now answers `blocked: False`
+with status `COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED`, and the
+composed value is published there.
+
+The pinned route withheld on any answer (`is not None`), so after the merge
+it would have withheld a value #28 publishes for the same filing - the one
+disagreement this port exists to prevent. It now withholds only when the
+answer blocks, and keeps a proved answer on the result's record
+(`selection.depreciation_scope.contract_amortization`). Nothing is added and
+nothing is recomputed.
+
+Measured on the saved filings (`scripts/vnext/historical_zero_ai_results.py`
+at a21ad181): Marriott FY2025 publishes 0.1756281982738868097456656229 and
+FY2024 0.1653386454183266932270916335, each with five revenue-deduction proofs
+(FY2025: 5,438 - 135 = 5,303 consolidated; FY2024: 5,170 - 103 = 5,067), the
+same values accepted before the withhold; FY2025's equals #28's ordinary value
+for the same filing. FY2023 stops where it did in the checkout
+(`ALL_BRANCHES_REJECTED`, a source gap unrelated to this).
+
+The two coordinate defects
+(`B03_MARRIOTT_2025_COMPOSED_DA_BESIDE_CONTRACT_COST_AMORTIZATION`, `..._2024_...`)
+said the composed value was not provably the whole D&A. The proof answers
+that: the line is not D&A. The release rule is unchanged - a release names a
+recomputed result and its closure - so the published results the frame
+computes under this closure are what the defects release; the earlier
+published results, computed without the question, stay withdrawn.
+
+The rewritten `AComposedTotalBesideAContractCostAmortization` asks: the proved
+deduction keeps the composition and carries the proof; the answer is #28's own
+on the ordinary case, field for field, and so is the value; the value is the
+unchecked composition's; and an unproved relation (constructed: the rows taken
+not to prove it) is still withheld by name with B01 carried. `injections.py`
+now holds 9 injections, 5 for this question.
