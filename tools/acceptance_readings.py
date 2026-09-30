@@ -52,10 +52,13 @@ EVENTS_PARAMOUNT_PREDECESSOR = EVIDENCE + "event-count-read-paramount-2024.json"
 # the export: an acquired 8-K's header is read from that root's request ledger
 # and its path recorded (tools/read_event_counts.py --source-root).
 EVENTS_BATCH = EVIDENCE + "event-count-read-batch.json"
-EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR, EVENTS_BATCH)
+# A successor registrant's year, over the approved successor window and the
+# 8-Ks of every registered CIK, against the same batch.
+EVENTS_SUCCESSOR = EVIDENCE + "event-count-read-successor.json"
+EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR, EVENTS_BATCH, EVENTS_SUCCESSOR)
 # Readings made over a restored root: their index is the restored ledger's
 # latest copy, which the checkout's ledger does not necessarily name.
-RESTORED_ROOT_EVENT_READINGS = (EVENTS_BATCH,)
+RESTORED_ROOT_EVENT_READINGS = (EVENTS_BATCH, EVENTS_SUCCESSOR)
 # E01 counts an 8.01 only once a keyword in its text confirms it, which a count
 # of header item codes cannot check. Every 8.01 in the E01 windows is read here
 # by tools/read_e01_eight_o_ones.py, under each reading of that confirmation.

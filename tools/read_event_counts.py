@@ -45,6 +45,14 @@ block stops the reading: this reads the index's recent table, and a count over
 part of a window is not a count of it. A filing in the window whose header
 cannot be read makes the position NOT_READ, even when the count it did make
 happens to equal the published value.
+
+A successor registrant's year is counted over the window the approved policy
+gives it (``catalog/zero_ai_public_projection.json``'s
+``event_window_policy_by_continuity``): from the previous calendar year's
+start, over the 8-Ks of every CIK the registry names for the company, because
+the pinned year's events were filed partly by the predecessor. The window is
+derived here from the policy and the period, not taken from the result; a
+result that measured another window is refused, not compared.
 """
 import argparse
 import collections
@@ -158,6 +166,32 @@ def keyword_hit(cik, accession, aliases):
         if any(alias.casefold() in plain for alias in aliases):
             return True
     return False
+
+
+def event_window(*, company_id, period, cik, root=REPO):
+    """The window this position's count measures, and the CIKs whose 8-Ks it counts.
+
+    Returns:
+        ``((start, end), [cik, ...], policy)``: the fiscal window and the period's
+        own registrant, unless that registrant is the company's successor - then
+        the approved successor window and every registered CIK.
+    """
+    with (root / "config/company_registry.csv").open(encoding="utf-8") as opened:
+        rows = [row for row in csv.DictReader(opened) if row["company_id"] == company_id]
+    if len(rows) != 1:
+        raise SystemExit("COMPANY_NOT_REGISTERED_ONCE:" + company_id)
+    roles = {str(int(entry.split(":", 1)[1])): entry.split(":", 1)[0]
+             for entry in rows[0]["roles"].split(";") if entry}
+    if not (rows[0]["entity_continuity_status"] == "successor_predecessor"
+            and roles.get(str(int(cik))) == "successor"):
+        return (period["period_start"], period["period_end"]), [str(int(cik))], "TARGET_PERIOD"
+    policies = json.loads((root / "catalog/zero_ai_public_projection.json").read_text(
+        encoding="utf-8"))["event_window_policy_by_continuity"]
+    policy = policies["successor_predecessor"]
+    if policy != "PRIOR_CALENDAR_YEAR_START_TO_TARGET_END":
+        raise SystemExit("EVENT_WINDOW_POLICY_NOT_READ_HERE:" + policy)
+    start = "{}-01-01".format(int(period["fiscal_year"]) - 1)
+    return (start, period["period_end"]), sorted(roles, key=int), policy
 
 
 def filings_in_index(submissions):
@@ -291,29 +325,41 @@ def main():
     for company_id, report_end, label in cases:
         period, cik = _case_input(company_id=company_id, report_end=report_end,
                                   source_root=source)
-        url = submissions_url(cik=int(cik))
-        saved = saved_source(repo_root=source, url=url)
-        if saved is None:
-            raise SystemExit("SUBMISSIONS_INDEX_NOT_SAVED:" + url)
-        start, end = period["period_start"], period["period_end"]
-        # This counts the fiscal year's window. A result that measured another
-        # window - a successor's registered events reach back into the
-        # predecessor's year - is not a count of this one, and is not compared.
+        (start, end), ciks, policy = event_window(company_id=company_id, period=period,
+                                                  cik=cik, root=source)
+        # A result that measured another window than the one derived here is
+        # not a count of this one, and is not compared.
         measured = {(result["period_start"], result["period_end"])
                     for metric in sorted(_routes())
                     for result in [select_receipt(found=index.get((company_id, metric, report_end), []),
                                                   closure=arguments.closure)["result"]]
                     if result is not None and result.get("value") is not None}
         if measured - {(start, end)}:
-            raise SystemExit("RESULT_WINDOW_IS_NOT_THE_FISCAL_WINDOW:" + label + ":"
+            raise SystemExit("RESULT_WINDOW_IS_NOT_THE_DERIVED_WINDOW:" + label + ":"
                              + json.dumps(sorted(measured)))
-        submissions = json.loads(saved["raw"])
-        reached = history_blocks_reached(submissions, start)
-        if reached:
-            raise SystemExit("WINDOW_REACHES_A_HISTORY_BLOCK:" + label + ":" + ",".join(reached))
-        counts, seen, unreadable = count_window(
-            filings=filings_in_index(submissions), cik=cik, start=start, end=end,
-            header=header, metrics=metrics)
+        counts = {basis: collections.Counter() for basis in ("filing_date", "report_date")}
+        seen = {basis: [] for basis in counts}
+        unreadable, indexes = [], {}
+        for registrant in ciks:
+            url = submissions_url(cik=int(registrant))
+            saved = saved_source(repo_root=source, url=url)
+            if saved is None:
+                raise SystemExit("SUBMISSIONS_INDEX_NOT_SAVED:" + url)
+            indexes[registrant] = saved["proof"]["request_repo_relative_path"]
+            submissions = json.loads(saved["raw"])
+            reached = history_blocks_reached(submissions, start)
+            if reached:
+                raise SystemExit("WINDOW_REACHES_A_HISTORY_BLOCK:" + label + ":"
+                                 + ",".join(reached))
+            each, admitted, missing = count_window(
+                filings=filings_in_index(submissions), cik=registrant, start=start, end=end,
+                header=header, metrics=metrics)
+            for basis in counts:
+                counts[basis].update(each[basis])
+                seen[basis].extend(entry if len(ciks) == 1 else {**entry, "cik": registrant}
+                                   for entry in admitted[basis])
+            unreadable.extend(missing)
+        unreadable = sorted(set(unreadable))
         rows = {}
         for metric in sorted(metrics or _routes()):
             result = select_receipt(found=index.get((company_id, metric, report_end), []),
@@ -342,7 +388,7 @@ def main():
             rows[metric] = row
         positions[label] = {
             "company_id": company_id, "window": [start, end],
-            "submissions_index": saved["proof"]["request_repo_relative_path"],
+            "submissions_index": indexes[str(int(cik))],
             "eight_ks_in_window": {basis: len(entries) for basis, entries in seen.items()},
             "headers_not_saved": unreadable, "metrics": rows, "filings": seen,
             "e01_keyword_rule_note": (
@@ -352,6 +398,9 @@ def main():
                 ("E01 is not counted over a restored root: its keyword rule reads every "
                  "saved document of a filing, and a filing only the acquisition saved "
                  "has its primary document only"))}
+        if len(ciks) > 1:
+            positions[label].update({"window_policy": policy, "registered_ciks": ciks,
+                                     "submissions_indexes": indexes})
         print(label, {metric: row["verdict"] for metric, row in rows.items()}, flush=True)
     owned = {"per_position", "result", "reader", "requirement_closure_hash", "calls"}
     body = {key: value for key, value in previous.items() if key not in owned}

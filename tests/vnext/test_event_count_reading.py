@@ -4,9 +4,14 @@ tools/read_event_counts.py replaces a reading whose code was never committed
 and whose submissions index was whichever copy an unsorted glob found first.
 """
 import ast
+import collections
+import csv
 import json
+import shutil
 import sys
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
@@ -33,11 +38,11 @@ def _recount(label):
 
     A header only the acquisition saved is read from the path the reading
     recorded, out of the checkout or the export; one the checkout's accession
-    materials hold is read from there, as the reader read it.
+    materials hold is read from there, as the reader read it. A successor's
+    year is counted over each registered CIK's index, in the reading's order.
     """
     row = _committed()[label]
-    submissions = json.loads(saved_bytes(repo_root=ROOT, relative=row["submissions_index"]))
-    cik = int(submissions["cik"])
+    indexes = row.get("submissions_indexes") or {None: row["submissions_index"]}
     recorded = {entry["accession"]: entry["header"] for entries in row["filings"].values()
                 for entry in entries if "header" in entry}
 
@@ -50,9 +55,22 @@ def _recount(label):
         text = saved_bytes(repo_root=ROOT, relative=recorded[accession]).decode(
             "utf-8", errors="replace")
         return reader.items_of(text), recorded[accession]
-    return reader.count_window(filings=reader.filings_in_index(submissions), cik=cik,
-                               start=row["window"][0], end=row["window"][1],
-                               header=header, metrics=sorted(row["metrics"]))
+    counts = {basis: collections.Counter() for basis in ("filing_date", "report_date")}
+    seen, unreadable = {basis: [] for basis in counts}, []
+    # The reading's own order of registrants (its JSON keys are sorted as text).
+    for registrant in row.get("registered_ciks") or [None]:
+        path = indexes[registrant]
+        submissions = json.loads(saved_bytes(repo_root=ROOT, relative=path))
+        cik = int(submissions["cik"])
+        each, admitted, missing = reader.count_window(
+            filings=reader.filings_in_index(submissions), cik=cik, start=row["window"][0],
+            end=row["window"][1], header=header, metrics=sorted(row["metrics"]))
+        for basis in counts:
+            counts[basis].update(each[basis])
+            seen[basis].extend(entry if registrant is None else {**entry, "cik": registrant}
+                               for entry in admitted[basis])
+        unreadable.extend(missing)
+    return counts, seen, sorted(set(unreadable))
 
 
 class TheReaderIsNotTheRouteTest(unittest.TestCase):
@@ -198,6 +216,54 @@ class APartialWindowIsNotCountedTest(unittest.TestCase):
         # E01's keyword rule reads every saved document of a filing, which an
         # acquired filing does not have; it is not counted over a restored root.
         self.assertTrue(all("E01" not in row["metrics"] for row in restored.values()))
+
+
+class ASuccessorYearIsCountedOverItsApprovedWindowTest(unittest.TestCase):
+    """The window and the registrants come from the approved policy, not the result."""
+
+    PARAMOUNT = "paramount_skydance_paramount_global"
+
+    def test_the_successor_year_reaches_back_and_counts_both_registrants(self):
+        window, ciks, policy = reader.event_window(
+            company_id=self.PARAMOUNT, cik="2041610",
+            period={"fiscal_year": 2025, "period_start": "2025-01-01",
+                    "period_end": "2025-12-31"})
+        self.assertEqual((("2024-01-01", "2025-12-31"), ["813828", "2041610"],
+                          "PRIOR_CALENDAR_YEAR_START_TO_TARGET_END"), (window, ciks, policy))
+
+    def test_the_predecessor_s_own_year_is_its_own_window(self):
+        window, ciks, _ = reader.event_window(
+            company_id=self.PARAMOUNT, cik="813828",
+            period={"fiscal_year": 2024, "period_start": "2024-01-01",
+                    "period_end": "2024-12-31"})
+        self.assertEqual((("2024-01-01", "2024-12-31"), ["813828"]), (window, ciks))
+
+    def test_a_policy_this_reading_does_not_implement_stops_it(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ("config/company_registry.csv", "catalog/zero_ai_public_projection.json"):
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy(ROOT / name, root / name)
+            catalog = json.loads((root / "catalog/zero_ai_public_projection.json").read_text(
+                encoding="utf-8"))
+            catalog["event_window_policy_by_continuity"]["successor_predecessor"] = "OTHER"
+            (root / "catalog/zero_ai_public_projection.json").write_text(json.dumps(catalog),
+                                                                         encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "EVENT_WINDOW_POLICY_NOT_READ_HERE"):
+                reader.event_window(company_id=self.PARAMOUNT, cik="2041610", root=root,
+                                    period={"fiscal_year": 2025, "period_start": "2025-01-01",
+                                            "period_end": "2025-12-31"})
+
+    def test_the_committed_successor_reading_counts_each_registrant(self):
+        from tools.acceptance_readings import EVENTS_SUCCESSOR
+        row = _committed([EVENTS_SUCCESSOR])["paramount-2025"]
+        with (ROOT / "config/company_registry.csv").open(encoding="utf-8") as opened:
+            roles = next(r["roles"] for r in csv.DictReader(opened)
+                         if r["company_id"] == self.PARAMOUNT)
+        self.assertEqual(sorted(entry.split(":")[1] for entry in roles.split(";")),
+                         sorted(row["registered_ciks"]))
+        self.assertEqual(set(row["registered_ciks"]),
+                         {entry["cik"] for entry in row["filings"]["filing_date"]})
 
 
 class TheVerdictTest(unittest.TestCase):
