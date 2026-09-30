@@ -20,6 +20,11 @@ is registered), so keeping those roots would fill the disk. A program fault or
 any read-back that differs keeps it.
 
 Progress, one line per event, goes to ``<out>/progress.log``. Zero calls.
+
+``--stop-after-minutes N`` starts no period after N minutes; the periods already
+running finish and the rest are logged as deferred. A background task has an
+upper bound on its run time, and a period cut by that bound starts over on the
+next run, so stopping between periods keeps the work instead of losing it.
 """
 import argparse
 import json
@@ -74,13 +79,16 @@ def _deletable(period):
             and all(_named_refusal(p) for m, p in positions.items() if m not in created))
 
 
-def run_period(line, out):
+def run_period(line, out, deadline=None):
     label, company, report_end, metrics = line
     target = out / label
     record = target / ("period-" + label + ".json")
     if record.exists():
         _log(out, label + " SKIPPED_ALREADY_RECORDED")
         return label, "SKIPPED"
+    if deadline is not None and time.time() > deadline:
+        _log(out, label + " DEFERRED_STOP_AFTER")
+        return label, "DEFERRED"
     if target.exists():
         # A period cut short by a restart: its Runs cannot be resumed one by
         # one inside the same shared data root, so the period starts over.
@@ -121,16 +129,20 @@ def main():
     parser.add_argument("plan", type=Path)
     parser.add_argument("out", type=Path)
     parser.add_argument("--workers", type=int, default=3)
+    parser.add_argument("--stop-after-minutes", type=int, default=None)
     args = parser.parse_args()
+    deadline = (None if args.stop_after_minutes is None
+                else time.time() + 60 * args.stop_after_minutes)
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
     lines = [line.rstrip("\n").split("\t") for line in args.plan.read_text().splitlines()
              if line.strip()]
     _log(out, "BATCH_START " + str(len(lines)) + " periods, " + str(args.workers) + " workers")
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        results = list(pool.map(lambda line: run_period(line, out), lines))
+        results = list(pool.map(lambda line: run_period(line, out, deadline), lines))
     _log(out, "BATCH_END " + json.dumps({status: sum(1 for _, s in results if s == status)
-                                         for status in ("DONE", "SKIPPED", "FAILED")}))
+                                         for status in ("DONE", "SKIPPED", "FAILED",
+                                                        "DEFERRED")}))
 
 
 if __name__ == "__main__":
