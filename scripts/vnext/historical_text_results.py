@@ -627,26 +627,53 @@ def page_number_blocks(blocks):
     return pages
 
 
+# A note heading whose number is in parentheses, as Lumen's reports before FY2024
+# print them: "(18) Commitments, Contingencies and Other Items".
+_PARENTHESIZED_NOTE = re.compile(r"\((\d{1,3}[A-Z]?)\)\s*(?=[A-Za-z])")
+
+
 def note_references(document, ranges):
-    """The frozen note navigation, with page numbers not read as headings.
+    """The frozen note navigation over the text the filing means, not the text it prints.
 
-    The frozen scan runs unchanged over the document with each page number's
-    text blanked, so it cannot become a heading and nothing else it decides
-    moves. A blank block matches neither a note reference nor a heading, so
-    the blanked text never reaches an excerpt the result names.
+    Two differences, both in what the frozen scan is shown and nothing in how
+    it decides. A page number's text is blanked (``page_number_blocks``), so it
+    cannot become a heading. A heading that puts its number in parentheses is
+    shown without them: the frozen heading pattern starts at the number, so
+    Lumen's "(18) Commitments, Contingencies and Other Items" - the note its
+    Item 3 incorporates as "Note 18-Commitments, Contingencies and Other
+    Items" - was never a heading, and D02 stopped in Lumen's FY2021-FY2023
+    reports and CenturyLink's FY2020 one. Measured over the 62 saved annual
+    reports, emphasized parenthesized numbers occur in exactly those four,
+    as their notes 1 to 23 or 24, and in one filing outside the frame as two
+    table headers.
 
-    Measured over the 61 annual reports that build: the navigation changes in
-    two, both Pfizer's - FY2024's Note 16A resolves to the real Note 16, and
-    FY2021's already unique range loses the page-number heading from its list
-    of heading candidates. Nine D02 candidates the frame batch froze are
-    rebuilt with the same candidate hash.
+    Every excerpt the result names carries its block's original text, so what
+    was shown to the scan never reaches an excerpt. Measured over the 61 annual
+    reports that build: the navigation changes in six - Pfizer FY2024's Note
+    16A resolves to the real Note 16, Pfizer FY2021's unique range loses a
+    page-number heading candidate, and Lumen's four reports resolve Note 18
+    (Note 17 for FY2020).
     """
-    pages = page_number_blocks(document["blocks"])
-    if not pages:
+    blocks = document["blocks"]
+    pages = page_number_blocks(blocks)
+    shown = {}
+    for index, block in enumerate(blocks):
+        if index in pages:
+            shown[index] = ""
+            continue
+        parenthesized = _PARENTHESIZED_NOTE.match(block["text"])
+        if parenthesized:
+            shown[index] = (parenthesized.group(1) + ") "
+                            + block["text"][parenthesized.end():])
+    if not shown:
         return _note_references(document, ranges)
-    masked = {**document, "blocks": [{**block, "text": ""} if index in pages else block
-                                     for index, block in enumerate(document["blocks"])]}
-    return _note_references(masked, ranges)
+    presented = {**document, "blocks": [{**block, "text": shown[index]} if index in shown else block
+                                        for index, block in enumerate(blocks)]}
+    result = _note_references(presented, ranges)
+    for reference in result:
+        for excerpt in (*reference["source_occurrences"], *reference["heading_candidates"]):
+            excerpt["text"] = blocks[excerpt["block_index"]]["text"]
+    return result
 
 
 # D02's frozen legal scan and preparation with the note navigation above; every

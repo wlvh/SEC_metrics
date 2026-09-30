@@ -1,4 +1,4 @@
-"""Undo each part of the page-number-aware note navigation and require the case written for it to fail.
+"""Undo each part of the successor note navigation and require the case written for it to fail.
 
 Usage: python3 injections.py <out.json> [NAME ...]
 
@@ -27,13 +27,23 @@ CASES = "tests.vnext.test_historical_note_navigation"
 INJECTIONS = {
     "PAGE_NUMBERS_ARE_NOT_BLANKED": (
         ROUTE,
-        """    pages = page_number_blocks(document["blocks"])
-    if not pages:
-        return _note_references(document, ranges)""",
+        """    pages = page_number_blocks(blocks)
+    shown = {}""",
         """    pages = set()
-    if not pages:
-        return _note_references(document, ranges)""",
+    shown = {}""",
         "test_pfizer_fy2024_resolves_note_16a_to_the_real_note"),
+    "PARENTHESES_ARE_SHOWN_AS_PRINTED": (
+        ROUTE,
+        """        parenthesized = _PARENTHESIZED_NOTE.match(block["text"])
+        if parenthesized:""",
+        """        parenthesized = None
+        if parenthesized:""",
+        "test_lumen_s_parenthesized_note_number_is_a_heading"),
+    "THE_SHOWN_TEXT_REACHES_THE_EXCERPTS": (
+        ROUTE,
+        """            excerpt["text"] = blocks[excerpt["block_index"]]["text"]""",
+        """            pass""",
+        "test_every_excerpt_the_navigation_names_carries_the_filing_s_text"),
     "ANY_NUMBER_BESIDE_A_FOOTER_IS_A_PAGE": (
         ROUTE,
         """            if texts[neighbour] >= 3 and beside[(side, neighbour)] & {number - 1, number + 1}:""",

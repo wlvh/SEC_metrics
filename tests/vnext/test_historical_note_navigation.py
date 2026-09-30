@@ -40,6 +40,8 @@ PFIZER_2021 = ("evidence/request_attempts/a6/a6dc538da8dd8c78563933a612ccb61bcc7
                "https://www.sec.gov/Archives/edgar/data/78003/000007800322000027/pfe-20211231.htm", "2021-12-31")
 PFIZER_2025 = ("evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
                "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm", "2025-12-31")
+LUMEN_2023 = ("evidence/request_attempts/57/57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac/lumn-20231231.htm",
+              "https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm", "2023-12-31")
 MACYS_2021 = ("evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm",
               "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm", "2022-01-29")
 _PATTERNS = json.loads((ROOT / "catalog/r6/text_business_candidates_v1.json").read_text())["patterns"]
@@ -76,7 +78,8 @@ class ThePageNumberIsNotANoteHeading(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.documents = {case[0]: _document(case) for case in (PFIZER_2024, PFIZER_2021, PFIZER_2025, MACYS_2021)}
+        cls.documents = {case[0]: _document(case)
+                         for case in (PFIZER_2024, PFIZER_2021, PFIZER_2025, MACYS_2021, LUMEN_2023)}
 
     def _navigation(self, case, function):
         document = self.documents[case[0]]
@@ -127,6 +130,32 @@ class ThePageNumberIsNotANoteHeading(unittest.TestCase):
         self.assertEqual(set(), set(headings) & page_number_blocks(blocks))
         self.assertEqual(self._navigation(MACYS_2021, _note_references),
                          self._navigation(MACYS_2021, note_references))
+
+    def test_lumen_s_parenthesized_note_number_is_a_heading(self):
+        frozen = self._navigation(LUMEN_2023, _note_references)
+        self.assertEqual([("Note 18", "REFERENCE_NAVIGATION_NOT_UNIQUE_OR_INCOMPLETE")],
+                         [(r["reference"], r["status"]) for r in frozen])
+        successor = self._navigation(LUMEN_2023, note_references)
+        self.assertEqual(["LOCATED_NOTE_RANGE"], [r["status"] for r in successor])
+        candidate = successor[0]["range_candidates"][0]
+        blocks = self.documents[LUMEN_2023[0]]["blocks"]
+        self.assertEqual("(18) Commitments, Contingencies and Other Items",
+                         blocks[candidate["start_block"]]["text"])
+        self.assertEqual("(19) Other Financial Information",
+                         blocks[candidate["end_block_exclusive"]]["text"])
+        self.assertEqual("EXACT_NOTE", candidate["scope_relation"])
+
+    def test_every_excerpt_the_navigation_names_carries_the_filing_s_text(self):
+        for case in (LUMEN_2023, PFIZER_2024):
+            blocks = self.documents[case[0]]["blocks"]
+            with self.subTest(case[2]):
+                named = [excerpt for reference in self._navigation(case, note_references)
+                         for excerpt in (*reference["source_occurrences"], *reference["heading_candidates"])]
+                self.assertTrue(named)
+                for excerpt in named:
+                    self.assertEqual(blocks[excerpt["block_index"]]["text"], excerpt["text"])
+                self.assertTrue(any(excerpt["text"].startswith("(18)") for excerpt in named)
+                                or case is PFIZER_2024)
 
     def test_the_referenced_notes_are_located_with_the_same_navigation(self):
         document = self.documents[PFIZER_2024[0]]
