@@ -17,3 +17,5 @@
 修后`exercise-repair.log`/`exercise-repair.json`使用**另一个**私有处理根重新执行真实保存来源下的禁网正常CLI，返回`UPDATES_READY/B03 CANDIDATE_READY`，仍为原Result ID与值`0.1756281982738868097456656229`，新成功尝试为`aa11c78b0cd64e1fb7b88bd65393b780`。证据绑定修后模块SHA`acc01df28a45c56c89d0c9c280487434b25efd0ac0ee60d8f659ce25a2b8429f`及V14清单SHA`e6110cdcfa8bbbab370c2e149014fcd6c00a9e6471bdcdff0d71360dd72a0a90`，实账本、来源日志和正式active的受保护哈希未变；零真实调用。第一次后台启动留下空日志、无退出码且未创建私有根，不计作业务演练；随后保持终端会话的持久后台启动返回0，原空日志保留。
 
 `cold-repair.log`/`cold-repair.json`在另一进程从修后私有安装副本重放本次Run、Result与公开行，返回码0；当前选择依据仍为`NATIVE_PUBLISHED_RESULT`，值、Result ID、Run ID和公开行字节与初版私有演练相同，受监视的私有状态文件未改变。相同Run ID只表示原生Run内容没有因外部V14来源准入检查改变；修后的来源检查和成功尝试另由本次修后证据绑定，不能把旧演练冒充修后执行。
+
+原审阅者对精确`2bbd7694`的[修后增量复核](independent-review/followup-2bbd769.md)为`PASS_WITH_BOUNDS`：独立运行3项短测、V14身份和三份接线校验，并核对修后私有Run/冷读收据与当前模块字节一致；没有亲自重跑长链。原`7bb17621`的`NEEDS_FIX`仍保留。此结论只关闭所选原文事实URI的误接受，不扩大成全部B03经济含义、正式采纳或390验收。
