@@ -187,6 +187,11 @@ NEW_RULE_FILES = (
     # decides whether such a period has an annual input at all, and which
     # label it carries, so both roots check it.
     "scripts/vnext/historical_fiscal_labels.py",
+    # A C02 proxy's identity when it carries no inline XBRL: the Schedule 14A
+    # cover's form and name, the name checked against the SEC's record of the
+    # CIK's names on the filing date. It decides whether a proxy filed before
+    # pay-versus-performance is read at all, so both roots check it.
+    "scripts/vnext/historical_proxy_identity.py",
 )
 
 # One module the parent's authority does not name although its own named code

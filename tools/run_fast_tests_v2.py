@@ -312,6 +312,7 @@ SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_route",)
 # The DEI reader with the taxonomy releases before 2022 accepted: it parses ten
 # saved annual reports and constructed older-release copies, about 30 seconds.
 SOURCE_TESTS += ("tests.vnext.test_historical_dei",)
+SOURCE_TESTS += ("tests.vnext.test_historical_proxy_identity",)
 # Four modules the tier did not run although their records said it did or would:
 # the approved amendment policy asked of two saved 10-K/A filings (38 seconds
 # alone), the two Part III filings' statement-input admission re-verified from

@@ -441,6 +441,82 @@ class EveryHistoricalReferenceGoesThroughAView(unittest.TestCase):
                                                                 own_modules=own))
 
 
+class AnOverrideViewReplacesOnlyWhatItNames(unittest.TestCase):
+    """``release_aware_with``: the frozen code with named globals bound otherwise.
+
+    #47 uses it where a successor replaces one helper a frozen function calls
+    (C02's proxy without inline XBRL: ``_bound_source`` inside
+    ``governance_source_document``) and keeps everything else the frozen
+    function does.
+    """
+
+    def tearDown(self):
+        sys.modules.pop("vnext._historical_dei_fixture", None)
+
+    def _module(self):
+        return _fixture_module(
+            "def helper():\n"
+            "    return 'frozen'\n"
+            "def other():\n"
+            "    return 'other'\n"
+            "def caller():\n"
+            "    return helper() + ':' + other()\n")
+
+    def test_the_named_global_is_replaced_and_nothing_else(self):
+        module = self._module()
+
+        def successor():
+            return "successor"
+        overridden = historical_dei.release_aware_with(module.caller, helper=successor)
+        self.assertEqual("successor:other", overridden())
+        self.assertEqual("frozen:other", module.caller(), "the frozen function is unchanged")
+        self.assertIs(overridden, historical_dei.release_aware_with(module.caller, helper=successor))
+        self.assertIs(overridden, view(overridden), "an override view is a view")
+
+    def test_a_name_the_code_does_not_read_is_refused(self):
+        module = self._module()
+        with self.assertRaisesRegex(historical_dei.HistoricalDeiError,
+                                    "HISTORICAL_DEI_OVERRIDE_NAME_NOT_READ:caller:absent"):
+            historical_dei.release_aware_with(module.caller, absent=len)
+
+    def test_a_replacement_that_asks_the_question_without_a_view_is_refused(self):
+        module = self._module()
+        with self.assertRaisesRegex(historical_dei.HistoricalDeiError,
+                                    "HISTORICAL_DEI_OVERRIDE_REACHES_THE_QUESTION:helper"):
+            historical_dei.release_aware_with(module.caller, helper=text_coverage.build_text_document)
+        historical_dei.release_aware_with(module.caller, helper=view(text_coverage.build_text_document))
+
+    def test_only_a_package_function_can_be_overridden(self):
+        with self.assertRaisesRegex(historical_dei.HistoricalDeiError,
+                                    "HISTORICAL_DEI_OVERRIDE_TARGET_NOT_A_PACKAGE_FUNCTION"):
+            historical_dei.release_aware_with(len, helper=len)
+
+    def test_the_frozen_code_runs_with_the_override_and_the_release_aware_differences(self):
+        from vnext import historical_proxy_identity as proxy
+        from vnext import text_business_candidates as frozen_candidates
+        target = frozen_candidates.governance_source_document
+        seen = []
+
+        def profile(frame, event, arg):
+            if event == "call" and frame.f_code is target.__code__:
+                seen.append(dict(frame.f_globals))
+        sys.setprofile(profile)
+        try:
+            with self.assertRaises(Exception):
+                proxy.governance_source_document(raw_bytes=b"", raw_blob={}, source_reference={},
+                                                 company_id="c", cik="1", filing={})
+        finally:
+            sys.setprofile(None)
+        self.assertEqual(1, len(seen))
+        namespace, original = seen[0], vars(frozen_candidates)
+        self.assertIs(proxy.proxy_bound_source, namespace["_bound_source"])
+        changed = {name for name in namespace
+                   if name in original and namespace[name] is not original[name]}
+        for name in changed - {"_bound_source", "__builtins__"}:
+            with self.subTest(name=name):
+                self.assertIs(view(original[name]), namespace[name])
+
+
 class TheFrozenModulesAreUnchanged(unittest.TestCase):
 
     def test_the_frozen_modules_keep_their_own_objects(self):

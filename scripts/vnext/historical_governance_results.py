@@ -47,7 +47,8 @@ from .normal_governance_input import _EVENT_FORMS, _Sources, _filings, _history_
 from .normal_history_catalog import block_last_days, history_block_coherence
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
-from .deterministic_router import source_set_manifest
+from .deterministic_router import DeterministicRouterError, source_set_manifest
+from .historical_proxy_identity import NO_CONTEXTS, carries_inline_xbrl
 from .specs import compile_spec_file
 
 # The frozen readers this module calls, answering the DEI namespace question
@@ -63,6 +64,9 @@ RECORD_TYPE = "HISTORICAL_GOVERNANCE_COMPONENT"
 # only carried one of the two - measured, not assumed.
 SPEC_PATHS = {"C03": C03_SPEC_PATH, "C04": C04_V2_SPEC_PATH}
 SUPPORTED_METRICS = tuple(sorted(SPEC_PATHS))
+# C03 for a period whose pinned proxy has no inline XBRL: the ECD facts do not
+# exist and the proxy's compensation table is not yet read by this route.
+PROXY_TABLE_NOT_READ = "C03_PROXY_WITHOUT_INLINE_XBRL_TABLE_NOT_READ"
 
 
 def _need(condition, reason, category=None):
@@ -232,15 +236,14 @@ def _compensation_resolution(*, root, reader, selection, target, company_id, cik
     record when neither stage did - a missing proxy is a source gap and keeps
     that name.
     """
-    def blocked(reason, details):
+    def blocked(reason, details, category="SOURCE_OR_IMPLEMENTATION_UNRESOLVED"):
         withheld, trace = withheld_metric_result(compiled_spec=spec, target=target,
                                                  reason_code=reason)
         return (C03_SPEC_PATH,
                 {"selection": {"selection_id": None, "reason_code": reason,
                                "details": details},
                  "observation": None, "result": withheld, "trace": trace},
-                {"reason": reason, "details": details,
-                 "category": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED"})
+                {"reason": reason, "details": details, "category": category})
 
     proxy, failures = selection["pinned_def14a"], []
     if selection["def14a_amendments"]:
@@ -251,6 +254,7 @@ def _compensation_resolution(*, root, reader, selection, target, company_id, cik
             failures.append({"filing": filing["accessionNumber"],
                              "reason": "DEF14A_AMENDMENT_CHAIN_REQUIRES_SEMANTIC_REPLAY"})
     elif proxy is not None:
+        source = None
         try:
             source = reader.primary(proxy)
             resolved = resolve_c03(compiled_spec=spec, **source, target=target,
@@ -261,6 +265,17 @@ def _compensation_resolution(*, root, reader, selection, target, company_id, cik
             failures.append(resolved["selection"])
         except (*_SOURCE_ERRORS, GovernanceSignalError) as error:
             failures.append({"filing": proxy["accessionNumber"], "reason": str(error)})
+        except DeterministicRouterError as error:
+            # A proxy filed before the pay-versus-performance rule has no
+            # inline XBRL, so no ECD facts. Its own compensation table is the
+            # approved source (DEF 14A) and this route does not read it yet:
+            # an implementation gap, named as one, never an absence. Any
+            # other router error is something else and keeps its error.
+            if (source is None or str(error) != NO_CONTEXTS
+                    or carries_inline_xbrl(source["raw_bytes"])):
+                raise
+            failures.append({"filing": proxy["accessionNumber"],
+                             "reason": PROXY_TABLE_NOT_READ})
     else:
         failures.append({"reason": selection["def14a_status"]})
     table_spec = compile_spec_file(path=root / SCT_SPEC_PATH, dependency_specs={})
@@ -286,6 +301,8 @@ def _compensation_resolution(*, root, reader, selection, target, company_id, cik
                 return blocked("C03_REPORTED_TABLE_UNRESOLVED", failures)
         except _SOURCE_ERRORS as error:
             failures.append({"filing": filing["accessionNumber"], "reason": str(error)})
+    if any(failure.get("reason") == PROXY_TABLE_NOT_READ for failure in failures):
+        return blocked(PROXY_TABLE_NOT_READ, failures, category="IMPLEMENTATION_GAP")
     return blocked("C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND", failures)
 
 

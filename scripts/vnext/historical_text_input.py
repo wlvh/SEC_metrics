@@ -34,9 +34,11 @@ from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url
 
-from .canonical import content_hash, sha256_file
+from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_dei import release_aware
+from .historical_proxy_identity import (carries_inline_xbrl, cover_name_in_effect,
+                                        proxy_cover)
 from .historical_metadata_context import (check_historical_metadata_scope,
                                           historical_metadata_context)
 from .normal_governance_input import _Sources
@@ -110,7 +112,7 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
               "period_start": period["period_start"], "period_end": period["period_end"],
               "scope": scope, "scope_key": content_hash(value=scope)}
     plan, text_sources, filings, limitations = None, [], {}, []
-    part_iii = None
+    part_iii = cover_identity = None
     try:
         # D01 and D02 read the same source structure - the pinned annual
         # filing, one text role, no Part III proof - so D02's frozen plan is
@@ -145,6 +147,17 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
                     source=selected["source_reference"], blob=selected["raw_blob"],
                     raw=selected["raw_bytes"], filing=governance, company_id=company_id,
                     cik=cik, period_end=period["period_end"])
+            elif (governance["form"] == "DEF 14A"
+                  and not carries_inline_xbrl(selected["raw_bytes"])):
+                # A proxy filed before it carried inline XBRL is identified by
+                # its Schedule 14A cover, whose name must be the one the SEC's
+                # submissions record gives this CIK on the filing date
+                # (historical_proxy_identity). Checked here, where the record
+                # is read; the Run repeats it on every replay.
+                cover_identity = cover_name_in_effect(
+                    cover=proxy_cover(raw_bytes=selected["raw_bytes"], filing=governance),
+                    inventory=strict_json_loads(text=inventory["raw_bytes"].decode("utf-8")),
+                    filing=governance)
     except ValueError as error:
         limitations.append({"metric_id": metric_id,
                             "category": getattr(error, "category", None)
@@ -219,6 +232,10 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
     if review is not None:
         body["registered_item_8_review"] = {key: review[key] for key in (
             "input_record_id", "request_id", "mode")}
+    if cover_identity is not None:
+        # Only where the cover identified the proxy, so every other position
+        # keeps its binding's bytes.
+        body["proxy_cover_identity"] = cover_identity
     binding = {**body, "input_binding_id": content_hash(value=body)}
     return {"prepared_input": prepared, "input_binding": binding, "input_status": status,
             "records": records, "source_references": references, "source_set_manifests": [],

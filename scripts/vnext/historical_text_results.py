@@ -68,7 +68,8 @@ from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _
                                        _ranges, _substantive)
 from . import text_results_v2 as frozen
 from .historical_board_composition import board_composition_facts
-from .historical_dei import release_aware
+from .historical_dei import release_aware, release_aware_with
+from . import historical_proxy_identity as proxy_identity
 from .text_results_v2 import TextResultV2Error, build_text_review_unit
 
 SECTION_BOUNDARY_POLICY = "FORM_UNNUMBERED_PART_I_ITEM_V1"
@@ -949,6 +950,13 @@ def _preparation_key(*, metric_id, source_arguments):
     return content_hash(value={"metric_id": metric_id, **keyed})
 
 
+# C02's frozen preparation with the proxy's governance document read through
+# the cover-identity successor; every other check is the frozen one.
+_C02_PREPARATION = release_aware_with(
+    frozen.prepare_business_text_sources,
+    governance_source_document=proxy_identity.governance_source_document)
+
+
 def prepare_business_text_sources(*, metric_id, legal_review=None, **source_arguments):
     """The frozen source preparation with the located ranges corrected.
 
@@ -980,10 +988,15 @@ def _prepare_corrected_sources(*, metric_id, **source_arguments):
         # structures and the caller owns what it is handed, so returning the
         # stored object would let one caller's edit reach the next one.
         return copy.deepcopy(shared[key])
+    if metric_id == "C02":
+        # The proxy's identity comes from its DEI facts when it has them and
+        # from its Schedule 14A cover when it has none (historical_proxy_identity).
+        prepared = _C02_PREPARATION(metric_id=metric_id, **source_arguments)
+        prepared = proxy_identity.record_cover_identity(
+            prepared=prepared, raw_bytes_by_id=source_arguments["raw_bytes_by_id"])
+        return _remember(shared=shared, key=key, prepared=_composition_facts(prepared))
     prepared = release_aware(frozen).prepare_business_text_sources(metric_id=metric_id,
                                                                    **source_arguments)
-    if metric_id == "C02":
-        return _remember(shared=shared, key=key, prepared=_composition_facts(prepared))
     _need(len(prepared["documents"]) == 1, "HISTORICAL_TEXT_BOUNDARY_EXPECTS_ONE_DOCUMENT")
     reference_id = next(iter(prepared["documents"]))
     document = prepared["documents"][reference_id]

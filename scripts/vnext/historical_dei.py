@@ -406,7 +406,7 @@ def _refuse_unredirectable(function):
                                      + function.__module__ + ":" + function.__qualname__)
 
 
-def _function_view(function):
+def _function_view(function, overrides=None):
     module = sys.modules[function.__module__]
     if module.__dict__ is not function.__globals__:
         raise HistoricalDeiError("HISTORICAL_DEI_FUNCTION_OUTSIDE_ITS_MODULE:"
@@ -416,6 +416,7 @@ def _function_view(function):
     names = sorted(set().union(*(code.co_names for code in _codes(function.__code__))))
     imports = any(instruction.opname == "IMPORT_NAME" for code in _codes(function.__code__)
                   for instruction in dis.get_instructions(code))
+    overrides = dict(overrides or {})
 
     def view(*args, **kwargs):
         namespace = dict(vars(module))
@@ -426,6 +427,7 @@ def _function_view(function):
             namespace["re"] = RELEASE_AWARE_RE
         if imports:
             namespace["__builtins__"] = _VIEW_BUILTINS
+        namespace.update(overrides)
         runnable = types.FunctionType(function.__code__, namespace, function.__name__,
                                       function.__defaults__, function.__closure__)
         runnable.__kwdefaults__ = function.__kwdefaults__
@@ -434,6 +436,44 @@ def _function_view(function):
     functools.update_wrapper(view, function)
     view.release_aware_view_of = function
     return view
+
+
+# Views with overrides, kept for the life of the process like the others.
+_OVERRIDE_VIEWS = {}
+
+
+def release_aware_with(function, **overrides):
+    """``release_aware(function)`` with some of the names its own code reads bound otherwise.
+
+    For a successor that replaces one helper a frozen function calls and keeps
+    everything else the frozen function does: each call is the frozen code in
+    its module's namespace as the release-aware view sees it, then the named
+    globals replaced. Only a name the function's own code reads can be
+    replaced - naming another would change nothing and read as a change - and
+    a replacement that can itself ask the frozen DEI question without a view
+    is refused, so an override cannot carry the frozen answer back in.
+    """
+    if not (isinstance(function, types.FunctionType) and _in_package(function)
+            and not hasattr(function, "__wrapped__")):
+        raise HistoricalDeiError("HISTORICAL_DEI_OVERRIDE_TARGET_NOT_A_PACKAGE_FUNCTION:"
+                                 + repr(function)[:120])
+    read = set().union(*(code.co_names for code in _codes(function.__code__)))
+    unread = sorted(set(overrides) - read)
+    if unread:
+        raise HistoricalDeiError("HISTORICAL_DEI_OVERRIDE_NAME_NOT_READ:"
+                                 + function.__qualname__ + ":" + ",".join(unread))
+    for name, value in overrides.items():
+        if not _is_view(value) and reaches_the_dei_question(value):
+            raise HistoricalDeiError("HISTORICAL_DEI_OVERRIDE_REACHES_THE_QUESTION:" + name)
+    key = (id(function), tuple(sorted((name, id(value)) for name, value in overrides.items())))
+    known = _OVERRIDE_VIEWS.get(key)
+    if known is None:
+        view = _function_view(function, overrides)
+        # The originals are kept with the view so the ids in the key stay theirs.
+        known = (function, dict(overrides), view)
+        _OVERRIDE_VIEWS[key] = known
+        _VIEW_IDS.add(id(view))
+    return known[2]
 
 
 def _class_view(klass):
