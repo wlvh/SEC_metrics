@@ -21,10 +21,13 @@ filing's composition is asked too (constructed: no saved filing retakes).
 
 A kept composition is asked #28's other question: whether the filing reports,
 apart from the depreciation and intangible-asset amortization it takes, a
-positive amortization of capitalized contract costs. Marriott's filings do, so
-its composed B03 is withheld by name with #28's own answer; with that check
-answering nothing, the same composition is published as before.
+positive amortization of capitalized contract costs. Marriott's filings do, and
+#28 proved from their own income-statement rows that it is a gross-to-net
+revenue deduction, so the composition is published as it is with #28's answer
+kept on the record; where the rows do not prove it (constructed), the composed
+B03 is withheld by name with #28's own answer.
 """
+from decimal import Decimal
 import unittest
 from unittest.mock import patch
 
@@ -206,30 +209,40 @@ class AKeptTotalTheFilingSaysIncludesImpairment(unittest.TestCase):
 
 
 class AComposedTotalBesideAContractCostAmortization(unittest.TestCase):
-    """Marriott's filings report contract-cost amortization apart from the composition."""
+    """Marriott's filings report contract-cost amortization apart from the composition.
+
+    #28 proved from the filing's own income-statement rows that it is a
+    gross-to-net revenue deduction (gross fee revenues, contract investment
+    amortization, net fee revenues), so it is not D&A: the composition stands,
+    nothing is added and #28's answer is kept on the result's record. Whether
+    an unproved relation is still withheld is asked on a constructed shape: no
+    saved filing leaves it unproved any more.
+    """
 
     @classmethod
     def setUpClass(cls):
         cls.wired = {end: resolve("marriott_international", end)
                      for end in ("2025-12-31", "2024-12-31")}
 
-    def test_it_is_withheld_by_name_and_still_carries_b01(self):
+    def test_a_proved_revenue_deduction_keeps_the_composition(self):
         for end, outcome in self.wired.items():
             with self.subTest(end=end):
-                self.assertEqual(("WITHHELD", REASON), (outcome["result"]["publication"],
-                                                        outcome["result"]["reason_code"]))
+                self.assertEqual(("PUBLISHED", "PASS"), (outcome["result"]["publication"],
+                                                         outcome["result"]["reason_code"]))
                 scope = outcome["selection"]["depreciation_scope"]
-                self.assertEqual(
-                    "THE_FILING_REPORTS_AN_AMORTIZATION_THE_COMPOSITION_DOES_NOT_TAKE",
-                    scope["why"])
+                self.assertEqual(("KEEP", "THE_APPROVED_COMPOSITION_APPLIES"),
+                                 (scope["status"], scope["why"]))
                 answer = scope["contract_amortization"]
-                self.assertEqual("COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED",
-                                 answer["status"])
+                self.assertEqual(("COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED", False),
+                                 (answer["status"], answer["blocked"]))
                 self.assertFalse(answer["amount_added_or_result_recomputed"])
-                self.assertTrue(answer["additional_facts"])
-                b01 = [r for r in outcome["dependency_records"]
-                       if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == "B01"]
-                self.assertEqual(["PUBLISHED"], [r["publication"] for r in b01])
+                self.assertTrue(answer["excluded_facts"])
+                for proof in answer["revenue_deduction_proofs"]:
+                    gross, deduction, net = (Decimal(x) for x in proof["displayed_amounts"])
+                    self.assertEqual(gross + deduction, net)
+                    self.assertLess(deduction, 0)
+                self.assertEqual({"depreciation", "amortization"},
+                                 {o["semantic_role"] for o in d_and_a(outcome)})
 
     def test_it_is_the_answer_of_28_s_own_check(self):
         from tests.vnext.test_normal_zero_ai_results import original_sources_only
@@ -240,10 +253,12 @@ class AComposedTotalBesideAContractCostAmortization(unittest.TestCase):
                                 metric_id="B03")
             ordinary = assess_current_b03_scope(case=case, data_root=ROOT)
         ours = self.wired["2025-12-31"]["selection"]["depreciation_scope"]["contract_amortization"]
-        self.assertEqual(ordinary, {**ours, "blocked": True})
+        self.assertEqual(ordinary, ours)
+        self.assertEqual(case["results"]["B03"]["value"],
+                         self.wired["2025-12-31"]["result"]["value"])
 
-    def test_without_it_the_composition_is_published_as_before(self):
-        for end in self.wired:
+    def test_the_value_is_the_unchecked_composition_s(self):
+        for end, outcome in self.wired.items():
             with self.subTest(end=end):
                 with patch.object(route, "contract_amortization_unreconciled",
                                   lambda **_: None):
@@ -252,8 +267,30 @@ class AComposedTotalBesideAContractCostAmortization(unittest.TestCase):
                 scope = unchecked["selection"]["depreciation_scope"]
                 self.assertEqual(("KEEP", "THE_APPROVED_COMPOSITION_APPLIES"),
                                  (scope["status"], scope["why"]))
-                self.assertEqual({"depreciation", "amortization"},
-                                 {o["semantic_role"] for o in d_and_a(unchecked)})
+                self.assertNotIn("contract_amortization", scope)
+                self.assertEqual(unchecked["result"]["value"], outcome["result"]["value"])
+                self.assertEqual([o["source_binding"]["fact_id"] for o in d_and_a(unchecked)],
+                                 [o["source_binding"]["fact_id"] for o in d_and_a(outcome)])
+
+    def test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01(self):
+        # Constructed: the rows are taken not to prove the deduction, so #28's
+        # own check answers that the amortization is unreconciled.
+        from vnext import b03_contract_amortization_scope as scope_check
+        with patch.object(scope_check, "_visible_revenue_deductions", lambda **_: None):
+            outcome = resolve("marriott_international", "2025-12-31")
+        self.assertEqual(("WITHHELD", REASON), (outcome["result"]["publication"],
+                                                outcome["result"]["reason_code"]))
+        scope = outcome["selection"]["depreciation_scope"]
+        self.assertEqual("THE_FILING_REPORTS_AN_AMORTIZATION_THE_COMPOSITION_DOES_NOT_TAKE",
+                         scope["why"])
+        answer = scope["contract_amortization"]
+        self.assertEqual(("COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED", True),
+                         (answer["status"], answer["blocked"]))
+        self.assertFalse(answer["amount_added_or_result_recomputed"])
+        self.assertTrue(answer["additional_facts"])
+        b01 = [r for r in outcome["dependency_records"]
+               if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == "B01"]
+        self.assertEqual(["PUBLISHED"], [r["publication"] for r in b01])
 
     def test_a_direct_total_is_not_its_question(self):
         # Enphase's B03 takes a direct total; #28's check answers None for it,

@@ -239,15 +239,20 @@ def contract_amortization_unreconciled(*, repo_root, prepared, period, observati
     composition neither adds nor is shown to include
     (``b03_contract_amortization_scope``, ``[shared-with-#47]`` commit
     ``45bcce3d``; docs/evidence/issue28_continuous/
-    b03-marriott-contract-amortization-20260929/). Until that relation is
-    proved or the definition is decided either way, a composed total is not
-    provably the whole D&A, so it is withheld by name - never added to and
-    never recomputed.
+    b03-marriott-contract-amortization-20260929/). #28 later proved, from the
+    filing's own income-statement rows, that such a line can be a gross-to-net
+    revenue deduction (``7bb17621``): gross revenues, contract amortization
+    and net revenues in consecutive rows whose displayed amounts reconcile to
+    the tagged fact. Then the answer is ``blocked: False`` and the composition
+    stands - the amortization is not D&A, so nothing is added. Otherwise the
+    relation is unproved, a composed total is not provably the whole D&A, and
+    it is withheld by name - never added to and never recomputed.
 
     Asked with #28's own check, not a copy of it: the case it reads is the
     pinned input's source proofs, the target period and the route's B03
     observations, and it reads the same primary document the pinned input
     admitted. A direct D&A total is not its question and gets None, as there.
+    The caller acts on ``blocked``, as #28's own consumers do.
     """
     from .b03_contract_amortization_scope import _unreconciled_contract_amortization
     return _unreconciled_contract_amortization(
@@ -615,10 +620,15 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                 unreconciled = contract_amortization_unreconciled(
                     repo_root=repo_root, prepared=prepared, period=period,
                     observations=observations)
-                if unreconciled is not None:
+                # #28's answer blocks only when the separate amortization is
+                # not proved to be a gross-to-net revenue deduction; a proved
+                # one is excluded from D&A there and here, and kept on record.
+                if unreconciled is not None and unreconciled["blocked"]:
                     raise _DepreciationScopeUnproven({
                         **da_scope, "status": "WITHHOLD", "contract_amortization": unreconciled,
                         "why": "THE_FILING_REPORTS_AN_AMORTIZATION_THE_COMPOSITION_DOES_NOT_TAKE"})
+                if unreconciled is not None:
+                    da_scope = {**da_scope, "contract_amortization": unreconciled}
             if da_scope["status"] == "RETAKE":
                 # The filing's own composition proves a later direct candidate;
                 # the frozen selector is asked again over a pool without the

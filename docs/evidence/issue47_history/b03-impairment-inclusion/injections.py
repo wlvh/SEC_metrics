@@ -63,26 +63,41 @@ INJECTIONS = [
      "edit": "impairment_included() takes a fact of any period that carries the value",
      "why": "a year's total would be withheld for a footnote written about another year"},
     # #28's contract-cost amortization question, asked of a kept composition.
+    # Marriott's saved filings prove the line a revenue deduction, so the
+    # withhold is asked on a constructed shape (the rows taken not to prove it).
     {"id": "THE_COMPOSITION_IS_NOT_ASKED", "file": ROUTE,
      "old": ("            if da_scope[\"status\"] == \"KEEP\":\n"
              "                unreconciled = contract_amortization_unreconciled(\n"),
      "new": ("            if False:\n"
              "                unreconciled = contract_amortization_unreconciled(\n"),
-     "expect": MARRIOTT + ".test_it_is_withheld_by_name_and_still_carries_b01",
+     "expect": MARRIOTT + ".test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01",
      "edit": "the route publishes a kept composition without asking #28's question",
      "why": "a D&A the filing shows is not the whole of it would be published"},
     {"id": "EVERY_KEPT_RESULT_IS_WITHHELD", "file": ROUTE,
-     "old": ("                if unreconciled is not None:\n"
+     "old": ("                if unreconciled is not None and unreconciled[\"blocked\"]:\n"
              "                    raise _DepreciationScopeUnproven({\n"),
      "new": ("                if True:\n"
              "                    raise _DepreciationScopeUnproven({\n"),
      "expect": MARRIOTT + ".test_a_direct_total_is_not_its_question",
      "edit": "the route withholds every kept B03, whatever #28's check answers",
      "why": "a direct total the question does not concern would be lost for nothing"},
+    {"id": "THE_BLOCKED_FLAG_IS_NOT_READ", "file": ROUTE,
+     "old": "                if unreconciled is not None and unreconciled[\"blocked\"]:\n",
+     "new": "                if unreconciled is not None:\n",
+     "expect": MARRIOTT + ".test_a_proved_revenue_deduction_keeps_the_composition",
+     "edit": "the route withholds on any answer, including #28's proved revenue deduction",
+     "why": "an amortization the filing's own rows prove is not D&A would withhold a correct value, "
+            "and the pinned route would disagree with #28 on the same filing"},
+    {"id": "THE_PROOF_IS_NOT_KEPT_ON_RECORD", "file": ROUTE,
+     "old": "                    da_scope = {**da_scope, \"contract_amortization\": unreconciled}\n",
+     "new": "                    pass\n",
+     "expect": MARRIOTT + ".test_it_is_the_answer_of_28_s_own_check",
+     "edit": "a kept composition drops #28's proof that the separate line is a revenue deduction",
+     "why": "the reader could not see why an amortization the filing states was left out of D&A"},
     {"id": "THE_ANSWER_IS_NOT_CARRIED", "file": ROUTE,
      "old": "\"status\": \"WITHHOLD\", \"contract_amortization\": unreconciled,",
      "new": "\"status\": \"WITHHOLD\",",
-     "expect": MARRIOTT + ".test_it_is_the_answer_of_28_s_own_check",
+     "expect": MARRIOTT + ".test_an_unproved_relation_is_withheld_by_name_and_still_carries_b01",
      "edit": "the withheld result drops #28's answer",
      "why": "the reader could not see which amortization, amount and fact withheld it"},
 ]
