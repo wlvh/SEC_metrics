@@ -1235,6 +1235,13 @@ REQUIRED_WIRING_EVIDENCE = (
     # review found that gap; a declaration the gate admits from is pinned by
     # the same receipt as the gate, and so is what verifies what it declares.
     "scripts/vnext/normal_history_plan.py",
+    # The catalog the planner reads. Whether a saved history block is the block
+    # its index declares decides whether the planner asks for it again
+    # (SNAPSHOT_REFRESH) and whether a period's filings can be listed at all,
+    # so a weakened block check would change what the gate admits as due just
+    # as a weakened planner would. It is a rule file too, and for the same
+    # reason as the planner that is not enough on the live path.
+    "scripts/vnext/normal_history_catalog.py",
     # The event declaration. It lives outside the Requirement closure because
     # the planner it extends is a rule file, and that is exactly why its bytes
     # belong here: a declaration the gate admits from must be pinned by the

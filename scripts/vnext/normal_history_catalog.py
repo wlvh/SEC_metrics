@@ -14,15 +14,15 @@ whenever the plan's own rules improve, and while it shared this file every such
 change altered ``catalog_module_sha256`` and invalidated every installed
 historical package that had read nothing different at all.
 """
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from sec_urls import submissions_file_url, submissions_url
 
 from .canonical import content_hash, sha256_file, strict_json_loads
 from .normal_annual_input import _cik, _registry_rows, _subject_policy
-from .normal_governance_input import (_Sources, _filings, _history_index,
-                                      history_body_alignment, NormalGovernanceInputError)
+from .normal_governance_input import (_IDENTITY_FIELDS, _Sources, _filings, _history_index,
+                                      NormalGovernanceInputError)
 from .normal_source_authority import ROOT
 from .sources import resolve_repository_file
 
@@ -79,6 +79,80 @@ def registered_predecessor_ciks(*, repo_root: Path, company_id: str):
         "related_predecessor_ciks", ()))
 
 
+DAY = timedelta(days=1)
+
+
+def block_last_days(*, payload, shards):
+    """The last day each declared history block can hold, from the index itself.
+
+    SEC declares each block's range as ``[filingFrom, filingTo]``, and between
+    one block's ``filingTo`` and the next newer block's ``filingFrom`` it
+    usually leaves one undeclared day; the filings dated on that day sit in the
+    older block. Measured: every one of the 70 gaps in JPMorgan's index, whose
+    blocks were fetched within two minutes of it, is two days wide, and in 50
+    of those blocks every filing outside the declared range is dated exactly on
+    the gap day; eight of the nine other saved indexes leave the same gap, and
+    one (Ford's) leaves none. So a block ends on the day before the next newer
+    block starts; the newest block's next newer block is the index's own recent
+    list, which starts at its oldest filing. A block never ends before its
+    declared end.
+
+    ``shards`` is ``_history_index``'s order, newest first.
+    """
+    recent = [value for value in payload["filings"]["recent"]["filingDate"]]
+    _need(all(type(value) is str for value in recent), "HISTORY_RECENT_DATES_INVALID")
+    last_days = {}
+    for position, shard in enumerate(shards):
+        newer_start = (shards[position - 1]["filingFrom"] if position
+                       else (min(recent) if recent else None))
+        if newer_start is None:
+            last_days[shard["name"]] = shard["filingTo"]
+            continue
+        day_before = (date.fromisoformat(newer_start) - DAY).isoformat()
+        last_days[shard["name"]] = max(shard["filingTo"], day_before)
+    return last_days
+
+
+def history_block_coherence(*, shard, body, rows, last_day):
+    """None when a saved block is the block its index declares; else the conflict.
+
+    Two checks, both on every filing the saved block holds rather than only the
+    forms the catalog keeps:
+
+    * the number of filings equals the ``filingCount`` the index declares. A
+      block saved before SEC moved newer filings into it (the newest block
+      grows as filings age out of the recent list), or cut from another
+      partition, holds a different number even when every filing it does hold
+      is dated inside the range; the frozen date check could not see that, and
+      it left three blocks with filings missing - JPMorgan's block 007 (saved
+      from another partition, holding no filing of the forms kept), and the
+      newest blocks of Pfizer and Salesforce;
+    * every filing is dated from the declared start through ``last_day``
+      (``block_last_days``), which is the frozen check with the undeclared gap
+      day admitted.
+    """
+    dates = body.get("filingDate") if type(body) is dict else None
+    _need(type(dates) is list and all(type(value) is str for value in dates),
+          "HISTORY_BLOCK_DATES_INVALID")
+    declared = shard.get("filingCount")
+    outside = [value for value in dates if not shard["filingFrom"] <= value <= last_day]
+    failed = []
+    if type(declared) is not int or declared != len(dates):
+        failed.append("FILING_COUNT_DIFFERS_FROM_DECLARED")
+    if outside:
+        failed.append("FILINGS_OUTSIDE_THE_BLOCK")
+    if not failed:
+        return None
+    return {"history_name": shard["name"], "declared_filing_from": shard["filingFrom"],
+            "declared_filing_to": shard["filingTo"], "block_last_day": last_day,
+            "declared_filing_count": declared, "saved_filing_count": len(dates),
+            "filings_outside_the_block": len(outside),
+            "out_of_range_filings": [{key: row[key] for key in _IDENTITY_FIELDS} for row in rows
+                                     if not shard["filingFrom"] <= row["filingDate"] <= last_day],
+            "failed_checks": failed,
+            "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"}
+
+
 def _annual_ends(rows):
     return sorted({row["reportDate"] for row in rows if row["form"] == "10-K"}, reverse=True)
 
@@ -107,6 +181,7 @@ def load_annual_history(*, repo_root: Path, company_id: str, reader=None, requir
                             role="sec_submissions_inventory", media_type="application/json")
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
     shards = _history_index(payload, cik)
+    last_days = block_last_days(payload=payload, shards=shards)
     names = [inventory["source_reference"]["document_name"]]
     rows = _filings(payload, inventory_name=names[0])
     limitations = []
@@ -142,7 +217,8 @@ def load_annual_history(*, repo_root: Path, company_id: str, reader=None, requir
                                 "declared_filing_to": shard["filingTo"],
                                 "reason": str(error), "error_category": error.category})
             continue
-        problem = history_body_alignment(shard=shard, rows=shard_rows)
+        problem = history_block_coherence(shard=shard, body=body, rows=shard_rows,
+                                          last_day=last_days[shard["name"]])
         if problem:
             limitations.append({"kind": "HISTORY_SHARD_SNAPSHOT_CONFLICT", **problem})
         rows.extend(shard_rows)
@@ -186,6 +262,7 @@ def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str
                             role="sec_submissions_inventory", media_type="application/json")
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
     shards = _history_index(payload, cik)
+    last_days = block_last_days(payload=payload, shards=shards)
     names = [inventory["source_reference"]["document_name"]]
     rows = _filings(payload, inventory_name=names[0])
     limitations = []
@@ -222,7 +299,8 @@ def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str
                                 "declared_filing_to": shard["filingTo"],
                                 "reason": str(error), "error_category": error.category})
             continue
-        problem = history_body_alignment(shard=shard, rows=shard_rows)
+        problem = history_block_coherence(shard=shard, body=body, rows=shard_rows,
+                                          last_day=last_days[shard["name"]])
         if problem:
             limitations.append({"kind": "HISTORY_SHARD_SNAPSHOT_CONFLICT", **problem})
         rows.extend(shard_rows)
@@ -304,7 +382,15 @@ def _candidate(*, company_id, history, periods, index, ordinal):
         reasons.append(period["original_status"])
     if blocking:
         reasons.append("RELEVANT_HISTORY_NOT_LOADED")
+    # A block that cannot be trusted blocks the periods whose filings it could
+    # hold: everything dated after the prior period's end - the target's own
+    # annual report, its amendments, the fiscal window's events. A block that
+    # ends on or before that day holds none of them, so an old stale block no
+    # longer blocks every period of the company, as it did when a conflict was
+    # company-wide; with no prior in the catalog, every conflict is relevant.
+    prior_end = following["report_date"] if following else None
     if any(item["kind"] == "HISTORY_SHARD_SNAPSHOT_CONFLICT"
+           and (prior_end is None or item["block_last_day"] > prior_end)
            for item in history["limitations"]):
         reasons.append("HISTORY_SNAPSHOT_CONFLICT")
     candidate = {

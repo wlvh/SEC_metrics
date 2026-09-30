@@ -151,14 +151,17 @@ shown to give the same Runs before a batch uses it.
   | Ford | 273 | 49 | 65, 1905 | 1, 138 | identical, 0 fields differ |
   | Macy's | 157 | 41 | 57, 1650 | 1, 104 | identical, 0 fields differ |
 
-- `injections.py`: fourteen injections, each undoing one part, plus one that
-  takes out the link count, which no case should fail without. **Not yet run
-  against this version.** Each one rewrites the planner in the checkout, and
-  the acquisition that this change unblocks reads that same checkout and
-  checks the planner against the SEC wiring receipt; the two must not
-  overlap, so the injections run once the acquisition has stopped.
-  `injections-first-version.json` is the run against the first version, kept
-  as what it was: it overlapped the first measurement (finding 1 above), and
-  its one miss is the post-replay recheck that was since removed.
+- `injections.py` -> `injections.json`: fourteen injections, each undoing one
+  part, plus one that takes out the link count, which no case should fail
+  without. Every one of the fourteen was caught by the case written for it, and
+  the link count was caught by none, as it should be (`all_caught`,
+  `redundant_parts_not_caught`). Each injection rewrites the planner in the tree
+  it runs in, and the acquisition this change unblocked read the checkout and
+  checked the planner against the SEC wiring receipt, so they ran in a separate
+  clone of the checkout at `338cb049` - the planner, its cases and this script
+  byte-identical to the checkout's - while the acquisition went on, not in the
+  checkout itself. `injections-first-version.json` is the run against the first
+  version, kept as what it was: it overlapped the first measurement (finding 1
+  above), and its one miss is the post-replay recheck that was since removed.
 
 Zero SEC or provider calls.

@@ -322,6 +322,15 @@ SOURCE_TESTS += ("tests.vnext.test_historical_amendment_admission",)
 SOURCE_TESTS += ("tests.vnext.test_historical_part_iii_admission",)
 SOURCE_TESTS += ("tests.vnext.test_historical_fiscal_labels",)
 SOURCE_TESTS += ("tests.vnext.test_historical_plan_replay",)
+# The batch's two blocks: the checkpoint replay once per ledger state over two
+# recorded roots, and the derivation memo, whose last class calls the five real
+# functions on this repository's saved sources.
+SOURCE_TESTS += ("tests.vnext.test_historical_run_replay",)
+SOURCE_TESTS += ("tests.vnext.test_historical_derivation_memo",)
+# Whether a saved history block is the block its index declares: made-up
+# blocks, then every saved and acquired block, read from the checkout and the
+# acquisition's export.
+SOURCE_TESTS += ("tests.vnext.test_history_block_coherence",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -480,6 +489,15 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Installs the baseline corpus into a recorded root and plans a company
     # twice, once with the frozen replay on every check; 127 seconds alone.
     "tests.vnext.test_historical_plan_replay": 480,
+    # Two recorded roots from the baseline corpus, sixteen cases; about two
+    # minutes alone.
+    "tests.vnext.test_historical_run_replay": 480,
+    # The real-function class loads the Requirement snapshot and prepares one
+    # period's inputs, each twice frozen and once memoized; about a minute alone.
+    "tests.vnext.test_historical_derivation_memo": 300,
+    # Reads every saved and acquired submissions block out of the export's
+    # archives; 140 seconds alone.
+    "tests.vnext.test_history_block_coherence": 480,
     # Copies the baseline corpus into a recorded root, then resolves three route
     # families on both roots; 52 seconds measured beside a running sweep.
     "tests.vnext.test_historical_filing_inventory": 480,
@@ -631,6 +649,9 @@ SOURCE_CI_SECONDS = {
     # Local measurements, not CI means: registered after the three runs above.
     "tests.vnext.test_historical_part_iii_admission": 150,
     "tests.vnext.test_historical_plan_replay": 130,
+    "tests.vnext.test_historical_run_replay": 130,
+    "tests.vnext.test_historical_derivation_memo": 70,
+    "tests.vnext.test_history_block_coherence": 150,
     "tests.vnext.test_historical_amendment_admission": 40,
 }
 SOURCE_DEFAULT_CI_SECONDS = 30

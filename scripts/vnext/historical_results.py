@@ -25,12 +25,11 @@ from sec_urls import submissions_url
 from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import content_hash, sha256_file
 from .historical_annual_input import prepare_historical_annual_input
-from .historical_filing_inventory import filing_inventory
+from .historical_filing_inventory import filing_inventory, prior_filing
 from .historical_dei import annual_period
 from .normal_annual_input import _registry_rows
 from .normal_companyfacts_results import (CATALOG_PATH, NormalCompanyfactsError,
-                                          _SOURCE_ERRORS, _authority, _filing_source,
-                                          _prior_filing)
+                                          _SOURCE_ERRORS, _authority, _filing_source)
 from .normal_annual_input_v2 import exact_json_value
 from .historical_spec_revision import compile_historical_spec_file
 from .normal_governance_input import _Sources
@@ -160,7 +159,7 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
                               for c in b["components"]) for route in routes.values())
     if needs_prior:
         try:
-            filing, prior_inventory = _prior_filing(reader, inventory, prepared)
+            filing, prior_inventory = prior_filing(reader, inventory, prepared)
             # The selected period already proved which filing precedes it from
             # the complete saved catalog; the source walk must land on it.
             _need(period_selection["prior_filing"] is not None

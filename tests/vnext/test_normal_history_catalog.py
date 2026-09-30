@@ -55,8 +55,20 @@ class HistoryCatalogTest(unittest.TestCase):
         # Salesforce's recent block does not, so exactly the reachable shard is read.
         self.assertEqual(["CIK0001108524.json", "CIK0001108524-submissions-001.json"],
                          wide["loaded_inventories"])
-        self.assertEqual([], wide["limitations"])
         self.assertEqual("2021-01-31", wide["window_oldest_report_end"])
+        # That shard was saved weeks before the index that declares it, and
+        # holds 2010 of the 2016 filings the index says it does: the six dated
+        # 2023-07-26..29 aged out of the recent list after it was saved, so they
+        # are in neither. Every filing it does hold is in range, which is all
+        # the frozen date check could look at; it is a gap, not a coherent block.
+        [conflict] = wide["limitations"]
+        self.assertEqual("HISTORY_SHARD_SNAPSHOT_CONFLICT", conflict["kind"])
+        self.assertEqual("CIK0001108524-submissions-001.json", conflict["history_name"])
+        self.assertEqual(["FILING_COUNT_DIFFERS_FROM_DECLARED"], conflict["failed_checks"])
+        self.assertEqual((2016, 2010, 0), (conflict["declared_filing_count"],
+                                           conflict["saved_filing_count"],
+                                           conflict["filings_outside_the_block"]))
+        self.assertFalse(wide["window_proven"])
 
     def test_plan_is_deterministic_and_never_spends_a_business_call(self):
         with original_sources_only():

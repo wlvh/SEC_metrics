@@ -1,8 +1,13 @@
 """An earlier period is read from the blocks that hold it, or refused by name.
 
-Every case here runs on this repository's own saved submissions bytes. No
-block is written, moved or re-labelled: what changes is which of them the
-pinned period is allowed to look in.
+Every case runs on this repository's own saved submissions bytes, and no block
+is written, moved or re-labelled: what changes is which of them the pinned
+period is allowed to look in. The periods whose row is in a history block sit
+in blocks saved at another time than their index, which the catalog now
+refuses by name (``test_on_the_saved_blocks_the_stale_block_is_named``); the
+cases about reading such a period run on a recorded root whose index is
+re-derived from those same saved blocks (``tests/vnext/derived_history.py``),
+so they prove the mechanism, not SEC's metadata.
 
 The frozen view is called alongside the successor in the cases where the
 difference is the point, because "the new one accepts it" only means something
@@ -13,6 +18,7 @@ import unittest
 from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT as ROOT
+from tests.vnext.derived_history import derived_history_root
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from sec_urls import submissions_url
 from vnext.historical_metadata_context import (_FORMS as FORMS,
@@ -36,6 +42,14 @@ FROZEN_REFUSAL = "TEXT_INPUT_CURRENT_METADATA_SCOPE_REQUIRES_HISTORY"
 _IDENTITY = ("form", "reportDate", "filingDate", "accessionNumber", "primaryDocument")
 
 
+def _shard_root():
+    return derived_history_root(*sorted({company for company, _ in IN_A_SHARD}))
+
+
+def _root_for(company_id, report_end):
+    return _shard_root() if (company_id, report_end) in IN_A_SHARD else ROOT
+
+
 def _from_catalog(company_id, report_end):
     """A pinned-period input built from the saved metadata's own annual row.
 
@@ -46,8 +60,9 @@ def _from_catalog(company_id, report_end):
     the selection means - are taken from the saved submissions rows directly.
     Nothing here is invented: every value is a column of a real SEC row.
     """
+    root = _root_for(company_id, report_end)
     with original_sources_only():
-        catalog = load_annual_history(repo_root=ROOT, company_id=company_id,
+        catalog = load_annual_history(repo_root=root, company_id=company_id,
                                       required_annual_count=8)
         rows = [row for row in catalog["annual_rows"]
                 if row["form"] == "10-K" and row["reportDate"] == report_end]
@@ -57,7 +72,7 @@ def _from_catalog(company_id, report_end):
                     "filing": {key: rows[0][key] for key in _IDENTITY},
                     "table_input": {"target_period": {"period_start": None,
                                                       "period_end": report_end}}}
-        reader = _Sources(ROOT, company_id, cik)
+        reader = _Sources(root, company_id, cik)
         inventory = reader.read(submissions_url(cik=int(cik)),
                                 role="sec_submissions_inventory",
                                 media_type="application/json")
@@ -67,7 +82,8 @@ def _from_catalog(company_id, report_end):
 def _context(company_id, report_end, *, prepared=None):
     built, inventory, reader, _ = _from_catalog(company_id, report_end)
     with original_sources_only():
-        return historical_metadata_context(repo_root=ROOT, company_id=company_id,
+        return historical_metadata_context(repo_root=_root_for(company_id, report_end),
+                                           company_id=company_id,
                                            prepared=prepared or built,
                                            inventory=inventory, reader=reader,
                                            metric_id="D02")
@@ -115,6 +131,30 @@ class PinnedPeriodsReadTheBlocksThatHoldThemTest(unittest.TestCase):
                                  context["selection"]["amendments"])
                 self.assertEqual([context["loaded_inventories"][0]],
                                  context["loaded_inventories"])
+
+    def test_on_the_saved_blocks_the_stale_block_is_named(self):
+        """This repository's own index and blocks: the period is refused, not read.
+
+        Salesforce's newest block holds 2010 of the 2016 filings its index
+        declares, and Pfizer's 2001 of 2005 - the filings that aged out of the
+        recent list after the block was saved are in neither. Reading a period
+        from such a block would miss them without saying so.
+        """
+        for company_id, report_end in IN_A_SHARD:
+            with self.subTest(company=company_id, period=report_end):
+                prepared, _, _, _ = _from_catalog(company_id, report_end)
+                cik = prepared["entity"]
+                reader = _Sources(ROOT, company_id, cik)
+                with original_sources_only():
+                    inventory = reader.read(submissions_url(cik=int(cik)),
+                                            role="sec_submissions_inventory",
+                                            media_type="application/json")
+                    with self.assertRaises(HistoricalMetadataError) as refused:
+                        historical_metadata_context(repo_root=ROOT, company_id=company_id,
+                                                    prepared=prepared, inventory=inventory,
+                                                    reader=reader, metric_id="D02")
+                self.assertEqual("HISTORICAL_TEXT_METADATA_BLOCK_UNUSABLE:"
+                                 "HISTORY_SHARD_SNAPSHOT_CONFLICT", str(refused.exception))
 
     def test_a_block_the_period_needs_and_cannot_read_is_named_not_skipped(self):
         """JPMorgan is the case: the blocks exist and this repository lacks them.
@@ -243,9 +283,9 @@ class TheSelectedFilingStillComesFromThePeriodSelectionTest(unittest.TestCase):
         for company_id, report_end in IN_A_SHARD + IN_THE_RECENT_BLOCK:
             with self.subTest(company=company_id, period=report_end):
                 with original_sources_only():
-                    selection = resolve_period_selection(repo_root=ROOT,
-                                                         company_id=company_id,
-                                                         report_end=report_end)
+                    selection = resolve_period_selection(
+                        repo_root=_root_for(company_id, report_end),
+                        company_id=company_id, report_end=report_end)
                 context = _context(company_id, report_end)
                 for key in _IDENTITY:
                     self.assertEqual(selection["current_filing"][key],

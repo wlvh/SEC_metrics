@@ -2074,8 +2074,10 @@ class ARefreshIsFinishedWhenThePlanStopsAskingForIt(unittest.TestCase):
     filing is older than the newest declared range even begins. So the
     document refreshed here is the index, and its bytes are **derived**: each
     saved shard's declared range becomes that shard's own minimum and maximum
-    filing date. Entries for shards never saved are left untouched, so the
-    separate "not saved" limitation is neither hidden nor changed.
+    filing date, and its declared filing count the number of filings it holds
+    (the catalog checks both since the block check counts filings too).
+    Entries for shards never saved are left untouched, so the separate "not
+    saved" limitation is neither hidden nor changed.
 
     That makes this a proof of the mechanism, not of SEC's current metadata.
     The real repair for this company is an acquisition, and it is named as
@@ -2147,7 +2149,8 @@ class ARefreshIsFinishedWhenThePlanStopsAskingForIt(unittest.TestCase):
             measured.append({
                 "name": shard["name"], "declared_from": shard["filingFrom"],
                 "declared_to": shard["filingTo"], "body_from": min(body["filingDate"]),
-                "body_to": max(body["filingDate"]), "relevant_rows": len(relevant),
+                "body_to": max(body["filingDate"]), "body_count": len(body["filingDate"]),
+                "relevant_rows": len(relevant),
                 "relevant_inside": sum(1 for row in relevant
                                        if shard["filingFrom"] <= row["filingDate"]
                                        <= shard["filingTo"])})
@@ -2163,6 +2166,7 @@ class ARefreshIsFinishedWhenThePlanStopsAskingForIt(unittest.TestCase):
                 if row is not None:
                     entry["filingFrom"] = row["body_from"]
                     entry["filingTo"] = row["body_to"]
+                    entry["filingCount"] = row["body_count"]
         return json.dumps(body, ensure_ascii=False).encode("utf-8")
 
     def test_the_conflict_is_there_before_and_on_the_root_the_refresh_acts_on(self):

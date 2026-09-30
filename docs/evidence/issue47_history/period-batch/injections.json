@@ -1,0 +1,148 @@
+{
+ "A_BLOCK_IS_SHARED_ACROSS_THREADS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_is_for_one_thread",
+  "failed_cases": [
+   "test_a_block_is_for_one_thread"
+  ],
+  "returncode": 1,
+  "seconds": 96
+ },
+ "A_BOOL_INDEX_IS_REMEMBERED_AS_AN_INT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_call_the_frozen_helper_refuses_is_still_refused",
+  "failed_cases": [
+   "test_a_call_the_frozen_helper_refuses_is_still_refused"
+  ],
+  "returncode": 1,
+  "seconds": 141
+ },
+ "A_LATE_IMPORT_KEEPS_THE_MEMO": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_module_imported_inside_the_block_gets_the_frozen_helper_back",
+  "failed_cases": [
+   "test_a_module_imported_inside_the_block_gets_the_frozen_helper_back"
+  ],
+  "returncode": 1,
+  "seconds": 103
+ },
+ "A_NESTED_BLOCK_STARTS_ITS_OWN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_inside_another_keeps_the_outer_memo",
+  "failed_cases": [
+   "test_a_block_inside_another_keeps_the_outer_memo",
+   "test_a_block_is_for_one_thread"
+  ],
+  "returncode": 1,
+  "seconds": 94
+ },
+ "A_PARSE_KEYED_ON_THE_LENGTH": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_two_logs_never_share_an_answer",
+  "failed_cases": [
+   "test_two_logs_never_share_an_answer"
+  ],
+  "returncode": 1,
+  "seconds": 119
+ },
+ "A_PREFIX_KEYED_ON_ITS_COUNT_ALONE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_two_logs_never_share_an_answer",
+  "failed_cases": [
+   "test_two_logs_never_share_an_answer"
+  ],
+  "returncode": 1,
+  "seconds": 98
+ },
+ "A_REFUSAL_IS_REMEMBERED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_refused_replay_is_not_remembered",
+  "failed_cases": [
+   "test_a_refused_replay_is_not_remembered"
+  ],
+  "returncode": 1,
+  "seconds": 96
+ },
+ "A_TEXT_SUBCLASS_IS_REMEMBERED_AS_TEXT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_call_the_frozen_helper_refuses_is_still_refused",
+  "failed_cases": [
+   "test_a_call_the_frozen_helper_refuses_is_still_refused"
+  ],
+  "returncode": 1,
+  "seconds": 110
+ },
+ "CONTROL": {
+  "returncode": 0,
+  "seconds": 95
+ },
+ "IT_OPENS_INSIDE_THE_PLANNER_S_BLOCK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_it_does_not_open_inside_the_planner_s_block",
+  "failed_cases": [
+   "test_it_does_not_open_inside_the_planner_s_block"
+  ],
+  "returncode": 1,
+  "seconds": 108
+ },
+ "KEYED_ON_THE_ROOT_NOT_ITS_STATE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_change_under_a_remembered_root_is_replayed_again",
+  "failed_cases": [
+   "test_a_change_under_a_remembered_root_is_replayed_again"
+  ],
+  "returncode": 1,
+  "seconds": 95
+ },
+ "NOTHING_IS_EVER_FORGOTTEN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_forgotten_state_is_replayed_again_not_answered_wrong",
+  "failed_cases": [
+   "test_a_forgotten_state_is_replayed_again_not_answered_wrong"
+  ],
+  "returncode": 1,
+  "seconds": 121
+ },
+ "NOTHING_IS_PUT_BACK_AFTER_A_FAILURE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_everything_is_put_back_after_a_failure",
+  "failed_cases": [
+   "test_everything_is_put_back_after_a_failure",
+   "test_it_does_not_open_inside_the_planner_s_block",
+   "test_one_root_s_answer_never_answers_another",
+   "test_the_answer_is_a_copy",
+   "test_the_answer_is_the_frozen_replay_s",
+   "test_two_roots_in_turn_are_replayed_once_each"
+  ],
+  "returncode": 1,
+  "seconds": 93
+ },
+ "ONE_STATE_AT_A_TIME": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_two_roots_in_turn_are_replayed_once_each",
+  "failed_cases": [
+   "test_two_roots_in_turn_are_replayed_once_each"
+  ],
+  "returncode": 1,
+  "seconds": 102
+ },
+ "PARSED_ROWS_ARE_SHARED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_parsed_rows_are_fresh_each_time",
+  "failed_cases": [
+   "test_parsed_rows_are_fresh_each_time"
+  ],
+  "returncode": 1,
+  "seconds": 97
+ },
+ "THE_SHARED_ANSWER_IS_HANDED_OUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_answer_is_a_copy",
+  "failed_cases": [
+   "test_the_answer_is_a_copy"
+  ],
+  "returncode": 1,
+  "seconds": 95
+ },
+ "all_caught": true
+}

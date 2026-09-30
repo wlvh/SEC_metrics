@@ -43,8 +43,8 @@ from .historical_governance_input import (HistoricalGovernanceError,
                                           select_historical_governance_metadata)
 from .normal_annual_input import _registry_rows
 from .normal_companyfacts_results import _SOURCE_ERRORS
-from .normal_governance_input import (_EVENT_FORMS, _Sources, _filings, _history_index,
-                                      history_body_alignment)
+from .normal_governance_input import _EVENT_FORMS, _Sources, _filings, _history_index
+from .normal_history_catalog import block_last_days, history_block_coherence
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .deterministic_router import source_set_manifest
@@ -83,6 +83,7 @@ def _blocks(*, reader, cik, payload, period, current):
     the selection that follows it did.
     """
     files = _history_index(payload, cik)
+    last_days = block_last_days(payload=payload, shards=files)
     inventories = [{"name": current["source_reference"]["document_name"],
                     "payload": payload, "source": current}]
     rows = _filings(payload, inventory_name=inventories[0]["name"])
@@ -100,7 +101,8 @@ def _blocks(*, reader, cik, payload, period, current):
             _need(str(data["cik"]).isdigit() and int(data["cik"]) == int(cik),
                   "HISTORICAL_GOVERNANCE_HISTORY_BODY_ENTITY_CONFLICT")
         shard_rows = _filings(data, inventory_name=shard["name"])
-        conflict = history_body_alignment(shard=shard, rows=shard_rows)
+        conflict = history_block_coherence(shard=shard, body=data, rows=shard_rows,
+                                           last_day=last_days[shard["name"]])
         if conflict:
             conflicts.append(conflict)
         rows.extend(shard_rows)

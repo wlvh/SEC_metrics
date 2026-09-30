@@ -125,19 +125,29 @@ class HistoricalPeriodSelectionTest(unittest.TestCase):
         self.assertNotEqual(asked["selection_id"], end_only["selection_id"])
         self.assertEqual(by_end, end_only)
         self.assertEqual(asked["current_filing"], end_only["current_filing"])
-        # A restored request is still re-derived from source, not trusted.
+        # A restored request is still re-derived from source, not trusted. The
+        # absent report end lies where the recent list answers alone.
         with original_sources_only():
             with self.assertRaises(PeriodSelectionError) as absent:
                 restore_period_selection(repo_root=ROOT, company_id="salesforce",
-                                         target_report_end="2019-12-30",
+                                         target_report_end="2025-06-30",
                                          requested_fiscal_year=2026)
             with self.assertRaises(PeriodSelectionError) as malformed:
                 restore_period_selection(repo_root=ROOT, company_id="salesforce",
                                          target_report_end=asked["target_report_end"],
                                          requested_fiscal_year="2026")
+            # One that reaches Salesforce's newest history block cannot be
+            # called absent: that block is missing six of the filings its index
+            # declares, and the one asked for could be among them.
+            with self.assertRaises(PeriodSelectionError) as unprovable:
+                restore_period_selection(repo_root=ROOT, company_id="salesforce",
+                                         target_report_end="2019-12-30",
+                                         requested_fiscal_year=2026)
         self.assertEqual("ORDINARY_PERIOD_SELECTION_REPORT_END_NOT_IN_SAVED_SUBMISSIONS",
                          str(absent.exception))
         self.assertEqual("ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_INVALID", str(malformed.exception))
+        self.assertEqual("ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT",
+                         str(unprovable.exception))
 
     def test_a_forged_label_claim_is_refused_by_every_wired_adapter(self):
         """Re-deriving the selection is not what catches a wrong label.
