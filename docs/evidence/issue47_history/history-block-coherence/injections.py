@@ -1,6 +1,8 @@
 """Undo each part of the history-block coherence rule and require the case written for it to fail.
 
-Usage: python3 injections.py <out.json>
+Usage: python3 injections.py <out.json> [NAME ...]
+
+With names, only those injections run (the control still runs every module).
 
 Each injection edits one rule file in place (exactly one match, must compile),
 runs the coherence module - and, for the two catalog loaders, the module whose
@@ -25,6 +27,7 @@ REPO = Path(__file__).resolve().parents[4]
 CATALOG = "scripts/vnext/normal_history_catalog.py"
 LOOKUP = "scripts/vnext/historical_filing_inventory.py"
 C04 = "scripts/vnext/historical_governance_results.py"
+EVENTS = "scripts/vnext/historical_event_walk.py"
 COHERENCE = "tests.vnext.test_history_block_coherence"
 CATALOG_CASES = "tests.vnext.test_normal_history_catalog"
 PERIOD_CASES = "tests.vnext.test_historical_metadata_context"
@@ -141,6 +144,26 @@ INJECTIONS = {
         """        from .normal_governance_input import history_body_alignment
         conflict = history_body_alignment(shard=shard, rows=shard_rows)""",
         "test_c04_s_walk_takes_a_fresh_block_with_a_gap_day_filing"),
+    "THE_EVENT_WALK_KEEPS_THE_FROZEN_CHECK": (
+        EVENTS,
+        """    walk = _view(frozen._event_sources, history_body_alignment=coherence)""",
+        """    walk = frozen._event_sources""",
+        "test_a_fresh_block_with_a_gap_day_filing_is_read"),
+    "THE_EVENT_WALK_COUNTS_THE_ROWS_IT_IS_HANDED": (
+        EVENTS,
+        """        return history_block_coherence(shard=shard, body=strict_json_loads(text=raw.decode("utf-8")),""",
+        """        return history_block_coherence(shard=shard, body={"filingDate": [row["filingDate"] for row in rows]},""",
+        "test_a_fresh_block_with_a_gap_day_filing_is_read"),
+    "THE_REGISTERED_WALK_KEEPS_THE_FROZEN_WALK": (
+        EVENTS,
+        """    walk = _view(frozen._registered_event_sources, _event_sources=event_sources)""",
+        """    walk = frozen._registered_event_sources""",
+        "test_the_registered_walk_walks_each_cik_with_the_successor"),
+    "AN_UNREFERENCED_NAME_IS_BOUND_SILENTLY": (
+        EVENTS,
+        """    _need(set(names) <= set(function.__code__.co_names),""",
+        """    _need(True,""",
+        "test_a_name_the_frozen_code_does_not_use_is_refused"),
 }
 
 
@@ -157,9 +180,10 @@ def run(modules):
     return codes, sorted(failed), int(time.time() - started)
 
 
-def main(out):
-    originals = {name: (REPO / name).read_bytes() for name in (CATALOG, LOOKUP, C04)}
-    for name, (target, old, *_rest) in INJECTIONS.items():
+def main(out, names):
+    chosen = {name: INJECTIONS[name] for name in (names or INJECTIONS)}
+    originals = {name: (REPO / name).read_bytes() for name in (CATALOG, LOOKUP, C04, EVENTS)}
+    for name, (target, old, *_rest) in chosen.items():
         if originals[target].decode("utf-8").count(old) != 1:
             raise SystemExit("INJECTION_DOES_NOT_MATCH_ONCE:" + name)
     results = {}
@@ -168,7 +192,7 @@ def main(out):
         raise SystemExit("CONTROL_FAILED:%s %s" % (codes, failed))
     results["CONTROL"] = {"returncodes": codes, "seconds": seconds}
     try:
-        for name, (target, old, new, expected, *module) in INJECTIONS.items():
+        for name, (target, old, new, expected, *module) in chosen.items():
             path = REPO / target
             path.write_bytes(originals[target].decode("utf-8").replace(old, new).encode("utf-8"))
             py_compile.compile(str(path), doraise=True, cfile=tempfile.mktemp())
@@ -186,11 +210,11 @@ def main(out):
         if (REPO / target).read_bytes() != data:
             raise SystemExit("TARGET_NOT_RESTORED:" + target)
     results["all_caught"] = all(results[name]["caught_by_the_case_written_for_it"]
-                                for name in INJECTIONS)
+                                for name in chosen)
     Path(out).write_text(json.dumps(results, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"all_caught": results["all_caught"]}), flush=True)
     return 0 if results["all_caught"] else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1]))
+    sys.exit(main(sys.argv[1], sys.argv[2:]))

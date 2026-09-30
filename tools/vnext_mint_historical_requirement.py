@@ -140,6 +140,10 @@ NEW_RULE_FILES = (
     # that does. It decides the source set four routes build, so both roots
     # check it.
     "scripts/vnext/historical_filing_inventory.py",
+    # The zero-AI event route's walk over history blocks, run from the frozen
+    # walk's own code with its block check bound to the catalog's. It decides
+    # which blocks an event count may be read from, so both roots check it.
+    "scripts/vnext/historical_event_walk.py",
     # E01's 8.01 items read from their own text rather than the frozen brief,
     # and the interim answer that withholds a window whose 8.01 text carries an
     # alias until its meaning is decided. It decides a published count, so both

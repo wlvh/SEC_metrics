@@ -26,11 +26,14 @@ import sys
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
+from vnext.historical_event_walk import event_sources, registered_event_sources
 from vnext.historical_filing_inventory import prior_filing
 from vnext.normal_companyfacts_results import NormalCompanyfactsError, _prior_filing
 from vnext.normal_governance_input import history_body_alignment
-from vnext.normal_history_catalog import (_candidate, block_last_days,
+from vnext.normal_history_catalog import (HistoryCatalogError, _candidate, block_last_days,
                                           history_block_coherence)
+from vnext.normal_zero_ai_results import (NormalZeroAiError, _event_sources,
+                                          _registered_event_sources)
 
 sys.path.insert(0, str(ROOT / "tools"))
 from acceptance_readings import _export_member_bytes, _export_members, saved_bytes  # noqa: E402
@@ -304,6 +307,93 @@ class EveryOtherReaderOfABlockHoldsItToTheSameCheck(unittest.TestCase):
         with self.assertRaisesRegex(HistoricalGovernanceError,
                                     "HISTORICAL_GOVERNANCE_HISTORY_SNAPSHOT_COVERAGE_CONFLICT"):
             self._walk(older, 2)
+
+
+class _Reached(Exception):
+    """The walk got past the block check and asked for an 8-K."""
+
+
+class _EventReader(_Reader):
+    def read(self, url, role, media_type, accession=None):
+        if role.startswith("fy_8k"):
+            raise _Reached(url)
+        return super().read(url, role, media_type)
+
+
+class TheEventWalkHoldsBlocksToTheSameCheck(unittest.TestCase):
+    """The zero-AI event route's block walk: frozen, and the successor the route runs.
+
+    The walk checks every block before it reads any 8-K, and the recent list
+    holds one in the window, which the reader answers with ``_Reached``: so a
+    case says only which blocks the check lets through. The block is declared
+    to 2023-06-29 and the recent list starts 2023-07-01, so 06-30 is the gap
+    day.
+    """
+    NAME = "CIK%s-submissions-001.json" % CIK
+    MAIN = "CIK%s.json" % CIK
+    PERIOD = {"period_start": "2023-01-01", "period_end": "2023-12-31"}
+
+    def _case(self, older, older_count):
+        index = {"cik": CIK, "filings": {
+            "recent": _rows([("8-K", "2023-07-01", ""), ("10-K", "2024-02-20", "2023-12-31")]),
+            "files": [{"name": self.NAME, "filingFrom": "2022-01-03", "filingTo": "2023-06-29",
+                       "filingCount": older_count}]}}
+        reader = _EventReader({self.MAIN: index, self.NAME: older})
+        inventory = reader.read(self.MAIN, role="x", media_type="x")
+        prepared = {"company_id": "c", "entity": CIK, "table_input": {"target_period": self.PERIOD}}
+        return {"repo_root": ROOT, "reader": reader, "prepared": prepared, "inventory": inventory}
+
+    def _verdict(self, walk, arguments):
+        try:
+            walk(**arguments)
+        except _Reached:
+            return "PAST_THE_BLOCK_CHECK"
+        except NormalZeroAiError as error:
+            return str(error)
+        raise AssertionError("the walk ended without asking for an 8-K")
+
+    def test_a_fresh_block_with_a_gap_day_filing_is_read(self):
+        # A filing of a form the catalog does not keep makes the count 3: the
+        # check must count the block's whole body, not the rows it is handed.
+        older = _rows([("8-K", "2023-05-01", ""), ("424B2", "2023-06-01", ""),
+                       ("8-K", "2023-06-30", "")])
+        self.assertEqual("NORMAL_EVENT_HISTORY_SNAPSHOT_CONFLICT",
+                         self._verdict(_event_sources, self._case(older, 3)))
+        self.assertEqual("PAST_THE_BLOCK_CHECK", self._verdict(event_sources, self._case(older, 3)))
+
+    def test_a_block_missing_filings_stops_the_walk(self):
+        older = _rows([("8-K", "2023-05-01", "")])
+        self.assertEqual("PAST_THE_BLOCK_CHECK", self._verdict(_event_sources, self._case(older, 2)))
+        self.assertEqual("NORMAL_EVENT_HISTORY_SNAPSHOT_CONFLICT",
+                         self._verdict(event_sources, self._case(older, 2)))
+
+    def test_the_registered_walk_walks_each_cik_with_the_successor(self):
+        # A company with one registered CIK: the registered walk's only walk
+        # is the entity's own, so its outcome is the walk it is bound to.
+        from vnext.traits import repository_company_ciks
+        company = next(company for company in ("ford_motor_company", "pfizer", "enphase_energy")
+                       if len(repository_company_ciks(repo_root=ROOT, company_id=company)) == 1)
+        [cik] = repository_company_ciks(repo_root=ROOT, company_id=company)
+        older = _rows([("8-K", "2023-05-01", "")])
+        arguments = self._case(older, 2)
+        arguments["prepared"] = dict(arguments["prepared"], company_id=company, entity=cik)
+        padded = cik.zfill(10)  # the registry's CIK is bare; block names carry ten digits
+        arguments["inventory"]["raw_bytes"] = arguments["inventory"]["raw_bytes"].replace(
+            CIK.encode(), padded.encode())
+        arguments["reader"].bodies = {name.replace(CIK, padded): json.loads(
+                                          json.dumps(body).replace(CIK, padded))
+                                      for name, body in arguments["reader"].bodies.items()}
+        arguments["period"] = self.PERIOD
+        self.assertEqual("PAST_THE_BLOCK_CHECK",
+                         self._verdict(_registered_event_sources, arguments))
+        self.assertEqual("NORMAL_EVENT_HISTORY_SNAPSHOT_CONFLICT",
+                         self._verdict(registered_event_sources, arguments))
+
+    def test_a_name_the_frozen_code_does_not_use_is_refused(self):
+        from vnext.historical_event_walk import _view
+        with self.assertRaisesRegex(HistoryCatalogError,
+                                    "HISTORICAL_EVENT_WALK_NAME_NOT_REFERENCED:renamed_check"):
+            _view(_event_sources, renamed_check=lambda **_: None)
 
 
 def _saved_submissions():

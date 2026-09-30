@@ -45,12 +45,13 @@ from .historical_ma_confirmation import (ConfirmationNotRegistered, confirmation
 from .historical_event_items import (CONFIRMATION_REASON, NOT_LOCATED_REASON, SUCCESSOR_EVENT_ROUTES,
                                      EventItemTextError, compact_confirmation,
                                      content_confirmation_candidates, successor_event_route)
+from .historical_event_walk import event_sources, registered_event_sources
 from .historical_filing_inventory import filing_inventory
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources, NormalGovernanceInputError
 from .normal_zero_ai_results import (B01_SPEC_PATH, B03_SPEC_PATH, EVENT_METRICS,
                                      NormalZeroAiError, _authority, _compiled_event_spec,
-                                     _event_sources, _exact_set, _registered_event_sources)
+                                     _exact_set)
 from .observations import structured_observation
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
@@ -473,14 +474,14 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                 # accessions may not overlap. This is source discovery across
                 # registered identities; it authorises no financial
                 # combination, which the scope record states explicitly.
-                claims, source_sets, events, evidence = _registered_event_sources(
+                claims, source_sets, events, evidence = registered_event_sources(
                     repo_root=repo_root, reader=reader, prepared=prepared,
                     inventory=inventory, period=period)
                 registered_scope = {**registered_scope, **evidence,
                                     "pinned_period": dict(pinned),
                                     "status": "SOURCE_RECONSTRUCTED_FROM_REGISTERED_CIKS"}
             else:
-                claims, source_sets, events = _event_sources(
+                claims, source_sets, events = event_sources(
                     repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
             filings.extend(events)
             route = catalog["routes"][metric_id]
