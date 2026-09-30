@@ -19,7 +19,7 @@
 
 ## 用例与注错
 
-`tests/vnext/test_historical_page_split_headings.py`（13 例）与 `tests/vnext/test_d01_byte_reading.py` 的 `AHeadingRunOverAPageIsReadOnlyThroughItsJudgementTest`。`source-records.json` 是四份申报在批次 Run 里的 SOURCE_REFERENCE、RAW_BLOB 记录与计算目标，用例据此从已存字节（检出或导出）重建文档，不需要批次。`injections.py` → `injections.json`：路线 8 个、读取器 3 个，在隔离克隆里跑。
+`tests/vnext/test_historical_page_split_headings.py`（13 例）与 `tests/vnext/test_d01_byte_reading.py` 的 `AHeadingRunOverAPageIsReadOnlyThroughItsJudgementTest`。`source-records.json` 是四份申报在批次 Run 里的 SOURCE_REFERENCE、RAW_BLOB 记录与计算目标，用例据此从已存字节（检出或导出）重建文档，不需要批次。`injections.py` → `injections.json`：路线 8 个、读取器 3 个，在隔离克隆（提交 `17cfe5d0`，跑完逐文件还原）里跑，对照先通过，11 个全部由为它写的用例抓到；其中 4 个同时让别的用例失败（例如"后半截留作单独一行"同时让两份真实申报的行数与证据用例失败），不影响判定。
 
 ## 不保证的
 
