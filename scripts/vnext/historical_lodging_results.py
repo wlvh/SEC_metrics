@@ -27,6 +27,21 @@ B10 and B11 are statement-class inputs and are not among the nine metric IDs
 the policy does not cover, so a period carrying an amendment is decided rather
 than refused on sight.
 
+One wording differs, and only where the frozen check refuses it. The approved
+table introduction is the sentence the newest reports print ("The following
+table presents ... for 2023, and 2023 compared to 2022."). Marriott's FY2022
+report says "The following tables present ... for 2022, and ...", and FY2021's
+also drops the comma ("for 2021 and 2021 compared to 2020"). Same period and
+the same scope sentence, in the plural and without the comma. Only when the
+frozen inspector refuses a table because that introduction is unproven is the
+filing inspected again with the introduction pattern that also accepts those
+two forms; every other check, and every other policy value, is the frozen one.
+The component then carries the successor policy's hash (``policy_hash``), so a
+reader can tell which wording admitted it. Measured before writing it: with
+only that pattern changed, FY2021 and FY2022 resolve to one table each and
+every other frozen check passes; FY2023 onward the frozen inspector already
+accepts and nothing changes.
+
 What this does not do: reach a value where the target filing's own original is
 not saved. B10 and B11 read only the target filing - no prior period, no
 accession index - so they are the cheapest historical metrics in the set, but
@@ -42,7 +57,8 @@ from .calculator import (calculate_observation_metric, metric_is_applicable,
 from .canonical import content_hash, sha256_file
 from .historical_amendment_admission import AmendmentAdmissionError, amendment_admission
 from .historical_annual_input import prepare_historical_annual_input
-from .historical_dei import release_aware
+from .historical_dei import release_aware, release_aware_with
+from . import lodging_table_source as frozen_lodging
 from .lodging_table_source import (POLICY_PATH, LodgingSourceError,
                                    inspect_lodging_table_source)
 from .normal_lodging_results import SPEC_PATHS as ORDINARY_SPEC_PATHS, _spec as _ordinary_spec
@@ -58,6 +74,51 @@ from .traits import repository_company_traits
 # The frozen readers this module calls, answering the DEI namespace question
 # for every taxonomy release (historical_dei).
 inspect_lodging_table_source = release_aware(inspect_lodging_table_source)
+
+INTRODUCTION_REFUSAL = "LODGING_TABLE_PERIOD_AND_OPERATING_INTRODUCTION_UNPROVEN"
+# The two forms older reports print, as two replacements in the frozen pattern;
+# each must hit exactly once, so a changed frozen pattern stops this rather
+# than being widened by accident.
+INTRODUCTION_FORMS = (
+    ("The following table presents ", "The following (?:table presents|tables present) "),
+    ("(?P<year>[0-9]{4}), and (?P=year)", "(?P<year>[0-9]{4}),? and (?P=year)"))
+
+
+def _older_introduction(pattern):
+    for old, new in INTRODUCTION_FORMS:
+        if pattern.count(old) != 1:
+            raise ValueError("HISTORICAL_LODGING_INTRODUCTION_FORM_NOT_IN_THE_FROZEN_PATTERN:" + old)
+        pattern = pattern.replace(old, new)
+    return pattern
+
+
+OLDER_INTRODUCTION_POLICY = {
+    **frozen_lodging.POLICY,
+    "table_introduction_pattern": _older_introduction(frozen_lodging.POLICY["table_introduction_pattern"])}
+_OLDER_CONTEXT = release_aware_with(frozen_lodging._source_context, POLICY=OLDER_INTRODUCTION_POLICY)
+inspect_older_introduction = release_aware_with(
+    frozen_lodging.inspect_lodging_table_source, POLICY=OLDER_INTRODUCTION_POLICY,
+    _source_context=_OLDER_CONTEXT)
+
+
+def inspect_with_older_introduction(**arguments):
+    """The frozen inspection; the older introduction forms only where the frozen one refuses them.
+
+    The frozen inspector refuses with ``LODGING_MATCHING_TABLE_NOT_UNIQUE`` and
+    lists why each table with the metric headers failed. The older forms are
+    tried only when the introduction is among those reasons; any other refusal
+    is the frozen one, raised unchanged. The retry is the whole frozen
+    inspection with only the pattern replaced, so every other table's reason,
+    the one-candidate rule and the competing-target rule still apply.
+    """
+    try:
+        return inspect_lodging_table_source(**arguments)
+    except LodgingSourceError as error:
+        message = str(error)
+        if not message.startswith("LODGING_MATCHING_TABLE_NOT_UNIQUE:") \
+                or INTRODUCTION_REFUSAL not in message:
+            raise
+    return inspect_older_introduction(**arguments)
 
 RECORD_TYPE = "HISTORICAL_LODGING_COMPONENT"
 # The deterministic Specs the ordinary route uses, not the historical AI ones
@@ -163,7 +224,7 @@ def resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metri
         reference = primary["source_reference"]
         _need(reference["raw_asset_id"] == blob["raw_asset_id"],
               "HISTORICAL_LODGING_PRIMARY_SOURCE_CONFLICT")
-        component = inspect_lodging_table_source(
+        component = inspect_with_older_introduction(
             raw=saved["raw"], blob=blob, reference=reference, filing=prepared["filing"],
             company_id=company_id, cik=prepared["entity"], period=period)
         fact = component["selection"]["facts"][metric_id]

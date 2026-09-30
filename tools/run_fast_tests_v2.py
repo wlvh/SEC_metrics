@@ -319,6 +319,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_proxy_compensation",)
 # Pfizer FY2022 from the export and an Enphase report from the checkout, with
 # the request bound's own refusal of a unit twice the size; 27 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_semantic_bound",)
+# The lodging table introduction in its older printed forms, read only where the
+# frozen inspector refuses it: Marriott FY2021/FY2022 from the export and FY2025
+# from the checkout; 26 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_lodging_introduction",)
 # Four modules the tier did not run although their records said it did or would:
 # the approved amendment policy asked of two saved 10-K/A filings (38 seconds
 # alone), the two Part III filings' statement-input admission re-verified from
