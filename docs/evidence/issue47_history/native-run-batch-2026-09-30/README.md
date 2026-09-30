@@ -43,6 +43,13 @@
 
 Ford 2024、2025 年代理的薪酬与业绩表给前任 CEO 的后几年总额标了 nil（空值占位），而文件里没有他的任何姓名事实：唯一的 PEO 姓名事实是 Farley 的，且不带人员维度。冻结规则把目标年的 nil 当作无效事实。它已经把"前任 PEO 的零值横线"当占位排除，但前提是有姓名事实证明那个人属于别的年份、而本年另有 PEO。这里没有那些姓名事实，所以要排除这个 nil，就是新定一条"nil 不算冲突"的正确性标准，而不是沿用已有规则。33 份已存代理里只有 Ford 这两份有 nil 的 PEO 总额。暂不改，列为低优先级的口径问题。
 
+## B07 与 B02 的 Company Facts 缺口：查过，属口径
+
+5 个 `HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED` 逐个查了原因：
+
+- **B07（利息保障倍数）Southwest FY2021–FY2023、Ford FY2024**：路线的理由是"没有一个已批分支取齐组件"。Southwest 这三年把利润表的 "Interest expense" 行标为 `InterestCostsIncurred`（FY2021 为 4.67 亿美元，另起一行列资本化利息 0.36 亿），它的 `InterestExpenseDebt` 全部带债务工具或套期维度，Company Facts 不收带维度的事实，所以保存的 Company Facts 里根本没有它。Ford FY2024 把工业部分的利息标为 `InterestExpenseOther`（11.15 亿美元）。这两个概念都不在 B07 已批的利息费用概念里（`InterestExpense`、`InterestExpenseNonoperating`、`InterestExpenseDebt`）。把它们加进来会改变 B07 取哪个数：Southwest 的是资本化前的毛利息，Ford 的是扣除 Ford Credit 之外的"其他利息"。这是口径决定，不是程序缺口，所以没改，列为待所有者决定。
+- **B02 Marriott FY2021**：`NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED`。上一年有 10-K/A，冻结路线没有实现穿过它重放上一期。这是继承自 #28 路线的已命名实现缺口。
+
 ## 框架的一处修正
 
 报告第一次生成时，覆盖框架在检出上规划期间。检出里只有最新年份的原件，于是 1,131 个位置被读成"原件未保存"，而其中 1,045 个明明有冻结的 Run，框架自相矛盾。`tools/vnext_history_coverage.py` 现在接受 `--source-root`：期间在给定的根上规划和选择，缺陷、接受、等 #28 这些登记与收据仍从仓库读。输出记下 `periods_planned_on`。用例 `PeriodsArePlannedOnTheSuppliedSourceRootTest` 用监视器记录规划和期间选择被要求用哪个根。
