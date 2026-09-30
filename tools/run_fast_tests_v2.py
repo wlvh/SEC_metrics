@@ -330,6 +330,9 @@ SOURCE_TESTS += ("tests.vnext.test_historical_ecd_release",)
 # The older-year C03 reading across every saved proxy of the registrant,
 # including the export's: 5 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_c03_across_proxies_reading",)
+# The XBRL instances an annual accession's index lists, declared for C04 and
+# B06 and checked against the frozen reader run for real: 52 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_instance_sources",)
 # Four modules the tier did not run although their records said it did or would:
 # the approved amendment policy asked of two saved 10-K/A filings (38 seconds
 # alone), the two Part III filings' statement-input admission re-verified from

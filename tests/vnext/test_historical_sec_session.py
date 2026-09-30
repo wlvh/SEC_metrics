@@ -4426,7 +4426,8 @@ def _write_chain(root, records):
         canonical_json_bytes(value=line).rstrip(b"\n") + b"\n" for line in lines))
 
 
-def _recorded_scope(classes=("ACCESSION_INSTANCE_DISCOVERY", "ANNUAL_PERIOD_IDENTITY",
+def _recorded_scope(classes=("ACCESSION_INSTANCE_DISCOVERY", "ACCESSION_XBRL_INSTANCE",
+                             "ANNUAL_PERIOD_IDENTITY",
                              "COMPANYFACTS", "FISCAL_EVENT_FILING",
                              "GOVERNANCE_DISCLOSURE_FILING", "SUBMISSIONS_HISTORY",
                              "SUBMISSIONS_INDEX")):

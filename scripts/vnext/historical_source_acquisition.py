@@ -179,10 +179,20 @@ def _declared_frame(*, repo_root: Path, company_id: str, years: int):
     governance = governance_dependencies(repo_root=Path(repo_root), company_id=company_id,
                                          report_ends=targets)
     requirements = _union(planned=requirements, added=governance["requirements"])
+    # And one hop further into each annual accession: C04 and B06 read the XBRL
+    # instances its index lists (the frozen governance reader's auditor_filing),
+    # and the planner declares only the primary and the index. The first
+    # acquisition fetched no older year's instance, which withheld 32 C04 and
+    # 23 B06 positions of the full-frame batch on a file nothing declared.
+    from .historical_instance_sources import instance_dependencies
+    instances = instance_dependencies(repo_root=Path(repo_root), company_id=company_id,
+                                      planned=plan["requirements"])
+    requirements = _union(planned=requirements, added=instances["requirements"])
     return {"requirements": requirements, "target_report_dates": targets,
             "company_id": company_id, "plan_id": plan["plan_id"],
             "event_declaration_limitations": events["limitations"],
-            "governance_declaration_limitations": governance["limitations"]}
+            "governance_declaration_limitations": governance["limitations"],
+            "instance_declaration_limitations": instances["limitations"]}
 
 
 def _union(*, planned, added):

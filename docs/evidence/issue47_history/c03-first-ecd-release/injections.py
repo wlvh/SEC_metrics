@@ -72,7 +72,8 @@ def run(modules):
 
 def main(out, names):
     chosen = {name: INJECTIONS[name] for name in (names or INJECTIONS)}
-    originals = {target: (REPO / target).read_bytes() for target in (SOURCE, NOTE)}
+    originals = {target: (REPO / target).read_bytes()
+                 for target in {SOURCE, NOTE} | {item[0] for item in chosen.values()}}
     for name, (target, old, *_rest) in chosen.items():
         if originals[target].decode("utf-8").count(old) != 1:
             raise SystemExit("INJECTION_DOES_NOT_MATCH_ONCE:" + name)

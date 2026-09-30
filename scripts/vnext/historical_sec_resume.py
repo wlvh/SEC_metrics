@@ -81,19 +81,22 @@ from .historical_source_acquisition import (HistoricalAcquisitionError, declared
 from .invocation_control import _exclusive_write_bytes, _exclusive_write_json
 from .normal_source_authority import ROOT
 
-# The classes whose capture makes nothing new declarable: an 8-K body or header
-# and a proxy are read by the routes, never by the planner's declarations. A
+# The classes whose capture makes nothing new declarable: an 8-K body or header,
+# a proxy and an accession's XBRL instance are read by the routes, never by the
+# planner's declarations. A
 # due row of any other class can open more rows in a later pass - an annual
 # primary its event window and proxy, an index or a shard the periods and
 # filings themselves - so a reserve that counted only the rows due now would
 # understate what one acquisition invocation could have claimed.
-TERMINAL_CLASSES = ("FISCAL_EVENT_FILING", "GOVERNANCE_DISCLOSURE_FILING")
+TERMINAL_CLASSES = ("ACCESSION_XBRL_INSTANCE", "FISCAL_EVENT_FILING",
+                    "GOVERNANCE_DISCLOSURE_FILING")
 # Files the planner reads to declare what is due. The resume record carries
 # their digests, so a reserve can be checked against the code that computed it.
 PLANNER_FILES = ("scripts/vnext/historical_source_acquisition.py",
                  "scripts/vnext/normal_history_plan.py",
                  "scripts/vnext/historical_event_sources.py",
-                 "scripts/vnext/historical_governance_sources.py")
+                 "scripts/vnext/historical_governance_sources.py",
+                 "scripts/vnext/historical_instance_sources.py")
 
 
 def _need(condition, reason):

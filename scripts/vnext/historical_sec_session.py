@@ -1379,6 +1379,9 @@ REQUIRED_WIRING_EVIDENCE = (
     # declaration the gate admits from has to be pinned by the same receipt as
     # the gate.
     "scripts/vnext/historical_governance_sources.py",
+    # The instance declaration: the XBRL instances an annual accession's index
+    # lists, which C04 and B06 read and the planner does not declare.
+    "scripts/vnext/historical_instance_sources.py",
     # The start that outlives the host, shared with the model ledger: a start
     # the gate refuses without is part of the path a grant is spent on.
     "scripts/vnext/historical_ledger_start.py",
@@ -1839,6 +1842,7 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
                                 # a history shard was impossible and nothing
                                 # said so; adding the event class found it.
                                 dependency_classes=("ACCESSION_INSTANCE_DISCOVERY",
+                                                    "ACCESSION_XBRL_INSTANCE",
                                                     "ANNUAL_PERIOD_IDENTITY",
                                                     "COMPANYFACTS", "FISCAL_EVENT_FILING",
                                                     "GOVERNANCE_DISCLOSURE_FILING",
