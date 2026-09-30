@@ -3,7 +3,7 @@
 Nine shapes: a statement read keyed by label with one row per metric, a
 lodging table keyed by label, an event window with its filing list, E01's
 item 8.01 reading over the same windows, governance rows beside a period, a D02
-text reading, the D01 heading readings (one shape, three files), an older
+text reading, the D01 heading readings (one shape, one file per round of results), an older
 year's C03 read across every proxy that reports it, and two single-coordinate
 readings. The acceptance register and the identity binder both have to walk
 them, and walking them twice with two sets of rules is how the two would come
@@ -35,7 +35,10 @@ CROSS_PARAMOUNT_PART_III = EVIDENCE + "part-iii-statement-read.json"
 # Years whose originals the acquisition saved, read off the bytes its export
 # carries against the results of the round that ran them.
 CROSS_OLDER_YEARS = EVIDENCE + "cross-source-read-older-years.json"
-CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III, CROSS_OLDER_YEARS)
+# The full-frame batch's older-year statement values, read off the export the
+# same way against the batch's own closure.
+CROSS_BATCH = EVIDENCE + "cross-source-read-batch.json"
+CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III, CROSS_OLDER_YEARS, CROSS_BATCH)
 LODGING = EVIDENCE + "lodging-table-read.json"
 # Marriott's older years, read off the export against the round that ran them.
 LODGING_OLDER_YEARS = EVIDENCE + "lodging-table-read-older-years.json"
@@ -45,7 +48,14 @@ EVENTS = EVIDENCE + "event-count-read.json"
 # the closure that cleared its event window (part-iii-statement-review/): a
 # reading's positions all compare results of one closure, so it is its own file.
 EVENTS_PARAMOUNT_PREDECESSOR = EVIDENCE + "event-count-read-paramount-2024.json"
-EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR)
+# The full-frame batch's older event windows, counted over a root restored from
+# the export: an acquired 8-K's header is read from that root's request ledger
+# and its path recorded (tools/read_event_counts.py --source-root).
+EVENTS_BATCH = EVIDENCE + "event-count-read-batch.json"
+EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR, EVENTS_BATCH)
+# Readings made over a restored root: their index is the restored ledger's
+# latest copy, which the checkout's ledger does not necessarily name.
+RESTORED_ROOT_EVENT_READINGS = (EVENTS_BATCH,)
 # E01 counts an 8.01 only once a keyword in its text confirms it, which a count
 # of header item codes cannot check. Every 8.01 in the E01 windows is read here
 # by tools/read_e01_eight_o_ones.py, under each reading of that confirmation.
@@ -54,6 +64,9 @@ E01_EIGHT_O_ONES = EVIDENCE + "e01-eight-o-one-read.json"
 # its own Spec): tools/read_e01_candidates.py reads each window's candidate
 # items off their headers, and can accept only a window with none.
 E01_CANDIDATES = EVIDENCE + "e01-content-confirmed-read.json"
+# The same reading of the 41-period batch's older windows, over a restored root.
+E01_CANDIDATES_BATCH = EVIDENCE + "e01-content-confirmed-read-batch.json"
+E01_CANDIDATE_READINGS = (E01_CANDIDATES, E01_CANDIDATES_BATCH)
 # C02 under the owner's composition-fact meaning: the two-direction reading of
 # c02-composition-facts/, compared with the published results by
 # tools/read_c02_composition.py.
@@ -81,8 +94,14 @@ HEADINGS_PARAMOUNT_PREDECESSOR = EVIDENCE + "d01-paramount-predecessor-2024-read
 # Years whose originals the acquisition saved, read off the bytes its export
 # carries against the results of the round that ran them.
 HEADINGS_OLDER_YEARS = EVIDENCE + "d01-older-years-read.json"
+# The 41-period batch's other older years, read the same way against its results.
+HEADINGS_OLDER_YEARS_BATCH = EVIDENCE + "d01-older-years-read-batch.json"
+# Southwest's two reports whose headings run over a page, read against the
+# results after the page-split join (their batch results differ, above).
+HEADINGS_SOUTHWEST_PAGE_SPLIT = EVIDENCE + "d01-southwest-page-split-read.json"
 D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
-                HEADINGS_PARAMOUNT_PREDECESSOR, HEADINGS_OLDER_YEARS)
+                HEADINGS_PARAMOUNT_PREDECESSOR, HEADINGS_OLDER_YEARS, HEADINGS_OLDER_YEARS_BATCH,
+                HEADINGS_SOUTHWEST_PAGE_SPLIT)
 RPO = EVIDENCE + "rpo-read.json"
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
@@ -90,7 +109,7 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
             TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION,
-            E01_CANDIDATES, *C03_ACROSS_PROXIES)
+            *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES)
 # The company periods the readings cover are data, not code: tools/ is scanned
 # as production Python for identity literals and fixed dates.
 POSITIONS = "docs/evidence/issue47_history/reading-producers/positions.json"
@@ -141,21 +160,56 @@ def dump(*, repo_root: Path, path: str, body, options):
     (repo_root / path).write_text(json.dumps(body, **options) + "\n", encoding="utf-8")
 
 
+# One process reads the same export many times - a register build walks every
+# reading, and each acquired document's filing is found from the headers saved
+# beside it. Opening a gzip archive and asking for one member decompresses it
+# from the start, so each file is read once per process: the index and each
+# archive's small members (the saved headers) in one pass, keyed by the file's
+# path, size and modification time, so a file that changes is read again. The
+# digest the index records is still checked on every read.
+_SMALL_MEMBER_BYTES = 256 * 1024
+_EXPORT_READS = {}
+
+
+def _file_key(path: Path):
+    stat = path.stat()
+    return str(path), stat.st_size, stat.st_mtime_ns
+
+
 def _export_members(repo_root: Path):
-    index = json.loads((repo_root / EXPORT / "export.json").read_text(encoding="utf-8"))
-    members = {}
-    for archive in index["row_archives"]:
-        for path, meta in archive["members"].items():
-            if path in members:
-                raise ReadingError("READING_EXPORT_MEMBER_NOT_UNIQUE:" + path)
-            members[path] = (archive["name"], meta["sha256"])
-    return members
+    path = repo_root / EXPORT / "export.json"
+    key = ("index",) + _file_key(path)
+    if key not in _EXPORT_READS:
+        index = json.loads(path.read_text(encoding="utf-8"))
+        members = {}
+        for archive in index["row_archives"]:
+            for member, meta in archive["members"].items():
+                if member in members:
+                    raise ReadingError("READING_EXPORT_MEMBER_NOT_UNIQUE:" + member)
+                members[member] = (archive["name"], meta["sha256"])
+        _EXPORT_READS[key] = members
+    return dict(_EXPORT_READS[key])
+
+
+def _small_members(archive_path: Path):
+    key = ("small",) + _file_key(archive_path)
+    if key not in _EXPORT_READS:
+        small = {}
+        with tarfile.open(archive_path) as archive:
+            for info in archive:
+                if info.isfile() and info.size <= _SMALL_MEMBER_BYTES:
+                    small[info.name] = archive.extractfile(info).read()
+        _EXPORT_READS[key] = small
+    return _EXPORT_READS[key]
 
 
 def _export_member_bytes(*, repo_root: Path, member: str, members):
     name, digest = members[member]
-    with tarfile.open(repo_root / EXPORT / name) as archive:
-        data = archive.extractfile(member).read()
+    archive_path = repo_root / EXPORT / name
+    data = _small_members(archive_path).get(member)
+    if data is None:
+        with tarfile.open(archive_path) as archive:
+            data = archive.extractfile(member).read()
     if hashlib.sha256(data).hexdigest() != digest:
         raise ReadingError("READING_EXPORT_MEMBER_DIGEST_DIFFERS:" + member)
     return data
@@ -287,7 +341,7 @@ def positions(*, repo_root: Path, path: str, body):
                     published=row["published"], verdict=row["verdict"],
                     filings=listed, window=case["window"],
                     filings_are_the_whole_set=True, case=case))
-    elif path in (E01_EIGHT_O_ONES, E01_CANDIDATES):
+    elif path in (E01_EIGHT_O_ONES, *E01_CANDIDATE_READINGS):
         for label, case in sorted(body["per_position"].items()):
             found.append(_position(
                 reading=path, label=label, slot=case, company_id=case["company_id"],

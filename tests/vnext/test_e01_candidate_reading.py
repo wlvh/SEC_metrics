@@ -61,5 +61,58 @@ class TheCandidateReadingIsTheSavedHeaders(unittest.TestCase):
                                                             or "deterministic_router" in name)})
 
 
+class TheOlderWindowsAreReadOffTheExportTest(unittest.TestCase):
+    """The batch's older windows, read over a restored root and recounted without it.
+
+    Every header the reading used was recorded with the path it read, and the
+    submissions index by its path; both are read back here from the checkout or
+    the acquisition's export, so the zero is recomputed without the root.
+    """
+
+    BATCH = "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json"
+
+    def test_every_committed_position_recounts_from_the_bytes_it_names(self):
+        from tools.acceptance_readings import saved_bytes
+        from tools.read_event_counts import header_items, items_of
+        rows = json.loads((ROOT / self.BATCH).read_text(encoding="utf-8"))["per_position"]
+        self.assertTrue(rows)
+        for label, row in rows.items():
+            with self.subTest(label):
+                submissions = json.loads(saved_bytes(repo_root=ROOT,
+                                                     relative=row["submissions_index"]))
+                recorded = {entry["accession"]: entry["header"]
+                            for entries in row["filings"].values() for entry in entries
+                            if "header" in entry}
+
+                def header(cik, accession):
+                    items = header_items(cik, accession)
+                    if items is not None:
+                        return items, None
+                    if accession not in recorded:
+                        return None, None
+                    return (items_of(saved_bytes(repo_root=ROOT, relative=recorded[accession])
+                                     .decode("utf-8", errors="replace")), recorded[accession])
+                seen, unreadable = reader.window_candidates(
+                    filings=filings_in_index(submissions), cik=int(submissions["cik"]),
+                    start=row["window"][0], end=row["window"][1], codes=reader.candidate_codes(),
+                    header=header)
+                self.assertEqual(row["filings"], seen)
+                self.assertEqual(row["headers_not_saved"], unreadable)
+                self.assertEqual(row["candidate_items_by_basis"],
+                                 {basis: sum(len(entry["candidate_items"]) for entry in entries)
+                                  for basis, entries in seen.items()})
+
+    def test_a_restored_root_reading_is_a_reading_of_its_own(self):
+        import sys
+        from unittest.mock import patch
+        argv = ["read_e01_candidates.py", "--runs-root", "/nonexistent", "--closure", "sha256:x",
+                "--case", "enphase-2022=enphase_energy:2022-12-31", "--source-root", "/nonexistent",
+                "--output", reader.CHECKOUT_READING]
+        with patch.object(sys, "argv", argv), self.assertRaises(SystemExit) as refused:
+            reader.main()
+        self.assertEqual("A_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN",
+                         str(refused.exception))
+
+
 if __name__ == "__main__":
     unittest.main()

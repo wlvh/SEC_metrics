@@ -245,6 +245,38 @@ class TheRegisterReadsNoRunTest(unittest.TestCase):
         self.assertIn("marriott-2025:C04", str(raised.exception))
 
 
+class ASecondReadingOfOneFactConfirmsItTest(unittest.TestCase):
+    """A batch reading re-reads facts an earlier reading accepted; that is one grant."""
+
+    @staticmethod
+    def _entry(evidence, **changes):
+        identity = {"period_start": "2023-01-01", "period_end": "2023-12-31", "unit": "USD",
+                    "scope_key": "sha256:" + "1" * 64, "value_kind": None,
+                    "spec_closure_hash": "sha256:" + "2" * 64, "filings": ["0000000000-24-000001"],
+                    "entities": ["1"], "established_by": "RECORDED_AT_READING_TIME",
+                    "bound_from": {"requirement_closure_hash": evidence}}
+        identity.update(changes.pop("identity", {}))
+        return {"acceptance_id": "CONTENT_B01_X_2023", "company_id": "x", "metric_id": "B01",
+                "period_end": "2023-12-31", "accepted_value": "5", "evidence": evidence,
+                "checked_identity": identity, **changes}
+
+    def test_the_same_fact_read_twice_is_one_acceptance_with_a_witness(self):
+        merged = generator._merge_confirmations([self._entry("first.json"),
+                                                 self._entry("second.json")])
+        self.assertEqual(1, len(merged))
+        self.assertEqual("first.json", merged[0]["evidence"])
+        self.assertEqual(["second.json"], merged[0]["confirmed_by"])
+
+    def test_readings_that_disagree_on_one_coordinate_stop_the_build(self):
+        for change in ({"accepted_value": "6"},
+                       {"identity": {"filings": ["0000000000-24-000002"]}},
+                       {"identity": {"period_start": "2023-01-02"}}):
+            with self.subTest(change), self.assertRaisesRegex(
+                    generator.RegisterError, "READINGS_DISAGREE_ON_ONE_COORDINATE"):
+                generator._merge_confirmations([self._entry("first.json"),
+                                                self._entry("second.json", **change)])
+
+
 class TheBindingIsCheckedAgainstTheReadingTest(unittest.TestCase):
     """Binding is a one-time act, and it must agree with what the reading names."""
 

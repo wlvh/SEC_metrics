@@ -11,16 +11,16 @@ from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_event_counts as reader
+from tools.acceptance_readings import EVENT_READINGS, RESTORED_ROOT_EVENT_READINGS, saved_bytes
 
 READING = "docs/evidence/issue47_history/content-acceptance/event-count-read.json"
 # A position whose results ran under another closure is its own reading.
-READINGS = (READING,
-            "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json")
+READINGS = EVENT_READINGS
 
 
-def _committed():
+def _committed(paths=READINGS):
     positions = {}
-    for path in READINGS:
+    for path in paths:
         for label, row in json.loads((ROOT / path).read_text(encoding="utf-8"))[
                 "per_position"].items():
             assert label not in positions, label
@@ -29,11 +29,30 @@ def _committed():
 
 
 def _recount(label):
+    """The committed position counted again from the bytes it names.
+
+    A header only the acquisition saved is read from the path the reading
+    recorded, out of the checkout or the export; one the checkout's accession
+    materials hold is read from there, as the reader read it.
+    """
     row = _committed()[label]
-    submissions = json.loads((ROOT / row["submissions_index"]).read_text(encoding="utf-8"))
+    submissions = json.loads(saved_bytes(repo_root=ROOT, relative=row["submissions_index"]))
     cik = int(submissions["cik"])
+    recorded = {entry["accession"]: entry["header"] for entries in row["filings"].values()
+                for entry in entries if "header" in entry}
+
+    def header(cik, accession):
+        items = reader.header_items(cik, accession)
+        if items is not None:
+            return items, None
+        if accession not in recorded:
+            return None, None
+        text = saved_bytes(repo_root=ROOT, relative=recorded[accession]).decode(
+            "utf-8", errors="replace")
+        return reader.items_of(text), recorded[accession]
     return reader.count_window(filings=reader.filings_in_index(submissions), cik=cik,
-                               start=row["window"][0], end=row["window"][1])
+                               start=row["window"][0], end=row["window"][1],
+                               header=header, metrics=sorted(row["metrics"]))
 
 
 class TheReaderIsNotTheRouteTest(unittest.TestCase):
@@ -84,7 +103,8 @@ class TheSavedFilingsGiveTheCommittedCountsTest(unittest.TestCase):
     def test_the_index_is_the_ledger_s_latest_successful_copy(self):
         from sec_urls import submissions_url
         from vnext.annual_update import saved_source
-        for label, row in _committed().items():
+        checkout = [path for path in READINGS if path not in RESTORED_ROOT_EVENT_READINGS]
+        for label, row in _committed(checkout).items():
             submissions = json.loads((ROOT / row["submissions_index"]).read_text(
                 encoding="utf-8"))
             saved = saved_source(repo_root=ROOT, url=submissions_url(cik=int(submissions["cik"])))
@@ -112,6 +132,74 @@ class ACaseOfItsOwnIsAReadingOfItsOwnTest(unittest.TestCase):
             reader._case("paramount-2024")
 
 
+class APartialWindowIsNotCountedTest(unittest.TestCase):
+    """The two refusals --source-root added: a window reaching a history block,
+    and a filing whose header cannot be read."""
+
+    def test_a_block_reaches_through_the_day_after_its_declared_end(self):
+        # SEC files the day between two blocks' ranges in the older block.
+        index = {"filings": {"files": [{"name": "b1", "filingTo": "2018-01-16"}]}}
+        self.assertEqual(["b1"], reader.history_blocks_reached(index, "2018-01-16"))
+        self.assertEqual(["b1"], reader.history_blocks_reached(index, "2018-01-17"))
+        self.assertEqual([], reader.history_blocks_reached(index, "2018-01-18"))
+
+    def test_a_saved_index_whose_recent_table_misses_the_window_start(self):
+        # Pfizer's recent table begins 2021-02-02; its block 001 ends 2021-01-31.
+        from sec_urls import submissions_url
+        from vnext.annual_update import saved_source
+        index = json.loads(saved_source(repo_root=ROOT, url=submissions_url(cik=78003))["raw"])
+        self.assertIn("CIK0000078003-submissions-001.json",
+                      reader.history_blocks_reached(index, "2021-01-01"))
+        self.assertEqual([], reader.history_blocks_reached(index, "2025-01-01"))
+
+    def test_an_unreadable_header_is_not_a_count_even_when_the_numbers_agree(self):
+        self.assertEqual("NOT_READ", reader.verdict(published="2", by_filing_date=2,
+                                                    by_report_date=2, unreadable=["x"]))
+
+    def test_the_ledger_s_latest_copy_must_have_its_recorded_digest(self):
+        import csv
+        import hashlib
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "evidence").mkdir()
+            (root / "evidence/a.hdr.sgml").write_bytes(b"<ITEMS>5.02\n")
+            fields = ["method", "source_url", "status_code", "error", "repo_relative_path",
+                      "content_sha256"]
+
+            def ledger(*rows):
+                with (root / "evidence/requests_log.csv").open("w", newline="") as opened:
+                    writer = csv.DictWriter(opened, fieldnames=fields)
+                    writer.writeheader()
+                    writer.writerows(rows)
+                return reader.ledger_rows(root)
+            good = {"method": "GET", "source_url": "u", "status_code": "200", "error": "",
+                    "repo_relative_path": "evidence/a.hdr.sgml",
+                    "content_sha256": hashlib.sha256(b"<ITEMS>5.02\n").hexdigest()}
+            self.assertEqual((b"<ITEMS>5.02\n", "evidence/a.hdr.sgml"),
+                             reader.latest_saved(root=root, rows=ledger(good), url="u"))
+            # A failed latest request is not read around, even over an earlier success.
+            self.assertIsNone(reader.latest_saved(
+                root=root, rows=ledger(good, {**good, "status_code": "503"}), url="u"))
+            with self.assertRaisesRegex(SystemExit, "SAVED_BYTES_DIFFER_FROM_THE_LEDGER"):
+                reader.latest_saved(root=root, rows=ledger({**good, "content_sha256": "0" * 64}),
+                                    url="u")
+
+    def test_a_restored_root_reading_records_the_header_it_read_from_the_ledger(self):
+        restored = _committed(RESTORED_ROOT_EVENT_READINGS)
+        recorded = [entry for row in restored.values() for entries in row["filings"].values()
+                    for entry in entries if "header" in entry]
+        self.assertTrue(recorded)
+        for entry in recorded:
+            with self.subTest(entry["accession"]):
+                self.assertTrue(entry["header"].startswith("evidence/request_attempts/"))
+                self.assertTrue(entry["header"].endswith(entry["accession"] + ".hdr.sgml"))
+        # E01's keyword rule reads every saved document of a filing, which an
+        # acquired filing does not have; it is not counted over a restored root.
+        self.assertTrue(all("E01" not in row["metrics"] for row in restored.values()))
+
+
 class TheVerdictTest(unittest.TestCase):
 
     def test_accepted_only_when_both_window_readings_agree(self):
@@ -127,7 +215,8 @@ class TheVerdictTest(unittest.TestCase):
     def test_every_recorded_identity_was_recorded_when_the_reading_was_made(self):
         for label, row in _committed().items():
             for metric, entry in row["metrics"].items():
-                if entry["published"] is None:
+                # NOT_READ binds no identity: nothing was compared, so nothing is granted.
+                if entry["published"] is None or entry["verdict"] == "NOT_READ":
                     continue
                 with self.subTest(label=label, metric=metric):
                     self.assertEqual("RECORDED_AT_READING_TIME",

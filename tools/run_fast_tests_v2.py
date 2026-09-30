@@ -210,6 +210,7 @@ SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
 # value's digest from the filing alone. It reads seven full 10-Ks; 5 seconds
 # measured.
 SOURCE_TESTS += ("tests.vnext.test_d01_byte_reading",)
+SOURCE_TESTS += ("tests.vnext.test_historical_page_split_headings",)
 # Three D02 marks the frozen parse cannot see - Enphase's page-numbered footer,
 # Lumen's underlined case label and Paramount's italic matter labels - each on
 # its filing against a control with the rule off, with D03 required not to
@@ -380,7 +381,8 @@ FAST_TESTS += ("tests.vnext.test_historical_protocol_wiring",)
 # asserted by replacing every binding of the receipt readers - and an unchanged
 # reading regenerated beside a batch whose result moved unit, scope, filing or
 # meaning must build the committed register byte for byte. It reads the
-# committed readings and a few saved attempt headers; 0.2 seconds measured.
+# committed readings and a few saved attempt headers; 2 seconds measured with
+# 600 acceptances, most of it one pass over each export archive.
 FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
 # #47's model-call allowance, ledger and request binding, in the tree where the
 # egress patch is not applied: nothing here can reach a provider, which is
@@ -720,7 +722,8 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_normal_history_catalog": 17,
     "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_borrowing_keyword_and_explicit_past_issuance_do_not_block": 16,
     "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic": 16,
-    "tests.vnext.test_d01_byte_reading": 15,
+    "tests.vnext.test_d01_byte_reading": 40,
+    "tests.vnext.test_historical_page_split_headings": 30,
     "tests.vnext.test_e01_candidate_reading": 15,
     "tests.vnext.test_risk_signals": 15,
     "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two": 15,

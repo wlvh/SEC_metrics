@@ -1303,3 +1303,18 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 **XBRL 实例的声明**。`historical_source_acquisition._declared_frame` 在规划器、事件声明、治理声明之外再合并 `historical_instance_sources.instance_dependencies`：对每个索引已存的年报 accession，用一个只记录、不读取的 `_Sources` 子类跑冻结的 `auditor_filing`，把它在 `auditor_facts` 角色下要读的每个文件记成 `ACCESSION_XBRL_INSTANCE` 依赖。索引未存的 accession 记为 `ACCESSION_INDEX_NOT_SAVED` 限制，经帧的 `instance_declaration_limitations` 返回。这个类别列在 `historical_sec_resume.TERMINAL_CLASSES` 里：取回实例不会让新的依赖变得可声明，所以恢复保留量按它计。模块本身列在 SEC 接线收据的 `REQUIRED_WIRING_EVIDENCE` 里，因为实时路径只核对收据，不核对 Requirement 闭包。
 
 **覆盖表的规划根**。`tools/vnext_history_coverage.py --source-root <根>` 让期间在给定的根上规划与选择（批次的数据根是从获取导出恢复的根，检出只有最新年份的原件）；缺陷、接受、等 #28 这些登记与 Run 收据仍从仓库读。输出记下 `periods_planned_on`。
+
+**成对量的可比性**（B02、A07）。历史 Company Facts 路线在冻结计算图之后调用 `historical_results.paired_measure_problem`。检查对象是同一分支里对当年与上年申报列同一组已批标签的两个分量（`_paired_concept_lists`：B02 的收入、A07 的净利润；A05、A06 只有一个标签，不会不一致）。两个 claim 标签相同，放行。标签不同时，有两种结果：
+- 目标年报自己用当年那个标签报了上年，且数值等于上年 claim：视为同一个量，保留结果，并在 detail 的 `paired_measure_bridge` 记下这对 claim。
+- 否则：清空图，按名扣留 `HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE`（category `MEASURE_NOT_COMPARABLE`）。detail 列出两个 claim，以及目标年报在当年标签下对上年报了什么。
+
+扣留时不换标签重算，因为那等于选一个已批分支没有点名的口径。接续主体的分支按已批连续性处理，不经过这条检查。普通路线（#28）共用同一条目录规则，这里不改。
+
+**D01：跑过页脚的标题**。D01 的后继文档构建器（`historical_text_emphasis.build_text_document_admitting_underline`）在换下两个强调字段之后，调用 `join_headings_split_across_a_page`，把申报跑过页脚的标题的两半合成一行。触发条件同时满足五项：
+- 只在 Item 1A 内；
+- 两半都整块强调、不带链接；
+- 中间只有页码与带链接的"Table of Contents"行，而且至少有一个；
+- 前一半不以句末标点结束；
+- 后一半小写开头。
+
+合并方式：前一半的 `leading_emphasis` 改为两半的文字、从前一半起点到后一半终点的原始字节跨度及其摘要；后一半的 `leading_emphasis` 置空。块文本与其余逐块字段仍是冻结解析器的，冻结的标题选择器、`text_claim_from_block` 与证据检查一行未动（证据检查核对的正是这个跨度的字节摘要）。只有发生了合并的文档多带一个 `headings_joined_across_a_page` 记录，其余文档逐字节不变。独立的 D01 读取器（`tools/read_d01_headings.py`）不用小写这一条：任何"一行只含标题、不以句末标点结束、只隔页面装饰又接一行标题"都要一条记录的判断。

@@ -32,7 +32,7 @@ sys.path.insert(0, str(REPO / "tools"))
 
 from acceptance_readings import (C02_COMPOSITION, C03_ACROSS_PROXIES, COMPENSATION, CROSS,  # noqa: E402
                                  CROSS_READINGS,
-                                 D01_READINGS, DEBT_TO_EQUITY, E01_CANDIDATES, E01_EIGHT_O_ONES,
+                                 D01_READINGS, DEBT_TO_EQUITY, E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
                                  EVENT_READINGS, GOVERNANCE, LODGING, LODGING_READINGS, READINGS, RPO, TEXT, load,
                                  positions)
 
@@ -199,7 +199,7 @@ def _read_from(position):
                 "eight_k_filings_in_window": case["eight_ks_in_window"]["filing_date"],
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
                 "counted_under": ["filing_date", "report_date"]}
-    if path == E01_CANDIDATES:
+    if path in E01_CANDIDATE_READINGS:
         return {"window": case["window"], "eight_k_filings_in_window": len(case["filings_in_window"]),
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
                 "candidate_items_by_basis": case["candidate_items_by_basis"]}
@@ -249,7 +249,7 @@ def _method_and_limit(position):
         return EVENT_METHOD, EVENT_LIMIT
     if path == E01_EIGHT_O_ONES:
         return E01_METHOD, E01_LIMIT
-    if path == E01_CANDIDATES:
+    if path in E01_CANDIDATE_READINGS:
         return E01_CANDIDATES_METHOD, E01_CANDIDATES_LIMIT
     if path == C02_COMPOSITION:
         return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
@@ -342,7 +342,7 @@ def _acceptance_id(position):
         return "CONTENT_B12_SALESFORCE_2026"
     if position["reading"] == COMPENSATION:
         return "CONTENT_C03_PARAMOUNT_2025"
-    if position["reading"] == E01_CANDIDATES:
+    if position["reading"] in E01_CANDIDATE_READINGS:
         # A different definition's acceptance: its own name, so it can never be
         # read as the item-code definition's entry at the same coordinate.
         return "CONTENT_E01_CONTENT_CONFIRMED_" + position["label"].upper().replace("-", "_")

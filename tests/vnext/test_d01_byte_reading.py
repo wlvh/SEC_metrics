@@ -12,13 +12,17 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_d01_headings as reader
-from tools.acceptance_readings import saved_bytes
+from tools.acceptance_readings import D01_READINGS, saved_bytes
 
 READING = "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json"
 REPAIRED = "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json"
 PARAMOUNT_REPAIRED = "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json"
 OLDER_YEARS = "docs/evidence/issue47_history/content-acceptance/d01-older-years-read.json"
-READINGS = (READING, REPAIRED, PARAMOUNT_REPAIRED, OLDER_YEARS)
+# Every D01 reading the register grants from, so a reading added there is
+# reproduced here without a second list to keep (the predecessor year's reading
+# was missing from the list this replaced).
+READINGS = D01_READINGS
+assert {READING, REPAIRED, PARAMOUNT_REPAIRED, OLDER_YEARS} <= set(READINGS)
 
 
 def _saved_bytes(relative):
@@ -27,6 +31,21 @@ def _saved_bytes(relative):
 
 
 CUT = "Failures to comply with or changes in U"
+
+
+def _page_split_decisions(body, label, row):
+    """The page-split decisions a row was read under.
+
+    A row carries them from the time the reader flags page splits. A row
+    recorded before carries none, and its decisions were recorded afterwards in
+    the judgement file the reading names - so every pair the reader flags on its
+    filing is still judged, just not by the row itself.
+    """
+    if "page_split_judgements" in row:
+        return row["page_split_judgements"]
+    recorded = json.loads((ROOT / body["judgements"]).read_text(encoding="utf-8"))
+    return {entry["line"]: entry["decision"]
+            for entry in recorded.get(label, {}).get("page_split_lines", ())}
 
 
 def _document(path, label):
@@ -158,6 +177,68 @@ class AFlaggedLineIsReadOnlyThroughItsJudgementTest(unittest.TestCase):
         self.assertEqual([CUT], row["lines_where_emphasis_resumes_after_a_short_gap"])
 
 
+class AHeadingRunOverAPageIsReadOnlyThroughItsJudgementTest(unittest.TestCase):
+    """Two heading lines across page furniture, where the first does not end.
+
+    The route joins them when the second begins in lower case; the reading
+    flags every such pair whatever the second looks like, so a split whose rest
+    begins with a capital would be flagged here even though the route would not
+    join it - and only a recorded decision says which it is.
+    """
+
+    OLDER = "docs/evidence/issue47_history/content-acceptance/d01-older-years-read-batch.json"
+
+    def _read_older(self, label):
+        row = json.loads((ROOT / self.OLDER).read_text(encoding="utf-8"))["per_position"][label]
+        return reader.headings_and_other_marks(
+            raw_bytes=_saved_bytes(row["document"]),
+            registrant_names=row["registrant_names_tagged_in_the_filing"])
+
+    def test_southwest_fy2022_s_two_split_headings_are_flagged(self):
+        headings, shapes, _ = self._read_older("southwest-2022")
+        flagged = [(text, shape["runs_over_a_page_into"]) for text, shape in zip(headings, shapes)
+                   if "runs_over_a_page_into" in shape]
+        self.assertEqual(2, len(flagged))
+        self.assertEqual(["a localized disaster", "ability of the Company"],
+                         [rest[:len(start)] for (_, rest), start in zip(
+                             flagged, ("a localized disaster", "ability of the Company"))])
+
+    def test_each_decision_gives_its_own_lines_and_no_decision_fails(self):
+        headings, shapes, _ = self._read_older("southwest-2022")
+        first = [text for text, shape in zip(headings, shapes) if "runs_over_a_page_into" in shape]
+        lines, unjudged, not_found = reader.judged_lines(
+            headings=headings, shapes=shapes, short_gap_lines={}, page_split_lines={})
+        self.assertEqual((sorted(first), []), (unjudged, not_found))
+        joined, unjudged, _ = reader.judged_lines(
+            headings=headings, shapes=shapes, short_gap_lines={},
+            page_split_lines={text: "ONE_HEADING_ACROSS_THE_PAGE" for text in first})
+        self.assertEqual([], unjudged)
+        self.assertEqual(len(lines) - 2, len(joined))
+        self.assertTrue(any(line.endswith("or a localized disaster or disturbance in a key "
+                                          "geography has adversely and materially impacted, and "
+                                          "in the future could again adversely and materially "
+                                          "impact, the Company’s business, results of operations, "
+                                          "and financial condition.") for line in joined))
+        kept, unjudged, _ = reader.judged_lines(
+            headings=headings, shapes=shapes, short_gap_lines={},
+            page_split_lines={text: "TWO_HEADINGS" for text in first})
+        self.assertEqual(([], lines), (unjudged, kept))
+
+    def test_a_decision_about_a_pair_the_filing_does_not_flag_fails(self):
+        headings, shapes, _ = self._read_older("southwest-2024")
+        _, _, not_found = reader.judged_lines(
+            headings=headings, shapes=shapes, short_gap_lines={},
+            page_split_lines={headings[0]: "TWO_HEADINGS"})
+        self.assertEqual([headings[0]], not_found)
+
+    def test_a_label_at_the_foot_of_a_page_is_flagged_though_the_next_line_is_capitalised(self):
+        headings, shapes, _ = _read(READING, "enphase-2025")
+        flagged = [shape["runs_over_a_page_into"] for shape in shapes
+                   if "runs_over_a_page_into" in shape]
+        self.assertEqual(1, len(flagged))
+        self.assertTrue(flagged[0][:1].isupper())
+
+
 class TheReaderReproducesThePublishedValueTest(unittest.TestCase):
     """Byte for byte, from the filing alone, for every accepted position.
 
@@ -169,8 +250,8 @@ class TheReaderReproducesThePublishedValueTest(unittest.TestCase):
 
     def test_every_accepted_position(self):
         for path in READINGS:
-            rows = json.loads((ROOT / path).read_text(encoding="utf-8"))["per_position"]
-            for label, row in rows.items():
+            body = json.loads((ROOT / path).read_text(encoding="utf-8"))
+            for label, row in body["per_position"].items():
                 if row["verdict"] != "MATCH":
                     continue
                 with self.subTest(path=path, label=label):
@@ -179,7 +260,8 @@ class TheReaderReproducesThePublishedValueTest(unittest.TestCase):
                         raw_bytes=raw, registrant_names=row["registrant_names_tagged_in_the_filing"])
                     lines, unjudged, not_found = reader.judged_lines(
                         headings=headings, shapes=shapes,
-                        short_gap_lines=row.get("short_gap_judgements", {}))
+                        short_gap_lines=row.get("short_gap_judgements", {}),
+                        page_split_lines=_page_split_decisions(body, label, row))
                     self.assertEqual(([], []), (unjudged, not_found))
                     joined = "\n".join(reader.as_published(lines))
                     self.assertEqual(row["value_sha256"],

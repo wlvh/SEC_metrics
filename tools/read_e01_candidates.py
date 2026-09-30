@@ -30,6 +30,9 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 ROUTE = "catalog/r6/E01_content_confirmed_ma_v1.json"
+# The reading made over the checkout. A reading over a restored root compares
+# another closure's results and is written to a file of its own.
+CHECKOUT_READING = "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json"
 
 
 def candidate_codes():
@@ -41,9 +44,17 @@ def candidate_codes():
     return sorted(codes)
 
 
-def window_candidates(*, filings, cik, start, end, codes):
-    """Per basis, every 8-K in the window with its item codes and the candidates among them."""
+def window_candidates(*, filings, cik, start, end, codes, header=None):
+    """Per basis, every 8-K in the window with its item codes and the candidates among them.
+
+    ``header`` reads a filing's item codes and the path it read, ``(None, None)``
+    when unsaved; by default the checkout's accession materials, whose path is
+    not recorded. Over a restored root it is ``read_event_counts.
+    restored_root_headers``, which records the path, so the reading can be
+    recomputed from the export without the root.
+    """
     from read_event_counts import header_items
+    header = header or (lambda cik, accession: (header_items(cik, accession), None))
     seen, unreadable = {"filing_date": [], "report_date": []}, set()
     for filing in filings:
         if not filing["form"].startswith("8-K"):
@@ -52,19 +63,21 @@ def window_candidates(*, filings, cik, start, end, codes):
             date = filing[field]
             if not date or not start <= date <= end:
                 continue
-            items = header_items(cik, filing["accessionNumber"])
+            items, path = header(cik, filing["accessionNumber"])
             if items is None:
                 unreadable.add(filing["accessionNumber"])
                 continue
             seen[basis].append({"accession": filing["accessionNumber"], field: date,
                                 "items": items,
-                                "candidate_items": sorted(set(items) & set(codes))})
+                                "candidate_items": sorted(set(items) & set(codes)),
+                                **({"header": path} if path is not None else {})})
     return seen, sorted(unreadable)
 
 
 def main():
     from bind_acceptance_readings import identity_for
-    from read_event_counts import _case, _case_input, filings_in_index
+    from read_event_counts import (_case, _case_input, filings_in_index, history_blocks_reached,
+                                   restored_root_headers)
     from sec_urls import submissions_url
     from vnext.annual_update import saved_source
     from vnext.historical_coverage import select_receipt
@@ -74,7 +87,14 @@ def main():
     parser.add_argument("--closure", required=True)
     parser.add_argument("--case", required=True, action="append", type=_case)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--source-root", type=Path, default=None,
+                        help="a data root holding filings the checkout does not, "
+                             "such as one restored from the acquisition's export")
     arguments = parser.parse_args()
+    if arguments.source_root is not None and arguments.output == CHECKOUT_READING:
+        raise SystemExit("A_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    source = REPO if arguments.source_root is None else arguments.source_root.resolve()
+    header = None if arguments.source_root is None else restored_root_headers(source)
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
@@ -82,14 +102,21 @@ def main():
     codes = candidate_codes()
     positions = {}
     for company_id, report_end, label in arguments.case:
-        period, cik = _case_input(company_id=company_id, report_end=report_end)
+        period, cik = _case_input(company_id=company_id, report_end=report_end,
+                                  source_root=source)
         url = submissions_url(cik=int(cik))
-        saved = saved_source(repo_root=REPO, url=url)
+        saved = saved_source(repo_root=source, url=url)
         if saved is None:
             raise SystemExit("SUBMISSIONS_INDEX_NOT_SAVED:" + url)
         start, end = period["period_start"], period["period_end"]
-        seen, unreadable = window_candidates(filings=filings_in_index(json.loads(saved["raw"])),
-                                             cik=cik, start=start, end=end, codes=codes)
+        submissions = json.loads(saved["raw"])
+        # A window a history block may reach holds filings this index's recent
+        # table does not list; counting only the recent table would call it empty.
+        reached = history_blocks_reached(submissions, start)
+        if reached:
+            raise SystemExit("WINDOW_REACHES_A_HISTORY_BLOCK:" + label + ":" + ",".join(reached))
+        seen, unreadable = window_candidates(filings=filings_in_index(submissions), cik=cik,
+                                             start=start, end=end, codes=codes, header=header)
         candidates = {basis: sum(len(entry["candidate_items"]) for entry in entries)
                       for basis, entries in seen.items()}
         selection = select_receipt(found=index.get((company_id, "E01", report_end), []),

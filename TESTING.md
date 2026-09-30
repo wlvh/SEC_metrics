@@ -1046,3 +1046,17 @@ C02 核心事实核查：`PYTHONPATH=scripts python3 -m unittest tests.vnext.tes
 **年报 accession 的 XBRL 实例声明（2026-09-30）**：`tests.vnext.test_historical_instance_sources`（saved-source 层，6 例，本机 54 秒）。Marriott 最新两年的实例已存：声明必须等于冻结 `auditor_filing` 真实读到的 XML 文件，以及它记下的 `expected_xml_documents`。直接问声明模块本身时，它只列实例；只经帧合并看不出这一点，因为规划器的行会胜出。已存的实例归为已存；索引未存的 accession 记为限制，不记为空集；读取器不读的同级文件（`_cal.xml`）不是声明依赖；这个类别是终态类别。注错 `docs/evidence/issue47_history/instance-declaration/injections.py`（4 个）。
 
 **覆盖表在给定的根上规划期间（2026-09-30）**：`tests.vnext.test_historical_coverage` 的 `PeriodsArePlannedOnTheSuppliedSourceRootTest` 用监视器记录规划与期间选择被要求用哪个根：给了 `--source-root` 就用它，缺陷、接受、等 #28 等登记与收据仍从仓库读。缘由是全帧批次的第一份报告：在检出上规划时，1,131 个位置被读成"原件未保存"，而其中 1,045 个有冻结 Run。
+
+**B02 当年与上年读同一个量（2026-09-30）**：`tests.vnext.test_historical_paired_measure`（fast 层，7 例，0.2 秒，用检出里 Pfizer 已存的 Company Facts）。历史 Company Facts 路线对"同一分支里对当年与上年列同一组已批标签"的两个分量要求读同一个量：Pfizer FY2023（产品收入 ÷ 总收入）与 FY2024（总收入 ÷ 产品收入）按名扣留 `HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE`，FY2022 因目标年报自己用 Revenues 报了 2021 年的同一个数而保留；同一标签不问；上年 claim 缺失时不问；只有 A05、A06、A07、B02 四个路由有这样的分量对。注错 `docs/evidence/issue47_history/b02-revenue-concept/injections.py`（4 个）。
+
+**8-K 计数核对只数 8-K 与 8-K/A（2026-09-30）**：`tools/read_event_counts.py` 原来数所有以"8-K"开头的表单，把接续主体的注册 8-K12B/8-K12B/A 也算进去了，而已批事件路线不读它们；现在只数 8-K 与 8-K/A，并在结果所量窗口不是本财年时停下（接续主体按已批政策把事件窗口放宽到上一年），不拿两个窗口互比。`tests.vnext.test_event_count_reading` 另有 `APartialWindowIsNotCountedTest`：历史分片的空档日规则、Pfizer 的最近块起点、读不到的头文件即使计数相等也记 NOT_READ、账本最近一次成功副本的摘要校验、恢复根读取按已记录路径从导出重读。
+
+**同一事实被第二份核对读到时记为确认（2026-09-30）**：`tools/build_acceptance_register.py` 在同一接受编号出现两次时，要求坐标、数值与覆盖表用来匹配接受的身份字段一致，然后只保留第一条并记 `confirmed_by`；不一致即停。`tests.vnext.test_acceptance_identity` 仍要求已提交登记等于重新生成的结果。
+
+**D01 往年标题的三向阅读与分页续接（2026-09-30）**：`tests.vnext.test_d01_byte_reading`（saved-source 层，19 例）现在逐份复现 `tools/acceptance_readings.D01_READINGS` 里的每份阅读，而不是自己再列一份清单——被替换的那份清单漏了 Paramount 前身 FY2024 的阅读。新增的往年阅读 `content-acceptance/d01-older-years-read-batch.json`（28 个位置）从导出读字节。读取器新标记"跨页两行标题"：一行只含标题、不以句末标点结束，之后只隔着页面装饰（页码、目录链接），下一行又是标题——不论下一行大小写都标记，由记录的判断决定是一个标题跑过了页还是两个标题。`AHeadingRunOverAPageIsReadOnlyThroughItsJudgementTest` 用 Southwest FY2022（两处续接）与 Enphase FY2025（页脚分类标签后接大写开头标题）核对：没有判断即失败、两种判断各给出自己的行、点名没被标记的行即失败。在这个标记之前记录的行没有判断，判断补记在该阅读点名的判断文件里，复现用例从那里取。
+
+**D01 分页续接的标题合并为一行（2026-09-30）**：`tests.vnext.test_historical_page_split_headings`（saved-source 层，13 例，本机 24 秒）。`historical_text_emphasis.join_headings_split_across_a_page` 只在 Item 1A 内、两半都整块强调且无链接、中间只有页码与带链接的目录行、前一半不以句末标点结束、后一半小写开头时合并。Southwest FY2022/FY2023 从导出读字节并用 `page-split/source-records.json` 里批次 Run 的记录重建文档：33→31、29→28 行，合并后的跨度与它点名的字节相符，路线的候选与证据检查都通过；Southwest FY2025 与 Enphase FY2025（页脚分类标签后接标题）文档逐字节不变；八个合成用例各破坏一个条件。在 41 份 D01 申报上实测只移动这两份（`page-split/measure.py`）。注错 `page-split/injections.py`（11 个，路线 8 个、读取器 3 个）。
+
+**E01 往年窗口的零值从导出重算（2026-09-30）**：`tools/read_e01_candidates.py` 新增 `--source-root`，在导出恢复的根上读往年窗口：头文件取账本里最近一次成功的那份并记下路径，窗口够到历史分片即停，恢复根上的阅读必须写进自己的文件。`tests.vnext.test_e01_candidate_reading.TheOlderWindowsAreReadOffTheExportTest` 不用恢复根，按记下的索引与头文件路径从检出或导出读回字节，逐位置重算候选条目。Enphase FY2022、FY2024 窗口里没有 1.01/2.01/8.01，零值接受。
+
+**阅读工具一次进程只读一遍导出（2026-09-30）**：`tools/acceptance_readings` 从导出取文件时，原来每次都打开归档并按名字取成员，gzip 归档因此每次从头解压；接受登记增到 600 条后，`test_acceptance_identity` 由 0.2 秒涨到 87 秒，超过快速层 30 秒上限。现在导出索引与每个归档里的小成员（保存的头文件）在一个进程里按"路径、大小、修改时间"各读一遍，文件变了就重读；每次读取仍核对索引记下的摘要。该模块 87 秒降到 2 秒，事件计数阅读 66 秒降到 3 秒。

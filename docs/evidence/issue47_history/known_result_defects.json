@@ -1833,17 +1833,28 @@
    "root_cause": "B02's approved branch (catalog/deterministic_metrics.json, comparable_annual_revenue) picks revenue_current and revenue_prior independently, each the first approved concept its own filing tags. Pfizer tagged total revenue as RevenueFromContractWithCustomerExcludingAssessedTax in its FY2021 10-K, as Revenues in FY2022, used the contract concept for product revenue only (alliance and royalty revenue excluded) beside Revenues in FY2023, and Revenues alone in FY2024. Where the two years' filings put the chain's first concept on different quantities, the growth divides one measure by another.",
    "scope_measured": "all 41 B02 runs of the 41-period batch: 3 use a different concept for the two years, all Pfizer; FY2022's are the same quantity (its own 10-K reports 2021 under Revenues at the FY2021 contract value, 81,288,000,000), FY2023's and FY2024's are not (b02-revenue-concept/measured.json). Pfizer FY2025 (the year Issue #28 reports) uses Revenues for both years.",
    "found_by": "the cross-source statement reading of the batch's older years (content-acceptance/cross-source-read-batch.json): 234 MATCH, 2 DIFFERS, these two.",
-   "repair_state": "ROOT_CAUSE_MEASURED_WITHDRAWN",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
    "evidence": [
     "docs/evidence/issue47_history/b02-revenue-concept/measure.py",
     "docs/evidence/issue47_history/b02-revenue-concept/measured.json",
+    "docs/evidence/issue47_history/b02-revenue-concept/targeted-runs.json",
     "docs/evidence/issue47_history/content-acceptance/cross-source-read-batch.json"
    ],
-   "repair": "pending: withhold by name when the two claims' concepts differ and no saved filing reports the prior year under the current claim's concept at the prior claim's value",
+   "repair": "The historical Company Facts route checks, after the frozen graph, the two claims of a branch that lists one set of approved concepts for the current and the prior filing (historical_results.paired_measure_problem, committed in f50534dc). Claims on two concepts are kept only where the target filing reports the prior year under the current claim's concept at the prior claim's value; otherwise the result is withheld by name, HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE. It does not recompute from another concept: that would be choosing a measure the approved branch does not name.",
    "defect_id": "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE",
    "period_end": "2023-12-31",
    "same_cause_as": [],
-   "summary": "Published -0.4925346357021827967706568325 = (50,914,000,000 - 100,330,000,000) / 100,330,000,000: the FY2023 10-K's RevenueFromContractWithCustomerExcludingAssessedTax (product revenue only) over the FY2022 10-K's Revenues (total revenue). The FY2023 10-K reports 2022 under the contract concept at 91,793,000,000, so the two are different quantities. Same-measure growth: total revenue -0.4170, product revenue -0.4453."
+   "summary": "Published -0.4925346357021827967706568325 = (50,914,000,000 - 100,330,000,000) / 100,330,000,000: the FY2023 10-K's RevenueFromContractWithCustomerExcludingAssessedTax (product revenue only) over the FY2022 10-K's Revenues (total revenue). The FY2023 10-K reports 2022 under the contract concept at 91,793,000,000, so the two are different quantities. Same-measure growth: total revenue -0.4170, product revenue -0.4453.",
+   "released": [
+    {
+     "result_id": "sha256:46b2e5b0b87837fbd7c99764c4dcb9d1a7f8bf01efef501e70220207d8b6e744",
+     "requirement_closure_hash": "sha256:cd5e9b8f9e748a8bbc2c66f780200f83f806270f64abd13e2244d0561a608e3c",
+     "run_id": "run:historical-period:54884bfe0a91b1ce9ae164768f50d2f38ed0f770648eace5a6f1e15325c69467",
+     "read_by": "docs/evidence/issue47_history/b02-revenue-concept/targeted-runs.json",
+     "what_this_releases": "This withheld result and no other. The value the 41-period batch published, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none under the approved branch: the two filings tag the chain's first concept on different quantities. Nor that any full batch has re-run under this version."
+    }
+   ]
   },
   {
    "company_id": "pfizer",
@@ -1852,19 +1863,92 @@
    "root_cause": "B02's approved branch (catalog/deterministic_metrics.json, comparable_annual_revenue) picks revenue_current and revenue_prior independently, each the first approved concept its own filing tags. Pfizer tagged total revenue as RevenueFromContractWithCustomerExcludingAssessedTax in its FY2021 10-K, as Revenues in FY2022, used the contract concept for product revenue only (alliance and royalty revenue excluded) beside Revenues in FY2023, and Revenues alone in FY2024. Where the two years' filings put the chain's first concept on different quantities, the growth divides one measure by another.",
    "scope_measured": "all 41 B02 runs of the 41-period batch: 3 use a different concept for the two years, all Pfizer; FY2022's are the same quantity (its own 10-K reports 2021 under Revenues at the FY2021 contract value, 81,288,000,000), FY2023's and FY2024's are not (b02-revenue-concept/measured.json). Pfizer FY2025 (the year Issue #28 reports) uses Revenues for both years.",
    "found_by": "the cross-source statement reading of the batch's older years (content-acceptance/cross-source-read-batch.json): 234 MATCH, 2 DIFFERS, these two.",
-   "repair_state": "ROOT_CAUSE_MEASURED_WITHDRAWN",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
    "evidence": [
     "docs/evidence/issue47_history/b02-revenue-concept/measure.py",
     "docs/evidence/issue47_history/b02-revenue-concept/measured.json",
+    "docs/evidence/issue47_history/b02-revenue-concept/targeted-runs.json",
     "docs/evidence/issue47_history/content-acceptance/cross-source-read-batch.json"
    ],
-   "repair": "pending: withhold by name when the two claims' concepts differ and no saved filing reports the prior year under the current claim's concept at the prior claim's value",
+   "repair": "The historical Company Facts route checks, after the frozen graph, the two claims of a branch that lists one set of approved concepts for the current and the prior filing (historical_results.paired_measure_problem, committed in f50534dc). Claims on two concepts are kept only where the target filing reports the prior year under the current claim's concept at the prior claim's value; otherwise the result is withheld by name, HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE. It does not recompute from another concept: that would be choosing a measure the approved branch does not name.",
    "defect_id": "B02_PFIZER_2024_TOTAL_REVENUE_OVER_PRODUCT_REVENUE",
    "period_end": "2024-12-31",
    "same_cause_as": [
     "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE"
    ],
-   "summary": "Published 0.2496955650705110578622775661 = (63,627,000,000 - 50,914,000,000) / 50,914,000,000: the FY2024 10-K's Revenues (total revenue) over the FY2023 10-K's contract concept (product revenue only). Same-measure growth on total revenue is +0.0877 against the FY2023 10-K's 58,496,000,000, or +0.0684 against the FY2024 10-K's recast 59,553,000,000."
+   "summary": "Published 0.2496955650705110578622775661 = (63,627,000,000 - 50,914,000,000) / 50,914,000,000: the FY2024 10-K's Revenues (total revenue) over the FY2023 10-K's contract concept (product revenue only). Same-measure growth on total revenue is +0.0877 against the FY2023 10-K's 58,496,000,000, or +0.0684 against the FY2024 10-K's recast 59,553,000,000.",
+   "released": [
+    {
+     "result_id": "sha256:26673f1f3b18cde9d6b8fe3897fc645e732e2499ffb821ac06aeb47253742fad",
+     "requirement_closure_hash": "sha256:cd5e9b8f9e748a8bbc2c66f780200f83f806270f64abd13e2244d0561a608e3c",
+     "run_id": "run:historical-period:d7ecea2d31ead7e883dd9cd9cf46aa6fd86e6d9916de1853d9a1ce9ce1efeec9",
+     "read_by": "docs/evidence/issue47_history/b02-revenue-concept/targeted-runs.json",
+     "what_this_releases": "This withheld result and no other. The value the 41-period batch published, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none under the approved branch: the two filings tag the chain's first concept on different quantities. Nor that any full batch has re-run under this version."
+    }
+   ]
+  },
+  {
+   "company_id": "southwest_airlines",
+   "metric_id": "D01",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "defect_id": "D01_SOUTHWEST_2022_HEADINGS_SPLIT_ACROSS_A_PAGE",
+   "summary": "Two of the filing's 31 headings (five category labels and 26 risk factors) are published as two lines each: 'The Company’s operations have been ... following adverse weather or' / 'a localized disaster or disturbance in a key geography ... financial condition.' (split at page 36), and 'The Company’s Bylaws designate specific courts ... or limit the' / 'ability of the Company’s Shareholders to bring a claim ... other Employees.' (split at page 46). The value has 33 lines where the filing has 31 headings.",
+   "root_cause": "text_coverage builds one block per block-level element. Southwest's FY2022 and FY2023 reports let a risk-factor heading run over the foot of a page: the first half ends one block, the page number, a 'Table of Contents' link and a page rule follow, and the second half opens the next page as its own bold block. The heading selector takes each bold block as a heading, so the value lists the two halves as two lines and neither line is the heading.",
+   "scope_measured": "Every D01 filing of the 41-period batch and its later rounds (41 filings) scanned for a heading-only block that does not end with sentence punctuation and is followed, across page furniture only, by another heading-only block: five pairs. Three are these split headings (Southwest FY2022 twice, FY2023 once), each second half beginning mid-sentence in lower case; two are a category label at the foot of a page followed by the first heading on the next (Enphase FY2025, Southwest FY2025), which are two headings. The published values were also scanned for lines beginning in lower case: only these three lines.",
+   "found_by": "the D01 reading of the batch's older years (tools/read_d01_headings.py): 26 of 28 MATCH, these two with lines judged wrong.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "repair": "D01's successor document builder joins the two halves of a heading the filing runs over a page (historical_text_emphasis.join_headings_split_across_a_page, rule file): in Item 1A, both halves emphasised whole and unlinked, only a page number and the linked 'Table of Contents' line between them, the first half not ending its sentence and the second beginning in lower case. The joined heading is the first block's leading emphasis, its raw span running from the first half's start to the second half's end; the frozen selector and evidence check are unchanged. Measured on the 41 D01 filings of the batch: it moves these two and no other (d01-risk-headings/page-split/measured.json).",
+   "evidence": [
+    "docs/evidence/issue47_history/content-acceptance/d01-older-years-read-batch.json",
+    "docs/evidence/issue47_history/content-acceptance/d01-southwest-page-split-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-41-period-batch.json",
+    "docs/evidence/issue47_history/d01-risk-headings/page-split/measured.json"
+   ],
+   "same_cause_as": [],
+   "released": [
+    {
+     "result_id": "sha256:758ecf624c05c8f54e9b333082aa5c859f98c12ad4719c3d1fd7e98ccaabcd49",
+     "requirement_closure_hash": "sha256:e667d42cbccb0f33e5aef7a1948f128a29f91473671643297d75461befe922ff",
+     "run_id": "run:historical-period:8e5e4bae1e3d2929d7cd3f22ad0c0597da66a9b8bc47cd4e9d0922624642992c",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-southwest-page-split-read.json",
+     "what_this_releases": "This result and no other: the value the 41-period batch published, with the halves as lines of their own, and any other result at this coordinate stays withdrawn.",
+     "what_it_does_not_assert": "that any full batch has re-run under this version."
+    }
+   ]
+  },
+  {
+   "company_id": "southwest_airlines",
+   "metric_id": "D01",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "defect_id": "D01_SOUTHWEST_2023_HEADING_SPLIT_ACROSS_A_PAGE",
+   "summary": "One of the filing's 28 headings is published as two lines: 'The Company’s operations have been ... following adverse weather, a' / 'localized disaster, or disturbance in a key geography ... financial condition.' (split at page 37). The value has 29 lines where the filing has 28 headings.",
+   "root_cause": "text_coverage builds one block per block-level element. Southwest's FY2022 and FY2023 reports let a risk-factor heading run over the foot of a page: the first half ends one block, the page number, a 'Table of Contents' link and a page rule follow, and the second half opens the next page as its own bold block. The heading selector takes each bold block as a heading, so the value lists the two halves as two lines and neither line is the heading.",
+   "scope_measured": "Every D01 filing of the 41-period batch and its later rounds (41 filings) scanned for a heading-only block that does not end with sentence punctuation and is followed, across page furniture only, by another heading-only block: five pairs. Three are these split headings (Southwest FY2022 twice, FY2023 once), each second half beginning mid-sentence in lower case; two are a category label at the foot of a page followed by the first heading on the next (Enphase FY2025, Southwest FY2025), which are two headings. The published values were also scanned for lines beginning in lower case: only these three lines.",
+   "found_by": "the D01 reading of the batch's older years (tools/read_d01_headings.py): 26 of 28 MATCH, these two with lines judged wrong.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "repair": "D01's successor document builder joins the two halves of a heading the filing runs over a page (historical_text_emphasis.join_headings_split_across_a_page, rule file): in Item 1A, both halves emphasised whole and unlinked, only a page number and the linked 'Table of Contents' line between them, the first half not ending its sentence and the second beginning in lower case. The joined heading is the first block's leading emphasis, its raw span running from the first half's start to the second half's end; the frozen selector and evidence check are unchanged. Measured on the 41 D01 filings of the batch: it moves these two and no other (d01-risk-headings/page-split/measured.json).",
+   "evidence": [
+    "docs/evidence/issue47_history/content-acceptance/d01-older-years-read-batch.json",
+    "docs/evidence/issue47_history/content-acceptance/d01-southwest-page-split-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-41-period-batch.json",
+    "docs/evidence/issue47_history/d01-risk-headings/page-split/measured.json"
+   ],
+   "same_cause_as": [
+    "D01_SOUTHWEST_2022_HEADINGS_SPLIT_ACROSS_A_PAGE"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:b6ad49376adcf12f1ef2da7190b947bd5d7413c6451267b3b77e456401f48151",
+     "requirement_closure_hash": "sha256:e667d42cbccb0f33e5aef7a1948f128a29f91473671643297d75461befe922ff",
+     "run_id": "run:historical-period:d6adcb58c7a417b3828b3effa4fe9dc1368c80fde9729dfbda18ac88c5567271",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-southwest-page-split-read.json",
+     "what_this_releases": "This result and no other: the value the 41-period batch published, with the halves as lines of their own, and any other result at this coordinate stays withdrawn.",
+     "what_it_does_not_assert": "that any full batch has re-run under this version."
+    }
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

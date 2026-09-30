@@ -204,27 +204,49 @@ def _marked_across_short_gaps(runs, *, marks):
 
 
 SHORT_GAP_DECISIONS = ("ONE_HEADING_ACROSS_THE_GAP", "HEADING_ENDS_AT_THE_GAP")
+PAGE_SPLIT_DECISIONS = ("ONE_HEADING_ACROSS_THE_PAGE", "TWO_HEADINGS")
+# A line that ends like this ends its sentence; a heading cut by a page does not.
+SENTENCE_END = re.compile(r"[.:;?!)\]\"\u201d\u2019]\s*$")
 
 
-def judged_lines(*, headings, shapes, short_gap_lines):
+def judged_lines(*, headings, shapes, short_gap_lines, page_split_lines=None):
     """The heading lines after each flagged line's recorded judgement.
 
     ``short_gap_lines`` maps a flagged line's prefix to one of
-    SHORT_GAP_DECISIONS. Returns ``(lines, unjudged, not_found)``: a flagged
+    SHORT_GAP_DECISIONS, and ``page_split_lines`` maps the first of two
+    heading lines flagged as possibly one heading run over a page to one of
+    PAGE_SPLIT_DECISIONS. Returns ``(lines, unjudged, not_found)``: a flagged
     line with no judgement, and a judgement naming a line the filing does not
     flag, each fail the reading - the second because a judgement about a line
     this filing does not have describes some other filing.
+
+    ``page_split_lines=None`` is only for a row recorded before this reader
+    flagged page splits; such a row carries no decisions to apply, and the case
+    that reproduces it says which of its lines were flagged since.
     """
-    lines, flagged = [], set()
+    lines, flagged, split_flagged, skip = [], set(), set(), False
     for text, shape in zip(headings, shapes):
+        if skip:
+            skip = False
+            continue
         if shape["emphasis_resumes_after_a_short_gap"]:
             flagged.add(text)
             if short_gap_lines.get(text) == "ONE_HEADING_ACROSS_THE_GAP":
                 text = shape["across_short_gaps"]
+        if page_split_lines is not None and "runs_over_a_page_into" in shape:
+            split_flagged.add(text)
+            if page_split_lines.get(text) == "ONE_HEADING_ACROSS_THE_PAGE":
+                text = text + " " + shape["runs_over_a_page_into"]
+                skip = True
         lines.append(text)
     unjudged = sorted(line for line in flagged if short_gap_lines.get(line)
                       not in SHORT_GAP_DECISIONS)
-    return lines, unjudged, sorted(set(short_gap_lines) - flagged)
+    not_found = sorted(set(short_gap_lines) - flagged)
+    if page_split_lines is not None:
+        unjudged += sorted(line for line in split_flagged if page_split_lines.get(line)
+                           not in PAGE_SPLIT_DECISIONS)
+        not_found += sorted(set(page_split_lines) - split_flagged)
+    return lines, unjudged, not_found
 
 
 def as_published(headings):
@@ -282,9 +304,18 @@ def headings_and_other_marks(*, raw_bytes, registrant_names=()):
     """
     names = {re.sub(r"\W", "", name).casefold() for name in registrant_names}
     headings, shapes, others = [], [], []
+    # The last line, if it was a heading standing alone that did not end its
+    # sentence, and whether page furniture has come since: a heading after
+    # that, across furniture only, may be the rest of the same heading run
+    # over a page. Flagged whatever the second line looks like - a mid-sentence
+    # start is the route's condition, not this reading's - and judged below.
+    pending, furniture_since = None, False
     for position, runs in enumerate(read_item_1a(raw_bytes=raw_bytes)):
         text = _text(runs)
-        if not text or FURNITURE.match(text):
+        if not text:
+            continue
+        if FURNITURE.match(text):
+            furniture_since = True
             continue
         heading = _marked_prefix(runs, marks=("bold", "underline"))
         # A marked prefix with no letter - a bold bullet, a number - labels
@@ -302,7 +333,13 @@ def headings_and_other_marks(*, raw_bytes, registrant_names=()):
                            "emphasis_resumes_after_a_short_gap": resumes,
                            **({"across_short_gaps": _marked_across_short_gaps(
                                runs, marks=("bold", "underline"))} if resumes else {})})
+            if pending is not None and furniture_since:
+                shapes[pending]["runs_over_a_page_into"] = heading
+            pending = (len(shapes) - 1 if body <= 1 and not SENTENCE_END.search(heading)
+                       else None)
+            furniture_since = False
             continue
+        pending, furniture_since = None, False
         italic = _marked_prefix(runs, marks=("italic",))
         if italic:
             others.append({"block_in_item_1a": position, "text": text[:160]})
@@ -362,8 +399,11 @@ def read_position(*, index, closure, company_id, period_end, judgements, source_
         raw_bytes=raw, registrant_names=registrant_names)
     short_gap_lines = {entry["line"]: entry["decision"]
                        for entry in judgements.get("short_gap_lines", ())}
+    page_split_lines = {entry["line"]: entry["decision"]
+                        for entry in judgements.get("page_split_lines", ())}
     lines, gap_unjudged, gap_not_found = judged_lines(
-        headings=headings, shapes=shapes, short_gap_lines=short_gap_lines)
+        headings=headings, shapes=shapes, short_gap_lines=short_gap_lines,
+        page_split_lines=page_split_lines)
     published = str(result["value"]).split("\n")
     distinct = as_published(lines)
     judged = {entry["block_in_item_1a"]: entry["judgement"]
@@ -388,6 +428,14 @@ def read_position(*, index, closure, company_id, period_end, judgements, source_
         "short_gap_judgements": short_gap_lines,
         "short_gap_lines_with_no_judgement": gap_unjudged,
         "short_gap_judgements_not_found_in_the_filing": gap_not_found,
+        # Two heading lines across page furniture where the first does not end
+        # its sentence, and the decision recorded for each: one heading run
+        # over the page, or two headings. Its failures are counted with the
+        # short-gap ones above, which is where the verdict reads them.
+        "lines_running_over_a_page": [
+            {"line": text, "next_line": shape["runs_over_a_page_into"]}
+            for text, shape in zip(headings, shapes) if "runs_over_a_page_into" in shape],
+        "page_split_judgements": page_split_lines,
         # The part a program cannot supply: whether each line is a heading in
         # the approved definition's sense. Recorded per filing; the reading
         # fails without it, and fails when it names a line as wrong.

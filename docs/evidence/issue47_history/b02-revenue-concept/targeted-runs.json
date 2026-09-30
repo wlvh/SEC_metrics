@@ -1,0 +1,109 @@
+{
+ "periods": {
+  "ford-2023": {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "ford_motor_company",
+   "evidence_count": 2,
+   "memo_off_read_back_same": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "requirement_closure_hash": "sha256:cd5e9b8f9e748a8bbc2c66f780200f83f806270f64abd13e2244d0561a608e3c",
+   "result_id": "sha256:d21eeec77aa5dac0187905c55a494082b1c560732926e818af5cdbc98afa1972",
+   "row_hash": "sha256:683d6f71ae11aa5fd1c97cf8b3dd0cc2b1df1ff5d86085a32b2d36c16570498a",
+   "run_id": "run:historical-period:186361ca3240cdcf450a52ad132f756f21fd66eff7b027f0cdbc4036ad1a74fe",
+   "separate_process_read_back_same": true,
+   "stage": "PUBLIC_ROW",
+   "value": "0.1147307616872394136292603301"
+  },
+  "pfizer-2022": {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "pfizer",
+   "evidence_count": 2,
+   "memo_off_read_back_same": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "requirement_closure_hash": "sha256:cd5e9b8f9e748a8bbc2c66f780200f83f806270f64abd13e2244d0561a608e3c",
+   "result_id": "sha256:9b4860ceebb10ce8e08cbb1363d7f207d6c7dd3911fb17c40a41429ec832723f",
+   "row_hash": "sha256:483db3a04282b3391d1af0ac93ce3b15a935341f5f6d80a9b4090f06f3b8b8cb",
+   "run_id": "run:historical-period:deb105d393ee2b5847fd93d3198b09a4d140c5e78e28c46925a1f2834798263a",
+   "separate_process_read_back_same": true,
+   "stage": "PUBLIC_ROW",
+   "value": "0.2342535183544926680444838106"
+  },
+  "pfizer-2023": {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "pfizer",
+   "evidence_count": 0,
+   "memo_off_read_back_same": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE",
+   "report_end": "2023-12-31",
+   "requirement_closure_hash": "sha256:cd5e9b8f9e748a8bbc2c66f780200f83f806270f64abd13e2244d0561a608e3c",
+   "result_id": "sha256:46b2e5b0b87837fbd7c99764c4dcb9d1a7f8bf01efef501e70220207d8b6e744",
+   "row_hash": "sha256:ce194345f017219e3c823d4d3976797ca62f4725589b645888bec6f5df283843",
+   "run_id": "run:historical-period:54884bfe0a91b1ce9ae164768f50d2f38ed0f770648eace5a6f1e15325c69467",
+   "separate_process_read_back_same": true,
+   "stage": "PUBLIC_ROW",
+   "value": null
+  },
+  "pfizer-2024": {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "pfizer",
+   "evidence_count": 0,
+   "memo_off_read_back_same": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE",
+   "report_end": "2024-12-31",
+   "requirement_closure_hash": "sha256:cd5e9b8f9e748a8bbc2c66f780200f83f806270f64abd13e2244d0561a608e3c",
+   "result_id": "sha256:26673f1f3b18cde9d6b8fe3897fc645e732e2499ffb821ac06aeb47253742fad",
+   "row_hash": "sha256:542ca31e1743280779a04832a750acc690c109b5917c01b1e0b9f74e49e3a5ef",
+   "run_id": "run:historical-period:d7ecea2d31ead7e883dd9cd9cf46aa6fd86e6d9916de1853d9a1ce9ce1efeec9",
+   "separate_process_read_back_same": true,
+   "stage": "PUBLIC_ROW",
+   "value": null
+  }
+ },
+ "record_type": "ISSUE_47_B02_PAIRED_MEASURE_TARGETED_RUNS"
+}
