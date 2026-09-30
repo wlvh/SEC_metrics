@@ -2782,6 +2782,40 @@
       "result_path": "docs/evidence/issue28_continuous/d03-context-only-summary-20260930/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS",
       "status": "DONE"
+    },
+    {
+      "task_name": "review_b03contract_7bb1762",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b03_contract_amortization",
+      "scope_paths": [
+        "scripts/vnext/b03_contract_amortization_scope.py",
+        "tests/vnext/test_b03_contract_amortization_scope.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/"
+      ],
+      "patch_sha": "7bb17621c45545449f9dce390a41f39ec4bd0208",
+      "spawned_at": "2026-09-30T18:26:11Z",
+      "ended_at": "2026-09-30T18:34:55Z",
+      "tool_calls": 33,
+      "result_path": "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_SELECTED_CONCEPT_URI",
+      "followup_reviews": [
+        {
+          "patch_sha": "2bbd76945b20c1739c4878715f3de03973cd4b21",
+          "scope_paths": [
+            "scripts/vnext/b03_contract_amortization_scope.py",
+            "tests/vnext/test_b03_contract_amortization_scope.py",
+            "requirements/issue_28_v14/baseline_manifest.json",
+            "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/"
+          ],
+          "spawned_at": "2026-09-30T18:59:31Z",
+          "ended_at": "2026-09-30T19:02:15Z",
+          "result_path": "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/independent-review/followup-2bbd769.md",
+          "verdict": "PASS_WITH_BOUNDS_URI_P2_CLOSED",
+          "additional_tool_calls_reported_approximate": 16,
+          "cumulative_tool_calls_reported_approximate": 49
+        }
+      ]
     }
   ],
   "ci_capacity_20260922": {
@@ -7828,7 +7862,7 @@
     "scope": "previous head B13 currency guard and independent review receipt; does not cover following D03 difference"
   },
   "d03_context_only_summary_20260930": {
-    "status": "LIMITED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_NEW_HEAD_CI_PENDING",
+    "status": "LIMITED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_CI_SUCCESS_16_OF_16",
     "evidence": "docs/evidence/issue28_continuous/d03-context-only-summary-20260930/README.md",
     "trigger": "V6_HOST_MATERIALIZED_OTHER_MEANING_CONTEXT_PLACEHOLDER_MISCOUNTED_AS_BUSINESS_UNRESOLVED",
     "saved_marriott_source_id": "sha256:e9ee4912fd17edc2069f7570bbe979ddde2a687b1acb3ef18cd42219619ecbe6",
@@ -7850,10 +7884,62 @@
       0,
       0
     ],
-    "new_head_ci": "PENDING_AFTER_PUSH",
+    "new_head_ci": "SUCCESS_36746800281_16_OF_16_AT_2026-09-30T17:37:50Z",
     "limited_independent_review": "PASS_WITH_BOUNDS_EXACT_2E687740_2_OF_2_INDEPENDENT_SHORT_TESTS_50_TOTAL_TOOLS",
     "limited_independent_review_path": "docs/evidence/issue28_continuous/d03-context-only-summary-20260930/independent-review/conclusion.md",
     "shared_default_bindings_changed": false,
     "issue47_operated": false
+   },
+  "ci_36746800281": {
+    "head": "430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e",
+    "run_id": 36746800281,
+    "conclusion": "SUCCESS",
+    "jobs_successful": 16,
+    "jobs_total": 16,
+    "updated_at_utc": "2026-09-30T17:37:50Z",
+    "scope": "D03 context-only summary repair and prior code; does not cover subsequent Marriott B03 patch"
+  },
+  "b03_marriott_contract_revenue_exclusion_20261001": {
+    "status": "PRIVATE_CURRENT_B03_CANDIDATE_READY_REPAIR_INCREMENTAL_REVIEW_PASS_WITH_BOUNDS_REMOTE_CI_PENDING",
+    "user_decision": "2026-10-01 direct chat: exclude USD135M contract investment amortization revenue deduction; continue B03 using USD458M (USD145M depreciation + USD313M intangible amortization)",
+    "evidence": "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/README.md",
+    "initial_patch_sha": "7bb17621c45545449f9dce390a41f39ec4bd0208",
+    "initial_review": "NEEDS_FIX_P2_SELECTED_ORIGINAL_CONCEPT_URI",
+    "repair_patch_sha": "2bbd76945b20c1739c4878715f3de03973cd4b21",
+    "repair_review": "PASS_WITH_BOUNDS_URI_P2_CLOSED_3_INDEPENDENT_SHORT_TESTS",
+    "repair_review_path": "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/independent-review/followup-2bbd769.md",
+    "selected_components_usd": {
+      "depreciation": "145000000",
+      "amortization_of_intangible_assets": "313000000"
+    },
+    "excluded_revenue_deduction_usd": "135000000",
+    "segment_revenue_deduction_proofs_millions": [
+      "3004-83=2921",
+      "640-19=621",
+      "261-1=260",
+      "376-6=370"
+    ],
+    "current_source_relation_status": "COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED",
+    "private_normal_update_status": "UPDATES_READY_B03_CANDIDATE_READY",
+    "private_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+    "private_run_id": "run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa",
+    "value": "0.1756281982738868097456656229",
+    "repair_short_tests": "3/3_PASS",
+    "prior_tree_fast": "142/142_PASS_BEFORE_URI_REPAIR_NOT_FINAL_TREE",
+    "repair_private_update_and_independent_process_cold_read": "PASS_ZERO_NETWORK_ZERO_REAL_CALLS",
+    "repair_v14_requirement_closure_hash": "sha256:e3f0eabc5ed50b7b5ecd79b7c407927ef888383d6983dc16619c38a863288b1d",
+    "historical_result_and_v13_binding_unchanged": true,
+    "unquantified_fulfillment_cost_amortization_expense_not_proven_in_usd313m": true,
+    "economic_all_amortization_scope_proven": false,
+    "new_390_business_coordinate": false,
+    "formal_adoption": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "actual_ledger_claim_rows_after": 195,
+    "issue47_operated": false,
+    "new_head_ci": "PENDING_AFTER_PUSH"
   }
 }
