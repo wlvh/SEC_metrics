@@ -204,6 +204,29 @@ class NotesItMustRefuse(unittest.TestCase):
         self._refused(paragraph, paragraph + extra, "AMENDMENT_NOTE_PARAGRAPHS_OUT_OF_BOUND:10")
 
 
+
+class TheEcdReleaseItAccepts(unittest.TestCase):
+    """The note reader asks whether the amendment's new facts are all ECD facts.
+
+    It asks with the historical view's ECD question (``is_ecd_namespace``). No
+    saved Part III amendment declares the first ECD release, so the predecessor's
+    amendment is read again with its one ECD namespace declaration rewritten -
+    constructed bytes, named as such.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.prepared, cls.original, (cls.amendment,) = _Saved.get(PARAMOUNT, "2024-12-31")
+
+    def test_the_first_ecd_release_is_read_as_ecd(self):
+        changed = _changed(self.amendment, "xbrl.sec.gov/ecd/2024", "xbrl.sec.gov/ecd/2022q4")
+        self.assertEqual(_read(changed, self.original, self.prepared)["classification"], PART_III_CLASS)
+
+    def test_a_namespace_that_is_not_a_release_is_not(self):
+        changed = _changed(self.amendment, "xbrl.sec.gov/ecd/2024", "xbrl.sec.gov/ecd/2024x")
+        with self.assertRaisesRegex(AmendmentNoteError, "PART_III_ONLY_SOURCE_SCOPE_NOT_PROVEN"):
+            _read(changed, self.original, self.prepared)
+
 class TheAdmissionAsksIt(unittest.TestCase):
 
     def test_the_predecessor_s_event_window_is_cleared_and_its_statements_are_not(self):

@@ -67,7 +67,8 @@ def main():
                  if len({r["value"] for r in row["reports"] if not r["placeholder"]}) > 1]
     body = {"record_type": "ISSUE47_C03_LATER_PROXY_SCAN", "proxies_read": len(seen),
             "person_years": len(rows), "person_years_reported_by_two_or_more_proxies": len(by_several),
-            "person_years_with_different_amounts": differing, "calls": {"sec": 0, "provider": 0}}
+            "person_years_with_different_amounts": differing, "person_year_reports": rows,
+            "calls": {"sec": 0, "provider": 0}}
     OUT.write_text(json.dumps(body, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({key: body[key] for key in ("proxies_read", "person_years",
                                                  "person_years_reported_by_two_or_more_proxies")}),

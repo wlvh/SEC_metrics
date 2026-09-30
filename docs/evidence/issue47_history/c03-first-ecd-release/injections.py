@@ -24,7 +24,8 @@ SOURCE = "scripts/vnext/historical_dei.py"
 NOTE = "scripts/vnext/historical_amendment_note.py"
 CASES = "tests.vnext.test_historical_ecd_release"
 DEI = "tests.vnext.test_historical_dei"
-MODULES = (CASES, DEI)
+NOTE_CASES = "tests.vnext.test_historical_amendment_note"
+MODULES = (CASES, DEI, NOTE_CASES)
 
 # name: (file, old, new, the case written for it[, the module that holds it])
 INJECTIONS = {
@@ -53,7 +54,7 @@ INJECTIONS = {
         NOTE,
         '    governance = all(is_ecd_namespace(fact["concept"][0])',
         '    governance = all(re.fullmatch(r"https?://xbrl\\.sec\\.gov/ecd/[0-9]{4}", fact["concept"][0])',
-        "test_no_historical_function_reaches_the_question_without_a_view", DEI),
+        "test_the_first_ecd_release_is_read_as_ecd", NOTE_CASES),
 }
 
 
