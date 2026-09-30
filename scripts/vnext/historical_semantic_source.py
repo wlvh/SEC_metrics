@@ -25,6 +25,23 @@ root is an installed, registered root, so this is always the
 source proofs are admitted by ``verify_ordinary_source_proofs``, as every other
 historical route admits them.
 
+One bound differs, and only where the frozen one refuses. The frozen grouping
+refuses any single source object whose encoded payload exceeds
+``max_single_object_payload_bytes`` (300,000 bytes). That byte count stands in
+for "fits in one request"; the request builders check the real bound
+(``continuous_request_context.measured_groups``: reference tokens plus the
+output reserve within the model context, and the request's own byte limit) and
+refuse an indivisible unit that does not fit, naming it. Older annual reports
+carry inline continuations of pension tables that are over 300 KB of markup
+yet about 130,000-155,000 reference tokens, well inside that request bound.
+When, and only when, the frozen grouping of a document refuses with
+``SEMANTIC_SINGLE_SOURCE_OBJECT_EXCEEDS_INPUT_BOUND``, that document is grouped
+again with the single-object bound set to the request's byte limit and every
+other policy value unchanged. The document's entry records it
+(``single_object_bound``) and names each unit over the frozen bound. A document
+the frozen grouping accepts is unchanged, byte for byte. No object is split,
+trimmed or omitted.
+
 Nothing here makes a request, reads a response or decides a result.
 """
 from pathlib import Path
@@ -36,7 +53,8 @@ from . import going_concern_source as frozen_going_concern
 from . import r6_semantic_source as frozen_semantic
 from .annual_update import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file
-from .historical_dei import release_aware
+from .continuous_request_context import MAX_BYTES as REQUEST_PAYLOAD_BYTES
+from .historical_dei import release_aware, release_aware_with
 from .historical_annual_input import (prepare_historical_annual_input,
                                       prepare_original_historical_input)
 from .normal_annual_input_v2 import exact_json_value
@@ -46,6 +64,13 @@ from .regulatory_investigation_candidates import _quotation_ranges
 from .sources import raw_blob_record, resolve_repository_file, source_reference_record
 
 SUPPORTED_METRICS = ("B13", "D04")
+
+
+SINGLE_OBJECT_REFUSAL = "SEMANTIC_SINGLE_SOURCE_OBJECT_EXCEEDS_INPUT_BOUND"
+SINGLE_OBJECT_POLICY = {**frozen_semantic.POLICY,
+                        "max_single_object_payload_bytes": REQUEST_PAYLOAD_BYTES}
+_WIDER_GROUP = release_aware_with(frozen_semantic._group, POLICY=SINGLE_OBJECT_POLICY)
+_WIDER_NATIVE_UNITS = release_aware_with(frozen_semantic._native_units, _group=_WIDER_GROUP)
 
 
 class HistoricalSemanticSourceError(ValueError):
@@ -127,6 +152,37 @@ def prepare_historical_going_concern_source(*, repo_root: Path, company_id: str,
         "calls": {"provider": 0, "paid": 0, "sec": 0}}, "packet_id")
 
 
+def _document_units(blocks, raw, component, document_id):
+    """The frozen grouping of one document; the wider single-object bound only where it refuses.
+
+    Returns ``(visible, native, coverage, bound)``: ``bound`` is empty when the
+    frozen grouping accepted the document, otherwise ``{"single_object_bound":
+    record}`` naming the frozen and successor bounds and every unit over the
+    frozen one. Any other refusal is the frozen one, raised unchanged.
+    """
+    def group(group_function, native_function):
+        visible = group_function(blocks, lambda rows: {"blocks": rows}, document_id, "VISIBLE_TEXT")
+        _need([b for u in visible for b in u["payload"]["blocks"]] == blocks,
+              "SEMANTIC_VISIBLE_ROUNDTRIP_CHANGED")
+        native, coverage = native_function(raw, component)
+        return visible, native, coverage
+
+    try:
+        return (*group(frozen_semantic._group, frozen_semantic._native_units), {})
+    except frozen_semantic.SemanticSourceError as error:
+        if str(error) != SINGLE_OBJECT_REFUSAL:
+            raise
+    visible, native, coverage = group(_WIDER_GROUP, _WIDER_NATIVE_UNITS)
+    frozen_bound = frozen_semantic.POLICY["max_single_object_payload_bytes"]
+    over = [{"unit_id": u["unit_id"], "kind": u["kind"], "payload_bytes": u["payload_bytes"]}
+            for u in visible + native if u["payload_bytes"] > frozen_bound]
+    _need(over, "HISTORICAL_SEMANTIC_WIDER_BOUND_ADMITTED_NOTHING_OVER_THE_FROZEN_ONE")
+    return visible, native, coverage, {"single_object_bound": {
+        "frozen_bytes": frozen_bound, "successor_bytes": REQUEST_PAYLOAD_BYTES,
+        "successor_basis": "REQUEST_PAYLOAD_BYTE_LIMIT_WITH_THE_TOKEN_CHECK_AT_REQUEST_CONSTRUCTION",
+        "frozen_refusal": SINGLE_OBJECT_REFUSAL, "units_over_the_frozen_bound": over}}
+
+
 def prepare_historical_d04_semantic_source(*, repo_root: Path, company_id: str,
                                            period_selection):
     """``prepare_d04_semantic_source`` for the pinned period."""
@@ -154,13 +210,9 @@ def prepare_historical_d04_semantic_source(*, repo_root: Path, company_id: str,
                    "html_quotation_context": any(a < b["raw_end_byte"] and b["raw_start_byte"] < z
                                                  for a, z in quotation_ranges)}
                   for b in document["blocks"]]
-        visible = frozen_semantic._group(blocks, lambda rows: {"blocks": rows}, document_id,
-                                         "VISIBLE_TEXT")
-        _need([b for u in visible for b in u["payload"]["blocks"]] == blocks,
-              "SEMANTIC_VISIBLE_ROUNDTRIP_CHANGED")
-        native, coverage = frozen_semantic._native_units(raw, component)
+        visible, native, coverage, bound = _document_units(blocks, raw, component, document_id)
         units.extend(visible + native)
-        documents.append({
+        documents.append({**bound,
             "document_id": document_id, "source_reference": component["source_reference"],
             "raw_blob": component["raw_blob"], "filing": component["source_filing"],
             "registrant_name_binding": component["registrant_name_binding"],

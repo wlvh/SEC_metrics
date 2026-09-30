@@ -315,6 +315,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_dei",)
 SOURCE_TESTS += ("tests.vnext.test_historical_proxy_identity",)
 SOURCE_TESTS += ("tests.vnext.test_historical_note_navigation",)
 SOURCE_TESTS += ("tests.vnext.test_historical_proxy_compensation",)
+# D04's single-object bound widened only where the frozen grouping refuses:
+# Pfizer FY2022 from the export and an Enphase report from the checkout, with
+# the request bound's own refusal of a unit twice the size; 27 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_semantic_bound",)
 # Four modules the tier did not run although their records said it did or would:
 # the approved amendment policy asked of two saved 10-K/A filings (38 seconds
 # alone), the two Part III filings' statement-input admission re-verified from

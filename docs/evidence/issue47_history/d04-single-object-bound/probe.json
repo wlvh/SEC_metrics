@@ -1,0 +1,80 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "positions": {
+  "pfizer@2022-12-31": {
+   "error": "SemanticSourceError:SEMANTIC_SINGLE_SOURCE_OBJECT_EXCEEDS_INPUT_BOUND",
+   "largest": {
+    "NATIVE_FACTS": {
+     "bytes": 8395,
+     "concept": null,
+     "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+     "kind": "NATIVE_FACTS",
+     "ordinal": 2620,
+     "value_characters": 0,
+     "value_prefix": ""
+    },
+    "NATIVE_SUPPLEMENTS": {
+     "attributes": {
+      "continuedat": "i501db177ee9946a8bc857ab966a8f7a6",
+      "id": "if81144c24cd349e6b41ffac2467a28e1"
+     },
+     "bytes": 313218,
+     "end_character": 5743676,
+     "kind": "NATIVE_SUPPLEMENTS",
+     "local_name": "continuation",
+     "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+     "nested_local_names": [
+      "footnote"
+     ],
+     "nested_objects": 5,
+     "raw_xml_characters": 296067,
+     "start_character": 5447609,
+     "text_prefix": "D. Plan Assets The following provides the components of plan assets: As of December 31, 2022 As of December 31, 2021 &#160;&#160; &#160;&#160; Fair Value Fair Value (MILLIONS EXCEPT TARGET ALLOCATION PERCENTAGE) Target Allocation Percentage",
+     "visible_characters": 5434
+    },
+    "VISIBLE_TEXT": {
+     "block_index": 678,
+     "bytes": 3705,
+     "kind": "VISIBLE_TEXT",
+     "raw_bytes": 3515,
+     "text_characters": 3491,
+     "text_prefix": "Significant disruptions of IT systems or breaches of information security could adversely affect our business. We extensively rely upon sophisticated IT systems (including cloud services) to operate our business. We produce, collect, proces"
+    }
+   },
+   "over": [
+    {
+     "attributes": {
+      "continuedat": "i501db177ee9946a8bc857ab966a8f7a6",
+      "id": "if81144c24cd349e6b41ffac2467a28e1"
+     },
+     "bytes": 313218,
+     "end_character": 5743676,
+     "kind": "NATIVE_SUPPLEMENTS",
+     "local_name": "continuation",
+     "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+     "nested_local_names": [
+      "footnote"
+     ],
+     "nested_objects": 5,
+     "raw_xml_characters": 296067,
+     "start_character": 5447609,
+     "text_prefix": "D. Plan Assets The following provides the components of plan assets: As of December 31, 2022 As of December 31, 2021 &#160;&#160; &#160;&#160; Fair Value Fair Value (MILLIONS EXCEPT TARGET ALLOCATION PERCENTAGE) Target Allocation Percentage",
+     "visible_characters": 5434
+    }
+   ],
+   "rows": {
+    "NATIVE_FACTS": 3239,
+    "NATIVE_SUPPLEMENTS": 415,
+    "VISIBLE_TEXT": 4092
+   },
+   "seconds": 135
+  }
+ },
+ "root_note": "restored from the committed export; not a data root the Runs use",
+ "single_object_bound_bytes": 300000,
+ "unit_limit_bytes": 150000
+}
