@@ -24,7 +24,7 @@
 ## 实测
 
 - `probe.py` → `probe.json`：在导出恢复的根上走历史路线准备 C02 输入并建候选。六个可达的 FY2021 位置（Marriott 42 条、Ford 74、Paramount 84、Enphase 15、Lumen 46、Macy's 40）全部准备成功，每个输入绑定都带 `proxy_cover_identity`；Pfizer 与 Salesforce 在期间选择处停下（历史分片不一致，需刷新，在延伸批准里）。**这些摘录条数不是内容验收**：选择器是在 10 份 2023 年后的代理上写并核对的，2022 年的版式没读过。运行时检出里还有未提交的 #80 改动（只涉及 D02 路径）。
-- `injections.py` → `injections.json`：第一次 14 个注错，13 个由为它写的用例抓到；"输入层不调用名称检查"那一个按设计不被单元用例看见（它的检查是上面的 probe 要求每个绑定都带封面身份），也如实未被抓到。接上 SCT 读法后，关于 C03 扣留理由的那一个注错随之失效，移到 `../proxy-compensation-table/injections.py`；本脚本余下 13 个在最终代码上重跑。
+- `injections.py` → `injections.json`：第一次 14 个注错，13 个由为它写的用例抓到；"输入层不调用名称检查"那一个按设计不被单元用例看见（它的检查是上面的 probe 要求每个绑定都带封面身份），也如实未被抓到。接上 SCT 读法后，关于 C03 扣留理由的那一个注错随之失效，移到 `../proxy-compensation-table/injections.py`；本脚本余下 13 个在最终代码上重跑（`injections.json`，第一次的结果保留为 `injections-first-version.json`）：对照通过，12 个由为它写的用例抓到，"输入层不调用名称检查"仍按设计未被单元用例抓到。`C03_TAKES_ANY_ROUTER_ERROR_AS_THE_GAP` 保留，现在守的是路线只在"no-contexts 且无 inline 标记"时才去读代理表，由 `test_an_inline_document_that_fails_the_parse_keeps_its_error` 抓到。
 - 用例：`tests/vnext/test_historical_proxy_identity.py`（23 例，读导出里的 8 份真实代理与已存 submissions）、`tests/vnext/test_historical_dei.py` 新增 5 例。零 SEC、零模型调用。
 
 ## 没做的

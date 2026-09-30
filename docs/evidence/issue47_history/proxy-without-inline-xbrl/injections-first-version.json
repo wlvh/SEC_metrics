@@ -13,7 +13,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 22
  },
  "ANY_GLYPH_IS_A_MARK": {
   "as_expected": true,
@@ -29,7 +29,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 25
+  "seconds": 21
  },
  "ANY_ROUTER_ERROR_REACHES_THE_COVER": {
   "as_expected": true,
@@ -45,7 +45,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 21
  },
  "AN_INLINE_DOCUMENT_REACHES_THE_COVER": {
   "as_expected": true,
@@ -61,7 +61,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 19
  },
  "AN_OVERRIDE_MAY_ASK_THE_QUESTION_WITHOUT_A_VIEW": {
   "as_expected": true,
@@ -77,7 +77,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 73
+  "seconds": 77
  },
  "AN_OVERRIDE_MAY_NAME_WHAT_THE_CODE_DOES_NOT_READ": {
   "as_expected": true,
@@ -93,7 +93,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 73
+  "seconds": 76
  },
  "A_FORMER_NAME_COUNTS_ON_ANY_DATE": {
   "as_expected": true,
@@ -109,7 +109,23 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 21
+ },
+ "C03_DOES_NOT_NAME_THE_GAP": {
+  "as_expected": true,
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_withhold_names_the_gap_and_the_proxy",
+  "failed_cases": [
+   "test_the_withhold_names_the_gap_and_the_proxy"
+  ],
+  "file": "scripts/vnext/historical_governance_results.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 20
  },
  "C03_TAKES_ANY_ROUTER_ERROR_AS_THE_GAP": {
   "as_expected": true,
@@ -125,14 +141,14 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 20
  },
  "CONTROL": {
   "returncodes": [
    0,
    0
   ],
-  "seconds": 99
+  "seconds": 92
  },
  "NAMES_ARE_COMPARED_WITH_THEIR_LEGAL_SUFFIXES": {
   "as_expected": true,
@@ -148,7 +164,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 21
  },
  "THE_COVERAGE_DOES_NOT_SAY_HOW_THE_PROXY_WAS_IDENTIFIED": {
   "as_expected": true,
@@ -164,7 +180,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 22
  },
  "THE_CURRENT_NAME_COUNTS_ON_ANY_DATE": {
   "as_expected": true,
@@ -180,7 +196,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 26
+  "seconds": 20
  },
  "THE_INPUT_DOES_NOT_CHECK_THE_COVER_NAME": {
   "as_expected": true,
@@ -196,7 +212,7 @@
    0,
    0
   ],
-  "seconds": 101
+  "seconds": 94
  },
  "THE_OVERRIDE_IS_NOT_APPLIED": {
   "as_expected": true,
@@ -213,7 +229,7 @@
   "returncodes": [
    1
   ],
-  "seconds": 76
+  "seconds": 78
  },
  "all_as_expected": true
 }
