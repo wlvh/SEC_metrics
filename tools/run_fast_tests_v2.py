@@ -466,8 +466,11 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # re-captures unchanged bytes, which is the case that makes the rest mean
     # anything. Each company's declaration is still built once per process and
     # deep-copied to the cases that read it. This module is the one whose
-    # timeout would read as "the acquisition chain broke".
-    "tests.vnext.test_historical_sec_session": 900,
+    # timeout would read as "the acquisition chain broke". The extension of
+    # the SEC approval added 26 cases, three of them real chains or resumes;
+    # the whole module took 930 seconds here while a batch held three of four
+    # cores, so the budget moved from 900 before a runner could hit it.
+    "tests.vnext.test_historical_sec_session": 1500,
     # 21 cases, five complete semantic sources; 204 seconds measured while a
     # batch held three of four cores, which is too close to the default.
     "tests.vnext.test_historical_semantic_routes": 600,

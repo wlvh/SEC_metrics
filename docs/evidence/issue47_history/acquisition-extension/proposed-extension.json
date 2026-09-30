@@ -1,0 +1,291 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "digest_of_the_body": "a819e7b370b76bc908a2972125e9ea3f6816692671fae757da205c399e1a6ab2",
+ "need_notes": {
+  "jpmorgan_chase": {
+   "due_rows_serving_only_a_target_outside_the_window": 2,
+   "event_estimator_calibration": {
+    "2021-12-31": {
+     "due_rows": 70,
+     "estimate": 70
+    },
+    "2022-12-31": {
+     "due_rows": 54,
+     "estimate": 54
+    },
+    "2023-12-31": {
+     "due_rows": 52,
+     "estimate": 52
+    }
+   },
+   "metadata": "the index and every one of its 70 blocks plus one, less the 2 refresh rows already declared",
+   "missed_targets": {
+    "2024-12-31": 62
+   },
+   "stale_blocks": {
+    "CIK0000019617-submissions-007.json": {
+     "basis": "the saved copy is another partition; the most 8-Ks in the same span of the 4 years before: [0, 1, 1, 3]",
+     "filings": 3,
+     "windows": [
+      "2025-12-31"
+     ]
+    }
+   }
+  },
+  "pfizer": {
+   "due_rows_serving_only_a_target_outside_the_window": 0,
+   "event_estimator_calibration": {},
+   "metadata": "the index and every one of its 3 blocks plus one, less the 2 refresh rows already declared",
+   "missed_targets": {},
+   "stale_blocks": {
+    "CIK0000078003-submissions-001.json": {
+     "basis": "the block lists 4 filings its saved copy lacks",
+     "filings": 4,
+     "windows": [
+      "2021-12-31"
+     ]
+    }
+   }
+  },
+  "salesforce": {
+   "due_rows_serving_only_a_target_outside_the_window": 0,
+   "event_estimator_calibration": {},
+   "metadata": "the index and every one of its 5 blocks plus one, less the 2 refresh rows already declared",
+   "missed_targets": {},
+   "stale_blocks": {
+    "CIK0001108524-submissions-001.json": {
+     "basis": "the block lists 6 filings its saved copy lacks",
+     "filings": 6,
+     "windows": [
+      "2022-01-31",
+      "2023-01-31",
+      "2024-01-31"
+     ]
+    }
+   }
+  },
+  "southwest_airlines": {
+   "due_rows_serving_only_a_target_outside_the_window": 0
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE_EXTENSION",
+ "the_comment_body_as_text": "{\n \"budget_root\": \"/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1\",\n \"cap_arithmetic\": {\n  \"jpmorgan_chase\": {\n   \"a_missed_target_s_annual_chain\": 2,\n   \"a_missed_target_s_events\": 62,\n   \"a_missed_target_s_proxy\": 1,\n   \"declarable_today\": 178,\n   \"events_a_stale_block_hides\": 6,\n   \"metadata_refresh_beyond_the_declared_rows\": 70,\n   \"proxies_of_targets_without_a_governance_plan\": 4,\n   \"refused_today_only_for_an_out_of_frame_consumer\": 2\n  },\n  \"pfizer\": {\n   \"a_missed_target_s_annual_chain\": 0,\n   \"a_missed_target_s_events\": 0,\n   \"a_missed_target_s_proxy\": 0,\n   \"declarable_today\": 2,\n   \"events_a_stale_block_hides\": 8,\n   \"metadata_refresh_beyond_the_declared_rows\": 3,\n   \"proxies_of_targets_without_a_governance_plan\": 1,\n   \"refused_today_only_for_an_out_of_frame_consumer\": 0\n  },\n  \"salesforce\": {\n   \"a_missed_target_s_annual_chain\": 0,\n   \"a_missed_target_s_events\": 0,\n   \"a_missed_target_s_proxy\": 0,\n   \"declarable_today\": 2,\n   \"events_a_stale_block_hides\": 12,\n   \"metadata_refresh_beyond_the_declared_rows\": 5,\n   \"proxies_of_targets_without_a_governance_plan\": 3,\n   \"refused_today_only_for_an_out_of_frame_consumer\": 0\n  },\n  \"southwest_airlines\": {\n   \"declarable_today\": 110,\n   \"proxies_of_targets_without_a_governance_plan\": 0,\n   \"refused_today_only_for_an_out_of_frame_consumer\": 0\n  }\n },\n \"execution\": \"the same ledger, root, container, start marker and export as the approval it extends; every gate that approval passes through applies to this one, and they bind the executor's code path, not the executor\",\n \"extends\": {\n  \"delegation_body_sha256\": \"131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0\",\n  \"delegation_url\": \"https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5886314727\",\n  \"ledger_state\": {\n   \"claim_count\": 1130,\n   \"claims\": {\n    \"sha256\": \"c23650743f5a641fc3c87af3c54e29d07561628a7097cbad4dd41db45c7e08a0\",\n    \"size\": 812668\n   },\n   \"cumulative\": [\n    0,\n    0,\n    1354\n   ],\n   \"export_id\": \"sha256:817f632dbddee5ff23482a8d56fbe8d6cac3dea60ad5aa3ab8458211f1a557bd\",\n   \"resumes\": {\n    \"sha256\": \"69395248537e98d3b383d3f08ec7e596853d3c434c0e610981d80a8bb81d28f0\",\n    \"size\": 2427\n   }\n  }\n },\n \"extension_ordinal\": 1,\n \"maximum_additional_provider_paid_sec_calls\": [\n  0,\n  0,\n  471\n ],\n \"production_authorized\": false,\n \"reclaim\": [\n  {\n   \"acquisition_kind\": \"REPLACEMENT_ACQUISITION\",\n   \"dependency_classes\": [\n    \"FISCAL_EVENT_FILING\"\n   ]\n  },\n  {\n   \"acquisition_kind\": \"SNAPSHOT_REFRESH\",\n   \"dependency_classes\": [\n    \"SUBMISSIONS_HISTORY\",\n    \"SUBMISSIONS_INDEX\"\n   ]\n  }\n ],\n \"record_type\": \"ISSUE_47_HISTORICAL_SEC_DELEGATION_EXTENSION\",\n \"requirement_id\": \"issue_47_v1\",\n \"scope\": {\n  \"company_ids\": [\n   \"jpmorgan_chase\",\n   \"pfizer\",\n   \"salesforce\",\n   \"southwest_airlines\"\n  ],\n  \"dependency_classes\": [\n   \"ACCESSION_INSTANCE_DISCOVERY\",\n   \"ANNUAL_PERIOD_IDENTITY\",\n   \"FISCAL_EVENT_FILING\",\n   \"GOVERNANCE_DISCLOSURE_FILING\",\n   \"SUBMISSIONS_HISTORY\",\n   \"SUBMISSIONS_INDEX\"\n  ],\n  \"earliest_report_end\": \"2021-12-31\",\n  \"grants\": [\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\",\n     \"pfizer\",\n     \"salesforce\"\n    ],\n    \"dependency_classes\": [\n     \"ACCESSION_INSTANCE_DISCOVERY\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"X_ACCESSION_INSTANCE_DISCOVERY\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\",\n     \"pfizer\",\n     \"salesforce\"\n    ],\n    \"dependency_classes\": [\n     \"ANNUAL_PERIOD_IDENTITY\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"X_ANNUAL_PERIOD_IDENTITY\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\",\n     \"pfizer\",\n     \"salesforce\",\n     \"southwest_airlines\"\n    ],\n    \"dependency_classes\": [\n     \"FISCAL_EVENT_FILING\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"X_FISCAL_EVENT_FILING\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\",\n     \"pfizer\",\n     \"salesforce\",\n     \"southwest_airlines\"\n    ],\n    \"dependency_classes\": [\n     \"GOVERNANCE_DISCLOSURE_FILING\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"X_GOVERNANCE_DISCLOSURE_FILING\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\",\n     \"pfizer\",\n     \"salesforce\"\n    ],\n    \"dependency_classes\": [\n     \"SUBMISSIONS_HISTORY\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"X_SUBMISSIONS_HISTORY\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\",\n     \"pfizer\",\n     \"salesforce\"\n    ],\n    \"dependency_classes\": [\n     \"SUBMISSIONS_INDEX\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"X_SUBMISSIONS_INDEX\",\n    \"latest_report_end\": \"2026-01-31\"\n   }\n  ],\n  \"latest_report_end\": \"2026-01-31\",\n  \"purposes\": [\n   \"ISSUE47_HISTORICAL_SOURCE_DEPENDENCY\"\n  ]\n }\n}",
+ "the_comment_body_to_post": {
+  "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
+  "cap_arithmetic": {
+   "jpmorgan_chase": {
+    "a_missed_target_s_annual_chain": 2,
+    "a_missed_target_s_events": 62,
+    "a_missed_target_s_proxy": 1,
+    "declarable_today": 178,
+    "events_a_stale_block_hides": 6,
+    "metadata_refresh_beyond_the_declared_rows": 70,
+    "proxies_of_targets_without_a_governance_plan": 4,
+    "refused_today_only_for_an_out_of_frame_consumer": 2
+   },
+   "pfizer": {
+    "a_missed_target_s_annual_chain": 0,
+    "a_missed_target_s_events": 0,
+    "a_missed_target_s_proxy": 0,
+    "declarable_today": 2,
+    "events_a_stale_block_hides": 8,
+    "metadata_refresh_beyond_the_declared_rows": 3,
+    "proxies_of_targets_without_a_governance_plan": 1,
+    "refused_today_only_for_an_out_of_frame_consumer": 0
+   },
+   "salesforce": {
+    "a_missed_target_s_annual_chain": 0,
+    "a_missed_target_s_events": 0,
+    "a_missed_target_s_proxy": 0,
+    "declarable_today": 2,
+    "events_a_stale_block_hides": 12,
+    "metadata_refresh_beyond_the_declared_rows": 5,
+    "proxies_of_targets_without_a_governance_plan": 3,
+    "refused_today_only_for_an_out_of_frame_consumer": 0
+   },
+   "southwest_airlines": {
+    "declarable_today": 110,
+    "proxies_of_targets_without_a_governance_plan": 0,
+    "refused_today_only_for_an_out_of_frame_consumer": 0
+   }
+  },
+  "execution": "the same ledger, root, container, start marker and export as the approval it extends; every gate that approval passes through applies to this one, and they bind the executor's code path, not the executor",
+  "extends": {
+   "delegation_body_sha256": "131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0",
+   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5886314727",
+   "ledger_state": {
+    "claim_count": 1130,
+    "claims": {
+     "sha256": "c23650743f5a641fc3c87af3c54e29d07561628a7097cbad4dd41db45c7e08a0",
+     "size": 812668
+    },
+    "cumulative": [
+     0,
+     0,
+     1354
+    ],
+    "export_id": "sha256:817f632dbddee5ff23482a8d56fbe8d6cac3dea60ad5aa3ab8458211f1a557bd",
+    "resumes": {
+     "sha256": "69395248537e98d3b383d3f08ec7e596853d3c434c0e610981d80a8bb81d28f0",
+     "size": 2427
+    }
+   }
+  },
+  "extension_ordinal": 1,
+  "maximum_additional_provider_paid_sec_calls": [
+   0,
+   0,
+   471
+  ],
+  "production_authorized": false,
+  "reclaim": [
+   {
+    "acquisition_kind": "REPLACEMENT_ACQUISITION",
+    "dependency_classes": [
+     "FISCAL_EVENT_FILING"
+    ]
+   },
+   {
+    "acquisition_kind": "SNAPSHOT_REFRESH",
+    "dependency_classes": [
+     "SUBMISSIONS_HISTORY",
+     "SUBMISSIONS_INDEX"
+    ]
+   }
+  ],
+  "record_type": "ISSUE_47_HISTORICAL_SEC_DELEGATION_EXTENSION",
+  "requirement_id": "issue_47_v1",
+  "scope": {
+   "company_ids": [
+    "jpmorgan_chase",
+    "pfizer",
+    "salesforce",
+    "southwest_airlines"
+   ],
+   "dependency_classes": [
+    "ACCESSION_INSTANCE_DISCOVERY",
+    "ANNUAL_PERIOD_IDENTITY",
+    "FISCAL_EVENT_FILING",
+    "GOVERNANCE_DISCLOSURE_FILING",
+    "SUBMISSIONS_HISTORY",
+    "SUBMISSIONS_INDEX"
+   ],
+   "earliest_report_end": "2021-12-31",
+   "grants": [
+    {
+     "company_ids": [
+      "jpmorgan_chase",
+      "pfizer",
+      "salesforce"
+     ],
+     "dependency_classes": [
+      "ACCESSION_INSTANCE_DISCOVERY"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "X_ACCESSION_INSTANCE_DISCOVERY",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase",
+      "pfizer",
+      "salesforce"
+     ],
+     "dependency_classes": [
+      "ANNUAL_PERIOD_IDENTITY"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "X_ANNUAL_PERIOD_IDENTITY",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase",
+      "pfizer",
+      "salesforce",
+      "southwest_airlines"
+     ],
+     "dependency_classes": [
+      "FISCAL_EVENT_FILING"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "X_FISCAL_EVENT_FILING",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase",
+      "pfizer",
+      "salesforce",
+      "southwest_airlines"
+     ],
+     "dependency_classes": [
+      "GOVERNANCE_DISCLOSURE_FILING"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "X_GOVERNANCE_DISCLOSURE_FILING",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase",
+      "pfizer",
+      "salesforce"
+     ],
+     "dependency_classes": [
+      "SUBMISSIONS_HISTORY"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "X_SUBMISSIONS_HISTORY",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase",
+      "pfizer",
+      "salesforce"
+     ],
+     "dependency_classes": [
+      "SUBMISSIONS_INDEX"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "X_SUBMISSIONS_INDEX",
+     "latest_report_end": "2026-01-31"
+    }
+   ],
+   "latest_report_end": "2026-01-31",
+   "purposes": [
+    "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
+   ]
+  }
+ },
+ "this_is_a_proposal_not_a_grant": {
+  "what_is_still_missing": [
+   "the owner posts the body below on issue 47",
+   "register-extension reads it back from GitHub and writes the policy and the record"
+  ],
+  "where_a_grant_would_live": "config/issue47_historical_calls_v1_extension_1.json"
+ },
+ "verified": {
+  "a_policy_wider_than_the_comment": "ISSUE_47_EXTENSION_WIDENS_THE_APPROVED_GRANT:maximum_additional_provider_paid_sec_calls",
+  "accepted_offline": true,
+  "declared_rows_under_the_extension": {
+   "admitted": 292,
+   "admitted_as_a_request_again": 2,
+   "refused": {}
+  },
+  "the_live_ledger_is_the_stated_one": {
+   "claim_count": 1130,
+   "spent_at_that_log": [
+    0,
+    0,
+    1354
+   ]
+  }
+ }
+}

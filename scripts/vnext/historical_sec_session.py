@@ -53,6 +53,7 @@ import os
 
 from sec_http import (SecHttpClient, parse_request_log_rows, request_log_attempt_id,
                       validate_official_sec_url, validate_request_log_manifest)
+from git_workspace import first_symlink_in_path
 from .batch_workflow import validate_request_attempt_binding
 from .canonical import (canonical_json_bytes, content_hash, sha256_bytes, sha256_file,
                         strict_json_file, strict_json_loads)
@@ -396,6 +397,10 @@ class HistoricalCallLedger:
         # otherwise lower the count mid-session. None until the session pins
         # it; recorded sessions have no published start to pin from.
         self._pinned_reserve = None
+        # The owner's extension of the approval this ledger was bound to, once
+        # the live path has verified it (historical_sec_extension): its added
+        # limits and the claim-log state it continues from. None without one.
+        self._extension = None
 
     @staticmethod
     def anchor_path(root):
@@ -557,9 +562,77 @@ class HistoricalCallLedger:
               "ISSUE_47_LEDGER_RESUME_RESERVE_CHANGED:" + str(reserve) + " now, "
               + str(self._pinned_reserve) + " when the live path checked it")
         counts[2] += reserve
-        return {"counts": counts, "limits": list(self.binding["limits"]),
+        return {"counts": counts, "limits": self._limits(),
                 "blocked": blocked, "slot_count": len(slots), "resume_reserve": reserve,
                 "previous_intent_id": previous, "request_digests": digests}
+
+    def _limits(self):
+        """The binding's limits, plus what a pinned extension adds."""
+        limits = list(self.binding["limits"])
+        if self._extension is not None:
+            limits = [a + b for a, b in zip(limits, self._extension["limits"])]
+        return limits
+
+    def pin_extension(self, extension):
+        """Raise the cap by what the owner's extension adds, for as long as this ledger lives.
+
+        Only for the ledger the extension names: its claim log must begin with
+        exactly the bytes the extension's ledger state describes, and those
+        bytes must hold the claim count it states. An extension of another
+        ledger - or of this one reset or rewound - is refused rather than
+        added to whatever is here.
+        """
+        _need(self._extension is None, "ISSUE_47_LEDGER_EXTENSION_ALREADY_PINNED")
+        state = extension["ledger_state"]
+        log = self.root / "claims.jsonl"
+        _need(log.is_file() and not log.is_symlink(),
+              "ISSUE_47_LEDGER_EXTENSION_WITHOUT_A_CLAIM_LOG")
+        held = log.read_bytes()
+        size = state["claims"]["size"]
+        _need(len(held) >= size and sha256_bytes(content=held[:size]) == state["claims"]["sha256"]
+              and held[:size].count(b"\n") == state["claim_count"],
+              "ISSUE_47_LEDGER_IS_NOT_THE_ONE_THE_EXTENSION_EXTENDS")
+        # What the owner read as already spent is what this ledger had spent at
+        # that state: its claims by channel, plus every resume charge recorded
+        # at or before that claim log. A stated count lower than the real one
+        # would let the owner approve more than they meant.
+        spent = [0, 0, 0]
+        for line in held[:size].decode("utf-8").splitlines():
+            spent[{"PROVIDER": 0, "PAID": 1, SEC: 2}[strict_json_loads(text=line)["channel"]]] += 1
+        spent[2] += resume_reserve_at_state(self.root, claims_size=size,
+                                            resumes=state["resumes"])
+        _need(spent == list(state["cumulative"]),
+              "ISSUE_47_EXTENSION_STATES_ANOTHER_SPENDING:" + str(state["cumulative"])
+              + " stated, " + str(spent) + " at that claim log")
+        # The first pin at this root writes what it pinned beside the root; a
+        # later pin, in any process, must be the same extension. An extension
+        # dict that was never the verified one cannot follow a real one here.
+        # Written whole under a temporary name and linked into place, so a
+        # crash or a second process never sees a partial anchor.
+        anchor = extension_anchor_path(self.root, extension["extension_ordinal"])
+        pinned = canonical_json_bytes(value={
+            field: extension[field] for field in (
+                "extension_ordinal", "delegation_url", "delegation_body_sha256",
+                "maximum_additional_provider_paid_sec_calls", "ledger_state")})
+        _need(first_symlink_in_path(path=anchor) is None, "ISSUE_47_EXTENSION_ANCHOR_UNSAFE")
+        if not anchor.exists() and not anchor.is_symlink():
+            staged = anchor.parent / (anchor.name + "." + os.urandom(8).hex() + ".tmp")
+            try:
+                with staged.open("xb") as handle:
+                    handle.write(pinned)
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                try:
+                    os.link(staged, anchor)
+                except FileExistsError:
+                    pass
+            finally:
+                staged.unlink(missing_ok=True)
+        _need(anchor.is_file() and not anchor.is_symlink() and anchor.read_bytes() == pinned,
+              "ISSUE_47_ANOTHER_EXTENSION_WAS_PINNED_HERE:" + anchor.name)
+        self._extension = {"limits": list(extension["maximum_additional_provider_paid_sec_calls"]),
+                           "claim_count": state["claim_count"],
+                           "extension_ordinal": extension["extension_ordinal"]}
 
     def pin_resume_reserve(self, reserve):
         """Hold the ledger to the resume charge the live path verified, for as long as it lives."""
@@ -584,12 +657,17 @@ class HistoricalCallLedger:
         asked - and if it is asked anyway, the answer is a refusal rather than
         a set that silently omits it.
         """
+        return set(self.claimed_url_ordinals())
+
+    def claimed_url_ordinals(self):
+        """Every URL a slot has claimed, with the ordinals of the slots that claimed it."""
         calls = self.root / "calls"
-        urls = set()
+        urls = {}
         for slot in (sorted(calls.iterdir()) if calls.is_dir() else []):
             plan = slot / "sec-plan.json"
             _need(plan.is_file(), "ISSUE_47_SLOT_HAS_NO_PLAN:" + slot.name)
-            urls.add(strict_json_file(path=plan)["request"]["url"])
+            urls.setdefault(strict_json_file(path=plan)["request"]["url"], []).append(
+                int(slot.name))
         return urls
 
     def require_unblocked(self):
@@ -619,9 +697,9 @@ class HistoricalCallLedger:
         delta = [0, 0, 0]
         delta[index] = 1
         _need(all(a + b <= c for a, b, c in
-                  zip(state["counts"], delta, self.binding["limits"])),
+                  zip(state["counts"], delta, state["limits"])),
               "ISSUE_47_CUMULATIVE_LIMIT_REACHED:" + channel + ":"
-              + str(state["counts"]) + " of " + str(self.binding["limits"]))
+              + str(state["counts"]) + " of " + str(state["limits"]))
         # The same request twice is a redraw, and zero retries forbids it.
         _need(request_digest not in state["request_digests"],
               "ISSUE_47_UNCHANGED_REQUEST_REDRAW_FORBIDDEN")
@@ -729,6 +807,16 @@ class HistoricalSecSession:
             _need(self.ledger.root == Path(self.allowance["budget_root"])
                   and self.response is None,
                   "ISSUE_47_LIVE_SESSION_MUST_USE_THE_GRANTED_ROOT")
+        # A ledger pinned to an extension raises the cap; the session holding
+        # the grants and the re-request rule must be the same extension's, or
+        # requests would be counted against one approval and admitted by another.
+        extension, pinned = self.allowance.get("extension"), self.ledger._extension
+        _need((extension is None and pinned is None)
+              or (extension is not None and pinned is not None
+                  and pinned["extension_ordinal"] == extension["extension_ordinal"]
+                  and pinned["limits"]
+                  == list(extension["maximum_additional_provider_paid_sec_calls"])),
+              "ISSUE_47_LEDGER_AND_SESSION_DISAGREE_ON_THE_EXTENSION")
 
     def _recorded_body(self, *, url):
         """The body this session answers one URL with, or a named refusal.
@@ -783,8 +871,8 @@ class HistoricalSecSession:
                 return {"status": "EXISTING_VERIFIED_SOURCE_REUSED",
                         "source": dependency, "calls": [0, 0, 0],
                         "acquisition_kind": dependency.get("acquisition_kind")}
-            _need(url not in self.ledger.claimed_urls(),
-                  "ISSUE_47_URL_ALREADY_CLAIMED_IN_THIS_LEDGER:" + url)
+            reclaim = self._reclaim(dependency, self.ledger.claimed_url_ordinals())
+            _need(reclaim is not False, "ISSUE_47_URL_ALREADY_CLAIMED_IN_THIS_LEDGER:" + url)
             purpose = self.allowance["scope"]["purposes"][0]
             admitted = request_is_in_scope(allowance=self.allowance,
                                            company_id=company_id,
@@ -792,7 +880,7 @@ class HistoricalSecSession:
                                            frame_report_dates=frame["target_report_dates"])
             receipt, terminal = self._capture_one(company_id=company_id, url=url,
                                                   dependency=dependency,
-                                                  admitted=admitted)
+                                                  admitted=admitted, reclaim=reclaim)
             checkpoint = self.register_checkpoint()
             return {"status": receipt["status"], "receipt": receipt, "terminal": terminal,
                     "checkpoint_id": checkpoint["checkpoint_id"],
@@ -866,14 +954,16 @@ class HistoricalSecSession:
             duplicated = sorted({url for url in urls if urls.count(url) > 1})
             _need(not duplicated,
                   "HISTORICAL_URL_IS_DECLARED_MORE_THAN_ONCE:" + ",".join(duplicated))
-            claimed = self.ledger.claimed_urls()
-            due = []
+            claimed = self.ledger.claimed_url_ordinals()
+            due, reclaims = [], {}
             for row in frame["requirements"]:
                 if not row["new_acquisition_required"]:
                     continue
-                if row["source_url"] in claimed:
+                reclaim = self._reclaim(row, claimed)
+                if reclaim is False:
                     result["already_claimed"].append(_listed(row))
                     continue
+                reclaims[row["source_url"]] = reclaim
                 due.append(row)
             purpose = self.allowance["scope"]["purposes"][0]
             for tier in PASS_TIERS:
@@ -903,7 +993,8 @@ class HistoricalSecSession:
                     try:
                         receipt, _ = self._capture_one(
                             company_id=company_id, url=dependency["source_url"],
-                            dependency=dependency, admitted=admitted)
+                            dependency=dependency, admitted=admitted,
+                            reclaim=reclaims[dependency["source_url"]])
                     except HistoricalSessionError as refusal:
                         if not str(refusal).startswith("ISSUE_47_CUMULATIVE_LIMIT_REACHED"):
                             raise
@@ -1003,7 +1094,25 @@ class HistoricalSecSession:
         summary["cumulative"] = self.ledger.snapshot()
         return summary
 
-    def _capture_one(self, *, company_id, url, dependency, admitted):
+    def _reclaim(self, dependency, claimed):
+        """None for a URL this ledger never claimed, an extension ordinal for one it may claim
+        again, and False for one it may not.
+
+        ``claimed`` maps each claimed URL to the ordinals of the slots that
+        claimed it. Zero automatic retries means a claimed URL is never claimed
+        again - unless the owner's extension says a refresh or a replacement of
+        exactly this kind of row may be requested once more
+        (``historical_sec_extension.reclaim_ordinal``).
+        """
+        ordinals = claimed.get(dependency["source_url"])
+        if not ordinals:
+            return None
+        from .historical_sec_extension import reclaim_ordinal
+        ordinal = reclaim_ordinal(allowance=self.allowance, dependency=dependency,
+                                  claimed_ordinals=ordinals)
+        return False if ordinal is None else ordinal
+
+    def _capture_one(self, *, company_id, url, dependency, admitted, reclaim=None):
         """Claim, fetch, prove and close one request. The lock is the caller's.
 
         Everything from the claim to the terminal happens here and nowhere
@@ -1012,8 +1121,24 @@ class HistoricalSecSession:
         because the caller holds the frame it was computed against; it is
         still bound into the plan the slot claims, so a slot never exists
         without the grant that let it be claimed.
+
+        ``reclaim`` is the extension ordinal under which an already-claimed URL
+        is requested again. It goes into the request, so the request's digest
+        differs from the first one's and the ledger's rule against drawing the
+        same request twice still holds within the extension.
         """
         _need(self.ledger._locked, "ISSUE_47_LEDGER_LOCK_REQUIRED")
+        # A re-request is only the extension's to make: a marker naming an
+        # extension this session does not hold is refused before anything else.
+        _need(reclaim is None
+              or (type(reclaim) is int and reclaim > 0
+                  and (self.allowance.get("extension") or {}).get("extension_ordinal")
+                  == reclaim), "ISSUE_47_RECLAIM_WITHOUT_ITS_EXTENSION")
+        # And the marker must be the one this ledger's slots give, read now
+        # under the lock: a caller's marker for a URL already requested under
+        # the extension, or never requested, is refused.
+        _need(self._reclaim(dependency, self.ledger.claimed_url_ordinals()) == reclaim,
+              "ISSUE_47_RECLAIM_IS_NOT_WHAT_THE_LEDGER_ALLOWS:" + url)
         validate_official_sec_url(url=url)
         _need(admitted.get("company_id") == company_id
               and admitted.get("dependency_class") == dependency["dependency_class"]
@@ -1036,6 +1161,8 @@ class HistoricalSecSession:
         request = {"url": url, "method": "GET", "automatic_retry_count": 0,
                    "sec_configuration_sha256": sha256_file(
                        path=ROOT / "config/sec_config.json")}
+        if reclaim is not None:
+            request["reclaimed_under_extension"] = reclaim
         plan = {"company_id": company_id, "requirement_id": REQUIREMENT_ID,
                 "source_dependency": dependency, "request": request,
                 "source_ledger_before_sha256": sha256_bytes(content=before),
@@ -1262,6 +1389,10 @@ REQUIRED_WIRING_EVIDENCE = (
     # The resume after a lost host: it rebuilds the ledger a grant is spent on
     # and charges what the lost host may have spent, so it is on that path too.
     "scripts/vnext/historical_sec_resume.py",
+    # The owner's extension of the approval: it raises the cap a grant is spent
+    # against and decides which already-requested URLs may be requested again,
+    # so it is on the path as much as the first approval's gate is.
+    "scripts/vnext/historical_sec_extension.py",
     "tests/vnext/test_historical_sec_session.py",
     "tools/vnext_historical_sec.py",
     "tools/vnext_historical_wiring.py",
@@ -1481,6 +1612,48 @@ def resume_view(record):
     return view
 
 
+def extension_anchor_path(root, ordinal):
+    """Where the first pin of an extension at ``root`` records it: beside the root, with the anchor."""
+    root = Path(root)
+    return root.parent / ("." + root.name + ".extension-" + str(int(ordinal)) + ".json")
+
+
+def resume_reserve_at_state(root, *, claims_size, resumes):
+    """The resume charge a ledger state carries, read from the chain beside ``root``.
+
+    ``resumes`` is the chain as the state's export carried it (its public
+    views' bytes: digest and size). The chain here must begin with exactly
+    those bytes, their reserves are the charge at that state, and every resume
+    after them must have restored a claim log at least as long as the state's -
+    a resume made after the state cannot have restored an earlier one, and one
+    restoring an earlier log that the stated chain leaves out would be a charge
+    the state understates. Binding the prefix rather than the restored length
+    lets a resume made after the state, restoring the stated export itself,
+    stay outside the stated spending.
+    """
+    from .historical_sec_resume import local_chain
+    path = resume_chain_path(root)
+    records = (local_chain(root) if path.exists() or path.is_symlink() else [])
+    lines = [canonical_json_bytes(value=resume_view(record) if "instance_nonce" in record
+                                  else record).rstrip(b"\n") + b"\n" for record in records]
+    offset, reserve, stated = 0, 0, resumes["size"]
+    for record, line in zip(records, lines):
+        restored = ((record.get("restored_export") or {}).get("claims") or {}).get("size")
+        _need(type(restored) is int, "ISSUE_47_LEDGER_RESUME_CHAIN_INVALID")
+        if offset < stated:
+            _need(offset + len(line) <= stated and restored <= claims_size,
+                  "ISSUE_47_LEDGER_RESUMES_ARE_NOT_THE_ONES_THE_EXTENSION_EXTENDS")
+            reserve += record["lost_segment"]["reserve_sec_calls"]
+        else:
+            _need(restored >= claims_size,
+                  "ISSUE_47_EXTENSION_STATE_LEAVES_OUT_AN_EARLIER_RESUME")
+        offset += len(line)
+    chain = b"".join(lines)
+    _need(len(chain) >= stated and sha256_bytes(content=chain[:stated]) == resumes["sha256"],
+          "ISSUE_47_LEDGER_RESUMES_ARE_NOT_THE_ONES_THE_EXTENSION_EXTENDS")
+    return reserve
+
+
 def _resume_reserve(root):
     """The SEC calls every resume of the ledger at ``root`` charged for a lost segment, summed.
 
@@ -1616,7 +1789,8 @@ def live_historical_session(*, branch_tip):
     _need(allowance["delegation_body_sha256"] and allowance["delegation_url"],
           "ISSUE_47_ALLOWANCE_DELEGATION_INCOMPLETE:" + POLICY_PATH)
     verify_offline_wiring(receipt_path=allowance["sec_wiring_receipt_path"])
-    branch_export_index = branch_tip()["export_index"]
+    tip = branch_tip()
+    branch_export_index = tip["export_index"]
 
     # Before the session exists, so before any transport: a ledger with no
     # published start could be a second start of an allowance already begun.
@@ -1624,16 +1798,34 @@ def live_historical_session(*, branch_tip):
         return require_published_start(allowance=allowance, reader=reader,
                                        branch_export_index=branch_export_index)
 
-    ledger = live_ledger(allowance=allowance, published=published())
-    session = HistoricalSecSession(factory=_FACTORY, allowance=allowance, ledger=ledger)
+    # The owner's extension of this approval, verified against GitHub the same
+    # way, or None: the start, the resume chain and the export are the first
+    # approval's, and the extension only raises the cap and names the grants
+    # every request from here on is held to.
+    from .historical_sec_extension import (acquisition_extension, extended_allowance,
+                                           require_extension_on_branch)
+    require_extension_on_branch(repo_root=ROOT, branch_files=tip.get("extension_files"))
+    extension = acquisition_extension(repo_root=ROOT, allowance=allowance,
+                                      delegation_reader=reader)
+    effective = extended_allowance(allowance=allowance, extension=extension)
+    ledger = live_ledger(allowance=effective, published=published())
+    session = HistoricalSecSession(factory=_FACTORY, allowance=effective, ledger=ledger)
     session.published_check = published
     return session
 
 
 def live_ledger(*, allowance, published):
-    """The LIVE ledger at the granted root, held to the resume charge the published check verified."""
+    """The LIVE ledger at the granted root, held to the resume charge the published check verified.
+
+    With an extension in ``allowance`` (``extended_allowance``), the ledger is
+    also pinned to it - only if it is the ledger the extension continues.
+    """
     ledger = _allowance_ledger(allowance=allowance, root=Path(allowance["budget_root"]), live=True)
     ledger.pin_resume_reserve(published["reserve_sec_calls"])
+    if allowance.get("extension") is not None:
+        _need(allowance["extension"].get("provenance_verified_against_github") is True,
+              "ISSUE_47_LIVE_EXTENSION_NOT_READ_BACK_FROM_GITHUB")
+        ledger.pin_extension(allowance["extension"])
     return ledger
 
 
@@ -1654,7 +1846,7 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
                                                     "SUBMISSIONS_INDEX"),
                                 earliest_report_end=date.min.isoformat(),
                                 latest_report_end=date.max.isoformat(),
-                                allowance_root=None):
+                                allowance_root=None, extension=None):
     """Offline tests only; no conversion of this session into production.
 
     The root must not be any configured budget root - neither Issue #28's nor
@@ -1695,11 +1887,22 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
                                            "latest_report_end": latest_report_end}]},
                      "delegation_url": None, "delegation_body_sha256": None,
                      "recorded_test_allowance": True}
+    # An extension comes from the tree the allowance came from - verified by
+    # the same gate the live path uses, without the GitHub fetch - or, for a
+    # case about the ledger or the passes rather than the approval, as a test
+    # object in the verified extension's shape.
+    from .historical_sec_extension import acquisition_extension, extended_allowance
+    if allowance_root is not None:
+        _need(extension is None, "ISSUE_47_TEST_EXTENSION_GIVEN_TWICE")
+        extension = acquisition_extension(repo_root=Path(allowance_root), allowance=allowance)
+    allowance = extended_allowance(allowance=allowance, extension=extension)
+    ledger = _allowance_ledger(allowance={
+        **allowance,
+        "maximum_additional_provider_paid_sec_calls":
+            allowance["maximum_additional_provider_paid_sec_calls"]},
+        root=root, live=False)
+    if allowance.get("extension") is not None:
+        ledger.pin_extension(allowance["extension"])
     return HistoricalSecSession(
-        factory=_FACTORY, allowance=allowance,
-        ledger=_allowance_ledger(allowance={
-            **allowance,
-            "maximum_additional_provider_paid_sec_calls":
-                allowance["maximum_additional_provider_paid_sec_calls"]},
-            root=root, live=False),
+        factory=_FACTORY, allowance=allowance, ledger=ledger,
         recorded_response=response, recorded_status=status)

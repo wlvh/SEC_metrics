@@ -1,0 +1,189 @@
+{
+ "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
+ "cap_arithmetic": {
+  "jpmorgan_chase": {
+   "a_missed_target_s_annual_chain": 2,
+   "a_missed_target_s_events": 62,
+   "a_missed_target_s_proxy": 1,
+   "declarable_today": 178,
+   "events_a_stale_block_hides": 6,
+   "metadata_refresh_beyond_the_declared_rows": 70,
+   "proxies_of_targets_without_a_governance_plan": 4,
+   "refused_today_only_for_an_out_of_frame_consumer": 2
+  },
+  "pfizer": {
+   "a_missed_target_s_annual_chain": 0,
+   "a_missed_target_s_events": 0,
+   "a_missed_target_s_proxy": 0,
+   "declarable_today": 2,
+   "events_a_stale_block_hides": 8,
+   "metadata_refresh_beyond_the_declared_rows": 3,
+   "proxies_of_targets_without_a_governance_plan": 1,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
+  "salesforce": {
+   "a_missed_target_s_annual_chain": 0,
+   "a_missed_target_s_events": 0,
+   "a_missed_target_s_proxy": 0,
+   "declarable_today": 2,
+   "events_a_stale_block_hides": 12,
+   "metadata_refresh_beyond_the_declared_rows": 5,
+   "proxies_of_targets_without_a_governance_plan": 3,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  },
+  "southwest_airlines": {
+   "declarable_today": 110,
+   "proxies_of_targets_without_a_governance_plan": 0,
+   "refused_today_only_for_an_out_of_frame_consumer": 0
+  }
+ },
+ "execution": "the same ledger, root, container, start marker and export as the approval it extends; every gate that approval passes through applies to this one, and they bind the executor's code path, not the executor",
+ "extends": {
+  "delegation_body_sha256": "131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5886314727",
+  "ledger_state": {
+   "claim_count": 1130,
+   "claims": {
+    "sha256": "c23650743f5a641fc3c87af3c54e29d07561628a7097cbad4dd41db45c7e08a0",
+    "size": 812668
+   },
+   "cumulative": [
+    0,
+    0,
+    1354
+   ],
+   "export_id": "sha256:817f632dbddee5ff23482a8d56fbe8d6cac3dea60ad5aa3ab8458211f1a557bd",
+   "resumes": {
+    "sha256": "69395248537e98d3b383d3f08ec7e596853d3c434c0e610981d80a8bb81d28f0",
+    "size": 2427
+   }
+  }
+ },
+ "extension_ordinal": 1,
+ "maximum_additional_provider_paid_sec_calls": [
+  0,
+  0,
+  471
+ ],
+ "production_authorized": false,
+ "reclaim": [
+  {
+   "acquisition_kind": "REPLACEMENT_ACQUISITION",
+   "dependency_classes": [
+    "FISCAL_EVENT_FILING"
+   ]
+  },
+  {
+   "acquisition_kind": "SNAPSHOT_REFRESH",
+   "dependency_classes": [
+    "SUBMISSIONS_HISTORY",
+    "SUBMISSIONS_INDEX"
+   ]
+  }
+ ],
+ "record_type": "ISSUE_47_HISTORICAL_SEC_DELEGATION_EXTENSION",
+ "requirement_id": "issue_47_v1",
+ "scope": {
+  "company_ids": [
+   "jpmorgan_chase",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "dependency_classes": [
+   "ACCESSION_INSTANCE_DISCOVERY",
+   "ANNUAL_PERIOD_IDENTITY",
+   "FISCAL_EVENT_FILING",
+   "GOVERNANCE_DISCLOSURE_FILING",
+   "SUBMISSIONS_HISTORY",
+   "SUBMISSIONS_INDEX"
+  ],
+  "earliest_report_end": "2021-12-31",
+  "grants": [
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "ACCESSION_INSTANCE_DISCOVERY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_ACCESSION_INSTANCE_DISCOVERY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "ANNUAL_PERIOD_IDENTITY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_ANNUAL_PERIOD_IDENTITY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "FISCAL_EVENT_FILING"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_FISCAL_EVENT_FILING",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_GOVERNANCE_DISCLOSURE_FILING",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "SUBMISSIONS_HISTORY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_SUBMISSIONS_HISTORY",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase",
+     "pfizer",
+     "salesforce"
+    ],
+    "dependency_classes": [
+     "SUBMISSIONS_INDEX"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "X_SUBMISSIONS_INDEX",
+    "latest_report_end": "2026-01-31"
+   }
+  ],
+  "latest_report_end": "2026-01-31",
+  "purposes": [
+   "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
+  ]
+ }
+}

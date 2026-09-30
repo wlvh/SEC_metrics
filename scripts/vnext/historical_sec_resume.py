@@ -207,7 +207,14 @@ def lost_segment_reserve(*, data_root, claimed_urls, allowance, company_ids, yea
     capturing them makes nothing new declarable, which is why a due row of any
     class outside ``TERMINAL_CLASSES`` is a refusal rather than a smaller bound.
     """
+    from .historical_sec_extension import reclaim_ordinal
     purpose = allowance["scope"]["purposes"][0]
+    # A mapping from URL to the ordinals of the slots that claimed it lets a row
+    # the owner's extension allows to be requested once more count as one the
+    # lost host could have claimed; a plain set of URLs (no ordinals) cannot say
+    # that, and counts every claimed URL as done.
+    claimed = (claimed_urls if isinstance(claimed_urls, dict)
+               else {url: None for url in claimed_urls})
     by_company = {}
     for company_id in company_ids:
         _need(company_id in allowance["scope"]["company_ids"],
@@ -215,7 +222,12 @@ def lost_segment_reserve(*, data_root, claimed_urls, allowance, company_ids, yea
         frame = declared_frame(repo_root=Path(data_root), company_id=company_id, years=years)
         admitted, outside = [], 0
         for row in frame["requirements"]:
-            if not row["new_acquisition_required"] or row["source_url"] in claimed_urls:
+            if not row["new_acquisition_required"]:
+                continue
+            if row["source_url"] in claimed and (
+                    claimed[row["source_url"]] is None
+                    or reclaim_ordinal(allowance=allowance, dependency=row,
+                                       claimed_ordinals=claimed[row["source_url"]]) is None):
                 continue
             try:
                 request_is_in_scope(allowance=allowance, company_id=company_id, dependency=row,
@@ -257,6 +269,20 @@ def marker_comment_body(record, *, decision_text):
             "for this approval are exactly the local resume chain, whose random number is not "
             "published here.\n\n```json\n"
             + json.dumps(view, indent=1, sort_keys=True, ensure_ascii=False) + "\n```\n")
+
+
+_EXTENSION_NAMING = ("extension_ordinal", "delegation_url", "delegation_body_sha256",
+                     "maximum_additional_provider_paid_sec_calls")
+
+
+def _extension_named(extension):
+    """The fields that name an extension, as a resume record and an export index carry them."""
+    return {field: extension[field] for field in _EXTENSION_NAMING}
+
+
+def _same_extension(exported, held):
+    return held is not None and all(exported.get(field) == held.get(field)
+                                    for field in _EXTENSION_NAMING)
 
 
 def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decision,
@@ -313,6 +339,14 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
     _need(index.get("execution_mode") == "LIVE"
           and index.get("approval") == _expected_approval(allowance),
           "RESUME_EXPORT_IS_FOR_ANOTHER_APPROVAL")
+    # An export made under an extension says so; the reserve for what the lost
+    # host could have spent after it must be computed under that extension's
+    # grants and re-request rule, or the charge leaves out exactly the rows only
+    # the extension admits. An allowance holding an extension the export does
+    # not name is the other, conservative way round and is allowed.
+    _need(index.get("extension") is None
+          or _same_extension(index["extension"], allowance.get("extension")),
+          "RESUME_EXPORT_WAS_SPENT_UNDER_AN_EXTENSION_THIS_ALLOWANCE_LACKS")
     state = _read_archive(export_dir / STATE_ARCHIVE, index["state_archive"])
     binding = strict_json_loads(text=state["ledger/binding.json"].decode("utf-8"))
     expected = _allowance_ledger(allowance=allowance, root=root, live=True).binding
@@ -359,8 +393,10 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
         _need((restored / "claims.jsonl").read_bytes() == claims
               and strict_json_file(path=restored / "binding.json") == binding,
               "RESUME_RESTORE_DIFFERS_FROM_THE_EXPORT")
-        claimed = {strict_json_file(path=slot / "sec-plan.json")["request"]["url"]
-                   for slot in sorted((restored / "calls").iterdir())}
+        claimed = {}
+        for slot in sorted((restored / "calls").iterdir()):
+            claimed.setdefault(strict_json_file(path=slot / "sec-plan.json")["request"]["url"],
+                               []).append(int(slot.name))
         reserve = lost_segment_reserve(data_root=staging / "source-inputs", claimed_urls=claimed,
                                        allowance=allowance, company_ids=companies)
         record = {"record_type": RESUME_TYPE, "schema_version": 1,
@@ -387,6 +423,8 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
                       "years": 5,
                       "planner_files_sha256": {relative: sha256_file(path=ROOT / relative)
                                                for relative in PLANNER_FILES}},
+                  **({"extension": _extension_named(allowance["extension"])}
+                     if allowance.get("extension") is not None else {}),
                   "decision": {"text": decision["text"], "received_at": decision["received_at"],
                                "recorded_as": "the owner's decision in the session, transcribed "
                                               "by the executor; not posted by the owner"},
@@ -431,6 +469,13 @@ def require_published_resume(*, allowance, reader, checkout):
               and all(view.get(key) == allowance[key]
                       for key in ("delegation_url", "delegation_body_sha256", "budget_root")),
               "RESUME_RECORD_IS_FOR_ANOTHER_APPROVAL")
+        # A resume charged under an extension holds only while that extension
+        # is the one in force: under another, or none, its reserve was not
+        # computed against the grants now being spent.
+        _need("extension" not in view or view["extension"]
+              == (_extension_named(allowance["extension"])
+                  if allowance.get("extension") is not None else None),
+              "RESUME_WAS_CHARGED_UNDER_ANOTHER_EXTENSION")
     markers = start_markers(kind, allowance=allowance, reader=reader)
     _need(markers, "RESUME_WITHOUT_A_PUBLISHED_START")
     _need(_unedited(markers[0]["comment"]),

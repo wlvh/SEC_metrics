@@ -144,6 +144,31 @@ def _approval(*, ledger_root, mode, policy_root):
                                          "maximum_additional_provider_paid_sec_calls")}
 
 
+def _extension(*, approval, policy_root):
+    """The owner's extension a LIVE ledger was also spent under, if one is registered.
+
+    An export after an extension says so: the claims past the state it names
+    were counted against the raised cap and held to its grants. Its absence
+    leaves an export exactly as before, so an export made before any extension
+    reads the same. The extension's authority is checked on the live path
+    (historical_sec_extension); here it is only recorded, and only beside the
+    approval it names.
+    """
+    from .historical_sec_extension import EXTENSION_POLICY_PATH
+    path = Path(policy_root) / EXTENSION_POLICY_PATH
+    if approval is None or not path.exists():
+        return None
+    policy = strict_json_file(path=path)
+    _need(policy["extends"]["delegation_url"] == approval["delegation_url"]
+          and policy["extends"]["delegation_body_sha256"] == approval["delegation_body_sha256"]
+          and Path(policy["budget_root"]) == Path(approval["budget_root"]),
+          "ISSUE_47_EXPORT_EXTENSION_IS_OF_ANOTHER_APPROVAL")
+    return {key: policy[key] for key in ("extension_ordinal", "delegation_url",
+                                         "delegation_body_sha256", "delegation_record_path",
+                                         "extends",
+                                         "maximum_additional_provider_paid_sec_calls")}
+
+
 def _groups(rows, first_index, data_root):
     """Row groups and the files each group carries, closed as described above."""
     groups, current, raw, seen = [], None, 0, set()
@@ -206,6 +231,8 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
           "ISSUE_47_EXPORT_ATTRIBUTION_DISAGREES_WITH_CHECKPOINT")
     approval = _approval(ledger_root=ledger_root, mode=mode,
                          policy_root=ROOT if policy_root is None else policy_root)
+    extension = _extension(approval=approval,
+                           policy_root=ROOT if policy_root is None else policy_root)
     # A LIVE ledger began either with a start published here or with a resume
     # of a lost one; one with neither beside it has lost the record of its own
     # beginning - a deleted resume chain among them, whose charge the export
@@ -275,6 +302,7 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
         "baseline_row_count": len(old), "exported_row_count": len(rows) - len(old),
         "checkpoint_id": checkpoint["checkpoint_id"],
         "attribution_id": attribution["attribution_id"], "approval": approval,
+        **({"extension": extension} if extension is not None else {}),
         "state_archive": {"name": STATE_ARCHIVE, **_binding(state_bytes),
                           "members": {k: _binding(v) for k, v in sorted(state.items())}},
         "row_archives": chunks, "exported_from_commit": _source_commit(),

@@ -12,6 +12,10 @@ the owner decided to run it there, the executor's cloud container:
 
   register-approval --approval-url URL   read the posted approval back from
                                          GitHub and write the allowance files
+  register-extension --approval-url URL  read the owner's extension of that
+                                         approval back from GitHub and write its
+                                         files; acquire and resume then use it
+                                         (historical_sec_extension)
   start                                  write the ledger's local start record
                                          and print the marker comment to post
                                          on issue 47; nothing is requested
@@ -61,13 +65,23 @@ from vnext.historical_source_export import (  # noqa: E402 - path set above
 EXPORT_HINT = ("config/issue47_historical_calls_v1.json "
                "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json "
                "evidence/issue47_acquired")
-COMMANDS = ["list", "plan", "capture", "register-approval", "start", "acquire", "export",
-            "run", "restore", "resume"]
+EXTENSION_HINT = ("config/issue47_historical_calls_v1_extension_1.json "
+                  "docs/evidence/issue47_history/acquisition-extension/approval-comment.json")
+COMMANDS = ["list", "plan", "capture", "register-approval", "register-extension", "start",
+            "acquire", "export", "run", "restore", "resume"]
+
+
+def _effective_allowance(reader):
+    """The first approval, verified, extended by the owner's extension where one is registered."""
+    from vnext.historical_sec_extension import acquisition_extension, extended_allowance
+    allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=reader)
+    return extended_allowance(allowance=allowance, extension=acquisition_extension(
+        repo_root=ROOT, allowance=allowance, delegation_reader=reader))
 
 
 def _companies(args):
     """The companies to acquire for: the grant's own list, in its own order."""
-    allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=live_github_reader())
+    allowance = _effective_allowance(live_github_reader())
     granted = list(allowance["scope"]["company_ids"])
     if args.company is None:
         return granted
@@ -149,10 +163,19 @@ def _branch_tip():
         raise HistoricalAcquisitionError(
             "ISSUE_47_CHECKOUT_BEHIND_THE_BRANCH_TIP:HEAD does not contain " + upstream + " at "
             + tip + "; bring the checkout to the tip before resuming or acquiring")
-    path = upstream + ":" + EXPORT_DIRECTORY + "/" + INDEX_NAME
-    present = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", path],
-                             capture_output=True, timeout=60).returncode == 0
-    return {"commit": tip, "export_index": git("show", path, text=False) if present else None}
+    from vnext.historical_sec_extension import EXTENSION_FILES
+
+    def blob(relative):
+        path = upstream + ":" + relative
+        present = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", path],
+                                 capture_output=True, timeout=60).returncode == 0
+        return git("show", path, text=False) if present else None
+
+    # The extension's files as the tip carries them: a request under an
+    # extension is made only once the branch carries it (the live path
+    # compares these with the checkout's).
+    return {"commit": tip, "export_index": blob(EXPORT_DIRECTORY + "/" + INDEX_NAME),
+            "extension_files": {relative: blob(relative) for relative in EXTENSION_FILES}}
 
 
 def main(argv=None):
@@ -178,7 +201,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.command in ("list", "plan", "capture") and args.company is None:
         parser.error("--company is required for " + args.command)
-    if args.command in ("register-approval", "run") and args.approval_url is None:
+    if args.command in ("register-approval", "register-extension", "run") \
+            and args.approval_url is None:
         parser.error("--approval-url is required for " + args.command)
     if args.command == "restore" and (args.export is None or args.out is None):
         parser.error("--export and --out are required for restore")
@@ -192,6 +216,12 @@ def main(argv=None):
             registered = register_approval(repo_root=ROOT, comment_url=args.approval_url,
                                            reader=live_github_reader())
             result = registered
+        if args.command == "register-extension":
+            from vnext.historical_sec_extension import register_extension
+            reader = live_github_reader()
+            result = register_extension(
+                repo_root=ROOT, comment_url=args.approval_url, reader=reader,
+                allowance=acquisition_allowance(repo_root=ROOT, delegation_reader=reader))
         if args.command == "start":
             reader = live_github_reader()
             result = start_ledger(allowance=acquisition_allowance(
@@ -199,7 +229,7 @@ def main(argv=None):
         if args.command == "resume":
             from vnext.historical_sec_resume import resume_ledger
             reader = live_github_reader()
-            allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=reader)
+            allowance = _effective_allowance(reader)
             tip = _branch_tip()
             result = resume_ledger(
                 allowance=allowance,
@@ -282,6 +312,9 @@ def main(argv=None):
     print(json.dumps(result, ensure_ascii=False, indent=1, sort_keys=True))
     if args.command in ("export", "run"):
         print("Next: git add " + EXPORT_HINT + " && git commit && git push",
+              file=sys.stderr)
+    if args.command == "register-extension":
+        print("Next: git add " + EXTENSION_HINT + " && git commit && git push",
               file=sys.stderr)
     return 3 if result.get("stop") or any(
         item.get("error") for item in result.get("companies", {}).values()) else 0

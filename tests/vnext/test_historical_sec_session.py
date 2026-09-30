@@ -31,7 +31,7 @@ import tempfile
 import types
 import unittest
 
-from vnext.canonical import canonical_json_bytes, content_hash, strict_json_file
+from vnext.canonical import canonical_json_bytes, content_hash, strict_json_file, strict_json_loads
 from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
 from vnext.annual_update import saved_source
 from vnext.historical_sec_session import HistoricalCallLedger as SESSION_LEDGER
@@ -2390,6 +2390,7 @@ class _ScriptedPasses:
                             company_id=_SCRIPTED_COMPANY) for rows in frames]
         self.statuses = statuses or {}
         self.fetched = []
+        self.reclaims = []
         self.frame_calls = 0
         scripted = self
         test_case = test
@@ -2401,9 +2402,12 @@ class _ScriptedPasses:
             chosen = scripted.frames.pop(0) if len(scripted.frames) > 1 else scripted.frames[0]
             return copy.deepcopy(chosen)
 
-        def capture_one(session, *, company_id, url, dependency, admitted):
+        def capture_one(session, *, company_id, url, dependency, admitted, reclaim=None):
             code = scripted.statuses.get(url, "200")
             request = {"url": url}
+            if reclaim is not None:
+                request["reclaimed_under_extension"] = reclaim
+            scripted.reclaims.append(reclaim)
             plan = {"request": request, "scope_admission": admitted}
             path, intent = session.ledger.claim(channel="SEC",
                                                 request_digest=content_hash(value=request),
@@ -3646,6 +3650,22 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                     SESSION_MODULE.start_ledger(allowance=allowance, reader=self._reader([]))
                 self.assertIn("ISSUE_47_SEC_LEDGER_EXISTS_WITHOUT_A_START", str(caught.exception))
 
+    def test_the_live_path_needs_the_branch_to_say_which_extension(self):
+        """A branch tip that does not name the extension files is refused before the ledger."""
+        allowance = {**self.allowance, "sec_wiring_receipt_path": "unused",
+                     "maximum_additional_provider_paid_sec_calls": [0, 0, 5],
+                     "scope": {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"]}}
+        with patch.object(SESSION_MODULE, "acquisition_allowance",
+                          lambda **kwargs: copy.deepcopy(allowance)), \
+                patch.object(SESSION_MODULE, "verify_offline_wiring", lambda **kwargs: None), \
+                patch("vnext.historical_source_acquisition.live_github_reader",
+                      lambda: self._reader([])), \
+                patch.object(SESSION_MODULE, "SecHttpClient",
+                             side_effect=AssertionError("a transport was built")):
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                live_historical_session(branch_tip=lambda: {"export_index": _tip()})
+        self.assertIn("ISSUE_47_BRANCH_TIP_DOES_NOT_SAY_WHICH_EXTENSION", str(caught.exception))
+
     def test_the_live_path_checks_the_start_before_any_transport(self):
         """Registered and wired, not started: refused before a session, and so before a socket."""
         allowance = {**self.allowance, "sec_wiring_receipt_path": "unused",
@@ -3661,7 +3681,8 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                 patch.object(SESSION_MODULE, "HistoricalSecSession",
                              side_effect=AssertionError("a session was built")):
             with self.assertRaises(HistoricalSessionError) as caught:
-                live_historical_session(branch_tip=lambda: {"export_index": _tip()})
+                live_historical_session(branch_tip=lambda: {"export_index": _tip(),
+                                                          "extension_files": _NO_EXTENSION})
         self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
         # The same path with the start published builds the session.
         SESSION_MODULE.start_ledger(allowance=allowance, reader=reader)
@@ -3675,7 +3696,8 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                       lambda: published), \
                 patch.object(SESSION_MODULE, "SecHttpClient",
                              side_effect=AssertionError("a transport was built")):
-            session = live_historical_session(branch_tip=lambda: {"export_index": _tip()})
+            session = live_historical_session(branch_tip=lambda: {"export_index": _tip(),
+                                                          "extension_files": _NO_EXTENSION})
         self.assertEqual(Path(allowance["budget_root"]), session.ledger.root)
         # It keeps the check for every pass, and holds the ledger to the charge
         # the check verified: none, for a ledger started here.
@@ -4048,6 +4070,55 @@ class ALostHostResumesFromTheExportAndPaysForWhatItMayHaveSpent(unittest.TestCas
         self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_EXPORT_IS_FOR_ANOTHER_APPROVAL",
                       str(caught.exception))
 
+    def test_a_resume_charges_under_the_extension_the_export_was_spent_under(self):
+        """An export naming an extension resumes only under that extension, or it under-charges."""
+        self.addCleanup(self._lose)
+        other = self.base / "extension-checkout"
+        shutil.copytree(self.checkout, other, dirs_exist_ok=True)
+        self.addCleanup(shutil.rmtree, other, ignore_errors=True)
+        index_path = other / "evidence/issue47_acquired" / EXPORT_MODULE.INDEX_NAME
+        index = strict_json_file(path=index_path)
+        named = {"extension_ordinal": 1, "delegation_url": _EXTENSION_URL,
+                 "delegation_body_sha256": "b" * 64,
+                 "maximum_additional_provider_paid_sec_calls": [0, 0, 7]}
+        body = {key: value for key, value in index.items() if key != "export_id"}
+        body["extension"] = {**named, "delegation_record_path": "docs/extension.json",
+                             "extends": {}}
+        index_path.write_bytes(canonical_json_bytes(value={**body,
+                                                           "export_id": content_hash(value=body)}))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([], checkout=other)
+        self.assertIn("RESUME_EXPORT_WAS_SPENT_UNDER_AN_EXTENSION_THIS_ALLOWANCE_LACKS",
+                      str(caught.exception))
+        # Under the same extension the check passes, and the resume goes on to
+        # the next thing it needs: the start marker, absent here.
+        held = self.allowance
+        self.allowance = {**held, "extension": {**named, "ledger_state": {},
+                                                "reclaim": [],
+                                                "provenance_verified_against_github": True}}
+        try:
+            with self.assertRaises(HistoricalSessionError) as caught:
+                self._resume([], checkout=other)
+        finally:
+            self.allowance = held
+        self.assertIn("RESUME_WITHOUT_A_PUBLISHED_START", str(caught.exception))
+
+    def test_a_resume_charged_under_an_extension_holds_only_under_it(self):
+        self.addCleanup(self._lose)
+        record = {"record_type": RESUME_MODULE.RESUME_TYPE, "requirement_id": "issue_47_v1",
+                  "delegation_url": self.URL, "delegation_body_sha256": "a" * 64,
+                  "budget_root": str(self.root), "instance_nonce": "0" * 32,
+                  "extension": {"extension_ordinal": 1, "delegation_url": _EXTENSION_URL,
+                                "delegation_body_sha256": "b" * 64,
+                                "maximum_additional_provider_paid_sec_calls": [0, 0, 7]}}
+        chain = SESSION_MODULE.resume_chain_path(self.root)
+        chain.write_bytes(canonical_json_bytes(value=record).rstrip(b"\n") + b"\n")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            RESUME_MODULE.require_published_resume(allowance=self.allowance,
+                                                   reader=self._reader([]),
+                                                   checkout=self.checkout)
+        self.assertIn("RESUME_WAS_CHARGED_UNDER_ANOTHER_EXTENSION", str(caught.exception))
+
     def test_a_resume_needs_the_approval_s_earliest_start_marker_unedited(self):
         self.addCleanup(self._lose)
         with self.assertRaises(HistoricalSessionError) as caught:
@@ -4299,3 +4370,806 @@ class ALostHostResumesFromTheExportAndPaysForWhatItMayHaveSpent(unittest.TestCas
                                                    allowance=self.allowance,
                                                    company_ids=[_SCRIPTED_COMPANY])
         self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_RESERVE_UNBOUNDED", str(caught.exception))
+
+
+from vnext import historical_sec_extension as EXTENSION_MODULE  # noqa: E402
+
+# A branch tip carrying no extension files, as every tip does until one is registered.
+_NO_EXTENSION = {path: None for path in EXTENSION_MODULE.EXTENSION_FILES}
+from vnext.historical_sec_extension import (EXTENSION_POLICY_PATH,  # noqa: E402
+                                            EXTENSION_TYPE, HistoricalExtensionError,
+                                            acquisition_extension, extended_allowance)
+
+_EXTENSION_URL = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-2"
+
+
+def _chain_views(root):
+    """The resume chain beside ``root`` as an export carries it: each record's public view."""
+    path = SESSION_MODULE.resume_chain_path(Path(root))
+    if not path.exists():
+        return b"", 0
+    records = RESUME_MODULE.local_chain(Path(root))
+    views = b"".join(canonical_json_bytes(
+        value=SESSION_MODULE.resume_view(record) if "instance_nonce" in record else record
+    ).rstrip(b"\n") + b"\n" for record in records)
+    return views, sum(record["lost_segment"]["reserve_sec_calls"] for record in records)
+
+
+def _ledger_state(root):
+    """The state an extension continues from, read from a ledger's own claim log and chain."""
+    claims = (Path(root) / "claims.jsonl").read_bytes()
+    count = claims.count(b"\n")
+    views, reserve = _chain_views(root)
+    return {"export_id": "sha256:" + "e" * 64,
+            "claims": {"sha256": hashlib.sha256(claims).hexdigest(), "size": len(claims)},
+            "claim_count": count,
+            "resumes": {"sha256": hashlib.sha256(views).hexdigest(), "size": len(views)},
+            "cumulative": [0, 0, count + reserve]}
+
+
+def _resume_record(root, *, restored_size, reserve, extension=None, previous=None):
+    """A resume record of the ledger at ``root``, in the shape the chain holds."""
+    record = {"record_type": RESUME_MODULE.RESUME_TYPE, "requirement_id": "issue_47_v1",
+              "budget_root": str(Path(root)), "previous_resume_sha256": previous,
+              "restored_export": {"claims": {"sha256": "c" * 64, "size": restored_size}},
+              "lost_segment": {"reserve_sec_calls": reserve},
+              "instance_nonce": os.urandom(16).hex()}
+    if extension is not None:
+        record["extension"] = extension
+    return record
+
+
+def _write_chain(root, records):
+    """Write a chain as a host holds it: earlier records as views, its own record last."""
+    lines = [SESSION_MODULE.resume_view(record) for record in records[:-1]] + records[-1:]
+    SESSION_MODULE.resume_chain_path(Path(root)).write_bytes(b"".join(
+        canonical_json_bytes(value=line).rstrip(b"\n") + b"\n" for line in lines))
+
+
+def _recorded_scope(classes=("ACCESSION_INSTANCE_DISCOVERY", "ANNUAL_PERIOD_IDENTITY",
+                             "COMPANYFACTS", "FISCAL_EVENT_FILING",
+                             "GOVERNANCE_DISCLOSURE_FILING", "SUBMISSIONS_HISTORY",
+                             "SUBMISSIONS_INDEX")):
+    """The recorded session's own default scope, narrowed to ``classes``."""
+    from datetime import date
+    scope = {"purposes": ["historical_five_year_source_acquisition"],
+             "company_ids": [_SCRIPTED_COMPANY], "dependency_classes": list(classes),
+             "earliest_report_end": date.min.isoformat(),
+             "latest_report_end": date.max.isoformat()}
+    scope["grants"] = [_whole_envelope(scope)]
+    return scope
+
+
+def _test_extension(root, *, limits=(0, 0, 1), reclaim=(), scope=None, state=None):
+    """An extension in the verified shape ``acquisition_extension`` returns, for ledger cases."""
+    return {"extension_ordinal": 1, "delegation_url": _EXTENSION_URL,
+            "delegation_body_sha256": "b" * 64,
+            "extends": {"delegation_url": None, "delegation_body_sha256": None,
+                        "ledger_state": state or _ledger_state(root)},
+            "maximum_additional_provider_paid_sec_calls": list(limits),
+            "scope": scope or _recorded_scope(), "reclaim": [dict(entry) for entry in reclaim],
+            # Recorded: never read back from GitHub, which only the live
+            # ledger requires.
+            "approved_extension": {"provenance_verified_against_github": False}}
+
+
+class AnExtensionRaisesTheCapOnlyForTheLedgerItNames(unittest.TestCase):
+    """The owner's extension continues one ledger, and only that one, by what it adds.
+
+    The first approval was spent to its cap. An extension could have been a
+    second ledger, but the frozen checkpoint covers every row past the
+    baseline, so a second ledger could not register what it fetched without
+    re-counting the first. So the same ledger continues, and these cases hold
+    the two things that could go wrong without failing: the cap raised for a
+    ledger the extension does not name, and a raise larger than approved.
+    """
+
+    def test_the_cap_rises_by_exactly_what_the_extension_adds(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], limits=(0, 0, 1))
+        base = scripted.session()
+        summary = base.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(_OTHER[:1], scripted.fetched)
+        self.assertTrue(summary["stop"]["reason"].startswith("ISSUE_47_CUMULATIVE_LIMIT_REACHED"))
+        extended = recorded_historical_session(
+            root=scripted.root, response=BODY, limits=(0, 0, 1),
+            extension=_test_extension(scripted.root, limits=(0, 0, 1)))
+        self.assertEqual([0, 0, 2], extended.ledger.snapshot()["limits"])
+        summary = extended.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(_OTHER[:2], scripted.fetched, "one more, and not the third")
+        self.assertTrue(summary["stop"]["reason"].startswith("ISSUE_47_CUMULATIVE_LIMIT_REACHED"))
+        self.assertEqual([0, 0, 2], extended.ledger.snapshot()["counts"])
+
+    def test_an_extension_of_another_ledger_or_state_is_refused(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER[:1]]
+        scripted = _ScriptedPasses(self, frames=[rows], limits=(0, 0, 1))
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        state = _ledger_state(scripted.root)
+        for label, changed in (
+                ("another log", {**state, "claims": {**state["claims"], "sha256": "f" * 64}}),
+                ("a longer log", {**state, "claims": {**state["claims"],
+                                                      "size": state["claims"]["size"] + 1}}),
+                ("another count", {**state, "claim_count": state["claim_count"] + 1})):
+            with self.subTest(label):
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    recorded_historical_session(
+                        root=scripted.root, response=BODY, limits=(0, 0, 1),
+                        extension=_test_extension(scripted.root, state=changed))
+                self.assertIn("ISSUE_47_LEDGER_IS_NOT_THE_ONE_THE_EXTENSION_EXTENDS",
+                              str(caught.exception))
+
+    def test_the_ledger_grows_past_the_state_and_the_extension_still_holds(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], limits=(0, 0, 1))
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        extension = _test_extension(scripted.root, limits=(0, 0, 2))
+        first = recorded_historical_session(root=scripted.root, response=BODY,
+                                            limits=(0, 0, 1), extension=extension)
+        first.acquire(company_ids=[_SCRIPTED_COMPANY], max_captures=1)
+        # The claim log now extends past the state; the extension pins again.
+        later = recorded_historical_session(root=scripted.root, response=BODY,
+                                            limits=(0, 0, 1), extension=extension)
+        later.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(_OTHER, scripted.fetched)
+        self.assertEqual([0, 0, 3], later.ledger.snapshot()["counts"])
+
+
+class TheStatedSpendingIsTheLedgerAtThatState(unittest.TestCase):
+    """The spending an extension states is the ledger's at that state, resumes included.
+
+    The state binds the resume chain as the export carried it, not the
+    restored claim-log length: a resume made after the state that restored
+    the stated export itself has that same length, and it must stay outside
+    the stated spending (the review's N1), while one the state leaves out
+    that restored an earlier log is a charge the state understates.
+    """
+
+    def _spent(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], limits=(0, 0, 2))
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        return scripted
+
+    def _pin(self, scripted, state):
+        return recorded_historical_session(root=scripted.root, response=BODY, limits=(0, 0, 2),
+                                           extension=_test_extension(scripted.root, state=state))
+
+    def test_a_resume_before_the_state_is_in_it_and_one_after_is_not(self):
+        scripted = self._spent()
+        size = len((scripted.root / "claims.jsonl").read_bytes())
+        first = _resume_record(scripted.root, restored_size=size - 1, reserve=3)
+        _write_chain(scripted.root, [first])
+        state = _ledger_state(scripted.root)
+        self.assertEqual([0, 0, 5], state["cumulative"], "two claims and a charge of three")
+        # A resume after the state that restored the stated export itself.
+        after = _resume_record(scripted.root, restored_size=size, reserve=4, extension={},
+                               previous=SESSION_MODULE.resume_view(first)[
+                                   "resume_record_sha256"])
+        _write_chain(scripted.root, [first, after])
+        self.assertEqual([0, 0, 3], self._pin(scripted, state).ledger._limits(),
+                         "the resume after the state is outside the stated spending")
+
+    def test_a_state_that_leaves_out_an_earlier_resume_is_refused(self):
+        scripted = self._spent()
+        size = len((scripted.root / "claims.jsonl").read_bytes())
+        state = _ledger_state(scripted.root)
+        _write_chain(scripted.root, [_resume_record(scripted.root, restored_size=size - 1,
+                                                    reserve=3)])
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._pin(scripted, state)
+        self.assertIn("ISSUE_47_EXTENSION_STATE_LEAVES_OUT_AN_EARLIER_RESUME",
+                      str(caught.exception))
+
+    def test_a_chain_that_does_not_begin_with_the_stated_one_is_refused(self):
+        scripted = self._spent()
+        size = len((scripted.root / "claims.jsonl").read_bytes())
+        _write_chain(scripted.root, [_resume_record(scripted.root, restored_size=size - 1,
+                                                    reserve=3)])
+        state = _ledger_state(scripted.root)
+        _write_chain(scripted.root, [_resume_record(scripted.root, restored_size=size - 1,
+                                                    reserve=9)])
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._pin(scripted, state)
+        self.assertIn("ISSUE_47_LEDGER_RESUMES_ARE_NOT_THE_ONES_THE_EXTENSION_EXTENDS",
+                      str(caught.exception))
+
+    def test_a_staged_anchor_left_by_a_crash_does_not_block_the_pin(self):
+        scripted = self._spent()
+        state = _ledger_state(scripted.root)
+        anchor = SESSION_MODULE.extension_anchor_path(scripted.root, 1)
+        (anchor.parent / (anchor.name + ".0011223344556677.tmp")).write_bytes(b"")
+        self.assertEqual([0, 0, 3], self._pin(scripted, state).ledger._limits())
+        self.assertTrue(anchor.is_file())
+        self.assertEqual([0, 0, 3], self._pin(scripted, state).ledger._limits(),
+                         "the same extension pins again")
+
+
+class AnExtensionMayRequestARefreshOrReplacementOnceMore(unittest.TestCase):
+    """A URL the ledger already requested is requested again only as the owner said.
+
+    Zero automatic retries is why a claimed URL is never claimed again. The
+    owner's extension names two exceptions - a saved copy the planner marks
+    as disagreeing with its index, and one whose last request failed - and
+    only for the classes it names, once per extension. These cases hold each
+    half of that: the kind, the class, the once, and that without an
+    extension nothing changed.
+    """
+
+    def _refresh(self):
+        row = _scripted_row(_INDEX, "SUBMISSIONS_INDEX", consumers=["historical_catalog"])
+        return {**row, "acquisition_kind": "SNAPSHOT_REFRESH"}
+
+    def test_a_refresh_is_requested_once_more_under_the_extension_and_not_again(self):
+        refresh = self._refresh()
+        scripted = _ScriptedPasses(self, frames=[[refresh]])
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_INDEX], scripted.fetched)
+        # Without an extension the planner still asking changes nothing.
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_INDEX], scripted.fetched)
+        self.assertEqual([_INDEX], [item["source_url"] for item in
+                                    summary["companies"][_SCRIPTED_COMPANY]["already_claimed"]])
+        extension = _test_extension(scripted.root, limits=(0, 0, 5), reclaim=[
+            {"acquisition_kind": "SNAPSHOT_REFRESH", "dependency_classes": ["SUBMISSIONS_INDEX"]}])
+        extended = recorded_historical_session(root=scripted.root, response=BODY,
+                                               extension=extension)
+        extended.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_INDEX, _INDEX], scripted.fetched, "requested once more")
+        self.assertEqual([None, 1], scripted.reclaims, "and marked as the extension's")
+        digests = extended.ledger.snapshot()["request_digests"]
+        self.assertEqual(2, len(digests), "a re-request is not the same request")
+        # Once per extension: the planner still asking is not a third request.
+        again = recorded_historical_session(root=scripted.root, response=BODY,
+                                            extension=extension)
+        summary = again.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_INDEX, _INDEX], scripted.fetched)
+        self.assertEqual([_INDEX], [item["source_url"] for item in
+                                    summary["companies"][_SCRIPTED_COMPANY]["already_claimed"]])
+
+    def test_only_the_kinds_and_classes_the_owner_named(self):
+        refresh = self._refresh()
+        failed_first = _scripted_row(_OTHER[0], "FISCAL_EVENT_FILING")
+        cases = (
+            ("a refresh of a class not named", [refresh], {},
+             [{"acquisition_kind": "SNAPSHOT_REFRESH",
+               "dependency_classes": ["SUBMISSIONS_HISTORY"]}]),
+            ("a failed first acquisition, not marked as a replacement", [failed_first],
+             {_OTHER[0]: "404"},
+             [{"acquisition_kind": "REPLACEMENT_ACQUISITION",
+               "dependency_classes": ["FISCAL_EVENT_FILING"]}]),
+            ("a replacement when only refreshes are named",
+             [{**failed_first, "acquisition_kind": "REPLACEMENT_ACQUISITION"}],
+             {_OTHER[0]: "404"},
+             [{"acquisition_kind": "SNAPSHOT_REFRESH",
+               "dependency_classes": ["FISCAL_EVENT_FILING"]}]))
+        for label, rows, statuses, reclaim in cases:
+            with self.subTest(label):
+                scripted = _ScriptedPasses(self, frames=[rows], statuses=statuses)
+                scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+                extended = recorded_historical_session(
+                    root=scripted.root, response=BODY,
+                    extension=_test_extension(scripted.root, limits=(0, 0, 5), reclaim=reclaim))
+                extended.acquire(company_ids=[_SCRIPTED_COMPANY])
+                self.assertEqual(1, len(scripted.fetched), "not requested again")
+
+    def test_a_replacement_the_owner_named_is_requested_once_more(self):
+        replacement = {**_scripted_row(_OTHER[0], "FISCAL_EVENT_FILING"),
+                       "acquisition_kind": "REPLACEMENT_ACQUISITION",
+                       "reason": "LATEST_SOURCE_REQUEST_FAILED: " + _OTHER[0]}
+        scripted = _ScriptedPasses(self, frames=[[replacement]], statuses={_OTHER[0]: "503"})
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        scripted.statuses[_OTHER[0]] = "200"
+        extended = recorded_historical_session(
+            root=scripted.root, response=BODY,
+            extension=_test_extension(scripted.root, limits=(0, 0, 5), reclaim=[
+                {"acquisition_kind": "REPLACEMENT_ACQUISITION",
+                 "dependency_classes": ["FISCAL_EVENT_FILING"]}]))
+        extended.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_OTHER[0], _OTHER[0]], scripted.fetched)
+
+    def test_a_replacement_is_only_for_a_copy_whose_last_request_failed(self):
+        """The planner calls any unreadable copy a replacement; the owner named failed requests."""
+        extension_reclaim = [{"acquisition_kind": "REPLACEMENT_ACQUISITION",
+                              "dependency_classes": ["FISCAL_EVENT_FILING"]}]
+        for reason, again in (("SOURCE_ATTEMPT_SELECTION_CONFLICT", False),
+                              ("LATEST_SOURCE_REQUEST_FAILED: " + _OTHER[0], True)):
+            with self.subTest(reason[:40]):
+                row = {**_scripted_row(_OTHER[0], "FISCAL_EVENT_FILING"),
+                       "acquisition_kind": "REPLACEMENT_ACQUISITION", "reason": reason}
+                scripted = _ScriptedPasses(self, frames=[[row]])
+                scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+                recorded_historical_session(
+                    root=scripted.root, response=BODY,
+                    extension=_test_extension(scripted.root, limits=(0, 0, 5),
+                                              reclaim=extension_reclaim),
+                ).acquire(company_ids=[_SCRIPTED_COMPANY])
+                self.assertEqual(2 if again else 1, len(scripted.fetched))
+
+    def test_a_session_holding_other_grants_than_its_ledger_s_extension_is_refused(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], limits=(0, 0, 1))
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        extended = recorded_historical_session(
+            root=scripted.root, response=BODY, limits=(0, 0, 1),
+            extension=_test_extension(scripted.root, limits=(0, 0, 1)))
+        first = {key: value for key, value in extended.allowance.items()
+                 if key not in ("extension", "first_approval_scope")}
+        first["scope"] = extended.allowance["first_approval_scope"]
+        mixed = SESSION_MODULE.HistoricalSecSession(
+            factory=SESSION_MODULE._FACTORY, ledger=extended.ledger, allowance=first,
+            recorded_response=BODY)
+        # acquire reports a company's refusal rather than raising it.
+        summary = mixed.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertIn("ISSUE_47_LEDGER_AND_SESSION_DISAGREE_ON_THE_EXTENSION",
+                      summary["companies"][_SCRIPTED_COMPANY]["error"]["error"])
+        self.assertEqual(_OTHER[:1], scripted.fetched)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            mixed.capture(company_id=_SCRIPTED_COMPANY, url=_OTHER[1])
+        self.assertIn("ISSUE_47_LEDGER_AND_SESSION_DISAGREE_ON_THE_EXTENSION",
+                      str(caught.exception))
+
+    def test_after_the_extension_requests_are_held_to_its_grants(self):
+        # The first approval is spent on one row; the next frame asks for two
+        # more, of which the extension grants one class.
+        spent = [_scripted_row(_OTHER[2], "ANNUAL_PERIOD_IDENTITY")]
+        rows = [_scripted_row(_OTHER[0], "ANNUAL_PERIOD_IDENTITY"),
+                _scripted_row(_OTHER[1], "FISCAL_EVENT_FILING")]
+        scripted = _ScriptedPasses(self, frames=[spent, rows], limits=(0, 0, 1))
+        scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_OTHER[2]], scripted.fetched)
+        extended = recorded_historical_session(
+            root=scripted.root, response=BODY, limits=(0, 0, 1),
+            extension=_test_extension(scripted.root, limits=(0, 0, 5),
+                                      scope=_recorded_scope(classes=("FISCAL_EVENT_FILING",))))
+        summary = extended.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_OTHER[2], _OTHER[1]], scripted.fetched)
+        listed = summary["companies"][_SCRIPTED_COMPANY]["outside_grants"]
+        self.assertEqual([_OTHER[0]], [item["source_url"] for item in listed])
+
+    def test_a_re_request_marker_needs_the_extension_that_makes_it(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-reclaim-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        session = recorded_historical_session(root=root / "ledger", response=BODY)
+        admitted = {"company_id": _SCRIPTED_COMPANY, "dependency_class": "SUBMISSIONS_INDEX",
+                    "grants": ["RECORDED_TEST"], "purpose": "x"}
+        with session.ledger.locked():
+            with self.assertRaises(HistoricalSessionError) as caught:
+                session._capture_one(company_id=_SCRIPTED_COMPANY, url=_INDEX,
+                                     dependency=self._refresh(), admitted=admitted, reclaim=1)
+        self.assertIn("ISSUE_47_RECLAIM_WITHOUT_ITS_EXTENSION", str(caught.exception))
+        self.assertEqual(0, session.ledger.snapshot()["slot_count"], "refused before a claim")
+
+    def test_a_lost_host_s_reserve_counts_what_the_extension_let_it_request_again(self):
+        refresh = {**_scripted_row(_INDEX, "SUBMISSIONS_INDEX", consumers=["historical_catalog"]),
+                   "acquisition_kind": "SNAPSHOT_REFRESH"}
+        event = _scripted_row(_OTHER[0], "FISCAL_EVENT_FILING")
+        scope = _recorded_scope(classes=("FISCAL_EVENT_FILING", "SUBMISSIONS_INDEX"))
+        allowance = {"scope": scope, "extension": {
+            "extension_ordinal": 1, "ledger_state": {"claim_count": 3},
+            "reclaim": [{"acquisition_kind": "SNAPSHOT_REFRESH",
+                         "dependency_classes": ["SUBMISSIONS_INDEX"]}]}}
+        frame = {"requirements": [refresh, event], "company_id": _SCRIPTED_COMPANY,
+                 "target_report_dates": ["2024-12-31"]}
+        with patch.object(RESUME_MODULE, "declared_frame", lambda **kwargs: copy.deepcopy(frame)):
+            # Claimed before the extension: it may be requested again, so a
+            # lost host could have - and it would open more rows, so refused.
+            with self.assertRaises(HistoricalSessionError) as caught:
+                RESUME_MODULE.lost_segment_reserve(
+                    data_root=ROOT, claimed_urls={_INDEX: [2]}, allowance=allowance,
+                    company_ids=[_SCRIPTED_COMPANY])
+            self.assertIn("RESUME_RESERVE_UNBOUNDED", str(caught.exception))
+            # Already requested again under the extension: done.
+            reserve = RESUME_MODULE.lost_segment_reserve(
+                data_root=ROOT, claimed_urls={_INDEX: [2, 4]}, allowance=allowance,
+                company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(1, reserve["reserve_sec_calls"])
+
+
+def _extension_tree(*, body_overrides=None, policy_overrides=None, comment_overrides=None):
+    """A first approval and an extension of it, both real and internally consistent."""
+    root, budget = _grant_tree()
+    allowance = acquisition_allowance(repo_root=root)
+    state = {"export_id": "sha256:" + "e" * 64,
+             "claims": {"sha256": "c" * 64, "size": 100}, "claim_count": 3,
+             "resumes": {"sha256": hashlib.sha256(b"").hexdigest(), "size": 0},
+             "cumulative": [0, 0, 3]}
+    scope = dict(allowance["scope"])
+    approved = {"record_type": EXTENSION_TYPE, "requirement_id": "issue_47_v1",
+                "extension_ordinal": 1,
+                "extends": {"delegation_url": allowance["delegation_url"],
+                            "delegation_body_sha256": allowance["delegation_body_sha256"],
+                            "ledger_state": state},
+                "maximum_additional_provider_paid_sec_calls": [0, 0, 10],
+                "budget_root": allowance["budget_root"], "scope": scope,
+                "reclaim": [{"acquisition_kind": "SNAPSHOT_REFRESH",
+                             "dependency_classes": ["SUBMISSIONS_INDEX"]}],
+                "production_authorized": False, **(body_overrides or {})}
+    body = json.dumps(approved, sort_keys=True)
+    comment = {"html_url": _EXTENSION_URL, "body": body, "id": 2,
+               "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
+               "user": {"login": "wlvh", "id": 30534800, "type": "User"},
+               "author_association": "OWNER", "created_at": "2026-09-30T00:00:00Z",
+               "updated_at": "2026-09-30T00:00:00Z", "performed_via_github_app": None,
+               **(comment_overrides or {})}
+    (root / "docs/extension.json").write_text(json.dumps(comment), encoding="utf-8")
+    policy = {"requirement_id": "issue_47_v1", "repository": "wlvh/SEC_metrics",
+              "approver_login": "wlvh", "extension_ordinal": 1,
+              "delegation_url": _EXTENSION_URL,
+              "delegation_body_sha256": hashlib.sha256(body.encode()).hexdigest(),
+              "delegation_record_path": "docs/extension.json",
+              "extends": approved["extends"] if "extends" not in (body_overrides or {})
+              else {"delegation_url": allowance["delegation_url"],
+                    "delegation_body_sha256": allowance["delegation_body_sha256"],
+                    "ledger_state": state},
+              "budget_root": allowance["budget_root"],
+              "maximum_additional_provider_paid_sec_calls": [0, 0, 10],
+              "scope": scope, "reclaim": approved["reclaim"] if "reclaim" not in (
+                  body_overrides or {}) else [{"acquisition_kind": "SNAPSHOT_REFRESH",
+                                               "dependency_classes": ["SUBMISSIONS_INDEX"]}],
+              **(policy_overrides or {})}
+    (root / EXTENSION_POLICY_PATH).write_text(json.dumps(policy), encoding="utf-8")
+    return root, budget, allowance, comment
+
+
+class AnExtensionIsVerifiedLikeTheApprovalItExtends(unittest.TestCase):
+    """The same gate as the first approval, and ties to it that a copy cannot fake.
+
+    An extension is a second comment by the owner; everything that makes the
+    first one an approval - read back from GitHub, posted directly, unedited,
+    restating what the policy grants - is required of it too, and it must name
+    the approval and the ledger it continues.
+    """
+
+    def setUp(self):
+        self.made = []
+        self.addCleanup(lambda: [shutil.rmtree(p, ignore_errors=True)
+                                 for group in self.made for p in group[:2]])
+
+    def _tree(self, **overrides):
+        made = _extension_tree(**overrides)
+        self.made.append(made)
+        return made
+
+    def test_a_consistent_extension_is_read_and_extends_the_allowance(self):
+        root, _, allowance, comment = self._tree()
+        extension = acquisition_extension(repo_root=root, allowance=allowance,
+                                          delegation_reader=lambda path: dict(comment))
+        self.assertTrue(extension["approved_extension"]["provenance_verified_against_github"])
+        effective = extended_allowance(allowance=allowance, extension=extension)
+        self.assertEqual(allowance["maximum_additional_provider_paid_sec_calls"],
+                         effective["maximum_additional_provider_paid_sec_calls"],
+                         "the binding's limits stay the first approval's")
+        self.assertEqual([0, 0, 10], effective["extension"][
+            "maximum_additional_provider_paid_sec_calls"])
+        self.assertEqual(allowance["delegation_url"], effective["delegation_url"])
+
+    def test_no_extension_is_none_and_changes_nothing(self):
+        root, _, allowance, _ = self._tree()
+        (root / EXTENSION_POLICY_PATH).unlink()
+        self.assertIsNone(acquisition_extension(repo_root=root, allowance=allowance))
+        self.assertIs(allowance, extended_allowance(allowance=allowance, extension=None))
+
+    def test_each_tie_and_each_field_refuses_by_name(self):
+        cases = (
+            ("the policy raises more than the comment",
+             dict(policy_overrides={"maximum_additional_provider_paid_sec_calls": [0, 0, 99]}),
+             "ISSUE_47_EXTENSION_WIDENS_THE_APPROVED_GRANT:maximum"),
+            ("another approval extended",
+             dict(policy_overrides={"extends": {"delegation_url": _EXTENSION_URL,
+                                                "delegation_body_sha256": "d" * 64,
+                                                "ledger_state": {
+                                                    "export_id": "sha256:" + "e" * 64,
+                                                    "claims": {"sha256": "c" * 64,
+                                                               "size": 100},
+                                                    "claim_count": 3,
+                                                    "resumes": {"sha256": "d" * 64,
+                                                                "size": 0},
+                                                    "cumulative": [0, 0, 3]}}}),
+             "ISSUE_47_EXTENSION_EXTENDS_ANOTHER_APPROVAL"),
+            ("another ledger root",
+             dict(policy_overrides={"budget_root": "/tmp/another-ledger-root"}),
+             "ISSUE_47_EXTENSION_NAMES_ANOTHER_LEDGER_ROOT"),
+            ("the first approval's own comment",
+             dict(policy_overrides={"delegation_url": "https://github.com/wlvh/SEC_metrics/"
+                                                      "issues/47#issuecomment-1"}),
+             "ISSUE_47_EXTENSION_IS_THE_FIRST_APPROVAL_S_COMMENT"),
+            ("a re-request for a first acquisition",
+             dict(policy_overrides={"reclaim": [{"acquisition_kind": "FIRST_ACQUISITION",
+                                                 "dependency_classes": ["SUBMISSIONS_INDEX"]}]}),
+             "ISSUE_47_EXTENSION_RECLAIM_KIND_NOT_ALLOWED"),
+            ("a re-request of a class outside the grants",
+             dict(policy_overrides={"reclaim": [{"acquisition_kind": "SNAPSHOT_REFRESH",
+                                                 "dependency_classes": ["NOT_A_CLASS"]}]}),
+             "ISSUE_47_EXTENSION_RECLAIM_CLASS_OUTSIDE_THE_GRANTS"),
+            ("the comment is the first approval's type",
+             dict(body_overrides={"record_type": DELEGATION_TYPE}),
+             "ISSUE_47_EXTENSION_RECORD_TYPE_CHANGED"),
+            ("an edited comment",
+             dict(comment_overrides={"updated_at": "2026-09-30T01:00:00Z"}),
+             "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED"),
+            ("posted through an app",
+             dict(comment_overrides={"performed_via_github_app": {"id": 1}}),
+             "ISSUE_47_DELEGATION_WAS_POSTED_THROUGH_AN_APP"),
+            ("the comment authorizes production",
+             dict(body_overrides={"production_authorized": True}),
+             "ISSUE_47_EXTENSION_MUST_NOT_AUTHORIZE_PRODUCTION"))
+        for label, overrides, reason in cases:
+            with self.subTest(label):
+                root, _, allowance, _ = self._tree(**overrides)
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    acquisition_extension(repo_root=root, allowance=allowance)
+                self.assertIn(reason, str(caught.exception))
+
+    def test_a_purpose_the_binding_never_saw_is_refused(self):
+        root, _, allowance, _ = self._tree()
+        policy = json.loads((root / EXTENSION_POLICY_PATH).read_text())
+        policy["scope"] = {**policy["scope"],
+                           "purposes": [*policy["scope"]["purposes"], "another_purpose"]}
+        (root / EXTENSION_POLICY_PATH).write_text(json.dumps(policy), encoding="utf-8")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_extension(repo_root=root, allowance=allowance)
+        self.assertIn("ISSUE_47_EXTENSION_ADDS_A_PURPOSE", str(caught.exception))
+
+    def test_the_saved_record_must_be_what_github_returns(self):
+        root, _, allowance, comment = self._tree()
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_extension(repo_root=root, allowance=allowance,
+                                  delegation_reader=lambda path: {**comment,
+                                                                  "body": comment["body"] + " "})
+        self.assertIn("ISSUE_47_SAVED_EXTENSION_DIFFERS_FROM_THE_ONE_ON_GITHUB",
+                      str(caught.exception))
+
+    def test_registration_waits_for_a_pinned_body_and_takes_only_those_bytes(self):
+        root, _, allowance, comment = self._tree()
+        with patch.object(EXTENSION_MODULE, "EXTENSION_BODY_SHA256", None), \
+                self.assertRaises(HistoricalAcquisitionError) as caught:
+            EXTENSION_MODULE.register_extension(repo_root=root, comment_url=_EXTENSION_URL,
+                                                reader=lambda path: dict(comment),
+                                                allowance=allowance)
+        self.assertIn("ISSUE_47_EXTENSION_BODY_NOT_PINNED", str(caught.exception))
+        (root / EXTENSION_POLICY_PATH).unlink()
+        body = comment["body"].encode("utf-8")
+        (root / EXTENSION_MODULE.EXTENSION_BODY_PATH).parent.mkdir(parents=True, exist_ok=True)
+        (root / EXTENSION_MODULE.EXTENSION_BODY_PATH).write_bytes(body)
+        with patch.object(EXTENSION_MODULE, "EXTENSION_BODY_SHA256",
+                          hashlib.sha256(body).hexdigest()):
+            other = {**comment, "body": comment["body"].replace('"extension_ordinal": 1',
+                                                                '"extension_ordinal": 2')}
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXTENSION_MODULE.register_extension(
+                    repo_root=root, comment_url=_EXTENSION_URL,
+                    reader=lambda path: dict(other), allowance=allowance)
+            self.assertIn("ISSUE_47_POSTED_EXTENSION_IS_NOT_THE_APPROVED_TEXT",
+                          str(caught.exception))
+            # A browser's line breaks are forgiven, as for the first approval.
+            posted = {**comment, "body": comment["body"].replace("\n", "\r\n") + "\r\n"}
+            result = EXTENSION_MODULE.register_extension(
+                repo_root=root, comment_url=_EXTENSION_URL,
+                reader=lambda path: dict(posted), allowance=allowance)
+        self.assertEqual("EXTENSION_REGISTERED", result["status"])
+        self.assertEqual([0, 0, 10], result["additional_limits"])
+
+
+class AReplacementUnderTheExtensionReplaysThroughTheFrozenValidator(unittest.TestCase):
+    """The real chain: a failed request, replaced once under the extension, and registered.
+
+    The scripted cases stop at the ledger. Two attempts for one URL in the
+    request log is a shape the first approval never produced, and whether the
+    frozen checkpoint replay, the installation and the planner accept it is a
+    question only the real chain answers.
+    """
+
+    def test_the_replacement_is_saved_and_the_plan_stops_asking(self):
+        base = Path(tempfile.mkdtemp(prefix="issue47-replace-"))
+        self.addCleanup(shutil.rmtree, base, ignore_errors=True)
+        root = base / "ledger"
+        failed = recorded_historical_session(root=root, response=b"", status=404,
+                                             limits=(0, 0, 1))
+        self.assertEqual("FAILED_TERMINAL",
+                         failed.capture(company_id=_SCRIPTED_COMPANY, url=DECLARED)["status"])
+        frame = declared_frame(repo_root=failed.data_root, company_id=_SCRIPTED_COMPANY)
+        row = next(r for r in frame["requirements"] if r["source_url"] == DECLARED)
+        self.assertEqual("REPLACEMENT_ACQUISITION", row["acquisition_kind"])
+        with self.assertRaises(HistoricalSessionError) as caught:
+            recorded_historical_session(root=root, response=BODY, limits=(0, 0, 1)).capture(
+                company_id=_SCRIPTED_COMPANY, url=DECLARED)
+        self.assertIn("ISSUE_47_URL_ALREADY_CLAIMED_IN_THIS_LEDGER", str(caught.exception))
+        extension = _test_extension(root, limits=(0, 0, 1), reclaim=[
+            {"acquisition_kind": "REPLACEMENT_ACQUISITION",
+             "dependency_classes": [row["dependency_class"]]}])
+        replaced = recorded_historical_session(root=root, response=BODY, limits=(0, 0, 1),
+                                               extension=extension)
+        result = replaced.capture(company_id=_SCRIPTED_COMPANY, url=DECLARED)
+        self.assertEqual("SUCCEEDED", result["status"])
+        plan = strict_json_file(path=root / "calls/0002/sec-plan.json")
+        self.assertEqual(1, plan["request"]["reclaimed_under_extension"])
+        checkpoint, _ = checkpoint_installation(source_root=replaced.data_root)
+        self.assertEqual(2, len(checkpoint["captures"]))
+        after = declared_frame(repo_root=replaced.data_root, company_id=_SCRIPTED_COMPANY)
+        row = next(r for r in after["requirements"] if r["source_url"] == DECLARED)
+        self.assertFalse(row["new_acquisition_required"], "the replacement is what is saved now")
+        self.assertEqual([0, 0, 2], replaced.ledger.snapshot()["counts"])
+        # Requested again under the extension already: a caller's marker for
+        # it, or none, is not what the ledger allows, and nothing is claimed.
+        failed_row = {**row, "acquisition_kind": "REPLACEMENT_ACQUISITION",
+                      "reason": "LATEST_SOURCE_REQUEST_FAILED: " + DECLARED}
+        admitted = {"company_id": _SCRIPTED_COMPANY,
+                    "dependency_class": row["dependency_class"], "grants": ["RECORDED_TEST"],
+                    "purpose": replaced.allowance["scope"]["purposes"][0]}
+        for marker in (1, None):
+            with self.subTest(marker=marker), replaced.ledger.locked():
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    replaced._capture_one(company_id=_SCRIPTED_COMPANY, url=DECLARED,
+                                          dependency=failed_row, admitted=admitted,
+                                          reclaim=marker)
+                self.assertIn("ISSUE_47_RECLAIM_IS_NOT_WHAT_THE_LEDGER_ALLOWS",
+                              str(caught.exception))
+        self.assertEqual(2, replaced.ledger.snapshot()["slot_count"])
+
+
+class AnExportSaysWhichExtensionItWasSpentUnder(unittest.TestCase):
+    """An export after an extension records it, and only beside the approval it extends.
+
+    The export is what the branch carries and what a resume restores from; a
+    claim past the first approval's cap is readable there only if the export
+    names the extension that raised it. An extension naming another approval
+    or another ledger root is refused rather than recorded beside this one.
+    """
+
+    def setUp(self):
+        self.root, self.budget, self.allowance, _ = _extension_tree()
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+        self.addCleanup(shutil.rmtree, self.budget, ignore_errors=True)
+        self.approval = {key: self.allowance[key] for key in (
+            "delegation_url", "delegation_body_sha256", "budget_root")}
+
+    def test_the_extension_is_recorded_beside_its_approval(self):
+        recorded = EXPORT_MODULE._extension(approval=self.approval, policy_root=self.root)
+        self.assertEqual(_EXTENSION_URL, recorded["delegation_url"])
+        self.assertEqual([0, 0, 10], recorded["maximum_additional_provider_paid_sec_calls"])
+        self.assertEqual(self.allowance["delegation_url"],
+                         recorded["extends"]["delegation_url"])
+
+    def test_an_export_without_an_extension_is_unchanged(self):
+        (self.root / EXTENSION_POLICY_PATH).unlink()
+        self.assertIsNone(EXPORT_MODULE._extension(approval=self.approval,
+                                                   policy_root=self.root))
+        self.assertIsNone(EXPORT_MODULE._extension(approval=None, policy_root=self.root))
+
+    def test_an_extension_of_another_approval_or_root_is_refused(self):
+        for label, approval in (
+                ("another approval", {**self.approval, "delegation_body_sha256": "d" * 64}),
+                ("another comment", {**self.approval, "delegation_url": _EXTENSION_URL}),
+                ("another ledger root", {**self.approval,
+                                         "budget_root": "/tmp/another-ledger-root"})):
+            with self.subTest(label):
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    EXPORT_MODULE._extension(approval=approval, policy_root=self.root)
+                self.assertIn("ISSUE_47_EXPORT_EXTENSION_IS_OF_ANOTHER_APPROVAL",
+                              str(caught.exception))
+
+
+class TheLivePathHoldsTheLedgerToTheExtensionItRead(unittest.TestCase):
+    """The live ledger is pinned to the extension the live path verified, or refused.
+
+    The scripted and recorded cases hand the extension to the recorded session;
+    the live session reaches the ledger through ``live_ledger``, and a live
+    path that read the extension but did not pin it would raise nothing - it
+    would stop at the first approval's cap - while one that raised the cap
+    without the claim-log check would raise it for any ledger at that root.
+    """
+
+    def test_the_live_ledger_is_raised_only_for_the_log_it_continues(self):
+        base = Path(tempfile.mkdtemp(prefix="issue47-livepin-"))
+        self.addCleanup(shutil.rmtree, base, ignore_errors=True)
+        root = base / "ledger"
+        purpose = "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
+        allowance = {"budget_root": str(root), "scope": {"purposes": [purpose]},
+                     "maximum_additional_provider_paid_sec_calls": [0, 0, 1]}
+        first = SESSION_MODULE.live_ledger(allowance=allowance,
+                                           published={"reserve_sec_calls": 0})
+        with first.locked():
+            first.claim(channel="SEC", request_digest="sha256:" + "1" * 64,
+                        plan_id="sha256:" + "2" * 64, purpose=purpose)
+        state = _ledger_state(root)
+        extension = {"extension_ordinal": 1, "delegation_url": _EXTENSION_URL,
+                     "delegation_body_sha256": "b" * 64,
+                     "maximum_additional_provider_paid_sec_calls": [0, 0, 2],
+                     "ledger_state": state, "provenance_verified_against_github": True}
+        published = {"reserve_sec_calls": 0}
+        refusals = (
+            ("not read back from GitHub",
+             {**extension, "provenance_verified_against_github": False},
+             "ISSUE_47_LIVE_EXTENSION_NOT_READ_BACK_FROM_GITHUB"),
+            ("another claim log", {**extension, "ledger_state": {
+                **state, "claims": {**state["claims"], "sha256": "f" * 64}}},
+             "ISSUE_47_LEDGER_IS_NOT_THE_ONE_THE_EXTENSION_EXTENDS"),
+            ("another spending stated", {**extension, "ledger_state": {
+                **state, "cumulative": [0, 0, state["claim_count"] + 1]}},
+             "ISSUE_47_EXTENSION_STATES_ANOTHER_SPENDING"))
+        for label, stated, reason in refusals:
+            with self.subTest(label):
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    SESSION_MODULE.live_ledger(allowance={**allowance, "extension": stated},
+                                               published=published)
+                self.assertIn(reason, str(caught.exception))
+        again = SESSION_MODULE.live_ledger(allowance={**allowance, "extension": extension},
+                                           published=published)
+        self.assertEqual([0, 0, 3], again.snapshot()["limits"])
+        # Pinned once at this root; the same extension pins again in a new
+        # process, and a different one - a larger raise - does not.
+        self.assertTrue(SESSION_MODULE.extension_anchor_path(root, 1).is_file())
+        SESSION_MODULE.live_ledger(allowance={**allowance, "extension": extension},
+                                   published=published)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.live_ledger(allowance={**allowance, "extension": {
+                **extension, "maximum_additional_provider_paid_sec_calls": [0, 0, 1000]}},
+                published=published)
+        self.assertIn("ISSUE_47_ANOTHER_EXTENSION_WAS_PINNED_HERE", str(caught.exception))
+
+
+class AnExtensionIsSpentOnlyOnceTheBranchCarriesIt(unittest.TestCase):
+    """The checkout's extension files must be the branch tip's before any request under them.
+
+    A resume reads the branch. An extension registered in a container and
+    never pushed would let requests be made that a successor, reading the
+    branch, cannot charge for; a branch carrying an extension the checkout
+    lacks would be spent under grants the session does not hold.
+    """
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-branch-extension-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def _write(self, relative, data):
+        path = self.root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+
+    def test_the_checkout_and_the_tip_must_carry_the_same_extension(self):
+        policy, record = EXTENSION_MODULE.EXTENSION_FILES
+        EXTENSION_MODULE.require_extension_on_branch(repo_root=self.root,
+                                                     branch_files=dict(_NO_EXTENSION))
+        self._write(policy, b"{}")
+        self._write(record, b"{}")
+        same = {policy: b"{}", record: b"{}"}
+        EXTENSION_MODULE.require_extension_on_branch(repo_root=self.root, branch_files=same)
+        for label, branch in (("not pushed", dict(_NO_EXTENSION)),
+                              ("pushed differently", {policy: b"{} ", record: b"{}"}),
+                              ("only half pushed", {policy: b"{}", record: None})):
+            with self.subTest(label):
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    EXTENSION_MODULE.require_extension_on_branch(repo_root=self.root,
+                                                                 branch_files=branch)
+                self.assertIn("ISSUE_47_EXTENSION_NOT_ON_THE_BRANCH", str(caught.exception))
+        (self.root / policy).unlink()
+        (self.root / record).unlink()
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            EXTENSION_MODULE.require_extension_on_branch(repo_root=self.root, branch_files=same)
+        self.assertIn("ISSUE_47_EXTENSION_NOT_ON_THE_BRANCH", str(caught.exception))
+        for missing in ({}, {policy: None}):
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXTENSION_MODULE.require_extension_on_branch(repo_root=self.root,
+                                                             branch_files=missing)
+            self.assertIn("ISSUE_47_BRANCH_TIP_DOES_NOT_SAY_WHICH_EXTENSION",
+                          str(caught.exception))
+
+
+class ThePinnedBodyIsTheCommittedProposal(unittest.TestCase):
+    """The digest registration checks is the body the proposal tool wrote and the owner reads."""
+
+    def test_the_committed_body_has_the_pinned_digest_and_passes_the_gate_s_shape(self):
+        body = (ROOT / EXTENSION_MODULE.EXTENSION_BODY_PATH).read_bytes()
+        self.assertEqual(EXTENSION_MODULE.EXTENSION_BODY_SHA256, hashlib.sha256(body).hexdigest())
+        approved = strict_json_loads(text=body.decode("utf-8"))
+        self.assertEqual(EXTENSION_MODULE.EXTENSION_TYPE, approved["record_type"])
+        self.assertIs(False, approved["production_authorized"])
+        first = acquisition_allowance(repo_root=ROOT)
+        self.assertEqual(first["delegation_url"], approved["extends"]["delegation_url"])
+        self.assertEqual(first["budget_root"], approved["budget_root"])
+        # The state it extends is the committed export's claim log.
+        index = strict_json_file(path=ROOT / "evidence/issue47_acquired/export.json")
+        state = approved["extends"]["ledger_state"]
+        self.assertEqual(index["export_id"], state["export_id"])
+        self.assertEqual(index["state_archive"]["members"]["ledger/claims.jsonl"],
+                         state["claims"])
