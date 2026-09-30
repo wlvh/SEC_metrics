@@ -1767,12 +1767,28 @@
    "root_cause": "The historical C03 route reads the pinned year from the first proxy after it (as first reported, the same point-in-time rule every other metric follows: the target year's own filing). Nothing in the frame asks a later filing whether it still reports the same amount.",
    "scope_measured": "Every PeoTotalCompAmt in the 33 saved proxies (checkout and the acquisition's export): 103 person-years, 53 of them reported by two or more proxies, 2 with different amounts (c03-first-ecd-release/later-proxies.json).",
    "found_by": "A cross-proxy scan run before publishing the first-release values (c03-first-ecd-release/later_proxies.py).",
-   "repair_state": "ROOT_CAUSE_MEASURED_AWAITS_THE_CONVENTION_DECISION",
+   "repair_state": "CONVENTION_DECIDED_AS_FIRST_REPORTED_RELEASED",
    "evidence": [
     "docs/evidence/issue47_history/c03-first-ecd-release/README.md",
     "docs/evidence/issue47_history/c03-first-ecd-release/later-proxies.json"
    ],
-   "repair": "Which amount the frame shows is a convention the owner decides: as first reported (the other metrics' rule) or as later reported. Until then the coordinate is withdrawn from the verified outcome; the value is not changed or removed."
+   "repair": "Which amount the frame shows is a convention the owner decides: as first reported (the other metrics' rule) or as later reported. Until then the coordinate is withdrawn from the verified outcome; the value is not changed or removed.",
+   "convention_decision": {
+    "decision": "A: the year's value as first reported, the point-in-time rule the other metrics follow",
+    "decided_by": "the owner, answering 'A' in this session (transcribed by the executor)",
+    "record": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+    "reversible": "the owner may choose B or C; this entry would then withdraw the result again"
+   },
+   "released": [
+    {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:b8da73f6699f7e38d3a97add5f67368bcdfa4b6865b9432f16c7827b6d8d5bda",
+     "run_id": "run:historical-period:70af4c6ef5e14d4feb904e179e873f342557001c35ea8360570fffbab6477277",
+     "value": "18686271",
+     "what_this_releases": "this result and no other: under convention A the first-reported total is the value the historical frame reports for this year, so the later proxy's different amount is recorded, not a defect of this result",
+     "what_it_does_not_assert": "that the value is independently read: the only filing that reports this amount is the one the result names, so no reading can confirm it from a document the route did not read; it stays unaccepted"
+    }
+   ]
   },
   {
    "defect_id": "C03_MACYS_2023_LATER_PROXIES_REPORT_THE_TOTAL_NET_OF_A_CLAWBACK",
@@ -1787,12 +1803,28 @@
    "root_cause": "The historical C03 route reads the pinned year from the first proxy after it (as first reported, the same point-in-time rule every other metric follows: the target year's own filing). Nothing in the frame asks a later filing whether it still reports the same amount.",
    "scope_measured": "Every PeoTotalCompAmt in the 33 saved proxies (checkout and the acquisition's export): 103 person-years, 53 of them reported by two or more proxies, 2 with different amounts (c03-first-ecd-release/later-proxies.json).",
    "found_by": "The same cross-proxy scan.",
-   "repair_state": "ROOT_CAUSE_MEASURED_AWAITS_THE_CONVENTION_DECISION",
+   "repair_state": "CONVENTION_DECIDED_AS_FIRST_REPORTED_RELEASED",
    "evidence": [
     "docs/evidence/issue47_history/c03-first-ecd-release/README.md",
     "docs/evidence/issue47_history/c03-first-ecd-release/later-proxies.json"
    ],
-   "repair": "Which amount the frame shows is a convention the owner decides: as first reported (the other metrics' rule) or as later reported. Until then the coordinate is withdrawn from the verified outcome; the value is not changed or removed."
+   "repair": "Which amount the frame shows is a convention the owner decides: as first reported (the other metrics' rule) or as later reported. Until then the coordinate is withdrawn from the verified outcome; the value is not changed or removed.",
+   "convention_decision": {
+    "decision": "A: the year's value as first reported, the point-in-time rule the other metrics follow",
+    "decided_by": "the owner, answering 'A' in this session (transcribed by the executor)",
+    "record": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+    "reversible": "the owner may choose B or C; this entry would then withdraw the result again"
+   },
+   "released": [
+    {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:bd75145b139fb5114c15a0e6ede7bd2f9876dc6a1a683db113fa8552ba415783",
+     "run_id": "run:historical-period:ca3c817acf69e2f4cf494f421e76fe09fab9cfb554ce587151f1274f00a273a2",
+     "value": "11821259",
+     "what_this_releases": "this result and no other: under convention A the first-reported total is the value the historical frame reports for this year, so the later proxy's different amount is recorded, not a defect of this result",
+     "what_it_does_not_assert": "that the value is independently read: the only filing that reports this amount is the one the result names, so no reading can confirm it from a document the route did not read; it stays unaccepted"
+    }
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
