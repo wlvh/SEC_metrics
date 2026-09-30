@@ -2700,6 +2700,27 @@
       "ordinary_messages": 1,
       "result_path": "docs/evidence/issue28_continuous/b03-marriott-contract-amortization-20260929/independent-review-45bcce3/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "sourcecheck_b13group1_419ddb1",
+      "purpose": "large_original_one_time_check",
+      "module": "b13_enphase_group1",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0191/semantic-request.json",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0191/source.json",
+        "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/"
+      ],
+      "patch_sha": "419ddb1d75513a4fa80a7e21f605322ff6f26b0d",
+      "spawned_at": "2026-09-30T05:29:06Z",
+      "ended_at": "2026-09-30T05:41:32Z",
+      "tool_calls": 52,
+      "outer_exec_calls": 16,
+      "nested_tool_calls": 36,
+      "ordinary_messages": 4,
+      "message_cap_exceeded": true,
+      "message_cap_note": "Original source check used three messages; parent follow-up requested the count and caused a fourth. No source reread or test was done in the follow-up.",
+      "result_path": "docs/evidence/issue28_continuous/b13-enphase-group1-source-check-20260930/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_GROUP1_SOURCE_ONLY_NO_B13_RESULT_CREDIT"
     }
   ],
   "ci_capacity_20260922": {
