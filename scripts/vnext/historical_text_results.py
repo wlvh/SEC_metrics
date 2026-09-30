@@ -63,6 +63,7 @@ import re
 
 from .canonical import content_hash, sha256_bytes
 from .records import validate_record
+from . import text_business_candidates as _frozen_candidates
 from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _POLICY_HASH,
                                        _PROSPECTIVE, _check_document, _excerpt, _note_references,
                                        _ranges, _substantive)
@@ -579,6 +580,83 @@ def audit_report_spans(*, document, ranges=None):
     return {"spans": spans, "unclosed_openings": unclosed}
 
 
+_BARE_NUMBER = re.compile(r"\d{1,4}")
+
+
+def page_number_blocks(blocks):
+    """Blocks that are a page's number, found as a sequence beside a running footer.
+
+    The frozen note scan (``_note_references``) takes an emphasized bare
+    identifier followed by an emphasized block that starts with a letter as a
+    note heading, which is how Macy's older reports print "1." above
+    "Organization and Summary of Significant Accounting Policies". Pfizer
+    prints each page's number the same way - bold, alone, below "Pfizer Inc."
+    and "<year> Form 10-K" - so whenever a page begins with a bold section
+    heading the scan builds a note heading from the page number. Measured over
+    the 62 saved annual reports: 485 headings are built from a bare
+    identifier, 445 of them Pfizer page numbers (71 to 78 a year). They are
+    harmless until the page's number equals the note a filing's Item 3
+    refers to: in the FY2024 report page 16 begins with "GLOBAL OPERATIONS",
+    so "Note 16A" found two Note 16 headings, stayed unresolved, and D02
+    stopped at TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE.
+
+    A page number is a bare number that stands beside a block repeating at
+    least three times in the document (the running footer), on a side where
+    the same footer also stands beside the number one lower or one higher.
+    No real heading in those reports meets it: Macy's thirty-six numbered
+    note headings stand beside unique paragraphs or beside a running header
+    that no neighbouring number shares.
+    """
+    texts = Counter(" ".join(block["text"].split()).casefold() for block in blocks)
+    bare = {index: int(block["text"].strip()) for index, block in enumerate(blocks)
+            if _BARE_NUMBER.fullmatch(block["text"].strip())}
+    beside = {}
+    for index, number in bare.items():
+        for side in (-1, 1):
+            if 0 <= index + side < len(blocks):
+                neighbour = " ".join(blocks[index + side]["text"].split()).casefold()
+                beside.setdefault((side, neighbour), set()).add(number)
+    pages = set()
+    for index, number in bare.items():
+        for side in (-1, 1):
+            if not 0 <= index + side < len(blocks):
+                continue
+            neighbour = " ".join(blocks[index + side]["text"].split()).casefold()
+            if texts[neighbour] >= 3 and beside[(side, neighbour)] & {number - 1, number + 1}:
+                pages.add(index)
+    return pages
+
+
+def note_references(document, ranges):
+    """The frozen note navigation, with page numbers not read as headings.
+
+    The frozen scan runs unchanged over the document with each page number's
+    text blanked, so it cannot become a heading and nothing else it decides
+    moves. A blank block matches neither a note reference nor a heading, so
+    the blanked text never reaches an excerpt the result names.
+
+    Measured over the 61 annual reports that build: the navigation changes in
+    two, both Pfizer's - FY2024's Note 16A resolves to the real Note 16, and
+    FY2021's already unique range loses the page-number heading from its list
+    of heading candidates. Nine D02 candidates the frame batch froze are
+    rebuilt with the same candidate hash.
+    """
+    pages = page_number_blocks(document["blocks"])
+    if not pages:
+        return _note_references(document, ranges)
+    masked = {**document, "blocks": [{**block, "text": ""} if index in pages else block
+                                     for index, block in enumerate(document["blocks"])]}
+    return _note_references(masked, ranges)
+
+
+# D02's frozen legal scan and preparation with the note navigation above; every
+# other check is the frozen one.
+_D02_LEGAL_SCAN = release_aware_with(_frozen_candidates.legal_risk_candidates,
+                                     _note_references=note_references)
+_D02_PREPARATION = release_aware_with(frozen.prepare_business_text_sources,
+                                      legal_risk_candidates=_D02_LEGAL_SCAN)
+
+
 def referenced_note_candidates(*, document, raw_bytes):
     """`legal_risk_candidates` with a referenced note kept as a note.
 
@@ -614,7 +692,7 @@ def referenced_note_candidates(*, document, raw_bytes):
     """
     _check_document(document)
     ranges, reasons = _ranges(document, ["ITEM_1A", "ITEM_3", "ITEM_8"])
-    references = _note_references(document, ranges)
+    references = note_references(document, ranges)
     for reference in references:
         if reference["status"] != "LOCATED_NOTE_RANGE":
             reasons.append("UNRESOLVED_" + reference["reference"].upper().replace(" ", "_"))
@@ -995,8 +1073,7 @@ def _prepare_corrected_sources(*, metric_id, **source_arguments):
         prepared = proxy_identity.record_cover_identity(
             prepared=prepared, raw_bytes_by_id=source_arguments["raw_bytes_by_id"])
         return _remember(shared=shared, key=key, prepared=_composition_facts(prepared))
-    prepared = release_aware(frozen).prepare_business_text_sources(metric_id=metric_id,
-                                                                   **source_arguments)
+    prepared = _D02_PREPARATION(metric_id=metric_id, **source_arguments)
     _need(len(prepared["documents"]) == 1, "HISTORICAL_TEXT_BOUNDARY_EXPECTS_ONE_DOCUMENT")
     reference_id = next(iter(prepared["documents"]))
     document = prepared["documents"][reference_id]

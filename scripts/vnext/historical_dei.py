@@ -45,6 +45,9 @@ record their bytes.
 Call relationships: #47's route modules call the frozen readers through
 ``release_aware``. ``unviewed_references`` is the check that they do: it lists
 what a #47 function reaches that can ask the question without a view.
+``release_aware_with`` is the same view with some of the names the frozen
+code reads bound to a successor (C02's proxy identity, D02's note navigation);
+``overrides_of`` tells which.
 """
 import builtins
 import dis
@@ -474,6 +477,14 @@ def release_aware_with(function, **overrides):
         _OVERRIDE_VIEWS[key] = known
         _VIEW_IDS.add(id(view))
     return known[2]
+
+
+def overrides_of(view):
+    """The names ``release_aware_with`` bound for ``view``, or None if it has none."""
+    for function, overrides, known in _OVERRIDE_VIEWS.values():
+        if known is view:
+            return dict(overrides)
+    return None
 
 
 def _class_view(klass):
