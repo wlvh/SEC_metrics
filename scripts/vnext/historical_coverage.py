@@ -977,7 +977,7 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
 
 def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                           runs_root=None, requirement_closure_hash=None,
-                          attempts_root=None):
+                          attempts_root=None, source_root=None):
     """Enumerate every target position with independent status dimensions.
 
     ``first_blocking_reason`` is a display convenience: it names what this
@@ -999,10 +999,17 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     such a position says the distinction is unproven rather than implying
     nothing was attempted.
 
+    ``source_root`` is where the periods are planned and selected: a root
+    restored from the acquisition's export holds originals the checkout does
+    not, and a batch run on it reads as "original not saved" when its periods
+    are planned on the checkout. Registers (defects, acceptances, awaiting),
+    the declared metrics and the receipts still come from ``repo_root``.
+
     This entry computes no metric outcome in any mode. It reads receipts and
     records; it does not ask a route what it would do now, because that answers
     a different question and would re-compute results inside the report.
     """
+    periods_root = repo_root if source_root is None else Path(source_root)
     metrics, policy = declared_metric_ids(repo_root=repo_root)
     configured = [c["company_id"] for c in _registry_rows(repo_root=repo_root)]
     selected = configured if company_ids is None else list(company_ids)
@@ -1021,7 +1028,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     positions = []
     company_reports = []
     for company_id in selected:
-        plan = plan_historical_sources(repo_root=repo_root, company_id=company_id, count=years)
+        plan = plan_historical_sources(repo_root=periods_root, company_id=company_id, count=years)
         identity_ready = set(plan["annual_identity_ready_report_dates"])
         periods = []
         for candidate in plan["target_candidates"]:
@@ -1039,7 +1046,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                      else "ORIGINAL_NOT_SAVED" if report_end not in identity_ready
                      else "PERIOD_ESTABLISHED"}
             if entry["period_status"] == "PERIOD_ESTABLISHED":
-                selection = resolve_period_selection(repo_root=repo_root,
+                selection = resolve_period_selection(repo_root=periods_root,
                                                      company_id=company_id,
                                                      report_end=report_end)
                 entry["selection_id"] = selection["selection_id"]
@@ -1230,6 +1237,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             "delivery_by_outcome": delivery_by_outcome,
             "runs_root_supplied": runs_root is not None,
             "attempts_root_supplied": attempts_root is not None,
+            "periods_planned_on": "REPOSITORY" if source_root is None else "SUPPLIED_SOURCE_ROOT",
             "unreadable_attempt_artifacts": attempts["unreadable"],
             "rejected_attempt_records": attempts["rejected"],
             # A bare False here was imprecise, and counting the calls rather

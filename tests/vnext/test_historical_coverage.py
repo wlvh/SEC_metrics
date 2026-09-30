@@ -1425,6 +1425,49 @@ class RowBundleLocationTest(unittest.TestCase):
         self.assertNotEqual(first, second)
         self.assertEqual(root, first.parent)
 
+
+class PeriodsArePlannedOnTheSuppliedSourceRootTest(unittest.TestCase):
+    """A batch run on a restored root must not read as "original not saved".
+
+    The periods are planned and selected on ``source_root`` when one is
+    supplied; registers, the declared metrics and receipts stay with the
+    repository. Without it both calls see the repository, as before.
+    """
+
+    def _planned_on(self, source_root):
+        # The real planner and selection run on the repository; the spies only
+        # record which root each was asked to use.
+        from vnext import historical_coverage as coverage
+        seen = {"plan": [], "selection": []}
+        real_plan, real_select = coverage.plan_historical_sources, coverage.resolve_period_selection
+
+        def plan(*, repo_root, **arguments):
+            seen["plan"].append(repo_root)
+            return real_plan(repo_root=ROOT, **arguments)
+
+        def select(*, repo_root, **arguments):
+            seen["selection"].append(repo_root)
+            return real_select(repo_root=ROOT, **arguments)
+
+        with original_sources_only(), \
+                patch.object(coverage, "plan_historical_sources", side_effect=plan), \
+                patch.object(coverage, "resolve_period_selection", side_effect=select):
+            matrix = coverage.build_coverage_matrix(repo_root=ROOT, company_ids=["marriott_international"],
+                                                    years=1, source_root=source_root)
+        self.assertTrue(seen["selection"])
+        return {*seen["plan"], *seen["selection"]}, matrix["periods_planned_on"]
+
+    def test_the_supplied_root_plans_the_periods(self):
+        with TemporaryDirectory() as root:
+            seen, on = self._planned_on(Path(root))
+            self.assertEqual({Path(root)}, seen)
+            self.assertEqual("SUPPLIED_SOURCE_ROOT", on)
+
+    def test_without_it_the_repository_plans_them(self):
+        seen, on = self._planned_on(None)
+        self.assertEqual({ROOT}, seen)
+        self.assertEqual("REPOSITORY", on)
+
 if __name__ == "__main__":
     unittest.main()
 

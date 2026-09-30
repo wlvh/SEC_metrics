@@ -13,7 +13,7 @@ quietly files an unknown reason under "gap" says something nobody checked.
 
 Usage (after the batch has finished; the frame driver writes one directory per
 period, and its run directories are moved into ``<batch>/runs`` first):
-    python3 report.py <batch directory> <runtime manifest> <output directory> <batch commit>
+    python3 report.py <batch directory> <runtime manifest> <output directory> <batch commit> [<source root>]
 
 ``<runtime manifest>`` is the minted ``baseline_manifest.json`` of the runtime
 tree the batch ran in (the repository commit's files plus the registration
@@ -143,7 +143,11 @@ def main():
                                       "converted_from": "matrix-" + label + ".json",
                                       "positions": matrix["positions"]}, indent=1, sort_keys=True))
     frame_path = BATCH / "frame.json"
-    subprocess.run([sys.executable, "tools/vnext_history_coverage.py", "--runs-root", str(BATCH / "runs"),
+    # The batch ran on the root restored from the acquisition's export; its
+    # periods are planned there, or the frame reads them as "original not saved".
+    source_root = [] if len(sys.argv) < 6 else ["--source-root", sys.argv[5]]
+    subprocess.run([sys.executable, "tools/vnext_history_coverage.py", *source_root,
+                    "--runs-root", str(BATCH / "runs"),
                     "--requirement-closure-hash", closures[0], "--attempts-root", str(attempts),
                     "--output", str(frame_path)], cwd=str(REPO), check=True,
                    stdout=subprocess.DEVNULL)
@@ -225,7 +229,7 @@ def main():
             "dimension_counts", "acceptance_reading_states", "run_receipts_read",
             "unreadable_run_directories", "rejected_attempt_records", "unreadable_attempt_artifacts",
             "wired_historical_metric_ids", "scope_answered_metric_ids",
-            "structural_applicability_metric_ids")},
+            "structural_applicability_metric_ids", "periods_planned_on")},
         "per_period": {key: dict(sorted(counter.items()))
                        for key, counter in sorted(per_period_frame.items())},
         "withdrawn_by_a_confirmed_defect": [

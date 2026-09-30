@@ -48,16 +48,24 @@ def main(argv=None):
                              "from a position nothing reached. Read as a statement "
                              "about the past; it cannot confer run status, and without "
                              "it such a position says the distinction is unproven.")
+    parser.add_argument("--source-root", type=Path,
+                        help="Plan and select the periods on this root (for example one "
+                             "restored from the acquisition's export) instead of the "
+                             "checkout. Registers and receipts still come from the "
+                             "checkout. The checkpoint is replayed once per ledger state.")
     parser.add_argument("--output", type=Path)
     arguments = parser.parse_args(argv)
+    from vnext.normal_history_plan import checkpoint_replayed_once
     with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")), \
-         patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS forbidden")):
+         patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS forbidden")), \
+         checkpoint_replayed_once():
         matrix = build_coverage_matrix(repo_root=REPO_ROOT, company_ids=arguments.companies,
                                        years=arguments.years,
                                        runs_root=arguments.runs_root,
                                        attempts_root=arguments.attempts_root,
                                        requirement_closure_hash=(
-                                           arguments.requirement_closure_hash))
+                                           arguments.requirement_closure_hash),
+                                       source_root=arguments.source_root)
     if arguments.output:
         arguments.output.parent.mkdir(parents=True, exist_ok=True)
         arguments.output.write_text(json.dumps(matrix, ensure_ascii=False, indent=1,
