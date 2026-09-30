@@ -33,7 +33,7 @@ sys.path.insert(0, str(REPO / "tools"))
 from acceptance_readings import (C02_COMPOSITION, C03_ACROSS_PROXIES, COMPENSATION, CROSS,  # noqa: E402
                                  CROSS_READINGS,
                                  D01_READINGS, DEBT_TO_EQUITY, E01_CANDIDATES, E01_EIGHT_O_ONES,
-                                 EVENT_READINGS, GOVERNANCE, LODGING, READINGS, RPO, TEXT, load,
+                                 EVENT_READINGS, GOVERNANCE, LODGING, LODGING_READINGS, READINGS, RPO, TEXT, load,
                                  positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
@@ -190,7 +190,7 @@ def _read_from(position):
                 "finance_leases": case["finance_leases"]}
     if path in CROSS_READINGS:
         return {"document": case["document"], "concepts_that_answered": case["concepts_used"]}
-    if path == LODGING:
+    if path in LODGING_READINGS:
         return {"document": case["document"], "table_ordinal": case["read"]["table_ordinal"],
                 "row_text": case["read"]["row_text"],
                 "tables_naming_the_scope_literal": case["tables_matching_scope"]}
@@ -243,7 +243,7 @@ def _method_and_limit(position):
         return DEBT_TO_EQUITY_METHOD, DEBT_TO_EQUITY_LIMIT
     if path in CROSS_READINGS:
         return STATEMENT_METHOD, STATEMENT_LIMIT
-    if path == LODGING:
+    if path in LODGING_READINGS:
         return LODGING_METHOD, LODGING_LIMIT
     if path in EVENT_READINGS:
         return EVENT_METHOD, EVENT_LIMIT

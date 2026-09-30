@@ -37,6 +37,9 @@ CROSS_PARAMOUNT_PART_III = EVIDENCE + "part-iii-statement-read.json"
 CROSS_OLDER_YEARS = EVIDENCE + "cross-source-read-older-years.json"
 CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III, CROSS_OLDER_YEARS)
 LODGING = EVIDENCE + "lodging-table-read.json"
+# Marriott's older years, read off the export against the round that ran them.
+LODGING_OLDER_YEARS = EVIDENCE + "lodging-table-read-older-years.json"
+LODGING_READINGS = (LODGING, LODGING_OLDER_YEARS)
 EVENTS = EVIDENCE + "event-count-read.json"
 # Paramount's predecessor year, read the same way against the targeted Runs of
 # the closure that cleared its event window (part-iii-statement-review/): a
@@ -59,7 +62,8 @@ GOVERNANCE = EVIDENCE + "governance-read.json"
 # An older year's C03, read from every saved proxy that tags it (a year is
 # reported again by each later proxy) by tools/read_c03_across_proxies.py; one
 # file per closure its positions compare.
-C03_ACROSS_PROXIES = (EVIDENCE + "c03-across-proxies-read-batch.json",)
+C03_ACROSS_PROXIES = (EVIDENCE + "c03-across-proxies-read-batch.json",
+                      EVIDENCE + "c03-across-proxies-read-round3.json")
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
 # imports none of the route's text modules: one reading for the 30-metric
@@ -84,7 +88,7 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
-READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
+READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
             TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION,
             E01_CANDIDATES, *C03_ACROSS_PROXIES)
 # The company periods the readings cover are data, not code: tools/ is scanned
@@ -256,7 +260,7 @@ def positions(*, repo_root: Path, path: str, body):
                     metric_id=metric, period_end=case["period_end"],
                     published=row["published"], verdict=row["verdict"],
                     filings=[accession], case=case))
-    elif path == LODGING:
+    elif path in LODGING_READINGS:
         for label, case in sorted(body.items()):
             accession, _ = accession_of_document(repo_root=repo_root,
                                                  document=case["document"])

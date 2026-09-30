@@ -10,6 +10,7 @@ from decimal import Decimal
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_lodging_table as lodging
 from tools import read_single_facts as single
+from tools.acceptance_readings import saved_bytes
 
 EVIDENCE = "docs/evidence/issue47_history/content-acceptance/"
 
@@ -19,13 +20,16 @@ def _load(name):
 
 
 def _text(path):
-    return (ROOT / path).read_text(encoding="utf-8-sig", errors="replace")
+    # The export's archive where only the export holds the filing.
+    return saved_bytes(repo_root=ROOT, relative=path).decode("utf-8-sig", errors="replace")
 
 
 class TheLodgingTableTest(unittest.TestCase):
 
     def test_every_year_re_derives(self):
-        for label, row in _load("lodging-table-read.json").items():
+        rows = {**_load("lodging-table-read.json"), **_load("lodging-table-read-older-years.json")}
+        self.assertEqual(5, len(rows))
+        for label, row in rows.items():
             read, matching = lodging.read_table(_text(row["document"]))
             with self.subTest(label):
                 self.assertEqual((row["read"], row["tables_matching_scope"]), (read, matching))

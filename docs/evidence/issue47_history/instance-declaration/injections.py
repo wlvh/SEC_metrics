@@ -28,7 +28,7 @@ harness.INJECTIONS = {
         SOURCE,
         "        if role == ROLE:\n",
         "        if role in (ROLE, \"target_primary\"):\n",
-        "test_every_saved_index_names_exactly_what_the_reader_reads"),
+        "test_the_declaration_alone_names_nothing_but_the_instances"),
     "A_MISSING_INDEX_DECLARES_NOTHING_SILENTLY": (
         SOURCE,
         "            limitations.append({\"accession\": accession, \"reason\": \"ACCESSION_INDEX_NOT_SAVED\",\n",

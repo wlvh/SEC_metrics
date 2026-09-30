@@ -11,12 +11,13 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_c03_across_proxies as reader
+from tools.acceptance_readings import C03_ACROSS_PROXIES
 
-READING = "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json"
+BATCH = C03_ACROSS_PROXIES[0]
 
 
-def _committed():
-    return json.loads((ROOT / READING).read_text(encoding="utf-8"))["per_position"]
+def _committed(path=BATCH):
+    return json.loads((ROOT / path).read_text(encoding="utf-8"))["per_position"]
 
 
 class TheReaderIsNotTheRouteTest(unittest.TestCase):
@@ -51,11 +52,12 @@ class TheCommittedReadingRederivesTest(unittest.TestCase):
             proxies=[proxy for cik in row["ciks"] for proxy in self.proxies.get(cik, [])],
             period=row["period"], result_filings=result_filings, published=row["published"])
 
-    def test_every_position(self):
-        for label, row in self.committed.items():
-            with self.subTest(label):
-                read = self._read(row)
-                self.assertEqual({key: row[key] for key in read}, read)
+    def test_every_position_of_every_reading(self):
+        for path in C03_ACROSS_PROXIES:
+            for label, row in _committed(path).items():
+                with self.subTest(reading=path, label=label):
+                    read = self._read(row)
+                    self.assertEqual({key: row[key] for key in read}, read)
 
     def test_a_year_two_proxies_report_differently_is_not_chosen_between(self):
         read = self._read(self.committed["macys-2024"])
@@ -83,12 +85,13 @@ class TheCommittedReadingRederivesTest(unittest.TestCase):
         self.assertEqual(4, len(read["proxies_reporting_the_target_period"]))
 
     def test_the_accepted_positions_are_confirmed_by_a_filing_the_result_does_not_name(self):
-        for label, row in self.committed.items():
-            if row["verdict"] != "MATCH":
-                continue
-            with self.subTest(label):
-                self.assertTrue([report for report in row["proxies_reporting_the_target_period"]
-                                 if not report["named_by_the_result"]])
+        for path in C03_ACROSS_PROXIES:
+            for label, row in _committed(path).items():
+                if row["verdict"] != "MATCH":
+                    continue
+                with self.subTest(reading=path, label=label):
+                    self.assertTrue([report for report in row["proxies_reporting_the_target_period"]
+                                     if not report["named_by_the_result"]])
 
 
 if __name__ == "__main__":

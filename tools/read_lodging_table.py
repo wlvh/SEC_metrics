@@ -12,7 +12,13 @@ It replaces a reading whose code was never committed.
 
 Usage:
     python3 tools/read_lodging_table.py --runs-root <flat runs root> \
-        --closure sha256:<closure the compared results ran under>
+        --closure sha256:<closure the compared results ran under> \
+        [--reading <positions.json reading> --output <path> --source-root <restored root>]
+
+``--source-root`` names the root the periods are selected on (a root restored
+from the acquisition's export); the filing's bytes are read from the checkout
+or, where only the export holds them, from the export's archive by the digest
+its index records.
 """
 import argparse
 import html
@@ -28,8 +34,7 @@ sys.path.insert(0, str(REPO / "tools"))
 
 OUT = "docs/evidence/issue47_history/content-acceptance/lodging-table-read.json"
 SCOPE = "Comparable Systemwide Properties"
-from acceptance_readings import reading_cases  # noqa: E402
-CASES = reading_cases("lodging_table")
+from acceptance_readings import reading_cases, saved_bytes  # noqa: E402
 _TABLE = re.compile(r"<table\b.*?</table>", re.S | re.I)
 _ROW = re.compile(r"<tr\b.*?</tr>", re.S | re.I)
 
@@ -99,20 +104,24 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
+    parser.add_argument("--reading", default="lodging_table")
+    parser.add_argument("--output", default=OUT)
+    parser.add_argument("--source-root", type=Path, default=REPO)
     arguments = parser.parse_args()
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
     index = index_receipts(receipts=receipts)
     body = {}
-    for company_id, report_end, label in CASES:
-        selection = resolve_period_selection(repo_root=REPO, company_id=company_id,
-                                             report_end=report_end)
-        prepared = prepare_historical_annual_input(repo_root=REPO, company_id=company_id,
+    for company_id, report_end, label in reading_cases(arguments.reading):
+        selection = resolve_period_selection(repo_root=arguments.source_root,
+                                             company_id=company_id, report_end=report_end)
+        prepared = prepare_historical_annual_input(repo_root=arguments.source_root,
+                                                   company_id=company_id,
                                                    period_selection=selection)
         document = prepared["original_input"]["table_input"]["source_repo_relative_path"]
-        read, matching = read_table((REPO / document).read_text(encoding="utf-8-sig",
-                                                                 errors="replace"))
+        read, matching = read_table(saved_bytes(repo_root=REPO, relative=document).decode(
+            "utf-8-sig", errors="replace"))
         published = {}
         for metric in ("B10", "B11"):
             result = select_receipt(found=index.get((company_id, metric, report_end), []),
@@ -137,7 +146,8 @@ def main():
             entry[metric]["checked_identity"] = identity
         body[label] = entry
         print(label, entry["B10"]["verdict"], entry["B11"]["verdict"], flush=True)
-    (REPO / OUT).write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)
+    (REPO / arguments.output).write_text(json.dumps(body, indent=1, sort_keys=True,
+                                                    ensure_ascii=False)
                             + "\n", encoding="utf-8")
     return 0
 

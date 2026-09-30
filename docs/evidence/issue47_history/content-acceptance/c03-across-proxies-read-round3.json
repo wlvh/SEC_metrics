@@ -1,0 +1,926 @@
+{
+ "calls": {
+  "provider": 0,
+  "sec": 0
+ },
+ "per_position": {
+  "enphase-2021": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:0cdf72a30861de73d0360924690e44cb56a920fd30ba6e30c88399ffa66b6554",
+     "run_id": "run:historical-period:6df8ea7805c194a7aa34d22e057295682a58348783b1cd39df288ccce2f5d0c1"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-22-000032"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "1463101"
+   ],
+   "company_id": "enphase_energy",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-01",
+    "2021-12-31"
+   ],
+   "period_end": "2021-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001463101-23-000061",
+     "document": "evidence/request_attempts/6b/6b672121eae7104bf879beb63b9343c0b141690871877b57ff1611f75b26bbf4/enph-20230406.htm",
+     "named_by_the_result": false,
+     "sha256": "6b672121eae7104bf879beb63b9343c0b141690871877b57ff1611f75b26bbf4",
+     "values": [
+      19019162
+     ]
+    },
+    {
+     "accession": "0001463101-24-000049",
+     "document": "evidence/request_attempts/1c/1c8339b97e3eda141ae574a36ddc34c496e306ed2f497775a615d9aa4b15865a/enph-20240404.htm",
+     "named_by_the_result": false,
+     "sha256": "1c8339b97e3eda141ae574a36ddc34c496e306ed2f497775a615d9aa4b15865a",
+     "values": [
+      19019162
+     ]
+    },
+    {
+     "accession": "0001463101-25-000041",
+     "document": "evidence/request_attempts/97/975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1/enph-20250404.htm",
+     "named_by_the_result": false,
+     "sha256": "975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1",
+     "values": [
+      19019162
+     ]
+    },
+    {
+     "accession": "0001463101-26-000026",
+     "document": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+     "named_by_the_result": false,
+     "sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+     "values": [
+      19019162
+     ]
+    }
+   ],
+   "published": "19019162",
+   "read": "19019162",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "enphase-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:ad922980c2435c3710c98ca74daab7211afd81bdfd660b3f8659430a6c2a9615",
+     "run_id": "run:historical-period:efd8c715cdd84d4a61cef28fb869d36381b67d882413d24ffa5bf85c837a9b90"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-23-000061"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "1463101"
+   ],
+   "company_id": "enphase_energy",
+   "opened_filings_the_result_names": [
+    "0001463101-23-000061"
+   ],
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "period_end": "2022-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001463101-23-000061",
+     "document": "evidence/request_attempts/6b/6b672121eae7104bf879beb63b9343c0b141690871877b57ff1611f75b26bbf4/enph-20230406.htm",
+     "named_by_the_result": true,
+     "sha256": "6b672121eae7104bf879beb63b9343c0b141690871877b57ff1611f75b26bbf4",
+     "values": [
+      16627977
+     ]
+    },
+    {
+     "accession": "0001463101-24-000049",
+     "document": "evidence/request_attempts/1c/1c8339b97e3eda141ae574a36ddc34c496e306ed2f497775a615d9aa4b15865a/enph-20240404.htm",
+     "named_by_the_result": false,
+     "sha256": "1c8339b97e3eda141ae574a36ddc34c496e306ed2f497775a615d9aa4b15865a",
+     "values": [
+      16627977
+     ]
+    },
+    {
+     "accession": "0001463101-25-000041",
+     "document": "evidence/request_attempts/97/975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1/enph-20250404.htm",
+     "named_by_the_result": false,
+     "sha256": "975081e8226393ec4d327163380c6f1bea92db0cd669857589f78355b2fb45a1",
+     "values": [
+      16627977
+     ]
+    },
+    {
+     "accession": "0001463101-26-000026",
+     "document": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+     "named_by_the_result": false,
+     "sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+     "values": [
+      16627977
+     ]
+    }
+   ],
+   "published": "16627977",
+   "read": "16627977",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "ford-2021": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:1a87afff723321d3e0cda520a951640e944917264316667f9241fd704aa30b1a",
+     "run_id": "run:historical-period:0043023bf79bfcb4a769ef8d57ab5d603a09d1684ccbf063290bd1f04a88e9be"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001104659-22-041499"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "37996"
+   ],
+   "company_id": "ford_motor_company",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-01",
+    "2021-12-31"
+   ],
+   "period_end": "2021-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001104659-24-040871",
+     "document": "evidence/request_attempts/70/706abbd3080e856948fd83c21105df78154a3ad9bdfec0bb7257e7e45629d3d7/tm2318496-d4_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "706abbd3080e856948fd83c21105df78154a3ad9bdfec0bb7257e7e45629d3d7",
+     "values": [
+      22813174
+     ]
+    },
+    {
+     "accession": "0001104659-25-029100",
+     "document": "evidence/request_attempts/c2/c2a4be1e714f832c6e13843a6ac27b3706217fcf72ce5362670bc202ba423eca/tm2416981-6_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "c2a4be1e714f832c6e13843a6ac27b3706217fcf72ce5362670bc202ba423eca",
+     "values": [
+      22813174
+     ]
+    },
+    {
+     "accession": "0001552781-26-000164",
+     "document": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "6c098b3a19c316b1b3ca0da53bce7109c34b226d7093060c366eab519b8b443d",
+     "values": [
+      22813174
+     ]
+    },
+    {
+     "accession": "0001558370-23-005203",
+     "document": "evidence/request_attempts/1a/1a3b6fedb789ddf2cedce0050317744da84afc737d754fba4d57b40d261fb2b1/f-20230511xdef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "1a3b6fedb789ddf2cedce0050317744da84afc737d754fba4d57b40d261fb2b1",
+     "values": [
+      22813174
+     ]
+    }
+   ],
+   "published": "22813174",
+   "read": "22813174",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "ford-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:fbb3bd4cf2724447968c411cb232847e9e744390ed3e87e7cc5876247f86166a",
+     "run_id": "run:historical-period:b0399208a8210654f50aff3432e6946d878343f00ceb523403d6e9f01f149d04"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001558370-23-005203"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "37996"
+   ],
+   "company_id": "ford_motor_company",
+   "opened_filings_the_result_names": [
+    "0001558370-23-005203"
+   ],
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "period_end": "2022-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001104659-24-040871",
+     "document": "evidence/request_attempts/70/706abbd3080e856948fd83c21105df78154a3ad9bdfec0bb7257e7e45629d3d7/tm2318496-d4_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "706abbd3080e856948fd83c21105df78154a3ad9bdfec0bb7257e7e45629d3d7",
+     "values": [
+      20996146
+     ]
+    },
+    {
+     "accession": "0001104659-25-029100",
+     "document": "evidence/request_attempts/c2/c2a4be1e714f832c6e13843a6ac27b3706217fcf72ce5362670bc202ba423eca/tm2416981-6_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "c2a4be1e714f832c6e13843a6ac27b3706217fcf72ce5362670bc202ba423eca",
+     "values": [
+      20996146
+     ]
+    },
+    {
+     "accession": "0001552781-26-000164",
+     "document": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "6c098b3a19c316b1b3ca0da53bce7109c34b226d7093060c366eab519b8b443d",
+     "values": [
+      20996146
+     ]
+    },
+    {
+     "accession": "0001558370-23-005203",
+     "document": "evidence/request_attempts/1a/1a3b6fedb789ddf2cedce0050317744da84afc737d754fba4d57b40d261fb2b1/f-20230511xdef14a.htm",
+     "named_by_the_result": true,
+     "sha256": "1a3b6fedb789ddf2cedce0050317744da84afc737d754fba4d57b40d261fb2b1",
+     "values": [
+      20996146
+     ]
+    }
+   ],
+   "published": "20996146",
+   "read": "20996146",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "lumen-2021": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:c6385d64372b96b88e374971c45ccb1724d3e5d7c5bae765607d6f9171d54a4f",
+     "run_id": "run:historical-period:62010209d91bda1865af357c5d0c45affa2150629df812982fbc1c4655c2f31e"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000018926-22-000013"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "18926"
+   ],
+   "company_id": "lumen_technologies",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-01",
+    "2021-12-31"
+   ],
+   "period_end": "2021-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000018926-23-000038",
+     "document": "evidence/request_attempts/a2/a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb/lumn-20230405.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "lumn:KateJohnsonMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2022"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb",
+     "values": [
+      22654781
+     ]
+    },
+    {
+     "accession": "0000018926-24-000046",
+     "document": "evidence/request_attempts/d6/d68c44c0839356001d1a0191e8539934f1d9b2f17836171423696196f62e7826/lumn-20240405.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "lumn:KathleenJohnsonMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2022",
+        "2023"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "d68c44c0839356001d1a0191e8539934f1d9b2f17836171423696196f62e7826",
+     "values": [
+      22654781
+     ]
+    },
+    {
+     "accession": "0000018926-25-000031",
+     "document": "evidence/request_attempts/50/506581b77fa128b7f82cad9dc8e62fb6ed426a007c8b196af5eacef84d368ca5/lumn-20250331.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "lumn:KathleenJohnsonMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2022",
+        "2023",
+        "2024"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "506581b77fa128b7f82cad9dc8e62fb6ed426a007c8b196af5eacef84d368ca5",
+     "values": [
+      22654781
+     ]
+    },
+    {
+     "accession": "0000018926-26-000024",
+     "document": "evidence/accession_materials/lumen_technologies_18926_000001892626000024/lumn-20260401.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "lumn:KathleenJohnsonMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "240f1713b322a8ffcabc69edf3da935ed704e7163f3b5d064a7eb431e9906038",
+     "values": [
+      22654781
+     ]
+    }
+   ],
+   "published": "22654781",
+   "read": "22654781",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "macys-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:30ac8c37f1b4cc9ec9864a60820a6b0f000fdbd477c98d8b4a2e127e80d63953",
+     "run_id": "run:historical-period:a1b328821c27ecd0381f13b905ba38cb98ef947375ff35e8c29aeb6fac13fc51"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001558370-22-005031"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2022-01-29",
+    "period_start": "2021-01-31",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "794367"
+   ],
+   "company_id": "macys",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-31",
+    "2022-01-29"
+   ],
+   "period_end": "2022-01-29",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001104659-26-037752",
+     "document": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "3b501eec7b59a3dabbe9da4a206a6b3e61469c426650f9c16432c03e66703d06",
+     "values": [
+      12290931
+     ]
+    },
+    {
+     "accession": "0001558370-24-005094",
+     "document": "evidence/request_attempts/6e/6e55572e74016470aa2893ebd4019dfbf908d45647ef53ab3f4dd9ce6982ef08/m-20240517xdef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "6e55572e74016470aa2893ebd4019dfbf908d45647ef53ab3f4dd9ce6982ef08",
+     "values": [
+      12290931
+     ]
+    },
+    {
+     "accession": "0001558370-25-004270",
+     "document": "evidence/request_attempts/bb/bbfcb511624c779d505125fdcdda492a1bd098615f02481dc097e6d6be59fb99/m-20250516xdef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "bbfcb511624c779d505125fdcdda492a1bd098615f02481dc097e6d6be59fb99",
+     "values": [
+      12290931
+     ]
+    }
+   ],
+   "published": "12290931",
+   "read": "12290931",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "marriott-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:b8da73f6699f7e38d3a97add5f67368bcdfa4b6865b9432f16c7827b6d8d5bda",
+     "run_id": "run:historical-period:70af4c6ef5e14d4feb904e179e873f342557001c35ea8360570fffbab6477277"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-23-014123"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "1048286"
+   ],
+   "company_id": "marriott_international",
+   "opened_filings_the_result_names": [
+    "0001140361-23-014123"
+   ],
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "period_end": "2022-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001140361-23-014123",
+     "document": "evidence/request_attempts/55/559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c/ny20006599x500_def14a.htm",
+     "named_by_the_result": true,
+     "sha256": "559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+     "values": [
+      18686271
+     ]
+    },
+    {
+     "accession": "0001140361-24-015465",
+     "document": "evidence/request_attempts/a2/a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954/ny20015439x1_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+     "values": [
+      18715093
+     ]
+    },
+    {
+     "accession": "0001140361-25-010600",
+     "document": "evidence/request_attempts/d1/d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43/ny20039208x771_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43",
+     "values": [
+      18715093
+     ]
+    },
+    {
+     "accession": "0001140361-26-011590",
+     "document": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+     "named_by_the_result": false,
+     "sha256": "fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+     "values": [
+      18715093
+     ]
+    }
+   ],
+   "published": "18686271",
+   "read": null,
+   "verdict": "NOT_READ",
+   "why_not_read": "PROXIES_REPORT_DIFFERENT_AMOUNTS"
+  },
+  "paramount-2021": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:ab8c3a2b64f6722b426d14284ff0cad0aeb57dfc60d975474502ba903ef4afc1",
+     "run_id": "run:historical-period:d91c6be4c57ae66649dc4314e87a7bcfea0e2a049b6adfac59fbcf128e38423f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001193125-22-106893"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "2041610",
+    "813828"
+   ],
+   "company_id": "paramount_skydance_paramount_global",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-01",
+    "2021-12-31"
+   ],
+   "period_end": "2021-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001140361-25-021135",
+     "document": "evidence/accession_materials/paramount_skydance_paramount_global_813828_000114036125021135/ny20047871x1_def14a.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "para:ChrisMcCarthyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2024"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "67f6aa6db3d49465672a425e411c7c8dc77d445dc779453ac3a723929a40b3b8",
+     "values": [
+      20035212
+     ]
+    },
+    {
+     "accession": "0001193125-23-074091",
+     "document": "evidence/request_attempts/e8/e80b11597c0f92458927fb6f55454b5fdd0a29386b9717aa79e133d737c14667/d436078ddef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "e80b11597c0f92458927fb6f55454b5fdd0a29386b9717aa79e133d737c14667",
+     "values": [
+      20035212
+     ]
+    },
+    {
+     "accession": "0001193125-24-105026",
+     "document": "evidence/request_attempts/65/655b8420b5e23e022242d3d6f268c21caf179d6d8acab7941e8e6ff3980abeb9/d558817ddef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "655b8420b5e23e022242d3d6f268c21caf179d6d8acab7941e8e6ff3980abeb9",
+     "values": [
+      20035212
+     ]
+    }
+   ],
+   "published": "20035212",
+   "read": "20035212",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "paramount-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:7814e6fdd72495fc47cb1dd5e77e1d0906b1ed2ff506982d91397227003cc91c",
+     "run_id": "run:historical-period:00d2360b4b6ba32e9c2424d5dfd0a9a889080568053a5ed9b8f819bba9235463"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001193125-23-074091"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "2041610",
+    "813828"
+   ],
+   "company_id": "paramount_skydance_paramount_global",
+   "opened_filings_the_result_names": [
+    "0001193125-23-074091"
+   ],
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "period_end": "2022-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001140361-25-021135",
+     "document": "evidence/accession_materials/paramount_skydance_paramount_global_813828_000114036125021135/ny20047871x1_def14a.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "para:ChrisMcCarthyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2024"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "67f6aa6db3d49465672a425e411c7c8dc77d445dc779453ac3a723929a40b3b8",
+     "values": [
+      32046006
+     ]
+    },
+    {
+     "accession": "0001193125-23-074091",
+     "document": "evidence/request_attempts/e8/e80b11597c0f92458927fb6f55454b5fdd0a29386b9717aa79e133d737c14667/d436078ddef14a.htm",
+     "named_by_the_result": true,
+     "sha256": "e80b11597c0f92458927fb6f55454b5fdd0a29386b9717aa79e133d737c14667",
+     "values": [
+      32046006
+     ]
+    },
+    {
+     "accession": "0001193125-24-105026",
+     "document": "evidence/request_attempts/65/655b8420b5e23e022242d3d6f268c21caf179d6d8acab7941e8e6ff3980abeb9/d558817ddef14a.htm",
+     "named_by_the_result": false,
+     "sha256": "655b8420b5e23e022242d3d6f268c21caf179d6d8acab7941e8e6ff3980abeb9",
+     "values": [
+      32046006
+     ]
+    }
+   ],
+   "published": "32046006",
+   "read": "32046006",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "pfizer-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:ae5ac8505de8461c174b638f4b432201a049ef45dd27805086e608c37ea785bf",
+     "run_id": "run:historical-period:44f9a656f9b41fb83865fb2baf2b0b881a33b336ebf15fb1902e5ff47d508ded"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-23-000040"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "78003"
+   ],
+   "company_id": "pfizer",
+   "opened_filings_the_result_names": [
+    "0000078003-23-000040"
+   ],
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "period_end": "2022-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000078003-23-000040",
+     "document": "evidence/request_attempts/cf/cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626/pfe-20230315.htm",
+     "named_by_the_result": true,
+     "sha256": "cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626",
+     "values": [
+      33017453
+     ]
+    },
+    {
+     "accession": "0000078003-24-000068",
+     "document": "evidence/request_attempts/1d/1d4cd29495b7f6a1de80ebecd0f48991988bf2daf9f502651e4e7707dc1bc823/pfe-20240313.htm",
+     "named_by_the_result": false,
+     "sha256": "1d4cd29495b7f6a1de80ebecd0f48991988bf2daf9f502651e4e7707dc1bc823",
+     "values": [
+      33017453
+     ]
+    },
+    {
+     "accession": "0000078003-25-000062",
+     "document": "evidence/request_attempts/c0/c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db/pfe-20250313.htm",
+     "named_by_the_result": false,
+     "sha256": "c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db",
+     "values": [
+      33017453
+     ]
+    },
+    {
+     "accession": "0000078003-26-000033",
+     "document": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+     "named_by_the_result": false,
+     "sha256": "f53e7ec13d217b5f0d5868af1d55fa9465b22daa40a2a34ff6dc653d8bad0e6e",
+     "values": [
+      33017453
+     ]
+    }
+   ],
+   "published": "33017453",
+   "read": "33017453",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "pfizer-2023": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:7faaf4b8f59e96ff2c29d6d66e6f9f5020fb47a9440831fe8843b81fa73ca2a5",
+     "run_id": "run:historical-period:fe1324cefa358e62108d7b2f7ae6f909fac093db39de207433d3806d0280f942"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-24-000068"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "78003"
+   ],
+   "company_id": "pfizer",
+   "opened_filings_the_result_names": [
+    "0000078003-24-000068"
+   ],
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "period_end": "2023-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000078003-24-000068",
+     "document": "evidence/request_attempts/1d/1d4cd29495b7f6a1de80ebecd0f48991988bf2daf9f502651e4e7707dc1bc823/pfe-20240313.htm",
+     "named_by_the_result": true,
+     "sha256": "1d4cd29495b7f6a1de80ebecd0f48991988bf2daf9f502651e4e7707dc1bc823",
+     "values": [
+      21562064
+     ]
+    },
+    {
+     "accession": "0000078003-25-000062",
+     "document": "evidence/request_attempts/c0/c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db/pfe-20250313.htm",
+     "named_by_the_result": false,
+     "sha256": "c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db",
+     "values": [
+      21562064
+     ]
+    },
+    {
+     "accession": "0000078003-26-000033",
+     "document": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+     "named_by_the_result": false,
+     "sha256": "f53e7ec13d217b5f0d5868af1d55fa9465b22daa40a2a34ff6dc653d8bad0e6e",
+     "values": [
+      21562064
+     ]
+    }
+   ],
+   "published": "21562064",
+   "read": "21562064",
+   "verdict": "MATCH",
+   "why_not_read": null
+  }
+ },
+ "proxies_read": 33,
+ "reader": "tools/read_c03_across_proxies.py",
+ "reading": "c03_across_proxies_round3",
+ "record_type": "ISSUE47_C03_ACROSS_PROXIES_READING",
+ "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e"
+}

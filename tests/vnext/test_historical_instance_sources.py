@@ -15,7 +15,7 @@ from vnext.historical_sec_resume import TERMINAL_CLASSES
 from vnext.historical_source_acquisition import (HistoricalAcquisitionError, declared_frame,
                                                  historical_dependency)
 from vnext.normal_governance_input import _Sources
-from vnext.normal_history_plan import checkpoint_replayed_once
+from vnext.normal_history_plan import checkpoint_replayed_once, plan_historical_sources
 
 COMPANY = "marriott_international"
 
@@ -47,6 +47,17 @@ class TheDeclarationIsWhatTheFrozenReaderReadsTest(unittest.TestCase):
                 self.assertEqual(read, declared)
                 self.assertEqual(reader.file_sets[-1]["expected_xml_documents"],
                                  sorted(url.rsplit("/", 1)[1] for url in declared))
+
+    def test_the_declaration_alone_names_nothing_but_the_instances(self):
+        # Asked of the module itself, not of the frame: the frame's union keeps
+        # the planner's row for a URL both declare, so a declaration that also
+        # named the primary would read the same through the frame.
+        with checkpoint_replayed_once():
+            plan = plan_historical_sources(repo_root=ROOT, company_id=COMPANY, count=5)
+            alone = declaration.instance_dependencies(repo_root=ROOT, company_id=COMPANY,
+                                                      planned=plan["requirements"])
+        self.assertEqual(sorted(row["source_url"] for row in self.rows),
+                         [row["source_url"] for row in alone["requirements"]])
 
     def test_the_saved_instances_are_classified_as_saved(self):
         self.assertTrue(self.rows)
