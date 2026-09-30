@@ -1825,6 +1825,46 @@
      "what_it_does_not_assert": "that the value is independently read: the only filing that reports this amount is the one the result names, so no reading can confirm it from a document the route did not read; it stays unaccepted"
     }
    ]
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "B02",
+   "result_id": null,
+   "root_cause": "B02's approved branch (catalog/deterministic_metrics.json, comparable_annual_revenue) picks revenue_current and revenue_prior independently, each the first approved concept its own filing tags. Pfizer tagged total revenue as RevenueFromContractWithCustomerExcludingAssessedTax in its FY2021 10-K, as Revenues in FY2022, used the contract concept for product revenue only (alliance and royalty revenue excluded) beside Revenues in FY2023, and Revenues alone in FY2024. Where the two years' filings put the chain's first concept on different quantities, the growth divides one measure by another.",
+   "scope_measured": "all 41 B02 runs of the 41-period batch: 3 use a different concept for the two years, all Pfizer; FY2022's are the same quantity (its own 10-K reports 2021 under Revenues at the FY2021 contract value, 81,288,000,000), FY2023's and FY2024's are not (b02-revenue-concept/measured.json). Pfizer FY2025 (the year Issue #28 reports) uses Revenues for both years.",
+   "found_by": "the cross-source statement reading of the batch's older years (content-acceptance/cross-source-read-batch.json): 234 MATCH, 2 DIFFERS, these two.",
+   "repair_state": "ROOT_CAUSE_MEASURED_WITHDRAWN",
+   "evidence": [
+    "docs/evidence/issue47_history/b02-revenue-concept/measure.py",
+    "docs/evidence/issue47_history/b02-revenue-concept/measured.json",
+    "docs/evidence/issue47_history/content-acceptance/cross-source-read-batch.json"
+   ],
+   "repair": "pending: withhold by name when the two claims' concepts differ and no saved filing reports the prior year under the current claim's concept at the prior claim's value",
+   "defect_id": "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE",
+   "period_end": "2023-12-31",
+   "same_cause_as": [],
+   "summary": "Published -0.4925346357021827967706568325 = (50,914,000,000 - 100,330,000,000) / 100,330,000,000: the FY2023 10-K's RevenueFromContractWithCustomerExcludingAssessedTax (product revenue only) over the FY2022 10-K's Revenues (total revenue). The FY2023 10-K reports 2022 under the contract concept at 91,793,000,000, so the two are different quantities. Same-measure growth: total revenue -0.4170, product revenue -0.4453."
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "B02",
+   "result_id": null,
+   "root_cause": "B02's approved branch (catalog/deterministic_metrics.json, comparable_annual_revenue) picks revenue_current and revenue_prior independently, each the first approved concept its own filing tags. Pfizer tagged total revenue as RevenueFromContractWithCustomerExcludingAssessedTax in its FY2021 10-K, as Revenues in FY2022, used the contract concept for product revenue only (alliance and royalty revenue excluded) beside Revenues in FY2023, and Revenues alone in FY2024. Where the two years' filings put the chain's first concept on different quantities, the growth divides one measure by another.",
+   "scope_measured": "all 41 B02 runs of the 41-period batch: 3 use a different concept for the two years, all Pfizer; FY2022's are the same quantity (its own 10-K reports 2021 under Revenues at the FY2021 contract value, 81,288,000,000), FY2023's and FY2024's are not (b02-revenue-concept/measured.json). Pfizer FY2025 (the year Issue #28 reports) uses Revenues for both years.",
+   "found_by": "the cross-source statement reading of the batch's older years (content-acceptance/cross-source-read-batch.json): 234 MATCH, 2 DIFFERS, these two.",
+   "repair_state": "ROOT_CAUSE_MEASURED_WITHDRAWN",
+   "evidence": [
+    "docs/evidence/issue47_history/b02-revenue-concept/measure.py",
+    "docs/evidence/issue47_history/b02-revenue-concept/measured.json",
+    "docs/evidence/issue47_history/content-acceptance/cross-source-read-batch.json"
+   ],
+   "repair": "pending: withhold by name when the two claims' concepts differ and no saved filing reports the prior year under the current claim's concept at the prior claim's value",
+   "defect_id": "B02_PFIZER_2024_TOTAL_REVENUE_OVER_PRODUCT_REVENUE",
+   "period_end": "2024-12-31",
+   "same_cause_as": [
+    "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE"
+   ],
+   "summary": "Published 0.2496955650705110578622775661 = (63,627,000,000 - 50,914,000,000) / 50,914,000,000: the FY2024 10-K's Revenues (total revenue) over the FY2023 10-K's contract concept (product revenue only). Same-measure growth on total revenue is +0.0877 against the FY2023 10-K's 58,496,000,000, or +0.0684 against the FY2024 10-K's recast 59,553,000,000."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

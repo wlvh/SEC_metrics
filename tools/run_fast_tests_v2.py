@@ -414,6 +414,9 @@ FAST_TESTS += ("tests.vnext.test_historical_legal_review.TheRequestIsTheBlocksAn
                "tests.vnext.test_historical_legal_review.WhatACheckedAnswerCounts",
                "tests.vnext.test_historical_legal_review.ARegistrationIsCheckedAgainUnderTheCurrentCode")
 SOURCE_TESTS += ("tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",)
+# Issue #47: a current and a prior claim of one quantity must read one quantity
+# (Pfizer's B02 divided product revenue by total revenue); saved Company Facts only.
+FAST_TESTS += ("tests.vnext.test_historical_paired_measure",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",)

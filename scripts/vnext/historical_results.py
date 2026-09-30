@@ -17,7 +17,7 @@ as implementation gaps. Resolving them against today's latest filing under a
 historical request would be a wrong answer, not a missing feature.
 """
 from datetime import date, timedelta
-from decimal import DecimalException
+from decimal import Decimal, DecimalException
 from pathlib import Path
 
 from sec_urls import submissions_url
@@ -43,6 +43,81 @@ from .zero_ai_r2 import (_load_deterministic_catalog, _compiled_deterministic_sp
 
 RESULT_RECORD_TYPE = "HISTORICAL_COMPANYFACTS_NATIVE_RESULTS"
 RUN_INPUT_RECORD_TYPE = "HISTORICAL_ZERO_AI_RUN_INPUT"
+# B02's revenues and A07's net incomes are one quantity read at two times: the
+# branch lists the same approved concepts for a current and a prior component,
+# and each component takes the first of them its own filing tags. When a filer
+# moves a concept the two can land on different quantities, and the result
+# divides one measure by another. Measured on Pfizer, which tagged total
+# revenue as contract revenue in its FY2021 10-K, as Revenues in FY2022, and
+# put the contract concept on product revenue alone from FY2023: FY2023's
+# growth was published as -49.3% (product over total) and FY2024's as +25.0%
+# (total over product), against -41.7% and +8.8% on total revenue. A pair on
+# two concepts is kept only where the target filing itself reports the prior
+# year under the current claim's concept at the prior claim's value - then the
+# two concepts name one quantity for that year, as Pfizer's FY2022 10-K does
+# for 2021. Otherwise the metric is withheld by name. It is not rebuilt from
+# another concept: that would choose a measure the approved branch does not.
+PAIRED_MEASURE_REASON = "HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE"
+
+
+def _paired_concept_lists(route):
+    """The approved concept lists a branch reads for both the current and the prior filing."""
+    paired = set()
+    for branch in route["branches"]:
+        roles = {}
+        for component in branch["components"]:
+            roles.setdefault(tuple(component["approved_concepts"]), set()).add(
+                component["accession_role"])
+        paired.update(concepts for concepts, seen in roles.items()
+                      if {"current", "prior"} <= seen)
+    return paired
+
+
+def _claim_view(claim):
+    locator = claim["locator"]
+    return {"concept": locator["concept"], "period_start": locator["period_start"],
+            "period_end": locator["period_end"], "accession": claim["attributes"]["accession"],
+            "unit": claim["unit"], "value": str(claim["value"])}
+
+
+def paired_measure_problem(*, route, claims, current_claims, accessions):
+    """Whether a result's current and prior claims read one quantity.
+
+    Args:
+        route: the catalog route of the metric.
+        claims: the claims the frozen graph used for the result.
+        current_claims: every claim the target accession's Company Facts source carries.
+        accessions: ``{"current": accession, "prior": accession or None}``.
+
+    Returns:
+        ``(problem, bridged)``. ``problem`` is None or names both claims and the
+        values the target filing reports for the prior year under the current
+        claim's concept; ``bridged`` lists the pairs on two concepts that the
+        target filing shows are one quantity.
+    """
+    bridged = []
+    for concepts in sorted(_paired_concept_lists(route)):
+        used = {role: [claim for claim in claims if claim["locator"]["concept"] in concepts
+                       and claim["attributes"]["accession"] == accessions[role]]
+                for role in ("current", "prior")}
+        if len(used["current"]) != 1 or len(used["prior"]) != 1:
+            continue
+        current, prior = _claim_view(used["current"][0]), _claim_view(used["prior"][0])
+        if current["concept"] == prior["concept"]:
+            continue
+        reported = sorted({str(Decimal(str(claim["value"]))) for claim in current_claims
+                           if claim["attributes"]["accession"] == accessions["current"]
+                           and claim["locator"]["concept"] == current["concept"]
+                           and claim["locator"]["period_start"] == prior["period_start"]
+                           and claim["locator"]["period_end"] == prior["period_end"]
+                           and claim["unit"] == prior["unit"]})
+        pair = {"current": current, "prior": prior,
+                "target_filing_reports_the_prior_year_under_the_current_concept": reported}
+        if reported == [str(Decimal(prior["value"]))]:
+            bridged.append(pair)
+            continue
+        return {"reason_code": PAIRED_MEASURE_REASON, **pair}, bridged
+    return None, bridged
 
 
 def _need(condition, reason):
@@ -258,7 +333,20 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
                           (prior_error or {}).get("reason"))
                     graph = _deterministic_metric_graph(context=context, company_id=company_id,
                                                         metric_id=metric_id)
-                    result, trace = graph["result"], graph["trace"]
+                    problem, bridged = paired_measure_problem(
+                        route=route, claims=graph["claims"],
+                        current_claims=claims_by_role["current"],
+                        accessions={"current": prepared["filing"]["accessionNumber"],
+                                    "prior": (filings["prior"] or {}).get("accessionNumber")})
+                    if problem is not None:
+                        graph = {"claims": [], "projection_claims": [], "observation": None}
+                        detail = {"category": "MEASURE_NOT_COMPARABLE", **problem}
+                        result, trace = withheld_metric_result(
+                            compiled_spec=spec, target=target, reason_code=PAIRED_MEASURE_REASON)
+                    else:
+                        result, trace = graph["result"], graph["trace"]
+                        if bridged:
+                            detail = {"paired_measure_bridge": bridged}
                 if per_filing:
                     detail = {**(detail or {}), "amendment_per_filing_admission": per_filing}
                 if period_continuity is not None and route["continuity_policy"] == "REQUIRE_CONTINUOUS":
