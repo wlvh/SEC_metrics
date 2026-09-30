@@ -3,6 +3,7 @@
   "provider": 0,
   "sec": 0
  },
+ "first_reported_decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
  "per_position": {
   "enphase-2021": {
    "checked_identity": {
@@ -550,6 +551,12 @@
     "1048286"
    ],
    "company_id": "marriott_international",
+   "confirmed_only_by_the_filing_the_route_read": true,
+   "decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+   "first_report": "0001140361-23-014123",
+   "later_amounts": [
+    18715093
+   ],
    "opened_filings_the_result_names": [
     "0001140361-23-014123"
    ],
@@ -597,9 +604,10 @@
     }
    ],
    "published": "18686271",
-   "read": null,
-   "verdict": "NOT_READ",
-   "why_not_read": "PROXIES_REPORT_DIFFERENT_AMOUNTS"
+   "read": "18686271",
+   "read_as": "FIRST_REPORTED",
+   "verdict": "MATCH",
+   "why_not_read": null
   },
   "paramount-2021": {
    "checked_identity": {

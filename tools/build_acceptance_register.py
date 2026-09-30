@@ -256,6 +256,8 @@ def _method_and_limit(position):
     if path == GOVERNANCE:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path in C03_ACROSS_PROXIES:
+        if position["case"].get("read_as") == "FIRST_REPORTED":
+            return C03_FIRST_REPORTED_METHOD, C03_FIRST_REPORTED_LIMIT
         return C03_ACROSS_PROXIES_METHOD, C03_ACROSS_PROXIES_LIMIT
     if path == TEXT:
         return TEXT_METHOD, TEXT_LIMIT
@@ -313,6 +315,17 @@ C03_ACROSS_PROXIES_LIMIT = (
  "that the amount first reported is the amount the frame should show where a later "
  "proxy reports another (such a year is not accepted here; see "
  "c03-first-ecd-release/), nor " + COMMON)
+C03_FIRST_REPORTED_METHOD = (
+ "a year the saved proxies report differently, read as the owner decided a year is "
+ "read - as first reported (owner-decisions-2026-09-30/c03-convention.json, answer "
+ "A): the earliest proxy's single ecd:PeoTotalCompAmt for the year, read by "
+ "tools/read_c03_across_proxies.py, which imports none of the route's governance "
+ "modules; that proxy must be the filing the result names, and every later amount "
+ "is recorded beside it.")
+C03_FIRST_REPORTED_LIMIT = (
+ "confirmation by a document the route did not read: the later proxies report "
+ "another amount, so the only confirmation is the route's own filing read with "
+ "independent code - the standard the latest years' C03 meet; nor " + COMMON)
 COMPENSATION_METHOD = ("the Summary Compensation Table's own CEO row, read off the "
                        "table. Its five components sum to its total, so the number "
                        "is confirmed by the table's arithmetic as well as by "

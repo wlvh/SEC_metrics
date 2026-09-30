@@ -3,6 +3,7 @@
   "provider": 0,
   "sec": 0
  },
+ "first_reported_decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
  "per_position": {
   "enphase-2023": {
    "checked_identity": {
@@ -166,6 +167,12 @@
     "794367"
    ],
    "company_id": "macys",
+   "confirmed_only_by_the_filing_the_route_read": true,
+   "decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+   "first_report": "0001558370-24-005094",
+   "later_amounts": [
+    11563739
+   ],
    "opened_filings_the_result_names": [
     "0001558370-24-005094"
    ],
@@ -204,9 +211,10 @@
     }
    ],
    "published": "11821259",
-   "read": null,
-   "verdict": "NOT_READ",
-   "why_not_read": "PROXIES_REPORT_DIFFERENT_AMOUNTS"
+   "read": "11821259",
+   "read_as": "FIRST_REPORTED",
+   "verdict": "MATCH",
+   "why_not_read": null
   },
   "macys-2025": {
    "checked_identity": {

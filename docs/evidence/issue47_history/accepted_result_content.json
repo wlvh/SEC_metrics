@@ -23240,6 +23240,71 @@
    "what_this_does_not_establish": "that the amount first reported is the amount the frame should show where a later proxy reports another (such a year is not accepted here; see c03-first-ecd-release/), nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_MACYS_2024",
+   "accepted_value": "11821259",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:bd75145b139fb5114c15a0e6ede7bd2f9876dc6a1a683db113fa8552ba415783",
+     "run_id": "run:historical-period:ca3c817acf69e2f4cf494f421e76fe09fab9cfb554ce587151f1274f00a273a2"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001558370-24-005094"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-02-03",
+    "period_start": "2023-01-29",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
+   "method": "a year the saved proxies report differently, read as the owner decided a year is read - as first reported (owner-decisions-2026-09-30/c03-convention.json, answer A): the earliest proxy's single ecd:PeoTotalCompAmt for the year, read by tools/read_c03_across_proxies.py, which imports none of the route's governance modules; that proxy must be the filing the result names, and every later amount is recorded beside it.",
+   "metric_id": "C03",
+   "period_end": "2024-02-03",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001104659-26-037752",
+      "document": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+      "named_by_the_result": false,
+      "sha256": "3b501eec7b59a3dabbe9da4a206a6b3e61469c426650f9c16432c03e66703d06",
+      "values": [
+       11563739
+      ]
+     },
+     {
+      "accession": "0001558370-24-005094",
+      "document": "evidence/request_attempts/6e/6e55572e74016470aa2893ebd4019dfbf908d45647ef53ab3f4dd9ce6982ef08/m-20240517xdef14a.htm",
+      "named_by_the_result": true,
+      "sha256": "6e55572e74016470aa2893ebd4019dfbf908d45647ef53ab3f4dd9ce6982ef08",
+      "values": [
+       11821259
+      ]
+     },
+     {
+      "accession": "0001558370-25-004270",
+      "document": "evidence/request_attempts/bb/bbfcb511624c779d505125fdcdda492a1bd098615f02481dc097e6d6be59fb99/m-20250516xdef14a.htm",
+      "named_by_the_result": false,
+      "sha256": "bbfcb511624c779d505125fdcdda492a1bd098615f02481dc097e6d6be59fb99",
+      "values": [
+       11563739
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "confirmation by a document the route did not read: the later proxies report another amount, so the only confirmation is the route's own filing read with independent code - the standard the latest years' C03 meet; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_MACYS_2025",
    "accepted_value": "16452108",
    "checked_identity": {
@@ -23339,6 +23404,80 @@
     ]
    },
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C03_MARRIOTT_2022",
+   "accepted_value": "18686271",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:b8da73f6699f7e38d3a97add5f67368bcdfa4b6865b9432f16c7827b6d8d5bda",
+     "run_id": "run:historical-period:70af4c6ef5e14d4feb904e179e873f342557001c35ea8360570fffbab6477277"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-23-014123"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round3.json",
+   "method": "a year the saved proxies report differently, read as the owner decided a year is read - as first reported (owner-decisions-2026-09-30/c03-convention.json, answer A): the earliest proxy's single ecd:PeoTotalCompAmt for the year, read by tools/read_c03_across_proxies.py, which imports none of the route's governance modules; that proxy must be the filing the result names, and every later amount is recorded beside it.",
+   "metric_id": "C03",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "proxies": [
+     {
+      "accession": "0001140361-23-014123",
+      "document": "evidence/request_attempts/55/559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c/ny20006599x500_def14a.htm",
+      "named_by_the_result": true,
+      "sha256": "559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+      "values": [
+       18686271
+      ]
+     },
+     {
+      "accession": "0001140361-24-015465",
+      "document": "evidence/request_attempts/a2/a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954/ny20015439x1_def14a.htm",
+      "named_by_the_result": false,
+      "sha256": "a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+      "values": [
+       18715093
+      ]
+     },
+     {
+      "accession": "0001140361-25-010600",
+      "document": "evidence/request_attempts/d1/d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43/ny20039208x771_def14a.htm",
+      "named_by_the_result": false,
+      "sha256": "d1647a6383dffd60c28816c8e213ff1904b66282bfd96e5e5ec0fb6c40d5ac43",
+      "values": [
+       18715093
+      ]
+     },
+     {
+      "accession": "0001140361-26-011590",
+      "document": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+      "named_by_the_result": false,
+      "sha256": "fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+      "values": [
+       18715093
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "confirmation by a document the route did not read: the later proxies report another amount, so the only confirmation is the route's own filing read with independent code - the standard the latest years' C03 meet; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_C03_MARRIOTT_2023",
@@ -46352,14 +46491,14 @@
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json": {
-   "acceptances_contributed": 8,
-   "content_sha256": "sha256:f9f5afcb9c3f9023881ea5174cbf92bd4f2cf92aa87f87c6c5af55f5478562b0",
+   "acceptances_contributed": 9,
+   "content_sha256": "sha256:483c0b64801bd3b622e469bb7dacc288bcc8c876d9e5b653d98f813f20adb776",
    "positions_examined": 9,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round3.json": {
-   "acceptances_contributed": 10,
-   "content_sha256": "sha256:692e64b0b636ba3116a2a312b5043a8e32f390d86b6cc8bded66ff5a64b711d2",
+   "acceptances_contributed": 11,
+   "content_sha256": "sha256:bf15aa273ebef1ddeb47ed96a2ce1136038d5ba262423194d69bd6715b56da71",
    "positions_examined": 11,
    "positions_examined_is_null_because": null
   },
