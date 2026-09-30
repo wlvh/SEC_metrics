@@ -95,13 +95,20 @@ def main():
             item = result["companies"].get(company, {})
             stop = result.get("stop")
             chunk_only = stop is not None and stop.get("reason") == "MAX_CAPTURES_FOR_THIS_INVOCATION"
-            if item.get("captured", 0):
-                exported = _run(CLI + ["export"])
-                log("EXPORT_EXIT", exported.returncode, exported.stdout.strip()[-1500:])
-                if exported.returncode != 0:
-                    log("STOP", "export failed", exported.stderr[-2000:])
-                    return 2
-                _run(["git", "add"] + EXPORT_PATHS)
+            # Every invocation is exported, not only one that captured: an
+            # invocation cut by a restart after some captures leaves them in the
+            # ledger unexported, and the next invocation may find nothing left
+            # to capture (on 2026-09-30 the last 24 JPMorgan captures stayed out
+            # of the branch that way). An export that changes nothing commits
+            # nothing.
+            exported = _run(CLI + ["export"])
+            log("EXPORT_EXIT", exported.returncode, exported.stdout.strip()[-1500:])
+            if exported.returncode != 0:
+                log("STOP", "export failed", exported.stderr[-2000:])
+                return 2
+            _run(["git", "add"] + EXPORT_PATHS)
+            changed = _run(["git", "diff", "--cached", "--quiet", "--"] + EXPORT_PATHS).returncode != 0
+            if changed:
                 message = ("Acquire #47 SEC sources: %s, %d captured (%d failed), cumulative %s of %s"
                            % (company, item["captured"], item["failed"],
                               result["cumulative_calls"], result["limits"]))
