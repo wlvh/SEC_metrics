@@ -1,0 +1,97 @@
+{
+ "record_type": "ISSUE_47_C02_LATEST_YEAR_SELECTION_COUNTS",
+ "measured_at_commit": "8339917b69367d3e2ada3c5c5c3d8526629837ef",
+ "bound_selector": {
+  "path": "scripts/vnext/historical_board_composition.py",
+  "note": "bytes #28 binds (repairs 1-12, #47 60aa9f7b)",
+  "git_blob": "a5f238c61c560daf65affd4aaf3a4e43f7020ca6"
+ },
+ "current_selector": {
+  "path": "scripts/vnext/historical_board_composition_v2.py",
+  "note": "#47 repairs 1-16 (last 006795dd)",
+  "git_blob": "6741b37ef981df156b67e7142822c128209f42cb"
+ },
+ "documents": "the governance filings measure.py prepares from the final restored source root, one per latest-year position (JPMorgan has no settled latest period in #47)",
+ "call": "board_composition_facts(document=..., period_start=<target year first day>) for the current selector; the bound selector takes no period argument",
+ "positions": {
+  "enphase_energy": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 48,
+   "v2_now": 48,
+   "added": [],
+   "removed": []
+  },
+  "ford_motor_company": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 82,
+   "v2_now": 82,
+   "added": [],
+   "removed": []
+  },
+  "lumen_technologies": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 99,
+   "v2_now": 99,
+   "added": [],
+   "removed": []
+  },
+  "macys": {
+   "period_start": "2025-02-02",
+   "bound_60aa9f7b": 99,
+   "v2_now": 99,
+   "added": [],
+   "removed": []
+  },
+  "marriott_international": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 98,
+   "v2_now": 98,
+   "added": [],
+   "removed": []
+  },
+  "paramount_skydance_paramount_global": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 54,
+   "v2_now": 63,
+   "added": [
+    100,
+    110,
+    117,
+    126,
+    133,
+    143,
+    150,
+    159,
+    166
+   ],
+   "removed": []
+  },
+  "pfizer": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 79,
+   "v2_now": 79,
+   "added": [],
+   "removed": []
+  },
+  "salesforce": {
+   "period_start": "2025-02-01",
+   "bound_60aa9f7b": 63,
+   "v2_now": 64,
+   "added": [
+    919,
+    933
+   ],
+   "removed": [
+    4300
+   ]
+  },
+  "southwest_airlines": {
+   "period_start": "2025-01-01",
+   "bound_60aa9f7b": 95,
+   "v2_now": 95,
+   "added": [],
+   "removed": []
+  }
+ },
+ "reading": "Only Paramount FY2025 (54 -> 63) and Salesforce FY2026 (63 -> 64) move; both now fit the native 64-item bound. Whether #28's ordinary documents are block-identical to these has not been measured."
+}
