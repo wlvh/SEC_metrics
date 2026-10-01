@@ -846,6 +846,25 @@
   },
   "subagent_register": [
     {
+      "task_name": "audit_c02salesforce_2cc97e3",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_c02_salesforce_2026",
+      "scope_paths": [
+        "/private/tmp/issue28-c02-normal-update-salesforce-877-20261001/metrics/C02/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/salesforce-update-877-cold.json",
+        "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json"
+      ],
+      "patch_sha": "2cc97e3a462afe2815ccb5c522e2da7655549b02",
+      "spawned_at": "2026-10-01T12:34:47Z",
+      "ended_at": "2026-10-01T12:49:56Z",
+      "tool_calls": 83,
+      "tool_calls_outer": 22,
+      "tool_calls_inner": 61,
+      "tool_cap_exceeded_by": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md",
+      "verdict": "NEEDS_FIX_CONTENT_AND_RESOURCE_CAP_EXCEEDED"
+    },
+    {
       "task_name": "review_c02spec_2afa6d7",
       "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
       "module": "ordinary_c02_spec_wording_and_binding",
@@ -8239,7 +8258,7 @@
       ]
     },
     "c02_current_impact": {
-      "status": "THREE_COORDINATES_FIVE_OLD_IDENTITIES_WITHDRAWN_TWO_NEW_PRIVATE_IDENTITIES_NOT_CREDITED",
+      "status": "FIVE_OLD_COORDINATES_WITHDRAWN_THREE_NEW_PRIVATE_IDENTITIES_NOT_CREDITED",
       "evidence": "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/",
       "own_register": "docs/evidence/issue28_continuous/known_result_defects.json",
       "coordinates": [
@@ -8250,7 +8269,8 @@
       "superseded_775_private_result_id": "sha256:677efa34258f3126e9097fb12a1dbaac5d085f490b6aeb2d969b33155a03b54b",
       "old_runs_and_390_denominator_retained": true,
       "new_enphase_private_result_failed_content_scope": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
-    "latest_peer_0e80_impact": "SIX_EXACT_HASH_MATCHED_ELECTION_AND_CLASS_HEADING_BLOCKS_IN_BOTH_PRIVATE_54_EXCERPT_RESULTS_NO_BUSINESS_CREDIT"
+    "latest_peer_0e80_impact": "TWO_ADDITIONAL_CURRENT_OMITTED_FACT_COORDINATES_AND_SIX_ENPHASE_FALSE_POSITIVE_BLOCKS",
+    "salesforce_private_content_audit": "NEEDS_FIX_BLOCK_4300_FALSE_POSITIVE_BLOCK_933_OMITTED_NO_BUSINESS_CREDIT"
     },
     "reference_table_pr": {
       "url": "https://github.com/wlvh/SEC_metrics/pull/53",
@@ -8275,6 +8295,9 @@
       "enphase_independent_process_cold_read": "PASS",
       "marriott_full_96": "EXECUTION_FAILED_NO_C02_SUCCESS_POINTER_WHILE_B01_READY",
       "pfizer_full_79": "SOURCE_MATERIAL_REJECTS_BEFORE_CANDIDATE",
+    "ford_full_80": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
+    "southwest_full_95": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
+    "salesforce_full_63": "PRIVATE_NORMAL_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_BUSINESS_CREDIT",
       "independent_patch_review": "PASS_WITH_BOUNDS_E17_AND_2AFA_EXCLUDES_FULL_CONTENT_REVIEW",
       "full_business_content_acceptance": false,
     "current_private_enphase_content_scope": "FAILED_SIX_OUT_OF_SCOPE_BLOCKS_UNDER_0E80_PEER_ADJUDICATION_AND_OWN_SOURCE_READ",
