@@ -1,0 +1,56 @@
+{
+  "record_type": "ISSUE28_JPM_CURRENT_SAVED_HISTORY_DISCOVERY_READ_ONLY",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "source_requirements_id": "sha256:6dd9caee391e77244e2c2f1ac8bfee454fe652ee22b7f48ba7974a403e5dfbad",
+  "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+  "metadata": {
+    "status": "SAVED_METADATA_COHERENT",
+    "history_conflicts": [],
+    "unavailable_history_urls": [],
+    "complete_filing_inventory_proven": true
+  },
+  "selected_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+  "selected_source": {
+    "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+    "method": "GET",
+    "roles": [
+      "sec_submissions_history"
+    ],
+    "accession": "",
+    "media_type": "application/json",
+    "refresh_for_new_discovery": true,
+    "saved_status": "VERIFIED_SAVED_SOURCE",
+    "source_acquisition_credit": false,
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:361abc71e8ba9d62e56e0a44e2fcc0cf220cb1bc74ecc6cac649857f2cc966ac",
+      "raw_asset_id": "sha256:6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-001.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:85a2f7f79d9d7dfb7ae76a8f4d1e57eba2eed9f38677af33f4d17b72fda3572b"
+    },
+    "proof": {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-001.json",
+      "content_sha256": "6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774",
+      "request_body_sha256": "6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774",
+      "request_body_size": 374687,
+      "request_headers_repo_relative_path": "evidence/request_attempts/68/6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774/CIK0000019617-submissions-001.json.216181fe130360479c35355ca8affec20fc2ac897d8979991548c8f6708fb784.headers.json",
+      "request_headers_sha256": "216181fe130360479c35355ca8affec20fc2ac897d8979991548c8f6708fb784",
+      "request_headers_size": 752,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/68/6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774/CIK0000019617-submissions-001.json",
+      "request_attempt_id": "request:attempt:85a2f7f79d9d7dfb7ae76a8f4d1e57eba2eed9f38677af33f4d17b72fda3572b"
+    }
+  },
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false
+}
