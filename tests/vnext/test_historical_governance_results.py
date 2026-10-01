@@ -16,6 +16,24 @@ from vnext.historical_governance_results import (SUPPORTED_METRICS,
 from vnext.historical_results import prepare_historical_run_input
 from vnext.normal_period_selection import resolve_period_selection
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (95 parses of 15 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
+
 MARRIOTT = "marriott_international"
 # The most recent period, whose accession material is saved, and an earlier one
 # whose is not. Both are in this repository's saved originals, so the pair is a

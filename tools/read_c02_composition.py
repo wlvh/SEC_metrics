@@ -432,26 +432,32 @@ def main(argv=None):
         raise SystemExit("C02_NO_READINGS_IN:" + str(args.readings_dir))
     adjudications = load_adjudications()
     report = {}
-    for path in readings:
-        reading = json.loads(path.read_text(encoding="utf-8"))
-        company_id, report_end = reading["position"].rsplit(":", 1)
-        if args.position and reading["position"] not in args.position:
-            continue
-        document, chosen, candidate = route_selection(repo_root=REPO, company_id=company_id,
-                                                      report_end=report_end, source_root=source_root)
-        answer = read_position(document=document, chosen=chosen, reading=reading, adjudications=adjudications)
-        answer["document_id"] = document["text_document_id"]
-        answer["candidate_hash"] = candidate["candidate_hash"]
-        answer["reading_sha256"] = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
-        report[reading["position"]] = answer
-        if index is not None:
-            label = company_id.split("_")[0] + "-" + report_end[:4]
-            accepted[label] = {**accepted_position(
-                index=index, closure=args.closure, company_id=company_id, report_end=report_end,
-                answer=answer, document=document, chosen=chosen, candidate=candidate,
-                source_root=source_root),
-                "reading": str(path.relative_to(REPO)), "reading_sha256": answer["reading_sha256"]}
-            print(label, accepted[label]["verdict"], flush=True)
+    # One replay of a restored root's acquisition checkpoint for the whole loop.
+    # route_selection opens its own block, and a block inside another keeps the
+    # outer memo; without this every position replayed the whole ledger again
+    # (about ten minutes each on the final acquisition's root).
+    from vnext.normal_history_plan import checkpoint_replayed_once
+    with checkpoint_replayed_once():
+        for path in readings:
+            reading = json.loads(path.read_text(encoding="utf-8"))
+            company_id, report_end = reading["position"].rsplit(":", 1)
+            if args.position and reading["position"] not in args.position:
+                continue
+            document, chosen, candidate = route_selection(repo_root=REPO, company_id=company_id,
+                                                          report_end=report_end, source_root=source_root)
+            answer = read_position(document=document, chosen=chosen, reading=reading, adjudications=adjudications)
+            answer["document_id"] = document["text_document_id"]
+            answer["candidate_hash"] = candidate["candidate_hash"]
+            answer["reading_sha256"] = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+            report[reading["position"]] = answer
+            if index is not None:
+                label = company_id.split("_")[0] + "-" + report_end[:4]
+                accepted[label] = {**accepted_position(
+                    index=index, closure=args.closure, company_id=company_id, report_end=report_end,
+                    answer=answer, document=document, chosen=chosen, candidate=candidate,
+                    source_root=source_root),
+                    "reading": str(path.relative_to(REPO)), "reading_sha256": answer["reading_sha256"]}
+                print(label, accepted[label]["verdict"], flush=True)
     text = json.dumps(report, ensure_ascii=False, indent=1, sort_keys=True) + "\n"
     if args.output:
         Path(args.output).write_text(text, encoding="utf-8")

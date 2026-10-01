@@ -23,6 +23,23 @@ from vnext.normal_period_selection import (PeriodSelectionError, resolve_period_
                                            restore_period_selection,
                                            selected_historical_filing)
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (153 parses of 8 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
 
 MARRIOTT = "marriott_international"
 FY2024_END = "2024-12-31"

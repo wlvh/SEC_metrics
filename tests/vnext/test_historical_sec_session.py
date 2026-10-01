@@ -145,10 +145,18 @@ def _shared_frame(**arguments):
 
 def setUpModule():
     from vnext import historical_sec_session as session_module
+    from vnext.historical_xbrl_parse import xbrl_parsed_once
     _REAL_DECLARED_FRAME.append(session_module.declared_frame)
     patcher = patch.object(session_module, "declared_frame", _shared_frame)
     patcher.start()
     unittest.addModuleCleanup(patcher.stop)
+    # Each document's inline XBRL is parsed once for the module
+    # (historical_xbrl_parse): the declarations and preparations parse the same
+    # filings again and again (206 parses in one profiled run of this module),
+    # and nothing a case does can change a parsed document.
+    parsed_once = xbrl_parsed_once()
+    parsed_once.__enter__()
+    unittest.addModuleCleanup(parsed_once.__exit__, None, None, None)
 
 
 def _frame(company_id):

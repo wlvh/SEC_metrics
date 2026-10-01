@@ -22,6 +22,24 @@ from vnext import normal_period_selection as selection
 from vnext.historical_annual_input import prepare_historical_annual_input
 from vnext.normal_annual_input import NormalAnnualInputError
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (89 parses of 5 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
+
 PARAMOUNT = "paramount_skydance_paramount_global"
 SUCCESSOR, PREDECESSOR = "2041610", "813828"
 

@@ -469,7 +469,34 @@ def _page_furniture(*, blocks, start, stop, repeated):
 
 
 # A page footer that carries its page number: some text, a separator, digits.
-_PAGE_NUMBERED = re.compile(r"^(?P<stem>.*?[A-Za-z].*?)[\s|\-\u2013\u2014]+(?P<page>\d{1,4})$")
+# The rule as first written was the pattern
+#     ^(?P<stem>.*?[A-Za-z].*?)[\s|\-\u2013\u2014]+(?P<page>\d{1,4})$
+# whose two lazy groups retry every split of a block that does not end in a
+# page number, so a paragraph of a few thousand characters cost millions of
+# steps and the rule spent most of a D02 Run's time on body text (about 500 of
+# the 721 seconds the D02 repair cases spent under the profiler).
+# ``_page_numbered`` answers the same question reading from the end: the
+# shortest stem the pattern can take is the text before the separator run that
+# precedes the trailing one to four digits, and it matches when that stem has a
+# letter and no line break. The lookbehind lets the search start only where a
+# separator run starts, so a long run is walked once rather than once from each
+# of its positions; it cannot change the answer, because the only start that
+# reaches the end is the first separator of that run.
+# tests.vnext.test_historical_page_numbered holds the old pattern as the
+# reference and compares the two.
+_PAGE_SUFFIX = re.compile(r"(?<![\s|\-\u2013\u2014])[\s|\-\u2013\u2014]+(\d{1,4})$")
+_ASCII_LETTER = re.compile(r"[A-Za-z]")
+
+
+def _page_numbered(text):
+    """(stem, page) when ``text`` ends in a separator run and a one-to-four digit page, else None."""
+    suffix = _PAGE_SUFFIX.search(text)
+    if suffix is None:
+        return None
+    stem = text[:suffix.start()]
+    if "\n" in stem or _ASCII_LETTER.search(stem) is None:
+        return None
+    return stem, suffix.group(1)
 
 
 def _numbered_page_footers(*, blocks, start, stop):
@@ -488,26 +515,27 @@ def _numbered_page_footers(*, blocks, start, stop):
     block leaves, Enphase's, and no other excerpt moves; D03's candidates are
     unchanged in every filing.
     """
-    stems, texts = {}, Counter()
+    # Each block's normalized text, and the normalized stem of those that end
+    # in a page number, read once for the document.
+    stems, texts, normalized, stem_of = {}, Counter(), [], []
     for block in blocks:
         text = " ".join(block["text"].split())
-        texts[_normalized(text)] += 1
-        numbered = _PAGE_NUMBERED.match(text)
-        if numbered:
-            stems.setdefault(_normalized(numbered["stem"]), set()).add(numbered["page"])
+        normalized.append(_normalized(text))
+        texts[normalized[-1]] += 1
+        found = _page_numbered(text)
+        stem_of.append(None if found is None else _normalized(found[0]))
+        if found is not None:
+            stems.setdefault(stem_of[-1], set()).add(found[1])
 
     def recurring(index):
         if not 0 <= index < len(blocks):
             return False
-        text = " ".join(blocks[index]["text"].split())
-        numbered = _PAGE_NUMBERED.match(text)
-        return ((numbered is not None and len(stems[_normalized(numbered["stem"])]) >= 3)
-                or texts[_normalized(text)] >= 3)
+        return ((stem_of[index] is not None and len(stems[stem_of[index]]) >= 3)
+                or texts[normalized[index]] >= 3)
 
     footers = set()
     for index in range(start, stop):
-        numbered = _PAGE_NUMBERED.match(" ".join(blocks[index]["text"].split()))
-        if (numbered and len(stems[_normalized(numbered["stem"])]) >= 3
+        if (stem_of[index] is not None and len(stems[stem_of[index]]) >= 3
                 and (recurring(index - 1) or recurring(index + 1))):
             footers.add(index)
     return footers

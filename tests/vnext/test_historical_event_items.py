@@ -37,6 +37,24 @@ from vnext import historical_ma_confirmation as confirmation
 from vnext.historical_zero_ai_results import e01_confirmation_request, resolve_historical_zero_ai_metric
 from vnext.normal_period_selection import resolve_period_selection
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (68 parses of 10 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
+
 MATERIALS = ROOT / "evidence/accession_materials"
 WINDOWS = {"enphase_energy": "2025-12-31", "ford_motor_company": "2025-12-31",
            "lumen_technologies": "2025-12-31", "macys": "2026-01-31",

@@ -13,18 +13,21 @@ compared against the way it replaces:
   historical_run_replay.run_checks_replay_once(); ``off`` runs the frozen path.
 * ``--memo on`` also opens historical_derivation_memo.derived_once_per_state()
   in both processes, so the Requirement snapshot and the two input
-  preparations are derived once per state of the trees they read; ``off``
-  derives them every time, as the frozen path does.
+  preparations are derived once per state of the trees they read, and
+  historical_xbrl_parse.xbrl_parsed_once(), so each document's inline XBRL is
+  parsed once per process; ``off`` derives and parses every time, as the
+  frozen path does.
 
 Each position records the run and result it produced, its public row hash and
 a separate process's read-back. That process opens the same blocks, so it
 catches anything that changed since creation but does not test the
-derivation memo's own assumptions; ``--memo-off-read-back N`` reads N of the
-period's Runs back once more with the memo off (the replay block stays on: a
-replay on an acquisition's root takes minutes), chosen by the label's hash so
-a frame's periods sample different metrics. The period records seconds, the
-number of
-frozen checkpoint replays and the memo's outcomes per phase. Besides
+derivation memo's or the parse block's own assumptions;
+``--memo-off-read-back N`` reads N of the period's Runs back once more with
+both off (the replay block stays on: a replay on an acquisition's root takes
+minutes), chosen by the label's hash so a frame's periods sample different
+metrics. The period records seconds, the number of frozen checkpoint replays
+and the memo's outcomes per phase, and the documents the parser actually
+parsed. Besides
 ``period-<label>.json`` it writes ``matrix-<label>.json`` in the shape
 targeted_runs.py writes, one row per position with the read-back under
 ``separate_process_replay``, so the full-frame report reads either driver's
@@ -57,6 +60,7 @@ from vnext.historical_projection import render_historical_run  # noqa: E402
 from vnext.historical_derivation_memo import derived_once_per_state  # noqa: E402
 from vnext.historical_run import create_historical_run, install_historical_run_inputs  # noqa: E402
 from vnext.historical_run_replay import run_checks_replay_once  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
 from vnext.normal_period_selection import resolve_period_selection  # noqa: E402
 
 READ_BACK = r"""
@@ -66,14 +70,17 @@ from unittest.mock import patch
 sys.path.insert(0, %(scripts)r)
 from vnext.historical_derivation_memo import derived_once_per_state
 from vnext.historical_run_replay import run_checks_replay_once
+from vnext.historical_xbrl_parse import xbrl_parsed_once
 from vnext.run_store import load_frozen_run
 import contextlib
-replays, memo = [], []
+replays, memo, parses = [], [], []
 block = run_checks_replay_once(replays=replays) if %(block)r else contextlib.nullcontext()
 derived = derived_once_per_state(report=memo) if %(memo)r else contextlib.nullcontext()
+parsed = xbrl_parsed_once(parses=parses) if %(memo)r else contextlib.nullcontext()
 rows, started = {}, time.time()
 with patch.object(socket.socket, 'connect', side_effect=AssertionError('no net')), \
-     patch.object(socket, 'getaddrinfo', side_effect=AssertionError('no dns')), block, derived:
+     patch.object(socket, 'getaddrinfo', side_effect=AssertionError('no dns')), block, derived, \
+     parsed:
     for metric, run_dir, data_root in %(runs)r:
         try:
             manifest, records, _ = load_frozen_run(run_dir=Path(run_dir), repo_root=Path(data_root))
@@ -91,7 +98,7 @@ outcomes = {}
 for item in memo:
     outcomes[item['outcome']] = outcomes.get(item['outcome'], 0) + 1
 print(json.dumps({'rows': rows, 'seconds': round(time.time() - started, 1),
-                  'frozen_replays': len(replays), 'memo': outcomes,
+                  'frozen_replays': len(replays), 'memo': outcomes, 'xbrl_parses': len(parses),
                   'not_remembered': [x for x in memo if x['outcome'] != 'ANSWERED'
                                      and x['outcome'] != 'COMPUTED']}))
 """
@@ -122,10 +129,11 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     source_root = Path(os.environ["SOURCE_ROOT"]) if os.environ.get("SOURCE_ROOT") else None
     metrics = args.metrics.split(",")
-    replays, memo, phases, positions = [], [], {}, {}
+    replays, memo, parses, phases, positions = [], [], [], {}, {}
     block = run_checks_replay_once(replays=replays) if args.block == "on" else contextlib.nullcontext()
     derived = (derived_once_per_state(report=memo) if args.memo == "on"
                else contextlib.nullcontext())
+    parsed = xbrl_parsed_once(parses=parses) if args.memo == "on" else contextlib.nullcontext()
 
     def data_root(metric):
         return out / ("data-" + args.label + ("" if args.layout == "shared" else "-" + metric))
@@ -138,7 +146,7 @@ def main():
                          "frozen_replays": len(replays) - before[0], "memo": outcomes}
 
     started_all = time.time()
-    with _no_network(), block, derived:
+    with _no_network(), block, derived, parsed:
         started, before = time.time(), (len(replays), len(memo))
         selection = resolve_period_selection(repo_root=source_root or RUNTIME,
                                              company_id=args.company_id,
@@ -223,7 +231,7 @@ def main():
             "memo_not_remembered": [item for item in memo
                                     if item["outcome"] not in ("ANSWERED", "COMPUTED")],
             "selection_id": selection["selection_id"], "positions": positions, "phases": phases,
-            "seconds": round(time.time() - started_all, 1),
+            "seconds": round(time.time() - started_all, 1), "xbrl_parses": len(parses),
             "calls": {"provider": 0, "paid": 0, "sec": 0}}
     matrix = []
     for metric in metrics:

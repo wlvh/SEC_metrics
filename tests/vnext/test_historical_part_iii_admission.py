@@ -24,6 +24,24 @@ from vnext.historical_amendment_admission import (AmendmentAdmissionError,
 from vnext.historical_annual_input import prepare_historical_annual_input
 from vnext.normal_period_selection import resolve_period_selection
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (122 parses of 4 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
+
 COMPANY = "paramount_skydance_paramount_global"
 STATEMENT = ["B02", "B04", "B05", "B07", "B08", "B09"]
 _PREPARED = {}

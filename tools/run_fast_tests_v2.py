@@ -419,6 +419,12 @@ SOURCE_TESTS += ("tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem
 # Issue #47: a current and a prior claim of one quantity must read one quantity
 # (Pfizer's B02 divided product revenue by total revenue); saved Company Facts only.
 FAST_TESTS += ("tests.vnext.test_historical_paired_measure",)
+# D02's numbered page footer: the linear reading against the backtracking
+# pattern it replaced, on crafted and generated strings; no filing.
+FAST_TESTS += ("tests.vnext.test_historical_page_numbered",)
+# The XBRL parse block: one parse per document while it is open, each binding
+# put back after; synthetic documents and one saved 10-K. A few seconds.
+FAST_TESTS += ("tests.vnext.test_historical_xbrl_parse",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",)
@@ -613,50 +619,53 @@ def _run_source_case(name):
 # and fails nothing. Balanced, three shards carry about 32.7 minutes a lane; the
 # fourth shard (docs/evidence/issue47_history/ci-job-patch/0005) is a workflow
 # change this branch cannot push.
+#
+# Fifteen #47 entries were measured again on 2026-10-01, after the page-number
+# footer rule became linear and the XBRL parse block opened in their modules
+# (docs/evidence/issue47_history/saved-source-time/): each module's seconds on a
+# four-core host running four or five such jobs at once, times 1.15 - the
+# local-to-CI ratio of the one module measured both ways before. A module whose
+# new figure came out above its CI mean kept the mean. The next CI run's
+# progress lines replace these with measured seconds.
 SOURCE_CI_SECONDS = {
-    # Not in the three runs the table below averages: measured locally (619
-    # seconds for its sixteen cases on a loaded machine), rounded up.
-    "tests.vnext.test_historical_d02_route_repairs": 620,
     "tests.vnext.test_historical_sec_session": 574,
-    "tests.vnext.test_historical_debt_results": 438,
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 376,
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 370,
-    "tests.vnext.test_historical_text_boundary": 365,
+    "tests.vnext.test_historical_debt_results": 289,
     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 270,
-    "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 262,
-    "tests.vnext.test_historical_period_results": 251,
     "tests.vnext.test_historical_semantic_routes": 249,
     "tests.vnext.test_continuous_sec_acquisition": 227,
     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 214,
     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 211,
     "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest": 209,
-    "tests.vnext.test_historical_event_items": 196,
     "tests.vnext.test_normal_zero_ai_results": 193,
-    "tests.vnext.test_historical_d02_marks": 187,
-    "tests.vnext.test_historical_risk_headings": 185,
-    "tests.vnext.test_historical_board_composition_filings": 184,
+    "tests.vnext.test_historical_board_composition_filings": 175,
     "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest": 173,
     "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest": 171,
     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 167,
+    "tests.vnext.test_historical_event_items": 167,
     "tests.vnext.test_normal_companyfacts_results": 163,
     "tests.vnext.test_regulatory_fact_review": 163,
+    "tests.vnext.test_historical_period_results": 160,
     "tests.vnext.test_historical_coverage": 159,
-    "tests.vnext.test_historical_financial_results": 155,
-    "tests.vnext.test_historical_part_iii_admission": 150,
-    "tests.vnext.test_historical_event_window": 148,
+    "tests.vnext.test_historical_text_boundary": 155,
     "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest": 146,
     "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest": 140,
-    "tests.vnext.test_historical_predecessor_periods": 138,
+    "tests.vnext.test_historical_part_iii_admission": 137,
     "tests.vnext.test_b06_inclusive_table": 136,
+    "tests.vnext.test_historical_risk_headings": 136,
     "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt": 133,
-    "tests.vnext.test_historical_shared_sources": 120,
+    "tests.vnext.test_historical_financial_results": 132,
+    "tests.vnext.test_historical_event_window": 125,
     "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest": 118,
     "tests.vnext.test_b06_bond_leases": 115,
+    "tests.vnext.test_historical_predecessor_periods": 115,
     "tests.vnext.test_normal_accession_results": 112,
     "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest": 111,
     "tests.vnext.test_historical_amendment_note": 110,
-    "tests.vnext.test_historical_governance_results": 108,
     "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan": 106,
+    "tests.vnext.test_historical_governance_results": 102,
+    "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 100,
     "tests.vnext.test_historical_da_scope_route": 99,
     "tests.vnext.test_historical_plan_replay": 97,
     "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest": 94,
@@ -666,6 +675,7 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_historical_source_acquisition": 90,
     "tests.vnext.test_c02_board_reading": 89,
     "tests.vnext.test_history_block_coherence": 87,
+    "tests.vnext.test_historical_d02_route_repairs": 83,
     "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest": 79,
     "tests.vnext.test_historical_run_replay": 78,
     "tests.vnext.test_ordinary_income_input": 75,
@@ -687,12 +697,15 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest": 52,
     "tests.vnext.test_normal_source_requirements": 51,
     "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard": 48,
+    "tests.vnext.test_historical_shared_sources": 48,
     "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration": 46,
     "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass": 45,
     "tests.vnext.test_capacity_text_results": 45,
     "tests.vnext.test_capacity_native_assessment": 44,
+    "tests.vnext.test_historical_d02_marks": 43,
     "tests.vnext.test_r6_regulatory_semantics": 43,
     "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition": 41,
+    "tests.vnext.test_d01_byte_reading": 40,
     "tests.vnext.test_historical_proxy_compensation": 40,
     "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy": 39,
     "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest": 39,
@@ -707,6 +720,7 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_d04_native_wiring": 32,
     "tests.vnext.test_historical_note_navigation": 32,
     "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest": 32,
+    "tests.vnext.test_historical_page_split_headings": 30,
     "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest": 29,
     "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients": 28,
     "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients": 28,
@@ -739,8 +753,6 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_normal_history_catalog": 17,
     "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_borrowing_keyword_and_explicit_past_issuance_do_not_block": 16,
     "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic": 16,
-    "tests.vnext.test_d01_byte_reading": 40,
-    "tests.vnext.test_historical_page_split_headings": 30,
     "tests.vnext.test_e01_candidate_reading": 15,
     "tests.vnext.test_risk_signals": 15,
     "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two": 15,

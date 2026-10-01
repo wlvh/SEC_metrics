@@ -27,6 +27,24 @@ from vnext.normal_annual_input_v2 import prepare_saved_annual_input
 import vnext.normal_bond_debt_results as bond
 import vnext.normal_inclusive_debt_results as inclusive
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (356 parses of 17 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
+
 # Five companies whose current filings reach five different stages. Asked of
 # all ten rather than chosen - though two of the ten did not answer, which is
 # what the note below is about: Marriott's equity is nonpositive so the guard

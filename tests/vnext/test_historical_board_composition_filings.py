@@ -27,6 +27,24 @@ from tools import read_c02_composition as reading
 from vnext.historical_board_composition import _strip_name, board_composition_facts
 from vnext.historical_spec_revision import SUCCESSOR_MAX_ITEMS
 
+from contextlib import ExitStack  # noqa: E402
+from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
+
+# Each document's inline XBRL is parsed once for the module
+# (historical_xbrl_parse): the cases' chains parse the same filings again at
+# nearly every stage (121 parses of 20 documents here, measured), and nothing a
+# case does can change a parsed document.
+_PARSED_ONCE = ExitStack()
+
+
+def setUpModule():
+    _PARSED_ONCE.enter_context(xbrl_parsed_once())
+
+
+def tearDownModule():
+    _PARSED_ONCE.close()
+
+
 READINGS = sorted((ROOT / "docs/evidence/issue47_history/c02-composition-facts/judgements").glob("*.json"))
 
 
