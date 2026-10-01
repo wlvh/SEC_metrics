@@ -392,6 +392,31 @@ class ALeadershipOrMembershipFactNamesThisBoardAndThePerson(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertIn("BOARD_LEADERSHIP_STATEMENT", self.labels(text))
 
+    def test_whether_the_chair_and_the_chief_executive_are_one_person(self):
+        # Marriott's, Ford's, Lumen's and Macy's proxies state the structure
+        # without naming the holders (c02-composition-facts/adjudicate.py,
+        # CHAIR_CEO_STRUCTURE).
+        for text in ("Separate Board Chairman and CEO. Since 2012, the Board has chosen to separate the roles of "
+                     "Chairman of the Board and CEO.",
+                     "We believe that separation of the Chairman and CEO positions has functioned effectively over "
+                     "the past many years.",
+                     "Our Chairman and CEO functions currently are performed by a single individual.",
+                     "The Board has maintained separate Chairman and CEO roles and a Lead Independent Director role "
+                     "for many years."):
+            with self.subTest(text=text[:50]):
+                self.assertIn("BOARD_LEADERSHIP_STATEMENT", self.labels(text))
+
+    def test_a_choice_a_policy_or_a_proposal_states_no_structure(self):
+        # None of these is set aside earlier as a requirement or a hypothetical,
+        # so each reaches the structure rule itself.
+        for text in ("The Board periodically considers whether separating or combining the roles of Chairman and "
+                     "CEO serves the Company.",
+                     "The Board does not believe that adopting a rigid policy to separate the roles of Chairman and "
+                     "CEO would be in the best interests of shareholders.",
+                     "This proposal asks the Board to separate the roles of Chairman and CEO."):
+            with self.subTest(text=text[:50]):
+                self.assertNotIn("BOARD_LEADERSHIP_STATEMENT", self.labels(text))
+
     def test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s(self):
         for text in ("Mr. Varga has served as Acme's Chairman since 2010.",
                      "Mr. Lawler currently serves as Vice Chair of the Company.",

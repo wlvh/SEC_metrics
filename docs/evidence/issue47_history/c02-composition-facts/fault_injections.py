@@ -135,6 +135,16 @@ INJECTIONS = [
      "test_a_committee_of_management_is_not_the_board_s"),
     ('ANY_WORDS_OPEN_THE_MEMBER_LIST', "|(?-i:[A-Z])[\\w&’'\\-]*\\s+){0,6}", '|\\w+\\s+){0,6}',
      "test_a_committee_of_management_is_not_the_board_s"),
+    # Repair 7: whether the chair and the chief executive are one person.
+    ('THE_CHAIR_CEO_STRUCTURE_STATES_NOTHING',
+     '        if (_CHAIR_CEO_STRUCTURE.search(sentence) and not _BOTH_STRUCTURES.search(sentence)\n'
+     '                and not _STRUCTURE_POLICY.search(sentence)):\n'
+     '            labels.add("BOARD_LEADERSHIP_STATEMENT")\n', '',
+     "test_whether_the_chair_and_the_chief_executive_are_one_person"),
+    ('NAMING_BOTH_CHOICES_STATES_A_STRUCTURE', ' and not _BOTH_STRUCTURES.search(sentence)\n', '\n',
+     "test_a_choice_a_policy_or_a_proposal_states_no_structure"),
+    ('A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE', '\n                and not _STRUCTURE_POLICY.search(sentence)):', '):',
+     "test_a_choice_a_policy_or_a_proposal_states_no_structure"),
 ]
 
 

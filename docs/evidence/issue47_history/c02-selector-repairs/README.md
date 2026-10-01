@@ -97,3 +97,15 @@
 **量测**（`measured-6-management-committees.json`）：只移走这 5 块（Lumen 2021、2022 各 1，Marriott 2021 有 1，Pfizer 2022 有 2），全部是判读判为非事实的块。误选 45 → 40，漏选 146 不变，最新十个位置不变。四个坐标仍有别的问题，继续撤回。
 
 **不主张。** Lumen 的"由董事会主席、各委员会主席与 CEO 组成的临时遴选委员会"（search committee）不属于这一类（成员是董事与 CEO），仍按原样取，判读判为流程描述，属另一个问题。
+
+## 7. 董事长与 CEO 是否分设的陈述
+
+**问题。** "the Board has chosen to separate the roles of Chairman of the Board and CEO"、"Our Chairman and CEO functions currently are performed by a single individual" 这类句子说的是董事会主席与 CEO 是两人还是一人，不点名。往年读者在五家公司 31 块上都判为事实，最新年 Ford、Macy's、Enphase 的读者也取了，最新年 Lumen、Marriott 的读者没取同样的句子。统一裁定（`../c02-composition-facts/adjudicate.py` 的 `CHAIR_CEO_STRUCTURE`）判为事实；选择器只认点名的主席句（"X serves as Chairman"），这类句子一句也没取。
+
+**改动。** `_CHAIR_CEO_STRUCTURE`：句中有分设或合并（separate、split、combine）紧挨着"Chairman/Chair（of the Board）与 CEO/Chief Executive Officer"这一对，或这一对角色后面跟着 separate、combined、single individual、same person 等，标为 `BOARD_LEADERSHIP_STATEMENT`。两种选择都提到的（"separating or combining"）和讲政策或股东提案的不算。规则与裁定的类别定义相同，但写在选择器自己的模块里，裁定不读选择器。
+
+**用例与注错。** `test_historical_board_composition.ALeadershipOrMembershipFactNamesThisBoardAndThePerson.test_whether_the_chair_and_the_chief_executive_are_one_person`（四种原句）与 `test_a_choice_a_policy_or_a_proposal_states_no_structure`（两种选择都提、政策、提案三种不算；三句都不会在前面被当作要求或假设句排除，所以每一句都真正走到这条规则）。只撤回模块改动时四个原句子用例失败。注错 `THE_CHAIR_CEO_STRUCTURE_STATES_NOTHING`、`NAMING_BOTH_CHOICES_STATES_A_STRUCTURE`、`A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE`。
+
+**量测**（`measured-7-chair-ceo-structure.json`，在统一裁定之上）：新增的块全部是判读判为事实、或统一裁定判为事实的块，没有移走任何块。漏选 144 → 118，误选 46 不变，不一致的位置 28 → 26。最新年 Lumen、Marriott 由不一致变为一致；Pfizer FY2022 取了 723 一块（董事会决定继续由 Bourla 兼任主席与 CEO），读者为它列为同一事实的 16 块随之不再算漏选。最新年 Ford、Macy's 的选择也多了一两块（判读本来就判为事实），已接受的值只对应旧结果，下一次运行后要重新读过才接受。
+
+**不主张。** 点名的兼任句（"Bourla, Chairman and CEO"）原来就由点名规则处理，这里不改；只说分设历史的句子（"separated the roles in 2012"）同样被取，与读者一致。

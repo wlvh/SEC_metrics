@@ -570,6 +570,25 @@ _LEADERSHIP = (
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:our|the company['’]s)\s+" + _BOARD_QUALIFIER
                + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I),
 )
+# Whether the board's chair and the chief executive are two people or one: "the
+# Board has chosen to separate the roles of Chairman of the Board and CEO",
+# "Our Chairman and CEO functions currently are performed by a single
+# individual". It says who can hold the board's chair, as a sentence naming the
+# chair does. A sentence naming both choices ("separating, or continuing to
+# combine, the roles") states neither, and one about a policy or a proposal
+# ("a policy requiring the separation of the roles") states none
+# (c02-composition-facts/adjudicate.py, CHAIR_CEO_STRUCTURE).
+_ROLE_PAIR = (r"(?:(?:board\s+)?chair(?:man|person|woman)?(?:\s+of\s+the\s+board(?:\s+of\s+directors)?)?\s+(?:and|&)\s+"
+              r"(?:the\s+)?(?:ceo|chief executive officer)(?:\s+\(\W*ceo\W*\))?"
+              r"|(?:ceo|chief executive officer)(?:\s+\(\W*ceo\W*\))?\s+(?:and|&)\s+(?:the\s+)?(?:board\s+)?"
+              r"chair(?:man|person|woman)?(?:\s+of\s+the\s+board(?:\s+of\s+directors)?)?)")
+_ROLE_NOUN = r"(?:roles?|positions?|functions?|offices?|structure)"
+_CHAIR_CEO_STRUCTURE = re.compile(
+    r"\b(?:separat\w*|split|combin\w*)\b[^.;]{0,40}?\b(?:" + _ROLE_NOUN + r"\s+of\s+(?:the\s+)?)?" + _ROLE_PAIR
+    + r"|\b" + _ROLE_PAIR + r"\s+" + _ROLE_NOUN + r"\b[^.;]{0,80}?\b(?:separat\w*|combin\w*|single individual"
+    r"|one person|same person|different (?:individuals|people|persons))", re.I)
+_BOTH_STRUCTURES = re.compile(r"\bseparat\w*\b.*\bcombin\w*|\bcombin\w*\b.*\bseparat\w*", re.I)
+_STRUCTURE_POLICY = re.compile(r"\bpolic(?:y|ies)\b|\bmandat\w*|\bimpos\w*|\bproposals?\b", re.I)
 _OWNED_LEADERSHIP = re.compile(
     r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s\s+" + _BOARD_QUALIFIER
     + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I)
@@ -749,6 +768,9 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
         owned = _OWNED_LEADERSHIP.search(sentence)
         if (any(p.search(sentence) for p in _LEADERSHIP)
                 or (owned and owned.group("owner").casefold() in registrant)):
+            labels.add("BOARD_LEADERSHIP_STATEMENT")
+        if (_CHAIR_CEO_STRUCTURE.search(sentence) and not _BOTH_STRUCTURES.search(sentence)
+                and not _STRUCTURE_POLICY.search(sentence)):
             labels.add("BOARD_LEADERSHIP_STATEMENT")
         owned = _OWNED_CHANGE.search(sentence)
         if (_mentions_person(sentence)

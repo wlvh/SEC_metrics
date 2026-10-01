@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 48,
- "caught": 42,
- "total": 42,
+ "control_tests_run": 50,
+ "caught": 45,
+ "total": 45,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -353,6 +353,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_committee_of_management_is_not_the_board_s"
+   ]
+  },
+  {
+   "injection": "THE_CHAIR_CEO_STRUCTURE_STATES_NOTHING",
+   "expected": "test_whether_the_chair_and_the_chief_executive_are_one_person",
+   "result": "CAUGHT",
+   "failed": [
+    "test_whether_the_chair_and_the_chief_executive_are_one_person"
+   ]
+  },
+  {
+   "injection": "NAMING_BOTH_CHOICES_STATES_A_STRUCTURE",
+   "expected": "test_a_choice_a_policy_or_a_proposal_states_no_structure",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_choice_a_policy_or_a_proposal_states_no_structure"
+   ]
+  },
+  {
+   "injection": "A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE",
+   "expected": "test_a_choice_a_policy_or_a_proposal_states_no_structure",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_choice_a_policy_or_a_proposal_states_no_structure"
    ]
   }
  ]
