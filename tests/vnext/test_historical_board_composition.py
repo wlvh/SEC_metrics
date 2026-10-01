@@ -167,6 +167,18 @@ class ACommitteePageIsReadAsAStructure(unittest.TestCase):
         chosen = _selected(texts, emphasized={0, 4, 8})
         self.assertEqual({0, 1, 4, 5, 6, 7}, set(chosen))
 
+    def test_a_chair_label_on_a_line_of_its_own(self):
+        # Pfizer FY2022 blocks 874-877: the label, then the chair's name broken in two.
+        texts = ["The Science and Technology Committee", "Chair:", "Helen H.", "Hobbs, M.D.",
+                 "The Committee is responsible for periodically examining management’s strategic direction of and "
+                 "investment in the company’s biopharmaceutical R&D and technology initiatives. Its "
+                 "responsibilities include:"]
+        self.assertEqual({0: ["COMMITTEE_HEADING"], 1: ["COMMITTEE_CHAIR_DESIGNATION"], 2: ["COMMITTEE_CHAIR_NAME"],
+                          3: ["COMMITTEE_CHAIR_NAME"]}, _selected(texts))
+        # A label no name follows states nothing (constructed; block 807's words after it).
+        self.assertEqual({}, _selected(["The Audit Committee", "Chair:",
+                                        "The Committee’s primary responsibilities include:"]))
+
     def test_a_member_column_laid_out_after_the_duties(self):
         texts = ["Audit Committee", "Number of Meetings in 2025: 8", "Current Members", "Key Responsibilities",
                  "•", "Oversee accounting and financial reporting.", "Isabella D.", "Goren", "CHAIR",

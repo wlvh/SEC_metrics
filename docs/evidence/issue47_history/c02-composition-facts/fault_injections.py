@@ -286,6 +286,23 @@ INJECTIONS = [
     ('A_SUFFIX_JOINS_A_SURNAME_ALONE',
      '        if parts and _SUFFIX_ITEM.match(part) and len(parts[-1].split()) >= 2:',
      '        if parts and _SUFFIX_ITEM.match(part):', 'test_a_suffix_after_a_comma_ends_the_name_before_it'),
+    # Repair 31: "Chair:" on a line of its own, the chair's name after it.
+    ('A_CHAIR_LABEL_ALONE_IS_NOT_READ',
+     '            if _CHAIR_LABEL.match(text):\n'
+     '                run, count, end = _roster_run(blocks, k + 1, stop, registrant)\n'
+     '                if count:\n'
+     '                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))\n'
+     '                    found.extend((j, "COMMITTEE_CHAIR_NAME" if label == "COMMITTEE_MEMBER_NAME" else label)\n'
+     '                                 for j, label in run)\n'
+     '                    k = end\n'
+     '                    continue\n', '', 'test_a_chair_label_on_a_line_of_its_own'),
+    ('A_CHAIR_LABEL_WITH_NO_NAME_COUNTS',
+     '                if count:\n                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))',
+     '                if True:\n                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))',
+     'test_a_chair_label_on_a_line_of_its_own'),
+    ('THE_LABELLED_CHAIR_IS_A_MEMBER',
+     '"COMMITTEE_CHAIR_NAME" if label == "COMMITTEE_MEMBER_NAME" else label)', 'label)',
+     'test_a_chair_label_on_a_line_of_its_own'),
 ]
 
 

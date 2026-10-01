@@ -563,3 +563,20 @@
 "恰好两个"字母没有单独的注错：语料里三个首字母的块（"M.B.A., Harvard University"）不在倒数第二个位置，放宽到三个也不会被任何真实块区分。
 
 **量测**（`measured-30-joined-initials-and-suffix.json`）：只新增 Marriott 2021 第 990、991 块；漏选 34→32，不一致位置 18→17（Marriott 2021 现与判读一致），误选 14 不变，最新年不变。
+
+## 31. 单独一行的 "Chair:"，主席名在下一行
+
+**问题。** Pfizer 2022 的五个委员会页都把 "Chair:" 单独印成一块，主席名在下一块（"Suzanne Nora Johnson"、"James C. Smith"、"Joseph J. Echevarria"、"Scott Gottlieb, M.D."），科学技术委员会的主席名还拆成 "Helen H." 和 "Hobbs, M.D." 两块。选择器只认同一块里的 "Chair: 名字"，这五处都没取。前四位主席另在别处被选中的块里写明（读者记为同一事实），所以不算漏选；Hobbs 任科学技术委员会主席这件事没有别的块写，第 875–877 块是漏选。
+
+**先量后改。** 37 份文档里单独成块的 "Chair:" 只有 Pfizer 2022 这五处。
+
+**改动。** 委员会页内单独一块 "Chair:"，其后紧跟名字时，取这一块和其后的名字，名字标为主席名；后面没有名字的标签不取。只收语料里的写法 "Chair:"，不收 "Chairman:"、"Committee Chair:" 等没有出现的写法。
+
+**用例与注错。** `test_a_chair_label_on_a_line_of_its_own`：第 874–878 块原文为正例；标签后接职责说明而没有名字时不取（构造，用第 807 块的原文接在标签后）。注错：
+- `A_CHAIR_LABEL_ALONE_IS_NOT_READ`（去掉这条规则）；
+- `A_CHAIR_LABEL_WITH_NO_NAME_COUNTS`（不要求后接名字）；
+- `THE_LABELLED_CHAIR_IS_A_MEMBER`（名字不标为主席）。
+
+共 105/105，对照 80 个用例。
+
+**量测**（`measured-31-chair-label-line.json`）：只在 Pfizer 2022 新增 11 块（五个标签和其后的主席名，读者都判为事实）；漏选 32→29，不一致位置 17→16（Pfizer 2022 现与判读一致），误选 14 不变，最新年不变。

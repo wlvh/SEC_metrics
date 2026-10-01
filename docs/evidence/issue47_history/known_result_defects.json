@@ -3499,7 +3499,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/pfizer-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 6 block(s) taken that state no composition fact (364: Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact; 446: Echevarria not standing again for Xerox board, not the Pfizer board (nominee-table footnote)); 20 block(s) stating a composition fact that no taken block states (198: Letter signature: Bourla, signing as Chairman & CEO; 199: Signature title: Bourla is Chairman & CEO (combined roles)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
@@ -3509,23 +3509,19 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-28-another-company-meeting.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-29-no-committee-change.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-29-no-committee-change.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-31-chair-label-line.json"
    ],
    "partial_repair": {
     "management_committee": "2 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
-    "still_open": "3 fact block(s) missed (875, 876, 877) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28]).",
     "another_company_meeting_28": "Repair 28 sets aside a re-election at another company's annual meeting: 0 block(s) added, 2 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 28 [shared-with-#28]).",
-    "no_committee_change_29": "Repair 29 reads a statement that the committees' composition did not change in the year: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 29 [shared-with-#28])."
+    "no_committee_change_29": "Repair 29 reads a statement that the committees' composition did not change in the year: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 29 [shared-with-#28]).",
+    "chair_label_line_31": "Repair 31 reads a 'Chair:' label printed on a line of its own with the chair's name after it: 11 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 31 [shared-with-#28])."
    },
-   "selection_problems": {
-    "missed": [
-     875,
-     876,
-     877
-    ]
-   }
+   "selection_problems": {}
   },
   {
    "defect_id": "C02_PFIZER_2023_OLDER_YEAR_READING_DISAGREES",

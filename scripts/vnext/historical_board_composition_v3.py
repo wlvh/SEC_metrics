@@ -296,6 +296,9 @@ def committee_name(text):
 _MEMBER_LABEL = re.compile(r"^(?:(?:current|additional|other)\s+)?(?:committee\s+)?members\s*:?\s*$", re.I)
 _MEMBER_INLINE = re.compile(r"^(?:(?:current|additional|other)\s+)?(?:committee\s+)?members?\s*:\s*(?P<names>\S.*)$", re.I)
 _CHAIR_INLINE = re.compile(r"^(?:committee\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)\s*[:\-–—]\s*(?P<name>\S.*)$", re.I)
+# "Chair:" on a line of its own with the chair's name on the next (Pfizer's
+# FY2022 committee pages; "Helen H." and "Hobbs, M.D." on two more).
+_CHAIR_LABEL = re.compile(r"^chair\s*:$", re.I)
 _META = re.compile(r"(?:^|\b)(?:meetings?|attendance|actions? by written|consent in|number of meetings|in fiscal"
                    r"|fiscal \d{4})\b|^\d{1,3}%?$", re.I)
 _SECTION_REACH = 120
@@ -404,6 +407,14 @@ def _committee_structures(blocks, headings, registrant):
                 found.extend(run)
                 k = max(k + 1, end)
                 continue
+            if _CHAIR_LABEL.match(text):
+                run, count, end = _roster_run(blocks, k + 1, stop, registrant)
+                if count:
+                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))
+                    found.extend((j, "COMMITTEE_CHAIR_NAME" if label == "COMMITTEE_MEMBER_NAME" else label)
+                                 for j, label in run)
+                    k = end
+                    continue
             if _MEMBER_LABEL.match(text):
                 run, count, end = _roster_run(blocks, k + 1, stop, registrant)
                 if count == 0:

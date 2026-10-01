@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 79,
- "caught": 102,
- "total": 102,
+ "control_tests_run": 80,
+ "caught": 105,
+ "total": 105,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -176,6 +176,7 @@
    "expected": "test_a_designation_on_a_card_and_not_a_table_header",
    "result": "CAUGHT",
    "failed": [
+    "test_a_chair_label_on_a_line_of_its_own",
     "test_a_designation_on_a_card_and_not_a_table_header",
     "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark",
     "test_a_signature_is_a_roster_and_a_fee_table_is_not"
@@ -867,6 +868,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_suffix_after_a_comma_ends_the_name_before_it"
+   ]
+  },
+  {
+   "injection": "A_CHAIR_LABEL_ALONE_IS_NOT_READ",
+   "expected": "test_a_chair_label_on_a_line_of_its_own",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_chair_label_on_a_line_of_its_own"
+   ]
+  },
+  {
+   "injection": "A_CHAIR_LABEL_WITH_NO_NAME_COUNTS",
+   "expected": "test_a_chair_label_on_a_line_of_its_own",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_chair_label_on_a_line_of_its_own"
+   ]
+  },
+  {
+   "injection": "THE_LABELLED_CHAIR_IS_A_MEMBER",
+   "expected": "test_a_chair_label_on_a_line_of_its_own",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_chair_label_on_a_line_of_its_own"
    ]
   }
  ]
