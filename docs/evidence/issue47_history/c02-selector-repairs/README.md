@@ -596,3 +596,22 @@
 共 107/107，对照 81 个用例。
 
 **量测**（`measured-32-has-a-lead-director.json`）：只新增 Enphase 2021 第 216 块；漏选 28→27，误选 14 不变，不一致位置 15 不变（Enphase 2021 还有表格脚注的主席标记和一处董事薪酬句），最新年不变。
+
+## 33. 表格里带脚注标记的名字，和表下写明委员会职务的注释
+
+**问题。** Enphase 2021 的董事表（第 144–156 块）在名字后印脚注标记（"Steven J. Gomo(2)"、"Benjamin Kortlang(1)(5)"），表下第 157–162 块逐条写明标记的含义（"(1)Chair of the Nominating and Corporate Governance Committee"、"(2)Chair of the Audit Committee"、"(5)Member of the Audit Committee" 等）。读者把带标记的名字和六条注释都判为事实。选择器没有这种读法，其中 Gomo 任审计委员会主席（第 146、158 块）和第 157 块别处没有写，是漏选。
+
+**先量后改。** 37 份文档里 "(n)Chair/Member of the … Committee" 这种注释只在 Enphase 2021 出现。
+
+**改动。** 与已有的"脚注写明变动"读法（`_footnoted_changes`）同样处理：表下一条 "(n)Chair/Member of the … Committee" 注释，和它之前 80 块内名字带 "(n)" 标记的块一起取；没有名字引用它的注释不取，带别的标记的名字不算这条注释的。
+
+**用例与注错。** `test_a_table_s_names_and_the_notes_that_give_their_committee_roles`：第 144–162 块节选原文为正例；没有名字引用的注释不取（构造）；带别的标记的名字不算（构造，"标记须对应"沿用自脚注变动读法，语料里所有标记都有注释，所以用构造块行使它）。注错：
+- `A_ROLE_NOTE_IS_NOT_READ`（不调用这一读法）；
+- `A_ROLE_NOTE_WITHOUT_NAMES_IS_TAKEN`（没有名字也取注释）；
+- `A_NAME_CITING_ANOTHER_MARK_IS_THE_NOTE_S`（任何带标记的名字都算）。
+
+两个旧注错因这次改动失效，第一次运行在它们那里停下（`EDIT_DOES_NOT_APPLY`）：`A_FOOTNOTE_WITHOUT_ITS_NAMES` 的目标行在新读法里又出现一次，改为连同下一行（变动注释自己的标签）一起作目标；`A_TASK_FORCE_TITLE_IS_NOT_TAKEN` 的目标行被拆成两行，改为新的行。两者针对的仍是原来的规则。
+
+共 110/110，对照 82 个用例。
+
+**量测**（`measured-33-footnoted-committee-roles.json`）：只在 Enphase 2021 新增 11 块（5 个带标记的名字、6 条注释，读者都判为事实）；漏选 27→24，误选 14 不变，最新年不变。Enphase 2021 剩下一处误选（第 943 块，董事薪酬资格的引导句）。

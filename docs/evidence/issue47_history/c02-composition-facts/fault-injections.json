@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 81,
- "caught": 107,
- "total": 107,
+ "control_tests_run": 82,
+ "caught": 110,
+ "total": 110,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -179,7 +179,8 @@
     "test_a_chair_label_on_a_line_of_its_own",
     "test_a_designation_on_a_card_and_not_a_table_header",
     "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark",
-    "test_a_signature_is_a_roster_and_a_fee_table_is_not"
+    "test_a_signature_is_a_roster_and_a_fee_table_is_not",
+    "test_a_table_s_names_and_the_notes_that_give_their_committee_roles"
    ]
   },
   {
@@ -191,6 +192,7 @@
     "test_a_members_line_written_as_a_sentence",
     "test_a_quoted_nickname_between_the_names",
     "test_a_roster_marked_with_each_glyph_filings_print",
+    "test_a_table_s_names_and_the_notes_that_give_their_committee_roles",
     "test_a_title_line_at_this_registrant_and_not_elsewhere",
     "test_unlabelled_committees_on_the_lines_after_the_tenure"
    ]
@@ -908,6 +910,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_board_that_has_a_lead_director_names_the_holder"
+   ]
+  },
+  {
+   "injection": "A_ROLE_NOTE_IS_NOT_READ",
+   "expected": "test_a_table_s_names_and_the_notes_that_give_their_committee_roles",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_table_s_names_and_the_notes_that_give_their_committee_roles"
+   ]
+  },
+  {
+   "injection": "A_ROLE_NOTE_WITHOUT_NAMES_IS_TAKEN",
+   "expected": "test_a_table_s_names_and_the_notes_that_give_their_committee_roles",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_table_s_names_and_the_notes_that_give_their_committee_roles"
+   ]
+  },
+  {
+   "injection": "A_NAME_CITING_ANOTHER_MARK_IS_THE_NOTE_S",
+   "expected": "test_a_table_s_names_and_the_notes_that_give_their_committee_roles",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_table_s_names_and_the_notes_that_give_their_committee_roles"
    ]
   }
  ]

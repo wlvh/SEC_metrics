@@ -957,6 +957,23 @@ class ACardOrTableStatesWhoAndWhat(unittest.TestCase):
                  "Hal Stanley Jones", "(Chair)", "Christopher CaposselaKevin P. ChiltonMichelle Goldberg", "50"]
         self.assertEqual({0, 1, 2, 3}, set(_selected(texts)))
 
+    def test_a_table_s_names_and_the_notes_that_give_their_committee_roles(self):
+        # Enphase FY2021 blocks 144-162 (abridged): each name's marks point to
+        # notes under the table that give the mark's committee role.
+        texts = ["NameAgePosition(s)",
+                 "Badrinarayanan Kothandaraman50President, Chief Executive Officer (“CEO”), and Director",
+                 "Steven J. Gomo(2)", "70Director", "Benjamin Kortlang(1)(5)", "46Director",
+                 "Joseph Malchow36Director", "(1)Chair of the Nominating and Corporate Governance Committee",
+                 "(2)Chair of the Audit Committee", "(5)Member of the Audit Committee"]
+        self.assertEqual({2: ["FOOTNOTED_DIRECTOR"], 4: ["FOOTNOTED_DIRECTOR"], 7: ["FOOTNOTED_COMMITTEE_ROLE"],
+                          8: ["FOOTNOTED_COMMITTEE_ROLE"], 9: ["FOOTNOTED_COMMITTEE_ROLE"]}, _selected(texts))
+        # A note no name in the table cites says nothing about whom (constructed).
+        self.assertEqual({}, _selected(["Steven J. Gomo", "70Director", "(2)Chair of the Audit Committee"]))
+        # A name carrying another mark is not this note's (constructed), as for a
+        # footnoted change.
+        self.assertEqual({0: ["FOOTNOTED_DIRECTOR"], 2: ["FOOTNOTED_COMMITTEE_ROLE"]},
+                         _selected(["Steven J. Gomo(2)", "Jamie Haenggi(3)", "(2)Chair of the Audit Committee"]))
+
     def test_member_and_chair_tails_on_signatures(self):
         texts = ["Compensation Committee", "Thurman John Rodgers, Chair", "Richard Mora, Member",
                  "*The material in this report is not soliciting material."]

@@ -1410,6 +1410,12 @@ _FOOTNOTED_CHANGE = re.compile(
     r"^(?:retired|resigned|departed|stepped down|appointed|elected|joined|ceased)\b[^.;]{0,60}\b(?:from|to|as)"
     r"\s+(?:a\s+(?:member|director)\s+of\s+)?(?:the|our)\s+board\b", re.I)
 _FOOTNOTE_REACH = 80
+# A note under a table of directors that gives a committee role to the rows
+# whose names carry its mark: "(2)Chair of the Audit Committee" under "Steven
+# J. Gomo(2)" (Enphase FY2021). Like a footnoted change it says whose role only
+# with the names, so it is taken only with them.
+_ROLE_NOTE = re.compile(r"^\((?P<mark>\d{1,2})\)\s*(?:chair|member) of the\b.*\bcommittee$", re.I)
+_NAME_MARKS = re.compile(r"\((\d{1,2})\)")
 
 
 def _task_force_titles(blocks):
@@ -1449,6 +1455,23 @@ def _footnoted_changes(blocks, registrant):
         if names:
             taken.extend((k, "FOOTNOTED_DIRECTOR") for k in names)
             taken.append((i, "FOOTNOTED_MEMBERSHIP_CHANGE"))
+    return taken
+
+
+def _footnoted_roles(blocks, registrant):
+    """A table's note that gives a committee role, and the names that carry its mark."""
+    taken = []
+    for i, block in enumerate(blocks):
+        match = _ROLE_NOTE.match(clean(block["text"]))
+        if block["linked"] or not match:
+            continue
+        names = [k for k in range(max(0, i - _FOOTNOTE_REACH), i)
+                 if match.group("mark") in _NAME_MARKS.findall(clean(blocks[k]["text"]))
+                 and not blocks[k]["linked"] and person_name(blocks[k]["text"])
+                 and re.sub(r"\W", "", clean(blocks[k]["text"]).casefold()) not in registrant]
+        if names:
+            taken.extend((k, "FOOTNOTED_DIRECTOR") for k in names)
+            taken.append((i, "FOOTNOTED_COMMITTEE_ROLE"))
     return taken
 
 
@@ -1598,7 +1621,8 @@ def board_composition_facts(*, document, period_start):
                          *_cards(blocks, vocabulary, registrant),
                          *_unlabelled_card_items(blocks, vocabulary, registrant), *_designations(blocks, registrant),
                          *_registrant_title_lines(blocks, cores), *_director_groups(blocks, registrant),
-                         *_footnoted_changes(blocks, registrant), *_task_force_titles(blocks)):
+                         *_footnoted_changes(blocks, registrant), *_footnoted_roles(blocks, registrant),
+                         *_task_force_titles(blocks)):
         take(index, label)
     candidates = [_excerpt(document, blocks[i], SECTION_ID, sorted(picked[i])) for i in sorted(picked)]
     body = {"record_type": "BOARD_COMPOSITION_SOURCE_CANDIDATES", "metric_id": "C02",

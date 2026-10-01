@@ -87,7 +87,11 @@ INJECTIONS = [
     ("ONE_NAME_MAKES_A_TABLE", "        if len(names) >= 2:\n            taken.extend((k, \"DIRECTOR_GROUP_MEMBER\")",
      "        if names:\n            taken.extend((k, \"DIRECTOR_GROUP_MEMBER\")",
      "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"),
-    ("A_FOOTNOTE_WITHOUT_ITS_NAMES", "            taken.extend((k, \"FOOTNOTED_DIRECTOR\") for k in names)\n", "",
+    # The departure note's own names, not the role note's (repair 33 printed the
+    # same line once more in _footnoted_roles).
+    ("A_FOOTNOTE_WITHOUT_ITS_NAMES", "            taken.extend((k, \"FOOTNOTED_DIRECTOR\") for k in names)\n"
+     "            taken.append((i, \"FOOTNOTED_MEMBERSHIP_CHANGE\"))\n",
+     "            taken.append((i, \"FOOTNOTED_MEMBERSHIP_CHANGE\"))\n",
      "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark"),
     ("A_VICE_CHAIR_IS_THE_BOARD_S", "_SOLE_CHAIR = r\"(?<!vice )(?<!vice-)chair(?:man|person|woman)?\"",
      "_SOLE_CHAIR = _CHAIR_WORD",
@@ -166,7 +170,8 @@ INJECTIONS = [
     ('A_TASK_FORCE_STATES_NOTHING', '        if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):\n'
      '            labels.add("COMMITTEE_COMPOSITION_STATEMENT")\n', '',
      "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
-    ('A_TASK_FORCE_TITLE_IS_NOT_TAKEN', ', *_task_force_titles(blocks)):', '):',
+    ('A_TASK_FORCE_TITLE_IS_NOT_TAKEN', '\n                         *_task_force_titles(blocks)):',
+     '):',
      "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
     ('ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS', ' and title.casefold() in \\\n'
      '                    clean(block["text"]).casefold():', ':', "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
@@ -311,6 +316,19 @@ INJECTIONS = [
      'r" board|" + _LEAD_ROLE + r")\\s*,\\s*(?:(?:mr|ms|mrs|dr)\\s+)?(?-i:[A-Z][a-z])", re.I),',
      'r" board|" + _LEAD_ROLE + r")\\s*,\\s*(?:(?:mr|ms|mrs|dr)\\s+)?[A-Z][a-z]", re.I),',
      'test_a_board_that_has_a_lead_director_names_the_holder'),
+    # Repair 33: "Steven J. Gomo(2)" ... "(2)Chair of the Audit Committee".
+    ('A_ROLE_NOTE_IS_NOT_READ', ' *_footnoted_roles(blocks, registrant),\n', '\n',
+     'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
+    ('A_ROLE_NOTE_WITHOUT_NAMES_IS_TAKEN',
+     '        if names:\n            taken.extend((k, "FOOTNOTED_DIRECTOR") for k in names)\n'
+     '            taken.append((i, "FOOTNOTED_COMMITTEE_ROLE"))',
+     '        if True:\n            taken.extend((k, "FOOTNOTED_DIRECTOR") for k in names)\n'
+     '            taken.append((i, "FOOTNOTED_COMMITTEE_ROLE"))',
+     'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
+    ('A_NAME_CITING_ANOTHER_MARK_IS_THE_NOTE_S',
+     '                 if match.group("mark") in _NAME_MARKS.findall(clean(blocks[k]["text"]))',
+     '                 if _NAME_MARKS.findall(clean(blocks[k]["text"]))',
+     'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
 ]
 
 
