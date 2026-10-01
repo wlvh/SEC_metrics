@@ -483,7 +483,12 @@ _COMMITTEE_COMPOSITION = (
                r"\s+of\s+(?:the|our|its)\b[^.;]{0,60}\bcommittee\b", re.I),
     re.compile(r"\bcommittee\b[^.;]{0,40}\b(?:is\s+|was\s+)?chaired by\b", re.I),
     re.compile(r"\bas (?:the )?chair(?:man|person|woman)? of the\b[^.;]{0,60}\bcommittee\b", re.I),
-    re.compile("\\bas (?:the |our )?(?:[A-Z][\\w&’'\\-]*\\s+){0,6}committee chair\\b", re.I),
+    # The words before "committee chair" are the committee's name, so each
+    # starts with a capital. Without (?-i:...) the flag lets [A-Z] match any
+    # letter, and "Previous service as a Board committee chair" - a criterion
+    # for choosing a lead director, Macy's older proxies - read as someone
+    # serving as one (c02-older-years, collab-28/README.md).
+    re.compile("\\bas (?:the |our )?(?:(?-i:[A-Z])[\\w&’'\\-]*\\s+){0,6}committee chair\\b", re.I),
     re.compile(r"\b(?:none of the members|no (?:current |former )?members?|neither)\s+of\s+(?:the|our)\b[^.;]{0,60}"
                r"\bcommittee\b[^.;]{0,80}\b(?:was|is|were|are|has (?:ever )?been|have (?:ever )?been)\b[^.;]{0,40}"
                r"\b(?:officer|employee)", re.I),

@@ -2946,12 +2946,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2022-01-29.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1089: a criterion (past committee-chair service) for choosing a lead independent director; names no one and states no composition); 48 block(s) stating a composition fact that no taken block states (640: Blake chairs the CMD Committee (card field); his CMD membership also in 1153; 642: Blake on the Finance Committee (card field)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+   ],
+   "partial_repair": {
+    "criterion_bullet": "Block 1089 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
+    "still_open": "48 fact blocks missed (director card committee fields and others); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MACYS_2023_OLDER_YEAR_READING_DISAGREES",
@@ -2963,12 +2968,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2023-01-28.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (1107: basis of the NCG Committee's independence review (no employment by suppliers, or amounts below thresholds); does not say which directors are; 1150: a criterion for choosing the lead independent director, not who chairs what); 1 block(s) stating a composition fact that no taken block states (40: Tony Spring appointed a member of the Board earlier in 2023, amid CEO-succession news). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2023-01-28.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+   ],
+   "partial_repair": {
+    "criterion_bullet": "Block 1150 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
+    "still_open": "1 block taken that states no composition fact (1107: basis of the NCG Committee's independence review) and 1 fact block missed; the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MACYS_2024_OLDER_YEAR_READING_DISAGREES",
@@ -2980,12 +2990,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2024-02-03.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1217: a criterion for choosing a Lead Independent Director candidate, not a fact about who serves); 3 block(s) stating a composition fact that no taken block states (626: every nominee is currently a member of the Board (the slate is the sitting board), among nomination process and term; 1982: Bryant and Hale ceased serving on the Board after the May 19, 2023 annual meeting). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2024-02-03.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+   ],
+   "partial_repair": {
+    "criterion_bullet": "Block 1217 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
+    "still_open": "3 fact blocks missed; the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MACYS_2025_OLDER_YEAR_READING_DISAGREES",
@@ -2997,12 +3012,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2025-02-01.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1083: a criterion for choosing the lead independent director (prior committee-chair service); states no composition fact); 2 block(s) stating a composition fact that no taken block states (1814: Buchanan left the Board Nov 25, 2024 (stated nowhere else) - with RSU forfeiture; 1816: Lenehan left the Board Oct 25, 2024 (stated nowhere else) - with RSU prorating). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2025-02-01.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+   ],
+   "partial_repair": {
+    "criterion_bullet": "Block 1083 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
+    "still_open": "2 fact blocks missed; the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MARRIOTT_2021_OLDER_YEAR_READING_DISAGREES",

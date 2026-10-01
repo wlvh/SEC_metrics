@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 40,
- "caught": 30,
- "total": 30,
+ "control_tests_run": 43,
+ "caught": 31,
+ "total": 31,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -252,6 +252,14 @@
    "result": "CAUGHT",
    "failed": [
     "test_size_setup_and_determinations"
+   ]
+  },
+  {
+   "injection": "A_LOWER_CASE_WORD_NAMES_A_COMMITTEE",
+   "expected": "test_a_criterion_for_choosing_a_chair_seats_no_one",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_criterion_for_choosing_a_chair_seats_no_one"
    ]
   }
  ]

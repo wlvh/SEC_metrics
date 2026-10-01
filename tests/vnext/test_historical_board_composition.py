@@ -288,6 +288,14 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                           "Executive Officers and 11 non-employee directors, each of whom would be eligible to be "
                           "granted awards under the 2013 Plan.", "BOARD_SIZE_STATEMENT")
 
+    def test_a_criterion_for_choosing_a_chair_seats_no_one(self):
+        # A bullet from a list of what the Board looks for in a lead director,
+        # as Macy's older proxies print it: "a Board" is not a committee's name.
+        self.assertStatesNothing("●Previous service as a Board committee chair")
+        self.assertStates("Ms. Lee serves as Audit Committee chair.", "COMMITTEE_COMPOSITION_STATEMENT")
+        self.assertStates("He was appointed as our Compensation Committee chair in 2024.",
+                          "COMMITTEE_COMPOSITION_STATEMENT")
+
 
 class ALeadershipOrMembershipFactNamesThisBoardAndThePerson(unittest.TestCase):
 

@@ -19,6 +19,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import py_compile
 import shutil
 import subprocess
@@ -112,19 +113,40 @@ INJECTIONS = [
      "        if False:", "test_who_chaired_is_a_fact_even_where_a_fee_is_explained"),
     ("NO_COMMITTEE_ACRONYMS", "    if not acronyms:\n        return False", "    if True:\n        return False",
      "test_size_setup_and_determinations"),
+    # Repairs from the older-year readings (c02-selector-repairs/README.md).
+    ("A_LOWER_CASE_WORD_NAMES_A_COMMITTEE", "(?:(?-i:[A-Z])", "(?:[A-Z]",
+     "test_a_criterion_for_choosing_a_chair_seats_no_one"),
 ]
+
+
+# Files the module reads relative to itself. It reads the lead-director phrase
+# from the catalog (tools/check_vnext_semantics.py keeps it out of code), so
+# the edited copy is laid out as scripts/vnext/ under a temporary root holding
+# that file. Before that layout the control run failed - the module could not
+# import - and the runner stopped there rather than reporting every injection
+# as missed.
+READ_BESIDE = ("catalog/r6/C02_board_composition_terms_v1.json",)
 
 
 def run_one(text):
     """Run the suite against ``text`` as the module; return (failed tests, tests run)."""
     with tempfile.TemporaryDirectory() as tmp:
-        target = Path(tmp) / MODULE.name
+        package = Path(tmp) / "scripts/vnext"
+        package.mkdir(parents=True)
+        for relative in READ_BESIDE:
+            (Path(tmp) / relative).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(REPO / relative, Path(tmp) / relative)
+        target = package / MODULE.name
         target.write_text(text, encoding="utf-8")
         py_compile.compile(str(target), doraise=True)
         code = ("import sys; sys.path.insert(0, %r); import vnext; vnext.__path__.insert(0, %r); "
                 "sys.argv=['x', %r]; import unittest; unittest.main(module=None)"
-                ) % (str(REPO / "scripts"), tmp, SUITE)
-        run = subprocess.run([sys.executable, "-c", code], cwd=REPO, capture_output=True, text=True, timeout=600)
+                ) % (str(REPO / "scripts"), str(package), SUITE)
+        # A fresh bytecode directory, as every injection script here uses: the
+        # child neither reads nor writes the checkout's __pycache__.
+        env = {**os.environ, "PYTHONPYCACHEPREFIX": str(Path(tmp) / "pycache")}
+        run = subprocess.run([sys.executable, "-c", code], cwd=REPO, capture_output=True, text=True, timeout=600,
+                             env=env)
         failed = sorted({line.split(" ")[1] for line in run.stderr.splitlines()
                          if line.startswith(("FAIL: ", "ERROR: "))})
         ran = [int(line.split()[1]) for line in run.stderr.splitlines() if line.startswith("Ran ")]
