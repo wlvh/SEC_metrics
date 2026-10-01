@@ -2731,11 +2731,509 @@
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2024-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
    ]
+  },
+  {
+   "defect_id": "C02_ENPHASE_2021_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/enphase_energy-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (30: Meeting agenda item to elect two unnamed nominees; states neither the board's size nor who joins or leaves.; 943: Which non-employee directors were eligible for cash compensation; director pay, no composition fact.); 5 block(s) stating a composition fact that no taken block states (146: Directors table: 'Steven J. Gomo(2)' with footnote 158 - Gomo is Chair of the Audit Committee; no other block names the Audit chair (his mem; 157: Table footnote (1) 'Chair of the Nominating and Corporate Governance Committee', attached to Kortlang (150); this chair is named nowhere els). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2021-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_ENPHASE_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/enphase_energy-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 4 block(s) taken that state no composition fact (31: Meeting-notice agenda item: elect three (unnamed) nominees until 2026; no board size, independence, committee, chair or membership change.; 167: Board nominated three directors for three-year terms, plus skills and classified-board rationale: the election slate, not the board's size, ); 3 block(s) stating a composition fact that no taken block states (364: Card field: Kortlang chairs the NCG Committee - stated in no selected block.; 382: Bio sentence: Kothandaraman appointed a member of the Board in September 2017 (join with date), among career history.). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2022-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_ENPHASE_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/enphase_energy-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 9 block(s) taken that state no composition fact (31: Agenda item to elect the two nominees to hold office until 2027 - the voting business; states no board size, independence, committee, chair ; 167: The Board nominated two directors for three-year terms until 2027, plus skills and classified-board rhetoric; re-nominating incumbents state); 3 block(s) stating a composition fact that no taken block states (331: Bio sentence: Kothandaraman was appointed a member of the Board in September 2017 (a join with its date); the rest is career biography. Else; 398: Kortlang's card field: chair of the Nominating and Corporate Governance Committee - no other block names this chair (493 lists the members o). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2023-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_ENPHASE_2024_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/enphase_energy-2024-12-31.json) disagrees with the selection the current code makes from the saved filing: 5 block(s) taken that state no composition fact (55: Notice agenda item: elect two nominees to terms ending 2028 - an election item; states no board size, independence, committee or change.; 203: Board nominated two (incumbent) directors for three-year terms to 2028, their skills, and the classified-board rationale; no size, independe); 2 block(s) stating a composition fact that no taken block states (403: Kortlang chairs the Nominating and Corporate Governance Committee - no other block names that committee's chair (his membership alone is in ; 422: Biography sentence: Kothandaraman was appointed a member of the Board in September 2017 (a join with its date); elsewhere only his card's te). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2024-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_FORD_2021_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "ford_motor_company",
+   "metric_id": "C02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/ford_motor_company-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 7 block(s) stating a composition fact that no taken block states (626: Compensation Committee renamed the Compensation, Talent and Culture Committee - with the reason (its responsibilities); 760: Alexandra Ford English and Henry Ford III first elected to the Board at the 2021 Annual Meeting - within rationale about family perspectives). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2021-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_FORD_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "ford_motor_company",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/ford_motor_company-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 57 block(s) stating a composition fact that no taken block states (260: Names the five standing committees (Audit, CTC, Finance, NG, SIP), alongside 2022 meeting counts; 406: Alexandra Ford English and Henry Ford III first elected to the Board at the 2021 Annual Meeting - within a tenure-mix rationale). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2022-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_FORD_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "ford_motor_company",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/ford_motor_company-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) stating a composition fact that no taken block states (749: Alexandra Ford English and Henry Ford III first elected to the Board at the 2021 Annual Meeting (their cards give only tenure); the rest is ). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2023-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_FORD_2024_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "ford_motor_company",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/ford_motor_company-2024-12-31.json) disagrees with the selection the current code makes from the saved filing: 21 block(s) stating a composition fact that no taken block states (435: Casiano independent; 449: Cisneros independent). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2024-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_LUMEN_2021_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/lumen_technologies-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 3 block(s) taken that state no composition fact (349: Diversity and Inclusion Steering Committee of senior leaders and executives: a management committee, not a board committee.; 856: Southwestern Bell Telephone: a past employer in Storey's biography.); 21 block(s) stating a composition fact that no taken block states (455: Nominees Quincy L. Allen, Kevin P. Chilton, W. Bruce Hanks, Laurie Siegel.; 456: Nominees Martha Helena Bejar, Steven T. Clontz, Hal Stanley Jones, Jeffrey K. Storey.). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2021-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_LUMEN_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/lumen_technologies-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 3 block(s) taken that state no composition fact (362: Diversity and Inclusion Steering Committee is a management committee of senior leaders and executives, not a board committee; 842: generic director-search process step: an ad hoc search committee (Chairman, HRCC/NCG chairs, CEO) formed per search to interview candidates ); 12 block(s) stating a composition fact that no taken block states (475: Clontz is one of the 10 director nominees; 669: Clontz on the NCG Committee - stated nowhere else in the packet). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2022-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_LUMEN_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/lumen_technologies-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (790: Brown's audit chair and committee seats at Cineverse, another company's board; 1085: generic step of the director-search process (a search committee formed to interview candidates); no actual committee, member or count); 4 block(s) stating a composition fact that no taken block states (834: Clontz on the NCG Committee - stated nowhere else in the packet; 1124: Board had a non-executive Vice Chairman through the 2023 meeting and plans no successor after Vice Chairman Hanks retired (Hanks's retiremen). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2023-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_LUMEN_2024_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/lumen_technologies-2024-12-31.json) disagrees with the selection the current code makes from the saved filing: 14 block(s) stating a composition fact that no taken block states (565: Departures timeline name: Peter C. Brown (retiring 2025); 566: Departures timeline name: Brown (retiring 2025)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2024-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MACYS_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2022-01-29",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2022-01-29.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1089: a criterion (past committee-chair service) for choosing a lead independent director; names no one and states no composition); 48 block(s) stating a composition fact that no taken block states (640: Blake chairs the CMD Committee (card field); his CMD membership also in 1153; 642: Blake on the Finance Committee (card field)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MACYS_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2023-01-28",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2023-01-28.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (1107: basis of the NCG Committee's independence review (no employment by suppliers, or amounts below thresholds); does not say which directors are; 1150: a criterion for choosing the lead independent director, not who chairs what); 1 block(s) stating a composition fact that no taken block states (40: Tony Spring appointed a member of the Board earlier in 2023, amid CEO-succession news). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/macys-2023-01-28.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MACYS_2024_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2024-02-03",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2024-02-03.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1217: a criterion for choosing a Lead Independent Director candidate, not a fact about who serves); 3 block(s) stating a composition fact that no taken block states (626: every nominee is currently a member of the Board (the slate is the sitting board), among nomination process and term; 1982: Bryant and Hale ceased serving on the Board after the May 19, 2023 annual meeting). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/macys-2024-02-03.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MACYS_2025_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2025-02-01",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2025-02-01.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1083: a criterion for choosing the lead independent director (prior committee-chair service); states no composition fact); 2 block(s) stating a composition fact that no taken block states (1814: Buchanan left the Board Nov 25, 2024 (stated nowhere else) - with RSU forfeiture; 1816: Lenehan left the Board Oct 25, 2024 (stated nowhere else) - with RSU prorating). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/macys-2025-02-01.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2021_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1145: Oberg chairs the Global Operating Committee of senior company leaders, a management committee, not a Board committee; NEO duties); 8 block(s) stating a composition fact that no taken block states (610: Chairman and CEO roles separate since 2012; plus rationale; 842: Goren joined the Board on March 1, 2022 (and 13 directors served at the 2021 meeting); the rest is attendance). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2021-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 4 block(s) taken that state no composition fact (367: plan eligibility; '13 non-employee directors' is neither the board's size nor its independent count; 825: Hobart's other public company board (DICK'S), not the registrant's board); 15 block(s) stating a composition fact that no taken block states (504: Chairman of the Board and CEO roles kept separate for over ten years; rest is rationale; 665: Capuano's card: Executive Committee member). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (1537: Entry under McCarthy's other current public company boards (Alignment Healthcare), not the registrant's board; 1583: Reid biography; the board/governance committee named is the Consumer Goods Forum's, not the registrant's). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2023-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2024_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2024-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) stating a composition fact that no taken block states (528: Chairman and CEO roles are separate; the rest is rationale; 1264: 12 directors were nominated for election in 2024 (board size before Tresvant joined); the rest is meetings and attendance). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2024-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2021_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/paramount_skydance_paramount_global-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (583: Compensation Committee interlocks disclosure (no member an officer/employee, no interlocks); no membership, count, chair or board determinat); 1 block(s) stating a composition fact that no taken block states (375: the independent Chair of the Nominating and Governance Committee presides at meetings of the independent directors (presiding independent di). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2021-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/paramount_skydance_paramount_global-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 3 block(s) stating a composition fact that no taken block states (426: independent Chair of the N&G Committee presides at meetings of the independent directors; rest is executive-session practice; 819: Ostroff card's Committees field: N/A (no committee)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2022-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/paramount_skydance_paramount_global-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) stating a composition fact that no taken block states (421: The independent Chair of the Nominating and Governance Committee presides at meetings of the independent directors (rest: executive sessions). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2023-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PFIZER_2022_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "pfizer",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/pfizer-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 6 block(s) taken that state no composition fact (364: Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact; 446: Echevarria not standing again for Xerox board, not the Pfizer board (nominee-table footnote)); 20 block(s) stating a composition fact that no taken block states (198: Letter signature: Bourla, signing as Chairman & CEO; 199: Signature title: Bourla is Chairman & CEO (combined roles)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PFIZER_2023_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "pfizer",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/pfizer-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1453: Stock-plan eligibility: employees and 11 non-employee Directors eligible for awards; compensation-plan content, not board size, independence); 1 block(s) stating a composition fact that no taken block states (884: There were no changes to Committee compositions in 2023; rest is the committee-appointment process and refreshment rationale.). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2023-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
+  },
+  {
+   "defect_id": "C02_SALESFORCE_2025_OLDER_YEAR_READING_DISAGREES",
+   "company_id": "salesforce",
+   "metric_id": "C02",
+   "period_end": "2025-01-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The two-direction reading of this proxy (c02-older-years/judgements/salesforce-2025-01-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1147: Conway's skills bullet: knowledge from past, undated service on the Board and a former M&A Committee (not among the fiscal 2025 committees);); 1 block(s) stating a composition fact that no taken block states (54: letter writer (Lead Independent Director Donald, per signature 70-71) joined the Board in January 2023; rest is the company's transformation). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
+   "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
+   "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/salesforce-2025-01-31.json",
+    "docs/evidence/issue47_history/c02-older-years/comparison.json"
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
  "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
  "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
- "schema_version": 2
+ "schema_version": 2,
+ "peer_register_reads": [
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "f4cf13cdbbcd6726958e07bad8a043702ddbf567",
+   "own_commit_at_read": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "ABSENT_AT_THE_COMMIT_READ",
+   "what_that_state_means": "The register had not been established at the commit read. That is not a statement that #28 has no defects, nor that its results are right.",
+   "baseline": "First read under the rule. The increments since the last merged peer commit (3d7adf920125a588a3c19f8f14baf23e421cdba2) were read from their commit messages, file lists and evidence READMEs; their code differences were not yet read line by line.",
+   "increments": [
+    {
+     "commit": "91cfc9d5",
+     "marker": "[shared-with-#47]",
+     "subject": "Issue #28: record bounded B13 reference coverage scan",
+     "touches": [
+      "scripts/vnext/capacity_two_stage.py",
+      "scripts/vnext/continuous_semantic_calls.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+     ],
+     "affects_47": "No #47 result: the historical B13 applicable branch is not wired (it waits for #28's request contract), and the out-of-scope branch reads no model output. issue_47_v1 records continuous_semantic_calls.py byte for byte, so taking this peer version moves the snapshot and needs a re-mint; checked when merged.",
+     "integration": "NOT_YET_MERGED"
+    },
+    {
+     "commit": "6617ed1e",
+     "marker": null,
+     "subject": "Audit E01 zero item coverage against saved 8-K headers",
+     "affects_47": "No #47 result changes. The audit supports zeros under the item rule only; #47's historical E01 counts content-confirmed announcements (the joint target under the rule). Pfizer FY2025's 8.01 of 2025-11-13 reports a completed acquisition (Metsera) whose body the frozen keyword branch never reads: registered here as E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM, offered to #28 as a shared defect.",
+     "integration": "NOT_APPLICABLE"
+    },
+    {
+     "commit": "f4cf13cd",
+     "marker": null,
+     "subject": "Issue #28: confirm current JPMorgan saved history coherence",
+     "affects_47": "No #47 result changes. #28's current saved JPMorgan metadata (2026-09-15 main response and submissions-001) is coherent under its validator; this agrees with #47's history-block coherence successor (one-day gaps between declared ranges are SEC's own layout). #47's older JPMorgan periods stay blocked by the stale saved shards #47 measured, which this commit does not touch.",
+     "integration": "NOT_APPLICABLE"
+    },
+    {
+     "commits": [
+      "dc8ef67c",
+      "4ac3e1cc",
+      "56180089",
+      "09a93321",
+      "0a7d68e9"
+     ],
+     "marker": null,
+     "affects_47": "Evidence and execution-state records for #28's own runs (Salesforce normal update, E01 evidence boundaries, B13 scan review and CI terminal, update wall time). No #47 code or result reads them.",
+     "integration": "NOT_APPLICABLE"
+    }
+   ],
+   "next_read": "At the next session start, before work on a metric these touch, and before any acceptance credit for an affected result: fetch, pin the peer commit, read only the increments since f4cf13cd."
+  }
+ ]
 }

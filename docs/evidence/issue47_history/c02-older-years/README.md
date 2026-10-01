@@ -24,8 +24,18 @@ twice, or lists a block outside the pool.
 
 ## Where it stands
 
-All 27 are read (`judgements/`); every position disagrees with the selection - blocks taken
-that state no composition fact and facts no taken block states. The classes seen:
+All 27 are read (`judgements/`). Compared with the selection the current code
+makes from the saved filings (`comparison.json`, 2026-10-01, by
+`tools/read_c02_composition.py --readings-dir c02-older-years/judgements` on the
+final acquisition's restored root), **26 disagree and one agrees**: 49 blocks
+taken that state no composition fact and 256 fact blocks no taken block states;
+Pfizer FY2024's reading agrees with its selection. An earlier version of this
+paragraph said every position disagrees - it was written from the readers'
+answers before the comparison was run, and the comparison does not bear it out
+for Pfizer FY2024. The 26 coordinates are withdrawn in
+`../known_result_defects.json` (`C02_*_OLDER_YEAR_READING_DISAGREES`); Pfizer
+FY2024 is not accepted either, since a reading's agreement is not yet an
+acceptance against the Run's result. The classes seen:
 
 - taken but not composition facts: a classified board's slate count and the
   election agenda items carrying it (Enphase), class headings of the summary
@@ -58,7 +68,6 @@ Pfizer FY2024 has 110 of 159 and two numbers or common names. Neither answer rea
 like another packet's blocks. The check is a heuristic: a `why` that names
 nothing distinctive is not tested by it.
 
-No older-year C02 value is accepted, and none was before. The acceptance pass,
-the defects with their causes and the general selector repairs follow the
-readings; a repair written on these 27 readings has no held-out material left
-and will be labelled so.
+No older-year C02 value is accepted, and none was before. The class decisions
+and the general selector repairs follow; a repair written on these 27 readings
+has no held-out material left and is labelled so.
