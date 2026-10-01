@@ -3256,7 +3256,8 @@
       "requirements/issue_28_v14/baseline_manifest.json"
      ],
      "affects_47": "No #47 result: the historical B13 applicable branch is not wired (it waits for #28's request contract), and the out-of-scope branch reads no model output. issue_47_v1 records continuous_semantic_calls.py byte for byte, so taking this peer version moves the snapshot and needs a re-mint; checked when merged.",
-     "integration": "NOT_YET_MERGED"
+     "integration": "MERGED",
+     "merged": "Merged with f4cf13cd into task/sec-history-five-year (merge commit aa7b2118) after the PR's fast suite failed the issue_47_v1 snapshot check on the merge ref (run 36836809585). The re-mint moved only continuous_semantic_calls.py's two leaves; the parent closure is unchanged. Its change is the B13 coverage-scan branch: the request builder and validator chosen by scan_contract.version. D04, E01 and D02 do not take that branch, and the historical B13 applicable branch is not wired, so no historical position moves; the fast tier and test_historical_semantic_routes pass on the merged tree. The model egress receipt binds the snapshot and is stale again; under the 2026-09-28 contract a snapshot move alone does not reseal it."
     },
     {
      "commit": "6617ed1e",
