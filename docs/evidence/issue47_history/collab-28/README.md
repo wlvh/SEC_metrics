@@ -47,5 +47,6 @@
 | # | 问题 | 提交 | 用例 | 历史侧量测 |
 |---|---|---|---|---|
 | 1 | 匹配 "as <委员会名> committee chair" 的模式带 `re.I`，`[A-Z]` 也匹配小写，把遴选标准 "Previous service as a Board committee chair" 读成有人任委员会主席 | `5f803852` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_criterion_for_choosing_a_chair_seats_no_one`；注错 `A_LOWER_CASE_WORD_NAMES_A_COMMITTEE` | 只移动 Macy's 四个往年位置的这四块（都是判读判为非事实的块）；误选 49→45，漏选 256 不变，最新十个位置不变（`../c02-selector-repairs/measured-1-capitalised-committee-name.json`） |
+| 2 | 委员会名单在每个名字前单独印项目符号，"◾" 与 "·" 不在选择器的符号集里，名单在第一个符号处结束，一个名字都没读到 | `9b7465ab` | `test_historical_board_composition.ACommitteePageIsReadAsAStructure.test_a_roster_marked_with_each_glyph_filings_print`；注错 `THE_SQUARE_BULLET_IS_NOT_A_BULLET`、`THE_MIDDLE_DOT_IS_NOT_A_BULLET` | 只在 Ford、Macy's 各一个往年位置新增 43 + 24 块，全部是判读判为事实的块；漏选 256→175，误选不变，最新十个位置不变（`../c02-selector-repairs/measured-2-bullet-glyphs.json`） |
 
 这些修复都不让任何往年坐标重新获得信用：每个坐标的选择只要还和判读不一致，就继续撤回。#28 的普通路线目前用冻结选择器，后继选择器及这些修复是否、何时接入由 #28 自己处置；#47 不代为宣布普通路线已通过。
