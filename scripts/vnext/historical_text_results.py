@@ -72,8 +72,10 @@ from .historical_board_composition import board_composition_facts
 from .historical_dei import release_aware, release_aware_with
 from . import historical_proxy_identity as proxy_identity
 from .text_results_v2 import TextResultV2Error, build_text_review_unit
+from .text_coverage import _SUCCESSOR, _heading as _item_heading
 
 SECTION_BOUNDARY_POLICY = "FORM_UNNUMBERED_PART_I_ITEM_V1"
+ITEM_HEADING_POLICY = "PAGE_NUMBER_AFTER_AN_ITEM_HEADING_IS_NOT_A_CONTENTS_ROW_V1"
 SUPPORTED_METRICS = ("D02", "C02")
 
 # Form 10-K General Instruction G(3) names the item but leaves the registrant an
@@ -102,17 +104,88 @@ def form_unnumbered_item_blocks(*, document):
             if not block["linked"] and _FORM_UNNUMBERED_ITEM.fullmatch(block["text"].strip())]
 
 
-def narrow_document_sections(*, document):
-    """Re-derive the located ranges with the unnumbered item as a closing boundary.
+def _sections_from(headings):
+    """``text_coverage.build_text_document``'s section derivation over given headings.
 
-    The blocks, the bytes and every other field are the frozen derivation's.
-    Only ``sections`` changes, and the document records both the policy that
-    changed it and the identity of the derivation it came from, so a reader can
-    tell the two apart instead of finding two ids for the same bytes.
+    The frozen builder derives sections inline, so a successor that changes
+    which blocks are headings has to derive them again. It is held to the
+    original on every document: ``page_bottom_item_headings`` first rebuilds the
+    frozen sections from the frozen headings and refuses to go on unless they
+    are equal.
     """
+    sections = {}
+    for item, next_items in _SUCCESSOR.items():
+        candidates = []
+        for i, heading in enumerate(headings):
+            if heading["item"] != item:
+                continue
+            following = next((h for h in headings[i + 1:] if h["item"] != item), None)
+            if following is None or following["item"] not in next_items:
+                continue
+            start = heading["heading_end_index"] + 1
+            end = following["block_index"]
+            if start >= end:
+                continue
+            candidates.append({"section_id": "ITEM_" + item, "start_block": start,
+                               "end_block_exclusive": end, "heading": heading,
+                               "closing_heading": following})
+        sections["ITEM_" + item] = {
+            "status": "LOCATED" if len(candidates) == 1 else "AMBIGUOUS" if candidates else "MISSING",
+            "candidates": candidates}
+    return sections
+
+
+def page_bottom_item_headings(*, document):
+    """Item headings the frozen scan refuses only because the page's number follows them.
+
+    ``text_coverage._heading`` refuses a heading whose next block is a bare
+    number, because a contents list often puts item, title and page in three
+    cells. A heading printed at the foot of a page is followed by that page's
+    number in the same way. Southwest's FY2023 report prints "Item 4. Mine
+    Safety Disclosures" as the last line of its page 56: the frozen scan
+    refuses it, Item 3 runs on to the next heading it accepts, and the value
+    carried Item 4's answer, "Not applicable.", as legal proceedings text.
+
+    The frozen scan is asked again with the page numbers blanked - the same
+    presentation ``note_references`` gives the note scan - so its own rules
+    decide what is a heading. A contents row keeps its number: a contents
+    page's numbers stand beside titles, not beside a running footer that
+    stands beside the neighbouring numbers too, so ``page_number_blocks``
+    does not take them. Returns every heading and the ones the blanking added.
+    """
+    blocks = document["blocks"]
+    frozen_headings = [h for i in range(len(blocks)) if (h := _item_heading(blocks, i)) is not None]
+    _need(_sections_from(frozen_headings) == document["sections"],
+          "HISTORICAL_TEXT_SECTION_DERIVATION_CHANGED")
+    pages = page_number_blocks(blocks)
+    if not pages:
+        return frozen_headings, []
+    shown = [{**block, "text": ""} if index in pages else block
+             for index, block in enumerate(blocks)]
+    headings = [h for i in range(len(shown)) if (h := _item_heading(shown, i)) is not None]
+    _need(all(h in headings for h in frozen_headings),
+          "HISTORICAL_TEXT_PAGE_NUMBER_BLANKING_REMOVED_A_HEADING")
+    return headings, [h for h in headings if h not in frozen_headings]
+
+
+def narrow_document_sections(*, document):
+    """Re-derive the located ranges with two closing boundaries the frozen scan misses.
+
+    The form's unnumbered Part I item, and an item heading printed at the foot
+    of a page (``page_bottom_item_headings``). The blocks, the bytes and every
+    other field are the frozen derivation's. Only ``sections`` changes, and the
+    document records the policy that changed it and the identity of the
+    derivation it came from, so a reader can tell the two apart instead of
+    finding two ids for the same bytes. A page-foot heading that moves no
+    section leaves the document as it was.
+    """
+    headings, added = page_bottom_item_headings(document=document)
+    base = _sections_from(headings) if added else document["sections"]
+    if base == document["sections"]:
+        added = []
     boundaries = form_unnumbered_item_blocks(document=document)
     sections, narrowed = {}, []
-    for section_id, section in document["sections"].items():
+    for section_id, section in base.items():
         candidates = []
         for candidate in section["candidates"]:
             inside = [index for index in boundaries
@@ -138,12 +211,16 @@ def narrow_document_sections(*, document):
         sections[section_id] = {
             "status": ("LOCATED" if len(candidates) == 1 else "AMBIGUOUS" if candidates else "MISSING"),
             "candidates": candidates}
-    if not narrowed:
+    if not narrowed and not added:
         return document
     corrected = {key: value for key, value in document.items() if key != "text_document_id"}
     corrected["sections"] = sections
-    corrected["section_boundary_policy"] = SECTION_BOUNDARY_POLICY
-    corrected["narrowed_sections"] = narrowed
+    if narrowed:
+        corrected["section_boundary_policy"] = SECTION_BOUNDARY_POLICY
+        corrected["narrowed_sections"] = narrowed
+    if added:
+        corrected["item_heading_policy"] = ITEM_HEADING_POLICY
+        corrected["page_bottom_item_headings"] = added
     corrected["frozen_text_document_id"] = document["text_document_id"]
     corrected["text_document_id"] = content_hash(value=corrected)
     return corrected
@@ -270,6 +347,50 @@ def _note_heading(document, section, block, raw_bytes=None):
                 and re.sub(r"\W", "", text).casefold() not in names)
 
 
+ITEM_8 = "ITEM_8"
+APPENDED_STATEMENTS = "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+# The primary statements' titles Regulation S-X gives them, as a block of their own.
+_STATEMENT_TITLE = re.compile(
+    r"^consolidated (?:balance sheets?|income statements?|statements? of (?:financial position"
+    r"|financial condition|operations|income|earnings|comprehensive|cash flows?|changes"
+    r"|shareholders|stockholders|equity))", re.I)
+
+
+def appended_statements_range(*, document, ranges):
+    """The financial statements a report prints after its items when Item 8 only points to them.
+
+    The frozen note scan already searches the whole document, because "financial
+    statements can be appended after the form's numbered items". The keyword
+    proxy reads Item 8 only, so where Item 8 is a pointer page it reads none of
+    the statements. Macy's FY2021 report is one: its Item 8 is twenty blocks
+    that say where the statements are, and the statements, printed after the
+    signatures, carry the self-insurance claims accrual that the same
+    company's later values take through Item 8.
+
+    Item 8 is a pointer page when it holds none of the primary statements'
+    titles and the document prints them after it. The range then runs from the
+    first title after Item 8 to the end of the document; a note an Item
+    incorporates keeps its own blocks (the innermost range owns a block), and the
+    range is read as Item 8 is, through the keyword.
+    """
+    item_8 = next((r for r in ranges if r["section_id"] == ITEM_8), None)
+    if item_8 is None:
+        return None
+    blocks = document["blocks"]
+    titles = [index for index, block in enumerate(blocks)
+              if not block["linked"] and len(block["text"].strip()) <= 120
+              and _STATEMENT_TITLE.match(block["text"].strip())]
+    if any(item_8["start_block"] <= index < item_8["end_block_exclusive"] for index in titles):
+        return None
+    after = [index for index in titles if index >= item_8["end_block_exclusive"]]
+    if not after:
+        return None
+    return {"section_id": APPENDED_STATEMENTS, "start_block": after[0],
+            "end_block_exclusive": len(blocks),
+            "scope_relation": "ITEM_8_POINTS_TO_STATEMENTS_PRINTED_AFTER_THE_ITEMS",
+            "caption_text": blocks[after[0]]["text"]}
+
+
 def _d02_section(section, text):
     """Whether a declared range puts a block in D02's excerpt set.
 
@@ -279,7 +400,7 @@ def _d02_section(section, text):
     one below ask this, because restating it in two places is how they drift.
     """
     return bool(section == "ITEM_3" or section.startswith("NOTE_")
-                or section == "ITEM_8" and _LEGAL.search(text))
+                or section in (ITEM_8, APPENDED_STATEMENTS) and _LEGAL.search(text))
 
 
 def _hyperlinked_sentence(*, document, block):
@@ -425,6 +546,49 @@ def _lettered_sub_note_scopes(*, document, note, blocks, start, stop, repeated):
              "repeated_furniture_blocks": furniture}]
 
 
+# A note heading's number, as the filings print it: "14.", "Note 18 -", "(18)".
+_NOTE_NUMBER_PREFIX = re.compile(r"^(?:note\s+)?\(?\d{1,3}[a-z]?\)?\s*[.:\u2014\u2013-]?\s*")
+# A quoted Form 10-K item ("Item 8. Financial Statements and Supplementary Data")
+# says where the note is, not which part of it is incorporated.
+_QUOTED_FORM_ITEM = re.compile(r"^(?:part\s+[ivx]+\W+)?item\s+\d{1,2}[a-z]?\b")
+
+
+def unincorporable_captions(*, document, reference, note):
+    """The captions Item 3 quotes for a note that the note does not carry.
+
+    A quoted string names a limit when it is not the note's own title and not
+    a Form 10-K item: Paramount's Item 3 quotes both the caption "Legal
+    Matters" and the place the note is printed, "Item 8. Financial Statements
+    and Supplementary Data-Notes to Consolidated Financial Statements", and the
+    second says where, not which part. A limit is found when a caption-like
+    block inside the note (or its heading) carries exactly that text. Anything
+    quoted and not found is returned, so a filing whose Item 3 names two
+    captions and one of them is missing is not read as incorporating the other
+    alone. Only an exactly-numbered note is asked: a lettered sub-note
+    reference is resolved by its letter, not by quotes.
+    """
+    if note.get("scope_relation") != "EXACT_NOTE":
+        return []
+    blocks = document["blocks"]
+    start, stop = note["start_block"], note["end_block_exclusive"]
+    quoted = []
+    for occurrence in reference["source_occurrences"]:
+        quoted.extend(_normalized(m.group(1)) for m in _QUOTED_CAPTION.finditer(occurrence["text"]))
+    # The note's own title is not a limit. Its heading is the range's first
+    # block or the one before it, and it carries the note's number, which a
+    # quoted title leaves out: Salesforce's Item 3 quotes "Legal Proceedings
+    # and Claims" and the note reads "14. Legal Proceedings and Claims".
+    carried = set()
+    for index in (start - 1, start):
+        if 0 <= index < len(blocks):
+            title = _normalized(blocks[index]["text"])
+            carried |= {title, _NOTE_NUMBER_PREFIX.sub("", title, count=1)}
+    carried |= {_normalized(blocks[index]["text"]) for index in range(start, stop)
+                if _caption_like(document, blocks[index])}
+    return sorted({caption for caption in quoted
+                   if caption not in carried and not _QUOTED_FORM_ITEM.match(caption)})
+
+
 def incorporated_scopes(*, document, raw_bytes, reference, note):
     """The parts of a referenced note that Item 3 says it incorporates.
 
@@ -469,6 +633,15 @@ def incorporated_scopes(*, document, raw_bytes, reference, note):
                     and _caption_like(document, blocks[index])})
     # A quoted note title names the whole note; a quoted caption limits it.
     inside = [index for index in named if _normalized(blocks[index]["text"]) != heading]
+    if unincorporable_captions(document=document, reference=reference, note=note):
+        # Item 3 limits the note by captions the note does not carry. Taking the
+        # whole note instead admits what the filing did not incorporate:
+        # Lumen's FY2021 Item 3 names "Pending Matters" and "Other Proceedings
+        # and Disputes", its note says "Principal Proceedings" and "Other
+        # Proceedings, Disputes and Contingencies", and the whole note carried
+        # the right-of-way table and the purchase commitments into the value.
+        # No scope is returned; referenced_note_candidates records the gap.
+        return []
     if not inside:
         return [note]
     scopes = []
@@ -627,6 +800,53 @@ def page_number_blocks(blocks):
     return pages
 
 
+# How far from a page number a running footer or header can sit. Pfizer's group
+# is two blocks on each side; the bound keeps the census linear.
+_PAGE_FURNITURE_REACH = 4
+
+
+def page_structure_furniture(blocks):
+    """Blocks that stand at the same place beside the page number on three pages or more.
+
+    ``_page_furniture`` counts repeats inside the scope being read and wants a
+    repeating neighbour there. Two page layouts defeat it, both in Pfizer's
+    older reports. Item 3 of the FY2023 and FY2024 reports is four blocks -
+    the one sentence, "Pfizer Inc.", "<year> Form 10-K" and the page number -
+    so nothing repeats inside it and "2024 Form 10-K" became an excerpt. In the
+    FY2022 report the footer is one block, "Pfizer Inc.2022 Form 10-K", and the
+    page number stands between it and the running head, so it has no repeating
+    neighbour; six copies of it became excerpts of Note 16A.
+
+    What these blocks share is their place on the page: each sits at the same
+    distance from a page number (``page_number_blocks``) on page after page. So
+    walking out from each page number, a block is furniture while its text
+    stands at that same offset from a page number on at least three pages; the
+    walk stops at the first block that does not. A matter label, a table row or
+    a heading that happens to open a page does not stand at the same offset on
+    three pages with the same text.
+    """
+    pages = page_number_blocks(blocks)
+    texts = [" ".join(block["text"].split()).casefold() for block in blocks]
+    seen = Counter()
+    for page in pages:
+        for step in (-1, 1):
+            index, offset = page + step, step
+            while (0 <= index < len(blocks) and index not in pages
+                   and abs(offset) <= _PAGE_FURNITURE_REACH):
+                seen[(offset, texts[index])] += 1
+                index, offset = index + step, offset + step
+    furniture = set()
+    for page in pages:
+        for step in (-1, 1):
+            index, offset = page + step, step
+            while (0 <= index < len(blocks) and index not in pages and texts[index]
+                   and abs(offset) <= _PAGE_FURNITURE_REACH
+                   and seen[(offset, texts[index])] >= 3):
+                furniture.add(index)
+                index, offset = index + step, offset + step
+    return furniture
+
+
 # A note heading whose number is in parentheses, as Lumen's reports before FY2024
 # print them: "(18) Commitments, Contingencies and Other Items".
 _PARENTHESIZED_NOTE = re.compile(r"\((\d{1,3}[A-Z]?)\)\s*(?=[A-Za-z])")
@@ -725,11 +945,18 @@ def referenced_note_candidates(*, document, raw_bytes):
             reasons.append("UNRESOLVED_" + reference["reference"].upper().replace(" ", "_"))
             continue
         note = reference["range_candidates"][0]
+        missing = unincorporable_captions(document=document, reference=reference, note=note)
+        if missing:
+            reasons.append("UNRESOLVED_INCORPORATED_CAPTION_" + note["section_id"])
+            continue
         for scope in incorporated_scopes(document=document, raw_bytes=raw_bytes,
                                          reference=reference, note=note):
             if not any(r["section_id"] == scope["section_id"]
                        and r["start_block"] == scope["start_block"] for r in ranges):
                 ranges.append(scope)
+    appended = appended_statements_range(document=document, ranges=ranges)
+    if appended is not None:
+        ranges.append(appended)
     # The furniture criterion was attached only to the scopes this successor
     # builds, so Item 3 and a wholesale note went without it. Reading four
     # excerpt sets against their filings found the consequence: Ford's result
@@ -773,6 +1000,9 @@ def referenced_note_candidates(*, document, raw_bytes):
                            for index in range(start, stop))
         d02_furniture[id(scope)] = set(_page_furniture(
             blocks=document["blocks"], start=start, stop=stop, repeated=repeated))
+    # Furniture found by its place on the page, for every scope and on D02's
+    # branch only, for the reason above. Pfizer's FY2022-FY2024 footers.
+    on_the_page = page_structure_furniture(document["blocks"])
     owner = {}
     for scope in ranges:
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
@@ -786,7 +1016,7 @@ def referenced_note_candidates(*, document, raw_bytes):
     for scope in ranges:
         section = scope["section_id"]
         furniture = set(scope.get("repeated_furniture_blocks", ()))
-        running_header = d02_furniture.get(id(scope), frozenset())
+        running_header = d02_furniture.get(id(scope), frozenset()) | on_the_page
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
             if owner[index] is not scope or index in furniture:
                 continue
@@ -822,7 +1052,9 @@ def referenced_note_candidates(*, document, raw_bytes):
                     legal.append(_excerpt(document, block, section,
                                           ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
                                            else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
-            if _ACTION.search(text) or _AUTHORITY.search(text):
+            # The appended statements are read for D02 only, as the other two
+            # repairs above are: D03 keeps the ranges it was measured with.
+            if section != APPENDED_STATEMENTS and (_ACTION.search(text) or _AUTHORITY.search(text)):
                 labels = ["ACTION_LANGUAGE_PRESENT" if _ACTION.search(text)
                           else "AUTHORITY_OR_GENERAL_REGULATION_MENTION"]
                 if _PROSPECTIVE.search(text):
@@ -1121,6 +1353,8 @@ def _prepare_corrected_sources(*, metric_id, **source_arguments):
     coverage["ranges"] = proposal["checked_ranges"]
     coverage["note_references"] = proposal["note_references"]
     coverage["section_boundary_policy"] = SECTION_BOUNDARY_POLICY
+    if "item_heading_policy" in corrected:
+        coverage["item_heading_policy"] = corrected["item_heading_policy"]
     coverage["coverage_hash"] = content_hash(value=coverage)
     return _remember(shared=shared, key=key, prepared={
         **prepared,

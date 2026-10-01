@@ -1,0 +1,192 @@
+{
+ "record_type": "ISSUE_47_D02_ROUTE_REPAIR_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "PAGE_FOOT_HEADINGS_ARE_NOT_ADDED",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "page_bottom_item_headings() adds nothing",
+   "why_it_matters": "Item 3 runs past a heading printed at the page foot again",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.AHeadingAtThePageFootTest.test_item_three_closes_at_item_four_printed_above_the_page_number",
+   "failed_cases": [
+    "test_item_three_closes_at_item_four_printed_above_the_page_number"
+   ],
+   "expected_case_failure": "AssertionError: 767 != 773",
+   "suite_result": "Ran 1 test in 29.491s FAILED (failures=1)",
+   "seconds": 30
+  },
+  {
+   "id": "A_HEADING_THAT_MOVES_NOTHING_IS_RECORDED",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "a page-foot heading that moves no section still rewrites the document",
+   "why_it_matters": "a report whose ranges did not change would get a new document identity",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.AHeadingAtThePageFootTest.test_a_page_foot_heading_that_moves_no_section_leaves_the_document_as_it_was",
+   "failed_cases": [
+    "test_a_page_foot_heading_that_moves_no_section_leaves_the_document_as_it_was"
+   ],
+   "expected_case_failure": "AssertionError: {'record_type': 'LOCAL_TEXT_DOCUMENT', 'transform_version': '1', 'source_reference_id': 'sha256:7fe75402ead0af4eff758bc42b8b592f12860f4477b3365e4b1fa22f52ae2afc', 'source_reference': {'record_type': 'SOURCE_REFERENCE', 'source_reference_id': 'sha256:7fe75402ead0af4eff758bc42b8b592f12860f4477b3365e4b1fa22f52ae2afc', 'raw_asset_id': 'sha256:c372495ac4ad3e62399040675f490315db137e17cd9",
+   "suite_result": "Ran 1 test in 1.173s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_SECTION_DERIVATION_DRIFTS",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "_sections_from() no longer rebuilds the frozen sections exactly",
+   "why_it_matters": "the successor's derivation would stop being the frozen one",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.AHeadingAtThePageFootTest.test_the_section_derivation_is_the_frozen_one",
+   "failed_cases": [
+    "test_the_section_derivation_is_the_frozen_one"
+   ],
+   "expected_case_failure": "AssertionError: {'ITE[264 chars]: 673}}]}, 'ITEM_3': {'status': 'LOCATED', 'ca[515 chars]}}]}} != {'ITE[264 chars]: 673, 'drifted': True}}]}, 'ITEM_3': {'status[566 chars]}}]}}",
+   "suite_result": "Ran 1 test in 6.728s FAILED (failures=3)",
+   "seconds": 8
+  },
+  {
+   "id": "NO_FURNITURE_BY_PLACE",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "page-position furniture is not applied",
+   "why_it_matters": "Pfizer's footers become excerpts again",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.FurnitureByItsPlaceOnThePageTest.test_the_item_three_footer_leaves_and_the_sentence_stays",
+   "failed_cases": [
+    "test_the_item_three_footer_leaves_and_the_sentence_stays"
+   ],
+   "expected_case_failure": "AssertionError: 946 unexpectedly found in [944, 946, 2295, 2362, 2433, 2479, 2961, 3888, 3889, 3890, 3896, 3897, 3898, 3899, 3900, 3901, 3902, 3903, 3904, 3905, 3906, 3907, 3913, 3914, 3915, 3916, 3917, 3918, 3919, 3920, 3921, 3922, 3923, 3924, 3925, 3926, 3927, 3928, 3929, 3930, 3936, 3937, 3938, 3939, 3940, 3941, 3942, 3943, 3944, 3945, 3946, 3947, 3948, 3949, 3950, 3951, 3952, 3953, 3954, 3955,",
+   "suite_result": "Ran 1 test in 133.605s FAILED (failures=2)",
+   "seconds": 134
+  },
+  {
+   "id": "THE_WALK_DOES_NOT_STOP_AT_A_BLOCK_THAT_DOES_NOT_RECUR",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "every block within reach of a page number is furniture",
+   "why_it_matters": "the Item 3 sentence three blocks above the page number would be dropped",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.FurnitureByItsPlaceOnThePageTest.test_the_item_three_footer_leaves_and_the_sentence_stays",
+   "failed_cases": [
+    "test_the_item_three_footer_leaves_and_the_sentence_stays"
+   ],
+   "expected_case_failure": "AssertionError: 944 not found in [2295, 2479, 3888, 3898, 3899, 3900, 3901, 3902, 3903, 3904, 3905, 3915, 3916, 3917, 3918, 3919, 3920, 3921, 3922, 3923, 3924, 3925, 3926, 3927, 3928, 3938, 3939, 3940, 3941, 3942, 3943, 3944, 3945, 3946, 3947, 3948, 3949, 3950, 3951, 3952, 3953, 3954, 3964, 3965, 3966, 3967, 3968, 3969, 3970, 3971, 3972, 3973, 3974, 3975, 3985, 3986, 3987, 3988, 3989, 3990, 3991, ",
+   "suite_result": "Ran 1 test in 115.605s FAILED (failures=2)",
+   "seconds": 116
+  },
+  {
+   "id": "FURNITURE_BY_PLACE_IS_SKIPPED_FOR_D03_TOO",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "page-position furniture is skipped for D03's candidates as well",
+   "why_it_matters": "D03's measured ranges would move under a D02 repair; no saved filing prints D03's words in a footer, so only the constructed case can tell",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.FurnitureByItsPlaceOnThePageTest.test_d03_keeps_what_the_repair_takes_out_of_d02",
+   "failed_cases": [
+    "test_d03_keeps_what_the_repair_takes_out_of_d02"
+   ],
+   "expected_case_failure": "AssertionError: Lists differ: [586, 592, 597, 601, 604, 607, 608, 614, 619, 620, 621, 623[936 chars]3573] != [586, 592, 597, 604, 607, 608, 619, 620, 621, 623, 630, 634[555 chars]3573]",
+   "suite_result": "Ran 1 test in 47.247s FAILED (failures=1)",
+   "seconds": 48
+  },
+  {
+   "id": "UNCARRIED_CAPTIONS_ARE_IGNORED",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "unincorporable_captions() never reports a caption",
+   "why_it_matters": "Lumen FY2021's whole note, commitments included, is taken again",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.CaptionsTheNoteDoesNotCarryTest.test_the_whole_note_is_not_taken_in_their_place",
+   "failed_cases": [
+    "test_the_whole_note_is_not_taken_in_their_place"
+   ],
+   "expected_case_failure": "AssertionError: Lists differ: ['other proceedings and disputes', 'pending matters'] != []",
+   "suite_result": "Ran 1 test in 17.369s FAILED (failures=1)",
+   "seconds": 18
+  },
+  {
+   "id": "THE_NOTE_S_NUMBERED_TITLE_IS_NOT_ITS_TITLE",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "the note heading is compared with its number",
+   "why_it_matters": "Salesforce's quoted note title would read as a missing caption and stop its D02",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.CaptionsTheNoteDoesNotCarryTest.test_a_quoted_note_title_is_not_a_missing_caption",
+   "failed_cases": [
+    "test_a_quoted_note_title_is_not_a_missing_caption"
+   ],
+   "expected_case_failure": "AssertionError: Lists differ: [] != ['legal proceedings and claims']",
+   "suite_result": "Ran 1 test in 13.110s FAILED (failures=1)",
+   "seconds": 14
+  },
+  {
+   "id": "A_QUOTED_FORM_ITEM_IS_A_CAPTION",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "a quoted Form 10-K item is read as a caption the note must carry",
+   "why_it_matters": "every Paramount year stops as navigation incomplete",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.CaptionsTheNoteDoesNotCarryTest.test_a_quoted_form_item_says_where_the_note_is_not_which_part",
+   "failed_cases": [
+    "test_a_quoted_form_item_says_where_the_note_is_not_which_part"
+   ],
+   "expected_case_failure": "AssertionError: Lists differ: [] != ['item 8. financial statements and supplem[51 chars]nts']",
+   "suite_result": "Ran 1 test in 17.491s FAILED (failures=1)",
+   "seconds": 18
+  },
+  {
+   "id": "ONE_FOUND_CAPTION_IS_ENOUGH",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "a note is stopped only when none of its quoted captions is found",
+   "why_it_matters": "one found caption would silently stand for two",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.CaptionsTheNoteDoesNotCarryTest.test_one_missing_caption_of_two_is_enough",
+   "failed_cases": [
+    "test_one_missing_caption_of_two_is_enough"
+   ],
+   "expected_case_failure": "AssertionError: Lists differ: ['pending matters'] != []",
+   "suite_result": "Ran 1 test in 21.315s FAILED (failures=1)",
+   "seconds": 22
+  },
+  {
+   "id": "THE_APPENDED_STATEMENTS_ARE_NOT_READ",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "the statements after a pointer-page Item 8 are not added",
+   "why_it_matters": "Macy's FY2021 claims accrual is missing again",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.StatementsPrintedAfterAPointerPageTest.test_the_statements_are_read_through_the_keyword_and_nothing_else_moves",
+   "failed_cases": [
+    "test_the_statements_are_read_through_the_keyword_and_nothing_else_moves"
+   ],
+   "expected_case_failure": "AssertionError: 1 != 0",
+   "suite_result": "Ran 1 test in 17.409s FAILED (failures=1)",
+   "seconds": 18
+  },
+  {
+   "id": "THE_APPENDED_STATEMENTS_ARE_READ_WHOLE",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "every block of the appended statements is an excerpt",
+   "why_it_matters": "whole statements would be taken as litigation disclosure",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.StatementsPrintedAfterAPointerPageTest.test_the_statements_are_read_through_the_keyword_and_nothing_else_moves",
+   "failed_cases": [
+    "test_the_statements_are_read_through_the_keyword_and_nothing_else_moves"
+   ],
+   "expected_case_failure": "AssertionError: 1 != 538",
+   "suite_result": "Ran 1 test in 19.929s FAILED (failures=1)",
+   "seconds": 21
+  },
+  {
+   "id": "THE_APPENDED_STATEMENTS_FEED_D03",
+   "file": "scripts/vnext/historical_text_results.py",
+   "edit": "the appended statements add D03 candidates",
+   "why_it_matters": "D03's measured candidates would move under a D02 repair",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_d02_route_repairs.StatementsPrintedAfterAPointerPageTest.test_the_statements_are_read_through_the_keyword_and_nothing_else_moves",
+   "failed_cases": [
+    "test_the_statements_are_read_through_the_keyword_and_nothing_else_moves"
+   ],
+   "expected_case_failure": "AssertionError: Lists differ: [340,[69 chars], 622] != [340,[69 chars], 622, 2242, 2337, 2643, 2868, 2954, 2958, 296[75 chars]4993]",
+   "suite_result": "Ran 1 test in 20.063s FAILED (failures=1)",
+   "seconds": 21
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

@@ -646,15 +646,25 @@ def _running_headers(document, ranges):
     """Blocks that repeat inside their scope next to another repeating block.
 
     Recomputed here from the document rather than read off the scope, so the
-    expectation does not come from the field the rule under test writes.
+    expectation does not come from the field the rule under test writes. A
+    block is counted in the innermost scope that contains it, as the route
+    owns it: a note inside the statements printed after a pointer-page Item 8
+    is read as the note, and the wider range's repeats (a page number that
+    recurs as a table figure elsewhere in the statements) are not the note's.
     """
+    def owner(index):
+        holding = [scope for scope in ranges
+                   if scope["start_block"] <= index < scope["end_block_exclusive"]]
+        return min(holding, key=lambda scope: scope["end_block_exclusive"] - scope["start_block"])
+
     found = set()
     for scope in ranges:
         start, stop = scope["start_block"], scope["end_block_exclusive"]
+        owned = [index for index in range(start, stop) if owner(index) is scope]
         counts = collections.Counter(
             " ".join(document["blocks"][index]["text"].split()).strip(" .:;,\u2014-").casefold()
-            for index in range(start, stop))
-        repeats = {index for index in range(start, stop)
+            for index in owned)
+        repeats = {index for index in owned
                    if counts[" ".join(document["blocks"][index]["text"].split())
                              .strip(" .:;,\u2014-").casefold()] > 1}
         found |= {index for index in repeats

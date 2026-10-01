@@ -449,6 +449,11 @@ SOURCE_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterp
 # filing with the two registered keyword errors in front of the reader, and each
 # committed reading's excerpts rendering the value it accepted. About 80 seconds.
 SOURCE_TESTS += ("tests.vnext.test_d02_excerpt_reading",)
+# The four D02 route repairs the older-year readings found (page-foot item
+# headings, page-position furniture, captions a note does not carry, statements
+# after a pointer-page Item 8), each on the saved filing that showed it, with
+# what must not move asserted beside what must. Builds thirteen annual reports.
+SOURCE_TESTS += ("tests.vnext.test_historical_d02_route_repairs",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
@@ -465,6 +470,10 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Measured at 1029 seconds alone on a 4-core runner beside one other
     # single-process job.
     "tests.vnext.test_historical_text_boundary": 1500,
+    # Sixteen cases over thirteen annual reports' full bytes; the injection
+    # script's control run took 619 seconds on a 4-core machine running four
+    # other jobs. Most of it is the route's proposals, not the builds.
+    "tests.vnext.test_historical_d02_route_repairs": 1200,
     # Ten cases over the ordinary zero-AI routes, including the registered
     # event union across two CIKs. Measured at 258 seconds alone - over the
     # default, not near it - so it was timing out rather than flaking, and a
@@ -605,6 +614,9 @@ def _run_source_case(name):
 # fourth shard (docs/evidence/issue47_history/ci-job-patch/0005) is a workflow
 # change this branch cannot push.
 SOURCE_CI_SECONDS = {
+    # Not in the three runs the table below averages: measured locally (619
+    # seconds for its sixteen cases on a loaded machine), rounded up.
+    "tests.vnext.test_historical_d02_route_repairs": 620,
     "tests.vnext.test_historical_sec_session": 574,
     "tests.vnext.test_historical_debt_results": 438,
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 376,
