@@ -71,6 +71,10 @@ SINGLE_OBJECT_POLICY = {**frozen_semantic.POLICY,
                         "max_single_object_payload_bytes": REQUEST_PAYLOAD_BYTES}
 _WIDER_GROUP = release_aware_with(frozen_semantic._group, POLICY=SINGLE_OBJECT_POLICY)
 _WIDER_NATIVE_UNITS = release_aware_with(frozen_semantic._native_units, _group=_WIDER_GROUP)
+# The frozen capacity source, through the view: its monetary-capacity role asks
+# whether a fact's concept is US GAAP in the year-only namespace form.
+_CAPACITY_SOURCE_FROM_COMPLETE_ANNUAL = release_aware(
+    frozen_capacity.capacity_source_from_complete_annual)
 
 
 class HistoricalSemanticSourceError(ValueError):
@@ -258,7 +262,7 @@ def prepare_historical_capacity_semantic_source(*, repo_root: Path, company_id: 
     rules = strict_json_file(path=ROOT / frozen_capacity.POLICY_PATH)
     source = prepare_historical_d04_semantic_source(repo_root=repo_root, company_id=company_id,
                                                     period_selection=period_selection)
-    result = frozen_capacity.capacity_source_from_complete_annual(source=source, rules=rules)
+    result = _CAPACITY_SOURCE_FROM_COMPLETE_ANNUAL(source=source, rules=rules)
     body = {k: v for k, v in result.items() if k != "semantic_source_id"}
     body.update(capacity_rule_sha256=sha256_file(path=ROOT / frozen_capacity.POLICY_PATH),
                 capacity_module_sha256=sha256_file(path=Path(frozen_capacity.__file__)))

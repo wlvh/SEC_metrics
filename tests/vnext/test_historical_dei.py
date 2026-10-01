@@ -220,6 +220,68 @@ class TheReViewWidensOnlyTheDeiQuestion(unittest.TestCase):
                 self.assertIn(pattern, sources)
 
 
+class AUsGaapReleaseIsRead(unittest.TestCase):
+    """The FASB's US GAAP namespace: dated releases through 2021, the year alone after."""
+
+    def test_every_release_form_is_a_us_gaap_namespace(self):
+        for release in ("2019-01-31", "2020-01-31", "2021-01-31", "2022", "2025"):
+            for scheme in ("http", "https"):
+                uri = scheme + "://fasb.org/us-gaap/" + release
+                with self.subTest(uri=uri):
+                    self.assertTrue(historical_dei.is_us_gaap_namespace(uri))
+                    for pattern in historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS:
+                        self.assertIsNotNone(historical_dei.RELEASE_AWARE_RE.fullmatch(pattern, uri))
+
+    def test_anything_else_is_refused(self):
+        """No quarter releases, no other FASB taxonomy, no filer's own namespace."""
+        for uri in ("http://fasb.org/us-gaap/2021q4", "http://fasb.org/srt/2021-01-31",
+                    "http://fasb.org/us-gaap/21", "http://fasb.org/us-gaap/2021-1-31",
+                    "http://fasb.org/us-gaap/2021-01-31x", "http://www.marriott.com/20211231",
+                    "http://xbrl.sec.gov/dei/2021-01-31", "http://fasb.org/us-gaap/"):
+            with self.subTest(uri=uri):
+                self.assertFalse(historical_dei.is_us_gaap_namespace(uri))
+                for pattern in historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS:
+                    self.assertIsNone(historical_dei.RELEASE_AWARE_RE.fullmatch(pattern, uri))
+
+    def test_the_frozen_readers_spell_the_pattern_these_ways(self):
+        import inspect
+        from vnext import (b03_contract_amortization_scope, b06_guarded_result_v3,
+                           capacity_semantic_source, text_business_candidates)
+        spellings = {r"https?://fasb\.org/us-gaap/[0-9]{4}": (b06_guarded_result_v3,
+                                                               b03_contract_amortization_scope),
+                     r"https?://fasb\.org/us-gaap/\d{4}": (capacity_semantic_source,
+                                                           text_business_candidates)}
+        self.assertEqual(set(spellings), set(historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS))
+        for pattern, modules in spellings.items():
+            for module in modules:
+                with self.subTest(pattern=pattern, module=module.__name__):
+                    self.assertIn(pattern, inspect.getsource(module))
+
+    def test_a_fy2021_report_s_equity_is_read_through_the_view(self):
+        """Marriott FY2021 declares us-gaap/2021-01-31; the B06 guard's equity read needs the view.
+
+        With the US GAAP entry taken out of the view's table and nothing else
+        changed, the same call stops where the frame stopped.
+        """
+        from tests.vnext.saved_filings import saved_filing as _saved
+        from vnext import b06_guarded_result_v3 as guard
+        raw, url = _saved("mar-20211231.htm")
+        cik = re.search(r"/data/(\d+)/", url).group(1)
+        self.assertIn(b'xmlns:us-gaap="http://fasb.org/us-gaap/2021-01-31"', raw)
+        filing = {"form": "10-K", "reportDate": "2021-12-31"}
+        arguments = {"raw": raw, "kind": "primary_inline", "filing": filing,
+                     "target": {"entity": str(int(cik)), "period_end": "2021-12-31"},
+                     "period": historical_dei.annual_period(raw=raw, cik=cik, filing=filing)}
+        read = historical_dei.release_aware(guard._source_equity)(**arguments)
+        self.assertEqual("1414000000", read["chosen"]["value"])
+        without = {pattern: widened for pattern, widened in historical_dei._WIDENED.items()
+                   if pattern not in historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS}
+        with mock.patch.dict(historical_dei._WIDENED, without, clear=True):
+            with self.assertRaises(guard.B06GuardError) as caught:
+                historical_dei.release_aware(guard._source_equity)(**arguments)
+        self.assertEqual("B06_GUARD_EQUITY_NAMESPACE_CONFLICT", str(caught.exception))
+
+
 class OnSavedAnnualReportsTheViewsAgreeWithTheFrozenReaders(unittest.TestCase):
 
     def test_the_annual_reader_gives_the_frozen_answer(self):

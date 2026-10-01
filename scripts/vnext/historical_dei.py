@@ -44,7 +44,9 @@ record their bytes.
 
 The executive-compensation (ECD) taxonomy namespace is the same question with
 the same three release suffixes (``ecd/2022q4`` is the 2023 proxies' release)
-and is answered by the same view.
+and is answered by the same view. So is the FASB's US GAAP namespace, whose
+releases through 2021 carry the release date after the year
+(``us-gaap/<year>-<month>-<day>``).
 
 Call relationships: #47's route modules call the frozen readers through
 ``release_aware``. ``unviewed_references`` is the check that they do: it lists
@@ -80,8 +82,20 @@ DEI_NAMESPACE_PATTERN = r"https?://xbrl\.sec\.gov/dei/\d{4}(?:q[1-4]|-\d{2}-\d{2
 FROZEN_ECD_NAMESPACE_PATTERNS = (r"https?://xbrl\.sec\.gov/ecd/\d{4}",
                                  r"https?://xbrl\.sec\.gov/ecd/[0-9]{4}")
 ECD_NAMESPACE_PATTERN = r"https?://xbrl\.sec\.gov/ecd/\d{4}(?:q[1-4]|-\d{2}-\d{2})?"
+# The same question about the FASB's US GAAP taxonomy, which the frozen B06
+# routes, B03's contract-amortization check and the successor income input ask
+# of a fact's concept. Releases through 2021 are named with the release date
+# after the year (the form every FY2021 annual report here declares); from 2022
+# the year alone. The frozen readers accept only the year, so once
+# the older annual reports' XBRL instances were acquired, every B06 position of
+# FY2021 stopped at B06_GUARD_EQUITY_NAMESPACE_CONFLICT instead of reading the
+# equity it was asking about. The date form is accepted and nothing else.
+FROZEN_US_GAAP_NAMESPACE_PATTERNS = (r"https?://fasb\.org/us-gaap/[0-9]{4}",
+                                     r"https?://fasb\.org/us-gaap/\d{4}")
+US_GAAP_NAMESPACE_PATTERN = r"https?://fasb\.org/us-gaap/[0-9]{4}(?:-\d{2}-\d{2})?"
 _WIDENED = {**{p: DEI_NAMESPACE_PATTERN for p in FROZEN_DEI_NAMESPACE_PATTERNS},
-            **{p: ECD_NAMESPACE_PATTERN for p in FROZEN_ECD_NAMESPACE_PATTERNS}}
+            **{p: ECD_NAMESPACE_PATTERN for p in FROZEN_ECD_NAMESPACE_PATTERNS},
+            **{p: US_GAAP_NAMESPACE_PATTERN for p in FROZEN_US_GAAP_NAMESPACE_PATTERNS}}
 _CONTAINERS = (dict, list, tuple, set, frozenset)
 _ATTRIBUTE_LOADS = ("LOAD_ATTR", "LOAD_METHOD")
 _NAME_LOADS = ("LOAD_GLOBAL", "LOAD_NAME", "LOAD_FAST", "LOAD_DEREF")
@@ -99,6 +113,11 @@ def is_dei_namespace(uri):
 def is_ecd_namespace(uri):
     """Whether ``uri`` is a release of the SEC's executive-compensation (ECD) taxonomy."""
     return re.fullmatch(ECD_NAMESPACE_PATTERN, str(uri)) is not None
+
+
+def is_us_gaap_namespace(uri):
+    """Whether ``uri`` is a release of the FASB's US GAAP taxonomy."""
+    return re.fullmatch(US_GAAP_NAMESPACE_PATTERN, str(uri)) is not None
 
 
 def _frozen_pattern(pattern):

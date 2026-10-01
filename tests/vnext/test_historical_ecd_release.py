@@ -183,14 +183,22 @@ class TheEcdNamespaceIsWidenedByTheReleaseSuffixOnlyTest(unittest.TestCase):
 
     def test_each_frozen_pattern_is_answered_by_its_own_widened_pattern(self):
         widened = historical_dei._WIDENED
+        # Every family the view widens, and nothing else: the US GAAP family
+        # joined the table when the FY2021 reports' dated releases stopped B06
+        # (docs/evidence/issue47_history/us-gaap-release/).
         self.assertEqual(set(historical_dei.FROZEN_DEI_NAMESPACE_PATTERNS)
-                         | set(historical_dei.FROZEN_ECD_NAMESPACE_PATTERNS), set(widened))
+                         | set(historical_dei.FROZEN_ECD_NAMESPACE_PATTERNS)
+                         | set(historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS), set(widened))
         for frozen_pattern in historical_dei.FROZEN_ECD_NAMESPACE_PATTERNS:
             self.assertEqual(ECD_NAMESPACE_PATTERN, widened[frozen_pattern])
             self.assertIsNotNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
                 frozen_pattern, "http://xbrl.sec.gov/ecd/2022q4"))
             self.assertIsNone(re.fullmatch(frozen_pattern, "http://xbrl.sec.gov/ecd/2022q4"))
         for frozen_pattern in historical_dei.FROZEN_DEI_NAMESPACE_PATTERNS:
+            self.assertIsNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
+                frozen_pattern, "http://xbrl.sec.gov/ecd/2022q4"))
+        for frozen_pattern in historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS:
+            self.assertEqual(historical_dei.US_GAAP_NAMESPACE_PATTERN, widened[frozen_pattern])
             self.assertIsNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
                 frozen_pattern, "http://xbrl.sec.gov/ecd/2022q4"))
 

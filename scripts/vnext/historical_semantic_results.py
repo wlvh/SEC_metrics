@@ -66,6 +66,7 @@ from .canonical import content_hash, sha256_bytes, strict_json_file, strict_json
 from .continuous_request_context import FORMAT_VERSION
 from .d04_native_assessment import (CURRENT_KINDS, SPEC_PATH as D04_SPEC_PATH,
                                     build_acceptance as accept_d04, native_source)
+from .historical_dei import release_aware
 from .historical_semantic_source import prepare_historical_d04_semantic_source
 from .historical_spec_revision import compile_historical_spec_file
 from .native_unit_index import evidence_json_bytes, reconstruct_requests
@@ -114,9 +115,15 @@ def pinned_native_source(*, repo_root: Path, company_id: str, metric_id: str, pe
         request_context_format=FORMAT_VERSION, complete_response_contract=True)
 
 
+# The frozen request reconstruction, seen through the release-aware view: its
+# capacity branch asks whether a fact's concept is US GAAP in the year-only
+# namespace form, which a FY2021 report's dated release fails (historical_dei).
+_RECONSTRUCT_REQUESTS = release_aware(reconstruct_requests)
+
+
 def pinned_requests(source):
     """Every request the source partitions into, in order - the base contract only."""
-    return reconstruct_requests(source)
+    return _RECONSTRUCT_REQUESTS(source)
 
 
 def request_binding(request):

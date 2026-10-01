@@ -233,14 +233,17 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
         # of the ordinary case; the historical case holds the same objects, so
         # they are handed over under the ordinary names. Found by the first
         # end-to-end D04 Run, which froze and then could not render.
-        from .capacity_run import project_defined_absence
+        # Through the release-aware view: re-deriving the candidate reaches the
+        # capacity source's US GAAP namespace question (historical_dei).
+        from . import capacity_run
+        from .historical_dei import release_aware
         from .historical_semantic_results import prepare_historical_semantic_case
         semantic = prepare_historical_semantic_case(
             repo_root=data_root, company_id=manifest["company_id"], metric_id=metric,
             period_selection=case["period_selection"])
         # The ordinary case's status for D04 is TEXT_QUAL on both branches
         # (capacity_run: NOT_AVAILABLE_SEC only for B13's absence).
-        row, evidence = project_defined_absence(
+        row, evidence = release_aware(capacity_run).project_defined_absence(
             case={"registered_input": semantic["registered"],
                   "selection": {"status": "TEXT_QUAL"},
                   "text_arguments": {"compiled_spec": spec, **semantic["text_arguments"]}},

@@ -33,11 +33,13 @@ from pathlib import Path
 from sec_urls import companyfacts_url, submissions_url
 
 from .annual_update import AnnualUpdateError
+from . import b03_contract_amortization_scope as _contract_scope
 from .batch_workflow import BatchWorkflowError, _structured_concepts
 from .calculator import (calculate_metric, calculate_observation_metric,
                          withheld_metric_result)
 from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
 from .historical_da_scope_candidate import (COMPOSITION, DIRECT, WITHHELD_REASON as DA_SCOPE_REASON,
                                             agree, annual_facts, da_scope_answer)
 from .historical_ma_confirmation import (ConfirmationNotRegistered, confirmation_request,
@@ -230,6 +232,12 @@ def impairment_included(*, raw_bytes, period, observation):
             "footnote_span_sha256": proof["footnote"]["span_sha256"]}
 
 
+# #28's check, seen through the release-aware view (historical_dei): it asks
+# whether a fact's concept is US GAAP in the year-only namespace form.
+_UNRECONCILED_CONTRACT_AMORTIZATION = release_aware(
+    _contract_scope._unreconciled_contract_amortization)
+
+
 def contract_amortization_unreconciled(*, repo_root, prepared, period, observations):
     """#28's answer on whether the filing reports an amortization a composed D&A does not take.
 
@@ -252,10 +260,12 @@ def contract_amortization_unreconciled(*, repo_root, prepared, period, observati
     pinned input's source proofs, the target period and the route's B03
     observations, and it reads the same primary document the pinned input
     admitted. A direct D&A total is not its question and gets None, as there.
-    The caller acts on ``blocked``, as #28's own consumers do.
+    The caller acts on ``blocked``, as #28's own consumers do. Through the
+    release-aware view: #28's check asks whether a fact's concept is US GAAP
+    with the frozen year-only namespace, which a FY2021 report's dated release
+    fails.
     """
-    from .b03_contract_amortization_scope import _unreconciled_contract_amortization
-    return _unreconciled_contract_amortization(
+    return _UNRECONCILED_CONTRACT_AMORTIZATION(
         case={"observations": observations, "target_period": period,
               "source_proofs": prepared["source_proofs"]},
         data_root=Path(repo_root))
@@ -314,7 +324,6 @@ def _successor_income_input(*, repo_root: Path, company_id: str, metric_id: str,
             or prepared["subject_policy"]["mode"] != "SUCCESSOR_REGISTRANT_ONLY"):
         return None
     from . import ordinary_income_input
-    from .historical_dei import release_aware
     income_input = release_aware(ordinary_income_input).prepare_current_income_input(
         repo_root=repo_root, company_id=company_id)
     proved = income_input["annual_input"]["filing"]["accessionNumber"]
