@@ -355,6 +355,31 @@ class ATermEndingIsCoveredOnlyByTheSameDeparture(unittest.TestCase):
         self.assertEqual([], missed([0, 1, 3, 5], decided))
 
 
+class ANomineesNoCommitteeFieldIsNotAFact(unittest.TestCase):
+    """"Committees: N/A" on a not-yet-director nominee's card (NOMINEE_CARD_NO_COMMITTEE).
+
+    Paramount's FY2022 reader took the field on Dawn Ostroff's card (block 819);
+    its FY2024 readers left out the same field on three new nominees' cards.
+    The two cards' fields are Paramount's FY2022 blocks 816-820 and 823-828.
+    """
+
+    POSITION = "example_company:2022-12-31"
+    TEXTS = ["Director Nominee", "Age: 62", "Director since: N/A", "Committees: N/A", "DAWN OSTROFF",
+             "Director", "Age: 63", "Director since: 2019", "Committees: N/A", "CHARLES E. PHILLIPS, JR."]
+
+    def test_only_the_nominees_field_is_decided(self):
+        sha = [reading.text_sha256(text) for text in self.TEXTS]
+        document = {"blocks": [{"text": text, "linked": False} for text in self.TEXTS]}
+        record = {"position": self.POSITION, "selected": [],
+                  "pool_facts": [{"i": i, "verdict": "FACT", "why": "", "text_sha256": sha[i]} for i in (3, 8)],
+                  "pool": [{"i": i, "text_sha256": h} for i, h in enumerate(sha)]}
+        decided = {row["i"]: row for row in _adjudicator().decisions_for(self.POSITION, document, record)}
+        self.assertEqual(("NOMINEE_CARD_NO_COMMITTEE", "NOT", "FACT"),
+                         (decided[3]["rule"], decided[3]["decision"], decided[3]["reader_verdict"]))
+        # A sitting director's "N/A" says that director serves on no committee.
+        self.assertNotIn(8, decided)
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

@@ -20,6 +20,15 @@ CARD_TENURE_FIELD (NOT)
     A director card's "Director since: 2017" / "Joined the Board: 2025" field.
     How long a sitting director has served is none of the owner's facts.
 
+NOMINEE_CARD_NO_COMMITTEE (NOT)
+    "Committees: N/A" on the card of a nominee who is not yet a director: the
+    card's "Director since: N/A" printed right before it. The nominee sits on no
+    committee because the nominee does not sit on the board; it says nothing
+    about who serves on the board's committees. Paramount's FY2024 readers
+    left out all three such fields, its FY2022 reader took the one there. A
+    sitting director's "N/A" says that director serves on no committee and is
+    outside the class.
+
 CARD_SUBJECT_NAME (FACT)
     The name a director card or a table row prints before a field the reading
     judges a composition fact ("NCG (Chair)", "Committees: N/A", a summary
@@ -174,6 +183,9 @@ RULES = {
                                  "committee setup, members, chairs, related determinations)."),
     "CARD_SUBJECT_NAME": ("FACT", "A field states nothing without whose it is; the same reading's reason for the "
                                   "field names this person."),
+    "NOMINEE_CARD_NO_COMMITTEE": ("NOT", "A nominee who is not yet a director sits on no committee because the "
+                                         "nominee does not sit on the board; the field says nothing about the "
+                                         "board's committees."),
     "CHAIR_CEO_STRUCTURE": ("FACT", "Whether the board's chair and the CEO are two people or one says who can hold "
                                     "the board's chair, the kind of fact every reading takes when the holder is "
                                     "named."),
@@ -209,6 +221,8 @@ RULES = {
 }
 
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
+NOT_YET = re.compile(r"^\s*director since\s*:?\s*n/?a$", re.I)
+NO_COMMITTEE_FIELD = re.compile(r"^committees?\s*:\s*n/?a$", re.I)
 _MONTHS = "january|february|march|april|may|june|july|august|september|october|november|december"
 _NUM = r"(?:\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen)"
 _DATE = r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)"
@@ -558,6 +572,14 @@ def decisions_for(position, document, record):
     for index in sorted(facts):
         if TENURE.match(blocks[index]["text"]):
             decide(index, "CARD_TENURE_FIELD")
+    # NOMINEE_CARD_NO_COMMITTEE: the card prints its tenure field right before
+    # its committee field (blank layout blocks between are passed over).
+    for index in sorted(facts):
+        if not NO_COMMITTEE_FIELD.match(texts[index]):
+            continue
+        before = next((j for j in range(index - 1, -1, -1) if texts[j]), None)
+        if before is not None and NOT_YET.match(texts[before]):
+            decide(index, "NOMINEE_CARD_NO_COMMITTEE")
     # CARD_SUBJECT_NAME: the nearest name before a field whose reason names it.
     for index in sorted(facts):
         if len(texts[index]) > 160:

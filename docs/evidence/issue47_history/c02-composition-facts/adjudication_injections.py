@@ -91,6 +91,16 @@ INJECTIONS = [
      '                if not re.search(r"(?:\\b(?:Mr|Ms|Mrs|Dr)\\s+|\\b(?!(?:The|A|An|Our|Its|This|That|Each|Every|Such)\\s)"\n                                 r"(?-i:[A-Z])[\\w\\-]+\\s+(?:(?-i:[A-Z])\\s+)?)$", sentence[:match.start("owner")]):',
      '                if False:',
      'tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture'),
+    ('THE_NOMINEE_FIELD_IS_NOT_DECIDED', ADJ,
+     '            decide(index, "NOMINEE_CARD_NO_COMMITTEE")', '            pass',
+     'tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact'),
+    ('THE_NOMINEE_FIELD_IS_DECIDED_A_FACT', ADJ,
+     '"NOMINEE_CARD_NO_COMMITTEE": ("NOT",', '"NOMINEE_CARD_NO_COMMITTEE": ("FACT",',
+     'tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact'),
+    ('A_SITTING_DIRECTORS_FIELD_IS_A_NOMINEES', ADJ,
+     '        if before is not None and NOT_YET.match(texts[before]):',
+     '        if before is not None:',
+     'tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact'),
 ]
 RUNNER = textwrap.dedent('''
     import importlib.util, sys, types, unittest

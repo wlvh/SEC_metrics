@@ -44,6 +44,7 @@
 |---|---|---|
 | `CARD_TENURE_FIELD` | 非事实 | 卡片上的"Director since: 2017"。在任多久不在所有者列出的事实里 |
 | `CARD_SUBJECT_NAME` | 事实 | 卡片或表格行在构成字段前印的名字。字段不写是谁就什么也没说；字段自己写出了人名的不需要 |
+| `NOMINEE_CARD_NO_COMMITTEE` | 非事实 | 尚未任董事的候选人卡片上的 "Committees: N/A"（紧挨在它前面的是本卡片的 "Director since: N/A"）。候选人不在任何委员会，是因为还不在董事会，这说明不了本董事会委员会的成员。Paramount FY2024 的读者三处都没取，FY2022 的读者取了一处（第 819 块，Ostroff）。在任董事的 "N/A" 说明此人不在任何委员会，不在本类。37 份文档里四处候选人卡片都是这个顺序，所以只认紧挨在前的字段，不另设窗口。只产生一条裁定：Paramount 2022 第 819 块由事实改为非事实，该位置漏选 [819] 消失、与判读一致（`adjudication-effect-nominee-card.json`：漏选 29→28，一致的位置 21→22） |
 | `CHAIR_CEO_STRUCTURE` | 事实 | 董事长与 CEO 分设还是由一人担任。往年读者在五家公司 31 块上都取了；最新 Lumen、Marriott 的读者没取同样的句子 |
 | `CLASSIFIED_SLATE_COUNT` | 非事实 | 分级董事会里一级的候选人数。不是董事会规模，也不是成员变动 |
 | `DIRECTOR_GROUP_HEADING` | 非事实 | 董事分组标题（级别、候选或留任、任期），表格上方与卡片上方同样处理。级别与任期与任期年限同类 |
@@ -65,7 +66,7 @@
 
 **效果**（`adjudication-effect.json`，用今天的选择器）：误选 40→46，漏选 146→144，一致的位置 11→9。对路线不利和有利的裁定大致相当：新不一致的是最新年 Enphase（3 个级别标题、3 处分级候选人数被取）、Lumen（分设句未取）、Macy's（候选人现为董事未取）、Marriott（两处分设句未取），以及若干往年块；新一致的是 Paramount FY2021、FY2023。这四个最新位置已按坐标登记缺陷（`C02_*_UNIFIED_ADJUDICATION_DISAGREES`，带逐块的 `selection_problems`），此前接受的值在修好的选择被重新读过之前一律撤回。
 
-用例：`test_historical_board_composition_filings` 要求最新十个位置的裁定**正好**是规则在该文档与判读上得出的结果（多一条少一条都不行），往年裁定都绑在读者看过的文本上，每个位置要么一致、要么与登记的缺陷逐块相同。`adjudication_injections.py`（结果在 `adjudication-injections.json`）在内存里改五处，五处都被抓到，对照运行干净。
+用例：`test_historical_board_composition_filings` 要求最新十个位置的裁定**正好**是规则在该文档与判读上得出的结果（多一条少一条都不行），往年裁定都绑在读者看过的文本上，每个位置要么一致、要么与登记的缺陷逐块相同。`adjudication_injections.py`（结果在 `adjudication-injections.json`）在内存里逐处改读法与裁定，随规则增加到 20 处（`NOMINEE_CARD_NO_COMMITTEE` 加了 3 处），20 处都被各自点名的用例抓到，对照运行干净。
 
 **局限**：每一类的识别式是在这 37 份判读上写的，只找得到这些申报里的写法；换一种写法的同类块不会被裁定，仍按判读处理。用来定规则的判读对后续修复只算回归材料。
 

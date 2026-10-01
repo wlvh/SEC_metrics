@@ -9,6 +9,10 @@
    "failures": 0,
    "ran": 2
   },
+  "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact": {
+   "failures": 0,
+   "ran": 1
+  },
   "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture": {
    "failures": 0,
    "ran": 2
@@ -158,6 +162,30 @@
    "caught": true,
    "failures": 2,
    "ran": 2
+  },
+  {
+   "injection": "THE_NOMINEE_FIELD_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_NOMINEE_FIELD_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "A_SITTING_DIRECTORS_FIELD_IS_A_NOMINEES",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
   }
  ],
  "all_caught": true

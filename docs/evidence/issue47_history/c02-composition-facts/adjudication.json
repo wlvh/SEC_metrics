@@ -14,6 +14,10 @@
    "decision": "FACT",
    "reason": "A field states nothing without whose it is; the same reading's reason for the field names this person."
   },
+  "NOMINEE_CARD_NO_COMMITTEE": {
+   "decision": "NOT",
+   "reason": "A nominee who is not yet a director sits on no committee because the nominee does not sit on the board; the field says nothing about the board's committees."
+  },
   "CHAIR_CEO_STRUCTURE": {
    "decision": "FACT",
    "reason": "Whether the board's chair and the CEO are two people or one says who can hold the board's chair, the kind of fact every reading takes when the holder is named."
@@ -675,6 +679,15 @@
    "decision": "NOT",
    "reader_verdict": "MIXED",
    "reader_why": "independent Chair of the N&G Committee presides at meetings of the independent directors; rest is executive-session practice"
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2022-12-31",
+   "i": 819,
+   "text_sha256": "sha256:10282050ad6e94693c3c1a6b0f50ebf043b6a751f737e95c95725d26593c344f",
+   "rule": "NOMINEE_CARD_NO_COMMITTEE",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Ostroff card's Committees field: N/A (no committee)"
   },
   {
    "position": "paramount_skydance_paramount_global:2022-12-31",
