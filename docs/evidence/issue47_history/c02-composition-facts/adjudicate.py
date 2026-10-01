@@ -21,11 +21,17 @@ CARD_SUBJECT_NAME (decision FACT)
     another block the route takes is decided here; any other is left to the
     readings.
 
+Older years' filings are read from a root restored from the acquisition's
+export by this checkout (``--source-root``); the latest years' filings are in
+that root too, because a restored root starts as a copy of this checkout's
+saved sources.
+
 Usage:
-    python3 docs/evidence/issue47_history/c02-composition-facts/adjudicate.py
+    python3 docs/evidence/issue47_history/c02-composition-facts/adjudicate.py [--source-root <root>]
 """
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -83,13 +89,17 @@ def decisions_for(position, document, record, chosen_labels):
     return out
 
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--source-root", type=Path, default=REPO)
+    args = parser.parse_args(argv)
     decisions = []
     for path in sorted(reading.READING_DIR.glob("*.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
         company_id, report_end = record["position"].rsplit(":", 1)
         document, _chosen, _candidate = reading.route_selection(repo_root=REPO, company_id=company_id,
-                                                                 report_end=report_end)
+                                                                 report_end=report_end,
+                                                                 source_root=args.source_root.resolve())
         proposal = board_composition_facts(document=document)
         chosen_labels = {c["block_index"]: c["labels"] for c in proposal["candidates"]}
         decisions.extend(decisions_for(record["position"], document, record, chosen_labels))

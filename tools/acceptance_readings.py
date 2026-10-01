@@ -74,6 +74,12 @@ E01_CANDIDATE_READINGS = (E01_CANDIDATES, E01_CANDIDATES_BATCH)
 # c02-composition-facts/, compared with the published results by
 # tools/read_c02_composition.py.
 C02_COMPOSITION = EVIDENCE + "c02-composition-read.json"
+# Older years, read from packets (the selection and a pool around it) by
+# independent readers against c02-older-years/reader-brief.md and compared the
+# same way; one file per closure its positions compare.
+C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read.json",
+                            EVIDENCE + "c02-older-years-read-round3.json")
+C02_COMPOSITION_READINGS = (C02_COMPOSITION, *C02_OLDER_YEARS_READINGS)
 GOVERNANCE = EVIDENCE + "governance-read.json"
 # An older year's C03, read from every saved proxy that tags it (a year is
 # reported again by each later proxy) by tools/read_c03_across_proxies.py; one
@@ -129,6 +135,9 @@ DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH)
 READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
             TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
             *DEBT_TO_EQUITY_READINGS,
+            # The older-year C02 readings (C02_OLDER_YEARS_READINGS) join when
+            # their acceptance files are written: they are being read, and no
+            # older-year C02 value is accepted yet.
             C02_COMPOSITION,
             *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES)
 # The company periods the readings cover are data, not code: tools/ is scanned
@@ -428,7 +437,7 @@ def positions(*, repo_root: Path, path: str, body):
                 metric_id="D01", period_end=case["period_end"],
                 published=case["value_sha256"], verdict=case["verdict"],
                 filings=[case["accession"]] if case.get("accession") else []))
-    elif path == C02_COMPOSITION:
+    elif path in C02_COMPOSITION_READINGS:
         # The value is the whole text payload, named by digest; the filing
         # named is the governance document whose blocks were judged.
         for label, case in sorted(body["per_position"].items()):

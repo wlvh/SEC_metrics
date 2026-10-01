@@ -30,7 +30,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (C02_COMPOSITION, C03_ACROSS_PROXIES, COMPENSATION, CROSS,  # noqa: E402
+from acceptance_readings import (C02_COMPOSITION, C02_COMPOSITION_READINGS,  # noqa: E402
+                                 C02_OLDER_YEARS_READINGS, C03_ACROSS_PROXIES, COMPENSATION, CROSS,
                                  CROSS_READINGS,
                                  D01_READINGS, D02_EXCERPT_READINGS, DEBT_TO_EQUITY_READINGS,
                                  E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
@@ -174,6 +175,28 @@ C02_COMPOSITION_LIMIT = (
  "held-out test; the readers are agents of one model family and their "
  "judgements were not sampled by a person. It does not establish " + COMMON)
 
+C02_OLDER_YEARS_METHOD = (
+ "a packet built from the saved governance document by tools/read_c02_composition.py "
+ "through the route's own selection - every selected block, and a pool of every block "
+ "using the owner's words for composition facts with every short block within sixteen "
+ "blocks of one (the rule docs/evidence/issue47_history/c02-older-years/pool_rule.py "
+ "chose because, with the selection, it holds every fact block the latest-year readers "
+ "found) - read by an independent reader (a fresh-context subagent of the same model "
+ "family, not a person) against c02-older-years/reader-brief.md: every selected block "
+ "judged, and every pool block stating a composition fact listed with the blocks that "
+ "state the same fact. Accepted only where no selected block is judged outside the "
+ "meaning, no listed fact is missed, the Run's candidate hash is the one recomputed and "
+ "its excerpts are the selected blocks' texts in order. The value is named by digest "
+ "because it is the whole text payload.")
+C02_OLDER_YEARS_LIMIT = (
+ "what is established is that this excerpt set states the composition facts the reading "
+ "found in this document and nothing the reading judged outside the meaning. The older "
+ "years are material the selection rules were not written on; but the pool is a rule "
+ "too - a fact stated only in a long block that uses none of the pool's words and lies "
+ "more than sixteen blocks from one is not read - and the readers are agents of one "
+ "model family whose judgements were not sampled by a person. It does not establish "
+ + COMMON)
+
 HEADINGS_LIMIT = (
  "what is established is that this heading set is the set the approved source "
  "definition asks for in this filing, read in both directions and item by "
@@ -204,7 +227,7 @@ def _read_from(position):
         return {"window": case["window"], "eight_k_filings_in_window": len(case["filings_in_window"]),
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
                 "candidate_items_by_basis": case["candidate_items_by_basis"]}
-    if path == C02_COMPOSITION:
+    if path in C02_COMPOSITION_READINGS:
         return {"governance_document": case["governance_document"],
                 "reading": case["reading"], "reading_sha256": case["reading_sha256"],
                 "counts": case["counts"], "adjudicated_blocks": case["adjudicated_blocks"],
@@ -258,6 +281,8 @@ def _method_and_limit(position):
         return E01_CANDIDATES_METHOD, E01_CANDIDATES_LIMIT
     if path == C02_COMPOSITION:
         return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
+    if path in C02_OLDER_YEARS_READINGS:
+        return C02_OLDER_YEARS_METHOD, C02_OLDER_YEARS_LIMIT
     if path == GOVERNANCE:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path in C03_ACROSS_PROXIES:

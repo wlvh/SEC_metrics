@@ -38,9 +38,27 @@ texts in the selected order. The value is named by digest, because it is the
 whole text payload, and the identity of the result it was read against is
 recorded at reading time.
 
+Older years are read the same way from a packet this tool builds
+(``--packet``): every selected block and a pool of the blocks around them, in
+document order, for a reader given ``c02-older-years/reader-brief.md``. The
+pool is the blocks that use the owner's words for composition facts, and
+every short block within ``POOL_REACH`` of one; the rule was chosen because, with the
+selection, it holds every fact block the latest-year readers found
+(``c02-older-years/pool_rule.py``, ``pool-rule.json``). A reader's answer is
+merged into a reading (``--merge``) only if it judges every selected block and
+lists only pool blocks as found facts; it is written to ``OLDER_READING_DIR``,
+apart from the latest years' readings, and compared with ``--readings-dir``
+naming that directory. Older years' filings are read from an export-restored
+root (``--source-root``, restored by this checkout).
+
 Usage:
     python3 tools/read_c02_composition.py [--position <company>:<report_end>] [--output PATH]
+    python3 tools/read_c02_composition.py --packet --position <company>:<report_end> \
+        [--source-root <root>] --output <packet.json>
+    python3 tools/read_c02_composition.py --merge --packet-file <packet.json> \
+        --answer <answer.json> --reader "<who read it>"
     python3 tools/read_c02_composition.py --runs-root <root> [--runs-root <root>] \
+        [--source-root <root>] [--readings-dir <dir>] [--position <company>:<report_end> ...] \
         --closure sha256:<closure> --acceptance-output <path>
 """
 from __future__ import annotations
@@ -48,6 +66,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -55,9 +74,25 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
 READING_DIR = REPO / "docs/evidence/issue47_history/c02-composition-facts/judgements"
+# Older years are the first material the selection rules were not written on,
+# so their readings are kept apart from the latest years' (which the rules were
+# fitted on and whose cases assert agreement on all ten).
+OLDER_READING_DIR = REPO / "docs/evidence/issue47_history/c02-older-years/judgements"
 ADJUDICATION_PATH = REPO / "docs/evidence/issue47_history/c02-composition-facts/adjudication.json"
 VERDICTS_TAKEN = {"FACT", "MIXED", "NOT"}
 VERDICTS_FOUND = {"FACT", "MIXED"}
+# The owner's decision in the words a proxy uses for it (c02-older-years/pool_rule.py).
+POOL_VOCABULARY = re.compile(
+    r"\b(?:directors?|board|committees?|independen(?:t|ce)|chair(?:man|woman|person|s)?|vice[- ]chair"
+    r"|lead(?:ing)?\s+director|presiding\s+director|members?(?:hip)?|nominees?|nominat(?:ed|ing|ion))\b",
+    re.I)
+# Every block using those words, and every short block (a name, a committee's name
+# in a card or matrix, a card label) within POOL_REACH blocks of one. Measured on the
+# latest-year readings, this pool with the selection holds every fact block their
+# readers found (c02-older-years/pool-rule.json).
+POOL_REACH = 16
+POOL_SHORT = 80
+_LETTER = re.compile(r"[A-Za-z]")
 
 
 def text_sha256(text):
@@ -97,6 +132,82 @@ def route_selection(*, repo_root: Path, company_id: str, report_end: str, source
     document = built["documents"][governance[0]]
     chosen = sorted((claim["block_index"] for claim in candidate["selected"].values()))
     return document, chosen, candidate
+
+
+def pool_blocks(blocks):
+    """Every block that uses the owner's words for composition facts, and every short block near one."""
+    matched = [index for index, block in enumerate(blocks) if POOL_VOCABULARY.search(block["text"])]
+    pool = set(matched)
+    for index in matched:
+        for near in range(max(0, index - POOL_REACH), min(len(blocks), index + POOL_REACH + 1)):
+            text = blocks[near]["text"].strip()
+            if len(text) <= POOL_SHORT and _LETTER.search(text):
+                pool.add(near)
+    return pool
+
+
+def make_packet(*, document, chosen, candidate):
+    """The blocks a reader judges: the selection and the pool, in document order."""
+    blocks = document["blocks"]
+    selected = set(chosen)
+    pool = pool_blocks(blocks) - selected
+    stream = [{"i": index, "kind": "SELECTED" if index in selected else "POOL",
+               "text": blocks[index]["text"], "text_sha256": text_sha256(blocks[index]["text"])}
+              for index in sorted(selected | pool)]
+    return {"document_id": document["text_document_id"], "candidate_hash": candidate["candidate_hash"],
+            "pool_rule": {"vocabulary": POOL_VOCABULARY.pattern, "reach": POOL_REACH,
+                          "short_block_characters": POOL_SHORT},
+            "selected_count": len(selected), "pool_count": len(pool), "blocks": stream}
+
+
+def merge_answer(*, packet, answer, reader):
+    """A reader's answer made into a reading in the latest-year readings' shape.
+
+    Every selected block must be judged once, and only pool blocks can be found
+    facts: a reading that did not see a block is never read as agreeing with
+    it, and a verdict on a block the packet does not hold has nothing to bind to.
+    """
+    blocks = {row["i"]: row for row in packet["blocks"]}
+    selected = [row for row in packet["blocks"] if row["kind"] == "SELECTED"]
+    judged = {}
+    for row in answer["selected"]:
+        block = blocks.get(row["i"])
+        if block is None or block["kind"] != "SELECTED":
+            raise SystemExit("C02_ANSWER_JUDGES_A_BLOCK_NOT_SELECTED:" + packet["position"] + ":" + str(row["i"]))
+        if row["i"] in judged:
+            raise SystemExit("C02_ANSWER_JUDGES_A_BLOCK_TWICE:" + packet["position"] + ":" + str(row["i"]))
+        if row["verdict"] not in VERDICTS_TAKEN or not row.get("why"):
+            raise SystemExit("C02_ANSWER_VERDICT_INVALID:" + packet["position"] + ":" + str(row["i"]))
+        judged[row["i"]] = {"i": row["i"], "verdict": row["verdict"], "why": row["why"],
+                            "text_sha256": block["text_sha256"]}
+    missing = [row["i"] for row in selected if row["i"] not in judged]
+    if missing:
+        raise SystemExit("C02_ANSWER_LEAVES_SELECTED_BLOCKS_UNJUDGED:" + packet["position"] + ":" + str(missing))
+    facts = {}
+    for row in answer["facts"]:
+        block = blocks.get(row["i"])
+        if block is None or block["kind"] != "POOL":
+            raise SystemExit("C02_ANSWER_FACT_IS_NOT_A_POOL_BLOCK:" + packet["position"] + ":" + str(row["i"]))
+        if row["i"] in facts:
+            raise SystemExit("C02_ANSWER_LISTS_A_FACT_TWICE:" + packet["position"] + ":" + str(row["i"]))
+        if row["verdict"] not in VERDICTS_FOUND or not row.get("why"):
+            raise SystemExit("C02_ANSWER_VERDICT_INVALID:" + packet["position"] + ":" + str(row["i"]))
+        cover = row.get("redundant_with", [])
+        if any(other not in blocks or other == row["i"] for other in cover):
+            raise SystemExit("C02_ANSWER_CITES_A_BLOCK_NOT_IN_THE_PACKET:" + packet["position"] + ":" + str(row["i"]))
+        facts[row["i"]] = {"i": row["i"], "verdict": row["verdict"], "why": row["why"],
+                           "text_sha256": block["text_sha256"], "redundant_with": sorted(set(cover))}
+    pool = [{"i": row["i"], "text_sha256": row["text_sha256"]} for row in packet["blocks"]
+            if row["kind"] == "POOL"]
+    return {"position": packet["position"], "reader": reader,
+            "read_as": ("independent subagent reading: a fresh agent given c02-older-years/reader-brief.md "
+                        "and the packet, not the selector's rules or any earlier reading"),
+            "reader_note": answer.get("reader_note", ""),
+            "packet_document_id": packet["document_id"], "packet_candidate_hash": packet["candidate_hash"],
+            "packet_pool_rule": packet["pool_rule"],
+            "packet_selection": len(selected), "packet_pool_size": len(pool), "pool_blocks_read": len(pool),
+            "selected": [judged[i] for i in sorted(judged)],
+            "pool_facts": [facts[i] for i in sorted(facts)], "outside_pool_facts": [], "pool": pool}
 
 
 def load_adjudications(path=ADJUDICATION_PATH):
@@ -265,10 +376,46 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--position", action="append", default=[])
     parser.add_argument("--output")
+    parser.add_argument("--packet", action="store_true")
+    parser.add_argument("--merge", action="store_true")
+    parser.add_argument("--packet-file", type=Path)
+    parser.add_argument("--answer", type=Path)
+    parser.add_argument("--reader")
+    parser.add_argument("--source-root", type=Path, default=REPO)
     parser.add_argument("--runs-root", action="append", type=Path, default=[])
     parser.add_argument("--closure")
     parser.add_argument("--acceptance-output")
+    parser.add_argument("--readings-dir", type=Path, default=READING_DIR)
     args = parser.parse_args(argv)
+    source_root = args.source_root.resolve()
+    if args.merge:
+        if not (args.packet_file and args.answer and args.reader):
+            raise SystemExit("A_MERGE_NAMES_ITS_PACKET_ANSWER_AND_READER")
+        packet = json.loads(args.packet_file.read_text(encoding="utf-8"))
+        answer = json.loads(args.answer.read_text(encoding="utf-8"))
+        if answer.get("position") != packet["position"]:
+            raise SystemExit("C02_ANSWER_IS_FOR_ANOTHER_POSITION")
+        reading = merge_answer(packet=packet, answer=answer, reader=args.reader)
+        company_id, report_end = packet["position"].rsplit(":", 1)
+        target = OLDER_READING_DIR / (company_id + "-" + report_end + ".json")
+        if target.exists():
+            raise SystemExit("C02_READING_EXISTS:" + str(target.relative_to(REPO)))
+        target.write_text(json.dumps(reading, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        print(target.relative_to(REPO), len(reading["selected"]), len(reading["pool_facts"]))
+        return 0
+    if args.packet:
+        if len(args.position) != 1 or not args.output or args.runs_root:
+            raise SystemExit("A_PACKET_IS_ONE_POSITION_WRITTEN_TO_ITS_OWN_FILE")
+        company_id, report_end = args.position[0].rsplit(":", 1)
+        document, chosen, candidate = route_selection(repo_root=REPO, company_id=company_id,
+                                                      report_end=report_end, source_root=source_root)
+        packet = {"record_type": "ISSUE_47_C02_READING_PACKET", "position": args.position[0],
+                  "reader_tool": "tools/read_c02_composition.py",
+                  **make_packet(document=document, chosen=chosen, candidate=candidate)}
+        Path(args.output).write_text(json.dumps(packet, ensure_ascii=False, indent=1) + "\n",
+                                     encoding="utf-8")
+        print(args.position[0], {"selected": packet["selected_count"], "pool": packet["pool_count"]})
+        return 0
     if bool(args.runs_root) != bool(args.closure) or bool(args.closure) != bool(args.acceptance_output):
         raise SystemExit("RUNS_ROOT_CLOSURE_AND_ACCEPTANCE_OUTPUT_GO_TOGETHER")
     index = None
@@ -280,7 +427,9 @@ def main(argv=None):
                 receipts.append({**receipt, "_runs_root": str(root)})
         index = index_receipts(receipts=receipts)
     accepted = {}
-    readings = sorted(READING_DIR.glob("*.json"))
+    readings = sorted((REPO / args.readings_dir).glob("*.json"))
+    if not readings:
+        raise SystemExit("C02_NO_READINGS_IN:" + str(args.readings_dir))
     adjudications = load_adjudications()
     report = {}
     for path in readings:
@@ -289,7 +438,7 @@ def main(argv=None):
         if args.position and reading["position"] not in args.position:
             continue
         document, chosen, candidate = route_selection(repo_root=REPO, company_id=company_id,
-                                                      report_end=report_end)
+                                                      report_end=report_end, source_root=source_root)
         answer = read_position(document=document, chosen=chosen, reading=reading, adjudications=adjudications)
         answer["document_id"] = document["text_document_id"]
         answer["candidate_hash"] = candidate["candidate_hash"]
@@ -299,7 +448,8 @@ def main(argv=None):
             label = company_id.split("_")[0] + "-" + report_end[:4]
             accepted[label] = {**accepted_position(
                 index=index, closure=args.closure, company_id=company_id, report_end=report_end,
-                answer=answer, document=document, chosen=chosen, candidate=candidate),
+                answer=answer, document=document, chosen=chosen, candidate=candidate,
+                source_root=source_root),
                 "reading": str(path.relative_to(REPO)), "reading_sha256": answer["reading_sha256"]}
             print(label, accepted[label]["verdict"], flush=True)
     text = json.dumps(report, ensure_ascii=False, indent=1, sort_keys=True) + "\n"
