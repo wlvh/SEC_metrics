@@ -24,7 +24,7 @@ twice, or lists a block outside the pool.
 
 ## Where it stands
 
-Read so far (23 of 27), every position disagrees with the selection - blocks taken that
+Read so far (24 of 27), every position disagrees with the selection - blocks taken that
 state no composition fact and facts no taken block states. The classes seen:
 
 - taken but not composition facts: a classified board's slate count and the
