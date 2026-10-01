@@ -3041,12 +3041,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1145: Oberg chairs the Global Operating Committee of senior company leaders, a management committee, not a Board committee; NEO duties); 8 block(s) stating a composition fact that no taken block states (610: Chairman and CEO roles separate since 2012; plus rationale; 842: Goren joined the Board on March 1, 2022 (and 13 directors served at the 2021 meeting); the rest is attendance). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2021-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json"
+   ],
+   "partial_repair": {
+    "sentence_member_list": "6 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
+    "still_open": "5 fact block(s) missed (610, 842, 990, 991, 1144) and 1 block(s) taken that state no composition fact (1145); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MARRIOTT_2022_OLDER_YEAR_READING_DISAGREES",
@@ -3058,12 +3063,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 4 block(s) taken that state no composition fact (367: plan eligibility; '13 non-employee directors' is neither the board's size nor its independent count; 825: Hobart's other public company board (DICK'S), not the registrant's board); 15 block(s) stating a composition fact that no taken block states (504: Chairman of the Board and CEO roles kept separate for over ten years; rest is rationale; 665: Capuano's card: Executive Committee member). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json"
+   ],
+   "partial_repair": {
+    "sentence_member_list": "8 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
+    "still_open": "3 fact block(s) missed (504, 665, 856) and 4 block(s) taken that state no composition fact (367, 825, 922, 959); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MARRIOTT_2023_OLDER_YEAR_READING_DISAGREES",

@@ -167,6 +167,15 @@ class ACommitteePageIsReadAsAStructure(unittest.TestCase):
                             "Members: Mason Morfit (Chair), Neelie Kroes, John V. Roos, Maynard Webb(1)"])
         self.assertEqual({0, 1}, set(chosen))
 
+    def test_a_members_line_written_as_a_sentence(self):
+        # Marriott's older proxies end the list with a period and put a comma
+        # before its last "and"; either one alone failed the whole list.
+        texts = ["Nominating and Corporate Governance Committee",
+                 "Current Members: Frederick A. Henderson (Chair), Debra L. Lee, and Aylwin B. Lewis."]
+        self.assertEqual({0: ["COMMITTEE_HEADING"], 1: ["COMMITTEE_MEMBERS_LIST"]}, _selected(texts))
+        # Words that are not names are still no list, period or not.
+        self.assertEqual({}, _selected(["Audit Committee", "Members: see the table on page 12."]))
+
     def test_a_lead_in_to_duties_does_not_carry_the_duties(self):
         # The sentence that ends in the colon introduces duties, even though an
         # earlier sentence of the same block states the committee's makeup.

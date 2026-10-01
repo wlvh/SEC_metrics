@@ -191,12 +191,19 @@ def person_name(text):
     return words > 0
 
 
+# A list written as a sentence ends in a period and may put a comma before its
+# last "and" ("Frederick A. Henderson (Chair), Debra L. Lee, and Aylwin B.
+# Lewis."). The period is not the list's last initial: "B." keeps its own.
+_LIST_END = re.compile(r"(?<![A-Z])\.\s*$")
+_LIST_SEPARATOR = re.compile(r",\s*(?:and\s+)?|\s+and\s+|;\s*")
+
+
 def name_list(text):
     """True when the text is one name or a list of names."""
     t = re.sub(r"\((?:chair(?:man|person|woman)?|vice[- ]chair)\)", "", clean(text), flags=re.I)
     if person_name(t):
         return True
-    parts = [part for part in re.split(r",\s*|\s+and\s+|;\s*", t) if part.strip()]
+    parts = [part for part in _LIST_SEPARATOR.split(_LIST_END.sub("", t)) if part.strip()]
     return bool(parts) and all(person_name(part) for part in parts)
 
 

@@ -118,6 +118,9 @@ INJECTIONS = [
      "test_a_criterion_for_choosing_a_chair_seats_no_one"),
     ("THE_SQUARE_BULLET_IS_NOT_A_BULLET", "◾·", "·", "test_a_roster_marked_with_each_glyph_filings_print"),
     ("THE_MIDDLE_DOT_IS_NOT_A_BULLET", "◾·", "◾", "test_a_roster_marked_with_each_glyph_filings_print"),
+    ("A_SERIAL_COMMA_ENDS_A_LIST", 'r",\\s*(?:and\\s+)?|', 'r",\\s*|', "test_a_members_line_written_as_a_sentence"),
+    ("A_FINAL_PERIOD_ENDS_A_LIST", "_LIST_SEPARATOR.split(_LIST_END.sub(\"\", t))", "_LIST_SEPARATOR.split(t)",
+     "test_a_members_line_written_as_a_sentence"),
 ]
 
 
