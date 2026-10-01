@@ -674,6 +674,15 @@ _DIRECTOR_DETERMINATION = (
 _ROSTER_STATEMENT = re.compile(
     r"\b(?:nominees for election|director nominees|nominees|current directors|members of (?:the|our) board)\b"
     r"[^.;]{0,60}\b(?:are|include)\b\s*(?:the following\b|:)", re.I)
+# A body of the board made up of named directors that the filing calls a task
+# force, not a committee: "The Digital Innovation Task Force is made up of three
+# directors, Torrence Boone, Ashley Buchanan and Tracey Zhen, and senior members
+# of our digital ... teams" (c02-composition-facts/adjudicate.py,
+# BOARD_TASK_FORCE). The count of directors keeps a body of management out.
+_TASK_FORCE_MEMBERS = re.compile(r"\btask force\b[^.;]{0,40}?\b(?:is|was|are|were)\s+(?:currently\s+)?(?:composed|comprised"
+                                 r"|made up)\s+of\s+" + _NUM + r"\s+(?:of\s+(?:our|the)\s+)?(?:independent\s+)?"
+                                 r"directors\b", re.I)
+_TASK_FORCE_TITLE = re.compile(r"^(?-i:[A-Z])[\w&’'\- ]{0,60}\btask force$", re.I)
 # "Each nominee is currently a member of the Board": the slate is the sitting
 # board, so the names that follow are its members
 # (c02-composition-facts/adjudicate.py, NOMINEES_ARE_SITTING_DIRECTORS).
@@ -800,6 +809,8 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         if any(p.search(sentence) for p in _MEMBERSHIP_COUNT):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
+        if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):
+            labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         if _ROSTER_STATEMENT.search(sentence) or _SITTING_SLATE.search(sentence):
             labels.add("BOARD_ROSTER_STATEMENT")
         if (_QUALIFICATION.search(independence) and _MEMBER_REFERENCE.search(sentence)
@@ -1149,6 +1160,21 @@ _FOOTNOTED_CHANGE = re.compile(
 _FOOTNOTE_REACH = 80
 
 
+def _task_force_titles(blocks):
+    """The title printed over a task force's members sentence ("Digital Innovation Task Force")."""
+    taken = []
+    for i, block in enumerate(blocks):
+        if block["linked"] or not _TASK_FORCE_MEMBERS.search(clean(block["text"])):
+            continue
+        for j in range(i - 1, max(i - 4, -1), -1):
+            title = clean(blocks[j]["text"])
+            if not blocks[j]["linked"] and _TASK_FORCE_TITLE.match(title) and title.casefold() in \
+                    clean(block["text"]).casefold():
+                taken.append((j, "COMMITTEE_HEADING"))
+                break
+    return taken
+
+
 def _footnoted_changes(blocks, registrant):
     """A table's footnote that states a change, and the names that carry its mark.
 
@@ -1308,7 +1334,7 @@ def board_composition_facts(*, document):
                          *_cards(blocks, vocabulary, registrant),
                          *_unlabelled_card_items(blocks, vocabulary, registrant), *_designations(blocks, registrant),
                          *_registrant_title_lines(blocks, cores), *_director_groups(blocks, registrant),
-                         *_footnoted_changes(blocks, registrant)):
+                         *_footnoted_changes(blocks, registrant), *_task_force_titles(blocks)):
         take(index, label)
     candidates = [_excerpt(document, blocks[i], SECTION_ID, sorted(picked[i])) for i in sorted(picked)]
     body = {"record_type": "BOARD_COMPOSITION_SOURCE_CANDIDATES", "metric_id": "C02",

@@ -141,3 +141,13 @@
 **用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_slate_of_sitting_directors_says_who_the_members_are`（两种原句取；同意参选、别家董事会、任期句不取）。撤回模块改动时该用例失败。注错 `A_SITTING_SLATE_STATES_NOTHING`、`ANOTHER_BOARD_SEATS_THE_SLATE`；注错 51/51，对照 53 例。写用例时自己举的反例（别家公司的董事会）暴露了第一版会把它也读成本董事会，已收紧后再量。
 
 **量测**（`measured-10-sitting-slate.json`）：只在 Macy's 五个位置各新增这一块，漏选 118 → 113，误选 21 不变，最新年 Macy's 恢复一致。
+
+## 11. 由具名董事组成的董事会工作组
+
+**问题。** Macy's 2022、2023 年代理在委员会一节里有"Digital Innovation Task Force"及"The Digital Innovation Task Force is made up of three directors, Torrence Boone, Ashley Buchanan and Tracey Zhen, and senior members of our digital … teams"。2022 年读者判为事实，2023 年读者没取同样两块；统一裁定（`BOARD_TASK_FORCE`）判为事实：由具名董事组成的董事会机构，属委员会设置与成员。选择器只认"committee"，没有取。
+
+**改动。** `_TASK_FORCE_MEMBERS`：工作组"由 N 名董事组成"且句中写出人名，标为委员会构成陈述；只有管理层成员的工作组（"made up of senior leaders"）没有董事人数，不算。`_task_force_titles`：只有当上方三块内的标题正是这句话里的工作组名时才取标题。
+
+**用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_task_force_of_named_directors_is_a_body_of_the_board`（原句取；管理层工作组不取；标题取；别的工作组标题不取）。撤回模块改动时该用例失败。注错 `A_TASK_FORCE_STATES_NOTHING`、`A_TASK_FORCE_TITLE_IS_NOT_TAKEN`、`ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS`；注错 54/54，对照 54 例。
+
+**量测**（`measured-11-task-force.json`）：只在 Macy's 2022、2023 各新增标题与成员句两块，漏选 113 → 109，误选 21 不变。

@@ -332,6 +332,18 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertNotIn("BOARD_ROSTER_STATEMENT",
                                  statement_labels(text, frozenset({"audit", "compensation", "example"})))
 
+    def test_a_task_force_of_named_directors_is_a_body_of_the_board(self):
+        # Macy's (c02-composition-facts/adjudicate.py, BOARD_TASK_FORCE).
+        members = ("The Digital Innovation Task Force is made up of three directors, Torrence Boone, Ashley "
+                   "Buchanan and Tracey Zhen, and senior members of our digital and merchandising teams.")
+        self.assertStates(members, "COMMITTEE_COMPOSITION_STATEMENT")
+        # A task force of management names no director.
+        self.assertStatesNothing("The Integration Task Force is made up of senior leaders from each business.")
+        chosen = _selected(["Digital Innovation Task Force", members, "Audit Committee"])
+        self.assertEqual(["COMMITTEE_HEADING"], chosen[0])
+        # A title is taken only over the members sentence of the same task force.
+        self.assertNotIn(0, _selected(["Supply Chain Task Force", members]))
+
     def test_the_filing_says_whether_its_board_is_classified(self):
         slate = "To elect our three nominees for director to hold office until the 2029 Annual Meeting."
         classified = ["Class II Directors", "Steven J. Gomo", slate]

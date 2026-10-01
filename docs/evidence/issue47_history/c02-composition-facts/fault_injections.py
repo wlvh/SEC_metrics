@@ -162,6 +162,14 @@ INJECTIONS = [
      "test_a_slate_of_sitting_directors_says_who_the_members_are"),
     ('ANOTHER_BOARD_SEATS_THE_SLATE', '(?:\\s+of\\s+directors)?(?!\\s+of\\b)|directors?\\b(?!\\s+of\\b))',
      '|directors?\\b)', "test_a_slate_of_sitting_directors_says_who_the_members_are"),
+    # Repair 11: a task force of named directors.
+    ('A_TASK_FORCE_STATES_NOTHING', '        if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):\n'
+     '            labels.add("COMMITTEE_COMPOSITION_STATEMENT")\n', '',
+     "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
+    ('A_TASK_FORCE_TITLE_IS_NOT_TAKEN', ', *_task_force_titles(blocks)):', '):',
+     "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
+    ('ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS', ' and title.casefold() in \\\n'
+     '                    clean(block["text"]).casefold():', ':', "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
 ]
 
 

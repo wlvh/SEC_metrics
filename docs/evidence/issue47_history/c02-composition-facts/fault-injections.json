@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 53,
- "caught": 51,
- "total": 51,
+ "control_tests_run": 54,
+ "caught": 54,
+ "total": 54,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -426,6 +426,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_slate_of_sitting_directors_says_who_the_members_are"
+   ]
+  },
+  {
+   "injection": "A_TASK_FORCE_STATES_NOTHING",
+   "expected": "test_a_task_force_of_named_directors_is_a_body_of_the_board",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_task_force_of_named_directors_is_a_body_of_the_board"
+   ]
+  },
+  {
+   "injection": "A_TASK_FORCE_TITLE_IS_NOT_TAKEN",
+   "expected": "test_a_task_force_of_named_directors_is_a_body_of_the_board",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_task_force_of_named_directors_is_a_body_of_the_board"
+   ]
+  },
+  {
+   "injection": "ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS",
+   "expected": "test_a_task_force_of_named_directors_is_a_body_of_the_board",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_task_force_of_named_directors_is_a_body_of_the_board"
    ]
   }
  ]
