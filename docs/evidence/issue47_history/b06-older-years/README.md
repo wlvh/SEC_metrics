@@ -29,6 +29,19 @@ Every one of these is the program not handling a layout the filing does have, no
 that lacks the disclosure: the grammars and the fallback resolver were written on the latest
 reports (#28's ordinary route reads only those) and are frozen there.
 
+## The next blocker behind the first
+
+`sibling_concepts.py` asks the fallback resolver again for the five positions
+whose first stop is a missing text block that the filing tags under a sibling
+concept of the same taxonomy (Marriott FY2021-FY2022 tag their debt note
+`LongTermDebtTextBlock`, Paramount's predecessor FY2021-FY2023 their debt
+schedule `ScheduleOfDebtTableTextBlock`), accepting the sibling in that one
+process (a monkeypatch; the repository is not changed). None reaches a value:
+Marriott stops next at `COMPLETE_BALANCE_SHEET_MISSING_OR_AMBIGUOUS` and
+Paramount at `DEBT_FACT_MISSING` (`sibling-concepts.txt`). Each layout
+difference removed shows the next one, so a repair is a successor fitted to
+the older layouts stage by stage, not one alias.
+
 ## What this does not decide
 
 - Some of these cannot become values by recognising the layout alone. The note-carrying
