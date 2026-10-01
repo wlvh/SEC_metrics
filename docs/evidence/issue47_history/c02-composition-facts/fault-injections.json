@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 88,
- "caught": 125,
- "total": 125,
+ "control_tests_run": 89,
+ "caught": 130,
+ "total": 130,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -195,6 +195,7 @@
     "test_a_card_uses_the_filing_s_own_short_forms",
     "test_a_members_line_written_as_a_sentence",
     "test_a_quoted_nickname_between_the_names",
+    "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee",
     "test_a_roster_marked_with_each_glyph_filings_print",
     "test_a_table_s_names_and_the_notes_that_give_their_committee_roles",
     "test_a_title_line_at_this_registrant_and_not_elsewhere",
@@ -1061,6 +1062,46 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_company_named_with_the_roles_held_there"
+   ]
+  },
+  {
+   "injection": "THE_REPORT_SIGNATURES_ARE_NOT_READ",
+   "expected": "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"
+   ]
+  },
+  {
+   "injection": "A_SIGN_OFF_NEED_NOT_FOLLOW_A_NAMED_COMMITTEE",
+   "expected": "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"
+   ]
+  },
+  {
+   "injection": "THE_COMMITTEE_NAME_IS_NOT_CHECKED",
+   "expected": "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"
+   ]
+  },
+  {
+   "injection": "A_LONE_SIGNATURE_IS_A_ROSTER",
+   "expected": "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"
+   ]
+  },
+  {
+   "injection": "THE_SIGN_OFF_IS_TAKEN",
+   "expected": "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"
    ]
   }
  ]

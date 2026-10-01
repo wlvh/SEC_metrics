@@ -170,8 +170,8 @@ INJECTIONS = [
     ('A_TASK_FORCE_STATES_NOTHING', '        if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):\n'
      '            labels.add("COMMITTEE_COMPOSITION_STATEMENT")\n', '',
      "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
-    ('A_TASK_FORCE_TITLE_IS_NOT_TAKEN', '\n                         *_task_force_titles(blocks)):',
-     '):',
+    ('A_TASK_FORCE_TITLE_IS_NOT_TAKEN', '*_task_force_titles(blocks), *_signed_reports(',
+     '*_signed_reports(',
      "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
     ('ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS', ' and title.casefold() in \\\n'
      '                    clean(block["text"]).casefold():', ':', "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
@@ -384,6 +384,20 @@ INJECTIONS = [
      '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
      '    if match:\n        return True\n    match = re.search("\\\\b[Aa]t',
      'test_a_company_named_with_the_roles_held_there'),
+    # Repair 40: Macy's committee reports signed under "Respectfully submitted,".
+    ('THE_REPORT_SIGNATURES_ARE_NOT_READ', '*_task_force_titles(blocks), *_signed_reports(blocks, registrant)):',
+     '*_task_force_titles(blocks)):', "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('A_SIGN_OFF_NEED_NOT_FOLLOW_A_NAMED_COMMITTEE',
+     '        if not lead or committee_name(lead.group("name")) is None:\n            continue\n', '',
+     "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('THE_COMMITTEE_NAME_IS_NOT_CHECKED', 'if not lead or committee_name(lead.group("name")) is None:',
+     'if not lead:', "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('A_LONE_SIGNATURE_IS_A_ROSTER',
+     'if count >= 2 or (count and any(label == "COMMITTEE_CHAIR_NAME" for _, label in run)):',
+     'if count:', "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('THE_SIGN_OFF_IS_TAKEN', '            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))\n',
+     '            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))\n            taken.append((i, "REPORT_SIGNERS_COMMITTEE"))\n',
+     "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
 ]
 
 

@@ -1047,6 +1047,25 @@ class ACardOrTableStatesWhoAndWhat(unittest.TestCase):
                  "Hal Stanley Jones", "(Chair)", "Christopher CaposselaKevin P. ChiltonMichelle Goldberg", "50"]
         self.assertEqual({0, 1, 2, 3}, set(_selected(texts)))
 
+    def test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee(self):
+        # Macy's FY2022 blocks 1875-1883: the report's last sentence names the
+        # committee, "Respectfully submitted," follows, then the members sign.
+        sentence = ("The foregoing report was submitted by the Audit Committee and shall not be deemed to be "
+                    "“soliciting materials” or to be “filed” with the Securities and Exchange Commission.")
+        texts = [sentence, "Respectfully submitted,", "John A. Bryant, Chair", "Torrence N. Boone",
+                 "Ashley Buchanan", "Macy’s, Inc. 2022 Notice of Meeting and Proxy Statement 35"]
+        self.assertEqual({0: ["REPORT_SIGNERS_COMMITTEE"], 2: ["COMMITTEE_CHAIR_NAME"],
+                          3: ["COMMITTEE_MEMBER_NAME"], 4: ["COMMITTEE_MEMBER_NAME"]}, _selected(texts))
+        # The sign-off alone names no committee (constructed).
+        self.assertEqual({}, _selected(texts[1:]))
+        # A sentence naming no committee heads no roster (constructed).
+        unnamed = "The foregoing report shall not be deemed to be filed with the Securities and Exchange Commission."
+        self.assertEqual({}, _selected([unnamed, *texts[1:]]))
+        # A name the committee check refuses is no committee's (constructed).
+        self.assertEqual({}, _selected([sentence.replace("Audit Committee", "Report Committee"), *texts[1:]]))
+        # One unmarked signature is no roster, as under any other head (constructed).
+        self.assertEqual({}, _selected([sentence, "Respectfully submitted,", "Torrence N. Boone", texts[-1]]))
+
     def test_a_table_s_names_and_the_notes_that_give_their_committee_roles(self):
         # Enphase FY2021 blocks 144-162 (abridged): each name's marks point to
         # notes under the table that give the mark's committee role.

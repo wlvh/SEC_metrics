@@ -3166,23 +3166,21 @@
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-10-sitting-slate.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-11-task-force.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-11-task-force.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-40-report-signatures.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1089 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
-    "still_open": "5 fact block(s) missed (640, 703, 810, 1877, 1945) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "1 fact block(s) missed (810) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "roster_bullet_glyph": "24 blocks now taken, every one judged a composition fact: the rosters on the Audit, Compensation and Management Development, Finance and Nominating and Corporate Governance committee pages, whose members follow a '·' the selector did not count as a list bullet, so each roster ended before its first name (scripts/vnext/historical_board_composition.py _BULLET_CHARS; docs/evidence/issue47_history/c02-selector-repairs/README.md section 2 [shared-with-#28]).",
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "nominees_are_sitting_directors": "1 block(s) now taken that say each nominee is currently a member of the Board (NOMINEES_ARE_SITTING_DIRECTORS), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 10 [shared-with-#28]).",
-    "board_task_force": "2 block(s) now taken: the board task force made up of named directors and its title (BOARD_TASK_FORCE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 11 [shared-with-#28])."
+    "board_task_force": "2 block(s) now taken: the board task force made up of named directors and its title (BOARD_TASK_FORCE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 11 [shared-with-#28]).",
+    "report_signatures_40": "Committee report signatures under \"Respectfully submitted,\" are read with the sentence naming the submitting committee: 12 block(s) taken, 0 dropped, all judged facts or decided so by REPORT_SIGNERS_COMMITTEE (docs/evidence/issue47_history/c02-selector-repairs/README.md section 40 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
-     640,
-     703,
-     810,
-     1877,
-     1945
+     810
     ]
    }
   },
@@ -3207,7 +3205,8 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-10-sitting-slate.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-11-task-force.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-27-appointed-a-member.json",
-    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect-independence-relationships.json"
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect-independence-relationships.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-40-report-signatures.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1150 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
@@ -3216,7 +3215,8 @@
     "nominees_are_sitting_directors": "1 block(s) now taken that say each nominee is currently a member of the Board (NOMINEES_ARE_SITTING_DIRECTORS), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 10 [shared-with-#28]).",
     "board_task_force": "2 block(s) now taken: the board task force made up of named directors and its title (BOARD_TASK_FORCE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 11 [shared-with-#28]).",
     "appointed_a_member_27": "Repair 27 reads a director appointed with an office and as a member of the board: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 27 [shared-with-#28]).",
-    "independence_relationship_adjudication": "The uniform adjudication's INDEPENDENCE_RELATIONSHIP_DETERMINATION rule decides block 1107 (the NCG Committee determined, for each Non-Employee Director, that neither the director nor any immediate family member was employed by a Macy's supplier or the amounts were below the independence standards' thresholds) a composition fact: an independence determination about the directors. The reader had judged it not one; the FY2024, FY2025 and FY2026 readers took the same sentence (docs/evidence/issue47_history/c02-composition-facts/README.md, 裁定 [shared-with-#28])."
+    "independence_relationship_adjudication": "The uniform adjudication's INDEPENDENCE_RELATIONSHIP_DETERMINATION rule decides block 1107 (the NCG Committee determined, for each Non-Employee Director, that neither the director nor any immediate family member was employed by a Macy's supplier or the amounts were below the independence standards' thresholds) a composition fact: an independence determination about the directors. The reader had judged it not one; the FY2024, FY2025 and FY2026 readers took the same sentence (docs/evidence/issue47_history/c02-composition-facts/README.md, 裁定 [shared-with-#28]).",
+    "report_signatures_40": "Committee report signatures under \"Respectfully submitted,\" are read with the sentence naming the submitting committee: 15 block(s) taken, 0 dropped, all judged facts or decided so by REPORT_SIGNERS_COMMITTEE (docs/evidence/issue47_history/c02-selector-repairs/README.md section 40 [shared-with-#28])."
    },
    "selection_problems": {}
   },
@@ -3239,14 +3239,16 @@
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-10-sitting-slate.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-26-dated-departures.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-27-appointed-a-member.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-27-appointed-a-member.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-40-report-signatures.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1217 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
     "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "nominees_are_sitting_directors": "1 block(s) now taken that say each nominee is currently a member of the Board (NOMINEES_ARE_SITTING_DIRECTORS), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 10 [shared-with-#28]).",
     "dated_departures_26": "Repair 26 reads a departure dated in the year wherever it is printed: 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 26 [shared-with-#28]).",
-    "appointed_a_member_27": "Repair 27 reads a director appointed with an office and as a member of the board: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 27 [shared-with-#28])."
+    "appointed_a_member_27": "Repair 27 reads a director appointed with an office and as a member of the board: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 27 [shared-with-#28]).",
+    "report_signatures_40": "Committee report signatures under \"Respectfully submitted,\" are read with the sentence naming the submitting committee: 13 block(s) taken, 0 dropped, all judged facts or decided so by REPORT_SIGNERS_COMMITTEE (docs/evidence/issue47_history/c02-selector-repairs/README.md section 40 [shared-with-#28])."
    },
    "selection_problems": {}
   },
@@ -3268,13 +3270,15 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-10-sitting-slate.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-26-dated-departures.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-26-dated-departures.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-40-report-signatures.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1083 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
     "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "nominees_are_sitting_directors": "1 block(s) now taken that say each nominee is currently a member of the Board (NOMINEES_ARE_SITTING_DIRECTORS), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 10 [shared-with-#28]).",
-    "dated_departures_26": "Repair 26 reads a departure dated in the year wherever it is printed: 3 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 26 [shared-with-#28])."
+    "dated_departures_26": "Repair 26 reads a departure dated in the year wherever it is printed: 3 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 26 [shared-with-#28]).",
+    "report_signatures_40": "Committee report signatures under \"Respectfully submitted,\" are read with the sentence naming the submitting committee: 13 block(s) taken, 0 dropped, all judged facts or decided so by REPORT_SIGNERS_COMMITTEE (docs/evidence/issue47_history/c02-selector-repairs/README.md section 40 [shared-with-#28])."
    },
    "selection_problems": {}
   },
@@ -3635,13 +3639,15 @@
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-composition-facts/judgements/macys-2026-01-31.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-10-sitting-slate.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-10-sitting-slate.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-40-report-signatures.json"
    ],
    "selection_problems": {},
    "partial_repair": {
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
-    "nominees_are_sitting_directors": "1 block(s) now taken that say each nominee is currently a member of the Board (NOMINEES_ARE_SITTING_DIRECTORS), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 10 [shared-with-#28])."
+    "nominees_are_sitting_directors": "1 block(s) now taken that say each nominee is currently a member of the Board (NOMINEES_ARE_SITTING_DIRECTORS), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 10 [shared-with-#28]).",
+    "report_signatures_40": "Committee report signatures under \"Respectfully submitted,\" are read with the sentence naming the submitting committee: 14 block(s) taken, 0 dropped, all judged facts or decided so by REPORT_SIGNERS_COMMITTEE (docs/evidence/issue47_history/c02-selector-repairs/README.md section 40 [shared-with-#28])."
    }
   },
   {

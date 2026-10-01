@@ -1488,6 +1488,34 @@ def _task_force_titles(blocks):
     return taken
 
 
+# A committee report that closes with a sentence naming the committee that
+# submits it, then "Respectfully submitted," and the members' names (Macy's
+# proxies): the sentence names the committee whose members sign beneath the
+# sign-off, as "Submitted by the Audit Committee ..." heads Lumen's signatures.
+_SUBMITTED_BY = re.compile(r"\breport was submitted by the (?P<name>(?-i:[A-Z])[\w&’' ,]{0,80}?\bcommittee)\b", re.I)
+_SIGN_OFF = re.compile(r"^respectfully submitted,?$", re.I)
+
+
+def _signed_reports(blocks, registrant):
+    """The sentence naming a report's committee and the members who sign it.
+
+    The sign-off names neither a committee nor a person and is not taken; the
+    signatures are read as any roster is, at least two names or a chair.
+    """
+    taken = []
+    for i in range(1, len(blocks)):
+        if blocks[i]["linked"] or blocks[i - 1]["linked"] or not _SIGN_OFF.match(clean(blocks[i]["text"])):
+            continue
+        lead = _SUBMITTED_BY.search(clean(blocks[i - 1]["text"]))
+        if not lead or committee_name(lead.group("name")) is None:
+            continue
+        run, count, _ = _roster_run(blocks, i + 1, min(len(blocks), i + 1 + _SECTION_REACH), registrant)
+        if count >= 2 or (count and any(label == "COMMITTEE_CHAIR_NAME" for _, label in run)):
+            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))
+            taken.extend(run)
+    return taken
+
+
 def _footnoted_changes(blocks, registrant):
     """A table's footnote that states a change, and the names that carry its mark.
 
@@ -1677,7 +1705,7 @@ def board_composition_facts(*, document, period_start):
                          *_unlabelled_card_items(blocks, vocabulary, registrant), *_designations(blocks, registrant),
                          *_registrant_title_lines(blocks, cores), *_director_groups(blocks, registrant),
                          *_footnoted_changes(blocks, registrant), *_footnoted_roles(blocks, registrant),
-                         *_task_force_titles(blocks)):
+                         *_task_force_titles(blocks), *_signed_reports(blocks, registrant)):
         take(index, label)
     candidates = [_excerpt(document, blocks[i], SECTION_ID, sorted(picked[i])) for i in sorted(picked)]
     body = {"record_type": "BOARD_COMPOSITION_SOURCE_CANDIDATES", "metric_id": "C02",

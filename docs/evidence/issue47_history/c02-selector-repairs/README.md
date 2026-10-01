@@ -758,3 +758,37 @@
 共 125/125，对照 88 个用例。
 
 **量测**（`measured-39-legacy-plan-paragraph.json`）：只移走 Lumen 2021 第 1236 块、2022 第 1324 块（读者都判为非事实）；2023、2024 两块仍被取，标注现在来自离任句。误选 7→5，漏选 20 不变，最新年不变。
+
+## 40. 委员会报告的签名：写在 "Respectfully submitted," 下面、由上一句点名委员会
+
+**问题。** Macy's 五份代理里审计委员会与 CMD 委员会的报告都这样收尾：
+
+- 一句 "The foregoing report was submitted by the Audit Committee and shall not be deemed to be 'soliciting materials' …"；
+- 一块 "Respectfully submitted,"；
+- 成员签名，第一位带 ", Chair"。
+
+别家代理的签名上方是写出委员会名的标题（"Members of the Audit Committee:"、"THE AUDIT COMMITTEE"、"Submitted by the Audit Committee of the Board of Directors."），选择器按标题读签名。Macy's 签名上方那块不写委员会名，所以签名一块都没取。2022 年因此漏了第 1877、1945 块（Bryant、Blake 的主席签名）；读者给第 703、640 块（卡片上的 "Audit (Chair)"、"CMD (Chair)"）引用的覆盖正是这两块，于是这两块也算漏选。其余年份的签名都由别处的复述覆盖，所以没有显示为漏选。
+
+**先裁定，再改选择器。** 签名上方这两块读者意见相反，按第 20、21 条统一裁定（`../c02-composition-facts/README.md`，提交 `cd581ac9`，与本处分开提交）：点名委员会的那一句为事实（其中法律声明不是事实），"Respectfully submitted," 为非事实。
+
+**改动。** 新增 `_signed_reports`：
+
+- 一块 "Respectfully submitted,"；
+- 紧挨在它上面的一句写着 "report was submitted by the <名字> Committee"，名字须通过与签名标题相同的委员会名检查；
+- 它下面的签名按任何名单的读法读，至少两人或有一位主席。
+
+取那一句（标注 `REPORT_SIGNERS_COMMITTEE`）和签名，不取 "Respectfully submitted,"。只认语料里的这种写法；中间隔着页面装饰的情形语料里没有，不收。
+
+**用例与注错。** `test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee`：Macy's FY2022 的原文为正例；以下四个是构造的反例：只有 "Respectfully submitted," 没有上一句；上一句不写委员会名；委员会名不通过检查（"Report Committee"）；只有一个不带主席标注的签名。注错：
+
+- `THE_REPORT_SIGNATURES_ARE_NOT_READ`（不调用新读法）；
+- `A_SIGN_OFF_NEED_NOT_FOLLOW_A_NAMED_COMMITTEE`（不看上一句）；
+- `THE_COMMITTEE_NAME_IS_NOT_CHECKED`（不做委员会名检查）；
+- `A_LONE_SIGNATURE_IS_A_ROSTER`（一个签名就算名单）；
+- `THE_SIGN_OFF_IS_TAKEN`（把 "Respectfully submitted," 也取进来）。
+
+新读法接在工作组标题读法后面，工作组的注错 `A_TASK_FORCE_TITLE_IS_NOT_TAKEN` 原本删掉那一整行，现改为只去掉工作组读法，针对的仍是原来的规则。
+
+共 130/130，对照 89 个用例。
+
+**量测**（`measured-40-report-signatures.json`）：只在 Macy's 五个位置新增，共 67 块：10 块点名委员会的句子（FY2023 两块读者判为部分事实，另 8 块由第 20 条裁定为事实）、57 块签名（读者都判为事实）；没有去掉任何块，其余 32 个位置不变。漏选 20→16，误选 5 不变。Macy's 2022 只剩第 810 块（NCG 委员会主席，只写在卡片上，NCG 没有报告）；最新年 Macy's 2026 多取 14 块，读者都判为事实或由裁定判为事实，值会变，下一次运行后要重读。
