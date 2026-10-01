@@ -3336,19 +3336,20 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-35-where-clause-body.json"
    ],
    "partial_repair": {
     "sentence_member_list": "8 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "0 fact block(s) missed (none) and 3 block(s) taken that state no composition fact (825, 922, 959); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "0 fact block(s) missed (none) and 2 block(s) taken that state no composition fact (825, 922); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "quoted_nickname": "2 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "where_clause_body_35": "Repair 35 places a board named in a 'where' clause at the body before it: 0 block(s) added, 1 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 35 [shared-with-#28])."
    },
    "selection_problems": {
     "wrongly_taken": [
      825,
-     922,
-     959
+     922
     ]
    }
   },
@@ -3369,18 +3370,19 @@
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-35-where-clause-body.json"
    ],
    "selection_problems": {
     "wrongly_taken": [
-     1537,
-     1583
+     1537
     ]
    },
    "partial_repair": {
-    "still_open": "0 fact block(s) missed (none) and 2 block(s) taken that state no composition fact (1537, 1583); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "0 fact block(s) missed (none) and 1 block(s) taken that state no composition fact (1537); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28])."
+    "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28]).",
+    "where_clause_body_35": "Repair 35 places a board named in a 'where' clause at the body before it: 0 block(s) added, 1 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 35 [shared-with-#28])."
    }
   },
   {

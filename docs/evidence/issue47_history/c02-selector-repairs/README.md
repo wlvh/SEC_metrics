@@ -627,3 +627,19 @@
 **用例与注错。** `test_who_is_eligible_for_pay_is_not_a_qualification`：第 943、531 块原文为反例。注错 `PAY_ELIGIBILITY_IS_A_QUALIFICATION`（去掉这一排除）。共 111/111，对照 83 个用例。
 
 **量测**（`measured-34-pay-eligibility.json`）：只移走这三块；误选 14→11，不一致位置 15→12（Enphase 2021、2022、2023 现与判读一致），漏选 24 不变，最新年不变。
+
+## 35. "…, where he served on the board of directors" 说的是逗号前那个机构的董事会
+
+**问题。** Marriott 2022 第 959 块、2023 第 1583 块是董事 Grant Reid 的履历："… and the Consumer Goods Forum, where he served on the board of directors, co-chaired the governance committee, and co-led the Forest Positive Coalition."。读者都判为非事实（Consumer Goods Forum 的董事会和治理委员会，不是本公司的）。选择器的"别的机构"检查认 "the board of Acme"、"At Acme, …"，不认"Acme, where he served on the board"，于是按委员会构成取了。
+
+**先量后改。** 37 份文档里 "<机构>, where he/she served … board" 只有三处：上面两块，和 Paramount 2024 第 802 块（"the Council on Foreign Relations, where she served on the Board of Directors from 2010 to …"，本来就没被取，改后也不取）。
+
+**改动。** "where he/she/they" 从句前紧挨着的大写名字不是本公司或本公司委员会的名字时，算别的机构。本公司名字不算别的机构，这一点沿用其余几条检查的做法，语料里没有本公司 + "where" 的句子，用构造句行使。
+
+**用例与注错。** `test_a_board_a_where_clause_is_about_is_that_body_s`：第 959 块那句原文为反例；"Example Corporation, where he served on the Audit Committee" 为构造正例。注错：
+- `A_WHERE_CLAUSE_BODY_IS_THIS_BOARD`（去掉这条检查）；
+- `THE_REGISTRANT_BEFORE_WHERE_IS_ANOTHER_BODY`（本公司名字也算别的机构）。
+
+这条检查插在第 28 处那条检查之后，那条的注错 `THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S` 原目标文本跨到了下一行，第一次核对时在它那里对不上，已改目标，针对的仍是原规则。共 113/113，对照 84 个用例。
+
+**量测**（`measured-35-where-clause-body.json`）：只移走这两块；误选 11→9，漏选 24 不变，不一致位置 12 不变（两个位置各还有一处把别家公司名当人名的误选），最新年不变。

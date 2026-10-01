@@ -638,6 +638,18 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:50]):
                 self.assertEqual([], self.labels_for(text, "2022-01-01"))
 
+    def test_a_board_a_where_clause_is_about_is_that_body_s(self):
+        # Marriott FY2022 block 959 and FY2023 block 1583: the Consumer Goods Forum's board.
+        self.assertEqual([], self.labels_for(
+            "Grant also contributes significant sustainability and climate expertise, gained from his past and "
+            "current roles with various business organizations, including the Sustainable Markets Initiative’s "
+            "Agribusiness Task Force, Business for Inclusive Growth, One Planet for Bio Diversity, and the Consumer "
+            "Goods Forum, where he served on the board of directors, co-chaired the governance committee, and "
+            "co-led the Forest Positive Coalition.", "2022-01-01"))
+        # The registrant itself (constructed).
+        self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", self.labels_for(
+            "He spent his career with Example Corporation, where he served on the Audit Committee.", "2022-01-01"))
+
     def test_no_change_to_the_committees_in_the_year(self):
         # Pfizer FY2022 block 799 and FY2023 block 884: the readers judged each
         # a fact about the committees' members that year.

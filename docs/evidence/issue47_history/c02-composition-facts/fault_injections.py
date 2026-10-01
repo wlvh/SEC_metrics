@@ -265,7 +265,8 @@ INJECTIONS = [
      'test_appointed_with_an_office_and_as_a_member_of_the_board'),
     ('ANOTHER_COMPANY_S_MEETING_IS_THIS_BOARD_S', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z][\\\\w&\\\\-]+)(?:\\\\s+[A-Z][\\\\w&\\\\-]+)*[’\']s\\\\s+"\n                             "(?:[Aa]nnual|[Ss]pecial)\\\\s+[Mm]eetings?\\\\b", sentence):\n        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n', '',
      'test_standing_down_at_another_company_s_meeting'),
-    ('THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S', '        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n    match = re.search(', '        if match.group(1).casefold() not in {"board"}:\n            return True\n    match = re.search(',
+    # Repair 35 put the "where" check after this loop, so the target ends at it.
+    ('THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S', '        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n    # The body a', '        if match.group(1).casefold() not in {"board"}:\n            return True\n    # The body a',
      'test_standing_down_at_another_company_s_meeting'),
     ('THE_ARTICLE_NAMES_THE_COMPANY', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z]', '    for match in re.finditer("\\\\b([A-Z]',
      'test_standing_down_at_another_company_s_meeting'),
@@ -333,6 +334,15 @@ INJECTIONS = [
     ('PAY_ELIGIBILITY_IS_A_QUALIFICATION',
      'r"|\\beligible\\s+for\\b[^.;]{0,40}?\\bcompensation\\b"', 'r""',
      'test_who_is_eligible_for_pay_is_not_a_qualification'),
+    # Repair 35: "... and the Consumer Goods Forum, where he served on the board of directors".
+    ('A_WHERE_CLAUSE_BODY_IS_THIS_BOARD',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     '    match = re.search("\\\\b[Aa]t',
+     'test_a_board_a_where_clause_is_about_is_that_body_s'),
+    ('THE_REGISTRANT_BEFORE_WHERE_IS_ANOTHER_BODY',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     '    if match:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     'test_a_board_a_where_clause_is_about_is_that_body_s'),
 ]
 
 

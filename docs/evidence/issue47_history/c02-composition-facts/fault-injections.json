@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 83,
- "caught": 111,
- "total": 111,
+ "control_tests_run": 84,
+ "caught": 113,
+ "total": 113,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -19,6 +19,7 @@
    "expected": "test_another_organisations_board_is_not_this_one",
    "result": "CAUGHT",
    "failed": [
+    "test_a_board_a_where_clause_is_about_is_that_body_s",
     "test_a_join_dated_in_the_year_is_a_change",
     "test_another_organisations_board_is_not_this_one",
     "test_standing_down_at_another_company_s_meeting",
@@ -942,6 +943,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_who_is_eligible_for_pay_is_not_a_qualification"
+   ]
+  },
+  {
+   "injection": "A_WHERE_CLAUSE_BODY_IS_THIS_BOARD",
+   "expected": "test_a_board_a_where_clause_is_about_is_that_body_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_board_a_where_clause_is_about_is_that_body_s"
+   ]
+  },
+  {
+   "injection": "THE_REGISTRANT_BEFORE_WHERE_IS_ANOTHER_BODY",
+   "expected": "test_a_board_a_where_clause_is_about_is_that_body_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_board_a_where_clause_is_about_is_that_body_s"
    ]
   }
  ]

@@ -947,6 +947,12 @@ def _other_organization(sentence, own_words):
                              "(?:[Aa]nnual|[Ss]pecial)\\s+[Mm]eetings?\\b", sentence):
         if match.group(1).casefold() not in {"company", "board"} | own_words:
             return True
+    # The body a "where" clause is about: "... and the Consumer Goods Forum, where
+    # he served on the board of directors, co-chaired the governance committee"
+    # (a Marriott director's biography).
+    match = re.search("\\b([A-Z][\\w&’'\\-]+)(?:\\s+[A-Z][\\w&’'\\-]+)*\\s*,\\s+where\\s+(?:he|she|they)\\b", sentence)
+    if match and match.group(1).casefold() not in own_words:
+        return True
     match = re.search("\\b[Aa]t\\s+([A-Z][\\w&’'\\-]+)(?:\\s+[A-Z][\\w&’'\\-]+)*\\s*,", sentence)
     return bool(match and re.sub("[’']s$", "", match.group(1)).casefold() not in own_words)
 
