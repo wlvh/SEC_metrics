@@ -24,8 +24,8 @@ twice, or lists a block outside the pool.
 
 ## Where it stands
 
-Read so far (24 of 27), every position disagrees with the selection - blocks taken that
-state no composition fact and facts no taken block states. The classes seen:
+All 27 are read (`judgements/`); every position disagrees with the selection - blocks taken
+that state no composition fact and facts no taken block states. The classes seen:
 
 - taken but not composition facts: a classified board's slate count and the
   election agenda items carrying it (Enphase), class headings of the summary
@@ -44,6 +44,19 @@ reader judged it a fact), bare rosters of nominees, "<role> since:" fields,
 a card's "Committees: N/A" - which are to be decided by rule and applied to
 every reading of the class, the latest years' included (as
 `../c02-composition-facts/adjudicate.py` does for two classes).
+
+Three readers were stopped by the API session limit and resumed from where they
+stopped (Pfizer FY2023, FY2024, Salesforce FY2025). Two of them each wrote a helper
+script under the same scratch name at about the same time, so for a while one
+reader's script printed the other's packet; both noticed and printed inline from
+then on. `answer_crosscheck.py` checks every answer against that: the distinctive
+words of each `why` are looked up in the block (with two neighbours) of the
+answer's own packet and, at the same index, of every other packet
+(`answer-crosscheck.txt`). Of Salesforce FY2025's 107 entries 80 match their own
+block and two match another packet better, both on a bare number ("12", "2025");
+Pfizer FY2024 has 110 of 159 and two numbers or common names. Neither answer reads
+like another packet's blocks. The check is a heuristic: a `why` that names
+nothing distinctive is not tested by it.
 
 No older-year C02 value is accepted, and none was before. The acceptance pass,
 the defects with their causes and the general selector repairs follow the
