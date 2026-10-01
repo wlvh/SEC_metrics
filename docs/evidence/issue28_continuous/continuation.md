@@ -1,5 +1,7 @@
 # Issue28当前入口：D04十家公司完整真实候选，B13第1组修后仍截断
 
+**2026-10-02 D01 Paramount标题截断的本方确切归属：**在同主体FY2025原Item1A块292，完整风险标题写“Failures to comply with or changes in U.S. or foreign laws…”，但本方前导加粗解析遇到`U.S.`内未加粗句点便停在“…changes in U”，且残句进入38条原生D01 Result。#28当前私有Run和保留390索引是同一`sha256:a7a52ae7…`身份；已直接核原件/候选/Evidence/Result/原字节，把此一坐标从当前可信结果扣留，别的D01不按名称撤回。结合先前C02六坐标十二身份和D02四坐标四身份，当前合计十一坐标/十七确诊Result身份；历史原件/Run/Result与390分母不改。#47固定增量有标点桥接修复线索，本方还未移植、测试或取得新结果，不借对方信用；真实调用0/0/0。证据`collab-d01-paramount-20261002/`。
+
 **2026-10-02 D02三家确切误纳补充：**在Lumen单坐标之后，本方又逐份核对Pfizer/Paramount/Enphase FY2025已保存正常Run的原10-K字节、Candidate/Evidence/Result及390旧索引同一身份：Pfizer的Item8原块2175是估计风险政策、2240是应收款催收政策；Paramount的2257是贷款杠杆契约的诉讼准备加回类别；Enphase的Item3块755只是带页码的页脚。它们分别进入本方58/16/18项D02 Result，却不披露实际诉讼。**Paramount块2108末句报告具体股东诉讼收益，本轮不把它误撤回。**据此只扣留三家各一个精确Result和坐标，其他摘录及公司不连坐；与Lumen及C02旧缺陷合计现为十坐标/十六个确诊Result身份，旧Run、原件、390分母保留。共同根因的通用修复仍待开发，不能靠删掉“litigation/legal”误伤合法Item8摘录；真实调用0/0/0。证据`collab-d02-current-source-audit-20261002/`。
 
 **2026-10-02 D02 Lumen确切结果纠错：**#47固定`1f3f446c`登记提示Item8原块1670为外部法律顾问费用会计政策，本方从已保存FY2025原10-K的SourceReference/RawBlob/候选/Evidence/Result逐层核验确有该块，原文虽列“litigation”为咨询事项之一，却没有报告本公司诉讼或索赔。#28私有普通Run只选15项（不是对方历史41项），这段作为`excerpt_1`进入`sha256:7e2d21f0…`；既有390对照与私有Run为**同一Result ID**。因此仅将`lumen_technologies|D02|2025-12-31`这一坐标和该确切身份从本方当前可信结果中扣留，原Run/Result/原件与390分母保留，其他14摘录及其他公司D02不按指标名撤回。`known_result_defects.json`在此Lumen阶段为七坐标/十三确诊Result身份（后续三家另见上段）；修正来源选择仍待本方实现，不从#47复制运行结果。零真实调用，原账本和来源日志哈希不变；证据`collab-d02-lumen-20261002/`。

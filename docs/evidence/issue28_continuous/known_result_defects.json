@@ -6,8 +6,8 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 10,
-    "newly_excluded_result_id_count": 16,
+    "newly_excluded_coordinate_count": 11,
+    "newly_excluded_result_id_count": 17,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
@@ -16,6 +16,7 @@
       "macys|C02|2026-01-31",
       "marriott_international|C02|2025-12-31",
       "paramount_skydance_paramount_global|C02|2025-12-31",
+      "paramount_skydance_paramount_global|D01|2025-12-31",
       "paramount_skydance_paramount_global|D02|2025-12-31",
       "pfizer|C02|2025-12-31",
       "pfizer|D02|2025-12-31"
@@ -658,6 +659,42 @@
       "evidence": [
         "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/audit.json",
         "docs/evidence/issue28_continuous/ordinary-enphase-current-36-cli-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "D01_PARAMOUNT_2025_HEADING_TRUNCATED_AT_US_PERIOD",
+      "metric_id": "D01",
+      "company_id": "paramount_skydance_paramount_global",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:a7a52ae7df0eb150b4cc6cf66c08b508056febcfbd013ea7a9ec85026c144cca",
+      "run_id": "run:ordinary-integrated:3ab895343886afabb650f73dcb98539ad974fb6993739059edb2c188083843e3",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "PUNCTUATION_BRIDGE_NOT_YET_INTEGRATED_IN_28",
+      "current_credit": "WITHDRAWN_CONFIRMED_TRUNCATED_RISK_HEADING",
+      "summary": "The original Item 1A source block has a complete U.S./foreign-law risk heading. The exact #28 Result renders only its broken leading-emphasis prefix through U. Other D01 coordinates and headings are not judged by this entry.",
+      "source_block": {
+        "block_index": 292,
+        "section_id": "ITEM_1A",
+        "accession": "0002041610-26-000011",
+        "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+        "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+        "selected_span_sha256": "93aed129c3a080394864a6a4e33ae79a0aa8a08abeb7942d388be17a5867d720",
+        "full_original_block_span_sha256": "fa3c8a1c8a0f733e59365dc68dcd0a693f25d23855b598f97a1d443cb47b5e98",
+        "delivered_heading": "Failures to comply with or changes in U",
+        "full_original_block_text": "Failures to comply with or changes in U.S. or foreign laws or regulations could have an adverse effect on our business, financial condition or results of operations."
+      },
+      "peer_origin": {
+        "fixed_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+        "defect_id": "D01_PARAMOUNT_2025_HEADING_TRUNCATED_AT_AN_UNBOLDED_PERIOD",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d01-paramount-20261002/audit.json",
+        "docs/evidence/issue28_continuous/ordinary-paramount-current-36-cli-20260929/comparison.json"
       ],
       "released": [],
       "original_record_retained": true
