@@ -699,6 +699,15 @@ _LEADERSHIP = (
                + _BOARD_QUALIFIER + r"(?:" + _CHAIR_WORD + r" of the board|board chair|" + _LEAD_ROLE
                + r"|presiding (?:independent )?director)\b", re.I),
 )
+# "Having" names who holds the board's chair: "In addition, having a Ford family
+# member, William Clay Ford, Jr., as our Executive Chair brings a unique and
+# historical long-term perspective to Board deliberations" (Ford's proxies;
+# the latest-year reader took the holder, the older readers the join beside
+# it). It states a holder only where it names the person, as a chair's fee
+# explanation does (_SERVICE_AS_CHAIR); a committee's chair is not the
+# board's (the same guard as the fourth _LEADERSHIP pattern).
+_HAVING_AS_CHAIR = re.compile(r"\bhaving\b[^.;]{0,60}\bas\s+our\s+" + _BOARD_QUALIFIER + _SOLE_CHAIR
+                              + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I)
 # Whether the board's chair and the chief executive are two people or one: "the
 # Board has chosen to separate the roles of Chairman of the Board and CEO",
 # "Our Chairman and CEO functions currently are performed by a single
@@ -1053,6 +1062,8 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         owned = _OWNED_LEADERSHIP.search(sentence)
         if (any(p.search(sentence) for p in _LEADERSHIP)
                 or (owned and owned.group("owner").casefold() in registrant)):
+            labels.add("BOARD_LEADERSHIP_STATEMENT")
+        if _HAVING_AS_CHAIR.search(sentence) and _mentions_person(sentence):
             labels.add("BOARD_LEADERSHIP_STATEMENT")
         if (_CHAIR_CEO_STRUCTURE.search(sentence) and not _BOTH_STRUCTURES.search(sentence)
                 and not _STRUCTURE_POLICY.search(sentence)):

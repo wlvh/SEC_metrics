@@ -192,6 +192,14 @@ INJECTIONS = [
     ('ANY_COUNT_AFTER_ALL_IS_A_SIZE', 'r"|\\ball\\s+" + _NUM + r"\\s+directors\\s+then\\s+serving\\b"',
      'r"|\\ball\\b[^.;]{0,20}?\\b" + _NUM + r"\\b[^.;]{0,40}?\\b(?:directors|members)\\b"',
      "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    # Repair 38: 'having <person> as our Executive Chair' names the holder.
+    ('HAVING_A_CHAIR_IS_NOT_READ', '        if _HAVING_AS_CHAIR.search(sentence) and _mentions_person(sentence):\n'
+     '            labels.add("BOARD_LEADERSHIP_STATEMENT")\n', '', "test_having_a_named_director_as_our_chair"),
+    ('A_HAVING_HOLDER_NEED_NOT_BE_NAMED', '_HAVING_AS_CHAIR.search(sentence) and _mentions_person(sentence):',
+     '_HAVING_AS_CHAIR.search(sentence):', "test_having_a_named_director_as_our_chair"),
+    ('A_HAVING_COMMITTEE_CHAIR_IS_THE_BOARD_S', '_SOLE_CHAIR\n'
+     '                              + r"\\b(?!\\s+of\\s+(?:the|our|its)\\s+[^.;]{0,60}\\bcommittee)", re.I)',
+     '_SOLE_CHAIR\n                              + r"\\b", re.I)', "test_having_a_named_director_as_our_chair"),
     ('A_DATED_JOIN_COUNTS_IN_ANY_YEAR', 'undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence',
      'undated = sentence', "test_a_join_dated_before_the_year_is_tenure"),
     ('AN_IN_YEAR_JOIN_STATES_NOTHING',

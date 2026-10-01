@@ -439,6 +439,24 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "directors attended our Annual Meeting of Stockholders in 2021.", frozenset({"example"}),
             period_start=START))
 
+    def test_having_a_named_director_as_our_chair(self):
+        # Ford's proxies name the Executive Chair this way; the latest-year
+        # reader took the holder (FY2024 block 942).
+        self.assertStates("In addition, having a Ford family member, William Clay Ford, Jr., as our Executive Chair "
+                          "brings a unique and historical long-term perspective to Board deliberations, while "
+                          "Alexandra Ford English and Henry Ford III, who were first elected to the Board at the 2021 "
+                          "Annual Meeting, provide perspectives and valuable insights while continuing the Ford "
+                          "family’s more than 121 years of active involvement with and stewardship of the Company.",
+                          "BOARD_LEADERSHIP_STATEMENT")
+        # Constructed: no one named is a preference, not a holder; a
+        # committee's chair is not the board's.
+        for text in ("We believe that having an independent director as our Chair strengthens the Board.",
+                     "In addition, having Jane Doe as our Chair of the Audit Committee brings financial "
+                     "expertise."):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("BOARD_LEADERSHIP_STATEMENT", statement_labels(
+                    text, frozenset({"audit", "example"}), period_start=START))
+
     def labels_for(self, text, period_start):
         return statement_labels(text, frozenset({"audit", "compensation", "example"}),
                                 period_start=dt.date.fromisoformat(period_start))

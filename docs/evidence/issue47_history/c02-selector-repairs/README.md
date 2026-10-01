@@ -701,3 +701,29 @@
 **量测**（`measured-37-board-size-at-attendance.json`）：只在 Marriott 2022–2025 各新增一块，都是读者判为含事实的块；漏选 24→23，误选 7 不变，Marriott 2024 现与判读一致。最新年 Marriott 2025 的选择多了第 1199 块（读者判为含事实，列为由已取的第 491 块覆盖）。已接受的值只对应旧结果，下一次运行后要重读。
 
 **局限。** 两种写法都不看句中年份。"nominated for election" 的人数在不分级的董事会上按当时在任的人数读，与读者一致；若句中年份早于目标年度，本条照样取，没有例子检验。
+
+## 38. "having <董事> as our Executive Chair" 写出了董事会主席是谁
+
+**问题。** Ford 五年的代理都有同一句："In addition, having a Ford family member, William Clay Ford, Jr., as our Executive Chair brings a unique and historical long-term perspective to Board deliberations, while Alexandra Ford English and Henry Ford III, who were first elected to the Board at the 2021 Annual Meeting, provide …"。
+- 最新年（2025 第 411 块）的读者取的事实是 "W.C. Ford Jr. is Executive Chair"，列为由已取的第 395 块覆盖，并说明 2021 年当选是任期、不是当年变动。
+- 2022–2024 的读者（第 406、749、942 块）也判为含事实，理由却是 2021 年当选。按统一裁定 `JOIN_BEFORE_THE_YEAR`，年度之前的当选是任期；但块里另写了董事会主席是谁，所以统一裁定把它留给判读（`OTHER_COMPOSITION` 看到 "Chair"）。
+- 2021 第 760 块已因当年当选被取。
+
+选择器的领导结构句式都要一个担任类动词（serves、is、named……），"having … as our Executive Chair" 没有，所以 2022–2024 三块算漏选。
+
+**先量后改。** 37 份文档里 "having … as our <主席或首席董事>" 只有 Ford 这五句。
+
+**改动。** 新增 `_HAVING_AS_CHAIR`："having" 之后 60 个字符内 "as our <限定词> Chair"，且句中写出了人名时，算董事会领导结构。
+- 要求写出人名，沿用选择器原有的 `_SERVICE_AS_CHAIR`（委员会主席费用说明）的做法："having an independent director as our Chair" 只是偏好，不说谁担任。
+- 主席之后是 "of the … Committee" 的不算，沿用第四条领导结构句式里的同一检查：委员会主席不是董事会的。
+
+这两条检查语料都没有行使，用构造句行使。
+
+**用例与注错。** `test_having_a_named_director_as_our_chair`：Ford 2024 原文为正例；不写人名的偏好句、"having Jane Doe as our Chair of the Audit Committee" 为构造反例。注错：
+- `HAVING_A_CHAIR_IS_NOT_READ`（去掉这条读法）；
+- `A_HAVING_HOLDER_NEED_NOT_BE_NAMED`（不要求人名）；
+- `A_HAVING_COMMITTEE_CHAIR_IS_THE_BOARD_S`（去掉委员会检查）。
+
+共 122/122，对照 87 个用例。
+
+**量测**（`measured-38-having-as-our-chair.json`）：只在 Ford 2022–2025 各新增一块，都是读者判为含事实的块；漏选 23→20，误选 7 不变，Ford 2023、2024 现与判读一致。最新年 Ford 2025 的选择多了第 411 块（读者判为含事实、列为由已取的第 395 块覆盖）。已接受的值只对应旧结果，下一次运行后要重读。
