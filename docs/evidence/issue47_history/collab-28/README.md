@@ -39,3 +39,13 @@
 **当前状态。** 最新十个位置（同上口径）由后继选择器产出的新结果已读并接受；冻结选择器的十条缺陷只对这十个新结果释放。27 个往年值一个都没有被接受；不一致的 26 个已按坐标登记为缺陷撤回（`../known_result_defects.json`，`C02_*_OLDER_YEAR_READING_DISAGREES`），一致的 Pfizer FY2024 也还没有对它的结果做接受核对。这 27 份判读已经或将要用于调整规则，所以它们对之后的修复也只算开发/回归材料。“27 份读完”不等于结果被接受。
 
 **分工。** 共用选择器修复默认由 #47 继续实现，#28 负责普通路线接入和独立检查。修复按“一个明确的误选或漏选问题”为单位提交，提交标 `[shared-with-#28]`，并在本目录登记问题、提交、用例与历史侧验证结果。#28 现在的普通路线用的仍是冻结选择器，所以它最新年度的 C02 结果与 `c02-board-read/` 读的十个值同属一类问题；这部分的核对与接入由 #28 在自己的记录里处置，#47 不代为宣布普通路线已通过。
+
+### C02 共用修复登记
+
+每一项是一个边界清楚的误选或漏选问题，提交标 `[shared-with-#28]`。可复用位置都是后继选择器 `scripts/vnext/historical_board_composition.py` 在该提交的版本；问题、成因、用例、注错与历史侧量测见 `../c02-selector-repairs/README.md` 对应一节。量测把修复前后的选择器在全部 37 份判读（27 个往年、10 个最新）上各跑一次，列出移动的每一块。
+
+| # | 问题 | 提交 | 用例 | 历史侧量测 |
+|---|---|---|---|---|
+| 1 | 匹配 "as <委员会名> committee chair" 的模式带 `re.I`，`[A-Z]` 也匹配小写，把遴选标准 "Previous service as a Board committee chair" 读成有人任委员会主席 | `5f803852` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_criterion_for_choosing_a_chair_seats_no_one`；注错 `A_LOWER_CASE_WORD_NAMES_A_COMMITTEE` | 只移动 Macy's 四个往年位置的这四块（都是判读判为非事实的块）；误选 49→45，漏选 256 不变，最新十个位置不变（`../c02-selector-repairs/measured-1-capitalised-committee-name.json`） |
+
+这些修复都不让任何往年坐标重新获得信用：每个坐标的选择只要还和判读不一致，就继续撤回。#28 的普通路线目前用冻结选择器，后继选择器及这些修复是否、何时接入由 #28 自己处置；#47 不代为宣布普通路线已通过。
