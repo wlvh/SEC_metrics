@@ -4159,6 +4159,75 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "af9e1709",
+   "own_commit_at_read": "4e1423ac",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_17_ENTRIES",
+   "what_that_state_means": "Five new entries, each an exact #28 result ID for a defect #47 registered (peer_origin names #47's defect at 1f3f446c): D02 Lumen 2025 legal-counsel cost policy (1670), D02 Pfizer 2025 policy keywords (2175/2240), D02 Paramount 2025 credit covenant, D02 Enphase 2025 page footer, D01 Paramount 2025 truncated heading. Its excluded coordinates go 6 -> 11. None names a #47 result; the Pfizer D02 result ab1bfcb4... is the shared original that #47 already withdraws (D02_PFIZER_2025_OFFICER_SECTION).",
+   "baseline": "Read since 0bc38d07: five commits' messages and file lists, the register diff, the Salesforce and Paramount C02 content conclusions.",
+   "increments": [
+    {
+     "commit": "2c861c89",
+     "marker": null,
+     "subject": "Record Salesforce C02 saved-source limited content credit",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-peer4d-content/"
+     ],
+     "affects_47": "None. Limited content pass for #28's private Salesforce FY2026 result built with #47's 4d0b2b9d reader. It judges block 602 (the charter sentence naming three committees, which #47's repair 20 takes in _v3) not a confirmed miss for that result, because headings 742/750/772 already state the committees. That does not conflict with #47 taking it: #47's adjudication counts it a fact (COMMITTEES_NAMED_AS_A_SET), so taking it is not a wrong take either way.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "623aff42",
+     "marker": null,
+     "subject": "Record conditional Paramount C02 source audit",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount-peer4d-content/"
+     ],
+     "affects_47": "None. Confirms the nine dated own-board joins #47's repairs 13/16 take are in #28's private result; block 168 stays the meaning question already raised. Its reading of block 117 (a January 2026 join kept as a source excerpt, not a year-end fact) matches #47's Spec (board_as_of not_inferred).",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "aa680064",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold exact Lumen D02 legal-fee policy result",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-d02-lumen-20261002/"
+     ],
+     "affects_47": "None: #28 consumed #47's D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY for its own result 7e2d21f0...; #47's coordinate is already withdrawn.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "28f9577a",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold three exact D02 source-policy results",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/"
+     ],
+     "affects_47": "None: #28's own Pfizer, Paramount and Enphase 2025 D02 results, from #47's registered defects; #47's coordinates are withdrawn or released only on #47's own repaired results.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "af9e1709",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold exact Paramount D01 truncated heading",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-d01-paramount-20261002/"
+     ],
+     "affects_47": "None: #28's own result a7a52ae7...; #47's defect is released only on #47's repaired results.",
+     "integration": "MERGED"
+    }
+   ],
+   "note": "No authority file moved; the issue_47_v1 snapshot is unchanged by this merge."
   }
  ]
 }

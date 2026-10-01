@@ -846,6 +846,46 @@
   },
   "subagent_register": [
     {
+      "task_name": "audit_c02paramount_2c861c8",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_c02_paramount_peer4d_delta",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount54-content/conclusion.md",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-paramount-update.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-paramount-cold.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-known-source-check.json",
+        "catalog/r6/C02_board_disclosures_v3.md",
+        "/private/tmp/issue28-c02-peer4d-paramount-20261002/metrics/C02/"
+      ],
+      "patch_sha": "2c861c89b019fb5963e15561f150a0a784a006c0",
+      "spawned_at": "2026-10-01T18:03:35Z",
+      "ended_at": "2026-10-01T18:12:52Z",
+      "tool_calls": 42,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount-peer4d-content/conclusion.md",
+      "message_count": 1,
+      "verdict": "PASS_INCREMENTAL_WITHHELD_PENDING_BLOCK168_BUSINESS_SCOPE"
+    },
+    {
+      "task_name": "audit_c02salesforce_0bc38d0",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_c02_salesforce_peer4d_delta",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-salesforce-update.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-salesforce-cold.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-known-source-check.json",
+        "catalog/r6/C02_board_disclosures_v3.md",
+        "/private/tmp/issue28-c02-peer4d-salesforce-20261002/metrics/C02/"
+      ],
+      "patch_sha": "0bc38d078a8b4c4c26379a6c239a114e812d72b7",
+      "spawned_at": "2026-10-01T17:49:34Z",
+      "ended_at": "2026-10-01T17:59:26Z",
+      "tool_calls": 56,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-peer4d-content/conclusion.md",
+      "message_count": 2,
+      "verdict": "PASS_LIMITED_SAVED_SOURCE_CONTENT_NO_390_CREDIT"
+    },
+    {
       "task_name": "review_c02peer_5ff5554",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "ordinary_c02_peer4d_reader",
@@ -8517,8 +8557,12 @@
         "ten_complete_candidate_evidence": "PASS_10_OF_10_SELECTED_ORIGINAL_BLOCKS_48_TO_101_GROUPS_10_TO_39",
         "known_source_delta": "PARAMOUNT_ADDS_9_DATED_JOIN_BLOCKS_SALESFORCE_DROPS_4300_ADDS_919_933",
         "paramount_new_private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818",
+        "paramount_incremental_content_review": "PASS_OLD54_PLUS_9_OWN_BOARD_JOINS_10_GROUPS_BLOCK168_SCOPE_PENDING_NO_CREDIT",
+        "paramount_incremental_content_review_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount-peer4d-content/conclusion.md",
         "paramount_new_private_run_id": "run:ordinary-integrated:39bef01913109baae8629489b37a097a802be8c3189748f7bf0fa87d597972d6",
         "salesforce_new_private_result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
+        "salesforce_limited_content_review": "PASS_LIMITED_64_ORIGINAL_BLOCKS_36_GROUPS_OLD_4300_DROPPED_919_933_ADDED_602_COVERED_NO_390",
+        "salesforce_limited_content_review_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-peer4d-content/conclusion.md",
         "salesforce_new_private_run_id": "run:ordinary-integrated:d781a0d086b0429765f2636aae4d68422d319cdf0abee6357176160f318d644c",
         "both_native_and_cold": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE_INDEPENDENT_PROCESS_PUBLISHED_EXACT",
         "old_exact_result_defects_released": false,
@@ -8568,6 +8612,90 @@
         "default_compatibility": "new optional grouped flag defaults false; default old C02 candidate/Evidence bytes tested; original v2 installed Run replays under its own bytes",
         "downstream_effect": "#47 stacked branch must reconcile current V13/V14 binding and explicit ordinary C02 v3 route; no historical selector or #47 runtime was copied"
       }
+    },
+    "d02_lumen_2025_source_defect": {
+      "status": "CONFIRMED_EXACT_28_D02_RESULT_WITHDRAWN_NO_CODE_FIX_YET",
+      "fixed_peer_lead_sha": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+      "company_id": "lumen_technologies",
+      "metric_id": "D02",
+      "period_end": "2025-12-31",
+      "source_block": 1670,
+      "source_section": "ITEM_8",
+      "current_private_and_historical_result_id": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+      "private_run_id": "run:ordinary-integrated:82b8dbb8f776fe917453dae851c61199c3ca8dfa413f51eff406436164b0343e",
+      "old_run_result_bytes_retained": true,
+      "new_business_content_credit": false,
+      "current_390_credit": false,
+      "other_d02_results_not_withdrawn_by_metric_name": true,
+      "at_lumen_registration_confirmed_coordinates": 7,
+      "at_lumen_registration_exact_result_ids": 13,
+      "evidence": "docs/evidence/issue28_continuous/collab-d02-lumen-20261002/audit.json",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "d02_current_three_exact_result_defects": {
+      "status": "THREE_MORE_EXACT_28_D02_RESULTS_WITHDRAWN_NO_CODE_FIX_YET",
+      "fixed_peer_lead_sha": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+      "companies": [
+        "pfizer",
+        "paramount_skydance_paramount_global",
+        "enphase_energy"
+      ],
+      "confirmed_source_blocks": {
+        "pfizer": [
+          2175,
+          2240
+        ],
+        "paramount_skydance_paramount_global": [
+          2257
+        ],
+        "enphase_energy": [
+          755
+        ]
+      },
+      "exact_result_ids": {
+        "pfizer": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+        "paramount_skydance_paramount_global": "sha256:a65cdc379d52ed8bc70fbe3f40be274dc93ea7682af654e08a16a1db76da7b46",
+        "enphase_energy": "sha256:1f8e6698e8f6e4c211e4b0170e0f767c0709da60cd2e310dc282fcd0b0424fce"
+      },
+      "paramount_block_2108": "SPECIFIC_STOCKHOLDER_LITIGATION_BENEFIT_NOT_WITHDRAWN_AS_FALSE_SELECTION",
+      "historical_index_matches_private_result_ids": true,
+      "at_d02_stage_excluded_coordinates": 10,
+      "at_d02_stage_excluded_result_ids": 16,
+      "other_d02_results_not_withdrawn_by_metric_name": true,
+      "repair_status": "SOURCE_SEMANTIC_SELECTION_GUARD_PENDING_WITH_POSITIVE_ITEM8_PRESERVATION",
+      "evidence": "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/audit.json",
+      "old_run_result_source_bytes_retained": true,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "d01_paramount_2025_heading_defect": {
+      "status": "CONFIRMED_OWN_D01_RESULT_TRUNCATED_HEADING_WITHDRAWN_REPAIR_PENDING",
+      "fixed_peer_lead_sha": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "D01",
+      "period_end": "2025-12-31",
+      "source_block": 292,
+      "delivered_heading": "Failures to comply with or changes in U",
+      "full_original_head_start": "Failures to comply with or changes in U.S. or foreign laws or regulations",
+      "exact_result_id": "sha256:a7a52ae7df0eb150b4cc6cf66c08b508056febcfbd013ea7a9ec85026c144cca",
+      "historical_index_same_result_id": true,
+      "current_trusted_excluded_coordinates_total": 11,
+      "current_trusted_excluded_result_ids_total": 17,
+      "repair_status": "EXPLICIT_28_PUNCTUATION_BRIDGE_PENDING_NO_PEER_RESULT_CREDIT",
+      "evidence": "docs/evidence/issue28_continuous/collab-d01-paramount-20261002/audit.json",
+      "old_run_result_source_bytes_retained": true,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
     },
     "reference_table_pr": {
       "url": "https://github.com/wlvh/SEC_metrics/pull/53",
