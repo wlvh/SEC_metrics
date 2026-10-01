@@ -4077,6 +4077,32 @@
     }
    ],
    "note": "The grouped v3 output is a different answer to the same capacity gap: an excerpt becomes a block range that also shows up to two unselected context blocks. Whether a reader of the value can tell the selected blocks from the context is #28's contract to state; #47 keeps whole selected blocks only."
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "137ecb24e15ab8f6e7da9beed58ff5c448cb70aa",
+   "own_commit_at_read": "d1cabb48",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_13_ENTRIES",
+   "what_that_state_means": "One new entry (C02_MACYS_2026_GROUPED_PRIVATE_RESULT_MIXED_CONTEXT_AND_DETACHED_ROLE) names #28's own grouped Macy's FY2025 result; none names a #47 result.",
+   "baseline": "Read since d29a8fa9: one commit, its register entry, the independent Macy's content conclusion and the parent's targeted check.",
+   "increments": [
+    {
+     "commit": "137ecb24",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold Macy grouped C02 content credit",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-macys29-content/"
+     ],
+     "affects_47": "Checked against #47's own selection of the same document (text_document_id sha256:0114280e...). (1) Detached title: #47 also selects the card title 821 (and 826, 453) without the name 820. The fact itself is stated in #47's value by selected block 839 ('Mr. Spring ... currently serves as Chairman and Chief Executive Officer'), which is what #47's adjudication counts as covering the name (CARD_SUBJECT_NAME, 820 -> [453, 826, 839]); the title blocks are still fields without their owner, so taking a card's name with its leadership title is measured as a selector repair. (2) Mixed blocks 912 and 1929: #47 publishes whole blocks, and its reader judged both MIXED (1929 carries the only statement of 12 non-employee directors on 2026-01-31); separating the composition sentence from the plan or policy prose inside one block is an output-granularity question both routes share, not a selection defect under #47's rules. (3) 925 (unselected) is covered by 912/927 in #47's reading too. #47's Macy's FY2025 coordinate is already withdrawn (C02_MACYS_2026_UNIFIED_ADJUDICATION_DISAGREES, SELECTION_AGREES_RESULT_NOT_RECOMPUTED), so no further withdrawal.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }
