@@ -451,7 +451,7 @@ _NOT_DIRECTOR_INDEPENDENCE = re.compile(
 _POLICY = re.compile(
     r"\b(?:shall|must|should|may not|requires?|required|at least|no fewer than|not less than|a minimum of"
     r"|charter provides|guidelines provide|policy provides|can(?:not)? be (?:considered )?independent if"
-    r"|is not independent if|are not independent if|would (?:not )?be (?:considered )?independent|family members?"
+    r"|is not independent if|are not independent if|would (?:not )?be (?:considered )?independent"
     r"|expected to|intends? to|seeks? to|strives? to|may (?:be|serve|include)|requirements? that|exempt\w*"
     r"|elected not to comply|controlled company|provides? that|is free to|if)\b", re.I)
 _QUALIFYING_REFERENCE = re.compile(r"\bas (?:is |are )?(?:currently )?(?:required|defined|set forth|provided"
@@ -652,6 +652,7 @@ _CHAIR_CEO_STRUCTURE = re.compile(
     + r"|\b" + _ROLE_PAIR + r"\s+" + _ROLE_NOUN + r"\b[^.;]{0,80}?\b(?:separat\w*|combin\w*|single individual"
     r"|one person|same person|different (?:individuals|people|persons))", re.I)
 _BOTH_STRUCTURES = re.compile(r"\bseparat\w*\b.*\bcombin\w*|\bcombin\w*\b.*\bseparat\w*", re.I)
+_FAMILY = re.compile(r"\bfamily members?\b", re.I)
 _STRUCTURE_POLICY = re.compile(r"\bpolic(?:y|ies)\b|\bmandat\w*|\bimpos\w*|\bproposals?\b", re.I)
 _OWNED_LEADERSHIP = re.compile(
     r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s\s+" + _BOARD_QUALIFIER
@@ -883,6 +884,13 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
             continue
         unqualified = _QUALIFYING_REFERENCE.sub(" ", sentence)
         policy = _POLICY.search(unqualified)
+        # "Family member" is an independence standard's word ("the director or
+        # a family member is ... employed by"), unless the sentence names the
+        # people it is about ("having a Ford family member, William Clay Ford,
+        # Jr., as our Executive Chair ...").
+        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)
+        if family and (policy is None or family.start() < policy.start()):
+            policy = family
         determination = _DETERMINATION.search(unqualified)
         if policy and (determination is None or policy.start() < determination.start()):
             continue

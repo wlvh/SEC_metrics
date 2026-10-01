@@ -491,6 +491,24 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:40]):
                 self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
 
+    def test_a_named_family_member_is_not_an_independence_standard(self):
+        # Ford FY2021 block 760: the two Ford family directors joined at the
+        # year's annual meeting. "Family member" vetoed it as a standard.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "In addition, having a Ford family member, William Clay Ford, Jr., as our Executive Chair brings a long-term "
+            "perspective to Board deliberations, while Alexandra Ford English and Henry Ford III, who were first "
+            "elected to the Board at the 2021 Annual Meeting, provide fresh perspectives.", "2021-01-01"))
+        # The standards themselves name nobody and stay set aside (Paramount
+        # 2021 block 387, Marriott 2021 block 848: without the word each reads
+        # as committee composition).
+        for text in ("The director is, or has a family member who is, employed as an executive officer of another "
+                     "entity where at any time during the past three years any of the executive officers of Example "
+                     "have served on the compensation committee of such other entity; or",
+                     "(iv) the director or a family member is part of an interlocking directorate in which the director "
+                     "or a family member serves on the compensation committee of another company."):
+            with self.subTest(text=text[:40]):
+                self.assertEqual([], self.labels_for(text, "2021-01-01"))
+
     def test_a_committee_that_changed_its_name(self):
         # Ford FY2021 states the rename three times (blocks 626, 3096, 4055).
         for text in ("The Compensation Committee changed its name to the Compensation, Talent and Culture Committee "

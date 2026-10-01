@@ -371,3 +371,34 @@
 **量出来的结果。** 37 份文档里新增 12 个姓名块。其中 7 个是对的：Macy's 历年的 Gennette、Spring，以及 Marriott 2024、2025 的 David S. Marriott。另外 5 个连错了人（`rejected-title-name/probe.log`）。Macy's 的提名人汇总表一行是"姓名、年龄、技能……、任职年份、头衔"。第 480 块的头衔属于上一行（Spring），往下最近的姓名却是下一行的 Varga（Macy's 2022、2023 是 Granoff），读者把这些姓名判为非事实。就近规则在卡片里成立，在表格里会把董事长头衔安到另一位董事身上；这个错比头衔单独出现更糟。
 
 **结论。** 不采用。要把头衔和人连起来，需要读出表格的行结构，不能靠距离。在此之前，头衔行照旧单独取；人与头衔的关系由同一份值里写明二者的句子（Macy's 2026 的 839）承担。这个口径问题也已告诉 #28。
+
+## 22. 点名了人的 "family member" 不是独立性标准
+
+**问题。** Ford 2021 只剩第 760 块漏选："In addition, having a Ford family member, William Clay Ford, Jr., as our Executive Chair …, while Alexandra Ford English and Henry Ford III, who were first elected to the Board at the 2021 Annual Meeting, provide fresh perspectives …"。对 FY2021 来说，2021 年年会上的加入属于年度内的成员变动，读者判为含事实。选择器的政策否决词里有 "family member(s)"，整句因此被搁置。这个词本来是为独立性标准设的，例如 "the director or a family member is … employed by"。
+
+**先量后改。** 把这个词从否决里整个拿掉（只在内存里试），37 份文档会多出 10 块：其中 9 块是读者判为非事实的独立性标准条款（Marriott 五年、Paramount 四年），只有这 1 块是事实。这 9 块都不点名任何人；第 760 块点名了 Ford 家族的几位董事。
+
+**改动。** "family member" 只在句子不点名任何人时才算标准。点名了人的句子说的是具体的人，不是规则。那 9 块条款仍被否决；用例直接用其中两条原文作反例，它们离开这个词会被读成委员会组成，所以反例能证明否决仍在起作用。
+
+**用例与注错。** `test_a_named_family_member_is_not_an_independence_standard`。注错：
+- `A_NAMED_FAMILY_MEMBER_IS_A_STANDARD`（恢复无条件否决）；
+- `A_FAMILY_MEMBER_IS_NEVER_A_STANDARD`（完全取消否决）。
+
+共 79/79。
+
+**量测**（`measured-22-named-family-member.json`）：只新增 Ford 2021 第 760 块；漏选 52→51，不一致位置 22→21，Ford 2021 恢复一致。
+
+**仍开放的同句。** Ford 2022 第 406、2023 第 749、2024 第 942 块是同一句。对这三个年度，2021 年的加入在目标年度之前，按统一裁定属于任期，不算事实。句中另有 "William Clay Ford, Jr., as our Executive Chair" 这一主席事实，所以裁定把这三块留给读者；读者判为含事实，理由却只写了 2021 年的加入，也没有列出覆盖块。这三块是真漏选，还是读者理由与统一规则冲突，要看主席事实是否已由其他被选中的块写明，需要为主席事实写覆盖核对，本节没有处理。
+
+## 量过而暂缓：列表项不是卡片姓名
+
+**问题。** 剩下 18 块误选中有 3 块是别家公司名，被当成了董事姓名：Marriott 2022 的 "■ DICK’S Sporting Goods"、"■ Alignment Healthcare"，Marriott 2023 的 "⯀ Alignment Healthcare"。`person_name` 先去掉开头的项目符号再判断，于是带项目符号的列表项也能算姓名。
+
+**试过的做法。** 卡片找姓名时（`_full_name`），以项目符号开头的块不算姓名。只在内存里试，脚本与输出见 `pending-bulleted-card-names/`。
+
+**量出来的结果。**
+- 这 3 块错的公司名被去掉，没有别的影响。
+- 但同时去掉了 3 块 "Independent Director" 标注，读者判为事实（Marriott 2022 第 819、915 块，2023 第 1529 块）。原来这些标注一直挂在错的"姓名"上。
+- 原因在版式：Marriott 把卡片姓名印在委员会和外部董事会列表之后。以第 819 块为例，名字 Lauren R. Hobart 在第 829 块，超出标注的就近范围；范围内能找到的"姓名"只有那个公司名。
+
+**结论。** 暂不采用。直接改会把 3 块误选换成 3 块漏选，而这 3 块标注此前被量测算作"选对了"，其实一直挂在错的人名上，量测看不出这一层。正确的做法是让标注找到排在列表之后的卡片姓名，同时不重犯第 19 节里 Macy's 那种越界到下一张卡片的问题，需要单独设计。

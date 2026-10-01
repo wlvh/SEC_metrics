@@ -226,6 +226,10 @@ INJECTIONS = [
      'test_a_committee_that_changed_its_name'),
     ('A_RENAMED_PLAN_IS_A_COMMITTEE', '    re.compile(r"\\bcommittee\\s+changed\\s+its\\s+name\\s+to\\s+(?:the\\s+)?[^.;]{0,80}?\\bcommittee\\b", re.I),\n', '    re.compile(r"\\bchanged\\s+its\\s+name\\b|\\brenamed\\b", re.I),\n',
      'test_a_committee_that_changed_its_name'),
+    ('A_NAMED_FAMILY_MEMBER_IS_A_STANDARD', '        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)\n', '        family = _FAMILY.search(unqualified)\n',
+     'test_a_named_family_member_is_not_an_independence_standard'),
+    ('A_FAMILY_MEMBER_IS_NEVER_A_STANDARD', '        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)\n', '        family = None\n',
+     'test_a_named_family_member_is_not_an_independence_standard'),
 ]
 
 
