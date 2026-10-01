@@ -3721,6 +3721,31 @@
     "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id."
    }
+  },
+  {
+   "defect_id": "C02_SALESFORCE_2026_TENURE_TAKEN_AND_DATED_CHAIR_HANDOVER_MISSED",
+   "company_id": "salesforce",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "#28's independent content check of its own Salesforce FY2026 C02 result, which runs the same shared reader on the same proxy (DEF 14A 0001108524-26-000085), found two errors that the #47 accepted result shares, because its 63 published excerpts are the same selection. Block 4300 is taken although its only board fact is that Mr. Munoz was appointed to the Board in January 2022: before the year, tenure in other words (the JOIN_BEFORE_THE_YEAR class). Block 933 is not taken although it is the only block that says Mr. Roos assumed the chair of the Governance Committee on March 21, 2025; the reading counted it covered by blocks that give the current chair (773), the month of Mr. Donald's change (665) and the quarters a fee covers (964), none of which states Mr. Roos's change. Checked on #47's own saved proxy: same blocks, same text. The accepted value (acceptance CONTENT_C02_SALESFORCE_2026, result sha256:61126f335c2d1348c5e61851f11a9f9bccc852437d05eecf86dcbea6349b3384 under closure sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9) is withdrawn with the coordinate.",
+   "root_cause": "Two gaps in the measuring and in the reader. The adjudicator's join pattern (and the reader's _DATED_JOIN) covers verbs ('was appointed to the Board in ...') but not the noun form ('appointment to the Board in January 2022'), so the uniform JOIN_BEFORE_THE_YEAR decision never reached 4300 and the reader's MIXED verdict stood. The reading's coverage claim for 933 was taken at its word: read_position counts a judged fact covered when any block it cites is selected, and nothing checks that a cited block states the same change. The reader does not read 'assumed the role of Chair of the Governance Committee' as a committee chair change.",
+   "scope_measured": "Across the 37 readings, the noun form occurs in three Salesforce FY2026 blocks (919, 1943, 4300); dated role changes in 17 sentences, of which five unselected blocks rest on coverage claims (Lumen FY2021 897, Macy's FY2023 3164, FY2024 2351 and 2358, Salesforce FY2026 933). Block 4301 ('prior to the dates that Oscar Munoz and Craig Conway joined the Audit Committee', no date) is left as the reading judged it (a fact, covered by roster 743); #28 records it as a boundary to decide.",
+   "found_by": "#28's independent content check (peer_origin), confirmed on #47's saved proxy",
+   "peer_origin": {
+    "commit": "34338e4ec65afdae13eac747559eb885924d0ea1",
+    "defect_id": "C02_SALESFORCE_2026_PRIVATE_HISTORICAL_TENURE_FALSE_POSITIVE_AND_CHAIR_DATE_OMISSION",
+    "register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+    "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md"
+   },
+   "repair_state": "SELECTOR_AND_ADJUDICATION_REPAIR_PENDING",
+   "why_not_repaired_yet": "Both gaps are classes, not this position: the noun-form join goes into the JOIN rule and the reader's dated-join pattern together, and a dated role change needs a rule for what covers it, applied to every reading. Until the adjudication carries them, the reading machinery still reports this position as agreeing, so this entry carries no selection_problems.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json",
+    "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
+   ],
+   "original_record_retained": true
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -3889,6 +3914,56 @@
      "affects_47": "No #47 result moves. #28 withdrew its two private Enphase FY2025 Results on blocks 57, 210, 212, 232, 243 and 2338, citing #47's C02_ENPHASE_2025_UNIFIED_ADJUDICATION_DISAGREES. Those six are exactly the blocks #47's repairs 8 (bed088ee) and 9 (bd181df0) drop: the bound copy selects 54 there, the successor 48, adding none. #47's own Enphase FY2025 coordinate stays withdrawn until a recomputed result is read and released.",
      "integration": "MERGED",
      "receipt": "Confirmed: #28 read #47's unified adjudication at 0e80eb60 and acted on it for its own results."
+    }
+   ]
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "34338e4ec65afdae13eac747559eb885924d0ea1",
+   "own_commit_at_read": "75889d862dafb97068b942730803fd28552db95b",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_TEN_ENTRIES",
+   "what_that_state_means": "Ten entries, all #28's own C02 FY2025/FY2026 result identities (Enphase, Lumen, Macy's, Marriott, Pfizer, Salesforce); none names a #47 result. The register's latest_peer_read_commit is 60aa9f7b, so #28 has read #47's repairs 1-12.",
+   "baseline": "Read since 2cc97e3a: the three commits' messages and file lists, the register's new entries, the Salesforce content check, the selector review, and the selector bytes c6eac291 put at the path issue_28_v13 binds.",
+   "increments": [
+    {
+     "commit": "9f8b855f",
+     "marker": "[shared-with-#47]",
+     "subject": "Withdraw exact C02 results exposed by source audit",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md"
+     ],
+     "affects_47": "Yes, one #47 coordinate. #28 withdrew its Lumen and Macy's FY2025/26 results on facts #47's adjudication decided (no new #47 impact: #47 withdrew those positions already) and found two errors in Salesforce FY2026 that #47's accepted result shares: block 4300 (a 2022 board appointment, tenure) taken and block 933 (Mr. Roos's March 21, 2025 Governance chair handover) missed. #47 withdrew its Salesforce FY2026 C02 value: C02_SALESFORCE_2026_TENURE_TAKEN_AND_DATED_CHAIR_HANDOVER_MISSED.",
+     "integration": "MERGED",
+     "receipt": "Confirmed: #28 read #47's readings and adjudication as a lead and inspected its own source independently."
+    },
+    {
+     "commit": "c6eac291",
+     "marker": "[shared-with-#47]",
+     "subject": "Apply current board-composition selector in ordinary C02",
+     "touches": [
+      "scripts/vnext/historical_board_composition.py",
+      "tests/vnext/test_normal_c02_composition.py",
+      "requirements/issue_28_v13/baseline_manifest.json"
+     ],
+     "affects_47": "No #47 result moves. #28 copied #47's reader at 60aa9f7b (repairs 1-12) into the path its generation binds, as the integration protocol asks; #47's reader continues in historical_board_composition_v2.py (repair 13 changes its interface). Merged cleanly; issue_47_v1 re-minted (75889d86).",
+     "integration": "MERGED",
+     "receipt": "Confirmed for repairs 1-12. Repair 13 (2926b7d0, joins by period; needs period_start) is not taken."
+    },
+    {
+     "commit": "34338e4e",
+     "marker": "[shared-with-#47]",
+     "subject": "Record C02 selector limited review",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-peer60aa/conclusion.md"
+     ],
+     "affects_47": "None. PASS_WITH_BOUNDS for #28's integration at 60aa9f7b; it states the Salesforce errors stand and that Macy's, Lumen and Marriott exceed #28's native 64-excerpt bound.",
+     "integration": "MERGED"
     }
    ]
   }
