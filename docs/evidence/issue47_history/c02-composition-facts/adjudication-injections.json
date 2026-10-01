@@ -1,0 +1,56 @@
+{
+ "record_type": "C02_ADJUDICATION_FAULT_INJECTIONS",
+ "controls": {
+  "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here": {
+   "failures": 0,
+   "ran": 1
+  },
+  "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt": {
+   "failures": 0,
+   "ran": 4
+  }
+ },
+ "injections": [
+  {
+   "injection": "AN_ADJUDICATED_FACT_IS_NEVER_MISSED",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt",
+   "caught": true,
+   "failures": 1,
+   "ran": 4
+  },
+  {
+   "injection": "A_COVERING_BLOCK_IS_IGNORED",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt",
+   "caught": true,
+   "failures": 1,
+   "ran": 4
+  },
+  {
+   "injection": "A_FACT_DECISION_SKIPS_ITS_TEXT_BINDING",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt",
+   "caught": true,
+   "failures": 1,
+   "ran": 4
+  },
+  {
+   "injection": "THE_PRESIDING_DUTY_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_SAME_SENTENCE_IS_NOT_CHECKED_FOR_A_DEPARTURE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  }
+ ],
+ "all_caught": true
+}

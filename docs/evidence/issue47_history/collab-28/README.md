@@ -54,3 +54,7 @@
 | 6 | 管理层委员会（成员是高管、员工，或由某某 Officer 主持）被构成句式当成董事会委员会 | `546d10d1` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_committee_of_management_is_not_the_board_s`；注错 `MANAGEMENT_SEATS_A_BOARD_COMMITTEE`、`ANY_WORDS_OPEN_THE_MEMBER_LIST` | 只移走 Lumen、Marriott、Pfizer 四个往年位置的 5 个误选块（都是判读判为非事实的块）；误选 45→40，漏选不变，最新十个位置不变（`../c02-selector-repairs/measured-6-management-committees.json`） |
 
 这些修复都不让任何往年坐标重新获得信用：每个坐标的选择只要还和判读不一致，就继续撤回。#28 的普通路线目前用冻结选择器，后继选择器及这些修复是否、何时接入由 #28 自己处置；#47 不代为宣布普通路线已通过。
+
+### C02 读者分歧的统一裁定（[shared-with-#28]）
+
+`../c02-composition-facts/adjudicate.py` 把读者判断相反的类别各用一条规则决定（16 条，按文字界定、不看路线是否选取），对全部 37 份判读适用，表格与两处取舍的说明见 `../c02-composition-facts/README.md`。用今天的选择器：误选 40→46，漏选 146→144，一致位置 11→9；对路线有利与不利的裁定大致相当。**影响 #28 普通路线的部分**：这些是"什么算构成事实"的判定，与选择器实现无关；#28 用自己的读法核对最新年度时，若读到同类块（董事长/CEO 分设句、分级董事会一级候选人数、分组标题、"每位候选人现为董事"等）可以直接引用这些规则，也可以不同意并说明。最新年 Enphase、Lumen、Macy's、Marriott 的值按新裁定与读者判读不一致，#47 已撤回这四个值（`C02_*_UNIFIED_ADJUDICATION_DISAGREES`）；后续选择器修复按类别逐项提交，仍标 `[shared-with-#28]` 并在上表登记。

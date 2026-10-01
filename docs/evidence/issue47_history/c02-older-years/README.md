@@ -50,10 +50,14 @@ acceptance against the Run's result. The classes seen:
   set up, per-director independence labels.
 
 Readers also split on some classes - the slate count above (the latest Enphase
-reader judged it a fact), bare rosters of nominees, "<role> since:" fields,
-a card's "Committees: N/A" - which are to be decided by rule and applied to
-every reading of the class, the latest years' included (as
-`../c02-composition-facts/adjudicate.py` does for two classes).
+reader judged it a fact), class headings, dated joins, who presides over the
+independent directors' sessions, and others. Each is now decided by one rule
+for every reading of the class, the latest years' included
+(`../c02-composition-facts/adjudicate.py`, 16 rules; the classes are defined by
+their text, not by what the route takes). With today's selection the older
+positions then stand at 40 blocks taken that state no composition fact and 140
+fact blocks missed; Paramount FY2021 and FY2023 agree, and so does Pfizer FY2024
+(`../c02-composition-facts/adjudication-effect.json`).
 
 Three readers were stopped by the API session limit and resumed from where they
 stopped (Pfizer FY2023, FY2024, Salesforce FY2025). Two of them each wrote a helper
@@ -68,6 +72,6 @@ Pfizer FY2024 has 110 of 159 and two numbers or common names. Neither answer rea
 like another packet's blocks. The check is a heuristic: a `why` that names
 nothing distinctive is not tested by it.
 
-No older-year C02 value is accepted, and none was before. The class decisions
-and the general selector repairs follow; a repair written on these 27 readings
-has no held-out material left and is labelled so.
+No older-year C02 value is accepted, and none was before. The general selector
+repairs follow the decided classes; a repair written on these 27 readings has
+no held-out material left and is labelled so.

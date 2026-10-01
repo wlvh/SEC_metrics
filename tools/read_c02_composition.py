@@ -25,8 +25,11 @@ Two further inputs refine a reading and are reported as such:
   judgements of blocks a changed selection takes that the first reader was not
   asked about (or left silent). They are judged like selected blocks.
 * the adjudication file - the executor's decision where readers disagree on a
-  class of block (card tenure fields, card subject names). Each entry names
-  its rule and reason and is bound to the block's text; the answer lists every
+  class of block (``c02-composition-facts/adjudicate.py`` lists the classes).
+  Each entry names its rule and reason and is bound to the block's text. A NOT
+  decision makes a selected block wrongly taken; a FACT decision makes a block
+  the reading did not take (or never read) missed unless it, or a block the
+  decision names as stating the same fact, is selected. The answer lists every
   position whose agreement rests on one.
 
 Against published results, the same reading becomes an acceptance reading.
@@ -293,6 +296,17 @@ def read_position(*, document, chosen, reading, adjudications=None):
         elif len(cover_selected) < len(cover):
             partly.append({"i": index, "cover_selected": cover_selected,
                            "cover_not_selected": [o for o in cover if o not in selected]})
+    # A block the adjudication decides is a fact where the reading did not take
+    # it as one (or never read it) is missed too, unless it is selected or a
+    # block the decision names as stating the same fact is.
+    for index, row in sorted(adjudicated.items()):
+        if row["decision"] != "FACT" or index in selected or index in judged_facts:
+            continue
+        if adjudication(index) is None:
+            continue
+        cover = row.get("redundant_with") or []
+        if not any(other in selected for other in cover):
+            problems["missed"].append({"i": index, "why": "adjudicated: " + row["rule"], "redundant_with": cover})
     verdict_of = lambda i: (taken.get(i) or found.get(i) or {}).get("verdict")
     counts = {"selected": len(chosen),
               "selected_fact": sum(1 for i in chosen if verdict_of(i) == "FACT"),

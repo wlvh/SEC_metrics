@@ -1,0 +1,1009 @@
+{
+ "record_type": "C02_ADJUDICATION_EFFECT",
+ "selection": "today's scripts/vnext/historical_board_composition.py on each judged position's document",
+ "before": "HEAD:docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+ "after": "the adjudication this tool wrote",
+ "totals": {
+  "before": {
+   "wrongly_taken": 40,
+   "missed": 146,
+   "agree": 11
+  },
+  "after": {
+   "wrongly_taken": 46,
+   "missed": 144,
+   "agree": 9
+  }
+ },
+ "positions": {
+  "enphase_energy:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      30,
+      943
+     ],
+     "missed": [
+      146,
+      157,
+      158,
+      180,
+      216
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      30,
+      943,
+      957
+     ],
+     "missed": [
+      146,
+      157,
+      158,
+      216
+     ]
+    }
+   }
+  },
+  "enphase_energy:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      31,
+      167,
+      531,
+      1588
+     ],
+     "missed": [
+      382
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      31,
+      167,
+      169,
+      182,
+      189,
+      531,
+      547,
+      1588
+     ]
+    }
+   }
+  },
+  "enphase_energy:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      31,
+      167,
+      169,
+      170,
+      173,
+      176,
+      185,
+      515,
+      1589
+     ],
+     "missed": [
+      331,
+      447
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      31,
+      167,
+      169,
+      176,
+      185,
+      515,
+      1589
+     ],
+     "missed": [
+      447
+     ]
+    }
+   }
+  },
+  "enphase_energy:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      55,
+      203,
+      205,
+      214,
+      227
+     ],
+     "missed": [
+      422
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      55,
+      203,
+      205,
+      214,
+      227
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      626,
+      760,
+      1472,
+      2325,
+      2336,
+      3096,
+      4055
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      626,
+      760,
+      1472,
+      2325,
+      2336,
+      3096,
+      4055
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      260,
+      406,
+      413,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      474,
+      1255,
+      4535
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      260,
+      406,
+      413,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      474,
+      789,
+      1255,
+      4535
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      749
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      749
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      435,
+      449,
+      512,
+      541,
+      559,
+      575,
+      590,
+      624,
+      637,
+      942,
+      2443,
+      2459,
+      2489,
+      2499,
+      2559,
+      2603,
+      2622,
+      2645,
+      2662,
+      2716,
+      2732
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      435,
+      449,
+      512,
+      541,
+      559,
+      575,
+      590,
+      624,
+      637,
+      942,
+      2443,
+      2459,
+      2489,
+      2499,
+      2559,
+      2603,
+      2622,
+      2645,
+      2662,
+      2716,
+      2732
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      856,
+      1236
+     ],
+     "missed": [
+      455,
+      456,
+      457,
+      695,
+      732,
+      896,
+      897,
+      898,
+      1047,
+      1049,
+      1204,
+      1205,
+      1211,
+      1222,
+      1223,
+      2651
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      856,
+      1236
+     ],
+     "missed": [
+      455,
+      456,
+      457,
+      695,
+      732,
+      896,
+      897,
+      898,
+      1047,
+      1049,
+      1204,
+      1205,
+      1211,
+      1222,
+      1223,
+      2651
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      842,
+      1324
+     ],
+     "missed": [
+      865,
+      866,
+      867,
+      946,
+      954,
+      958,
+      1078,
+      1281,
+      1879,
+      3663
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      842,
+      1324,
+      2784
+     ],
+     "missed": [
+      865,
+      866,
+      867,
+      946,
+      958,
+      1078,
+      1281,
+      1879,
+      3663
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      790,
+      1085
+     ],
+     "missed": [
+      1124,
+      1423,
+      1601
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      790,
+      1085
+     ],
+     "missed": [
+      1124,
+      1423,
+      1601
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      575,
+      576,
+      577,
+      1494,
+      1495,
+      1496,
+      1497,
+      1506
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1483
+     ],
+     "missed": [
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      1494,
+      1495,
+      1496,
+      1497,
+      1506
+     ]
+    }
+   }
+  },
+  "macys:2022-01-29": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      640,
+      703,
+      810,
+      1230,
+      1231,
+      1877,
+      1945
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      629,
+      640,
+      703,
+      810,
+      1230,
+      1231,
+      1877,
+      1945
+     ]
+    }
+   }
+  },
+  "macys:2023-01-28": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1107
+     ],
+     "missed": [
+      40
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1107
+     ],
+     "missed": [
+      40,
+      709,
+      1351,
+      1352
+     ]
+    }
+   }
+  },
+  "macys:2024-02-03": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      626,
+      1982,
+      2737
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      626,
+      1982,
+      2737
+     ]
+    }
+   }
+  },
+  "macys:2025-02-01": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      1814,
+      1816
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      563,
+      1814,
+      1816
+     ]
+    }
+   }
+  },
+  "marriott_international:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      610,
+      842,
+      990,
+      991,
+      1144
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      610,
+      613,
+      842,
+      990,
+      991,
+      1144
+     ]
+    }
+   }
+  },
+  "marriott_international:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      367,
+      825,
+      922,
+      959
+     ],
+     "missed": [
+      504
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      825,
+      922,
+      959
+     ],
+     "missed": [
+      504
+     ]
+    }
+   }
+  },
+  "marriott_international:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1537,
+      1583
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1537,
+      1583
+     ]
+    }
+   }
+  },
+  "marriott_international:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      528,
+      1264
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      528,
+      1264
+     ]
+    }
+   }
+  },
+  "paramount_skydance_paramount_global:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      583
+     ],
+     "missed": [
+      375
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "paramount_skydance_paramount_global:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      426,
+      819,
+      2681
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      819
+     ]
+    }
+   }
+  },
+  "paramount_skydance_paramount_global:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      421
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "pfizer:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      364,
+      446,
+      547,
+      897
+     ],
+     "missed": [
+      198,
+      199,
+      425,
+      426,
+      493,
+      496,
+      500,
+      502,
+      723,
+      799,
+      875,
+      876,
+      877,
+      1294,
+      1539,
+      1880,
+      1881,
+      2051,
+      2052,
+      3107
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      446,
+      547
+     ],
+     "missed": [
+      198,
+      199,
+      425,
+      426,
+      493,
+      496,
+      500,
+      502,
+      723,
+      799,
+      875,
+      876,
+      877,
+      1294,
+      1539,
+      1880,
+      1881,
+      2051,
+      2052,
+      3107
+     ]
+    }
+   }
+  },
+  "pfizer:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1453
+     ],
+     "missed": [
+      884
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      884
+     ]
+    }
+   }
+  },
+  "pfizer:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "salesforce:2025-01-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1147
+     ],
+     "missed": [
+      54
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1147
+     ]
+    }
+   }
+  },
+  "enphase_energy:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      57,
+      210,
+      212,
+      232,
+      243,
+      2338
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "lumen_technologies:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      864
+     ]
+    }
+   }
+  },
+  "macys:2026-01-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      508
+     ]
+    }
+   }
+  },
+  "marriott_international:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      520,
+      521
+     ]
+    }
+   }
+  },
+  "paramount_skydance_paramount_global:2024-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "paramount_skydance_paramount_global:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "pfizer:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "salesforce:2026-01-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "southwest_airlines:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  }
+ }
+}

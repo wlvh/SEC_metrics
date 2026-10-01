@@ -2743,11 +2743,28 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2021-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "wrongly_taken": [
+     30,
+     943,
+     957
+    ],
+    "missed": [
+     146,
+     157,
+     158,
+     216
+    ]
+   },
+   "partial_repair": {
+    "still_open": "4 fact block(s) missed (146, 157, 158, 216) and 3 block(s) taken that state no composition fact (30, 943, 957) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_ENPHASE_2022_OLDER_YEAR_READING_DISAGREES",
@@ -2760,15 +2777,28 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "15 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "1 fact block(s) missed (382) and 4 block(s) taken that state no composition fact (31, 167, 531, 1588); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "0 fact block(s) missed (none) and 8 block(s) taken that state no composition fact (31, 167, 169, 182, 189, 531, 547, 1588) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     31,
+     167,
+     169,
+     182,
+     189,
+     531,
+     547,
+     1588
+    ]
    }
   },
   {
@@ -2782,15 +2812,30 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2023-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "15 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "2 fact block(s) missed (331, 447) and 9 block(s) taken that state no composition fact (31, 167, 169, 170, 173, 176, 185, 515, 1589); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "1 fact block(s) missed (447) and 7 block(s) taken that state no composition fact (31, 167, 169, 176, 185, 515, 1589) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     31,
+     167,
+     169,
+     176,
+     185,
+     515,
+     1589
+    ],
+    "missed": [
+     447
+    ]
    }
   },
   {
@@ -2804,15 +2849,25 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2024-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "19 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "1 fact block(s) missed (422) and 5 block(s) taken that state no composition fact (55, 203, 205, 214, 227); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "0 fact block(s) missed (none) and 5 block(s) taken that state no composition fact (55, 203, 205, 214, 227) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     55,
+     203,
+     205,
+     214,
+     227
+    ]
    }
   },
   {
@@ -2826,11 +2881,26 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2021-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     626,
+     760,
+     1472,
+     2325,
+     2336,
+     3096,
+     4055
+    ]
+   },
+   "partial_repair": {
+    "still_open": "7 fact block(s) missed (626, 760, 1472, 2325, 2336, 3096, 4055) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_FORD_2022_OLDER_YEAR_READING_DISAGREES",
@@ -2843,15 +2913,38 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "roster_bullet_glyph": "43 blocks now taken, every one judged a composition fact: the rosters on the Audit, Compensation Talent and Culture, Finance, Nominating and Governance and Sustainability Innovation and Policy committee pages, whose members follow a '◾' the selector did not count as a list bullet, so each roster ended before its first name (scripts/vnext/historical_board_composition.py _BULLET_CHARS; docs/evidence/issue47_history/c02-selector-repairs/README.md section 2 [shared-with-#28]).",
-    "still_open": "17 fact block(s) missed (260, 406, 413, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 474, 1255, 4535); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "18 fact block(s) missed (260, 406, 413, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 474, 789, 1255, 4535) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "missed": [
+     260,
+     406,
+     413,
+     415,
+     416,
+     417,
+     418,
+     419,
+     420,
+     421,
+     422,
+     423,
+     424,
+     425,
+     474,
+     789,
+     1255,
+     4535
+    ]
    }
   },
   {
@@ -2865,11 +2958,20 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2023-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     749
+    ]
+   },
+   "partial_repair": {
+    "still_open": "1 fact block(s) missed (749) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_FORD_2024_OLDER_YEAR_READING_DISAGREES",
@@ -2882,11 +2984,40 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2024-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     435,
+     449,
+     512,
+     541,
+     559,
+     575,
+     590,
+     624,
+     637,
+     942,
+     2443,
+     2459,
+     2489,
+     2499,
+     2559,
+     2603,
+     2622,
+     2645,
+     2662,
+     2716,
+     2732
+    ]
+   },
+   "partial_repair": {
+    "still_open": "21 fact block(s) missed (435, 449, 512, 541, 559, 575, 590, 624, 637, 942, 2443, 2459, 2489, 2499, 2559, 2603, 2622, 2645, 2662, 2716, 2732) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_LUMEN_2021_OLDER_YEAR_READING_DISAGREES",
@@ -2899,17 +3030,42 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "16 fact block(s) missed (455, 456, 457, 695, 732, 896, 897, 898, 1047, 1049, 1204, 1205, 1211, 1222, 1223, 2651) and 2 block(s) taken that state no composition fact (856, 1236); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "16 fact block(s) missed (455, 456, 457, 695, 732, 896, 897, 898, 1047, 1049, 1204, 1205, 1211, 1222, 1223, 2651) and 2 block(s) taken that state no composition fact (856, 1236) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28])."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     856,
+     1236
+    ],
+    "missed": [
+     455,
+     456,
+     457,
+     695,
+     732,
+     896,
+     897,
+     898,
+     1047,
+     1049,
+     1204,
+     1205,
+     1211,
+     1222,
+     1223,
+     2651
+    ]
    }
   },
   {
@@ -2923,17 +3079,36 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "10 fact block(s) missed (865, 866, 867, 946, 954, 958, 1078, 1281, 1879, 3663) and 2 block(s) taken that state no composition fact (842, 1324); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "9 fact block(s) missed (865, 866, 867, 946, 958, 1078, 1281, 1879, 3663) and 3 block(s) taken that state no composition fact (842, 1324, 2784) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28])."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     842,
+     1324,
+     2784
+    ],
+    "missed": [
+     865,
+     866,
+     867,
+     946,
+     958,
+     1078,
+     1281,
+     1879,
+     3663
+    ]
    }
   },
   {
@@ -2947,15 +3122,27 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2023-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "3 fact block(s) missed (1124, 1423, 1601) and 2 block(s) taken that state no composition fact (790, 1085); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "3 fact block(s) missed (1124, 1423, 1601) and 2 block(s) taken that state no composition fact (790, 1085) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     790,
+     1085
+    ],
+    "missed": [
+     1124,
+     1423,
+     1601
+    ]
    }
   },
   {
@@ -2969,11 +3156,33 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2024-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "wrongly_taken": [
+     1483
+    ],
+    "missed": [
+     565,
+     566,
+     567,
+     568,
+     569,
+     570,
+     1494,
+     1495,
+     1496,
+     1497,
+     1506
+    ]
+   },
+   "partial_repair": {
+    "still_open": "11 fact block(s) missed (565, 566, 567, 568, 569, 570, 1494, 1495, 1496, 1497, 1506) and 1 block(s) taken that state no composition fact (1483) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MACYS_2022_OLDER_YEAR_READING_DISAGREES",
@@ -2986,17 +3195,30 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1089 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
-    "still_open": "7 fact block(s) missed (640, 703, 810, 1230, 1231, 1877, 1945); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "8 fact block(s) missed (629, 640, 703, 810, 1230, 1231, 1877, 1945) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "roster_bullet_glyph": "24 blocks now taken, every one judged a composition fact: the rosters on the Audit, Compensation and Management Development, Finance and Nominating and Corporate Governance committee pages, whose members follow a '·' the selector did not count as a list bullet, so each roster ended before its first name (scripts/vnext/historical_board_composition.py _BULLET_CHARS; docs/evidence/issue47_history/c02-selector-repairs/README.md section 2 [shared-with-#28])."
+   },
+   "selection_problems": {
+    "missed": [
+     629,
+     640,
+     703,
+     810,
+     1230,
+     1231,
+     1877,
+     1945
+    ]
    }
   },
   {
@@ -3010,15 +3232,27 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2023-01-28.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1150 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
-    "still_open": "1 block taken that states no composition fact (1107: basis of the NCG Committee's independence review) and 1 fact block missed; the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "4 fact block(s) missed (40, 709, 1351, 1352) and 1 block(s) taken that state no composition fact (1107) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     1107
+    ],
+    "missed": [
+     40,
+     709,
+     1351,
+     1352
+    ]
    }
   },
   {
@@ -3032,15 +3266,23 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2024-02-03.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1217 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
-    "still_open": "3 fact blocks missed; the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "3 fact block(s) missed (626, 1982, 2737) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "missed": [
+     626,
+     1982,
+     2737
+    ]
    }
   },
   {
@@ -3054,15 +3296,23 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2025-02-01.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1083 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
-    "still_open": "2 fact blocks missed; the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "3 fact block(s) missed (563, 1814, 1816) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "missed": [
+     563,
+     1814,
+     1816
+    ]
    }
   },
   {
@@ -3076,17 +3326,28 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "sentence_member_list": "6 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "5 fact block(s) missed (610, 842, 990, 991, 1144); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "6 fact block(s) missed (610, 613, 842, 990, 991, 1144) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28])."
+   },
+   "selection_problems": {
+    "missed": [
+     610,
+     613,
+     842,
+     990,
+     991,
+     1144
+    ]
    }
   },
   {
@@ -3100,17 +3361,28 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "sentence_member_list": "8 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "1 fact block(s) missed (504) and 4 block(s) taken that state no composition fact (367, 825, 922, 959); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "1 fact block(s) missed (504) and 3 block(s) taken that state no composition fact (825, 922, 959) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "quoted_nickname": "2 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28])."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     825,
+     922,
+     959
+    ],
+    "missed": [
+     504
+    ]
    }
   },
   {
@@ -3124,11 +3396,21 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2023-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "wrongly_taken": [
+     1537,
+     1583
+    ]
+   },
+   "partial_repair": {
+    "still_open": "0 fact block(s) missed (none) and 2 block(s) taken that state no composition fact (1537, 1583) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_MARRIOTT_2024_OLDER_YEAR_READING_DISAGREES",
@@ -3141,11 +3423,21 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2024-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     528,
+     1264
+    ]
+   },
+   "partial_repair": {
+    "still_open": "2 fact block(s) missed (528, 1264) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_PARAMOUNT_2021_OLDER_YEAR_READING_DISAGREES",
@@ -3157,12 +3449,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/paramount_skydance_paramount_global-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (583: Compensation Committee interlocks disclosure (no member an officer/employee, no interlocks); no membership, count, chair or board determinat); 1 block(s) stating a composition fact that no taken block states (375: the independent Chair of the Nominating and Governance Committee presides at meetings of the independent directors (presiding independent di). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2021-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {},
+   "partial_repair": {
+    "still_open": "Under the uniform adjudication today's selection agrees with the reading (adjudication-effect.json): the disagreements were blocks of classes the readers split on. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id."
+   }
   },
   {
    "defect_id": "C02_PARAMOUNT_2022_OLDER_YEAR_READING_DISAGREES",
@@ -3175,11 +3472,20 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2022-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     819
+    ]
+   },
+   "partial_repair": {
+    "still_open": "1 fact block(s) missed (819) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_PARAMOUNT_2023_OLDER_YEAR_READING_DISAGREES",
@@ -3191,12 +3497,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/paramount_skydance_paramount_global-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) stating a composition fact that no taken block states (421: The independent Chair of the Nominating and Governance Committee presides at meetings of the independent directors (rest: executive sessions). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2023-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {},
+   "partial_repair": {
+    "still_open": "Under the uniform adjudication today's selection agrees with the reading (adjudication-effect.json): the disagreements were blocks of classes the readers split on. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id."
+   }
   },
   {
    "defect_id": "C02_PFIZER_2022_OLDER_YEAR_READING_DISAGREES",
@@ -3209,15 +3520,44 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
    ],
    "partial_repair": {
     "management_committee": "2 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
-    "still_open": "20 fact block(s) missed (198, 199, 425, 426, 493, 496, 500, 502, 723, 799, 875, 876, 877, 1294, 1539, 1880, 1881, 2051, 2052, 3107) and 4 block(s) taken that state no composition fact (364, 446, 547, 897); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "20 fact block(s) missed (198, 199, 425, 426, 493, 496, 500, 502, 723, 799, 875, 876, 877, 1294, 1539, 1880, 1881, 2051, 2052, 3107) and 2 block(s) taken that state no composition fact (446, 547) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   },
+   "selection_problems": {
+    "wrongly_taken": [
+     446,
+     547
+    ],
+    "missed": [
+     198,
+     199,
+     425,
+     426,
+     493,
+     496,
+     500,
+     502,
+     723,
+     799,
+     875,
+     876,
+     877,
+     1294,
+     1539,
+     1880,
+     1881,
+     2051,
+     2052,
+     3107
+    ]
    }
   },
   {
@@ -3231,11 +3571,20 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2023-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     884
+    ]
+   },
+   "partial_repair": {
+    "still_open": "1 fact block(s) missed (884) and 0 block(s) taken that state no composition fact (none) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_SALESFORCE_2025_OLDER_YEAR_READING_DISAGREES",
@@ -3248,11 +3597,122 @@
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
    "repair_state": "NOT_REPAIRED",
-   "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
+   "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/salesforce-2025-01-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+   ],
+   "selection_problems": {
+    "wrongly_taken": [
+     1147
+    ]
+   },
+   "partial_repair": {
+    "still_open": "0 fact block(s) missed (none) and 1 block(s) taken that state no composition fact (1147) under the uniform adjudication (adjudication-effect.json); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
+  },
+  {
+   "defect_id": "C02_ENPHASE_2025_UNIFIED_ADJUDICATION_DISAGREES",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Today's C02 selection disagrees with this position's two-direction reading under the uniform adjudication: 6 block(s) taken that the adjudication decides state no composition fact (57: CLASSIFIED_SLATE_COUNT, 210: CLASSIFIED_SLATE_COUNT, 212: DIRECTOR_GROUP_HEADING, 232: DIRECTOR_GROUP_HEADING, 243: DIRECTOR_GROUP_HEADING, 2338: CLASSIFIED_SLATE_COUNT). The value accepted earlier was read under the earlier adjudication, which decided two classes only; the reading left these blocks out (or took them), and the adjudication now decides their class the same way in every reading. A set with wrong or missing members is not the right set, so the coordinate is withdrawn - the accepted value included - until a release names a result whose selection agrees; the original Runs stay readable.",
+   "root_cause": "Readers of different years split on these classes; c02-composition-facts/adjudicate.py decides each class by its text, once, for all 37 readings (adjudication.json, adjudication-effect.json). The selector does not yet follow the decided classes.",
+   "scope_measured": "All 37 judged positions (ten latest, 27 older) held to today's selection under the committed and the new adjudication (adjudication-effect.json): wrongly taken 40 -> 46, missed 146 -> 144, agreeing positions 11 -> 9. These four latest positions newly disagree; Paramount FY2021 and FY2023 newly agree.",
+   "found_by": "c02-composition-facts/adjudicate.py --effect-output, on the readings in c02-composition-facts/judgements",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Selector repairs follow the decided classes one bounded problem at a time ([shared-with-#28]); this position's readings shaped the rules, so they are regression material for the repairs, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/enphase_energy-2025-12-31.json"
+   ],
+   "selection_problems": {
+    "wrongly_taken": [
+     57,
+     210,
+     212,
+     232,
+     243,
+     2338
+    ]
+   }
+  },
+  {
+   "defect_id": "C02_LUMEN_2025_UNIFIED_ADJUDICATION_DISAGREES",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Today's C02 selection disagrees with this position's two-direction reading under the uniform adjudication: 1 block(s) that the adjudication decides state a composition fact no taken block states (864: CHAIR_CEO_STRUCTURE). The value accepted earlier was read under the earlier adjudication, which decided two classes only; the reading left these blocks out (or took them), and the adjudication now decides their class the same way in every reading. A set with wrong or missing members is not the right set, so the coordinate is withdrawn - the accepted value included - until a release names a result whose selection agrees; the original Runs stay readable.",
+   "root_cause": "Readers of different years split on these classes; c02-composition-facts/adjudicate.py decides each class by its text, once, for all 37 readings (adjudication.json, adjudication-effect.json). The selector does not yet follow the decided classes.",
+   "scope_measured": "All 37 judged positions (ten latest, 27 older) held to today's selection under the committed and the new adjudication (adjudication-effect.json): wrongly taken 40 -> 46, missed 146 -> 144, agreeing positions 11 -> 9. These four latest positions newly disagree; Paramount FY2021 and FY2023 newly agree.",
+   "found_by": "c02-composition-facts/adjudicate.py --effect-output, on the readings in c02-composition-facts/judgements",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Selector repairs follow the decided classes one bounded problem at a time ([shared-with-#28]); this position's readings shaped the rules, so they are regression material for the repairs, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/lumen_technologies-2025-12-31.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     864
+    ]
+   }
+  },
+  {
+   "defect_id": "C02_MACYS_2026_UNIFIED_ADJUDICATION_DISAGREES",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Today's C02 selection disagrees with this position's two-direction reading under the uniform adjudication: 1 block(s) that the adjudication decides state a composition fact no taken block states (508: NOMINEES_ARE_SITTING_DIRECTORS). The value accepted earlier was read under the earlier adjudication, which decided two classes only; the reading left these blocks out (or took them), and the adjudication now decides their class the same way in every reading. A set with wrong or missing members is not the right set, so the coordinate is withdrawn - the accepted value included - until a release names a result whose selection agrees; the original Runs stay readable.",
+   "root_cause": "Readers of different years split on these classes; c02-composition-facts/adjudicate.py decides each class by its text, once, for all 37 readings (adjudication.json, adjudication-effect.json). The selector does not yet follow the decided classes.",
+   "scope_measured": "All 37 judged positions (ten latest, 27 older) held to today's selection under the committed and the new adjudication (adjudication-effect.json): wrongly taken 40 -> 46, missed 146 -> 144, agreeing positions 11 -> 9. These four latest positions newly disagree; Paramount FY2021 and FY2023 newly agree.",
+   "found_by": "c02-composition-facts/adjudicate.py --effect-output, on the readings in c02-composition-facts/judgements",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Selector repairs follow the decided classes one bounded problem at a time ([shared-with-#28]); this position's readings shaped the rules, so they are regression material for the repairs, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/macys-2026-01-31.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     508
+    ]
+   }
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2025_UNIFIED_ADJUDICATION_DISAGREES",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Today's C02 selection disagrees with this position's two-direction reading under the uniform adjudication: 2 block(s) that the adjudication decides state a composition fact no taken block states (520: CHAIR_CEO_STRUCTURE, 521: CHAIR_CEO_STRUCTURE). The value accepted earlier was read under the earlier adjudication, which decided two classes only; the reading left these blocks out (or took them), and the adjudication now decides their class the same way in every reading. A set with wrong or missing members is not the right set, so the coordinate is withdrawn - the accepted value included - until a release names a result whose selection agrees; the original Runs stay readable.",
+   "root_cause": "Readers of different years split on these classes; c02-composition-facts/adjudicate.py decides each class by its text, once, for all 37 readings (adjudication.json, adjudication-effect.json). The selector does not yet follow the decided classes.",
+   "scope_measured": "All 37 judged positions (ten latest, 27 older) held to today's selection under the committed and the new adjudication (adjudication-effect.json): wrongly taken 40 -> 46, missed 146 -> 144, agreeing positions 11 -> 9. These four latest positions newly disagree; Paramount FY2021 and FY2023 newly agree.",
+   "found_by": "c02-composition-facts/adjudicate.py --effect-output, on the readings in c02-composition-facts/judgements",
+   "repair_state": "NOT_REPAIRED",
+   "why_not_repaired_yet": "Selector repairs follow the decided classes one bounded problem at a time ([shared-with-#28]); this position's readings shaped the rules, so they are regression material for the repairs, not held-out validation.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/marriott_international-2025-12-31.json"
+   ],
+   "selection_problems": {
+    "missed": [
+     520,
+     521
+    ]
+   }
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
