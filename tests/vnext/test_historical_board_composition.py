@@ -249,6 +249,26 @@ class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
                  "Age: 71", "Director Since: 2016", "Committees:", "• Audit Committee", "Professional Background"]
         self.assertEqual({0, 4, 5}, set(_selected(texts)))
 
+    def test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach(self):
+        # Ford's cards (2021, 2023, 2024) interleave zero-width spacer blocks
+        # and lone bullet glyphs: ten raw blocks from Farley's name to his
+        # "Committees: N/A", four of them printed.
+        texts = ["James D. Farley, Jr.", "\u200b \u200b \u200b \u200b", "\u200b", "\u200b \u200b", "▪", "Age: 62",
+                 "\u200b", "▪", "Director Since: 2020", "\u200b", "Committees: N/A", "\u200b \u200b",
+                 "\u200b Experience: Mr. Farley was elected President and Chief Executive Officer of the company "
+                 "effective October 1, 2020."]
+        self.assertEqual({0: ["DIRECTOR_NAME"], 10: ["DIRECTOR_NO_COMMITTEE"]}, _selected(texts))
+
+    def test_a_designation_s_reach_still_counts_every_block(self):
+        # Macy's cards: printed blocks only would let the designation pass this
+        # card's committee lines and reach the next card's name, and a name on
+        # both sides leaves it out. Its reach stays eight blocks of any kind.
+        texts = ["Jill Granoff", "Senior Advisor, Eurazeo Brands", "Independent", "Age: 62", "Director Since: 2022",
+                 "Committees:", "●", "CMD (Chair)", "●", "Finance", "●", "Audit", "Torrence Boone"]
+        selected = _selected(texts)
+        self.assertEqual(["DIRECTOR_DESIGNATION"], selected.get(2))
+        self.assertEqual(["DIRECTOR_NAME"], selected.get(0))
+
     def test_a_card_whose_director_is_not_beside_it_is_left_out(self):
         # A paragraph stands between the name and the label: nothing ties them.
         texts = ["Robert B. Chavez", "Mr. Chavez brings to the Board decades of experience leading luxury retail "

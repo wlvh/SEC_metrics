@@ -983,15 +983,38 @@ def _name_from(blocks, j, registrant):
     return split if split == [j, j + 1] else None
 
 
-def _card_name(blocks, before, after, registrant, *, passable=_card_field):
+def _reach(blocks, start, step, spacers_free):
+    """Block indices from ``start`` in the direction ``step``, as far as a card reaches.
+
+    The reach is ``_CARD_REACH`` blocks. With ``spacers_free`` only blocks that
+    print something count: Ford's cards put zero-width spacer blocks and lone
+    bullet glyphs between their fields, ten raw blocks from Farley's name to
+    his "Committees: N/A", four of them printed.
+    """
+    seen, index = 0, start
+    while 0 <= index < len(blocks) and seen < _CARD_REACH:
+        if not spacers_free:
+            seen += 1
+        else:
+            text = clean(blocks[index]["text"])
+            if text and not _ONE_BULLET.match(text):
+                seen += 1
+        yield index
+        index += step
+
+
+def _card_name(blocks, before, after, registrant, *, passable=_card_field, spacers_free=False):
     """The card's director: the full name after ``after`` or before ``before``.
 
     Card fields (age, tenure, a title, a designation) may stand between the
     name and the field that was read; nothing else may. A name found on both
-    sides belongs to one of two cards and is not chosen.
+    sides belongs to one of two cards and is not chosen. ``spacers_free``
+    measures the reach in printed blocks (see ``_reach``); only the committee
+    label uses it, since a designation that can pass a card's labels and items
+    would then reach the next card's name as well and be dropped as ambiguous.
     """
     following = None
-    for j in range(after, min(len(blocks), after + _CARD_REACH)):
+    for j in _reach(blocks, after, 1, spacers_free):
         text = clean(blocks[j]["text"])
         if not text or _ONE_BULLET.match(text):
             continue
@@ -999,7 +1022,7 @@ def _card_name(blocks, before, after, registrant, *, passable=_card_field):
         if following or not passable(blocks[j]):
             break
     preceding = None
-    for k in range(before - 1, max(-1, before - 1 - _CARD_REACH), -1):
+    for k in _reach(blocks, before - 1, -1, spacers_free):
         if not clean(blocks[k]["text"]):
             continue
         preceding = _full_name(blocks, k, registrant)
@@ -1057,7 +1080,7 @@ def _cards(blocks, vocabulary, registrant):
                 break
             if not items:
                 continue
-        name = _card_name(blocks, i, j, registrant, passable=lambda block: False)
+        name = _card_name(blocks, i, j, registrant, passable=lambda block: False, spacers_free=True)
         if name is None:
             continue
         if negative and any(_NOT_YET_DIRECTOR.match(field) for field in _card_fields(blocks, i, name[0])):

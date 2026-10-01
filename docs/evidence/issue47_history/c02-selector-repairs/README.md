@@ -306,3 +306,22 @@
 - Ford 2024 剩 942、2489、2499 三块。942 是被 `_POLICY` 里 "family members" 挡住的句子；2489、2499 是 Farley 卡片上的 "Committees: N/A"，见第 19 节。
 - 另外三个位置新增的块原本就被覆盖，问题集不变。
 - Pfizer 2025 是最新年度，值会变，但原值不缺事实，所以不撤回。
+
+## 19. 委员会标签的就近范围按印出的块计
+
+**问题。** Ford 2021、2023、2024 往年判读都漏了 Farley 卡片上的两块：姓名 "James D. Farley, Jr." 和 "Committees: N/A"（他不在任何委员会）。卡片读法从标签往前找姓名，最多看 8 块。Ford 的卡片在字段之间插了零宽空白块和单独的项目符号块，从 "Committees: N/A" 到姓名隔了 10 个原始块，其中只有 4 块印了东西，所以永远找不到姓名。
+
+**改动。** 委员会标签找姓名时，范围只数印出内容的块，空白块和单独的项目符号不占名额。其他读法（身份标注、无标签的卡片条目）仍按原始块计：
+- 先在 37 份文档上把新算法套到所有读法上试过。除了 Ford 三年，它还会去掉 Macy's 2025、2026 的三处 "Independent"（读者判为事实），并在 Marriott 2024、2025 取进 "GE Aerospace" 这类别家公司名（读者判为非事实）。
+- 原因是身份标注可以越过本卡片的标签和委员会条目继续往下，一旦数的是印出的块，就会够到下一张卡片的姓名。两边都有姓名时按规则不取，于是掉了。
+- 只用于委员会标签时，移动的正好是 Ford 三年这 6 块。
+
+**用例与注错。**
+- `test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach`：Ford 式卡片，注错 `SPACERS_COUNT_FOR_A_COMMITTEE_LABEL`。
+- `test_a_designation_s_reach_still_counts_every_block`：Macy's 式卡片，防止把新算法推广到身份标注，注错 `SPACERS_ARE_FREE_FOR_A_DESIGNATION`。
+- 注错 72/72。
+
+**量测**（`measured-19-card-reach.json`）：Ford 2021、2023、2024 各新增两块，都是读者判为事实的块；漏选 73→69，误选 18 不变，不一致位置 22 不变。
+- Ford 2024 剩 942，即被 `_POLICY` 的 "family members" 挡住的句子。
+- Ford 2023 剩 749。
+- Ford 2021 剩 626、760、3096、4055，其中委员会改名的几块是另一类问题。

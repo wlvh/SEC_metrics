@@ -2882,22 +2882,22 @@
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-12-past-board-size.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-12-past-board-size.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-19-card-reach.json"
    ],
    "selection_problems": {
     "missed": [
      626,
      760,
-     2325,
-     2336,
      3096,
      4055
     ]
    },
    "partial_repair": {
-    "still_open": "6 fact block(s) missed (626, 760, 2325, 2336, 3096, 4055) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "4 fact block(s) missed (626, 760, 3096, 4055) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "board_size_on_a_past_date": "1 block(s) now taken that give the board's size at last year's meeting where attendance is reported (DIRECTOR_COUNT_ON_A_DATE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 12 [shared-with-#28])."
+    "board_size_on_a_past_date": "1 block(s) now taken that give the board's size at last year's meeting where attendance is reported (DIRECTOR_COUNT_ON_A_DATE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 12 [shared-with-#28]).",
+    "card_reach_19": "Repair 19 measures a committee-label card's reach in printed blocks: 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 19 [shared-with-#28])."
    }
   },
   {
@@ -2964,7 +2964,8 @@
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2023-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-19-card-reach.json"
    ],
    "selection_problems": {
     "missed": [
@@ -2973,7 +2974,8 @@
    },
    "partial_repair": {
     "still_open": "1 fact block(s) missed (749) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
-    "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "card_reach_19": "Repair 19 measures a committee-label card's reach in printed blocks: 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 19 [shared-with-#28])."
    }
   },
   {
@@ -2993,19 +2995,19 @@
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-19-card-reach.json"
    ],
    "selection_problems": {
     "missed": [
-     942,
-     2489,
-     2499
+     942
     ]
    },
    "partial_repair": {
-    "still_open": "3 fact block(s) missed (942, 2489, 2499) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "1 fact block(s) missed (942) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28])."
+    "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28]).",
+    "card_reach_19": "Repair 19 measures a committee-label card's reach in printed blocks: 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 19 [shared-with-#28])."
    }
   },
   {

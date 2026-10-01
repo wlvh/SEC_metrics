@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 65,
- "caught": 70,
- "total": 70,
+ "control_tests_run": 67,
+ "caught": 72,
+ "total": 72,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -154,6 +154,7 @@
     "test_a_card_uses_the_filing_s_own_short_forms",
     "test_a_designation_on_a_card_and_not_a_table_header",
     "test_committee_lines_then_the_director",
+    "test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach",
     "test_the_director_named_above_the_card_fields"
    ]
   },
@@ -597,6 +598,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_statement_carrying_a_cross_reference_is_read"
+   ]
+  },
+  {
+   "injection": "SPACERS_COUNT_FOR_A_COMMITTEE_LABEL",
+   "expected": "test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach",
+   "result": "CAUGHT",
+   "failed": [
+    "test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach"
+   ]
+  },
+  {
+   "injection": "SPACERS_ARE_FREE_FOR_A_DESIGNATION",
+   "expected": "test_a_designation_s_reach_still_counts_every_block",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_designation_s_reach_still_counts_every_block"
    ]
   }
  ]

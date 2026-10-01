@@ -212,6 +212,10 @@ INJECTIONS = [
      'test_a_footnote_number_printed_against_the_honorific'),
     ('A_LINKED_STATEMENT_IS_NAVIGATION', '        if not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(', '        if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(',
      'test_a_statement_carrying_a_cross_reference_is_read'),
+    ('SPACERS_COUNT_FOR_A_COMMITTEE_LABEL', '        name = _card_name(blocks, i, j, registrant, passable=lambda block: False, spacers_free=True)', '        name = _card_name(blocks, i, j, registrant, passable=lambda block: False)',
+     'test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach'),
+    ('SPACERS_ARE_FREE_FOR_A_DESIGNATION', '        name = _card_name(blocks, i, i + 1, registrant, passable=passable)', '        name = _card_name(blocks, i, i + 1, registrant, passable=passable, spacers_free=True)',
+     'test_a_designation_s_reach_still_counts_every_block'),
 ]
 
 
