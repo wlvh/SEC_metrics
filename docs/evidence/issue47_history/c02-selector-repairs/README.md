@@ -423,3 +423,19 @@
 共 82/82，对照 71 个用例。
 
 **量测**（`measured-23-named-committee-setup.json`）：只新增 Enphase 2023 第 447 块、Lumen 2022 第 1281、1879 块，都是读者判为含事实的块；漏选 51→47（含由 1281、1879 覆盖的 958），误选 18 不变，不一致位置 21 不变，最新年不变。
+
+## 24. 每次物色董事时才组成的遴选委员会是一个步骤，不是委员会构成
+
+**问题。** Lumen 2022 第 842 块、2023 第 1085 块是同一句："The NCG Committee forms a search committee that is comprised of the Chairman of the Board, the HRCC and NCG Committee chairs, and the CEO who will request to interview with a diverse slate of candidates…"。读者都判为非事实：这是物色董事的流程，每次物色时才组成这个委员会，句中列的是职务，不是某个现有委员会的成员。选择器按 "committee … is comprised of" 当成委员会构成取了。2024、2025 年同一句没被取，只是因为那两年写成 "who will seek to interview"，"seeks to" 碰巧触发了政策否决，并不是规则把它判对了。
+
+**先量后改。** 在 37 份文档里找"现在时或 will/may/would 加 forms/convenes/creates/establishes/appoints 一个委员会"的句子，只有 Lumen 这一句（2022–2025 四年），读者都判为非事实。过去时的设立（"the Board formed a special CEO Succession Committee"）说的是一个已经存在的委员会，不受影响。
+
+**改动。** 句子说某个委员会是"每次组成"的，就不按委员会构成取。
+
+**用例与注错。** `test_a_committee_formed_for_each_search_is_a_step`：反例是第 1085 块原文；正例是同一句改成过去时的构造句，仍按构成取。注错：
+- `A_SEARCH_STEP_IS_COMPOSITION`（去掉这条判断）；
+- `A_PAST_FORMATION_IS_A_STEP`（过去时 "formed" 也算每次组成）。
+
+第 6 项的注错 `MANAGEMENT_SEATS_A_BOARD_COMMITTEE` 改的正是这一行，所以改为只去掉管理层判断、保留本条。共 84/84，对照 72 个用例。
+
+**量测**（`measured-24-search-committee-step.json`）：只移走 Lumen 2022 第 842 块、2023 第 1085 块；误选 18→16，漏选 47 不变，不一致位置 21 不变，最新年不变。

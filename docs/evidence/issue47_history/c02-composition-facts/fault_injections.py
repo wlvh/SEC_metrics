@@ -131,7 +131,7 @@ INJECTIONS = [
      "test_a_quoted_nickname_between_the_names"),
     ('ANY_QUOTED_WORD_IS_A_NICKNAME', '[”\\"](?=\\\\s+\\\\S)', '[”\\"]',
      "test_a_quoted_nickname_between_the_names"),
-    ('MANAGEMENT_SEATS_A_BOARD_COMMITTEE', '\n                and not _MANAGEMENT_MEMBERS.search(sentence)):', '):',
+    ('MANAGEMENT_SEATS_A_BOARD_COMMITTEE', '\n                and not _MANAGEMENT_MEMBERS.search(sentence) and not', '\n                and not',
      "test_a_committee_of_management_is_not_the_board_s"),
     ('ANY_WORDS_OPEN_THE_MEMBER_LIST', "|(?-i:[A-Z])[\\w&’'\\-]*\\s+){0,6}", '|\\w+\\s+){0,6}',
      "test_a_committee_of_management_is_not_the_board_s"),
@@ -236,6 +236,10 @@ INJECTIONS = [
      'test_a_committee_the_board_set_up_under_its_own_name'),
     ('A_CLAUSE_IS_A_NAME', '               r"(?:(?!(?:and|or|of|the|to|with|for|by|on|in|at|its|our|their|that|which|who)\\b)[\\w&’\'\\-]+\\s+){1,6}"\n', '               r"(?:[\\w&’\'\\-]+\\s+){1,6}"\n',
      'test_a_committee_the_board_set_up_under_its_own_name'),
+    ('A_SEARCH_STEP_IS_COMPOSITION', '                and not _MANAGEMENT_MEMBERS.search(sentence) and not _FORMED_EACH_TIME.search(sentence)):\n', '                and not _MANAGEMENT_MEMBERS.search(sentence)):\n',
+     'test_a_committee_formed_for_each_search_is_a_step'),
+    ('A_PAST_FORMATION_IS_A_STEP', '    r"\\b(?:forms|convenes|creates|establishes|appoints|(?:will|may|would)\\s+(?:form|convene|create|establish"\n', '    r"\\b(?:formed|forms|convenes|creates|establishes|appoints|(?:will|may|would)\\s+(?:form|convene|create|establish"\n',
+     'test_a_committee_formed_for_each_search_is_a_step'),
 ]
 
 

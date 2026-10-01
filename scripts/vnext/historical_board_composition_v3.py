@@ -548,6 +548,15 @@ _MANAGEMENT_MEMBERS = re.compile(
     r"\b(?:composed|comprised|made up|consists?|consisted|(?:co-)?chaired)\s+(?:entirely\s+|solely\s+"
     r"|exclusively\s+|wholly\s+)?(?:of|by)\s+(?:(?:the|our|its|senior|other|various|key|company|members of)\s+"
     r"|(?-i:[A-Z])[\w&’'\-]*\s+){0,6}(?:leaders|executives|officers?|employees|associates|management)\b", re.I)
+# A committee a sentence says is formed each time - "The NCG Committee forms a
+# search committee that is comprised of the Chairman of the Board, the HRCC and
+# NCG Committee chairs, and the CEO" (Lumen's director-search process) - is a
+# step in a procedure: its make-up names roles, not the members of one of this
+# board's committees. The verb is in the present or with "will"/"may"; "the
+# Board formed a special CEO Succession Committee" is a committee that exists.
+_FORMED_EACH_TIME = re.compile(
+    r"\b(?:forms|convenes|creates|establishes|appoints|(?:will|may|would)\s+(?:form|convene|create|establish"
+    r"|appoint))\s+(?:a|an)\s+(?:[\w&’'\-]+\s+){0,4}(?:sub-?)?committee\b", re.I)
 _QUALIFICATION = re.compile(
     r"\b(?:independent|financially literate|financial literacy|financially sophisticated|financial sophistication"
     r"|financial experts?|non-employee directors?|outside directors?|non-management directors?"
@@ -930,7 +939,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         if any(p.search(sentence) for p in _DIRECTOR_DETERMINATION):
             labels.add("DIRECTOR_QUALIFICATION_DETERMINATION")
         if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms))
-                and not _MANAGEMENT_MEMBERS.search(sentence)):
+                and not _MANAGEMENT_MEMBERS.search(sentence) and not _FORMED_EACH_TIME.search(sentence)):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):
             labels.add("STANDING_COMMITTEES_STATEMENT")

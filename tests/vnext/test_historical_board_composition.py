@@ -545,6 +545,20 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertNotIn("STANDING_COMMITTEES_STATEMENT",
                                  statement_labels(text, frozenset({"lumen", "example"}), period_start=START))
 
+    def test_a_committee_formed_for_each_search_is_a_step(self):
+        # Lumen FY2023 block 1085 (FY2022 block 842 is the same sentence): the
+        # search committee is formed each time; its make-up names roles.
+        step = ("The NCG Committee forms a search committee that is comprised of the Chairman of the Board, the "
+                "HRCC and NCG Committee chairs, and the CEO who will request to interview with a diverse slate of "
+                "candidates that best fit the profile.")
+        self.assertNotIn("COMMITTEE_COMPOSITION_STATEMENT",
+                         statement_labels(step, frozenset({"lumen", "example"}), period_start=START))
+        # The same sentence telling of a committee that was formed (a constructed
+        # past-tense pair) still states its make-up.
+        formed = ("In 2022, the NCG Committee formed a search committee that was comprised of the Chairman of the "
+                  "Board, the HRCC and NCG Committee chairs, and the CEO.")
+        self.assertStates(formed, "COMMITTEE_COMPOSITION_STATEMENT")
+
     def test_the_committees_named_together_on_their_charters(self):
         # Ford's five years and Salesforce's two name every committee in one
         # sentence about their charters: which committees exist.
