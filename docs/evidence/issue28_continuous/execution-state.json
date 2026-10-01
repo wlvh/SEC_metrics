@@ -2819,6 +2819,26 @@
           "cumulative_tool_calls_reported_approximate": 49
         }
       ]
+    },
+    {
+      "task_name": "review_b13coverage_91cfc9d",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "b13_reference_coverage_scan_v2",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py",
+        "config/ordinary_scalability_exemptions_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-reference-coverage-scan-v2-20261001/"
+      ],
+      "patch_sha": "91cfc9d5b744ca8cd52eb78a62fb1e29706bd44f",
+      "spawned_at": "2026-10-01T06:27:05Z",
+      "ended_at": "2026-10-01T06:36:28Z",
+      "tool_calls": 68,
+      "result_path": "docs/evidence/issue28_continuous/b13-reference-coverage-scan-v2-20261001/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_RECORDED_SCAN_SHAPE_ONLY"
     }
   ],
   "ci_capacity_20260922": {
@@ -8011,5 +8031,43 @@
     ],
     "formal_adoption": false,
     "issue47_operated": false
+  },
+  "b13_reference_coverage_scan_v2_20261001": {
+    "status": "RECORDED_ONLY_COVERAGE_SHAPE_CANDIDATE_LIMITED_REVIEW_PASS_WITH_BOUNDS",
+    "patch_sha": "91cfc9d5b744ca8cd52eb78a62fb1e29706bd44f",
+    "evidence": "docs/evidence/issue28_continuous/b13-reference-coverage-scan-v2-20261001/README.md",
+    "independent_review": "docs/evidence/issue28_continuous/b13-reference-coverage-scan-v2-20261001/independent-review/conclusion.md",
+    "original_191_and_192_status": "FAILED_TERMINAL_UNCHANGED_NO_NEW_OPPORTUNITY",
+    "original_191_source_references": 1276,
+    "synthetic_complete_exclusion_ranges": 4,
+    "synthetic_response_bytes": 160,
+    "measured_input_tokens": 155889,
+    "output_reserve_tokens": 4096,
+    "measured_context_tokens": 159985,
+    "context_limit_tokens": 200000,
+    "recorded_native_scan_cold_read": "PASS_SHAPE_ONLY_NO_METRIC_RESULT",
+    "material_tests": "3/3_PASS_FINAL_TREE",
+    "focused_tests": "26/26_PASS_FINAL_TREE",
+    "fast_selectors": "142/142_PASS_FINAL_TREE",
+    "v14_requirement_closure_hash": "sha256:c3964a1cea2611fab6e4aaab2e9ff574c34507c57411b13346df843bfb61aa1c",
+    "shared_with_issue47_compatibility": {
+      "files_functions": [
+        "scripts/vnext/continuous_semantic_calls.py:SemanticRequest.validate",
+        "scripts/vnext/continuous_semantic_calls.py:_execute_semantic"
+      ],
+      "change": "explicit scan_contract V2 dispatch in recorded B13 scan path",
+      "old_default": "SCAN_VERSION V1 remains selected by old request bytes; live scan still denied",
+      "downstream_impact": "stacked PR52 may need to rebind its own execution snapshot after pulling this parent; no PR52 branch or snapshot operated here"
+    },
+    "model_relevance_proven": false,
+    "complete_interpretation_stage": false,
+    "native_company_result_or_run": false,
+    "new_390_business_coordinate_count": 0,
+    "real_call_authorization_expanded": false,
+    "new_real_calls": [0, 0, 0],
+    "actual_ledger_claim_rows_after": 195,
+    "formal_adoption": false,
+    "issue47_operated": false,
+    "new_head_ci": "PENDING_AFTER_PUSH"
   }
 }
