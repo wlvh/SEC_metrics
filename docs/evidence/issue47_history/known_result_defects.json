@@ -3789,6 +3789,58 @@
     }
    ],
    "next_read": "At the next session start, before work on a metric these touch, and before any acceptance credit for an affected result: fetch, pin the peer commit, read only the increments since f4cf13cd."
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "3473308b843b1a9aecfc64d7b4058db698350750",
+   "own_commit_at_read": "852a6e903153f54823a7385ccee03c46b025a6b8",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_THREE_ENTRIES",
+   "what_that_state_means": "Established in 3473308b. Its three entries withdraw #28's own FY2025 C02 Result identities (Marriott, two identities; Pfizer, one) because each value holds a block #47's c02-board-read judged outside board composition (Marriott block 402, executive pay alignment; Pfizer block 1239, shareholder-proposal engagement). They are #28's own result identities; none names a #47 result.",
+   "baseline": "Read since the last merged peer commit (f4cf13cd): the three commits' messages, file lists, the new register in full, the C02 impact README and impact.json, the B02 review conclusion, and the ported paired_measure_v1.py.",
+   "increments": [
+    {
+     "commit": "32faa26d",
+     "marker": "[shared-with-#47]",
+     "subject": "Guard ordinary B02 paired revenue measures",
+     "touches": [
+      "scripts/vnext/paired_measure_v1.py",
+      "scripts/vnext/normal_companyfacts_results.py",
+      "requirements/issue_28_v13/baseline_manifest.json",
+      "requirements/issue_28_v14/baseline_manifest.json",
+      "AGENTS.md"
+     ],
+     "affects_47": "No #47 result moves: #28 ported #47's guard (the three functions are #47's at 48b46a2d, by #28's AST comparison) into its ordinary route under its own reason code. It does move issue_28_v13's baseline, which issue_47_v1 records as its parent closure, so taking it needs a re-mint. It also placed the COLLAB-28-47-v1 section in AGENTS.md's entrance; #47's own identical copy was removed so the file holds one.",
+     "integration": "MERGED",
+     "receipt": "Confirmed: this is #28 taking the B02 handover (collab-28/README.md, first round) into its ordinary route, with its own Pfizer FY2022/2023/2024 and current FY2025 cases."
+    },
+    {
+     "commit": "f2018837",
+     "marker": "[shared-with-#47]",
+     "subject": "Record B02 limited review and current credit boundary",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-b02-normal-20261001/independent-review/conclusion.md"
+     ],
+     "affects_47": "None. #28's limited independent review of 32faa26d: PASS_WITH_BOUNDS, no reproducible false acceptance, wrong refusal of a legitimate rename, missed ordinary wiring or binding mismatch. It restates the guard's limit #47 recorded: a label whose meaning changes, or two different quantities that happen to be equal, pass it.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "3473308b",
+     "marker": "[shared-with-#47]",
+     "subject": "Withdraw two current C02 composition-scope results",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/"
+     ],
+     "affects_47": "None. #47's successor selector does not take Marriott FY2025 block 402 or Pfizer FY2025 block 1239 (checked on today's selection from the saved proxies), so no #47 C02 value holds either block. #28 states its next C02 step is a targeted ordinary-route integration of the shared selector with its own checks; until then its current C02 results stay on the frozen selector.",
+     "integration": "MERGED",
+     "receipt": "Partly confirmed: #28 read #47's c02-board-read at 48b46a2d and acted on two of its findings; integration of the shared selector and of the repairs registered in collab-28/README.md is pending on #28's side."
+    }
+   ]
   }
  ]
 }
