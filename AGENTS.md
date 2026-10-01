@@ -1027,3 +1027,5 @@ Issue #47 C02 第七处共用修复（2026-10-01，[shared-with-#28]，`c02-sele
 Issue #47 C02 第八处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 8 节）：Enphase 董事会分三级，每年只选一级；"To elect our three nominees"这类参选人数被当成董事会规模。参选人数的句式分出为 `_SLATE_SIZE`，只在文件没有级别说明时算规模；直接说规模的句式不再允许中间夹 nominate/elect/propose（"has nominated three directors"）。只移走 Enphase 五个位置的 12 块，误选 46→34，漏选不变，其余公司不动。注错 48/48。
 
 Issue #47 C02 第九处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 9 节）：董事表上方的分组标题（"Continuing Class III Directors (Until 2027 …)"、"Continuing Directors:"）统一裁定为非事实（级别与任期，与任期年限同类）。`_director_groups` 仍用标题找表，只取名字不取标题。只移走 13 个标题，误选 34→21，漏选不变，Enphase 2024 与最新年 Enphase 恢复一致。原有注错 `ONE_NAME_MAKES_A_TABLE` 的目标代码改了，已改为针对新代码并补断言抓到；注错 49/49。
+
+Issue #47 C02 第十处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 10 节）："Each nominee is currently a member of the Board"统一裁定为事实（非分级董事会，候选名单即现任董事会），选择器此前不取。`_SITTING_SLATE` 标为名册陈述，后接"of <别的机构>"的不算（第一版会把别家董事会也读进来，是写反例时发现的）。只在 Macy's 五个位置各新增一块，漏选 118→113，最新年 Macy's 恢复一致。注错 51/51。

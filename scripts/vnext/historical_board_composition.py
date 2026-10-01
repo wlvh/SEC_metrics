@@ -674,6 +674,12 @@ _DIRECTOR_DETERMINATION = (
 _ROSTER_STATEMENT = re.compile(
     r"\b(?:nominees for election|director nominees|nominees|current directors|members of (?:the|our) board)\b"
     r"[^.;]{0,60}\b(?:are|include)\b\s*(?:the following\b|:)", re.I)
+# "Each nominee is currently a member of the Board": the slate is the sitting
+# board, so the names that follow are its members
+# (c02-composition-facts/adjudicate.py, NOMINEES_ARE_SITTING_DIRECTORS).
+_SITTING_SLATE = re.compile(r"\b(?:each|every|all)\s+(?:of\s+the\s+)?nominees?\s+(?:is|are)\s+currently\s+(?:a\s+)?"
+                           r"(?:members?\s+of\s+(?:the|our)\s+board(?:\s+of\s+directors)?(?!\s+of\b)|directors?\b(?!\s+of\b))",
+                           re.I)
 _HONORIFIC_WORD = re.compile(r"\b(?:Mr|Ms|Mrs|Dr|Messrs|Mses)\b")
 _CAPITAL_SPAN = re.compile("\\b[A-Z][\\w’'\\-]+(?:\\s+(?:[A-Z]\\.?|[A-Z][\\w’'\\-]+)){1,3}\\b")
 
@@ -794,7 +800,7 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         if any(p.search(sentence) for p in _MEMBERSHIP_COUNT):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
-        if _ROSTER_STATEMENT.search(sentence):
+        if _ROSTER_STATEMENT.search(sentence) or _SITTING_SLATE.search(sentence):
             labels.add("BOARD_ROSTER_STATEMENT")
         if (_QUALIFICATION.search(independence) and _MEMBER_REFERENCE.search(sentence)
                 and _STATE.search(sentence)):

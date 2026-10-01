@@ -157,6 +157,11 @@ INJECTIONS = [
      '            taken.append((i, "DIRECTOR_GROUP_HEADING"))\n'
      '            taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)',
      "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"),
+    # Repair 10: a slate of sitting directors.
+    ('A_SITTING_SLATE_STATES_NOTHING', ' or _SITTING_SLATE.search(sentence)', '',
+     "test_a_slate_of_sitting_directors_says_who_the_members_are"),
+    ('ANOTHER_BOARD_SEATS_THE_SLATE', '(?:\\s+of\\s+directors)?(?!\\s+of\\b)|directors?\\b(?!\\s+of\\b))',
+     '|directors?\\b)', "test_a_slate_of_sitting_directors_says_who_the_members_are"),
 ]
 
 

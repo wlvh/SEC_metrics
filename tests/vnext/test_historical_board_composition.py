@@ -320,6 +320,18 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertIn("BOARD_SIZE_STATEMENT", statement_labels(text, frozenset({"example"})))
         self.assertIn("BOARD_SIZE_STATEMENT", statement_labels(size, frozenset({"example"}), classified=True))
 
+    def test_a_slate_of_sitting_directors_says_who_the_members_are(self):
+        # Macy's proxies (c02-composition-facts/adjudicate.py, NOMINEES_ARE_SITTING_DIRECTORS).
+        self.assertStates("Each nominee is currently a member of the Board.", "BOARD_ROSTER_STATEMENT")
+        self.assertStates("All of the nominees are currently directors.", "BOARD_ROSTER_STATEMENT")
+        for text in ("Each nominee has consented to serve if elected.",
+                     "Each nominee is currently a member of the board of directors of another public company.",
+                     "All of the nominees are currently directors of other public companies.",
+                     "If elected, each nominee will serve for a one-year term."):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("BOARD_ROSTER_STATEMENT",
+                                 statement_labels(text, frozenset({"audit", "compensation", "example"})))
+
     def test_the_filing_says_whether_its_board_is_classified(self):
         slate = "To elect our three nominees for director to hold office until the 2029 Annual Meeting."
         classified = ["Class II Directors", "Steven J. Gomo", slate]

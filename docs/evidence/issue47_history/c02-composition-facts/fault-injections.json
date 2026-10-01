@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 52,
- "caught": 49,
- "total": 49,
+ "control_tests_run": 53,
+ "caught": 51,
+ "total": 51,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -410,6 +410,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"
+   ]
+  },
+  {
+   "injection": "A_SITTING_SLATE_STATES_NOTHING",
+   "expected": "test_a_slate_of_sitting_directors_says_who_the_members_are",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_slate_of_sitting_directors_says_who_the_members_are"
+   ]
+  },
+  {
+   "injection": "ANOTHER_BOARD_SEATS_THE_SLATE",
+   "expected": "test_a_slate_of_sitting_directors_says_who_the_members_are",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_slate_of_sitting_directors_says_who_the_members_are"
    ]
   }
  ]

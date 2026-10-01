@@ -131,3 +131,13 @@
 **用例与注错。** `test_historical_board_composition.ACardOrTableStatesWhoAndWhat.test_a_table_of_directors_by_class_and_not_a_card_under_a_heading` 改为要求取两个名字、不取两个标题，并补一条：卡片上方标题下的单个名字不算表格成员。撤回模块改动时该用例失败。注错 `THE_GROUP_HEADING_IS_TAKEN_AGAIN`；原有注错 `ONE_NAME_MAKES_A_TABLE` 的目标代码随之改动，已改为针对新代码，并由新补的断言抓到。注错 49/49，对照 52 例。
 
 **量测**（`measured-9-group-headings.json`）：只移走 13 个分组标题（Enphase 四年各 3 个、Lumen 2024 一个），全部是读者或统一裁定判为非事实的块，名字一个不少。误选 34 → 21，漏选 118 不变，不一致位置 26 → 24：Enphase 2024 与最新年 Enphase 恢复一致。
+
+## 10. "每位候选人现为董事"
+
+**问题。** Macy's 每年的代理都写"Each nominee is currently a member of the Board"。它的董事全员每年改选，这句话说的是候选名单就是现任董事会。五份判读里只有 2024 年的读者取了，统一裁定（`NOMINEES_ARE_SITTING_DIRECTORS`）判为事实，理由与"非分级董事会的候选人数即规模"相同。选择器没有取。
+
+**改动。** `_SITTING_SLATE`：每位/全部候选人"现为本董事会成员/现为董事"标为 `BOARD_ROSTER_STATEMENT`；后面接"of <别的机构>"的（"a member of the board of directors of another public company"）不算。
+
+**用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_slate_of_sitting_directors_says_who_the_members_are`（两种原句取；同意参选、别家董事会、任期句不取）。撤回模块改动时该用例失败。注错 `A_SITTING_SLATE_STATES_NOTHING`、`ANOTHER_BOARD_SEATS_THE_SLATE`；注错 51/51，对照 53 例。写用例时自己举的反例（别家公司的董事会）暴露了第一版会把它也读成本董事会，已收紧后再量。
+
+**量测**（`measured-10-sitting-slate.json`）：只在 Macy's 五个位置各新增这一块，漏选 118 → 113，误选 21 不变，最新年 Macy's 恢复一致。
