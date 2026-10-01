@@ -172,6 +172,7 @@
       "metric_id": "A01",
       "name_en": "Tier 1 capital ratio",
       "name_zh": "一级资本比率",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_instant"
@@ -360,6 +361,7 @@
       "metric_id": "A02",
       "name_en": "CET1 ratio",
       "name_zh": "普通股一级资本比率（CET1）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_instant"
@@ -531,6 +533,7 @@
       "metric_id": "A03",
       "name_en": "Liquidity coverage ratio",
       "name_zh": "流动性覆盖率（LCR）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -703,6 +706,7 @@
       "metric_id": "A04",
       "name_en": "Net interest margin",
       "name_zh": "净息差（NIM）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -947,6 +951,7 @@
       "metric_id": "A05",
       "name_en": "ROA",
       "name_zh": "总资产收益率（ROA）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual",
@@ -1190,6 +1195,7 @@
       "metric_id": "A06",
       "name_en": "ROE",
       "name_zh": "净资产收益率（ROE）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual",
@@ -1409,6 +1415,7 @@
       "metric_id": "A07",
       "name_en": "Net income trends",
       "name_zh": "净利润趋势（同比差额）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual",
@@ -1619,6 +1626,7 @@
       "metric_id": "A08",
       "name_en": "Fee income vs interest income",
       "name_zh": "非利息收入相对净利息收入",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual"
@@ -1800,6 +1808,7 @@
       "metric_id": "A09",
       "name_en": "Non-performing loan ratio",
       "name_zh": "不良贷款率（NPL ratio）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -2012,6 +2021,7 @@
       "metric_id": "A10",
       "name_en": "Loan loss reserves",
       "name_zh": "贷款损失准备率",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_instant"
@@ -2180,6 +2190,7 @@
       "metric_id": "A11",
       "name_en": "Assets under management",
       "name_zh": "资产管理规模（AUM）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -2353,6 +2364,7 @@
       "metric_id": "A12",
       "name_en": "Trading exposure",
       "name_zh": "交易风险暴露（VaR）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -2536,6 +2548,7 @@
       "metric_id": "A13",
       "name_en": "International net revenue",
       "name_zh": "地区暴露（国际净收入）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -2782,6 +2795,7 @@
       "metric_id": "B01",
       "name_en": "Revenue",
       "name_zh": "营业收入",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": [
           300,
@@ -3078,6 +3092,18 @@
       "metric_id": "B02",
       "name_en": "Revenue YoY growth",
       "name_zh": "收入同比增长率",
+      "owner_scope_decision": {
+        "content_zh": "是否改为两年共有的第一个收入标签尚未决定；已批准的配对防错不改变原事实选择或采用最新重述值。",
+        "decision_date": null,
+        "recorded_date": "2026-10-01",
+        "source": {
+          "commit": "32faa26d87b47a882e13145e450e565df0eaa1d3",
+          "locator": "COLLAB-28-47-v1 §2",
+          "path": "AGENTS.md",
+          "url": "https://github.com/wlvh/SEC_metrics/blob/32faa26d87b47a882e13145e450e565df0eaa1d3/AGENTS.md"
+        },
+        "status": "POLICY_PENDING"
+      },
       "period_and_scope": {
         "component_period_roles": [
           "current_annual",
@@ -3479,6 +3505,7 @@
       "metric_id": "B03",
       "name_en": "EBITDA margin",
       "name_zh": "EBITDA 利润率（GAAP EBITDA proxy）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": [
           300,
@@ -3745,6 +3772,7 @@
       "metric_id": "B04",
       "name_en": "Net income",
       "name_zh": "净利润",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual"
@@ -4021,6 +4049,7 @@
       "metric_id": "B05",
       "name_en": "Free cash flow",
       "name_zh": "自由现金流",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual"
@@ -4629,6 +4658,7 @@
       "metric_id": "B06",
       "name_en": "Debt-to-equity",
       "name_zh": "债务权益比",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -5017,6 +5047,7 @@
       "metric_id": "B07",
       "name_en": "Interest coverage ratio",
       "name_zh": "利息保障倍数",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_annual"
@@ -5290,6 +5321,7 @@
       "metric_id": "B08",
       "name_en": "Current ratio",
       "name_zh": "流动比率",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_instant"
@@ -5533,6 +5565,7 @@
       "metric_id": "B09",
       "name_en": "Cash reserves",
       "name_zh": "现金储备",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_instant"
@@ -5702,6 +5735,7 @@
       "metric_id": "B10",
       "name_en": "Occupancy rate",
       "name_zh": "入住率",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -5874,6 +5908,7 @@
       "metric_id": "B11",
       "name_en": "RevPAR",
       "name_zh": "每间可售房收入（RevPAR）",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -6074,6 +6109,7 @@
       "metric_id": "B12",
       "name_en": "ARR / churn or RPO substitute",
       "name_zh": "ARR / churn 可得性与 RPO/cRPO 替代值",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "component_period_roles": [
           "current_instant"
@@ -6330,6 +6366,7 @@
       "metric_id": "B13",
       "name_en": "Capacity utilization",
       "name_zh": "产能利用率",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "annual_duration_days": null,
         "entity_or_business_scope": {
@@ -6581,6 +6618,7 @@
       "metric_id": "C01",
       "name_en": "CEO / CFO changes",
       "name_zh": "CEO / CFO 变动",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "all 8-K filings of the registrant within the window",
         "event_window_policy_by_continuity": {
@@ -6812,6 +6850,18 @@
       "metric_id": "C02",
       "name_en": "Board composition",
       "name_zh": "董事会构成",
+      "owner_scope_decision": {
+        "content_zh": "采用构成事实：董事会规模、独立董事人数、委员会设置、成员、主席及相关独立性和资格认定；不纳入一般治理流程或委员会工作描述。",
+        "decision_date": "2026-09-27",
+        "recorded_date": "2026-10-01",
+        "source": {
+          "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+          "locator": "decisions.C02",
+          "path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+          "url": "https://github.com/wlvh/SEC_metrics/blob/48b46a2d742eb3e3b8bd5a6404908745046b5d2f/docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json"
+        },
+        "status": "DECIDED_TARGET"
+      },
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -7073,6 +7123,7 @@
       "metric_id": "C03",
       "name_en": "Executive compensation signals",
       "name_zh": "高管薪酬信号",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -7338,6 +7389,7 @@
       "metric_id": "C04",
       "name_en": "Auditor changes",
       "name_zh": "审计师变更",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -7563,6 +7615,7 @@
       "metric_id": "D01",
       "name_en": "Risk factors summary",
       "name_zh": "风险因素摘要",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -7787,6 +7840,7 @@
       "metric_id": "D02",
       "name_en": "Litigation disclosures",
       "name_zh": "诉讼披露",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -8002,6 +8056,7 @@
       "metric_id": "D03",
       "name_en": "Regulatory investigations",
       "name_zh": "监管调查",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -8240,6 +8295,7 @@
       "metric_id": "D04",
       "name_en": "Going concern statements",
       "name_zh": "持续经营声明",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "registrant-level text of the selected filing",
         "period_role": "target_fiscal_year_filing"
@@ -8487,6 +8543,18 @@
       "metric_id": "E01",
       "name_en": "M&A announcements",
       "name_zh": "并购公告",
+      "owner_scope_decision": {
+        "content_zh": "采用经内容确认的并购公告；旧按条目或关键词得到的值不能直接继承为新目标的正确结果，具体计数与去重仍须另核。",
+        "decision_date": "2026-09-27",
+        "recorded_date": "2026-10-01",
+        "source": {
+          "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+          "locator": "decisions.E01",
+          "path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+          "url": "https://github.com/wlvh/SEC_metrics/blob/48b46a2d742eb3e3b8bd5a6404908745046b5d2f/docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json"
+        },
+        "status": "DECIDED_TARGET"
+      },
       "period_and_scope": {
         "entity_or_business_scope": "all 8-K filings of the registrant within the window",
         "event_window_policy_by_continuity": {
@@ -8717,6 +8785,7 @@
       "metric_id": "E02",
       "name_en": "Bankruptcy filings",
       "name_zh": "破产申请",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "all 8-K filings of the registrant within the window",
         "event_window_policy_by_continuity": {
@@ -8949,6 +9018,7 @@
       "metric_id": "E03",
       "name_en": "Leadership departures",
       "name_zh": "领导层离任",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "all 8-K filings of the registrant within the window",
         "event_window_policy_by_continuity": {
@@ -9179,6 +9249,7 @@
       "metric_id": "E04",
       "name_en": "Financial restatements",
       "name_zh": "财务重述",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "all 8-K filings of the registrant within the window",
         "event_window_policy_by_continuity": {
@@ -9411,6 +9482,7 @@
       "metric_id": "E05",
       "name_en": "Material agreements",
       "name_zh": "重大协议",
+      "owner_scope_decision": null,
       "period_and_scope": {
         "entity_or_business_scope": "all 8-K filings of the registrant within the window",
         "event_window_policy_by_continuity": {
