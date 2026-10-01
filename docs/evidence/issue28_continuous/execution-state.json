@@ -8068,7 +8068,16 @@
     "actual_ledger_claim_rows_after": 195,
     "formal_adoption": false,
     "issue47_operated": false,
-    "new_head_ci": "PENDING_AFTER_PUSH"
+    "new_head_ci": "SUCCESS_36825799739_56180089_2026-10-01T07:11:41Z"
+  },
+  "ci_36825799739": {
+    "head": "561800899b98b4ded0c5def2a1e2ea7ce63fadf6",
+    "run_id": 36825799739,
+    "conclusion": "SUCCESS",
+    "jobs_successful": 15,
+    "jobs_total": 15,
+    "updated_at_utc": "2026-10-01T07:11:41Z",
+    "scope": "B13 reference coverage scan product patch and limited review; does not cover subsequent local ordinary-update latency evidence commit"
   },
   "ordinary_update_latency_a05_20261001": {
     "status": "BOUNDED_LOCAL_SLEEP_CORRELATION_AND_ONE_METRIC_PROFILE_NO_PRODUCT_CHANGE",
