@@ -23,7 +23,7 @@
       "metric_id": "C02",
       "period_end": "2025-12-31",
       "result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
-      "status": "FAILED_CONTENT_SCOPE_AUDIT_NO_CURRENT_CREDIT",
+      "status": "PRIOR_54_PRIVATE_RESULT_FAILED_CONTENT_SCOPE_NEW_48_RESULT_PENDING_CONTENT_REVIEW",
       "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
       "peer_disputed_block_indexes": [
         57,
@@ -32,7 +32,10 @@
         232,
         243,
         2338
-      ]
+      ],
+      "new_peer60aa_private_result_id": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
+      "new_peer60aa_selected_count": 48,
+      "new_peer60aa_credit": "NONE_PENDING_FULL_OWN_CONTENT_ACCEPTANCE"
     },
     "private_salesforce_successor_failed_content": {
       "company_id": "salesforce",
@@ -360,5 +363,5 @@
       "original_record_retained": true
     }
   ],
-  "latest_peer_read_commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3"
+  "latest_peer_read_commit": "60aa9f7b5b12289c74776f2320bc827d71b7c857"
 }
