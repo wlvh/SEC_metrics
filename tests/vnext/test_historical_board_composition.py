@@ -421,6 +421,24 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "All then current directors attended our 2022 annual meeting.", frozenset({"example"}),
             period_start=START))
 
+    def test_the_board_s_size_where_attendance_at_its_meeting_is_reported(self):
+        # Marriott's proxies report attendance at the year's annual meeting
+        # with the count of directors then serving, or of the directors
+        # nominated for election; every reader took the count as the board's
+        # size then.
+        self.assertStates("All 14 directors then serving attended the Company’s 2022 annual meeting.",
+                          "BOARD_SIZE_STATEMENT")
+        nominated = "All 12 directors nominated for election in 2024 attended the Company’s 2024 annual meeting."
+        self.assertStates(nominated, "BOARD_SIZE_STATEMENT")
+        # On a board divided into classes the nominees are one class (constructed).
+        self.assertNotIn("BOARD_SIZE_STATEMENT", statement_labels(
+            nominated, frozenset({"example"}), period_start=START, classified=True))
+        # "All but two" counts no one (Enphase's 2021 proxy).
+        self.assertNotIn("BOARD_SIZE_STATEMENT", statement_labels(
+            "Badri Kothandaraman, our President and CEO, and all but two of the other members of our board of "
+            "directors attended our Annual Meeting of Stockholders in 2021.", frozenset({"example"}),
+            period_start=START))
+
     def labels_for(self, text, period_start):
         return statement_labels(text, frozenset({"audit", "compensation", "example"}),
                                 period_start=dt.date.fromisoformat(period_start))

@@ -178,6 +178,20 @@ INJECTIONS = [
     # Repair 12: the board's size on a past date, printed with attendance.
     ('A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE', ' or _THEN_CURRENT_MEMBERS.search(sentence)', '',
      "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"),
+    # Repair 37: the board's size where attendance at its meeting is reported.
+    ('A_THEN_SERVING_COUNT_IS_SET_ASIDE', '\n'
+     '                                   # "All 13 directors then serving attended the Company\'s 2021\n'
+     '                                   # annual meeting" (Marriott\'s proxies).\n'
+     '                                   r"|\\ball\\s+" + _NUM + r"\\s+directors\\s+then\\s+serving\\b", re.I)',
+     ', re.I)', "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    ('A_NOMINATED_COUNT_IS_SET_ASIDE', '        if _ALL_NOMINATED_DIRECTORS.search(sentence) and not classified:\n'
+     '            labels.add("BOARD_SIZE_STATEMENT")\n', '',
+     "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    ('A_CLASS_S_NOMINEES_ARE_THE_BOARD', '_ALL_NOMINATED_DIRECTORS.search(sentence) and not classified:',
+     '_ALL_NOMINATED_DIRECTORS.search(sentence):', "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    ('ANY_COUNT_AFTER_ALL_IS_A_SIZE', 'r"|\\ball\\s+" + _NUM + r"\\s+directors\\s+then\\s+serving\\b"',
+     'r"|\\ball\\b[^.;]{0,20}?\\b" + _NUM + r"\\b[^.;]{0,40}?\\b(?:directors|members)\\b"',
+     "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
     ('A_DATED_JOIN_COUNTS_IN_ANY_YEAR', 'undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence',
      'undated = sentence', "test_a_join_dated_before_the_year_is_tenure"),
     ('AN_IN_YEAR_JOIN_STATES_NOTHING',

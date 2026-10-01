@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 85,
- "caught": 115,
- "total": 115,
+ "control_tests_run": 86,
+ "caught": 119,
+ "total": 119,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -480,7 +480,40 @@
    "expected": "test_the_board_s_size_on_a_past_date_wherever_it_is_printed",
    "result": "CAUGHT",
    "failed": [
-    "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"
+    "test_the_board_s_size_on_a_past_date_wherever_it_is_printed",
+    "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"
+   ]
+  },
+  {
+   "injection": "A_THEN_SERVING_COUNT_IS_SET_ASIDE",
+   "expected": "test_the_board_s_size_where_attendance_at_its_meeting_is_reported",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"
+   ]
+  },
+  {
+   "injection": "A_NOMINATED_COUNT_IS_SET_ASIDE",
+   "expected": "test_the_board_s_size_where_attendance_at_its_meeting_is_reported",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"
+   ]
+  },
+  {
+   "injection": "A_CLASS_S_NOMINEES_ARE_THE_BOARD",
+   "expected": "test_the_board_s_size_where_attendance_at_its_meeting_is_reported",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"
+   ]
+  },
+  {
+   "injection": "ANY_COUNT_AFTER_ALL_IS_A_SIZE",
+   "expected": "test_the_board_s_size_where_attendance_at_its_meeting_is_reported",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"
    ]
   },
   {

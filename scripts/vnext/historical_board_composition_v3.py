@@ -851,7 +851,19 @@ def _joined_before(date_text, start):
 
 
 _THEN_CURRENT_MEMBERS = re.compile(r"\bof\s+the\s+" + _NUM + r"\s+then[- ]current\s+(?:members\s+of\s+(?:the|our)\s+board"
-                                   r"|directors)\b", re.I)
+                                   r"|directors)\b"
+                                   # "All 13 directors then serving attended the Company's 2021
+                                   # annual meeting" (Marriott's proxies).
+                                   r"|\ball\s+" + _NUM + r"\s+directors\s+then\s+serving\b", re.I)
+# The same count printed as the directors nominated who attended: "All 12
+# directors nominated for election in 2024 attended the Company's 2024 annual
+# meeting" (Marriott's later proxies; every reader took the count as the
+# board's size then). On a board whose directors all stand each year the
+# nominees are the board; on a board divided into classes they are one
+# class's slate and state nothing (c02-composition-facts/adjudicate.py,
+# CLASSIFIED_SLATE_COUNT). Like the count above it is read wherever it is
+# printed.
+_ALL_NOMINATED_DIRECTORS = re.compile(r"\ball\s+" + _NUM + r"\s+directors\s+nominated\s+for\s+election\b", re.I)
 # A committee chair named where the filing explains a fee: "Cash fees paid
 # to Mr. Roos relate to his service as Chair of the Compensation Committee for
 # the first quarter". The pay is set aside; who chaired which committee is not.
@@ -1006,6 +1018,8 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         if _other_organization(sentence, own_words):
             continue
         if _DIRECTOR_COUNT.search(sentence) or _THEN_CURRENT_MEMBERS.search(sentence):
+            labels.add("BOARD_SIZE_STATEMENT")
+        if _ALL_NOMINATED_DIRECTORS.search(sentence) and not classified:
             labels.add("BOARD_SIZE_STATEMENT")
         if _SERVICE_AS_CHAIR.search(sentence) and _mentions_person(sentence):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")

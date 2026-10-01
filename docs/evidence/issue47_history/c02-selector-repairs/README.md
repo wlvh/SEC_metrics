@@ -670,3 +670,34 @@
 共 115/115，对照 85 个用例。
 
 **量测**（`measured-36-company-roles-in-parentheses.json`）：只移走这一块；误选 9→8，漏选 24 不变，最新年不变。
+
+## 37. 出席情况里写出的董事人数
+
+**问题。** Marriott 的代理在出席情况里写出当时的董事人数：
+- 2022 第 1039 块："All 14 directors then serving attended the Company’s 2022 annual meeting"；
+- 2024 第 1264 块："All 12 directors nominated for election in 2024 attended the Company’s 2024 annual meeting"（2023 第 1685 块、2025 第 1199 块同样写法）。
+
+读者都判为含事实（当时董事会的人数），选择器因出席话题整句排除。2021 第 842 块被取，只是因为同一块另写了一个带日期的加入。2024 年只有第 1264 块写出 12 人，读者没列覆盖块，所以算漏选；另外三年的人数另有 "reduced its size from X to Y" 的块写出，且已被取。
+
+**先量后改。** 37 份文档里同时写出董事人数与出席的句子只有 7 句：
+- Ford 2021 "of the twelve then current members of the Board, twelve attended"（第 12 处已读）；
+- Marriott 五年的上述 5 句；
+- Enphase 2021 "all but two of the other members of our board of directors attended"：没写董事会人数，读者没取。
+
+**改动。** 与第 12 处一样，在出席话题排除之前读：
+- "All N directors then serving" 并入已有的 `_THEN_CURRENT_MEMBERS`（某日在任董事的人数）；
+- "All N directors nominated for election" 新增 `_ALL_NOMINATED_DIRECTORS`，只在董事会不分级时算规模。分级董事会上候选人只是其中一级，按统一裁定 `CLASSIFIED_SLATE_COUNT` 不算，与第 8 处同一判断。
+
+只认语料里的这两种写法。
+
+**用例与注错。** `test_the_board_s_size_where_attendance_at_its_meeting_is_reported`：Marriott 2022、2024 的两句原文为正例；同一句放在分级董事会上为构造反例；Enphase 2021 "all but two" 原文为反例。注错：
+- `A_THEN_SERVING_COUNT_IS_SET_ASIDE`（去掉 then serving 写法）；
+- `A_NOMINATED_COUNT_IS_SET_ASIDE`（去掉 nominated 写法）；
+- `A_CLASS_S_NOMINEES_ARE_THE_BOARD`（不看是否分级）；
+- `ANY_COUNT_AFTER_ALL_IS_A_SIZE`（把 then serving 写法放宽成 "all … 数字 … directors/members"，由 Enphase 反例抓到）。
+
+共 119/119，对照 86 个用例。
+
+**量测**（`measured-37-board-size-at-attendance.json`）：只在 Marriott 2022–2025 各新增一块，都是读者判为含事实的块；漏选 24→23，误选 7 不变，Marriott 2024 现与判读一致。最新年 Marriott 2025 的选择多了第 1199 块（读者判为含事实，列为由已取的第 491 块覆盖）。已接受的值只对应旧结果，下一次运行后要重读。
+
+**局限。** 两种写法都不看句中年份。"nominated for election" 的人数在不分级的董事会上按当时在任的人数读，与读者一致；若句中年份早于目标年度，本条照样取，没有例子检验。
