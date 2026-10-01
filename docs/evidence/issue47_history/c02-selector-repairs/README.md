@@ -121,3 +121,13 @@
 **用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_on_a_classified_board_the_slate_is_not_the_board_s_size`（三种原句在分级时不算规模，不分级时算；"currently has seven members"两种情形都算）与 `test_the_filing_says_whether_its_board_is_classified`（同一句话在出现级别标题的文件里不取、没有时取）。撤回模块改动时这些用例失败。注错 `A_CLASSIFIED_BOARD_STILL_COUNTS_ITS_SLATE`、`NO_FILING_IS_CLASSIFIED`、`HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE`；注错 48/48，对照 52 例。
 
 **量测**（`measured-8-classified-slate.json`）：只移走 Enphase 五个位置的这 12 块，全部是判读或统一裁定判为非事实的块，其余公司一块不动。误选 46 → 34，漏选 118 不变。最新年 Enphase 的值随之变化（仍有三个级别标题被取，待第 9 项）。
+
+## 9. 董事分组标题不取
+
+**问题。** Enphase 的董事表按级别分组，每组上方印着"Continuing Class III Directors (Until 2027 Annual Meeting of Stockholders)"、"Class II Nominees for Election (Until 2029 …)"；Lumen 2024 的董事薪酬表上方有"Continuing Directors:"。选择器把这些标题连同其下的名字一起取了。读者判断相反（Enphase 2022、2025 与 Lumen 2024、2025 取了，Enphase 2021、2023、2024 与 Macy's 各年没取），统一裁定（`DIRECTOR_GROUP_HEADING`）判为非事实：标题说的是级别、是否参选与任期，与任期年限同类；董事是谁由下面的名字说明。
+
+**改动。** `_director_groups` 仍用标题找到表格，但只取表里的名字，不取标题本身。一个标题下只有一个名字时那是卡片的开头，不是表格，名字照旧留给卡片规则。
+
+**用例与注错。** `test_historical_board_composition.ACardOrTableStatesWhoAndWhat.test_a_table_of_directors_by_class_and_not_a_card_under_a_heading` 改为要求取两个名字、不取两个标题，并补一条：卡片上方标题下的单个名字不算表格成员。撤回模块改动时该用例失败。注错 `THE_GROUP_HEADING_IS_TAKEN_AGAIN`；原有注错 `ONE_NAME_MAKES_A_TABLE` 的目标代码随之改动，已改为针对新代码，并由新补的断言抓到。注错 49/49，对照 52 例。
+
+**量测**（`measured-9-group-headings.json`）：只移走 13 个分组标题（Enphase 四年各 3 个、Lumen 2024 一个），全部是读者或统一裁定判为非事实的块，名字一个不少。误选 34 → 21，漏选 118 不变，不一致位置 26 → 24：Enphase 2024 与最新年 Enphase 恢复一致。

@@ -1100,14 +1100,17 @@ _GROUP_REACH = 60
 
 
 def _director_groups(blocks, registrant):
-    """Director-group headings and the names in the rows beneath them.
+    """The names in the rows beneath a director-group heading.
 
     Rows lead with the director's name, emphasised; the fields after it
     (occupation, age, year, marks) are not names. The table ends at the next
     emphasised block that is not a name - the next group's heading - or at
     prose. A heading followed by anything but a name within three blocks, or
     by a single name, heads director cards, not a table, and is left to the
-    cards.
+    cards. The heading finds the table but is not taken: it states the
+    directors' class, their standing for election and their term, which are
+    tenure-like (c02-composition-facts/adjudicate.py, DIRECTOR_GROUP_HEADING);
+    the names carry who the directors are.
     """
     taken = []
     for i, block in enumerate(blocks):
@@ -1129,7 +1132,6 @@ def _director_groups(blocks, registrant):
             j += 1
         # One name under a heading is a card that follows it, not a table.
         if len(names) >= 2:
-            taken.append((i, "DIRECTOR_GROUP_HEADING"))
             taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)
     return taken
 

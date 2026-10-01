@@ -1025,3 +1025,5 @@ Issue #47 C02 读者分歧的统一裁定（2026-10-01，[shared-with-#28]，`do
 Issue #47 C02 第七处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 7 节）：董事长与 CEO 分设还是合一的陈述（不点名）一句都没取，而统一裁定判为事实。`_CHAIR_CEO_STRUCTURE` 把"分设/合并 + 主席与 CEO 这一对角色"标为领导结构陈述，两种选择都提的、讲政策或提案的不算。新增块全是判读或裁定判为事实的块，没有移走任何块；漏选 144→118，误选 46 不变，不一致位置 28→26，最新年 Lumen、Marriott 恢复一致。最新年 Ford、Macy's 的选择也多了一两块，已接受的值只对应旧结果，下一次运行后要重读。
 
 Issue #47 C02 第八处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 8 节）：Enphase 董事会分三级，每年只选一级；"To elect our three nominees"这类参选人数被当成董事会规模。参选人数的句式分出为 `_SLATE_SIZE`，只在文件没有级别说明时算规模；直接说规模的句式不再允许中间夹 nominate/elect/propose（"has nominated three directors"）。只移走 Enphase 五个位置的 12 块，误选 46→34，漏选不变，其余公司不动。注错 48/48。
+
+Issue #47 C02 第九处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 9 节）：董事表上方的分组标题（"Continuing Class III Directors (Until 2027 …)"、"Continuing Directors:"）统一裁定为非事实（级别与任期，与任期年限同类）。`_director_groups` 仍用标题找表，只取名字不取标题。只移走 13 个标题，误选 34→21，漏选不变，Enphase 2024 与最新年 Enphase 恢复一致。原有注错 `ONE_NAME_MAKES_A_TABLE` 的目标代码改了，已改为针对新代码并补断言抓到；注错 49/49。

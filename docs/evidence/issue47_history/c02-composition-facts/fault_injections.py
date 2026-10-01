@@ -84,8 +84,8 @@ INJECTIONS = [
      "            if not _TITLE_LINE_CHAIR.search(clause) or _TITLE_LINE_PAST.search(clause):",
      "            if not _TITLE_LINE_CHAIR.search(clause):",
      "test_a_title_line_at_this_registrant_and_not_elsewhere"),
-    ("ONE_NAME_MAKES_A_TABLE", "        if len(names) >= 2:\n            taken.append((i, \"DIRECTOR_GROUP_HEADING\"))",
-     "        if names:\n            taken.append((i, \"DIRECTOR_GROUP_HEADING\"))",
+    ("ONE_NAME_MAKES_A_TABLE", "        if len(names) >= 2:\n            taken.extend((k, \"DIRECTOR_GROUP_MEMBER\")",
+     "        if names:\n            taken.extend((k, \"DIRECTOR_GROUP_MEMBER\")",
      "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"),
     ("A_FOOTNOTE_WITHOUT_ITS_NAMES", "            taken.extend((k, \"FOOTNOTED_DIRECTOR\") for k in names)\n", "",
      "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark"),
@@ -152,7 +152,11 @@ INJECTIONS = [
      '    classified = any(_CLASSIFIED.search(block["text"]) for block in blocks if not block["linked"])',
      '    classified = False', "test_the_filing_says_whether_its_board_is_classified"),
     ('HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE', '(?:(?!\\bnominat|\\belect|\\bpropos)[^.;]){0,30}?', '[^.;]{0,30}?',
-     "test_on_a_classified_board_the_slate_is_not_the_board_s_size"),
+     "test_on_a_classified_board_the_slate_is_not_the_board_s_size"),    # Repair 9: a director-group heading is not taken.
+    ('THE_GROUP_HEADING_IS_TAKEN_AGAIN', '            taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)',
+     '            taken.append((i, "DIRECTOR_GROUP_HEADING"))\n'
+     '            taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)',
+     "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"),
 ]
 
 

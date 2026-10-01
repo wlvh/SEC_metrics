@@ -561,10 +561,18 @@ class ACardOrTableStatesWhoAndWhat(unittest.TestCase):
                  "Joseph Malchow", "Founding Partner, a venture firm", "IND", "40", "2020",
                  "Continuing Class I Directors (Until 2028 Annual Meeting of Stockholders)"]
         chosen = _selected(table, emphasized={0, 1, 5, 7, 10})
-        self.assertEqual({0, 1, 5}, {i for i, labels in chosen.items() if labels[0].startswith("DIRECTOR_GROUP")})
+        # The names are the board's directors; the heading over them states
+        # their class and term and is not taken
+        # (c02-composition-facts/adjudicate.py, DIRECTOR_GROUP_HEADING).
+        self.assertEqual({1, 5}, {i for i, labels in chosen.items() if labels[0].startswith("DIRECTOR_GROUP")})
+        self.assertNotIn(0, chosen)
+        self.assertNotIn(10, chosen)
         cards = ["Nominees for Election as Directors:", "Emilie Arel", "President, Mitchell & Ness", "Independent",
                  "Age: 44"]
-        self.assertNotIn(0, _selected(cards, emphasized={1, 3}))
+        under_cards = _selected(cards, emphasized={1, 3})
+        self.assertNotIn(0, under_cards)
+        # One name under a heading begins a card, not a table.
+        self.assertNotIn("DIRECTOR_GROUP_MEMBER", under_cards.get(1, []))
 
     def test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark(self):
         texts = ["Director", "Eduardo F. Conrado(2)", "58,527", "Elaine Mendoza(2)", "70,000", "Gary Kelly", "(1)",
