@@ -439,3 +439,30 @@
 第 6 项的注错 `MANAGEMENT_SEATS_A_BOARD_COMMITTEE` 改的正是这一行，所以改为只去掉管理层判断、保留本条。共 84/84，对照 72 个用例。
 
 **量测**（`measured-24-search-committee-step.json`）：只移走 Lumen 2022 第 842 块、2023 第 1085 块；误选 18→16，漏选 47 不变，不一致位置 21 不变，最新年不变。
+
+## 25. 用 "became" 接任的职务
+
+**问题。** Lumen 2021 第 897 块 "Effective May 20, 2020, Mr. Glenn became Lumen’s independent, non-executive Chairman, with Mr. Hanks continuing his role as Vice Chairman" 没取。选择器认的职务动词都要带 "as"（"serves as"、"was appointed as"），或是第 15 项的 "assumed the role of"；"became" 直接接职务名，不带 "as"。读者把同年的五块漏选（第 695、732 块卡片上的 "Chairman of the Board"、"Vice Chairman of the Board"，第 1049 块 "Independent Chairman named at 2020 annual meeting"，第 1223、2651 块董事酬金和关联交易里的副主席）都列为由 897 覆盖，所以这一块关系到六个块。
+
+**日期。** 2020 年早于目标年度 2021。加入日期早于年度是任期，统一裁定判为非事实（`JOIN_BEFORE_THE_YEAR`）；职务不一样。读者对"谁担任某职务"的带日期陈述，不论日期在年度前后，都判为事实（"Lead Independent Director since 2022"、"Chair of the Board since January 1999"、"non-executive chairman since 2009"），因为它说的是现在谁担任，没有别的块更新它。加入日期只是重复了名单已经写明的"谁在董事会"，职务陈述却是唯一说明谁是主席的地方。所以这里不按日期筛。
+
+**先量后改。** 37 份文档里 "became" 后 80 字符内出现主席、首席董事、副主席的句子共六句：
+- 第 897 块是唯一没取的事实；
+- Ford 2021 第 2381 块、Macy's 2024 第 2736 块、Salesforce 2025 第 1887 块已因同块其他句子被选中；
+- Paramount 2021 第 932 块是董事酬金句（因薪酬话题排除）；
+- Paramount 2021 第 728 块 "became the first woman to chair a major New York law firm" 说的是别的机构，读者判为非事实。
+
+**改动。** 只加语料里实际出现的两种写法：
+- "became <本公司>’s … Chairman"（与 "served as <本公司>’s Chairman" 同一规则，名字必须是本公司）；
+- "became Chair of the … Committee"（加入委员会主席句式的动词表，Salesforce 第 1887 块的句子由此得到标签，但该块原已入选）。
+
+"became Lead Independent Director"、"became Chairman of the Board" 这类不带所有格的写法，37 份文档里一句都没有，先不加：一条没有例子检验的规则不加。
+
+**用例与注错。** `test_a_role_taken_up_with_became`：第 897、1887 块原文两条正例；反例是构造的 "she became Acme’s Chairman" 和第 728 块原文。注错：
+- `BECAME_TAKES_NO_ROLE`；
+- `BECAME_ANY_OWNERS_CHAIR`（所有格不核对是不是本公司）；
+- `BECAME_A_COMMITTEE_CHAIR_IS_NOT_READ`。
+
+共 87/87，对照 73 个用例。
+
+**量测**（`measured-25-became.json`）：只新增 Lumen 2021 第 897 块；漏选 47→42（695、732、1049、1223、2651 由它覆盖），误选 16 不变，不一致位置 21 不变，最新年不变。

@@ -545,6 +545,23 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertNotIn("STANDING_COMMITTEES_STATEMENT",
                                  statement_labels(text, frozenset({"lumen", "example"}), period_start=START))
 
+    def test_a_role_taken_up_with_became(self):
+        # Lumen FY2021 block 897: the registrant's chair, named by its possessive.
+        lumen = frozenset({"lumen", "technologies"})
+        self.assertIn("BOARD_LEADERSHIP_STATEMENT", statement_labels(
+            "Effective May 20, 2020, Mr. Glenn became Lumen’s independent, non-executive Chairman, with Mr. Hanks "
+            "continuing his role as Vice Chairman.", lumen, period_start=START, registrant=lumen))
+        # Salesforce FY2025 block 1887: a committee's chair.
+        self.assertStates("In December 2024, Craig Conway transitioned to the Audit & Finance Committee, and in "
+                          "January 2025, Mr. Morfit became Chair of the Compensation Committee.",
+                          "COMMITTEE_COMPOSITION_STATEMENT")
+        # Another company's chair (a constructed sentence), and Paramount FY2021
+        # block 728's chair of a law firm.
+        for text in ("In 2010, she became Acme’s Chairman.",
+                     "In 1999, Ms. Beinecke became the first woman to chair a major New York law firm."):
+            with self.subTest(text=text[:40]):
+                self.assertEqual([], statement_labels(text, lumen, period_start=START, registrant=lumen))
+
     def test_a_committee_formed_for_each_search_is_a_step(self):
         # Lumen FY2023 block 1085 (FY2022 block 842 is the same sentence): the
         # search committee is formed each time; its make-up names roles.

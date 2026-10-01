@@ -240,6 +240,12 @@ INJECTIONS = [
      'test_a_committee_formed_for_each_search_is_a_step'),
     ('A_PAST_FORMATION_IS_A_STEP', '    r"\\b(?:forms|convenes|creates|establishes|appoints|(?:will|may|would)\\s+(?:form|convene|create|establish"\n', '    r"\\b(?:formed|forms|convenes|creates|establishes|appoints|(?:will|may|would)\\s+(?:form|convene|create|establish"\n',
      'test_a_committee_formed_for_each_search_is_a_step'),
+    ('BECAME_TAKES_NO_ROLE', '    r"\\b(?:" + _LEADERSHIP_VERB + r"\\b[^.;]{0,40}\\bas|became)\\s+(?P<owner>(?-i:[A-Z])[\\w&\\-]*)[\'’]s\\s+"\n', '    r"\\b(?:" + _LEADERSHIP_VERB + r"\\b[^.;]{0,40}\\bas)\\s+(?P<owner>(?-i:[A-Z])[\\w&\\-]*)[\'’]s\\s+"\n',
+     'test_a_role_taken_up_with_became'),
+    ('BECAME_ANY_OWNERS_CHAIR', '                or (owned and owned.group("owner").casefold() in registrant)):\n', '                or owned):\n',
+     'test_a_role_taken_up_with_became'),
+    ('BECAME_A_COMMITTEE_CHAIR_IS_NOT_READ', '               r"|designated(?: as)?|elected(?: as)?|became)\\s+(?:the\\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"\n', '               r"|designated(?: as)?|elected(?: as)?)\\s+(?:the\\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"\n',
+     'test_a_role_taken_up_with_became'),
 ]
 
 

@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 72,
- "caught": 84,
- "total": 84,
+ "control_tests_run": 73,
+ "caught": 87,
+ "total": 87,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -227,6 +227,7 @@
    "expected": "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s",
    "result": "CAUGHT",
    "failed": [
+    "test_a_role_taken_up_with_became",
     "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s"
    ]
   },
@@ -712,6 +713,31 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_committee_formed_for_each_search_is_a_step"
+   ]
+  },
+  {
+   "injection": "BECAME_TAKES_NO_ROLE",
+   "expected": "test_a_role_taken_up_with_became",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_role_taken_up_with_became"
+   ]
+  },
+  {
+   "injection": "BECAME_ANY_OWNERS_CHAIR",
+   "expected": "test_a_role_taken_up_with_became",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_role_taken_up_with_became",
+    "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s"
+   ]
+  },
+  {
+   "injection": "BECAME_A_COMMITTEE_CHAIR_IS_NOT_READ",
+   "expected": "test_a_role_taken_up_with_became",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_role_taken_up_with_became"
    ]
   }
  ]

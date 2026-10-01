@@ -520,7 +520,7 @@ _COMMITTEE_COMPOSITION = (
     re.compile(r"\b(?:served|serve|serves|serving|sit|sits|sat)\s+(?:as\s+(?:a\s+)?members?\s+)?on\s+(?:the|our"
                r"|its|each of the)\b[^.;]{0,80}\bcommittees?\b", re.I),
     re.compile(r"\b(?:is|was|serves as|served as|has served as|will serve as|appointed(?: as)?|named(?: as)?"
-               r"|designated(?: as)?|elected(?: as)?)\s+(?:the\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"
+               r"|designated(?: as)?|elected(?: as)?|became)\s+(?:the\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"
                r"\s+of\s+(?:the|our|its)\b[^.;]{0,60}\bcommittee\b", re.I),
     re.compile(r"\bcommittee\b[^.;]{0,40}\b(?:is\s+|was\s+)?chaired by\b", re.I),
     re.compile(r"\bas (?:the )?chair(?:man|person|woman)? of the\b[^.;]{0,60}\bcommittee\b", re.I),
@@ -676,9 +676,11 @@ _CHAIR_CEO_STRUCTURE = re.compile(
 _BOTH_STRUCTURES = re.compile(r"\bseparat\w*\b.*\bcombin\w*|\bcombin\w*\b.*\bseparat\w*", re.I)
 _FAMILY = re.compile(r"\bfamily members?\b", re.I)
 _STRUCTURE_POLICY = re.compile(r"\bpolic(?:y|ies)\b|\bmandat\w*|\bimpos\w*|\bproposals?\b", re.I)
+# "became" takes the role without "as": "Effective May 20, 2020, Mr. Glenn
+# became Lumen's independent, non-executive Chairman" (Lumen FY2021 block 897).
 _OWNED_LEADERSHIP = re.compile(
-    r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s\s+" + _BOARD_QUALIFIER
-    + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I)
+    r"\b(?:" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas|became)\s+(?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s\s+"
+    + _BOARD_QUALIFIER + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I)
 # People named in a row: "C. David Cush, Sarah E. Feinberg, and Patricia A.
 # Watson", "Mses. Feinberg and Watson and Messrs. Cush, Grissen, and Saretsky".
 _NAME_LIST = ("(?:(?:(?:mr|ms|mrs|dr|messrs|mses)\\.?\\s+)?(?-i:[A-Z])[\\w’'\\-]*\\.?"
