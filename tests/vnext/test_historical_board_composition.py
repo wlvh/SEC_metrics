@@ -515,6 +515,29 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "Resources with Lumen effective April 24, 2023, and was involuntarily terminated on April 5, 2024.",
             "2023-01-01"))
 
+    def test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained(self):
+        # Lumen's legacy Qwest plan paragraph: FY2024 block 1516 prints the
+        # departure in a sentence about the account's value, FY2023 block 1656
+        # as the event the payout follows.
+        ceased = ("During 2024, Michael J. Roberts was the only remaining participant in this plan, and he had a "
+                  "balance of 9,569 phantom units, with an aggregate value of approximately $12,439, as of the 2024 "
+                  "annual meeting, following which he ceased to serve on our Board.")
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(ceased, "2024-01-01"))
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Subject to the terms of the plan, Mr. Roberts’ account will be distributed as a lump sum in cash as soon "
+            "as practicable following the end of his service as a director at the 2024 annual shareholders meeting.",
+            "2023-01-01"))
+        # A departure before the year is not a change in it (constructed: the
+        # same sentence in a later year's filing).
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(ceased, "2025-01-01"))
+        # "Common Shares" is not a person; directors who joined after a merger
+        # are no one named (FY2021 block 1236, read as no fact).
+        self.assertFalse(person_name("Common Shares"))
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Plan balances attributable to amounts deferred on or after January 1, 2005, by Qwest directors who "
+            "joined our Board following the merger were converted, based on the merger exchange ratio, to phantom "
+            "units based on the value of one of our Common Shares.", "2021-01-01"))
+
     def test_appointed_with_an_office_and_as_a_member_of_the_board(self):
         # Marriott FY2021 block 1144 prints no date; Macy's FY2023 block 2737
         # prints it before the verb.

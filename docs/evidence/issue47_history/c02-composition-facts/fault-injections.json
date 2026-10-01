@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 87,
- "caught": 122,
- "total": 122,
+ "control_tests_run": 88,
+ "caught": 125,
+ "total": 125,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -90,6 +90,7 @@
    "expected": "test_committee_board_and_leadership_facts",
    "result": "CAUGHT",
    "failed": [
+    "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained",
     "test_a_departure_dated_in_the_year_is_a_change_wherever_printed",
     "test_a_footnote_number_printed_against_the_honorific",
     "test_a_join_dated_before_the_year_is_tenure",
@@ -542,6 +543,30 @@
    ]
   },
   {
+   "injection": "COMMON_SHARES_IS_A_NAME",
+   "expected": "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained"
+   ]
+  },
+  {
+   "injection": "A_DEPARTURE_AT_A_MEETING_IS_NOT_READ",
+   "expected": "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained"
+   ]
+  },
+  {
+   "injection": "A_MEETING_DEPARTURE_IS_ALWAYS_THIS_YEAR",
+   "expected": "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained"
+   ]
+  },
+  {
    "injection": "A_DATED_JOIN_COUNTS_IN_ANY_YEAR",
    "expected": "test_a_join_dated_before_the_year_is_tenure",
    "result": "CAUGHT",
@@ -823,6 +848,7 @@
    "expected": "test_a_departure_dated_in_the_year_is_a_change_wherever_printed",
    "result": "CAUGHT",
    "failed": [
+    "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained",
     "test_a_departure_dated_in_the_year_is_a_change_wherever_printed"
    ]
   },

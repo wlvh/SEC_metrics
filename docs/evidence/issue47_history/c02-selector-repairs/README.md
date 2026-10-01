@@ -727,3 +727,34 @@
 共 122/122，对照 87 个用例。
 
 **量测**（`measured-38-having-as-our-chair.json`）：只在 Ford 2022–2025 各新增一块，都是读者判为含事实的块；漏选 23→20，误选 7 不变，Ford 2023、2024 现与判读一致。最新年 Ford 2025 的选择多了第 411 块（读者判为含事实、列为由已取的第 395 块覆盖）。已接受的值只对应旧结果，下一次运行后要重读。
+
+## 39. Lumen 旧递延薪酬计划段落："Common Shares" 不是人名，段里写的离任要按它自己的话读
+
+**问题。** Lumen 每年的代理都有一段 "LEGACY QWEST DEFERRED COMPENSATION PLAN"。其中一句 "Plan balances … by Qwest directors who joined our Board following the merger were converted … to phantom units based on the value of one of our Common Shares" 被读成董事会成员变动，原因有两层：
+- "joined our Board" 是变动句式；
+- 变动要求句中写出人名，而 "Common Shares" 被认成了人名。
+
+2021 第 1236 块、2022 第 1324 块读者都判为非事实，算误选。2023 第 1656 块、2024 第 1516 块也是靠同一句被取的，但读者判为含事实，理由是段尾写出了 Roberts 的离任：
+- 2023："… following the end of his service as a director at the 2024 annual shareholders meeting"；
+- 2024："… as of the 2024 annual meeting, following which he ceased to serve on our Board"。
+
+这两句本身都读不到：2024 这句写着金额，被薪酬话题排除；带日期的离任句式（第 26 处）要求日期写在 "ceased serving on the Board" 之后。所以只去掉假人名，会把 2023、2024 两处判为含事实的块变成漏选。
+
+**先量后改。** 只把 "shares" 加进人名停用词时，只有这四块移动（两块非事实被去掉，两块含事实也被去掉）。这两种离任写法在 37 份文档里只出现在 Lumen 2023、2024 的这一段。
+
+**改动。**
+- "shares" 加进人名停用词（"stock" 原本就在），"Common Shares" 不再是人名；
+- 新增 `_DEPARTURE_AT_A_MEETING`：上面两种写法按第 26 处带日期离任的规则读，即在薪酬话题排除之前读，会议年份在目标年度或之后才算变动。
+
+只认语料里的这两种写法。
+
+**用例与注错。** `test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained`：2024、2023 两句原文为正例；同一句放到下一年度为构造反例；2021 的 "Common Shares" 原句为反例。注错：
+- `COMMON_SHARES_IS_A_NAME`（去掉停用词）；
+- `A_DEPARTURE_AT_A_MEETING_IS_NOT_READ`（去掉新读法）；
+- `A_MEETING_DEPARTURE_IS_ALWAYS_THIS_YEAR`（不看会议年份）。
+
+新读法插在第 26 处读法的两行之间，第 26 处的注错 `A_DATED_DEPARTURE_IS_NOT_READ` 原本删掉这两行和标注，现改为只清空带日期离任的列表，针对的仍是第 26 处的规则。
+
+共 125/125，对照 88 个用例。
+
+**量测**（`measured-39-legacy-plan-paragraph.json`）：只移走 Lumen 2021 第 1236 块、2022 第 1324 块（读者都判为非事实）；2023、2024 两块仍被取，标注现在来自离任句。误选 7→5，漏选 20 不变，最新年不变。

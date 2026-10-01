@@ -129,7 +129,7 @@ oversight fleet strategic executive culture talent policy policies public regula
 innovation transformation business responsibilities responsibility key primary functions function focus areas
 recent highlights overview summary proxy statement annual table contents company inc corporation corp llc ltd
 plc lp international group holdings partners capital management additions departures name names age since
-occupation total fees retainer cash stock awards the our and of for to in on at by with as from all each other
+occupation total fees retainer cash stock shares awards the our and of for to in on at by with as from all each other
 current former retiring incoming chief officer president founder partner senior counsel secretary treasurer
 controller presiding skills experience qualifications background professional education tenure diversity gender
 matrix notes note appendix exhibit item part page section questions voting proposal proposals election nominees
@@ -826,6 +826,19 @@ _DATED_DEPARTURE = re.compile(
     r"\bceased (?:serving|to serve) (?:as (?:a )?(?:director|member) )?on (?:the|our) board(?: of directors)?\b"
     r"[^.;]{0,80}?\b(?:on|in|effective|as of)\s+(?:the\s+)?"
     r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)", re.I)
+# A departure tied to a dated annual meeting, as the deferred-pay paragraph of
+# Lumen's proxies prints it: "... as of the 2024 annual meeting, following which
+# he ceased to serve on our Board" (FY2024) and "... following the end of his
+# service as a director at the 2024 annual shareholders meeting" (FY2023). Like
+# a dated departure, one at a meeting in the year or after is a change in who
+# sits on the board wherever it is printed.
+_ANNUAL_MEETING = r"annual\s+(?:shareholders?['’]?\s+|stockholders?['’]?\s+)?meeting"
+_DEPARTURE_AT_A_MEETING = (
+    re.compile(r"\b(?P<date>(?:19|20)\d\d)\s+" + _ANNUAL_MEETING + r"\s*,\s*following\s+which\s+(?:he|she|they)\s+"
+               r"ceased\s+to\s+serve\s+on\s+(?:the|our)\s+board\b", re.I),
+    re.compile(r"\bend\s+of\s+(?:his|her|their)\s+service\s+as\s+(?:a\s+)?director\s+at\s+the\s+"
+               r"(?P<date>(?:19|20)\d\d)\s+" + _ANNUAL_MEETING + r"\b", re.I),
+)
 # A director appointed to the board together with an office: "the Board elected
 # Anthony Capuano to serve as CEO of the Company and as a member of the Board",
 # "in March 2023, the Board appointed Mr. Spring as Macy's President and
@@ -1039,6 +1052,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         departures = [match.group("date") for match in _DATED_DEPARTURE.finditer(sentence)]
+        departures += [match.group("date") for pattern in _DEPARTURE_AT_A_MEETING for match in pattern.finditer(sentence)]
         if any(not _joined_before(date, period_start) for date in departures) and _mentions_person(sentence):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence
