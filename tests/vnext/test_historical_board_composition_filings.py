@@ -406,6 +406,58 @@ class ACommitteesRelationshipDeterminationIsAFact(unittest.TestCase):
         self.assertEqual([], self.decided("FACT"))
 
 
+class AReportsSigningCommitteeIsAFactAndItsSignOffIsNot(unittest.TestCase):
+    """A committee report's close (REPORT_SIGNERS_COMMITTEE, REPORT_SIGN_OFF).
+
+    Macy's five proxies close both committee reports with "The foregoing
+    report was submitted by the Audit Committee ...", "Respectfully
+    submitted," and the members' names (FY2022 blocks 1875-1882). Its FY2023
+    reader judged the sentence mixed and the sign-off a fact; its FY2022 and
+    FY2024 readers left both out.
+    """
+
+    POSITION = "example_company:2022-12-31"
+    SENTENCE = ("The foregoing report was submitted by the Audit Committee and shall not be deemed to be “soliciting "
+                "materials” or to be “filed” with the Securities and Exchange Commission.")
+    TEXTS = ["Audit Committee", "Jane Q. Roe", "Richard Doe", SENTENCE, "Respectfully submitted,",
+             "Jane Q. Roe, Chair", "Richard Doe", "Macy’s, Inc. 2022 Notice of Meeting and Proxy Statement 35"]
+
+    def decided(self, texts=None, sentence=None, sign_off=None, signer_cites=((5, [1, 6]), (6, [2]))):
+        texts = texts or self.TEXTS
+        sha = [reading.text_sha256(text) for text in texts]
+        document = {"blocks": [{"text": text, "linked": False} for text in texts]}
+        judged = [{"i": i, "verdict": "FACT", "why": "", "text_sha256": sha[i], "redundant_with": cites}
+                  for i, cites in signer_cites]
+        judged += [{"i": i, "verdict": verdict, "why": "", "text_sha256": sha[i], "redundant_with": [1]}
+                   for i, verdict in ((3, sentence), (4, sign_off)) if verdict is not None]
+        record = {"position": self.POSITION, "selected": [], "pool_facts": judged,
+                  "pool": [{"i": i, "text_sha256": h} for i, h in enumerate(sha)]}
+        return {row["i"]: row for row in _adjudicator().decisions_for(self.POSITION, document, record)}
+
+    def test_the_sentence_is_a_fact_and_the_sign_off_is_not(self):
+        decided = self.decided(sign_off="FACT")
+        self.assertEqual({3, 4}, set(decided))
+        self.assertEqual(("REPORT_SIGNERS_COMMITTEE", "FACT", "LEFT_OUT_OF_POOL_FACTS"),
+                         (decided[3]["rule"], decided[3]["decision"], decided[3]["reader_verdict"]))
+        self.assertEqual(("REPORT_SIGN_OFF", "NOT", "FACT"),
+                         (decided[4]["rule"], decided[4]["decision"], decided[4]["reader_verdict"]))
+        # Readers who already said what the rules say need no decision.
+        self.assertEqual({}, self.decided(sentence="MIXED"))
+
+    def test_the_signatures_restatements_cover_the_sentence_and_the_signatures_do_not(self):
+        # A signature citing another signature does not make the names state
+        # the committee they sign for.
+        self.assertEqual([1, 2], self.decided()[3]["redundant_with"])
+
+    def test_only_a_sign_off_under_a_named_committee_and_over_signatures_is_the_class(self):
+        unnamed = list(self.TEXTS)
+        unnamed[3] = "The foregoing report shall not be deemed to be filed with the Securities and Exchange Commission."
+        self.assertEqual({}, self.decided(texts=unnamed, sign_off="FACT"))
+        unsigned = list(self.TEXTS)
+        unsigned[5:7] = ["Macy’s, Inc.", "Table of Contents"]
+        self.assertEqual({}, self.decided(texts=unsigned, sign_off="FACT", signer_cites=()))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

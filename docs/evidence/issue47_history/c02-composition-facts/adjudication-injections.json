@@ -17,6 +17,10 @@
    "failures": 0,
    "ran": 1
   },
+  "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot": {
+   "failures": 0,
+   "ran": 3
+  },
   "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture": {
    "failures": 0,
    "ran": 2
@@ -206,6 +210,46 @@
    "caught": true,
    "failures": 1,
    "ran": 1
+  },
+  {
+   "injection": "THE_SIGNERS_COMMITTEE_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 2,
+   "ran": 3
+  },
+  {
+   "injection": "THE_SIGN_OFF_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "A_SIGNATURE_COVERS_ITS_COMMITTEE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "A_SIGN_OFF_NEED_NOT_HEAD_SIGNATURES",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "THE_COMMITTEE_NEED_NOT_BE_NAMED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
   }
  ],
  "all_caught": true

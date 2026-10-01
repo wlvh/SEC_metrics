@@ -153,6 +153,24 @@ TERM_END_AT_A_MEETING (FACT; covered only by the same departure)
     one is given; a heading over the leavers or a sentence counting them
     without names does not.
 
+REPORT_SIGNERS_COMMITTEE (FACT) / REPORT_SIGN_OFF (NOT)
+    A committee report that closes with a sentence naming the committee that
+    submits it ("The foregoing report was submitted by the Audit Committee
+    and shall not be deemed to be 'soliciting materials' ..."), then
+    "Respectfully submitted," and the members' names (both reports in each of
+    Macy's five proxies). The sentence is what makes the names beneath it the
+    named committee's members and chair: every reading took each signature as
+    a member or the chair of the committee the sentence names, and the other
+    proxies' signature heads, which name the committee whose members sign
+    ("Members of the Audit Committee:", "THE AUDIT COMMITTEE", "Submitted by
+    the Audit Committee of the Board of Directors."), are taken by every
+    reading. Its notice about the report's legal standing is no fact, so the
+    block is a mixed one, as Macy's FY2023 reader judged both such blocks;
+    the other eight were left out. "Respectfully submitted," names neither a
+    committee nor a person: four readers took it, four left it out. The
+    sentence is covered wherever the signatures' own restatements are; the
+    signatures themselves do not name the committee.
+
 Older years' filings are read from a root restored from the acquisition's
 export by this checkout (``--source-root``). Building a document takes the
 route's input preparation; ``--documents`` names a cache directory (outside
@@ -230,6 +248,11 @@ RULES = {
     "TERM_END_AT_A_MEETING": ("FACT", "A named director's term ending at an annual meeting is a departure from the "
                                       "board; only a block naming the same people leaving at the same meeting "
                                       "states it."),
+    "REPORT_SIGNERS_COMMITTEE": ("FACT", "The sentence closing a committee report that names the committee submitting "
+                                         "it makes the names signed beneath it that committee's members and chair, "
+                                         "as the other proxies' signature heads do; its legal notice is no fact."),
+    "REPORT_SIGN_OFF": ("NOT", "\"Respectfully submitted,\" names neither a committee nor a person; the sentence above "
+                               "it names the committee and the signatures name the people."),
 }
 
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
@@ -441,6 +464,10 @@ DEPARTURE = re.compile(r"\b(?:(?:retir\w*|resign\w*|stepp?\w* down|leav\w*|depar
 # nominees presently serves on our Board and their term of office will expire
 # at the Annual Meeting") ends a term without anyone leaving.
 NOMINEES = re.compile(r"\bnominees?\b|\bnominated\b|\bstand(?:s|ing)? for (?:re-?)?election\b", re.I)
+# A committee report's close (Macy's proxies): a sentence naming the committee
+# that submits the report, "Respectfully submitted," and the members' names.
+SUBMITTED_BY = re.compile(r"\breport was submitted by the (?-i:[A-Z])[\w&’' ,]{0,80}?\bcommittee\b", re.I)
+SIGN_OFF = re.compile(r"^respectfully submitted,?$", re.I)
 
 
 def _leavers(text):
@@ -630,6 +657,22 @@ def decisions_for(position, document, record):
             for index in range(header + 1, legend):
                 if person_name(blocks[index]["text"]) and not GROUP_HEADING.match(texts[index]):
                     decide(index, "DIRECTOR_TABLE_NAME")
+    # REPORT_SIGNERS_COMMITTEE / REPORT_SIGN_OFF: the sentence naming the
+    # committee that submits a report, right above "Respectfully submitted,",
+    # with the members' names right below the sign-off.
+    for index in range(1, len(blocks)):
+        if not SIGN_OFF.match(texts[index]) or not usable(index - 1) or not SUBMITTED_BY.search(texts[index - 1]):
+            continue
+        signers = []
+        for j in range(index + 1, len(blocks)):
+            if not person_name(blocks[j]["text"]):
+                break
+            signers.append(j)
+        if not signers:
+            continue
+        decide(index, "REPORT_SIGN_OFF")
+        cover = {other for j in signers for other in (verdict.get(j) or {}).get("redundant_with") or []}
+        decide(index - 1, "REPORT_SIGNERS_COMMITTEE", redundant_with=cover - set(signers) - {index})
     for index in range(len(blocks)):
         if not usable(index):
             continue

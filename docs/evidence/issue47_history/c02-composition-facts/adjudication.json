@@ -81,6 +81,14 @@
   "TERM_END_AT_A_MEETING": {
    "decision": "FACT",
    "reason": "A named director's term ending at an annual meeting is a departure from the board; only a block naming the same people leaving at the same meeting states it."
+  },
+  "REPORT_SIGNERS_COMMITTEE": {
+   "decision": "FACT",
+   "reason": "The sentence closing a committee report that names the committee submitting it makes the names signed beneath it that committee's members and chair, as the other proxies' signature heads do; its legal notice is no fact."
+  },
+  "REPORT_SIGN_OFF": {
+   "decision": "NOT",
+   "reason": "\"Respectfully submitted,\" names neither a committee nor a person; the sentence above it names the committee and the signatures name the people."
   }
  },
  "decisions": [
@@ -526,6 +534,45 @@
    "redundant_with": []
   },
   {
+   "position": "macys:2022-01-29",
+   "i": 1875,
+   "text_sha256": "sha256:12de1e0e4b861e2d2ee613bbb10ac9bec1d9e81e23a674b0f89da9768a7e69d2",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    673,
+    703,
+    749,
+    886,
+    918,
+    1127,
+    1129,
+    1131,
+    1133,
+    1135
+   ]
+  },
+  {
+   "position": "macys:2022-01-29",
+   "i": 1943,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    640,
+    808,
+    944,
+    974,
+    1155,
+    1157,
+    1159
+   ]
+  },
+  {
    "position": "macys:2023-01-28",
    "i": 709,
    "text_sha256": "sha256:3f4ea01e70d50ca1719f281ed86beac1606fded2ee3058fefbdb561f90fb3fab",
@@ -568,6 +615,79 @@
    "redundant_with": []
   },
   {
+   "position": "macys:2023-01-28",
+   "i": 2197,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "lead-in of the Audit Committee report signature"
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 2246,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "lead-in of the CMD Committee report signature"
+  },
+  {
+   "position": "macys:2024-02-03",
+   "i": 2254,
+   "text_sha256": "sha256:c8e30d9b91c8b63dd52df112f2ca84bc322f124ff95403efe0eb2586b015ac8c",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    675,
+    683,
+    705,
+    713,
+    745,
+    753,
+    781,
+    789,
+    924,
+    932,
+    1126,
+    1134,
+    1344,
+    1345,
+    1346,
+    1347,
+    1348,
+    1349
+   ]
+  },
+  {
+   "position": "macys:2024-02-03",
+   "i": 2558,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    636,
+    644,
+    850,
+    858,
+    887,
+    895,
+    958,
+    966,
+    1091,
+    1099,
+    1372,
+    1373,
+    1374,
+    1375,
+    1376
+   ]
+  },
+  {
    "position": "macys:2025-02-01",
    "i": 563,
    "text_sha256": "sha256:dc3818fdf9e66f679b2408e8592905a579eada8092e4ede00f8a9cbfd758c6a0",
@@ -576,6 +696,92 @@
    "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
    "reader_why": "",
    "redundant_with": []
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1934,
+   "text_sha256": "sha256:c8e30d9b91c8b63dd52df112f2ca84bc322f124ff95403efe0eb2586b015ac8c",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    611,
+    616,
+    618,
+    642,
+    647,
+    649,
+    711,
+    716,
+    718,
+    743,
+    749,
+    751,
+    993,
+    998,
+    1000,
+    1196,
+    1197,
+    1198,
+    1200,
+    1201,
+    1202
+   ]
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1935,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Audit Committee report signature lead-in (signers Chandoha as chair, Boone, Chopra, Clark, Zhen)"
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1962,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    573,
+    578,
+    580,
+    788,
+    793,
+    795,
+    823,
+    828,
+    830,
+    894,
+    899,
+    901,
+    960,
+    965,
+    967,
+    1220,
+    1221,
+    1222,
+    1223,
+    1224,
+    1225,
+    1226,
+    1227,
+    1228,
+    1229
+   ]
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1963,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "CMD Committee report signature lead-in (signers Granoff as chair, Arel, Connelly, Levinson, Sesler, Varga)"
   },
   {
    "position": "macys:2025-02-01",
@@ -1826,6 +2032,42 @@
    "field": 851,
    "redundant_with": [
     927
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 1755,
+   "text_sha256": "sha256:c8e30d9b91c8b63dd52df112f2ca84bc322f124ff95403efe0eb2586b015ac8c",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    601,
+    1044,
+    1045,
+    1046,
+    1047,
+    1048,
+    1049
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 2235,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    750,
+    1065,
+    1066,
+    1067,
+    1068,
+    1069,
+    1070
    ]
   },
   {

@@ -108,6 +108,23 @@ INJECTIONS = [
     ('THE_RELATIONSHIP_DETERMINATION_IS_DECIDED_NOT', ADJ,
      '"INDEPENDENCE_RELATIONSHIP_DETERMINATION": ("FACT",', '"INDEPENDENCE_RELATIONSHIP_DETERMINATION": ("NOT",',
      'tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact'),
+    ('THE_SIGNERS_COMMITTEE_IS_NOT_DECIDED', ADJ,
+     '        decide(index - 1, "REPORT_SIGNERS_COMMITTEE", redundant_with=cover - set(signers) - {index})',
+     '        pass',
+     'tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot'),
+    ('THE_SIGN_OFF_IS_DECIDED_A_FACT', ADJ,
+     '"REPORT_SIGN_OFF": ("NOT",', '"REPORT_SIGN_OFF": ("FACT",',
+     'tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot'),
+    ('A_SIGNATURE_COVERS_ITS_COMMITTEE', ADJ,
+     'redundant_with=cover - set(signers) - {index})', 'redundant_with=cover - {index})',
+     'tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot'),
+    ('A_SIGN_OFF_NEED_NOT_HEAD_SIGNATURES', ADJ,
+     '        if not signers:\n            continue\n        decide(index, "REPORT_SIGN_OFF")',
+     '        decide(index, "REPORT_SIGN_OFF")',
+     'tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot'),
+    ('THE_COMMITTEE_NEED_NOT_BE_NAMED', ADJ,
+     ' or not SUBMITTED_BY.search(texts[index - 1]):', ':',
+     'tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot'),
 ]
 RUNNER = textwrap.dedent('''
     import importlib.util, sys, types, unittest
