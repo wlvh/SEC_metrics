@@ -846,6 +846,25 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_c02pair_ad83fcb",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "ordinary_c02_spec_policy_repair",
+      "scope_paths": [
+        "scripts/vnext/c02_composition_text_results.py",
+        "tests/vnext/test_normal_c02_composition.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/grouped-v3-spec-policy-commit-verification.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-grouped-v3/conclusion.md"
+      ],
+      "patch_sha": "ad83fcbcd12d1ebf26e3cf3741591e4c91c9568c",
+      "spawned_at": "2026-10-01T16:05:29Z",
+      "ended_at": "2026-10-01T16:12:30Z",
+      "tool_calls": 48,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-spec-policy-repair/conclusion.md",
+      "verdict": "PASS_LIMITED_SPEC_POLICY_PAIR"
+    },
+    {
       "task_name": "review_c02group_f4e4c4f",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "ordinary_c02_grouped_v3",
@@ -8363,13 +8382,13 @@
       "paramount_2025_private_result_no_business_credit": "sha256:4d469eff63d687acdc24b8ba2e22d5b2f18bc3f8c61eab8f0f7d146b19e9fc68"
     },
     "c02_grouped_v3": {
-      "status": "F4_COMMITTED_REPAIR_TESTED_UNCOMMITTED_NEW_SHA_LIMITED_REVIEW_PENDING",
+      "status": "AD83_COMMITTED_SPEC_POLICY_REPAIR_LIMITED_REVIEW_PASS_LOCAL_PUSH_PENDING",
     "initial_independent_review": {
       "patch_sha": "f4e4c4f62a1536b8bd265ced3ddf00962aaee9b6",
       "verdict": "NEEDS_FIX_API_SPEC_POLICY_MISMATCH",
       "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-grouped-v3/conclusion.md",
       "ordinary_run_exploit_proven": false,
-      "repair_status": "LOCAL_PATCH_TESTED_NOT_YET_REVIEWED_OR_COMMITTED"
+      "repair_status": "FIXED_BY_AD83_LIMITED_INDEPENDENT_REVIEW_PASS"
     },
       "new_spec": "catalog/r6/C02_board_disclosures_v3.md",
       "new_module": "scripts/vnext/c02_grouped_source.py",
@@ -8418,7 +8437,8 @@
         "fix": "PAIR_COMPILED_C02_DISCLOSURE_GROUP_WITH_EXPLICIT_SELECTION_POLICY_AT_CANDIDATE_EVIDENCE_AND_RESULT_REPLAY",
         "precommit_binding": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/grouped-v3-spec-policy-test-tree-binding.json",
         "prior_f4_review": "NEEDS_FIX_RETAINED",
-        "new_exact_sha_review": "PENDING",
+        "new_exact_sha_review": "PASS_LIMITED_AD83F_48_TOOL_CALLS",
+        "new_exact_sha_review_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-spec-policy-repair/conclusion.md",
         "macy_private_native_and_independent_cold_read": "PASS_ZERO_NETWORK_ZERO_REAL_CALLS_CONTENT_NOT_ACCEPTED"
       },
       "business_content_credit": false,
