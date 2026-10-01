@@ -343,6 +343,29 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                           "Executive Officers and 11 non-employee directors, each of whom would be eligible to be "
                           "granted awards under the 2013 Plan.", "BOARD_SIZE_STATEMENT")
 
+    def test_a_committee_of_management_is_not_the_board_s(self):
+        # Lumen's, Pfizer's and Marriott's older proxies describe management
+        # committees in the words a board committee's makeup is stated in.
+        for text in ("Lumen’s Diversity and Inclusion Steering Committee (DISC), is made up of senior leaders and "
+                     "executives, including Lumen’s Chief Diversity and Inclusion Officer.",
+                     "In addition, the Pfizer PAC Steering Committee (Steering Committee), which is composed of "
+                     "Pfizer employees from different divisions of the company, reviews and approves all political "
+                     "contribution requests on a monthly basis.",
+                     "Further, all PAC and corporate contribution requests are shared with the Pfizer Political "
+                     "Contributions Policy Committee (PCPC), which is co-chaired by the Chief Corporate Affairs "
+                     "Officer and the Chief Compliance, Quality & Risk Officer.",
+                     "She was appointed Chair of our Global Operating Committee, which consists of senior Company "
+                     "leaders who support our business operating platform."):
+            with self.subTest(text=text[:40]):
+                self.assertStatesNothing(text)
+        # Directors who are not management, and a board chair chairing, still seat a board committee.
+        for text in ("The Audit Committee is composed entirely of independent directors who are not officers or "
+                     "employees of the Company.",
+                     "The Committee is composed of three directors, none of whom is an officer or employee.",
+                     "The Executive Committee is chaired by the Chairman of the Board."):
+            with self.subTest(text=text[:40]):
+                self.assertStates(text, "COMMITTEE_COMPOSITION_STATEMENT")
+
     def test_a_criterion_for_choosing_a_chair_seats_no_one(self):
         # A bullet from a list of what the Board looks for in a lead director,
         # as Macy's older proxies print it: "a Board" is not a committee's name.

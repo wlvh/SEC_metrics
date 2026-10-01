@@ -83,3 +83,17 @@
 **用例与注错。** `test_historical_board_composition.ANameIsTheWholeBlock.test_a_quoted_nickname_between_the_names`：两种引号的昵称名字成立；定义词、末尾引号词、"Definition of “Cause”:" 仍不是名字；带昵称成员的名单整串读出。只撤回模块改动时该用例失败。注错 `NICKNAMES_STAY_IN_THE_NAME`（不去昵称）、`ANY_QUOTED_WORD_IS_A_NICKNAME`（去掉"后面还有词"的条件）都由这条用例抓到；注错总数 40/40，对照 47 例。
 
 **量测**（`measured-5-quoted-nicknames.json`）：Lumen 2021、2022、2023 各 5 块，Marriott 2022 有 2 块，全部新增、全部是判读判为事实的块。漏选 156 → 146，误选 45 不变，最新十个位置不变（Lumen 2025 也有这个名字，但只出现在薪酬表里，带脚注编号，不在任何被读的结构里）。四个坐标还有别的问题，继续撤回。
+
+## 6. 管理层委员会被当成董事会委员会
+
+**问题。** 四份往年代理用描述董事会委员会构成的句式描述管理层委员会：Lumen 的 "Diversity and Inclusion Steering Committee … is made up of senior leaders and executives"（2021、2022 两年），Pfizer 的 PAC Steering Committee "composed of Pfizer employees" 与 Political Contributions Policy Committee "co-chaired by the Chief Corporate Affairs Officer and …"，Marriott 的 Global Operating Committee "which consists of senior Company leaders"。判读都判为不是董事会构成，选择器以 `COMMITTEE_COMPOSITION_STATEMENT` 取了它们。
+
+**成因。** 构成句式（composed of、made up of、consists of、chaired by）不看成员是谁。这些委员会的名字也不能拿来判断：Lumen 的代理把 "Diversity and Inclusion Steering Committee" 印成过标题，选择器从标题收集的委员会名里就有它，所以"不在本文件委员会名单里"这条判据不成立。
+
+**改动。** `_MANAGEMENT_MEMBERS`：构成句的成员列表一开头就是管理层角色（leaders、executives、officer(s)、employees、associates、management），前面只允许限定词、"senior"、公司名或大写的头衔词，整句不算董事会委员会构成。"composed entirely of independent directors who are not officers"、"three directors, none of whom is an officer"、"chaired by the Chairman of the Board" 不受影响。
+
+**用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_committee_of_management_is_not_the_board_s`：四种原句都不陈述构成事实；三种董事会委员会的写法仍读出。只撤回模块改动时四个原句子用例失败。注错 `MANAGEMENT_SEATS_A_BOARD_COMMITTEE`（去掉这条判断）、`ANY_WORDS_OPEN_THE_MEMBER_LIST`（成员列表开头放宽为任意词）都由这条用例抓到；注错总数 42/42，对照 48 例。
+
+**量测**（`measured-6-management-committees.json`）：只移走这 5 块（Lumen 2021、2022 各 1，Marriott 2021 有 1，Pfizer 2022 有 2），全部是判读判为非事实的块。误选 45 → 40，漏选 146 不变，最新十个位置不变。四个坐标仍有别的问题，继续撤回。
+
+**不主张。** Lumen 的"由董事会主席、各委员会主席与 CEO 组成的临时遴选委员会"（search committee）不属于这一类（成员是董事与 CEO），仍按原样取，判读判为流程描述，属另一个问题。

@@ -510,6 +510,16 @@ _COMMITTEE_COMPOSITION = (
                r"\bcommittee\b[^.;]{0,80}\b(?:was|is|were|are|has (?:ever )?been|have (?:ever )?been)\b[^.;]{0,40}"
                r"\b(?:officer|employee)", re.I),
 )
+# A committee whose members are management is not one of the board's: "made up
+# of senior leaders and executives", "composed of Pfizer employees", "co-chaired
+# by the Chief Corporate Affairs Officer". Only the words that open the list are
+# read - a title, a determiner, the company's name - so "composed entirely of
+# independent directors" and "three directors, none of whom is an officer" are
+# not management.
+_MANAGEMENT_MEMBERS = re.compile(
+    r"\b(?:composed|comprised|made up|consists?|consisted|(?:co-)?chaired)\s+(?:entirely\s+|solely\s+"
+    r"|exclusively\s+|wholly\s+)?(?:of|by)\s+(?:(?:the|our|its|senior|other|various|key|company|members of)\s+"
+    r"|(?-i:[A-Z])[\w&’'\-]*\s+){0,6}(?:leaders|executives|officers?|employees|associates|management)\b", re.I)
 _QUALIFICATION = re.compile(
     r"\b(?:independent|financially literate|financial literacy|financially sophisticated|financial sophistication"
     r"|financial experts?|non-employee directors?|outside directors?|non-management directors?"
@@ -731,7 +741,8 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             labels.add("BOARD_INDEPENDENCE_STATEMENT")
         if any(p.search(sentence) for p in _DIRECTOR_DETERMINATION):
             labels.add("DIRECTOR_QUALIFICATION_DETERMINATION")
-        if any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms):
+        if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms))
+                and not _MANAGEMENT_MEMBERS.search(sentence)):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)):
             labels.add("STANDING_COMMITTEES_STATEMENT")

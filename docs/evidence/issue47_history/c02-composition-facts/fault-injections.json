@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 47,
- "caught": 40,
- "total": 40,
+ "control_tests_run": 48,
+ "caught": 42,
+ "total": 42,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -337,6 +337,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_quoted_nickname_between_the_names"
+   ]
+  },
+  {
+   "injection": "MANAGEMENT_SEATS_A_BOARD_COMMITTEE",
+   "expected": "test_a_committee_of_management_is_not_the_board_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_committee_of_management_is_not_the_board_s"
+   ]
+  },
+  {
+   "injection": "ANY_WORDS_OPEN_THE_MEMBER_LIST",
+   "expected": "test_a_committee_of_management_is_not_the_board_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_committee_of_management_is_not_the_board_s"
    ]
   }
  ]

@@ -2903,11 +2903,13 @@
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "16 fact block(s) missed (455, 456, 457, 695, 732, 896, 897, 898, 1047, 1049, 1204, 1205, 1211, 1222, 1223, 2651) and 3 block(s) taken that state no composition fact (349, 856, 1236); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "16 fact block(s) missed (455, 456, 457, 695, 732, 896, 897, 898, 1047, 1049, 1204, 1205, 1211, 1222, 1223, 2651) and 2 block(s) taken that state no composition fact (856, 1236); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28])."
    }
   },
   {
@@ -2925,11 +2927,13 @@
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "10 fact block(s) missed (865, 866, 867, 946, 954, 958, 1078, 1281, 1879, 3663) and 3 block(s) taken that state no composition fact (362, 842, 1324); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "10 fact block(s) missed (865, 866, 867, 946, 954, 958, 1078, 1281, 1879, 3663) and 2 block(s) taken that state no composition fact (842, 1324); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28])."
    }
   },
   {
@@ -3076,11 +3080,13 @@
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
    ],
    "partial_repair": {
     "sentence_member_list": "6 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "5 fact block(s) missed (610, 842, 990, 991, 1144) and 1 block(s) taken that state no composition fact (1145); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "5 fact block(s) missed (610, 842, 990, 991, 1144); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28])."
    }
   },
   {
@@ -3202,12 +3208,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/pfizer-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 6 block(s) taken that state no composition fact (364: Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact; 446: Echevarria not standing again for Xerox board, not the Pfizer board (nominee-table footnote)); 20 block(s) stating a composition fact that no taken block states (198: Letter signature: Bourla, signing as Chairman & CEO; 199: Signature title: Bourla is Chairman & CEO (combined roles)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json"
+   ],
+   "partial_repair": {
+    "management_committee": "2 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
+    "still_open": "20 fact block(s) missed (198, 199, 425, 426, 493, 496, 500, 502, 723, 799, 875, 876, 877, 1294, 1539, 1880, 1881, 2051, 2052, 3107) and 4 block(s) taken that state no composition fact (364, 446, 547, 897); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_PFIZER_2023_OLDER_YEAR_READING_DISAGREES",

@@ -131,6 +131,10 @@ INJECTIONS = [
      "test_a_quoted_nickname_between_the_names"),
     ('ANY_QUOTED_WORD_IS_A_NICKNAME', '[”\\"](?=\\\\s+\\\\S)', '[”\\"]',
      "test_a_quoted_nickname_between_the_names"),
+    ('MANAGEMENT_SEATS_A_BOARD_COMMITTEE', '\n                and not _MANAGEMENT_MEMBERS.search(sentence)):', '):',
+     "test_a_committee_of_management_is_not_the_board_s"),
+    ('ANY_WORDS_OPEN_THE_MEMBER_LIST', "|(?-i:[A-Z])[\\w&’'\\-]*\\s+){0,6}", '|\\w+\\s+){0,6}',
+     "test_a_committee_of_management_is_not_the_board_s"),
 ]
 
 
