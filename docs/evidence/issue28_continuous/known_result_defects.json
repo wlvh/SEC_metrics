@@ -6,16 +6,19 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 7,
-    "newly_excluded_result_id_count": 13,
+    "newly_excluded_coordinate_count": 10,
+    "newly_excluded_result_id_count": 16,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
+      "enphase_energy|D02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
       "lumen_technologies|D02|2025-12-31",
       "macys|C02|2026-01-31",
       "marriott_international|C02|2025-12-31",
       "paramount_skydance_paramount_global|C02|2025-12-31",
-      "pfizer|C02|2025-12-31"
+      "paramount_skydance_paramount_global|D02|2025-12-31",
+      "pfizer|C02|2025-12-31",
+      "pfizer|D02|2025-12-31"
     ],
     "all_390_currently_validated": false,
     "other_coordinates_not_cleared_by_this_audit": true,
@@ -526,6 +529,135 @@
       "evidence": [
         "docs/evidence/issue28_continuous/collab-d02-lumen-20261002/audit.json",
         "docs/evidence/issue28_continuous/ordinary-lumen-current-36-cli-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "D02_PFIZER_2025_ITEM8_POLICY_KEYWORDS_SELECTED",
+      "metric_id": "D02",
+      "company_id": "pfizer",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+      "run_id": "run:ordinary-integrated:895294e50a6d4948a7eb5c387e34604fa87c3cd2c021720f2fb7abe6140caa5f",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "SOURCE_SELECTION_GUARD_NOT_YET_REPAIRED_IN_28",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_SOURCE_EXCERPT",
+      "summary": "This exact #28 Result contains the listed out-of-scope excerpt(s). Other excerpts and companies are not judged here. The historical 390 comparison and current private Run use the same Result ID.",
+      "confirmed_wrong_source_blocks": [
+        {
+          "block_index": 2175,
+          "section_id": "ITEM_8",
+          "accession": "0000078003-26-000026",
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+          "raw_span_sha256": "e1aa21bb8c60eab4db0cc8f4586e8d9b98aff27ff039340bf5b62a6cb838eec2",
+          "text_sha256": "e1aa21bb8c60eab4db0cc8f4586e8d9b98aff27ff039340bf5b62a6cb838eec2",
+          "text_start": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and as",
+          "why_out_of_scope": "An estimates/assumptions policy lists litigation among business risks; it reports no specific proceeding."
+        },
+        {
+          "block_index": 2240,
+          "section_id": "ITEM_8",
+          "accession": "0000078003-26-000026",
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+          "raw_span_sha256": "d70491d92a93e12ceed3caa4169dc14f0f8b631c3ea7258f1485a53e343917b4",
+          "text_sha256": "d70491d92a93e12ceed3caa4169dc14f0f8b631c3ea7258f1485a53e343917b4",
+          "text_start": "In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory an",
+          "why_out_of_scope": "A trade-receivables reserve and collection policy mentions litigation as a possible collection method, not a current case."
+        }
+      ],
+      "peer_origin": {
+        "fixed_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+        "defect_id": "D02_PFIZER_2025_SCOPE_CONTENT_READ",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/audit.json",
+        "docs/evidence/issue28_continuous/ordinary-pfizer-current-36-cli-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "D02_PARAMOUNT_2025_ITEM8_CREDIT_COVENANT_SELECTED",
+      "metric_id": "D02",
+      "company_id": "paramount_skydance_paramount_global",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:a65cdc379d52ed8bc70fbe3f40be274dc93ea7682af654e08a16a1db76da7b46",
+      "run_id": "run:ordinary-integrated:a913b9191cdc8927ccd86a7ad08a7078f782cfd8cd8699abcb62ace5ac4c81a6",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "SOURCE_SELECTION_GUARD_NOT_YET_REPAIRED_IN_28",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_SOURCE_EXCERPT",
+      "summary": "This exact #28 Result contains the listed out-of-scope excerpt(s). Other excerpts and companies are not judged here. The historical 390 comparison and current private Run use the same Result ID.",
+      "confirmed_wrong_source_blocks": [
+        {
+          "block_index": 2257,
+          "section_id": "ITEM_8",
+          "accession": "0002041610-26-000011",
+          "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+          "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+          "raw_span_sha256": "6392df283a30a0cb1a921df67f8c6a0bacf3e10bf2d222947e4b855fcfb53f8b",
+          "text_sha256": "ee66df1754d654edebc4955301d0ee2908517ab853d1a8ec6388e0ac9b5b83e9",
+          "text_start": "The Credit Facility has one principal financial covenant which sets a maximum Consolidated Total Leverage Ratio (“Leverage Ratio”) at the end of each quarter. The maximum Leverage ",
+          "why_out_of_scope": "A credit-facility leverage covenant names litigation reserves only as one possible EBITDA add-back."
+        }
+      ],
+      "peer_origin": {
+        "fixed_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+        "defect_id": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/audit.json",
+        "docs/evidence/issue28_continuous/ordinary-paramount-current-36-cli-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "specific_non_retraction": {
+        "block_index": 2108,
+        "reason": "The last sentence reports a specific $156 million stockholder-litigation benefit; not a false selection here."
+      }
+    },
+    {
+      "defect_id": "D02_ENPHASE_2025_ITEM3_PAGE_FOOTER_SELECTED",
+      "metric_id": "D02",
+      "company_id": "enphase_energy",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:1f8e6698e8f6e4c211e4b0170e0f767c0709da60cd2e310dc282fcd0b0424fce",
+      "run_id": "run:ordinary-integrated:29485397ff79fbf533866e162a37aa111d473c8064639e0054192fc65e33f34c",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "SOURCE_SELECTION_GUARD_NOT_YET_REPAIRED_IN_28",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_SOURCE_EXCERPT",
+      "summary": "This exact #28 Result contains the listed out-of-scope excerpt(s). Other excerpts and companies are not judged here. The historical 390 comparison and current private Run use the same Result ID.",
+      "confirmed_wrong_source_blocks": [
+        {
+          "block_index": 755,
+          "section_id": "ITEM_3",
+          "accession": "0001463101-26-000013",
+          "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+          "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+          "raw_span_sha256": "324ead6ccc3882ab287e21bd4e62af5bbeb7a225a98f6bfd21823527404fc730",
+          "text_sha256": "720f78e1a02da0729eeff0389d46e4e687d16ccd6bff7aba43bf30c6111b2c34",
+          "text_start": "Enphase Energy, Inc. | 2025 Form 10-K | 46",
+          "why_out_of_scope": "A page footer with company name, form and page number is document furniture, not a proceeding disclosure."
+        }
+      ],
+      "peer_origin": {
+        "fixed_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+        "defect_id": "D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/audit.json",
+        "docs/evidence/issue28_continuous/ordinary-enphase-current-36-cli-20260929/comparison.json"
       ],
       "released": [],
       "original_record_retained": true

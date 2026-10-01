@@ -8627,9 +8627,48 @@
       "new_business_content_credit": false,
       "current_390_credit": false,
       "other_d02_results_not_withdrawn_by_metric_name": true,
-      "own_defect_register_confirmed_coordinates": 7,
-      "own_defect_register_exact_result_ids": 13,
+      "at_lumen_registration_confirmed_coordinates": 7,
+      "at_lumen_registration_exact_result_ids": 13,
       "evidence": "docs/evidence/issue28_continuous/collab-d02-lumen-20261002/audit.json",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "d02_current_three_exact_result_defects": {
+      "status": "THREE_MORE_EXACT_28_D02_RESULTS_WITHDRAWN_NO_CODE_FIX_YET",
+      "fixed_peer_lead_sha": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+      "companies": [
+        "pfizer",
+        "paramount_skydance_paramount_global",
+        "enphase_energy"
+      ],
+      "confirmed_source_blocks": {
+        "pfizer": [
+          2175,
+          2240
+        ],
+        "paramount_skydance_paramount_global": [
+          2257
+        ],
+        "enphase_energy": [
+          755
+        ]
+      },
+      "exact_result_ids": {
+        "pfizer": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+        "paramount_skydance_paramount_global": "sha256:a65cdc379d52ed8bc70fbe3f40be274dc93ea7682af654e08a16a1db76da7b46",
+        "enphase_energy": "sha256:1f8e6698e8f6e4c211e4b0170e0f767c0709da60cd2e310dc282fcd0b0424fce"
+      },
+      "paramount_block_2108": "SPECIFIC_STOCKHOLDER_LITIGATION_BENEFIT_NOT_WITHDRAWN_AS_FALSE_SELECTION",
+      "historical_index_matches_private_result_ids": true,
+      "current_trusted_excluded_coordinates_total": 10,
+      "current_trusted_excluded_result_ids_total": 16,
+      "other_d02_results_not_withdrawn_by_metric_name": true,
+      "repair_status": "SOURCE_SEMANTIC_SELECTION_GUARD_PENDING_WITH_POSITIVE_ITEM8_PRESERVATION",
+      "evidence": "docs/evidence/issue28_continuous/collab-d02-current-source-audit-20261002/audit.json",
+      "old_run_result_source_bytes_retained": true,
       "new_real_calls": [
         0,
         0,
