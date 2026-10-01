@@ -495,7 +495,11 @@ _EXCLUDED_TOPIC = re.compile(
     r"\$\s?\d|\bretainers?\b|\bfees?\b|\bRSUs?\b|\bequity awards?\b|\bcompensation (?:earned|paid)\b"
     r"|\bcommunicat\w*|\bcorrespondence\b|\b(?:have|has) joined the board (?:within|since|in the (?:last|past))\b"
     r"|\bplurality\b|\bvotes? cast\b|\bbroker non-votes?\b|\bquorum\b|\bproxy card\b|\badministered by\b"
-    r"|\bis administered\b|\bwaived\b|\bvotes?\b|\bawards?\b|\battend\w*|\bliable\b", re.I)
+    r"|\bis administered\b|\bwaived\b|\bvotes?\b|\bawards?\b|\battend\w*|\bliable\b"
+    # Who is eligible for pay: "each member of the Board who is not our employee
+    # was eligible for the following cash compensation" (Enphase), whose policy
+    # is named "Non-Employee Director Compensation Policy".
+    r"|\beligible\s+for\b[^.;]{0,40}?\bcompensation\b", re.I)
 _FIRST_PERSON = re.compile(r"\bI\b")
 _BOARD_SIZE = (
     re.compile(r"\bboard(?: of directors)?\b[^.;:]{0,60}?\b(?:consists|is (?:currently |now )?(?:composed|comprised"

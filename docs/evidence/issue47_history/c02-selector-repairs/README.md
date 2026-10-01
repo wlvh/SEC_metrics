@@ -615,3 +615,15 @@
 共 110/110，对照 82 个用例。
 
 **量测**（`measured-33-footnoted-committee-roles.json`）：只在 Enphase 2021 新增 11 块（5 个带标记的名字、6 条注释，读者都判为事实）；漏选 27→24，误选 14 不变，最新年不变。Enphase 2021 剩下一处误选（第 943 块，董事薪酬资格的引导句）。
+
+## 34. 谁有资格领取董事薪酬，不是任职资格认定
+
+**问题。** Enphase 2021 第 943 块、2022 第 531 块、2023 第 515 块都是董事现金薪酬表的引导句："Under the Non-Employee Director Compensation Policy, each member of the Board who is not our employee was eligible for the following cash compensation for Board services."。读者三份都判为非事实（董事薪酬）。选择器把它读成"委员会成员资格认定"：政策名里的 "Non-Employee Director" 碰上资格词，"each member" 碰上成员指称，"was" 碰上状态动词。
+
+**先量后改。** 37 份文档里写 "eligible for … compensation" 的句子只有这三句；Enphase 2024 第 534 块同一句没写政策名，本来就没被取。"eligible to receive … compensation"（Enphase 2022 第 547 块）所在的块没被取、也不因这条变化，所以不收。
+
+**改动。** "eligible for … compensation" 归入已有的薪酬话题排除（与 retainer、fees、RSU 同处理：句子讲的是薪酬，就不按构成读）。
+
+**用例与注错。** `test_who_is_eligible_for_pay_is_not_a_qualification`：第 943、531 块原文为反例。注错 `PAY_ELIGIBILITY_IS_A_QUALIFICATION`（去掉这一排除）。共 111/111，对照 83 个用例。
+
+**量测**（`measured-34-pay-eligibility.json`）：只移走这三块；误选 14→11，不一致位置 15→12（Enphase 2021、2022、2023 现与判读一致），漏选 24 不变，最新年不变。

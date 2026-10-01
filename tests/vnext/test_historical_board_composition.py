@@ -628,6 +628,16 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:60]):
                 self.assertIn("BOARD_MEMBERSHIP_CHANGE", statement_labels(text, pfizer, period_start=START))
 
+    def test_who_is_eligible_for_pay_is_not_a_qualification(self):
+        # Enphase FY2021 block 943 and FY2022 block 531: director pay lead-ins.
+        for text in ("Under the non-employee director compensation policy each member of our Board who is not our "
+                     "employee and not affiliated with a venture capital fund who is an investor in the Company was "
+                     "eligible for the following cash compensation for Board services:",
+                     "Under the Non-Employee Director Compensation Policy, each member of the Board who is not our "
+                     "employee was eligible for the following cash compensation for Board services."):
+            with self.subTest(text=text[:50]):
+                self.assertEqual([], self.labels_for(text, "2022-01-01"))
+
     def test_no_change_to_the_committees_in_the_year(self):
         # Pfizer FY2022 block 799 and FY2023 block 884: the readers judged each
         # a fact about the committees' members that year.

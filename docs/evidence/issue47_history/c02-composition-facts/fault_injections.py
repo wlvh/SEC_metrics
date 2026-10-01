@@ -329,6 +329,10 @@ INJECTIONS = [
      '                 if match.group("mark") in _NAME_MARKS.findall(clean(blocks[k]["text"]))',
      '                 if _NAME_MARKS.findall(clean(blocks[k]["text"]))',
      'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
+    # Repair 34: "... was eligible for the following cash compensation for Board services."
+    ('PAY_ELIGIBILITY_IS_A_QUALIFICATION',
+     'r"|\\beligible\\s+for\\b[^.;]{0,40}?\\bcompensation\\b"', 'r""',
+     'test_who_is_eligible_for_pay_is_not_a_qualification'),
 ]
 
 
