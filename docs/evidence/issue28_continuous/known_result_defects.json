@@ -6,11 +6,12 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 6,
-    "newly_excluded_result_id_count": 12,
+    "newly_excluded_coordinate_count": 7,
+    "newly_excluded_result_id_count": 13,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
+      "lumen_technologies|D02|2025-12-31",
       "macys|C02|2026-01-31",
       "marriott_international|C02|2025-12-31",
       "paramount_skydance_paramount_global|C02|2025-12-31",
@@ -493,6 +494,41 @@
       "repair_state": "SHARED_SELECTOR_SCOPE_REPAIR_AND_NEW_OWN_RESULT_PENDING",
       "current_credit": "NONE_PRIVATE_CANDIDATE_CONTENT_NEEDS_FIX",
       "summary": "The new 54-excerpt private Result does not select exact own-board join dates and qualification rationale at blocks 110, 117 and 168; its native PUBLISHED/EXACT status is not content acceptance."
+    },
+    {
+      "defect_id": "D02_LUMEN_2025_ITEM8_COUNSEL_COST_POLICY_SELECTED",
+      "metric_id": "D02",
+      "company_id": "lumen_technologies",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+      "run_id": "run:ordinary-integrated:82b8dbb8f776fe917453dae851c61199c3ca8dfa413f51eff406436164b0343e",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "SOURCE_SELECTION_GUARD_NOT_YET_REPAIRED_IN_28",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_ITEM8_COUNSEL_COST_POLICY",
+      "summary": "#28 selected original Item 8 block 1670, which describes accounting for external legal counsel costs across advisory subjects, not a litigation proceeding or case disclosure. This exact Result ID is present in both the historical 390 reconciliation and current private normal Run; other D02 companies and the other 14 excerpts are not judged here.",
+      "source_block": {
+        "block_index": 1670,
+        "section_id": "ITEM_8",
+        "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+        "accession": "0000018926-26-000014",
+        "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+        "raw_span_sha256": "0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8",
+        "selected_text_sha256": "0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8",
+        "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation, and other matters. Subject to certain exceptions, we expense these costs as the related services are received."
+      },
+      "peer_origin": {
+        "fixed_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+        "defect_id": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-lumen-20261002/audit.json",
+        "docs/evidence/issue28_continuous/ordinary-lumen-current-36-cli-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
   ],
   "latest_peer_read_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353"

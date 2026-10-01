@@ -8613,6 +8613,29 @@
         "downstream_effect": "#47 stacked branch must reconcile current V13/V14 binding and explicit ordinary C02 v3 route; no historical selector or #47 runtime was copied"
       }
     },
+    "d02_lumen_2025_source_defect": {
+      "status": "CONFIRMED_EXACT_28_D02_RESULT_WITHDRAWN_NO_CODE_FIX_YET",
+      "fixed_peer_lead_sha": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+      "company_id": "lumen_technologies",
+      "metric_id": "D02",
+      "period_end": "2025-12-31",
+      "source_block": 1670,
+      "source_section": "ITEM_8",
+      "current_private_and_historical_result_id": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+      "private_run_id": "run:ordinary-integrated:82b8dbb8f776fe917453dae851c61199c3ca8dfa413f51eff406436164b0343e",
+      "old_run_result_bytes_retained": true,
+      "new_business_content_credit": false,
+      "current_390_credit": false,
+      "other_d02_results_not_withdrawn_by_metric_name": true,
+      "own_defect_register_confirmed_coordinates": 7,
+      "own_defect_register_exact_result_ids": 13,
+      "evidence": "docs/evidence/issue28_continuous/collab-d02-lumen-20261002/audit.json",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
     "reference_table_pr": {
       "url": "https://github.com/wlvh/SEC_metrics/pull/53",
       "head_commit": "564aa70dded2c9c797f3275fbec740f2b0a89a7f",
