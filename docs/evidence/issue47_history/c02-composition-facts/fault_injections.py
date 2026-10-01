@@ -230,6 +230,12 @@ INJECTIONS = [
      'test_a_named_family_member_is_not_an_independence_standard'),
     ('A_FAMILY_MEMBER_IS_NEVER_A_STANDARD', '        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)\n', '        family = None\n',
      'test_a_named_family_member_is_not_an_independence_standard'),
+    ('A_NAMED_SETUP_IS_NOT_READ', '    re.compile(r"\\b(?:board(?: of directors)?|committee)\\s+(?:(?:also|has|had|then|recently|subsequently)\\s+)*"\n', '    re.compile(r"(?!x)x"\n',
+     'test_a_committee_the_board_set_up_under_its_own_name'),
+    ('ANY_SUBJECT_SETS_UP_A_NAMED_COMMITTEE', '    re.compile(r"\\b(?:board(?: of directors)?|committee)\\s+(?:(?:also|has|had|then|recently|subsequently)\\s+)*"\n', '    re.compile(r"\\b"\n',
+     'test_a_committee_the_board_set_up_under_its_own_name'),
+    ('A_CLAUSE_IS_A_NAME', '               r"(?:(?!(?:and|or|of|the|to|with|for|by|on|in|at|its|our|their|that|which|who)\\b)[\\w&’\'\\-]+\\s+){1,6}"\n', '               r"(?:[\\w&’\'\\-]+\\s+){1,6}"\n',
+     'test_a_committee_the_board_set_up_under_its_own_name'),
 ]
 
 

@@ -402,3 +402,24 @@
 - 原因在版式：Marriott 把卡片姓名印在委员会和外部董事会列表之后。以第 819 块为例，名字 Lauren R. Hobart 在第 829 块，超出标注的就近范围；范围内能找到的"姓名"只有那个公司名。
 
 **结论。** 暂不采用。直接改会把 3 块误选换成 3 块漏选，而这 3 块标注此前被量测算作"选对了"，其实一直挂在错的人名上，量测看不出这一层。正确的做法是让标注找到排在列表之后的卡片姓名，同时不重犯第 19 节里 Macy's 那种越界到下一张卡片的问题，需要单独设计。
+
+## 23. 董事会或其委员会设立的、名字夹在冠词和 "Committee" 之间的委员会
+
+**问题。** Enphase 2023 第 447 块 "the Audit Committee established a cybersecurity subcommittee, which includes a board member with cybersecurity expertise"，Lumen 2022 第 1879 块 "In early 2022, the Board formed a special CEO Succession Committee"、第 1281 块同一件事，读者都判为含事实（设立了委员会），都没取。选择器设立委员会的句式只允许冠词和 "committee" 之间出现 new、separate、special、standing、ad hoc 这几个修饰词；委员会自己的名字（"cybersecurity"、"CEO Succession"）一出现就不匹配。Lumen 2022 的第 958 块是同一事实，读者把它列为由 1281、1879 覆盖。
+
+**先量后改。** 允许名字出现后，37 份文档里匹配的句子共五句：
+- 上面三块，加上 Southwest 2025 第 1225 块 "the Board also established an ad hoc Fleet Oversight Committee"（该块已因同块另一句被选中）；
+- Lumen 2021 第 68 块 "We have also established a Lumen Sustainability Management committee which is responsible for driving our sustainability agenda with the Board and senior leaders…"，读者判为非事实：这是公司的管理层委员会，不是董事会的。
+
+名字可以是任何词，所以只靠名字分不出谁的委员会。这五句里，是董事会的委员会的那四句，设立者都是董事会或它的某个委员会；第 68 块的设立者是 "We"。
+
+**改动。** 新增一个设立句式：名字可以夹在冠词和 "committee" 之间，但设立者必须是董事会或某个委员会；名字只能是词，不能是从句（"formed a working group with the Audit Committee" 不算设立委员会）。原来不带名字的句式不变（它不要求设立者；Enphase 2024、2025 的 "has established a subcommittee" 由它取到）。
+
+**用例与注错。** `test_a_committee_the_board_set_up_under_its_own_name`：三条原文正例；反例是第 68 块原文和一条构造的 "working group" 句子。注错：
+- `A_NAMED_SETUP_IS_NOT_READ`；
+- `ANY_SUBJECT_SETS_UP_A_NAMED_COMMITTEE`（去掉设立者要求）；
+- `A_CLAUSE_IS_A_NAME`（名字里允许介词、冠词等虚词）。
+
+共 82/82，对照 71 个用例。
+
+**量测**（`measured-23-named-committee-setup.json`）：只新增 Enphase 2023 第 447 块、Lumen 2022 第 1281、1879 块，都是读者判为含事实的块；漏选 51→47（含由 1281、1879 覆盖的 958），误选 18 不变，不一致位置 21 不变，最新年不变。

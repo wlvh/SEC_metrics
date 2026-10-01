@@ -526,6 +526,25 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                                  statement_labels(text, frozenset({"audit", "compensation", "example"}),
                                                   period_start=START))
 
+    def test_a_committee_the_board_set_up_under_its_own_name(self):
+        # Enphase FY2023 block 447, Lumen FY2022 block 1879 and Southwest
+        # FY2025 block 1225: the name sits between the article and "committee".
+        for text in ("To help with this, the Audit Committee established a cybersecurity subcommittee, which includes "
+                     "a board member with cybersecurity expertise, and holds regular meetings.",
+                     "In early 2022, the Board formed a special CEO Succession Committee to evaluate internal and "
+                     "external candidates to succeed Mr. Storey upon his retirement.",
+                     "In July 2025, the Board also established an ad hoc Fleet Oversight Committee."):
+            with self.subTest(text=text[:40]):
+                self.assertStates(text, "STANDING_COMMITTEES_STATEMENT")
+        # The company's own committee (Lumen FY2021 block 68), and a group
+        # formed with a committee rather than as one (a constructed sentence).
+        for text in ("We have also established a Lumen Sustainability Management committee which is responsible for "
+                     "driving our sustainability agenda with the Board and senior leadership.",
+                     "The Board formed a working group with the Audit Committee to review the plan."):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("STANDING_COMMITTEES_STATEMENT",
+                                 statement_labels(text, frozenset({"lumen", "example"}), period_start=START))
+
     def test_the_committees_named_together_on_their_charters(self):
         # Ford's five years and Salesforce's two name every committee in one
         # sentence about their charters: which committees exist.

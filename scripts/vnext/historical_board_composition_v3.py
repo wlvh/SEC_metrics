@@ -575,6 +575,18 @@ _COMMITTEE_SETUP = (
     re.compile(r"\b(?:established|set up|formed|created|constituted)\s+(?:a|an)\s+(?:(?:new|separate|special|standing"
                r"|ad hoc)\s+)*(?:sub-?committee|committee)\b", re.I),
     re.compile(r"\b(?:a|the)\s+special committee of (?:the|our) board\b", re.I),
+    # A committee set up with its name between the article and "committee":
+    # "the Audit Committee established a cybersecurity subcommittee", "the
+    # Board formed a special CEO Succession Committee". A name can say anything,
+    # so the board or one of its committees must be the one setting it up: "We
+    # have also established a Lumen Sustainability Management committee" is the
+    # company's. The name is words, not a clause: "formed a working group with
+    # the Audit Committee" sets up no committee.
+    re.compile(r"\b(?:board(?: of directors)?|committee)\s+(?:(?:also|has|had|then|recently|subsequently)\s+)*"
+               r"(?:established|set up|formed|created|constituted)\s+(?:a|an)\s+"
+               r"(?:(?:new|separate|special|standing|ad hoc)\s+)*"
+               r"(?:(?!(?:and|or|of|the|to|with|for|by|on|in|at|its|our|their|that|which|who)\b)[\w&’'\-]+\s+){1,6}"
+               r"(?:sub-?committee|committee)\b", re.I),
     # A committee's change of name: "The Compensation Committee changed its
     # name to the Compensation, Talent and Culture Committee", "to update the
     # name of the CTC Committee from the “Compensation Committee” to the ...".
