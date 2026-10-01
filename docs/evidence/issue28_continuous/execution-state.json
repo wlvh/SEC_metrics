@@ -846,6 +846,30 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_c02_e17cf33",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "ordinary_c02_composition",
+      "scope_paths": [
+        "scripts/vnext/historical_board_composition.py",
+        "catalog/r6/C02_board_composition_terms_v1.json",
+        "catalog/r6/C02_board_disclosures_v2.md",
+        "scripts/vnext/c02_composition_text_results.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "tests/vnext/test_normal_c02_composition.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/"
+      ],
+      "patch_sha": "e17cf333ef62c8edf68b7028c77b8460f593629f",
+      "spawned_at": "2026-10-01T11:34:53Z",
+      "ended_at": "2026-10-01T11:45:42Z",
+      "tool_calls": 73,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
       "task_name": "review_b02_32faa26",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "ordinary_b02_paired_measure",
@@ -8190,7 +8214,7 @@
       ],
       "superseded_775_private_result_id": "sha256:677efa34258f3126e9097fb12a1dbaac5d085f490b6aeb2d969b33155a03b54b",
       "old_runs_and_390_denominator_retained": true,
-      "new_enphase_private_result_pending_content_review": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71"
+      "new_enphase_private_result_pending_content_review": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2"
     },
     "reference_table_pr": {
       "url": "https://github.com/wlvh/SEC_metrics/pull/53",
@@ -8210,12 +8234,12 @@
       "ordinary_adapter": "scripts/vnext/c02_composition_text_results.py",
       "native_item_ceiling": 64,
       "enphase_selected_count": 54,
-      "enphase_private_result_id": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "enphase_private_result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
       "enphase_normal_update": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE",
       "enphase_independent_process_cold_read": "PASS",
       "marriott_full_96": "EXECUTION_FAILED_NO_C02_SUCCESS_POINTER_WHILE_B01_READY",
       "pfizer_full_79": "SOURCE_MATERIAL_REJECTS_BEFORE_CANDIDATE",
-      "independent_patch_review": "PENDING_EXACT_SHA",
+      "independent_patch_review": "PASS_WITH_BOUNDS_E17_EXCLUDES_FULL_CONTENT_REVIEW",
       "full_business_content_acceptance": false,
       "new_calls": [
         0,
@@ -8232,6 +8256,15 @@
         ],
         "default_compatibility": "legacy C02 candidate and Evidence bytes equal in directed test; frozen text modules and Run store unchanged",
         "potential_downstream": "#47 stacked branch must reconcile V13/V14 current bindings and duplicate selector path when consuming this upstream commit"
+      },
+      "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "post_review_spec_prose_fix": {
+        "changed": "catalog/r6/C02_board_disclosures_v2.md explanatory final paragraph only",
+        "compiled_and_semantic_prompt_closure_hashes_unchanged": true,
+        "spec_file_and_requirement_hashes_changed": true,
+        "new_head_normal_update": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE",
+        "new_head_cold_read": "PASS",
+        "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-update-docfix.json"
       }
     }
   }
