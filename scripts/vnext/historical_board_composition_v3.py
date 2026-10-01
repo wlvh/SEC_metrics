@@ -774,6 +774,18 @@ _DATED_DEPARTURE = re.compile(
     r"\bceased (?:serving|to serve) (?:as (?:a )?(?:director|member) )?on (?:the|our) board(?: of directors)?\b"
     r"[^.;]{0,80}?\b(?:on|in|effective|as of)\s+(?:the\s+)?"
     r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)", re.I)
+# A director appointed to the board together with an office: "the Board elected
+# Anthony Capuano to serve as CEO of the Company and as a member of the Board",
+# "in March 2023, the Board appointed Mr. Spring as Macy's President and
+# CEO-elect and a member of the Board". The date, where the sentence prints
+# one, may stand before the verb, so every date the sentence prints is read:
+# an appointment dated only before the year is tenure, as a dated join is
+# ("appointed President and CEO and a member of the Board in September 2017"
+# in a later year's proxy).
+_APPOINTED_A_MEMBER = re.compile(
+    r"\b(?:appointed|elected|named)\b[^.;]{0,120}?\b(?:and|as)\s+(?:as\s+)?a (?:new )?(?:member|director) of "
+    r"(?:the|our) board\b", re.I)
+_PRINTED_DATE = re.compile(r"\b(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d\b", re.I)
 _MONTH_NUMBERS = {name: number for number, name in enumerate(_MONTHS.split("|"), start=1)}
 
 
@@ -970,6 +982,10 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
                 and (any(p.search(undated) for p in _MEMBERSHIP_CHANGE)
                      or (owned and owned.group("owner").casefold() in registrant))):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
+        if _APPOINTED_A_MEMBER.search(sentence) and _mentions_person(sentence):
+            dates = [match.group(0) for match in _PRINTED_DATE.finditer(sentence)]
+            if not dates or any(not _joined_before(date, period_start) for date in dates):
+                labels.add("BOARD_MEMBERSHIP_CHANGE")
         if any(p.search(sentence) for p in _MEMBERSHIP_COUNT):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):

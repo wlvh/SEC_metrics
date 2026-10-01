@@ -252,6 +252,12 @@ INJECTIONS = [
      'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
     ('AN_OFFICER_S_DEPARTURE_IS_THE_BOARD_S', '    r"\\bceased (?:serving|to serve) (?:as (?:a )?(?:director|member) )?on (?:the|our) board(?: of directors)?\\b"\n', '    r"\\bceased (?:serving|to serve)\\b"\n',
      'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
+    ('AN_APPOINTMENT_WITH_AN_OFFICE_IS_NOT_READ', '        if _APPOINTED_A_MEMBER.search(sentence) and _mentions_person(sentence):\n            dates = [match.group(0) for match in _PRINTED_DATE.finditer(sentence)]\n            if not dates or any(not _joined_before(date, period_start) for date in dates):\n                labels.add("BOARD_MEMBERSHIP_CHANGE")\n', '',
+     'test_appointed_with_an_office_and_as_a_member_of_the_board'),
+    ('AN_APPOINTMENT_BEFORE_THE_YEAR_COUNTS', '            if not dates or any(not _joined_before(date, period_start) for date in dates):\n', '            if True:\n',
+     'test_appointed_with_an_office_and_as_a_member_of_the_board'),
+    ('ANY_DATED_APPOINTMENT_IS_TENURE', '            if not dates or any(not _joined_before(date, period_start) for date in dates):\n', '            if not dates:\n',
+     'test_appointed_with_an_office_and_as_a_member_of_the_board'),
 ]
 
 

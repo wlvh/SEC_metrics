@@ -446,6 +446,24 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "Resources with Lumen effective April 24, 2023, and was involuntarily terminated on April 5, 2024.",
             "2023-01-01"))
 
+    def test_appointed_with_an_office_and_as_a_member_of_the_board(self):
+        # Marriott FY2021 block 1144 prints no date; Macy's FY2023 block 2737
+        # prints it before the verb.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Following Mr. Sorenson’s passing, the Board elected Anthony Capuano to serve as CEO of the Company and "
+            "as a member of the Board.", "2021-01-01"))
+        spring = ("Following a rigorous selection process, during which multiple internal and external candidates "
+                  "were evaluated, in March 2023, the Board appointed Mr. Spring as Macy’s President and CEO-elect "
+                  "and a member of the Board.")
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(spring, "2023-01-29"))
+        # The same appointment read in a later year is tenure.
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(spring, "2024-02-04"))
+        # Enphase FY2022 block 382: the date follows "a member of the Board" and
+        # falls before the year, so the dated-join rule already sets it aside.
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Mr. Kothandaraman, 51, joined Enphase in April 2017 as COO, before being appointed President and CEO "
+            "and a member of the Board in September 2017.", "2022-01-01"))
+
     def test_a_join_written_as_a_noun_is_dated_too(self):
         # Salesforce's related-party paragraph dates a director's appointment
         # as a noun; #28's content check found the FY2026 selection took it as

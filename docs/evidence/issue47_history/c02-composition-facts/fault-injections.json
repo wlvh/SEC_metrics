@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 74,
- "caught": 90,
- "total": 90,
+ "control_tests_run": 75,
+ "caught": 93,
+ "total": 93,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -95,6 +95,7 @@
     "test_a_join_written_as_a_noun_is_dated_too",
     "test_a_long_title_before_the_join",
     "test_a_named_director_s_term_ending_at_a_meeting",
+    "test_appointed_with_an_office_and_as_a_member_of_the_board",
     "test_committee_board_and_leadership_facts",
     "test_who_joined_left_or_stayed"
    ]
@@ -763,6 +764,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_departure_dated_in_the_year_is_a_change_wherever_printed"
+   ]
+  },
+  {
+   "injection": "AN_APPOINTMENT_WITH_AN_OFFICE_IS_NOT_READ",
+   "expected": "test_appointed_with_an_office_and_as_a_member_of_the_board",
+   "result": "CAUGHT",
+   "failed": [
+    "test_appointed_with_an_office_and_as_a_member_of_the_board"
+   ]
+  },
+  {
+   "injection": "AN_APPOINTMENT_BEFORE_THE_YEAR_COUNTS",
+   "expected": "test_appointed_with_an_office_and_as_a_member_of_the_board",
+   "result": "CAUGHT",
+   "failed": [
+    "test_appointed_with_an_office_and_as_a_member_of_the_board"
+   ]
+  },
+  {
+   "injection": "ANY_DATED_APPOINTMENT_IS_TENURE",
+   "expected": "test_appointed_with_an_office_and_as_a_member_of_the_board",
+   "result": "CAUGHT",
+   "failed": [
+    "test_appointed_with_an_office_and_as_a_member_of_the_board"
    ]
   }
  ]

@@ -483,3 +483,25 @@
 共 90/90，对照 74 个用例。
 
 **量测**（`measured-26-dated-departures.json`）：只新增上面五块；漏选 42→39，不一致位置 21→20（Macy's 2025 现与判读一致），误选 16 不变，最新年不变。
+
+## 27. 与职务一起被任命为董事
+
+**问题。** 三块读者判为含事实（董事会成员变化）的句子没取：
+- Marriott 2021 第 1144 块 "Following Mr. Sorenson’s passing, the Board elected Anthony Capuano to serve as CEO of the Company and as a member of the Board."；
+- Macy's 2023 第 40 块 "Tony Spring was appointed by the Board of Directors as Macy’s, Inc. president and CEO-elect, and a member of the Board of Directors."；
+- Macy's 2024 第 2737 块 "in March 2023, the Board appointed Mr. Spring as Macy’s President and CEO-elect and a member of the Board."。
+
+选择器的任命句式要 "to the Board"（"appointed X to the Board"），或带日期的加入要日期跟在 "a member of the Board" 之后；这三句是 "as …, and a member of the Board"，日期要么没有，要么在动词前面。
+
+**日期。** 与加入日期同一规则（统一裁定 `JOIN_BEFORE_THE_YEAR`）：任命只在年度之前的，是任期。这里日期可能在动词前，所以读句子里所有的日期：没有日期，或有一个在年度内或之后，才算变化。
+
+**先量后改。** 37 份文档里 "appointed/elected/named … and/as a member of the Board" 的句子共八句：上面三句；Enphase 2021–2025 五句 "before being appointed President and CEO and a member of the Board in September 2017"，对这五个年度都是任期（统一裁定把 2021–2024 四块判为非事实，2025 年那块读者判为非事实），新规则也不取。
+
+**用例与注错。** `test_appointed_with_an_office_and_as_a_member_of_the_board`：第 1144、2737 块原文两条正例；第 2737 块放到下一年度不算；Enphase 2022 第 382 块原文不算。注错：
+- `AN_APPOINTMENT_WITH_AN_OFFICE_IS_NOT_READ`；
+- `AN_APPOINTMENT_BEFORE_THE_YEAR_COUNTS`（不看日期）；
+- `ANY_DATED_APPOINTMENT_IS_TENURE`（有日期就不算）。
+
+第一版只读去掉带日期加入之后的句子；规则既然要读句子里所有日期，去不去掉没有区别，也没有任何用例能区分，所以改为直接读整句。共 93/93，对照 75 个用例。
+
+**量测**（`measured-27-appointed-a-member.json`）：只新增上面三块；漏选 39→36，不一致位置 20→19（Macy's 2024 现与判读一致），误选 16 不变，最新年不变。
