@@ -792,3 +792,23 @@
 共 130/130，对照 89 个用例。
 
 **量测**（`measured-40-report-signatures.json`）：只在 Macy's 五个位置新增，共 67 块：10 块点名委员会的句子（FY2023 两块读者判为部分事实，另 8 块由第 20 条裁定为事实）、57 块签名（读者都判为事实）；没有去掉任何块，其余 32 个位置不变。漏选 20→16，误选 5 不变。Macy's 2022 只剩第 810 块（NCG 委员会主席，只写在卡片上，NCG 没有报告）；最新年 Macy's 2026 多取 14 块，读者都判为事实或由裁定判为事实，值会变，下一次运行后要重读。
+
+## 41. "Rotated NCG Committee Chair at 2020 annual meeting"：不带主语的委员会主席轮换
+
+**问题。** Lumen 2021–2023 的代理在一串董事会变化的条目里写着 "•Rotated NCG Committee Chair at 2020 annual meeting"。三份判读都判为事实，而且是唯一写这件事的块（读者没有给覆盖）。选择器的委员会主席句式都要动词带主语（"Mr. Roos assumed the role of Chair of …"），这种不带主语的条目一块都没取，三个位置各漏一块。
+
+**日期在目标年度之前，照样取。** 与第 25 处一样，读者对写明日期的职务陈述不论年份都判为事实，只有加入日期才算任期，所以不按年份筛。
+
+**改动。** `_COMMITTEE_COMPOSITION` 新增一个句式："Rotated" + 一到六个大写开头的词（委员会名）+ "Committee Chair at" + 某年的年会。只认语料里的这种写法。"Rotating committee chairs and memberships to ensure fresh perspectives and leadership"（Lumen 2022 第 1070 块，一种做法，不是变化）没写年会，不会读到。
+
+**用例与注错。** `test_a_committee_chair_rotated_at_a_dated_meeting`：Lumen 的原句为正例；"Rotating committee chairs …" 原句为反例；以下两个反例是构造的：没写年会的 "Rotated NCG Committee Chair"、不写委员会名的 "Rotated a committee chair at 2020 annual meeting"。注错：
+
+- `A_ROTATED_CHAIR_IS_NOT_READ`（句式读不到）；
+- `A_ROTATION_NEED_NOT_BE_AT_A_MEETING`（不要年会）；
+- `A_ROTATED_CHAIR_NEED_NOT_NAME_A_COMMITTEE`（不要大写的委员会名）。
+
+本以为过去时 "Rotated" 也要单独一个注错（改成 "Rotat…" 任意时态），先在内存里试过：语料里的 "Rotating …" 本来就因为没写年会而读不到，这个注错抓不到任何用例，说明过去时这一条在语料上不承重，所以不列为检查。新句式与第 1 处的大写委员会名句式有一段相同的文字，第 1 处的注错 `A_LOWER_CASE_WORD_NAMES_A_COMMITTEE` 改为用更长的、只出现一次的目标；第 15 处的注错 `TAKING_OVER_A_COMMITTEE_CHAIR_IS_NOT_READ` 原来连着元组的结尾，现改为连着新句式的注释，针对的仍是原规则。
+
+共 133/133，对照 90 个用例。
+
+**量测**（`measured-41-rotated-committee-chair.json`）：只新增 Lumen 2021 第 1047 块、2022 第 1078 块、2023 第 1423 块（读者都判为事实），其余位置不变。漏选 16→13，误选 5 不变，最新年不变。

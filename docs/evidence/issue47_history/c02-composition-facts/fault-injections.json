@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 89,
- "caught": 130,
- "total": 130,
+ "control_tests_run": 90,
+ "caught": 133,
+ "total": 133,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -1102,6 +1102,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"
+   ]
+  },
+  {
+   "injection": "A_ROTATED_CHAIR_IS_NOT_READ",
+   "expected": "test_a_committee_chair_rotated_at_a_dated_meeting",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_committee_chair_rotated_at_a_dated_meeting"
+   ]
+  },
+  {
+   "injection": "A_ROTATION_NEED_NOT_BE_AT_A_MEETING",
+   "expected": "test_a_committee_chair_rotated_at_a_dated_meeting",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_committee_chair_rotated_at_a_dated_meeting"
+   ]
+  },
+  {
+   "injection": "A_ROTATED_CHAIR_NEED_NOT_NAME_A_COMMITTEE",
+   "expected": "test_a_committee_chair_rotated_at_a_dated_meeting",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_committee_chair_rotated_at_a_dated_meeting"
    ]
   }
  ]

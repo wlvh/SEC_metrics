@@ -571,6 +571,13 @@ _COMMITTEE_COMPOSITION = (
     # Governance Committee" (#28's content check of Salesforce FY2026, block 933).
     re.compile(r"\b(?:assumed|assumes|took over|took on)\s+(?:the\s+)?(?:role|position)\s+(?:of|as)\s+(?:the\s+)?"
                r"chair(?:man|person|woman)?\s+of\s+(?:the|our|its)\b[^.;]{0,60}\bcommittee\b", re.I),
+    # A committee's chair changing hands at a dated meeting, in a list of the
+    # board's changes without a subject: "Rotated NCG Committee Chair at 2020
+    # annual meeting" (Lumen's older proxies). Like any dated statement of who
+    # holds a role, every reader took it whatever its year. "Rotating committee
+    # chairs and memberships to ensure fresh perspectives" names no meeting.
+    re.compile("\\brotated\\s+(?:the\\s+)?(?:(?-i:[A-Z])[\\w&’'\\-]*\\s+){1,6}committee\\s+chair\\s+at\\s+"
+               "(?:the\\s+|our\\s+)?(?:19|20)\\d\\d\\s+annual\\s+meeting\\b", re.I),
 )
 # A committee whose members are management is not one of the board's: "made up
 # of senior leaders and executives", "composed of Pfizer employees", "co-chaired

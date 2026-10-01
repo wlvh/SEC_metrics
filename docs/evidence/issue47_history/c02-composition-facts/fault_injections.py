@@ -118,7 +118,7 @@ INJECTIONS = [
     ("NO_COMMITTEE_ACRONYMS", "    if not acronyms:\n        return False", "    if True:\n        return False",
      "test_size_setup_and_determinations"),
     # Repairs from the older-year readings (c02-selector-repairs/README.md).
-    ("A_LOWER_CASE_WORD_NAMES_A_COMMITTEE", "(?:(?-i:[A-Z])", "(?:[A-Z]",
+    ("A_LOWER_CASE_WORD_NAMES_A_COMMITTEE", "as (?:the |our )?(?:(?-i:[A-Z])", "as (?:the |our )?(?:[A-Z]",
      "test_a_criterion_for_choosing_a_chair_seats_no_one"),
     ("THE_SQUARE_BULLET_IS_NOT_A_BULLET", "◾·", "·", "test_a_roster_marked_with_each_glyph_filings_print"),
     ("THE_MIDDLE_DOT_IS_NOT_A_BULLET", "◾·", "◾", "test_a_roster_marked_with_each_glyph_filings_print"),
@@ -226,8 +226,8 @@ INJECTIONS = [
      '    r"|(?:appointment|election) to (?:the|our) board(?: of directors)?\\s+(?:on|in|effective))\\s+(?:the\\s+)?"',
      '    r")\\s+(?:the\\s+)?"', "test_a_join_written_as_a_noun_is_dated_too"),
     ('TAKING_OVER_A_COMMITTEE_CHAIR_IS_NOT_READ',
-     '               r"chair(?:man|person|woman)?\\s+of\\s+(?:the|our|its)\\b[^.;]{0,60}\\bcommittee\\b", re.I),\n)',
-     '               r"chair(?:man|person|woman)?\\s+of\\s+(?:the|our|its)\\b[^.;]{0,60}\\bcommittee\\bNEVER", re.I),\n)',
+     '               r"chair(?:man|person|woman)?\\s+of\\s+(?:the|our|its)\\b[^.;]{0,60}\\bcommittee\\b", re.I),\n    # A committee\'s chair changing hands',
+     '               r"chair(?:man|person|woman)?\\s+of\\s+(?:the|our|its)\\b[^.;]{0,60}\\bcommittee\\bNEVER", re.I),\n    # A committee\'s chair changing hands',
      "test_taking_over_a_chair_or_the_lead_role"),
     ('TAKING_OVER_THE_LEAD_ROLE_IS_NOT_READ',
      '               + r"|presiding (?:independent )?director)\\b", re.I),\n)',
@@ -398,6 +398,14 @@ INJECTIONS = [
     ('THE_SIGN_OFF_IS_TAKEN', '            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))\n',
      '            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))\n            taken.append((i, "REPORT_SIGNERS_COMMITTEE"))\n',
      "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    # Repair 41: "Rotated NCG Committee Chair at 2020 annual meeting".
+    ('A_ROTATED_CHAIR_IS_NOT_READ', 'committee\\\\s+chair\\\\s+at\\\\s+"', 'committee\\\\s+chairNEVER\\\\s+at\\\\s+"',
+     "test_a_committee_chair_rotated_at_a_dated_meeting"),
+    ('A_ROTATION_NEED_NOT_BE_AT_A_MEETING',
+     'committee\\\\s+chair\\\\s+at\\\\s+"\n               "(?:the\\\\s+|our\\\\s+)?(?:19|20)\\\\d\\\\d\\\\s+annual\\\\s+meeting\\\\b"',
+     'committee\\\\s+chair\\\\b"', "test_a_committee_chair_rotated_at_a_dated_meeting"),
+    ('A_ROTATED_CHAIR_NEED_NOT_NAME_A_COMMITTEE', '(?:(?-i:[A-Z])[\\\\w&’\'\\\\-]*\\\\s+){1,6}committee\\\\s+chair',
+     '(?:[\\\\w&’\'\\\\-]*\\\\s+){1,6}committee\\\\s+chair', "test_a_committee_chair_rotated_at_a_dated_meeting"),
 ]
 
 

@@ -590,6 +590,23 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertEqual([], statement_labels(
             "Ms. Park assumed the role of Chief Financial Officer in May 2025.", own, period_start=START))
 
+    def test_a_committee_chair_rotated_at_a_dated_meeting(self):
+        # Lumen FY2021-FY2023 (blocks 1047, 1078, 1423): a list of the board's
+        # changes, each without a subject. Every reader took it; its date is
+        # before each of those years, as for any dated holder of a role.
+        own = frozenset({"ncg", "audit", "example"})
+        self.assertEqual(["COMMITTEE_COMPOSITION_STATEMENT"], statement_labels(
+            "•Rotated NCG Committee Chair at 2020 annual meeting", own, period_start=START))
+        # A practice of rotating chairs, and a rotation with no meeting, are not
+        # a change (the first from Lumen FY2022 block 1070; the second constructed).
+        self.assertEqual([], statement_labels(
+            "•Rotating committee chairs and memberships to ensure fresh perspectives and leadership", own,
+            period_start=START))
+        self.assertEqual([], statement_labels("•Rotated NCG Committee Chair", own, period_start=START))
+        # A rotation that names no committee says nothing about which (constructed).
+        self.assertEqual([], statement_labels("•Rotated a committee chair at 2020 annual meeting", own,
+                                              period_start=START))
+
     def test_a_long_title_before_the_join(self):
         # Paramount FY2025 block 100 (#28's content check): an officer's titles
         # stand between "has served as" and "a member of our Board".
