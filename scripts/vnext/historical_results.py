@@ -417,10 +417,12 @@ TEXT_METRICS = ("C02", "D01", "D02")
 # 28 to 60 headings against max_items 64, so nothing here is waiting on the
 # capacity work D02 needed - though Enphase is four headings away from it.
 # C02 moved to its v2 successor with the owner's composition-fact meaning: the
-# selection changed (historical_board_composition) and the bound rose, because
+# selection changed (historical_board_composition_v2) and the bound rose, because
 # a filing that prints each committee member in its own block states more
-# facts than 64 blocks hold (up to 85 measured on the ten saved filings).
-TEXT_SPEC_PATHS = {"C02": "catalog/r6/C02_board_disclosures_v2.md",
+# facts than 64 blocks hold (up to 85 measured on the ten saved filings). Its
+# file is the historical v2 because #28's ordinary C02 successor, a different
+# contract with the native bound 64, holds catalog/r6/C02_board_disclosures_v2.md.
+TEXT_SPEC_PATHS = {"C02": "catalog/r6/C02_board_disclosures_historical_v2.md",
                    "D01": "catalog/r6/D01_risk_factor_headings_v2.md",
                    "D02": "catalog/r6/D02_legal_disclosures_v2.md"}
 

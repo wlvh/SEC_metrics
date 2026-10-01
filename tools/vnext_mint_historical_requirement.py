@@ -63,12 +63,18 @@ NEW_RULE_FILES = (
     # decide a metric's bound belongs in the rule set rather than only in the
     # authority, so both roots check it.
     "catalog/r6/D02_legal_disclosures_v2.md",
-    "scripts/vnext/historical_board_composition.py",
+    # The C02 composition reader. Its first path, historical_board_composition.py,
+    # now carries the bytes #28's issue_28_v13 records for the ordinary route and
+    # comes in with the parent's authority; this generation's reader continues in
+    # the successor, so neither Issue edits a path the other's generation binds.
+    "scripts/vnext/historical_board_composition_v2.py",
     # The board's lead-director role phrase that reader compiles into four of
     # its patterns: a phrase the source strategy owns for the family, so it
     # lives in the catalog, and its bytes decide what the reader selects.
     "catalog/r6/C02_board_composition_terms_v1.json",
-    "catalog/r6/C02_board_disclosures_v2.md",
+    # The historical C02 Spec. #28's ordinary C02 successor took the v2 path with
+    # its own contract (bound 64); this one (bound 192) keeps its bytes here.
+    "catalog/r6/C02_board_disclosures_historical_v2.md",
     # E01's content-confirmed successor route: its hash is the Spec's, so the
     # meaning it carries belongs in the rule set.
     "catalog/r6/E01_content_confirmed_ma_v1.json",

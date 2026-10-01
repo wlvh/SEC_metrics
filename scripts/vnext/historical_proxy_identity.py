@@ -57,7 +57,7 @@ import re
 
 from .canonical import content_hash
 from .deterministic_router import DeterministicRouterError
-from .historical_board_composition import _name_core
+from .historical_board_composition_v2 import _name_core
 from .historical_dei import release_aware, release_aware_with
 from . import text_business_candidates as _frozen
 from .text_coverage import _Blocks

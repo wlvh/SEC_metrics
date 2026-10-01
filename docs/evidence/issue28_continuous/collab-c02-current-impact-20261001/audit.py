@@ -9,6 +9,12 @@ HERE = Path(__file__).resolve().parent
 PEER_SHA = '48b46a2d742eb3e3b8bd5a6404908745046b5d2f'
 PEER_PATH = 'docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json'
 PRIVATE = {
+    'enphase_energy': {
+        'records': Path('/private/tmp/issue28-enphase_energy-current-36-cli-20260929/state/enphase_energy/metrics/C02/attempts/cf669abae7834e66a8059f01bd7a6a23/runs/C02/records.jsonl'),
+        'block': 294,
+        'old_result': 'sha256:405e208e4ef48ef4dea3e462ef419aeb60fcfb0c78c8b4ab9310a94d4937764c',
+        'private_result': 'sha256:405e208e4ef48ef4dea3e462ef419aeb60fcfb0c78c8b4ab9310a94d4937764c',
+    },
     'marriott_international': {
         'records': Path('/private/tmp/issue28-marriott-current-36-20260929/state/metrics/C02/attempts/1a24edf5e4b64dcb8e9268ec2e4ccab4/runs/C02/records.jsonl'),
         'block': 402,
@@ -65,9 +71,12 @@ def main():
             },
             'peer_category': judgement['category'],
             'peer_reason': judgement['reason'],
-            'own_review': ('Executive pay alignment is not a board or committee composition fact.'
-                           if company == 'marriott_international' else
-                           'Shareholder proposal engagement and voting outreach are not composition facts.'),
+            'own_review': (
+                'Shareholder outreach by a board member and legal staff is not a composition fact.'
+                if company == 'enphase_energy' else
+                'Executive pay alignment is not a board or committee composition fact.'
+                if company == 'marriott_international' else
+                'Shareholder proposal engagement and voting outreach are not composition facts.'),
             'private_records_path': str(item['records']),
         })
     body = {
@@ -76,14 +85,14 @@ def main():
         'peer_read_sha256': hashlib.sha256(peer_raw).hexdigest(),
         'archived_index_path': str(index_path.relative_to(ROOT)),
         'archived_index_sha256': hashlib.sha256(index_path.read_bytes()).hexdigest(),
-        'affected_coordinate_count': 2,
+        'affected_coordinate_count': len(rows),
         'affected_distinct_result_id_count': len({rid for r in rows for rid in
              (r['archived_result_id'], r['private_result_id'])}),
         'rows': rows,
-        'limit': 'Only two source blocks and their exact current result identities were inspected. No finding about the other eight C02 coordinates or full C02 recall is implied.',
+        'limit': 'Only three source blocks and their exact current result identities were inspected. No finding about the other seven C02 coordinates or full C02 recall is implied.',
     }
     (HERE / 'impact.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
-    print(json.dumps({'affected_coordinates': 2,
+    print(json.dumps({'affected_coordinates': len(rows),
                       'distinct_result_ids': body['affected_distinct_result_id_count'],
                       'peer_commit': PEER_SHA}, sort_keys=True))
 

@@ -1277,7 +1277,7 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 
 ### 所有者 2026-09-27 的两项口径：C02 构成事实与 E01 经内容确认的并购公告
 
-**C02**：`scripts/vnext/historical_board_composition.py`（规则文件）在冻结文本选择器之外按"构成事实"选块——董事会规模、独立董事人数、委员会设置、成员、主席及相关独立性与资格认定；一般治理流程与委员会职能描述不收。委员会页面按结构读（委员会名、"Chair:"、成员块、"All Members are Independent"），因为冻结选择器要求同一块同时含委员会名与结构词，而这类页面没有这样的块。验收是两向阅读（`docs/evidence/issue47_history/c02-composition-facts/`）：每个入选块判是否在口径内，另从点名董事或委员会的全部块里找漏选；`tools/read_c02_composition.py` 的接受模式再要求 Run 的候选哈希等于今天重算的选择、公共行摘录就是选中块按序。
+**C02**：`scripts/vnext/historical_board_composition_v2.py`（规则文件；原路径 `historical_board_composition.py` 现由 #28 的 issue_28_v13 按 `546d10d1` 的字节绑定、本世代从父代继承，历史 Spec 相应改为 `catalog/r6/C02_board_disclosures_historical_v2.md`，见 `docs/evidence/issue47_history/collab-28/README.md`“选择器路径”）在冻结文本选择器之外按"构成事实"选块——董事会规模、独立董事人数、委员会设置、成员、主席及相关独立性与资格认定；一般治理流程与委员会职能描述不收。委员会页面按结构读（委员会名、"Chair:"、成员块、"All Members are Independent"），因为冻结选择器要求同一块同时含委员会名与结构词，而这类页面没有这样的块。验收是两向阅读（`docs/evidence/issue47_history/c02-composition-facts/`）：每个入选块判是否在口径内，另从点名董事或委员会的全部块里找漏选；`tools/read_c02_composition.py` 的接受模式再要求 Run 的候选哈希等于今天重算的选择、公共行摘录就是选中块按序。
 
 **E01**：后继路线 `catalog/r6/E01_content_confirmed_ma_v1.json` 用哈希点名它替换的已批路线；`historical_event_items.py` 从每个候选条目（1.01/2.01/8.01）自己的正文读出区间并绑定字节，只有表格标题的条目共享其后正文；`historical_ma_confirmation.py`（规则文件）定义确认契约——一个窗口一个请求、回答只按形式检查、计数只数被确认的、任一条目按自身文字无法判定则整窗扣留——以及登记：创建者日志与随 Run 安装的副本，默认 LIVE，每个消费者在当前代码下重推。数据流在已有的零 AI 事件分支上只多一步：候选存在时由路线自己构造请求（`e01_confirmation_request` 与计数用的是同一段代码），读登记，把被否定的候选从匹配器的输入里拿掉，其余照旧。Run 侧两处：后继规格文档 `catalog/r6/E01_content_confirmed_ma_v1.md` 由路线生成、按字节核对（Run 存储只会从 Markdown 规格编译），公共行的注释取自后继路线自己的 `public_notes`（普通展示策略描述的是已批条目规则的计数，且被 issue_28 各世代绑定）。模型调用不在这里：真实调用要经 #47 自己的许可、账本与出口补丁（E01 的请求类型随出口修订另行提交），本仓库今天不发出任何调用。
 

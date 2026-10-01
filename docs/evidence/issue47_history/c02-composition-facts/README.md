@@ -4,7 +4,7 @@
 
 2026-09-27 所有者决定（原文摘录见 `../owner-decisions-2026-09-27/decisions.json`）：C02 取**构成事实**——董事会规模、独立董事人数、委员会设置、成员、主席，以及相关独立性和资格认定；不扩展到一般治理流程或委员会工作描述；实现要包含委员会页面的结构化读取和漏选/误选双向检查。
 
-冻结选择器（`text_business_candidates.board_composition_candidates`）表达不了这个口径：它只要一个块里任意位置出现委员会名和任意结构词就标成"委员会信息"，又一次只读一个块，读不到委员会页面（名称、标签、每位成员各占一块）。所以新增后继 `scripts/vnext/historical_board_composition.py`（规则文件），由 `historical_text_results.prepare_business_text_sources` 只替换 C02 治理文档的 proposal；冻结准备仍负责全部来源、身份与期间检查，冻结候选构造、Evidence 与记录形状原样复用。条目上限按 D02 同一修订机制放到 192（`catalog/r6/C02_board_disclosures_v2.md`，只改 `max_items`），实测最多 98 条。
+冻结选择器（`text_business_candidates.board_composition_candidates`）表达不了这个口径：它只要一个块里任意位置出现委员会名和任意结构词就标成"委员会信息"，又一次只读一个块，读不到委员会页面（名称、标签、每位成员各占一块）。所以新增后继 `scripts/vnext/historical_board_composition.py`（规则文件；合并 `2cc97e3a` 起这个路径保留 #28 绑定的 `546d10d1` 字节，本方的选择器在 `historical_board_composition_v2.py` 继续，Spec 在 `catalog/r6/C02_board_disclosures_historical_v2.md`，见 `../collab-28/README.md`“选择器路径”），由 `historical_text_results.prepare_business_text_sources` 只替换 C02 治理文档的 proposal；冻结准备仍负责全部来源、身份与期间检查，冻结候选构造、Evidence 与记录形状原样复用。条目上限按 D02 同一修订机制放到 192（`catalog/r6/C02_board_disclosures_v2.md`，只改 `max_items`），实测最多 98 条。
 
 ## 读什么
 

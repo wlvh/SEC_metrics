@@ -1,6 +1,6 @@
 # C02 选择器修复（共用，[shared-with-#28]）
 
-27 个往年位置的双向判读与当前选择对比（`../c02-older-years/comparison.json`）：26 个不一致，49 个误选块、256 个漏选块。这里按"一个边界清楚的问题"逐个修，每个问题一节：问题、成因、改动、用例与注错、在全部 37 份判读上的量测。选择器是 `scripts/vnext/historical_board_composition.py`（#47 规则文件，改动后重铸 `issue_47_v1`）。
+27 个往年位置的双向判读与当前选择对比（`../c02-older-years/comparison.json`）：26 个不一致，49 个误选块、256 个漏选块。这里按"一个边界清楚的问题"逐个修，每个问题一节：问题、成因、改动、用例与注错、在全部 37 份判读上的量测。选择器是 `scripts/vnext/historical_board_composition.py`（#47 规则文件，改动后重铸 `issue_47_v1`）；合并 `2cc97e3a` 起它在 `historical_board_composition_v2.py`，原路径保留 #28 绑定的 `546d10d1` 字节（`../collab-28/README.md`“选择器路径”），之后各节改的都是 `_v2`。
 
 ## 量测方法
 

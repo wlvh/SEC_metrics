@@ -68,7 +68,7 @@ from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _
                                        _PROSPECTIVE, _check_document, _excerpt, _note_references,
                                        _ranges, _substantive)
 from . import text_results_v2 as frozen
-from .historical_board_composition import board_composition_facts
+from .historical_board_composition_v2 import board_composition_facts
 from .historical_dei import release_aware, release_aware_with
 from . import historical_proxy_identity as proxy_identity
 from .text_results_v2 import TextResultV2Error, build_text_review_unit

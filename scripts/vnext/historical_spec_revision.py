@@ -65,7 +65,7 @@ REVISED_TEXT_SPECS = {
     "catalog/r6/D02_legal_disclosures_v2.md": "catalog/r6/D02_legal_disclosures_v1.md",
     # The composition-fact meaning lives in the body and the selection code;
     # the front matter moves only the bound, which is what this proof checks.
-    "catalog/r6/C02_board_disclosures_v2.md": "catalog/r6/C02_board_disclosures_v1.md",
+    "catalog/r6/C02_board_disclosures_historical_v2.md": "catalog/r6/C02_board_disclosures_v1.md",
     # D01 reproduces every emphasized Item 1A heading and never a subset, so a
     # filing with more headings than the bound had no result at all.
     "catalog/r6/D01_risk_factor_headings_v2.md": "catalog/r6/D01_risk_factor_headings.md",

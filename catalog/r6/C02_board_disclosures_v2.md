@@ -1,11 +1,11 @@
 ---
 {
   "metric_id": "C02",
-  "name": "Board composition source disclosures",
+  "name": "Board composition facts",
   "kind": "direct_text",
   "canonical_unit": "text",
   "source_mode": "ai_text",
-  "disclosure_group": "c02_source_disclosures_v1",
+  "disclosure_group": "c02_composition_facts_v1",
   "applicability": {
     "all": [],
     "none": []
@@ -77,7 +77,7 @@
       "governance_proxy"
     ],
     "renderer": "ORDERED_NEWLINE_V1",
-    "max_items": 192,
+    "max_items": 64,
     "max_text_chars": 64000,
     "review_required": true
   },
@@ -100,4 +100,4 @@ Committee membership is read as the filing lays it out: a committee's page headi
 
 Excerpts are whole source blocks, so a block that states a composition fact is kept whole even when it also says something else. The ordinary annual source anchors the reporting container only. The source filing date and proxy report/meeting metadata remain distinct from a board measurement date, which is not inferred; no count is computed and no year-end board is asserted. Exact source excerpts are mechanically replayed and reviewed through the existing whole ReviewUnit. No keyword miss proves nondisclosure.
 
-This successor of `C02_board_disclosures_v1.md` carries the owner's 2026-09-27 composition-fact meaning for the historical route and raises the item bound to the successor ceiling, because a filing that prints committee rosters one member per block states more facts than 64 blocks hold. v1 keeps its bytes and its identity, because the Runs frozen under it declare it.
+This #28 ordinary successor of `C02_board_disclosures_v1.md` carries the owner's 2026-09-27 composition-fact meaning while retaining the current native TEXT_V1 ceiling of 64 excerpts. A complete filing above that ceiling remains an implementation-capacity failure; it is not shortened to obtain a Result. A separate native protocol successor is needed before such a filing can complete. v1 keeps its bytes and identity because the Runs frozen under it declare it.

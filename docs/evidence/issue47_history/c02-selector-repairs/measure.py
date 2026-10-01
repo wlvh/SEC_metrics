@@ -1,8 +1,9 @@
 """What a change to the C02 selector moves, judged by every two-direction reading.
 
-The selector (``scripts/vnext/historical_board_composition.py``) is run twice
-on each judged position's governance document - once as committed at
-``--base``, once as it is in the working tree - and both selections are held
+The selector (``scripts/vnext/historical_board_composition_v2.py``; at a
+``--base`` from before the split, the first path, which holds the same reader
+there) is run twice on each judged position's governance document - once as
+committed at ``--base``, once as it is in the working tree - and both selections are held
 to the position's reading with ``tools/read_c02_composition.read_position``.
 The answer lists every block that moved, with what the reading says it is, and
 each position's problems before and after. A repair aimed at one problem
@@ -36,19 +37,27 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 
 from tools import read_c02_composition as reading  # noqa: E402
-from vnext import historical_board_composition as working  # noqa: E402
+from vnext import historical_board_composition_v2 as working  # noqa: E402
 
-MODULE = "scripts/vnext/historical_board_composition.py"
+MODULE = "scripts/vnext/historical_board_composition_v2.py"
+# Until the base merge that brought #28's bound copy in, #47's reader lived at
+# this path; a --base from before that commit holds it there.
+FIRST_PATH = "scripts/vnext/historical_board_composition.py"
 
 
 def selector_at(ref):
     """The selector module as committed at ``ref``, loaded beside the working one."""
-    source = subprocess.run(["git", "-C", str(REPO), "show", ref + ":" + MODULE],
-                            check=True, capture_output=True).stdout
+    shown = subprocess.run(["git", "-C", str(REPO), "show", ref + ":" + MODULE], capture_output=True)
+    path = MODULE
+    if shown.returncode != 0:
+        path = FIRST_PATH
+        shown = subprocess.run(["git", "-C", str(REPO), "show", ref + ":" + path], check=True,
+                               capture_output=True)
+    source = shown.stdout
     module = types.ModuleType("vnext._c02_selector_at_base")
     module.__package__ = "vnext"
-    module.__file__ = str(REPO / MODULE)
-    exec(compile(source, MODULE + "@" + ref, "exec"), module.__dict__)
+    module.__file__ = str(REPO / path)
+    exec(compile(source, path + "@" + ref, "exec"), module.__dict__)
     return module, "sha256:" + hashlib.sha256(source).hexdigest()
 
 

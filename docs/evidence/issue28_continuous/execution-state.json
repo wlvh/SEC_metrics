@@ -846,6 +846,65 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_c02spec_2afa6d7",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_c02_spec_wording_and_binding",
+      "scope_paths": [
+        "catalog/r6/C02_board_disclosures_v2.md",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/spec-docfix-compare.json"
+      ],
+      "patch_sha": "2afa6d71f51ac539b4fd55f283225f76be34be1b",
+      "spawned_at": "2026-10-01T12:02:52Z",
+      "ended_at": "2026-10-01T12:11:20Z",
+      "tool_calls": 75,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-spec/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS",
+      "tool_calls_precision": "REVIEWER_APPROXIMATE_REPORT"
+    },
+    {
+      "task_name": "review_c02_e17cf33",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_c02_spec_wording_followup",
+      "scope_paths": [
+        "catalog/r6/C02_board_disclosures_v2.md",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-update-docfix.json"
+      ],
+      "patch_sha": "2afa6d71f51ac539b4fd55f283225f76be34be1b",
+      "spawned_at": "2026-10-01T11:55:26Z",
+      "ended_at": "2026-10-01T12:02:37Z",
+      "tool_calls": 80,
+      "result_path": null,
+      "verdict": "INCOMPLETE_TOOL_LIMIT_UNRESOLVED_SPEC_COMPARISON"
+    },
+    {
+      "task_name": "review_c02_e17cf33",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "ordinary_c02_composition",
+      "scope_paths": [
+        "scripts/vnext/historical_board_composition.py",
+        "catalog/r6/C02_board_composition_terms_v1.json",
+        "catalog/r6/C02_board_disclosures_v2.md",
+        "scripts/vnext/c02_composition_text_results.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "tests/vnext/test_normal_c02_composition.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/"
+      ],
+      "patch_sha": "e17cf333ef62c8edf68b7028c77b8460f593629f",
+      "spawned_at": "2026-10-01T11:34:53Z",
+      "ended_at": "2026-10-01T11:45:42Z",
+      "tool_calls": 73,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
       "task_name": "review_b02_32faa26",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "ordinary_b02_paired_measure",
@@ -8151,7 +8210,7 @@
       "E01": "CONTENT_CONFIRMED_M_AND_A"
     },
     "b02_ordinary_guard": {
-      "status": "COMMITTED_32FAA26D_LIMITED_REVIEW_PASS_WITH_BOUNDS_REMOTE_CI_PENDING",
+      "status": "COMMITTED_LIMITED_REVIEW_PASS_WITH_BOUNDS_CI_36841813778_SUCCESS",
       "peer_source": "scripts/vnext/historical_results.py:paired_measure_problem",
       "own_functions": [
         "scripts/vnext/paired_measure_v1.py:paired_measure_problem",
@@ -8179,7 +8238,71 @@
         0
       ]
     },
-    "c02_current_impact": {"status": "TWO_COORDINATES_THREE_RESULT_IDENTITIES_WITHDRAWN_FROM_CURRENT_TRUST", "evidence": "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/", "own_register": "docs/evidence/issue28_continuous/known_result_defects.json", "coordinates": ["marriott_international|C02|2025-12-31", "pfizer|C02|2025-12-31"], "current_trusted_count_for_these_two": 0, "old_runs_and_390_denominator_retained": true, "shared_selector_normal_integration": "PENDING"},
-    "reference_table_pr": "NOT_STARTED_SEPARATE_CLEAN_MAIN_BRANCH"
+    "c02_current_impact": {
+      "status": "THREE_COORDINATES_FIVE_OLD_IDENTITIES_WITHDRAWN_TWO_NEW_PRIVATE_IDENTITIES_NOT_CREDITED",
+      "evidence": "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/",
+      "own_register": "docs/evidence/issue28_continuous/known_result_defects.json",
+      "coordinates": [
+        "enphase_energy|C02|2025-12-31",
+        "marriott_international|C02|2025-12-31",
+        "pfizer|C02|2025-12-31"
+      ],
+      "superseded_775_private_result_id": "sha256:677efa34258f3126e9097fb12a1dbaac5d085f490b6aeb2d969b33155a03b54b",
+      "old_runs_and_390_denominator_retained": true,
+      "new_enphase_private_result_failed_content_scope": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+    "latest_peer_0e80_impact": "SIX_EXACT_HASH_MATCHED_ELECTION_AND_CLASS_HEADING_BLOCKS_IN_BOTH_PRIVATE_54_EXCERPT_RESULTS_NO_BUSINESS_CREDIT"
+    },
+    "reference_table_pr": {
+      "url": "https://github.com/wlvh/SEC_metrics/pull/53",
+      "head_commit": "564aa70dded2c9c797f3275fbec740f2b0a89a7f",
+      "base_commit": "af1984ad5f1a3598ded3626fe999d3abeffd29b9",
+      "draft": true,
+      "reference_ci": "SUCCESS",
+      "vnext_fast_ci": "SUCCESS",
+      "not_merged_or_production": true
+    },
+    "peer_latest_read_commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3",
+    "peer_latest_register_git_blob": "1a603f40d56b3d37ef34795e36a55744eef5c8c8",
+    "c02_ordinary_successor": {
+      "peer_selector_commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f",
+      "peer_selector_exact_byte_reused": true,
+      "ordinary_spec": "catalog/r6/C02_board_disclosures_v2.md",
+      "ordinary_adapter": "scripts/vnext/c02_composition_text_results.py",
+      "native_item_ceiling": 64,
+      "enphase_selected_count": 54,
+      "enphase_private_result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+      "enphase_normal_update": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE",
+      "enphase_independent_process_cold_read": "PASS",
+      "marriott_full_96": "EXECUTION_FAILED_NO_C02_SUCCESS_POINTER_WHILE_B01_READY",
+      "pfizer_full_79": "SOURCE_MATERIAL_REJECTS_BEFORE_CANDIDATE",
+      "independent_patch_review": "PASS_WITH_BOUNDS_E17_AND_2AFA_EXCLUDES_FULL_CONTENT_REVIEW",
+      "full_business_content_acceptance": false,
+    "current_private_enphase_content_scope": "FAILED_SIX_OUT_OF_SCOPE_BLOCKS_UNDER_0E80_PEER_ADJUDICATION_AND_OWN_SOURCE_READ",
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/",
+      "shared_with_issue47": {
+        "commit_marker": "[shared-with-#47]",
+        "changed_functions": [
+          "scripts/vnext/normal_run_v3.py:prepare_case,install_normal_inputs,create_normal_run,replay_case,text_api,prepare_text_contexts",
+          "scripts/vnext/ordinary_remaining_cases.py:prepare_current_source_case",
+          "scripts/vnext/ordinary_update_cycle.py:_inspect,run_once"
+        ],
+        "default_compatibility": "legacy C02 candidate and Evidence bytes equal in directed test; frozen text modules and Run store unchanged",
+        "potential_downstream": "#47 stacked branch must reconcile V13/V14 current bindings and duplicate selector path when consuming this upstream commit"
+      },
+      "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "post_review_spec_prose_fix": {
+        "changed": "catalog/r6/C02_board_disclosures_v2.md explanatory final paragraph only",
+        "compiled_and_semantic_prompt_closure_hashes_unchanged": true,
+        "spec_file_and_requirement_hashes_changed": true,
+        "new_head_normal_update": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE",
+        "new_head_cold_read": "PASS",
+        "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-update-docfix.json"
+      }
+    }
   }
 }

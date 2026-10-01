@@ -29,7 +29,7 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_c02_composition as reading
-from vnext.historical_board_composition import board_composition_facts
+from vnext.historical_board_composition_v2 import board_composition_facts
 from vnext.historical_spec_revision import SUCCESSOR_MAX_ITEMS
 
 from contextlib import ExitStack  # noqa: E402
