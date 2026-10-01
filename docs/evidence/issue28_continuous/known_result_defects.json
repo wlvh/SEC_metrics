@@ -7,7 +7,7 @@
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
     "newly_excluded_coordinate_count": 6,
-    "newly_excluded_result_id_count": 13,
+    "newly_excluded_result_id_count": 12,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
@@ -60,7 +60,7 @@
     "grouped_v3_private_candidates_pending_content": {
       "macys_result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
       "pfizer_final_candidate_hash": "sha256:d219495796f6ca77f3433fc11c14483f3ee6005e135e07eefda77c75a6b08529",
-      "status": "MACYS_NEW_RESULT_CONTENT_NEEDS_FIX_NO_CREDIT; PFIZER_CANDIDATE_UNAUDITED; NO_OLD_DEFECT_RELEASE"
+      "status": "MACYS_NEW_RESULT_CONTENT_UNVERIFIED_NO_CONFIRMED_DEFECT_OR_CREDIT; PFIZER_CANDIDATE_UNAUDITED; NO_OLD_DEFECT_RELEASE"
     },
     "peer4d_private_replacements_under_review": {
       "fixed_peer_sha": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9",
@@ -476,53 +476,7 @@
       "repair_state": "SHARED_SELECTOR_SCOPE_REPAIR_AND_NEW_OWN_RESULT_PENDING",
       "current_credit": "NONE_PRIVATE_CANDIDATE_CONTENT_NEEDS_FIX",
       "summary": "The new 54-excerpt private Result does not select exact own-board join dates and qualification rationale at blocks 110, 117 and 168; its native PUBLISHED/EXACT status is not content acceptance."
-    },
-    {
-      "defect_id": "C02_MACYS_2026_GROUPED_PRIVATE_RESULT_MIXED_CONTEXT_AND_DETACHED_ROLE",
-      "metric_id": "C02",
-      "company_id": "macys",
-      "period_end": "2026-01-31",
-      "result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
-      "run_id": "run:ordinary-integrated:cc04eaa4ab870e86c2f9c4338f2c23b2104ce6f8ee4b7ca7cce11c9ca4fd4164",
-      "prior_private_run_id_same_result": "run:ordinary-integrated:7c8046b58484abb1e103516894771fb55a341f5ee940d403c3e52430c52e6432",
-      "reported_quality": "EXACT_PRIVATE_RECORD_ONLY",
-      "repair_state": "COMPOSITION_FACT_OUTPUT_AND_NAME_ROLE_BINDING_UNRESOLVED",
-      "current_credit": "NONE_NEW_PRIVATE_RESULT_CONTENT_NEEDS_FIX",
-      "summary": "The exact grouped result preserves original bytes and all 99 selected blocks, but its published text contains equity-plan eligibility and governance-policy/background alongside composition facts; the selected chairman/CEO title excerpt lacks the adjacent named person. A source-excerpt record is not current accepted composition-fact content. The 2026 proxy and March committee roster are not a 2026-01-31 board snapshot.",
-      "source_identity": {
-        "proxy_raw_sha256": "3b501eec7b59a3dabbe9da4a206a6b3e61469c426650f9c16432c03e66703d06",
-        "original_document_id": "sha256:0114280efe81af1abc22343b68cdec547616357097dbe2984902e3617ec92381"
-      },
-      "source_blocks": [
-        {
-          "block_index": 821,
-          "raw_span_sha256": "b2941716bfa0eeb86e2414747e33ed9bd666685660dc2eacef10cb5ea81142c1",
-          "finding": "TITLE_ONLY_SELECTED; ADJACENT_NAME_820_NOT_IN_THIS_EXCERPT"
-        },
-        {
-          "block_index": 923,
-          "raw_span_sha256": "fe237d67687739a6a29ecc2519c00124f1badbabb40def8979b7e10576a52137",
-          "finding": "HISTORICAL_CHAIR_CEO_RATIONALE_INCLUDED_WITH_CONTEXT_POLICY"
-        },
-        {
-          "block_index": 1929,
-          "raw_span_sha256": "d29e311c3273f39d01f386ab3bacbf2d2ef92d121add2cd66efd0b4283897a4",
-          "finding": "MIXED_NONEMPLOYEE_DIRECTOR_COUNT_AND_EQUITY_PLAN_ELIGIBILITY"
-        }
-      ],
-      "peer_context": {
-        "fixed_read_commit": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9",
-        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
-        "limitation": "Peer reports current selection agrees with its judgement; it did not validate this #28 grouped Result or its rendered content."
-      },
-      "audit_resource_note": "One-time audit used 49 tools; parent follow-up for metadata made 4 ordinary messages against a 3-message limit, so treat its report as diagnostic. Parent directly rechecked the raw source and exact saved Result excerpts; no full parent independent audit is claimed.",
-      "evidence": [
-        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-macys29-content/conclusion.md",
-        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-macys29-content/parent-targeted-check.json"
-      ],
-      "released": [],
-      "original_record_retained": true
     }
   ],
-  "latest_peer_read_commit": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9"
+  "latest_peer_read_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353"
 }

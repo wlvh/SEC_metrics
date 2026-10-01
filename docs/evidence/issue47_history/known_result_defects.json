@@ -4139,6 +4139,33 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "0bc38d078a8b4c4c26379a6c239a114e812d72b7",
+   "own_commit_at_read": "9ec97ba3",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_12_ENTRIES",
+   "what_that_state_means": "One entry removed: C02_MACYS_2026_GROUPED_PRIVATE_RESULT_MIXED_CONTEXT_AND_DETACHED_ROLE, #28's own grouped Macy's FY2025 result. Its newly_excluded_result_id_count goes 13 -> 12 and its latest_peer_read_commit is now 1f3f446c (#47's repair 22). None names a #47 result.",
+   "baseline": "Read since 22146e52: one commit, its register diff, the README paragraph and parent-interpretation-correction.json.",
+   "increments": [
+    {
+     "commit": "0bc38d07",
+     "marker": "[shared-with-#47]",
+     "subject": "Correct Macy C02 full-result attribution",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/README.md",
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-macys29-content/parent-interpretation-correction.json"
+     ],
+     "affects_47": "None. #28 found within the same result that block 839 says Mr. Spring currently serves as Chairman and CEO, so the detached title 821 does not mean the result omits the chair, and removed its own exact-ID defect. This is what #47's read of 137ecb24 recorded for #47's selection of the same document (839 covers 820/821 under CARD_SUBJECT_NAME). #47's Macy's FY2025 coordinate stays withdrawn under C02_MACYS_2026_UNIFIED_ADJUDICATION_DISAGREES until it is recomputed and read; nothing here releases it. No authority file moved; the issue_47_v1 snapshot is unchanged.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }
