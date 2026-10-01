@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 84,
- "caught": 113,
- "total": 113,
+ "control_tests_run": 85,
+ "caught": 115,
+ "total": 115,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -20,6 +20,7 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_board_a_where_clause_is_about_is_that_body_s",
+    "test_a_company_named_with_the_roles_held_there",
     "test_a_join_dated_in_the_year_is_a_change",
     "test_another_organisations_board_is_not_this_one",
     "test_standing_down_at_another_company_s_meeting",
@@ -959,6 +960,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_board_a_where_clause_is_about_is_that_body_s"
+   ]
+  },
+  {
+   "injection": "A_COMPANY_S_ROLES_ARE_THIS_BOARD_S",
+   "expected": "test_a_company_named_with_the_roles_held_there",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_company_named_with_the_roles_held_there"
+   ]
+  },
+  {
+   "injection": "THE_REGISTRANT_WITH_ROLES_IS_ANOTHER_BODY",
+   "expected": "test_a_company_named_with_the_roles_held_there",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_company_named_with_the_roles_held_there"
    ]
   }
  ]

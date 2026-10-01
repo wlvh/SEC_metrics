@@ -650,6 +650,15 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", self.labels_for(
             "He spent his career with Example Corporation, where he served on the Audit Committee.", "2022-01-01"))
 
+    def test_a_company_named_with_the_roles_held_there(self):
+        # Lumen FY2023 block 790: a director's committee roles at Cineverse.
+        self.assertEqual([], self.labels_for(
+            "Cineverse Corporation (Chairman of the Audit Committee, and serves on the Compensation and Nominating "
+            "Committees)", "2023-01-01"))
+        # The registrant itself (constructed).
+        self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", self.labels_for(
+            "Example Corporation (serves on the Audit Committee)", "2023-01-01"))
+
     def test_no_change_to_the_committees_in_the_year(self):
         # Pfizer FY2022 block 799 and FY2023 block 884: the readers judged each
         # a fact about the committees' members that year.

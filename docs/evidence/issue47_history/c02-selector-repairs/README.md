@@ -643,3 +643,23 @@
 这条检查插在第 28 处那条检查之后，那条的注错 `THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S` 原目标文本跨到了下一行，第一次核对时在它那里对不上，已改目标，针对的仍是原规则。共 113/113，对照 84 个用例。
 
 **量测**（`measured-35-where-clause-body.json`）：只移走这两块；误选 11→9，漏选 24 不变，不一致位置 12 不变（两个位置各还有一处把别家公司名当人名的误选），最新年不变。
+
+## 36. 公司名后面括号里写的委员会职务，是那家公司的
+
+**问题。** Lumen 2023 第 790 块 "Cineverse Corporation (Chairman of the Audit Committee, and serves on the Compensation and Nominating Committees)" 是一位董事在别家上市公司的职务列表中的一项。读者判为非事实，选择器按 "serves on the … Committees" 读成本董事会委员会构成。
+
+**先量后改。** 37 份文档里"名字 + 括号里写着委员会"的整块只有这一块；Lumen 2025 第 700 块 "•Ally Financial since May 2025 (Audit committee member)" 和 Pfizer 2025 两块职责条目都以项目符号开头，不在本条范围，也都没被取。
+
+**改动。** 一句话整句是"以大写名字开头 + 括号里写着委员会"的形状，且开头的名字不是本公司或本公司委员会的名字时，括号里的职务算那家机构的。
+
+第一版写成区分大小写的 "committee"，而这块写的是 "Committee"，规则没有生效，量测显示什么都没动、新用例失败；改为认首字母大写。
+
+**用例与注错。** `test_a_company_named_with_the_roles_held_there`：第 790 块原文为反例；"Example Corporation (serves on the Audit Committee)" 为构造正例。注错：
+- `A_COMPANY_S_ROLES_ARE_THIS_BOARD_S`（去掉这条检查）；
+- `THE_REGISTRANT_WITH_ROLES_IS_ANOTHER_BODY`（本公司名字也算别的机构）。
+
+新检查与第 35 处的检查结尾相同，第 35 处两个注错的目标文本会落到新检查上，已改为以新检查的注释行结尾，针对的仍是第 35 处的规则。
+
+共 115/115，对照 85 个用例。
+
+**量测**（`measured-36-company-roles-in-parentheses.json`）：只移走这一块；误选 9→8，漏选 24 不变，最新年不变。

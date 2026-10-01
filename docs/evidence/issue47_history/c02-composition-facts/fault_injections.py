@@ -335,14 +335,24 @@ INJECTIONS = [
      'r"|\\beligible\\s+for\\b[^.;]{0,40}?\\bcompensation\\b"', 'r""',
      'test_who_is_eligible_for_pay_is_not_a_qualification'),
     # Repair 35: "... and the Consumer Goods Forum, where he served on the board of directors".
+    # (Repair 36's check now follows this one, so the targets end at its comment.)
     ('A_WHERE_CLAUSE_BODY_IS_THIS_BOARD',
-     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
-     '    match = re.search("\\\\b[Aa]t',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    # A company named',
+     '    # A company named',
      'test_a_board_a_where_clause_is_about_is_that_body_s'),
     ('THE_REGISTRANT_BEFORE_WHERE_IS_ANOTHER_BODY',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    # A company named',
+     '    if match:\n        return True\n    # A company named',
+     'test_a_board_a_where_clause_is_about_is_that_body_s'),
+    # Repair 36: "Cineverse Corporation (Chairman of the Audit Committee, and serves on ...)".
+    ('A_COMPANY_S_ROLES_ARE_THIS_BOARD_S',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     '    match = re.search("\\\\b[Aa]t',
+     'test_a_company_named_with_the_roles_held_there'),
+    ('THE_REGISTRANT_WITH_ROLES_IS_ANOTHER_BODY',
      '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
      '    if match:\n        return True\n    match = re.search("\\\\b[Aa]t',
-     'test_a_board_a_where_clause_is_about_is_that_body_s'),
+     'test_a_company_named_with_the_roles_held_there'),
 ]
 
 

@@ -953,6 +953,12 @@ def _other_organization(sentence, own_words):
     match = re.search("\\b([A-Z][\\w&’'\\-]+)(?:\\s+[A-Z][\\w&’'\\-]+)*\\s*,\\s+where\\s+(?:he|she|they)\\b", sentence)
     if match and match.group(1).casefold() not in own_words:
         return True
+    # A company named with the committee roles held there in parentheses:
+    # "Cineverse Corporation (Chairman of the Audit Committee, and serves on the
+    # Compensation and Nominating Committees)" (a Lumen director's other boards).
+    match = re.match("([A-Z][\\w&’'\\-]+)[^()]{0,80}\\((?=[^()]*\\b[Cc]ommittees?\\b)[^()]*\\)\\.?$", sentence)
+    if match and match.group(1).casefold() not in own_words:
+        return True
     match = re.search("\\b[Aa]t\\s+([A-Z][\\w&’'\\-]+)(?:\\s+[A-Z][\\w&’'\\-]+)*\\s*,", sentence)
     return bool(match and re.sub("[’']s$", "", match.group(1)).casefold() not in own_words)
 
