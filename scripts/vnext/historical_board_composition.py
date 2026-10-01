@@ -919,6 +919,40 @@ of the board and non-executive executive current new incoming retiring chief off
 _DESIGNATION_CORE = frozenset({"independent", "director", "nominee", "chair", "chairman", "chairperson", "chairwoman"})
 
 
+def _unlabelled_card_items(blocks, vocabulary, registrant):
+    """A card's committees printed with no label, on the lines after its tenure or age.
+
+    Enphase's older proxies print "Director since May 2010" and then one line
+    per committee ("Audit Committee", "Nominating and Corporate Governance
+    Committee (Chair)") with no "Committees:" before them. Only lines that are
+    each one of this filing's committees count, with nothing but blanks and
+    bullets between them, and the card must name its director, as a labelled
+    card must; a page heading is emphasised and ends the run.
+    """
+    taken = []
+    for i, block in enumerate(blocks):
+        if block["linked"] or not _CARD_EVIDENCE.match(clean(block["text"])):
+            continue
+        j, items = i + 1, []
+        while j < len(blocks):
+            text = clean(blocks[j]["text"])
+            if not text or _ONE_BULLET.match(text):
+                j += 1
+                continue
+            if blocks[j]["linked"] or blocks[j].get("emphasized") or not _card_item(text, vocabulary):
+                break
+            items.append(j)
+            j += 1
+        if not items:
+            continue
+        name = _card_name(blocks, i, j, registrant, passable=lambda block: False)
+        if name is None:
+            continue
+        taken.extend((k, "DIRECTOR_COMMITTEE_ITEM") for k in items)
+        taken.extend((k, "DIRECTOR_NAME") for k in name)
+    return taken
+
+
 def _designation(text):
     """True when a card field is only a designation of the person on the board."""
     words = re.findall(r"[a-z\-]+", _AGE_PREFIX.sub("", clean(text)).casefold())
@@ -1207,7 +1241,8 @@ def board_composition_facts(*, document):
             for index, label in _list_items(blocks, i):
                 take(index, label)
     for index, label in (*_changes(blocks, sorted(span[0] for span, _ in headings)),
-                         *_cards(blocks, vocabulary, registrant), *_designations(blocks, registrant),
+                         *_cards(blocks, vocabulary, registrant),
+                         *_unlabelled_card_items(blocks, vocabulary, registrant), *_designations(blocks, registrant),
                          *_registrant_title_lines(blocks, cores), *_director_groups(blocks, registrant),
                          *_footnoted_changes(blocks, registrant)):
         take(index, label)

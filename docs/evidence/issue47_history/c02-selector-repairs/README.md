@@ -55,3 +55,19 @@
 **量测**（`measured-3-sentence-member-lists.json`，base `e95dd9a3`）：只有 Marriott 两个往年位置移动，全部新增、全部是判读判为事实的块：2021 年 6 块、2022 年 8 块（各委员会的标题与成员行）。漏选 175 → 160，误选 45 不变，最新十个位置不变。2022 年的卡片字段原来也算漏选，现在由新取的成员行覆盖，所以那一年的漏选从 15 降到 3。两个坐标仍有别的问题（2021：董事长与 CEO 分设、新董事加入、执行委员会名单；2022：董事长与 CEO 分设、两张卡片字段，另有 4 个误选），继续撤回。
 
 **不主张。** Marriott 2021 的执行委员会名单 "J.W. Marriott, Jr. (Chair), ..." 还读不出：逗号把 "Jr." 切成了一段，"J.W." 也不是选择器认得的名字写法。让叠写的首字母算名字，会让 "U.S." 这类缩写组成的词组也被当成人名，这需要单独量过再改，这一处没有做。
+
+## 4. 卡片上没有标签的委员会条目
+
+**问题。** Enphase 的董事卡片在 "Director since May 2010" 之后一行一个委员会（"Audit Committee"、"Nominating and Corporate Governance Committee (Chair)"），前面没有 "Committees:" 标签。选择器只认带标签的卡片，这些条目一条都没取。成员关系多半能从委员会页面的名单读到，读不到的是主席标注：三个往年位置各漏一到两条（谁任提名与治理委员会主席、谁任审计委员会主席）。
+
+**成因。** `_cards` 只从 "Committees:" 标签开始读条目。
+
+**改动。** 新增 `_unlabelled_card_items`：在任期或年龄字段（与 `_designations` 用的同一个 `_CARD_EVIDENCE`）之后，连续的非强调、非链接块，每一块都必须是本文件自己的一个委员会（与带标签卡片的条目同一个判断 `_card_item`），中间只许空白和项目符号；卡片必须能找到它的董事名（与带标签卡片同一个 `_card_name`），找不到就整张不取。委员会页面的标题是强调块，会结束这一串。
+
+**用例与注错。** `test_historical_board_composition.ADirectorCardIsReadOnlyWhenItNamesItsDirector.test_unlabelled_committees_on_the_lines_after_the_tenure`：条目与董事名都读出；强调的委员会标题不算条目；找不到董事名的卡片不取。只撤回模块改动时该用例失败。注错 `AN_EMPHASISED_HEADING_IS_A_CARD_ITEM`、`UNLABELLED_ITEMS_NEED_NO_DIRECTOR`、`UNLABELLED_CARD_ITEMS_UNREAD`，都由这条用例抓到；注错总数 38/38，对照 46 例。
+
+**量测**（`measured-4-unlabelled-card-items.json`，base `77532c65`）：移动的是 Enphase 的四个位置，全部新增、全部是判读判为事实的块：2022、2023 各 15 块，2024 有 19 块，**最新年份 2025 也有 19 块**。漏选 160 → 156（主席标注），误选 45 不变，其余公司不变。
+
+**最新年份的值会变。** Enphase 2025 的选择多了 19 块。判读把它们都判为事实（原来是"别处已陈述"的冗余事实），所以这个位置仍与判读一致；但值（摘录集合）变了，已接受的那个值只对应旧结果。下一次在新版本下运行时，这个位置要用 `tools/read_c02_composition.py --runs-root … --closure …` 重新核对接受，在那之前它在覆盖表里读作"接受与这个结果不符"，这是如实的状态。#28 若接入这处修复，它最新年度 Enphase 的 C02 值同样会变。
+
+**还剩的。** 这三个往年坐标还有别的问题（各一到两条传记里的加入日期、2023 年审计委员会设立网络安全小组，以及选举议程、分级名单标题、董事薪酬引导句等误选，后几类读者之间判断相反，要先按类裁定），继续撤回。

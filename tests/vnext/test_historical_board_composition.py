@@ -207,6 +207,21 @@ class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
                  "• Nominating and Governance Committee", "BARBARA M. BYRNE", "Ms. Byrne has served as a member."]
         self.assertEqual({1, 2, 3, 4}, set(_selected(texts)))
 
+    def test_unlabelled_committees_on_the_lines_after_the_tenure(self):
+        # Enphase's older proxies print each director's committees on the
+        # lines after "Director since", with no "Committees:" label.
+        texts = ["Jamie", "Haenggi", "Director since August 2020", "Nominating and Corporate Governance Committee",
+                 "Audit Committee (Chair)", "Key Skills and Qualifications"]
+        self.assertEqual({0: ["DIRECTOR_NAME"], 1: ["DIRECTOR_NAME"], 3: ["DIRECTOR_COMMITTEE_ITEM"],
+                          4: ["DIRECTOR_COMMITTEE_ITEM"]}, _selected(texts, emphasized={0, 1, 5}))
+        # A committee page's heading is emphasised and is not a card's item.
+        self.assertEqual({}, _selected(["Benjamin Kortlang", "Director since May 2010", "Audit Committee",
+                                        "The Audit Committee oversees the integrity of our financial statements."],
+                                       emphasized={2}))
+        # Items on a card that names no director are left out, as a labelled card's are.
+        self.assertEqual({}, _selected(["Key Skills and Qualifications", "Director since May 2010",
+                                        "Audit Committee", "Career Highlights"], emphasized={0, 3}))
+
     def test_the_director_named_above_the_card_fields(self):
         # Name, title, designation, age and tenure, then the committee label:
         # the card fields between the name and the label belong to one card.

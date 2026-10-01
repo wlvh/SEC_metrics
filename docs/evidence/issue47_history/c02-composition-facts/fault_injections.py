@@ -121,6 +121,12 @@ INJECTIONS = [
     ("A_SERIAL_COMMA_ENDS_A_LIST", 'r",\\s*(?:and\\s+)?|', 'r",\\s*|', "test_a_members_line_written_as_a_sentence"),
     ("A_FINAL_PERIOD_ENDS_A_LIST", "_LIST_SEPARATOR.split(_LIST_END.sub(\"\", t))", "_LIST_SEPARATOR.split(t)",
      "test_a_members_line_written_as_a_sentence"),
+    ('AN_EMPHASISED_HEADING_IS_A_CARD_ITEM', '            if blocks[j]["linked"] or blocks[j].get("emphasized") or not _card_item(text, vocabulary):', '            if blocks[j]["linked"] or not _card_item(text, vocabulary):',
+     "test_unlabelled_committees_on_the_lines_after_the_tenure"),
+    ('UNLABELLED_ITEMS_NEED_NO_DIRECTOR', '        if name is None:\n            continue\n        taken.extend((k, "DIRECTOR_COMMITTEE_ITEM") for k in items)', '        taken.extend((k, "DIRECTOR_COMMITTEE_ITEM") for k in items)\n        if name is None:\n            continue',
+     "test_unlabelled_committees_on_the_lines_after_the_tenure"),
+    ('UNLABELLED_CARD_ITEMS_UNREAD', '*_unlabelled_card_items(blocks, vocabulary, registrant), ', '',
+     "test_unlabelled_committees_on_the_lines_after_the_tenure"),
 ]
 
 
