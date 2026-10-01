@@ -40,7 +40,14 @@ def _prepared(*, c02_selection_policy, **source_arguments):
     old._need(len(governance_ids) == 1, 'C02_COMPOSITION_GOVERNANCE_SOURCE_REQUIRED')
     sid = governance_ids[0]
     document = prepared['documents'][sid]
-    successor = board_composition_facts(document=document)
+    if c02_selection_policy == 'COMPOSITION_GROUPED_V2':
+        # This explicit grouped route consumes the pinned period-aware shared
+        # reader. The earlier V2 and default C02 routes keep their own bytes.
+        from .historical_board_composition_v2 import board_composition_facts as current_facts
+        successor = current_facts(
+            document=document, period_start=source_arguments['target']['period_start'])
+    else:
+        successor = board_composition_facts(document=document)
     old._need(successor['document_id'] == document['text_document_id']
               and successor['source_reference_id'] == sid
               and successor['source_filing'] == proposals[sid]['source_filing']

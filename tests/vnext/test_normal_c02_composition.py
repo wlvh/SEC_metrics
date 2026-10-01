@@ -228,6 +228,37 @@ class C02CompositionMaterialTest(unittest.TestCase):
                                         'TEXT_V2_COMPLETE_EXCERPT_SET_EXCEEDS_ITEM_BOUND'):
                 api.create_deterministic_text_candidate(**grouped['text_arguments'])
 
+    def test_grouped_successor_uses_period_aware_shared_reader_for_known_source_errors(self):
+        cases = (
+            ('paramount_skydance_paramount_global', {100, 110, 117}, set(), 54, 63),
+            ('salesforce', {919, 933}, {4300}, 63, 64),
+        )
+        for company, added, removed, old_count, new_count in cases:
+            with self.subTest(company=company):
+                prior = prepare_case(data_root=ROOT, company_id=company,
+                                     metric_id='C02', c02_composition=True)
+                current = prepare_case(data_root=ROOT, company_id=company,
+                                       metric_id='C02', c02_composition=True,
+                                       c02_grouped=True)
+                prior_prepared = new_api._prepared(**{k: v for k, v in
+                    prior['text_arguments'].items() if k != 'compiled_spec'})
+                current_prepared = new_api._prepared(**{k: v for k, v in
+                    current['text_arguments'].items() if k != 'compiled_spec'})
+                old_proposal = next(p for p in prior_prepared['proposals'].values()
+                                    if p.get('metric_id') == 'C02')
+                new_proposal = next(p for p in current_prepared['proposals'].values()
+                                    if p.get('metric_id') == 'C02')
+                old_indices = {row['block_index'] for row in old_proposal['candidates']}
+                new_indices = {index for row in new_proposal['candidates']
+                               for index in row['selected_source_blocks']}
+                self.assertEqual(old_count, len(old_indices))
+                self.assertEqual(new_count, len(new_indices))
+                self.assertTrue(added.isdisjoint(old_indices))
+                self.assertTrue(added <= new_indices)
+                self.assertTrue(removed <= old_indices)
+                self.assertTrue(removed.isdisjoint(new_indices))
+                self.assertLessEqual(len(new_proposal['candidates']), 64)
+
 
 if __name__ == '__main__':
     unittest.main()

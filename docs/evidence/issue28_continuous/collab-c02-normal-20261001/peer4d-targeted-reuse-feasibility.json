@@ -1,0 +1,129 @@
+{
+  "record_type": "ISSUE28_C02_PEER4D_SELECTOR_TARGETED_REUSE_FEASIBILITY",
+  "fixed_peer_sha": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9",
+  "fixed_peer_code_blob": "cf7c0ac689d53b653f93286720323d76f0bed568",
+  "source_path": "scripts/vnext/historical_board_composition_v2.py",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "base_head_before_commit": "137ecb24e15ab8f6e7da9beed58ff5c448cb70aa",
+  "worktree_uncommitted": true,
+  "own_prior_selector_bytes_unchanged": true,
+  "rows": [
+    {
+      "company": "enphase_energy",
+      "old_count": 48,
+      "peer4d_count": 48,
+      "grouped_count": 28,
+      "added": [],
+      "dropped": []
+    },
+    {
+      "company": "ford_motor_company",
+      "old_count": 82,
+      "peer4d_count": 82,
+      "grouped_count": 25,
+      "added": [],
+      "dropped": []
+    },
+    {
+      "company": "jpmorgan_chase",
+      "old_count": 53,
+      "peer4d_count": 60,
+      "grouped_count": 34,
+      "added": [
+        1003,
+        1004,
+        1087,
+        1089,
+        1502,
+        1504,
+        3548
+      ],
+      "dropped": []
+    },
+    {
+      "company": "lumen_technologies",
+      "old_count": 99,
+      "peer4d_count": 101,
+      "grouped_count": 31,
+      "added": [
+        1370,
+        1373
+      ],
+      "dropped": []
+    },
+    {
+      "company": "macys",
+      "old_count": 99,
+      "peer4d_count": 99,
+      "grouped_count": 29,
+      "added": [],
+      "dropped": []
+    },
+    {
+      "company": "marriott_international",
+      "old_count": 98,
+      "peer4d_count": 98,
+      "grouped_count": 25,
+      "added": [],
+      "dropped": []
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "old_count": 54,
+      "peer4d_count": 63,
+      "grouped_count": 10,
+      "added": [
+        100,
+        110,
+        117,
+        126,
+        133,
+        143,
+        150,
+        159,
+        166
+      ],
+      "dropped": []
+    },
+    {
+      "company": "pfizer",
+      "old_count": 79,
+      "peer4d_count": 80,
+      "grouped_count": 26,
+      "added": [
+        4015
+      ],
+      "dropped": []
+    },
+    {
+      "company": "salesforce",
+      "old_count": 63,
+      "peer4d_count": 64,
+      "grouped_count": 36,
+      "added": [
+        919,
+        933
+      ],
+      "dropped": [
+        4300
+      ]
+    },
+    {
+      "company": "southwest_airlines",
+      "old_count": 95,
+      "peer4d_count": 95,
+      "grouped_count": 39,
+      "added": [],
+      "dropped": []
+    }
+  ],
+  "all_ten_current_candidate_evidence_pass": true,
+  "current_v13_requirement_closure": "sha256:fe9daf95ff41a5e195a99a43171eb0f239c1f89ff480a348c07d2c64c5d305d9",
+  "current_v14_requirement_closure": "sha256:662f21af954006bf189b718ddfe392166e597cdfc78b46c4c5cf7d4359c7adc3",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_limit": "Structural source-selection difference and complete candidate/Evidence construction only; does not transfer peer result credit, validate all content, or release old #28 defects."
+}

@@ -7,15 +7,15 @@
   "contract_revision": "continuous-calls-and-b13-v1",
   "parent": {
     "requirement_id": "issue_28_v13",
-    "requirement_closure_hash": "sha256:5d75a1a0297b162d5238f9d1569c3677fb89e844b67a127192d2682b3df83d50",
+    "requirement_closure_hash": "sha256:fe9daf95ff41a5e195a99a43171eb0f239c1f89ff480a348c07d2c64c5d305d9",
     "snapshot_files": {
       "decision_register.json": {
-        "sha256": "38688136ee92ed5968cece8242d93c4d3c8a1cfd22f91586f550ffee64e093b3",
-        "size": 8545
+        "sha256": "147b35fa5c34d441be1804f546e4428e51284eb0786bcb2bd315cbc00fdcc2c9",
+        "size": 8603
       },
       "baseline_manifest.json": {
-        "sha256": "1274eed9ede64e77dcbe1fb2b2f3bb7249187765ad2d5e8f7d91220e232e26f0",
-        "size": 75631
+        "sha256": "e468560b8b2588c189ba95841b33f9d2250d65345c4e57efc09e3a8753ef06d1",
+        "size": 75977
       },
       "invariant_profile.json": {
         "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
@@ -749,8 +749,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "95b6a30a3a82a0fb7bad7d9f92ecbcdbd1b0fa22d1713ceaf2d1e070f6b470b5",
-        "size": 7938
+        "sha256": "878c89379b52cb78038c6c1b30a9a8f93f01ddfeb6f8412eaa98af00ab9cd5f5",
+        "size": 7994
       },
       "config/issue28_recovery_110_v1.json": {
         "sha256": "9af01a329f156b6d98708909db2c14656ad2bdc1a2690386c03e2eead66d2df2",
@@ -2189,8 +2189,8 @@
         "size": 5134
       },
       "scripts/vnext/c02_composition_text_results.py": {
-        "sha256": "0e1092982550a0a8f486cee396c7e6644cd3480943898d942a0fae3af52bf711",
-        "size": 12154
+        "sha256": "8ab64935ff69f3d1c71cf31c4a35f5aecfaac636f7adf71aedf214577b90b4e4",
+        "size": 12598
       },
       "scripts/vnext/historical_board_composition.py": {
         "sha256": "a514ceffd0855733222526e38c170840d789b07bcef5e82cda096b4942cf4158",
@@ -2203,6 +2203,10 @@
       "scripts/vnext/c02_grouped_source.py": {
         "sha256": "b49dff1eb083bca2f6902f8adf26c180b4996691f8aa0c04c34092322a221062",
         "size": 7167
+      },
+      "scripts/vnext/historical_board_composition_v2.py": {
+        "sha256": "73ec30fff3642eba9023c894119e10cbfebe63235e9d80bad0adbb106d37ba6b",
+        "size": 80427
       }
     },
     "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
