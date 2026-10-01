@@ -1,0 +1,63 @@
+{
+  "record_type": "ISSUE28_C02_GROUPED_V3_SPEC_POLICY_PRECOMMIT_TEST_TREE",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "base_commit_at_test": "f4e4c4f62a1536b8bd265ced3ddf00962aaee9b6",
+  "worktree_uncommitted": true,
+  "files": {
+    "scripts/vnext/c02_composition_text_results.py": {
+      "sha256": "0e1092982550a0a8f486cee396c7e6644cd3480943898d942a0fae3af52bf711",
+      "git_blob": "cf988c3d5b91072f33514f4590e9066bff398f91"
+    },
+    "tests/vnext/test_normal_c02_composition.py": {
+      "sha256": "e9ecf4c69f1af88b6deba91a5379fffd50df2ca409c840f09786aa1b542ae683",
+      "git_blob": "02dbf93f49fbf4fd85914d7f44bba0e46f88ab89"
+    },
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "sha256": "1274eed9ede64e77dcbe1fb2b2f3bb7249187765ad2d5e8f7d91220e232e26f0",
+      "git_blob": "1f35bc358348f100da40f6a1a04141733a8f9e28"
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "sha256": "b10a8153e8e6c0f7ec960bc669edcf876184e07f3aaa1d93c9afaf8f58d2f566",
+      "git_blob": "6ebe7ad916a04be9c57ac4400a24c851d89606bf"
+    },
+    "requirements/issue_28_v14/transfer_manifest.json": {
+      "sha256": "48c775b92014f000f9048b9397a3eb10384181b406d3d2c87b83e5f654d306fb",
+      "git_blob": "8323f4f10410819ed570c0302cb4ed5d1d115f1b"
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": {
+      "sha256": "187c4ca749fd4976f1c53e730081767c5c5cf9e1a422771866bfa239affb48e3",
+      "git_blob": "606246bb0b9da3bb9f51556a0025bf4b33973444"
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": {
+      "sha256": "f53301c113a6b21a8e0aeef365a032bc2e88fa599c1085b0ce3f68715c87237b",
+      "git_blob": "45024c8c9ddb6b662e2fa8b179931e25c6321e53"
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": {
+      "sha256": "5a6300a4ac06154f51f193a38535a6db4a27b626dd24edb02ec201b1ef4f0a8b",
+      "git_blob": "5bbc5870bb38283b2455ca0733dd25c3ddcaad47"
+    }
+  },
+  "current_v13_requirement_closure": "sha256:5d75a1a0297b162d5238f9d1569c3677fb89e844b67a127192d2682b3df83d50",
+  "current_v14_requirement_closure": "sha256:7e469c866f3b2978f947fe0724f11306480fa9426d522da94b8aabced8777baf",
+  "current_v14_execution_authority": "sha256:592f7d3049273bdd2b3b59bbe9a54f02de2cb72c41339a1182328ad686a7be9d",
+  "directed_tests": 10,
+  "fast_suite": {
+    "status": "PASSED",
+    "selectors": 144,
+    "duration_seconds": 66.167
+  },
+  "macys_private_native": {
+    "result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
+    "run_id": "run:ordinary-integrated:cc04eaa4ab870e86c2f9c4338f2c23b2104ce6f8ee4b7ca7cce11c9ca4fd4164",
+    "first": "CANDIDATE_READY",
+    "repeat": "NO_SOURCE_CONTENT_CHANGE",
+    "cold_read": "PUBLISHED/EXACT",
+    "business_content_acceptance": false
+  },
+  "prior_independent_review": "f4e4c4f_NEEDS_FIX",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

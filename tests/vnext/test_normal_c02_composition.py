@@ -33,6 +33,35 @@ class C02CompositionFastTest(unittest.TestCase):
                          candidate=old_candidate, **source))
         self.assertIs(review, api.build_text_review_unit)
 
+    def test_successor_spec_and_source_policy_must_match_at_each_acceptance_entry(self):
+        source = inputs()
+        contracts = (
+            ('v2', 'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2'),
+            ('v3', 'COMPOSITION_GROUPED_V2', 'COMPOSITION_FACTS_V1'),
+        )
+        for version, matching_policy, wrong_policy in contracts:
+            with self.subTest(version=version):
+                spec = compile_spec_file(
+                    path=ROOT / f'catalog/r6/C02_board_disclosures_{version}.md',
+                    dependency_specs={})
+                good = {**source, 'compiled_spec': spec,
+                        'c02_selection_policy': matching_policy}
+                bad = {**good, 'c02_selection_policy': wrong_policy}
+                candidate = new_api.create_deterministic_text_candidate(**good)
+                evidence = new_api.build_text_evidence(candidate=candidate, **good)
+                self.assertEqual('PASS', evidence['status'])
+                with self.assertRaisesRegex(ValueError, 'C02_COMPOSITION_SPEC_POLICY_MISMATCH'):
+                    new_api.create_deterministic_text_candidate(**bad)
+                with self.assertRaisesRegex(ValueError, 'C02_COMPOSITION_SPEC_POLICY_MISMATCH'):
+                    new_api.build_text_evidence(candidate=candidate, **bad)
+                with self.assertRaisesRegex(ValueError, 'C02_COMPOSITION_SPEC_POLICY_MISMATCH'):
+                    new_api.replay_text_result(
+                        compiled_spec=spec, target=source['target'],
+                        company_traits={}, candidate=candidate,
+                        evidence_check=evidence, review_unit=None,
+                        review_decisions=[], **{k: v for k, v in bad.items()
+                                                if k not in ('compiled_spec', 'target')})
+
     def test_old_default_and_explicit_selection_are_distinct(self):
         source = inputs(governance=(
             '<p>Our Board currently has twelve directors.</p>'

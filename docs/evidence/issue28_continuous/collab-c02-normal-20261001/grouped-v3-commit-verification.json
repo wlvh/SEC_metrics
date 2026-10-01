@@ -1,0 +1,50 @@
+{
+  "record_type": "ISSUE28_C02_GROUPED_V3_POSTCOMMIT_TEST_TREE_VERIFICATION",
+  "commit": "f4e4c4f62a1536b8bd265ced3ddf00962aaee9b6",
+  "tested_product_file_count": 10,
+  "all_tested_product_bytes_in_commit": true,
+  "files": {
+    "scripts/vnext/c02_grouped_source.py": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "scripts/vnext/c02_composition_text_results.py": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "scripts/vnext/normal_run_v3.py": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "scripts/vnext/ordinary_remaining_cases.py": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "catalog/r6/C02_board_disclosures_v3.md": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "config/issue28_normal_results_v2.json": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    },
+    "requirements/issue_28_v14/transfer_manifest.json": {
+      "tested_sha256_equals_committed": true,
+      "tested_git_blob_equals_committed": true
+    }
+  },
+  "precommit_receipt": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/grouped-v3-test-tree-binding.json",
+  "limitation": "Tests and private Runs were executed on the precommit worktree with the same product bytes; this check does not make those private Results business-accepted."
+}

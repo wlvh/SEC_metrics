@@ -21,6 +21,15 @@ def _successor(compiled_spec):
             {'c02_composition_facts_v1', 'c02_composition_grouped_v2'})
 
 
+def _require_spec_policy_pair(*, compiled_spec, source_arguments):
+    expected = {
+        'c02_composition_facts_v1': 'COMPOSITION_FACTS_V1',
+        'c02_composition_grouped_v2': 'COMPOSITION_GROUPED_V2',
+    }[compiled_spec['compiled']['disclosure_group']]
+    old._need(source_arguments.get('c02_selection_policy') == expected,
+              'C02_COMPOSITION_SPEC_POLICY_MISMATCH')
+
+
 def _prepared(*, c02_selection_policy, **source_arguments):
     old._need(c02_selection_policy in {'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2'},
               'C02_COMPOSITION_SELECTION_POLICY_REQUIRED')
@@ -59,6 +68,8 @@ def create_deterministic_text_candidate(*, compiled_spec, **source_arguments):
               {'c02_composition_facts_v1', 'c02_composition_grouped_v2'}
               and compiled_spec['compiled']['text_policy']['max_items'] == 64,
               'C02_COMPOSITION_SPEC_REQUIRED')
+    _require_spec_policy_pair(compiled_spec=compiled_spec,
+                              source_arguments=source_arguments)
     return old._derive_candidate(compiled_spec=compiled_spec,
                                  target=source_arguments['target'],
                                  prepared=_prepared(**source_arguments))
@@ -69,6 +80,8 @@ def build_text_evidence(*, compiled_spec, candidate, **source_arguments):
     if not _successor(compiled_spec):
         return old.build_text_evidence(compiled_spec=compiled_spec,
                                        candidate=candidate, **source_arguments)
+    _require_spec_policy_pair(compiled_spec=compiled_spec,
+                              source_arguments=source_arguments)
     prepared = _prepared(**source_arguments)
     expected = old._derive_candidate(compiled_spec=compiled_spec,
                                      target=source_arguments['target'], prepared=prepared)
@@ -175,6 +188,8 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate,
             company_traits=company_traits, candidate=candidate,
             evidence_check=evidence_check, review_unit=review_unit,
             review_decisions=review_decisions, **source_arguments)
+    _require_spec_policy_pair(compiled_spec=compiled_spec,
+                              source_arguments=source_arguments)
     from .calculator import calculate_text_metric
     observations = reviewed_text_observations(
         compiled_spec=compiled_spec, target=target, candidate=candidate,
