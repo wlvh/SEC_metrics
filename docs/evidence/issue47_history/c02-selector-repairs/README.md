@@ -580,3 +580,19 @@
 共 105/105，对照 80 个用例。
 
 **量测**（`measured-31-chair-label-line.json`）：只在 Pfizer 2022 新增 11 块（五个标签和其后的主席名，读者都判为事实）；漏选 32→29，不一致位置 17→16（Pfizer 2022 现与判读一致），误选 14 不变，最新年不变。
+
+## 32. "Our Board has a Lead Independent Director, Mr. Gomo"
+
+**问题。** Enphase 2021 第 216 块第一句 "Our Board has a Lead Independent Director, Mr. Gomo, who has authority, among other things, to call and preside over Board meetings, …"。读者判为含事实（Gomo 任首席独立董事，别处没有写），选择器没取。现有句式认 "our/the + 职务 + , + 人名"（"the Lead Independent Director, Mr. X"），这里是不定冠词 "a"。
+
+**先量后改。** 37 份文档里 "a/an + 董事长或首席独立董事 + 逗号" 的句子：这一句之后紧跟大写人名；Enphase 2022–2025 的 "an independent Chair of the Board, separate from the CEO"、Macy's 五年的 "the use of a lead independent director, and the other elements …"、Pfizer 2023/2025 的 "the election of a Lead Independent Director, establish …" 逗号后都是小写词，不是担任者。
+
+**改动。** 冠词加上 "a"；逗号后仍须是大写开头的人名（原有的大小写敏感条件）。"an" 在语料里没有逗号后接人名的例子，没有加。
+
+**用例与注错。** `test_a_board_that_has_a_lead_director_names_the_holder`：第 216 块那句原文为正例，Pfizer 2023 第 3546 块原文为反例。注错：
+- `A_LEAD_DIRECTOR_INTRODUCED_WITH_A_IS_NOT_READ`（去掉 "a"）；
+- `A_LOWER_CASE_WORD_AFTER_THE_COMMA_IS_A_HOLDER`（逗号后不要求大写，Pfizer 那句会被读成担任者）。
+
+共 107/107，对照 81 个用例。
+
+**量测**（`measured-32-has-a-lead-director.json`）：只新增 Enphase 2021 第 216 块；漏选 28→27，误选 14 不变，不一致位置 15 不变（Enphase 2021 还有表格脚注的主席标记和一处董事薪酬句），最新年不变。

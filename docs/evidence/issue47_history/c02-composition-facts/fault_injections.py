@@ -303,6 +303,14 @@ INJECTIONS = [
     ('THE_LABELLED_CHAIR_IS_A_MEMBER',
      '"COMMITTEE_CHAIR_NAME" if label == "COMMITTEE_MEMBER_NAME" else label)', 'label)',
      'test_a_chair_label_on_a_line_of_its_own'),
+    # Repair 32: "Our Board has a Lead Independent Director, Mr. Gomo, ..."
+    ('A_LEAD_DIRECTOR_INTRODUCED_WITH_A_IS_NOT_READ',
+     '    re.compile(r"\\b(?:our|the|a)\\s+(?:independent', '    re.compile(r"\\b(?:our|the)\\s+(?:independent',
+     'test_a_board_that_has_a_lead_director_names_the_holder'),
+    ('A_LOWER_CASE_WORD_AFTER_THE_COMMA_IS_A_HOLDER',
+     'r" board|" + _LEAD_ROLE + r")\\s*,\\s*(?:(?:mr|ms|mrs|dr)\\s+)?(?-i:[A-Z][a-z])", re.I),',
+     'r" board|" + _LEAD_ROLE + r")\\s*,\\s*(?:(?:mr|ms|mrs|dr)\\s+)?[A-Z][a-z]", re.I),',
+     'test_a_board_that_has_a_lead_director_names_the_holder'),
 ]
 
 

@@ -831,6 +831,17 @@ class ALeadershipOrMembershipFactNamesThisBoardAndThePerson(unittest.TestCase):
         return statement_labels(text, self.OWN, period_start=START, acronyms=frozenset({"HRC", "HRCC"}),
                                 registrant=frozenset({"example"}))
 
+    def test_a_board_that_has_a_lead_director_names_the_holder(self):
+        # Enphase FY2021 block 216: the role with "a", the holder after the comma.
+        self.assertIn("BOARD_LEADERSHIP_STATEMENT", self.labels(
+            "Our Board has a Lead Independent Director, Mr. Gomo, who has authority, among other things, to call and "
+            "preside over Board meetings, including meetings of the independent directors, as well as establish the "
+            "agenda for these meetings."))
+        # The role named in a list of practices has no holder (Pfizer FY2023 block 3546).
+        self.assertEqual([], self.labels(
+            "Pfizer’s shareholder rights and governance practices, including the election of a Lead Independent "
+            "Director, establish a robust leadership structure that supports independent board oversight."))
+
     def test_whose_chair_the_sentence_says(self):
         for text in ("T. Michael Glenn has served as Example's independent, non-executive Chairman since May 2020.",
                      "Mr. Ellison has served as our Chairman and Chief Executive Officer since August 2025.",

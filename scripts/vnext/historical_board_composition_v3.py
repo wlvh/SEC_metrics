@@ -680,7 +680,10 @@ _LEADERSHIP = (
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:our\s+|the\s+|its\s+|the company['’]s\s+)?"
                + _BOARD_QUALIFIER + r"(?:" + _CHAIR_WORD + r" of the board|board chair|" + _LEAD_ROLE
                + r"|presiding (?:independent )?director)\b", re.I),
-    re.compile(r"\b(?:our|the)\s+(?:independent\s+|non-executive\s+|executive\s+)*(?:chair(?:man|person|woman)? of the"
+    # "a" too: "Our Board has a Lead Independent Director, Mr. Gomo, who ..."
+    # (Enphase FY2021). The holder after the comma is a capitalised name, so
+    # "the election of a Lead Independent Director, establish ..." is none.
+    re.compile(r"\b(?:our|the|a)\s+(?:independent\s+|non-executive\s+|executive\s+)*(?:chair(?:man|person|woman)? of the"
                r" board|" + _LEAD_ROLE + r")\s*,\s*(?:(?:mr|ms|mrs|dr)\s+)?(?-i:[A-Z][a-z])", re.I),
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:the\s+)?" + _BOARD_QUALIFIER + _SOLE_CHAIR
                + r"(?:\s+and\s+(?:chief executive officer|ceo|president))?\s+of\s+(?:the|our)\s+company\b", re.I),
