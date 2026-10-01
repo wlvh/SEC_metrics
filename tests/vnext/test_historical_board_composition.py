@@ -17,7 +17,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.canonical import content_hash, sha256_bytes  # noqa: E402
 from vnext.historical_board_composition_v2 import (  # noqa: E402
-    _mentions_person, board_composition_facts, committee_name, person_name, sentences, statement_labels)
+    _committee_set, _mentions_person, board_composition_facts, committee_name, person_name, sentences,
+    statement_labels)
 
 # The target year of the synthetic filings: a proxy filed in 2026 reports 2025.
 PERIOD_START = "2025-01-01"
@@ -490,6 +491,23 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:40]):
                 self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
 
+    def test_a_committee_that_changed_its_name(self):
+        # Ford FY2021 states the rename three times (blocks 626, 3096, 4055).
+        for text in ("The Compensation Committee changed its name to the Compensation, Talent and Culture Committee "
+                     "to reflect its responsibilities related to significant people-related strategies.",
+                     "In May 2021, the Charter of the CTC Committee was amended to update the name of the CTC Committee "
+                     "from the “Compensation Committee” to the “Compensation, Talent and Culture Committee” in order "
+                     "to reflect the expansion of its responsibilities."):
+            with self.subTest(text=text[:40]):
+                self.assertStates(text, "STANDING_COMMITTEES_STATEMENT")
+        # A plan or a policy renamed is not a committee renamed.
+        for text in ("The Committee renamed the Annual Incentive Plan as the Annual Performance Bonus Plan in 2023.",
+                     "The Committee changed its name for the recoupment policy to the Officer Misconduct Policy."):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("STANDING_COMMITTEES_STATEMENT",
+                                 statement_labels(text, frozenset({"audit", "compensation", "example"}),
+                                                  period_start=START))
+
     def test_the_committees_named_together_on_their_charters(self):
         # Ford's five years and Salesforce's two name every committee in one
         # sentence about their charters: which committees exist.
@@ -502,10 +520,13 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertStates(text, "STANDING_COMMITTEES_STATEMENT")
         # One committee's charter names no set, however often the sentence
         # repeats the committee or punctuates its name.
+        # A rename names one committee three ways; the set rule does not count
+        # it (it is a fact for the rename, test_a_committee_that_changed_its_name).
+        self.assertFalse(_committee_set(
+            "In May 2021, the Charter of the CTC Committee was amended to update the name of the CTC Committee "
+            "from the “Compensation Committee” to the “Compensation, Talent and Culture Committee”."))
         for text in ("The Charter of the Audit Committee was reviewed by the Audit Committee and the full audit "
                      "committee in 2024.",
-                     "In May 2021, the Charter of the CTC Committee was amended to update the name of the CTC Committee "
-                     "from the “Compensation Committee” to the “Compensation, Talent and Culture Committee”.",
                      "The charter of the Compensation, Talent and Culture Committee is available on our website."):
             with self.subTest(text=text[:40]):
                 self.assertNotIn("STANDING_COMMITTEES_STATEMENT",

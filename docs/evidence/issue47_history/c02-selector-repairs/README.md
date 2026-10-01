@@ -344,3 +344,30 @@
 共 75/75。
 
 **量测**（`measured-20-committee-set.json`）：新增的正好是上面七块；漏选 69→55，误选 18 不变，不一致位置 22 不变。Ford 2022 只剩 406（"family member" 句）、1255（Farley 卡片姓名）、4535（股东提案人的原话）。最新年度两处：Ford 2025 新增 438，原值已覆盖这一事实，值会变；Salesforce 2026 新增 602，这个坐标本来就因第 14、15 节撤回，重算时一并计入。
+
+## 21. 委员会改名是委员会设置的变动
+
+**问题。** Ford 2021 往年判读漏了同一次改名的三块：第 626、4055 块 "The Compensation Committee changed its name to the Compensation, Talent and Culture Committee"，以及第 3096 块 "the Charter of the CTC Committee was amended to update the name of the CTC Committee from the “Compensation Committee” to the “Compensation, Talent and Culture Committee”"。读者判三块都含事实（委员会更名，属于设有哪些委员会），并互相列为覆盖。选择器原有的改名句式只认 "committee … was renamed … <年份>"。
+
+**先量后改。** 在 37 份文档里搜 "changed its name"、"renamed"、"name of … committee … from"：
+- 委员会改名只出现在 Ford 2021 这三块。
+- 其余命中都是薪酬计划或政策被改名（Ford 2023 的奖金计划、Ford 2023–2025 的追回政策、Pfizer 2025 的计划修订），读者都判为非事实。
+
+所以新句式要求被改名的是委员会：要么 "X Committee changed its name to the Y Committee"，要么 "the name of the X Committee from the A Committee to the B Committee"。第 20 节的"一组委员会"规则不把改名句算成一组；改名句由本节按改名取，标签同为"设有哪些委员会"。
+
+**用例与注错。**
+- 用例 `test_a_committee_that_changed_its_name`：两种委员会改名要取；计划改名、政策改名不取。
+- 第 20 节的反例改为直接检查一组规则（`_committee_set`），不再检查标签，因为改名句现在凭改名得到同一个标签。
+- 注错 `A_RENAME_IS_NOT_READ`、`A_RENAMED_PLAN_IS_A_COMMITTEE`。共 77/77。
+
+**量测**（`measured-21-committee-rename.json`）：只有 Ford 2021 新增这三块；漏选 55→52，误选 18 不变，不一致位置 22 不变。Ford 2021 只剩第 760 块，即 "family member" 那句。
+
+## 量过而未采用：按就近找卡片姓名把头衔行与人连起来
+
+**来由。** #28 在 `137ecb24` 审它自己的 Macy's FY2025 结果，指出董事长兼首席执行官的头衔行（第 821 块）被单独取出，紧挨着的姓名（第 820 块 Tony Spring）没有跟着。#47 的选择同样单独取了 821、826、453。不过 #47 的值里有第 839 块 "Mr. Spring … currently serves as Chairman and Chief Executive Officer"，这件事本身是陈述了的。
+
+**试过的做法。** 仿照委员会标签和身份标注的读法，头衔行也按就近找卡片姓名，找到就一起取（`rejected-title-name/probe.py`，只在内存里改，不写文件）。
+
+**量出来的结果。** 37 份文档里新增 12 个姓名块。其中 7 个是对的：Macy's 历年的 Gennette、Spring，以及 Marriott 2024、2025 的 David S. Marriott。另外 5 个连错了人（`rejected-title-name/probe.log`）。Macy's 的提名人汇总表一行是"姓名、年龄、技能……、任职年份、头衔"。第 480 块的头衔属于上一行（Spring），往下最近的姓名却是下一行的 Varga（Macy's 2022、2023 是 Granoff），读者把这些姓名判为非事实。就近规则在卡片里成立，在表格里会把董事长头衔安到另一位董事身上；这个错比头衔单独出现更糟。
+
+**结论。** 不采用。要把头衔和人连起来，需要读出表格的行结构，不能靠距离。在此之前，头衔行照旧单独取；人与头衔的关系由同一份值里写明二者的句子（Macy's 2026 的 839）承担。这个口径问题也已告诉 #28。

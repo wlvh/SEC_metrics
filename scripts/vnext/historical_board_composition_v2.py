@@ -574,6 +574,13 @@ _COMMITTEE_SETUP = (
     re.compile(r"\b(?:established|set up|formed|created|constituted)\s+(?:a|an)\s+(?:(?:new|separate|special|standing"
                r"|ad hoc)\s+)*(?:sub-?committee|committee)\b", re.I),
     re.compile(r"\b(?:a|the)\s+special committee of (?:the|our) board\b", re.I),
+    # A committee's change of name: "The Compensation Committee changed its
+    # name to the Compensation, Talent and Culture Committee", "to update the
+    # name of the CTC Committee from the “Compensation Committee” to the ...".
+    # The renamed thing is a committee; a pay plan or a policy "renamed" is not.
+    re.compile(r"\bcommittee\s+changed\s+its\s+name\s+to\s+(?:the\s+)?[^.;]{0,80}?\bcommittee\b", re.I),
+    re.compile(r"\bname\s+of\s+the\s+[^.;]{0,60}?\bcommittee\s+from\s+(?:the\s+)?[^.;]{0,80}?\bcommittee\b"
+               r"[^.;]{0,10}?\s+to\s+(?:the\s+)?[^.;]{0,80}?\bcommittee\b", re.I),
 )
 # The board's committees named together, as the sentence on their charters
 # does ("the charter of each of the Audit Committee, ..., and Sustainability,

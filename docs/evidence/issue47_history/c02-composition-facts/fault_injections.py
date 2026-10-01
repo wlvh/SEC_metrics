@@ -222,6 +222,10 @@ INJECTIONS = [
      'test_the_committees_named_together_on_their_charters'),
     ('A_RENAME_COUNTS_AS_A_SET', '    return (bool(listed) and not _RENAME.search(sentence)\n', '    return (bool(listed)\n',
      'test_the_committees_named_together_on_their_charters'),
+    ('A_RENAME_IS_NOT_READ', '    re.compile(r"\\bcommittee\\s+changed\\s+its\\s+name\\s+to\\s+(?:the\\s+)?[^.;]{0,80}?\\bcommittee\\b", re.I),\n', '    re.compile(r"(?!x)x", re.I),\n',
+     'test_a_committee_that_changed_its_name'),
+    ('A_RENAMED_PLAN_IS_A_COMMITTEE', '    re.compile(r"\\bcommittee\\s+changed\\s+its\\s+name\\s+to\\s+(?:the\\s+)?[^.;]{0,80}?\\bcommittee\\b", re.I),\n', '    re.compile(r"\\bchanged\\s+its\\s+name\\b|\\brenamed\\b", re.I),\n',
+     'test_a_committee_that_changed_its_name'),
 ]
 
 

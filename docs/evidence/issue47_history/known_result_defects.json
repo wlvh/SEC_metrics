@@ -2884,22 +2884,21 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-12-past-board-size.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-19-card-reach.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-20-committee-set.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-20-committee-set.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-21-committee-rename.json"
    ],
    "selection_problems": {
     "missed": [
-     626,
-     760,
-     3096,
-     4055
+     760
     ]
    },
    "partial_repair": {
-    "still_open": "4 fact block(s) missed (626, 760, 3096, 4055) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "1 fact block(s) missed (760) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "board_size_on_a_past_date": "1 block(s) now taken that give the board's size at last year's meeting where attendance is reported (DIRECTOR_COUNT_ON_A_DATE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 12 [shared-with-#28]).",
     "card_reach_19": "Repair 19 measures a committee-label card's reach in printed blocks: 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 19 [shared-with-#28]).",
-    "committee_set_20": "Repair 20 takes the sentence naming three or more of the board's committees on their charters: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 20 [shared-with-#28])."
+    "committee_set_20": "Repair 20 takes the sentence naming three or more of the board's committees on their charters: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 20 [shared-with-#28]).",
+    "committee_rename_21": "Repair 21 takes a committee's change of name: 3 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 21 [shared-with-#28])."
    }
   },
   {
