@@ -112,6 +112,11 @@ _NAME_TOKEN = re.compile(
     "|[" + _UPPER + "][" + _UPPER + "'’\\-]+)$")
 _PARTICLES = frozenset({"van", "von", "de", "del", "della", "da", "di", "du", "la", "le", "dos", "das",
                         "bin", "al", "st."})
+# Two initials printed without a space between them ("J.W. Marriott, Jr.",
+# "Andrew P.C. Wright") stand where one would: right before the surname. Only
+# there - "U.S. Federal Income Tax Consequences", "Orange, S.A." and "B.A.,
+# Cornell University" print the same shape and are not names.
+_JOINED_INITIALS = re.compile("^[" + _UPPER + "]\\.[" + _UPPER + "]\\.$")
 # The words proxy headings, captions, table cells and titles are made of. A
 # block of capitalised words is a heading as often as it is a name, so a word
 # on this list makes a block not a name. Governance vocabulary, not a list of
@@ -191,8 +196,10 @@ def person_name(text):
     if any(re.sub(r"[^\w]", "", token).casefold() in STOP_WORDS for token in tokens):
         return False
     words = 0
-    for token in tokens:
+    for position, token in enumerate(tokens):
         if token.casefold() in _PARTICLES:
+            continue
+        if _JOINED_INITIALS.match(token) and position == len(tokens) - 2:
             continue
         if not _NAME_TOKEN.match(token):
             return False
@@ -210,6 +217,10 @@ def person_name(text):
 # Lewis."). The period is not the list's last initial: "B." keeps its own.
 _LIST_END = re.compile(r"(?<![A-Z])\.\s*$")
 _LIST_SEPARATOR = re.compile(r",\s*(?:and\s+)?|\s+and\s+|;\s*")
+# A suffix after a comma ("J.W. Marriott, Jr. (Chair), Anthony G. Capuano, ...")
+# ends the name before it, a given name and a surname at least. "Phillips, Jr.,
+# Charles E." prints one name surname first; it is not a list of two.
+_SUFFIX_ITEM = re.compile(r"^jr\.?$", re.I)
 
 
 def name_list(text):
@@ -217,7 +228,15 @@ def name_list(text):
     t = re.sub(r"\((?:chair(?:man|person|woman)?|vice[- ]chair)\)", "", clean(text), flags=re.I)
     if person_name(t):
         return True
-    parts = [part for part in _LIST_SEPARATOR.split(_LIST_END.sub("", t)) if part.strip()]
+    parts = []
+    for part in _LIST_SEPARATOR.split(_LIST_END.sub("", t)):
+        part = part.strip()
+        if not part:
+            continue
+        if parts and _SUFFIX_ITEM.match(part) and len(parts[-1].split()) >= 2:
+            parts[-1] += ", " + part
+        else:
+            parts.append(part)
     return bool(parts) and all(person_name(part) for part in parts)
 
 

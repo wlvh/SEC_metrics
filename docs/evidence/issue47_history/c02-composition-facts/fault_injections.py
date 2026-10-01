@@ -272,6 +272,20 @@ INJECTIONS = [
     ('AN_EARLIER_YEAR_S_STABILITY_COUNTS',
      '        if stable and not _joined_before(stable.group("date"), period_start):',
      '        if stable:', 'test_no_change_to_the_committees_in_the_year'),
+    # Repair 30: "J.W. Marriott, Jr. (Chair), Anthony G. Capuano, ..."
+    ('JOINED_INITIALS_ARE_NOT_A_NAME',
+     '        if _JOINED_INITIALS.match(token) and position == len(tokens) - 2:\n            continue\n', '',
+     'test_two_initials_printed_together_before_the_surname'),
+    ('JOINED_INITIALS_ANYWHERE',
+     '        if _JOINED_INITIALS.match(token) and position == len(tokens) - 2:',
+     '        if _JOINED_INITIALS.match(token):', 'test_two_initials_printed_together_before_the_surname'),
+    ('A_SUFFIX_IS_A_NAME_OF_ITS_OWN',
+     '        if parts and _SUFFIX_ITEM.match(part) and len(parts[-1].split()) >= 2:\n'
+     '            parts[-1] += ", " + part\n        else:\n            parts.append(part)\n',
+     '        parts.append(part)\n', 'test_a_suffix_after_a_comma_ends_the_name_before_it'),
+    ('A_SUFFIX_JOINS_A_SURNAME_ALONE',
+     '        if parts and _SUFFIX_ITEM.match(part) and len(parts[-1].split()) >= 2:',
+     '        if parts and _SUFFIX_ITEM.match(part):', 'test_a_suffix_after_a_comma_ends_the_name_before_it'),
 ]
 
 

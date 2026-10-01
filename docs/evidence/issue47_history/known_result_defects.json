@@ -3302,7 +3302,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1145: Oberg chairs the Global Operating Committee of senior company leaders, a management committee, not a Board committee; NEO duties); 8 block(s) stating a composition fact that no taken block states (610: Chairman and CEO roles separate since 2012; plus rationale; 842: Goren joined the Board on March 1, 2022 (and 13 directors served at the 2021 meeting); the rest is attendance). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2021-12-31.json",
@@ -3312,22 +3312,19 @@
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-27-appointed-a-member.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-27-appointed-a-member.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-30-joined-initials-and-suffix.json"
    ],
    "partial_repair": {
     "sentence_member_list": "6 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "2 fact block(s) missed (990, 991) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
     "chair_ceo_structure": "6 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "joins_by_period": "A director's join is now judged against the target year: 2 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 0 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28]).",
-    "appointed_a_member_27": "Repair 27 reads a director appointed with an office and as a member of the board: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 27 [shared-with-#28])."
+    "appointed_a_member_27": "Repair 27 reads a director appointed with an office and as a member of the board: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 27 [shared-with-#28]).",
+    "joined_initials_and_suffix_30": "Repair 30 reads a members line naming J.W. Marriott, Jr. (joined initials, a suffix after a comma): 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 30 [shared-with-#28])."
    },
-   "selection_problems": {
-    "missed": [
-     990,
-     991
-    ]
-   }
+   "selection_problems": {}
   },
   {
    "defect_id": "C02_MARRIOTT_2022_OLDER_YEAR_READING_DISAGREES",

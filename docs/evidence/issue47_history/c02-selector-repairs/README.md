@@ -538,3 +538,28 @@
 共 98/98，对照 77 个用例。
 
 **量测**（`measured-29-no-committee-change.json`）：只新增 Pfizer 2022 第 799 块、2023 第 884 块；漏选 36→34，不一致位置 19→18（Pfizer 2023 现与判读一致），误选 14 不变，最新年不变。
+
+## 30. 名单里的 "J.W. Marriott, Jr."：连写的两个首字母和逗号后的 Jr.
+
+**问题。** Marriott 2021 第 991 块 "Current Members: J.W. Marriott, Jr. (Chair), Anthony G. Capuano, Lawrence W. Kellner, and Debra L. Lee." 是执行委员会的成员名单，读者判为事实，第 990 块是它的委员会标题。这一行整行读不出，原因有两个，缺一个都不行：
+- 名字词规则只认一个首字母（"J."），两个首字母连写不带空格（"J.W."）不算名字词；
+- 名单按逗号切开后，"Jr." 成了单独一项，它不是名字，整行就不算名单。
+
+**先量后改。** 用内存补丁在 37 份文档上分别量两条机制：
+- 只放开连写首字母、不限位置：会把 "U.S. Federal Income Tax Consequences"、"Orange, S.A."、"Telefonica S.A."、"M.B.A., Harvard University"、"B.A., Cornell University"、"U.S." 这些块都读成人名（选择不变，但名字判断变松）。限定为"恰好两个首字母、紧挨在最后一个词（姓）前"之后，名字判断只在真人名上变："J.W. Marriott, Jr."、"Andrew P.C. Wright"（Marriott 各年的签名与履历）。
+- 只把 "Jr." 并回前一项、不限前一项：Paramount 三年的 "Phillips, Jr., Charles E."（姓在前的一个名字）会被读成两个人的名单。限定为前一项至少有两个词（名和姓）之后，这一块不变。
+- 两条机制单独都不移动任何选择；两条一起只新增第 990、991 块。
+
+**改动。** 名字词：恰好两个连写首字母、且是倒数第二个词时，当作首字母。名单：逗号后单独的 "Jr." 并入前一项，前提是前一项至少两个词。"Sr."、"II"、"III" 这类后缀在 37 份文档的名单里没有出现，没有加。
+
+**用例与注错。** `test_two_initials_printed_together_before_the_surname`：两个真人名为正例，上面六个缩写块原文为反例；`test_a_suffix_after_a_comma_ends_the_name_before_it`：第 991 块的名单为正例，"Phillips, Jr., Charles E." 为反例；`test_a_members_line_written_as_a_sentence` 补上第 990、991 块。注错：
+- `JOINED_INITIALS_ARE_NOT_A_NAME`（去掉连写首字母规则）；
+- `JOINED_INITIALS_ANYWHERE`（不限位置）；
+- `A_SUFFIX_IS_A_NAME_OF_ITS_OWN`（不并入）；
+- `A_SUFFIX_JOINS_A_SURNAME_ALONE`（前一项只有姓也并入）。
+
+共 102/102，对照 79 个用例。
+
+"恰好两个"字母没有单独的注错：语料里三个首字母的块（"M.B.A., Harvard University"）不在倒数第二个位置，放宽到三个也不会被任何真实块区分。
+
+**量测**（`measured-30-joined-initials-and-suffix.json`）：只新增 Marriott 2021 第 990、991 块；漏选 34→32，不一致位置 18→17（Marriott 2021 现与判读一致），误选 14 不变，最新年不变。

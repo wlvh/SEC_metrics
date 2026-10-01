@@ -17,8 +17,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.canonical import content_hash, sha256_bytes  # noqa: E402
 from vnext.historical_board_composition_v3 import (  # noqa: E402
-    _committee_set, _mentions_person, board_composition_facts, committee_name, person_name, sentences,
-    statement_labels)
+    _committee_set, _mentions_person, board_composition_facts, committee_name, name_list, person_name,
+    sentences, statement_labels)
 
 # The target year of the synthetic filings: a proxy filed in 2026 reports 2025.
 PERIOD_START = "2025-01-01"
@@ -112,6 +112,23 @@ class ANameIsTheWholeBlock(unittest.TestCase):
         self.assertEqual({0: ["COMMITTEE_HEADING"], 1: ["COMMITTEE_CHAIR_NAME"], 2: ["COMMITTEE_MEMBER_NAME"],
                           3: ["COMMITTEE_MEMBER_NAME"]}, _selected(texts))
 
+    def test_two_initials_printed_together_before_the_surname(self):
+        # Marriott's proxies print "J.W. Marriott, Jr." and "Andrew P.C. Wright".
+        for text in ("J.W. Marriott, Jr.", "Andrew P.C. Wright"):
+            with self.subTest(text=text):
+                self.assertTrue(person_name(text))
+        # The same shape anywhere else is an abbreviation (blocks these proxies print).
+        for text in ("U.S. Federal Income Tax Consequences", "Orange, S.A.", "Telefonica S.A.",
+                     "B.A., Cornell University", "M.B.A., Harvard University", "U.S."):
+            with self.subTest(text=text):
+                self.assertFalse(person_name(text))
+
+    def test_a_suffix_after_a_comma_ends_the_name_before_it(self):
+        self.assertTrue(name_list("J.W. Marriott, Jr. (Chair), Anthony G. Capuano, Lawrence W. Kellner, and "
+                                  "Debra L. Lee."))
+        # One name printed surname first (Paramount's older proxies) is not a list.
+        self.assertFalse(name_list("Phillips, Jr., Charles E."))
+
     def test_headings_captions_and_furniture_are_not_names(self):
         for text in ("Recent Committee Focus Areas", "Key Responsibilities", "Marriott International, Inc.",
                      "2026 Proxy Statement", "Meetings in 2025: 7", "Corporate Governance",
@@ -193,6 +210,10 @@ class ACommitteePageIsReadAsAStructure(unittest.TestCase):
         # before its last "and"; either one alone failed the whole list.
         texts = ["Nominating and Corporate Governance Committee",
                  "Current Members: Frederick A. Henderson (Chair), Debra L. Lee, and Aylwin B. Lewis."]
+        self.assertEqual({0: ["COMMITTEE_HEADING"], 1: ["COMMITTEE_MEMBERS_LIST"]}, _selected(texts))
+        # Marriott FY2021 blocks 990 and 991: joined initials and a suffix in the list.
+        texts = ["Executive Committee", "Current Members: J.W. Marriott, Jr. (Chair), Anthony G. Capuano, "
+                 "Lawrence W. Kellner, and Debra L. Lee."]
         self.assertEqual({0: ["COMMITTEE_HEADING"], 1: ["COMMITTEE_MEMBERS_LIST"]}, _selected(texts))
         # Words that are not names are still no list, period or not.
         self.assertEqual({}, _selected(["Audit Committee", "Members: see the table on page 12."]))

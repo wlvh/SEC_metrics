@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 77,
- "caught": 98,
- "total": 98,
+ "control_tests_run": 79,
+ "caught": 102,
+ "total": 102,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -304,7 +304,8 @@
    "expected": "test_a_members_line_written_as_a_sentence",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_line_written_as_a_sentence"
+    "test_a_members_line_written_as_a_sentence",
+    "test_a_suffix_after_a_comma_ends_the_name_before_it"
    ]
   },
   {
@@ -312,7 +313,8 @@
    "expected": "test_a_members_line_written_as_a_sentence",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_line_written_as_a_sentence"
+    "test_a_members_line_written_as_a_sentence",
+    "test_a_suffix_after_a_comma_ends_the_name_before_it"
    ]
   },
   {
@@ -830,6 +832,41 @@
    "result": "CAUGHT",
    "failed": [
     "test_no_change_to_the_committees_in_the_year"
+   ]
+  },
+  {
+   "injection": "JOINED_INITIALS_ARE_NOT_A_NAME",
+   "expected": "test_two_initials_printed_together_before_the_surname",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_line_written_as_a_sentence",
+    "test_a_suffix_after_a_comma_ends_the_name_before_it",
+    "test_two_initials_printed_together_before_the_surname"
+   ]
+  },
+  {
+   "injection": "JOINED_INITIALS_ANYWHERE",
+   "expected": "test_two_initials_printed_together_before_the_surname",
+   "result": "CAUGHT",
+   "failed": [
+    "test_two_initials_printed_together_before_the_surname"
+   ]
+  },
+  {
+   "injection": "A_SUFFIX_IS_A_NAME_OF_ITS_OWN",
+   "expected": "test_a_suffix_after_a_comma_ends_the_name_before_it",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_line_written_as_a_sentence",
+    "test_a_suffix_after_a_comma_ends_the_name_before_it"
+   ]
+  },
+  {
+   "injection": "A_SUFFIX_JOINS_A_SURNAME_ALONE",
+   "expected": "test_a_suffix_after_a_comma_ends_the_name_before_it",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_suffix_after_a_comma_ends_the_name_before_it"
    ]
   }
  ]
