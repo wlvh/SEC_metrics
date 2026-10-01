@@ -19,8 +19,10 @@ from .capacity_reference_contract import (ASSERTION_SCOPED_VERSION,
                                           restore_base_request)
 
 SCAN_VERSION = 'B13_COMPLETE_REFERENCE_SCAN_V1'
+SCAN_COVERAGE_VERSION = 'B13_COMPLETE_REFERENCE_COVERAGE_SCAN_V2'
 ASSESS_VERSION = SCANNED_VERSION
 MAX_CANDIDATE_REFS = 64
+MAX_EXCLUDED_RANGES = 512
 MAX_ASSERTION_SCOPED_REFS = 24
 MAX_ASSERTION_SCOPED_FINDINGS = 28
 _TYPED = re.compile(r'(?:B|F)[0-9]+|S[0-9]+:[0-9]+\Z')
@@ -140,6 +142,37 @@ SCAN_PROTOCOL = {
         'additionalProperties': False,
     },
 }
+_COVERAGE_KIND_PREFIX = {
+    'VISIBLE_BLOCK': 'B',
+    'NATIVE_FACT': 'F',
+    'NATIVE_SUPPLEMENT': 'S',
+}
+SCAN_COVERAGE_PROTOCOL = deepcopy(SCAN_PROTOCOL)
+SCAN_COVERAGE_PROTOCOL['root_fields'].append('excluded_ref_ranges')
+SCAN_COVERAGE_PROTOCOL['json_schema']['properties']['excluded_ref_ranges'] = {
+    'type': 'array', 'maxItems': MAX_EXCLUDED_RANGES,
+    'items': {'type': 'array', 'minItems': 4, 'maxItems': 4,
+              'prefixItems': [{'type': 'string',
+                               'enum': sorted(_COVERAGE_KIND_PREFIX.values())},
+                              {'type': 'integer', 'minimum': 0},
+                              {'type': 'integer', 'minimum': 0},
+                              {'type': 'integer', 'minimum': 1}],
+              'items': False},
+}
+SCAN_COVERAGE_PROTOCOL['json_schema']['required'].append('excluded_ref_ranges')
+SCAN_COVERAGE_PROMPT = SCAN_PROMPT + (
+    ' Account for every original B, F, and S reference exactly once. '
+    'Place potentially relevant references only in candidate_refs; '
+    'put uncertain candidates in unresolved_refs too. Instead of listing '
+    'ordinary background one by one, encode it as excluded_ref_ranges: '
+    '[kind,unit_index,first_index,end_exclusive], where kind is B, F, or S. '
+    'Only combine consecutive original references owned by the same unit. '
+    'Program-accounted references already listed in scan_contract need no '
+    'model row or excluded range. Never place a required candidate in an '
+    'excluded range. Every source reference must be accounted for; a range '
+    'is a compact classification proposal, not proof that its text is '
+    'irrelevant or that no disclosure exists.'
+)
 
 
 def _need(ok, reason):
@@ -259,15 +292,92 @@ def scan_request(request):
     return {**body, 'request_id': content_hash(value=body)}
 
 
+def coverage_scan_request(request):
+    """Keep the full source while requesting compact, exact reference coverage."""
+    original = scan_request(request)
+    body = {key: deepcopy(value) for key, value in original.items()
+            if key != 'request_id'}
+    inventory = _reference_inventory(request)
+    body['system_prompt'] = SCAN_COVERAGE_PROMPT
+    body['response_protocol'] = deepcopy(SCAN_COVERAGE_PROTOCOL)
+    body['scan_contract']['version'] = SCAN_COVERAGE_VERSION
+    body['scan_contract']['reference_inventory_hash'] = content_hash(
+        value=sorted(inventory.items()))
+    body['scan_contract']['reference_count'] = len(inventory)
+    return {**body, 'request_id': content_hash(value=body)}
+
+
+def validate_coverage_scan(*, request, scan_request_value, raw_response):
+    """Verify a compact source census; never infer model relevance or absence."""
+    _need(scan_request_value == coverage_scan_request(request),
+          'B13_COVERAGE_SCAN_REQUEST_CHANGED')
+    _need(type(raw_response) is bytes,
+          'B13_COVERAGE_SCAN_RESPONSE_BYTES_REQUIRED')
+    response = strict_json_loads(text=raw_response.decode('utf-8'))
+    _need(type(response) is dict and
+          set(response) == set(SCAN_COVERAGE_PROTOCOL['root_fields']),
+          'B13_COVERAGE_SCAN_RESPONSE_FIELDS_CHANGED')
+    checked = {key: response[key] for key in SCAN_PROTOCOL['root_fields']}
+    # Preserve the V1 shape, ownership, required-reference and candidate-cap
+    # checks. Only the new exhaustive complement is interpreted below.
+    validate_scan(request=request, scan_request_value=scan_request(request),
+                  raw_response=canonical_json_bytes(value=checked))
+    inventory = _reference_inventory(request)
+    program_owned = _program_owned_references(request, inventory)
+    candidates = set(response['candidate_refs'])
+    ranges = response['excluded_ref_ranges']
+    _need(type(ranges) is list and len(ranges) <= MAX_EXCLUDED_RANGES,
+          'B13_COVERAGE_SCAN_RANGE_CAP_EXCEEDED')
+    excluded = set()
+    for item in ranges:
+        _need(type(item) is list and len(item) == 4
+              and type(item[0]) is str
+              and item[0] in set(_COVERAGE_KIND_PREFIX.values())
+              and all(type(number) is int for number in item[1:])
+              and 0 <= item[1] < len(request['units'])
+              and 0 <= item[2] < item[3]
+              and item[3] - item[2] <= len(inventory),
+              'B13_COVERAGE_SCAN_RANGE_INVALID')
+        kind, owner, start, end = item
+        for index in range(start, end):
+            ref = (kind + str(index) if kind != 'S' else
+                   'S' + str(owner) + ':' + str(index))
+            _need(inventory.get(ref) == owner and ref not in excluded
+                  and ref not in candidates and ref not in program_owned,
+                  'B13_COVERAGE_SCAN_RANGE_NOT_ORIGINAL_OR_OVERLAPS')
+            excluded.add(ref)
+    _need(excluded | candidates | program_owned == set(inventory),
+          'B13_COVERAGE_SCAN_SOURCE_GAP')
+    body = {'record_type': 'B13_REFERENCE_COVERAGE_SCAN_SHAPE_RESULT',
+            'scan_version': SCAN_COVERAGE_VERSION,
+            'scan_request_id': scan_request_value['request_id'],
+            'interpretation_request_id': request['request_id'],
+            'source_id': request['source_id'],
+            'raw_response_sha256': sha256_bytes(content=raw_response),
+            'response': response,
+            'source_reference_count': len(inventory),
+            'candidate_count': len(candidates),
+            'excluded_count': len(excluded),
+            'program_accounted_count': len(program_owned),
+            'model_relevance_proven': False,
+            'absence_established': False,
+            'native_credit': False}
+    return {**body, 'scan_result_id': content_hash(value=body)}
+
+
 def prior_for_scan(*, source, scan):
     """Rebuild a scan's one exact V4 parent from the complete saved source."""
     from .continuous_semantic_calls import source_requests
     from .capacity_reference_contract import upgrade_request
+    version = scan.get('scan_contract', {}).get('version')
+    _need(version in {SCAN_VERSION, SCAN_COVERAGE_VERSION},
+          'B13_SCAN_VERSION_UNSUPPORTED')
+    build = coverage_scan_request if version == SCAN_COVERAGE_VERSION else scan_request
     matches = []
     for original in source_requests(source):
         prior = upgrade_request(original, compact=True, role_labels=True,
                                 relevance_scope=True)
-        if scan_request(prior) == scan:
+        if build(prior) == scan:
             matches.append(prior)
     _need(len(matches) == 1, 'B13_SCAN_PRIOR_SOURCE_NOT_UNIQUE')
     return matches[0]
@@ -320,8 +430,10 @@ def build_scan_acceptance(*, prepared, plan, response_body):
     scan = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
     source = strict_json_loads(text=prepared.source_bytes.decode('utf-8'))
     prior = prior_for_scan(source=source, scan=scan)
-    result = validate_scan(request=prior, scan_request_value=scan,
-                           raw_response=response_body)
+    coverage = scan['scan_contract']['version'] == SCAN_COVERAGE_VERSION
+    validate = validate_coverage_scan if coverage else validate_scan
+    result = validate(request=prior, scan_request_value=scan,
+                      raw_response=response_body)
     document = next(doc for doc in source['documents']
                     if doc['document_id'] == scan['document_context']['document_id'])
     references = [document['source_reference']['source_reference_id']]
@@ -338,7 +450,8 @@ def build_scan_acceptance(*, prepared, plan, response_body):
         'status': 'CANDIDATE'})
     evidence_body = {'candidate_hash': candidate['candidate_hash'],
         'status': 'PASS', 'normalized_values': selected,
-        'checks': [{'check': 'B13_SCAN_COMPLETE_SOURCE_REFERENCE_SHAPE_ONLY',
+        'checks': [{'check': ('B13_COVERAGE_SCAN_ALL_ORIGINAL_REFERENCES_ACCOUNTED_SHAPE_ONLY'
+                    if coverage else 'B13_SCAN_COMPLETE_SOURCE_REFERENCE_SHAPE_ONLY'),
                     'status': 'PASS', 'scan_result_id': result['scan_result_id'],
                     'metric_result_created': False}],
         'reason_codes': [], 'identity_constraints': []}
@@ -358,8 +471,10 @@ def build_scan_acceptance(*, prepared, plan, response_body):
         'task_contract_hash': plan['task_contract_hash'],
         'validator_semantic_hash': content_hash(value={
             'module': sha256_file(path=Path(__file__)),
-            'scan_protocol': content_hash(value=SCAN_PROTOCOL)}),
-        'validator_semantic_version': 'B13_SCAN_SHAPE_STAGE_V1'}
+            'scan_protocol': content_hash(value=SCAN_COVERAGE_PROTOCOL
+                                         if coverage else SCAN_PROTOCOL)}),
+        'validator_semantic_version': ('B13_COVERAGE_SCAN_SHAPE_STAGE_V2'
+                                       if coverage else 'B13_SCAN_SHAPE_STAGE_V1')}
 
 
 def saved_scan_stage(*, prepared, scan_path):

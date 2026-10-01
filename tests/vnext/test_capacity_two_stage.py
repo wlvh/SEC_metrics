@@ -11,7 +11,8 @@ from vnext.capacity_reference_contract import (SCANNED_VERSION,
     restore_base_request, upgrade_request)
 from vnext.capacity_semantic_review import validate_response
 from vnext.capacity_two_stage import (
-    build_scan_acceptance, interpretation_request, scan_request,
+    _reference_inventory, build_scan_acceptance, coverage_scan_request,
+    interpretation_request, scan_request, validate_coverage_scan,
     validate_interpretation, validate_scan,
 )
 
@@ -41,6 +42,72 @@ class CapacityTwoStageTest(unittest.TestCase):
                           books['timing'].index('CURRENT_REPORT'),
                           [self.ref], 'Current contract manufacturing capacity is described.']],
         }
+
+    def test_compact_scan_covers_every_original_reference_without_absence_credit(self):
+        inventory = _reference_inventory(self.request)
+        excluded_ref = next(ref for ref in inventory if ref != self.ref)
+        excluded = ['B', inventory[excluded_ref],
+                    int(excluded_ref[1:]), int(excluded_ref[1:]) + 1]
+        scan = coverage_scan_request(self.request)
+        answer = {'units_reviewed': list(range(len(self.request['units']))),
+                  'candidate_refs': [self.ref], 'unresolved_refs': [],
+                  'excluded_ref_ranges': [excluded]}
+
+        def check(response, request=scan):
+            return validate_coverage_scan(request=self.request,
+                scan_request_value=request,
+                raw_response=canonical_json_bytes(value=response))
+
+        result = check(answer)
+        self.assertEqual(2, result['source_reference_count'])
+        self.assertEqual(1, result['excluded_count'])
+        self.assertFalse(result['absence_established'])
+        self.assertFalse(result['model_relevance_proven'])
+        self.assertFalse(result['native_credit'])
+        self.assertEqual(self.scan, scan_request(self.request))
+        self.assertNotEqual(self.scan['request_id'], scan['request_id'])
+        from vnext.capacity_two_stage import prior_for_scan
+        self.assertEqual(self.request,
+                         prior_for_scan(source=self.source, scan=scan))
+        plan = {key: content_hash(value=key) for key in
+            ('selected_representation_hash', 'ai_invocation_plan_id',
+             'source_identity_hash', 'task_contract_hash')}
+        draft = build_scan_acceptance(prepared=SimpleNamespace(
+            source_bytes=canonical_json_bytes(value=self.source),
+            request_bytes=canonical_json_bytes(value=scan)),
+            plan=plan, response_body=canonical_json_bytes(value=answer))
+        self.assertEqual('B13_COVERAGE_SCAN_SHAPE_STAGE_V2',
+                         draft['validator_semantic_version'])
+        self.assertFalse(draft['candidate_record']['selected'][
+            'source_scan']['native_credit'])
+
+        missing = deepcopy(answer)
+        missing['excluded_ref_ranges'] = []
+        with self.assertRaisesRegex(ValueError, 'B13_COVERAGE_SCAN_SOURCE_GAP'):
+            check(missing)
+        overlap = deepcopy(answer)
+        overlap['excluded_ref_ranges'] = [['B', inventory[self.ref],
+            int(self.ref[1:]), int(self.ref[1:]) + 1]]
+        with self.assertRaisesRegex(ValueError,
+                'B13_COVERAGE_SCAN_RANGE_NOT_ORIGINAL_OR_OVERLAPS'):
+            check(overlap)
+        forged = deepcopy(answer)
+        forged['excluded_ref_ranges'][0][3] += 1
+        with self.assertRaisesRegex(ValueError,
+                'B13_COVERAGE_SCAN_RANGE_NOT_ORIGINAL_OR_OVERLAPS'):
+            check(forged)
+        bad_integer = deepcopy(answer)
+        bad_integer['excluded_ref_ranges'][0][2] = True
+        with self.assertRaisesRegex(ValueError, 'B13_COVERAGE_SCAN_RANGE_INVALID'):
+            check(bad_integer)
+        bad_kind = deepcopy(answer)
+        bad_kind['excluded_ref_ranges'][0][0] = []
+        with self.assertRaisesRegex(ValueError, 'B13_COVERAGE_SCAN_RANGE_INVALID'):
+            check(bad_kind)
+        changed_scan = deepcopy(scan)
+        changed_scan['scan_contract']['reference_count'] += 1
+        with self.assertRaisesRegex(ValueError, 'B13_COVERAGE_SCAN_REQUEST_CHANGED'):
+            check(answer, request=changed_scan)
 
     def test_model_supplied_spans_keep_parallel_claims_without_lexical_split(self):
         from tests.vnext.test_capacity_utilization_source import quantity_source
