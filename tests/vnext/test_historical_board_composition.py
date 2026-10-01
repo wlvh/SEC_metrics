@@ -595,6 +595,18 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:60]):
                 self.assertIn("BOARD_MEMBERSHIP_CHANGE", statement_labels(text, pfizer, period_start=START))
 
+    def test_no_change_to_the_committees_in_the_year(self):
+        # Pfizer FY2022 block 799 and FY2023 block 884: the readers judged each
+        # a fact about the committees' members that year.
+        for text, start in (("There were no changes to Committee compositions in 2022.", "2022-01-01"),
+                            ("There were no changes to Committee compositions in 2023.", "2023-01-01")):
+            with self.subTest(text=text[:60]):
+                self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", self.labels_for(text, start))
+        # An earlier year's stability says nothing about the year reported
+        # (constructed: the 2022 sentence read in a FY2023 filing).
+        self.assertNotIn("COMMITTEE_COMPOSITION_STATEMENT", self.labels_for(
+            "There were no changes to Committee compositions in 2022.", "2023-01-01"))
+
     def test_a_role_taken_up_with_became(self):
         # Lumen FY2021 block 897: the registrant's chair, named by its possessive.
         lumen = frozenset({"lumen", "technologies"})

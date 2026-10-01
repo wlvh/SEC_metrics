@@ -522,3 +522,19 @@
 第三个注错第一次没被抓：正例只有小写的 "the Company’s"，去掉冠词跳过也不影响。句首大写冠词这种写法语料里没有，但不跳过它就会把 "The Company’s Annual Meeting" 读成别的公司，所以补了一条构造的句首正例，而不是删掉这段处理。共 96/96，对照 76 个用例。
 
 **量测**（`measured-28-another-company-meeting.json`）：只移走 Pfizer 2022 第 446、547 块；误选 16→14，漏选 36 不变，不一致位置 19 不变，最新年不变。
+
+## 29. 年度内委员会构成没有变化
+
+**问题。** Pfizer 2022 第 799 块、2023 第 884 块都以一句 "There were no changes to Committee compositions in 2022."（2023 年那份写 2023）结尾。这句说的是那一年各委员会的成员就是原来那些人，读者两份都判为含事实（MIXED，块里其余文字是委员会调整的程序），选择器没有对应句式，两块都没取。
+
+**先量后改。** 37 份文档里写 "no change(s) to/in … committee/board composition" 的只有 Pfizer 三句：上面两句，和 2025 年第 1095 块的 "No changes to Committee compositions occurred in 2025 other than the election of Dr. Desmond-Hellman as Chair of the Science and Technology Committee and to reflect the retirement of Dr. Hobbs."。最后这句已经因为点名了委员会主席的任命而入选，不靠新规则。
+
+**改动。** "no change(s) to Committee composition(s) in <年份>"，且年份不早于目标年度（与加入日期同一规则：早于年度的稳定不说明本年度）时，算委员会构成陈述。只收语料里出现的写法：不收 "during"、"occurred in" 这类中间插词的写法，也不收董事会构成——这些在 37 份文档里都没有例子，2025 年那句也不需要它。
+
+**用例与注错。** `test_no_change_to_the_committees_in_the_year`：第 799、884 块那句原文为正例；把 2022 年那句放到 FY2023 的文件里不算（构造）。注错：
+- `NO_CHANGE_TO_THE_COMMITTEES_IS_NOT_READ`（去掉这条规则）；
+- `AN_EARLIER_YEAR_S_STABILITY_COUNTS`（不看年份）。
+
+共 98/98，对照 77 个用例。
+
+**量测**（`measured-29-no-committee-change.json`）：只新增 Pfizer 2022 第 799 块、2023 第 884 块；漏选 36→34，不一致位置 19→18（Pfizer 2023 现与判读一致），误选 14 不变，最新年不变。

@@ -264,6 +264,14 @@ INJECTIONS = [
      'test_standing_down_at_another_company_s_meeting'),
     ('THE_ARTICLE_NAMES_THE_COMPANY', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z]', '    for match in re.finditer("\\\\b([A-Z]',
      'test_standing_down_at_another_company_s_meeting'),
+    # Repair 29: "There were no changes to Committee compositions in 2022."
+    ('NO_CHANGE_TO_THE_COMMITTEES_IS_NOT_READ',
+     '        if stable and not _joined_before(stable.group("date"), period_start):\n'
+     '            labels.add("COMMITTEE_COMPOSITION_STATEMENT")\n',
+     '', 'test_no_change_to_the_committees_in_the_year'),
+    ('AN_EARLIER_YEAR_S_STABILITY_COUNTS',
+     '        if stable and not _joined_before(stable.group("date"), period_start):',
+     '        if stable:', 'test_no_change_to_the_committees_in_the_year'),
 ]
 
 

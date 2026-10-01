@@ -557,6 +557,12 @@ _MANAGEMENT_MEMBERS = re.compile(
 _FORMED_EACH_TIME = re.compile(
     r"\b(?:forms|convenes|creates|establishes|appoints|(?:will|may|would)\s+(?:form|convene|create|establish"
     r"|appoint))\s+(?:a|an)\s+(?:[\w&’'\-]+\s+){0,4}(?:sub-?)?committee\b", re.I)
+# "There were no changes to Committee compositions in 2022" (Pfizer's older
+# proxies) states who sat on the committees that year: those who had. It is a
+# fact about the year it names, so a year before the one the filing reports
+# says nothing the selection may count.
+_NO_COMPOSITION_CHANGE = re.compile(
+    r"\bno changes?\s+to\s+committee\s+compositions?\s+in\s+(?P<date>(?:19|20)\d\d)\b", re.I)
 _QUALIFICATION = re.compile(
     r"\b(?:independent|financially literate|financial literacy|financially sophisticated|financial sophistication"
     r"|financial experts?|non-employee directors?|outside directors?|non-management directors?"
@@ -975,6 +981,9 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
             labels.add("DIRECTOR_QUALIFICATION_DETERMINATION")
         if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms))
                 and not _MANAGEMENT_MEMBERS.search(sentence) and not _FORMED_EACH_TIME.search(sentence)):
+            labels.add("COMMITTEE_COMPOSITION_STATEMENT")
+        stable = _NO_COMPOSITION_CHANGE.search(sentence)
+        if stable and not _joined_before(stable.group("date"), period_start):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):
             labels.add("STANDING_COMMITTEES_STATEMENT")
