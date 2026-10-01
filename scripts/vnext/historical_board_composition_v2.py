@@ -53,6 +53,7 @@ Call relationships:
 """
 from __future__ import annotations
 
+import datetime as dt
 import re
 from pathlib import Path
 
@@ -664,6 +665,44 @@ _DIRECTOR_COUNT = re.compile(
 # year, of the twelve then current members of the Board, twelve attended"
 # (c02-composition-facts/adjudicate.py, DIRECTOR_COUNT_ON_A_DATE). Like the
 # count above it is read wherever it is printed.
+# A director's join with its printed date: "has served as a director since
+# February 2021", "joined our Board on February 25, 2021", "was appointed to
+# the Board effective May 2019", "first elected to the Board at the 2015 Annual
+# Meeting". Dated before the fiscal year the filing reports, it is the
+# director's tenure in other words, as a card's "Director since" field is, and
+# states no change in that year; dated in that year or after, it is a change in
+# who sits on the board (c02-composition-facts/adjudicate.py, JOIN_IN_THE_YEAR
+# and JOIN_BEFORE_THE_YEAR).
+_DATED_JOIN = re.compile(
+    r"\b(?:has served as (?:[^.;]{0,60}?\b)?(?:a |an )?(?:independent |non-employee |non-executive )?"
+    r"(?:member of (?:the|our) board(?: of directors)?|director)(?: of (?:the|our) company)?\s+since"
+    r"|joined (?:the|our) board(?: of directors)?(?: as [^.;]{0,40}?)?\s+(?:on|in|effective)"
+    r"|(?:appointed|elected|named)\b[^.;]{0,80}?\b(?:a member of|to) (?:the|our) board(?: of directors)?\s+"
+    r"(?:on|in|effective|at the)"
+    r"|first elected to (?:the|our) board at the"
+    r"|since joining (?:the|our) board(?: of directors)? in)\s+(?:the\s+)?"
+    r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)", re.I)
+_MONTH_NUMBERS = {name: number for number, name in enumerate(_MONTHS.split("|"), start=1)}
+
+
+def _joined_before(date_text, start):
+    """True when a printed join date falls before the fiscal year's first day.
+
+    A date printed without its day or month is placed at the end of what it
+    names, so "February 2021" or "2021" is in a year that starts in that month
+    or year: the filing does not say the join came earlier.
+    """
+    year = int(re.search(r"(?:19|20)\d\d", date_text).group(0))
+    month = re.match("(" + _MONTHS + ")", date_text, re.I)
+    if month is None:
+        return year < start.year
+    number = _MONTH_NUMBERS[month.group(1).casefold()]
+    day = re.search(r"\b(\d{1,2}),", date_text)
+    if day is None:
+        return (year, number) < (start.year, start.month)
+    return dt.date(year, number, int(day.group(1))) < start
+
+
 _THEN_CURRENT_MEMBERS = re.compile(r"\bof\s+the\s+" + _NUM + r"\s+then[- ]current\s+(?:members\s+of\s+(?:the|our)\s+board"
                                    r"|directors)\b", re.I)
 # A committee chair named where the filing explains a fee: "Cash fees paid
@@ -765,7 +804,7 @@ def _acronym_service(sentence, acronyms):
                           r"(?:the|our)\s+(?-i:" + "|".join(sorted(acronyms)) + r")\b", sentence, re.I))
 
 
-def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), registrant=frozenset(),
+def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=frozenset(), registrant=frozenset(),
                      classified=False):
     """The composition facts a prose block states, one label per kind.
 
@@ -773,6 +812,9 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
         text: The block's text.
         own_words: Words of the registrant's name and of its committees' names;
             a board or committee named with them is not another body.
+        period_start: The first day of the fiscal year the filing reports
+            (``datetime.date``); a director's dated join is a change in who sits
+            on the board only from that day on.
         acronyms: The short forms this filing uses for its own committees.
         registrant: Words of the registrant's name, for a possessive owner.
         classified: The filing's board is divided into classes, so a count of
@@ -793,6 +835,13 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             labels.add("BOARD_SIZE_STATEMENT")
         if _SERVICE_AS_CHAIR.search(sentence) and _mentions_person(sentence):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
+        # A join dated in the year is a change in who sits on the board wherever
+        # it is printed - a pay paragraph included - as a past count is; one
+        # dated before the year states nothing the change rules may count.
+        joins = [match.group("date") for match in _DATED_JOIN.finditer(sentence)]
+        if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):
+            labels.add("BOARD_MEMBERSHIP_CHANGE")
+        undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence
         if _EXCLUDED_TOPIC.search(sentence):
             continue
         independence = _NOT_DIRECTOR_INDEPENDENCE.sub(" ", sentence)
@@ -816,7 +865,7 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             labels.add("BOARD_LEADERSHIP_STATEMENT")
         owned = _OWNED_CHANGE.search(sentence)
         if (_mentions_person(sentence)
-                and (any(p.search(sentence) for p in _MEMBERSHIP_CHANGE)
+                and (any(p.search(undated) for p in _MEMBERSHIP_CHANGE)
                      or (owned and owned.group("owner").casefold() in registrant))):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         if any(p.search(sentence) for p in _MEMBERSHIP_COUNT):
@@ -1296,12 +1345,15 @@ def _acronyms(headings):
     return frozenset(found)
 
 
-def board_composition_facts(*, document):
+def board_composition_facts(*, document, period_start):
     """Return the composition facts one governance document states.
 
     Args:
         document: The governance document record the frozen preparation built
             (``text_business_candidates.governance_source_document``).
+        period_start: The first day of the fiscal year the filing reports, as
+            an ISO date (the route's target ``period_start``). A director's
+            join dated before it is tenure, not a change in the year.
 
     Returns:
         A proposal of the frozen record type, whose candidates are whole-block
@@ -1309,6 +1361,10 @@ def board_composition_facts(*, document):
         it. Counts, dates and associations are never inferred.
     """
     _check_document(document)
+    try:
+        start = dt.date.fromisoformat(period_start)
+    except (TypeError, ValueError):
+        raise ValueError("C02_COMPOSITION_PERIOD_START_INVALID:" + repr(period_start)) from None
     blocks = document["blocks"]
     registrant = _registrant_keys(document)
     cores = _registrant_cores(document)
@@ -1330,8 +1386,8 @@ def board_composition_facts(*, document):
         text = clean(block["text"])
         if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\W", "", text.casefold()) in registrant:
             continue
-        labels = statement_labels(block["text"], own_words, acronyms=acronyms, registrant=registrant_words,
-                                  classified=classified)
+        labels = statement_labels(block["text"], own_words, period_start=start, acronyms=acronyms,
+                                  registrant=registrant_words, classified=classified)
         for label in labels:
             take(i, label)
         # A lead-in introduces a list only when the sentence that ends in the
@@ -1339,7 +1395,8 @@ def board_composition_facts(*, document):
         # responsibilities include:" introduces duties.
         last = sentences(block["text"])[-1] if labels and text.endswith(":") else ""
         if last and _introduces_people(last) and statement_labels(
-                last, own_words, acronyms=acronyms, registrant=registrant_words, classified=classified):
+                last, own_words, period_start=start, acronyms=acronyms, registrant=registrant_words,
+                classified=classified):
             for index, label in _list_items(blocks, i):
                 take(index, label)
     for index, label in (*_changes(blocks, sorted(span[0] for span, _ in headings)),
@@ -1356,6 +1413,7 @@ def board_composition_facts(*, document):
             "finding_status": "SOURCE_EXCERPTS_FOUND" if candidates else "NO_SUPPORTED_STATEMENT_PATTERN",
             "candidates": candidates, "numeric_board_counts_asserted": False,
             "board_measurement_date_assigned": False, "not_disclosed_confirmed": False,
+            "join_dates_judged_from": start.isoformat(),
             "semantic_interpretation": "VERBATIM_BOARD_COMPOSITION_FACTS_NOT_AS_OF_BOARD_INFERENCE",
             "selection_policy": SELECTION_POLICY,
             "committee_headings": [{"blocks": list(range(span[0], span[1] + 1)), "committee": name}

@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 55,
- "caught": 55,
- "total": 55,
+ "control_tests_run": 59,
+ "caught": 61,
+ "total": 61,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -19,6 +19,7 @@
    "expected": "test_another_organisations_board_is_not_this_one",
    "result": "CAUGHT",
    "failed": [
+    "test_a_join_dated_in_the_year_is_a_change",
     "test_another_organisations_board_is_not_this_one"
    ]
   },
@@ -84,6 +85,9 @@
    "expected": "test_committee_board_and_leadership_facts",
    "result": "CAUGHT",
    "failed": [
+    "test_a_join_dated_before_the_year_is_tenure",
+    "test_a_join_dated_in_the_year_is_a_change",
+    "test_a_join_is_dated_as_precisely_as_it_is_printed",
     "test_committee_board_and_leadership_facts",
     "test_who_joined_left_or_stayed"
    ]
@@ -458,6 +462,59 @@
    "result": "CAUGHT",
    "failed": [
     "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"
+   ]
+  },
+  {
+   "injection": "A_DATED_JOIN_COUNTS_IN_ANY_YEAR",
+   "expected": "test_a_join_dated_before_the_year_is_tenure",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_join_dated_before_the_year_is_tenure",
+    "test_a_join_is_dated_as_precisely_as_it_is_printed"
+   ]
+  },
+  {
+   "injection": "AN_IN_YEAR_JOIN_STATES_NOTHING",
+   "expected": "test_a_join_dated_in_the_year_is_a_change",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_join_dated_before_the_year_is_tenure",
+    "test_a_join_dated_in_the_year_is_a_change",
+    "test_a_join_is_dated_as_precisely_as_it_is_printed",
+    "test_the_target_year_is_a_date_and_the_proposal_names_it",
+    "test_who_joined_left_or_stayed"
+   ]
+  },
+  {
+   "injection": "A_JOIN_IN_A_PAY_SENTENCE_IS_SET_ASIDE",
+   "expected": "test_a_join_dated_in_the_year_is_a_change",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_join_dated_in_the_year_is_a_change"
+   ]
+  },
+  {
+   "injection": "A_PRINTED_DAY_IS_IGNORED",
+   "expected": "test_a_join_is_dated_as_precisely_as_it_is_printed",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_join_is_dated_as_precisely_as_it_is_printed"
+   ]
+  },
+  {
+   "injection": "A_MONTH_ALONE_IS_PLACED_AT_ITS_START",
+   "expected": "test_a_join_is_dated_as_precisely_as_it_is_printed",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_join_is_dated_as_precisely_as_it_is_printed"
+   ]
+  },
+  {
+   "injection": "ANY_TARGET_YEAR_IS_ACCEPTED",
+   "expected": "test_the_target_year_is_a_date_and_the_proposal_names_it",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_target_year_is_a_date_and_the_proposal_names_it"
    ]
   }
  ]

@@ -425,7 +425,7 @@ def main(argv=None):
         if (REPO / dumped["reading"]).parent == reading.READING_DIR:
             latest.add(record["position"])
         decisions.extend(decisions_for(record["position"], dumped["document"], record))
-        held.append((record, dumped["document"]))
+        held.append((record, dumped["document"], dumped["period_start"]))
     out = {"record_type": "C02_COMPOSITION_ADJUDICATION",
            "decided_by": "executor, applying each rule to every block of its class in every reading",
            "readings": [str(reading.READING_DIR.relative_to(REPO)), str(reading.OLDER_READING_DIR.relative_to(REPO))],
@@ -451,8 +451,9 @@ def _effect(*, held, latest, before_ref, after_path, output):
         handle.flush()
         tables = {"before": reading.load_adjudications(handle.name), "after": reading.load_adjudications(after_path)}
     positions, totals = {}, {side: {"wrongly_taken": 0, "missed": 0, "agree": 0} for side in tables}
-    for record, document in held:
-        chosen = sorted(c["block_index"] for c in board_composition_facts(document=document)["candidates"])
+    for record, document, period_start in held:
+        chosen = sorted(c["block_index"] for c in board_composition_facts(
+            document=document, period_start=period_start)["candidates"])
         entry = {"years": "latest" if record["position"] in latest else "older"}
         for side, table in tables.items():
             answer = reading.read_position(document=document, chosen=chosen, reading=record, adjudications=table)

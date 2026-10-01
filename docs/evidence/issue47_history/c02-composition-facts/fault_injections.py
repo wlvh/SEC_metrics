@@ -173,6 +173,22 @@ INJECTIONS = [
     # Repair 12: the board's size on a past date, printed with attendance.
     ('A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE', ' or _THEN_CURRENT_MEMBERS.search(sentence)', '',
      "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"),
+    ('A_DATED_JOIN_COUNTS_IN_ANY_YEAR', 'undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence',
+     'undated = sentence', "test_a_join_dated_before_the_year_is_tenure"),
+    ('AN_IN_YEAR_JOIN_STATES_NOTHING',
+     'if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):',
+     'if False:', "test_a_join_dated_in_the_year_is_a_change"),
+    ('A_JOIN_IN_A_PAY_SENTENCE_IS_SET_ASIDE',
+     'if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):',
+     'if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence) '
+     'and not _EXCLUDED_TOPIC.search(sentence):', "test_a_join_dated_in_the_year_is_a_change"),
+    ('A_PRINTED_DAY_IS_IGNORED', '    return dt.date(year, number, int(day.group(1))) < start',
+     '    return (year, number) < (start.year, start.month)', "test_a_join_is_dated_as_precisely_as_it_is_printed"),
+    ('A_MONTH_ALONE_IS_PLACED_AT_ITS_START', '        return (year, number) < (start.year, start.month)',
+     '        return (year, number) <= (start.year, start.month)',
+     "test_a_join_is_dated_as_precisely_as_it_is_printed"),
+    ('ANY_TARGET_YEAR_IS_ACCEPTED', '        raise ValueError("C02_COMPOSITION_PERIOD_START_INVALID:" + repr(period_start)) from None',
+     '        start = dt.date(1900, 1, 1)', "test_the_target_year_is_a_date_and_the_proposal_names_it"),
 ]
 
 

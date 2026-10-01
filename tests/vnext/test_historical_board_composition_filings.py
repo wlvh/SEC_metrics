@@ -224,9 +224,10 @@ class AReadingRefusesTextItDidNotSee(unittest.TestCase):
         path = READINGS[0]
         record = json.loads(path.read_text(encoding="utf-8"))
         company_id, report_end = record["position"].rsplit(":", 1)
-        document, chosen, _candidate = reading.route_selection(repo_root=ROOT, company_id=company_id,
-                                                               report_end=report_end)
-        direct = [c["block_index"] for c in board_composition_facts(document=document)["candidates"]]
+        document, chosen, _candidate, period_start = reading.route_selection(
+            repo_root=ROOT, company_id=company_id, report_end=report_end, with_period=True)
+        direct = [c["block_index"] for c in board_composition_facts(
+            document=document, period_start=period_start)["candidates"]]
         self.assertEqual(sorted(chosen), direct)
 
 

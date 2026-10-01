@@ -161,3 +161,37 @@
 **用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_the_board_s_size_on_a_past_date_wherever_it_is_printed`。撤回模块改动时该用例失败。注错 `A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE`；注错 55/55，对照 55 例。
 
 **量测**（`measured-12-past-board-size.json`）：只在 Ford 2021、2022 各新增这一块，漏选 109 → 107。
+
+## 13. 董事加入日期按目标年度判断
+
+**问题。** 有些句子写了董事何时加入董事会："who joined our Board in February 2020"、"has served as Chief Executive Officer and a director of the Company since February 2021"、"who joined our Board on February 25, 2021"。选择器原来不看日期：凡是 "joined our board" 都当成员变动取，凡是 "has served as … director since …" 都不取。统一裁定按目标年度分成两类。加入日期在目标年度之前，是任期的另一种说法，与卡片上的 "Director since" 同类（JOIN_BEFORE_THE_YEAR，非事实）。加入日期在目标年度之内或之后，是该年度董事会成员的变动（JOIN_IN_THE_YEAR，事实）。按这个口径，有三块误取、两块漏取：
+- 误取：Enphase 2021、2022 的董事薪酬段（Malchow 2020 年加入）；Lumen 2022 的持股指引例外（Allen 2021 年、Jones 2020 年加入）。
+- 漏取：Marriott 2021 的 CEO 在 2021 年 2 月加入董事会；Goren 在 2022 年 3 月加入。
+
+**成因。** 选择器的输入只有治理文件本身，不知道目标年度。代理文件的 reportDate 有时是股东会日期，有时为空，不能代替目标年度。
+
+**改动。**
+- `board_composition_facts` 增加必填参数 `period_start`，即目标年度第一天，ISO 日期。路线传 target 的 `period_start`；提案里记下 `join_dates_judged_from`。
+- `_DATED_JOIN` 识别带日期的加入句式。日期只印月份时按该月月末算，只印年份时按年末算：文件没说加入早于年度，就不当作早于。
+- 加入日期在年度第一天之前：这一段不再让成员变动规则成立，句中其他变动照常算。
+- 加入日期在年度之内或之后：标为成员变动。这项判断放在排除话题之前，与上年人数一样，所以写在薪酬段落里也取。
+- 日期不合法时按名拒绝（`C02_COMPOSITION_PERIOD_START_INVALID`）。
+- **接口变化**：调用方必须传目标年度。#28 若接这一版，需要在它的 `_prepared` 里传 `target["period_start"]`。
+
+**用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard` 的四条用例：
+- `test_a_join_dated_before_the_year_is_tenure`：两种原句在加入之后的年度不取，在加入当年取；同句另有变动时照取；不带日期的加入照旧取。
+- `test_a_join_dated_in_the_year_is_a_change`：CEO 原句当年取、次年不取；薪酬句里的当年加入取；别家董事会不算。
+- `test_a_join_is_dated_as_precisely_as_it_is_printed`：52/53 周年度从 1 月 30 日开始，印了 1 月 15 日算年度前，只印 1 月算年度内。
+- `test_the_target_year_is_a_date_and_the_proposal_names_it`：四种坏日期按名拒绝；提案记下目标年度。
+
+六个注错都由为它写的用例抓到：`A_DATED_JOIN_COUNTS_IN_ANY_YEAR`、`AN_IN_YEAR_JOIN_STATES_NOTHING`、`A_JOIN_IN_A_PAY_SENTENCE_IS_SET_ASIDE`、`A_PRINTED_DAY_IS_IGNORED`、`A_MONTH_ALONE_IS_PLACED_AT_ITS_START`、`ANY_TARGET_YEAR_IS_ACCEPTED`。注错 61/61，对照 59 例。
+
+**量测**（`measured-13-joins-by-period.json`）：
+- 移走 Enphase 2021、2022 与 Lumen 2022 三块，统一裁定都判为非事实。
+- 新增 Marriott 2021 两块：613 由统一裁定判为事实，842 由读者判为事实。
+- 误选 21→18，漏选 107→105。
+- **最新年 Paramount 2025 新增 8 块**：都是 "Ms. Byrne has served as a member of our Board since August 2025" 这类履历块，即 2025 年组成的新董事会成员，读者都判为含事实的混合块。该位置的选择仍与判读一致，但值会变；重算之后要重读，才能接受。
+
+**这次顺带修正了量测工具。** `measure.py` 的 `base_matches_route` 拿 `--base` 的选择去比缓存里路线当时的选择。缓存是在更早的选择器版本上建的，所以第 1–12 节的量测文件里，有 26 个位置这一项是 false，退出码因此是 1。原因是比较对象过时，不是规则不符。现在缓存记下建它时选择器的哈希：与 `--base` 相同才比较，否则记为 null；只有真比出差别时，退出码才是 1。
+
+**不主张。** 选择器识别加入日期的句式，与统一裁定 JOIN 规则的句式写法相同。所以在这些句式上两者一致是写法相同造成的，不是独立验证；主要依据仍是读者的原判。

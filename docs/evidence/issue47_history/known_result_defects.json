@@ -2748,7 +2748,8 @@
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json"
    ],
    "selection_problems": {
     "missed": [
@@ -2758,13 +2759,13 @@
      216
     ],
     "wrongly_taken": [
-     943,
-     957
+     943
     ]
    },
    "partial_repair": {
-    "still_open": "4 fact block(s) missed (146, 157, 158, 216) and 2 block(s) taken that state no composition fact (943, 957); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
-    "classified_slate_count": "1 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28])."
+    "still_open": "4 fact block(s) missed (146, 157, 158, 216) and 1 block(s) taken that state no composition fact (943); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "classified_slate_count": "1 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28]).",
+    "joins_by_period": "A director's join is now judged against the target year: 0 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 1 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28])."
    }
   },
   {
@@ -2785,18 +2786,19 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-9-group-headings.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-9-group-headings.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "15 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "0 fact block(s) missed (none) and 2 block(s) taken that state no composition fact (531, 547); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "0 fact block(s) missed (none) and 1 block(s) taken that state no composition fact (531); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "classified_slate_count": "3 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28]).",
-    "director_group_heading": "3 director-group heading(s) no longer taken (class, standing for election and term; DIRECTOR_GROUP_HEADING), every one decided not a composition fact by the reading or the uniform adjudication; the names under them stay; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 9 [shared-with-#28])."
+    "director_group_heading": "3 director-group heading(s) no longer taken (class, standing for election and term; DIRECTOR_GROUP_HEADING), every one decided not a composition fact by the reading or the uniform adjudication; the names under them stay; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 9 [shared-with-#28]).",
+    "joins_by_period": "A director's join is now judged against the target year: 0 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 1 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28])."
    },
    "selection_problems": {
     "wrongly_taken": [
-     531,
-     547
+     531
     ]
    }
   },
@@ -3087,13 +3089,15 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "9 fact block(s) missed (865, 866, 867, 946, 958, 1078, 1281, 1879, 3663) and 3 block(s) taken that state no composition fact (842, 1324, 2784); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "9 fact block(s) missed (865, 866, 867, 946, 958, 1078, 1281, 1879, 3663) and 2 block(s) taken that state no composition fact (842, 1324); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
-    "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "joins_by_period": "A director's join is now judged against the target year: 0 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 1 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
@@ -3109,8 +3113,7 @@
     ],
     "wrongly_taken": [
      842,
-     1324,
-     2784
+     1324
     ]
    }
   },
@@ -3347,18 +3350,18 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-3-sentence-member-lists.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json"
    ],
    "partial_repair": {
     "sentence_member_list": "6 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "5 fact block(s) missed (613, 842, 990, 991, 1144) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "3 fact block(s) missed (990, 991, 1144) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
-    "chair_ceo_structure": "6 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "chair_ceo_structure": "6 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "joins_by_period": "A director's join is now judged against the target year: 2 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 0 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
-     613,
-     842,
      990,
      991,
      1144

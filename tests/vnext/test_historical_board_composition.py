@@ -8,6 +8,7 @@ can be broken without any synthetic case noticing, and the reverse.
 from __future__ import annotations
 
 from pathlib import Path
+import datetime as dt
 import sys
 import unittest
 
@@ -17,6 +18,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from vnext.canonical import content_hash, sha256_bytes  # noqa: E402
 from vnext.historical_board_composition_v2 import (  # noqa: E402
     _mentions_person, board_composition_facts, committee_name, person_name, statement_labels)
+
+# The target year of the synthetic filings: a proxy filed in 2026 reports 2025.
+PERIOD_START = "2025-01-01"
+START = dt.date.fromisoformat(PERIOD_START)
 
 
 def _document(texts, *, emphasized=(), linked=(), registrant="Example Corporation"):
@@ -36,8 +41,8 @@ def _document(texts, *, emphasized=(), linked=(), registrant="Example Corporatio
     return {**body, "text_document_id": content_hash(value=body)}
 
 
-def _selected(texts, **kwargs):
-    proposal = board_composition_facts(document=_document(texts, **kwargs))
+def _selected(texts, *, period_start=PERIOD_START, **kwargs):
+    proposal = board_composition_facts(document=_document(texts, **kwargs), period_start=period_start)
     return {c["block_index"]: c["labels"] for c in proposal["candidates"]}
 
 
@@ -284,10 +289,12 @@ class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
 class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
 
     def assertStates(self, text, label):
-        self.assertIn(label, statement_labels(text, frozenset({"audit", "compensation", "example"})))
+        self.assertIn(label, statement_labels(text, frozenset({"audit", "compensation", "example"}),
+                                              period_start=START))
 
     def assertStatesNothing(self, text):
-        self.assertEqual([], statement_labels(text, frozenset({"audit", "compensation", "example"})))
+        self.assertEqual([], statement_labels(text, frozenset({"audit", "compensation", "example"}),
+                                              period_start=START))
 
     def test_committee_board_and_leadership_facts(self):
         self.assertStates("The Audit Committee is composed of three directors: Messrs. Gomo, Kortlang and Mora.",
@@ -313,12 +320,14 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         size = "The Board currently has seven members and is divided into three classes."
         for text in slate:
             with self.subTest(text=text[:40]):
-                labels = statement_labels(text, frozenset({"example"}), classified=True)
+                labels = statement_labels(text, frozenset({"example"}), period_start=START, classified=True)
                 self.assertNotIn("BOARD_SIZE_STATEMENT", labels)
                 # The same words on a board whose directors all stand each year
                 # state its size.
-                self.assertIn("BOARD_SIZE_STATEMENT", statement_labels(text, frozenset({"example"})))
-        self.assertIn("BOARD_SIZE_STATEMENT", statement_labels(size, frozenset({"example"}), classified=True))
+                self.assertIn("BOARD_SIZE_STATEMENT",
+                              statement_labels(text, frozenset({"example"}), period_start=START))
+        self.assertIn("BOARD_SIZE_STATEMENT",
+                      statement_labels(size, frozenset({"example"}), period_start=START, classified=True))
 
     def test_a_slate_of_sitting_directors_says_who_the_members_are(self):
         # Macy's proxies (c02-composition-facts/adjudicate.py, NOMINEES_ARE_SITTING_DIRECTORS).
@@ -330,7 +339,8 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                      "If elected, each nominee will serve for a one-year term."):
             with self.subTest(text=text[:40]):
                 self.assertNotIn("BOARD_ROSTER_STATEMENT",
-                                 statement_labels(text, frozenset({"audit", "compensation", "example"})))
+                                 statement_labels(text, frozenset({"audit", "compensation", "example"}),
+                                                  period_start=START))
 
     def test_a_task_force_of_named_directors_is_a_body_of_the_board(self):
         # Macy's (c02-composition-facts/adjudicate.py, BOARD_TASK_FORCE).
@@ -354,7 +364,76 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertStates(text, "BOARD_SIZE_STATEMENT")
         # No count, no size.
         self.assertNotIn("BOARD_SIZE_STATEMENT", statement_labels(
-            "All then current directors attended our 2022 annual meeting.", frozenset({"example"})))
+            "All then current directors attended our 2022 annual meeting.", frozenset({"example"}),
+            period_start=START))
+
+    def labels_for(self, text, period_start):
+        return statement_labels(text, frozenset({"audit", "compensation", "example"}),
+                                period_start=dt.date.fromisoformat(period_start))
+
+    def test_a_join_dated_before_the_year_is_tenure(self):
+        # Enphase's director pay paragraph and Lumen's ownership-guideline
+        # exceptions date each join; in a later year's filing that is how long
+        # someone has served (c02-composition-facts/adjudicate.py,
+        # JOIN_BEFORE_THE_YEAR).
+        for text, year in (
+                ("Notwithstanding the foregoing, Joseph Malchow (who joined our Board in February 2020) will not "
+                 "receive equity compensation for serving on our Board during the term of his consulting "
+                 "agreement.", "2021-01-01"),
+                ("Mr. Allen, who joined our Board on February 25, 2021, has until February 25, 2026 to comply "
+                 "with these guidelines.", "2022-01-01")):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, year))
+                # The same sentence in the filing for the year of the join is a change.
+                joined = text[text.index("20", text.index("joined")):][:4]
+                self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, joined + "-01-01"))
+        # Another change in the same sentence still counts.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Mr. Jones, who joined our Board in 2015, will not stand for re-election.", "2025-01-01"))
+        # A join without a date is a change, as before.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for("Ms. Smith joined our Board.", "2025-01-01"))
+
+    def test_a_join_dated_in_the_year_is_a_change(self):
+        # Marriott's CEO joined the board in the year its 2021 filing reports
+        # (JOIN_IN_THE_YEAR); the selector read "has served ... since" as
+        # tenure in every year.
+        text = ("Tony Capuano has served as Chief Executive Officer and a director of the Company since "
+                "February 2021.")
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2021-01-01"))
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2022-01-01"))
+        # A join in the year is read wherever it is printed, a pay sentence included.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Ms. Lee, who joined our Board in March 2025, received a prorated annual cash retainer.",
+            "2025-01-01"))
+        # Another organisation's board is still not this one.
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Ms. Lee joined the board of directors of Acme Holdings in March 2025.", "2025-01-01"))
+
+    def test_a_join_is_dated_as_precisely_as_it_is_printed(self):
+        # A 52/53-week year starts on its own day (Macy's 2022 year starts
+        # January 30). A printed day settles the side; a month alone does
+        # not say the join came before the year, so it is read as in it.
+        start = "2022-01-30"
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Mr. Allen, who joined our Board on January 15, 2022, has until 2027 to comply.", start))
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Mr. Allen, who joined our Board in January 2022, has until 2027 to comply.", start))
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Mr. Allen, who joined our Board in December 2021, has until 2026 to comply.", start))
+
+    def test_the_target_year_is_a_date_and_the_proposal_names_it(self):
+        texts = ["Tony Capuano has served as Chief Executive Officer and a director of the Company since "
+                 "February 2021."]
+        for bad in (None, "", "2021", "2021-13-01"):
+            with self.subTest(bad=bad):
+                with self.assertRaisesRegex(ValueError, "C02_COMPOSITION_PERIOD_START_INVALID"):
+                    board_composition_facts(document=_document(texts), period_start=bad)
+        proposal = board_composition_facts(document=_document(texts), period_start="2021-01-01")
+        self.assertEqual("2021-01-01", proposal["join_dates_judged_from"])
+        self.assertEqual([0], [c["block_index"] for c in proposal["candidates"]])
+        later = board_composition_facts(document=_document(texts), period_start="2022-01-01")
+        self.assertEqual([], later["candidates"])
+        self.assertNotEqual(proposal["proposal_id"], later["proposal_id"])
 
     def test_the_filing_says_whether_its_board_is_classified(self):
         slate = "To elect our three nominees for director to hold office until the 2029 Annual Meeting."
@@ -440,7 +519,7 @@ class ALeadershipOrMembershipFactNamesThisBoardAndThePerson(unittest.TestCase):
     OWN = frozenset({"audit", "compensation", "example"})
 
     def labels(self, text):
-        return statement_labels(text, self.OWN, acronyms=frozenset({"HRC", "HRCC"}),
+        return statement_labels(text, self.OWN, period_start=START, acronyms=frozenset({"HRC", "HRCC"}),
                                 registrant=frozenset({"example"}))
 
     def test_whose_chair_the_sentence_says(self):
@@ -621,7 +700,7 @@ class TheProposalKeepsTheFrozenShape(unittest.TestCase):
     def test_candidates_are_whole_blocks_in_document_order(self):
         document = _document(["Compensation Committee", "Members: Mason Morfit (Chair), Neelie Kroes",
                               "The Audit Committee is composed of two directors: Ms. Byrne and Mr. Hamill."])
-        proposal = board_composition_facts(document=document)
+        proposal = board_composition_facts(document=document, period_start=PERIOD_START)
         self.assertEqual([0, 1, 2], [c["block_index"] for c in proposal["candidates"]])
         self.assertTrue(all(c["section_id"] == "GOVERNANCE_DISCLOSURES" for c in proposal["candidates"]))
         self.assertEqual(document["blocks"][2]["text"], proposal["candidates"][2]["text"])
@@ -630,8 +709,8 @@ class TheProposalKeepsTheFrozenShape(unittest.TestCase):
 
     def test_the_identity_moves_with_the_rules_not_with_the_comments(self):
         document = _document(["Compensation Committee", "Members: Mason Morfit (Chair), Neelie Kroes"])
-        first = board_composition_facts(document=document)
-        second = board_composition_facts(document=document)
+        first = board_composition_facts(document=document, period_start=PERIOD_START)
+        second = board_composition_facts(document=document, period_start=PERIOD_START)
         self.assertEqual(first["proposal_id"], second["proposal_id"])
         self.assertTrue(first["policy_hash"].startswith("sha256:"))
 

@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import inspect
 import json
 import subprocess
 import sys
@@ -72,15 +73,42 @@ def documents(*, cache: Path, source_root: Path):
         for path, root in jobs:
             position = json.loads(path.read_text(encoding="utf-8"))["position"]
             target = cache / (position.replace(":", "_") + ".json")
+            company, end = position.rsplit(":", 1)
             if not target.exists():
-                company, end = position.rsplit(":", 1)
-                document, chosen, candidate = reading.route_selection(
-                    repo_root=REPO, company_id=company, report_end=end, source_root=root)
+                document, chosen, candidate, period_start = reading.route_selection(
+                    repo_root=REPO, company_id=company, report_end=end, source_root=root, with_period=True)
                 target.write_text(json.dumps({"position": position, "reading": str(path.relative_to(REPO)),
                                               "document": document, "chosen": chosen,
-                                              "candidate_hash": candidate["candidate_hash"]}),
+                                              "candidate_hash": candidate["candidate_hash"],
+                                              "period_start": period_start,
+                                              "selector_sha256": "sha256:" + hashlib.sha256(
+                                                  (REPO / MODULE).read_bytes()).hexdigest()}),
                                   encoding="utf-8")
-            yield json.loads(target.read_text(encoding="utf-8"))
+            dumped = json.loads(target.read_text(encoding="utf-8"))
+            if "period_start" not in dumped:
+                # Cached before the selector needed the target year's first day:
+                # take it from the same annual input the route's target uses.
+                dumped["period_start"] = target_period_start(root=root, company_id=company, report_end=end)
+                target.write_text(json.dumps(dumped), encoding="utf-8")
+            yield dumped
+
+
+def target_period_start(*, root, company_id, report_end):
+    """The first day of the year the route targets, as its text input derives it."""
+    from vnext.historical_annual_input import prepare_historical_annual_input
+    from vnext.normal_period_selection import resolve_period_selection
+    selection = resolve_period_selection(repo_root=root, company_id=company_id, report_end=report_end)
+    prepared = prepare_historical_annual_input(repo_root=root, company_id=company_id,
+                                               period_selection=selection)
+    return prepared["table_input"]["target_period"]["period_start"]
+
+
+def select(module, document, period_start):
+    """A selector's block indices; a version from before the period argument takes none."""
+    arguments = {"document": document}
+    if "period_start" in inspect.signature(module.board_composition_facts).parameters:
+        arguments["period_start"] = period_start
+    return sorted(c["block_index"] for c in module.board_composition_facts(**arguments)["candidates"])
 
 
 def main(argv=None):
@@ -96,8 +124,7 @@ def main(argv=None):
     for dumped in documents(cache=args.documents, source_root=args.source_root.resolve()):
         document, position = dumped["document"], dumped["position"]
         record = json.loads((REPO / dumped["reading"]).read_text(encoding="utf-8"))
-        chosen = {name: sorted(c["block_index"] for c in module.board_composition_facts(document=document)
-                               ["candidates"])
+        chosen = {name: select(module, document, dumped["period_start"])
                   for name, module in (("base", base), ("working", working))}
         judged = {row["i"]: row["verdict"] for row in [*record["pool_facts"], *record.get("outside_pool_facts", []),
                                                        *record["selected"], *record.get("supplementary", [])]}
@@ -116,7 +143,13 @@ def main(argv=None):
                 totals[name][kind] = totals[name].get(kind, 0) + len(items)
             totals[name]["positions_disagreeing"] = (totals[name].get("positions_disagreeing", 0)
                                                      + (answer["verdict"] != "READING_AGREES"))
-        positions[position] = {"reading": dumped["reading"], "base_matches_route": chosen["base"] == dumped["chosen"],
+        # The cached "chosen" is what the route selected when the entry was built,
+        # with the selector of that moment. It says whether --base is the rule
+        # the route ran only when that selector was --base's; otherwise there
+        # is nothing to compare, which is not a mismatch.
+        same_rule = dumped.get("selector_sha256") == base_sha
+        positions[position] = {"reading": dumped["reading"],
+                               "base_matches_route": (chosen["base"] == dumped["chosen"]) if same_rule else None,
                                "moved": moved, "problems_base": problems["base"],
                                "problems_working": problems["working"]}
     body = {"record_type": "ISSUE_47_C02_SELECTOR_CHANGE_MEASURED", "selector": MODULE,
@@ -131,7 +164,7 @@ def main(argv=None):
     if args.output:
         args.output.write_text(text, encoding="utf-8")
     print(json.dumps({"moved_in": body["positions_where_something_moved"], "totals": totals}, indent=1))
-    return 0 if all(row["base_matches_route"] for row in positions.values()) else 1
+    return 1 if any(row["base_matches_route"] is False for row in positions.values()) else 0
 
 
 if __name__ == "__main__":

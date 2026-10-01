@@ -1359,7 +1359,8 @@ def _prepare_corrected_sources(*, metric_id, **source_arguments):
         prepared = _C02_PREPARATION(metric_id=metric_id, **source_arguments)
         prepared = proxy_identity.record_cover_identity(
             prepared=prepared, raw_bytes_by_id=source_arguments["raw_bytes_by_id"])
-        return _remember(shared=shared, key=key, prepared=_composition_facts(prepared))
+        return _remember(shared=shared, key=key, prepared=_composition_facts(
+            prepared, period_start=source_arguments["target"]["period_start"]))
     prepared = _D02_PREPARATION(metric_id=metric_id, **source_arguments)
     _need(len(prepared["documents"]) == 1, "HISTORICAL_TEXT_BOUNDARY_EXPECTS_ONE_DOCUMENT")
     reference_id = next(iter(prepared["documents"]))
@@ -1391,18 +1392,21 @@ def _prepare_corrected_sources(*, metric_id, **source_arguments):
         "proposals": {**prepared["proposals"], reference_id: proposal}})
 
 
-def _composition_facts(prepared):
+def _composition_facts(prepared, *, period_start):
     """The frozen C02 preparation with its governance proposal replaced.
 
     Only which blocks are excerpts changes. The annual anchor and the
     governance document were built and checked by the frozen preparation; the
     coverage record keeps every field it had and names the selection policy,
     so a reader of the Evidence can tell which rule chose the excerpts.
+    ``period_start`` is the target year's first day: a director's join dated
+    before it is tenure, not a change in that year.
     """
     governance = list(prepared["proposals"])
     _need(len(governance) == 1, "HISTORICAL_C02_EXPECTS_ONE_GOVERNANCE_DOCUMENT")
     reference_id = governance[0]
-    proposal = board_composition_facts(document=prepared["documents"][reference_id])
+    proposal = board_composition_facts(document=prepared["documents"][reference_id],
+                                       period_start=period_start)
     _need(proposal["candidates"], "HISTORICAL_C02_NO_COMPOSITION_FACT_FOUND")
     coverage = {key: value for key, value in prepared["coverages"][reference_id].items()
                 if key != "coverage_hash"}

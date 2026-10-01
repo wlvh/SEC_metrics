@@ -102,12 +102,14 @@ def text_sha256(text):
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def route_selection(*, repo_root: Path, company_id: str, report_end: str, source_root=None):
+def route_selection(*, repo_root: Path, company_id: str, report_end: str, source_root=None, with_period=False):
     """The governance document and the C02 excerpts the historical route selects.
 
     ``source_root`` is where the filings' saved bytes are - this checkout, or
     for an older year a root restored from the acquisition's export by this
     checkout (its trust journal knows it); the Spec is this checkout's.
+    ``with_period`` adds the target year's first day, which the selector
+    needs to call it directly on the returned document.
     """
     from vnext.historical_results import TEXT_SPEC_PATHS
     from vnext.historical_spec_revision import compile_historical_spec_file
@@ -134,6 +136,8 @@ def route_selection(*, repo_root: Path, company_id: str, report_end: str, source
         raise SystemExit("C02_READING_EXPECTS_ONE_GOVERNANCE_DOCUMENT")
     document = built["documents"][governance[0]]
     chosen = sorted((claim["block_index"] for claim in candidate["selected"].values()))
+    if with_period:
+        return document, chosen, candidate, prepared["text_arguments"]["target"]["period_start"]
     return document, chosen, candidate
 
 
