@@ -109,7 +109,7 @@ def _inspect(source_root,configuration,native_assessment_ledger=None):
     ledger=sha256_file(path=source_root/'evidence/requests_log.csv')
     cases={m:normal.prepare_case(data_root=source_root,company_id=configuration['company_id'],metric_id=m,
                 **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
-                **({'c02_composition':True} if m == 'C02' else {}))
+                **({'c02_composition':True,'c02_grouped':True} if m == 'C02' else {}))
            for m in configuration['metric_ids']}
     _need(sha256_file(path=source_root/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_INSPECTION')
     return cases,_descriptor(cases,configuration),ledger
@@ -299,10 +299,10 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                     normal.install_normal_inputs(data_root=work/'data',source_root=None if source==normal.ROOT else source,
                         company_id=company_id,metric_id=metric,
                         **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
-                        **({'c02_composition':True} if metric == 'C02' else {}))
+                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}))
                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,
                         company_id=company_id,metric_id=metric,
-                        **({'c02_composition':True} if metric == 'C02' else {}))
+                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}))
                     rendered=render_ordinary_run(data_root=work/'data',run_dir=work/'runs'/metric)
                     hashes={}
                     for name,raw in rendered['files'].items():

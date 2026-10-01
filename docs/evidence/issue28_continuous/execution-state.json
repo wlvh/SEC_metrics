@@ -8339,6 +8339,69 @@
       "paramount_2025_archived_result_withdrawn": "sha256:b37865b74f2ae8157b09041026c5ad72c88efb5950d04c1c073d79e6e2f8cfd0",
       "paramount_2025_private_result_no_business_credit": "sha256:4d469eff63d687acdc24b8ba2e22d5b2f18bc3f8c61eab8f0f7d146b19e9fc68"
     },
+    "c02_grouped_v3": {
+      "status": "FINAL_UNCOMMITTED_GROUPED_V3_PRIVATE_NATIVE_AND_COLD_READ_PASS_LIMITED_REVIEW_PENDING",
+      "new_spec": "catalog/r6/C02_board_disclosures_v3.md",
+      "new_module": "scripts/vnext/c02_grouped_source.py",
+      "source_selected_block_counts": [
+        48,
+        82,
+        53,
+        99,
+        99,
+        98,
+        54,
+        79,
+        63,
+        95
+      ],
+      "grouped_counts": [
+        28,
+        25,
+        30,
+        31,
+        29,
+        25,
+        14,
+        25,
+        34,
+        39
+      ],
+      "ten_company_candidate_evidence": "PASS_10_OF_10_FINAL_MAPPED_WORKTREE",
+      "macy_final_private_result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
+      "macy_final_private_run_id": "run:ordinary-integrated:7c8046b58484abb1e103516894771fb55a341f5ee940d403c3e52430c52e6432",
+      "macy_final_status": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE_AND_INDEPENDENT_PROCESS_COLD_READ_PASS_CONTENT_PENDING",
+      "pfizer_pre_map_private_result_id_retained": "sha256:987bba7ce58717b9bcb1c55b78ebeddce3639665e458ca9bb268d3344591c7da",
+      "pfizer_final_mapped_candidate_evidence": "PASS_25_GROUPS_FROM_79_SELECTED_BLOCKS_NO_FINAL_NATIVE_RESULT_CREDIT",
+      "legacy_v2_original_installed_replay": "PASS_OLD_ENPHASE_RESULT_ID_UNCHANGED",
+      "native_protocol_limits_unchanged": {
+        "max_items": 64,
+        "max_text_chars": 64000
+      },
+      "current_v13_requirement_closure": "sha256:5be5192a08a37ddb45edc7f5c1a6c73949a055456ea412a8d64413e8c8611028",
+      "current_v14_requirement_closure": "sha256:5e10a12f388d00cf8af4db539e2d5a139cfe279103f9e01017376d3a69e19d3b",
+      "wiring_receipts": "PASS_THREE_CURRENT_ZERO_EGRESS",
+      "directed_tests": "PASS_9_OF_9_POST_MAPPING",
+      "fast_suite": "PASS_144_OF_144_PRE_MAPPING_PINNED_TOKENIZERS_0_22_2; FINAL_MAPPING_C02_DIRECTED_AND_TEN_SOURCE_RUNS_RECHECKED",
+      "business_content_credit": false,
+      "current_390_credit": false,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/",
+      "shared_with_issue47": {
+        "commit_marker": "[shared-with-#47]",
+        "files_functions": [
+          "scripts/vnext/normal_run_v3.py:prepare_case,install_normal_inputs,create_normal_run,replay_case",
+          "scripts/vnext/ordinary_remaining_cases.py:prepare_current_source_case",
+          "scripts/vnext/ordinary_update_cycle.py:_inspect,run_once"
+        ],
+        "default_compatibility": "new optional grouped flag defaults false; default old C02 candidate/Evidence bytes tested; original v2 installed Run replays under its own bytes",
+        "downstream_effect": "#47 stacked branch must reconcile current V13/V14 binding and explicit ordinary C02 v3 route; no historical selector or #47 runtime was copied"
+      }
+    },
     "reference_table_pr": {
       "url": "https://github.com/wlvh/SEC_metrics/pull/53",
       "head_commit": "564aa70dded2c9c797f3275fbec740f2b0a89a7f",
@@ -8348,8 +8411,8 @@
       "vnext_fast_ci": "SUCCESS",
       "not_merged_or_production": true
     },
-    "peer_latest_read_commit": "234819246783d2bc5a3b27f02888403bb8b41a63",
-    "peer_latest_register_git_blob": "4f8d2ca86be701aba2868756a477eea3d6062798",
+    "peer_latest_read_commit": "84627bed7174b201857676c91377d7df669f3462",
+    "peer_latest_register_git_blob": "e755dcf8e5a65048279e072e638d41fafe2a5ce6",
     "c02_ordinary_successor": {
       "peer_selector_commit": "60aa9f7b5b12289c74776f2320bc827d71b7c857",
       "peer_selector_exact_byte_reused": true,

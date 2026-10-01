@@ -30,10 +30,13 @@ def _current_structured_preparation(*,data_root,company_id,metric_id):
     return prepared,path,resolution,admission
 
 
-def prepare_current_source_case(*, data_root, company_id, metric_id, c02_composition=False):
+def prepare_current_source_case(*, data_root, company_id, metric_id,
+                                c02_composition=False, c02_grouped=False):
     """Pure discovery and source reconstruction; no caller-owned business facts."""
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == "C02"),
           "NORMAL_C02_COMPOSITION_WRONG_METRIC")
+    _need(type(c02_grouped) is bool and (not c02_grouped or (c02_composition and metric_id == "C02")),
+          "NORMAL_C02_GROUPED_SCOPE_INVALID")
     if c02_composition:
         from .normal_run_v3 import _policy as current_policy
         policy = current_policy(data_root)
@@ -53,11 +56,13 @@ def prepare_current_source_case(*, data_root, company_id, metric_id, c02_composi
                 "target": prepared["text_arguments"]["target"], "text_arguments": prepared["text_arguments"],
                 "spec_path": TEXT_PATHS[metric_id]}
         if c02_composition:
-            case["input_binding"] = {"c02_selection_policy": "COMPOSITION_FACTS_V1",
+            selection_policy = "COMPOSITION_GROUPED_V2" if c02_grouped else "COMPOSITION_FACTS_V1"
+            case["input_binding"] = {"c02_selection_policy": selection_policy,
                                      "source_input_binding": prepared["input_binding"]}
             case["text_arguments"] = {**case["text_arguments"],
-                                      "c02_selection_policy": "COMPOSITION_FACTS_V1"}
-            case["spec_path"] = "catalog/r6/C02_board_disclosures_v2.md"
+                                      "c02_selection_policy": selection_policy}
+            case["spec_path"] = ("catalog/r6/C02_board_disclosures_v3.md" if c02_grouped
+                                 else "catalog/r6/C02_board_disclosures_v2.md")
     elif metric_id == "D01":
         from .ordinary_text_input import current_text_sources
         prepared, admission, records, references = current_text_sources(repo_root=data_root, company_id=company_id)
