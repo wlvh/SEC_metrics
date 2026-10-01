@@ -63,6 +63,13 @@ def _adjudicator():
     return module
 
 
+def _judged_once(record, key):
+    """Blocks a reading judges in ``key`` and in none of its other lists."""
+    lists = {name: {row["i"] for row in record.get(name, [])}
+             for name in ("selected", "pool_facts", "outside_pool_facts", "supplementary")}
+    return {i for i in lists[key] if not any(i in blocks for name, blocks in lists.items() if name != key)}
+
+
 def _registered_disagreements():
     """position -> the selection problems its open C02 defect records."""
     out = {}
@@ -184,7 +191,9 @@ class AReadingRefusesTextItDidNotSee(unittest.TestCase):
         company_id, report_end = record["position"].rsplit(":", 1)
         document, chosen, _candidate = reading.route_selection(repo_root=ROOT, company_id=company_id,
                                                                report_end=report_end)
-        index = chosen[0]
+        # A selected block the reading judged once, among its selected rows.
+        once = _judged_once(record, "selected")
+        index = next(i for i in chosen if i in once)
         altered = json.loads(json.dumps(record))
         for row in altered["selected"]:
             if row["i"] == index:
@@ -198,11 +207,14 @@ class AReadingRefusesTextItDidNotSee(unittest.TestCase):
         company_id, report_end = record["position"].rsplit(":", 1)
         document, chosen, _candidate = reading.route_selection(repo_root=ROOT, company_id=company_id,
                                                                report_end=report_end)
+        index = chosen[0]
         altered = json.loads(json.dumps(record))
-        altered["selected"] = [row for row in altered["selected"] if row["i"] != chosen[0]]
-        altered["pool_facts"] = [row for row in altered["pool_facts"] if row["i"] != chosen[0]]
+        # Remove every trace of the block from the reading: judged nowhere and
+        # not in the pool, it was never read.
+        for key in ("selected", "pool_facts", "outside_pool_facts", "supplementary", "pool"):
+            altered[key] = [row for row in altered.get(key, []) if row["i"] != index]
         answer = reading.read_position(document=document, chosen=chosen, reading=altered)
-        self.assertIn(chosen[0], answer["problems"]["unread"])
+        self.assertIn(index, answer["problems"]["unread"])
 
     def test_the_selector_is_the_route_s_not_a_copy(self):
         # The reading tool recomputes the selection through the route; this

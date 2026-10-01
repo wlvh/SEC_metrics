@@ -109,3 +109,15 @@
 **量测**（`measured-7-chair-ceo-structure.json`，在统一裁定之上）：新增的块全部是判读判为事实、或统一裁定判为事实的块，没有移走任何块。漏选 144 → 118，误选 46 不变，不一致的位置 28 → 26。最新年 Lumen、Marriott 由不一致变为一致；Pfizer FY2022 取了 723 一块（董事会决定继续由 Bourla 兼任主席与 CEO），读者为它列为同一事实的 16 块随之不再算漏选。最新年 Ford、Macy's 的选择也多了一两块（判读本来就判为事实），已接受的值只对应旧结果，下一次运行后要重新读过才接受。
 
 **不主张。** 点名的兼任句（"Bourla, Chairman and CEO"）原来就由点名规则处理，这里不改；只说分设历史的句子（"separated the roles in 2012"）同样被取，与读者一致。
+
+## 8. 分级董事会一级候选人数不是董事会规模
+
+**问题。** Enphase 的董事会分为三级，每年只改选一级。"To elect our three nominees for director"、"Our Board of Directors has nominated three directors to serve for three-year terms"、"Election of our three nominees as Class II directors" 说的是这一级的候选人数，选择器以 `BOARD_SIZE_STATEMENT` 取了它们。往年四位读者判为非事实，最新年读者判为事实；统一裁定（`CLASSIFIED_SLATE_COUNT`）判为非事实：它既不是董事会规模，也不是成员变动。董事全员每年改选的公司，同样的话就是董事会规模，每位读者都取了。
+
+**成因。** 规模句式分两类却混在一张表里：一类直接说规模（"the Board consists of nine directors"），一类说参选人数（"to elect N nominees"）。另外，直接说规模的那一条允许"has"与人数之间隔 30 个字符，"has nominated three directors"也算"has three directors"。
+
+**改动。** 参选人数的句式移到 `_SLATE_SIZE`，只在董事会不分级时算规模；文件里出现"Class II Directors"、"classified board"或"divided into three classes"即为分级。直接说规模的句式不再允许中间夹着 nominate、elect、propose。
+
+**用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_on_a_classified_board_the_slate_is_not_the_board_s_size`（三种原句在分级时不算规模，不分级时算；"currently has seven members"两种情形都算）与 `test_the_filing_says_whether_its_board_is_classified`（同一句话在出现级别标题的文件里不取、没有时取）。撤回模块改动时这些用例失败。注错 `A_CLASSIFIED_BOARD_STILL_COUNTS_ITS_SLATE`、`NO_FILING_IS_CLASSIFIED`、`HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE`；注错 48/48，对照 52 例。
+
+**量测**（`measured-8-classified-slate.json`）：只移走 Enphase 五个位置的这 12 块，全部是判读或统一裁定判为非事实的块，其余公司一块不动。误选 46 → 34，漏选 118 不变。最新年 Enphase 的值随之变化（仍有三个级别标题被取，待第 9 项）。

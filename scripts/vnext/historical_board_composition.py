@@ -458,7 +458,17 @@ _FIRST_PERSON = re.compile(r"\bI\b")
 _BOARD_SIZE = (
     re.compile(r"\bboard(?: of directors)?\b[^.;:]{0,60}?\b(?:consists|is (?:currently |now )?(?:composed|comprised"
                r"|made up)|currently (?:has|consists)|has|is fixed at|will (?:consist|be (?:composed|comprised|reduced"
-               r"|increased))|comprises)\b[^.;]{0,30}?\b" + _NUM + r"\s+(?:directors?|members?|seats?)\b", re.I),
+               r"|increased))|comprises)\b(?:(?!\bnominat|\belect|\bpropos)[^.;]){0,30}?\b" + _NUM
+               + r"\s+(?:directors?|members?|seats?)\b", re.I),
+    re.compile(r"\bsize of the board\b[^.;]{0,80}\b" + _NUM + r"\b", re.I),
+    re.compile(r"\b(?:there are|we have)\s+(?:currently\s+)?" + _NUM + r"\s+(?:directors|members)\b", re.I),
+)
+# The number standing for election. On a board whose directors all stand each
+# year it is the board's size, and every reader took it so; on a board divided
+# into classes it is one class's slate, neither the board's size nor a change
+# in who sits on it (c02-composition-facts/adjudicate.py,
+# CLASSIFIED_SLATE_COUNT), so there it states nothing.
+_SLATE_SIZE = (
     re.compile(r"\b(?:elect|election|nominated|nominee|stand|standing|slate|propos)\w*\b[^.;]{0,80}\b" + _NUM
                + r"\s+(?:director\s+|board\s+)?nominees\b", re.I),
     re.compile(r"\b" + _NUM + r"\s+(?:director\s+|board\s+)?nominees\b[^.;]{0,80}\b(?:elect|election|nominated"
@@ -468,10 +478,12 @@ _BOARD_SIZE = (
                r"\b(?:are\s+|is\s+|will\s+|have been\s+|were\s+)?(?:standing|nominated|up|stand)\b", re.I),
     re.compile(r"\bnominated\s+(?:each of\s+)?(?:the\s+)?" + _NUM + r"\s+(?:directors|nominees|individuals"
                r"|candidates)\b", re.I),
-    re.compile(r"\bsize of the board\b[^.;]{0,80}\b" + _NUM + r"\b", re.I),
-    re.compile(r"\b(?:there are|we have)\s+(?:currently\s+)?" + _NUM + r"\s+(?:directors|members)\b", re.I),
     re.compile(r"\b(?:our|the|all)\s+" + _NUM + r"\s+(?:director\s+)?nominees\b", re.I),
 )
+# A board divided into classes says so: "Class II Directors", "a classified
+# board", "divided into three classes".
+_CLASSIFIED = re.compile(r"\bclass\s+(?:i{1,3}|[123])\s+(?:directors?|nominees?)\b|\bclassified board\b"
+                         r"|\bdivided into three classes\b", re.I)
 _BOARD_INDEPENDENCE = (
     re.compile(r"\b(?:" + _NUM + r"|all|each|every|majority|substantial majority|none|\d{1,3}\s?%)\b[^.;]{0,20}"
                r"\b(?:of|out of)\b[^.;]{0,30}\b(?:directors?|director nominees|nominees|members of (?:our|the) board)\b"
@@ -726,7 +738,8 @@ def _acronym_service(sentence, acronyms):
                           r"(?:the|our)\s+(?-i:" + "|".join(sorted(acronyms)) + r")\b", sentence, re.I))
 
 
-def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), registrant=frozenset()):
+def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), registrant=frozenset(),
+                     classified=False):
     """The composition facts a prose block states, one label per kind.
 
     Args:
@@ -735,6 +748,8 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             a board or committee named with them is not another body.
         acronyms: The short forms this filing uses for its own committees.
         registrant: Words of the registrant's name, for a possessive owner.
+        classified: The filing's board is divided into classes, so a count of
+            nominees is one class's slate and not the board's size.
     """
     labels = set()
     for sentence in sentences(text):
@@ -754,7 +769,7 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
         if _EXCLUDED_TOPIC.search(sentence):
             continue
         independence = _NOT_DIRECTOR_INDEPENDENCE.sub(" ", sentence)
-        if any(p.search(sentence) for p in (*_BOARD_SIZE, *_BOARD_SIZE_CHANGE)):
+        if any(p.search(sentence) for p in (*_BOARD_SIZE, *_BOARD_SIZE_CHANGE, *(() if classified else _SLATE_SIZE))):
             labels.add("BOARD_SIZE_STATEMENT")
         if any(p.search(independence) for p in _BOARD_INDEPENDENCE):
             labels.add("BOARD_INDEPENDENCE_STATEMENT")
@@ -1257,6 +1272,7 @@ def board_composition_facts(*, document):
     own_words = frozenset({word for _, name in headings for word in name.split()} | registrant_words) - _SMALL_WORDS
     acronyms = _acronyms(headings)
     vocabulary = _committee_vocabulary(headings)
+    classified = any(_CLASSIFIED.search(block["text"]) for block in blocks if not block["linked"])
     picked = {}
 
     def take(index, label):
@@ -1268,7 +1284,8 @@ def board_composition_facts(*, document):
         text = clean(block["text"])
         if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\W", "", text.casefold()) in registrant:
             continue
-        labels = statement_labels(block["text"], own_words, acronyms=acronyms, registrant=registrant_words)
+        labels = statement_labels(block["text"], own_words, acronyms=acronyms, registrant=registrant_words,
+                                  classified=classified)
         for label in labels:
             take(i, label)
         # A lead-in introduces a list only when the sentence that ends in the
@@ -1276,7 +1293,7 @@ def board_composition_facts(*, document):
         # responsibilities include:" introduces duties.
         last = sentences(block["text"])[-1] if labels and text.endswith(":") else ""
         if last and _introduces_people(last) and statement_labels(
-                last, own_words, acronyms=acronyms, registrant=registrant_words):
+                last, own_words, acronyms=acronyms, registrant=registrant_words, classified=classified):
             for index, label in _list_items(blocks, i):
                 take(index, label)
     for index, label in (*_changes(blocks, sorted(span[0] for span, _ in headings)),

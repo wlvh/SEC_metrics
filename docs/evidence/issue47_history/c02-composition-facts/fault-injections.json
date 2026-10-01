@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 50,
- "caught": 45,
- "total": 45,
+ "control_tests_run": 52,
+ "caught": 48,
+ "total": 48,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -377,6 +377,31 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_choice_a_policy_or_a_proposal_states_no_structure"
+   ]
+  },
+  {
+   "injection": "A_CLASSIFIED_BOARD_STILL_COUNTS_ITS_SLATE",
+   "expected": "test_on_a_classified_board_the_slate_is_not_the_board_s_size",
+   "result": "CAUGHT",
+   "failed": [
+    "test_on_a_classified_board_the_slate_is_not_the_board_s_size",
+    "test_the_filing_says_whether_its_board_is_classified"
+   ]
+  },
+  {
+   "injection": "NO_FILING_IS_CLASSIFIED",
+   "expected": "test_the_filing_says_whether_its_board_is_classified",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_filing_says_whether_its_board_is_classified"
+   ]
+  },
+  {
+   "injection": "HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE",
+   "expected": "test_on_a_classified_board_the_slate_is_not_the_board_s_size",
+   "result": "CAUGHT",
+   "failed": [
+    "test_on_a_classified_board_the_slate_is_not_the_board_s_size"
    ]
   }
  ]

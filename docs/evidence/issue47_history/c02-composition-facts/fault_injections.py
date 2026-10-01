@@ -145,6 +145,14 @@ INJECTIONS = [
      "test_a_choice_a_policy_or_a_proposal_states_no_structure"),
     ('A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE', '\n                and not _STRUCTURE_POLICY.search(sentence)):', '):',
      "test_a_choice_a_policy_or_a_proposal_states_no_structure"),
+    # Repair 8: a classified board's slate is not its size.
+    ('A_CLASSIFIED_BOARD_STILL_COUNTS_ITS_SLATE', '*(() if classified else _SLATE_SIZE)', '*_SLATE_SIZE',
+     "test_on_a_classified_board_the_slate_is_not_the_board_s_size"),
+    ('NO_FILING_IS_CLASSIFIED',
+     '    classified = any(_CLASSIFIED.search(block["text"]) for block in blocks if not block["linked"])',
+     '    classified = False', "test_the_filing_says_whether_its_board_is_classified"),
+    ('HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE', '(?:(?!\\bnominat|\\belect|\\bpropos)[^.;]){0,30}?', '[^.;]{0,30}?',
+     "test_on_a_classified_board_the_slate_is_not_the_board_s_size"),
 ]
 
 

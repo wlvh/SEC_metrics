@@ -302,6 +302,30 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                           "Company.", "COMMITTEE_COMPOSITION_STATEMENT")
         self.assertStates("Dr. Hockfield will retire from the Board in April 2026.", "BOARD_MEMBERSHIP_CHANGE")
 
+    def test_on_a_classified_board_the_slate_is_not_the_board_s_size(self):
+        # Enphase's board is divided into classes: the nominees are one class
+        # (c02-composition-facts/adjudicate.py, CLASSIFIED_SLATE_COUNT).
+        slate = ("1.To elect our three nominees for director named in the accompanying proxy statement to the "
+                 "Board of Directors, to hold office until the 2029 Annual Meeting of Stockholders.",
+                 "Our Board of Directors (the “Board”) has nominated three directors to serve for three-year terms "
+                 "until 2029.",
+                 "•Election of our three nominees as Class II directors to serve until the 2029 Annual Meeting.")
+        size = "The Board currently has seven members and is divided into three classes."
+        for text in slate:
+            with self.subTest(text=text[:40]):
+                labels = statement_labels(text, frozenset({"example"}), classified=True)
+                self.assertNotIn("BOARD_SIZE_STATEMENT", labels)
+                # The same words on a board whose directors all stand each year
+                # state its size.
+                self.assertIn("BOARD_SIZE_STATEMENT", statement_labels(text, frozenset({"example"})))
+        self.assertIn("BOARD_SIZE_STATEMENT", statement_labels(size, frozenset({"example"}), classified=True))
+
+    def test_the_filing_says_whether_its_board_is_classified(self):
+        slate = "To elect our three nominees for director to hold office until the 2029 Annual Meeting."
+        classified = ["Class II Directors", "Steven J. Gomo", slate]
+        self.assertNotIn(2, _selected(classified))
+        self.assertIn(2, _selected(["Annual Meeting", "Steven J. Gomo", slate]))
+
     def test_a_determination_qualified_by_a_rule_is_still_a_determination(self):
         self.assertStates("The Board has determined that all members of the Audit Committee are independent, as "
                           "required by Rule 5605(c)(2)(A).", "COMMITTEE_MEMBER_QUALIFICATION")

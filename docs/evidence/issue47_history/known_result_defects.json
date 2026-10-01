@@ -2742,12 +2742,13 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/enphase_energy-2021-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (30: Meeting agenda item to elect two unnamed nominees; states neither the board's size nor who joins or leaves.; 943: Which non-employee directors were eligible for cash compensation; director pay, no composition fact.); 5 block(s) stating a composition fact that no taken block states (146: Directors table: 'Steven J. Gomo(2)' with footnote 158 - Gomo is Chair of the Audit Committee; no other block names the Audit chair (his mem; 157: Table footnote (1) 'Chair of the Nominating and Corporate Governance Committee', attached to Kortlang (150); this chair is named nowhere els). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json"
    ],
    "selection_problems": {
     "missed": [
@@ -2757,13 +2758,13 @@
      216
     ],
     "wrongly_taken": [
-     30,
      943,
      957
     ]
    },
    "partial_repair": {
-    "still_open": "4 fact block(s) missed (146, 157, 158, 216) and 3 block(s) taken that state no composition fact (30, 943, 957); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "4 fact block(s) missed (146, 157, 158, 216) and 2 block(s) taken that state no composition fact (943, 957); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "classified_slate_count": "1 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28])."
    }
   },
   {
@@ -2782,22 +2783,21 @@
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2022-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
-    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "15 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "0 fact block(s) missed (none) and 8 block(s) taken that state no composition fact (31, 167, 169, 182, 189, 531, 547, 1588); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "0 fact block(s) missed (none) and 5 block(s) taken that state no composition fact (169, 182, 189, 531, 547); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "classified_slate_count": "3 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28])."
    },
    "selection_problems": {
     "wrongly_taken": [
-     31,
-     167,
      169,
      182,
      189,
      531,
-     547,
-     1588
+     547
     ]
    }
   },
@@ -2817,24 +2817,23 @@
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2023-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
-    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "15 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "1 fact block(s) missed (447) and 7 block(s) taken that state no composition fact (31, 167, 169, 176, 185, 515, 1589); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "1 fact block(s) missed (447) and 4 block(s) taken that state no composition fact (169, 176, 185, 515); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "classified_slate_count": "3 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
      447
     ],
     "wrongly_taken": [
-     31,
-     167,
      169,
      176,
      185,
-     515,
-     1589
+     515
     ]
    }
   },
@@ -2854,16 +2853,16 @@
     "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2024-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json",
-    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json"
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json"
    ],
    "partial_repair": {
     "unlabelled_card_items": "19 blocks now taken, every one judged a composition fact: each director card's committees, printed on the lines after 'Director since <date>' with no 'Committees:' label, and the card's director (scripts/vnext/historical_board_composition.py _unlabelled_card_items; docs/evidence/issue47_history/c02-selector-repairs/README.md section 4 [shared-with-#28]).",
-    "still_open": "0 fact block(s) missed (none) and 5 block(s) taken that state no composition fact (55, 203, 205, 214, 227); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "0 fact block(s) missed (none) and 3 block(s) taken that state no composition fact (205, 214, 227); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "classified_slate_count": "2 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28])."
    },
    "selection_problems": {
     "wrongly_taken": [
-     55,
-     203,
      205,
      214,
      227
@@ -3628,25 +3627,24 @@
    "root_cause": "Readers of different years split on these classes; c02-composition-facts/adjudicate.py decides each class by its text, once, for all 37 readings (adjudication.json, adjudication-effect.json). The selector does not yet follow the decided classes.",
    "scope_measured": "All 37 judged positions (ten latest, 27 older) held to today's selection under the committed and the new adjudication (adjudication-effect.json): wrongly taken 40 -> 46, missed 146 -> 144, agreeing positions 11 -> 9. These four latest positions newly disagree; Paramount FY2021 and FY2023 newly agree.",
    "found_by": "c02-composition-facts/adjudicate.py --effect-output, on the readings in c02-composition-facts/judgements",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Selector repairs follow the decided classes one bounded problem at a time ([shared-with-#28]); this position's readings shaped the rules, so they are regression material for the repairs, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-composition-facts/judgements/enphase_energy-2025-12-31.json"
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/enphase_energy-2025-12-31.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-8-classified-slate.json"
    ],
    "selection_problems": {
     "wrongly_taken": [
-     57,
-     210,
      212,
      232,
-     243,
-     2338
+     243
     ]
    },
    "partial_repair": {
-    "still_open": "0 fact block(s) missed (none) and 6 block(s) taken that state no composition fact (57, 210, 212, 232, 243, 2338); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "0 fact block(s) missed (none) and 3 block(s) taken that state no composition fact (212, 232, 243); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "classified_slate_count": "3 block(s) no longer taken that count one class's nominees on a board divided into classes (CLASSIFIED_SLATE_COUNT), every one decided not a composition fact by the reading or the uniform adjudication; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 8 [shared-with-#28])."
    }
   },
   {
