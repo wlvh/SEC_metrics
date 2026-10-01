@@ -17,11 +17,21 @@ validate_deterministic_candidate_shape = old.validate_deterministic_candidate_sh
 
 def _successor(compiled_spec):
     return (compiled_spec['compiled']['metric_id'] == 'C02'
-            and compiled_spec['compiled']['disclosure_group'] == 'c02_composition_facts_v1')
+            and compiled_spec['compiled']['disclosure_group'] in
+            {'c02_composition_facts_v1', 'c02_composition_grouped_v2'})
+
+
+def _require_spec_policy_pair(*, compiled_spec, source_arguments):
+    expected = {
+        'c02_composition_facts_v1': 'COMPOSITION_FACTS_V1',
+        'c02_composition_grouped_v2': 'COMPOSITION_GROUPED_V2',
+    }[compiled_spec['compiled']['disclosure_group']]
+    old._need(source_arguments.get('c02_selection_policy') == expected,
+              'C02_COMPOSITION_SPEC_POLICY_MISMATCH')
 
 
 def _prepared(*, c02_selection_policy, **source_arguments):
-    old._need(c02_selection_policy == 'COMPOSITION_FACTS_V1',
+    old._need(c02_selection_policy in {'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2'},
               'C02_COMPOSITION_SELECTION_POLICY_REQUIRED')
     prepared = old.prepare_business_text_sources(metric_id='C02', **source_arguments)
     proposals = dict(prepared['proposals'])
@@ -36,6 +46,15 @@ def _prepared(*, c02_selection_policy, **source_arguments):
               and successor['source_filing'] == proposals[sid]['source_filing']
               and successor['coverage_status'] == proposals[sid]['coverage_status'],
               'C02_COMPOSITION_SOURCE_BINDING_CHANGED')
+    if c02_selection_policy == 'COMPOSITION_GROUPED_V2':
+        from .c02_grouped_source import grouped_governance_source
+        document, successor, coverage = grouped_governance_source(
+            document=document, proposal=successor,
+            coverage=prepared['coverages'][sid],
+            raw_bytes=source_arguments['raw_bytes_by_id'][document['raw_asset_id']])
+        return {**prepared, 'documents': {**prepared['documents'], sid: document},
+                'coverages': {**prepared['coverages'], sid: coverage},
+                'proposals': {**proposals, sid: successor}}
     proposals[sid] = successor
     return {**prepared, 'proposals': proposals}
 
@@ -45,9 +64,12 @@ def create_deterministic_text_candidate(*, compiled_spec, **source_arguments):
         return old.create_deterministic_text_candidate(
             compiled_spec=compiled_spec, **source_arguments)
     old._need(compiled_spec['compiled']['metric_id'] == 'C02'
-              and compiled_spec['compiled']['disclosure_group'] == 'c02_composition_facts_v1'
+              and compiled_spec['compiled']['disclosure_group'] in
+              {'c02_composition_facts_v1', 'c02_composition_grouped_v2'}
               and compiled_spec['compiled']['text_policy']['max_items'] == 64,
               'C02_COMPOSITION_SPEC_REQUIRED')
+    _require_spec_policy_pair(compiled_spec=compiled_spec,
+                              source_arguments=source_arguments)
     return old._derive_candidate(compiled_spec=compiled_spec,
                                  target=source_arguments['target'],
                                  prepared=_prepared(**source_arguments))
@@ -58,12 +80,15 @@ def build_text_evidence(*, compiled_spec, candidate, **source_arguments):
     if not _successor(compiled_spec):
         return old.build_text_evidence(compiled_spec=compiled_spec,
                                        candidate=candidate, **source_arguments)
+    _require_spec_policy_pair(compiled_spec=compiled_spec,
+                              source_arguments=source_arguments)
     prepared = _prepared(**source_arguments)
     expected = old._derive_candidate(compiled_spec=compiled_spec,
                                      target=source_arguments['target'], prepared=prepared)
     old._need(validate_record(record=candidate) == expected,
               'C02_COMPOSITION_CANDIDATE_REPLAY_CHANGED')
     checks, normalized, seen = [], {}, set()
+    grouped = compiled_spec['compiled']['disclosure_group'] == 'c02_composition_grouped_v2'
     for role, claim in sorted(candidate['selected'].items(),
                               key=lambda pair: pair[1]['order']):
         sid = claim['source_reference_id']
@@ -79,8 +104,22 @@ def build_text_evidence(*, compiled_spec, candidate, **source_arguments):
         old._need(sha256_bytes(content=raw[claim['raw_start_byte']:claim['raw_end_byte']])
                   == claim['raw_span_sha256'], 'TEXT_V2_RAW_SPAN_REPLAY_CHANGED')
         normalized[role] = claim['text']
-        checks.append({'check': 'TEXT_EXACT_EXCERPT:' + role,
-                       'status': 'PASS', 'claim_hash': content_hash(value=claim)})
+        check = {'check': 'TEXT_EXACT_EXCERPT:' + role,
+                 'status': 'PASS', 'claim_hash': content_hash(value=claim)}
+        if grouped:
+            block = document['blocks'][index]
+            old._need(block['raw_start_byte'] == claim['raw_start_byte']
+                      and block['raw_end_byte'] == claim['raw_end_byte']
+                      and block['raw_span_sha256'] == claim['raw_span_sha256']
+                      and block['text'] == claim['text']
+                      and block['selected_source_blocks'],
+                      'C02_GROUPED_EXCERPT_SOURCE_MAP_CHANGED')
+            check.update(original_text_document_id=document['original_text_document_id'],
+                         source_block_range=list(block['source_block_range']),
+                         selected_source_blocks=list(block['selected_source_blocks']),
+                         context_source_blocks=list(block['context_source_blocks']),
+                         complete_source_partition_hash=prepared['coverages'][sid]['complete_source_partition_hash'])
+        checks.append(check)
     target = source_arguments['target']
     body = {'candidate_hash': candidate['candidate_hash'], 'status': 'PASS',
             'normalized_values': normalized,
@@ -149,6 +188,8 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate,
             company_traits=company_traits, candidate=candidate,
             evidence_check=evidence_check, review_unit=review_unit,
             review_decisions=review_decisions, **source_arguments)
+    _require_spec_policy_pair(compiled_spec=compiled_spec,
+                              source_arguments=source_arguments)
     from .calculator import calculate_text_metric
     observations = reviewed_text_observations(
         compiled_spec=compiled_spec, target=target, candidate=candidate,

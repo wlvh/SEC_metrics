@@ -1,0 +1,68 @@
+{
+  "record_type": "ISSUE28_C02_GROUPED_V3_PRECOMMIT_TEST_TREE_BINDING",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "base_commit_at_test": "3a661897ed72a748f793209cadb124c0ba4bc8c3",
+  "worktree_uncommitted": true,
+  "files": {
+    "scripts/vnext/c02_grouped_source.py": {
+      "sha256": "b49dff1eb083bca2f6902f8adf26c180b4996691f8aa0c04c34092322a221062",
+      "git_blob": "65bddc09c166ce5dba435fdeeba7365390ba18be"
+    },
+    "scripts/vnext/c02_composition_text_results.py": {
+      "sha256": "a4f8e1a88bd86c1d3c889a3a8ed1842dac319551a1bbc688b30bbb1f43a05619",
+      "git_blob": "adf377fc77be126718aa5cf4101afa5dba43fea8"
+    },
+    "scripts/vnext/normal_run_v3.py": {
+      "sha256": "6e3484ebccf5d3b8e4ac6233be2fb357dec59eb3b5f9aadc48b44078dfbaee8d",
+      "git_blob": "8fe29c0988527ae62614808bf07206be398ba73b"
+    },
+    "scripts/vnext/ordinary_remaining_cases.py": {
+      "sha256": "a16d162172b127c929553b845bb8cb85279b29084df94b0ee286868c4e2e0ecd",
+      "git_blob": "4f28c7eaa5c7f5da46b1c1695eb9336906e0b825"
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "sha256": "2f1ef80229f14d56458a86a8df05b855417c31266593b05e06a3df20c3d1d5cd",
+      "git_blob": "7e738406e2d20a954fea9a74b77ad9379e703466"
+    },
+    "catalog/r6/C02_board_disclosures_v3.md": {
+      "sha256": "2e8c97265bd378d7c26e451952d3ab7727a1aae4f29438f4ff66d3618c78b072",
+      "git_blob": "c4a1a6b94a765eda86f999662ec449156b9290d5"
+    },
+    "config/issue28_normal_results_v2.json": {
+      "sha256": "95b6a30a3a82a0fb7bad7d9f92ecbcdbd1b0fa22d1713ceaf2d1e070f6b470b5",
+      "git_blob": "f29e3ad99b4d340022002e87ab6cdc862fcc2a17"
+    },
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "sha256": "12a5bb418027a740899f39bbdbcaa44c270fb60e110a8f9fcdcbeeba492c0847",
+      "git_blob": "118d9f67cdb6d164e326390fedca2ac3f651b600"
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "sha256": "98f53aed1afb7f8356d100d19c00ba100d5bbb3d5fdf9ae2cf8ba840a91b31a2",
+      "git_blob": "115e57959b8f3c663c0d27126eb3b6e49cf1cdaf"
+    },
+    "requirements/issue_28_v14/transfer_manifest.json": {
+      "sha256": "593d920ffb8e292f905f6a8d86779e32cb1d529015316c2fdaafe3b211223d1d",
+      "git_blob": "5388b3149c926a4bfde096a9f5a911627af4192f"
+    }
+  },
+  "current_v13_requirement_closure": "sha256:5be5192a08a37ddb45edc7f5c1a6c73949a055456ea412a8d64413e8c8611028",
+  "current_v14_requirement_closure": "sha256:5e10a12f388d00cf8af4db539e2d5a139cfe279103f9e01017376d3a69e19d3b",
+  "current_v14_execution_authority": "sha256:09241478fa9452ea16455a133f438337d2fa86bfe2b0cdc1537ac7ab786b3722",
+  "current_post_map_tests": {
+    "directed_log": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/targeted-tests-grouped-v3-map.log",
+    "directed_tests": 9,
+    "ten_company_mapped_candidate_evidence_pass": 10,
+    "macys_final_mapped_result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
+    "macys_final_cold_read": true
+  },
+  "pre_map_fast_tests": {
+    "status": "PASSED",
+    "selectors": 144,
+    "limitation": "The fast suite passed before adding grouped Evidence source-map fields; final code has separate affected directed/source/Run checks and later CI."
+  },
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}
