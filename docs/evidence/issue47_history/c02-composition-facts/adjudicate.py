@@ -105,6 +105,19 @@ JOIN_BEFORE_THE_YEAR (NOT) / JOIN_IN_THE_YEAR (FACT)
     another composition fact (a chair, a committee, a departure) is left to
     the reading.
 
+DATED_ROLE_CHANGE (FACT; covered only by the same change)
+    A sentence giving the date - in the target year or after it - on which a
+    named director took up the board's chair, the lead or presiding director's
+    role, or a committee's chair ("On March 21, 2025, Mr. Donald assumed the
+    role of Lead Independent Director, and Mr. Roos assumed the role of Chair
+    of the Governance Committee"). It is a change in who holds the role. A
+    block states the same fact only by giving the same person's change in the
+    same role with the same date; one naming the current holder, another
+    person's change, a month where this gives a day, or the quarters a fee
+    covers does not (#28's content check of Salesforce FY2026, block 933).
+    Where the reader judged the block a fact but cited blocks that do not
+    state its changes, the decision replaces the reader's citation.
+
 Older years' filings are read from a root restored from the acquisition's
 export by this checkout (``--source-root``). Building a document takes the
 route's input preparation; ``--documents`` names a cache directory (outside
@@ -170,6 +183,9 @@ RULES = {
     "JOIN_BEFORE_THE_YEAR": ("NOT", "A join dated before the target year is tenure in other words."),
     "JOIN_IN_THE_YEAR": ("FACT", "A join dated in the target year or after it is a change in who sits on the board "
                                  "in the period the filing reports."),
+    "DATED_ROLE_CHANGE": ("FACT", "A named director taking up a board leadership role or a committee chair on a date in "
+                                  "the target year or after is a change in who holds it; only a block giving the same "
+                                  "person's change in that role on the same date states it."),
 }
 
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
@@ -250,6 +266,67 @@ OTHER_COMPOSITION = re.compile(r"\b(?:chair(?:man|person|woman)?|vice[- ]chair\w
                                r"|not stand|not be standing|cease\w*|depart\w*)\b", re.I)
 
 
+# A named director's change of role, with the role it names. The surname is the
+# person; "committee" keeps the committee's name so a cover can be matched to it.
+# sentences() has already taken the period off "Mr." and the like.
+ROLE_CHANGE = re.compile(
+    r"\b(?:Mr|Ms|Mrs|Dr)\.?\s+(?P<surname>(?-i:[A-Z])[\w’'\-]+)\s+(?:has\s+)?"
+    r"(?:assumed|took over|took on|became|was (?:appointed|elected|named)(?:\s+as)?)\s+"
+    r"(?:the\s+(?:role|position)\s+(?:of|as)\s+)?(?:our\s+|the\s+)?"
+    r"(?P<role>lead (?:independent )?director|presiding (?:independent )?director"
+    r"|(?:independent |non-executive )?chair(?:man|person|woman)? of (?:the|our) board(?: of directors)?"
+    r"|chair(?:man|person|woman)? of (?:the|our) (?P<committee>(?-i:[A-Z])[\w&,’' ]{1,60}?) committee"
+    # "was appointed Chairman in April 2024": the board's chair, named without the board.
+    r"|(?:independent |non-executive |executive )?chair(?:man|person|woman)?(?![\w-])(?!\s+of\b))\b", re.I)
+_SMALL = {"and", "of", "the", "&", "for", "on", "corporate"}
+
+
+def _role_key(match):
+    role = match.group("role").casefold()
+    if "lead" in role or "presiding" in role:
+        return ("lead", r"\b(?:lead (?:independent )?director|presiding (?:independent )?director)\b")
+    if match.group("committee") is None:
+        return ("board", r"\bchair(?:man|person|woman)? of (?:the|our) board\b")
+    words = [w for w in re.findall(r"[A-Za-z]+", match.group("committee")) if w.casefold() not in _SMALL]
+    return ("committee:" + words[0].casefold(), r"\b" + re.escape(words[0]) + r"\b[^.;]{0,60}?\bcommittee\b")
+
+
+def _role_changes(text, start):
+    """(surname, role, dates, role pattern) for each dated role change in the year or after."""
+    changes = []
+    for sentence in sentences(text):
+        dates = [m.group("date") for m in re.finditer(_DATE, sentence, re.I)]
+        if not dates or all(_before(date, start) for date in dates):
+            continue
+        for match in ROLE_CHANGE.finditer(sentence):
+            key, pattern = _role_key(match)
+            changes.append((match.group("surname"), key, dates, pattern))
+    return changes
+
+
+def _date_parts(date_text):
+    """(year, month or None, day or None) of 'March 21, 2025', 'April 2024' or '2024'."""
+    year = int(re.search(r"(?:19|20)\d\d", date_text).group(0))
+    month = re.match(r"(" + _MONTHS + r")", date_text, re.I)
+    day = re.search(r"\b(\d{1,2}),", date_text)
+    return (year, _MONTHS.split("|").index(month.group(1).lower()) + 1 if month else None,
+            int(day.group(1)) if day else None)
+
+
+def _same_date(given, other):
+    """True when ``other`` names the date ``given`` names, at least as precisely."""
+    g, o = _date_parts(given), _date_parts(other)
+    return all(want is None or want == have for want, have in zip(g, o))
+
+
+def _states_change(text, change):
+    surname, _key, dates, pattern = change
+    others = [m.group("date") for m in re.finditer(_DATE, text, re.I)]
+    return (re.search(r"\b" + re.escape(surname) + r"\b", text) is not None
+            and re.search(pattern, text, re.I) is not None and re.search(r"\bchair|\blead|\bpresiding", text, re.I)
+            and any(_same_date(date, other) for date in dates for other in others))
+
+
 def _fy_start(report_end):
     return dt.date.fromisoformat(report_end) - dt.timedelta(days=364)
 
@@ -323,6 +400,18 @@ def decisions_for(position, document, record):
             row["redundant_with"] = sorted(set(redundant_with) - {index})
         out[index] = row
 
+    def recover(index, rule, cover, **extra):
+        """A fact the reader also judged one but cited as stated by blocks that do not state it."""
+        row = verdict.get(index)
+        claimed = set((row or {}).get("redundant_with") or [])
+        if row is None or row["verdict"] not in ("FACT", "MIXED"):
+            decide(index, rule, redundant_with=cover, **extra)
+        elif index not in out and claimed and not claimed <= set(cover):
+            out[index] = {"position": position, "i": index, "text_sha256": reading.text_sha256(blocks[index]["text"]),
+                          "rule": rule, "decision": "FACT", "reader_verdict": row["verdict"],
+                          "reader_why": row.get("why", "")[:200], "reader_redundant_with": sorted(claimed),
+                          "redundant_with": sorted(set(cover) - {index}), **extra}
+
     def usable(index):
         return not blocks[index]["linked"] and len(blocks[index]["text"]) <= 3000
 
@@ -395,6 +484,13 @@ def decisions_for(position, document, record):
                                                             for name in committees)]
             cover += [j for i in cover for j in verdict[i].get("redundant_with") or []]
             decide(index, "COMMITTEES_NAMED_AS_A_SET", redundant_with=cover, committees=sorted(committees))
+        changes = _role_changes(text, start)
+        if changes:
+            # Covered by a block only if that block states every change this one does.
+            cover = [j for j in range(len(blocks)) if j != index
+                     and all(_states_change(texts[j], change) for change in changes)]
+            recover(index, "DATED_ROLE_CHANGE", cover,
+                    changes=[{"surname": c[0], "role": c[1], "dates": c[2]} for c in changes])
         joins = [m.group("date") for s in sentences(text) for m in JOIN.finditer(s)]
         if joins:
             if any(not _before(d, start) for d in joins):

@@ -3739,19 +3739,22 @@
     "register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md"
    },
-   "repair_state": "PARTLY_REPAIRED_COVERAGE_CLAIM_OPEN",
-   "why_not_repaired_yet": "Both gaps are classes, not this position: the noun-form join goes into the JOIN rule and the reader's dated-join pattern together, and a dated role change needs a rule for what covers it, applied to every reading. Until the adjudication carries them, the reading machinery still reports this position as agreeing, so this entry carries no selection_problems.",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the reader and the adjudication (sections 14 and 15); the published result is an earlier version's and is not recomputed yet.",
    "evidence": [
     "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
     "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-14-noun-form-joins.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-15-dated-role-changes.json",
     "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
    ],
    "original_record_retained": true,
    "partial_repair": {
     "noun_form_joins": "Block 4300 is no longer taken: the JOIN rule and the reader's dated-join pattern now read the noun form, and the adjudication decides 4300 JOIN_BEFORE_THE_YEAR (NOT). The same change takes block 919 ('upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk ...'), a join in the year the reader judged a fact (measured-14-noun-form-joins.json; docs/evidence/issue47_history/c02-selector-repairs/README.md section 14 [shared-with-#28]).",
-    "still_open": "Block 933 (Mr. Roos assumed the Governance Committee chair on March 21, 2025) is still not taken, and the reading's coverage claim for it still stands in the measuring, so the machinery reports this position as agreeing; that is the claim #28 showed wrong. The coordinate stays withdrawn."
-   }
+    "still_open": "Today's selection agrees with the reading under the uniform adjudication. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id. Block 4301 (an undated committee join) stays as the reading judged it; #28 records it as a boundary.",
+    "dated_role_changes": "Block 933 is now taken: the reader reads 'assumed the role of' a chair or the lead director's role, and the new DATED_ROLE_CHANGE adjudication class replaces the reading's coverage claim for 933 (it cited blocks that do not state Mr. Roos's change). Measured on all 37 readings, only this position moves (measured-15-dated-role-changes.json; docs/evidence/issue47_history/c02-selector-repairs/README.md section 15 [shared-with-#28])."
+   },
+   "selection_problems": {}
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

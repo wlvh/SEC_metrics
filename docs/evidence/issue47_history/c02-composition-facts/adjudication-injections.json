@@ -1,6 +1,10 @@
 {
  "record_type": "C02_ADJUDICATION_FAULT_INJECTIONS",
  "controls": {
+  "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange": {
+   "failures": 0,
+   "ran": 2
+  },
   "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here": {
    "failures": 0,
    "ran": 1
@@ -50,6 +54,38 @@
    "caught": true,
    "failures": 1,
    "ran": 1
+  },
+  {
+   "injection": "A_READER_CITATION_STANDS_OVER_THE_ADJUDICATION",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_YEAR_COVERS_A_DAY",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "ANOTHER_PERSONS_CHANGE_COVERS",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_CHANGE_BEFORE_THE_YEAR_IS_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
   }
  ],
  "all_caught": true

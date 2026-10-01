@@ -426,6 +426,23 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
             "The Board approved Ms. Chang’s appointment to the Board.", "2025-02-01"))
 
+    def test_taking_over_a_chair_or_the_lead_role(self):
+        # Salesforce FY2026 block 933, found by #28's content check: the day two
+        # directors took up their roles, printed in a pay table's introduction.
+        own = frozenset({"audit", "compensation", "governance", "example"})
+        labels = statement_labels(
+            "On March 21, 2025, Mr. Donald assumed the role of Lead Independent Director, and Mr. Roos assumed the "
+            "role of Chair of the Governance Committee.", own, period_start=START)
+        self.assertIn("BOARD_LEADERSHIP_STATEMENT", labels)
+        self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", labels)
+        self.assertIn("BOARD_LEADERSHIP_STATEMENT", statement_labels(
+            "Ms. Park took over the role of Chairman of the Board in May 2025.", own, period_start=START))
+        # Another body's committee, and a role that is not the board's, are not.
+        self.assertEqual([], statement_labels(
+            "Mr. Roos assumed the role of Chair of the Audit Committee of Acme Holdings.", own, period_start=START))
+        self.assertEqual([], statement_labels(
+            "Ms. Park assumed the role of Chief Financial Officer in May 2025.", own, period_start=START))
+
     def test_a_join_is_dated_as_precisely_as_it_is_printed(self):
         # A 52/53-week year starts on its own day (Macy's 2022 year starts
         # January 30). A printed day settles the side; a month alone does

@@ -212,3 +212,39 @@
 - 误选 19→18，不一致位置 24→23。
 
 **还没修的。** #28 指出的另一处是第 933 块："On March 21, 2025, Mr. Donald assumed the role of Lead Independent Director, and Mr. Roos assumed the role of Chair of the Governance Committee"。它没被取，读者又把它算作已被现任主席名单（773）、Donald 的月份（665）和费用季度（964）覆盖。这些块都没有说 Roos 何时接任，所以量测仍报这个位置"一致"——这正是 #28 指出的错。坐标继续撤回，这一处留给下一节。
+
+## 15. 带日期的职务接任，以及什么才算"已覆盖"
+
+**问题。** 第 14 节留下的第 933 块写在董事薪酬表的说明里："On March 21, 2025, Mr. Donald assumed the role of Lead Independent Director, and Mr. Roos assumed the role of Chair of the Governance Committee."。它是 Salesforce FY2026 唯一写明 Roos 何时接任治理委员会主席的一块。选择器不认 "assumed the role of"，没有取。读者判它含事实，但记为已被 665、962、964、3091 覆盖，而这四块都没有说出这次变动：
+- 665 只给 Donald 接任的月份；
+- 962 只讲 Donald；
+- 964 是 Roos 按季度领取的费用；
+- 3091 讲的是 Washington 卸任。
+
+量测原来的规则是"读者引用的块里有一块被选中就算覆盖"，所以一直报这个位置一致。
+
+**改动（量测一侧）。** 统一裁定新增一类 `DATED_ROLE_CHANGE`（事实）。一句话写明某位董事在目标年度内或之后的某天，接任董事长、首席独立（主持）董事或某委员会主席，就是一次职务变动。只有写明同一人、同一职务、同一次变动，且日期至少一样精确的块，才算覆盖它；以下几种都不算：只写现任者，写另一人的变动，本句给了日而另一块只给月份，讲费用对应的季度。读者已判为事实、却引用了不覆盖它的块时，裁定替换读者的引用，`read_position` 按裁定判断是否覆盖。
+
+在 37 份判读上，统一裁定只多两条：
+- Salesforce FY2026 第 933 块：没有任何块覆盖它。
+- Macy's FY2024 第 2358 块（"Mr. Spring was appointed Chairman in April 2024"）：读者引用了 18 块，裁定只认第 1044 块（"On April 10, 2024, … Mr. Spring began serving as Chairman of the Board"）。1044 已被选中，所以 2358 不算漏选。
+
+年度之前的变动按任期处理，不作裁定，例如 Lumen FY2021 的 "Effective May 20, 2020, Mr Glenn became … Chairman"。
+
+**改动（选择器一侧）。** "assumed / took over / took on the role (position) of" 后面接董事长、首席独立董事或主持董事的，标为领导职务陈述；接某委员会主席的，标为委员会构成陈述。
+
+**用例与注错。**
+- 选择器：`test_taking_over_a_chair_or_the_lead_role`。933 原句两种标签都有；别家公司的委员会、非董事会的职务都不算。注错 `TAKING_OVER_A_COMMITTEE_CHAIR_IS_NOT_READ`、`TAKING_OVER_THE_LEAD_ROLE_IS_NOT_READ` 都被这条用例抓到；注错 64/64，对照 61 例。
+- 统一裁定与判读工具：`test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange`。它检查规则对每一块的覆盖判断：读者的引用被裁定拒绝后，该块算漏选；选中后不算。注错 `A_READER_CITATION_STANDS_OVER_THE_ADJUDICATION`、`A_YEAR_COVERS_A_DAY`、`ANOTHER_PERSONS_CHANGE_COVERS`、`A_CHANGE_BEFORE_THE_YEAR_IS_DECIDED`。
+
+**量测**（`measured-15-dated-role-changes.json`）：只有 Salesforce 2026 一个位置移动，新增 933。漏选 106→105（新裁定下，933 原本算漏选），不一致位置 24→23。至此，Salesforce 2026 的选择与判读、统一裁定一致。
+
+**这个位置还剩什么。**
+- #28 提到的第 4301 块（"prior to the dates that Oscar Munoz and Craig Conway joined the Audit Committee"，没有日期）按读者的判断保留：含事实，已由成员名单 743 覆盖。
+- 第 962、3091 块讲的是同一次交接，933 被选中后由它覆盖。
+- 坐标仍然撤回：已发布的结果是旧版本算的，要重算、重读之后，才能按结果编号释放。
+
+**不主张。**
+- 这两类问题是 #28 在一个位置上发现的；本节把它们写成规则，在全部 37 份判读上量，只在两个位置起作用。
+- 读者是同族子代理，统一裁定由执行者按文字写成，两者都不是人工验收。
+- 规则是看过这些材料之后写的，属于开发/回归材料，不是留出验证。

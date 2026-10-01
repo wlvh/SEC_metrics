@@ -183,6 +183,64 @@ class AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt(unittest.TestCase
         self.assertEqual({"text_changed": [1]}, self._problems([0]))
 
 
+class ADatedRoleChangeIsCoveredOnlyByTheSameChange(unittest.TestCase):
+    """A reader's citation the adjudication rejects does not cover the block (DATED_ROLE_CHANGE).
+
+    #28's content check of Salesforce FY2026 found block 933 - the day Mr. Roos
+    took up the Governance Committee's chair - counted as covered by blocks that
+    give the current chair and the quarters a fee covers.
+    """
+
+    POSITION = "example_company:2025-12-31"
+    TEXTS = ["Mr. Roos is the Chair of the Governance Committee.",
+             "On March 21, 2025, Mr. Roos assumed the role of Chair of the Governance Committee.",
+             "Cash fees paid to Mr. Roos relate to his service as Chair of the Governance Committee for the second, "
+             "third, and fourth quarters of fiscal 2025.",
+             "In 2019, Mr. Lee became Chair of the Audit Committee.",
+             "On April 10, 2025, Ms. Park became Chairman of the Board.",
+             "Ms. Park was appointed Chairman in April 2025.",
+             "On March 21, 2025, Ms. Washington stepped down as Chair of the Governance Committee."]
+
+    def setUp(self):
+        sha = [reading.text_sha256(text) for text in self.TEXTS]
+        self.document = {"blocks": [{"text": text, "linked": False} for text in self.TEXTS]}
+        self.record = {"position": self.POSITION,
+                       "selected": [{"i": i, "verdict": "FACT", "why": "", "text_sha256": sha[i]} for i in (0, 4)],
+                       "pool_facts": [{"i": 1, "verdict": "MIXED", "why": "", "text_sha256": sha[1],
+                                       "redundant_with": [0, 2]},
+                                      {"i": 3, "verdict": "MIXED", "why": "", "text_sha256": sha[3],
+                                       "redundant_with": [0]},
+                                      {"i": 5, "verdict": "MIXED", "why": "", "text_sha256": sha[5],
+                                       "redundant_with": [0]}],
+                       "pool": [{"i": i, "text_sha256": h} for i, h in enumerate(sha)]}
+
+    def _decisions(self):
+        return {row["i"]: row for row in _adjudicator().decisions_for(self.POSITION, self.document, self.record)}
+
+    def test_the_rule_decides_what_states_each_change(self):
+        decided = self._decisions()
+        # Neither the current chair nor the fee quarters give Mr. Roos's change.
+        self.assertEqual(("DATED_ROLE_CHANGE", "FACT", []),
+                         (decided[1]["rule"], decided[1]["decision"], decided[1]["redundant_with"]))
+        self.assertEqual([0, 2], decided[1]["reader_redundant_with"])
+        # The same change with a more precise date covers a month.
+        self.assertEqual([4], decided[5]["redundant_with"])
+        # A change before the year is tenure, as a join is.
+        self.assertNotIn(3, decided)
+
+    def _problems(self, chosen, adjudications):
+        answer = reading.read_position(document=self.document, chosen=chosen, reading=self.record,
+                                       adjudications=adjudications)
+        return {kind: [item["i"] if isinstance(item, dict) else item for item in items]
+                for kind, items in answer["problems"].items() if items}
+
+    def test_the_rejected_citation_no_longer_covers_the_block(self):
+        decided = {(self.POSITION, i): row for i, row in self._decisions().items()}
+        self.assertEqual({}, self._problems([0, 4], {}))
+        self.assertEqual({"missed": [1]}, self._problems([0, 4], decided))
+        self.assertEqual({}, self._problems([0, 1, 4], decided))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

@@ -40,6 +40,25 @@ INJECTIONS = [
      '                rest = [JOIN.sub(" ", s) for s in sentences(text)]',
      '                rest = [s for s in sentences(text) if not JOIN.search(s)]',
      "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here"),
+    ("A_READER_CITATION_STANDS_OVER_THE_ADJUDICATION", TOOL,
+     '        if decided is not None and decided["decision"] == "FACT":\n'
+     '            # The adjudication has rejected the reader\'s citation: only the\n'
+     '            # blocks it names state this block\'s facts (DATED_ROLE_CHANGE).\n'
+     '            cover = decided.get("redundant_with") or []\n',
+     '',
+     "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange"),
+    ("A_YEAR_COVERS_A_DAY", ADJ,
+     '    return all(want is None or want == have for want, have in zip(g, o))',
+     '    return g[0] == o[0]',
+     "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange"),
+    ("ANOTHER_PERSONS_CHANGE_COVERS", ADJ,
+     '    return (re.search(r"\\b" + re.escape(surname) + r"\\b", text) is not None\n            and ',
+     '    return (True\n            and ',
+     "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange"),
+    ("A_CHANGE_BEFORE_THE_YEAR_IS_DECIDED", ADJ,
+     '        if not dates or all(_before(date, start) for date in dates):',
+     '        if not dates:',
+     "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange"),
 ]
 RUNNER = textwrap.dedent('''
     import importlib.util, sys, types, unittest

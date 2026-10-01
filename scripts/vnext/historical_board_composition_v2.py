@@ -528,6 +528,10 @@ _COMMITTEE_COMPOSITION = (
     re.compile(r"\b(?:none of the members|no (?:current |former )?members?|neither)\s+of\s+(?:the|our)\b[^.;]{0,60}"
                r"\bcommittee\b[^.;]{0,80}\b(?:was|is|were|are|has (?:ever )?been|have (?:ever )?been)\b[^.;]{0,40}"
                r"\b(?:officer|employee)", re.I),
+    # Taking over a committee's chair: "Mr. Roos assumed the role of Chair of the
+    # Governance Committee" (#28's content check of Salesforce FY2026, block 933).
+    re.compile(r"\b(?:assumed|assumes|took over|took on)\s+(?:the\s+)?(?:role|position)\s+(?:of|as)\s+(?:the\s+)?"
+               r"chair(?:man|person|woman)?\s+of\s+(?:the|our|its)\b[^.;]{0,60}\bcommittee\b", re.I),
 )
 # A committee whose members are management is not one of the board's: "made up
 # of senior leaders and executives", "composed of Pfizer employees", "co-chaired
@@ -588,6 +592,11 @@ _LEADERSHIP = (
                + r"(?:\s+and\s+(?:chief executive officer|ceo|president))?\s+of\s+(?:the|our)\s+company\b", re.I),
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:our|the company['’]s)\s+" + _BOARD_QUALIFIER
                + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I),
+    # Taking over the board's chair or the lead director's role: "Mr. Donald
+    # assumed the role of Lead Independent Director".
+    re.compile(r"\b(?:assumed|assumes|took over|took on)\s+(?:the\s+)?(?:role|position)\s+(?:of|as)\s+(?:our\s+|the\s+)?"
+               + _BOARD_QUALIFIER + r"(?:" + _CHAIR_WORD + r" of the board|board chair|" + _LEAD_ROLE
+               + r"|presiding (?:independent )?director)\b", re.I),
 )
 # Whether the board's chair and the chief executive are two people or one: "the
 # Board has chosen to separate the roles of Chairman of the Board and CEO",

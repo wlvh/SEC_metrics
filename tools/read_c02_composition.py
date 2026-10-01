@@ -290,6 +290,10 @@ def read_position(*, document, chosen, reading, adjudications=None):
         if decided is not None and decided["decision"] == "NOT":
             continue
         cover = row.get("redundant_with") or []
+        if decided is not None and decided["decision"] == "FACT":
+            # The adjudication has rejected the reader's citation: only the
+            # blocks it names state this block's facts (DATED_ROLE_CHANGE).
+            cover = decided.get("redundant_with") or []
         cover_selected = [other for other in cover if other in selected]
         # The reader cites every block that states the same facts, often as
         # alternatives to one another, so one selected citation is taken to

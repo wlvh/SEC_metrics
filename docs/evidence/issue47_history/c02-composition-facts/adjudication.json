@@ -65,6 +65,10 @@
   "JOIN_IN_THE_YEAR": {
    "decision": "FACT",
    "reason": "A join dated in the target year or after it is a change in who sits on the board in the period the filing reports."
+  },
+  "DATED_ROLE_CHANGE": {
+   "decision": "FACT",
+   "reason": "A named director taking up a board leadership role or a committee chair on a date in the target year or after is a change in who holds it; only a block giving the same person's change in that role on the same date states it."
   }
  },
  "decisions": [
@@ -379,6 +383,47 @@
    "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
    "reader_why": "",
    "redundant_with": []
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 2358,
+   "text_sha256": "sha256:b740a599a9b532b39259ce6c59735a923f60aaf1158fdb9d7c84adf64050f375",
+   "rule": "DATED_ROLE_CHANGE",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Spring appointed Chairman in April 2024 - within compensation text",
+   "reader_redundant_with": [
+    38,
+    39,
+    41,
+    48,
+    49,
+    453,
+    464,
+    933,
+    934,
+    939,
+    952,
+    1044,
+    1045,
+    2010,
+    2012,
+    2672,
+    2682,
+    2692
+   ],
+   "redundant_with": [
+    1044
+   ],
+   "changes": [
+    {
+     "surname": "Spring",
+     "role": "board",
+     "dates": [
+      "April 2024"
+     ]
+    }
+   ]
   },
   {
    "position": "marriott_international:2021-12-31",
@@ -1830,6 +1875,38 @@
    ],
    "redundant_with": [
     696
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 933,
+   "text_sha256": "sha256:e756e68fbf90cd91b2e24ce9b7f12fa99b41bb9a426ee8eaaf355ac655761c7a",
+   "rule": "DATED_ROLE_CHANGE",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Director-pay intro; Washington's former roles as Lead Independent Director and Governance Committee Chair ended when she became COFO effective 3/21/2025, when Donald became LID and Roos became Governa",
+   "reader_redundant_with": [
+    665,
+    962,
+    964,
+    3091
+   ],
+   "redundant_with": [],
+   "changes": [
+    {
+     "surname": "Donald",
+     "role": "lead",
+     "dates": [
+      "March 21, 2025"
+     ]
+    },
+    {
+     "surname": "Roos",
+     "role": "committee:governance",
+     "dates": [
+      "March 21, 2025"
+     ]
+    }
    ]
   },
   {
