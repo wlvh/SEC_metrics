@@ -99,6 +99,51 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
         self.assertNotEqual(case['metrics']['B02']['claims'][0]['attributes']['accession'],
                             case['metrics']['B02']['claims'][1]['attributes']['accession'])
 
+    def test_pfizer_current_b02_keeps_same_measure_and_guard_blocks_only_it(self):
+        from unittest.mock import patch
+        from vnext import normal_companyfacts_results as module
+        from vnext.normal_run_inputs import prepare_ordinary_zero_ai_run_input
+        from vnext.paired_measure_v1 import PAIRED_MEASURE_REASON
+
+        current = self.cases['pfizer']['metrics']['B02']
+        self.assertEqual('PUBLISHED', current['result']['publication'])
+        self.assertEqual('EXACT', current['result']['quality'])
+        self.assertEqual(Decimal('-0.01647099501783833906989171264'),
+                         Decimal(current['result']['value']))
+        self.assertEqual(['Revenues', 'Revenues'],
+                         [claim['locator']['concept'] for claim in current['claims']])
+
+        # Fault injection proves the normal route calls the guard after the
+        # approved graph selects its two facts. It is not a new Pfizer filing.
+        real = module.paired_measure_problem
+        seen = []
+        def disagree(**fields):
+            seen.append((fields['accessions'],fields['claims']))
+            problem, bridged = real(**fields)
+            self.assertIsNone(problem)
+            self.assertEqual([], bridged)
+            return {'reason_code': PAIRED_MEASURE_REASON,
+                    'current': {'concept': 'Revenues'},
+                    'prior': {'concept': 'Revenues'},
+                    'target_filing_reports_the_prior_year_under_the_current_concept': []}, []
+        with original_sources_only(), patch.object(module,'paired_measure_problem',
+                                                  side_effect=disagree):
+            normal_input = prepare_ordinary_zero_ai_run_input(
+                repo_root=ROOT,company_id='pfizer',metric_id='B02')
+        self.assertEqual(1,len(seen))
+        stopped = normal_input['component']
+        self.assertEqual(normal_input['primary_result'],
+                         stopped['metrics']['B02']['result'])
+        row = stopped['metrics']['B02']
+        self.assertEqual('WITHHELD',row['result']['publication'])
+        self.assertEqual(PAIRED_MEASURE_REASON,row['result']['reason_code'])
+        self.assertIsNone(row['result']['value'])
+        self.assertEqual('MEASURE_NOT_COMPARABLE',row['selection']['category'])
+        self.assertEqual([],row['claims'])
+        self.assertEqual([],row['observations'])
+        self.assertEqual(self.cases['pfizer']['metrics']['B08']['result'],
+                         stopped['metrics']['B08']['result'])
+
     def test_native_prior_instances_and_actual_noncalendar_periods_are_used(self):
         for company,prior_start,prior_end in [('macys','2024-02-04','2025-02-01'),
                                              ('salesforce','2024-02-01','2025-01-31')]:

@@ -1,0 +1,116 @@
+{
+  "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
+  "schema_version": 2,
+  "issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+  "purpose": "Confirmed #28 Result identities withheld from current trusted delivery. Original Runs, Results, sources and the 390-coordinate denominator remain intact; peer defects are leads, not imported #28 acceptance credit.",
+  "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
+  "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+  "current_trusted_summary": {
+    "newly_excluded_coordinate_count": 2,
+    "newly_excluded_result_id_count": 3,
+    "excluded_coordinate_keys": [
+      "marriott_international|C02|2025-12-31",
+      "pfizer|C02|2025-12-31"
+    ],
+    "all_390_currently_validated": false,
+    "other_coordinates_not_cleared_by_this_audit": true
+  },
+  "defects": [
+    {
+      "defect_id": "C02_MARRIOTT_INTERNATIONAL_2025_COMPOSITION_SCOPE_ARCHIVED_390",
+      "metric_id": "C02",
+      "company_id": "marriott_international",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:d2b64d11d63776aa2213330104a8878cdc1b30967d1834877d134a4b3b0f28d5",
+      "run_id": "run:ordinary-integrated:a103861fcfa2b5c7955c8f9f1f13b327bb04082e12e8705e05f633ac435642a2",
+      "reported_quality": "EXACT",
+      "repair_state": "NORMAL_SELECTOR_INTEGRATION_PENDING",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_EXCERPT",
+      "summary": "Executive pay alignment is not a board or committee composition fact. The exact selected block is present in this #28 Result; only this result identity is withdrawn.",
+      "source_block": {
+        "block_index": 402,
+        "document_id": "sha256:4d19c0aff0b02858f89279247e7792d45b82a8c7e46291e1ae0d5b2f07363cf0",
+        "source_reference_id": "sha256:f83a3aec9e0aa4fe67ecede9a18e28d4964911c19bf03fb1887768885290af0d",
+        "raw_span_sha256": "a98d2d03eb874bcc3bd7de25535bd44075d3caffbef28015e03682c2a4f2f978",
+        "text_sha256": "ddac7a4a539c3be1c0eb7e22ac39ed6de22619ccb0f198a28c84e1e62c899b65",
+        "text_start": "There is a strong correlation between our executive pay and Company performance. Our executive compensation program is designed to maintain this alignment, while also protecting the Company against inappropriate risk-taking and conflicts am"
+      },
+      "peer_origin": {
+        "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+        "defect_id": "C02_MARRIOTT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/impact.json",
+        "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+        "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "C02_MARRIOTT_INTERNATIONAL_2025_COMPOSITION_SCOPE_PRIVATE_NORMAL_UPDATE",
+      "metric_id": "C02",
+      "company_id": "marriott_international",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:20070857450124148530e85b3c8135666b455579c162320efbf46cacefc68e00",
+      "run_id": "run:ordinary-integrated:841b93081b5b268f268379007a3a80e441e13a589c27e4971383774a94b40dfc",
+      "reported_quality": "EXACT",
+      "repair_state": "NORMAL_SELECTOR_INTEGRATION_PENDING",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_EXCERPT",
+      "summary": "Executive pay alignment is not a board or committee composition fact. The exact selected block is present in this #28 Result; only this result identity is withdrawn.",
+      "source_block": {
+        "block_index": 402,
+        "document_id": "sha256:4d19c0aff0b02858f89279247e7792d45b82a8c7e46291e1ae0d5b2f07363cf0",
+        "source_reference_id": "sha256:f83a3aec9e0aa4fe67ecede9a18e28d4964911c19bf03fb1887768885290af0d",
+        "raw_span_sha256": "a98d2d03eb874bcc3bd7de25535bd44075d3caffbef28015e03682c2a4f2f978",
+        "text_sha256": "ddac7a4a539c3be1c0eb7e22ac39ed6de22619ccb0f198a28c84e1e62c899b65",
+        "text_start": "There is a strong correlation between our executive pay and Company performance. Our executive compensation program is designed to maintain this alignment, while also protecting the Company against inappropriate risk-taking and conflicts am"
+      },
+      "peer_origin": {
+        "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+        "defect_id": "C02_MARRIOTT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/impact.json",
+        "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+        "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "C02_PFIZER_2025_COMPOSITION_SCOPE_ARCHIVED_390",
+      "metric_id": "C02",
+      "company_id": "pfizer",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:cd35101fa8013371da3dff7f8f0d9c46d55bf32954417d399cbd90d3dddd9108",
+      "run_id": "run:ordinary-integrated:de69fbc16f08a7ab84519a044c7b5cd72770815747c3e6e30856ef4ee5203b9a",
+      "reported_quality": "EXACT",
+      "repair_state": "NORMAL_SELECTOR_INTEGRATION_PENDING",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_EXCERPT",
+      "summary": "Shareholder proposal engagement and voting outreach are not composition facts. The exact selected block is present in this #28 Result; only this result identity is withdrawn.",
+      "source_block": {
+        "block_index": 1239,
+        "document_id": "sha256:e708720bc6fd21ab2cf1f5bfbf607736cf4506a4a82ec23f2720f6f092d588f2",
+        "source_reference_id": "sha256:7cdc8ee870d1cca487bfce92e2f8a20bdb756477ae2d67bb80f9a3d2ee5a553e",
+        "raw_span_sha256": "a66b13b08b1025c2f16c43424e999348d3d730cd453a1281bb0e2d6687e4f89a",
+        "text_sha256": "17a2e6156ac2bcc9e3aac64563d0ef74ea6367b4a0b6106eda0d642aad9ea54e",
+        "text_start": "During the 2025 proxy season, the company actively engaged with the proponents of shareholder proposals, listened to their concerns, and worked collaboratively to try to reach mutual agreements to address them. After filing the 2025 Proxy S"
+      },
+      "peer_origin": {
+        "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+        "defect_id": "C02_PFIZER_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/impact.json",
+        "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+        "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    }
+  ]
+}

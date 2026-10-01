@@ -21,6 +21,7 @@ from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value
 from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
 from .normal_source_authority import ROOT
 from .ordinary_source_authority import verify_ordinary_source_proofs
+from .paired_measure_v1 import PAIRED_MEASURE_REASON, paired_measure_problem
 from .observations import scope_key
 from .sources import resolve_repository_file, SourceError
 from .traits import repository_company_traits
@@ -206,7 +207,24 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
                     requires_prior = any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"])
                     _need(not requires_prior or prior_error is None, (prior_error or {}).get("reason"))
                     graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
-                    result, trace = graph["result"], graph["trace"]
+                    if metric_id == "B02":
+                        problem, bridged = paired_measure_problem(
+                            route=route, claims=graph["claims"],
+                            current_claims=claims_by_role["current"],
+                            accessions={"current": prepared["filing"]["accessionNumber"],
+                                        "prior": (filings["prior"] or {}).get("accessionNumber")})
+                        if problem is not None:
+                            graph = {"claims": [], "projection_claims": [], "observation": None}
+                            detail = {"category": "MEASURE_NOT_COMPARABLE", **problem}
+                            result, trace = withheld_metric_result(
+                                compiled_spec=spec, target=target,
+                                reason_code=PAIRED_MEASURE_REASON)
+                        else:
+                            result, trace = graph["result"], graph["trace"]
+                            if bridged:
+                                detail = {"paired_measure_bridge": bridged}
+                    else:
+                        result, trace = graph["result"], graph["trace"]
                     if subject_error or limited_amendment:
                         detail={"subject_scope":"CURRENT_PRIMARY_CIK_AND_CURRENT_INSTANT_ONLY",
                                 "annual_continuity_proven":False,
