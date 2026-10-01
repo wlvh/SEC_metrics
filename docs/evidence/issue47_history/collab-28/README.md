@@ -38,6 +38,8 @@
 
 **当前状态。** 最新十个位置（同上口径）由后继选择器产出的新结果已读并接受；冻结选择器的十条缺陷只对这十个新结果释放。27 个往年值一个都没有被接受；不一致的 26 个已按坐标登记为缺陷撤回（`../known_result_defects.json`，`C02_*_OLDER_YEAR_READING_DISAGREES`），一致的 Pfizer FY2024 也还没有对它的结果做接受核对。这 27 份判读已经或将要用于调整规则，所以它们对之后的修复也只算开发/回归材料。“27 份读完”不等于结果被接受。
 
+**对方接收状态（2026-10-01 读到 `3473308b` 为止）。** B02：#28 在 `32faa26d` 把三个函数接入普通路线（逐 AST 与本方 `48b46a2d` 相同，原因码改为普通路线专用），`f2018837` 的限定独立审阅为 PASS_WITH_BOUNDS——**已确认接收**。C02：#28 在 `3473308b` 读了 `c02-board-read/` 并据其中两处判定撤回自己最新年 Marriott、Pfizer 的三个结果身份，后继选择器与上表修复的普通路线接入**尚未开始**，按其记录是下一步。
+
 **分工。** 共用选择器修复默认由 #47 继续实现，#28 负责普通路线接入和独立检查。修复按“一个明确的误选或漏选问题”为单位提交，提交标 `[shared-with-#28]`，并在本目录登记问题、提交、用例与历史侧验证结果。#28 现在的普通路线用的仍是冻结选择器，所以它最新年度的 C02 结果与 `c02-board-read/` 读的十个值同属一类问题；这部分的核对与接入由 #28 在自己的记录里处置，#47 不代为宣布普通路线已通过。
 
 ### C02 共用修复登记
@@ -52,6 +54,7 @@
 | 4 | 卡片在 "Director since …" 之后一行一个委员会、没有 "Committees:" 标签，选择器只认带标签的卡片，漏掉主席标注 | `a6975a47` | `test_historical_board_composition.ADirectorCardIsReadOnlyWhenItNamesItsDirector.test_unlabelled_committees_on_the_lines_after_the_tenure`；注错 `AN_EMPHASISED_HEADING_IS_A_CARD_ITEM`、`UNLABELLED_ITEMS_NEED_NO_DIRECTOR`、`UNLABELLED_CARD_ITEMS_UNREAD` | Enphase 三个往年位置新增 15 + 15 + 19 块，全部是判读判为事实的块，漏选 160→156，误选不变。**最新年份 Enphase 2025 也新增 19 块**（判读同样判为事实），已接受的值只对应旧结果，要重新核对接受；普通路线接入后最新年度 Enphase 的值同样会变（`../c02-selector-repairs/measured-4-unlabelled-card-items.json`） |
 | 5 | 名字中间印着引号昵称（"Steven T. “Terry” Clontz"），`person_name` 拒绝含引号的块，卡片读不出、名单读到他就断 | `5c595159` | `test_historical_board_composition.ANameIsTheWholeBlock.test_a_quoted_nickname_between_the_names`；注错 `NICKNAMES_STAY_IN_THE_NAME`、`ANY_QUOTED_WORD_IS_A_NICKNAME` | Lumen 三个往年位置各 5 块、Marriott 一个往年位置 2 块，全部新增、全部是判读判为事实的块；漏选 156→146，误选不变，最新十个位置不变（`../c02-selector-repairs/measured-5-quoted-nicknames.json`） |
 | 6 | 管理层委员会（成员是高管、员工，或由某某 Officer 主持）被构成句式当成董事会委员会 | `546d10d1` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_committee_of_management_is_not_the_board_s`；注错 `MANAGEMENT_SEATS_A_BOARD_COMMITTEE`、`ANY_WORDS_OPEN_THE_MEMBER_LIST` | 只移走 Lumen、Marriott、Pfizer 四个往年位置的 5 个误选块（都是判读判为非事实的块）；误选 45→40，漏选不变，最新十个位置不变（`../c02-selector-repairs/measured-6-management-committees.json`） |
+| 7 | 董事长与 CEO 分设或合一的陈述（不点名）一句都没取；统一裁定判为事实 | `852a6e90` | `test_historical_board_composition.ALeadershipOrMembershipFactNamesThisBoardAndThePerson.test_whether_the_chair_and_the_chief_executive_are_one_person`、`test_a_choice_a_policy_or_a_proposal_states_no_structure`；注错 `THE_CHAIR_CEO_STRUCTURE_STATES_NOTHING`、`NAMING_BOTH_CHOICES_STATES_A_STRUCTURE`、`A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE` | 新增块全是判读或统一裁定判为事实的块，未移走任何块；漏选 144→118，误选 46 不变，不一致位置 28→26；最新年 Lumen、Marriott 恢复一致；最新年 Ford、Macy's 的值随之变化，需重读后才接受（`../c02-selector-repairs/measured-7-chair-ceo-structure.json`） |
 
 这些修复都不让任何往年坐标重新获得信用：每个坐标的选择只要还和判读不一致，就继续撤回。#28 的普通路线目前用冻结选择器，后继选择器及这些修复是否、何时接入由 #28 自己处置；#47 不代为宣布普通路线已通过。
 
