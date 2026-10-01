@@ -6,13 +6,14 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 5,
-    "newly_excluded_result_id_count": 10,
+    "newly_excluded_coordinate_count": 6,
+    "newly_excluded_result_id_count": 12,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
       "macys|C02|2026-01-31",
       "marriott_international|C02|2025-12-31",
+      "paramount_skydance_paramount_global|C02|2025-12-31",
       "pfizer|C02|2025-12-31"
     ],
     "all_390_currently_validated": false,
@@ -23,7 +24,7 @@
       "metric_id": "C02",
       "period_end": "2025-12-31",
       "result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
-      "status": "PRIOR_54_PRIVATE_RESULT_FAILED_CONTENT_SCOPE_NEW_48_RESULT_PENDING_CONTENT_REVIEW",
+      "status": "NEW_48_CONTENT_PASS_LIMITED_PRIVATE_RUN_OPEN_VALIDATION_NOT_RUN_NO_390_CREDIT",
       "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
       "peer_disputed_block_indexes": [
         57,
@@ -35,7 +36,10 @@
       ],
       "new_peer60aa_private_result_id": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
       "new_peer60aa_selected_count": 48,
-      "new_peer60aa_credit": "NONE_PENDING_FULL_OWN_CONTENT_ACCEPTANCE"
+      "new_peer60aa_credit": "LIMITED_SAVED_SOURCE_CONTENT_ONLY_NOT_CURRENT_390_OR_PRODUCTION",
+      "independent_content_review": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-enphase48-content/conclusion.md",
+      "run_manifest_status": "OPEN",
+      "run_validation_status": "NOT_RUN"
     },
     "private_salesforce_successor_failed_content": {
       "company_id": "salesforce",
@@ -44,6 +48,14 @@
       "result_id": "sha256:220c0fb95032977990f8bee1e624f2ab53bbd23f3fd2c90b81d7a23d515e00b3",
       "status": "PRIVATE_NATIVE_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_CURRENT_CREDIT",
       "legacy_archived_result_id_not_withdrawn_by_this_specific_finding": "sha256:6d2608aed318b6113f7de35984cefaab059bcc38b949b2c6a7c6b9eda3e2ac5a"
+    },
+    "private_paramount_successor_failed_content": {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:4d469eff63d687acdc24b8ba2e22d5b2f18bc3f8c61eab8f0f7d146b19e9fc68",
+      "status": "PRIVATE_NATIVE_UPDATE_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_CREDIT",
+      "old_archived_result_id_also_withdrawn": "sha256:b37865b74f2ae8157b09041026c5ad72c88efb5950d04c1c073d79e6e2f8cfd0"
     }
   },
   "defects": [
@@ -361,7 +373,93 @@
       "audit_resource_limit": "83 tool calls vs 80 allowed; findings retained as diagnostic, not limit-compliant acceptance",
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "C02_PARAMOUNT_2025_OWN_BOARD_BIO_FACT_OMISSION_ARCHIVED",
+      "metric_id": "C02",
+      "company_id": "paramount_skydance_paramount_global",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "source_blocks": [
+        {
+          "block_index": 110,
+          "text_sha256": "28935641f660adbe453df2a5b49a680a28792131ddb9468105a54023595090a5",
+          "in_old_result": true,
+          "in_new_private_result": false
+        },
+        {
+          "block_index": 117,
+          "text_sha256": "c441444a1803e705faf2cb8262fe095096806dd774985801f0fdf316cbbac3dc",
+          "in_old_result": false,
+          "in_new_private_result": false
+        },
+        {
+          "block_index": 168,
+          "text_sha256": "7f7908099c893d1d020bdb0efac65bf67cf6b7e1d8f8556182e37d8e4f945144",
+          "in_old_result": false,
+          "in_new_private_result": false
+        }
+      ],
+      "peer_context": {
+        "commit": "234819246783d2bc5a3b27f02888403bb8b41a63",
+        "reading_path": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+        "limitation": "Peer reading labels bios redundant with roster; #28 own source audit found exact joining dates and issuer qualification reasons not represented by roster."
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/paramount-c02-exact-omissions.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount54-content/conclusion.md"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "result_id": "sha256:b37865b74f2ae8157b09041026c5ad72c88efb5950d04c1c073d79e6e2f8cfd0",
+      "run_id": "run:ordinary-integrated:dec2535d05423c2fe62af605fc1c7c2f7fed537075cd7230fd539e6c25b8ace7",
+      "repair_state": "SHARED_SELECTOR_SCOPE_REPAIR_AND_NEW_OWN_RESULT_PENDING",
+      "current_credit": "WITHDRAWN_CONFIRMED_OMITTED_OWN_BOARD_JOIN_DATE_AND_QUALIFICATION",
+      "summary": "The archived #28 C02 Result lacks exact own-board join date and qualification rationale; block 110 is present, but blocks 117 and 168 are not."
+    },
+    {
+      "defect_id": "C02_PARAMOUNT_2025_OWN_BOARD_BIO_FACT_OMISSION_PRIVATE_PEER60AA",
+      "metric_id": "C02",
+      "company_id": "paramount_skydance_paramount_global",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "source_blocks": [
+        {
+          "block_index": 110,
+          "text_sha256": "28935641f660adbe453df2a5b49a680a28792131ddb9468105a54023595090a5",
+          "in_old_result": true,
+          "in_new_private_result": false
+        },
+        {
+          "block_index": 117,
+          "text_sha256": "c441444a1803e705faf2cb8262fe095096806dd774985801f0fdf316cbbac3dc",
+          "in_old_result": false,
+          "in_new_private_result": false
+        },
+        {
+          "block_index": 168,
+          "text_sha256": "7f7908099c893d1d020bdb0efac65bf67cf6b7e1d8f8556182e37d8e4f945144",
+          "in_old_result": false,
+          "in_new_private_result": false
+        }
+      ],
+      "peer_context": {
+        "commit": "234819246783d2bc5a3b27f02888403bb8b41a63",
+        "reading_path": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+        "limitation": "Peer reading labels bios redundant with roster; #28 own source audit found exact joining dates and issuer qualification reasons not represented by roster."
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/paramount-c02-exact-omissions.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount54-content/conclusion.md"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "result_id": "sha256:4d469eff63d687acdc24b8ba2e22d5b2f18bc3f8c61eab8f0f7d146b19e9fc68",
+      "run_id": "run:ordinary-integrated:5ddcf865296fdcf1cbb9d0a212185d1062259d06d0374e085550078d438d5150",
+      "repair_state": "SHARED_SELECTOR_SCOPE_REPAIR_AND_NEW_OWN_RESULT_PENDING",
+      "current_credit": "NONE_PRIVATE_CANDIDATE_CONTENT_NEEDS_FIX",
+      "summary": "The new 54-excerpt private Result does not select exact own-board join dates and qualification rationale at blocks 110, 117 and 168; its native PUBLISHED/EXACT status is not content acceptance."
     }
   ],
-  "latest_peer_read_commit": "60aa9f7b5b12289c74776f2320bc827d71b7c857"
+  "latest_peer_read_commit": "234819246783d2bc5a3b27f02888403bb8b41a63"
 }
