@@ -1,0 +1,58 @@
+{
+  "record_type": "ISSUE28_C02_PEER_0E80_CURRENT_RESULT_OMISSIONS",
+  "peer_commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3",
+  "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
+  "peer_register_git_blob": "1a603f40d56b3d37ef34795e36a55744eef5c8c8",
+  "peer_adjudication_path": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+  "archived_index_path": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+  "archived_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",
+  "affected_new_coordinate_count": 2,
+  "affected_new_result_id_count": 2,
+  "rows": [
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "archived_result_id": "sha256:293febe4934ac3ff3789aba6b57fb1ca27bfb2d580560fcdffa79b06dd0b5a45",
+      "archived_run_id": "run:ordinary-integrated:4ae651a2bee9792705dac1462f496ec3e7a58b254bf1d019515410a72ecd04c0",
+      "private_run_id": "run:ordinary-integrated:79f7f18af32e08048f44690a6a3b6b5659c9f6481708b4f049ee23d0102e910a",
+      "private_result_id": "sha256:293febe4934ac3ff3789aba6b57fb1ca27bfb2d580560fcdffa79b06dd0b5a45",
+      "source_reference_id": "sha256:a6fc85dbb849224094431de004538bcf7f5523034ca5403dd4382858d0bbf307",
+      "document_id": "sha256:6c709e47b26766efb2c447e106467a96ae4869bd9dfc7a5cc0dfa3bf0206d83e",
+      "omitted_block_index": 864,
+      "omitted_text": "We believe that separation of the Chairman and CEO positions has functioned effectively over the past many years. Separating these positions has allowed our CEO to have primary responsibility for the operational leadership and strategic direction of our business, while allowing our Chairman to lead the Board in its fundamental role of providing guidance to and separate oversight of management.",
+      "omitted_text_sha256": "sha256:fb0164f0c82cb0a1dafb9ce3dd695ebff51185114c6ed01e2b8563fcf6f71e96",
+      "peer_rule": "CHAIR_CEO_STRUCTURE",
+      "peer_decision": "FACT",
+      "own_read": "The saved source explicitly states current chair/CEO separation.",
+      "old_candidate_selected_count": 17,
+      "original_records_path": "/private/tmp/issue28-lumen_technologies-current-36-cli-20260929/state/lumen_technologies/metrics/C02/attempts/1f292d2008cd4f97aa7816cc535267ab/runs/C02/records.jsonl"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "C02",
+      "period_end": "2026-01-31",
+      "archived_result_id": "sha256:ec1db68a0ccb02d9cc4f9753dc3d6b1f8f01175223c7b8cb0b5c0b3cdb3c3c7d",
+      "archived_run_id": "run:ordinary-integrated:9c488590e4ef5f55ed688385b891399c3c551e062bdf9202b2578f77eae62998",
+      "private_run_id": "run:ordinary-integrated:12c659bf11ef334bf9280f7665a720f19b7628121d67f10d00503a2a0df3dc43",
+      "private_result_id": "sha256:ec1db68a0ccb02d9cc4f9753dc3d6b1f8f01175223c7b8cb0b5c0b3cdb3c3c7d",
+      "source_reference_id": "sha256:3a0eee0980c2b03a0aed093b3197924ba006e15e210f804d88dfab1f1784f582",
+      "document_id": "sha256:0114280efe81af1abc22343b68cdec547616357097dbe2984902e3617ec92381",
+      "omitted_block_index": 508,
+      "omitted_text": "In accordance with the recommendation of the Nominating and Corporate Governance (NCG) Committee, the Board has nominated the following individuals for election as directors. Each nominee is currently a member of the Board. If elected, each nominee will serve for a one-year term expiring at our annual meeting of shareholders in 2027 or until his or her successor is duly elected and qualified.",
+      "omitted_text_sha256": "sha256:b57905636057d11ba0a9f49c509137bdc8d661beb9468ee36e0aa36d681e27c2",
+      "peer_rule": "NOMINEES_ARE_SITTING_DIRECTORS",
+      "peer_decision": "FACT",
+      "own_read": "The saved source explicitly says each listed nominee is currently a Board member.",
+      "old_candidate_selected_count": 13,
+      "original_records_path": "/private/tmp/issue28-macys-current-36-cli-20260929/state/macys/metrics/C02/attempts/f9016d6f90cf4e4ab5881a539ba91084/runs/C02/records.jsonl"
+    }
+  ],
+  "source_log_unchanged": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_limit": "Two exact #28 current C02 Result identities and two saved source blocks; no full 390 or all-ten C02 audit."
+}

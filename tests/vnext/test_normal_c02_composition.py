@@ -4,6 +4,7 @@ from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_text_results_v2 import inputs
 from vnext import ordinary_update_cycle, c02_composition_text_results as new_api
 from vnext.normal_run_v3 import prepare_case, text_api
+from vnext.historical_board_composition import statement_labels
 from vnext.specs import compile_spec_file
 from vnext.text_results_v2 import (
     prepare_business_text_sources, create_deterministic_text_candidate,
@@ -11,6 +12,13 @@ from vnext.text_results_v2 import (
 
 
 class C02CompositionFastTest(unittest.TestCase):
+    def test_class_slate_is_not_total_board_size_but_full_slate_can_be(self):
+        nominees = 'Our ten director nominees are standing for election.'
+        board_total = 'Our Board currently has ten directors.'
+        self.assertIn('BOARD_SIZE_STATEMENT', statement_labels(nominees, classified=False))
+        self.assertNotIn('BOARD_SIZE_STATEMENT', statement_labels(nominees, classified=True))
+        self.assertIn('BOARD_SIZE_STATEMENT', statement_labels(board_total, classified=True))
+
     def test_normal_default_dispatch_keeps_old_candidate_and_evidence_bytes(self):
         source = inputs()
         spec = compile_spec_file(path=ROOT / 'catalog/r6/C02_board_disclosures_v1.md',
@@ -88,11 +96,31 @@ class C02CompositionMaterialTest(unittest.TestCase):
         evidence = new_api.build_text_evidence(candidate=candidate,
                                                **new['text_arguments'])
         indices = {r['block_index'] for r in candidate['selected'].values()}
-        self.assertEqual(54, len(indices))
-        self.assertNotIn(294, indices)
-        self.assertIn(210, indices)
+        self.assertEqual(48, len(indices))
+        for unrelated in (57, 210, 212, 232, 243, 294, 2338):
+            self.assertNotIn(unrelated, indices)
         self.assertIn(415, indices)  # an actual named committee chair on an unlabelled director card
         self.assertEqual('PASS', evidence['status'])
+
+    def test_current_macy_and_lumen_composition_facts_are_selected(self):
+        for company, missing_in_old_result in (
+            ('macys', 508),  # each nominee is currently a board member
+            ('lumen_technologies', 864),  # chair and CEO roles are separate
+        ):
+            with self.subTest(company=company):
+                old = prepare_case(data_root=ROOT, company_id=company, metric_id='C02')
+                new = prepare_case(data_root=ROOT, company_id=company,
+                                   metric_id='C02', c02_composition=True)
+                old_candidate = create_deterministic_text_candidate(**old['text_arguments'])
+                self.assertNotIn(missing_in_old_result,
+                                 {claim['block_index'] for claim in old_candidate['selected'].values()})
+                prepared = new_api._prepared(**{k:v for k,v in new['text_arguments'].items()
+                                                if k != 'compiled_spec'})
+                proposal = next(p for p in prepared['proposals'].values()
+                                if p.get('metric_id') == 'C02')
+                indices = {claim['block_index'] for claim in proposal['candidates']}
+                self.assertIn(missing_in_old_result, indices)
+                self.assertGreater(len(indices), 64)
 
     def test_normal_update_inspection_chooses_explicit_successor(self):
         configuration = {'company_id': 'marriott_international',

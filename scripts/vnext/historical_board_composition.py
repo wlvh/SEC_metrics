@@ -458,7 +458,17 @@ _FIRST_PERSON = re.compile(r"\bI\b")
 _BOARD_SIZE = (
     re.compile(r"\bboard(?: of directors)?\b[^.;:]{0,60}?\b(?:consists|is (?:currently |now )?(?:composed|comprised"
                r"|made up)|currently (?:has|consists)|has|is fixed at|will (?:consist|be (?:composed|comprised|reduced"
-               r"|increased))|comprises)\b[^.;]{0,30}?\b" + _NUM + r"\s+(?:directors?|members?|seats?)\b", re.I),
+               r"|increased))|comprises)\b(?:(?!\bnominat|\belect|\bpropos)[^.;]){0,30}?\b" + _NUM
+               + r"\s+(?:directors?|members?|seats?)\b", re.I),
+    re.compile(r"\bsize of the board\b[^.;]{0,80}\b" + _NUM + r"\b", re.I),
+    re.compile(r"\b(?:there are|we have)\s+(?:currently\s+)?" + _NUM + r"\s+(?:directors|members)\b", re.I),
+)
+# The number standing for election. On a board whose directors all stand each
+# year it is the board's size, and every reader took it so; on a board divided
+# into classes it is one class's slate, neither the board's size nor a change
+# in who sits on it (c02-composition-facts/adjudicate.py,
+# CLASSIFIED_SLATE_COUNT), so there it states nothing.
+_SLATE_SIZE = (
     re.compile(r"\b(?:elect|election|nominated|nominee|stand|standing|slate|propos)\w*\b[^.;]{0,80}\b" + _NUM
                + r"\s+(?:director\s+|board\s+)?nominees\b", re.I),
     re.compile(r"\b" + _NUM + r"\s+(?:director\s+|board\s+)?nominees\b[^.;]{0,80}\b(?:elect|election|nominated"
@@ -468,10 +478,12 @@ _BOARD_SIZE = (
                r"\b(?:are\s+|is\s+|will\s+|have been\s+|were\s+)?(?:standing|nominated|up|stand)\b", re.I),
     re.compile(r"\bnominated\s+(?:each of\s+)?(?:the\s+)?" + _NUM + r"\s+(?:directors|nominees|individuals"
                r"|candidates)\b", re.I),
-    re.compile(r"\bsize of the board\b[^.;]{0,80}\b" + _NUM + r"\b", re.I),
-    re.compile(r"\b(?:there are|we have)\s+(?:currently\s+)?" + _NUM + r"\s+(?:directors|members)\b", re.I),
     re.compile(r"\b(?:our|the|all)\s+" + _NUM + r"\s+(?:director\s+)?nominees\b", re.I),
 )
+# A board divided into classes says so: "Class II Directors", "a classified
+# board", "divided into three classes".
+_CLASSIFIED = re.compile(r"\bclass\s+(?:i{1,3}|[123])\s+(?:directors?|nominees?)\b|\bclassified board\b"
+                         r"|\bdivided into three classes\b", re.I)
 _BOARD_INDEPENDENCE = (
     re.compile(r"\b(?:" + _NUM + r"|all|each|every|majority|substantial majority|none|\d{1,3}\s?%)\b[^.;]{0,20}"
                r"\b(?:of|out of)\b[^.;]{0,30}\b(?:directors?|director nominees|nominees|members of (?:our|the) board)\b"
@@ -570,6 +582,25 @@ _LEADERSHIP = (
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:our|the company['’]s)\s+" + _BOARD_QUALIFIER
                + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I),
 )
+# Whether the board's chair and the chief executive are two people or one: "the
+# Board has chosen to separate the roles of Chairman of the Board and CEO",
+# "Our Chairman and CEO functions currently are performed by a single
+# individual". It says who can hold the board's chair, as a sentence naming the
+# chair does. A sentence naming both choices ("separating, or continuing to
+# combine, the roles") states neither, and one about a policy or a proposal
+# ("a policy requiring the separation of the roles") states none
+# (c02-composition-facts/adjudicate.py, CHAIR_CEO_STRUCTURE).
+_ROLE_PAIR = (r"(?:(?:board\s+)?chair(?:man|person|woman)?(?:\s+of\s+the\s+board(?:\s+of\s+directors)?)?\s+(?:and|&)\s+"
+              r"(?:the\s+)?(?:ceo|chief executive officer)(?:\s+\(\W*ceo\W*\))?"
+              r"|(?:ceo|chief executive officer)(?:\s+\(\W*ceo\W*\))?\s+(?:and|&)\s+(?:the\s+)?(?:board\s+)?"
+              r"chair(?:man|person|woman)?(?:\s+of\s+the\s+board(?:\s+of\s+directors)?)?)")
+_ROLE_NOUN = r"(?:roles?|positions?|functions?|offices?|structure)"
+_CHAIR_CEO_STRUCTURE = re.compile(
+    r"\b(?:separat\w*|split|combin\w*)\b[^.;]{0,40}?\b(?:" + _ROLE_NOUN + r"\s+of\s+(?:the\s+)?)?" + _ROLE_PAIR
+    + r"|\b" + _ROLE_PAIR + r"\s+" + _ROLE_NOUN + r"\b[^.;]{0,80}?\b(?:separat\w*|combin\w*|single individual"
+    r"|one person|same person|different (?:individuals|people|persons))", re.I)
+_BOTH_STRUCTURES = re.compile(r"\bseparat\w*\b.*\bcombin\w*|\bcombin\w*\b.*\bseparat\w*", re.I)
+_STRUCTURE_POLICY = re.compile(r"\bpolic(?:y|ies)\b|\bmandat\w*|\bimpos\w*|\bproposals?\b", re.I)
 _OWNED_LEADERSHIP = re.compile(
     r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s\s+" + _BOARD_QUALIFIER
     + _SOLE_CHAIR + r"\b(?!\s+of\s+(?:the|our|its)\s+[^.;]{0,60}\bcommittee)", re.I)
@@ -623,6 +654,12 @@ _BOARD_SIZE_CHANGE = (
 _DIRECTOR_COUNT = re.compile(
     r"\b(?:had|has|have|there (?:were|are)|including|of (?:our|the|its))\b[^.;]{0,60}?\b" + _NUM
     + r"\s+(?:non-employee|non-management|outside)\s+directors\b", re.I)
+# The board's size on a past date, printed where attendance is reported: "Last
+# year, of the twelve then current members of the Board, twelve attended"
+# (c02-composition-facts/adjudicate.py, DIRECTOR_COUNT_ON_A_DATE). Like the
+# count above it is read wherever it is printed.
+_THEN_CURRENT_MEMBERS = re.compile(r"\bof\s+the\s+" + _NUM + r"\s+then[- ]current\s+(?:members\s+of\s+(?:the|our)\s+board"
+                                   r"|directors)\b", re.I)
 # A committee chair named where the filing explains a fee: "Cash fees paid
 # to Mr. Roos relate to his service as Chair of the Compensation Committee for
 # the first quarter". The pay is set aside; who chaired which committee is not.
@@ -643,6 +680,21 @@ _DIRECTOR_DETERMINATION = (
 _ROSTER_STATEMENT = re.compile(
     r"\b(?:nominees for election|director nominees|nominees|current directors|members of (?:the|our) board)\b"
     r"[^.;]{0,60}\b(?:are|include)\b\s*(?:the following\b|:)", re.I)
+# A body of the board made up of named directors that the filing calls a task
+# force, not a committee: "The Digital Innovation Task Force is made up of three
+# directors, Torrence Boone, Ashley Buchanan and Tracey Zhen, and senior members
+# of our digital ... teams" (c02-composition-facts/adjudicate.py,
+# BOARD_TASK_FORCE). The count of directors keeps a body of management out.
+_TASK_FORCE_MEMBERS = re.compile(r"\btask force\b[^.;]{0,40}?\b(?:is|was|are|were)\s+(?:currently\s+)?(?:composed|comprised"
+                                 r"|made up)\s+of\s+" + _NUM + r"\s+(?:of\s+(?:our|the)\s+)?(?:independent\s+)?"
+                                 r"directors\b", re.I)
+_TASK_FORCE_TITLE = re.compile(r"^(?-i:[A-Z])[\w&’'\- ]{0,60}\btask force$", re.I)
+# "Each nominee is currently a member of the Board": the slate is the sitting
+# board, so the names that follow are its members
+# (c02-composition-facts/adjudicate.py, NOMINEES_ARE_SITTING_DIRECTORS).
+_SITTING_SLATE = re.compile(r"\b(?:each|every|all)\s+(?:of\s+the\s+)?nominees?\s+(?:is|are)\s+currently\s+(?:a\s+)?"
+                           r"(?:members?\s+of\s+(?:the|our)\s+board(?:\s+of\s+directors)?(?!\s+of\b)|directors?\b(?!\s+of\b))",
+                           re.I)
 _HONORIFIC_WORD = re.compile(r"\b(?:Mr|Ms|Mrs|Dr|Messrs|Mses)\b")
 _CAPITAL_SPAN = re.compile("\\b[A-Z][\\w’'\\-]+(?:\\s+(?:[A-Z]\\.?|[A-Z][\\w’'\\-]+)){1,3}\\b")
 
@@ -707,7 +759,8 @@ def _acronym_service(sentence, acronyms):
                           r"(?:the|our)\s+(?-i:" + "|".join(sorted(acronyms)) + r")\b", sentence, re.I))
 
 
-def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), registrant=frozenset()):
+def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), registrant=frozenset(),
+                     classified=False):
     """The composition facts a prose block states, one label per kind.
 
     Args:
@@ -716,6 +769,8 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             a board or committee named with them is not another body.
         acronyms: The short forms this filing uses for its own committees.
         registrant: Words of the registrant's name, for a possessive owner.
+        classified: The filing's board is divided into classes, so a count of
+            nominees is one class's slate and not the board's size.
     """
     labels = set()
     for sentence in sentences(text):
@@ -728,14 +783,14 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             continue
         if _other_organization(sentence, own_words):
             continue
-        if _DIRECTOR_COUNT.search(sentence):
+        if _DIRECTOR_COUNT.search(sentence) or _THEN_CURRENT_MEMBERS.search(sentence):
             labels.add("BOARD_SIZE_STATEMENT")
         if _SERVICE_AS_CHAIR.search(sentence) and _mentions_person(sentence):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         if _EXCLUDED_TOPIC.search(sentence):
             continue
         independence = _NOT_DIRECTOR_INDEPENDENCE.sub(" ", sentence)
-        if any(p.search(sentence) for p in (*_BOARD_SIZE, *_BOARD_SIZE_CHANGE)):
+        if any(p.search(sentence) for p in (*_BOARD_SIZE, *_BOARD_SIZE_CHANGE, *(() if classified else _SLATE_SIZE))):
             labels.add("BOARD_SIZE_STATEMENT")
         if any(p.search(independence) for p in _BOARD_INDEPENDENCE):
             labels.add("BOARD_INDEPENDENCE_STATEMENT")
@@ -750,6 +805,9 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
         if (any(p.search(sentence) for p in _LEADERSHIP)
                 or (owned and owned.group("owner").casefold() in registrant)):
             labels.add("BOARD_LEADERSHIP_STATEMENT")
+        if (_CHAIR_CEO_STRUCTURE.search(sentence) and not _BOTH_STRUCTURES.search(sentence)
+                and not _STRUCTURE_POLICY.search(sentence)):
+            labels.add("BOARD_LEADERSHIP_STATEMENT")
         owned = _OWNED_CHANGE.search(sentence)
         if (_mentions_person(sentence)
                 and (any(p.search(sentence) for p in _MEMBERSHIP_CHANGE)
@@ -757,7 +815,9 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         if any(p.search(sentence) for p in _MEMBERSHIP_COUNT):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
-        if _ROSTER_STATEMENT.search(sentence):
+        if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):
+            labels.add("COMMITTEE_COMPOSITION_STATEMENT")
+        if _ROSTER_STATEMENT.search(sentence) or _SITTING_SLATE.search(sentence):
             labels.add("BOARD_ROSTER_STATEMENT")
         if (_QUALIFICATION.search(independence) and _MEMBER_REFERENCE.search(sentence)
                 and _STATE.search(sentence)):
@@ -1063,14 +1123,17 @@ _GROUP_REACH = 60
 
 
 def _director_groups(blocks, registrant):
-    """Director-group headings and the names in the rows beneath them.
+    """The names in the rows beneath a director-group heading.
 
     Rows lead with the director's name, emphasised; the fields after it
     (occupation, age, year, marks) are not names. The table ends at the next
     emphasised block that is not a name - the next group's heading - or at
     prose. A heading followed by anything but a name within three blocks, or
     by a single name, heads director cards, not a table, and is left to the
-    cards.
+    cards. The heading finds the table but is not taken: it states the
+    directors' class, their standing for election and their term, which are
+    tenure-like (c02-composition-facts/adjudicate.py, DIRECTOR_GROUP_HEADING);
+    the names carry who the directors are.
     """
     taken = []
     for i, block in enumerate(blocks):
@@ -1092,7 +1155,6 @@ def _director_groups(blocks, registrant):
             j += 1
         # One name under a heading is a card that follows it, not a table.
         if len(names) >= 2:
-            taken.append((i, "DIRECTOR_GROUP_HEADING"))
             taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)
     return taken
 
@@ -1102,6 +1164,21 @@ _FOOTNOTED_CHANGE = re.compile(
     r"^(?:retired|resigned|departed|stepped down|appointed|elected|joined|ceased)\b[^.;]{0,60}\b(?:from|to|as)"
     r"\s+(?:a\s+(?:member|director)\s+of\s+)?(?:the|our)\s+board\b", re.I)
 _FOOTNOTE_REACH = 80
+
+
+def _task_force_titles(blocks):
+    """The title printed over a task force's members sentence ("Digital Innovation Task Force")."""
+    taken = []
+    for i, block in enumerate(blocks):
+        if block["linked"] or not _TASK_FORCE_MEMBERS.search(clean(block["text"])):
+            continue
+        for j in range(i - 1, max(i - 4, -1), -1):
+            title = clean(blocks[j]["text"])
+            if not blocks[j]["linked"] and _TASK_FORCE_TITLE.match(title) and title.casefold() in \
+                    clean(block["text"]).casefold():
+                taken.append((j, "COMMITTEE_HEADING"))
+                break
+    return taken
 
 
 def _footnoted_changes(blocks, registrant):
@@ -1235,6 +1312,7 @@ def board_composition_facts(*, document):
     own_words = frozenset({word for _, name in headings for word in name.split()} | registrant_words) - _SMALL_WORDS
     acronyms = _acronyms(headings)
     vocabulary = _committee_vocabulary(headings)
+    classified = any(_CLASSIFIED.search(block["text"]) for block in blocks if not block["linked"])
     picked = {}
 
     def take(index, label):
@@ -1246,7 +1324,8 @@ def board_composition_facts(*, document):
         text = clean(block["text"])
         if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\W", "", text.casefold()) in registrant:
             continue
-        labels = statement_labels(block["text"], own_words, acronyms=acronyms, registrant=registrant_words)
+        labels = statement_labels(block["text"], own_words, acronyms=acronyms, registrant=registrant_words,
+                                  classified=classified)
         for label in labels:
             take(i, label)
         # A lead-in introduces a list only when the sentence that ends in the
@@ -1254,14 +1333,14 @@ def board_composition_facts(*, document):
         # responsibilities include:" introduces duties.
         last = sentences(block["text"])[-1] if labels and text.endswith(":") else ""
         if last and _introduces_people(last) and statement_labels(
-                last, own_words, acronyms=acronyms, registrant=registrant_words):
+                last, own_words, acronyms=acronyms, registrant=registrant_words, classified=classified):
             for index, label in _list_items(blocks, i):
                 take(index, label)
     for index, label in (*_changes(blocks, sorted(span[0] for span, _ in headings)),
                          *_cards(blocks, vocabulary, registrant),
                          *_unlabelled_card_items(blocks, vocabulary, registrant), *_designations(blocks, registrant),
                          *_registrant_title_lines(blocks, cores), *_director_groups(blocks, registrant),
-                         *_footnoted_changes(blocks, registrant)):
+                         *_footnoted_changes(blocks, registrant), *_task_force_titles(blocks)):
         take(index, label)
     candidates = [_excerpt(document, blocks[i], SECTION_ID, sorted(picked[i])) for i in sorted(picked)]
     body = {"record_type": "BOARD_COMPOSITION_SOURCE_CANDIDATES", "metric_id": "C02",

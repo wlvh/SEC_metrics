@@ -846,6 +846,47 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_c02select_c6eac29",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "ordinary_c02_shared_selector_increment",
+      "scope_paths": [
+        "scripts/vnext/historical_board_composition.py",
+        "catalog/r6/C02_board_disclosures_v2.md",
+        "tests/vnext/test_normal_c02_composition.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer-60aa-selection-impact.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-update-peer60aa-cold.json"
+      ],
+      "patch_sha": "c6eac2918aabf5227c0559b07a43f2bce4e3fb73",
+      "spawned_at": "2026-10-01T13:10:21Z",
+      "ended_at": "2026-10-01T13:19:58Z",
+      "tool_calls": 40,
+      "tool_calls_outer": 11,
+      "tool_calls_inner": 29,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-peer60aa/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "audit_c02salesforce_2cc97e3",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_c02_salesforce_2026",
+      "scope_paths": [
+        "/private/tmp/issue28-c02-normal-update-salesforce-877-20261001/metrics/C02/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/salesforce-update-877-cold.json",
+        "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json"
+      ],
+      "patch_sha": "2cc97e3a462afe2815ccb5c522e2da7655549b02",
+      "spawned_at": "2026-10-01T12:34:47Z",
+      "ended_at": "2026-10-01T12:49:56Z",
+      "tool_calls": 83,
+      "tool_calls_outer": 22,
+      "tool_calls_inner": 61,
+      "tool_cap_exceeded_by": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md",
+      "verdict": "NEEDS_FIX_CONTENT_AND_RESOURCE_CAP_EXCEEDED"
+    },
+    {
       "task_name": "review_c02spec_2afa6d7",
       "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
       "module": "ordinary_c02_spec_wording_and_binding",
@@ -8239,7 +8280,7 @@
       ]
     },
     "c02_current_impact": {
-      "status": "THREE_COORDINATES_FIVE_OLD_IDENTITIES_WITHDRAWN_TWO_NEW_PRIVATE_IDENTITIES_NOT_CREDITED",
+      "status": "FIVE_OLD_COORDINATES_WITHDRAWN_THREE_NEW_PRIVATE_IDENTITIES_NOT_CREDITED",
       "evidence": "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/",
       "own_register": "docs/evidence/issue28_continuous/known_result_defects.json",
       "coordinates": [
@@ -8250,7 +8291,9 @@
       "superseded_775_private_result_id": "sha256:677efa34258f3126e9097fb12a1dbaac5d085f490b6aeb2d969b33155a03b54b",
       "old_runs_and_390_denominator_retained": true,
       "new_enphase_private_result_failed_content_scope": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
-    "latest_peer_0e80_impact": "SIX_EXACT_HASH_MATCHED_ELECTION_AND_CLASS_HEADING_BLOCKS_IN_BOTH_PRIVATE_54_EXCERPT_RESULTS_NO_BUSINESS_CREDIT"
+    "peer60aa_replacement_pending_content_review": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
+    "latest_peer_0e80_impact": "TWO_ADDITIONAL_CURRENT_OMITTED_FACT_COORDINATES_AND_SIX_ENPHASE_FALSE_POSITIVE_BLOCKS",
+    "salesforce_private_content_audit": "NEEDS_FIX_BLOCK_4300_FALSE_POSITIVE_BLOCK_933_OMITTED_NO_BUSINESS_CREDIT"
     },
     "reference_table_pr": {
       "url": "https://github.com/wlvh/SEC_metrics/pull/53",
@@ -8261,23 +8304,26 @@
       "vnext_fast_ci": "SUCCESS",
       "not_merged_or_production": true
     },
-    "peer_latest_read_commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3",
-    "peer_latest_register_git_blob": "1a603f40d56b3d37ef34795e36a55744eef5c8c8",
+    "peer_latest_read_commit": "60aa9f7b5b12289c74776f2320bc827d71b7c857",
+    "peer_latest_register_git_blob": "143b65536db617d578f3856317e0a5c4b4a95c06",
     "c02_ordinary_successor": {
-      "peer_selector_commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f",
+      "peer_selector_commit": "60aa9f7b5b12289c74776f2320bc827d71b7c857",
       "peer_selector_exact_byte_reused": true,
       "ordinary_spec": "catalog/r6/C02_board_disclosures_v2.md",
       "ordinary_adapter": "scripts/vnext/c02_composition_text_results.py",
       "native_item_ceiling": 64,
-      "enphase_selected_count": 54,
-      "enphase_private_result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+      "enphase_selected_count": 48,
+      "enphase_private_result_id": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
       "enphase_normal_update": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE",
       "enphase_independent_process_cold_read": "PASS",
       "marriott_full_96": "EXECUTION_FAILED_NO_C02_SUCCESS_POINTER_WHILE_B01_READY",
       "pfizer_full_79": "SOURCE_MATERIAL_REJECTS_BEFORE_CANDIDATE",
-      "independent_patch_review": "PASS_WITH_BOUNDS_E17_AND_2AFA_EXCLUDES_FULL_CONTENT_REVIEW",
+    "ford_full_80": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
+    "southwest_full_95": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
+    "salesforce_full_63": "PRIVATE_NORMAL_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_BUSINESS_CREDIT",
+      "independent_patch_review": "E17_2AFA_AND_C6EAC291_PASS_WITH_BOUNDS_EXCLUDES_FULL_CONTENT_REVIEW",
       "full_business_content_acceptance": false,
-    "current_private_enphase_content_scope": "FAILED_SIX_OUT_OF_SCOPE_BLOCKS_UNDER_0E80_PEER_ADJUDICATION_AND_OWN_SOURCE_READ",
+    "current_private_enphase_content_scope": "PRIOR_54_FAILED_SIX_OUT_OF_SCOPE_NEW_48_PENDING_OWN_CONTENT_REVIEW",
       "new_calls": [
         0,
         0,
@@ -8295,7 +8341,18 @@
         "potential_downstream": "#47 stacked branch must reconcile V13/V14 current bindings and duplicate selector path when consuming this upstream commit"
       },
       "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
-      "post_review_spec_prose_fix": {
+      "peer60aa_increment": {
+      "changed_shared_file_function": "scripts/vnext/historical_board_composition.py:statement_labels,board_composition_facts,_director_groups; catalog/r6/C02_board_disclosures_v2.md target clarification",
+      "peer_code_blob": "a5f238c61c560daf65affd4aaf3a4e43f7020ca6",
+      "prior_enphase_54_result_retained_no_credit": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+      "current_enphase_48_result_pending_content_review": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
+      "normal_update_and_independent_process_cold_read": "PASS_PRIVATE_ZERO_CALL",
+      "targeted_tests": "7_MATERIAL_PLUS_1_CLASSIFIED_SLATE_PASS",
+      "binding_and_three_receipts": "PASS_CURRENT_V13_V14",
+      "new_calls": [0, 0, 0],
+      "shared_with_issue47": "UPSTREAM_FIXED_SELECTOR_BYTE_COPIED_OWN_BINDING_RECOMPUTED_DEFAULT_LEGACY_PATH_UNCHANGED"
+    },
+    "post_review_spec_prose_fix": {
         "changed": "catalog/r6/C02_board_disclosures_v2.md explanatory final paragraph only",
         "compiled_and_semantic_prompt_closure_hashes_unchanged": true,
         "spec_file_and_requirement_hashes_changed": true,
