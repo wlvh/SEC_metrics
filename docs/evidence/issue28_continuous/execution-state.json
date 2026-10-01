@@ -8069,5 +8069,27 @@
     "formal_adoption": false,
     "issue47_operated": false,
     "new_head_ci": "PENDING_AFTER_PUSH"
+  },
+  "ordinary_update_latency_a05_20261001": {
+    "status": "BOUNDED_LOCAL_SLEEP_CORRELATION_AND_ONE_METRIC_PROFILE_NO_PRODUCT_CHANGE",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-update-latency-a05-20261001/README.md",
+    "tested_product_head": "561800899b98b4ded0c5def2a1e2ea7ce63fadf6",
+    "tested_v14_requirement_closure_hash": "sha256:c3964a1cea2611fab6e4aaab2e9ff574c34507c57411b13346df843bfb61aa1c",
+    "previous_salesforce_36_wall_seconds": 22744.446,
+    "previous_terminal_intervals_seconds": 21780.828,
+    "previous_terminal_intervals_macos_sleep_overlap_seconds": 19484.0,
+    "long_intervals_over_900_seconds": 18,
+    "long_intervals_with_sleep_overlap": 18,
+    "current_a05_profile_seconds": 152.841,
+    "current_a05_private_status": "CANDIDATE_READY",
+    "old_processing_snapshot_current_v14_rejection": "ORDINARY_PROCESSING_SNAPSHOT_PATH_CHANGED_EXPECTED_AFTER_MUTABLE_REQUIREMENT_CHANGE",
+    "current_processing_snapshot_id": "sha256:6fd6b125473b93230c22a34a4739ede1eba42d76a6a51948863693cb6e52499d",
+    "original_claims_source_log_and_active_unchanged": true,
+    "causal_limit": "local host sleep explains most prior wall time; does not measure active CPU or prove all update paths fast",
+    "production_code_changed": false,
+    "new_complete_company_count": 0,
+    "new_390_business_coordinate_count": 0,
+    "new_real_calls": [0, 0, 0],
+    "issue47_operated": false
   }
 }

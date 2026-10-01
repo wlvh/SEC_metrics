@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-update-latency-a05-20261001/profile_a05.py", line 50, in <module>
+    verified = verify_processing_source(
+        acquisition_root=ACQUIRED / 'source-inputs',
+        processing_root=SOURCE, requirement=requirement)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_processing_source.py", line 89, in verify_processing_source
+    _need(copy.name == identity['snapshot_id'][7:],
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'ORDINARY_PROCESSING_SNAPSHOT_PATH_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_processing_source.py", line 31, in _need
+    raise ValueError(reason)
+ValueError: ORDINARY_PROCESSING_SNAPSHOT_PATH_CHANGED
