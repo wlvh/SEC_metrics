@@ -466,3 +466,20 @@
 共 87/87，对照 73 个用例。
 
 **量测**（`measured-25-became.json`）：只新增 Lumen 2021 第 897 块；漏选 47→42（695、732、1049、1223、2651 由它覆盖），误选 16 不变，不一致位置 21 不变，最新年不变。
+
+## 26. 年度内带日期的离任，无论印在哪里都算
+
+**问题。** Macy's 2024 第 1982 块 "(5)Mr. Bryant and Ms. Hale ceased serving on the Board following our annual meeting of shareholders on May 19, 2023"，Macy's 2025 第 1814、1816 块 "(5)Mr. Buchanan ceased serving on the Board on November 25, 2024 and forfeited the RSUs granted in May 2024" 等，读者都判为含事实（离开董事会，别处没有写），都没取。原因有两个：选择器的离任句式不认 "ceased serving on the Board"；而且这几块是薪酬表的脚注，提到 RSU，整句先被薪酬话题排除。
+
+**规则来自加入日期那一条。** 第 13 项起，年度内的加入"无论印在哪里都算，薪酬段落也不例外"：它是董事会成员的变化，统一裁定在年度之前的才判为任期。离任是同一种变化的另一面，所以照同样处理：带日期的离任，日期在年度内或之后，就在薪酬话题排除之前读；早于年度的不算年度内的变化。"ceased serving as EVP" 是高管离开职位，不是董事会，必须是 "on the Board"。
+
+**先量后改。** 37 份文档里 "ceased serving / ceased to serve / ceased to be" 的句子，说董事离开董事会且带日期的只有 Macy's 这五块（2024 第 1981、1982 块，2025 第 1813、1814、1816 块），读者都判为事实；其余是高管离职（Lumen、Enphase）、股权计划条款，或已因别的句子入选（Lumen 2024 第 1516 块、Paramount 2023 第 936 块）。
+
+**用例与注错。** `test_a_departure_dated_in_the_year_is_a_change_wherever_printed`：第 1814、1982 块原文两条正例；同一条 1814 放到日期之后开始的年度，不算；Lumen 2023 第 2324 块原文（高管离职）不算。注错：
+- `A_DATED_DEPARTURE_IS_NOT_READ`；
+- `A_DEPARTURE_BEFORE_THE_YEAR_COUNTS`（不看日期）；
+- `AN_OFFICER_S_DEPARTURE_IS_THE_BOARD_S`（不要求 "on the Board"）。
+
+共 90/90，对照 74 个用例。
+
+**量测**（`measured-26-dated-departures.json`）：只新增上面五块；漏选 42→39，不一致位置 21→20（Macy's 2025 现与判读一致），误选 16 不变，最新年不变。

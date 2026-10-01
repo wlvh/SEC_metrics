@@ -246,6 +246,12 @@ INJECTIONS = [
      'test_a_role_taken_up_with_became'),
     ('BECAME_A_COMMITTEE_CHAIR_IS_NOT_READ', '               r"|designated(?: as)?|elected(?: as)?|became)\\s+(?:the\\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"\n', '               r"|designated(?: as)?|elected(?: as)?)\\s+(?:the\\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"\n',
      'test_a_role_taken_up_with_became'),
+    ('A_DATED_DEPARTURE_IS_NOT_READ', '        departures = [match.group("date") for match in _DATED_DEPARTURE.finditer(sentence)]\n        if any(not _joined_before(date, period_start) for date in departures) and _mentions_person(sentence):\n            labels.add("BOARD_MEMBERSHIP_CHANGE")\n', '',
+     'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
+    ('A_DEPARTURE_BEFORE_THE_YEAR_COUNTS', '        if any(not _joined_before(date, period_start) for date in departures) and _mentions_person(sentence):\n', '        if departures and _mentions_person(sentence):\n',
+     'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
+    ('AN_OFFICER_S_DEPARTURE_IS_THE_BOARD_S', '    r"\\bceased (?:serving|to serve) (?:as (?:a )?(?:director|member) )?on (?:the|our) board(?: of directors)?\\b"\n', '    r"\\bceased (?:serving|to serve)\\b"\n',
+     'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
 ]
 
 

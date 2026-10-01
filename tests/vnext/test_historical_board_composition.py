@@ -430,6 +430,22 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
             "Ms. Lee joined the board of directors of Acme Holdings in March 2025.", "2025-01-01"))
 
+    def test_a_departure_dated_in_the_year_is_a_change_wherever_printed(self):
+        # Macy's FY2024 footnote 1814 sits in a pay table (it mentions RSUs);
+        # FY2023 footnote 1982 dates the departure by the annual meeting.
+        rsu = "(5)Mr. Buchanan ceased serving on the Board on November 25, 2024 and forfeited the RSUs granted in May 2024."
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(rsu, "2024-02-04"))
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "(5)Mr. Bryant and Ms. Hale ceased serving on the Board following our annual meeting of shareholders on "
+            "May 19, 2023.", "2023-01-29"))
+        # A departure before the year is not a change in it.
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(rsu, "2025-02-02"))
+        # An officer leaving a post (Lumen FY2023 block 2324) is not the board.
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "As previously disclosed and described elsewhere herein, Mr. Trezise ceased serving as EVP, Human "
+            "Resources with Lumen effective April 24, 2023, and was involuntarily terminated on April 5, 2024.",
+            "2023-01-01"))
+
     def test_a_join_written_as_a_noun_is_dated_too(self):
         # Salesforce's related-party paragraph dates a director's appointment
         # as a noun; #28's content check found the FY2026 selection took it as

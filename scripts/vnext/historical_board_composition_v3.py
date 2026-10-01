@@ -764,6 +764,16 @@ _DATED_JOIN = re.compile(
     # the Board in January 2022", "following his election to the Board on ...".
     r"|(?:appointment|election) to (?:the|our) board(?: of directors)?\s+(?:on|in|effective))\s+(?:the\s+)?"
     r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)", re.I)
+# A director leaving the board on a printed date: "Mr. Buchanan ceased serving on
+# the Board on November 25, 2024", "Mr. Bryant and Ms. Hale ceased serving on
+# the Board following our annual meeting of shareholders on May 19, 2023"
+# (Macy's pay-table footnotes). Like a join, one dated in the year or after is
+# a change in who sits on the board wherever it is printed; "ceased serving as
+# EVP" is an officer leaving a post, not the board.
+_DATED_DEPARTURE = re.compile(
+    r"\bceased (?:serving|to serve) (?:as (?:a )?(?:director|member) )?on (?:the|our) board(?: of directors)?\b"
+    r"[^.;]{0,80}?\b(?:on|in|effective|as of)\s+(?:the\s+)?"
+    r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)", re.I)
 _MONTH_NUMBERS = {name: number for number, name in enumerate(_MONTHS.split("|"), start=1)}
 
 
@@ -929,6 +939,9 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         # dated before the year states nothing the change rules may count.
         joins = [match.group("date") for match in _DATED_JOIN.finditer(sentence)]
         if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):
+            labels.add("BOARD_MEMBERSHIP_CHANGE")
+        departures = [match.group("date") for match in _DATED_DEPARTURE.finditer(sentence)]
+        if any(not _joined_before(date, period_start) for date in departures) and _mentions_person(sentence):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence
         if _EXCLUDED_TOPIC.search(sentence):
