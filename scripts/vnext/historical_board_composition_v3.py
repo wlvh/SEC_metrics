@@ -846,6 +846,13 @@ _DEPARTURE_AT_A_MEETING = (
     re.compile(r"\bend\s+of\s+(?:his|her|their)\s+service\s+as\s+(?:a\s+)?director\s+at\s+the\s+"
                r"(?P<date>(?:19|20)\d\d)\s+" + _ANNUAL_MEETING + r"\b", re.I),
 )
+# A board office's holder retiring, written as a noun with the year before the
+# office: "following the retirement in 2023 of our former Vice Chairman, W.
+# Bruce Hanks" (Lumen FY2023). "Our" makes the office this board's; a
+# director's retirement from another company ("until his retirement in 2015")
+# names no office of ours.
+_OFFICER_RETIREMENT = re.compile(
+    r"\bretirement\s+in\s+(?P<date>(?:19|20)\d\d)\s+of\s+our\s+(?:former\s+)?vice\s+chair(?:man|person|woman)?\b", re.I)
 # A director appointed to the board together with an office: "the Board elected
 # Anthony Capuano to serve as CEO of the Company and as a member of the Board",
 # "in March 2023, the Board appointed Mr. Spring as Macy's President and
@@ -1060,6 +1067,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         departures = [match.group("date") for match in _DATED_DEPARTURE.finditer(sentence)]
         departures += [match.group("date") for pattern in _DEPARTURE_AT_A_MEETING for match in pattern.finditer(sentence)]
+        departures += [match.group("date") for match in _OFFICER_RETIREMENT.finditer(sentence)]
         if any(not _joined_before(date, period_start) for date in departures) and _mentions_person(sentence):
             labels.add("BOARD_MEMBERSHIP_CHANGE")
         undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence

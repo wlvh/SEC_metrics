@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 90,
- "caught": 133,
- "total": 133,
+ "control_tests_run": 91,
+ "caught": 136,
+ "total": 136,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -850,7 +850,8 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained",
-    "test_a_departure_dated_in_the_year_is_a_change_wherever_printed"
+    "test_a_departure_dated_in_the_year_is_a_change_wherever_printed",
+    "test_our_vice_chairman_s_retirement_dated_in_the_year"
    ]
   },
   {
@@ -1126,6 +1127,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_committee_chair_rotated_at_a_dated_meeting"
+   ]
+  },
+  {
+   "injection": "AN_OFFICER_RETIREMENT_IS_NOT_READ",
+   "expected": "test_our_vice_chairman_s_retirement_dated_in_the_year",
+   "result": "CAUGHT",
+   "failed": [
+    "test_our_vice_chairman_s_retirement_dated_in_the_year"
+   ]
+  },
+  {
+   "injection": "AN_OFFICER_RETIREMENT_IS_ALWAYS_THIS_YEAR",
+   "expected": "test_our_vice_chairman_s_retirement_dated_in_the_year",
+   "result": "CAUGHT",
+   "failed": [
+    "test_our_vice_chairman_s_retirement_dated_in_the_year"
+   ]
+  },
+  {
+   "injection": "ANY_VICE_CHAIRMAN_IS_OURS",
+   "expected": "test_our_vice_chairman_s_retirement_dated_in_the_year",
+   "result": "CAUGHT",
+   "failed": [
+    "test_our_vice_chairman_s_retirement_dated_in_the_year"
    ]
   }
  ]

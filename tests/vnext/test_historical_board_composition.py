@@ -538,6 +538,20 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "joined our Board following the merger were converted, based on the merger exchange ratio, to phantom "
             "units based on the value of one of our Common Shares.", "2021-01-01"))
 
+    def test_our_vice_chairman_s_retirement_dated_in_the_year(self):
+        # Lumen FY2023 block 1124: the office is the board's ("our"), the
+        # holder is named after it, and the year is the year the filing reports.
+        text = ("From 2004 through our 2023 annual meeting, the Board had also elected a non-executive Vice Chairman "
+                "each year. The Board currently has no plans to select a successor Vice Chairman following the "
+                "retirement in 2023 of our former Vice Chairman, W. Bruce Hanks.")
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2023-01-01"))
+        # The same retirement in a later year's filing is not a change in it (constructed).
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
+        # A retirement that is not from an office of ours (constructed).
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "The Board has no plans to select a successor following the retirement in 2023 of the former Vice "
+            "Chairman, W. Bruce Hanks.", "2023-01-01"))
+
     def test_appointed_with_an_office_and_as_a_member_of_the_board(self):
         # Marriott FY2021 block 1144 prints no date; Macy's FY2023 block 2737
         # prints it before the verb.

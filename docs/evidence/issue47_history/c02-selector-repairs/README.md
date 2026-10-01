@@ -812,3 +812,21 @@
 共 133/133，对照 90 个用例。
 
 **量测**（`measured-41-rotated-committee-chair.json`）：只新增 Lumen 2021 第 1047 块、2022 第 1078 块、2023 第 1423 块（读者都判为事实），其余位置不变。漏选 16→13，误选 5 不变，最新年不变。
+
+## 42. "the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks"：写成名词、年份在前的本董事会职务离任
+
+**问题。** Lumen 2023 第 1124 块："From 2004 through our 2023 annual meeting, the Board had also elected a non-executive Vice Chairman each year. The Board currently has no plans to select a successor Vice Chairman following the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks."。读者判为事实；同年第 1601 块（"(1)Paid through May 2023, when our Vice Chairman retired and was not replaced."，部分事实）以它为覆盖，所以两块都算漏选。选择器的带日期离任句式都要动词（"ceased serving on the Board … in …"），这种名词写法、年份在职务之前的离任读不到。
+
+**先量后改。** "retirement in <年份>" 在 37 份文档里大多是董事在别家公司的退休（"until his retirement in 2015"、"(2007 to retirement in 2019)"），读者都没取。区别在 "of our"：只有 "of our … Vice Chairman" 说的是本董事会的职务，语料里只有这一处。
+
+**改动。** 新增 `_OFFICER_RETIREMENT`："retirement in <年份> of our [former] Vice Chairman"，并入带日期离任的列表，按第 26 处的规则读：在目标年度或之后才算变动，句中须写出人名。只认语料里的这种写法，其他职务（董事长、首席独立董事）在语料里没有这种写法，不收。
+
+**用例与注错。** `test_our_vice_chairman_s_retirement_dated_in_the_year`：Lumen FY2023 原文为正例；同一句放到下一年度、把 "our" 换成 "the" 为构造反例。注错：
+
+- `AN_OFFICER_RETIREMENT_IS_NOT_READ`（不读新句式）；
+- `AN_OFFICER_RETIREMENT_IS_ALWAYS_THIS_YEAR`（不看年份）；
+- `ANY_VICE_CHAIRMAN_IS_OURS`（不要求 "our"）。
+
+共 136/136，对照 91 个用例。
+
+**量测**（`measured-42-vice-chairman-retirement.json`）：只新增 Lumen 2023 第 1124 块（读者判为事实），第 1601 块随之有了覆盖，Lumen 2023 现与判读一致。漏选 13→11，误选 5 不变，不一致的位置 8→7，最新年不变。

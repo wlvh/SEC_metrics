@@ -3092,7 +3092,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/lumen_technologies-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (790: Brown's audit chair and committee seats at Cineverse, another company's board; 1085: generic step of the director-search process (a search committee formed to interview candidates); no actual committee, member or count); 4 block(s) stating a composition fact that no taken block states (834: Clontz on the NCG Committee - stated nowhere else in the packet; 1124: Board had a non-executive Vice Chairman through the 2023 meeting and plans no successor after Vice Chairman Hanks retired (Hanks's retiremen). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2023-12-31.json",
@@ -3103,23 +3103,20 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-17-term-endings.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-24-search-committee-step.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-36-company-roles-in-parentheses.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-41-rotated-committee-chair.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-41-rotated-committee-chair.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-42-vice-chairman-retirement.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "2 fact block(s) missed (1124, 1601) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "term_endings_17": "Repair 17 takes a named director's term ending at an annual meeting (and a footnote number printed against the honorific): 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 17 [shared-with-#28]).",
     "search_committee_step_24": "Repair 24 sets aside a committee the sentence says is formed for each search: 0 block(s) added, 1 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 24 [shared-with-#28]).",
     "company_roles_in_parentheses_36": "Repair 36 places the committee roles in parentheses after another company's name at that company: 0 block(s) added, 1 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 36 [shared-with-#28]).",
-    "rotated_committee_chair_41": "A committee chair rotated at a dated annual meeting (\"Rotated NCG Committee Chair at 2020 annual meeting\") is read: 1 block(s) taken, 0 dropped, judged facts by the reading (docs/evidence/issue47_history/c02-selector-repairs/README.md section 41 [shared-with-#28])."
+    "rotated_committee_chair_41": "A committee chair rotated at a dated annual meeting (\"Rotated NCG Committee Chair at 2020 annual meeting\") is read: 1 block(s) taken, 0 dropped, judged facts by the reading (docs/evidence/issue47_history/c02-selector-repairs/README.md section 41 [shared-with-#28]).",
+    "vice_chairman_retirement_42": "A dated retirement of the board's own vice chairman (\"the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks\") is read as a departure in the year: 1 block(s) taken, 0 dropped, judged facts by the reading (docs/evidence/issue47_history/c02-selector-repairs/README.md section 42 [shared-with-#28])."
    },
-   "selection_problems": {
-    "missed": [
-     1124,
-     1601
-    ]
-   }
+   "selection_problems": {}
   },
   {
    "defect_id": "C02_LUMEN_2024_OLDER_YEAR_READING_DISAGREES",

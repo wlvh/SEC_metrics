@@ -406,6 +406,14 @@ INJECTIONS = [
      'committee\\\\s+chair\\\\b"', "test_a_committee_chair_rotated_at_a_dated_meeting"),
     ('A_ROTATED_CHAIR_NEED_NOT_NAME_A_COMMITTEE', '(?:(?-i:[A-Z])[\\\\w&’\'\\\\-]*\\\\s+){1,6}committee\\\\s+chair',
      '(?:[\\\\w&’\'\\\\-]*\\\\s+){1,6}committee\\\\s+chair', "test_a_committee_chair_rotated_at_a_dated_meeting"),
+    # Repair 42: "the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks".
+    ('AN_OFFICER_RETIREMENT_IS_NOT_READ',
+     '        departures += [match.group("date") for match in _OFFICER_RETIREMENT.finditer(sentence)]\n', '',
+     "test_our_vice_chairman_s_retirement_dated_in_the_year"),
+    ('AN_OFFICER_RETIREMENT_IS_ALWAYS_THIS_YEAR', 'match.group("date") for match in _OFFICER_RETIREMENT',
+     'str(period_start.year) for match in _OFFICER_RETIREMENT', "test_our_vice_chairman_s_retirement_dated_in_the_year"),
+    ('ANY_VICE_CHAIRMAN_IS_OURS', 'of\\s+our\\s+(?:former\\s+)?vice', 'of\\s+(?:our|the)\\s+(?:former\\s+)?vice',
+     "test_our_vice_chairman_s_retirement_dated_in_the_year"),
 ]
 
 
