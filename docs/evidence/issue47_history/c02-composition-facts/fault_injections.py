@@ -170,6 +170,9 @@ INJECTIONS = [
      "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
     ('ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS', ' and title.casefold() in \\\n'
      '                    clean(block["text"]).casefold():', ':', "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
+    # Repair 12: the board's size on a past date, printed with attendance.
+    ('A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE', ' or _THEN_CURRENT_MEMBERS.search(sentence)', '',
+     "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"),
 ]
 
 

@@ -151,3 +151,13 @@
 **用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_task_force_of_named_directors_is_a_body_of_the_board`（原句取；管理层工作组不取；标题取；别的工作组标题不取）。撤回模块改动时该用例失败。注错 `A_TASK_FORCE_STATES_NOTHING`、`A_TASK_FORCE_TITLE_IS_NOT_TAKEN`、`ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS`；注错 54/54，对照 54 例。
 
 **量测**（`measured-11-task-force.json`）：只在 Macy's 2022、2023 各新增标题与成员句两块，漏选 113 → 109，误选 21 不变。
+
+## 12. 出席情况里给出的上年董事会人数
+
+**问题。** Ford 2021、2022 年代理写"Last year, of the twelve then current members of the Board, twelve attended the virtual annual meeting"。它给出上年股东会时董事会的人数。2021 年读者取了，2022 年读者没取同样的句子；统一裁定（`DIRECTOR_COUNT_ON_A_DATE`）判为事实：某日的董事人数，不论印在哪里。选择器把讲出席的句子整句排除了（出席不是构成事实）。
+
+**改动。** `_THEN_CURRENT_MEMBERS`："of the N then-current members of the Board / directors"标为规模陈述，与股权计划资格里的非雇员董事人数一样，在排除话题之前判断。没有人数的"All then current directors attended"不算。
+
+**用例与注错。** `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_the_board_s_size_on_a_past_date_wherever_it_is_printed`。撤回模块改动时该用例失败。注错 `A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE`；注错 55/55，对照 55 例。
+
+**量测**（`measured-12-past-board-size.json`）：只在 Ford 2021、2022 各新增这一块，漏选 109 → 107。

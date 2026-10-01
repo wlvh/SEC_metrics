@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 54,
- "caught": 54,
- "total": 54,
+ "control_tests_run": 55,
+ "caught": 55,
+ "total": 55,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -450,6 +450,14 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_task_force_of_named_directors_is_a_body_of_the_board"
+   ]
+  },
+  {
+   "injection": "A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE",
+   "expected": "test_the_board_s_size_on_a_past_date_wherever_it_is_printed",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"
    ]
   }
  ]

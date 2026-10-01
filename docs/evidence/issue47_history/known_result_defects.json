@@ -2879,13 +2879,13 @@
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2021-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-12-past-board-size.json"
    ],
    "selection_problems": {
     "missed": [
      626,
      760,
-     1472,
      2325,
      2336,
      3096,
@@ -2893,8 +2893,9 @@
     ]
    },
    "partial_repair": {
-    "still_open": "7 fact block(s) missed (626, 760, 1472, 2325, 2336, 3096, 4055) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
-    "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "still_open": "6 fact block(s) missed (626, 760, 2325, 2336, 3096, 4055) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "board_size_on_a_past_date": "1 block(s) now taken that give the board's size at last year's meeting where attendance is reported (DIRECTOR_COUNT_ON_A_DATE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 12 [shared-with-#28])."
    }
   },
   {
@@ -2914,12 +2915,14 @@
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-12-past-board-size.json"
    ],
    "partial_repair": {
     "roster_bullet_glyph": "43 blocks now taken, every one judged a composition fact: the rosters on the Audit, Compensation Talent and Culture, Finance, Nominating and Governance and Sustainability Innovation and Policy committee pages, whose members follow a '◾' the selector did not count as a list bullet, so each roster ended before its first name (scripts/vnext/historical_board_composition.py _BULLET_CHARS; docs/evidence/issue47_history/c02-selector-repairs/README.md section 2 [shared-with-#28]).",
-    "still_open": "18 fact block(s) missed (260, 406, 413, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 474, 789, 1255, 4535) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
-    "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "still_open": "17 fact block(s) missed (260, 406, 413, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 474, 1255, 4535) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "chair_ceo_structure": "3 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "board_size_on_a_past_date": "1 block(s) now taken that give the board's size at last year's meeting where attendance is reported (DIRECTOR_COUNT_ON_A_DATE), every one decided a composition fact by the reading or the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 12 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
@@ -2938,7 +2941,6 @@
      424,
      425,
      474,
-     789,
      1255,
      4535
     ]

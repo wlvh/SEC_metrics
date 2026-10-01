@@ -1031,3 +1031,5 @@ Issue #47 C02 第九处共用修复（2026-10-01，[shared-with-#28]，`c02-sele
 Issue #47 C02 第十处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 10 节）："Each nominee is currently a member of the Board"统一裁定为事实（非分级董事会，候选名单即现任董事会），选择器此前不取。`_SITTING_SLATE` 标为名册陈述，后接"of <别的机构>"的不算（第一版会把别家董事会也读进来，是写反例时发现的）。只在 Macy's 五个位置各新增一块，漏选 118→113，最新年 Macy's 恢复一致。注错 51/51。
 
 Issue #47 C02 第十一处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 11 节）：Macy's 的 Digital Innovation Task Force 由三名具名董事（及管理层）组成，统一裁定为委员会设置与成员。`_TASK_FORCE_MEMBERS` 只认"由 N 名董事组成"且写出人名的句子，标题只在正是该工作组名时取。只在 Macy's 2022、2023 各新增两块，漏选 113→109。注错 54/54。
+
+Issue #47 C02 第十二处共用修复（2026-10-01，[shared-with-#28]，`c02-selector-repairs/` 第 12 节）：Ford 出席情况里的"of the twelve then current members of the Board"统一裁定为某日的董事人数（事实），而出席话题让选择器整句排除。`_THEN_CURRENT_MEMBERS` 在排除话题之前判断，与非雇员董事人数同理。只在 Ford 2021、2022 各新增一块，漏选 109→107。注错 55/55。

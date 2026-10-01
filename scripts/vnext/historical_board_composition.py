@@ -654,6 +654,12 @@ _BOARD_SIZE_CHANGE = (
 _DIRECTOR_COUNT = re.compile(
     r"\b(?:had|has|have|there (?:were|are)|including|of (?:our|the|its))\b[^.;]{0,60}?\b" + _NUM
     + r"\s+(?:non-employee|non-management|outside)\s+directors\b", re.I)
+# The board's size on a past date, printed where attendance is reported: "Last
+# year, of the twelve then current members of the Board, twelve attended"
+# (c02-composition-facts/adjudicate.py, DIRECTOR_COUNT_ON_A_DATE). Like the
+# count above it is read wherever it is printed.
+_THEN_CURRENT_MEMBERS = re.compile(r"\bof\s+the\s+" + _NUM + r"\s+then[- ]current\s+(?:members\s+of\s+(?:the|our)\s+board"
+                                   r"|directors)\b", re.I)
 # A committee chair named where the filing explains a fee: "Cash fees paid
 # to Mr. Roos relate to his service as Chair of the Compensation Committee for
 # the first quarter". The pay is set aside; who chaired which committee is not.
@@ -777,7 +783,7 @@ def statement_labels(text, own_words=frozenset(), *, acronyms=frozenset(), regis
             continue
         if _other_organization(sentence, own_words):
             continue
-        if _DIRECTOR_COUNT.search(sentence):
+        if _DIRECTOR_COUNT.search(sentence) or _THEN_CURRENT_MEMBERS.search(sentence):
             labels.add("BOARD_SIZE_STATEMENT")
         if _SERVICE_AS_CHAIR.search(sentence) and _mentions_person(sentence):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")

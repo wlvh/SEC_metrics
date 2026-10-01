@@ -344,6 +344,18 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         # A title is taken only over the members sentence of the same task force.
         self.assertNotIn(0, _selected(["Supply Chain Task Force", members]))
 
+    def test_the_board_s_size_on_a_past_date_wherever_it_is_printed(self):
+        # Ford reports attendance at last year's meeting with the board's size
+        # then (c02-composition-facts/adjudicate.py, DIRECTOR_COUNT_ON_A_DATE).
+        for text in ("Last year, of the twelve then current members of the Board, twelve attended the virtual "
+                     "annual meeting.",
+                     "Last year, of the 14 then-current members of the Board, 14 attended the virtual annual meeting."):
+            with self.subTest(text=text[:40]):
+                self.assertStates(text, "BOARD_SIZE_STATEMENT")
+        # No count, no size.
+        self.assertNotIn("BOARD_SIZE_STATEMENT", statement_labels(
+            "All then current directors attended our 2022 annual meeting.", frozenset({"example"})))
+
     def test_the_filing_says_whether_its_board_is_classified(self):
         slate = "To elect our three nominees for director to hold office until the 2029 Annual Meeting."
         classified = ["Class II Directors", "Steven J. Gomo", slate]
