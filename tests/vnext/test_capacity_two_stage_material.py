@@ -14,6 +14,71 @@ from vnext.capacity_two_stage import interpretation_request, scan_request, valid
 
 
 class CapacityTwoStageMaterialTest(unittest.TestCase):
+    def test_complete_reference_coverage_scan_records_only_shape_credit(self):
+        from vnext.continuous_call_ledger import recorded_ledger
+        from vnext.continuous_call_policy import configured_transport_policy
+        from vnext.continuous_semantic_calls import (
+            _json, _source_json, execute_capacity_scan,
+            prepare_requests, request_body)
+        from vnext.capacity_two_stage import (
+            coverage_scan_request, validate_coverage_scan)
+        from vnext.native_assessment_replay import replay_native_response
+        from vnext.normal_source_authority import ROOT
+
+        with tempfile.TemporaryDirectory() as temporary, \
+             patch.object(socket.socket, 'connect',
+                          side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo',
+                          side_effect=AssertionError('DNS_FORBIDDEN')):
+            prepared = prepare_requests(company_id='enphase_energy',
+                metric_id='B13', reference_context=True,
+                program_quantity_roles=True)[1]
+            prior = upgrade_request(json.loads(prepared.request_bytes),
+                compact=True, role_labels=True, relevance_scope=True)
+            scan = coverage_scan_request(prior)
+            response = {'units_reviewed': list(range(len(prior['units']))),
+                'candidate_refs': ['B2382'], 'unresolved_refs': [],
+                'excluded_ref_ranges': [
+                    ['B', 0, 1884, 2382], ['B', 1, 2383, 2709],
+                    ['F', 2, 1, 237], ['F', 3, 237, 452]]}
+            raw = canonical_json_bytes(value=response)
+            checked = validate_coverage_scan(request=prior,
+                scan_request_value=scan, raw_response=raw)
+            self.assertEqual(1276, checked['source_reference_count'])
+            self.assertEqual(1275, checked['excluded_count'])
+            self.assertFalse(checked['absence_established'])
+            policy = configured_transport_policy(
+                requirement=prepared.requirement, repo_root=ROOT)
+            scanned = replace(prepared, request_bytes=_source_json(scan),
+                provider_request_body_bytes=request_body(scan, policy),
+                output_schema_bytes=_json(scan['response_protocol']))
+            ledger = recorded_ledger(root=Path(temporary)/'ledger')
+            with self.assertRaisesRegex(ValueError,
+                    'B13_TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED'):
+                execute_capacity_scan(prepared=scanned,
+                                      ledger=type('Live', (), {'live': True})())
+            wire = canonical_json_bytes(value={
+                'id': 'b13-coverage-recorded', 'model': 'deepseek-flash',
+                'choices': [{'message': {'role': 'assistant',
+                    'content': json.dumps(response)}, 'finish_reason': 'stop'}],
+                'usage': {'prompt_tokens': 100,
+                          'completion_tokens': 20, 'total_tokens': 120}})
+            path, outcome = execute_capacity_scan(prepared=scanned,
+                ledger=ledger, recorded_wire=wire)
+            self.assertEqual('SUCCEEDED', outcome['terminal']['status'])
+            self.assertFalse(outcome['native_result_created'])
+            self.assertEqual('SCAN_SHAPE_ONLY_NO_B13_METRIC_CREDIT',
+                             outcome['acceptance_scope'])
+            replay = replay_native_response(prepared=scanned, path=path)
+            receipt = replay['success']['acceptance_receipt']
+            self.assertEqual('B13_COVERAGE_SCAN_SHAPE_STAGE_V2',
+                             receipt['validator_semantic_version'])
+            self.assertEqual(1275, receipt['candidate_record']['selected'][
+                'source_scan']['excluded_count'])
+            self.assertFalse(replay['revalidation']['new_provider_execution'])
+            with ledger.locked():
+                self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
+
     def test_scoped_interpretation_stops_after_saved_scan(self):
         from vnext.continuous_call_ledger import recorded_ledger
         from vnext.continuous_call_policy import configured_transport_policy

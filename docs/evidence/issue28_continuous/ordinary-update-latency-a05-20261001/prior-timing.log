@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-update-latency-a05-20261001/prior_timing.py", line 25, in <module>
+    row['completed_epoch'] - rows[index - 1]['completed_epoch'], 3)
+                             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'completed_epoch'

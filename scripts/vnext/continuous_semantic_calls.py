@@ -285,9 +285,15 @@ class SemanticRequest:
                      'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE')
             elif request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
                 from .capacity_reference_contract import upgrade_request as reference_request
-                from .capacity_two_stage import scan_request
+                from .capacity_two_stage import (SCAN_COVERAGE_VERSION,
+                    SCAN_VERSION, coverage_scan_request, scan_request)
+                version = request.get('scan_contract', {}).get('version')
+                need(version in {SCAN_VERSION, SCAN_COVERAGE_VERSION},
+                     'CONTINUOUS_SCAN_REQUEST_VERSION_UNSUPPORTED')
+                build_scan = (coverage_scan_request if version == SCAN_COVERAGE_VERSION
+                              else scan_request)
                 need(source['metric_id'] == 'B13' and
-                     any(scan_request(reference_request(original, compact=True,
+                     any(build_scan(reference_request(original, compact=True,
                          role_labels=True, relevance_scope=True)) == request
                          for original in original_requests),
                      'CONTINUOUS_SCAN_REQUEST_NOT_IN_SOURCE')
@@ -920,10 +926,15 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
             from .r6_regulatory_semantics import validate_response
     elif scan_stage:
         from .capacity_two_stage import prior_for_scan, validate_scan
+        from .capacity_two_stage import (SCAN_COVERAGE_VERSION,
+                                         validate_coverage_scan)
         prior = prior_for_scan(source=strict_json_loads(text=prepared.source_bytes.decode()),
                                scan=request_fields)
+        scan_validate = (validate_coverage_scan
+            if request_fields['scan_contract']['version'] == SCAN_COVERAGE_VERSION
+            else validate_scan)
         def validate_response(*, request, raw_response):
-            return validate_scan(request=prior, scan_request_value=request,
+            return scan_validate(request=prior, scan_request_value=request,
                                  raw_response=raw_response)
     elif two_stage_scan is not None:
         from .capacity_two_stage import validate_interpretation

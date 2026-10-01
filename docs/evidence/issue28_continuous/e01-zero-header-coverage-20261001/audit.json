@@ -1,0 +1,891 @@
+{
+  "record_type": "ISSUE28_E01_FOUR_ZERO_HEADER_COVERAGE_AUDIT",
+  "tested_product_head": "3d7adf920125a588a3c19f8f14baf23e421cdba2",
+  "source_snapshot_id": "sha256:e9d22109164a16817fa183d31eeebb293039deb4d59e6ef2fbd4499404922681",
+  "requirement_closure_hash": "sha256:e3f0eabc5ed50b7b5ecd79b7c407927ef888383d6983dc16619c38a863288b1d",
+  "companies": [
+    {
+      "company_id": "marriott_international",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "current_prepared_result_id": "sha256:ec9158300ef962f26fd9ae74d7eef70cde535c707eb8ef492ff8fc30ba8db8b6",
+      "metadata_8k_count": 10,
+      "selected_header_count": 10,
+      "metadata_forms": {
+        "8-K": 9,
+        "8-K/A": 1
+      },
+      "metadata_8k": [
+        {
+          "accession": "0001048286-25-000011",
+          "form": "8-K",
+          "filing_date": "2025-11-04",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001193125-25-184082",
+          "form": "8-K",
+          "filing_date": "2025-08-20",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001628280-25-037592",
+          "form": "8-K",
+          "filing_date": "2025-08-05",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001193125-25-158742",
+          "form": "8-K",
+          "filing_date": "2025-07-14",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001193125-25-118861",
+          "form": "8-K/A",
+          "filing_date": "2025-05-13",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001193125-25-118853",
+          "form": "8-K",
+          "filing_date": "2025-05-13",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001628280-25-022390",
+          "form": "8-K",
+          "filing_date": "2025-05-06",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001193125-25-036732",
+          "form": "8-K",
+          "filing_date": "2025-02-26",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001628280-25-004772",
+          "form": "8-K",
+          "filing_date": "2025-02-11",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        },
+        {
+          "accession": "0001193125-25-009110",
+          "form": "8-K",
+          "filing_date": "2025-01-21",
+          "metadata_source_sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+        }
+      ],
+      "selected_headers": [
+        {
+          "accession": "0001193125-25-009110",
+          "items": [
+            "5.02",
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "0b7fcc3b211556d4e1426e93c53dc37170a505bdcc8ad1309de1fc9690b2e9f7",
+          "storage_name": "0001193125-25-009110.hdr.sgml"
+        },
+        {
+          "accession": "0001628280-25-004772",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "4e94fd03f5e3cb69234b4f7f3983fcf702a37ffb3445d29cd0d3ffaf220b2aff",
+          "storage_name": "0001628280-25-004772.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-036732",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "5b1ea9e16b1b97fb83873f648e991a654d4362e2b0751a82bb7ca94545177f7d",
+          "storage_name": "0001193125-25-036732.hdr.sgml"
+        },
+        {
+          "accession": "0001628280-25-022390",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "33c79bd1b02375176040dde689e87ac5dc1fc731b97781972c6718697dc45063",
+          "storage_name": "0001628280-25-022390.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-118853",
+          "items": [
+            "5.07"
+          ],
+          "source_sha256": "8c67669ade683e3325ec92076dbc2c6bba0a3a88b2bed1e9aa0389e079c99177",
+          "storage_name": "0001193125-25-118853.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-118861",
+          "items": [
+            "5.02"
+          ],
+          "source_sha256": "dceca997691cdbc0425a03c514b044a38d87b93062797c344b7e5dd45dd78602",
+          "storage_name": "0001193125-25-118861.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-158742",
+          "items": [
+            "5.02",
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "12606dfc17776def4d014b710c69365107ba57352ff38843233a631bba6bef4e",
+          "storage_name": "0001193125-25-158742.hdr.sgml"
+        },
+        {
+          "accession": "0001628280-25-037592",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "9c277c824dbe666f4e8ce126dd384f2e7db10f387e0e3e236528915755b29e81",
+          "storage_name": "0001628280-25-037592.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-184082",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "6b75de95cabe026c29bf30a19e7f03309d9021f9fb182e407b8fd455828fc152",
+          "storage_name": "0001193125-25-184082.hdr.sgml"
+        },
+        {
+          "accession": "0001048286-25-000011",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e",
+          "storage_name": "0001048286-25-000011.hdr.sgml"
+        }
+      ],
+      "history_descriptor_comparisons": [],
+      "all_saved_metadata_8k_headers_selected": true,
+      "selected_item_1_01_or_2_01_count": 0
+    },
+    {
+      "company_id": "pfizer",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "current_prepared_result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+      "metadata_8k_count": 9,
+      "selected_header_count": 9,
+      "metadata_forms": {
+        "8-K": 9
+      },
+      "metadata_8k": [
+        {
+          "accession": "0000078003-25-000167",
+          "form": "8-K",
+          "filing_date": "2025-12-16",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0001193125-25-291406",
+          "form": "8-K",
+          "filing_date": "2025-11-21",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0000078003-25-000159",
+          "form": "8-K",
+          "filing_date": "2025-11-13",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0000078003-25-000149",
+          "form": "8-K",
+          "filing_date": "2025-11-04",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0000078003-25-000136",
+          "form": "8-K",
+          "filing_date": "2025-08-05",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0001193125-25-122480",
+          "form": "8-K",
+          "filing_date": "2025-05-19",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0000078003-25-000111",
+          "form": "8-K",
+          "filing_date": "2025-04-29",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0000078003-25-000109",
+          "form": "8-K",
+          "filing_date": "2025-04-28",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        },
+        {
+          "accession": "0000078003-25-000017",
+          "form": "8-K",
+          "filing_date": "2025-02-04",
+          "metadata_source_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+        }
+      ],
+      "selected_headers": [
+        {
+          "accession": "0000078003-25-000017",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "70f1ee6446a3fe3c3807ed006e3a4fcc7787b94abd88500eb6c0c252417eb833",
+          "storage_name": "0000078003-25-000017.hdr.sgml"
+        },
+        {
+          "accession": "0000078003-25-000109",
+          "items": [
+            "5.07"
+          ],
+          "source_sha256": "1cf782f9555b5a8162340a995f9b56717cc94543084a0a045ceff3d2f627ca60",
+          "storage_name": "0000078003-25-000109.hdr.sgml"
+        },
+        {
+          "accession": "0000078003-25-000111",
+          "items": [
+            "2.02",
+            "2.05",
+            "9.01"
+          ],
+          "source_sha256": "a60422c224a9cc4dd702aa46db0288f4120ecd8e079d01631f8d8a1fff9e06e9",
+          "storage_name": "0000078003-25-000111.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-122480",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "096f6905c961e9d460b5cfb71d546462ff14546e5e19629b03838c2e1a324cc7",
+          "storage_name": "0001193125-25-122480.hdr.sgml"
+        },
+        {
+          "accession": "0000078003-25-000136",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "be9493761198bfcbd69476924f12c41d2d5022a045ed8f33ce8ba8049e139d01",
+          "storage_name": "0000078003-25-000136.hdr.sgml"
+        },
+        {
+          "accession": "0000078003-25-000149",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "38bc93844a1458bd8614e494e7bf5fb1e2931d8984234f2815a39268d9ea773f",
+          "storage_name": "0000078003-25-000149.hdr.sgml"
+        },
+        {
+          "accession": "0000078003-25-000159",
+          "items": [
+            "8.01"
+          ],
+          "source_sha256": "40e6234f226035221d9d7d71a5a66ffd165b882a858d96827b6dd50db0bdcd1b",
+          "storage_name": "0000078003-25-000159.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-291406",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "a616e0dc438379f8741510b9bf9b83e1e560da6faabce2c9c05ad598dae15432",
+          "storage_name": "0001193125-25-291406.hdr.sgml"
+        },
+        {
+          "accession": "0000078003-25-000167",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "5fdef3900cd91953947b8072950ed425d60d1862c83b7991767df051de09e913",
+          "storage_name": "0000078003-25-000167.hdr.sgml"
+        }
+      ],
+      "history_descriptor_comparisons": [],
+      "all_saved_metadata_8k_headers_selected": true,
+      "selected_item_1_01_or_2_01_count": 0
+    },
+    {
+      "company_id": "enphase_energy",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "current_prepared_result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
+      "metadata_8k_count": 6,
+      "selected_header_count": 6,
+      "metadata_forms": {
+        "8-K": 6
+      },
+      "metadata_8k": [
+        {
+          "accession": "0001463101-25-000111",
+          "form": "8-K",
+          "filing_date": "2025-10-28",
+          "metadata_source_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+        },
+        {
+          "accession": "0001463101-25-000099",
+          "form": "8-K",
+          "filing_date": "2025-07-22",
+          "metadata_source_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+        },
+        {
+          "accession": "0001463101-25-000090",
+          "form": "8-K",
+          "filing_date": "2025-06-30",
+          "metadata_source_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+        },
+        {
+          "accession": "0001463101-25-000075",
+          "form": "8-K",
+          "filing_date": "2025-05-20",
+          "metadata_source_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+        },
+        {
+          "accession": "0001463101-25-000054",
+          "form": "8-K",
+          "filing_date": "2025-04-22",
+          "metadata_source_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+        },
+        {
+          "accession": "0001463101-25-000014",
+          "form": "8-K",
+          "filing_date": "2025-02-04",
+          "metadata_source_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+        }
+      ],
+      "selected_headers": [
+        {
+          "accession": "0001463101-25-000014",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "6b47ae15ec24da3d34a2df0511e6f6fa8c4ef508eb72e433b567c033b4fe7c55",
+          "storage_name": "0001463101-25-000014.hdr.sgml"
+        },
+        {
+          "accession": "0001463101-25-000054",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "234fc0d624bb08b62a044469e40c7a68a33ed41a28503b21b4a1ef4f42c71100",
+          "storage_name": "0001463101-25-000054.hdr.sgml"
+        },
+        {
+          "accession": "0001463101-25-000075",
+          "items": [
+            "5.02",
+            "5.07",
+            "9.01"
+          ],
+          "source_sha256": "88d137a6e96d3e60489ff35dc847eb0a35922a6ec35bbcc341c8fab766a3347c",
+          "storage_name": "0001463101-25-000075.hdr.sgml"
+        },
+        {
+          "accession": "0001463101-25-000090",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "90925eeaf2aee3ba6523daeb1728bd37d5166d2387aeeebe7fb1eab1a0942605",
+          "storage_name": "0001463101-25-000090.hdr.sgml"
+        },
+        {
+          "accession": "0001463101-25-000099",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "9a74d4ed716965956f6102972b8ce166bada230d976819f9927ac28a45b3b01f",
+          "storage_name": "0001463101-25-000099.hdr.sgml"
+        },
+        {
+          "accession": "0001463101-25-000111",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "10cac1506207649d304315fbf62db133a89a06f99b2f8854bc5f37ba2afb8793",
+          "storage_name": "0001463101-25-000111.hdr.sgml"
+        }
+      ],
+      "history_descriptor_comparisons": [],
+      "all_saved_metadata_8k_headers_selected": true,
+      "selected_item_1_01_or_2_01_count": 0
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "current_prepared_result_id": "sha256:da0df5b5cee3319dc79db72df0d896faf59813e46d1592241878ce2d97ac7a37",
+      "metadata_8k_count": 23,
+      "selected_header_count": 23,
+      "metadata_forms": {
+        "8-K": 23
+      },
+      "metadata_8k": [
+        {
+          "accession": "0000019617-25-001100",
+          "form": "8-K",
+          "filing_date": "2025-12-08",
+          "metadata_source_sha256": "912d48b2d241e16c93d5e656857576cc0efe9e370cd65a078a35cf89032af7bb"
+        },
+        {
+          "accession": "0001193125-25-246803",
+          "form": "8-K",
+          "filing_date": "2025-10-22",
+          "metadata_source_sha256": "912d48b2d241e16c93d5e656857576cc0efe9e370cd65a078a35cf89032af7bb"
+        },
+        {
+          "accession": "0001628280-25-044887",
+          "form": "8-K",
+          "filing_date": "2025-10-14",
+          "metadata_source_sha256": "912d48b2d241e16c93d5e656857576cc0efe9e370cd65a078a35cf89032af7bb"
+        },
+        {
+          "accession": "0001628280-25-044845",
+          "form": "8-K",
+          "filing_date": "2025-10-14",
+          "metadata_source_sha256": "912d48b2d241e16c93d5e656857576cc0efe9e370cd65a078a35cf89032af7bb"
+        },
+        {
+          "accession": "0000019617-25-000907",
+          "form": "8-K",
+          "filing_date": "2025-09-12",
+          "metadata_source_sha256": "6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774"
+        },
+        {
+          "accession": "0001193125-25-163423",
+          "form": "8-K",
+          "filing_date": "2025-07-23",
+          "metadata_source_sha256": "5396d6a929d0640c43962a3a15e0b668b1f50193089b94265cbad6b9f64b80dc"
+        },
+        {
+          "accession": "0000019617-25-000520",
+          "form": "8-K",
+          "filing_date": "2025-07-15",
+          "metadata_source_sha256": "5396d6a929d0640c43962a3a15e0b668b1f50193089b94265cbad6b9f64b80dc"
+        },
+        {
+          "accession": "0000019617-25-000518",
+          "form": "8-K",
+          "filing_date": "2025-07-15",
+          "metadata_source_sha256": "5396d6a929d0640c43962a3a15e0b668b1f50193089b94265cbad6b9f64b80dc"
+        },
+        {
+          "accession": "0000019617-25-000510",
+          "form": "8-K",
+          "filing_date": "2025-07-01",
+          "metadata_source_sha256": "b8eb484bec7202accab256588b8a358c1b58e5e1a214c4530482746e8e947851"
+        },
+        {
+          "accession": "0000019617-25-000509",
+          "form": "8-K",
+          "filing_date": "2025-07-01",
+          "metadata_source_sha256": "b8eb484bec7202accab256588b8a358c1b58e5e1a214c4530482746e8e947851"
+        },
+        {
+          "accession": "0000019617-25-000485",
+          "form": "8-K",
+          "filing_date": "2025-05-22",
+          "metadata_source_sha256": "d320065f64a0acde84c63cd43c44dbcfba01288dd0723c6efecad4de2d1c328e"
+        },
+        {
+          "accession": "0000019617-25-000483",
+          "form": "8-K",
+          "filing_date": "2025-05-19",
+          "metadata_source_sha256": "d320065f64a0acde84c63cd43c44dbcfba01288dd0723c6efecad4de2d1c328e"
+        },
+        {
+          "accession": "0001193125-25-089203",
+          "form": "8-K",
+          "filing_date": "2025-04-22",
+          "metadata_source_sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a"
+        },
+        {
+          "accession": "0000019617-25-000334",
+          "form": "8-K",
+          "filing_date": "2025-04-11",
+          "metadata_source_sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a"
+        },
+        {
+          "accession": "0000019617-25-000332",
+          "form": "8-K",
+          "filing_date": "2025-04-11",
+          "metadata_source_sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a"
+        },
+        {
+          "accession": "0001193125-25-078015",
+          "form": "8-K",
+          "filing_date": "2025-04-10",
+          "metadata_source_sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a"
+        },
+        {
+          "accession": "0001193125-25-020070",
+          "form": "8-K",
+          "filing_date": "2025-02-04",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "accession": "0001193125-25-013396",
+          "form": "8-K",
+          "filing_date": "2025-01-27",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "accession": "0001193125-25-012230",
+          "form": "8-K",
+          "filing_date": "2025-01-24",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "accession": "0000019617-25-000056",
+          "form": "8-K",
+          "filing_date": "2025-01-23",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "accession": "0000019617-25-000042",
+          "form": "8-K",
+          "filing_date": "2025-01-15",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "accession": "0000019617-25-000040",
+          "form": "8-K",
+          "filing_date": "2025-01-15",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "accession": "0001193125-25-006009",
+          "form": "8-K",
+          "filing_date": "2025-01-14",
+          "metadata_source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        }
+      ],
+      "selected_headers": [
+        {
+          "accession": "0001628280-25-044845",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "51c10cc6604c4c20e23dff08503d4a10a7fcb0fd7a679429aeb3f6525331ac2c",
+          "storage_name": "0001628280-25-044845.hdr.sgml"
+        },
+        {
+          "accession": "0001628280-25-044887",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "129c76b9126a5b8c5e2068c5aae3c113bc581815f2a13477f5b66c7f5b96a1dd",
+          "storage_name": "0001628280-25-044887.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-246803",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "aeff4994a6264ccd72cf865ee59681a984823a6220305ca6507189169dbc7b0c",
+          "storage_name": "0001193125-25-246803.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-001100",
+          "items": [
+            "5.02"
+          ],
+          "source_sha256": "aa16f0f6616fd00065d23541e2f07408f59694c86b7fe2c38dd0bf87701afa49",
+          "storage_name": "0000019617-25-001100.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000907",
+          "items": [
+            "5.03",
+            "9.01"
+          ],
+          "source_sha256": "3da80081b4031792b0420810d615b46444ccaac9be124142af394bebfd4975c7",
+          "storage_name": "0000019617-25-000907.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000518",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "9170f4822a126cc9ab562f004c249bf39ee90514af194c163b8458be6969bdbc",
+          "storage_name": "0000019617-25-000518.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000520",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "0f5f9b54b425d767e17b4ab4963f6fbafb8b38658aca4f8142d70419b0e1e370",
+          "storage_name": "0000019617-25-000520.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-163423",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "a132388e07754377972f50db10a6bf2a2abaa98287b1257d25135710f7986731",
+          "storage_name": "0001193125-25-163423.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000509",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "9328f4773ffd0343d400d1deca334e5b550f75b53be6fa659169a91ed2eaa84a",
+          "storage_name": "0000019617-25-000509.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000510",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "201886354895108782aa4585c998103b2eb94e68f087a77cc6691c9b1d7911cd",
+          "storage_name": "0000019617-25-000510.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000483",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "fd5d82fe6b45fbf43d6febc298f6ed4665923308ce47596191596af4c7953987",
+          "storage_name": "0000019617-25-000483.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000485",
+          "items": [
+            "5.07",
+            "9.01"
+          ],
+          "source_sha256": "b29460402fe1626cd600cd364af78e9c7564bc1953549a6026309436620d15a9",
+          "storage_name": "0000019617-25-000485.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-078015",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "ef1fae7f7cb7f401ae92892972923c9eaf6649608b66f359a9842f9cbb0a2da2",
+          "storage_name": "0001193125-25-078015.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000332",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "f824f7bdcb35a0e57c96a0618a625a223a2db433f289c4f7ffea6bfb3aa45afd",
+          "storage_name": "0013.body"
+        },
+        {
+          "accession": "0000019617-25-000334",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "be4f5b87fd38ffcc26f834bddf657809d95314605d7a71a9b1ff816522cf84ae",
+          "storage_name": "0000019617-25-000334.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-089203",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "b29abcdeeed090f6f5419428dbf343816ab81b04e095d9631d5338e70831577d",
+          "storage_name": "0001193125-25-089203.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-006009",
+          "items": [
+            "5.02",
+            "9.01"
+          ],
+          "source_sha256": "e928aaed31e9c377a9cd60c4e72d5368aadef820566eb4ee500761de2e421dd4",
+          "storage_name": "0001193125-25-006009.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000040",
+          "items": [
+            "2.02",
+            "9.01"
+          ],
+          "source_sha256": "4a7ba5bfebb7a45970719019933f7cfc541fd8e11df71ffa7753eef21ab98322",
+          "storage_name": "0000019617-25-000040.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000042",
+          "items": [
+            "7.01",
+            "9.01"
+          ],
+          "source_sha256": "6c92a19cc76d1cf20d41ebb9ffe8eb74b2fde891ebf94818dbc235a0328c8804",
+          "storage_name": "0000019617-25-000042.hdr.sgml"
+        },
+        {
+          "accession": "0000019617-25-000056",
+          "items": [
+            "5.02"
+          ],
+          "source_sha256": "3a86c7c01ce5c4e39a43cdef349040821c02fef32243eacab633beea54b5cfc8",
+          "storage_name": "0000019617-25-000056.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-012230",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "2b8cb51b0be58b9feeabeaf7c7f358062aa0e3ef98b49faeec82e0ee47efe164",
+          "storage_name": "0001193125-25-012230.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-013396",
+          "items": [
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "ab51bb6d6f0c229ecb72ae86a23cdc50ec613dcbe65016db85535143380a1e3f",
+          "storage_name": "0001193125-25-013396.hdr.sgml"
+        },
+        {
+          "accession": "0001193125-25-020070",
+          "items": [
+            "3.03",
+            "5.03",
+            "8.01",
+            "9.01"
+          ],
+          "source_sha256": "0aaf413e76089f11ae3983451d6894729fef3f9b043f33d37c2b8450a022263d",
+          "storage_name": "0001193125-25-020070.hdr.sgml"
+        }
+      ],
+      "history_descriptor_comparisons": [
+        {
+          "name": "CIK0000019617-submissions-001.json",
+          "declared_from": "2025-08-12",
+          "declared_to": "2025-09-13",
+          "declared_count": 2065,
+          "saved_from": "2025-08-12",
+          "saved_to": "2025-09-12",
+          "saved_count": 2065,
+          "source_sha256": "6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774"
+        },
+        {
+          "name": "CIK0000019617-submissions-002.json",
+          "declared_from": "2025-07-09",
+          "declared_to": "2025-08-10",
+          "declared_count": 2039,
+          "saved_from": "2025-07-09",
+          "saved_to": "2025-08-11",
+          "saved_count": 2039,
+          "source_sha256": "5396d6a929d0640c43962a3a15e0b668b1f50193089b94265cbad6b9f64b80dc"
+        },
+        {
+          "name": "CIK0000019617-submissions-003.json",
+          "declared_from": "2025-06-03",
+          "declared_to": "2025-07-07",
+          "declared_count": 2071,
+          "saved_from": "2025-06-03",
+          "saved_to": "2025-07-08",
+          "saved_count": 2071,
+          "source_sha256": "b8eb484bec7202accab256588b8a358c1b58e5e1a214c4530482746e8e947851"
+        },
+        {
+          "name": "CIK0000019617-submissions-004.json",
+          "declared_from": "2025-04-25",
+          "declared_to": "2025-06-01",
+          "declared_count": 2005,
+          "saved_from": "2025-04-25",
+          "saved_to": "2025-06-02",
+          "saved_count": 2005,
+          "source_sha256": "d320065f64a0acde84c63cd43c44dbcfba01288dd0723c6efecad4de2d1c328e"
+        },
+        {
+          "name": "CIK0000019617-submissions-005.json",
+          "declared_from": "2025-03-21",
+          "declared_to": "2025-04-23",
+          "declared_count": 2035,
+          "saved_from": "2025-03-21",
+          "saved_to": "2025-04-24",
+          "saved_count": 2035,
+          "source_sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a"
+        },
+        {
+          "name": "CIK0000019617-submissions-006.json",
+          "declared_from": "2025-02-19",
+          "declared_to": "2025-03-19",
+          "declared_count": 2034,
+          "saved_from": "2025-02-19",
+          "saved_to": "2025-03-20",
+          "saved_count": 2034,
+          "source_sha256": "2b06df9c4bc05dad826878b53dcbe69ed555eb89ab7cd47cab2ca7bd06727e08"
+        },
+        {
+          "name": "CIK0000019617-submissions-007.json",
+          "declared_from": "2025-01-14",
+          "declared_to": "2025-02-17",
+          "declared_count": 2052,
+          "saved_from": "2025-01-14",
+          "saved_to": "2025-02-18",
+          "saved_count": 2052,
+          "source_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9"
+        },
+        {
+          "name": "CIK0000019617-submissions-008.json",
+          "declared_from": "2024-12-03",
+          "declared_to": "2025-01-12",
+          "declared_count": 2015,
+          "saved_from": "2024-12-03",
+          "saved_to": "2025-01-13",
+          "saved_count": 2015,
+          "source_sha256": "6f309bae0b4f97541b22f336947018f5dc4318e5dc3ba796adbc3f964db7b1d6"
+        }
+      ],
+      "all_saved_metadata_8k_headers_selected": true,
+      "selected_item_1_01_or_2_01_count": 0
+    }
+  ],
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "originals_unchanged": true,
+  "business_meaning_decided": false,
+  "formal_adoption": false,
+  "all390_acceptance": false
+}

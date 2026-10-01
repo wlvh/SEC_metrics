@@ -1,0 +1,224 @@
+{
+  "record_type": "ISSUE28_SALESFORCE_TERMINAL_SLEEP_CORRELATION",
+  "timezone": "Asia/Shanghai",
+  "source_kind": "local_pmset_sleep_wake_log",
+  "source_scope": "2026-10-01 local 05:00-12:00 only",
+  "sleep_spans_in_scope": 66,
+  "long_interval_count": 18,
+  "long_intervals_with_sleep_overlap": 18,
+  "all_intervals_wall_seconds": 21780.828,
+  "all_intervals_sleep_overlap_seconds": 19484.0,
+  "intervals": [
+    {
+      "metric_id": "A02",
+      "wall_seconds": 61.11,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 61.11
+    },
+    {
+      "metric_id": "A03",
+      "wall_seconds": 51.224,
+      "macos_sleep_overlap_seconds": 0.938,
+      "outside_logged_sleep_seconds": 50.286
+    },
+    {
+      "metric_id": "A04",
+      "wall_seconds": 1845.623,
+      "macos_sleep_overlap_seconds": 1799.062,
+      "outside_logged_sleep_seconds": 46.561
+    },
+    {
+      "metric_id": "A05",
+      "wall_seconds": 961.159,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 61.159
+    },
+    {
+      "metric_id": "A06",
+      "wall_seconds": 961.632,
+      "macos_sleep_overlap_seconds": 901.0,
+      "outside_logged_sleep_seconds": 60.632
+    },
+    {
+      "metric_id": "A07",
+      "wall_seconds": 64.267,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 64.267
+    },
+    {
+      "metric_id": "A08",
+      "wall_seconds": 962.426,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 62.426
+    },
+    {
+      "metric_id": "A09",
+      "wall_seconds": 50.725,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 50.725
+    },
+    {
+      "metric_id": "A10",
+      "wall_seconds": 66.024,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 66.024
+    },
+    {
+      "metric_id": "A11",
+      "wall_seconds": 948.196,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 48.196
+    },
+    {
+      "metric_id": "A12",
+      "wall_seconds": 50.886,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 50.886
+    },
+    {
+      "metric_id": "A13",
+      "wall_seconds": 252.505,
+      "macos_sleep_overlap_seconds": 204.0,
+      "outside_logged_sleep_seconds": 48.505
+    },
+    {
+      "metric_id": "B01",
+      "wall_seconds": 958.041,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 58.041
+    },
+    {
+      "metric_id": "B02",
+      "wall_seconds": 961.106,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 61.106
+    },
+    {
+      "metric_id": "B04",
+      "wall_seconds": 1180.424,
+      "macos_sleep_overlap_seconds": 1121.0,
+      "outside_logged_sleep_seconds": 59.424
+    },
+    {
+      "metric_id": "B05",
+      "wall_seconds": 74.636,
+      "macos_sleep_overlap_seconds": 13.0,
+      "outside_logged_sleep_seconds": 61.636
+    },
+    {
+      "metric_id": "B06",
+      "wall_seconds": 428.466,
+      "macos_sleep_overlap_seconds": 246.054,
+      "outside_logged_sleep_seconds": 182.413
+    },
+    {
+      "metric_id": "B07",
+      "wall_seconds": 1064.374,
+      "macos_sleep_overlap_seconds": 1001.946,
+      "outside_logged_sleep_seconds": 62.428
+    },
+    {
+      "metric_id": "B08",
+      "wall_seconds": 962.846,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 62.846
+    },
+    {
+      "metric_id": "B09",
+      "wall_seconds": 69.786,
+      "macos_sleep_overlap_seconds": 6.0,
+      "outside_logged_sleep_seconds": 63.786
+    },
+    {
+      "metric_id": "B10",
+      "wall_seconds": 946.365,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 46.365
+    },
+    {
+      "metric_id": "B11",
+      "wall_seconds": 48.578,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 48.578
+    },
+    {
+      "metric_id": "B12",
+      "wall_seconds": 63.529,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 63.529
+    },
+    {
+      "metric_id": "C01",
+      "wall_seconds": 977.914,
+      "macos_sleep_overlap_seconds": 913.0,
+      "outside_logged_sleep_seconds": 64.914
+    },
+    {
+      "metric_id": "C02",
+      "wall_seconds": 608.465,
+      "macos_sleep_overlap_seconds": 526.0,
+      "outside_logged_sleep_seconds": 82.465
+    },
+    {
+      "metric_id": "C03",
+      "wall_seconds": 979.09,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 79.09
+    },
+    {
+      "metric_id": "D01",
+      "wall_seconds": 1046.915,
+      "macos_sleep_overlap_seconds": 974.0,
+      "outside_logged_sleep_seconds": 72.915
+    },
+    {
+      "metric_id": "D02",
+      "wall_seconds": 980.175,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 80.175
+    },
+    {
+      "metric_id": "E01",
+      "wall_seconds": 234.932,
+      "macos_sleep_overlap_seconds": 169.0,
+      "outside_logged_sleep_seconds": 65.932
+    },
+    {
+      "metric_id": "E02",
+      "wall_seconds": 232.506,
+      "macos_sleep_overlap_seconds": 164.0,
+      "outside_logged_sleep_seconds": 68.506
+    },
+    {
+      "metric_id": "E03",
+      "wall_seconds": 967.802,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 67.802
+    },
+    {
+      "metric_id": "E04",
+      "wall_seconds": 967.031,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 67.031
+    },
+    {
+      "metric_id": "E05",
+      "wall_seconds": 966.676,
+      "macos_sleep_overlap_seconds": 900.0,
+      "outside_logged_sleep_seconds": 66.676
+    },
+    {
+      "metric_id": "B03",
+      "wall_seconds": 48.449,
+      "macos_sleep_overlap_seconds": 0,
+      "outside_logged_sleep_seconds": 48.449
+    },
+    {
+      "metric_id": "C04-registration-v3",
+      "wall_seconds": 736.945,
+      "macos_sleep_overlap_seconds": 645.0,
+      "outside_logged_sleep_seconds": 91.945
+    }
+  ],
+  "causal_limit": "Sleep overlap explains unavailable wall time; it does not measure active CPU time or prove source code has no latency issue."
+}
