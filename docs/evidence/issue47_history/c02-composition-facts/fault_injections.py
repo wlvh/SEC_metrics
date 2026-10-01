@@ -127,6 +127,10 @@ INJECTIONS = [
      "test_unlabelled_committees_on_the_lines_after_the_tenure"),
     ('UNLABELLED_CARD_ITEMS_UNREAD', '*_unlabelled_card_items(blocks, vocabulary, registrant), ', '',
      "test_unlabelled_committees_on_the_lines_after_the_tenure"),
+    ('NICKNAMES_STAY_IN_THE_NAME', '    t = _NICKNAME.sub("", _BULLET.sub("", clean(text)))', '    t = _BULLET.sub("", clean(text))',
+     "test_a_quoted_nickname_between_the_names"),
+    ('ANY_QUOTED_WORD_IS_A_NICKNAME', '[”\\"](?=\\\\s+\\\\S)', '[”\\"]',
+     "test_a_quoted_nickname_between_the_names"),
 ]
 
 

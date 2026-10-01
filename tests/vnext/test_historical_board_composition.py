@@ -91,6 +91,21 @@ class ANameIsTheWholeBlock(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertTrue(person_name(text))
 
+    def test_a_quoted_nickname_between_the_names(self):
+        # Lumen's and Marriott's proxies print "Steven T. “Terry” Clontz": the
+        # quotes failed the name, and a committee roster ended at it.
+        for text in ("Steven T. “Terry” Clontz", "Isabella D. \"Bella\" Goren"):
+            with self.subTest(text=text):
+                self.assertTrue(person_name(text))
+        # A quoted word that does not stand between two words of a name is no nickname.
+        for text in ("Recovery “Clawback”", "“Board” means", "Definition of “Cause”:"):
+            with self.subTest(text=text):
+                self.assertFalse(person_name(text))
+        texts = ["Nominating and Corporate Governance Committee", "Michael Roberts, Chair",
+                 "Steven T. “Terry” Clontz", "Laurie Siegel", "Meetings in 2021: 4"]
+        self.assertEqual({0: ["COMMITTEE_HEADING"], 1: ["COMMITTEE_CHAIR_NAME"], 2: ["COMMITTEE_MEMBER_NAME"],
+                          3: ["COMMITTEE_MEMBER_NAME"]}, _selected(texts))
+
     def test_headings_captions_and_furniture_are_not_names(self):
         for text in ("Recent Committee Focus Areas", "Key Responsibilities", "Marriott International, Inc.",
                      "2026 Proxy Statement", "Meetings in 2025: 7", "Corporate Governance",

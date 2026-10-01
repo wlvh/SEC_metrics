@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 46,
- "caught": 38,
- "total": 38,
+ "control_tests_run": 47,
+ "caught": 40,
+ "total": 40,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -173,6 +173,7 @@
    "failed": [
     "test_a_card_uses_the_filing_s_own_short_forms",
     "test_a_members_line_written_as_a_sentence",
+    "test_a_quoted_nickname_between_the_names",
     "test_a_roster_marked_with_each_glyph_filings_print",
     "test_a_title_line_at_this_registrant_and_not_elsewhere",
     "test_unlabelled_committees_on_the_lines_after_the_tenure"
@@ -320,6 +321,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_unlabelled_committees_on_the_lines_after_the_tenure"
+   ]
+  },
+  {
+   "injection": "NICKNAMES_STAY_IN_THE_NAME",
+   "expected": "test_a_quoted_nickname_between_the_names",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_quoted_nickname_between_the_names"
+   ]
+  },
+  {
+   "injection": "ANY_QUOTED_WORD_IS_A_NICKNAME",
+   "expected": "test_a_quoted_nickname_between_the_names",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_quoted_nickname_between_the_names"
    ]
   }
  ]

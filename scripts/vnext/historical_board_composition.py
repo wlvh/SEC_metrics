@@ -140,8 +140,14 @@ def clean(text):
     return _WS.sub(" ", text).strip()
 
 
+# A nickname printed in quotes between a director's names: "Steven T. “Terry”
+# Clontz", "Isabella D. “Bella” Goren". It stands between two of the name's
+# words, so a defined term ("“Board” means") or a quoted heading is not one.
+_NICKNAME = re.compile("(?<=\\S)\\s+[“\"][A-Z][a-z]+[”\"](?=\\s+\\S)")
+
+
 def _strip_name(text):
-    t = _BULLET.sub("", clean(text))
+    t = _NICKNAME.sub("", _BULLET.sub("", clean(text)))
     t = _FOOTNOTE_TAIL.sub("", t)
     t = _CHAIR_TAIL.sub("", t)
     t = _MEMBER_TAIL.sub("", t)
