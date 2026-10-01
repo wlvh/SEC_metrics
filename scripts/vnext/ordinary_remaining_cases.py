@@ -30,9 +30,15 @@ def _current_structured_preparation(*,data_root,company_id,metric_id):
     return prepared,path,resolution,admission
 
 
-def prepare_current_source_case(*, data_root, company_id, metric_id):
+def prepare_current_source_case(*, data_root, company_id, metric_id, c02_composition=False):
     """Pure discovery and source reconstruction; no caller-owned business facts."""
-    policy = _policy(data_root)
+    _need(type(c02_composition) is bool and (not c02_composition or metric_id == "C02"),
+          "NORMAL_C02_COMPOSITION_WRONG_METRIC")
+    if c02_composition:
+        from .normal_run_v3 import _policy as current_policy
+        policy = current_policy(data_root)
+    else:
+        policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"], "NORMAL_CURRENT_METRIC_NOT_ENABLED")
     _need(metric_id not in policy.get("temporarily_blocked_metrics", []),
           "NORMAL_CURRENT_SOURCE_REPAIR_PENDING")
@@ -46,6 +52,12 @@ def prepare_current_source_case(*, data_root, company_id, metric_id):
                 "target_period": prepared["prepared_input"]["table_input"]["target_period"],
                 "target": prepared["text_arguments"]["target"], "text_arguments": prepared["text_arguments"],
                 "spec_path": TEXT_PATHS[metric_id]}
+        if c02_composition:
+            case["input_binding"] = {"c02_selection_policy": "COMPOSITION_FACTS_V1",
+                                     "source_input_binding": prepared["input_binding"]}
+            case["text_arguments"] = {**case["text_arguments"],
+                                      "c02_selection_policy": "COMPOSITION_FACTS_V1"}
+            case["spec_path"] = "catalog/r6/C02_board_disclosures_v2.md"
     elif metric_id == "D01":
         from .ordinary_text_input import current_text_sources
         prepared, admission, records, references = current_text_sources(repo_root=data_root, company_id=company_id)
@@ -105,7 +117,8 @@ def prepare_current_source_case(*, data_root, company_id, metric_id):
     path = case["spec_path"]
     _need(path in policy["metric_spec_paths"][metric_id], "NORMAL_CURRENT_SPEC_ROUTE_NOT_ENABLED")
     spec = compile_spec_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=path), dependency_specs={})
-    _need(spec == compile_spec_file(path=ROOT / path, dependency_specs={}), "NORMAL_CURRENT_SPEC_DIFFERS_FROM_INSTALLED")
+    expected = compile_spec_file(path=ROOT / path, dependency_specs={})
+    _need(spec == expected, "NORMAL_CURRENT_SPEC_DIFFERS_FROM_INSTALLED")
     case["compiled_spec"] = spec
     if case["kind"] == "TEXT":
         case["text_arguments"] = {"compiled_spec": spec, **case["text_arguments"]}

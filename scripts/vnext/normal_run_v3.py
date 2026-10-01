@@ -92,9 +92,11 @@ def _registered_update_kwargs(metric_id, options, company_id):
 
 
 def prepare_case(*, data_root, company_id, metric_id, registered_update_options=None,
-                 native_assessment_ledger=None, c04_event_forms=None):
+                 native_assessment_ledger=None, c04_event_forms=None, c02_composition=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
+    _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
+          'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import prepare_case as prepare_capacity_case
         options=_registered_update_kwargs(metric_id, registered_update_options, company_id)
@@ -167,7 +169,7 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
     else:
         from .ordinary_remaining_cases import prepare_current_source_case
         old = prepare_current_source_case(data_root=data_root,company_id=company_id,
-            metric_id=metric_id)
+            metric_id=metric_id,c02_composition=c02_composition)
         annual = prepare_saved_annual_input(repo_root=data_root,company_id=company_id)
         year = annual["table_input"]["target_period"]["fiscal_year"]
         if year != old["target_period"]["fiscal_year"]:
@@ -184,6 +186,8 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
             "source_proofs":old["source_proofs"],"admission":old["admission"],
             "spec_paths":{metric_id:old["spec_path"]},"compiled_specs":{metric_id:old["compiled_spec"]},
             "target_period":period,"selection":old.get("selection")}
+        if c02_composition:
+            case["input_binding"]["c02_selection_policy"] = "COMPOSITION_FACTS_V1"
         if old["kind"] == "STRUCTURED":
             case.update(results={metric_id:old["result"]},traces={metric_id:old["trace"]},observations=old["observations"],
                 expected_records=[*old["records"],*old.get("derived_assets",[]),*old["observations"],old["trace"],old["result"]])
@@ -210,9 +214,11 @@ def _binding(case, requirement):
 
 def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
                           registered_update_options=None, native_assessment_ledger=None,
-                          c04_event_forms=None):
+                          c04_event_forms=None, c02_composition=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
+    _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
+          'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import install_inputs
         root=ROOT if source_root is None else source_root
@@ -230,11 +236,13 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
     _need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
           "ORDINARY_INTEGRATED_SOURCE_AND_OUTPUT_OVERLAP")
     case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id,
-        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
+        c02_composition=c02_composition)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
     _install_case_inputs(data_root=data_root,source_root=source_root,company_id=company_id,case=case,requirement=requirement)
     rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
-        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
+        c02_composition=c02_composition)
     _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
     return rebuilt
 
@@ -280,7 +288,12 @@ def _install_case_inputs(*, data_root, source_root, company_id, case, requiremen
         _write(data_root/relative,raw)
 
 
-def text_api(metric_id):
+def text_api(metric_id, c02_composition=False):
+    _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
+          'ORDINARY_C02_COMPOSITION_TEXT_API_WRONG_METRIC')
+    if metric_id == 'C02':
+        from . import c02_composition_text_results
+        return c02_composition_text_results, c02_composition_text_results.build_text_review_unit
     if metric_id in {'B13', 'D04'}:
         from . import capacity_text_results
         return capacity_text_results, capacity_text_results.build_text_review_unit
@@ -289,9 +302,11 @@ def text_api(metric_id):
 
 
 def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False,
-                      c04_event_forms=None):
+                      c04_event_forms=None, c02_composition=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
+    _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
+          'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -300,7 +315,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
     case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
-        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
+        c02_composition=c02_composition)
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
@@ -321,7 +337,8 @@ def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, require
     decision,unit,assets = None,None,None
     terminal_records = []
     if case["kind"] == "TEXT":
-        api,review_builder = text_api(metric_id)
+        api,review_builder = text_api(metric_id,
+            c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1')
         spec = case["compiled_specs"][metric_id]
         candidate = api.create_deterministic_text_candidate(**case["text_arguments"])
         evidence = api.build_text_evidence(candidate=candidate,**case["text_arguments"])
@@ -379,6 +396,12 @@ def replay_case(*, data_root, manifest, spec=None):
         'c04_registration_successor',{}).get('event_forms')
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_REPLAY_METRIC_CHANGED')
+    c02_policy = saved.get('input_binding', {}).get('c02_selection_policy')
+    _need(c02_policy in {None, 'COMPOSITION_FACTS_V1'},
+          'ORDINARY_C02_COMPOSITION_REPLAY_POLICY_CHANGED')
+    c02_composition = c02_policy == 'COMPOSITION_FACTS_V1'
+    _need(not c02_composition or metric_id == 'C02',
+          'ORDINARY_C02_COMPOSITION_REPLAY_METRIC_CHANGED')
     if saved.get('input_binding', {}).get('route') == 'B03_EXACT_IMPAIRMENT_EXCLUSION_V1':
         _need(metric_id == 'B03', 'ORDINARY_B03_ADJUSTED_REPLAY_METRIC_CHANGED')
         from .b03_impairment_adjusted_run import prepare_case as prepare_adjusted_b03
@@ -387,7 +410,8 @@ def replay_case(*, data_root, manifest, spec=None):
     else:
         case = prepare_case(data_root=data_root,company_id=manifest["company_id"],
             metric_id=metric_id,
-            **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
+            **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
+            c02_composition=c02_composition)
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
@@ -425,7 +449,8 @@ def prepare_text_contexts(*, repo_root, manifest, records, compiled_specs, **unu
     spec = next(iter(compiled_specs.values()))
     case = replay_case(data_root=repo_root,manifest=manifest,spec=spec)
     _need(case["kind"] == "TEXT","ORDINARY_INTEGRATED_TEXT_ROUTE_REQUIRED")
-    api,_ = text_api(spec["compiled"]["metric_id"])
+    api,_ = text_api(spec["compiled"]["metric_id"],
+        c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1')
     expected = api.create_deterministic_text_candidate(**case["text_arguments"])
     _need(candidates[0] == expected,"ORDINARY_INTEGRATED_TEXT_CANDIDATE_CHANGED")
     return {expected["candidate_hash"]:case["text_arguments"]}

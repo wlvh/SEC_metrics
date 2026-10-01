@@ -8151,7 +8151,7 @@
       "E01": "CONTENT_CONFIRMED_M_AND_A"
     },
     "b02_ordinary_guard": {
-      "status": "COMMITTED_32FAA26D_LIMITED_REVIEW_PASS_WITH_BOUNDS_REMOTE_CI_PENDING",
+      "status": "COMMITTED_LIMITED_REVIEW_PASS_WITH_BOUNDS_CI_36841813778_SUCCESS",
       "peer_source": "scripts/vnext/historical_results.py:paired_measure_problem",
       "own_functions": [
         "scripts/vnext/paired_measure_v1.py:paired_measure_problem",
@@ -8179,7 +8179,60 @@
         0
       ]
     },
-    "c02_current_impact": {"status": "TWO_COORDINATES_THREE_RESULT_IDENTITIES_WITHDRAWN_FROM_CURRENT_TRUST", "evidence": "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/", "own_register": "docs/evidence/issue28_continuous/known_result_defects.json", "coordinates": ["marriott_international|C02|2025-12-31", "pfizer|C02|2025-12-31"], "current_trusted_count_for_these_two": 0, "old_runs_and_390_denominator_retained": true, "shared_selector_normal_integration": "PENDING"},
-    "reference_table_pr": "NOT_STARTED_SEPARATE_CLEAN_MAIN_BRANCH"
+    "c02_current_impact": {
+      "status": "THREE_OLD_COORDINATES_FIVE_RESULT_IDENTITIES_WITHDRAWN_FROM_CURRENT_TRUST",
+      "evidence": "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/",
+      "own_register": "docs/evidence/issue28_continuous/known_result_defects.json",
+      "coordinates": [
+        "enphase_energy|C02|2025-12-31",
+        "marriott_international|C02|2025-12-31",
+        "pfizer|C02|2025-12-31"
+      ],
+      "superseded_775_private_result_id": "sha256:677efa34258f3126e9097fb12a1dbaac5d085f490b6aeb2d969b33155a03b54b",
+      "old_runs_and_390_denominator_retained": true,
+      "new_enphase_private_result_pending_content_review": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71"
+    },
+    "reference_table_pr": {
+      "url": "https://github.com/wlvh/SEC_metrics/pull/53",
+      "head_commit": "564aa70dded2c9c797f3275fbec740f2b0a89a7f",
+      "base_commit": "af1984ad5f1a3598ded3626fe999d3abeffd29b9",
+      "draft": true,
+      "reference_ci": "SUCCESS",
+      "vnext_fast_ci": "SUCCESS",
+      "not_merged_or_production": true
+    },
+    "peer_latest_read_commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f",
+    "peer_latest_register_git_blob": "daa5fdbe6a7940d94d825a5724e317907a0fa6e1",
+    "c02_ordinary_successor": {
+      "peer_selector_commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f",
+      "peer_selector_exact_byte_reused": true,
+      "ordinary_spec": "catalog/r6/C02_board_disclosures_v2.md",
+      "ordinary_adapter": "scripts/vnext/c02_composition_text_results.py",
+      "native_item_ceiling": 64,
+      "enphase_selected_count": 54,
+      "enphase_private_result_id": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "enphase_normal_update": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE",
+      "enphase_independent_process_cold_read": "PASS",
+      "marriott_full_96": "EXECUTION_FAILED_NO_C02_SUCCESS_POINTER_WHILE_B01_READY",
+      "pfizer_full_79": "SOURCE_MATERIAL_REJECTS_BEFORE_CANDIDATE",
+      "independent_patch_review": "PENDING_EXACT_SHA",
+      "full_business_content_acceptance": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/",
+      "shared_with_issue47": {
+        "commit_marker": "[shared-with-#47]",
+        "changed_functions": [
+          "scripts/vnext/normal_run_v3.py:prepare_case,install_normal_inputs,create_normal_run,replay_case,text_api,prepare_text_contexts",
+          "scripts/vnext/ordinary_remaining_cases.py:prepare_current_source_case",
+          "scripts/vnext/ordinary_update_cycle.py:_inspect,run_once"
+        ],
+        "default_compatibility": "legacy C02 candidate and Evidence bytes equal in directed test; frozen text modules and Run store unchanged",
+        "potential_downstream": "#47 stacked branch must reconcile V13/V14 current bindings and duplicate selector path when consuming this upstream commit"
+      }
+    }
   }
 }

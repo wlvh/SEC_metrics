@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1019, in load_run_bound_specs
+    return compile_spec_files(paths=paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 931, in compile_spec_files
+    compiled[metric_id] = compile_spec_file(
+                          ~~~~~~~~~~~~~~~~~^
+        path=path,
+        ^^^^^^^^^^
+    ...<3 lines>...
+        },
+        ^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 878, in compile_spec_file
+    return compile_spec(text=text, dependency_specs=dependency_specs)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 773, in compile_spec
+    raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+vnext.specs.SpecError: TEXT_V1 text_policy is missing or unsupported
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-c02-normal-20261001/recorded-enphase.py", line 32, in <module>
+    created = create_normal_run(data_root=DATA, run_dir=RUN,
+        company_id='enphase_energy', metric_id='C02',
+        c02_composition=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 323, in create_normal_run
+    return _create_case_run(data_root=data_root,run_dir=run_dir,company_id=company_id,metric_id=metric_id,
+                            case=case,requirement=requirement,freeze=freeze)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 377, in _create_case_run
+    manifest,stored,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3477, in _mechanically_replay_open_run
+    _verify_repository_bindings(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1308, in _verify_repository_bindings
+    compiled_by_id = load_run_bound_specs(
+        repo_root=repo_root, manifest=manifest,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1021, in load_run_bound_specs
+    raise RunStoreError("Run Spec closure cannot be compiled") from error
+vnext.run_store.RunStoreError: Run Spec closure cannot be compiled

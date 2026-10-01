@@ -6,16 +6,58 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 2,
-    "newly_excluded_result_id_count": 3,
+    "newly_excluded_coordinate_count": 3,
+    "newly_excluded_result_id_count": 5,
     "excluded_coordinate_keys": [
+      "enphase_energy|C02|2025-12-31",
       "marriott_international|C02|2025-12-31",
       "pfizer|C02|2025-12-31"
     ],
     "all_390_currently_validated": false,
-    "other_coordinates_not_cleared_by_this_audit": true
+    "other_coordinates_not_cleared_by_this_audit": true,
+    "superseded_private_candidate_count": 1,
+    "private_replacement_under_review": {
+      "company_id": "enphase_energy",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "status": "PRIVATE_NATIVE_RUN_AND_COLD_READ_PASS_CONTENT_ACCEPTANCE_PENDING"
+    }
   },
   "defects": [
+    {
+      "defect_id": "C02_ENPHASE_ENERGY_2025_COMPOSITION_SCOPE_ARCHIVED_AND_PRIVATE",
+      "metric_id": "C02",
+      "company_id": "enphase_energy",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:405e208e4ef48ef4dea3e462ef419aeb60fcfb0c78c8b4ab9310a94d4937764c",
+      "run_id": "run:ordinary-integrated:6d4c835aa86e560cba3625a28c15889c600d6ca37fda89bd8c787212e47c5d40",
+      "private_run_id_same_result": "run:ordinary-integrated:d80e1a0dfc6dff1d2a5ae763c3ab134dbc6ba1ca35c805ca5823424e820dfb5a",
+      "reported_quality": "EXACT",
+      "repair_state": "EXPLICIT_NORMAL_SUCCESSOR_PRIVATE_RUN_COLD_READ_PENDING_CONTENT_REVIEW",
+      "current_credit": "WITHDRAWN_CONFIRMED_OUT_OF_SCOPE_EXCERPT",
+      "summary": "Shareholder outreach by a board member and legal staff is not a composition fact. This exact old #28 Result identity appears in the archived index and later private ordinary Run; the new successor Result has its own identity.",
+      "source_block": {
+        "block_index": 294,
+        "document_id": "sha256:b3db9ac565fcd40d910d80b1b32e6b06726f512c5e803c27c72ca89203da04d0",
+        "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+        "raw_span_sha256": "daf27651310f94dfda1e80f1b90a1f509d63d86b5bb4f7e71b4621c79416454c",
+        "text_sha256": "b10842ad69a7eb8677066c3898386014b273f6ebdbbb4774f6e862bce0c0da5c",
+        "text_start": "A Board member (when requested), together with our General Counsel and Corporate Secretary, our head of investor relations, and other members of the legal team, participated in our outreach efforts in the Fall and Winter of 2025/26. All fee"
+      },
+      "peer_origin": {
+        "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+        "defect_id": "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-current-impact-20261001/impact.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-summary.json",
+        "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
     {
       "defect_id": "C02_MARRIOTT_INTERNATIONAL_2025_COMPOSITION_SCOPE_ARCHIVED_390",
       "metric_id": "C02",
@@ -111,6 +153,32 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "C02_ENPHASE_2025_775_UNLABELLED_CARD_OMISSION",
+      "metric_id": "C02",
+      "company_id": "enphase_energy",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:677efa34258f3126e9097fb12a1dbaac5d085f490b6aeb2d969b33155a03b54b",
+      "run_id": "run:ordinary-integrated:630923f76cc8967942cc731640c78d63cb2a0f33da97ed599cd49f4c266af286",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_SELECTOR_877_REAL_RECOMPUTE_IN_PROGRESS",
+      "current_credit": "WITHDRAWN_CONFIRMED_OMITTED_COMPOSITION_FACTS",
+      "summary": "The private #28 result under shared selector 77532c65 contained 35 selected excerpts. The fixed 877793e9 selector reads 19 additional Enphase 2025 director-card name and committee facts, including block 415. The old private Run remains intact but is incomplete under the current target.",
+      "peer_origin": {
+        "commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f",
+        "defect_id": null,
+        "register_path": "docs/evidence/issue47_history/collab-28/README.md",
+        "repair_commit": "a6975a47"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-summary.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-cold.json",
+        "docs/evidence/issue47_history/c02-selector-repairs/measured-4-unlabelled-card-items.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
-  ]
+  ],
+  "latest_peer_read_commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f"
 }
