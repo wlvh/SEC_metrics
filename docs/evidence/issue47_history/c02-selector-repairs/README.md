@@ -505,3 +505,20 @@
 第一版只读去掉带日期加入之后的句子；规则既然要读句子里所有日期，去不去掉没有区别，也没有任何用例能区分，所以改为直接读整句。共 93/93，对照 75 个用例。
 
 **量测**（`measured-27-appointed-a-member.json`）：只新增上面三块；漏选 39→36，不一致位置 20→19（Macy's 2024 现与判读一致），误选 16 不变，最新年不变。
+
+## 28. 在另一家公司的年会上不再连任，不是本董事会的变化
+
+**问题。** Pfizer 2022 第 446、547 块是同一条脚注："* Mr. Echevarria has informed Pfizer that he will not be standing for re-election at the Xerox Holdings Corporation’s Annual Meeting of Shareholders to be held on May 25, 2023."。说的是他不再在施乐的董事会连任，读者都判为非事实，选择器按 "not standing for re-election" 当成本董事会的离任取了。选择器的"别的机构"检查认 "the board of Acme"、"on the Acme board"、"At Acme, …" 等写法，不认"某公司的年会"。
+
+**先量后改。** 37 份文档里所有格的 "X’s Annual/Special Meeting" 中，X 除了这一条的 Xerox，都是本公司自己（"Ford’s"、"Pfizer’s"、"the Company’s"）。
+
+**改动。** "<名字>’s Annual Meeting / Special Meeting" 中的名字不是本公司的名字词、也不是 "Company" 时，算别的机构。句首的冠词不算名字："The Company’s Annual Meeting …" 是本公司的。
+
+**用例与注错。** `test_standing_down_at_another_company_s_meeting`：第 446 块原文为反例；本公司自己的年会三条构造正例（"the Company’s"、"Pfizer’s"、句首 "The Company’s"）。注错：
+- `ANOTHER_COMPANY_S_MEETING_IS_THIS_BOARD_S`（去掉这条检查）；
+- `THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S`（本公司名字也算别的机构）；
+- `THE_ARTICLE_NAMES_THE_COMPANY`（句首冠词当名字）。
+
+第三个注错第一次没被抓：正例只有小写的 "the Company’s"，去掉冠词跳过也不影响。句首大写冠词这种写法语料里没有，但不跳过它就会把 "The Company’s Annual Meeting" 读成别的公司，所以补了一条构造的句首正例，而不是删掉这段处理。共 96/96，对照 76 个用例。
+
+**量测**（`measured-28-another-company-meeting.json`）：只移走 Pfizer 2022 第 446、547 块；误选 16→14，漏选 36 不变，不一致位置 19 不变，最新年不变。

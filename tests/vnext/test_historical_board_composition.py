@@ -579,6 +579,22 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 self.assertNotIn("STANDING_COMMITTEES_STATEMENT",
                                  statement_labels(text, frozenset({"lumen", "example"}), period_start=START))
 
+    def test_standing_down_at_another_company_s_meeting(self):
+        # Pfizer FY2022 blocks 446 and 547: the re-election is at Xerox's meeting.
+        pfizer = frozenset({"pfizer", "example"})
+        self.assertEqual([], statement_labels(
+            "* Mr. Echevarria has informed Pfizer that he will not be standing for re-election at the Xerox Holdings "
+            "Corporation’s Annual Meeting of Shareholders to be held on May 25, 2023.", pfizer, period_start=START))
+        # The registrant's own meeting, by its name or as "the Company's"
+        # (constructed sentences).
+        for text in ("Mr. Smith will not be standing for re-election at the Company’s Annual Meeting of Shareholders.",
+                     "Mr. Smith will not be standing for re-election at Pfizer’s Annual Meeting of Shareholders.",
+                     # The article opening the sentence is not the name.
+                     "The Company’s Annual Meeting will be held on May 1, 2023, when Mr. Smith will not stand for "
+                     "re-election."):
+            with self.subTest(text=text[:60]):
+                self.assertIn("BOARD_MEMBERSHIP_CHANGE", statement_labels(text, pfizer, period_start=START))
+
     def test_a_role_taken_up_with_became(self):
         # Lumen FY2021 block 897: the registrant's chair, named by its possessive.
         lumen = frozenset({"lumen", "technologies"})

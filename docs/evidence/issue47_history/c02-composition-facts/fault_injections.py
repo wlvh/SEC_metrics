@@ -258,6 +258,12 @@ INJECTIONS = [
      'test_appointed_with_an_office_and_as_a_member_of_the_board'),
     ('ANY_DATED_APPOINTMENT_IS_TENURE', '            if not dates or any(not _joined_before(date, period_start) for date in dates):\n', '            if not dates:\n',
      'test_appointed_with_an_office_and_as_a_member_of_the_board'),
+    ('ANOTHER_COMPANY_S_MEETING_IS_THIS_BOARD_S', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z][\\\\w&\\\\-]+)(?:\\\\s+[A-Z][\\\\w&\\\\-]+)*[’\']s\\\\s+"\n                             "(?:[Aa]nnual|[Ss]pecial)\\\\s+[Mm]eetings?\\\\b", sentence):\n        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n', '',
+     'test_standing_down_at_another_company_s_meeting'),
+    ('THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S', '        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n    match = re.search(', '        if match.group(1).casefold() not in {"board"}:\n            return True\n    match = re.search(',
+     'test_standing_down_at_another_company_s_meeting'),
+    ('THE_ARTICLE_NAMES_THE_COMPANY', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z]', '    for match in re.finditer("\\\\b([A-Z]',
+     'test_standing_down_at_another_company_s_meeting'),
 ]
 
 

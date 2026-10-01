@@ -896,6 +896,14 @@ def _other_organization(sentence, own_words):
             return True
     if re.search("\\bon the (?:[A-Z][\\w&’'\\-]*\\s+){1,5}board\\b", sentence):
         return True
+    # Another company's shareholder meeting: "he will not be standing for
+    # re-election at the Xerox Holdings Corporation’s Annual Meeting" (a
+    # Pfizer director standing down from another board). The registrant's own
+    # meeting is "Ford’s" or "the Company’s".
+    for match in re.finditer("\\b(?:[Tt]he\\s+)?([A-Z][\\w&\\-]+)(?:\\s+[A-Z][\\w&\\-]+)*[’']s\\s+"
+                             "(?:[Aa]nnual|[Ss]pecial)\\s+[Mm]eetings?\\b", sentence):
+        if match.group(1).casefold() not in {"company", "board"} | own_words:
+            return True
     match = re.search("\\b[Aa]t\\s+([A-Z][\\w&’'\\-]+)(?:\\s+[A-Z][\\w&’'\\-]+)*\\s*,", sentence)
     return bool(match and re.sub("[’']s$", "", match.group(1)).casefold() not in own_words)
 

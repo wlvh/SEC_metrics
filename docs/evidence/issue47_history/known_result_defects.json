@@ -3510,13 +3510,15 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-18-linked-statements.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-28-another-company-meeting.json"
    ],
    "partial_repair": {
     "management_committee": "2 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
-    "still_open": "4 fact block(s) missed (799, 875, 876, 877) and 2 block(s) taken that state no composition fact (446, 547); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "4 fact block(s) missed (799, 875, 876, 877) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28])."
+    "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28]).",
+    "another_company_meeting_28": "Repair 28 sets aside a re-election at another company's annual meeting: 0 block(s) added, 2 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 28 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
@@ -3524,10 +3526,6 @@
      875,
      876,
      877
-    ],
-    "wrongly_taken": [
-     446,
-     547
     ]
    }
   },
