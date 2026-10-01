@@ -451,7 +451,7 @@ _NOT_DIRECTOR_INDEPENDENCE = re.compile(
 _POLICY = re.compile(
     r"\b(?:shall|must|should|may not|requires?|required|at least|no fewer than|not less than|a minimum of"
     r"|charter provides|guidelines provide|policy provides|can(?:not)? be (?:considered )?independent if"
-    r"|is not independent if|are not independent if|would (?:not )?be (?:considered )?independent"
+    r"|is not independent if|are not independent if|would (?:not )?be (?:considered )?independent|family members?"
     r"|expected to|intends? to|seeks? to|strives? to|may (?:be|serve|include)|requirements? that|exempt\w*"
     r"|elected not to comply|controlled company|provides? that|is free to|if)\b", re.I)
 _QUALIFYING_REFERENCE = re.compile(r"\bas (?:is |are )?(?:currently )?(?:required|defined|set forth|provided"
@@ -574,39 +574,7 @@ _COMMITTEE_SETUP = (
     re.compile(r"\b(?:established|set up|formed|created|constituted)\s+(?:a|an)\s+(?:(?:new|separate|special|standing"
                r"|ad hoc)\s+)*(?:sub-?committee|committee)\b", re.I),
     re.compile(r"\b(?:a|the)\s+special committee of (?:the|our) board\b", re.I),
-    # A committee's change of name: "The Compensation Committee changed its
-    # name to the Compensation, Talent and Culture Committee", "to update the
-    # name of the CTC Committee from the “Compensation Committee” to the ...".
-    # The renamed thing is a committee; a pay plan or a policy "renamed" is not.
-    re.compile(r"\bcommittee\s+changed\s+its\s+name\s+to\s+(?:the\s+)?[^.;]{0,80}?\bcommittee\b", re.I),
-    re.compile(r"\bname\s+of\s+the\s+[^.;]{0,60}?\bcommittee\s+from\s+(?:the\s+)?[^.;]{0,80}?\bcommittee\b"
-               r"[^.;]{0,10}?\s+to\s+(?:the\s+)?[^.;]{0,80}?\bcommittee\b", re.I),
 )
-# The board's committees named together, as the sentence on their charters
-# does ("the charter of each of the Audit Committee, ..., and Sustainability,
-# Innovation and Policy Committee of the Board"): which committees exist
-# (c02-composition-facts/adjudicate.py, COMMITTEES_NAMED_AS_A_SET). Three
-# distinct committee names at least; one committee's charter, however often
-# the sentence repeats its name ("The Charter of the Audit Committee provides
-# that a member of the Audit Committee ..."), names no set.
-_CHARTER_LIST = re.compile(r"\bcharters?\s+(?:of|for)\s+(?:each\s+of\s+)?(?:the|our)\b(?P<list>[^.;]*)", re.I)
-_LISTED_COMMITTEE = re.compile(r"(?<![\w])(?!Committee)([A-Z][\w&’'\-]*(?:(?:,\s*|\s+)(?:and\s+)?(?!Committee)"
-                               r"[A-Z][\w&’'\-]*){0,5})\s+Committees?\b")
-
-
-# A rename names one committee by its old and new names ("to update the name of
-# the CTC Committee from the “Compensation Committee” to the “Compensation,
-# Talent and Culture Committee”"): those are not three committees.
-_RENAME = re.compile(r"\bname\b[^.;]{0,80}?\bfrom\b[^.;]{0,120}?\bto\b", re.I)
-
-
-def _committee_set(sentence):
-    """True when a sentence on the committees' charters names three committees or more."""
-    listed = _CHARTER_LIST.search(sentence)
-    return (bool(listed) and not _RENAME.search(sentence)
-            and len({m.group(1) for m in _LISTED_COMMITTEE.finditer(listed.group("list"))}) >= 3)
-
-
 _CHAIR_WORD = r"(?:vice[- ])?chair(?:man|person|woman)?"
 # A chair title that names no board: "Chairman" is the board's chair, but a
 # "Vice Chair" is as often an officer's title ("Vice Chair, Policy"), so it is
@@ -652,7 +620,6 @@ _CHAIR_CEO_STRUCTURE = re.compile(
     + r"|\b" + _ROLE_PAIR + r"\s+" + _ROLE_NOUN + r"\b[^.;]{0,80}?\b(?:separat\w*|combin\w*|single individual"
     r"|one person|same person|different (?:individuals|people|persons))", re.I)
 _BOTH_STRUCTURES = re.compile(r"\bseparat\w*\b.*\bcombin\w*|\bcombin\w*\b.*\bseparat\w*", re.I)
-_FAMILY = re.compile(r"\bfamily members?\b", re.I)
 _STRUCTURE_POLICY = re.compile(r"\bpolic(?:y|ies)\b|\bmandat\w*|\bimpos\w*|\bproposals?\b", re.I)
 _OWNED_LEADERSHIP = re.compile(
     r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s\s+" + _BOARD_QUALIFIER
@@ -884,13 +851,6 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
             continue
         unqualified = _QUALIFYING_REFERENCE.sub(" ", sentence)
         policy = _POLICY.search(unqualified)
-        # "Family member" is an independence standard's word ("the director or
-        # a family member is ... employed by"), unless the sentence names the
-        # people it is about ("having a Ford family member, William Clay Ford,
-        # Jr., as our Executive Chair ...").
-        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)
-        if family and (policy is None or family.start() < policy.start()):
-            policy = family
         determination = _DETERMINATION.search(unqualified)
         if policy and (determination is None or policy.start() < determination.start()):
             continue
@@ -919,7 +879,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms))
                 and not _MANAGEMENT_MEMBERS.search(sentence)):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
-        if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):
+        if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)):
             labels.add("STANDING_COMMITTEES_STATEMENT")
         owned = _OWNED_LEADERSHIP.search(sentence)
         if (any(p.search(sentence) for p in _LEADERSHIP)
@@ -1023,38 +983,15 @@ def _name_from(blocks, j, registrant):
     return split if split == [j, j + 1] else None
 
 
-def _reach(blocks, start, step, spacers_free):
-    """Block indices from ``start`` in the direction ``step``, as far as a card reaches.
-
-    The reach is ``_CARD_REACH`` blocks. With ``spacers_free`` only blocks that
-    print something count: Ford's cards put zero-width spacer blocks and lone
-    bullet glyphs between their fields, ten raw blocks from Farley's name to
-    his "Committees: N/A", four of them printed.
-    """
-    seen, index = 0, start
-    while 0 <= index < len(blocks) and seen < _CARD_REACH:
-        if not spacers_free:
-            seen += 1
-        else:
-            text = clean(blocks[index]["text"])
-            if text and not _ONE_BULLET.match(text):
-                seen += 1
-        yield index
-        index += step
-
-
-def _card_name(blocks, before, after, registrant, *, passable=_card_field, spacers_free=False):
+def _card_name(blocks, before, after, registrant, *, passable=_card_field):
     """The card's director: the full name after ``after`` or before ``before``.
 
     Card fields (age, tenure, a title, a designation) may stand between the
     name and the field that was read; nothing else may. A name found on both
-    sides belongs to one of two cards and is not chosen. ``spacers_free``
-    measures the reach in printed blocks (see ``_reach``); only the committee
-    label uses it, since a designation that can pass a card's labels and items
-    would then reach the next card's name as well and be dropped as ambiguous.
+    sides belongs to one of two cards and is not chosen.
     """
     following = None
-    for j in _reach(blocks, after, 1, spacers_free):
+    for j in range(after, min(len(blocks), after + _CARD_REACH)):
         text = clean(blocks[j]["text"])
         if not text or _ONE_BULLET.match(text):
             continue
@@ -1062,7 +999,7 @@ def _card_name(blocks, before, after, registrant, *, passable=_card_field, space
         if following or not passable(blocks[j]):
             break
     preceding = None
-    for k in _reach(blocks, before - 1, -1, spacers_free):
+    for k in range(before - 1, max(-1, before - 1 - _CARD_REACH), -1):
         if not clean(blocks[k]["text"]):
             continue
         preceding = _full_name(blocks, k, registrant)
@@ -1120,7 +1057,7 @@ def _cards(blocks, vocabulary, registrant):
                 break
             if not items:
                 continue
-        name = _card_name(blocks, i, j, registrant, passable=lambda block: False, spacers_free=True)
+        name = _card_name(blocks, i, j, registrant, passable=lambda block: False)
         if name is None:
             continue
         if negative and any(_NOT_YET_DIRECTOR.match(field) for field in _card_fields(blocks, i, name[0])):

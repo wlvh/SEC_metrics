@@ -63,11 +63,12 @@ NEW_RULE_FILES = (
     # decide a metric's bound belongs in the rule set rather than only in the
     # authority, so both roots check it.
     "catalog/r6/D02_legal_disclosures_v2.md",
-    # The C02 composition reader. Its first path, historical_board_composition.py,
-    # now carries the bytes #28's issue_28_v13 records for the ordinary route and
-    # comes in with the parent's authority; this generation's reader continues in
-    # the successor, so neither Issue edits a path the other's generation binds.
-    "scripts/vnext/historical_board_composition_v2.py",
+    # The C02 composition reader. #28's issue_28_v13 binds two of its earlier
+    # paths for the ordinary route - historical_board_composition.py (#47's
+    # 60aa9f7b bytes) and historical_board_composition_v2.py (#47's 4d0b2b9d
+    # bytes) - and they come in with the parent's authority; this generation's
+    # reader continues in _v3, so neither Issue edits a path the other binds.
+    "scripts/vnext/historical_board_composition_v3.py",
     # The board's lead-director role phrase that reader compiles into four of
     # its patterns: a phrase the source strategy owns for the family, so it
     # lives in the catalog, and its bytes decide what the reader selects.

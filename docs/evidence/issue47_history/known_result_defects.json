@@ -4100,6 +4100,45 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "22146e52c1ac03aea96b3a8b09b36946e7daf41a",
+   "own_commit_at_read": "1f3f446c",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_13_ENTRIES_PLUS_ONE_UNDER_REVIEW_NOTE",
+   "what_that_state_means": "No new defect entry. The register's private-replacement section gains peer4d_private_replacements_under_review: #28's own Paramount FY2025 and Salesforce FY2026 grouped results built with #47's 4d0b2b9d reader, with no content credit and no old-defect release. None names a #47 result.",
+   "baseline": "Read since 137ecb24: two commits' messages and file lists, the register diff, the change to c02_composition_text_results._prepared, the issue_28_v13/v14 manifest moves, and the limited-review conclusion.",
+   "increments": [
+    {
+     "commit": "5ff55541",
+     "marker": "[shared-with-#47]",
+     "subject": "Reuse period-aware C02 selector in ordinary grouped route",
+     "touches": [
+      "scripts/vnext/historical_board_composition_v2.py",
+      "scripts/vnext/c02_composition_text_results.py",
+      "requirements/issue_28_v13/baseline_manifest.json",
+      "requirements/issue_28_v14/baseline_manifest.json",
+      "docs/evidence/issue28_continuous/known_result_defects.json"
+     ],
+     "affects_47": "Path, not result. #28's COMPOSITION_GROUPED_V2 route now imports board_composition_facts from scripts/vnext/historical_board_composition_v2.py, and issue_28_v13/v14 record that file at #47's 4d0b2b9d bytes (blob cf7c0ac6, repairs 1-18). #47 had already edited that path through repair 22, so the two sides conflicted on one path. Under the protocol stated to #28 (#47 never edits a path #28's generations bind; if #28 binds a #47 path directly, #47 starts a successor file), the merge keeps #28's bytes at _v2 and moves #47's selector unchanged to scripts/vnext/historical_board_composition_v3.py; every #47 caller, test, measurement and the mint's NEW_RULE_FILES now name _v3. No #47 frozen Run changes; the issue_47_v1 closure moves (parent closure fe9daf95, _v3 replaces _v2 among the rule files). #28's grouped route therefore consumes repairs 1-18, not 19-22; #28 is told the new path and what 19-22 change.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "22146e52",
+     "marker": null,
+     "subject": "Record limited review of C02 selector reuse",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-peer4d-reader/"
+     ],
+     "affects_47": "None. The review's content boundary on Paramount block 117 (a join dated January 2026 for the FY2025 coordinate) matches #47's own Spec: C02_board_disclosures_historical_v2 also requires period_basis annual_grouping_only and board_as_of not_inferred, so #47 takes 117 as a source excerpt of the proxy's board disclosure (JOIN_IN_THE_YEAR covers joins dated in the target year or after, up to the filing), never as a statement of the year-end board. Block 168 ('qualified to serve') stays the scope question already raised with #28; #47 does not count it.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }

@@ -42,11 +42,13 @@
 
 **对方接收状态（读到 `2cc97e3a` 为止）。** C02：#28 在 `e17cf333` 按本方 `877793e9` 把共用选择器接入普通路线的显式后继（选择器字节等于本方 `546d10d1`，即下表修复 1–6；它自己的 Spec v2 上限 64，Marriott、Pfizer 超过 64 条时按名失败、不截断），旧的冻结默认路线不变——修复 1–6 **已接收**。`2cc97e3a` 按本方统一裁定撤回它 Enphase 2025 的两个私有结果，点名六块（57、210、212、232、243、2338）；这六块正是下表修复 8、9 移走的块。修复 7–12 **尚未接收**；它对最新年各值的影响见下文“选择器路径”。修复 13 在其后提交，最新年只移动 Paramount 2025（新增 8 块）。
 
+**对方接收状态（读到 `22146e52` 为止）。** C02：#28 在 `5ff55541` 把本方 `4d0b2b9d` 的选择器（修复 1–18，Git blob `cf7c0ac6`）原样放到**同一路径** `scripts/vnext/historical_board_composition_v2.py` 并绑定进 issue_28_v13/v14，在自己的记录里写明了这一点；`22146e52` 是其限定独立审阅。按本方约定的做法（对方选择直接绑定时，#47 另起后继文件），本方合并该基线时把 `_v2` 留给对方绑定的字节，修复 19 起的本方选择器移到 `scripts/vnext/historical_board_composition_v3.py`，见下文“选择器路径（第二次）”。修复 1–18 **已接收**；修复 19–22 尚未接收。
+
 **分工。** 共用选择器修复默认由 #47 继续实现，#28 负责普通路线接入和独立检查。修复按“一个明确的误选或漏选问题”为单位提交，提交标 `[shared-with-#28]`，并在本目录登记问题、提交、用例与历史侧验证结果。#28 现在的普通路线用的仍是冻结选择器，所以它最新年度的 C02 结果与 `c02-board-read/` 读的十个值同属一类问题；这部分的核对与接入由 #28 在自己的记录里处置，#47 不代为宣布普通路线已通过。
 
 ### C02 共用修复登记
 
-每一项是一个边界清楚的误选或漏选问题，提交标 `[shared-with-#28]`。可复用位置都是选择器在该提交的版本：第 1–12 项提交时它在 `scripts/vnext/historical_board_composition.py`，合并 `2cc97e3a` 起在 `scripts/vnext/historical_board_composition_v2.py`（见下文“选择器路径”）；问题、成因、用例、注错与历史侧量测见 `../c02-selector-repairs/README.md` 对应一节。量测把修复前后的选择器在全部 37 份判读（27 个往年、10 个最新）上各跑一次，列出移动的每一块。
+每一项是一个边界清楚的误选或漏选问题，提交标 `[shared-with-#28]`。可复用位置都是选择器在该提交的版本：第 1–12 项提交时它在 `scripts/vnext/historical_board_composition.py`，合并 `2cc97e3a` 起在 `scripts/vnext/historical_board_composition_v2.py`，合并 `22146e52` 起在 `scripts/vnext/historical_board_composition_v3.py`（见下文“选择器路径”与“选择器路径（第二次）”）；问题、成因、用例、注错与历史侧量测见 `../c02-selector-repairs/README.md` 对应一节。量测把修复前后的选择器在全部 37 份判读（27 个往年、10 个最新）上各跑一次，列出移动的每一块。
 
 | # | 问题 | 提交 | 用例 | 历史侧量测 |
 |---|---|---|---|---|
@@ -69,6 +71,9 @@
 | 17 | 具名董事任期在年会结束的句子（"The terms of Mr. Brown, Mr. Clontz and Ms. Siegel will end … at the 2025 annual meeting"）没取；脚注编号贴着称谓（"6Ms. Boulet’s term …"）时看不到人 | `ace44471` | `test_a_named_director_s_term_ending_at_a_meeting`、`test_a_footnote_number_printed_against_the_honorific`；`test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture`；注错 `A_TERM_ENDING_IS_NOT_READ`、`A_TERM_OF_ANYTHING_IS_A_PERSONS`、`A_GLUED_MARK_HIDES_THE_PERSON`、`AN_AMOUNT_IS_A_MARK` 及五个裁定注错 | 统一裁定新增 `TERM_END_AT_A_MEETING`（只为判读池外的三块写裁定）；只移动 Lumen 五年，漏选 105→91；Lumen 2024 恢复一致；最新年 Lumen 2025 新增 1370、1373（原值已覆盖，值会变）（`../c02-selector-repairs/measured-17-term-endings.json`） |
 | 18 | 带交叉引用链接的陈述（"… Our committee membership is as noted on page 9"）被当成导航跳过；Ford 2024 第 1590 块是董事会对全部独立董事的认定 | `4d0b2b9d` | `test_a_statement_carrying_a_cross_reference_is_read`；注错 `A_LINKED_STATEMENT_IS_NAVIGATION` | 37 份文档里带链接又有标签的只有四块，读者都判为事实：Ford 2024 1590、Marriott 2023 6851、Pfizer 2022 3068、Pfizer 2025 4015；漏选 91→73。最新年 Pfizer 2025 新增 4015（原值已覆盖，值会变）（`../c02-selector-repairs/measured-18-linked-statements.json`） |
 | 19 | 委员会标签找姓名的范围被零宽空白块和单独的项目符号用掉，Farley 卡片的 "Committees: N/A" 找不到姓名 | `f01950d7` | `test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach`、`test_a_designation_s_reach_still_counts_every_block`；注错 `SPACERS_COUNT_FOR_A_COMMITTEE_LABEL`、`SPACERS_ARE_FREE_FOR_A_DESIGNATION` | 只用于委员会标签：套到所有读法会去掉 Macy's 三处 "Independent"、取进别家公司名；只移动 Ford 2021/2023/2024 六块，漏选 73→69；最新年不变（`../c02-selector-repairs/measured-19-card-reach.json`） |
+| 20 | 章程句里一并点名的三个以上委员会（"the charter of each of the Audit Committee, …, and Sustainability, Innovation and Policy Committee"）说明设有哪些委员会，选择器没有对应句式 | `d1cabb48` | `test_the_committees_named_together_on_their_charters`；注错 `A_CHARTER_SET_IS_NOT_READ`、`COMMITTEE_WORDS_COUNT_AS_COMMITTEES`、`A_RENAME_COUNTS_AS_A_SET` | 按不同的委员会名计数，不按 "committee" 一词；改名句不算一组。只新增七块（Ford 五年各一块、Salesforce 两年各一块），都由读者或统一裁定判为事实；漏选 69→55，误选不变。最新年 Ford 2025 新增 438（原值已覆盖，值会变），Salesforce 2026 新增 602（该坐标已因第 14、15 项撤回）（`../c02-selector-repairs/measured-20-committee-set.json`） |
+| 21 | 委员会改名（"The Compensation Committee changed its name to …"、"update the name of the CTC Committee from … to …"）没取，原句式只认 "was renamed … <年份>" | `56a43fe2` | `test_a_committee_that_changed_its_name`；注错 `A_RENAME_IS_NOT_READ`、`A_RENAMED_PLAN_IS_A_COMMITTEE` | 被改名的必须是委员会，计划、政策改名不取。只移动 Ford 2021（新增 626、4055、3096）；漏选 55→52，误选不变，最新年不变（`../c02-selector-repairs/measured-21-committee-rename.json`） |
+| 22 | 政策否决词 "family member" 把点名 Ford 家族董事的句子整句搁置（Ford 2021 第 760 块，含 2021 年会上的加入） | `1f3f446c` | `test_a_named_family_member_is_not_an_independence_standard`；注错 `A_NAMED_FAMILY_MEMBER_IS_A_STANDARD`、`A_FAMILY_MEMBER_IS_NEVER_A_STANDARD` | 只在句子不点名任何人时才算独立性标准；不点名人的九块标准条款仍被否决。只新增 Ford 2021 第 760 块；漏选 52→51，不一致位置 22→21，最新年不变。Ford 2022–2024 的同一句（406、749、942）仍开放：要先为主席事实写覆盖核对（`../c02-selector-repairs/measured-22-named-family-member.json`） |
 
 这些修复都不让任何坐标重新获得信用：选择仍与判读不一致的坐标继续撤回；已经一致的坐标，其已发布结果是旧版本算的，要等重算、重读后按结果编号释放。修复 7–12 是否、何时接入 #28 的普通路线由 #28 自己处置；#47 不代为宣布普通路线已通过。
 
@@ -87,3 +92,19 @@
 `../c02-composition-facts/adjudicate.py` 把读者判断相反的类别各用一条规则决定（16 条，按文字界定、不看路线是否选取），对全部 37 份判读适用，表格与两处取舍的说明见 `../c02-composition-facts/README.md`。用今天的选择器：误选 40→46，漏选 146→144，一致位置 11→9；对路线有利与不利的裁定大致相当。**影响 #28 普通路线的部分**：这些是"什么算构成事实"的判定，与选择器实现无关；#28 用自己的读法核对最新年度时，若读到同类块（董事长/CEO 分设句、分级董事会一级候选人数、分组标题、"每位候选人现为董事"等）可以直接引用这些规则，也可以不同意并说明。最新年 Enphase、Lumen、Macy's、Marriott 的值按新裁定与读者判读不一致，#47 已撤回这四个值（`C02_*_UNIFIED_ADJUDICATION_DISAGREES`）；后续选择器修复按类别逐项提交，仍标 `[shared-with-#28]` 并在上表登记。
 
 **#28 的内容核对引出的两处补充（读到 `34338e4e` 之后）。** #28 对它自己 Salesforce FY2026 结果的核对指出两处错，本方的量测也有同样的缺口：一是 JOIN 句式只认动词，没认名词写法（"prior to Mr. Munoz's appointment to the Board in January 2022"）；二是读者把一块记为"已被覆盖"，量测就照单全收，而被引用的块只写了现任主席、另一人的月份和费用季度。补上之后统一裁定共 16 条规则（原文误记为 17 类）：JOIN 增加名词写法，新增 `DATED_ROLE_CHANGE`（带日期的职务接任，只由写明同一变动的块覆盖，读者的引用被拒时由裁定替换）。在全部 37 份判读上只多三条裁定（Salesforce FY2026 第 4300、933 块，Macy's FY2024 第 2358 块），只移动 Salesforce FY2026 一个位置（见下表第 14、15 行）。
+
+### 选择器路径（第二次）
+
+- **发生了什么。** #28 在 `5ff55541` 把本方 `4d0b2b9d` 的 `historical_board_composition_v2.py`（修复 1–18）原样放进它的分支、按字节绑定进 issue_28_v13/v14，在 `collab-c02-normal-20261001/README.md` 里写明。本方 `1f3f446c` 的同一路径已含修复 19–22，合并时出现 add/add 冲突。
+- **怎样处理。** 按第一次分开时的约定（对方选择直接绑定，本方另起后继文件）：
+  - `_v2` 取对方绑定的字节，与本方 `4d0b2b9d` 的 blob `cf7c0ac6` 相同；
+  - 本方选择器移到 `historical_board_composition_v3.py`。代码与 `1f3f446c` 的 `_v2` 相同，只改了模块说明里解释为何有三个文件的那一段；
+  - 历史路线、身份检查、统一裁定、量测与测试改为导入 `_v3`；
+  - mint 工具的规则文件由 `_v2` 改为 `_v3`。
+
+  这样 `_v2` 随父代权威继承，本世代不再点名它。
+- **核对。**
+  - 统一裁定在新路径下重跑，决定与规则逐项不变。
+  - 量测工具按 `_v3`、`_v2`、首个路径的顺序找某一提交的选择器：`_v3` 存在时，`_v2` 是对方的副本，不是本方的选择器。
+  - 合并后的树上，本方 C02 测试与对方 `test_normal_c02_composition` 同时通过。
+- **以后。** 约定不变：哪一方的世代绑定了某个路径，另一方就不再改它。对方若要接修复 19 及以后，可以复制某个固定提交的 `_v3` 字节到它自己的路径；若再次直接绑定本方路径，本方再另起后继文件。

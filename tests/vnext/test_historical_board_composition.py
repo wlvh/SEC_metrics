@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.canonical import content_hash, sha256_bytes  # noqa: E402
-from vnext.historical_board_composition_v2 import (  # noqa: E402
+from vnext.historical_board_composition_v3 import (  # noqa: E402
     _committee_set, _mentions_person, board_composition_facts, committee_name, person_name, sentences,
     statement_labels)
 
@@ -58,7 +58,7 @@ class TheLeadRoleIsReadFromTheCatalog(unittest.TestCase):
 
     def test_the_four_patterns_carry_the_catalog_s_phrase(self):
         import json
-        from vnext import historical_board_composition_v2 as reader
+        from vnext import historical_board_composition_v3 as reader
         terms = json.loads(reader._TERMS_PATH.read_text(encoding="utf-8"))
         self.assertEqual(terms["board_lead_role"], reader._LEAD_ROLE)
         for pattern in (reader._CHAIR_TAIL, reader._NOT_DIRECTOR_INDEPENDENCE, *reader._LEADERSHIP[:2]):
@@ -69,7 +69,7 @@ class TheLeadRoleIsReadFromTheCatalog(unittest.TestCase):
         import json
         import tempfile
         from unittest.mock import patch
-        from vnext import historical_board_composition_v2 as reader
+        from vnext import historical_board_composition_v3 as reader
         good = json.loads(reader._TERMS_PATH.read_text(encoding="utf-8"))
         cases = {"a group": {**good, "board_lead_role": "lead (independent) director"},
                  "an alternation": {**good, "board_lead_role": "lead director|chair"},

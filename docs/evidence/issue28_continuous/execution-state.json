@@ -846,6 +846,28 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_c02peer_5ff5554",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "ordinary_c02_peer4d_reader",
+      "scope_paths": [
+        "scripts/vnext/historical_board_composition_v2.py",
+        "scripts/vnext/c02_composition_text_results.py",
+        "tests/vnext/test_normal_c02_composition.py",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-commit-verification.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-known-source-check.json"
+      ],
+      "patch_sha": "5ff555419925a16860c45567d03eeb5b89a9639e",
+      "spawned_at": "2026-10-01T17:12:05Z",
+      "ended_at": "2026-10-01T17:23:20Z",
+      "tool_calls": 66,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-peer4d-reader/conclusion.md",
+      "message_count": 1,
+      "verdict": "PASS_LIMITED_INTEGRATION_NO_CONTENT_CREDIT"
+    },
+    {
       "task_name": "audit_c02macys_d29a8fa",
       "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
       "module": "ordinary_c02_macys_fy2025_grouped_content",
@@ -8402,7 +8424,7 @@
       "paramount_2025_private_result_no_business_credit": "sha256:4d469eff63d687acdc24b8ba2e22d5b2f18bc3f8c61eab8f0f7d146b19e9fc68"
     },
     "c02_grouped_v3": {
-      "status": "AD83_COMMITTED_SPEC_POLICY_REPAIR_LIMITED_REVIEW_PASS_LOCAL_PUSH_PENDING",
+      "status": "PEER4D_SELECTOR_INTEGRATION_COMMITTED_LIMITED_REVIEW_PASS_PUSH_PENDING",
     "initial_independent_review": {
       "patch_sha": "f4e4c4f62a1536b8bd265ced3ddf00962aaee9b6",
       "verdict": "NEEDS_FIX_API_SPEC_POLICY_MISMATCH",
@@ -8436,11 +8458,11 @@
         34,
         39
       ],
-      "ten_company_candidate_evidence": "PASS_10_OF_10_PRE_SPEC_POLICY_PAIR_VALID_PATHS_UNCHANGED",
-      "macy_final_private_result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
+      "ten_company_candidate_evidence": "PASS_10_OF_10_FINAL_PEER4D_CURRENT_MAPPED_CANDIDATE_EVIDENCE",
+      "macy_prior_ad83_private_result_id_retained": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
       "macy_prior_mapped_run_id_retained": "run:ordinary-integrated:7c8046b58484abb1e103516894771fb55a341f5ee940d403c3e52430c52e6432",
-      "macy_final_private_run_id": "run:ordinary-integrated:cc04eaa4ab870e86c2f9c4338f2c23b2104ce6f8ee4b7ca7cce11c9ca4fd4164",
-      "macy_final_status": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE_AND_INDEPENDENT_PROCESS_COLD_READ_PASS_CONTENT_NEEDS_FIX",
+      "macy_prior_ad83_private_run_id_retained": "run:ordinary-integrated:cc04eaa4ab870e86c2f9c4338f2c23b2104ce6f8ee4b7ca7cce11c9ca4fd4164",
+      "macy_prior_ad83_status": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE_AND_INDEPENDENT_PROCESS_COLD_READ_PASS_CONTENT_NEEDS_FIX",
       "pfizer_pre_map_private_result_id_retained": "sha256:987bba7ce58717b9bcb1c55b78ebeddce3639665e458ca9bb268d3344591c7da",
       "pfizer_final_mapped_candidate_evidence": "PASS_25_GROUPS_FROM_79_SELECTED_BLOCKS_NO_FINAL_NATIVE_RESULT_CREDIT",
       "legacy_v2_original_installed_replay": "PASS_OLD_ENPHASE_RESULT_ID_UNCHANGED",
@@ -8448,11 +8470,11 @@
         "max_items": 64,
         "max_text_chars": 64000
       },
-      "current_v13_requirement_closure": "sha256:5d75a1a0297b162d5238f9d1569c3677fb89e844b67a127192d2682b3df83d50",
-      "current_v14_requirement_closure": "sha256:7e469c866f3b2978f947fe0724f11306480fa9426d522da94b8aabced8777baf",
+      "current_v13_requirement_closure": "sha256:fe9daf95ff41a5e195a99a43171eb0f239c1f89ff480a348c07d2c64c5d305d9",
+      "current_v14_requirement_closure": "sha256:662f21af954006bf189b718ddfe392166e597cdfc78b46c4c5cf7d4359c7adc3",
       "wiring_receipts": "PASS_THREE_CURRENT_ZERO_EGRESS",
-      "directed_tests": "PASS_10_OF_10_POST_SPEC_POLICY_PAIR",
-      "fast_suite": "PASS_144_OF_144_FINAL_SPEC_POLICY_PINNED_TOKENIZERS_0_22_2",
+      "directed_tests": "PASS_11_OF_11_POST_PEER4D_READER",
+      "fast_suite": "PASS_144_OF_144_FINAL_PEER4D_PINNED_TOKENIZERS_0_22_2",
       "spec_policy_repair": {
         "fix": "PAIR_COMPILED_C02_DISCLOSURE_GROUP_WITH_EXPLICIT_SELECTION_POLICY_AT_CANDIDATE_EVIDENCE_AND_RESULT_REPLAY",
         "precommit_binding": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/grouped-v3-spec-policy-test-tree-binding.json",
@@ -8480,6 +8502,40 @@
         "audit_process_note": "49_TOOLS_WITHIN_70;_4_MESSAGES_EXCEEDS_3_AFTER_PARENT_FOLLOWUP;_DIAGNOSTIC_NOT_COMPLIANT_INDEPENDENT_ACCEPTANCE",
         "own_exact_result_defect_register_count": 13,
         "affected_coordinate_count_remains": 6
+      },
+      "peer4d_selector_integration": {
+        "status": "COMMITTED_5FF5554_LIMITED_REVIEW_PASS_PUSH_PENDING",
+        "fixed_peer_sha": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9",
+        "independent_review": "PASS_LIMITED_INTEGRATION_5FF5554_66_TOOLS_1_MESSAGE_NO_CONTENT_CREDIT",
+        "independent_review_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-peer4d-reader/conclusion.md",
+        "copied_single_selector_git_blob": "cf7c0ac689d53b653f93286720323d76f0bed568",
+        "route": "EXPLICIT_C02_GROUPED_V3_ONLY_OLD_V2_AND_DEFAULT_KEEP_PINNED_READER",
+        "ten_complete_candidate_evidence": "PASS_10_OF_10_SELECTED_ORIGINAL_BLOCKS_48_TO_101_GROUPS_10_TO_39",
+        "known_source_delta": "PARAMOUNT_ADDS_9_DATED_JOIN_BLOCKS_SALESFORCE_DROPS_4300_ADDS_919_933",
+        "paramount_new_private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818",
+        "paramount_new_private_run_id": "run:ordinary-integrated:39bef01913109baae8629489b37a097a802be8c3189748f7bf0fa87d597972d6",
+        "salesforce_new_private_result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
+        "salesforce_new_private_run_id": "run:ordinary-integrated:d781a0d086b0429765f2636aae4d68422d319cdf0abee6357176160f318d644c",
+        "both_native_and_cold": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE_INDEPENDENT_PROCESS_PUBLISHED_EXACT",
+        "old_exact_result_defects_released": false,
+        "new_business_content_credit": false,
+        "new_current_390_credit": false,
+        "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-test-tree-binding.json",
+        "shared_with_issue47": {
+          "commit_marker": "[shared-with-#47]",
+          "files_functions": [
+            "scripts/vnext/historical_board_composition_v2.py:board_composition_facts",
+            "scripts/vnext/c02_composition_text_results.py:_prepared",
+            "config/issue28_normal_results_v2.json:rule_paths"
+          ],
+          "default_compatibility": "ordinary default and earlier V2 keep pinned original selector; new module exact peer blob",
+          "potential_downstream": "#47 stacked branch must reconcile mutable #28 V13/V14 parent identities"
+        },
+        "new_real_calls": [
+          0,
+          0,
+          0
+        ]
       },
       "business_content_credit": false,
       "current_390_credit": false,

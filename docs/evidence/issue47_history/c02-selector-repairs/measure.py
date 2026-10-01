@@ -1,8 +1,9 @@
 """What a change to the C02 selector moves, judged by every two-direction reading.
 
-The selector (``scripts/vnext/historical_board_composition_v2.py``; at a
-``--base`` from before the split, the first path, which holds the same reader
-there) is run twice on each judged position's governance document - once as
+The selector (``scripts/vnext/historical_board_composition_v3.py``; at a
+``--base`` from before a split, the path #47's reader had there - ``_v2``
+before #28 bound that path at 4d0b2b9d's bytes, the first path before that)
+is run twice on each judged position's governance document - once as
 committed at ``--base``, once as it is in the working tree - and both selections are held
 to the position's reading with ``tools/read_c02_composition.read_position``.
 The answer lists every block that moved, with what the reading says it is, and
@@ -38,22 +39,24 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 
 from tools import read_c02_composition as reading  # noqa: E402
-from vnext import historical_board_composition_v2 as working  # noqa: E402
+from vnext import historical_board_composition_v3 as working  # noqa: E402
 
-MODULE = "scripts/vnext/historical_board_composition_v2.py"
-# Until the base merge that brought #28's bound copy in, #47's reader lived at
-# this path; a --base from before that commit holds it there.
-FIRST_PATH = "scripts/vnext/historical_board_composition.py"
+MODULE = "scripts/vnext/historical_board_composition_v3.py"
+# #47's reader moved twice when #28 bound the path it lived at: from the first
+# path to _v2 (base 2cc97e3a), then from _v2 to _v3 (base 22146e52). A --base
+# holds it at the newest of these it has; where _v3 exists, _v2 is #28's copy.
+EARLIER_PATHS = ("scripts/vnext/historical_board_composition_v2.py",
+                 "scripts/vnext/historical_board_composition.py")
 
 
 def selector_at(ref):
     """The selector module as committed at ``ref``, loaded beside the working one."""
-    shown = subprocess.run(["git", "-C", str(REPO), "show", ref + ":" + MODULE], capture_output=True)
-    path = MODULE
-    if shown.returncode != 0:
-        path = FIRST_PATH
-        shown = subprocess.run(["git", "-C", str(REPO), "show", ref + ":" + path], check=True,
-                               capture_output=True)
+    for path in (MODULE, *EARLIER_PATHS):
+        shown = subprocess.run(["git", "-C", str(REPO), "show", ref + ":" + path], capture_output=True)
+        if shown.returncode == 0:
+            break
+    else:
+        raise SystemExit("C02_SELECTOR_NOT_AT_REF:" + ref)
     source = shown.stdout
     module = types.ModuleType("vnext._c02_selector_at_base")
     module.__package__ = "vnext"

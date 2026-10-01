@@ -1,0 +1,79 @@
+{
+  "record_type": "ISSUE28_C02_PEER4D_KNOWN_SOURCE_DELTA_CHECK",
+  "fixed_peer_sha": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9",
+  "code_head_before_commit": "137ecb24e15ab8f6e7da9beed58ff5c448cb70aa",
+  "worktree_contains_uncommitted_peer_reader": true,
+  "rows": [
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "period_end": "2025-12-31",
+      "run_id": "run:ordinary-integrated:39bef01913109baae8629489b37a097a802be8c3189748f7bf0fa87d597972d6",
+      "result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818",
+      "positive_source_checks": [
+        {
+          "original_block_index": 100,
+          "group_role": "excerpt_1",
+          "group_raw_span_sha256": "d3793ef0eca34d05709a2477dd826cc812d786d22a4cc69090149eef2e257a54",
+          "text_excerpt": "Committees: N/A\nDAVID ELLISON\nMr. Ellison has served as our Chairman and Chief Executive Officer since August 2025. Prior to becoming Chief Executive Officer of Paramount, Mr. Ellison served",
+          "source_reference_id": "sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e"
+        },
+        {
+          "original_block_index": 110,
+          "group_role": "excerpt_1",
+          "group_raw_span_sha256": "d3793ef0eca34d05709a2477dd826cc812d786d22a4cc69090149eef2e257a54",
+          "text_excerpt": "Committees: N/A\nDAVID ELLISON\nMr. Ellison has served as our Chairman and Chief Executive Officer since August 2025. Prior to becoming Chief Executive Officer of Paramount, Mr. Ellison served",
+          "source_reference_id": "sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e"
+        },
+        {
+          "original_block_index": 117,
+          "group_role": "excerpt_1",
+          "group_raw_span_sha256": "d3793ef0eca34d05709a2477dd826cc812d786d22a4cc69090149eef2e257a54",
+          "text_excerpt": "Committees: N/A\nDAVID ELLISON\nMr. Ellison has served as our Chairman and Chief Executive Officer since August 2025. Prior to becoming Chief Executive Officer of Paramount, Mr. Ellison served",
+          "source_reference_id": "sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e"
+        }
+      ],
+      "negative_original_block_indices_absent": [
+        168
+      ],
+      "original_selected_block_count": 63,
+      "context_block_count": 29,
+      "business_content_acceptance": false,
+      "current_390_credit": false
+    },
+    {
+      "company_id": "salesforce",
+      "period_end": "2026-01-31",
+      "run_id": "run:ordinary-integrated:d781a0d086b0429765f2636aae4d68422d319cdf0abee6357176160f318d644c",
+      "result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
+      "positive_source_checks": [
+        {
+          "original_block_index": 919,
+          "group_role": "excerpt_14",
+          "group_raw_span_sha256": "d83662bd0d8abfc7c75de05ced4898d824fafc38af8a8ba18c35bde0f6dcdcf6",
+          "text_excerpt": "Pursuant to our fiscal 2026 compensation policy for non-employee directors, (i) on February 1, 2025, each non-employee director serving at such time (other than Mr. Morfit, who waived receip",
+          "source_reference_id": "sha256:d37b437b3d36e41354a1c5d9ddc33331abb2d8951271067f6fb7d0ba9aeafaa8"
+        },
+        {
+          "original_block_index": 933,
+          "group_role": "excerpt_15",
+          "group_raw_span_sha256": "e756e68fbf90cd91b2e24ce9b7f12fa99b41bb9a426ee8eaaf355ac655761c7a",
+          "text_excerpt": "The following table sets forth information on the compensation earned during fiscal 2026 by our non-employee directors. The table excludes Messrs. Benioff and Harris, who receive compensatio",
+          "source_reference_id": "sha256:d37b437b3d36e41354a1c5d9ddc33331abb2d8951271067f6fb7d0ba9aeafaa8"
+        }
+      ],
+      "negative_original_block_indices_absent": [
+        4300
+      ],
+      "original_selected_block_count": 64,
+      "context_block_count": 4,
+      "business_content_acceptance": false,
+      "current_390_credit": false
+    }
+  ],
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_limit": "Only listed source blocks and saved Result spans are checked; not all content, business acceptance, old Result release or a production Run."
+}

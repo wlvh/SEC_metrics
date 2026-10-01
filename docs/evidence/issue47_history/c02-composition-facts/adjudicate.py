@@ -165,7 +165,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 
 from tools import read_c02_composition as reading  # noqa: E402
-from vnext.historical_board_composition_v2 import (  # noqa: E402
+from vnext.historical_board_composition_v3 import (  # noqa: E402
     board_composition_facts, clean, person_name, sentences, _strip_name)
 
 HERE = Path(__file__).resolve().parent
@@ -722,7 +722,7 @@ def _effect(*, held, latest, before_ref, after_path, output):
         positions[record["position"]] = entry
     output.write_text(json.dumps({
         "record_type": "C02_ADJUDICATION_EFFECT",
-        "selection": "today's scripts/vnext/historical_board_composition_v2.py on each judged position's document",
+        "selection": "today's scripts/vnext/historical_board_composition_v3.py on each judged position's document",
         "before": before_ref + ":" + str((HERE / "adjudication.json").relative_to(REPO)),
         "after": "the adjudication this tool wrote",
         "totals": totals, "positions": positions}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

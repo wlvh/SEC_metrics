@@ -1,6 +1,6 @@
 """Break one C02 rule at a time and require the case written for it to fail.
 
-Each injection edits ``scripts/vnext/historical_board_composition_v2.py`` in
+Each injection edits ``scripts/vnext/historical_board_composition_v3.py`` in
 memory, compiles it, and runs the synthetic suite in a child process whose
 ``vnext`` package searches a temporary directory holding only the edited
 module before the checkout's own package, so every other module and data file
@@ -28,7 +28,7 @@ import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[4]
-MODULE = REPO / "scripts/vnext/historical_board_composition_v2.py"
+MODULE = REPO / "scripts/vnext/historical_board_composition_v3.py"
 HERE = Path(__file__).resolve().parent
 SUITE = "tests.vnext.test_historical_board_composition"
 

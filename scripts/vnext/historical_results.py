@@ -417,7 +417,7 @@ TEXT_METRICS = ("C02", "D01", "D02")
 # 28 to 60 headings against max_items 64, so nothing here is waiting on the
 # capacity work D02 needed - though Enphase is four headings away from it.
 # C02 moved to its v2 successor with the owner's composition-fact meaning: the
-# selection changed (historical_board_composition_v2) and the bound rose, because
+# selection changed (historical_board_composition_v3) and the bound rose, because
 # a filing that prints each committee member in its own block states more
 # facts than 64 blocks hold (up to 85 measured on the ten saved filings). Its
 # file is the historical v2 because #28's ordinary C02 successor, a different
