@@ -74,6 +74,15 @@ COMPENSATION_COMMITTEE_INTERLOCKS (FACT)
     That no member of the compensation committee is or was an officer or an
     employee: a determination about the committee's members.
 
+INDEPENDENCE_RELATIONSHIP_DETERMINATION (FACT)
+    A committee's determination, for each non-employee director, about the
+    relationships the independence standards test ("the NCG Committee
+    determined that neither the director nor any immediate family member was
+    employed by a company providing goods or services to Macy's or the amounts
+    involved were below the monetary thresholds"): an independence
+    determination about the directors. Macy's FY2023 reader left it out, its
+    FY2024, FY2025 and FY2026 readers took the same sentence.
+
 MEMBERSHIP_CRITERIA_DETERMINATION (FACT)
     The board's determination that its directors meet the criteria for board
     membership or comply with the governance principles' requirements for
@@ -199,6 +208,9 @@ RULES = {
                                          "date is a composition fact wherever it is printed."),
     "COMPENSATION_COMMITTEE_INTERLOCKS": ("FACT", "That no compensation committee member is or was an officer or "
                                                   "employee is a determination about the committee's members."),
+    "INDEPENDENCE_RELATIONSHIP_DETERMINATION": ("FACT", "A committee's determination about the relationships the "
+                                                        "independence standards test, for each non-employee "
+                                                        "director, is an independence determination."),
     "MEMBERSHIP_CRITERIA_DETERMINATION": ("FACT", "The board's determination that its directors meet the criteria "
                                                   "for membership is a qualification determination."),
     "PRESIDING_DUTY": ("NOT", "Presiding over the independent directors' sessions is a duty of an office; who holds "
@@ -266,6 +278,8 @@ INTERLOCKS = re.compile(
     r"|\bcommittee consisted of\b[^.]{0,200}\bnone of whom\b[^.;]{0,60}\b(?:officers?|employees?)\b"
     r"|\bserved on the compensation committee\b[^.]{0,200}\bnone of\b[^.;]{0,80}\b(?:officers?|employees?)\b",
     re.I)
+RELATIONSHIPS = re.compile(r"\bdetermined that neither the director nor any immediate family member was employed by\b",
+                           re.I)
 CRITERIA = re.compile(r"\bdetermined that (?:the criteria for board membership have been satisfied"
                       r"|all directors are in compliance with)", re.I)
 PRESIDING = re.compile(
@@ -626,6 +640,9 @@ def decisions_for(position, document, record):
             decide(index, "COMPENSATION_COMMITTEE_INTERLOCKS")
         if CRITERIA.search(text):
             decide(index, "MEMBERSHIP_CRITERIA_DETERMINATION")
+        if RELATIONSHIPS.search(text):
+            decide(index, "INDEPENDENCE_RELATIONSHIP_DETERMINATION",
+                   redundant_with=[j for j in range(len(blocks)) if usable(j) and RELATIONSHIPS.search(texts[j])])
         if index in facts and PRESIDING.search(text) and not HOLDER.search(text):
             decide(index, "PRESIDING_DUTY")
         if TASK_FORCE_LINE.search(text):

@@ -42,6 +42,10 @@
    "decision": "FACT",
    "reason": "That no compensation committee member is or was an officer or employee is a determination about the committee's members."
   },
+  "INDEPENDENCE_RELATIONSHIP_DETERMINATION": {
+   "decision": "FACT",
+   "reason": "A committee's determination about the relationships the independence standards test, for each non-employee director, is an independence determination."
+  },
   "MEMBERSHIP_CRITERIA_DETERMINATION": {
    "decision": "FACT",
    "reason": "The board's determination that its directors meet the criteria for membership is a qualification determination."
@@ -529,6 +533,16 @@
    "decision": "FACT",
    "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
    "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 1107,
+   "text_sha256": "sha256:b710789a2cc90a3018edade5f1a11bf657a88097bf55082db0ca1375713f2fe5",
+   "rule": "INDEPENDENCE_RELATIONSHIP_DETERMINATION",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "basis of the NCG Committee's independence review (no employment by suppliers, or amounts below thresholds); does not say which directors are independent",
    "redundant_with": []
   },
   {

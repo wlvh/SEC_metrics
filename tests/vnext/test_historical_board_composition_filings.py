@@ -380,6 +380,32 @@ class ANomineesNoCommitteeFieldIsNotAFact(unittest.TestCase):
         self.assertNotIn(8, decided)
 
 
+class ACommitteesRelationshipDeterminationIsAFact(unittest.TestCase):
+    """The NCG Committee's determination about each director's relationships (INDEPENDENCE_RELATIONSHIP_DETERMINATION).
+
+    Macy's FY2023 reader left the sentence out (block 1107); its FY2024,
+    FY2025 and FY2026 readers took it.
+    """
+
+    POSITION = "example_company:2022-12-31"
+    TEXT = ("With respect to each Non-Employee Director, the NCG Committee determined that neither the director nor any "
+            "immediate family member was employed by a company providing goods or services to Macy’s or the amounts "
+            "involved were below the monetary thresholds set forth in the Standards for Director Independence.")
+
+    def decided(self, verdict):
+        sha = reading.text_sha256(self.TEXT)
+        document = {"blocks": [{"text": self.TEXT, "linked": False}]}
+        record = {"position": self.POSITION, "selected": [{"i": 0, "verdict": verdict, "why": "", "text_sha256": sha}],
+                  "pool_facts": [], "pool": [{"i": 0, "text_sha256": sha}]}
+        return [(row["rule"], row["decision"], row["reader_verdict"])
+                for row in _adjudicator().decisions_for(self.POSITION, document, record)]
+
+    def test_a_reader_who_left_it_out_is_overruled(self):
+        self.assertEqual([("INDEPENDENCE_RELATIONSHIP_DETERMINATION", "FACT", "NOT")], self.decided("NOT"))
+        # A reader who took it needs no decision.
+        self.assertEqual([], self.decided("FACT"))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

@@ -101,6 +101,13 @@ INJECTIONS = [
      '        if before is not None and NOT_YET.match(texts[before]):',
      '        if before is not None:',
      'tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact'),
+    ('THE_RELATIONSHIP_DETERMINATION_IS_NOT_DECIDED', ADJ,
+     '        if RELATIONSHIPS.search(text):\n            decide(index, "INDEPENDENCE_RELATIONSHIP_DETERMINATION",',
+     '        if False:\n            decide(index, "INDEPENDENCE_RELATIONSHIP_DETERMINATION",',
+     'tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact'),
+    ('THE_RELATIONSHIP_DETERMINATION_IS_DECIDED_NOT', ADJ,
+     '"INDEPENDENCE_RELATIONSHIP_DETERMINATION": ("FACT",', '"INDEPENDENCE_RELATIONSHIP_DETERMINATION": ("NOT",',
+     'tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact'),
 ]
 RUNNER = textwrap.dedent('''
     import importlib.util, sys, types, unittest

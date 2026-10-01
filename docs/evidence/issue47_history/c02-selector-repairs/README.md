@@ -403,6 +403,13 @@
 
 **结论。** 暂不采用。直接改会把 3 块误选换成 3 块漏选，而这 3 块标注此前被量测算作"选对了"，其实一直挂在错的人名上，量测看不出这一层。正确的做法是让标注找到排在列表之后的卡片姓名，同时不重犯第 19 节里 Macy's 那种越界到下一张卡片的问题，需要单独设计。
 
+**第二次量测（第 36 处之后）。** 试了"标注往后找姓名时，带项目符号的列表项不算姓名、也不计入就近范围"（`pending-bulleted-card-names/probe-skip-list-items.py`，只在内存里改；输出 `probe-skip-list-items.log`）：
+- 列表项按"单独项目符号块之后的行"也算时，Marriott 各年新增 60 多个判为事实的标注与姓名，但 Macy's 2024–2026 的四处 "Independent"（含最新年）被丢：标注在姓名之后，往后跳过整段经历列表找到了下一张卡片的姓名，前后都有姓名就按规则放弃；
+- 只算自带项目符号的块时，Macy's 2025、2026 仍丢三处，还新增把未加符号的公司名当姓名的误选（Marriott 2024 "GE Aerospace"、"Alignment Healthcare"，2025 "GE Aerospace"）；
+- Marriott 2022 第 915 块另有原因：姓名写作 "Margaret M. (Meg) McCarthy"，括号里的昵称使它不被认作人名，往后搜不到。
+
+所以仍暂缓。要做的是：认出"其他上市公司董事会 / 董事职务"列表段落（标题加其后的列表项）并整段排除在姓名之外，括号昵称按第 5 节的引号昵称同样处理，再量 Macy's 那种姓名在前、标注在后的卡片。
+
 ## 23. 董事会或其委员会设立的、名字夹在冠词和 "Committee" 之间的委员会
 
 **问题。** Enphase 2023 第 447 块 "the Audit Committee established a cybersecurity subcommittee, which includes a board member with cybersecurity expertise"，Lumen 2022 第 1879 块 "In early 2022, the Board formed a special CEO Succession Committee"、第 1281 块同一件事，读者都判为含事实（设立了委员会），都没取。选择器设立委员会的句式只允许冠词和 "committee" 之间出现 new、separate、special、standing、ad hoc 这几个修饰词；委员会自己的名字（"cybersecurity"、"CEO Succession"）一出现就不匹配。Lumen 2022 的第 958 块是同一事实，读者把它列为由 1281、1879 覆盖。

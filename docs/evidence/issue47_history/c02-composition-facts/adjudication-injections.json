@@ -1,6 +1,10 @@
 {
  "record_type": "C02_ADJUDICATION_FAULT_INJECTIONS",
  "controls": {
+  "tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact": {
+   "failures": 0,
+   "ran": 1
+  },
   "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange": {
    "failures": 0,
    "ran": 2
@@ -183,6 +187,22 @@
    "injection": "A_SITTING_DIRECTORS_FIELD_IS_A_NOMINEES",
    "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
    "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_RELATIONSHIP_DETERMINATION_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_RELATIONSHIP_DETERMINATION_IS_DECIDED_NOT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact",
    "caught": true,
    "failures": 1,
    "ran": 1

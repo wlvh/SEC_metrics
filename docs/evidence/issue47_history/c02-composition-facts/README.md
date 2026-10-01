@@ -51,6 +51,7 @@
 | `DIRECTOR_TABLE_NAME` | 事实 | 带独立性列的董事表里的每个名字。标了或没标，该行都承载这张表对此人的认定 |
 | `DIRECTOR_COUNT_ON_A_DATE` | 事实 | 某日的董事人数或非雇员董事人数，不论印在股权计划资格还是出席情况里 |
 | `COMPENSATION_COMMITTEE_INTERLOCKS` | 事实 | 薪酬委员会成员无人是或曾是高管或雇员：对委员会成员的认定 |
+| `INDEPENDENCE_RELATIONSHIP_DETERMINATION` | 事实 | 委员会对每位非雇员董事、就独立性标准所查关系作出的认定（"the NCG Committee determined that neither the director nor any immediate family member was employed by a company providing goods or services to Macy’s or the amounts involved were below the monetary thresholds"）：对董事的独立性认定。Macy's FY2023 的读者没取（理由是"没说哪位董事独立"），FY2024、FY2025、FY2026 的读者都取了同一句。只认语料里的这句写法。只产生一条裁定：Macy's 2023 第 1107 块由非事实改为事实，该位置的误选消失、与判读一致（`adjudication-effect-independence-relationships.json`：误选 8→7，一致的位置 25→26） |
 | `MEMBERSHIP_CRITERIA_DETERMINATION` | 事实 | 董事会认定董事符合任职标准：资格认定 |
 | `PRESIDING_DUTY` | 非事实 | 某个职位主持独立董事会议。这是该职位的职责；谁担任这个职位才是构成事实，在写出担任者处读。14 份判读里 9 份没取、5 份取了。块里另写出担任者的留给判读 |
 | `BOARD_TASK_FORCE` | 事实 | 由具名董事组成的董事会工作组及其标题：委员会设置与成员 |
@@ -66,7 +67,7 @@
 
 **效果**（`adjudication-effect.json`，用今天的选择器）：误选 40→46，漏选 146→144，一致的位置 11→9。对路线不利和有利的裁定大致相当：新不一致的是最新年 Enphase（3 个级别标题、3 处分级候选人数被取）、Lumen（分设句未取）、Macy's（候选人现为董事未取）、Marriott（两处分设句未取），以及若干往年块；新一致的是 Paramount FY2021、FY2023。这四个最新位置已按坐标登记缺陷（`C02_*_UNIFIED_ADJUDICATION_DISAGREES`，带逐块的 `selection_problems`），此前接受的值在修好的选择被重新读过之前一律撤回。
 
-用例：`test_historical_board_composition_filings` 要求最新十个位置的裁定**正好**是规则在该文档与判读上得出的结果（多一条少一条都不行），往年裁定都绑在读者看过的文本上，每个位置要么一致、要么与登记的缺陷逐块相同。`adjudication_injections.py`（结果在 `adjudication-injections.json`）在内存里逐处改读法与裁定，随规则增加到 20 处（`NOMINEE_CARD_NO_COMMITTEE` 加了 3 处），20 处都被各自点名的用例抓到，对照运行干净。
+用例：`test_historical_board_composition_filings` 要求最新十个位置的裁定**正好**是规则在该文档与判读上得出的结果（多一条少一条都不行），往年裁定都绑在读者看过的文本上，每个位置要么一致、要么与登记的缺陷逐块相同。`adjudication_injections.py`（结果在 `adjudication-injections.json`）在内存里逐处改读法与裁定，随规则增加到 22 处（`NOMINEE_CARD_NO_COMMITTEE` 加了 3 处，`INDEPENDENCE_RELATIONSHIP_DETERMINATION` 加了 2 处），22 处都被各自点名的用例抓到，对照运行干净。
 
 **局限**：每一类的识别式是在这 37 份判读上写的，只找得到这些申报里的写法；换一种写法的同类块不会被裁定，仍按判读处理。用来定规则的判读对后续修复只算回归材料。
 
