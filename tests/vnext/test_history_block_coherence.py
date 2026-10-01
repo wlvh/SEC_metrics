@@ -396,15 +396,19 @@ class TheEventWalkHoldsBlocksToTheSameCheck(unittest.TestCase):
             _view(_event_sources, renamed_check=lambda **_: None)
 
 
-def _saved_submissions():
-    """The latest saved attempt of every submissions URL: the checkout's, then the export's."""
+def _saved_submissions(*, include_export=True):
+    """The latest saved attempt of every submissions URL: the checkout's, then the export's.
+
+    Without the export, the checkout's own saved attempts only: the blocks as
+    they were before the acquisition fetched any of them again.
+    """
     import csv
     found = {}
     with open(ROOT / "evidence" / "requests_log.csv", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             if "/submissions/" in row["source_url"] and row["status_code"] == "200":
                 found[row["source_url"]] = (row["timestamp_utc"], row["repo_relative_path"])
-    if (ROOT / "evidence" / "issue47_acquired" / "export.json").exists():
+    if include_export and (ROOT / "evidence" / "issue47_acquired" / "export.json").exists():
         members = _export_members(ROOT)
         for member in sorted(members):
             if member.endswith(".headers.json"):
@@ -418,59 +422,93 @@ def _saved_submissions():
     return found
 
 
+def _check_blocks(*, indexes, blocks):
+    """Every block in ``blocks`` checked against the index in ``indexes`` that declares it."""
+    from vnext.normal_governance_input import _history_index, NormalGovernanceInputError
+    results = {}
+    for url, (_when, path) in indexes.items():
+        if "-submissions-" in url:
+            continue
+        payload = json.loads(saved_bytes(repo_root=ROOT, relative=path))
+        cik = str(payload["cik"]).zfill(10)
+        shards = _history_index(payload, cik)
+        last = block_last_days(payload=payload, shards=shards)
+        base = url.rsplit("/", 1)[0] + "/"
+        for shard in shards:
+            if base + shard["name"] not in blocks:
+                continue
+            body = json.loads(saved_bytes(repo_root=ROOT, relative=blocks[base + shard["name"]][1]))
+            try:
+                kept = _kept(body, shard["name"])
+            except NormalGovernanceInputError:
+                continue
+            results[shard["name"]] = {
+                "new": history_block_coherence(shard=shard, body=body, rows=kept,
+                                               last_day=last[shard["name"]]),
+                "frozen": history_body_alignment(shard=shard, rows=kept)}
+    return results
+
+
 class TheSavedBlocks(unittest.TestCase):
-    """Every saved block, checked against the latest saved index that declares it."""
+    """Every saved block, checked against the latest saved index that declares it.
+
+    Two sets of blocks are checked against the same latest indexes: the latest
+    saved attempt of each block (the acquisition's, where it fetched the block
+    again with its index), and the checkout's own attempt from before the
+    acquisition. The first set says what the frame reads now; the second keeps
+    the stale blocks the rule was written for, which the refresh replaced.
+    """
 
     @classmethod
     def setUpClass(cls):
-        from vnext.normal_governance_input import _history_index, NormalGovernanceInputError
-        saved = _saved_submissions()
-        cls.results = {}
-        for url, (_when, path) in saved.items():
-            if "-submissions-" in url:
-                continue
-            payload = json.loads(saved_bytes(repo_root=ROOT, relative=path))
-            cik = str(payload["cik"]).zfill(10)
-            shards = _history_index(payload, cik)
-            last = block_last_days(payload=payload, shards=shards)
-            base = url.rsplit("/", 1)[0] + "/"
-            for shard in shards:
-                if base + shard["name"] not in saved:
-                    continue
-                body = json.loads(saved_bytes(repo_root=ROOT, relative=saved[base + shard["name"]][1]))
-                try:
-                    kept = _kept(body, shard["name"])
-                except NormalGovernanceInputError:
-                    continue
-                cls.results[shard["name"]] = {
-                    "new": history_block_coherence(shard=shard, body=body, rows=kept,
-                                                   last_day=last[shard["name"]]),
-                    "frozen": history_body_alignment(shard=shard, rows=kept)}
+        latest = _saved_submissions()
+        cls.results = _check_blocks(indexes=latest, blocks=latest)
+        cls.before_the_refresh = _check_blocks(indexes=latest,
+                                               blocks=_saved_submissions(include_export=False))
 
     def test_jpmorgan_s_acquired_blocks_are_the_blocks_their_index_declares(self):
         jpm = {name: r for name, r in self.results.items() if name.startswith("CIK0000019617-")}
         self.assertGreaterEqual(len(jpm), 65)
         frozen_refused = sorted(name for name, r in jpm.items() if r["frozen"])
         new_refused = sorted(name for name, r in jpm.items() if r["new"])
-        # The frozen check refuses blocks fetched together with their index...
-        self.assertEqual(8, len(frozen_refused))
-        # ...for gap-day filings only; the one refused now is the block the
-        # acquisition never fetched again: saved from another partition,
-        # holding 2084 filings where its index declares 2023, none of a kept form.
-        self.assertEqual(["CIK0000019617-submissions-007.json"], new_refused)
-        conflict = jpm["CIK0000019617-submissions-007.json"]["new"]
-        self.assertEqual((2023, 2084), (conflict["declared_filing_count"],
-                                        conflict["saved_filing_count"]))
-        self.assertIsNone(jpm["CIK0000019617-submissions-007.json"]["frozen"])
+        # The frozen check refuses blocks fetched together with their index
+        # for gap-day filings only (a filing dated the day between two declared
+        # ranges, which SEC files in the older block) ...
+        self.assertEqual(6, len(frozen_refused))
+        # ... and once the acquisition fetched every block again with its
+        # index, block 007 included, the rule refuses none.
+        self.assertEqual([], new_refused)
 
-    def test_the_newest_blocks_of_pfizer_and_salesforce_miss_filings(self):
-        for name, counts in (("CIK0000078003-submissions-001.json", (2005, 2001)),
-                             ("CIK0001108524-submissions-001.json", (2016, 2010))):
-            result = self.results[name]
-            self.assertIsNotNone(result["new"], name)
-            self.assertIn("FILING_COUNT_DIFFERS_FROM_DECLARED", result["new"]["failed_checks"])
-            self.assertEqual(counts, (result["new"]["declared_filing_count"],
-                                      result["new"]["saved_filing_count"]))
+    def test_the_block_saved_from_another_partition_is_refused(self):
+        # Block 007 as the checkout saved it before the acquisition: from another
+        # partition, holding 2084 filings where the index declares another count
+        # (2023 in the index the first acquisition saved, 2057 in the one the
+        # extension saved: SEC moves its partitions), none of a kept form, so the
+        # frozen check sees nothing wrong. The saved count is the block's own;
+        # the declared one is whichever index is latest, so only the difference
+        # is asserted of it.
+        conflict = self.before_the_refresh["CIK0000019617-submissions-007.json"]
+        self.assertIsNotNone(conflict["new"])
+        self.assertEqual(2084, conflict["new"]["saved_filing_count"])
+        self.assertNotEqual(2084, conflict["new"]["declared_filing_count"])
+        self.assertIsNone(conflict["frozen"])
+        self.assertIsNone(self.results["CIK0000019617-submissions-007.json"]["new"])
+
+    def test_the_newest_blocks_of_pfizer_and_salesforce_missed_filings_until_refreshed(self):
+        # The blocks the checkout saved hold another number of filings than the
+        # latest index declares for them: 2001 and 2010 saved, where the index
+        # the first acquisition saved declared 2005 and 2016 and the one the
+        # extension saved declares 2002 and 2000 - SEC's partitions move both
+        # ways, so only the difference is asserted. The refreshed blocks are
+        # coherent with the same index.
+        for name, saved_count in (("CIK0000078003-submissions-001.json", 2001),
+                                  ("CIK0001108524-submissions-001.json", 2010)):
+            stale = self.before_the_refresh[name]
+            self.assertIsNotNone(stale["new"], name)
+            self.assertIn("FILING_COUNT_DIFFERS_FROM_DECLARED", stale["new"]["failed_checks"])
+            self.assertEqual(saved_count, stale["new"]["saved_filing_count"])
+            self.assertNotEqual(saved_count, stale["new"]["declared_filing_count"])
+            self.assertIsNone(self.results[name]["new"], name)
 
 
 if __name__ == "__main__":

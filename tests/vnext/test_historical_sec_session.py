@@ -3667,10 +3667,25 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         self.assertIn("ISSUE_47_BRANCH_TIP_DOES_NOT_SAY_WHICH_EXTENSION", str(caught.exception))
 
     def test_the_live_path_checks_the_start_before_any_transport(self):
-        """Registered and wired, not started: refused before a session, and so before a socket."""
+        """Registered and wired, not started: refused before a session, and so before a socket.
+
+        The allowance here is a test one, which no registered extension
+        continues; this checkout has carried the owner's extension since it was
+        registered, so the branch tip given is the checkout's own (the files
+        match, as on a pushed branch) and the extension is read as absent. The
+        extension's own path - verified against GitHub, pinned to the ledger it
+        continues - is tested where it is built.
+        """
         allowance = {**self.allowance, "sec_wiring_receipt_path": "unused",
                      "maximum_additional_provider_paid_sec_calls": [0, 0, 5],
                      "scope": {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"]}}
+        tip_files = {relative: ((ROOT / relative).read_bytes()
+                                if (ROOT / relative).is_file() else None)
+                     for relative in EXTENSION_MODULE.EXTENSION_FILES}
+        absent = patch("vnext.historical_sec_extension.acquisition_extension",
+                       lambda **kwargs: None)
+        absent.start()
+        self.addCleanup(absent.stop)
         reader = self._reader([])
         with patch.object(SESSION_MODULE, "acquisition_allowance",
                           lambda **kwargs: copy.deepcopy(allowance)), \
@@ -3682,7 +3697,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                              side_effect=AssertionError("a session was built")):
             with self.assertRaises(HistoricalSessionError) as caught:
                 live_historical_session(branch_tip=lambda: {"export_index": _tip(),
-                                                          "extension_files": _NO_EXTENSION})
+                                                          "extension_files": tip_files})
         self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
         # The same path with the start published builds the session.
         SESSION_MODULE.start_ledger(allowance=allowance, reader=reader)
@@ -3697,7 +3712,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                 patch.object(SESSION_MODULE, "SecHttpClient",
                              side_effect=AssertionError("a transport was built")):
             session = live_historical_session(branch_tip=lambda: {"export_index": _tip(),
-                                                          "extension_files": _NO_EXTENSION})
+                                                          "extension_files": tip_files})
         self.assertEqual(Path(allowance["budget_root"]), session.ledger.root)
         # It keeps the check for every pass, and holds the ledger to the charge
         # the check verified: none, for a ledger started here.
@@ -5168,9 +5183,19 @@ class ThePinnedBodyIsTheCommittedProposal(unittest.TestCase):
         first = acquisition_allowance(repo_root=ROOT)
         self.assertEqual(first["delegation_url"], approved["extends"]["delegation_url"])
         self.assertEqual(first["budget_root"], approved["budget_root"])
-        # The state it extends is the committed export's claim log.
-        index = strict_json_file(path=ROOT / "evidence/issue47_acquired/export.json")
+        # The state it extends is where the committed export's claim log
+        # begins: the export the extension was written against, or one that
+        # carries the requests made under it after those bytes. (Asserting the
+        # export id itself held only until the first export under the extension.)
+        from vnext.historical_source_export import STATE_ARCHIVE, _read_archive
+        export_dir = ROOT / "evidence/issue47_acquired"
+        index = strict_json_file(path=export_dir / "export.json")
         state = approved["extends"]["ledger_state"]
-        self.assertEqual(index["export_id"], state["export_id"])
-        self.assertEqual(index["state_archive"]["members"]["ledger/claims.jsonl"],
-                         state["claims"])
+        log = _read_archive(export_dir / STATE_ARCHIVE,
+                            index["state_archive"])["ledger/claims.jsonl"]
+        self.assertGreaterEqual(len(log), state["claims"]["size"])
+        self.assertEqual(state["claims"]["sha256"],
+                         hashlib.sha256(log[:state["claims"]["size"]]).hexdigest())
+        if index["export_id"] == state["export_id"]:
+            self.assertEqual(index["state_archive"]["members"]["ledger/claims.jsonl"],
+                             state["claims"])
