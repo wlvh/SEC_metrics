@@ -292,6 +292,69 @@ class AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin(unittest.TestCase):
         self.assertEqual([2, 4, 5], missed([0, 3], decided))
 
 
+class ATermEndingIsCoveredOnlyByTheSameDeparture(unittest.TestCase):
+    """A named director's term ending at a meeting is a departure (TERM_END_AT_A_MEETING).
+
+    Lumen's director-pay footnotes state each departure this way; the FY2024
+    reader cited the unnamed "three current directors will retire" and the
+    pay rows under a "Retiring Directors" heading as covering the one that
+    names the three (c02-selector-repairs/ section 17).
+    """
+
+    POSITION = "example_company:2024-12-31"
+    TEXTS = ["At the 2025 annual meeting, the following three current directors will retire from the Board:",
+             "(6)The terms of Mr. Brown, Mr. Clontz and Ms. Siegel will end in connection with the election of "
+             "directors at the 2025 annual meeting.",
+             "(7)Mr. Roberts’ term ended in connection with the election of directors at the 2024 annual meeting.",
+             "At the 2024 annual meeting, Michael Roberts, retired from the Board, after 13 years of service.",
+             "Mr. Hanks retired from the Board at the 2023 annual meeting.",
+             "5Mr. Hanks’ term will end immediately following the 2024 annual shareholders meeting.",
+             "Mr. Smith, a nominee, presently serves on our Board and his term of office will expire at the Annual "
+             "Meeting.",
+             "Their terms will end at the 2025 annual meeting.",
+             "The Committee’s term will end at the 2025 annual meeting."]
+
+    def setUp(self):
+        sha = [reading.text_sha256(text) for text in self.TEXTS]
+        self.document = {"blocks": [{"text": text, "linked": False} for text in self.TEXTS]}
+        self.record = {"position": self.POSITION,
+                       "selected": [{"i": i, "verdict": "FACT", "why": "", "text_sha256": sha[i]} for i in (0, 3)],
+                       "pool_facts": [{"i": 1, "verdict": "FACT", "why": "", "text_sha256": sha[1],
+                                       "redundant_with": [0]},
+                                      {"i": 2, "verdict": "FACT", "why": "", "text_sha256": sha[2],
+                                       "redundant_with": [3]}],
+                       # Block 5 is outside the pool: no reader looked at it.
+                       "pool": [{"i": i, "text_sha256": h} for i, h in enumerate(sha) if i != 5]}
+
+    def test_the_rule_decides_what_states_each_departure(self):
+        decided = {row["i"]: row for row in _adjudicator().decisions_for(self.POSITION, self.document, self.record)}
+        # The unnamed retirement sentence names none of the three.
+        self.assertEqual([], decided[1]["redundant_with"])
+        self.assertEqual("TERM_END_AT_A_MEETING", decided[1]["rule"])
+        # The reader's citation of Mr. Roberts' own retirement stands.
+        self.assertNotIn(2, decided)
+        # No reader looked at block 5; Mr. Hanks' 2023 retirement is another departure.
+        self.assertEqual(("FACT", "NOT_READ", []),
+                         (decided[5]["decision"], decided[5]["reader_verdict"], decided[5]["redundant_with"]))
+        # A nominee's term ending at the meeting, a term nobody is named for and
+        # a body's term are not departures.
+        for index in (6, 7, 8):
+            self.assertNotIn(index, decided)
+
+    def test_an_unnamed_retirement_no_longer_covers_the_footnote(self):
+        decided = {(self.POSITION, row["i"]): row
+                   for row in _adjudicator().decisions_for(self.POSITION, self.document, self.record)}
+
+        def missed(chosen, adjudications):
+            answer = reading.read_position(document=self.document, chosen=chosen, reading=self.record,
+                                           adjudications=adjudications)
+            return sorted(item["i"] for item in answer["problems"]["missed"])
+
+        self.assertEqual([], missed([0, 3], {}))
+        self.assertEqual([1, 5], missed([0, 3], decided))
+        self.assertEqual([], missed([0, 1, 3, 5], decided))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

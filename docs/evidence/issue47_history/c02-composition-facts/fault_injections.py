@@ -54,7 +54,7 @@ INJECTIONS = [
     ("ACCEPT_A_LETTER_IN_THE_FIRST_PERSON", "        if _FIRST_PERSON.search(sentence):\n            continue",
      "        if False:\n            continue", "test_pay_and_letters_are_not_facts"),
     ("LET_A_TITLE_S_PERIOD_END_THE_SENTENCE",
-     "    t = _ABBREVIATION.sub(lambda m: m.group(1).replace(\".\", \"\"), clean(text))", "    t = clean(text)",
+     '    t = _ABBREVIATION.sub(lambda m: m.group(1).replace(".", ""), _GLUED_MARK.sub(r"\\1 ", clean(text)))', '    t = _GLUED_MARK.sub(r"\\1 ", clean(text))',
      "test_committee_board_and_leadership_facts"),
     ("CONTINUE_A_LEAD_IN_TO_DUTIES", "        if last and _introduces_people(last) and statement_labels(",
      "        if last and statement_labels(", "test_a_composition_sentence_that_introduces_duties"),
@@ -202,6 +202,14 @@ INJECTIONS = [
      "test_a_long_title_before_the_join"),
     ('ANY_TARGET_YEAR_IS_ACCEPTED', '        raise ValueError("C02_COMPOSITION_PERIOD_START_INVALID:" + repr(period_start)) from None',
      '        start = dt.date(1900, 1, 1)', "test_the_target_year_is_a_date_and_the_proposal_names_it"),
+    ('A_TERM_ENDING_IS_NOT_READ', 'r"\\s+(?:will\\s+)?(?:end(?:ed|s)?|expire[sd]?)\\b[^.;]{0,80}?\\b(?:annual(?:\\s+(?:general"', 'r"\\s+(?:will\\s+)?(?:end(?:ed|s)?|expire[sd]?)\\bNEVER[^.;]{0,80}?\\b(?:annual(?:\\s+(?:general"',
+     'test_a_named_director_s_term_ending_at_a_meeting'),
+    ('A_TERM_OF_ANYTHING_IS_A_PERSONS', '\\bterms?(?:\\s+of\\s+office)?\\s+of\\s+(?:mr|ms|mrs|dr|messrs|mses)\\b[^.;]{0,120}?', '\\bterms?(?:\\s+of\\s+office)?\\s+of\\s+[^.;]{0,120}?',
+     'test_a_named_director_s_term_ending_at_a_meeting'),
+    ('A_GLUED_MARK_HIDES_THE_PERSON', '_GLUED_MARK.sub(r"\\1 ", clean(text))', 'clean(text)',
+     'test_a_footnote_number_printed_against_the_honorific'),
+    ('AN_AMOUNT_IS_A_MARK', '(?<![\\w$.,])(\\d{1,2})', '(?<![\\w])(\\d{1,2})',
+     'test_a_footnote_number_printed_against_the_honorific'),
 ]
 
 

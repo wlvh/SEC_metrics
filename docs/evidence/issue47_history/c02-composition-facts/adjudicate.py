@@ -121,6 +121,20 @@ DATED_ROLE_CHANGE (FACT; covered only by the same change)
     Where the reader judged the block a fact but cited blocks that do not
     state its changes, the decision replaces the reader's citation.
 
+TERM_END_AT_A_MEETING (FACT; covered only by the same departure)
+    A sentence saying that a named director's term on the board ended or
+    will end at an annual meeting ("(7)Mr. Roberts’ term ended in connection
+    with the election of directors at the 2024 annual meeting", "The terms of
+    Mr. Brown, Mr. Clontz and Ms. Siegel will end ..."). It is a departure:
+    a change in who sits on the board, stated with the person and the
+    meeting. Every reader who saw one judged it a fact, whatever its date, as
+    every reader judged dated retirements; the class is written for the
+    blocks no reader looked at (footnotes outside the pools, which hold no
+    word of the owner's vocabulary). A block states the same fact only by
+    naming each of the same people leaving, at the same year's meeting where
+    one is given; a heading over the leavers or a sentence counting them
+    without names does not.
+
 Older years' filings are read from a root restored from the acquisition's
 export by this checkout (``--source-root``). Building a document takes the
 route's input preparation; ``--documents`` names a cache directory (outside
@@ -189,6 +203,9 @@ RULES = {
     "DATED_ROLE_CHANGE": ("FACT", "A named director taking up a board leadership role or a committee chair on a date in "
                                   "the target year or after is a change in who holds it; only a block giving the same "
                                   "person's change in that role on the same date states it."),
+    "TERM_END_AT_A_MEETING": ("FACT", "A named director's term ending at an annual meeting is a departure from the "
+                                      "board; only a block naming the same people leaving at the same meeting "
+                                      "states it."),
 }
 
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
@@ -379,6 +396,75 @@ def _states_join(text, joiner):
                     for match in JOIN.finditer(sentence) for date in dates))
 
 
+# A named director's term ending at an annual meeting. The term is a person's:
+# a possessive surname, a pronoun, or "terms of" people named by honorific
+# (sentences() has taken the period off "Mr." and the like).
+TERM_END = re.compile(
+    r"(?:(?P<owner>(?-i:[A-Z])[\w\-]+)[’']s?\s+terms?(?:\s+of\s+office)?(?:\s+on\s+(?:the|our)\s+board)?"
+    r"|\b(?:his|her|their)\s+terms?(?:\s+of\s+office)?(?:\s+on\s+(?:the|our)\s+board)?"
+    r"|\bterms?(?:\s+of\s+office)?\s+of\s+(?P<named>(?:Mr|Ms|Mrs|Dr)\b[^.;]{0,120}?))"
+    r"\s+(?:will\s+)?(?:end(?:ed|s)?|expire[sd]?)\b(?P<tail>[^.;]{0,80}?\b(?:annual(?:\s+(?:general"
+    r"|shareholders?['’]?|stockholders?['’]?))?\s+meeting|election of directors))", re.I)
+# A departure from the board, as a covering block states it.
+DEPARTURE = re.compile(r"\b(?:(?:retir\w*|resign\w*|stepp?\w* down|leav\w*|depart\w*)\b[^.;]{0,60}?\bboard\b"
+                       r"|retirements? of\b|not (?:be )?stand\w* for re-?election|ceased to (?:be|serve)"
+                       r"|terms?\b[^.;]{0,120}?\b(?:end\w*|expir\w*))", re.I)
+# The annual re-election of sitting nominees ("Each of the following director
+# nominees presently serves on our Board and their term of office will expire
+# at the Annual Meeting") ends a term without anyone leaving.
+NOMINEES = re.compile(r"\bnominees?\b|\bnominated\b|\bstand(?:s|ing)? for (?:re-?)?election\b", re.I)
+
+
+def _leavers(text):
+    """(surnames, year or None) for each term ending at a meeting, or None if a leaver is not named."""
+    found = []
+    for sentence in sentences(text):
+        if NOMINEES.search(sentence) and not re.search(r"\bnot\b", sentence, re.I):
+            continue
+        for match in TERM_END.finditer(sentence):
+            if match.group("named"):
+                surnames = [m.group("surname") for m in _HONORIFIC_NAME.finditer(match.group("named"))]
+            elif match.group("owner"):
+                # A possessive is a person's only after an honorific or a first
+                # name ("Mr Roberts’ term", "W. Bruce Hanks’ term").
+                if not re.search(r"(?:\b(?:Mr|Ms|Mrs|Dr)\s+|\b(?!(?:The|A|An|Our|Its|This|That|Each|Every|Such)\s)"
+                                 r"(?-i:[A-Z])[\w\-]+\s+(?:(?-i:[A-Z])\s+)?)$", sentence[:match.start("owner")]):
+                    continue
+                surnames = [match.group("owner")]
+            else:
+                # "his term": the one person the sentence names before it.
+                before = sentence[:match.start()]
+                people = {m.group("surname") for m in _HONORIFIC_NAME.finditer(before)}
+                people |= {[w for w in m.group(0).split() if w not in _SUFFIX][-1]
+                           for m in _FULL_NAME.finditer(before)}
+                if len(people) != 1:
+                    # Not a named director's term: no one, or no one alone, is named.
+                    continue
+                surnames = sorted(people)
+            if not surnames:
+                return None
+            year = re.search(r"(?:19|20)\d\d", match.group("tail") + sentence[match.end():match.end() + 40])
+            found.append((surnames, year.group(0) if year else None))
+    return found
+
+
+def _states_departure(text, leaver):
+    """True when a sentence of ``text`` names each of the same people leaving the board.
+
+    A year that sentence gives must be the leavers' meeting's year; one naming
+    only "the Annual Meeting" gives none to contradict it, and another
+    sentence's year ("James Fowler resigned ... in December 2025") is about
+    another change.
+    """
+    surnames, year = leaver
+    for sentence in sentences(text):
+        years = set(re.findall(r"(?:19|20)\d\d", sentence))
+        if (all(re.search(r"\b" + re.escape(surname) + r"\b", sentence) for surname in surnames)
+                and DEPARTURE.search(sentence) is not None and (year is None or not years or year in years)):
+            return True
+    return False
+
+
 def _fy_start(report_end):
     return dt.date.fromisoformat(report_end) - dt.timedelta(days=364)
 
@@ -543,6 +629,16 @@ def decisions_for(position, document, record):
                      and all(_states_change(texts[j], change) for change in changes)]
             recover(index, "DATED_ROLE_CHANGE", cover,
                     changes=[{"surname": c[0], "role": c[1], "dates": c[2]} for c in changes])
+        leavers = _leavers(text)
+        if leavers is None:
+            decide(index, "TERM_END_AT_A_MEETING")
+        elif leavers:
+            # Covered by a block only if it names the same people leaving at
+            # the same meeting; a heading over the leavers does not.
+            cover = [j for j in range(len(blocks)) if j != index
+                     and all(_states_departure(texts[j], leaver) for leaver in leavers)]
+            recover(index, "TERM_END_AT_A_MEETING", cover,
+                    leavers=[{"surnames": s, "year": y} for s, y in leavers])
         joins = [m.group("date") for s in sentences(text) for m in JOIN.finditer(s)]
         if joins:
             if any(not _before(d, start) for d in joins):

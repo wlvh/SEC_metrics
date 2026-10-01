@@ -264,3 +264,32 @@
 **量测**（`measured-16-join-coverage.json`）：只有 Paramount 2025 一个位置移动，新增第 100 块；漏选 106→105（按新裁定，100 原本算漏选）。其余八块已在第 13 节取到，919 在第 14 节取到。这个位置的选择现与判读、统一裁定一致；坐标仍撤回，要等重算、重读。
 
 **没有跟着改的。** #28 还把提名理由（"We believe Mr. Thornton is qualified to serve as a member of our Board because …"，第 168 块）算作董事资格认定。两份 C02 Spec 列举的资格认定是 financially literate、audit committee financial expert、non-employee director、没有成员是高管或雇员，并写明提名与评估程序不在口径内；本方读者也判它不是事实。这是含义问题，已在登记里记为待对齐，没有改选择器。
+
+## 17. 具名董事的任期在年会上结束，是一次离任
+
+**问题。** Lumen 2024 往年判读的漏选有 11 块，都挂在第 1506 块上："(6)The terms of Mr. Brown, Mr. Clontz and Ms. Siegel will end in connection with the election of directors at the 2025 annual meeting."。它是全文唯一点名三人离任的块；读者把离任时间线里的名字（565–570）、"Retiring Directors:" 标题（1494）和其下三行薪酬（1495–1497）都记为由它覆盖。选择器没取它，原因有两个：
+- 离任句式只认 "term on the Board will end" 这种写法，不认 "X’s term ended …" 和 "The terms of X … will end …"。
+- Lumen 2021、2022 的脚注把编号直接贴在称谓前（"6Ms. Boulet’s term ended …"）。"6Ms" 不构成一个词，"Ms." 的句点被当成句末，句子在人名前断开，选择器看不到这个人。
+
+**改动（选择器一侧）。**
+- 成员变动多一种句式：某人的任期（所有格、代词或 "terms of" 加称谓姓名）在年会或董事选举时已结束或将结束。
+- 分句前，在贴着称谓的一两位数字后补一个空格。前面是 `$`、小数点、逗号或另一位数字时不补，所以金额和年份不受影响。
+
+**改动（量测一侧）。** 统一裁定新增规则 `TERM_END_AT_A_MEETING`（事实），现共 17 条（AGENTS.md 与协作索引曾把第 15 节之后的 16 条误记为 17 类，已改正）。凡是看到过这类脚注的读者都判为事实，读者之间没有分歧。这一类是为没人看过的块写的：Lumen 2022 第 1315 块、2023 第 1644、1645 块，这三块不含所有者的词汇，不在判读池里，选择器取了它们之后量测会报"未读"。覆盖规则与第 15、16 节相同：只有写明同一批人离开、且年份相同（如果写了年份）的句子才算覆盖。不点名的"以下三位将退休"、"Retiring Directors" 标题和薪酬行都不算。
+- 第一版把 Marriott 五年的 "Each of the following director nominees … their term of office will expire at the Annual Meeting" 也判成离任，读者都判它不是事实。这是整批候选人照常改选，没有人离开。现在提到候选人或提名的句子不在本类；只用代词、句中又没有恰好一人具名的，也不在本类。
+- 裁定判"同一离任"按句子看，不按整块看。Lumen 2025 第 537 块先写 Glenn、Jones 在年会退休，后一句写 Fowler 2025 年 12 月辞职；按整块看，"2025" 会被误当成与 2026 年会冲突。
+
+**用例与注错。**
+- 选择器：`test_a_named_director_s_term_ending_at_a_meeting`、`test_a_footnote_number_printed_against_the_honorific`。注错 `A_TERM_ENDING_IS_NOT_READ`、`A_TERM_OF_ANYTHING_IS_A_PERSONS`、`A_GLUED_MARK_HIDES_THE_PERSON`、`AN_AMOUNT_IS_A_MARK`。第一版的第二个注错（在所有格一支里加 "the|a"）没有被抓到：它根本碰不到反例 "The term of the Amended Plan will end …"，因为那句在 term 和 will end 之间隔着 "of the Amended Plan"。真正挡住这句的是 "terms of" 之后必须跟称谓，改为去掉这一条件后被抓到。原注错 `LET_A_TITLE_S_PERIOD_END_THE_SENTENCE` 的目标行随之改写，测的性质不变。
+- 统一裁定与判读工具：`test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture`。注错 `A_HEADING_COVERS_A_DEPARTURE`、`ANOTHER_YEARS_DEPARTURE_COVERS`、`A_NOMINEES_TERM_IS_A_DEPARTURE`、`A_PRONOUN_TERM_IS_ANYONES`、`A_POSSESSIVE_NEED_NOT_BE_A_PERSON`。
+
+**量测**（`measured-17-term-endings.json`）：只移动 Lumen 五年，新增的块读者都判为事实，或由新类判为事实。
+- Lumen 2021：新增 1210、1211。1210 是贴编号的年度内加入句，同一处改动让它也被认出。
+- Lumen 2022：新增 1315。
+- Lumen 2023：新增 1644、1645。
+- Lumen 2024：新增 1506、1507，11 块漏选全部消失，这个位置的选择现与判读、裁定一致。
+- Lumen 2025：新增 1370、1373。两块原本就由已选的块覆盖，问题集不变。
+
+合计漏选 105→91，误选 18 不变，不一致位置 23→22。Lumen 2025 是最新年度，值会变，但原值不缺事实，所以不撤回；重算后要重读。
+
+**没有跟着改的。** 读者把在目标年度之前的离任（如 FY2024 判读中"At the 2021 annual meeting, Virginia Boulet retired from the Board"）也判为事实，选择器也取。这与 `JOIN_BEFORE_THE_YEAR`（年度之前的加入是任期，不是事实）看起来不对称。区别在于：加入日期说的是一位在任董事任职多久；离任说的是一位已不在任的人。所有者的口径只写"成员变动，写明人或日期"，没有限定期间，读者之间也没有分歧，所以本节不改。是否只计年度内的离任，是口径问题。

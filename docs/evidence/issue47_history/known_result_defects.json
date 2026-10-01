@@ -3042,13 +3042,15 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-17-term-endings.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
-    "still_open": "12 fact block(s) missed (455, 456, 457, 695, 732, 1047, 1049, 1204, 1205, 1211, 1223, 2651) and 2 block(s) taken that state no composition fact (856, 1236); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "9 fact block(s) missed (455, 456, 457, 695, 732, 1047, 1049, 1223, 2651) and 2 block(s) taken that state no composition fact (856, 1236); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
-    "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "term_endings_17": "Repair 17 takes a named director's term ending at an annual meeting (and a footnote number printed against the honorific): 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 17 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
@@ -3059,9 +3061,6 @@
      732,
      1047,
      1049,
-     1204,
-     1205,
-     1211,
      1223,
      2651
     ],
@@ -3090,14 +3089,16 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-6-management-committees.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-17-term-endings.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
     "still_open": "9 fact block(s) missed (865, 866, 867, 946, 958, 1078, 1281, 1879, 3663) and 2 block(s) taken that state no composition fact (842, 1324); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
     "management_committee": "1 block(s) no longer taken, every one judged not a composition fact: a management committee (members 'senior leaders and executives', 'Company leaders', 'employees', chaired by named officers) described in the words a board committee's makeup is stated in (scripts/vnext/historical_board_composition.py _MANAGEMENT_MEMBERS) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 6 [shared-with-#28]).",
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "joins_by_period": "A director's join is now judged against the target year: 0 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 1 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28])."
+    "joins_by_period": "A director's join is now judged against the target year: 0 block(s) now taken that date a join in the year or after (JOIN_IN_THE_YEAR), and 1 dropped whose only change was a join dated before the year (JOIN_BEFORE_THE_YEAR), every move matching the reading or the uniform adjudication (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28]).",
+    "term_endings_17": "Repair 17 takes a named director's term ending at an annual meeting (and a footnote number printed against the honorific): 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 17 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
@@ -3134,12 +3135,14 @@
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-5-quoted-nicknames.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-17-term-endings.json"
    ],
    "partial_repair": {
     "quoted_nickname": "5 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
     "still_open": "3 fact block(s) missed (1124, 1423, 1601) and 2 block(s) taken that state no composition fact (790, 1085); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
-    "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28])."
+    "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
+    "term_endings_17": "Repair 17 takes a named director's term ending at an annual meeting (and a footnote number printed against the honorific): 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 17 [shared-with-#28])."
    },
    "selection_problems": {
     "missed": [
@@ -3163,34 +3166,22 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/lumen_technologies-2024-12-31.json) disagrees with the selection the current code makes from the saved filing: 14 block(s) stating a composition fact that no taken block states (565: Departures timeline name: Peter C. Brown (retiring 2025); 566: Departures timeline name: Brown (retiring 2025)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2024-12-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-9-group-headings.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-9-group-headings.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-17-term-endings.json"
    ],
-   "selection_problems": {
-    "missed": [
-     565,
-     566,
-     567,
-     568,
-     569,
-     570,
-     1494,
-     1495,
-     1496,
-     1497,
-     1506
-    ]
-   },
+   "selection_problems": {},
    "partial_repair": {
-    "still_open": "11 fact block(s) missed (565, 566, 567, 568, 569, 570, 1494, 1495, 1496, 1497, 1506) and 0 block(s) taken that state no composition fact (none); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "director_group_heading": "1 director-group heading(s) no longer taken (class, standing for election and term; DIRECTOR_GROUP_HEADING), every one decided not a composition fact by the reading or the uniform adjudication; the names under them stay; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 9 [shared-with-#28])."
+    "director_group_heading": "1 director-group heading(s) no longer taken (class, standing for election and term; DIRECTOR_GROUP_HEADING), every one decided not a composition fact by the reading or the uniform adjudication; the names under them stay; 0 added (docs/evidence/issue47_history/c02-selector-repairs/README.md section 9 [shared-with-#28]).",
+    "term_endings_17": "Repair 17 takes a named director's term ending at an annual meeting (and a footnote number printed against the honorific): 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 17 [shared-with-#28])."
    }
   },
   {
@@ -3662,12 +3653,14 @@
     "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
     "docs/evidence/issue47_history/c02-composition-facts/judgements/lumen_technologies-2025-12-31.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-7-chair-ceo-structure.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-17-term-endings.json"
    ],
    "selection_problems": {},
    "partial_repair": {
     "chair_ceo_structure": "1 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
-    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id."
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
+    "term_endings_17": "Repair 17 takes a named director's term ending at an annual meeting (and a footnote number printed against the honorific): 2 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 17 [shared-with-#28])."
    }
   },
   {

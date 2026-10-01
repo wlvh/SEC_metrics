@@ -422,11 +422,15 @@ _ABBREVIATION = re.compile(
     r"|M\.P\.H|L\.P|N\.A)\.")
 _INITIAL = re.compile(r"\b([A-Z])\.(?=\s|,|$)")
 _SENTENCE = re.compile("(?<=[.;!?])\\s+(?=[A-Z“\"(•●])")
+# A footnote number printed against the honorific that follows it ("6Ms.
+# Boulet’s term ended ..."): without a break the honorific is not a word, its
+# period ends a sentence and the person it names goes unseen.
+_GLUED_MARK = re.compile(r"(?<![\w$.,])(\d{1,2})(?=(?:Mr|Ms|Mrs|Dr|Messrs|Mses)\.\s)")
 
 
 def sentences(text):
     """The block's sentences, abbreviations disarmed first."""
-    t = _ABBREVIATION.sub(lambda m: m.group(1).replace(".", ""), clean(text))
+    t = _ABBREVIATION.sub(lambda m: m.group(1).replace(".", ""), _GLUED_MARK.sub(r"\1 ", clean(text)))
     t = _INITIAL.sub(r"\1", t)
     return [s for s in _SENTENCE.split(t) if s.strip()]
 
@@ -641,6 +645,15 @@ _MEMBERSHIP_CHANGE = (
     re.compile(r"\bceased to (?:be|serve as)\b[^.;]{0,60}?\b(?:directors?|members? of (?:the|our) board)\b", re.I),
     re.compile(r"\bjoined (?:the|our)\s+[^.;]{0,60}?\bcommittee\b", re.I),
     re.compile(r"\bserved (?:as (?:a )?members? )?(?:on|of) (?:the|our) board(?: of directors)? from\b", re.I),
+    # A named director's term ending at an annual meeting: "Mr. Roberts’ term
+    # ended in connection with the election of directors at the 2024 annual
+    # meeting", "The terms of Mr. Brown, ... and Ms. Siegel will end ...". The
+    # term is a person's - a possessive, a pronoun or "terms of" a name - so
+    # a plan's or an option's term is not one.
+    re.compile(r"(?:(?:[’']s?|\b(?:his|her|their))\s+terms?(?:\s+of\s+office)?(?:\s+on\s+(?:the|our)\s+board)?"
+               r"|\bterms?(?:\s+of\s+office)?\s+of\s+(?:mr|ms|mrs|dr|messrs|mses)\b[^.;]{0,120}?)"
+               r"\s+(?:will\s+)?(?:end(?:ed|s)?|expire[sd]?)\b[^.;]{0,80}?\b(?:annual(?:\s+(?:general"
+               r"|shareholders?['’]?|stockholders?['’]?))?\s+meeting|election of directors)\b", re.I),
 )
 _OWNED_CHANGE = re.compile(
     r"\bserved (?:as (?:a )?members? )?(?:on|of) (?P<owner>(?-i:[A-Z])[\w&\-]*)['’]s board(?: of directors)? from\b", re.I)

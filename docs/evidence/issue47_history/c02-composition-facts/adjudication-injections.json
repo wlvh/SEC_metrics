@@ -9,6 +9,10 @@
    "failures": 0,
    "ran": 2
   },
+  "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture": {
+   "failures": 0,
+   "ran": 2
+  },
   "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here": {
    "failures": 0,
    "ran": 1
@@ -113,6 +117,46 @@
    "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
    "caught": true,
    "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_HEADING_COVERS_A_DEPARTURE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "ANOTHER_YEARS_DEPARTURE_COVERS",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_NOMINEES_TERM_IS_A_DEPARTURE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_PRONOUN_TERM_IS_ANYONES",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_POSSESSIVE_NEED_NOT_BE_A_PERSON",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
    "ran": 2
   }
  ],

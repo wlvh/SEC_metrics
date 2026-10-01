@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.canonical import content_hash, sha256_bytes  # noqa: E402
 from vnext.historical_board_composition_v2 import (  # noqa: E402
-    _mentions_person, board_composition_facts, committee_name, person_name, statement_labels)
+    _mentions_person, board_composition_facts, committee_name, person_name, sentences, statement_labels)
 
 # The target year of the synthetic filings: a proxy filed in 2026 reports 2025.
 PERIOD_START = "2025-01-01"
@@ -450,6 +450,35 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
                 "member of our Board since August 2025.")
         self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2025-01-01"))
         self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2026-01-01"))
+
+    def test_a_named_director_s_term_ending_at_a_meeting(self):
+        # Lumen's director-pay footnotes state each departure this way; the
+        # FY2024 one (block 1506) is the only block naming the three leaving
+        # at the 2025 meeting (c02-selector-repairs/ section 17).
+        for text in ("(6)The terms of Mr. Brown, Mr. Clontz and Ms. Siegel will end in connection with the election "
+                     "of directors at the 2025 annual meeting.",
+                     "(7)Mr. Roberts’ term ended in connection with the election of directors at the 2024 annual "
+                     "meeting.",
+                     "(8)Mr. Hanks’ term ended immediately following the 2023 annual shareholders meeting."):
+            with self.subTest(text=text[:40]):
+                self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
+        # A plan's or an option's term is not a person's, a person named
+        # elsewhere in the sentence notwithstanding; nor is every director's.
+        for text in ("(z) “Option Expiration Date” shall mean the date on which the term of a Stock Option ends.",
+                     "The term of the Amended Plan will end at the 2030 annual meeting, as Mr. Smith noted.",
+                     "Each director's term will expire at the next annual meeting of shareholders."):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
+
+    def test_a_footnote_number_printed_against_the_honorific(self):
+        # Lumen FY2021/FY2022 print the mark with no space ("6Ms. Boulet’s
+        # term ended ..."): the honorific is still the person's.
+        text = "6Ms. Boulet’s term ended at the 2021 annual shareholders’ meeting."
+        self.assertEqual(["6 Ms Boulet’s term ended at the 2021 annual shareholders’ meeting."], sentences(text))
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2021-01-01"))
+        # A number that is part of an amount or a year is not a mark.
+        self.assertIn("$15Mr", sentences("Paid $15Mr. Smith.")[0])
+        self.assertIn("2021Mr", sentences("In 2021Mr. Smith joined.")[0])
 
     def test_a_join_is_dated_as_precisely_as_it_is_printed(self):
         # A 52/53-week year starts on its own day (Macy's 2022 year starts

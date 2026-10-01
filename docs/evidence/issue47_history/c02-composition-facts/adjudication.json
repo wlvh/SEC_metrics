@@ -69,6 +69,10 @@
   "DATED_ROLE_CHANGE": {
    "decision": "FACT",
    "reason": "A named director taking up a board leadership role or a committee chair on a date in the target year or after is a change in who holds it; only a block giving the same person's change in that role on the same date states it."
+  },
+  "TERM_END_AT_A_MEETING": {
+   "decision": "FACT",
+   "reason": "A named director's term ending at an annual meeting is a departure from the board; only a block naming the same people leaving at the same meeting states it."
   }
  },
  "decisions": [
@@ -266,6 +270,47 @@
    "redundant_with": []
   },
   {
+   "position": "lumen_technologies:2021-12-31",
+   "i": 1210,
+   "text_sha256": "sha256:e75c992ae1bf29d2d8e4473971043bfc0b469487ad0933832f5f2c14c67234c8",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Allen joined the Board on February 25, 2021.",
+   "reader_redundant_with": [
+    470,
+    2542
+   ],
+   "redundant_with": [
+    2542
+   ],
+   "dates": [
+    "February 25, 2021"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "i": 1211,
+   "text_sha256": "sha256:a608ea37778efb8bdefc70e034d9958ef2992321b65c7efd532a78aceb331168",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Ms. Boulet's term ended at the 2021 annual shareholders' meeting.",
+   "reader_redundant_with": [
+    1204,
+    1205
+   ],
+   "redundant_with": [],
+   "leavers": [
+    {
+     "surnames": [
+      "Boulet"
+     ],
+     "year": "2021"
+    }
+   ]
+  },
+  {
    "position": "lumen_technologies:2022-12-31",
    "i": 954,
    "text_sha256": "sha256:8a635e9412ad66e6ef9ce33055bc16da2d37a8cc44735ed0c5ebd536818341b0",
@@ -273,6 +318,27 @@
    "decision": "NOT",
    "reader_verdict": "MIXED",
    "reader_why": "independent directors' executive sessions are led by the Chairman - among meeting and attendance counts"
+  },
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "i": 1315,
+   "text_sha256": "sha256:2dddf317d8e0d009a2b07ce381b5bc1832b2df75774ae0ee8af1a62ee80b7308",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "leavers": [
+    {
+     "surnames": [
+      "Hanks"
+     ],
+     "year": "2023"
+    }
+   ],
+   "redundant_with": [
+    876,
+    1280
+   ]
   },
   {
    "position": "lumen_technologies:2022-12-31",
@@ -285,6 +351,47 @@
    "dates": [
     "February 25, 2021",
     "January 1, 2020"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2023-12-31",
+   "i": 1644,
+   "text_sha256": "sha256:20525918483d4b278c702d3d3252a3c225f2cd0ad96fba91e32a79815152596b",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "leavers": [
+    {
+     "surnames": [
+      "Roberts"
+     ],
+     "year": "2024"
+    }
+   ],
+   "redundant_with": [
+    684,
+    1656
+   ]
+  },
+  {
+   "position": "lumen_technologies:2023-12-31",
+   "i": 1645,
+   "text_sha256": "sha256:7c982c8c3a17478f98e1b1a25fa9dbec54817b34a1998eee073067b2b98efe9f",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "leavers": [
+    {
+     "surnames": [
+      "Hanks"
+     ],
+     "year": "2023"
+    }
+   ],
+   "redundant_with": [
+    685
    ]
   },
   {
@@ -331,6 +438,74 @@
    "decision": "NOT",
    "reader_verdict": "FACT",
    "reader_why": "director-compensation table group label: the listed directors continue on the Board (vs. Retiring and Former groups)"
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 1506,
+   "text_sha256": "sha256:198201ea77e4408cff2b6a560e43d0c5968eee39a43e054ae341d7ae0be69489",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "terms of Brown, Clontz and Siegel end at the 2025 annual meeting",
+   "reader_redundant_with": [
+    559,
+    565,
+    566,
+    567,
+    568,
+    569,
+    570,
+    575,
+    576,
+    577,
+    1494,
+    1495,
+    1496,
+    1497,
+    1823
+   ],
+   "redundant_with": [],
+   "leavers": [
+    {
+     "surnames": [
+      "Brown",
+      "Clontz",
+      "Siegel"
+     ],
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 1507,
+   "text_sha256": "sha256:7f51edffb5ae623b482376ac62a387b806aaa8a0bb8e7615f3cda19ce743bf36",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Roberts' term ended at the 2024 annual meeting",
+   "reader_redundant_with": [
+    563,
+    564,
+    574,
+    1498,
+    1499,
+    1515,
+    1516
+   ],
+   "redundant_with": [
+    574,
+    1515,
+    1516
+   ],
+   "leavers": [
+    {
+     "surnames": [
+      "Roberts"
+     ],
+     "year": "2024"
+    }
+   ]
   },
   {
    "position": "macys:2022-01-29",
@@ -1415,6 +1590,32 @@
    "decision": "NOT",
    "reader_verdict": "FACT",
    "reader_why": "Director-pay table group label 'Continuing Directors:' over the rows for Allen, Béjar, Capossela, Chilton, Goldberg, Linear, McMillan (continuing on the Board)."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 1370,
+   "text_sha256": "sha256:fda32790f48aa1a704cef2d8830004f0468e8c27c910cfac76b3125feba754b5",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Glenn's and Jones's terms end at the 2026 annual meeting.",
+   "reader_redundant_with": [
+    537,
+    568
+   ],
+   "redundant_with": [
+    537,
+    1724
+   ],
+   "leavers": [
+    {
+     "surnames": [
+      "Glenn",
+      "Jones"
+     ],
+     "year": "2026"
+    }
+   ]
   },
   {
    "position": "macys:2026-01-31",
