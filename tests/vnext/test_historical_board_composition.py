@@ -490,6 +490,28 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:40]):
                 self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
 
+    def test_the_committees_named_together_on_their_charters(self):
+        # Ford's five years and Salesforce's two name every committee in one
+        # sentence about their charters: which committees exist.
+        for text in ("The Company has published on its website the charter of each of the Audit Committee, "
+                     "Compensation, Talent and Culture Committee, Finance Committee, Nominating and Governance "
+                     "Committee, and Sustainability, Innovation and Policy Committee of the Board.",
+                     "The Board has adopted a written charter for the Audit and Finance Committee, the Compensation "
+                     "Committee, and the Nominating and Corporate Governance Committee."):
+            with self.subTest(text=text[:40]):
+                self.assertStates(text, "STANDING_COMMITTEES_STATEMENT")
+        # One committee's charter names no set, however often the sentence
+        # repeats the committee or punctuates its name.
+        for text in ("The Charter of the Audit Committee was reviewed by the Audit Committee and the full audit "
+                     "committee in 2024.",
+                     "In May 2021, the Charter of the CTC Committee was amended to update the name of the CTC Committee "
+                     "from the “Compensation Committee” to the “Compensation, Talent and Culture Committee”.",
+                     "The charter of the Compensation, Talent and Culture Committee is available on our website."):
+            with self.subTest(text=text[:40]):
+                self.assertNotIn("STANDING_COMMITTEES_STATEMENT",
+                                 statement_labels(text, frozenset({"audit", "compensation", "example"}),
+                                                  period_start=START))
+
     def test_a_statement_carrying_a_cross_reference_is_read(self):
         # Ford FY2024 block 1590 is linked only for "as noted on page 9"; every
         # independent director's card and summary-table status cites it.

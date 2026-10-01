@@ -575,6 +575,31 @@ _COMMITTEE_SETUP = (
                r"|ad hoc)\s+)*(?:sub-?committee|committee)\b", re.I),
     re.compile(r"\b(?:a|the)\s+special committee of (?:the|our) board\b", re.I),
 )
+# The board's committees named together, as the sentence on their charters
+# does ("the charter of each of the Audit Committee, ..., and Sustainability,
+# Innovation and Policy Committee of the Board"): which committees exist
+# (c02-composition-facts/adjudicate.py, COMMITTEES_NAMED_AS_A_SET). Three
+# distinct committee names at least; one committee's charter, however often
+# the sentence repeats its name ("The Charter of the Audit Committee provides
+# that a member of the Audit Committee ..."), names no set.
+_CHARTER_LIST = re.compile(r"\bcharters?\s+(?:of|for)\s+(?:each\s+of\s+)?(?:the|our)\b(?P<list>[^.;]*)", re.I)
+_LISTED_COMMITTEE = re.compile(r"(?<![\w])(?!Committee)([A-Z][\w&’'\-]*(?:(?:,\s*|\s+)(?:and\s+)?(?!Committee)"
+                               r"[A-Z][\w&’'\-]*){0,5})\s+Committees?\b")
+
+
+# A rename names one committee by its old and new names ("to update the name of
+# the CTC Committee from the “Compensation Committee” to the “Compensation,
+# Talent and Culture Committee”"): those are not three committees.
+_RENAME = re.compile(r"\bname\b[^.;]{0,80}?\bfrom\b[^.;]{0,120}?\bto\b", re.I)
+
+
+def _committee_set(sentence):
+    """True when a sentence on the committees' charters names three committees or more."""
+    listed = _CHARTER_LIST.search(sentence)
+    return (bool(listed) and not _RENAME.search(sentence)
+            and len({m.group(1) for m in _LISTED_COMMITTEE.finditer(listed.group("list"))}) >= 3)
+
+
 _CHAIR_WORD = r"(?:vice[- ])?chair(?:man|person|woman)?"
 # A chair title that names no board: "Chairman" is the board's chair, but a
 # "Vice Chair" is as often an officer's title ("Vice Chair, Policy"), so it is
@@ -879,7 +904,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
         if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms))
                 and not _MANAGEMENT_MEMBERS.search(sentence)):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
-        if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)):
+        if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):
             labels.add("STANDING_COMMITTEES_STATEMENT")
         owned = _OWNED_LEADERSHIP.search(sentence)
         if (any(p.search(sentence) for p in _LEADERSHIP)

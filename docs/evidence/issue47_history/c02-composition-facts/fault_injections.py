@@ -216,6 +216,12 @@ INJECTIONS = [
      'test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach'),
     ('SPACERS_ARE_FREE_FOR_A_DESIGNATION', '        name = _card_name(blocks, i, i + 1, registrant, passable=passable)', '        name = _card_name(blocks, i, i + 1, registrant, passable=passable, spacers_free=True)',
      'test_a_designation_s_reach_still_counts_every_block'),
+    ('A_CHARTER_SET_IS_NOT_READ', 'if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):', 'if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)):',
+     'test_the_committees_named_together_on_their_charters'),
+    ('COMMITTEE_WORDS_COUNT_AS_COMMITTEES', 'len({m.group(1) for m in _LISTED_COMMITTEE.finditer(listed.group("list"))}) >= 3', 'len(re.findall(r"(?i)\\bcommittees?\\b", listed.group("list"))) >= 3',
+     'test_the_committees_named_together_on_their_charters'),
+    ('A_RENAME_COUNTS_AS_A_SET', '    return (bool(listed) and not _RENAME.search(sentence)\n', '    return (bool(listed)\n',
+     'test_the_committees_named_together_on_their_charters'),
 ]
 
 

@@ -325,3 +325,22 @@
 - Ford 2024 剩 942，即被 `_POLICY` 的 "family members" 挡住的句子。
 - Ford 2023 剩 749。
 - Ford 2021 剩 626、760、3096、4055，其中委员会改名的几块是另一类问题。
+
+## 20. 在章程句里一并点名的委员会，说明设有哪些委员会
+
+**问题。** Ford 2022 往年判读还剩 17 块漏选，其中 14 块（"Standing Board Committees" 行和 Board Committees 矩阵的标题与表头）都把第 474 块列为覆盖块："the charter of each of the Audit Committee, Compensation, Talent and Culture Committee, Finance Committee, Nominating and Governance Committee, and Sustainability, Innovation and Policy Committee of the Board"。统一裁定早已把这一类判为事实（`COMMITTEES_NAMED_AS_A_SET`，即说明设有哪些委员会），选择器却没有对应句式。
+
+**先量后改。** 在 37 份文档里，一句章程句点名三个以上委员会的，共有七块：Ford 五年各一块（2021 第 910、2022 第 474、2023 第 873、2024 第 1079、2025 第 438 块），Salesforce 两年各一块（2025 第 619、2026 第 602 块）。它们都由读者判为事实，或由统一裁定判为事实。只点名一个委员会的章程句不算，例如 Macy's 的 "The charter for the CMD Committee is available …"，或 Ford 的 "The Charter of the Audit Committee provides that …"。
+
+**改动。** 新增规则：章程句里至少有三个**不同的**大写委员会名，就给出 "设有哪些委员会" 的标签。
+- 第一版数的是 "committee" 这个词。"The Charter of the Audit Committee provides that a member of the Audit Committee … audit committee …" 有三次这个词，却只说了一个委员会；当时的反例能通过，只是因为 "may not" 碰巧触发了政策否决。改为数不同的名字后，反例换成一句不含政策词的句子。
+- 第二版又把 Ford 2021 第 3096 块当成一组委员会。那一句是改名："update the name of the CTC Committee from the “Compensation Committee” to the “Compensation, Talent and Culture Committee”"，一个委员会被叫了三种名字。读者判它为事实，理由是改名，不是"设有哪些委员会"。现在含 "name … from … to" 的句子不算一组委员会，改名在第 21 节单独处理。
+
+**用例与注错。** `test_the_committees_named_together_on_their_charters`。注错：
+- `A_CHARTER_SET_IS_NOT_READ`；
+- `COMMITTEE_WORDS_COUNT_AS_COMMITTEES`（数词而不数名字）；
+- `A_RENAME_COUNTS_AS_A_SET`。
+
+共 75/75。
+
+**量测**（`measured-20-committee-set.json`）：新增的正好是上面七块；漏选 69→55，误选 18 不变，不一致位置 22 不变。Ford 2022 只剩 406（"family member" 句）、1255（Farley 卡片姓名）、4535（股东提案人的原话）。最新年度两处：Ford 2025 新增 438，原值已覆盖这一事实，值会变；Salesforce 2026 新增 602，这个坐标本来就因第 14、15 节撤回，重算时一并计入。
