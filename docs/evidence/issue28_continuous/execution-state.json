@@ -846,6 +846,26 @@
   },
   "subagent_register": [
     {
+      "task_name": "audit_c02paramount_2c861c8",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_c02_paramount_peer4d_delta",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount54-content/conclusion.md",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-paramount-update.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-paramount-cold.json",
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-known-source-check.json",
+        "catalog/r6/C02_board_disclosures_v3.md",
+        "/private/tmp/issue28-c02-peer4d-paramount-20261002/metrics/C02/"
+      ],
+      "patch_sha": "2c861c89b019fb5963e15561f150a0a784a006c0",
+      "spawned_at": "2026-10-01T18:03:35Z",
+      "ended_at": "2026-10-01T18:12:52Z",
+      "tool_calls": 42,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount-peer4d-content/conclusion.md",
+      "message_count": 1,
+      "verdict": "PASS_INCREMENTAL_WITHHELD_PENDING_BLOCK168_BUSINESS_SCOPE"
+    },
+    {
       "task_name": "audit_c02salesforce_0bc38d0",
       "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
       "module": "ordinary_c02_salesforce_peer4d_delta",
@@ -8537,6 +8557,8 @@
         "ten_complete_candidate_evidence": "PASS_10_OF_10_SELECTED_ORIGINAL_BLOCKS_48_TO_101_GROUPS_10_TO_39",
         "known_source_delta": "PARAMOUNT_ADDS_9_DATED_JOIN_BLOCKS_SALESFORCE_DROPS_4300_ADDS_919_933",
         "paramount_new_private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818",
+        "paramount_incremental_content_review": "PASS_OLD54_PLUS_9_OWN_BOARD_JOINS_10_GROUPS_BLOCK168_SCOPE_PENDING_NO_CREDIT",
+        "paramount_incremental_content_review_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount-peer4d-content/conclusion.md",
         "paramount_new_private_run_id": "run:ordinary-integrated:39bef01913109baae8629489b37a097a802be8c3189748f7bf0fa87d597972d6",
         "salesforce_new_private_result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
         "salesforce_limited_content_review": "PASS_LIMITED_64_ORIGINAL_BLOCKS_36_GROUPS_OLD_4300_DROPPED_919_933_ADDED_602_COVERED_NO_390",
