@@ -187,6 +187,9 @@ INJECTIONS = [
     ('A_MONTH_ALONE_IS_PLACED_AT_ITS_START', '        return (year, number) < (start.year, start.month)',
      '        return (year, number) <= (start.year, start.month)',
      "test_a_join_is_dated_as_precisely_as_it_is_printed"),
+    ('A_NOUN_FORM_JOIN_IS_NOT_DATED',
+     '    r"|(?:appointment|election) to (?:the|our) board(?: of directors)?\\s+(?:on|in|effective))\\s+(?:the\\s+)?"',
+     '    r")\\s+(?:the\\s+)?"', "test_a_join_written_as_a_noun_is_dated_too"),
     ('ANY_TARGET_YEAR_IS_ACCEPTED', '        raise ValueError("C02_COMPOSITION_PERIOD_START_INVALID:" + repr(period_start)) from None',
      '        start = dt.date(1900, 1, 1)', "test_the_target_year_is_a_date_and_the_proposal_names_it"),
 ]

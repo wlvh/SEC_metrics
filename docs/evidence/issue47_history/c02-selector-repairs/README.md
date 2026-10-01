@@ -195,3 +195,20 @@
 **这次顺带修正了量测工具。** `measure.py` 的 `base_matches_route` 拿 `--base` 的选择去比缓存里路线当时的选择。缓存是在更早的选择器版本上建的，所以第 1–12 节的量测文件里，有 26 个位置这一项是 false，退出码因此是 1。原因是比较对象过时，不是规则不符。现在缓存记下建它时选择器的哈希：与 `--base` 相同才比较，否则记为 null；只有真比出差别时，退出码才是 1。
 
 **不主张。** 选择器识别加入日期的句式，与统一裁定 JOIN 规则的句式写法相同。所以在这些句式上两者一致是写法相同造成的，不是独立验证；主要依据仍是读者的原判。
+
+## 14. 写成名词的加入日期
+
+**问题。** #28 在 `9f8b855f` 核对它自己 Salesforce FY2026 的 C02 结果，发现第 4300 块被取了。这一块讲的是关联方雇员，唯一与本董事会有关的话是"prior to Mr. Munoz's appointment to the Board in January 2022"。对 FY2026 来说，这是年度之前的加入，属于换了说法的任期（JOIN_BEFORE_THE_YEAR）。本方已接受的 Salesforce FY2026 值发布的是同样 63 块，也带着这一块。
+
+**成因。** 统一裁定的 JOIN 句式和第 13 节的 `_DATED_JOIN` 只认动词写法（"was appointed to the Board in …"），没有认名词写法。所以统一裁定从没判到 4300，读者的"混合（含事实）"就一直成立；选择器则按"X’s appointment to the Board"把它当成员变动取。
+
+**改动。** 选择器与统一裁定都补上同一个名词写法："appointment/election to the Board in/on/effective <日期>"。统一裁定重跑后只多一条：Salesforce 2026 第 4300 块，非事实（`../c02-composition-facts/adjudication.json`）。
+
+**用例与注错。** `test_a_join_written_as_a_noun_is_dated_too` 覆盖四种情形：原句在 FY2026 不取、在 2021 年度取；薪酬句里的年度内名词加入取；不带日期的名词照旧取。注错 `A_NOUN_FORM_JOIN_IS_NOT_DATED` 由这条用例抓到；注错 62/62，对照 60 例。
+
+**量测**（`measured-14-noun-form-joins.json`，用的是新的统一裁定）：只有 Salesforce 2026 一个位置移动，其余 36 个位置一块不动。
+- 移走 4300。
+- 新增 919："upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk each received a prorated RSU grant"，是年度内的加入，读者判为含事实。
+- 误选 19→18，不一致位置 24→23。
+
+**还没修的。** #28 指出的另一处是第 933 块："On March 21, 2025, Mr. Donald assumed the role of Lead Independent Director, and Mr. Roos assumed the role of Chair of the Governance Committee"。它没被取，读者又把它算作已被现任主席名单（773）、Donald 的月份（665）和费用季度（964）覆盖。这些块都没有说 Roos 何时接任，所以量测仍报这个位置"一致"——这正是 #28 指出的错。坐标继续撤回，这一处留给下一节。

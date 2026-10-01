@@ -3739,13 +3739,19 @@
     "register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-content/conclusion.md"
    },
-   "repair_state": "SELECTOR_AND_ADJUDICATION_REPAIR_PENDING",
+   "repair_state": "PARTLY_REPAIRED_COVERAGE_CLAIM_OPEN",
    "why_not_repaired_yet": "Both gaps are classes, not this position: the noun-form join goes into the JOIN rule and the reader's dated-join pattern together, and a dated role change needs a rule for what covers it, applied to every reading. Until the adjudication carries them, the reading machinery still reports this position as agreeing, so this entry carries no selection_problems.",
    "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
     "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-14-noun-form-joins.json",
     "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
    ],
-   "original_record_retained": true
+   "original_record_retained": true,
+   "partial_repair": {
+    "noun_form_joins": "Block 4300 is no longer taken: the JOIN rule and the reader's dated-join pattern now read the noun form, and the adjudication decides 4300 JOIN_BEFORE_THE_YEAR (NOT). The same change takes block 919 ('upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk ...'), a join in the year the reader judged a fact (measured-14-noun-form-joins.json; docs/evidence/issue47_history/c02-selector-repairs/README.md section 14 [shared-with-#28]).",
+    "still_open": "Block 933 (Mr. Roos assumed the Governance Committee chair on March 21, 2025) is still not taken, and the reading's coverage claim for it still stands in the measuring, so the machinery reports this position as agreeing; that is the claim #28 showed wrong. The coordinate stays withdrawn."
+   }
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

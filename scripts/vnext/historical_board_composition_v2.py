@@ -680,7 +680,10 @@ _DATED_JOIN = re.compile(
     r"|(?:appointed|elected|named)\b[^.;]{0,80}?\b(?:a member of|to) (?:the|our) board(?: of directors)?\s+"
     r"(?:on|in|effective|at the)"
     r"|first elected to (?:the|our) board at the"
-    r"|since joining (?:the|our) board(?: of directors)? in)\s+(?:the\s+)?"
+    r"|since joining (?:the|our) board(?: of directors)? in"
+    # The same join written as a noun: "prior to Mr. Munoz's appointment to
+    # the Board in January 2022", "following his election to the Board on ...".
+    r"|(?:appointment|election) to (?:the|our) board(?: of directors)?\s+(?:on|in|effective))\s+(?:the\s+)?"
     r"(?P<date>(?:(?:" + _MONTHS + r")\s+(?:\d{1,2},\s+)?)?(?:19|20)\d\d)", re.I)
 _MONTH_NUMBERS = {name: number for number, name in enumerate(_MONTHS.split("|"), start=1)}
 

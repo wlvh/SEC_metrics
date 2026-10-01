@@ -55,7 +55,7 @@
 | `BOARD_TASK_FORCE` | 事实 | 由具名董事组成的董事会工作组及其标题：委员会设置与成员 |
 | `NOMINEES_ARE_SITTING_DIRECTORS` | 事实 | "Each nominee is currently a member of the Board"：候选名单就是现任董事会 |
 | `COMMITTEES_NAMED_AS_A_SET` | 事实 | 把三个以上董事会委员会一并列出的句子（如章程句）：委员会设置。由判读里写出全部这些委员会的块覆盖 |
-| `JOIN_BEFORE_THE_YEAR` / `JOIN_IN_THE_YEAR` | 非事实 / 事实 | 写明某人何时加入董事会的句子。目标年度之前的日期是换了说法的任期，与 `CARD_TENURE_FIELD` 同；目标年度及以后的是期间内的成员变动。同一块里还写了别的构成事实（主席、委员会、离任）的留给判读 |
+| `JOIN_BEFORE_THE_YEAR` / `JOIN_IN_THE_YEAR` | 非事实 / 事实 | 写明某人何时加入董事会的句子。目标年度之前的日期是换了说法的任期，与 `CARD_TENURE_FIELD` 同；目标年度及以后的是期间内的成员变动。同一块里还写了别的构成事实（主席、委员会、离任）的留给判读。名词写法（"prior to Mr. Munoz's appointment to the Board in January 2022"）原先没有被句式识别，是 #28 对 Salesforce FY2026 的内容核对发现的；补上后多一条裁定（Salesforce 2026 第 4300 块，非事实） |
 
 **两处是执行者的取舍，不是多数读者的意见**：`PRESIDING_DUTY` 与多数读者一致（9 比 5），`NOMINEES_ARE_SITTING_DIRECTORS` 与多数相反（Macy's 五份判读里 1 份取、4 份没取），理由是非分级董事会全员改选，候选名单即董事会，与每位读者都取了的"非分级董事会候选人数即规模"同理。
 

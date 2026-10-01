@@ -409,6 +409,23 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
             "Ms. Lee joined the board of directors of Acme Holdings in March 2025.", "2025-01-01"))
 
+    def test_a_join_written_as_a_noun_is_dated_too(self):
+        # Salesforce's related-party paragraph dates a director's appointment
+        # as a noun; #28's content check found the FY2026 selection took it as
+        # a change (c02-composition-facts/adjudicate.py, JOIN_BEFORE_THE_YEAR).
+        tenure = ("Oscar Munoz’s daughter, Kellie Munoz, is a non-executive employee of Salesforce who joined the "
+                  "Company in January 2020, prior to Mr. Munoz’s appointment to the Board in January 2022, and is "
+                  "currently a Senior Director.")
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(tenure, "2025-02-01"))
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(tenure, "2021-02-01"))
+        # The same noun in the year is a change, a pay sentence included.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "Upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk each received a prorated "
+            "RSU grant.", "2025-02-01"))
+        # Undated, the noun is still a change, as before.
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(
+            "The Board approved Ms. Chang’s appointment to the Board.", "2025-02-01"))
+
     def test_a_join_is_dated_as_precisely_as_it_is_printed(self):
         # A 52/53-week year starts on its own day (Macy's 2022 year starts
         # January 30). A printed day settles the side; a month alone does

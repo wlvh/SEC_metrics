@@ -97,7 +97,8 @@ COMMITTEES_NAMED_AS_A_SET (FACT)
 JOIN_BEFORE_THE_YEAR (NOT) / JOIN_IN_THE_YEAR (FACT)
     A sentence giving when a director joined the board ("has served as a
     member of our Board since March 2011", "was appointed a member of the
-    Board in September 2017", "joined our Board on February 25, 2021"). A join
+    Board in September 2017", "joined our Board on February 25, 2021", "prior
+    to Mr. Munoz's appointment to the Board in January 2022"). A join
     dated in the target year or after it is a change in who sits on the board
     in the period the filing reports; a join dated earlier is tenure in other
     words, as CARD_TENURE_FIELD is. A block whose other sentences state
@@ -241,7 +242,9 @@ JOIN = re.compile(
     r"|(?:appointed|elected|named)\b[^.;]{0,80}?\b(?:a member of|to) (?:the|our) board(?: of directors)?\s+"
     r"(?:on|in|effective|at the)"
     r"|first elected to (?:the|our) board at the"
-    r"|since joining (?:the|our) board(?: of directors)? in)\s+(?:the\s+)?" + _DATE, re.I)
+    r"|since joining (?:the|our) board(?: of directors)? in"
+    r"|(?:appointment|election) to (?:the|our) board(?: of directors)?\s+(?:on|in|effective))\s+(?:the\s+)?" + _DATE,
+    re.I)
 OTHER_COMPOSITION = re.compile(r"\b(?:chair(?:man|person|woman)?|vice[- ]chair\w*|committee|independen\w*|lead "
                                r"(?:independent )?director|presiding|retir\w*|resign\w*|step(?:ped|s)? down"
                                r"|not stand|not be standing|cease\w*|depart\w*)\b", re.I)
