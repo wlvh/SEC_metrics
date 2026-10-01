@@ -81,6 +81,13 @@ GOVERNANCE = EVIDENCE + "governance-read.json"
 C03_ACROSS_PROXIES = (EVIDENCE + "c03-across-proxies-read-batch.json",
                       EVIDENCE + "c03-across-proxies-read-round3.json")
 TEXT = EVIDENCE + "d02-both-directions-read.json"
+# D02's older years, read in both directions by tools/read_d02_excerpts.py from
+# packets built off the saved filings (excerpts, blocks skipped inside Item 3
+# and the incorporated scopes, the contingencies notes Item 3 does not
+# incorporate, and the headings naming the definition's words); one file per
+# closure its positions compare.
+D02_EXCERPT_READINGS = (EVIDENCE + "d02-older-years-read.json",
+                        EVIDENCE + "d02-older-years-read-round3.json")
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
 # imports none of the route's text modules: one reading for the 30-metric
 # batch's results, one for the three results the underline repair produced and
@@ -120,7 +127,8 @@ DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 DEBT_TO_EQUITY_BATCH = EVIDENCE + "debt-to-equity-read-batch.json"
 DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH)
 READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
-            TEXT, *D01_READINGS, *RPO_READINGS, COMPENSATION, *DEBT_TO_EQUITY_READINGS,
+            TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
+            *DEBT_TO_EQUITY_READINGS,
             C02_COMPOSITION,
             *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES)
 # The company periods the readings cover are data, not code: tools/ is scanned
@@ -401,6 +409,16 @@ def positions(*, repo_root: Path, path: str, body):
                 reading=path, label=label, slot=case, company_id=case["company_id"],
                 metric_id="D02", period_end=case["period_end"],
                 published=case["value_sha256"], verdict="MATCH"))
+    elif path in D02_EXCERPT_READINGS:
+        # The value is the whole payload, named by digest; the filing named is
+        # the annual report whose blocks were judged. A position the reading
+        # found wrong stays in the reading as DIFFERS and grants nothing.
+        for label, case in sorted(body["per_position"].items()):
+            found.append(_position(
+                reading=path, label=label, slot=case, company_id=case["company_id"],
+                metric_id="D02", period_end=case["period_end"],
+                published=case["value_sha256"], verdict=case["verdict"],
+                filings=[case["accession"]]))
     elif path in D01_READINGS:
         for label, case in sorted(body["per_position"].items()):
             if not case.get("value_sha256"):

@@ -1686,7 +1686,7 @@
    "root_cause": "Same as D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES: the _LEGAL keyword standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks outside the incorporated note.",
    "scope_measured": "All sixteen excerpts and every untaken block inside Item 3 and the incorporated caption (d02-content-read/italic-note-labels.json census).",
    "found_by": "a both-directions reading of the FY2024 set, derived from the saved filing through the route's own text input",
-   "repair_state": "LABEL_HALF_REPAIRED_KEYWORD_PROXY_HALF_AWAITS_ITS_DECISION",
+   "repair_state": "RETRACTED_KEYWORD_HALF_AND_REPAIRED_LABEL_HALF_RESULT_ACCEPTED",
    "why_not_repaired_yet": "The keyword proxy is the registered decision in d02-content-read/keyword-proxy-decision.json; this filing adds a sixth instance and no new criterion.",
    "evidence": [
     "docs/evidence/issue47_history/d02-content-read/italic-note-labels.json"
@@ -1695,7 +1695,18 @@
     "rule": "docs/evidence/issue47_history/d02-older-years/adjudication.json, rule SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE",
     "block_2010": "Retracted. The paragraph states the stockholder-litigation settlement amounts of 2022 and 2023 - specific legal matters of the registrant with their amounts - so it is litigation disclosure. The independent older-year reader of this position's packet judged it DISCLOSURE by its content; the entry had judged it by its topic, and it was the only block the entry held against the set.",
     "effect": "With the keyword half retracted and the label half repaired, nothing this entry recorded stands. It still withdraws the coordinate until its 'released' block names a result that a reading accepted, under the version that result was produced in."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd",
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "run_id": "run:historical-period:19ef10fea9c82855eb1d1bd3791a998233f38a575f26d6b36c2cca117576fb7e",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json (paramount-2024: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/judgements/paramount_skydance_paramount_global-2024-12-31.json",
+     "reading_sha256": "sha256:7ba29a02d8e90127c44d0c001a9e2154663c9d70ad33e8aca4efd43c96cdfebe",
+     "what_this_releases": "this entry, for this result under this version only: the 41-period batch's result, whose eighteen excerpts the independent older-year reading accepted in both directions (block 2010 as litigation disclosure under SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE, and the italic labels 2877 and 2885 admitted by the label repair). Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "defect_id": "B03_FORD_2025_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION",
@@ -2035,6 +2046,690 @@
      "what_this_releases": "This result and no other: the value the 41-period batch published, with the halves as lines of their own, and any other result at this coordinate stays withdrawn.",
      "what_it_does_not_assert": "that any full batch has re-run under this version."
     }
+   ]
+  },
+  {
+   "company_id": "lumen_technologies",
+   "metric_id": "D02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "defect_id": "D02_LUMEN_2024_KEYWORD_PROXY",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 1 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 1350,
+     "scope": "ITEM_8",
+     "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+     "cause": "KEYWORD_PROXY"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2024-12-31.json",
+    "reading_sha256": "sha256:bd3b306598f5b42ca082b6892a0d7dec6b227ae9ab5a9e26b58ae36694894010",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:49c7854f11ed4c694220df522c110e4762b697e44b37c1bb94558c310e469218",
+     "run_id": "run:historical-period:1a3705d4914a26b577bb301dabe227b55744ac3680606d16884a2f1040e1fdd8"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2024-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "macys",
+   "metric_id": "D02",
+   "period_end": "2022-01-29",
+   "result_id": null,
+   "defect_id": "D02_MACYS_2022_ITEM_EIGHT_POINTER_PAGE",
+   "same_cause_as": [],
+   "summary": "The older-year reading in both directions found 1 wrong block(s): Item 8 is a pointer page; the financial statements are printed after the form's items and the keyword proxy reads Item 8 only, so the self-insurance claims accrual the later years' values carry is never reached. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "OUTSIDE",
+     "block_index": 2950,
+     "scope": null,
+     "text": "The Company, through its insurance subsidiary, is self-insured for workers compensation and general liability claims up to certain maximum liability amounts. Although the amounts accrued are actuarially determined based on analysis of historical trends of losses, settlements, litigation costs and other factors, the amounts the Company will ultimately disburse could differ from such accrued amounts.",
+     "verdict": "WRONGLY_SKIPPED",
+     "why": "the registrant's self-insurance accrual for its workers' compensation and general liability claims, a loss-contingency accrual arising from claims; the value lacks it because this filing's Item 8 is a pointer page and the statements printed after it are never read",
+     "cause": "ITEM_EIGHT_POINTER_PAGE",
+     "reader_verdict": "CORRECTLY_SKIPPED",
+     "adjudication_rule": "CLAIMS_ACCRUAL_IS_DISCLOSURE"
+    }
+   ],
+   "causes": {
+    "ITEM_EIGHT_POINTER_PAGE": {
+     "text": "Item 8 is a pointer page; the financial statements are printed after the form's items and the keyword proxy reads Item 8 only, so the self-insurance claims accrual the later years' values carry is never reached.",
+     "repair_state": "FOUND_BY_READING_REPAIR_BEING_MEASURED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/macys-2022-01-29.json",
+    "reading_sha256": "sha256:3daf21e8e1f3665f0022fbca7d000e46b242ad6be79da8dfd78365a031a5d84b",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:a5f2e698c7f99d3468f58134791e9d7c26f4831a7b6381a01682d886754a346e",
+     "run_id": "run:historical-period:34f88343d29be6b4f1d9f13452ce9c6dca54e1584a92d836c331c159afa341c9"
+    }
+   },
+   "repair_state": "FOUND_BY_READING_REPAIR_BEING_MEASURED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/macys-2022-01-29.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "defect_id": "D02_PFIZER_2022_KEYWORD_PROXY_AND_PAGE_FOOTER_AS_EXCERPT",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 9 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.; A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 1980,
+     "scope": "ITEM_8",
+     "text": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and their effects cannot be determined with precision, our estimates and assumptions may prove to be incomplete or inaccurate, or unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions. We are subject to risks and uncertainties that may cause actual results to differ from estimated amounts, such as changes in the healthcare environment, competition, litigation, legislation and regulations. We regularly evaluate our estimates and assumptions using historical experience and expectations about the future. We adjust our estimates and assumptions when facts and circumstances indicate the need for change.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "critical-estimates boilerplate; litigation only in a list of risks",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2041,
+     "scope": "ITEM_8",
+     "text": "In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory and legal environments, country and political risk, and other relevant current and future forecasted macroeconomic factors. These credit risk indicators are monitored on a quarterly basis to determine whether there have been any changes in the economic environment that would indicate the established reserve percentages should be adjusted, and are considered on a regional basis to reflect more geographic-specific metrics. Additionally, write-offs and recoveries of customer receivables are tracked against collections on a quarterly basis to determine whether the reserve percentages remain appropriate. When management becomes aware of certain customer-specific factors that impact credit risk, specific allowances for these known troubled accounts are recorded. Trade accounts receivable are written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "receivables write-off policy 'including litigation'",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2555,
+     "scope": "ITEM_8",
+     "text": "Any settlements or statutes of limitations expirations could result in a significant decrease in our uncertain tax positions. We estimate that it is reasonably possible that within the next 12 months, our gross unrecognized tax benefits, exclusive of interest, could decrease by as much as $100 million, as a result of settlements with taxing authorities or the expiration of the statutes of limitations. Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax benefits may not be representative of actual outcomes, and variation from such estimates could materially affect our financial statements in the period of settlement or when the statutes of limitations expire, as we treat these events as discrete items in the period of resolution. Finalizing audits with the relevant taxing authorities can include formal administrative and legal proceedings, and, as a result, it is difficult to estimate the timing and range of possible changes related to our uncertain tax positions, and such changes could be significant.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "uncertain tax positions; legal proceedings with tax authorities incidental",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 3448,
+     "scope": "NOTE_16_SUB_A",
+     "text": "Pfizer Inc.2022 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Form 10-K page footer",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 3464,
+     "scope": "NOTE_16_SUB_A",
+     "text": "Pfizer Inc.2022 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Form 10-K page footer",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 3490,
+     "scope": "NOTE_16_SUB_A",
+     "text": "Pfizer Inc.2022 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Form 10-K page footer",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 3510,
+     "scope": "NOTE_16_SUB_A",
+     "text": "Pfizer Inc.2022 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Form 10-K page footer",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 3532,
+     "scope": "NOTE_16_SUB_A",
+     "text": "Pfizer Inc.2022 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Form 10-K page footer",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 3555,
+     "scope": "NOTE_16_SUB_A",
+     "text": "Pfizer Inc.2022 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Form 10-K page footer",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    },
+    "PAGE_FOOTER_AS_EXCERPT": {
+     "text": "A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour.",
+     "repair": "historical_text_results.page_structure_furniture: a block standing at the same offset from a page number on three pages or more.",
+     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2022-12-31.json",
+    "reading_sha256": "sha256:dacc20f2a798a3af71d4813d79d596161aaea41bdec81b3fcfdc6508a475ff60",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:459dd835fdca47dadf32c55d047a5bf8ef75d8f9da4ee0f7532a3d6c4702f2ef",
+     "run_id": "run:historical-period:9c61cae02a3e613f24a6ad1433ddba74cfc92758001a676a9a9d5cc8ded0caa9"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2022-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "defect_id": "D02_PFIZER_2023_KEYWORD_PROXY_AND_PAGE_FOOTER_AS_EXCERPT",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 4 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.; A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 946,
+     "scope": "ITEM_3",
+     "text": "2023 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "page footer piece '2023 Form 10-K'",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2295,
+     "scope": "ITEM_8",
+     "text": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and their effects cannot be determined with precision, our estimates and assumptions may prove to be incomplete or inaccurate, or unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions. We are subject to risks and uncertainties that may cause actual results to differ from estimated amounts, such as changes in the healthcare environment, competition, litigation, legislation and regulations. We regularly evaluate our estimates and assumptions using historical experience and expectations about the future. We adjust our estimates and assumptions when facts and circumstances indicate the need for change.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "estimates boilerplate; litigation only in a list of risks",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2362,
+     "scope": "ITEM_8",
+     "text": "on a quarterly basis to determine whether the reserve percentages remain appropriate. When management becomes aware of certain customer-specific factors that impact credit risk, specific allowances for these known troubled accounts are recorded. Trade accounts receivable are written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "receivables write-off policy 'including litigation'",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2961,
+     "scope": "ITEM_8",
+     "text": "Any settlements or statutes of limitations expirations could result in a significant decrease in our uncertain tax positions. We estimate that it is reasonably possible that within the next 12 months, our gross unrecognized tax benefits, exclusive of interest, could decrease by as much as $100 million, as a result of settlements with taxing authorities or the expiration of the statutes of limitations. Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax benefits may not be representative of actual outcomes, and variation from such estimates could materially affect our financial statements in the period of settlement or when the statutes of limitations expire, as we treat these events as discrete items in the period of resolution. Finalizing audits with the relevant taxing authorities can include formal administrative and legal proceedings, and, as a result, it is difficult to estimate the timing and range of possible changes related to our uncertain tax positions, and such changes could be significant.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "uncertain tax positions; legal proceedings with tax authorities incidental",
+     "cause": "KEYWORD_PROXY"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    },
+    "PAGE_FOOTER_AS_EXCERPT": {
+     "text": "A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour.",
+     "repair": "historical_text_results.page_structure_furniture: a block standing at the same offset from a page number on three pages or more.",
+     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2023-12-31.json",
+    "reading_sha256": "sha256:5a5c905753437abc7441b18d47eb86ab54b5543b656de5b972db0b08c5318614",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:51191b2faa909acbd03670273e8c7b1a5a9ba5863fc49e412722fef8f1db7e06",
+     "run_id": "run:historical-period:91efcf5345a70e4026bd1eea683b805c42e3e9a1cefdb473f74ee99869ef1390"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2023-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "southwest_airlines",
+   "metric_id": "D02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "defect_id": "D02_SOUTHWEST_2023_ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING",
+   "same_cause_as": [],
+   "summary": "The older-year reading in both directions found 1 wrong block(s): 'Item 4. Mine Safety Disclosures' is the last line of a page, followed by the page number; the frozen heading scan reads that as a contents row, so Item 3 runs on and Item 4's answer 'Not applicable.' is an excerpt. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 770,
+     "scope": "ITEM_3",
+     "text": "Not applicable.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Item 4 Mine Safety answer after the Item 4 heading, not Item 3 text",
+     "cause": "ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING"
+    }
+   ],
+   "causes": {
+    "ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING": {
+     "text": "'Item 4. Mine Safety Disclosures' is the last line of a page, followed by the page number; the frozen heading scan reads that as a contents row, so Item 3 runs on and Item 4's answer 'Not applicable.' is an excerpt.",
+     "repair": "historical_text_results.page_bottom_item_headings: the frozen scan asked again with page numbers blanked.",
+     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/southwest_airlines-2023-12-31.json",
+    "reading_sha256": "sha256:d8249eb4f770632d575dbd140cf66d74235cb6760da28c06ab4c1f98f79287c0",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+     "result_id": "sha256:2c292990046f25e56a45a2cd5fb203b806d290807bf89d998fc89b88ddb61233",
+     "run_id": "run:historical-period:0e37b69d58a4ae1cbd5c492e4ff63f1e1b2ea883a5637985daa562f03bb9462a"
+    }
+   },
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/southwest_airlines-2023-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "lumen_technologies",
+   "metric_id": "D02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "defect_id": "D02_LUMEN_2021_KEYWORD_PROXY_AND_WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 11 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.; Item 3 incorporates a note's 'Pending Matters' and 'Other Proceedings and Disputes' subheadings; the note calls them 'Principal Proceedings' and 'Other Proceedings, Disputes and Contingencies'. With no quoted caption found the route took the whole note, and the value carries the right-of-way table and the purchase commitments the filing did not incorporate. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 1148,
+     "scope": "ITEM_8",
+     "text": "•Selling, general and administrative expenses are corporate overhead and other operating expenses. These expenses include: employee-related expenses (such as salaries, wages, internal commissions, benefits and professional fees) directly attributable to selling products or services and employee-related expenses for administrative functions; marketing and advertising; property and other operating taxes and fees; external commissions; litigation expenses associated with general matters; bad debt expense; and other selling, general and administrative expenses.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "SG&A definition; litigation expense only listed as a cost category",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 1183,
+     "scope": "ITEM_8",
+     "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2564,
+     "scope": "NOTE_18",
+     "text": "Right-of-Way",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Right-of-Way subheading: commitments, outside the two subheadings Item 3 incorporates",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2565,
+     "scope": "NOTE_18",
+     "text": "At December 31, 2021, our future rental commitments and Right-of-Way agreements were as follows:",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "introduces the right-of-way commitment table; not incorporated, not a legal matter",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2566,
+     "scope": "NOTE_18",
+     "text": "Right-of-Way Agreements",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "right-of-way commitment table header",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2567,
+     "scope": "NOTE_18",
+     "text": "(Dollars in millions)",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "commitment table unit caption",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2573,
+     "scope": "NOTE_18",
+     "text": "2027 and thereafter962",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "right-of-way commitment table row",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2574,
+     "scope": "NOTE_18",
+     "text": "Total future minimum payments$1,536",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "right-of-way commitment table total",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2576,
+     "scope": "NOTE_18",
+     "text": "Purchase Commitments",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "Purchase Commitments subheading, outside the subheadings Item 3 incorporates",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2577,
+     "scope": "NOTE_18",
+     "text": "We have several commitments primarily for marketing activities and support services from a variety of vendors to be used in the ordinary course of business totaling $1.1 billion at December 31, 2021. Of this amount, we expect to purchase $414 million in 2022, $386 million in 2023 through 2024, $91 million in 2025 through 2026 and $188 million in 2027 and thereafter. These amounts do not represent our entire anticipated purchases in the future, but represent only those items for which we were contractually committed as of December 31, 2021.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "purchase commitment amounts, not a legal matter",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2578,
+     "scope": "NOTE_18",
+     "text": "Amounts included in the Right-of-Way table and in the purchase commitments disclosed above are inclusive of contractual obligations related to our Latin American and ILEC businesses to be divested.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "commitment amounts include businesses to be divested; not legal",
+     "cause": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    },
+    "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY": {
+     "text": "Item 3 incorporates a note's 'Pending Matters' and 'Other Proceedings and Disputes' subheadings; the note calls them 'Principal Proceedings' and 'Other Proceedings, Disputes and Contingencies'. With no quoted caption found the route took the whole note, and the value carries the right-of-way table and the purchase commitments the filing did not incorporate.",
+     "repair": "historical_text_results.unincorporable_captions: a note limited by captions it does not carry is not taken; the coverage records UNRESOLVED_INCORPORATED_CAPTION and the position stops as navigation incomplete.",
+     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read-round3.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2021-12-31.json",
+    "reading_sha256": "sha256:57c6f65108c7ba7369581af6142e903649e900cda482cfb8a76e5fe5a5989f3b",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:55746ec5ce5ab3b21a4b8fccf712ed8536233b643d8705da94386b3f6116ad96",
+     "run_id": "run:historical-period:8a21db6794f429d9a343e7356fa86e013e4f002a18861efa488a8825deec71ec"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2021-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "lumen_technologies",
+   "metric_id": "D02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "defect_id": "D02_LUMEN_2022_KEYWORD_PROXY",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 2 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 1188,
+     "scope": "ITEM_8",
+     "text": "•Selling, general and administrative expenses are corporate overhead and other operating expenses. These expenses include: employee-related expenses (such as salaries, wages, internal commissions, benefits and professional fees) directly attributable to selling products or services and employee-related expenses for administrative functions; marketing and advertising; property and other operating taxes and fees; external commissions; litigation expenses associated with general matters; bad debt expense; and other selling, general and administrative expenses.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "SG&A definition; litigation expense only listed as a cost category",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 1223,
+     "scope": "ITEM_8",
+     "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+     "cause": "KEYWORD_PROXY"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read-round3.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2022-12-31.json",
+    "reading_sha256": "sha256:95b37d8ef462c2bd701bd8cd650c7d566983389b7db72ef33d4fc2fcf91838ce",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:a5ff227867630edc4d6ae68ea1bba20d0bcb6100041ef76af9388b2a17ecd47a",
+     "run_id": "run:historical-period:0ff1b6c826ff267843b018ba0ea90382d31dc00dc251986c3329611681d473d1"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2022-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "lumen_technologies",
+   "metric_id": "D02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "defect_id": "D02_LUMEN_2023_KEYWORD_PROXY",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 2 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 1219,
+     "scope": "ITEM_8",
+     "text": "•Selling, general and administrative expenses are corporate overhead and other operating expenses. These expenses include: employee-related expenses (such as salaries, wages, internal commissions, benefits and professional fees) directly attributable to selling products or services and employee-related expenses for administrative functions; marketing and advertising; property and other operating taxes and fees; external commissions; litigation expenses associated with general matters; bad debt expense; and other selling, general and administrative expenses.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "SG&A definition; litigation expense only listed as a cost category",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 1254,
+     "scope": "ITEM_8",
+     "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+     "cause": "KEYWORD_PROXY"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read-round3.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2023-12-31.json",
+    "reading_sha256": "sha256:0e4a9ae506af1fa451bcd0dc88c3e8612167051fbc9afd5b6495778a78d67eb1",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:f9139590cc709e259251dc261f77508f9bee3b282793cb702c85cf0560ccfec4",
+     "run_id": "run:historical-period:b1e2d80b82a012c39a3ca59baa1f72352c888e4292963e98f5b33a5202ffa45e"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2023-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ]
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "defect_id": "D02_PFIZER_2024_KEYWORD_PROXY_AND_PAGE_FOOTER_AS_EXCERPT",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "summary": "The older-year reading in both directions found 4 wrong block(s): An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.; A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour. A set with a wrong member is not the right set, so the coordinate is withdrawn.",
+   "the_blocks": [
+    {
+     "kind": "TAKEN",
+     "block_index": 904,
+     "scope": "ITEM_3",
+     "text": "2024 Form 10-K",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "page footer (form name) inside Item 3",
+     "cause": "PAGE_FOOTER_AS_EXCERPT"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2215,
+     "scope": "ITEM_8",
+     "text": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and their effects cannot be determined with precision, our estimates and assumptions may prove to be incomplete or inaccurate, or unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions. We are subject to risks and uncertainties that may cause actual results to differ from estimated amounts, such as changes in the healthcare environment, competition, litigation, legislation, development of competing assets by us or others, regulatory actions, or product recalls or withdrawals. We regularly evaluate our estimates and assumptions using historical experience and expectations about the future. We adjust our estimates and assumptions when facts and circumstances indicate the need for change.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "estimates boilerplate; litigation only in a list of risks",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2280,
+     "scope": "ITEM_8",
+     "text": "In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory and legal environments, country and political risk, and other relevant current and future forecasted macroeconomic factors. These credit risk indicators are monitored on a quarterly basis to determine whether there have been any changes in the economic environment that would indicate the established reserve percentages should be adjusted, and are considered on a regional basis to reflect more geographic-specific metrics. Additionally, write-offs and recoveries of customer receivables are tracked against collections on a quarterly basis to determine whether the reserve percentages remain appropriate. When management becomes aware of certain customer-specific factors that impact credit risk, specific allowances for these known troubled accounts are recorded. Trade accounts receivable are written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "receivables collection policy 'including litigation'",
+     "cause": "KEYWORD_PROXY"
+    },
+    {
+     "kind": "TAKEN",
+     "block_index": 2877,
+     "scope": "ITEM_8",
+     "text": "Any settlements or statutes of limitations expirations could result in a significant decrease in our uncertain tax positions. We estimate that it is reasonably possible that within the next 12 months, our gross unrecognized tax benefits, exclusive of interest, could decrease by as much as $200 million, as a result of settlements with taxing authorities or the expiration of the statutes of limitations. Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax benefits may not be representative of actual outcomes, and variation from such estimates could materially affect our financial statements in the period of settlement or when the statutes of limitations expire, as we treat these events as discrete items in the period of resolution. Finalizing audits with the relevant taxing authorities can include formal administrative and legal proceedings, and, as a result, it is difficult to estimate the timing and range of possible changes related to our uncertain tax positions, and such changes could be significant.",
+     "verdict": "NOT_DISCLOSURE",
+     "why": "tax: uncertain tax positions and tax audits",
+     "cause": "KEYWORD_PROXY"
+    }
+   ],
+   "causes": {
+    "KEYWORD_PROXY": {
+     "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
+     "same_cause_as": [
+      "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+      "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+     ],
+     "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+    },
+    "PAGE_FOOTER_AS_EXCERPT": {
+     "text": "A page footer taken as an excerpt: in FY2023/FY2024 Item 3 is four blocks, too few for repetition inside it to show the footer; in FY2022 the footer is one block and the page number separates it from the running head, so the scope rule finds no repeating neighbour.",
+     "repair": "historical_text_results.page_structure_furniture: a block standing at the same offset from a page number on three pages or more.",
+     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+    }
+   },
+   "confirmed_in": {
+    "acceptance_reading": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read-round3.json",
+    "reading": "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2024-12-31.json",
+    "reading_sha256": "sha256:5eb8c3d63e5bf1b790aec513370ced94ef6184e87b3a47d6fa316b1c51f555ca",
+    "result_identity": {
+     "requirement_closure_hash": "sha256:8530710b99e9d5b33153bb0a1f7af97be60183d626efe8b71c11c9f9d93c092e",
+     "result_id": "sha256:f1f556b294d58cb1442d17798813d1f3d67f609363872b8c6aaf190b87b34a64",
+     "run_id": "run:historical-period:8cb68fe1c6caf40f1bb551d5fb0179949688c5af09711cb0718bf65990b0f76f"
+    }
+   },
+   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-older-years/README.md",
+    "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2024-12-31.json",
+    "docs/evidence/issue47_history/d02-older-years/causes.json"
    ]
   }
  ],

@@ -115,3 +115,31 @@ The route causes are registered by position (`causes.json`,
 `register_defects.py`); three of them - the page-foot heading, the footers and
 Lumen FY2021's captions - and Macy's pointer page are repaired in
 `../d02-route-repairs/`. The keyword proxy remains the registered decision.
+
+## Acceptance against the published results
+
+`tools/read_d02_excerpts.py` compared each reading with the result it judged,
+in two files, one per version: `content-acceptance/d02-older-years-read.json`
+(the 41-period batch, closure `ed360ebc`, 26 positions) and
+`content-acceptance/d02-older-years-read-round3.json` (the third targeted
+round, closure `8530710b`, Lumen FY2021-FY2023 and Pfizer FY2024). The
+container restarted every half hour or so while the 26 ran, so each position
+was read by its own run to its own file and the parts were joined by
+`merge_acceptance_parts.py`, which refuses parts whose shared fields differ or
+whose positions overlap.
+
+- 21 positions MATCH and are accepted: the reading agrees, the result's
+  candidate hash is the one recomputed and its excerpts render the value. The
+  register moves from 623 to 644 acceptances (D02 from 8 to 29).
+- 9 positions DIFFER - the five of the batch named above (Lumen FY2024, Macy's
+  FY2021, Pfizer FY2022 and FY2023, Southwest FY2023) and the four of the third
+  round - and each is withdrawn by a coordinate-level entry in
+  `known_result_defects.json` naming its wrong blocks and their causes
+  (`register_defects.py`, from `causes.json`).
+- Paramount's predecessor FY2024 entry, whose two halves were retracted and
+  repaired (see above), is released on the batch result the reading accepted
+  (`5aa340a1...` under `ed360ebc`) and on no other.
+
+What the acceptance does not establish is in each entry's limit: that the rest
+of Item 8 holds no litigation disclosure under a heading worded otherwise, and
+that the reader is independent of the model family that wrote the rules.

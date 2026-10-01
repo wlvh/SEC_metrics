@@ -32,7 +32,8 @@ sys.path.insert(0, str(REPO / "tools"))
 
 from acceptance_readings import (C02_COMPOSITION, C03_ACROSS_PROXIES, COMPENSATION, CROSS,  # noqa: E402
                                  CROSS_READINGS,
-                                 D01_READINGS, DEBT_TO_EQUITY_READINGS, E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
+                                 D01_READINGS, D02_EXCERPT_READINGS, DEBT_TO_EQUITY_READINGS,
+                                 E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
                                  EVENT_READINGS, GOVERNANCE, LODGING, LODGING_READINGS, READINGS, RPO_READINGS, TEXT, load,
                                  positions)
 
@@ -226,6 +227,10 @@ def _read_from(position):
         return {"proxies": case["proxies_reporting_the_target_period"]}
     if path == TEXT:
         return {"excerpts": case["excerpts"], "chars": case["chars"]}
+    if path in D02_EXCERPT_READINGS:
+        return {"document": case["document"], "reading": case["reading"],
+                "reading_sha256": case["reading_sha256"], "counts": case["counts"],
+                "published_excerpts": case["published_excerpts"]}
     if path in D01_READINGS:
         return {"headings": len(case["headings_read"]), "accession": case["accession"],
                 "document": case["document"], "heading_shapes": case["heading_shapes"]}
@@ -261,6 +266,8 @@ def _method_and_limit(position):
         return C03_ACROSS_PROXIES_METHOD, C03_ACROSS_PROXIES_LIMIT
     if path == TEXT:
         return TEXT_METHOD, TEXT_LIMIT
+    if path in D02_EXCERPT_READINGS:
+        return D02_EXCERPTS_METHOD, D02_EXCERPTS_LIMIT
     if path in D01_READINGS:
         return HEADINGS_FROM_BYTES_METHOD, HEADINGS_LIMIT
     if path in RPO_READINGS:
@@ -270,6 +277,22 @@ def _method_and_limit(position):
     raise RegisterError("READING_SHAPE_UNKNOWN:" + path)
 
 
+D02_EXCERPTS_METHOD = (
+ "a packet built from the saved annual report by tools/read_d02_excerpts.py through "
+ "the route's own selection - every excerpt with its scope, every block skipped inside "
+ "Item 3 and the note scopes Item 3 incorporates, the blocks under an Item 8 heading "
+ "naming contingencies, legal proceedings or litigation in a note Item 3 does not "
+ "incorporate, and every heading naming those words - judged block by block by an "
+ "independent reader (a fresh-context subagent of the same model family, not a "
+ "person) against the brief in d02-older-years/reader-brief.md; the reading carries "
+ "each judged block's text, covers the packet exactly, and its excerpts render the "
+ "value; the result's candidate hash is the one recomputed from the filing.")
+D02_EXCERPTS_LIMIT = (
+ "that the rest of Item 8 holds no litigation disclosure: outside the incorporated "
+ "scopes it is read only where the keyword proxy took a block and under the headings "
+ "that name the definition's words, so a disclosure under a heading worded otherwise, "
+ "or under none, is not read (the proxy's registered decision); nor that the reader "
+ "is independent of the model family that wrote the rules; nor " + COMMON)
 HEADINGS_FROM_BYTES_METHOD = (
  "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which "
  "imports none of the route's text modules: its own block reader, runs carrying "
