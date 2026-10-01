@@ -1409,7 +1409,11 @@ def board_composition_facts(*, document, period_start):
         take(index, label)
     for i, block in enumerate(blocks):
         text = clean(block["text"])
-        if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\W", "", text.casefold()) in registrant:
+        # A link in a statement is a cross-reference ("Our committee membership
+        # is as noted on page 9"), not navigation: Ford FY2024's independence
+        # determination naming every independent director carries one. A
+        # table-of-contents line states no fact the rules below take.
+        if not re.search(r"[A-Za-z]", text) or re.sub(r"\W", "", text.casefold()) in registrant:
             continue
         labels = statement_labels(block["text"], own_words, period_start=start, acronyms=acronyms,
                                   registrant=registrant_words, classified=classified)

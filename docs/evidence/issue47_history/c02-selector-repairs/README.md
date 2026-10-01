@@ -293,3 +293,16 @@
 合计漏选 105→91，误选 18 不变，不一致位置 23→22。Lumen 2025 是最新年度，值会变，但原值不缺事实，所以不撤回；重算后要重读。
 
 **没有跟着改的。** 读者把在目标年度之前的离任（如 FY2024 判读中"At the 2021 annual meeting, Virginia Boulet retired from the Board"）也判为事实，选择器也取。这与 `JOIN_BEFORE_THE_YEAR`（年度之前的加入是任期，不是事实）看起来不对称。区别在于：加入日期说的是一位在任董事任职多久；离任说的是一位已不在任的人。所有者的口径只写"成员变动，写明人或日期"，没有限定期间，读者之间也没有分歧，所以本节不改。是否只计年度内的离任，是口径问题。
+
+## 18. 带交叉引用链接的陈述仍按正文读取
+
+**问题。** Ford 2024 往年判读有 21 块漏选，其中 18 块（九位独立董事在汇总表里的 "Independent" 和卡片上的 "Independent Director Since: …"）都引用同一个覆盖块：第 1590 块 "the Board determined that none of the following directors had any material relationship with the Company and, thus, are independent: Kimberly A. Casiano, …"。这是董事会对全部独立董事的认定，选择器给它打得出两个标签，却没有取。原因是这一块带链接：句末 "Our committee membership is as noted on page 9" 里的 "page 9" 是超链接，而正文循环跳过所有带链接的块。跳过链接块是为了排除目录这类导航行，但一句陈述里夹着交叉引用，并不会因此变成导航。D02 的 Pfizer Item 3 超链接句是同一种情形。
+
+**先量后改。** 在 37 份文档里，带链接、又能得到标签的块只有四块，读者都判为事实或含事实：Ford 2024 第 1590 块、Marriott 2023 第 6851 块（"FOR the election of each of the 12 director nominees (see Item 1 on page 12)"，全员改选的董事会，候选人数即规模）、Pfizer 2022 第 3068 块（薪酬委员会全由独立董事组成）、Pfizer 2025 第 4015 块（独立董事选 Narayen 续任首席独立董事）。目录行一块都得不到标签，因为标签规则本身要求完整陈述：具名的人、人数或认定。所以正文循环不再看链接标志；卡片、名单等其他读法仍按原样跳过链接。
+
+**用例与注错。** `test_a_statement_carrying_a_cross_reference_is_read`：带链接的认定句要取，带链接的目录行不取。注错 `A_LINKED_STATEMENT_IS_NAVIGATION`（把链接标志放回正文循环）。
+
+**量测**（`measured-18-linked-statements.json`）：只新增上面四块。漏选 91→73，误选 18 不变，不一致位置 22 不变。
+- Ford 2024 剩 942、2489、2499 三块。942 是被 `_POLICY` 里 "family members" 挡住的句子；2489、2499 是 Farley 卡片上的 "Committees: N/A"，见第 19 节。
+- 另外三个位置新增的块原本就被覆盖，问题集不变。
+- Pfizer 2025 是最新年度，值会变，但原值不缺事实，所以不撤回。

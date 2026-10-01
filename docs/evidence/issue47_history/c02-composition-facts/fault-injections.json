@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 64,
- "caught": 69,
- "total": 69,
+ "control_tests_run": 65,
+ "caught": 70,
+ "total": 70,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -589,6 +589,14 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_footnote_number_printed_against_the_honorific"
+   ]
+  },
+  {
+   "injection": "A_LINKED_STATEMENT_IS_NAVIGATION",
+   "expected": "test_a_statement_carrying_a_cross_reference_is_read",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_statement_carrying_a_cross_reference_is_read"
    ]
   }
  ]

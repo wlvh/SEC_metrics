@@ -470,6 +470,18 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             with self.subTest(text=text[:40]):
                 self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2024-01-01"))
 
+    def test_a_statement_carrying_a_cross_reference_is_read(self):
+        # Ford FY2024 block 1590 is linked only for "as noted on page 9"; every
+        # independent director's card and summary-table status cites it.
+        texts = ["The Board determined that none of the following directors had any material relationship with the "
+                 "Company and, thus, are independent: Kimberly A. Casiano and Adriana Cisneros. Our committee "
+                 "membership is as noted on page 9.",
+                 "Board Independence"]
+        selected = _selected(texts, linked={0, 1})
+        self.assertIn("BOARD_INDEPENDENCE_STATEMENT", selected.get(0, []))
+        # A table-of-contents line states nothing, linked or not.
+        self.assertNotIn(1, selected)
+
     def test_a_footnote_number_printed_against_the_honorific(self):
         # Lumen FY2021/FY2022 print the mark with no space ("6Ms. Boulet’s
         # term ended ..."): the honorific is still the person's.

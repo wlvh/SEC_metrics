@@ -210,6 +210,8 @@ INJECTIONS = [
      'test_a_footnote_number_printed_against_the_honorific'),
     ('AN_AMOUNT_IS_A_MARK', '(?<![\\w$.,])(\\d{1,2})', '(?<![\\w])(\\d{1,2})',
      'test_a_footnote_number_printed_against_the_honorific'),
+    ('A_LINKED_STATEMENT_IS_NAVIGATION', '        if not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(', '        if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(',
+     'test_a_statement_carrying_a_cross_reference_is_read'),
 ]
 
 
