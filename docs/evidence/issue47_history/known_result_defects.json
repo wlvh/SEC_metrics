@@ -2827,12 +2827,17 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/ford_motor_company-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 57 block(s) stating a composition fact that no taken block states (260: Names the five standing committees (Audit, CTC, Finance, NG, SIP), alongside 2022 meeting counts; 406: Alexandra Ford English and Henry Ford III first elected to the Board at the 2021 Annual Meeting - within a tenure-mix rationale). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "NOT_REPAIRED",
+   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
    "why_not_repaired_yet": "Readers split on several classes (a classified board's slate count, class headings, '<role> since:' fields, 'Committees: N/A'); those are decided by rule and applied to every reading of the class, the latest years' included, before the general selector repairs. Repairs are made one bounded problem at a time ([shared-with-#28]); readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2022-12-31.json",
-    "docs/evidence/issue47_history/c02-older-years/comparison.json"
-   ]
+    "docs/evidence/issue47_history/c02-older-years/comparison.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json"
+   ],
+   "partial_repair": {
+    "roster_bullet_glyph": "43 blocks now taken, every one judged a composition fact: the rosters on the Audit, Compensation Talent and Culture, Finance, Nominating and Governance and Sustainability Innovation and Policy committee pages, whose members follow a '◾' the selector did not count as a list bullet, so each roster ended before its first name (scripts/vnext/historical_board_composition.py _BULLET_CHARS; docs/evidence/issue47_history/c02-selector-repairs/README.md section 2 [shared-with-#28]).",
+    "still_open": "17 fact block(s) missed (260, 406, 413, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 474, 1255, 4535); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+   }
   },
   {
    "defect_id": "C02_FORD_2023_OLDER_YEAR_READING_DISAGREES",
@@ -2951,11 +2956,13 @@
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-1-capitalised-committee-name.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-2-bullet-glyphs.json"
    ],
    "partial_repair": {
     "criterion_bullet": "Block 1089 ('Previous service as a Board committee chair', a criterion for choosing a lead director) is no longer taken: the 'as <name> committee chair' pattern in scripts/vnext/historical_board_composition.py let re.I match lower-case words as a committee's name. See docs/evidence/issue47_history/c02-selector-repairs/README.md section 1 [shared-with-#28].",
-    "still_open": "48 fact blocks missed (director card committee fields and others); the selection still disagrees with the reading, so the coordinate stays withdrawn."
+    "still_open": "7 fact block(s) missed (640, 703, 810, 1230, 1231, 1877, 1945); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "roster_bullet_glyph": "24 blocks now taken, every one judged a composition fact: the rosters on the Audit, Compensation and Management Development, Finance and Nominating and Corporate Governance committee pages, whose members follow a '·' the selector did not count as a list bullet, so each roster ended before its first name (scripts/vnext/historical_board_composition.py _BULLET_CHARS; docs/evidence/issue47_history/c02-selector-repairs/README.md section 2 [shared-with-#28])."
    }
   },
   {

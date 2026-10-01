@@ -75,7 +75,11 @@ def _lead_role():
 _LEAD_ROLE = _lead_role()
 
 _WS = re.compile("[\\s ​  ]+")
-_BULLET_CHARS = "•●▪◦‣⯀■□◆◇\\-–—*"
+# The glyphs filings print before list items. Every list this reader steps
+# through - a roster, a card's items, a lead-in's list - is read only when its
+# glyph is here: Ford's older proxies put "◾" before each member's name and
+# Macy's "·", and neither roster was read (c02-selector-repairs/README.md).
+_BULLET_CHARS = "•●▪◦‣⯀■□◆◇◾·\\-–—*"
 _BULLET = re.compile("^[\\s" + _BULLET_CHARS + "]+")
 _ONE_BULLET = re.compile("^[" + _BULLET_CHARS + "]$")
 _BULLETS_ONLY = re.compile("^[\\s" + _BULLET_CHARS + "]*$")

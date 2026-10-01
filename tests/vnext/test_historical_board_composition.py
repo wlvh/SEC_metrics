@@ -141,6 +141,22 @@ class ACommitteePageIsReadAsAStructure(unittest.TestCase):
                             "Audit Committee", "•Chair—$35,000", "•Member—$17,500"])
         self.assertEqual({0, 1, 2}, set(chosen))
 
+    def test_a_roster_marked_with_each_glyph_filings_print(self):
+        # Ford's older proxies print "◾" before each member's name and Macy's
+        # "·". A glyph the reader does not know ends the roster before its
+        # first name, so both rosters went unread.
+        for glyph in ("◾", "·"):
+            with self.subTest(glyph=glyph, form="labelled"):
+                texts = ["Finance Committee", "Reviews the Company’s capital structure.", "MEMBERS", glyph,
+                         "Jane A. Doe, Chair", glyph, "John B. Roe", glyph, "Mary C. Poe", "MEETINGS IN 2022: 4"]
+                self.assertEqual({0: ["COMMITTEE_HEADING"], 2: ["COMMITTEE_MEMBERS_LABEL"],
+                                  4: ["COMMITTEE_CHAIR_NAME"], 6: ["COMMITTEE_MEMBER_NAME"],
+                                  8: ["COMMITTEE_MEMBER_NAME"]}, _selected(texts))
+            with self.subTest(glyph=glyph, form="heading then names"):
+                texts = ["Audit Committee", glyph, "John B. Roe", glyph, "Mary C. Poe", "Key Responsibilities"]
+                self.assertEqual({0: ["COMMITTEE_HEADING"], 2: ["COMMITTEE_MEMBER_NAME"],
+                                  4: ["COMMITTEE_MEMBER_NAME"]}, _selected(texts))
+
     def test_a_matrix_column_of_directors_is_not_a_roster(self):
         texts = ["Oversight", "Committee", "Lisa M. Atherton", "● ● ●", "Pierre R. Breber",
                  "● ●", "Douglas H. Brooks", "● ● ●"]

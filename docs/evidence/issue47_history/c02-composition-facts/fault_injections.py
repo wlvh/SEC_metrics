@@ -116,6 +116,8 @@ INJECTIONS = [
     # Repairs from the older-year readings (c02-selector-repairs/README.md).
     ("A_LOWER_CASE_WORD_NAMES_A_COMMITTEE", "(?:(?-i:[A-Z])", "(?:[A-Z]",
      "test_a_criterion_for_choosing_a_chair_seats_no_one"),
+    ("THE_SQUARE_BULLET_IS_NOT_A_BULLET", "◾·", "·", "test_a_roster_marked_with_each_glyph_filings_print"),
+    ("THE_MIDDLE_DOT_IS_NOT_A_BULLET", "◾·", "◾", "test_a_roster_marked_with_each_glyph_filings_print"),
 ]
 
 

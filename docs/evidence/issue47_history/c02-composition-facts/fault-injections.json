@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 43,
- "caught": 31,
- "total": 31,
+ "control_tests_run": 44,
+ "caught": 33,
+ "total": 33,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -171,6 +171,7 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_card_uses_the_filing_s_own_short_forms",
+    "test_a_roster_marked_with_each_glyph_filings_print",
     "test_a_title_line_at_this_registrant_and_not_elsewhere"
    ]
   },
@@ -260,6 +261,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_criterion_for_choosing_a_chair_seats_no_one"
+   ]
+  },
+  {
+   "injection": "THE_SQUARE_BULLET_IS_NOT_A_BULLET",
+   "expected": "test_a_roster_marked_with_each_glyph_filings_print",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_roster_marked_with_each_glyph_filings_print"
+   ]
+  },
+  {
+   "injection": "THE_MIDDLE_DOT_IS_NOT_A_BULLET",
+   "expected": "test_a_roster_marked_with_each_glyph_filings_print",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_roster_marked_with_each_glyph_filings_print"
    ]
   }
  ]
