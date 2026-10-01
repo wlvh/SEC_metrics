@@ -49,6 +49,20 @@
       "status": "PRIVATE_NATIVE_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_CURRENT_CREDIT",
       "legacy_archived_result_id_not_withdrawn_by_this_specific_finding": "sha256:6d2608aed318b6113f7de35984cefaab059bcc38b949b2c6a7c6b9eda3e2ac5a"
     },
+    "private_salesforce_peer4d_saved_source_content": {
+      "company_id": "salesforce",
+      "metric_id": "C02",
+      "period_end": "2026-01-31",
+      "new_result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
+      "new_run_id": "run:ordinary-integrated:d781a0d086b0429765f2636aae4d68422d319cdf0abee6357176160f318d644c",
+      "content_status": "PASS_LIMITED_SAVED_SOURCE_CONTENT_NOT_COMPLETE_ZERO_MISS_PROOF",
+      "independent_review": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-salesforce-peer4d-content/conclusion.md",
+      "old_private_result_id_retains_defect": "sha256:220c0fb95032977990f8bee1e624f2ab53bbd23f3fd2c90b81d7a23d515e00b3",
+      "run_manifest_status": "OPEN",
+      "run_validation_status": "NOT_RUN",
+      "current_390_credit": false,
+      "production_credit": false
+    },
     "private_paramount_successor_failed_content": {
       "company_id": "paramount_skydance_paramount_global",
       "metric_id": "C02",
@@ -68,6 +82,8 @@
       "paramount_source_delta": "DATED_OWN_BOARD_JOINS_100_110_117_NOW_SELECTED;_NOMINEE_QUALIFICATION_168_SCOPE_UNRESOLVED",
       "salesforce_result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
       "salesforce_source_delta": "HISTORICAL_TENURE_4300_DROPPED;_CURRENT_JOIN_919_AND_CHAIR_CHANGE_933_SELECTED",
+      "salesforce_content_status": "PASS_LIMITED_SAVED_SOURCE_ONLY_CURRENT_390_FALSE",
+      "paramount_content_status": "PENDING_SCOPE_AND_COMPLETE_CONTENT_REVIEW",
       "private_native_and_cold_read": "PASS_BOTH_ZERO_NETWORK_ZERO_NEW_REAL_CALLS",
       "business_content_credit": false,
       "current_390_credit": false,
