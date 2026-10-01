@@ -7,7 +7,7 @@
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
     "newly_excluded_coordinate_count": 3,
-    "newly_excluded_result_id_count": 5,
+    "newly_excluded_result_id_count": 7,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "marriott_international|C02|2025-12-31",
@@ -15,14 +15,22 @@
     ],
     "all_390_currently_validated": false,
     "other_coordinates_not_cleared_by_this_audit": true,
-    "superseded_private_candidate_count": 1,
+    "superseded_private_candidate_count": 3,
     "private_replacement_under_review": {
       "company_id": "enphase_energy",
       "metric_id": "C02",
       "period_end": "2025-12-31",
       "result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
-      "status": "CURRENT_PRIVATE_NATIVE_UPDATE_AND_COLD_READ_PASS_CONTENT_ACCEPTANCE_PENDING",
-      "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71"
+      "status": "FAILED_CONTENT_SCOPE_AUDIT_NO_CURRENT_CREDIT",
+      "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "peer_disputed_block_indexes": [
+        57,
+        210,
+        212,
+        232,
+        243,
+        2338
+      ]
     }
   },
   "defects": [
@@ -179,7 +187,69 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "C02_ENPHASE_2025_UNIFIED_ADJUDICATION_PRIVATE_E17",
+      "metric_id": "C02",
+      "company_id": "enphase_energy",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "run_id": "run:ordinary-integrated:63440d6f4b106e2ac984a1c5fe805c50edaf964400bd08ce5c0616f6219f0521",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_SELECTOR_REPAIR_AND_NEW_NATIVE_RESULT_PENDING",
+      "current_credit": "NONE_PRIVATE_CANDIDATE_CONTENT_SCOPE_FAILED",
+      "summary": "Six selected blocks state future classified slate counts or class/term headings, not standalone current composition facts under the shared owner target. This exact private Result never receives current business credit; its original Run and identity remain unchanged.",
+      "affected_block_indexes": [
+        57,
+        210,
+        212,
+        232,
+        243,
+        2338
+      ],
+      "peer_origin": {
+        "commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3",
+        "defect_id": "C02_ENPHASE_2025_UNIFIED_ADJUDICATION_DISAGREES",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "adjudication_path": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer-0e80-private-enphase-impact.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "C02_ENPHASE_2025_UNIFIED_ADJUDICATION_PRIVATE_DOCFIX",
+      "metric_id": "C02",
+      "company_id": "enphase_energy",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+      "run_id": "run:ordinary-integrated:7dbe846173aea142abd1faf30773355b0449c86961e86eb16936e21cca5f8190",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_SELECTOR_REPAIR_AND_NEW_NATIVE_RESULT_PENDING",
+      "current_credit": "NONE_PRIVATE_CANDIDATE_CONTENT_SCOPE_FAILED",
+      "summary": "Six selected blocks state future classified slate counts or class/term headings, not standalone current composition facts under the shared owner target. This exact private Result never receives current business credit; its original Run and identity remain unchanged.",
+      "affected_block_indexes": [
+        57,
+        210,
+        212,
+        232,
+        243,
+        2338
+      ],
+      "peer_origin": {
+        "commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3",
+        "defect_id": "C02_ENPHASE_2025_UNIFIED_ADJUDICATION_DISAGREES",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "adjudication_path": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer-0e80-private-enphase-impact.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
   ],
-  "latest_peer_read_commit": "877793e9505e1f7ac99ee66e1a828298484e3f7f"
+  "latest_peer_read_commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3"
 }
