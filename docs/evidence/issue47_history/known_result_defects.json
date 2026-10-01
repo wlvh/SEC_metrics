@@ -3755,6 +3755,32 @@
     "dated_role_changes": "Block 933 is now taken: the reader reads 'assumed the role of' a chair or the lead director's role, and the new DATED_ROLE_CHANGE adjudication class replaces the reading's coverage claim for 933 (it cited blocks that do not state Mr. Roos's change). Measured on all 37 readings, only this position moves (measured-15-dated-role-changes.json; docs/evidence/issue47_history/c02-selector-repairs/README.md section 15 [shared-with-#28])."
    },
    "selection_problems": {}
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2025_IN_YEAR_JOINS_COVERED_BY_A_ROSTER",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_SALESFORCE_2026_TENURE_TAKEN_AND_DATED_CHAIR_HANDOVER_MISSED"
+   ],
+   "summary": "#28's independent content check of its own Paramount FY2025 C02 result (3a661897) found the selection misses the directors' own-board start dates in the 10-K/A's biographies ('Ms. Byrne has served as a member of our Board since August 2025', 'Mr. Campion ... since January 2026'). The #47 accepted value (54 excerpts) has the same omission: the reading judged those blocks facts but counted them covered by the roster block 84, which names the ten sitting directors and gives no dates; a join in the year is a change in who sits on the board, and a roster does not state it. Checked on #47's saved 10-K/A. The accepted value (acceptance CONTENT_C02_PARAMOUNT_2025, result sha256:4a7367c8f783d6ca7b12858ac8772ddec834ba7cbdc0cfdccaea35af69ed71db under closure sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9) is withdrawn with the coordinate.",
+   "root_cause": "The same coverage gap as Salesforce FY2026 block 933: a reader's citation was taken as cover without checking that the cited block states the same change. JOIN_IN_THE_YEAR was decided only where the reader's verdict differed, so the reader's 'covered by 84' stood. Repair 13 (2926b7d0) already takes eight of these blocks; block 100 ('has served as our Chief Strategy Officer and Chief Operating Officer and as a member of our Board since August 2025') is longer than the reader's dated-join reach.",
+   "open_meaning_question": "#28 also counts the nomination rationale 'We believe Mr. Thornton is qualified to serve as a member of our Board because ...' (block 168) as a director qualification determination. #47's reading judged it outside: both C02 Specs enumerate the determinations as financially literate, audit committee financial expert, non-employee director and no member an officer or employee, and put nomination and evaluation procedure outside the meaning. Not counted as a defect here; raised with #28 for alignment.",
+   "found_by": "#28's independent content check (peer_origin), confirmed on #47's saved 10-K/A",
+   "peer_origin": {
+    "commit": "3a661897ed72a748f793209cadb124c0ba4bc8c3",
+    "defect_id": "C02_PARAMOUNT_2025_OWN_BOARD_BIO_FACT_OMISSION_ARCHIVED",
+    "register_path": "docs/evidence/issue28_continuous/known_result_defects.json"
+   },
+   "repair_state": "SELECTOR_AND_ADJUDICATION_REPAIR_PENDING",
+   "why_not_repaired_yet": "The coverage rule goes into JOIN_IN_THE_YEAR the way DATED_ROLE_CHANGE has it, applied to every reading, and the reader's dated-join reach must take block 100.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+    "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
+   ],
+   "original_record_retained": true
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -3973,6 +3999,43 @@
      ],
      "affects_47": "None. PASS_WITH_BOUNDS for #28's integration at 60aa9f7b; it states the Salesforce errors stand and that Macy's, Lumen and Marriott exceed #28's native 64-excerpt bound.",
      "integration": "MERGED"
+    }
+   ]
+  },
+  {
+   "read_on": "2026-10-01",
+   "collaboration_rule": "COLLAB-28-47-v1",
+   "rule_text_sha256": "26dae6cd9b8f6e890c895231833a1e1218f7e67c0dcb238e10ab376e128d823a",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "3a661897ed72a748f793209cadb124c0ba4bc8c3",
+   "own_commit_at_read": "bd907a44a4bbef7ffb3e1b99cb5da7a73ad114ec",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_TWELVE_ENTRIES",
+   "what_that_state_means": "Twelve entries, all #28's own C02 result identities; none names a #47 result. The register's latest_peer_read_commit is 23481924, #47's merge that split the shared paths.",
+   "baseline": "Read since 34338e4e: two commits' messages and file lists, the two new register entries, the Paramount content check and the Enphase limited credit.",
+   "increments": [
+    {
+     "commit": "2567676c",
+     "marker": "[shared-with-#47]",
+     "subject": "Record limited Enphase C02 source-content credit",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-enphase48-content/conclusion.md"
+     ],
+     "affects_47": "None: limited content credit for #28's own Enphase FY2025 48-excerpt private result; it does not name #47's results.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "3a661897",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold exact Paramount C02 omissions",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json",
+      "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-paramount54-content/conclusion.md"
+     ],
+     "affects_47": "Yes, one #47 coordinate: the own-board start dates in the biographies are missing from #47's accepted Paramount FY2025 value too; withdrawn as C02_PARAMOUNT_2025_IN_YEAR_JOINS_COVERED_BY_A_ROSTER. #28's further reading of the nomination rationale ('We believe X is qualified to serve ...') as a qualification determination is a meaning question both Specs answer otherwise; raised with #28, not counted.",
+     "integration": "MERGED",
+     "receipt": "Confirmed: #28 read #47's split merge (23481924) and inspected its own source independently."
     }
    ]
   }
