@@ -5,6 +5,10 @@
    "failures": 0,
    "ran": 2
   },
+  "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin": {
+   "failures": 0,
+   "ran": 2
+  },
   "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here": {
    "failures": 0,
    "ran": 1
@@ -85,6 +89,30 @@
    "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
    "caught": true,
    "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_ROSTER_COVERS_A_JOIN",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_JOINER_IS_ANY_NAME_BEFORE_THE_PRONOUN",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "ANOTHER_PERSONS_JOIN_COVERS",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
+   "caught": true,
+   "failures": 1,
    "ran": 2
   }
  ],

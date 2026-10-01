@@ -248,3 +248,19 @@
 - 这两类问题是 #28 在一个位置上发现的；本节把它们写成规则，在全部 37 份判读上量，只在两个位置起作用。
 - 读者是同族子代理，统一裁定由执行者按文字写成，两者都不是人工验收。
 - 规则是看过这些材料之后写的，属于开发/回归材料，不是留出验证。
+
+## 16. 年度内的加入也只由同一人的加入覆盖
+
+**问题。** #28 在 `3a661897` 核对它自己 Paramount FY2025 的结果，发现 10-K/A 董事履历里写的本董事会任职起点没有入选，例如 "Ms. Byrne has served as a member of our Board since August 2025"、"Mr. Campion … since January 2026"。本方已接受的值（54 块）同样缺这些块。读者判它们含事实，但都记为已被第 84 块覆盖；84 是"董事会现有十人"的名单，没有写任何人何时加入。这与第 15 节是同一个缺口：读者的引用没有经过核对。
+
+**改动（量测一侧）。** `JOIN_IN_THE_YEAR` 采用与 `DATED_ROLE_CHANGE` 相同的覆盖规则：只有写明同一人加入、日期至少一样精确的块才覆盖；读者引用了不覆盖的块时，裁定替换引用。加入的人取紧挨着加入短语之前的姓名（60 字符内）。加入短语前是 their、his、her 这类代词时，取它后面的姓名，例如 "upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk …"。在 37 份判读上，新增的覆盖裁定都落在两个位置：Paramount 2025 的九块履历，和 Salesforce 2026 的第 919 块；其他位置没有新裁定。
+
+**改动（选择器一侧）。** "has served as … a member of our Board since" 中间允许的长度由 60 字符放到 80，与统一裁定的 JOIN 句式一致。第 100 块中间夹着 "our Chief Strategy Officer and Chief Operating Officer and as"，共 62 字符，原来认不出。
+
+**用例与注错。**
+- 选择器：`test_a_long_title_before_the_join`；注错 `THE_JOIN_REACH_IS_SIXTY`。
+- 统一裁定与判读工具：`test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin`，覆盖三种情形：同一人、日期更精确的加入可以覆盖；名单不能覆盖；代词后面的人才是加入者。注错 `A_ROSTER_COVERS_A_JOIN`、`A_JOINER_IS_ANY_NAME_BEFORE_THE_PRONOUN`、`ANOTHER_PERSONS_JOIN_COVERS`。
+
+**量测**（`measured-16-join-coverage.json`）：只有 Paramount 2025 一个位置移动，新增第 100 块；漏选 106→105（按新裁定，100 原本算漏选）。其余八块已在第 13 节取到，919 在第 14 节取到。这个位置的选择现与判读、统一裁定一致；坐标仍撤回，要等重算、重读。
+
+**没有跟着改的。** #28 还把提名理由（"We believe Mr. Thornton is qualified to serve as a member of our Board because …"，第 168 块）算作董事资格认定。两份 C02 Spec 列举的资格认定是 financially literate、audit committee financial expert、non-employee director、没有成员是高管或雇员，并写明提名与评估程序不在口径内；本方读者也判它不是事实。这是含义问题，已在登记里记为待对齐，没有改选择器。

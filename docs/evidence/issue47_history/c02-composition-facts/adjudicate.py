@@ -103,7 +103,10 @@ JOIN_BEFORE_THE_YEAR (NOT) / JOIN_IN_THE_YEAR (FACT)
     in the period the filing reports; a join dated earlier is tenure in other
     words, as CARD_TENURE_FIELD is. A block whose other sentences state
     another composition fact (a chair, a committee, a departure) is left to
-    the reading.
+    the reading. Like a role change, a join in the year is stated only by a
+    block giving the same person's join on the same date: a roster of the
+    sitting directors does not state when anyone joined (#28's content check
+    of Paramount FY2025), so a reader's citation of one is replaced.
 
 DATED_ROLE_CHANGE (FACT; covered only by the same change)
     A sentence giving the date - in the target year or after it - on which a
@@ -252,7 +255,7 @@ COMMITTEE_NAME = re.compile(r"(?<![\w])(?!Committee)([A-Z][a-z]+)(?:(?:,\s*|\s+a
 HOLDER = re.compile(r"\b(?:Mr|Ms|Mrs|Dr)\.\s+[A-Z]|\bhas an? (?:independent )?(?:lead|presiding) (?:independent )?director\b",
                     re.I)
 JOIN = re.compile(
-    r"\b(?:has served as (?:[^.;]{0,60}?\b)?(?:a |an )?(?:independent |non-employee |non-executive )?"
+    r"\b(?:has served as (?:[^.;]{0,80}?\b)?(?:a |an )?(?:independent |non-employee |non-executive )?"
     r"(?:member of (?:the|our) board(?: of directors)?|director)(?: of (?:the|our) company)?\s+since"
     r"|joined (?:the|our) board(?: of directors)?(?: as [^.;]{0,40}?)?\s+(?:on|in|effective)"
     r"|(?:appointed|elected|named)\b[^.;]{0,80}?\b(?:a member of|to) (?:the|our) board(?: of directors)?\s+"
@@ -325,6 +328,55 @@ def _states_change(text, change):
     return (re.search(r"\b" + re.escape(surname) + r"\b", text) is not None
             and re.search(pattern, text, re.I) is not None and re.search(r"\bchair|\blead|\bpresiding", text, re.I)
             and any(_same_date(date, other) for date in dates for other in others))
+
+
+_HONORIFIC_NAME = re.compile(r"\b(?:Mr|Ms|Mrs|Dr)\.?\s+(?P<surname>(?-i:[A-Z])[\w’'\-]+)")
+_FULL_NAME = re.compile(r"(?-i:[A-Z][\w’'\-]+)(?:\s+(?-i:[A-Z])[\w’'\-.]*){1,3}")
+_SUFFIX = {"Jr", "Jr.", "Sr", "Sr.", "II", "III", "IV"}
+
+
+def _subjects(sentence, match):
+    """Surnames of whoever the join is about: named just before it, or else just after it.
+
+    "upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk
+    each received ..." names its joiners after a pronoun; a name before the
+    pronoun is someone else's.
+    """
+    before = sentence[:match.start()]
+    if re.search(r"\b(?:their|his|her)\s+$", before, re.I):
+        after = [m.group("surname") for m in _HONORIFIC_NAME.finditer(sentence[match.end():match.end() + 80])]
+        if after:
+            return after
+    named = [m for m in _HONORIFIC_NAME.finditer(before) if match.start() - m.end() <= 60]
+    if named:
+        return [named[-1].group("surname")]
+    full = [m for m in _FULL_NAME.finditer(before) if match.start() - m.end() <= 60]
+    words = [w.rstrip(",") for w in full[-1].group(0).split() if w.rstrip(",") not in _SUFFIX] if full else []
+    if words:
+        return [words[-1]]
+    # "upon their appointment to the Board in July 2025, Ms. Chang and Mr. Kirk each received ..."
+    return [m.group("surname") for m in _HONORIFIC_NAME.finditer(sentence[match.end():match.end() + 80])]
+
+
+def _joiners(text, start):
+    """(surname, dates) for each person joining in the year or after, or None if one is not named."""
+    found = []
+    for sentence in sentences(text):
+        for match in JOIN.finditer(sentence):
+            if _before(match.group("date"), start):
+                continue
+            surnames = _subjects(sentence, match)
+            if not surnames:
+                return None
+            found.extend((surname, [match.group("date")]) for surname in surnames)
+    return found
+
+
+def _states_join(text, joiner):
+    surname, dates = joiner
+    return (re.search(r"\b" + re.escape(surname) + r"\b", text) is not None
+            and any(_same_date(date, match.group("date")) for sentence in sentences(text)
+                    for match in JOIN.finditer(sentence) for date in dates))
 
 
 def _fy_start(report_end):
@@ -494,7 +546,16 @@ def decisions_for(position, document, record):
         joins = [m.group("date") for s in sentences(text) for m in JOIN.finditer(s)]
         if joins:
             if any(not _before(d, start) for d in joins):
-                decide(index, "JOIN_IN_THE_YEAR", dates=joins)
+                # A join in the year is a change in who sits on the board; only a
+                # block giving the same person's join on the same date states it,
+                # as for a role change - a roster of sitting directors does not.
+                joiners = _joiners(text, start)
+                if joiners:
+                    cover = [j for j in range(len(blocks)) if j != index
+                             and all(_states_join(texts[j], joiner) for joiner in joiners)]
+                    recover(index, "JOIN_IN_THE_YEAR", cover, dates=joins)
+                else:
+                    decide(index, "JOIN_IN_THE_YEAR", dates=joins)
             elif index in facts:
                 rest = [JOIN.sub(" ", s) for s in sentences(text)]
                 if not any(OTHER_COMPOSITION.search(s) for s in rest):

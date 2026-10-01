@@ -683,7 +683,7 @@ _DIRECTOR_COUNT = re.compile(
 # who sits on the board (c02-composition-facts/adjudicate.py, JOIN_IN_THE_YEAR
 # and JOIN_BEFORE_THE_YEAR).
 _DATED_JOIN = re.compile(
-    r"\b(?:has served as (?:[^.;]{0,60}?\b)?(?:a |an )?(?:independent |non-employee |non-executive )?"
+    r"\b(?:has served as (?:[^.;]{0,80}?\b)?(?:a |an )?(?:independent |non-employee |non-executive )?"
     r"(?:member of (?:the|our) board(?: of directors)?|director)(?: of (?:the|our) company)?\s+since"
     r"|joined (?:the|our) board(?: of directors)?(?: as [^.;]{0,40}?)?\s+(?:on|in|effective)"
     r"|(?:appointed|elected|named)\b[^.;]{0,80}?\b(?:a member of|to) (?:the|our) board(?: of directors)?\s+"

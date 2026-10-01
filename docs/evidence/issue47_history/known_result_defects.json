@@ -3774,13 +3774,22 @@
     "defect_id": "C02_PARAMOUNT_2025_OWN_BOARD_BIO_FACT_OMISSION_ARCHIVED",
     "register_path": "docs/evidence/issue28_continuous/known_result_defects.json"
    },
-   "repair_state": "SELECTOR_AND_ADJUDICATION_REPAIR_PENDING",
-   "why_not_repaired_yet": "The coverage rule goes into JOIN_IN_THE_YEAR the way DATED_ROLE_CHANGE has it, applied to every reading, and the reader's dated-join reach must take block 100.",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the reader and the adjudication (sections 13 and 16); the published result is an earlier version's and is not recomputed yet.",
    "evidence": [
+    "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
     "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-13-joins-by-period.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-16-join-coverage.json",
     "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
    ],
-   "original_record_retained": true
+   "original_record_retained": true,
+   "selection_problems": {},
+   "partial_repair": {
+    "joins_by_period": "Repair 13 (2926b7d0) takes eight of the biographies' in-year joins (110, 117, 126, 133, 143, 150, 159, 166), each judged a fact by the reader (docs/evidence/issue47_history/c02-selector-repairs/README.md section 13 [shared-with-#28]).",
+    "join_coverage": "JOIN_IN_THE_YEAR now replaces a reader's citation that does not state the same person's join (the roster 84 here), and the reader's dated-join reach takes block 100; only this position moves (measured-16-join-coverage.json; section 16 [shared-with-#28]).",
+    "still_open": "Today's selection agrees with the reading under the uniform adjudication. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id. The nomination-rationale question (block 168) stays open with #28."
+   }
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

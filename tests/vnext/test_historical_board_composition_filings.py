@@ -241,6 +241,57 @@ class ADatedRoleChangeIsCoveredOnlyByTheSameChange(unittest.TestCase):
         self.assertEqual({}, self._problems([0, 1, 4], decided))
 
 
+class AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin(unittest.TestCase):
+    """A roster of the sitting directors does not state when one of them joined (JOIN_IN_THE_YEAR).
+
+    #28's content check of Paramount FY2025 found the biographies' own-board
+    start dates counted covered by the roster that names the ten directors.
+    """
+
+    POSITION = "example_company:2025-12-31"
+    TEXTS = ["Our Board is currently comprised of three members: Barbara Byrne, Andrew Campion and Ann Lee.",
+             "Ms. Byrne has served as a member of our Board since August 2025.",
+             "Mr. Campion has served as a member of our Board since January 2026.",
+             "Ms. Byrne joined our Board on August 7, 2025.",
+             "Pursuant to our policy (other than Mr. Morfit, who waived receipt of the grant), upon their appointment "
+             "to the Board in July 2025, Ms. Chang and Mr. Kirk each received a prorated grant.",
+             "Mr. Morfit was appointed to the Board in July 2025."]
+
+    def setUp(self):
+        sha = [reading.text_sha256(text) for text in self.TEXTS]
+        self.document = {"blocks": [{"text": text, "linked": False} for text in self.TEXTS]}
+        self.record = {"position": self.POSITION,
+                       "selected": [{"i": 0, "verdict": "FACT", "why": "", "text_sha256": sha[0]}],
+                       "pool_facts": [{"i": i, "verdict": "MIXED", "why": "", "text_sha256": sha[i], "redundant_with": [0]}
+                                      for i in (1, 2, 4)],
+                       "pool": [{"i": i, "text_sha256": h} for i, h in enumerate(sha)]}
+
+    def test_the_rule_decides_what_states_each_join(self):
+        decided = {row["i"]: row for row in _adjudicator().decisions_for(self.POSITION, self.document, self.record)}
+        # The same person's join, more precisely dated, covers the month.
+        self.assertEqual([3], decided[1]["redundant_with"])
+        self.assertEqual([], decided[2]["redundant_with"])
+        # The joiners are the people the join is about, not a name further back.
+        self.assertEqual([], decided[4]["redundant_with"])
+        self.assertEqual("JOIN_IN_THE_YEAR", decided[2]["rule"])
+
+    def test_a_roster_no_longer_covers_the_join(self):
+        decided = {(self.POSITION, row["i"]): row
+                   for row in _adjudicator().decisions_for(self.POSITION, self.document, self.record)}
+
+        def missed(chosen, adjudications):
+            answer = reading.read_position(document=self.document, chosen=chosen, reading=self.record,
+                                           adjudications=adjudications)
+            return sorted(item["i"] for item in answer["problems"]["missed"])
+
+        # The reader's citation of the roster covered every join.
+        self.assertEqual([], missed([0, 3], {}))
+        # Under the rule only the same person's join covers one: block 3 covers
+        # Ms. Byrne's; Mr. Campion's, the grant sentence's and Mr. Morfit's own
+        # joins are stated nowhere else.
+        self.assertEqual([2, 4, 5], missed([0, 3], decided))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

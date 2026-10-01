@@ -198,6 +198,8 @@ INJECTIONS = [
      '               + r"|presiding (?:independent )?director)\\b", re.I),\n)',
      '               + r"|presiding (?:independent )?director)\\bNEVER", re.I),\n)',
      "test_taking_over_a_chair_or_the_lead_role"),
+    ('THE_JOIN_REACH_IS_SIXTY', 'r"\\b(?:has served as (?:[^.;]{0,80}?\\b)?', 'r"\\b(?:has served as (?:[^.;]{0,60}?\\b)?',
+     "test_a_long_title_before_the_join"),
     ('ANY_TARGET_YEAR_IS_ACCEPTED', '        raise ValueError("C02_COMPOSITION_PERIOD_START_INVALID:" + repr(period_start)) from None',
      '        start = dt.date(1900, 1, 1)', "test_the_target_year_is_a_date_and_the_proposal_names_it"),
 ]

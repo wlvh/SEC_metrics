@@ -443,6 +443,14 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertEqual([], statement_labels(
             "Ms. Park assumed the role of Chief Financial Officer in May 2025.", own, period_start=START))
 
+    def test_a_long_title_before_the_join(self):
+        # Paramount FY2025 block 100 (#28's content check): an officer's titles
+        # stand between "has served as" and "a member of our Board".
+        text = ("Mr. Brandon-Gordon has served as our Chief Strategy Officer and Chief Operating Officer and as a "
+                "member of our Board since August 2025.")
+        self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2025-01-01"))
+        self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels_for(text, "2026-01-01"))
+
     def test_a_join_is_dated_as_precisely_as_it_is_printed(self):
         # A 52/53-week year starts on its own day (Macy's 2022 year starts
         # January 30). A printed day settles the side; a month alone does

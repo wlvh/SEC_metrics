@@ -55,7 +55,7 @@
 | `BOARD_TASK_FORCE` | 事实 | 由具名董事组成的董事会工作组及其标题：委员会设置与成员 |
 | `NOMINEES_ARE_SITTING_DIRECTORS` | 事实 | "Each nominee is currently a member of the Board"：候选名单就是现任董事会 |
 | `COMMITTEES_NAMED_AS_A_SET` | 事实 | 把三个以上董事会委员会一并列出的句子（如章程句）：委员会设置。由判读里写出全部这些委员会的块覆盖 |
-| `JOIN_BEFORE_THE_YEAR` / `JOIN_IN_THE_YEAR` | 非事实 / 事实 | 写明某人何时加入董事会的句子。目标年度之前的日期是换了说法的任期，与 `CARD_TENURE_FIELD` 同；目标年度及以后的是期间内的成员变动。同一块里还写了别的构成事实（主席、委员会、离任）的留给判读。名词写法（"prior to Mr. Munoz's appointment to the Board in January 2022"）原先没有被句式识别，是 #28 对 Salesforce FY2026 的内容核对发现的；补上后多一条裁定（Salesforce 2026 第 4300 块，非事实） |
+| `JOIN_BEFORE_THE_YEAR` / `JOIN_IN_THE_YEAR` | 非事实 / 事实 | 写明某人何时加入董事会的句子。目标年度之前的日期是换了说法的任期，与 `CARD_TENURE_FIELD` 同；目标年度及以后的是期间内的成员变动。同一块里还写了别的构成事实（主席、委员会、离任）的留给判读。名词写法（"prior to Mr. Munoz's appointment to the Board in January 2022"）原先没有被句式识别，是 #28 对 Salesforce FY2026 的内容核对发现的；补上后多一条裁定（Salesforce 2026 第 4300 块，非事实）。年度内的加入与 `DATED_ROLE_CHANGE` 一样，只由写明同一人加入、日期至少一样精确的块覆盖，读者引用的名单（如 Paramount FY2025 第 84 块）不算，由 #28 对 Paramount FY2025 的核对引出 |
 | `DATED_ROLE_CHANGE` | 事实（只由同一变动覆盖） | 写明某位董事在目标年度内或之后某天接任董事长、首席独立（主持）董事或某委员会主席的句子：一次职务变动。只有写明同一人在同一职务上同一变动、日期至少一样精确的块才算覆盖；写现任者、另一人的变动、只给月份或费用季度的不算。读者判为事实但引用了不覆盖它的块时，裁定替换读者的引用，`read_position` 按裁定判断。由 #28 对 Salesforce FY2026 的内容核对（第 933 块）引出，见 `../c02-selector-repairs/README.md` 第 15 节 |
 
 **两处是执行者的取舍，不是多数读者的意见**：`PRESIDING_DUTY` 与多数读者一致（9 比 5），`NOMINEES_ARE_SITTING_DIRECTORS` 与多数相反（Macy's 五份判读里 1 份取、4 份没取），理由是非分级董事会全员改选，候选名单即董事会，与每位读者都取了的"非分级董事会候选人数即规模"同理。
