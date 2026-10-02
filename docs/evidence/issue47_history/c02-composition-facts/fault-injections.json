@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 91,
- "caught": 136,
- "total": 136,
+ "control_tests_run": 92,
+ "caught": 138,
+ "total": 138,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -1151,6 +1151,22 @@
    "result": "CAUGHT",
    "failed": [
     "test_our_vice_chairman_s_retirement_dated_in_the_year"
+   ]
+  },
+  {
+   "injection": "THE_PROXY_ACCESS_COUNT_IS_VETOED",
+   "expected": "test_the_board_s_size_on_which_a_proxy_access_limit_is_based",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"
+   ]
+  },
+  {
+   "injection": "ANY_BOARD_S_COUNT_IS_OURS",
+   "expected": "test_the_board_s_size_on_which_a_proxy_access_limit_is_based",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"
    ]
   }
  ]

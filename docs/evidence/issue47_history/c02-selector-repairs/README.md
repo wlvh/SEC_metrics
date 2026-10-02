@@ -830,3 +830,18 @@
 共 136/136，对照 91 个用例。
 
 **量测**（`measured-42-vice-chairman-retirement.json`）：只新增 Lumen 2023 第 1124 块（读者判为事实），第 1601 块随之有了覆盖，Lumen 2023 现与判读一致。漏选 13→11，误选 5 不变，不一致的位置 8→7，最新年不变。
+
+## 43. 代理访问条款里写出的董事会人数
+
+**问题。** Lumen 2021–2024 的代理访问条款都有一句 "Based on the 11 directors constituting our Board immediately following the meeting, two is the maximum number of proxy access candidates that we would be required to include in our … proxy materials."。四份判读都判为部分事实（会后董事会 11 人）。这句因为 "required" 被政策否决整句跳过。2021、2023、2024 的这块由别处的人数陈述覆盖，所以没显示为漏选；2022 的读者没给覆盖（他注意到当年候选人只有 10 位，与 11 对不上），于是算漏选。
+
+**改动。** 新增 `_CONSTITUTING_THE_BOARD`（"<人数> directors constituting our Board"），在政策否决之前读，标为董事会规模陈述：不管句子接着讲什么规则，这个人数就是董事会的规模。只认语料里的这种写法，要求 "our"。
+
+**用例与注错。** `test_the_board_s_size_on_which_a_proxy_access_limit_is_based`：Lumen 的原句为正例；同一段里前一句规则（"cannot exceed 20% of the number of directors then serving on the Board"，没写人数）为反例；别的机构董事会的人数为构造反例。注错：
+
+- `THE_PROXY_ACCESS_COUNT_IS_VETOED`（不在否决之前读）；
+- `ANY_BOARD_S_COUNT_IS_OURS`（不要求 "our"）。
+
+共 138/138，对照 92 个用例。
+
+**量测**（`measured-43-proxy-access-board-count.json`）：只新增 Lumen 2021 第 2756 块、2022 第 3663 块、2023 第 4439 块、2024 第 4312 块（读者都判为部分事实），其余位置不变。漏选 11→10，误选 5 不变，最新年不变。

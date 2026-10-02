@@ -414,6 +414,12 @@ INJECTIONS = [
      'str(period_start.year) for match in _OFFICER_RETIREMENT', "test_our_vice_chairman_s_retirement_dated_in_the_year"),
     ('ANY_VICE_CHAIRMAN_IS_OURS', 'of\\s+our\\s+(?:former\\s+)?vice', 'of\\s+(?:our|the)\\s+(?:former\\s+)?vice',
      "test_our_vice_chairman_s_retirement_dated_in_the_year"),
+    # Repair 43: the board's size a proxy-access limit is based on.
+    ('THE_PROXY_ACCESS_COUNT_IS_VETOED',
+     '        if _CONSTITUTING_THE_BOARD.search(sentence):\n            labels.add("BOARD_SIZE_STATEMENT")\n', '',
+     "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"),
+    ('ANY_BOARD_S_COUNT_IS_OURS', 'constituting\\s+our\\s+board', 'constituting\\s+(?:our|the)\\s+board',
+     "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"),
 ]
 
 

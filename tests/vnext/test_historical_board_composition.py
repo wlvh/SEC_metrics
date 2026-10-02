@@ -439,6 +439,22 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "directors attended our Annual Meeting of Stockholders in 2021.", frozenset({"example"}),
             period_start=START))
 
+    def test_the_board_s_size_on_which_a_proxy_access_limit_is_based(self):
+        # Lumen FY2021-FY2024 (blocks 2756, 3663, 4439, 4312): the count is
+        # stated in a rule's sentence ("would be required"), which the policy
+        # veto alone would set aside; every reader took the count.
+        text = ("Based on the 11 directors constituting our Board immediately following the meeting, two is the maximum "
+                "number of proxy access candidates that we would be required to include in our 2024 proxy materials.")
+        self.assertEqual(["BOARD_SIZE_STATEMENT"], statement_labels(text, period_start=START))
+        # The rule itself states no count (the sentence before it in each filing).
+        self.assertEqual([], statement_labels(
+            "The number of shareholder-nominated candidates appearing in any of our annual meeting proxy materials "
+            "cannot exceed 20% of the number of directors then serving on the Board.", period_start=START))
+        # Another body's board is not this one (constructed).
+        self.assertEqual([], statement_labels(
+            "Based on the 11 directors constituting the Board of Acme Holdings immediately following its meeting, two "
+            "is the maximum number of candidates that Acme would be required to include.", period_start=START))
+
     def test_having_a_named_director_as_our_chair(self):
         # Ford's proxies name the Executive Chair this way; the latest-year
         # reader took the holder (FY2024 block 942).

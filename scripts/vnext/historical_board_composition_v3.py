@@ -501,6 +501,12 @@ _EXCLUDED_TOPIC = re.compile(
     # is named "Non-Employee Director Compensation Policy".
     r"|\beligible\s+for\b[^.;]{0,40}?\bcompensation\b", re.I)
 _FIRST_PERSON = re.compile(r"\bI\b")
+# "Based on the 11 directors constituting our Board immediately following the
+# meeting, two is the maximum number of proxy access candidates that we would be
+# required to include ..." (Lumen's proxy-access paragraphs): the count is the
+# board's size whatever rule the sentence goes on to apply, so it is read before
+# the policy veto, as every reader of the four such sentences took it.
+_CONSTITUTING_THE_BOARD = re.compile(r"\b" + _NUM + r"\s+directors\s+constituting\s+our\s+board\b", re.I)
 _BOARD_SIZE = (
     re.compile(r"\bboard(?: of directors)?\b[^.;:]{0,60}?\b(?:consists|is (?:currently |now )?(?:composed|comprised"
                r"|made up)|currently (?:has|consists)|has|is fixed at|will (?:consist|be (?:composed|comprised|reduced"
@@ -1039,6 +1045,8 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
     for sentence in sentences(text):
         if _FIRST_PERSON.search(sentence):
             continue
+        if _CONSTITUTING_THE_BOARD.search(sentence):
+            labels.add("BOARD_SIZE_STATEMENT")
         unqualified = _QUALIFYING_REFERENCE.sub(" ", sentence)
         policy = _POLICY.search(unqualified)
         # "Family member" is an independence standard's word ("the director or
