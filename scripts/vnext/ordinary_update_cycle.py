@@ -284,6 +284,8 @@ def _recover(root,state,configuration,verify_candidate=None):
 def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
              source_identity_root=None,a05_formula=False,d02_category=False):
     """Check one company's current input and keep a durable candidate history."""
+    _need(type(d02_category) is bool, 'UPDATE_D02_CATEGORY_SCOPE_INVALID')
+    _need(not d02_category, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
         if source_identity_root is not None else Path(source_root).resolve())
     identity_source=(source if source_identity_root is None else

@@ -8,6 +8,12 @@
 
 定向真实保存来源测试覆盖 Lumen1670、Pfizer2175/2240、Paramount2257 的精确移除、Paramount2108真实诉讼收益保留、Enphase755 Item 3 页脚**仍未修复**、旧默认候选相等、旧候选在新证据合同下拒绝、D03同一来源提案不变。首次增加D03断言时误把 `compiled_spec` 传给内部来源函数，日志 `directed-final.log` 保留；修正测试调用后 `directed-repair.log` 2/2通过。Lumen私有Run只是程序重放和来源字节一致；14条内容及完整漏选方向尚未独立验收，其他三家公司也未产生新原生 Result。#47 自己的留出阅读仍留下许多非披露误纳，本方不能把这次部分排除当成完整 D02 能力。四个旧错误 Result 在 `known_result_defects.json` 继续按精确身份扣留，新私有 Result 不领取390或生产信用。
 
-当前代码树的 fast 选择器146/146通过（`fast.log`，59.274秒），并仅在实际新来源材料上跑了上述2项定向测试；未重跑未受改动的旧大材料。新源码精确差异独审与推送后主CI分别保留，不能以本地测试代替。
+停用前代码树的 fast 选择器146/146通过（`fast.log`，59.274秒），并仅在实际新来源材料上跑了上述2项定向测试；未重跑未受改动的旧大材料。停用后的绑定、短测、受影响快测和新增差异独审分别记录，不能把旧快测或先前私有Run写成最终树验收。
+
+**独审后的安全停点：**精确补丁 `de22326d` 的[限定独审](independent-review/conclusion.md)发现共用规则本身的 P2 误删反例：`We face litigation, which could result in a significant loss.` 中关键词后的单个逗号被当成列表证据，`left_out=True`，尽管它是对本公司诉讼的实际陈述。此句是合成反例，不在已核的四份原件中；四处原件排除仍正确，但**通用选择规则不能因此取得验收**。旧独审结论保留，复现已直接通知 #47 共用修复负责人（[评论](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381)）。本方没有另写一套竞争的词法核心。
+
+修后只在普通新 Run 与更新入口加停用门：`d02_category=True` 在写 Run 或更新状态前明确拒绝；`_create_case_run` 也拒绝直接绕过。`guard-existing.py` 对先前的 Lumen 私有成功指针重入返回 `UPDATE_BLOCKED`，指针哈希不变、没有新尝试/Result；之前的私有Run/记录仍可独立读取，**其 `PUBLISHED/EXACT` 只是当时程序通过，不转为当前内容信用**。冻结 V2、旧默认和其它指标路径不受此门影响。`binding-before-gate.json`/`binding-after-gate.json`分开保存停用前后V13/V14身份，不能把停用后的闭包写成此前 Lumen Run 的创建身份。修后新增短测和受影响快测/独审分别登记，不重做上述保存原件长链。
+
+停用门后的单项短测 `guard-short.log` 1/1 及最终树 fast `fast-gate.log` 146/146（57.748秒）均通过；先前保存来源定向2/2和Lumen创建/冷读只对停用前源码成立。停用门补丁的精确限定独审及最终head CI另验。
 
 本次没有改变 D02 业务定义、模型／SEC预算或生产权限。后继接收若规则字节改变，需要重新核对本方固定副本的实际差异与来源；不自动追平对方历史分支。

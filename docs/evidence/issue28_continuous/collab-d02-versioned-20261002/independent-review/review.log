@@ -1,0 +1,27 @@
+scope: de22326da963f83771241c0f6e968ed33b810f70^ = fdeafd4365a918b36dcd7c65540f2ad7f597c89c
+working tree at start: task/b06-new-source, ahead 2; pre-existing modified docs/evidence/issue28_continuous/execution-state.json left untouched.
+
+Read-only checks:
+- git diff --exit-code fdeafd43 de22326d -- scripts/vnext/text_results_v2.py scripts/vnext/normal_run_v2.py: exit 0, frozen files unchanged.
+- diff -u scripts/vnext/text_results_v2.py scripts/vnext/d02_text_results_v3.py: only module description, optional d02_category_policy validation, and select(proposal) before D02 candidate check.
+- Compared local versioned code and terms to git show 104876d6cfae7812d93fd5b8a4bb0e0f97959fff after replacing their mutual paths: exact byte equality both files.
+- PYTHONPATH=.:scripts python3 -m py_compile scripts/vnext/d02_text_results_v3.py scripts/vnext/ordinary_d02_item8_v1.py: exit 0.
+- load_requirement_snapshot and validate_execution_authority: V13 closure sha256:f1d966d1f5f681975e11302c98ef7df0120d5281cae7e00cddeba752c65a4239; V14 closure sha256:f8e1bd43989cf4d5bd1e3f86177a9af20d835e1000dce37a5ace3fd93176764c. validate_semantic_rule_bindings(V14) and validate_wiring_receipt(V14) returned without error. A subsequent logging expression used nonexistent parsed-snapshot key `parent` and raised KeyError; this was after all validators, with no mutation. Raw V14 baseline_manifest parent closure equals the V13 closure.
+- Existing directed-repair.log: 2 tests, OK; run.exit/cold.exit/fast.exit: 0/0/0. Existing fast.log summary: PASSED, 146 selected tests, 59.274 seconds. These are producer logs, not independent content acceptance.
+
+Original-source read (direct _Blocks parser; sha256 of full local HTML verified):
+- Lumen 2025 10-K file sha256 87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429, block 1670: counsel advises on finance, regulatory, litigation and other matters, then costs expensed; class left_out=True; out of D02 scope.
+- Pfizer 2025 10-K file sha256 175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab, block 2175: estimates risk list; block 2240: trade receivables collection, parenthetical litigation as possible method; both left_out=True; out of D02 scope.
+- Paramount 2025 10-K file sha256 4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d, block 2257: credit covenant add-back category, left_out=True; block 2108: records $156m 2023 stockholder-litigation benefit, left_out=False and retained.
+- Enphase 2025 10-K file sha256 7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112, block 755: page footer, no legal keyword; left_out=False, known unresolved false positive.
+
+Independent rule counterexample (PYTHONPATH=.:scripts, classify with text_business_candidates._LEGAL):
+- 'We face litigation, which could result in a significant loss.' -> occurrence LIST_MEMBER, exposure [], prose True, left_out True.
+- 'Litigation, brought by a customer against us in 2025, remains unresolved.' -> occurrence LIST_MEMBER, exposure [], prose True, left_out True.
+- Control: 'We are involved in litigation, which could result in a significant loss.' -> exposure REGISTRANT_SUBJECT_TO_A_LEGAL_MATTER, left_out False.
+Counterexamples are synthetic demonstrations of the general rule error; no claim they occur in the reviewed SEC originals.
+
+Saved private Lumen Run read-only check:
+- /private/tmp/issue28-d02-versioned-20261002/state/lumen_technologies/metrics/D02-item8-v1/attempts/f78b9756655c4c309ee24c98bac83876/ terminal CANDIDATE_READY, manifest parent requirement closure V13, Result sha256:da6c0000c7c45b04c2dec00927bcbf94de959d8270199a07c2bc89704a68411c, Evidence PASS, 14 selected. Block 1670 absent. metrics_matrix.csv and metric_evidence.csv match terminal file hashes.
+- current.json latest attempt 2424cbc9966e4e0b8ea43f71ee9440f7, successful attempt remains f78b9756655c4c309ee24c98bac83876. cold.json reports NO_SOURCE_CONTENT_CHANGE and same Result.
+- No independent failure injection or full semantic read of all 14 excerpts. No real provider/paid/SEC call.

@@ -1,6 +1,7 @@
 """The explicit #28 D02 successor reads current originals, not peer results."""
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from vnext import d02_text_results_v3 as successor
 from vnext import text_results_v2 as frozen
@@ -16,6 +17,29 @@ def indexes(candidate):
 
 
 class D02CurrentItem8MaterialTest(unittest.TestCase):
+    def test_unresolved_false_exclusion_cannot_create_or_resume_native_credit(self):
+        from vnext.d02_item8_category_28_v1 import classify
+        from vnext.text_business_candidates import _LEGAL
+        from vnext import normal_run_v3 as normal
+        from vnext import ordinary_update_cycle as update
+        from vnext.ordinary_d02_category_update import run_company
+
+        counterexample = 'We face litigation, which could result in a significant loss.'
+        self.assertTrue(classify(text=counterexample, keyword=_LEGAL)['left_out'])
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with self.assertRaisesRegex(ValueError, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED'):
+                normal.create_normal_run(data_root=root/'data', run_dir=root/'run',
+                    company_id='lumen_technologies', metric_id='D02', d02_category=True)
+            with self.assertRaisesRegex(ValueError, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED'):
+                update.run_once(state_root=root/'state', source_root=ROOT,
+                    company_id='lumen_technologies', metric_ids=['D02'], d02_category=True)
+            row = run_company(state_root=root/'state', source_root=ROOT,
+                company_id='lumen_technologies', metric_ids=['D02'])['metrics'][0]
+            self.assertEqual('UPDATE_BLOCKED', row['status'])
+            self.assertIn('UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED', row['reason'])
+            self.assertFalse((root/'state').exists())
+
     def test_current_false_mentions_leave_but_actual_litigation_stays(self):
         expected = {
             'lumen_technologies': {('ITEM_8', 1670)},

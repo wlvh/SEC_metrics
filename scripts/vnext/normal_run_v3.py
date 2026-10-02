@@ -363,6 +363,7 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
     _need(type(d02_category) is bool and (not d02_category or metric_id == 'D02'),
           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
+    _need(not d02_category, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -383,6 +384,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
 
 def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, requirement, freeze=False):
     """One native record/Review/Result write order for ordinary source routes."""
+    _need(case.get('input_binding', {}).get('d02_category_policy') is None,
+          'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
     from .run_store import (create_run,append_run_record,append_review_decision,write_review_assets,
         validate_and_freeze_run,load_frozen_run,_mechanically_replay_open_run)
     data_root,run_dir = _external(data_root),_external(run_dir)

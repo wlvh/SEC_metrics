@@ -846,6 +846,31 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_d02item8_de22326",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_d02_item8_v1",
+      "scope_paths": [
+        "scripts/vnext/ordinary_d02_item8_v1.py",
+        "scripts/vnext/d02_item8_category_28_v1.py",
+        "catalog/r6/D02_item8_category_28_v1.json",
+        "scripts/vnext/d02_text_results_v3.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_d02_category_update.py",
+        "tools/vnext_normal_update.py",
+        "tests/vnext/test_d02_item8_current_material.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/"
+      ],
+      "patch_sha": "de22326da963f83771241c0f6e968ed33b810f70",
+      "spawned_at": "2026-10-02T08:48:52Z",
+      "ended_at": "2026-10-02T09:01:03Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_COMMA_FALSE_EXCLUSION"
+    },
+    {
       "task_name": "review_a05na_3a05f07",
       "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
       "module": "a05_formula_structural_na_repair",
@@ -9338,7 +9363,7 @@
     ]
   },
   "d02_item8_versioned_current_20261002": {
-    "status": "LUMEN_PRIVATE_NATIVE_AND_INDEPENDENT_COLD_PASS_CONTENT_UNVALIDATED_REVIEW_PENDING",
+    "status": "FIRST_REVIEW_NEEDS_FIX_P2_FALSE_EXCLUSION_NATIVE_CREDIT_SUSPENDED",
     "peer_source_commit": "104876d6cfae7812d93fd5b8a4bb0e0f97959fff",
     "peer_wired_commit_read_via_exact_github_api": "36c64ab65e84af5e3f37b8f4b47820516fcec97d",
     "peer_source_code_blob": "7c02380ede6757ad6f1ff9528f0abb625d45af07",
@@ -9348,6 +9373,8 @@
     "old_default_candidate_equal": true,
     "parent_requirement_closure_hash": "sha256:f1d966d1f5f681975e11302c98ef7df0120d5281cae7e00cddeba752c65a4239",
     "child_requirement_closure_hash": "sha256:f8e1bd43989cf4d5bd1e3f86177a9af20d835e1000dce37a5ace3fd93176764c",
+    "post_review_gate_parent_requirement_closure_hash": "sha256:f916646edeb416ccae056b4233b3c600fcc60a890437a6c59fa31ac15ae1e1fa",
+    "post_review_gate_child_requirement_closure_hash": "sha256:ccce1faa6c84132271d20f2ba7a8e13f66262cebbe65ff8074b2345df3ee0621",
     "three_wiring_receipts": "IDENTITY_ONLY_PASS_NOT_NEW_FACTORY_CONTROLLER_ZERO_EGRESS_RUN",
     "directed_current_source_tests": "TWO_OF_TWO_PASS_FINAL_62_565_SECONDS",
     "fast_selectors": "146_OF_146_PASS_59_274_SECONDS",
@@ -9358,6 +9385,23 @@
     "lumen_new_private_result_id": "sha256:da6c0000c7c45b04c2dec00927bcbf94de959d8270199a07c2bc89704a68411c",
     "lumen_new_private_run_id": "run:ordinary-integrated:11d74bd11fcdb479e300cb9394992e433bab4c71cffd0ca1ea1aeb86dd02a75b",
     "lumen_normal_first_and_cold": "CANDIDATE_READY_66_819_SECONDS_THEN_NO_SOURCE_CONTENT_CHANGE_40_092_SECONDS_NO_SECOND_RUN",
+    "first_independent_review": {
+      "patch_sha": "de22326da963f83771241c0f6e968ed33b810f70",
+      "verdict": "NEEDS_FIX_P2_COMMA_FALSE_EXCLUSION",
+      "result_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review/conclusion.md",
+      "counterexample": "WE_FACE_LITIGATION_COMMA_WHICH_CURRENT_RULE_LEFT_OUT_TRUE",
+      "existing_four_source_exclusions": "INDEPENDENT_ORIGINAL_CHECK_SUPPORTS_ALL_FOUR",
+      "new_current_result_credit": false
+    },
+    "post_review_gate": {
+      "new_d02_category_normal_run": "REJECTED_BEFORE_RUN_WRITE",
+      "new_d02_category_ordinary_update": "UPDATE_BLOCKED_BEFORE_STATE_WRITE",
+      "pre_gate_lumen_private_success_pointer": "PRESERVED_HASH_UNCHANGED_NO_REACTIVATION",
+      "guard_short_test": "ONE_OF_ONE_PASS",
+      "final_tree_fast": "146_OF_146_PASS_57_748_SECONDS",
+      "shared_core_owner_notification": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381",
+      "real_calls": [0, 0, 0]
+    },
     "remaining_known_wrong_enphase_item3_footer": 755,
     "old_four_d02_exact_results_still_withheld": true,
     "new_private_content_credit": false,
