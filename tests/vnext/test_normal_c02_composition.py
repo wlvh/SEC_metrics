@@ -38,6 +38,7 @@ class C02CompositionFastTest(unittest.TestCase):
         contracts = (
             ('v2', 'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2'),
             ('v3', 'COMPOSITION_GROUPED_V2', 'COMPOSITION_FACTS_V1'),
+            ('v4', 'COMPOSITION_GROUPED_V3', 'COMPOSITION_GROUPED_V2'),
         )
         for version, matching_policy, wrong_policy in contracts:
             with self.subTest(version=version):

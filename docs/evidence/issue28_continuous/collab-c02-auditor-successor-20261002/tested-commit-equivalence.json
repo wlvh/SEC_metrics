@@ -1,0 +1,147 @@
+{
+  "record_type": "ISSUE28_TESTED_WORKTREE_COMMIT_BYTE_EQUIVALENCE",
+  "status": "PASS_BYTE_EQUIVALENCE",
+  "commit": "df9feafac6f1a5ff88145e29b1785117ab067bd1",
+  "execution_at_commit_claimed": false,
+  "original_execution": "PRE_COMMIT_BOUND_WORKTREE",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "installed_data_root": "/private/tmp/issue28-c02-auditor-current-20261002/state/jpmorgan_chase/metrics/C02-composition-auditor-v3/attempts/36c363d930f84c28aac9eb1711de8566/data",
+  "parent_closure": "sha256:51890efc877ffc6124184a064ff17671652301ba1ecf1106e02b5a31e19a5483",
+  "child_closure": "sha256:c94bbfbe435b54f44d860c8a35922170bfc984e9ccd2421010418fec89e29250",
+  "verified_files": [
+    {
+      "path": "catalog/r6/C02_board_disclosures_v4.md",
+      "sha256": "e30db70a8b3506263bccf5bd2f26883bc92a32cff60c19d51cf6047b7a6ed1d0",
+      "size": 5977,
+      "installed_equal": true
+    },
+    {
+      "path": "config/issue28_normal_results_v2.json",
+      "sha256": "45519d79515c45950a1d14e530e365c4a6c34c7c69d55733458a91ceb1eb554a",
+      "size": 8767,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/c02_board_composition_28_v3.py",
+      "sha256": "498c2a10615ea657b76b5183ebedb9ea52dd2854ee5e8f7748f3609c09771d9d",
+      "size": 80395,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/c02_composition_text_results.py",
+      "sha256": "123c6c45951e98977ec209f1d4001c07460dc9ee56ea3e96b9b22b08f45003c7",
+      "size": 13155,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "sha256": "8978fff64d442f2f7bbfe1f75d6743e89e2c6b4b44665828622f75ef550256f4",
+      "size": 36160,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_c02_auditor_update_v3.py",
+      "sha256": "cc909d984b21979cb3cd786c5e314511aa1db747de64f352e755f50896cea551",
+      "size": 3106,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_remaining_cases.py",
+      "sha256": "73a6b3c728430acf9814bfeb756fedddc0e145c695e45fa5412f7364655b6b7a",
+      "size": 11313,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "sha256": "4da408c978fb2fb691e44b857a855ab73e40ad4f8233277115cc6f4e65763c3a",
+      "size": 26464,
+      "installed_equal": true
+    },
+    {
+      "path": "tools/vnext_normal_update.py",
+      "sha256": "e1a3e6537d4cd3fe9d2040bbab989b797de8728c9c192b4946217ee0380fb60c",
+      "size": 6101,
+      "installed_equal": null,
+      "reason": "CLI is child-bound; normal Run installs the parent runtime"
+    },
+    {
+      "path": "requirements/issue_28_v13/CONTRACT.md",
+      "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "size": 1211,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "sha256": "7ff736eb87746a7d32a2df4d41ebaa35924ec9db6695cafa86b7fc81492499fd",
+      "size": 81094,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/decision_register.json",
+      "sha256": "2ee5980add0d483330521c7a5a2d8aac00776d13f9e621c692384fa1a8beb3c9",
+      "size": 9408,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/invariant_profile.json",
+      "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "size": 416,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/transfer_manifest.json",
+      "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "size": 311,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v14/CONTRACT.md",
+      "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+      "size": 1605,
+      "installed_equal": null
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "6c9b3e6d89e794205c4088d4dc59abfe73158079e7048a232feb78620aa37231",
+      "size": 94210,
+      "installed_equal": null
+    },
+    {
+      "path": "requirements/issue_28_v14/decision_register.json",
+      "sha256": "c83648909944ce5ede842d7ae1e6d31ac8320f368eef3b7c2876c13bffb22109",
+      "size": 11100,
+      "installed_equal": null
+    },
+    {
+      "path": "requirements/issue_28_v14/invariant_profile.json",
+      "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+      "size": 418,
+      "installed_equal": null
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "sha256": "3ad0ede03e83bba026e15a3035481180ef9cf79f7f87242b47bbdbc31ccd1db1",
+      "size": 520,
+      "installed_equal": null
+    },
+    {
+      "path": "tests/vnext/test_c02_auditor_successor.py",
+      "sha256": "7db7556c0f2c694ddb50f609b05d5671049316a10e1c98c313b89628fa700043",
+      "size": 6257,
+      "installed_equal": null
+    },
+    {
+      "path": "tests/vnext/test_normal_c02_composition.py",
+      "sha256": "078f3e1ffe4e16ac44437c65a055c936d8ba4fbb1c4098636a4baf94370bcf38",
+      "size": 17296,
+      "installed_equal": null
+    },
+    {
+      "path": "tools/run_fast_tests_v2.py",
+      "sha256": "ec71a80aed2a1903e1332081e3e303e33b06ceea5f29e0268fe4e3839fd56d00",
+      "size": 18461,
+      "installed_equal": null
+    }
+  ],
+  "whole_content_or_production_credit": false
+}
