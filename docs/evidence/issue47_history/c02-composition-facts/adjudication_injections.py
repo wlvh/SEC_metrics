@@ -125,6 +125,15 @@ INJECTIONS = [
     ('THE_COMMITTEE_NEED_NOT_BE_NAMED', ADJ,
      ' or not SUBMITTED_BY.search(texts[index - 1]):', ':',
      'tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot'),
+    ('THE_SUBCOMMITTEE_DUTY_IS_NOT_DECIDED', ADJ,
+     '        if SUBCOMMITTEE_DUTY.match(text):\n            decide(index, "SUBCOMMITTEE_DUTY")\n', '',
+     'tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact'),
+    ('THE_SUBCOMMITTEE_DUTY_IS_DECIDED_A_FACT', ADJ,
+     '"SUBCOMMITTEE_DUTY": ("NOT",', '"SUBCOMMITTEE_DUTY": ("FACT",',
+     'tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact'),
+    ('ANY_SUBCOMMITTEE_IS_A_DUTY', ADJ,
+     '        if SUBCOMMITTEE_DUTY.match(text):', '        if re.search(r"sub-?committee", text, re.I):',
+     'tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact'),
 ]
 RUNNER = textwrap.dedent('''
     import importlib.util, sys, types, unittest

@@ -458,6 +458,35 @@ class AReportsSigningCommitteeIsAFactAndItsSignOffIsNot(unittest.TestCase):
         self.assertEqual({}, self.decided(texts=unsigned, sign_off="FACT", signer_cites=()))
 
 
+class ADutyDoneThroughASubcommitteeIsNotAFact(unittest.TestCase):
+    """A committee's duty done through a subcommittee (SUBCOMMITTEE_DUTY).
+
+    Lumen's FY2022 reader took "Oversees our classified activities and
+    facilities through a subcommittee" (block 946); its FY2021, FY2023 and
+    FY2024 readers left the same line out.
+    """
+
+    POSITION = "example_company:2022-12-31"
+    DUTY = "■Oversees our classified activities and facilities through a subcommittee"
+    SETUP = ("To help with this, the Audit Committee established a cybersecurity subcommittee, which includes a board "
+             "member with cybersecurity expertise.")
+
+    def decided(self, text, verdict):
+        sha = reading.text_sha256(text)
+        document = {"blocks": [{"text": text, "linked": False}]}
+        record = {"position": self.POSITION, "selected": [], "pool": [{"i": 0, "text_sha256": sha}],
+                  "pool_facts": [{"i": 0, "verdict": verdict, "why": "", "text_sha256": sha}]}
+        return [(row["rule"], row["decision"], row["reader_verdict"])
+                for row in _adjudicator().decisions_for(self.POSITION, document, record)]
+
+    def test_a_reader_who_took_it_is_overruled(self):
+        self.assertEqual([("SUBCOMMITTEE_DUTY", "NOT", "MIXED")], self.decided(self.DUTY, "MIXED"))
+
+    def test_a_subcommittee_set_up_with_its_member_is_not_the_class(self):
+        # Enphase FY2023 block 447, taken by its reader and by the selector (repair 23).
+        self.assertEqual([], self.decided(self.SETUP, "MIXED"))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

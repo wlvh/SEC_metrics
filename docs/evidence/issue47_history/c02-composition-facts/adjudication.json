@@ -89,6 +89,10 @@
   "REPORT_SIGN_OFF": {
    "decision": "NOT",
    "reason": "\"Respectfully submitted,\" names neither a committee nor a person; the sentence above it names the committee and the signatures name the people."
+  },
+  "SUBCOMMITTEE_DUTY": {
+   "decision": "NOT",
+   "reason": "A committee's duty carried out through a subcommittee describes the committee's work, which the owner's meaning leaves out; it names no member and no decision setting a committee up."
   }
  },
  "decisions": [
@@ -325,6 +329,15 @@
      "year": "2021"
     }
    ]
+  },
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "i": 946,
+   "text_sha256": "sha256:495ef286ae2cfa6442891ec54135c9f0e17b1467737ed69bbbd78267ef053f31",
+   "rule": "SUBCOMMITTEE_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "the Risk and Security Committee has a subcommittee for classified activities and facilities - in its responsibilities list"
   },
   {
    "position": "lumen_technologies:2022-12-31",

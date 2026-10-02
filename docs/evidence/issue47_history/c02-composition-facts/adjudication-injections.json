@@ -9,6 +9,10 @@
    "failures": 0,
    "ran": 2
   },
+  "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact": {
+   "failures": 0,
+   "ran": 2
+  },
   "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin": {
    "failures": 0,
    "ran": 2
@@ -250,6 +254,30 @@
    "caught": true,
    "failures": 1,
    "ran": 3
+  },
+  {
+   "injection": "THE_SUBCOMMITTEE_DUTY_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "THE_SUBCOMMITTEE_DUTY_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "ANY_SUBCOMMITTEE_IS_A_DUTY",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
   }
  ],
  "all_caught": true

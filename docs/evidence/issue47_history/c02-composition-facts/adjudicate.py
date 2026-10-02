@@ -171,6 +171,16 @@ REPORT_SIGNERS_COMMITTEE (FACT) / REPORT_SIGN_OFF (NOT)
     sentence is covered wherever the signatures' own restatements are; the
     signatures themselves do not name the committee.
 
+SUBCOMMITTEE_DUTY (NOT)
+    A committee's responsibility carried out through a subcommittee, printed in
+    its list of duties ("Oversees our classified activities and facilities
+    through a subcommittee", Lumen's Risk and Security Committee). It describes
+    the committee's work, which the owner's meaning leaves out (a description
+    of a committee's work is not composition); it names no member and no
+    decision to set a committee up, as "the Audit Committee established a
+    cybersecurity subcommittee, which includes a board member ..." does. Lumen's
+    FY2022 reader took it; its FY2021, FY2023 and FY2024 readers left it out.
+
 Older years' filings are read from a root restored from the acquisition's
 export by this checkout (``--source-root``). Building a document takes the
 route's input preparation; ``--documents`` names a cache directory (outside
@@ -253,6 +263,9 @@ RULES = {
                                          "as the other proxies' signature heads do; its legal notice is no fact."),
     "REPORT_SIGN_OFF": ("NOT", "\"Respectfully submitted,\" names neither a committee nor a person; the sentence above "
                                "it names the committee and the signatures name the people."),
+    "SUBCOMMITTEE_DUTY": ("NOT", "A committee's duty carried out through a subcommittee describes the committee's work, "
+                                 "which the owner's meaning leaves out; it names no member and no decision setting a "
+                                 "committee up."),
 }
 
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
@@ -468,6 +481,8 @@ NOMINEES = re.compile(r"\bnominees?\b|\bnominated\b|\bstand(?:s|ing)? for (?:re-
 # that submits the report, "Respectfully submitted," and the members' names.
 SUBMITTED_BY = re.compile(r"\breport was submitted by the (?-i:[A-Z])[\w&’' ,]{0,80}?\bcommittee\b", re.I)
 SIGN_OFF = re.compile(r"^respectfully submitted,?$", re.I)
+# A duty in a committee's list of responsibilities, done through a subcommittee.
+SUBCOMMITTEE_DUTY = re.compile(r"^\W*oversees\b[^.;]{0,120}\bthrough\s+a\s+sub-?committee\b", re.I)
 
 
 def _leavers(text):
@@ -696,6 +711,8 @@ def decisions_for(position, document, record):
                 decide(title, "BOARD_TASK_FORCE", redundant_with=[index])
         if SITTING.search(text):
             decide(index, "NOMINEES_ARE_SITTING_DIRECTORS")
+        if SUBCOMMITTEE_DUTY.match(text):
+            decide(index, "SUBCOMMITTEE_DUTY")
         named = CHARTER_SET.search(text)
         committees = {m.group(1) for m in COMMITTEE_NAME.finditer(named.group("list"))} if named else set()
         if len(committees) >= 3:
