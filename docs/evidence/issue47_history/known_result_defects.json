@@ -6595,21 +6595,24 @@
      "marker": "[shared-with-#47]",
      "subject": "Guard explicit E01 sources against unlisted body items",
      "affects_47": "Yes, one of the three findings: #28's port of #47's header/document stop (0097c911) counted a display:none heading as headed; #47's historical_event_items.headed_item_codes does the same (measured in memory). The other two - a capitalised 'See Item' taken as a heading, and a hidden 'SEE' or the previous paragraph's 'OR' erasing the next real heading - do not reproduce on #47's reader (measured: neither is taken as a heading / the real heading stays).",
-     "integration": "OWN_REPAIR: headed_item_codes excludes headings whose span a reader cannot see (the item reader's _hidden_in_span), test and injection added; #47 code, #28's guard not copied"
+     "integration": "OWN_REPAIR: headed_item_codes excludes headings whose span a reader cannot see (the item reader's _hidden_in_span), test and injection added; #47 code, #28's guard not copied",
+     "later": "Corrected 2026-10-02 (9caada4e): the two 'do not reproduce' findings were measured wrongly. 'See Item 2.01.' was tested without a caption, which the heading pattern (a capital letter after the number) never matches; with a caption, 'SEE Item 2.01 Completion of ...' was read as a heading on #47's reader, its reference words being lowercase only. The 'OR' and hidden 'SEE' examples did not erase the next heading only because of that same case rule: a previous paragraph ending in lowercase 'see' or 'and', or hidden lowercase 'see', did erase it. Repaired in #47's own reader: reference words in any case, read only in the visible text of the heading's own block. 13 constructed controls (docs/evidence/issue47_history/e01-item-text/reference-controls.json): the reader at f25d3373 is wrong on 8, 9caada4e on none."
     },
     {
      "commit": "df0f455f",
      "marker": "[shared-with-#47]",
      "subject": "Bind E01 heading references to their visible block",
      "affects_47": "None: the cross-paragraph reference erasure it repairs does not occur on #47's reader (above).",
-     "integration": "NOT_NEEDED"
+     "integration": "NOT_NEEDED",
+     "later": "Corrected 2026-10-02 (9caada4e): the cross-paragraph erasure does occur on #47's reader for lowercase words (see 4711a488 above). Integration changed to OWN_REPAIR: #47's reader reads the reference window in the heading's own visible block, its own code; #28's segmentation is not copied."
     },
     {
      "commit": "0de97ec9",
      "marker": "[shared-with-#47]",
      "subject": "Preserve E01 references across invisible layout",
      "affects_47": "None: hidden <br> splitting belongs to #28's block segmentation, which #47's reader does not have.",
-     "integration": "NOT_NEEDED"
+     "integration": "NOT_NEEDED",
+     "later": "Corrected 2026-10-02 (9caada4e): #47's reader had the same exposure in another form - hidden text inside the 40-character window both made and hid references. #47's repair reads only visible text; an element out of the layout (display:none, hidden, non-display elements) starts no block, while a laid-out but unseen block (visibility:hidden, opacity:0) still breaks the line. Integration changed to OWN_REPAIR."
     },
     {
      "commit": "f6a4e442",
