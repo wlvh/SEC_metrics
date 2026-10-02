@@ -271,6 +271,36 @@ class APageNumberNeedsTheSequenceBesideTheFooter(unittest.TestCase):
         texts = ["Footer", "15", "body", "Footer", "16", "HEADING"]
         self.assertEqual(set(), page_number_blocks(self._blocks(texts)))
 
+    @staticmethod
+    def _facing(first, last, footer="Footer"):
+        # An odd page prints its number above the footer, an even page below it,
+        # as JPMorgan's reports do.
+        # The body differs page to page; a block repeated beside every number
+        # would be a running footer itself.
+        texts = []
+        for number in range(first, last + 1):
+            body = "text of page " + str(number)
+            texts += ([body, str(number), footer] if number % 2 else [footer, str(number), body])
+        return texts
+
+    def _numbers(self, texts, found):
+        return sorted(texts[i] for i in found)
+
+    def test_facing_pages_alternate_the_number_s_side(self):
+        texts = self._facing(15, 20)
+        found = page_number_blocks(self._blocks(texts))
+        self.assertEqual(["15", "16", "17", "18", "19", "20"], self._numbers(texts, found))
+        with mock.patch.object(route, "_FACING_PAGES", False):
+            self.assertEqual(set(), page_number_blocks(self._blocks(texts)))
+
+    def test_a_footer_without_words_is_not_a_running_footer(self):
+        # A table's "—" cells stand beside numbers on both sides too.
+        self.assertEqual(set(), page_number_blocks(self._blocks(self._facing(15, 20, "\u2014"))))
+
+    def test_a_short_run_is_not_a_sequence_of_pages(self):
+        # A contents entry or a table label stands beside a few numbers, not page after page.
+        self.assertEqual(set(), page_number_blocks(self._blocks(self._facing(15, 18))))
+
 
 class D02PreparesThroughThisNavigation(unittest.TestCase):
 

@@ -853,6 +853,12 @@ def audit_report_spans(*, document, ranges=None):
 
 
 _BARE_NUMBER = re.compile(r"\d{1,4}")
+# Whether a number may count as a page by a run of numbers beside the same
+# footer on either side (facing pages), and how long that run must be: a footer
+# stands beside page after page, a table label or a contents entry beside a few
+# numbers.
+_FACING_PAGES = True
+_FACING_PAGE_RUN = 5
 
 
 def page_number_blocks(blocks):
@@ -878,6 +884,20 @@ def page_number_blocks(blocks):
     No real heading in those reports meets it: Macy's thirty-six numbered
     note headings stand beside unique paragraphs or beside a running header
     that no neighbouring number shares.
+
+    A report printed as facing pages puts the number on alternate sides of
+    the footer, so the number one lower or higher stands beside the same
+    footer on the other side. JPMorgan's reports print "290" above "JPMorgan
+    Chase & Co./2021 Form 10-K" and "291" below it, and found 12 page numbers
+    in a 10,000-block report; its footer and the notes' running head then
+    became excerpts of the Note 30 Item 3 incorporates. So a number also
+    counts when the footer has words and the numbers beside it, on either
+    side, run through this one for at least ``_FACING_PAGE_RUN``
+    consecutive values. Looser forms were measured first and took table cells
+    and contents entries for page numbers: two pages apart on the same side
+    (cells beside "$", patent terms), one apart on the other side without a
+    run (Ford's contents rows "Ford Credit Segment 45 Corporate Other",
+    Macy's year columns), and the run without words (Macy's cells beside "—").
     """
     texts = Counter(" ".join(block["text"].split()).casefold() for block in blocks)
     bare = {index: int(block["text"].strip()) for index, block in enumerate(blocks)
@@ -894,9 +914,23 @@ def page_number_blocks(blocks):
             if not 0 <= index + side < len(blocks):
                 continue
             neighbour = " ".join(blocks[index + side]["text"].split()).casefold()
-            if texts[neighbour] >= 3 and beside[(side, neighbour)] & {number - 1, number + 1}:
+            adjacent = {number - 1, number + 1}
+            if texts[neighbour] >= 3 and (beside[(side, neighbour)] & adjacent or (
+                    _FACING_PAGES and re.search(r"[a-z]", neighbour)
+                    and _in_run(number, beside.get((-1, neighbour), set())
+                                | beside.get((1, neighbour), set())))):
                 pages.add(index)
     return pages
+
+
+def _in_run(number, numbers):
+    """Whether ``number`` lies in a run of ``_FACING_PAGE_RUN`` consecutive members of ``numbers``."""
+    low = high = number
+    while low - 1 in numbers:
+        low -= 1
+    while high + 1 in numbers:
+        high += 1
+    return high - low + 1 >= _FACING_PAGE_RUN
 
 
 # How far from a page number a running footer or header can sit. Pfizer's group

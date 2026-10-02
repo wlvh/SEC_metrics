@@ -74,6 +74,9 @@ def proposal_of(built, raw, *, without=None):
     if without == "APPENDED_STATEMENTS":
         saved["appended_statements_range"] = route.appended_statements_range
         route.appended_statements_range = lambda **arguments: None
+    if without == "FACING_PAGES":
+        saved["_FACING_PAGES"] = route._FACING_PAGES
+        route._FACING_PAGES = False
     if without == "STATEMENTS_START":
         # As before the repair: the statements start at the first title after Item 8.
         saved["statements_start"] = route.statements_start
@@ -370,6 +373,46 @@ class TheStatementsBeginWhereTheyArePrintedTogetherTest(unittest.TestCase):
         _, before = proposal("m-10k_20220129.htm", without="STATEMENTS_START")
         self.assertEqual(self._appended(before), self._appended(found))
         self.assertEqual(excerpts(before), excerpts(found))
+
+
+class FacingPageFurnitureTest(unittest.TestCase):
+    """JPMorgan prints its page numbers on alternate sides of the footer.
+
+    "290" stands above "JPMorgan Chase & Co./2025 Form 10-K" and "291" below
+    it, so the page-number rule (the number one lower or higher beside the
+    same footer on the same side) found eight page numbers in the FY2025
+    report, the page-structure furniture found none of its footers, and the
+    footer and the notes' running head became excerpts of the Note 30 that
+    Item 3 incorporates. The held-out reading of FY2025 judged each of them
+    not a disclosure (d02-older-years/judgements/jpmorgan_chase-2025-12-31.json).
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.corrected, cls.found = proposal("jpm-20251231.htm")
+        _, cls.before = proposal("jpm-20251231.htm", without="FACING_PAGES")
+
+    def test_the_page_numbers_are_found(self):
+        blocks = self.corrected["blocks"]
+        pages = route.page_number_blocks(blocks)
+        self.assertGreater(len(pages), 250)
+        footer = {" ".join(blocks[i + side]["text"].split()) for i in pages for side in (-1, 1)
+                  if 0 <= i + side < len(blocks)}
+        self.assertIn("JPMorgan Chase & Co./2025 Form 10-K", footer)
+
+    def test_only_the_footers_in_note_30_leave_and_each_was_judged_not_a_disclosure(self):
+        lost = set(excerpts(self.before)) - set(excerpts(self.found))
+        self.assertEqual(set(), set(excerpts(self.found)) - set(excerpts(self.before)))
+        reading = json.loads((ROOT / "docs/evidence/issue47_history/d02-older-years/judgements/"
+                                     "jpmorgan_chase-2025-12-31.json").read_text(encoding="utf-8"))
+        taken = {row["i"]: row for row in reading["judgements"] if row["kind"] == "TAKEN"}
+        footers = {i for i, row in taken.items()
+                   if row.get("scope") == "NOTE_30" and row["verdict"] == "NOT_DISCLOSURE"}
+        self.assertTrue(footers)
+        self.assertEqual(footers, lost)
+        disclosures = {i for i, row in taken.items() if row["verdict"] == "DISCLOSURE"}
+        self.assertEqual(set(), disclosures - set(excerpts(self.found)))
+        self.assertEqual(excerpts(self.before, "D03"), excerpts(self.found, "D03"))
 
 
 class StatementsStartTest(unittest.TestCase):

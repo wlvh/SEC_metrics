@@ -53,7 +53,8 @@
   },
   "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
    "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
-   "repair_state": "REGISTERED_NOT_REPAIRED"
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair": "historical_text_results.page_number_blocks reads page numbers printed on alternate sides of the footer (facing pages), so page_structure_furniture finds the footer and the running head (d02-facing-pages/)."
   },
   "SPLIT_EMPHASIS_NOTE_HEADING": {
    "text": "Note 17's heading prints its number bold, '. ' in body weight and the title bold, so the frozen scan never takes it as a heading. Note 16 ran on to the end of Item 8, the sub-note 16A Item 3 incorporates met Note 17's own 'A.' and was not located, and its legal proceedings were read only where the keyword admitted a paragraph.",
