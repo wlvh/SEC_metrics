@@ -719,6 +719,22 @@ class ACandidateTheHeaderOmitsStopsTheWindow(unittest.TestCase):
         self.assertEqual([], answer["candidates"])
         self.assertEqual("NO_CANDIDATE_ITEM", answer["status"])
 
+    def test_a_heading_a_reader_cannot_see_is_not_a_heading(self):
+        # In memory, #28's counterexample to its port (review of 4711a488): a
+        # display:none "Item 2.01" in a filing whose header lists 8.01 only.
+        raw = ('<html><body><div style="display:none">Item 2.01 Completion of Acquisition or Disposition of '
+               'Assets</div><p>Item 8.01 Other Events.</p><p>The company issued a press release.</p>'
+               '<p>SIGNATURES</p></body></html>').encode("utf-8")
+        self.assertEqual({"8.01"}, headed_item_codes(raw_bytes=raw))
+        answer = self._candidates([("0000000000-25-000006", raw, ["8.01"])])
+        self.assertEqual([("0000000000-25-000006", "8.01")],
+                         [(item["accession"], item["item_code"]) for item in answer["candidates"]])
+        # The same heading shown is headed, and stops the window.
+        shown = raw.replace(b' style="display:none"', b"")
+        with self.assertRaises(EventItemTextError) as caught:
+            self._candidates([("0000000000-25-000006", shown, ["8.01"])])
+        self.assertEqual(HEADED_NOT_LISTED + ":0000000000-25-000006:2.01", str(caught.exception))
+
     def test_one_filing_s_omission_stops_the_window_whatever_the_others_list(self):
         # In memory: a listed candidate in one filing, an unlisted one in another.
         listed = _html("Item 1.01 Entry into a Material Definitive Agreement.", "An agreement.", "SIGNATURES")

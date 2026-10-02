@@ -338,11 +338,19 @@ def item_text(*, raw_bytes, item_code):
 
 
 def headed_item_codes(*, raw_bytes):
-    """The item codes a document heads itself; a heading inside a link is a contents entry."""
+    """The item codes a document heads itself, as its reader sees them.
+
+    A heading inside a link is a contents entry. A heading in text a reader
+    cannot see - the elements, attributes and styles the item reader names - is
+    not one the document shows: #28's review of its port (4711a488) found a
+    display:none "Item 2.01" counted as headed, which stopped a window over
+    nothing a reader could read. Neither counts as headed.
+    """
     text = _visible_text(raw_bytes=raw_bytes)
     nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
     return {code for start, end, code in item_headings(text)
-            if not _linked_in_span(nodes=nodes, start=start, end=end)}
+            if not _linked_in_span(nodes=nodes, start=start, end=end)
+            and _hidden_in_span(nodes=nodes, start=start, end=end) is None}
 
 
 def _caption_only(gap, *, code):

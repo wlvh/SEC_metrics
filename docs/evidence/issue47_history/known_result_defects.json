@@ -6578,6 +6578,47 @@
      "integration": "NOT_NEEDED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "f6a4e442",
+   "own_commit_at_read": "62e4f355",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; changed since d6f82b22: #28's JPMorgan FY2025 C02 private result (sha256:53f2aa84...) now records block 3436 as a confirmed content error, shared fix 46 not yet received, no credit",
+   "baseline": "Read since d6f82b22: four commits, their file lists and the collab-e01-header-guard-20261002 README.",
+   "increments": [
+    {
+     "commit": "4711a488",
+     "marker": "[shared-with-#47]",
+     "subject": "Guard explicit E01 sources against unlisted body items",
+     "affects_47": "Yes, one of the three findings: #28's port of #47's header/document stop (0097c911) counted a display:none heading as headed; #47's historical_event_items.headed_item_codes does the same (measured in memory). The other two - a capitalised 'See Item' taken as a heading, and a hidden 'SEE' or the previous paragraph's 'OR' erasing the next real heading - do not reproduce on #47's reader (measured: neither is taken as a heading / the real heading stays).",
+     "integration": "OWN_REPAIR: headed_item_codes excludes headings whose span a reader cannot see (the item reader's _hidden_in_span), test and injection added; #47 code, #28's guard not copied"
+    },
+    {
+     "commit": "df0f455f",
+     "marker": "[shared-with-#47]",
+     "subject": "Bind E01 heading references to their visible block",
+     "affects_47": "None: the cross-paragraph reference erasure it repairs does not occur on #47's reader (above).",
+     "integration": "NOT_NEEDED"
+    },
+    {
+     "commit": "0de97ec9",
+     "marker": "[shared-with-#47]",
+     "subject": "Preserve E01 references across invisible layout",
+     "affects_47": "None: hidden <br> splitting belongs to #28's block segmentation, which #47's reader does not have.",
+     "integration": "NOT_NEEDED"
+    },
+    {
+     "commit": "f6a4e442",
+     "marker": "[shared-with-#47]",
+     "subject": "Record bounded E01 source guard review and byte evidence",
+     "affects_47": "None: evidence only. The merge moved issue_47_v1's parent closure (re-minted 481945f0).",
+     "integration": "MERGED_AND_REMINTED (481945f0)"
+    }
+   ]
   }
  ]
 }
