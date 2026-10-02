@@ -6,12 +6,13 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 18,
-    "newly_excluded_result_id_count": 25,
+    "newly_excluded_coordinate_count": 19,
+    "newly_excluded_result_id_count": 27,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
       "ford_motor_company|E01|2025-12-31",
+      "jpmorgan_chase|C02|2025-12-31",
       "jpmorgan_chase|D02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
       "lumen_technologies|D02|2025-12-31",
@@ -1013,7 +1014,63 @@
       "run_id": "run:ordinary-integrated:d2c6edc8a6f5b1489f0ade8b7741f860b200d313ff9b6170a69eefd441cb01be",
       "archived_value_footer_occurrences": 3,
       "archived_value_running_head_occurrences": 1
+    },
+    {
+      "metric_id": "C02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_COMPOSITION_SELECTOR_CONTENT_SCOPE_REPAIR_PENDING",
+      "current_credit": "WITHDRAWN_AUDITOR_RETENTION_IS_NOT_BOARD_COMPOSITION",
+      "summary": "A selected original proxy block reports the Audit Committee and Board view about retaining PwC as external auditor, not a fact about board size, membership, committees, independence or director qualifications under the adopted C02 target.",
+      "source_block": {
+        "block_index": 3367,
+        "role": "excerpt_31",
+        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
+        "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+        "source_accession": "0000019617-26-000096",
+        "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+        "raw_span_sha256": "deab07ffbaa55d1cefa40eafbf427e19a46167bcdeea7c11f18de45025647c03"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/audit.json",
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_PRIVATE_NORMAL_UPDATE",
+      "result_id": "sha256:43465c499be32cbdb37722b653be4a43cc0bf12998aaccbe7e27559ab42d831b",
+      "run_id": "run:ordinary-integrated:d2a38686e99b48c6fb0dbbcd323f7a2ac53f3d6f071388c8a118d075ebd381a4",
+      "native_evidence_status": "PASS_BUT_OUT_OF_TARGET_CONTENT"
+    },
+    {
+      "metric_id": "C02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_COMPOSITION_SELECTOR_CONTENT_SCOPE_REPAIR_PENDING",
+      "current_credit": "WITHDRAWN_AUDITOR_RETENTION_IS_NOT_BOARD_COMPOSITION",
+      "summary": "A selected original proxy block reports the Audit Committee and Board view about retaining PwC as external auditor, not a fact about board size, membership, committees, independence or director qualifications under the adopted C02 target.",
+      "source_block": {
+        "block_index": 3367,
+        "role": "excerpt_31",
+        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
+        "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+        "source_accession": "0000019617-26-000096",
+        "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+        "raw_span_sha256": "deab07ffbaa55d1cefa40eafbf427e19a46167bcdeea7c11f18de45025647c03"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/audit.json",
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_ARCHIVED_390",
+      "result_id": "sha256:5f6ec648144fa842c833b3a46cb390d9d5e46f67854083bb5ace3c0adf708400",
+      "run_id": "run:ordinary-integrated:f5525c123ee549e5ccb638c9e3dfa322254498899522104fb6a1dd969debe08d",
+      "archived_390_value_contains_excerpt": true
     }
   ],
-  "latest_peer_read_commit": "e76e2953d96005f2fde60e46118a9fbd495c5dfe"
+  "latest_peer_read_commit": "ebac1015497b97d35e2357781fbbfc0b613fb57a"
 }
