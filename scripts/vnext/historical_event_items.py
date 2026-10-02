@@ -65,8 +65,8 @@ the filing (hdr.sgml), written from the filer's submission form; the document is
 the filing itself. Where the document heads a candidate item its header does not
 list, the claims miss a candidate, and a count confirmed over them would be one
 short. Over the 794 saved 8-Ks this happens once: Pfizer's December 2023 8-K
-heads "Item 2.01 Completion of Acquisition or Disposition of Assets" (the Seagen
-merger) and its header lists 2.02 (docs/evidence/issue47_history/e01-item-text/
+heads a 2.01 item, the completion of an acquisition (the Seagen merger), and its
+header lists 2.02 (docs/evidence/issue47_history/e01-item-text/
 header-document-census.json). There is no claim to count such an item by, so
 the window stops by name (``HEADED_NOT_LISTED``) rather than being answered
 without it. A heading inside a link is a contents entry, not the item, and does
