@@ -54,6 +54,11 @@ def _locked(root):
         yield
 
 
+def _d02_v2_policy():
+    from .ordinary_d02_item8_v2 import POLICY
+    return POLICY
+
+
 def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
             a05_formula=False,d02_category=False):
     policy=normal._policy(normal.ROOT)
@@ -66,7 +71,8 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
     _need(not native or len(metrics) == 1, 'UPDATE_NATIVE_REQUIRES_PER_METRIC_HISTORY')
     _need(type(a05_formula) is bool and (not a05_formula or metrics == ['A05']),
           'UPDATE_A05_FORMULA_SCOPE_INVALID')
-    _need(type(d02_category) is bool and (not d02_category or metrics == ['D02']),
+    _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+          and (not d02_category or metrics == ['D02']),
           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
     requirement_id = normal.REQUIREMENT_ID
     if native:
@@ -81,7 +87,10 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
     if a05_formula:
         body['a05_formula_policy'] = normal.A05_FORMULA_POLICY
     if d02_category:
-        from .ordinary_d02_item8_v1 import POLICY
+        if d02_category is True:
+            from .ordinary_d02_item8_v1 import POLICY
+        else:
+            from .ordinary_d02_item8_v2 import POLICY
         body['d02_category_policy'] = POLICY
     path=root/'configuration.json'
     if path.exists():
@@ -129,7 +138,9 @@ def _inspect(source_root,configuration,native_assessment_ledger=None):
                 **({'d01_emphasis':True} if m == 'D01' else {}),
                 **({'a05_formula':True} if m == 'A05' and
                     configuration.get('a05_formula_policy') == normal.A05_FORMULA_POLICY else {}),
-                **({'d02_category':True} if m == 'D02' and
+                **({'d02_category':('ITEM8_V2' if
+                    configuration.get('d02_category_policy') == _d02_v2_policy()
+                    else True)} if m == 'D02' and
                     configuration.get('d02_category_policy') is not None else {}))
            for m in configuration['metric_ids']}
     _need(sha256_file(path=source_root/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_INSPECTION')
@@ -284,8 +295,9 @@ def _recover(root,state,configuration,verify_candidate=None):
 def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
              source_identity_root=None,a05_formula=False,d02_category=False):
     """Check one company's current input and keep a durable candidate history."""
-    _need(type(d02_category) is bool, 'UPDATE_D02_CATEGORY_SCOPE_INVALID')
-    _need(not d02_category, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(type(d02_category) is bool or d02_category == 'ITEM8_V2',
+          'UPDATE_D02_CATEGORY_SCOPE_INVALID')
+    _need(d02_category is not True, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
         if source_identity_root is not None else Path(source_root).resolve())
     identity_source=(source if source_identity_root is None else
@@ -327,13 +339,13 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                         **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}),
                         **({'d01_emphasis':True} if metric == 'D01' else {}),
                         **({'a05_formula':True} if a05_formula else {}),
-                        **({'d02_category':True} if d02_category else {}))
+                        **({'d02_category':d02_category} if d02_category else {}))
                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,
                         company_id=company_id,metric_id=metric,
                         **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}),
                         **({'d01_emphasis':True} if metric == 'D01' else {}),
                         **({'a05_formula':True} if a05_formula else {}),
-                        **({'d02_category':True} if d02_category else {}))
+                        **({'d02_category':d02_category} if d02_category else {}))
                     rendered=render_ordinary_run(data_root=work/'data',run_dir=work/'runs'/metric)
                     hashes={}
                     for name,raw in rendered['files'].items():

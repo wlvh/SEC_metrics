@@ -1,0 +1,45 @@
+{
+  "parent_closure": "sha256:8a667e941f234dd623138d8bdce46668f9f947c045bafda62b8a47f203f12b6b",
+  "child_closure": "sha256:71f7e0969a0f315e8826bba6a2778418f9cacc465b9f766c0a6dac0e49f96e6f",
+  "child_execution_authority_hash": "sha256:c4e14a5513e391370f868997bd9296a0eb4c2c8fa58d26b06a6568007382d54a",
+  "source_bindings": {
+    "catalog/r6/D02_item8_category_28_v2.json": null,
+    "config/issue28_normal_results_v2.json": {
+      "sha256": "83ae65669d2e85f9545dbcf7e27357c7f0b3fd48b6e9ef2341c9acc0b3f4a68b",
+      "size": 8367
+    },
+    "scripts/vnext/d02_item8_category_28_v2.py": null,
+    "scripts/vnext/d02_text_results_v3.py": {
+      "sha256": "2dd46868a1da519952ba5708f76761f2af8ecc963cbfbe4a8a7a5124adb65084",
+      "size": 35086
+    },
+    "scripts/vnext/normal_run_v3.py": {
+      "sha256": "8e9109ef0ae34d507ec93b0dd14fa081e3f8452c1e48efb6b8ed7a4f720d7fa9",
+      "size": 34153
+    },
+    "scripts/vnext/ordinary_d02_category_update.py": null,
+    "scripts/vnext/ordinary_d02_item8_v2.py": null,
+    "scripts/vnext/ordinary_remaining_cases.py": {
+      "sha256": "696534677044a674e2f5c05206fbae7e2e22c74cd4681abed28e7e05faa79858",
+      "size": 10669
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "sha256": "05a799f910da3f9cb269afea2da80430dbe735949ea088043232f286d4d3d6e0",
+      "size": 24947
+    }
+  },
+  "changed_paths": [
+    "catalog/r6/D02_item8_category_28_v2.json",
+    "config/issue28_normal_results_v2.json",
+    "scripts/vnext/d02_item8_category_28_v2.py",
+    "scripts/vnext/d02_text_results_v3.py",
+    "scripts/vnext/normal_run_v3.py",
+    "scripts/vnext/ordinary_d02_category_update.py",
+    "scripts/vnext/ordinary_d02_item8_v2.py",
+    "scripts/vnext/ordinary_remaining_cases.py",
+    "scripts/vnext/ordinary_update_cycle.py"
+  ],
+  "peer_source_commit": "147957c400c3361ab26ee0b04bbb89b2a692cadd",
+  "peer_module_git_blob": "184327494290f413a97091a22613e4b968ab8d45",
+  "peer_terms_git_blob": "e65ccafc00f569ac0adc0e3501c76a7d7dba463d"
+}

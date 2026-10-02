@@ -17,15 +17,20 @@ def indexes(candidate):
 
 
 class D02CurrentItem8MaterialTest(unittest.TestCase):
-    def test_unresolved_false_exclusion_cannot_create_or_resume_native_credit(self):
-        from vnext.d02_item8_category_28_v1 import classify
+    def test_v1_false_exclusion_remains_suspended_and_v2_keeps_the_matter(self):
+        from vnext.d02_item8_category_28_v1 import classify as v1
+        from vnext.d02_item8_category_28_v2 import classify as v2
         from vnext.text_business_candidates import _LEGAL
         from vnext import normal_run_v3 as normal
         from vnext import ordinary_update_cycle as update
-        from vnext.ordinary_d02_category_update import run_company
+        from vnext.ordinary_d02_category_update import run_company as old_wrapper
 
         counterexample = 'We face litigation, which could result in a significant loss.'
-        self.assertTrue(classify(text=counterexample, keyword=_LEGAL)['left_out'])
+        self.assertTrue(v1(text=counterexample, keyword=_LEGAL)['left_out'])
+        self.assertFalse(v2(text=counterexample, keyword=_LEGAL)['left_out'])
+        second = 'Litigation, brought by a customer against us in 2025, remains unresolved.'
+        self.assertTrue(v1(text=second, keyword=_LEGAL)['left_out'])
+        self.assertFalse(v2(text=second, keyword=_LEGAL)['left_out'])
         with TemporaryDirectory() as temporary:
             root = Path(temporary)
             with self.assertRaisesRegex(ValueError, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED'):
@@ -34,7 +39,7 @@ class D02CurrentItem8MaterialTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED'):
                 update.run_once(state_root=root/'state', source_root=ROOT,
                     company_id='lumen_technologies', metric_ids=['D02'], d02_category=True)
-            row = run_company(state_root=root/'state', source_root=ROOT,
+            row = old_wrapper(state_root=root/'state', source_root=ROOT,
                 company_id='lumen_technologies', metric_ids=['D02'])['metrics'][0]
             self.assertEqual('UPDATE_BLOCKED', row['status'])
             self.assertIn('UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED', row['reason'])
@@ -51,7 +56,7 @@ class D02CurrentItem8MaterialTest(unittest.TestCase):
                 old = prepare_case(data_root=ROOT, company_id=company,
                                    metric_id='D02')
                 new = prepare_case(data_root=ROOT, company_id=company,
-                                   metric_id='D02', d02_category=True)
+                                   metric_id='D02', d02_category='ITEM8_V2')
                 frozen_candidate = frozen.create_deterministic_text_candidate(
                     **old['text_arguments'])
                 default_candidate = successor.create_deterministic_text_candidate(
@@ -85,7 +90,7 @@ class D02CurrentItem8MaterialTest(unittest.TestCase):
     def test_item3_footer_is_not_falsely_claimed_as_repaired(self):
         old = prepare_case(data_root=ROOT, company_id='enphase_energy', metric_id='D02')
         new = prepare_case(data_root=ROOT, company_id='enphase_energy',
-                           metric_id='D02', d02_category=True)
+                           metric_id='D02', d02_category='ITEM8_V2')
         a = successor.create_deterministic_text_candidate(**old['text_arguments'])
         b = successor.create_deterministic_text_candidate(**new['text_arguments'])
         self.assertIn(('ITEM_3', 755), indexes(a))

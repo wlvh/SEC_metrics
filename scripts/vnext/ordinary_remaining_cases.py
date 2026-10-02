@@ -40,7 +40,8 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
           "NORMAL_C02_GROUPED_SCOPE_INVALID")
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == "D01"),
           "NORMAL_D01_EMPHASIS_SCOPE_INVALID")
-    _need(type(d02_category) is bool and (not d02_category or metric_id == "D02"),
+    _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+          and (not d02_category or metric_id == "D02"),
           "NORMAL_D02_CATEGORY_SCOPE_INVALID")
     if c02_composition:
         from .normal_run_v3 import _policy as current_policy
@@ -69,7 +70,10 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
             case["spec_path"] = ("catalog/r6/C02_board_disclosures_v3.md" if c02_grouped
                                  else "catalog/r6/C02_board_disclosures_v2.md")
         if d02_category:
-            from .ordinary_d02_item8_v1 import POLICY
+            if d02_category is True:
+                from .ordinary_d02_item8_v1 import POLICY
+            else:
+                from .ordinary_d02_item8_v2 import POLICY
             case['input_binding'] = {'d02_category_policy': POLICY,
                                      'source_input_binding': prepared['input_binding']}
             case['text_arguments'] = {**case['text_arguments'],
