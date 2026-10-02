@@ -846,6 +846,26 @@
   },
   "subagent_register": [
     {
+      "task_name": "audit_a05original_cbce8c3",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_a05_jpmorgan_current",
+      "scope_paths": [
+        "catalog/deterministic_metrics.json",
+        "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/result.json",
+        "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/original-content.json",
+        "/private/tmp/issue28-jpm-a05-current-20261002/state/jpmorgan_chase/metrics/A05/",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/request_attempts/"
+      ],
+      "patch_sha": "cbce8c37afeba590cee6fc1584753469ccea6ec2",
+      "spawned_at": "2026-10-02T06:07:03Z",
+      "ended_at": "2026-10-02T06:27:57Z",
+      "tool_calls": 48,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_ORIGINAL_CONTENT",
+      "tool_calls_outer": 17,
+      "message_count": 3
+    },
+    {
       "task_name": "audit_d01_current_865d822",
       "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
       "module": "ordinary_d01_marriott_paramount_current",
@@ -9137,7 +9157,7 @@
       "other_runner_functions_and_limits": "UNCHANGED",
       "potential_downstream": "Stacked #47 branch may inherit one D01 source-material selector; no historical code, ledger, snapshot or worktree operated"
     },
-    "new_head_ci": "36968995325_AT_187b4d43_FAST_SUCCESS_MAIN_IN_PROGRESS"
+    "new_head_ci": "36968995325_AT_187b4d43_SUCCESS_16_OF_16_COMPLETED_2026_10_02T06_20_40Z"
   },
   "collab_peer_94c_increment_20261002": {
     "peer_fixed_commit": "94cbc3e7e6af372d0ad8349585241fdbd2d0ed4e",
@@ -9165,6 +9185,8 @@
     "new_private_result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
     "value": "0.01353819078340816975991354239",
     "direct_original_content_check": "TWO_AUTHENTICATED_10K_HTML_FOUR_CONTEXT_VALUES_AND_APPROVED_RATIO_MATCH",
+    "independent_original_content": "PASS_LIMITED_ORIGINAL_CONTENT_CBCE8C37_TWO_10K_NOT_390",
+    "issuer_roa_display_difference": "ISSUER_REPORTED_1_29_PERCENT_OWN_APPROVED_FORMULA_1_353819_PERCENT_PUBLIC_ROW_FORMULA_CURRENTLY_EMPTY",
     "new_run_validation": "NOT_RUN",
     "current_390_credit": false,
     "old_archive_git_blob_unchanged": true,
