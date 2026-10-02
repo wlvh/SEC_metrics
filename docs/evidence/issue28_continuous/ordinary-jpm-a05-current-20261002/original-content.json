@@ -1,0 +1,86 @@
+{
+  "record_type": "ISSUE28_JPMORGAN_2025_A05_ORIGINAL_CONTENT_CHECK",
+  "source_ref_and_raw_sha256_verified": true,
+  "current_and_prior_annual_originals": [
+    {
+      "accession": "0000019617-25-000270",
+      "source_reference_id": "sha256:ee34c0ce40daa590e9746be4b5f55c944a34d13da3a499474c546c364dc67ea3",
+      "raw_asset_id": "sha256:f62bd288f3c4492140db19629acf7b9a8de9da72caf895b724a4229dc5b72d96",
+      "native_parse_id": "sha256:c0161fb0ec128ff8938afc83b2d18e9443244cc8de0ac4d1e421b930a8dc63ef"
+    },
+    {
+      "accession": "0001628280-26-008131",
+      "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+      "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "native_parse_id": "sha256:d4a9820c49bcea1c37ca331f29afeb3918beded5cb2e0515f7c198f46ba3a745"
+    }
+  ],
+  "facts": [
+    {
+      "accession": "0001628280-26-008131",
+      "qualified_name": "us-gaap:NetIncomeLoss",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "value_usd": "57048000000",
+      "original_occurrences": 6,
+      "contexts": [
+        "c-1"
+      ],
+      "original_lexical_values": [
+        "57,048"
+      ]
+    },
+    {
+      "accession": "0001628280-26-008131",
+      "qualified_name": "us-gaap:Assets",
+      "period_start": "2025-12-31",
+      "period_end": "2025-12-31",
+      "value_usd": "4424900000000",
+      "original_occurrences": 3,
+      "contexts": [
+        "c-30"
+      ],
+      "original_lexical_values": [
+        "4,424,900"
+      ]
+    },
+    {
+      "accession": "0001628280-26-008131",
+      "qualified_name": "us-gaap:Assets",
+      "period_start": "2024-12-31",
+      "period_end": "2024-12-31",
+      "value_usd": "4002814000000",
+      "original_occurrences": 3,
+      "contexts": [
+        "c-31"
+      ],
+      "original_lexical_values": [
+        "4,002,814"
+      ]
+    },
+    {
+      "accession": "0000019617-25-000270",
+      "qualified_name": "us-gaap:Assets",
+      "period_start": "2024-12-31",
+      "period_end": "2024-12-31",
+      "value_usd": "4002814000000",
+      "original_occurrences": 3,
+      "contexts": [
+        "c-26"
+      ],
+      "original_lexical_values": [
+        "4,002,814"
+      ]
+    }
+  ],
+  "approved_formula_id": "average_denominator_ratio",
+  "computed_ratio": "0.01353819078340816975991354239",
+  "private_result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+  "content_scope": "Three selected A05 values, same-concept FY2024 comparator, entity/period/unit/no-dimensions. Not all statement facts or full 390 acceptance.",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false
+}
