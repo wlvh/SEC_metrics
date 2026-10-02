@@ -106,7 +106,8 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
-    _need(type(d02_category) is bool and (not d02_category or metric_id == 'D02'),
+    _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+          and (not d02_category or metric_id == 'D02'),
           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import prepare_case as prepare_capacity_case
@@ -254,7 +255,8 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
-    _need(type(d02_category) is bool and (not d02_category or metric_id == 'D02'),
+    _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+          and (not d02_category or metric_id == 'D02'),
           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import install_inputs
@@ -361,9 +363,11 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
-    _need(type(d02_category) is bool and (not d02_category or metric_id == 'D02'),
+    _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+          and (not d02_category or metric_id == 'D02'),
           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
-    _need(not d02_category, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(d02_category is not True, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(d02_category != 'ITEM8_V2', 'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -384,8 +388,13 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
 
 def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, requirement, freeze=False):
     """One native record/Review/Result write order for ordinary source routes."""
-    _need(case.get('input_binding', {}).get('d02_category_policy') is None,
-          'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    if case.get('input_binding', {}).get('d02_category_policy') is not None:
+        from .ordinary_d02_item8_v1 import POLICY as suspended_d02_policy
+        _need(case['input_binding']['d02_category_policy'] != suspended_d02_policy,
+              'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+        from .ordinary_d02_item8_v2 import POLICY as suspended_d02_v2_policy
+        _need(case['input_binding']['d02_category_policy'] != suspended_d02_v2_policy,
+              'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
     from .run_store import (create_run,append_run_record,append_review_decision,write_review_assets,
         validate_and_freeze_run,load_frozen_run,_mechanically_replay_open_run)
     data_root,run_dir = _external(data_root),_external(run_dir)
@@ -472,9 +481,12 @@ def replay_case(*, data_root, manifest, spec=None):
     _need(a05_policy in {None, A05_FORMULA_POLICY} and
           (a05_policy is None or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_REPLAY_POLICY_CHANGED')
-    from .ordinary_d02_item8_v1 import POLICY as d02_policy_value
     d02_policy = saved.get('input_binding', {}).get('d02_category_policy')
-    _need(d02_policy in {None, d02_policy_value} and
+    d02_policy_v1 = d02_policy_v2 = None
+    if d02_policy is not None:
+        from .ordinary_d02_item8_v1 import POLICY as d02_policy_v1
+        from .ordinary_d02_item8_v2 import POLICY as d02_policy_v2
+    _need(d02_policy in {None, d02_policy_v1, d02_policy_v2} and
           (d02_policy is None or metric_id == 'D02'),
           'ORDINARY_D02_CATEGORY_REPLAY_POLICY_CHANGED')
     if saved.get('input_binding', {}).get('route') == 'B03_EXACT_IMPAIRMENT_EXCLUSION_V1':
@@ -489,7 +501,8 @@ def replay_case(*, data_root, manifest, spec=None):
             c02_composition=c02_composition,c02_grouped=c02_grouped,
             d01_emphasis=d01_policy is not None,
             a05_formula=a05_policy is not None,
-            d02_category=d02_policy is not None)
+            d02_category=('ITEM8_V2' if d02_policy is not None and d02_policy == d02_policy_v2
+                          else d02_policy is not None))
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)

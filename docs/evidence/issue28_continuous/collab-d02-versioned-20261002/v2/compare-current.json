@@ -1,0 +1,100 @@
+{
+  "record_type": "ISSUE28_D02_V2_SAVED_ITEM8_COMPARISON",
+  "peer_source_commit": "147957c400c3361ab26ee0b04bbb89b2a692cadd",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "synthetic": [
+    {
+      "v1_left_out": true,
+      "v2_left_out": false,
+      "text": "We face litigation, which could result in a significant loss."
+    },
+    {
+      "v1_left_out": true,
+      "v2_left_out": false,
+      "text": "Litigation, brought by a customer against us in 2025, remains unresolved."
+    }
+  ],
+  "rows": [
+    {
+      "company_id": "lumen_technologies",
+      "item8_keyword_candidates": 14,
+      "v1_removed": [
+        {
+          "block_index": 1670,
+          "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+          "raw_span_sha256": "0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8"
+        }
+      ],
+      "v2_removed": [
+        {
+          "block_index": 1670,
+          "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+          "raw_span_sha256": "0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8"
+        }
+      ],
+      "changed": []
+    },
+    {
+      "company_id": "pfizer",
+      "item8_keyword_candidates": 32,
+      "v1_removed": [
+        {
+          "block_index": 2175,
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_span_sha256": "e1aa21bb8c60eab4db0cc8f4586e8d9b98aff27ff039340bf5b62a6cb838eec2"
+        },
+        {
+          "block_index": 2240,
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_span_sha256": "d70491d92a93e12ceed3caa4169dc14f0f8b631c3ea7258f1485a53e343917b4"
+        }
+      ],
+      "v2_removed": [
+        {
+          "block_index": 2175,
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_span_sha256": "e1aa21bb8c60eab4db0cc8f4586e8d9b98aff27ff039340bf5b62a6cb838eec2"
+        },
+        {
+          "block_index": 2240,
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_span_sha256": "d70491d92a93e12ceed3caa4169dc14f0f8b631c3ea7258f1485a53e343917b4"
+        }
+      ],
+      "changed": []
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "item8_keyword_candidates": 15,
+      "v1_removed": [
+        {
+          "block_index": 2257,
+          "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+          "raw_span_sha256": "6392df283a30a0cb1a921df67f8c6a0bacf3e10bf2d222947e4b855fcfb53f8b"
+        }
+      ],
+      "v2_removed": [
+        {
+          "block_index": 2257,
+          "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+          "raw_span_sha256": "6392df283a30a0cb1a921df67f8c6a0bacf3e10bf2d222947e4b855fcfb53f8b"
+        }
+      ],
+      "changed": []
+    },
+    {
+      "company_id": "enphase_energy",
+      "item8_keyword_candidates": 2,
+      "v1_removed": [],
+      "v2_removed": [],
+      "changed": []
+    }
+  ],
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_result_or_run": false,
+  "content_acceptance": false
+}

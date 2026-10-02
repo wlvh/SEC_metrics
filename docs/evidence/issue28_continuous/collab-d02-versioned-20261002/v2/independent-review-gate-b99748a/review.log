@@ -1,0 +1,32 @@
+patch_sha=b99748acbd4d32bc5c69d2a40b9e809023f63cc7
+scope=scripts/vnext/normal_run_v3.py scripts/vnext/ordinary_update_cycle.py tests/vnext/test_d02_item8_current_material.py requirements/issue_28_v13 requirements/issue_28_v14
+head_at_review=b99748acbd4d32bc5c69d2a40b9e809023f63cc7
+diff_to_head_in_scope=none
+
+Independent execution:
+PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_d02_item8_current_material.D02CurrentItem8MaterialTest.test_v1_false_exclusion_remains_suspended_and_v2_keeps_the_matter
+Ran 1 test in 0.008s; OK; exit=0.
+
+Read-only identity execution:
+load_requirement_snapshot(issue_28_v13, issue_28_v14)
+validate_execution_authority(parent, child)
+validate_semantic_rule_bindings(child)
+validate_wiring_receipt(child)
+PASS parent=sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d
+PASS child=sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56
+PASS execution_authority=sha256:388660b53685032a6a0d3cb9f262e8eaf6cd6100145167a3f3300240be040195
+Three submitted receipts carry the same execution authority hash; provider receipt also carries the final child closure.
+
+Static order checked:
+create_normal_run V2 reject before _external/install/Run write.
+_create_case_run V2 policy reject before _write(binding)/create_run.
+ordinary_update_cycle.run_once V2 reject before state _external/_locked/_recover/new intent.
+Old V1 reject and default False unchanged in this patch; changed-source list limited to these two execution files.
+
+Submitted evidence read, not independently rerun:
+guard-existing-v2.json: UPDATE_BLOCKED; prior current pointer and attempt IDs unchanged; no new result or attempt.
+cold-old-v2-run.py/json: old installed runtime module path; same Result and public-row bytes; protected prior Run, ledger and active hashes unchanged.
+fast-guard.log/exit: PASSED 146 selectors; exit=0. guard-short/binding/cold exits all 0.
+
+Unresolved earlier finding: 79677ed2 NEEDS_FIX on V2 content selector; current verdict is PASS_GATE_ONLY.
+No live provider/SEC calls, commit, push or #47 access in this review.

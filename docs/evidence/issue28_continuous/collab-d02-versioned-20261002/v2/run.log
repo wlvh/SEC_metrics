@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-d02-versioned-20261002/v2/run.py", line 73, in <module>
+    'requirement_closure_hash': json.loads((HERE/'binding-after.json').read_text())['child_requirement_closure_hash'],
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'child_requirement_closure_hash'

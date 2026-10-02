@@ -254,10 +254,17 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
     the exact identity and period expected by that trusted boundary.
     """
     _target(metric_id, target)
+    d02_select = None
     if d02_category_policy is not None:
-        from .ordinary_d02_item8_v1 import POLICY
-        _need(metric_id == 'D02' and d02_category_policy == POLICY,
+        from .ordinary_d02_item8_v1 import POLICY as D02_V1_POLICY
+        from .ordinary_d02_item8_v2 import POLICY as D02_V2_POLICY
+        _need(metric_id == 'D02' and d02_category_policy in
+              {D02_V1_POLICY, D02_V2_POLICY},
               'TEXT_V2_D02_CATEGORY_POLICY_CHANGED')
+        if d02_category_policy == D02_V1_POLICY:
+            from .ordinary_d02_item8_v1 import select as d02_select
+        else:
+            from .ordinary_d02_item8_v2 import select as d02_select
     sources = [validate_record(record=s) for s in source_references]
     ids = [s["source_reference_id"] for s in sources]
     _need(len(ids) == len(set(ids)) and set(source_filings) == set(ids)
@@ -319,9 +326,8 @@ def prepare_business_text_sources(*, metric_id, target, source_references, raw_b
         coverage["coverage_hash"] = content_hash(value=coverage); coverages[governance_id] = coverage
     else:
         proposal = legal_risk_candidates(document=annual)
-        if d02_category_policy is not None:
-            from .ordinary_d02_item8_v1 import select
-            proposal = select(proposal=proposal)
+        if d02_select is not None:
+            proposal = d02_select(proposal=proposal)
         _need(proposal["coverage_status"] == "LOCAL_REQUESTED_RANGES_SCANNED",
               "TEXT_V2_LEGAL_SOURCE_NAVIGATION_INCOMPLETE")
         _need(proposal["D02"]["candidates"], "TEXT_V2_LEGAL_DISCLOSURE_TEXT_UNSUPPORTED")
