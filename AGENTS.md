@@ -62,6 +62,8 @@ ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登�
 
 权威原文：[Issue #28 协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；对方同文见 [Issue #47](https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1)。以下仅在已登记范围内替代旧的全面隔离描述。
 
+与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的接口按 `COMPANY-SEPARATION-v2.1-20261002` 及 [#28 通知5953695606](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5953695606) 接续：#54主实现获取—计算交接和公司独立处理，#28保留当期指标、正常更新、统一生产及旧路径退出，提供B13/D04计算侧输入、C04和journal读写边界并验证自己的消费者。共用改动一方维护、各自验证，用 `[shared-with-#54]` 回链；不把旧AI/Result当来源包必带答案，不借用/拆分预算。首个平台为OpenShift，集群及内网脚本/AI另期处理；此接口工作不代替下方v1.1条款或当前唯一队列。
+
 <!-- COLLAB-28-47-v1:BEGIN -->
 <a id="collab-28-47-v1"></a>
 ## 跨 Issue 协作（2026-10-02修订；COLLAB-28-47-v1.1）
