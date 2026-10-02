@@ -17,6 +17,30 @@ def html(*paragraphs):
 
 
 class E01HeaderDocumentGuardFastTest(unittest.TestCase):
+    def test_reference_context_is_visible_and_in_the_same_block(self):
+        title = '<h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2>'
+        for prefix in ('<p style="display:none">SEE</p>',
+                       '<p>Location: Portland, OR</p>',
+                       '<p>Location: Portland, or</p>',
+                       '<p>see</p>'):
+            raw = ('<html><body>' + prefix + title +
+                   '<p>The company completed an acquisition.</p></body></html>').encode()
+            with self.subTest(prefix=prefix):
+                self.assertEqual({'2.01'}, headed_item_codes(raw_bytes=raw))
+                with self.assertRaisesRegex(ValueError, 'HEADED_BUT_NOT_LISTED:synthetic:2.01'):
+                    check_document_header_items(raw_bytes=raw,
+                        listed_item_codes=[], candidate_item_codes=CANDIDATES,
+                        accession='synthetic')
+        for prefix in ('<span>SEE </span>', '<b>See</b> ',
+                       '<span style="display:none">SECRET</span><b>See</b> '):
+            raw = ('<html><body><p>' + prefix +
+                   'Item 2.01 Completion of Acquisition.</p></body></html>').encode()
+            with self.subTest(inline_prefix=prefix):
+                self.assertEqual(set(), headed_item_codes(raw_bytes=raw))
+        raw = ('<html><body><p><span style="display:none">SEE</span>'
+               'Item 2.01 Completion of Acquisition.</p></body></html>').encode()
+        self.assertEqual({'2.01'}, headed_item_codes(raw_bytes=raw))
+
     def test_unlisted_candidate_and_no_header_claims_stop_by_name(self):
         raw = html('Item 2.01 Completion of Acquisition or Disposition of Assets.',
                    'The company completed an acquisition.', 'SIGNATURES')

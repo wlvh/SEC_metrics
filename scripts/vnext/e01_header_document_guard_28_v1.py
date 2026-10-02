@@ -7,21 +7,69 @@ classifies M&A nor makes absence claims.
 """
 from .deterministic_router import _visible_text
 from .e01_item_text_28_v1 import (
-    _REFERENCE_BEFORE, _hidden_in_span, _linked_in_span, _text_nodes, item_headings)
+    _HEADING, _REFERENCE_BEFORE, _Visibility, _hidden_in_span, _linked_in_span, _need)
 
 
 PEER_PATCH_SHA = '0097c911df0e3e62fc681b7bfda2385edfc9bfcc'
 POLICY = 'STOP_ON_A_CANDIDATE_HEADED_IN_THE_DOCUMENT_BUT_NOT_LISTED_IN_ITS_HEADER'
 
 
+class _HeadingContext(_Visibility):
+    """Add block boundaries to the existing text/visibility/link reader."""
+    _BOUNDARIES = frozenset(('body', 'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                            'li', 'tr', 'td', 'th', 'blockquote', 'pre', 'address',
+                            'section', 'article', 'br', 'hr'))
+
+    def __init__(self):
+        super().__init__()
+        self.block_number = 0
+        self.node_blocks = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self._BOUNDARIES:
+            self.block_number += 1
+        super().handle_starttag(tag, attrs)
+
+    def handle_endtag(self, tag):
+        super().handle_endtag(tag)
+        if tag in self._BOUNDARIES:
+            self.block_number += 1
+
+    def handle_data(self, data):
+        before = len(self.nodes)
+        super().handle_data(data)
+        if len(self.nodes) != before:
+            self.node_blocks.append(self.block_number)
+
+
 def headed_item_codes(*, raw_bytes):
     """The document's visible headings, excluding linked contents entries."""
     text = _visible_text(raw_bytes=raw_bytes)
-    nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
-    return {code for start, end, code in item_headings(text)
-            if not _linked_in_span(nodes=nodes, start=start, end=end)
-            and _hidden_in_span(nodes=nodes, start=start, end=end) is None
-            and not _REFERENCE_BEFORE.search(text[max(0, start - 40):start].lower())}
+    reader = _HeadingContext()
+    reader.feed(raw_bytes.decode('utf-8', errors='replace'))
+    reader.close()
+    _need(' '.join(node for node, _, _ in reader.nodes) == text,
+          'EVENT_ITEM_TEXT_VIEW_NOT_REBUILT')
+    nodes, groups, offset = [], [], 0
+    for (node, hidden, linked), group in zip(reader.nodes, reader.node_blocks):
+        nodes.append((offset, offset + len(node), hidden, linked))
+        groups.append(group)
+        offset += len(node) + 1
+    found = set()
+    for match in _HEADING.finditer(text):
+        start, end = match.start(), match.end()
+        if (_linked_in_span(nodes=nodes, start=start, end=end)
+                or _hidden_in_span(nodes=nodes, start=start, end=end) is not None):
+            continue
+        own_group = next(group for (begin, finish, _, _), group in zip(nodes, groups)
+                         if begin <= start < finish)
+        context = ' '.join(text[max(begin, start - 40):min(finish, start)]
+                           for (begin, finish, hidden, _), group in zip(nodes, groups)
+                           if group == own_group and hidden is None
+                           and begin < start and finish > max(0, start - 40))
+        if not _REFERENCE_BEFORE.search(context.lower()):
+            found.add(match.group(1))
+    return found
 
 
 def check_document_header_items(*, raw_bytes, listed_item_codes,

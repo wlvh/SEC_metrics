@@ -1,0 +1,124 @@
+{
+  "checked_utc": "2026-10-02T14:38:57.882073+00:00",
+  "patch_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+  "verified_exact_sha_files": [
+    {
+      "path": "config/issue28_normal_results_v2.json",
+      "sha256": "dea252a4db8a0611cf6d6634d0bb4d4a75b137bd7636e561d2f74db05b5b1673",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/e01_header_document_guard_28_v1.py",
+      "sha256": "fbb91a55ba974e6e0812045368c4f0d3dd609517cbbe9ff54589ced6883a343f",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+      "sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "tests/vnext/test_e01_header_document_guard.py",
+      "sha256": "dca9f6ee50dc67bf93b705e9647773779b7fcf8a30816a30f92c3b9c71df7a2e",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "tools/run_fast_tests_v2.py",
+      "sha256": "433d3d5c22d96a75879305e4e81ed59e685cb70ba270dc2dcbd7175910025ecd",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v13/CONTRACT.md",
+      "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "sha256": "b077dd052e6ddae795a11f084b5dc78548ab17269689d7a975c0cf0637070161",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v13/decision_register.json",
+      "sha256": "83ee3d4f2bfe6c204ce82793b452f9a381b973bce6b31b43ec607c30b8219d97",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v13/invariant_profile.json",
+      "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v13/transfer_manifest.json",
+      "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v14/CONTRACT.md",
+      "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "09e59266719ce50d07312c7a8d00e053825fba75428a0a6b40696b29c49c9489",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v14/decision_register.json",
+      "sha256": "c83648909944ce5ede842d7ae1e6d31ac8320f368eef3b7c2876c13bffb22109",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v14/invariant_profile.json",
+      "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "sha256": "0e1467bcb181d3feb154bf4a3f752df8431fd632f3c9b0e13551f5d27bdbc854",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/e01_item_text_28_v1.py",
+      "sha256": "6d55c88f53278ce2d6a5027965e7e787a306292d7978880cd1b66ff41d9001c7",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_e01_item_text_input.py",
+      "sha256": "a97750590a1a528fe297802e64d4e86c4da6ccb386a628df4b3a569fd1ded873",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/deterministic_router.py",
+      "sha256": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/canonical.py",
+      "sha256": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "scripts/vnext/__init__.py",
+      "sha256": "a36dc7448c250e89c5a77fcd2c2e5aae2a39caaa6a16d06b1020c52b94e7671a",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "tests/__init__.py",
+      "sha256": "c1e9455e71ea7c43d2407fc835ecc114ab97affb8eaa6edf8e2ba1480cb96918",
+      "worktree_equals_patch": true
+    },
+    {
+      "path": "tests/vnext/__init__.py",
+      "sha256": "94c2027f6a2cc646383d508d0257a92fe254253368696d82b06f4916ca25c695",
+      "worktree_equals_patch": true
+    }
+  ],
+  "old_dependency_paths_unchanged": [
+    "scripts/vnext/e01_item_text_28_v1.py",
+    "scripts/vnext/ordinary_e01_item_text_input.py",
+    "scripts/vnext/normal_zero_ai_results.py",
+    "scripts/vnext/deterministic_router.py"
+  ],
+  "supplemental_record_claims_execution_at_commit": false,
+  "status": "PASS"
+}

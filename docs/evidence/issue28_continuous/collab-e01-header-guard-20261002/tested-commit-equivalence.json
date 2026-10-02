@@ -1,0 +1,125 @@
+{
+  "record_type": "ISSUE28_TESTED_WORKTREE_COMMIT_BYTE_EQUIVALENCE",
+  "commit": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+  "status": "PASS_BYTE_EQUIVALENCE",
+  "execution_at_commit_claimed": false,
+  "original_execution": "PRE_COMMIT_FINAL_BOUND_WORKTREE",
+  "verified_files": [
+    {
+      "path": "config/issue28_normal_results_v2.json",
+      "sha256": "dea252a4db8a0611cf6d6634d0bb4d4a75b137bd7636e561d2f74db05b5b1673",
+      "size": 8879,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "scripts/vnext/e01_header_document_guard_28_v1.py",
+      "sha256": "fbb91a55ba974e6e0812045368c4f0d3dd609517cbbe9ff54589ced6883a343f",
+      "size": 1618,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+      "sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e",
+      "size": 11269,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "tests/vnext/test_e01_header_document_guard.py",
+      "sha256": "dca9f6ee50dc67bf93b705e9647773779b7fcf8a30816a30f92c3b9c71df7a2e",
+      "size": 4850,
+      "installed_equal_companies": []
+    },
+    {
+      "path": "tools/run_fast_tests_v2.py",
+      "sha256": "433d3d5c22d96a75879305e4e81ed59e685cb70ba270dc2dcbd7175910025ecd",
+      "size": 18653,
+      "installed_equal_companies": []
+    },
+    {
+      "path": "requirements/issue_28_v13/CONTRACT.md",
+      "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "size": 1211,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "sha256": "b077dd052e6ddae795a11f084b5dc78548ab17269689d7a975c0cf0637070161",
+      "size": 81784,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "requirements/issue_28_v13/decision_register.json",
+      "sha256": "83ee3d4f2bfe6c204ce82793b452f9a381b973bce6b31b43ec607c30b8219d97",
+      "size": 9524,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "requirements/issue_28_v13/invariant_profile.json",
+      "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "size": 416,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "requirements/issue_28_v13/transfer_manifest.json",
+      "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "size": 311,
+      "installed_equal_companies": [
+        "enphase_energy",
+        "pfizer"
+      ]
+    },
+    {
+      "path": "requirements/issue_28_v14/CONTRACT.md",
+      "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+      "size": 1605,
+      "installed_equal_companies": []
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "09e59266719ce50d07312c7a8d00e053825fba75428a0a6b40696b29c49c9489",
+      "size": 94563,
+      "installed_equal_companies": []
+    },
+    {
+      "path": "requirements/issue_28_v14/decision_register.json",
+      "sha256": "c83648909944ce5ede842d7ae1e6d31ac8320f368eef3b7c2876c13bffb22109",
+      "size": 11100,
+      "installed_equal_companies": []
+    },
+    {
+      "path": "requirements/issue_28_v14/invariant_profile.json",
+      "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+      "size": 418,
+      "installed_equal_companies": []
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "sha256": "0e1467bcb181d3feb154bf4a3f752df8431fd632f3c9b0e13551f5d27bdbc854",
+      "size": 520,
+      "installed_equal_companies": []
+    }
+  ],
+  "parent_closure": "sha256:9900fbc56b809b19d86f688521a3372dd9576a329262a03ee656d42bcf356c6c",
+  "child_closure": "sha256:765dbb645a193d1b5ff72f789cbb4b66344c9ab7d87272e8bd067ea77ec05140"
+}

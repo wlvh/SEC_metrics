@@ -3440,6 +3440,31 @@
       "dedup_note": "No live agent, no exact patch/scope register or independent evidence match; tool task name uses required underscore syntax.",
       "outer_exec_calls": 15,
       "nested_tool_calls": 27
+    },
+    {
+      "task_name": "review_e01guard_4711a48",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_e01_body_header_guard",
+      "scope_paths": [
+        "scripts/vnext/e01_header_document_guard_28_v1.py",
+        "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+        "tests/vnext/test_e01_header_document_guard.py",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/"
+      ],
+      "patch_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+      "spawned_at": "2026-10-02T14:34:24+00:00",
+      "ended_at": "2026-10-02T14:43:50.225344+00:00",
+      "tool_calls": 24,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-4711a48/conclusion.md",
+      "verdict": "NEEDS_FIX_LIMITED_P2_REFERENCE_PREFIX_SCOPE",
+      "status": "DONE",
+      "dedup_note": "C02 reviewer completed; no same SHA/module register or evidence summary",
+      "outer_exec_calls": 11,
+      "nested_tool_calls": 13
     }
   ],
   "ci_capacity_20260922": {
@@ -10266,7 +10291,7 @@
     "jpm_repeat_seconds": 47.412,
     "jpm_repeat_status": "NO_SOURCE_CONTENT_CHANGE_SAME_RESULT_NO_SECOND_RUN",
     "old_run_390_index_ledger_active_unchanged": true,
-    "unjudged_block3436": "Full source authenticated; duties versus qualification question awaits existing-contract peer alignment; no new defect or acceptance",
+    "unjudged_block3436": "RESOLVED_EXISTING_CONTRACT_EXCLUDE_STANDALONE_SELECTED_BLOCK; NEW_PRIVATE_RESULT_HAS_CONTENT_ERROR_NO_CREDIT",
     "old_two_wrong_result_ids_still_withdrawn": true,
     "new_result_whole_content_or_390_credit": false,
     "new_real_calls": [
@@ -10324,7 +10349,7 @@
     ]
   },
   "e01_header_guard_20261002": {
-    "status": "EXPLICIT_SOURCE_INPUT_V2_PREPARE_INSTALL_AND_INDEPENDENT_COLD_PASS_PENDING_LIMITED_REVIEW",
+    "status": "NEW_GUARD_P2_IN_REPAIR_NO_SEMANTIC_OR_RESULT_CREDIT",
     "peer_read_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
     "peer_guard_patch_sha": "0097c911df0e3e62fc681b7bfda2385edfc9bfcc",
     "source_input_module": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
@@ -10409,6 +10434,54 @@
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/",
-    "independent_review": "PENDING_EXACT_INCREMENT"
+    "independent_review": {
+      "patch_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+      "verdict": "NEEDS_FIX_LIMITED_P2_REFERENCE_PREFIX_SCOPE",
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-4711a48/conclusion.md"
+    },
+    "tested_commit_byte_equivalence": "PASS_15_COMMITTED_FILES_TWO_INSTALLED_PARENT_RUNTIMES; execution remained precommit",
+    "repair": {
+      "status": "REFERENCE_SCOPE_REPAIRED_TARGETED_AND_TWO_INSTALLED_COLD_PASS_PENDING_LIMITED_INCREMENT_REVIEW",
+      "directed_tests": "PASS_5_OF_5_16.882_SECONDS",
+      "parent_closure": "sha256:ee62ab6a3170318bacfac41d9ccf31a83f2c631516fc9ce0eff85940bc9d0c79",
+      "child_closure": "sha256:821182bd168d4fe736bf899db06bccd8f9b4585a4d0a83bf276ef7d5a3454af8",
+      "installed_seconds": 38.387,
+      "cold_seconds": [
+        14.768,
+        16.829
+      ],
+      "whole_fast_current_tree": "NOT_RERUN_UNCHANGED_SELECTORS; PRE_REPAIR148_PASS_IS_HISTORICAL",
+      "prior_failed_review_retained": true,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "c02_fix46_next": {
+    "peer_read_sha": "6d7801f7a5f773435a12c8abafb98195d8930bd2",
+    "peer_fix_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+    "own_original_and_contract_checked": true,
+    "next": "Receive only related member-clause delta on a new own versioned selector/Spec/wrapper; preserve v3/old Run and independently validate 3436 removal/3409 retention/current material and cold."
+  },
+  "collab_peer_increment_6d7801f7": {
+    "peer_read_sha": "6d7801f7a5f773435a12c8abafb98195d8930bd2",
+    "previous_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
+    "defect_register_blob": "eaef9547ccbbbf399c8b12873c4a5d4b5b8ca11e",
+    "changed_entries": [
+      "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+      "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+      "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+      "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION"
+    ],
+    "C02_disposition": "Own3436 verified standalone selected, existing contract excludes duties disclaimer; no new owner meaning decision; new private53 has no credit. Shared fix46 available to receive next.",
+    "D02_disposition": "No source revision since recorded v3 known limits; gate unchanged.",
+    "peer_current_result_acceptance_copied": false,
+    "whole_peer_branch_merged_into_own": false
   }
 }

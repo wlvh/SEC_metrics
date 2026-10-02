@@ -1,0 +1,45 @@
+{
+  "record_type": "ISSUE28_C02_3436_EXISTING_CONTRACT_ALIGNMENT",
+  "peer_read_sha": "6d7801f7a5f773435a12c8abafb98195d8930bd2",
+  "peer_shared_fix_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+  "peer_answer_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5954886260",
+  "own_spec": "catalog/r6/C02_board_disclosures_v4.md",
+  "own_spec_sha256": "e30db70a8b3506263bccf5bd2f26883bc92a32cff60c19d51cf6047b7a6ed1d0",
+  "original_block": {
+    "block_index": 3436,
+    "source_accession": "0000019617-26-000096",
+    "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+    "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+    "raw_span_sha256": "8f96b7c9f8fb1e3553eb03871933f7dc2f7323b4c35b0016f894f31337c9d580",
+    "text": "Management is responsible for the Firm’s internal control over financial reporting, the financial reporting process and JPMorganChase’s Consolidated Financial Statements. PwC is responsible for performing an independent audit of JPMorganChase’s Consolidated Financial Statements and of the effectiveness of internal control over financial reporting in accordance with auditing standards promulgated by the PCAOB. The Firm’s Internal Audit function, under the direction of the General Auditor, is independent of the Firm’s businesses and the Independent Risk Management function. Internal Audit reports directly to the Audit Committee (and administratively to the Firm’s CEO) and is responsible for preparing an annual audit plan and conducting internal audits intended to independently test and evaluate the Firm’s governance, risk management and internal controls. The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes.",
+    "own_scope_reading": "SEPARATE_UNJUDGED_SCOPE_QUESTION",
+    "why": "The paragraph assigns management/auditor/Internal Audit responsibilities, then says committee members do not practise accounting and monitor the processes. It appears to describe duties; whether the final negative professional-practice statement is a qualification fact needs contract-based peer alignment. No new defect or acceptance credit is recorded here."
+  },
+  "own_initial_reading": "duties/oversight explanation, formed before peer answer",
+  "own_final_contract_reading": "EXCLUDE_COMMITTEE_ROLE_DISCLAIMER_NOT_A_MEMBER_OR_LISTED_QUALIFICATION_DETERMINATION",
+  "reason": "No board size, member identity, chair or independence/qualification determination. Negative professional-practice disclaimer explains oversight duties; it is not the approved not-officer/employee independence status. Same source block3409 supplies explicit positive determinations.",
+  "new_private_result_id": "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+  "selected_as_own_single_block_not_inserted_context": {
+    "check": "TEXT_EXACT_EXCERPT:excerpt_30",
+    "claim_hash": "sha256:2fce357c52ccd8c82279fa72f76e3833b8396dc3585cbd950ca7d7236530ddae",
+    "complete_source_partition_hash": "sha256:07ffaf86a470f8f2f5f5fb9acb42c544aa883face54ea46d6852449e840962d8",
+    "context_source_blocks": [],
+    "original_text_document_id": "sha256:399c128842acb45f8b714952a8617b22ece24ed0745260e416ad9fcf8ba73685",
+    "selected_source_blocks": [
+      3436
+    ],
+    "source_block_range": [
+      3436,
+      3437
+    ],
+    "status": "PASS"
+  },
+  "new_private_result_credit": "NOT_GRANTED_CONTENT_ERROR",
+  "prior_two_old_results_still_withdrawn_for_3367": true,
+  "new_full_result_or_390_acceptance": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}
