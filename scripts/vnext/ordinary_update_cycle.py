@@ -298,6 +298,7 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
     _need(type(d02_category) is bool or d02_category == 'ITEM8_V2',
           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
     _need(d02_category is not True, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(d02_category != 'ITEM8_V2', 'UPDATE_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
         if source_identity_root is not None else Path(source_root).resolve())
     identity_source=(source if source_identity_root is None else

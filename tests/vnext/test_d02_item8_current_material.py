@@ -24,6 +24,8 @@ class D02CurrentItem8MaterialTest(unittest.TestCase):
         from vnext import normal_run_v3 as normal
         from vnext import ordinary_update_cycle as update
         from vnext.ordinary_d02_category_update import run_company as old_wrapper
+        from vnext.ordinary_d02_category_update_v2 import run_company as v2_wrapper
+        from vnext.ordinary_d02_item8_v2 import POLICY as v2_policy
 
         counterexample = 'We face litigation, which could result in a significant loss.'
         self.assertTrue(v1(text=counterexample, keyword=_LEGAL)['left_out'])
@@ -39,10 +41,27 @@ class D02CurrentItem8MaterialTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED'):
                 update.run_once(state_root=root/'state', source_root=ROOT,
                     company_id='lumen_technologies', metric_ids=['D02'], d02_category=True)
+            with self.assertRaisesRegex(ValueError, 'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED'):
+                normal.create_normal_run(data_root=root/'data', run_dir=root/'run',
+                    company_id='lumen_technologies', metric_id='D02',
+                    d02_category='ITEM8_V2')
+            with self.assertRaisesRegex(ValueError, 'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED'):
+                normal._create_case_run(data_root=root/'data', run_dir=root/'run',
+                    company_id='lumen_technologies', metric_id='D02',
+                    case={'input_binding':{'d02_category_policy':v2_policy}},
+                    requirement={})
+            with self.assertRaisesRegex(ValueError, 'UPDATE_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED'):
+                update.run_once(state_root=root/'state', source_root=ROOT,
+                    company_id='lumen_technologies', metric_ids=['D02'],
+                    d02_category='ITEM8_V2')
             row = old_wrapper(state_root=root/'state', source_root=ROOT,
                 company_id='lumen_technologies', metric_ids=['D02'])['metrics'][0]
             self.assertEqual('UPDATE_BLOCKED', row['status'])
             self.assertIn('UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED', row['reason'])
+            v2 = v2_wrapper(state_root=root/'state', source_root=ROOT,
+                company_id='lumen_technologies', metric_ids=['D02'])['metrics'][0]
+            self.assertEqual('UPDATE_BLOCKED', v2['status'])
+            self.assertIn('UPDATE_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED', v2['reason'])
             self.assertFalse((root/'state').exists())
 
     def test_current_false_mentions_leave_but_actual_litigation_stays(self):

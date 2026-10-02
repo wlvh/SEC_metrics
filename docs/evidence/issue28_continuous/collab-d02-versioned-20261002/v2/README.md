@@ -10,4 +10,8 @@
 
 **最终代码树**改为独立v2包装器后，使用另一独立状态根进行必要重验：`run-final.py`在67.741秒产生一次私有Run `run:ordinary-integrated:18cf3dfa…`，Result内容ID仍为上述 `845ef41f…`，Evidence `PASS`；原账本、来源日志、active前后哈希不变。另一进程`cold-final.py`重读安装包和公开行并重复触发CLI，39.657秒返回`NO_SOURCE_CONTENT_CHANGE`、同Result、不生成该状态根的第二Run，保护文件哈希亦不变。两版私有Run分开保存且都没有正式390或生产信用；最终树真实provider/paid/SEC调用0/0/0。
 
-这项接入解决了**v1已知逗号误删导致的普通更新停用**，也形成可重读的v2私有候选；尚未审核Lumen其余14段的全部业务相关性与漏选方向，更没有证明十家公司D02完整结果。原有四个已知错误旧Result继续按精确身份扣留，新的私有Result也不领取当前390或生产信用。新的源码差异仍需精确SHA限定独审；通过后按受影响范围决定是否追加内容审阅，不以程序`PASS`替代合同内容正确。
+`79677ed2`的[限定独审](independent-review-79677ed/conclusion.md)结论是 **NEEDS_FIX（P2）**，不能把上述程序闭环升级为D02业务能力：`During 2025, our company faced litigation, regulatory proceedings and fines.` 明确说本公司面临诉讼，但v2把`litigation`判为`LIST_MEMBER`并移出候选；仅换成`the Company`或`we`就会保留。审阅者在函数和选择器级复现，本会话再次运行同句得到相同结果。该句是合成反例，尚未发现它存在于Lumen已保存原件；四家公司已见块的选择仍如上，不能据此宣称v2普遍正确。旧`de22326d NEEDS_FIX`、`0ccf5363 PASS_GATE_ONLY`及本次新审阅各保留原义。
+
+在后继补丁中，`ITEM8_V2`的新普通Run、内部`_create_case_run`和更新均于写入前返回`*_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED`；旧v1继续原有停用，未选后继的默认路径与其它指标仍运行。`binding-before-guard.json`与`binding-after-guard.json`分开登记停用前后未冻结需求身份，最终V13闭包 `sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d`、V14闭包 `sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56`及三收据通过。`guard-existing-v2.json`证明重入已完成的私有Lumen状态返回`UPDATE_BLOCKED`，原指针和尝试集合逐字节不变；`cold-old-v2-run.json`由独立进程只用该Run自己的安装运行时重读出同Result，原Run、账本和active哈希不变。停用后短测1/1、fast146/146通过，先前未变的四公司材料对照和私有Run不重复执行。
+
+因此当前结论是：v2来源选择与原生保存机制有实测能力，**v2业务选择规则尚有已证实误删且新信用已停用**。原有四个错误旧Result继续按精确身份扣留；Lumen两个私有演练Run及Result都保留历史记录，但新的私有Result不领取当前390或生产信用。待#47共用负责人修复此反例后，本方只接新增字节和受影响正反、运行/回读差异；不能给现有v2改一个名字就解除停用。

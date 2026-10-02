@@ -367,6 +367,7 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
           and (not d02_category or metric_id == 'D02'),
           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
     _need(d02_category is not True, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(d02_category != 'ITEM8_V2', 'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -391,6 +392,9 @@ def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, require
         from .ordinary_d02_item8_v1 import POLICY as suspended_d02_policy
         _need(case['input_binding']['d02_category_policy'] != suspended_d02_policy,
               'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+        from .ordinary_d02_item8_v2 import POLICY as suspended_d02_v2_policy
+        _need(case['input_binding']['d02_category_policy'] != suspended_d02_v2_policy,
+              'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
     from .run_store import (create_run,append_run_record,append_review_decision,write_review_assets,
         validate_and_freeze_run,load_frozen_run,_mechanically_replay_open_run)
     data_root,run_dir = _external(data_root),_external(run_dir)
