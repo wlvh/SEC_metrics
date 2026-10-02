@@ -11247,5 +11247,97 @@
       "material_rerun": false
     },
     "current_390_saved_scope_D01_credit": true
+  },
+  "collab54_D01_consumer_20261003": {
+    "provider_sha": "8a521e32204866021955f8330080a024db5f1b3c",
+    "consumer_head_at_test": "511ef6831b034c55708c1efec630e01ad4b60b59",
+    "evidence": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-d01-v1",
+    "status": "PASS_COMPANY_D01_SUCCESSOR_NATIVE_AND_INDEPENDENT_PROCESS_REPEAT",
+    "actual_policy": "D01_EMPHASIS_SOURCE_V2",
+    "manifest_identity": {
+      "run_id": "run:ordinary-integrated:430a68ada7e0765c3ae14a7a65b925e1197852fd23dadd2a03b10042504b752e",
+      "company_id": "marriott_international",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "requirement_id": "issue_54_v1",
+      "requirement_closure_hash": "sha256:3ff69e00ee10536557e9ae38b262dbb99d3b16c630061758353ddf748e66ecaa"
+    },
+    "same_previously_reviewed_38_titles": true,
+    "steps": [
+      {
+        "name": "runtime-install",
+        "exit": 0,
+        "seconds": 2.201,
+        "root": "/private/tmp/issue28-company-consumer-20261003/provider-code",
+        "guarded": false
+      },
+      {
+        "name": "source-export",
+        "exit": 0,
+        "seconds": 41.527,
+        "root": "/private/tmp/issue28-company-consumer-20261003/provider-code",
+        "guarded": false
+      },
+      {
+        "name": "source-install",
+        "exit": 0,
+        "seconds": 0.656,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+        "guarded": true
+      },
+      {
+        "name": "compute",
+        "exit": 0,
+        "seconds": 26.885,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+        "guarded": true
+      },
+      {
+        "name": "repeat",
+        "exit": 0,
+        "seconds": 9.117,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+        "guarded": true
+      }
+    ],
+    "actual_same_history_terminal_entries": [
+      {
+        "attempt_id": "81df2fefdd90448dbc73a543ff0b34ca",
+        "status": "NO_SOURCE_CONTENT_CHANGE"
+      },
+      {
+        "attempt_id": "2c5dc1f926e44949b4021ac19415cb18",
+        "status": "CANDIDATE_READY"
+      }
+    ],
+    "same_history_native_Run_count": 1,
+    "protected_bytes_unchanged": true,
+    "compute_does_not_read_original_acquisition_checkout_or_journal": true,
+    "openshift_tested": false,
+    "online_new_fiscal_year_tested": false,
+    "new_complete_company": 0,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "ci_37073021498": {
+    "head": "a31342deb658bc7b1b0b65b5307eb24be4f55e51",
+    "run_id": 37073021498,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T23:19:11Z",
+    "scope": "Prior shared evidence and unchanged main runtime; not subsequent current390 view code"
+  },
+  "collab_peer_increment_52d94470": {
+    "peer_read_commit": "52d94470d2f18b25f50f5fc5c6e69ef88f5e7eda",
+    "baseline": "51250475b4ea5b115a4e37e3a8913b4bdc59e6bd",
+    "register_blob": "0edfca788fd2c6a0938bae98ad10b06ced4bff84",
+    "source_core_increment": false,
+    "relevant_increment": "#47 own historical requirement minter adds observed imports and investigates model request identity; no own D01/C02/E01 core difference or acceptance credit copied"
   }
 }

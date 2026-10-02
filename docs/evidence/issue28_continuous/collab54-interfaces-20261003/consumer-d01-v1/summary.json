@@ -9175,5 +9175,35 @@
     "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log.csv": "1c9f81687e591f07f745ca5bf4543af70ef26af146cc7746859d515a1d4e18e6",
     "/Users/lyuhongwang/Developer/SEC_metrics/outputs/active_publication.json": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d"
   },
-  "protected_unchanged": true
+  "protected_unchanged": true,
+  "actual_attempt": "/private/tmp/issue28-company-consumer-20261003/state-marriott-d01/updates/metrics/D01/attempts/2c5dc1f926e44949b4021ac19415cb18",
+  "actual_manifest_identity": {
+    "run_id": "run:ordinary-integrated:430a68ada7e0765c3ae14a7a65b925e1197852fd23dadd2a03b10042504b752e",
+    "company_id": "marriott_international",
+    "target_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "requirement_id": "issue_54_v1",
+    "requirement_closure_hash": "sha256:3ff69e00ee10536557e9ae38b262dbb99d3b16c630061758353ddf748e66ecaa"
+  },
+  "actual_source_policy": "D01_EMPHASIS_SOURCE_V2",
+  "actual_company_update_terminals": [
+    {
+      "attempt_id": "81df2fefdd90448dbc73a543ff0b34ca",
+      "status": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    {
+      "attempt_id": "2c5dc1f926e44949b4021ac19415cb18",
+      "status": "CANDIDATE_READY"
+    }
+  ],
+  "actual_company_native_run_count": 1,
+  "postcheck_scope_correction": {
+    "incorrect_recursive_count_included_installed_historical_terminal_fixtures": 2,
+    "actual_history_terminal_count": 2,
+    "actual_history_native_run_count": 1,
+    "explanation": "A legitimate no-change journal entry is not a second native Run. First additional postcheck incorrectly required one terminal; corrected from actual journal. Compute/repeat not rerun."
+  }
 }
