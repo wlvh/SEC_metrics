@@ -6,14 +6,17 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 13,
-    "newly_excluded_result_id_count": 19,
+    "newly_excluded_coordinate_count": 17,
+    "newly_excluded_result_id_count": 23,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
+      "ford_motor_company|E01|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
       "lumen_technologies|D02|2025-12-31",
+      "lumen_technologies|E01|2025-12-31",
       "macys|C02|2026-01-31",
+      "macys|E01|2026-01-31",
       "marriott_international|C02|2025-12-31",
       "marriott_international|D01|2025-12-31",
       "paramount_skydance_paramount_global|C02|2025-12-31",
@@ -21,7 +24,8 @@
       "paramount_skydance_paramount_global|D02|2025-12-31",
       "pfizer|C02|2025-12-31",
       "pfizer|D02|2025-12-31",
-      "pfizer|E01|2025-12-31"
+      "pfizer|E01|2025-12-31",
+      "southwest_airlines|E01|2025-12-31"
     ],
     "all_390_currently_validated": false,
     "other_coordinates_not_cleared_by_this_audit": true,
@@ -809,7 +813,115 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_FORD_MOTOR_COMPANY_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "ford_motor_company",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+      "run_id": "run:ordinary-integrated:f28dd33ba10563af0449e3ef91a81368a03d16a9ee84fca38feb8f0d9d15f6d4",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0000037996-25-000067",
+        "selected_claim_id": "sha256:58727704a5d010eb360c72a7a235619fd756081d2f625da3477c8949508826be",
+        "primary_source_reference_id": "sha256:23ad85e7ca07d3d1e445866aa617b26d8ed7b6f4e24461131cbc24edd21b37e0",
+        "primary_raw_asset_id": "sha256:1dcd486c08b5c9b89709db6817b2875f7a6e3616f7fada4d4ed1257706ce71bf",
+        "header_source_reference_id": "sha256:87819c7a5528566f4855cbe121b99710e8f69f1e0c1fa769f5c488760bcd4edc",
+        "header_raw_asset_id": "sha256:79f659e205d6ae5ce305a3fd34031c6ac1deac8ed716918df5b6706f03c2b636",
+        "visible_anchor": "Twenty-Second Amendment"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_LUMEN_TECHNOLOGIES_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "lumen_technologies",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+      "run_id": "run:ordinary-integrated:62afa828503d710eaed49b86b2c42b05056b14a2bd15f6f5b3a9e3a0bc61ac39",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0000018926-25-000039",
+        "selected_claim_id": "sha256:ef278a53b32abb8c08970d03fc1a07c04ddec50fc00ba000602963c8b1c66d53",
+        "primary_source_reference_id": "sha256:2686b715657ba459c8915a68eb85fb496310bbfebe4d70f66b880aab83121545",
+        "primary_raw_asset_id": "sha256:9a9f2888c361468efefe5f53a8dfad8c292766acd9f8d67843ab9d826a73b846",
+        "header_source_reference_id": "sha256:1cbc0f01de9e5a372003d08d27dc9f24dd62c1411cdda416010dde808b98057c",
+        "header_raw_asset_id": "sha256:1c7d914072c22b537ea03bd30daac52c31f383930a82a2cc523d559073381c04",
+        "visible_anchor": "refinanced all of the outstanding secured term B-1 loan facilities"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_MACYS_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "macys",
+      "period_end": "2026-01-31",
+      "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+      "run_id": "run:ordinary-integrated:407de6f88021822af224689b08576835d5f149692a62e821f9e3fbb57a600601",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0000794367-25-000087",
+        "selected_claim_id": "sha256:83d4059228f1043652e9fe457f95c92b6cc6be1555d2a97e41c96428b4d899d4",
+        "primary_source_reference_id": "sha256:5d4dab753dd0bf14df45edd2da1b8a714176bc385235698d95ce8cc5c49453bf",
+        "primary_raw_asset_id": "sha256:017f60c99c1e20cd3dec91bb7c164c947fe72f19a40fc1258ecec17002632e11",
+        "header_source_reference_id": "sha256:04832929bac17c666fb8052b6cf93f76be5f3860b76f66e155ad86bac3e8c74a",
+        "header_raw_asset_id": "sha256:72a18a63a9eafce52700d79c206c786e213c515702220bc624e6bacdf25bf9b5",
+        "visible_anchor": "Refinancing and Extension of Existing Asset-Based Credit Facility"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_SOUTHWEST_AIRLINES_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "southwest_airlines",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
+      "run_id": "run:ordinary-integrated:63ab88f8dd10e74ac4ecdebfce2531e3f9552141a855c11519ad35940e5c72cd",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0001193125-25-262544",
+        "selected_claim_id": "sha256:8e53b0d3e57d5f015e1c87e8484a09ec24131ec2198063192e7469eb12049845",
+        "primary_source_reference_id": "sha256:5c3b61ee6824072a7b0b98083f9d305671a78ae0a8b1a954ca3d91241dd03251",
+        "primary_raw_asset_id": "sha256:37240895db1e2f9e69e4001f213a0db27a77fb693b1e346b1e9d701491ea6e54",
+        "header_source_reference_id": "sha256:92a368eefa8aedc8c08eec16f8b09d71fce6734e3594649deabd9f3b7a691323",
+        "header_raw_asset_id": "sha256:2bebd6703a7b136ec96be70304942614c8aeca924a056f10857c13e50f6c1701",
+        "visible_anchor": "public offering of $1,500,000,000 aggregate principal amount of debt securities"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
   ],
-  "latest_peer_read_commit": "104876d6cfae7812d93fd5b8a4bb0e0f97959fff"
+  "latest_peer_read_commit": "488a61734978adaa57e82ec0654e75a0af284cfb"
 }
