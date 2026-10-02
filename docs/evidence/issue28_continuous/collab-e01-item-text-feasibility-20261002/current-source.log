@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/current-source.py", line 52, in <module>
+    probe.legacy_disabled() as disabled):
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-b01-legacy-exit-20260928/probe.py", line 28, in legacy_disabled
+    assert 'vnext.normal_run_v3' not in sys.modules
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

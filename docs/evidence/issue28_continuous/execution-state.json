@@ -846,6 +846,28 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_e01source_dcd36df",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_e01_item_text_source_only",
+      "scope_paths": [
+        "scripts/vnext/e01_item_text_28_v1.py",
+        "scripts/vnext/ordinary_e01_item_text_input.py",
+        "tests/vnext/test_ordinary_e01_item_text_input.py",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
+      ],
+      "patch_sha": "dcd36df3daf1194b4e74a6fc81779d3dcf07bdb5",
+      "spawned_at": "2026-10-02T10:57:27Z",
+      "ended_at": "2026-10-02T11:11:15Z",
+      "tool_calls": 37,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/independent-review-dcd36df/conclusion.md",
+      "verdict": "PASS_LIMITED_SOURCE_INPUT",
+      "tool_calls_outer": 24,
+      "message_count": 3
+    },
+    {
       "task_name": "review_d02gate_0ccf536",
       "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
       "module": "ordinary_d02_item8_gate",
@@ -9499,6 +9521,33 @@
     "semantic_result_or_run_created": false,
     "current_390_credit": false,
     "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
+  },
+  "e01_current_item_text_source_only_20261002": {
+    "status": "VERSIONED_ORDINARY_SOURCE_INPUT_AND_THREE_INSTALLED_COLD_READS_PASS_LIMITED_REVIEW",
+    "peer_source_commit": "488a61734978adaa57e82ec0654e75a0af284cfb",
+    "peer_source_git_blob": "ff6996d2edb4d924ed77e5366bf4561bb8bb8135",
+    "own_source_reader": "scripts/vnext/e01_item_text_28_v1.py:item_text",
+    "own_source_adapter": "scripts/vnext/ordinary_e01_item_text_input.py:prepare_current_e01_item_text,verify_current_e01_item_text,install_current_e01_item_text",
+    "shared_with_issue47": {
+      "affected_files": ["config/issue28_normal_results_v2.json", "requirements/issue_28_v13/decision_register.json", "requirements/issue_28_v13/baseline_manifest.json", "requirements/issue_28_v14/baseline_manifest.json", "requirements/issue_28_v14/transfer_manifest.json"],
+      "default_old_E01_result_path_changed": false,
+      "new_explicit_input_record_type": "ORDINARY_E01_SOURCE_BOUND_ITEM_TEXT_V1",
+      "peer_runtime_or_historical_registration_imported": false,
+      "current_v13_closure_hash": "sha256:8a667e941f234dd623138d8bdce46668f9f947c045bafda62b8a47f203f12b6b",
+      "current_v14_closure_hash": "sha256:71f7e0969a0f315e8826bba6a2778418f9cacc465b9f766c0a6dac0e49f96e6f"
+    },
+    "ten_company_source_preparation": "PASS_ON_PRE_INSTALLER_ADAPTER_BYTES_60_ITEMS_NOT_FINAL_INPUT_IDS",
+    "final_code_installed_companies": ["enphase_energy", "pfizer", "paramount_skydance_paramount_global"],
+    "final_code_installed_candidate_counts": [0, 3, 14],
+    "final_code_cold_read": "PASS_3_OF_3_SAME_INPUT_ID_AND_ITEM_TEXT_SHA_NO_OLD_PRODUCER",
+    "final_code_directed_tests": "PASS_3_OF_3",
+    "final_code_fast_selectors": "PASS_146_OF_146",
+    "semantic_result_or_run_created": false,
+    "current_390_credit": false,
+    "real_calls": [0, 0, 0],
+    "review": "PASS_LIMITED_SOURCE_INPUT_ON_DCD36DF; NO_CONTENT_OR_OMISSION_CREDIT",
+    "review_result_path": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/independent-review-dcd36df/conclusion.md",
     "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
   }
 }

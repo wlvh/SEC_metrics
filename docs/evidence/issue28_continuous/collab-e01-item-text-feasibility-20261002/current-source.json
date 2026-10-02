@@ -1,0 +1,193 @@
+{
+  "record_type": "ISSUE28_CURRENT_E01_ITEM_TEXT_PROCESSING_SOURCE",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "acquisition_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "processing_root": "/private/tmp/issue28-e01-current-item-bound-20261002/sources/0a498abf28f919c21beaa887b142260cb3251de940decb4618f5c891b281cfe2",
+  "requirement_closure_hash": "sha256:d9a728918f9a5a23e8f4df1045dded85182ff7f882f772a1610e1ba9476f6ad0",
+  "source_snapshot_id": "sha256:0a498abf28f919c21beaa887b142260cb3251de940decb4618f5c891b281cfe2",
+  "rows": [
+    {
+      "company_id": "marriott_international",
+      "status": "PREPARED",
+      "candidate_count": 2,
+      "input_id": "sha256:0e0879c70440a093d085fe690702142c61703dfe1639dc5a12b73ef4524a8626",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "item_text_sha256": [
+        "sha256:411557ca5ffcceb50980d8049a02132cddfc696c12a4bc483b71181c7575d348",
+        "sha256:ed4cfc455866cdf6feea022e1e23746ce2a3f1b1b85b710107ab32c68d5b7407"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "status": "PREPARED",
+      "candidate_count": 3,
+      "input_id": "sha256:1bb2b386618e890fba7612fc8c52827d27ef519dda27071fc60e0425c9306af4",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "item_text_sha256": [
+        "sha256:f303bfdffa43dbac11e6ab8604c5fa66a0472f01339873124dee2658cd690e4d",
+        "sha256:16db14bb40749cb1843601a1a51ee987ee07c0b0c85d75c45b052790183bc17f",
+        "sha256:4d0255986f8ce836491e8d9264933dd203188ad8c2d31d4c3f468cfff1bad92d"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "ford_motor_company",
+      "status": "PREPARED",
+      "candidate_count": 7,
+      "input_id": "sha256:cf7366629af4a7275ec562ba6383263343a4e16fc7970215cd3ebacae538287f",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "item_text_sha256": [
+        "sha256:489e335b5ab04744e7cdf957dc7fbf379cee338e8ab9c87b0ada8220a8c48fbd",
+        "sha256:baa1db6858cb839492218aeecc5df6626c266153c022dc00e180c7117fa319ca",
+        "sha256:4945b1c9d22f306a448c6e4e2164f58bd91ee4b8d8c085b5bac73ac69aa3e16d",
+        "sha256:94a6fa57db7a98f15116c04fce7e4e5768a480f7e0fae68113e205843c0f01f7",
+        "sha256:a3d623808a0edf0e771bd88e885e18e0b9a2a280a1174c7535e501e977b8e0a0",
+        "sha256:0218c66e18f51d19abc57b670150e2ea573597b0ac14285668173514da966332",
+        "sha256:7357c6eb37158af6663337a4e87ae6c01cbfa9385a490288f313bd1e36e059b0"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "pfizer",
+      "status": "PREPARED",
+      "candidate_count": 3,
+      "input_id": "sha256:b1cb4585e37bdee6acae6c8feb3284ae417d19a39b14dc4f8800d8e65793a82f",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "item_text_sha256": [
+        "sha256:44c08d64c9ac9667fe8680ba4effcaa797dacb8dfd8208b97ceb04006e581e3d",
+        "sha256:23c69078f2f3ed4df3e50be989053afa01407ac9a8915ee81f83fbee0f39a425",
+        "sha256:3db9327bfdbfc10513d3fcbbf21ff442ff71e8ce84ec5e1e56e6369e1b5bc12a"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "status": "PREPARED",
+      "candidate_count": 8,
+      "input_id": "sha256:68357081fe52ea19e9e2b2ef09a5d17eb0bbfe21168fb82f2ea2c9876eb06fb2",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "item_text_sha256": [
+        "sha256:ac8f1fc2b2d6b045d3d5b9f58608afab879e45be70ee8cf44ed11026c5a8d296",
+        "sha256:7f5020eae4270b76b3736be24193a5f024c34d128bcc36a61da1791d2d75e6db",
+        "sha256:93b820af935eff953278560b45ae4c955c4a2c6ecf370d386693565bbab9a805",
+        "sha256:9e23573332470f786383e43f1f924ab7559e5837f7900a0726a58f3861a98092",
+        "sha256:e89cf3dcab66a108314581573c083b20c01080948a81f18f6b7e441cc1c0ef4c",
+        "sha256:633b8703c51bc03de7913b5de6294a0b79c5a2399ca1d788111d7d14127cfba2",
+        "sha256:6da9aba676af79ca3709c81571b5655c4471c55261be0bbd530dd61b9fbc8025",
+        "sha256:5ba0340766b2e50688cfd6614486040d381cea5673b2a9dac1d8307b7a8cc658"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "salesforce",
+      "status": "PREPARED",
+      "candidate_count": 2,
+      "input_id": "sha256:97f99ddcb39a49d4c4d8f5fa94a4f8705c00ba35aba91d31a0dbd8b5be9e2e14",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "item_text_sha256": [
+        "sha256:01f201e2b5adeb6408f63cff7fa915c75e86196dc7b5d4bb63c0b4eae3d39921",
+        "sha256:43386aa65d9ce772ff5dbf45d5341d26fae631eb160a138b613019533d14c5b0"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "lumen_technologies",
+      "status": "PREPARED",
+      "candidate_count": 15,
+      "input_id": "sha256:f5cffe1a4f8b93990bf4003a4ee93f68b7ed46ac05b5e54ef269b75b57af94f9",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "item_text_sha256": [
+        "sha256:01d14215ccd7812217bdf6942c4f9190373fc71b905d7216d66772b9de2d23c5",
+        "sha256:df7849ea42da803fea9ac2e02c99dded56ca2c131b3abad25c1123b1bdd41081",
+        "sha256:a40e76758e771e656af367ddcaee48446db91c469979a5773e6e645de053bcba",
+        "sha256:0699d402a01974b42112d5a2fb8973630036022d4ceae74d84ea129873450c86",
+        "sha256:6c2ffa75a797f36c4d3c336fd26f0291cc378ccb8df9f8fe38d704eb23bd88d2",
+        "sha256:f0bf4b5005d74687e1ad7f2c8c72bf992d49f1c06702c57696660d4c91f9f3ce",
+        "sha256:30c345c3fa3729397ddc3e4852641ddab0cda557cedf7689457c8f3a12ded751",
+        "sha256:8b731a43ce77d66a0e5a3cdf8479c3a2530b809132aa5411d99193ed4d17e8a3",
+        "sha256:a374135889aff9fb01ba636ce37b37d15f63af6153abe628810e17116ecef5c0",
+        "sha256:77a5f189d65b627ba3c508a68d3b901cca6d9af3e438f7890aff0c22e46d621d",
+        "sha256:d4c8fd26970bb63167d5047bf0c78fd9227c82dad75feaa37806446caa8dd421",
+        "sha256:c935e57abe0fd97be6390b4bf1fbb2cd3589d39d90f00e08971fd664226c2938",
+        "sha256:c66d93f2dd68815af21b5986b8f484947dfc57ab10791fc50efc70e868f1f8dc",
+        "sha256:babc1239945b5fe30d0f4aeba29cbba482687e330da95ac1fcccf7f7566fc429",
+        "sha256:c8b2d63b0824514364262e3d5e1c964ce574dd1e5d8122ceb3f3e73bb1f272aa"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "macys",
+      "status": "PREPARED",
+      "candidate_count": 6,
+      "input_id": "sha256:9bff3fce6d2c4463996f9dd68953a07a258f08f52499f4f6cb5d5a1c35f8c25e",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "item_text_sha256": [
+        "sha256:7a3cfd0a8553f969b25b5fb202d97b982559b50a621e208cd66f4c8e787cf992",
+        "sha256:dfd5f919b8f390008e24f8835386f2998f8dd80fe153e010e4d26cdbd6c87af0",
+        "sha256:8e574c1069d0b70c02b1adc806e13f7ec16acf549d48a75002232ac7bb1ee8cf",
+        "sha256:d06cc1dcdde81604cccc15e5bafc69deb1d441952d1f752dda743ba1cfaace03",
+        "sha256:829454e5effa0c2a659cfbc0b738a3e91b49d537aab705c794d92d0e01058144",
+        "sha256:06c0023527d9bf9111952ad79707463a4181b230537792832c4dc154ffc02cab"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "status": "PREPARED",
+      "candidate_count": 14,
+      "input_id": "sha256:536897e5eb48e064b6d8e25c18b8b48e7717ebd6d40d09e2c263a60410e6d83d",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "item_text_sha256": [
+        "sha256:d561e88d32bf83d2e4efbc35af0af60576228fa5bdfd2c0ff47d08344c75d6c4",
+        "sha256:5400332c9f43c56e24c41307f3b3d7467ae177815dbbdf8eb1d8f6e269e1140e",
+        "sha256:18e9d8cc2790d5d1f5621a683d4f1d0037d0e2c2f382d15ae77565b0aff5df3c",
+        "sha256:6276e833b58e3b518d8455f8f0cf5628a1145406c959eedeaff0e0e2f22bfc24",
+        "sha256:096f990c108784ff3b2ca0ae7c0409831a0c932e5ff821942de2fb98a95b44bb",
+        "sha256:9caf539bf4252a0cb4e99b81c2e205add0099e4a9f1d8227bd270a4425b86a60",
+        "sha256:52508f6eb7ce3036a23e26e84925d03f844da4ae61bad6df35d7a7ca50f030b6",
+        "sha256:d4f45e9421a2726dffcca89eead54ef45f6ddceed3e21f86defcf2340aea094a",
+        "sha256:798244575f94ba2b9e6048b021f09908303a9ce328e09e874b810edd697c7b1a",
+        "sha256:b20a297671215f545c2752019e6621f2a7e9ad2360a5a0f8cf0f29050dac088e",
+        "sha256:c57411d748782c3cee850dc32108a0c29f397699ba3d5eade11af7f0294397fc",
+        "sha256:6b44ad94b2a9d5e17406aea2cdbc1b16a6ce231d9e556230d3e0138c7b31eb37",
+        "sha256:57a7b82c30692016feba9810ba41ce0576c3ce8f15334b8a185c6c391bb78dc5",
+        "sha256:402812b91b8191ea023c99605187e8b382e572efdaaaf948253285cde5b68b28"
+      ],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    },
+    {
+      "company_id": "enphase_energy",
+      "status": "PREPARED",
+      "candidate_count": 0,
+      "input_id": "sha256:aaea1ec7e9330df1a51a5388f34b7fc4cb25d5693647598e0ff371bcdfa001af",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "item_text_sha256": [],
+      "semantic_confirmation_status": "NOT_PERFORMED",
+      "new_result": false
+    }
+  ],
+  "prepared": 10,
+  "stopped": 0,
+  "total_items": 60,
+  "elapsed_seconds": 129.826,
+  "legacy_exports_disabled": 116,
+  "protected_claims_source_log_active_unchanged": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_result_or_run": false,
+  "current_390_credit": false,
+  "production_authorized": false
+}
