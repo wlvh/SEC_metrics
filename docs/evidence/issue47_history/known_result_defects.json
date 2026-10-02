@@ -6405,6 +6405,40 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "0bc24734",
+   "own_commit_at_read": "54eb39d4",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; unchanged since 3275aa7b (empty diff 3275aa7b..0bc24734)",
+   "baseline": "Read since 3275aa7b: three commits, their messages and file lists, the D02 v2 README and both limited-review conclusions.",
+   "increments": [
+    {
+     "commit": "79677ed2",
+     "marker": "[shared-with-#47]",
+     "subject": "Route current D02 through versioned item-8 repair",
+     "affects_47": "#28 copied #47's D02 category rule version 2 (147957c4) into its own path and its review found a P2: 'During 2025, our company faced litigation, regulatory proceedings and fines.' is left out. Reproduced on #47's rule; no saved filing contains such a sentence, so no #47 value is affected (the 174 judged blocks and 64 saved reports decide as before).",
+     "integration": "PROVIDED_FIX: d02-keyword-repair/v3 (2a98ba84, 1672097b, 815c7820) [shared-with-#28]; Issue #28 comment 5954008104"
+    },
+    {
+     "commit": "b99748ac",
+     "marker": "[shared-with-#47]",
+     "subject": "Suspend D02 v2 native credit after scoped review",
+     "affects_47": "None on a #47 value: it stops #28's own versioned D02 path.",
+     "integration": "NOT_NEEDED"
+    },
+    {
+     "commit": "0bc24734",
+     "marker": null,
+     "subject": "Record scoped D02 v2 stop review and preserve rule finding",
+     "affects_47": "None on a #47 value. Merging the base moved issue_28_v13's authority: its named code now imports two versioned update modules it does not name, so issue_47_v1 names them (tools/vnext_mint_historical_requirement.py AUTHORITY_ADDITIONS).",
+     "integration": "MERGED_AND_REMINTED"
+    }
+   ]
   }
  ]
 }

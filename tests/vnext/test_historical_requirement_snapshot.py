@@ -111,7 +111,14 @@ class ExecutionAuthorityClosureTest(unittest.TestCase):
             sys.path.insert(0, str(REPO_ROOT))
         from tools.vnext_authority_closure import measure
         parent = measure(repo_root=REPO_ROOT, requirement_id="issue_28_v13")
-        self.assertEqual(["scripts/vnext/requirement_profile_v11.py"],
+        # requirement_profile_v11 was the parent's one gap when this was written;
+        # #28 has since added modules its named code imports without naming
+        # them (B03's contract-amortization scope, two versioned update
+        # modules). This generation names all four (AUTHORITY_ADDITIONS).
+        self.assertEqual(["scripts/vnext/b03_contract_amortization_scope.py",
+                          "scripts/vnext/ordinary_a05_formula_update.py",
+                          "scripts/vnext/ordinary_b03_scope_update.py",
+                          "scripts/vnext/requirement_profile_v11.py"],
                          parent["required_to_import_but_not_named"])
 
 

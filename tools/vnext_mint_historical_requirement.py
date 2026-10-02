@@ -286,6 +286,14 @@ AUTHORITY_ADDITIONS = (
     # not the parent's, so a change #28 makes to it moves this generation's
     # closure, as a parent change does.
     "scripts/vnext/b03_contract_amortization_scope.py",
+    # Two of #28's versioned update modules. The parent's authority names
+    # ordinary_refresh_cycle and ordinary_d02_category_update(_v2), which import
+    # them at module scope, but not the two themselves (measured at base
+    # 0bc24734 with tools/vnext_authority_closure.py). No historical Run executes
+    # them; they are named so that this generation's authority stays closed
+    # under imports, as requirement_profile_v11 is above.
+    "scripts/vnext/ordinary_a05_formula_update.py",
+    "scripts/vnext/ordinary_b03_scope_update.py",
 )
 
 # Three files the parent already binds, whose bytes a historical Run needs to be
