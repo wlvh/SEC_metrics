@@ -166,3 +166,20 @@
 ### E01 8.01 正文读取（#28 的反例对本方的影响）
 
 #28 对它自己的 `e01_item_source.py` 的独审给出两类反例（`7fc74694`）：视窗外文字（`right`/`bottom` 或正的大偏移）被当成可见；只有一个带链接的目录标题时把目录当正文起点。两套实现不同，本方逐条在 `historical_event_items.py` 上试过：两类在本方都成立，已有 56 个候选条目里都没有实例，E01 也还没有发过确认调用，所以没有结果移动。本方的修复见 `../e01-item-text/README.md` 末节；#28 的代码不移植。
+
+## 2026-10-02 读到 #28 `7f7b4eb0`
+
+### D02 Item 8 类别提及（#28 反例、本方修复）
+
+#28 在 `de22326d` 把本方 D02 类别提及规则（固定 `104876d6` 的字节、`36c64ab6` 的接线）复制到自己的版本化路径，限定独审查出一个误删：关键词后面的单个逗号被当成列表证据，`We face litigation, which could result in a significant loss.` 与 `Litigation, brought by a customer against us in 2025, remains unresolved.` 都被移出（[评论 5948676381](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381)）。#28 随后在 `0ccf5363` 暂停了自己的 D02 后继新 Run 与更新信用，等本方修复。
+
+归属：D02 共用规则由本方维护（v1.1 第 4 条；#28 提供反例、必须保住的正例与普通路线接入验证）。修复是规则第 2 版：`scripts/vnext/d02_item_8_category_mentions.py` 加 `catalog/r6/D02_item_8_category_mention_v2.json`，提交见 `../d02-keyword-repair/v2/README.md`。做法是在第 1 版的证据上加结构条件，只读封闭词类：关键词所在短语不是从句、不点名当事方或本公司；不是句子第一项；与另一个列表项用并列连词连起来；这个系列不是谓语的主语，也不由本公司作主语直接支配。另外在暴露词里加了四条关系，都是在一份独立反例集上看到的说法。接口不变，`classify` 多返回每处的原因码。
+
+验证（零调用，`../d02-keyword-repair/v2/compare.json`）：
+
+- 已判读的 159 个 Item 8 关键词块，两版逐块相同。
+- 独立反例集：由一个没看过规则的子代理写，共 40 段真实事项、25 段类别提及。第 1 版移出 20 段真实事项，第 2 版 0 段；类别提及第 1 版移出 11 段，第 2 版 8 段。这份反例集是在后两项改动之前跑的，所以只算设计材料，不算留出验证。
+- 全部 64 份已存年报的 158 个 Item 8 关键词块：第 1 版移出 29 块，第 2 版 28 块；第 2 版没有移出任何第 1 版保留的块。唯一移动的是 ViacomCBS FY2020 第 2382 块（2018 年法律程序与调查费用），现在保留；它不是框架的目标年份。
+- #28 核过的四处排除（Lumen 1670、Pfizer 2175/2240、Paramount 2257）仍移出，Paramount 2108 仍保留。
+
+接入时要知道：提案里只要有被移出的块，就会记下规则词表的哈希（`item_8_category_mentions_left_out.terms_hash`）。所以对 Lumen、Pfizer、Paramount 2025 这类有移出块的申报，即使移出的块不变，候选哈希也会变。仍然做不到的写在 v2 README：读不到开放词类；系列作主语、谓语动词贴在最后一项上时（"In 2025, litigation, fines and penalties increased."）仍会当成列表。

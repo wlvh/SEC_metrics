@@ -2,6 +2,8 @@
 
 Owner of the shared repair: #47 (Issue #47 comment 5946182786; #28 supplies counterexamples, the positives that must stay, and the ordinary-route integration).
 
+**Superseded by version 2** (`v2/README.md`): version 1, described below, read any separator beside the keyword as list evidence, so a comma opening a relative clause or a participial phrase counted (#28's review, Issue #47 comment 5948676381). The counts below are version 1's; version 2 keeps them on every judged block and is measured in `v2/compare.json`.
+
 ## The defect
 
 D02's approved sources are Item 3, legal proceedings and the contingencies notes. Item 8 at large is not a source, so the route admits an Item 8 paragraph only through the frozen keyword `_LEGAL` (litigation, lawsuit, legal proceeding, legal claim, loss contingency, litigation reserve). The keyword admits wherever the word stands. The two-direction readings found the same wrong admissions again and again. Each was a paragraph that names litigation only as a category, never as a matter: counsel fees for "finance, regulatory, litigation, and other matters"; receivables written off "(including litigation, where appropriate)"; estimates moved by "competition, litigation, legislation and regulations"; covenant add-backs. Three deterministic replacements were tried first, and each failed on a real filing (`d02-content-read/keyword-proxy-decision.json`).
