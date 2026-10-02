@@ -6,12 +6,13 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 17,
-    "newly_excluded_result_id_count": 23,
+    "newly_excluded_coordinate_count": 18,
+    "newly_excluded_result_id_count": 25,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
       "ford_motor_company|E01|2025-12-31",
+      "jpmorgan_chase|D02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
       "lumen_technologies|D02|2025-12-31",
       "lumen_technologies|E01|2025-12-31",
@@ -921,7 +922,98 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "metric_id": "D02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "PAGE_FURNITURE_SELECTION_REPAIR_NOT_YET_OWNED_OR_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_10K_PAGE_FURNITURE_IS_NOT_LEGAL_DISCLOSURE",
+      "summary": "The saved D02 text includes the annual-report footer and a running financial-statement header as if they were litigation disclosures; source content and the exact affected Result identity are retained.",
+      "peer_origin": {
+        "fixed_read_commit": "e76e2953d96005f2fde60e46118a9fbd495c5dfe",
+        "register_blob": "80335204c5c19ef721eec4a6c0e934d754a3a836",
+        "evidence_path": "docs/evidence/issue47_history/d02-facing-pages/README.md",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-jpm-page-furniture-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "D02_JPMORGAN_2025_PAGE_FURNITURE_PRIVATE_NORMAL_UPDATE",
+      "result_id": "sha256:7256aa80eeb53c368a87c26fe7318d230a9233401112171fe8288a5ce6dd7c08",
+      "run_id": "run:ordinary-integrated:b454778f89ee046f7ba937d608953dd549d0b76a1a4218c4d7811f99c40284bb",
+      "source_blocks": [
+        {
+          "role": "excerpt_15",
+          "block_index": 10174,
+          "text": "JPMorgan Chase & Co./2025 Form 10-K",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "350f452ade5992dad92103fc1fedd3f72c56b13f896df008bb03c806d83986f1"
+        },
+        {
+          "role": "excerpt_25",
+          "block_index": 10184,
+          "text": "JPMorgan Chase & Co./2025 Form 10-K",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "350f452ade5992dad92103fc1fedd3f72c56b13f896df008bb03c806d83986f1"
+        },
+        {
+          "role": "excerpt_26",
+          "block_index": 10186,
+          "text": "Notes to consolidated financial statements",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "8e412f342e9fd33395439e68a996ed4285af187ca8e0ddf69f758016ee910a43"
+        },
+        {
+          "role": "excerpt_33",
+          "block_index": 10195,
+          "text": "JPMorgan Chase & Co./2025 Form 10-K",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "350f452ade5992dad92103fc1fedd3f72c56b13f896df008bb03c806d83986f1"
+        }
+      ],
+      "native_evidence_status": "PASS_BUT_CONTENT_WRONG"
+    },
+    {
+      "metric_id": "D02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "PAGE_FURNITURE_SELECTION_REPAIR_NOT_YET_OWNED_OR_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_10K_PAGE_FURNITURE_IS_NOT_LEGAL_DISCLOSURE",
+      "summary": "The saved D02 text includes the annual-report footer and a running financial-statement header as if they were litigation disclosures; source content and the exact affected Result identity are retained.",
+      "peer_origin": {
+        "fixed_read_commit": "e76e2953d96005f2fde60e46118a9fbd495c5dfe",
+        "register_blob": "80335204c5c19ef721eec4a6c0e934d754a3a836",
+        "evidence_path": "docs/evidence/issue47_history/d02-facing-pages/README.md",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-jpm-page-furniture-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "D02_JPMORGAN_2025_PAGE_FURNITURE_ARCHIVED_390",
+      "result_id": "sha256:3c7230d0dae3e7e7cb91ae748f2904f84f9df00bb741cb3382f1b395e377cd59",
+      "run_id": "run:ordinary-integrated:d2c6edc8a6f5b1489f0ade8b7741f860b200d313ff9b6170a69eefd441cb01be",
+      "archived_value_footer_occurrences": 3,
+      "archived_value_running_head_occurrences": 1
     }
   ],
-  "latest_peer_read_commit": "488a61734978adaa57e82ec0654e75a0af284cfb"
+  "latest_peer_read_commit": "e76e2953d96005f2fde60e46118a9fbd495c5dfe"
 }
