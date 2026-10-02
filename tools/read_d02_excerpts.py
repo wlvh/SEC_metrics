@@ -68,6 +68,8 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 READING_DIR = REPO / "docs/evidence/issue47_history/d02-older-years/judgements"
+# Readings carried to a later selection of the same document (``carry_reading``).
+CARRIED_DIR = REPO / "docs/evidence/issue47_history/d02-older-years/carried"
 ADJUDICATION_PATH = REPO / "docs/evidence/issue47_history/d02-older-years/adjudication.json"
 VERDICTS = {"TAKEN": {"DISCLOSURE", "NOT_DISCLOSURE"},
             "SKIPPED": {"CORRECTLY_SKIPPED", "COVERED_ELSEWHERE", "WRONGLY_SKIPPED"},
@@ -290,6 +292,113 @@ def read_position(*, packet, reading):
             "counts": counts, "problems": problems, "covered_elsewhere": covered}
 
 
+# A verdict carried across kinds: what a judgement about a block's text says
+# once the route takes a block it skipped, or skips one it took.
+_TO_TAKEN = {"WRONGLY_SKIPPED": "DISCLOSURE", "CORRECTLY_SKIPPED": "NOT_DISCLOSURE"}
+_TO_SKIPPED = {"DISCLOSURE": "WRONGLY_SKIPPED", "NOT_DISCLOSURE": "CORRECTLY_SKIPPED"}
+_SKIP_KINDS = ("SKIPPED", "CONTEXT", "OUTSIDE")
+
+
+def carry_reading(*, packet, reading, reading_path):
+    """A reading carried to a new selection of the same document, verdict by verdict.
+
+    A reader's verdict is about a block's text, not about whether the route took
+    it. When a route repair changes the selection, each verdict moves with its
+    block, matched by index and text digest:
+
+    * a block judged not a disclosure that the route now skips is correctly
+      skipped, and one judged a disclosure that it now skips is wrongly skipped;
+    * a block judged wrongly skipped that the route now takes is a disclosure
+      taken, and one judged correctly skipped is a non-disclosure taken;
+    * a block that stays in a kind of the same family keeps its verdict.
+
+    Everything else needs a reader again and is returned unjudged rather than
+    guessed: a block no verdict covers, a block judged covered elsewhere whose
+    cited blocks are no longer taken, a block judged covered elsewhere that the
+    route now takes, and a heading judged missed (whether its matter is reached
+    depends on the new selection).
+
+    A heading judged reached carries: its matter was reached by excerpts judged
+    disclosures, and if the new selection drops one, that block is a wrongly
+    skipped or a lost disclosure below, so the carried reading cannot agree.
+    A block judged a disclosure or wrongly skipped, or a heading judged missed,
+    that the new packet no longer lists in its family (headings, or the blocks
+    taken or skipped) is returned as lost: a block listed only as a heading now
+    is not the excerpt it was. The carried reading is checked by
+    ``read_position`` like any other.
+    """
+    def family(kind):
+        return "HEADING" if kind == "HEADING" else "BLOCK"
+
+    by_index = {}
+    for row in reading["judgements"]:
+        by_index.setdefault(row["i"], []).append(row)
+    taken = {block["i"] for block in packet["taken"]}
+    carried, unjudged, listed = [], [], set()
+    for kind, key in KINDS:
+        for order, block in enumerate(packet.get(key, ())):
+            listed.add((family(kind), block["i"]))
+            prior = [row for row in by_index.get(block["i"], ())
+                     if row["text_sha256"] == block["text_sha256"]]
+            same = [row for row in prior if row["kind"] == kind]
+            other = [row for row in prior if row["kind"] != "HEADING" and kind != "HEADING"
+                     and row["kind"] != kind]
+            verdict, source = None, None
+            if same:
+                source = same[0]
+                verdict = source["verdict"]
+                if kind == "HEADING" and verdict == "MISSED":
+                    verdict = None
+            elif other:
+                source = other[0]
+                if kind == "TAKEN":
+                    verdict = _TO_TAKEN.get(source["verdict"])
+                elif source["kind"] == "TAKEN":
+                    verdict = _TO_SKIPPED[source["verdict"]]
+                else:
+                    verdict = source["verdict"]
+            if verdict == "COVERED_ELSEWHERE" and (
+                    kind == "TAKEN" or not set(source.get("covered_by") or ()) <= taken):
+                verdict = None
+            if verdict is None:
+                unjudged.append({"kind": kind, "i": block["i"], "text": block["text"][:160],
+                                 "prior": [(row["kind"], row["verdict"]) for row in prior]})
+                continue
+            row = {"kind": kind, "i": block["i"], "verdict": verdict, "why": source.get("why", ""),
+                   "text": block["text"], "text_sha256": block["text_sha256"]}
+            if source["kind"] != kind or source["verdict"] != verdict:
+                row["carried_from"] = {"kind": source["kind"], "verdict": source["verdict"]}
+            if kind == "TAKEN":
+                row["order"] = order
+            if "scope" in block:
+                row["scope"] = block["scope"]
+            if verdict == "COVERED_ELSEWHERE":
+                row["covered_by"] = source["covered_by"]
+            for field in ("reader_verdict", "reader_why", "adjudication_rule"):
+                if field in source:
+                    row[field] = source[field]
+            carried.append(row)
+    lost = [{"kind": row["kind"], "i": row["i"], "verdict": row["verdict"], "text": row["text"][:160]}
+            for row in reading["judgements"]
+            if (family(row["kind"]), row["i"]) not in listed
+            and row["verdict"] in ("DISCLOSURE", "WRONGLY_SKIPPED", "MISSED")]
+    rank = {kind: n for n, (kind, _) in enumerate(KINDS)}
+    source = Path(reading_path).resolve()
+    named = str(source.relative_to(REPO)) if source.is_relative_to(REPO) else str(source)
+    body = {"record_type": "ISSUE_47_D02_READING", "position": reading["position"],
+            "reader": reading["reader"] + " (carried by tools/read_d02_excerpts.py --carry)",
+            "reader_note": reading.get("reader_note", ""),
+            "packet_document_id": packet["document_id"],
+            "packet_candidate_hash": packet["candidate_hash"],
+            "carried_from": {"reading": named,
+                             "reading_sha256": "sha256:" + hashlib.sha256(
+                                 source.read_bytes()).hexdigest(),
+                             "packet_document_id": reading.get("packet_document_id"),
+                             "packet_candidate_hash": reading["packet_candidate_hash"]},
+            "judgements": sorted(carried, key=lambda row: (rank[row["kind"]], row["i"]))}
+    return body, unjudged, lost
+
+
 def load_adjudications(path=ADJUDICATION_PATH):
     """The executor's decisions on a class of block, keyed by (position, kind, block index).
 
@@ -439,8 +548,33 @@ def main(argv=None):
     parser.add_argument("--runs-root", action="append", type=Path, default=[])
     parser.add_argument("--closure")
     parser.add_argument("--acceptance-output")
+    parser.add_argument("--carry", action="store_true")
+    parser.add_argument("--reading-dir", type=Path, default=READING_DIR)
     args = parser.parse_args(argv)
     source_root = args.source_root.resolve()
+    if args.carry:
+        if not args.position or args.runs_root:
+            raise SystemExit("A_CARRY_NAMES_ITS_POSITIONS")
+        failed = 0
+        for position in args.position:
+            company_id, report_end = position.rsplit(":", 1)
+            path = READING_DIR / (company_id + "-" + report_end + ".json")
+            reading = json.loads(path.read_text(encoding="utf-8"))
+            document, proposal, candidate = route_selection(
+                source_root=source_root, company_id=company_id, report_end=report_end)
+            packet = make_packet(document=document, proposal=proposal, candidate=candidate)
+            body, unjudged, lost = carry_reading(packet=packet, reading=reading, reading_path=path)
+            if unjudged or lost:
+                failed += 1
+                print(position, "NOT_CARRIED", json.dumps({"unjudged": unjudged, "lost": lost},
+                                                          ensure_ascii=False)[:1500], flush=True)
+                continue
+            verdict = read_position(packet=packet, reading=body)["verdict"]
+            CARRIED_DIR.mkdir(parents=True, exist_ok=True)
+            target = CARRIED_DIR / path.name
+            target.write_text(json.dumps(body, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+            print(position, "CARRIED", verdict, target.relative_to(REPO), flush=True)
+        return 1 if failed else 0
     if args.merge:
         if not (args.packet_file and args.answer and args.reader):
             raise SystemExit("A_MERGE_NAMES_ITS_PACKET_ANSWER_AND_READER")
@@ -480,7 +614,7 @@ def main(argv=None):
                 receipts.append({**receipt, "_runs_root": str(root)})
         index = index_receipts(receipts=receipts)
     report, accepted = {}, {}
-    for path in sorted(READING_DIR.glob("*.json")):
+    for path in sorted(Path(args.reading_dir).glob("*.json")):
         reading = json.loads(path.read_text(encoding="utf-8"))
         if args.position and reading["position"] not in args.position:
             continue

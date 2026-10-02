@@ -21,6 +21,7 @@ joined as the renderer joins them, are the value named by digest.
 import hashlib
 import json
 import unittest
+from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_d02_excerpts as reader
@@ -126,6 +127,158 @@ class AReadingThatDidNotSeeTheBlockTest(unittest.TestCase):
     def test_a_verdict_of_the_wrong_kind_stops_the_reading(self):
         judged = reading({("TAKEN", 10): "CORRECTLY_SKIPPED"})
         self.refused(judged, "D02_VERDICT_INVALID")
+
+
+class CarryingAReadingToANewSelectionTest(unittest.TestCase):
+    """A route repair moves blocks between taken and skipped; verdicts move with their text.
+
+    The carried reading must never agree where a reader would not: a verdict
+    that depends on the selection, or a block no verdict covers, goes back to
+    a reader, and a judged disclosure the new packet no longer lists stops the
+    carry.
+    """
+
+    def setUp(self):
+        import tempfile
+        self.folder = tempfile.TemporaryDirectory()
+        self.addCleanup(self.folder.cleanup)
+
+    def old(self, verdicts=None):
+        judged = reading(verdicts)
+        judged.update({"reader": "constructed reader", "packet_document_id": "doc:1",
+                       "packet_candidate_hash": "sha256:old"})
+        return judged
+
+    def new_packet(self, *, taken, skipped, headings=None, outside=()):
+        def row(i, text, scope=None):
+            out = {"i": i, "text": text, "text_sha256": sha(text)}
+            if scope:
+                out["scope"] = scope
+            return out
+        return {"document_id": "doc:1", "candidate_hash": "sha256:new",
+                "taken": [row(*item) for item in taken],
+                "skipped": [row(*item) for item in skipped],
+                "outside": [row(*item) for item in outside],
+                "headings": [row(*item) for item in (headings if headings is not None
+                                                     else [(80, "Commitments and Contingencies")])]}
+
+    def carry(self, packet_, judged):
+        path = Path(self.folder.name) / "reading.json"
+        path.write_text(json.dumps(judged), encoding="utf-8")
+        return reader.carry_reading(packet=packet_, reading=judged, reading_path=path)
+
+    def verdicts(self, body):
+        return {(row["kind"], row["i"]): row["verdict"] for row in body["judgements"]}
+
+    def test_an_unchanged_selection_carries_every_verdict_as_it_was(self):
+        body, unjudged, lost = self.carry(packet_with_ids(), self.old())
+        self.assertEqual(([], []), (unjudged, lost))
+        self.assertEqual(self.verdicts(self.old()), self.verdicts(body))
+        self.assertEqual("READING_AGREES",
+                         reader.read_position(packet=packet_with_ids(), reading=body)["verdict"])
+        self.assertFalse(any("carried_from" in row for row in body["judgements"]))
+
+    def test_a_block_now_taken_carries_what_the_reader_said_of_its_text(self):
+        moved = self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3"), (11, "12", "ITEM_3"),
+                                       (90, "Keyword text.", "ITEM_8")], skipped=[])
+        for prior, carried, verdict in (("WRONGLY_SKIPPED", "DISCLOSURE", "READING_AGREES"),
+                                        ("CORRECTLY_SKIPPED", "NOT_DISCLOSURE", "READING_DISAGREES")):
+            with self.subTest(prior=prior):
+                body, unjudged, lost = self.carry(moved, self.old({("SKIPPED", 11): prior}))
+                self.assertEqual(([], []), (unjudged, lost))
+                self.assertEqual(carried, self.verdicts(body)[("TAKEN", 11)])
+                self.assertEqual(verdict, reader.read_position(packet=moved, reading=body)["verdict"])
+
+    def test_a_block_now_skipped_carries_what_the_reader_said_of_its_text(self):
+        for key in ("skipped", "outside"):
+            moved = self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3")],
+                                    skipped=[(11, "12", "ITEM_3")]
+                                    + ([(90, "Keyword text.", "ITEM_8")] if key == "skipped" else []),
+                                    outside=[(90, "Keyword text.")] if key == "outside" else ())
+            kind = {"skipped": "SKIPPED", "outside": "OUTSIDE"}[key]
+            for prior, carried, verdict in (("NOT_DISCLOSURE", "CORRECTLY_SKIPPED", "READING_AGREES"),
+                                            ("DISCLOSURE", "WRONGLY_SKIPPED", "READING_DISAGREES")):
+                with self.subTest(key=key, prior=prior):
+                    body, unjudged, lost = self.carry(moved, self.old({("TAKEN", 90): prior}))
+                    self.assertEqual(([], []), (unjudged, lost))
+                    self.assertEqual(carried, self.verdicts(body)[(kind, 90)])
+                    self.assertEqual({"kind": "TAKEN", "verdict": prior},
+                                     next(row for row in body["judgements"]
+                                          if row["i"] == 90)["carried_from"])
+                    self.assertEqual(verdict,
+                                     reader.read_position(packet=moved, reading=body)["verdict"])
+
+    def test_covered_elsewhere_goes_back_to_a_reader_when_the_selection_moves_under_it(self):
+        judged = self.old({("SKIPPED", 11): "COVERED_ELSEWHERE"})
+        judged["judgements"][2]["covered_by"] = [90]
+        cases = {
+            # the block itself is now taken: is it still covered, or now a duplicate?
+            "now_taken": self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3"), (11, "12", "ITEM_3"),
+                                                (90, "Keyword text.", "ITEM_8")], skipped=[]),
+            # the excerpt it cited is no longer taken
+            "citation_dropped": self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3")],
+                                                skipped=[(11, "12", "ITEM_3"),
+                                                         (90, "Keyword text.", "ITEM_8")])}
+        for name, moved in cases.items():
+            with self.subTest(name):
+                _, unjudged, _ = self.carry(moved, judged)
+                self.assertEqual([11], [row["i"] for row in unjudged])
+        kept = self.new_packet(taken=[(90, "Keyword text.", "ITEM_8")],
+                               skipped=[(10, "Item 3 text.", "ITEM_3"), (11, "12", "ITEM_3")])
+        body, unjudged, _ = self.carry(kept, judged)
+        self.assertEqual([], unjudged)
+        self.assertEqual([90], next(row for row in body["judgements"] if row["i"] == 11)["covered_by"])
+
+    def test_a_missed_heading_goes_back_to_a_reader(self):
+        body, unjudged, lost = self.carry(packet_with_ids(), self.old({("HEADING", 80): "MISSED"}))
+        self.assertEqual([("HEADING", 80)], [(row["kind"], row["i"]) for row in unjudged])
+        self.assertEqual([], lost)
+
+    def test_a_block_no_verdict_covers_goes_back_to_a_reader(self):
+        cases = {"new_block": self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3"),
+                                                     (90, "Keyword text.", "ITEM_8")],
+                                              skipped=[(11, "12", "ITEM_3"), (12, "13", "ITEM_3")]),
+                 "other_text": self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3"),
+                                                      (90, "Keyword text, revised.", "ITEM_8")],
+                                               skipped=[(11, "12", "ITEM_3")])}
+        for name, moved in cases.items():
+            with self.subTest(name):
+                _, unjudged, _ = self.carry(moved, self.old())
+                self.assertEqual(1, len(unjudged))
+                self.assertIn(unjudged[0]["i"], (12, 90))
+
+    def test_a_judged_disclosure_or_miss_the_new_packet_no_longer_lists_is_lost(self):
+        dropped = self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3")], skipped=[(11, "12", "ITEM_3")])
+        _, _, lost = self.carry(dropped, self.old())
+        self.assertEqual([("TAKEN", 90)], [(row["kind"], row["i"]) for row in lost])
+        # Listed now only as a heading, the excerpt is not what it was.
+        as_heading = self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3")], skipped=[(11, "12", "ITEM_3")],
+                                     headings=[(80, "Commitments and Contingencies"),
+                                               (90, "Keyword text.")])
+        _, unjudged, lost = self.carry(as_heading, self.old())
+        self.assertEqual([("TAKEN", 90)], [(row["kind"], row["i"]) for row in lost])
+        self.assertEqual([("HEADING", 90)], [(row["kind"], row["i"]) for row in unjudged])
+        no_heading = self.new_packet(taken=[(10, "Item 3 text.", "ITEM_3"), (90, "Keyword text.", "ITEM_8")],
+                                     skipped=[(11, "12", "ITEM_3")], headings=[])
+        _, _, lost = self.carry(no_heading, self.old({("HEADING", 80): "MISSED"}))
+        self.assertEqual([("HEADING", 80)], [(row["kind"], row["i"]) for row in lost])
+        # A block judged not a disclosure that drops out is no loss.
+        _, _, lost = self.carry(dropped, self.old({("TAKEN", 90): "NOT_DISCLOSURE"}))
+        self.assertEqual([], lost)
+
+    def test_the_carried_reading_names_what_it_was_carried_from(self):
+        judged = self.old()
+        body, _, _ = self.carry(packet_with_ids(), judged)
+        path = Path(self.folder.name) / "reading.json"
+        self.assertEqual("sha256:" + hashlib.sha256(path.read_bytes()).hexdigest(),
+                         body["carried_from"]["reading_sha256"])
+        self.assertEqual(("doc:1", "sha256:old"), (body["carried_from"]["packet_document_id"],
+                                                   body["carried_from"]["packet_candidate_hash"]))
+        self.assertEqual("sha256:new-ids", body["packet_candidate_hash"])
+
+
+def packet_with_ids():
+    return {**packet(), "document_id": "doc:1", "candidate_hash": "sha256:new-ids"}
 
 
 class ThePacketIsTheRouteSelectionTest(unittest.TestCase):
