@@ -561,7 +561,6 @@ _COMMITTEE_COMPOSITION = (
     re.compile(r"\bcommittee\b[^.;]{0,60}?\b(?:is|was|are|were)\s+(?:currently\s+|now\s+|also\s+)?(?:composed"
                r"|comprised|made up)\s+(?:entirely\s+|solely\s+|exclusively\s+|wholly\s+)?of\b", re.I),
     re.compile(r"\bcommittee\b[^.;]{0,40}\bconsist(?:s|ed)\s+of\b", re.I),
-    re.compile(r"\bmembers of the\b[^.;]{0,60}\bcommittee\b[^.;]{0,20}\b(?:are|were|include|included)\b", re.I),
     # "Having served on" is experience a nominee brings, in a list of
     # qualifications: "In-depth knowledge of the technology sector and
     # Salesforce, having served on our Board and its M&A Committee through
@@ -954,6 +953,30 @@ _HONORIFIC_WORD = re.compile(r"\b(?:Mr|Ms|Mrs|Dr|Messrs|Mses)\b")
 _CAPITAL_SPAN = re.compile("\\b[A-Z][\\w’'\\-]+(?:\\s+(?:[A-Z]\\.?|[A-Z][\\w’'\\-]+)){1,3}\\b")
 
 
+# "The members of the Audit Committee are ..." says who sits on a committee or
+# what they are only when the words after the verb do: a named member ("include
+# Mr. Smith") or a status the composition meaning lists - independence,
+# financial literacy or expertise, non-employee, not an employee or officer. An
+# audit committee report's disclaimer, "The members of the Audit Committee are
+# not professionally engaged in the practice of accounting or auditing; as noted
+# above, the Audit Committee's responsibility is to monitor and oversee these
+# processes" (JPMorgan FY2022-FY2025, #28's question on block 3436), says what
+# the committee does, which the meaning leaves out. The clause ends at a
+# semicolon, so the oversight half cannot lend it a status.
+_MEMBERS_ARE = re.compile(r"\bmembers of the\b[^.;]{0,60}\bcommittee\b[^.;]{0,20}\b(?:are|were|include|included)\b",
+                          re.I)
+_NOT_EMPLOYED = re.compile(r"\bnot\s+(?:officers?|employees?)\b", re.I)
+
+
+def _members_are(sentence):
+    """True when a "members of the ... Committee are" clause names members or their status."""
+    for match in _MEMBERS_ARE.finditer(sentence):
+        clause = _NOT_DIRECTOR_INDEPENDENCE.sub(" ", sentence[match.end():].split(";", 1)[0])
+        if _mentions_person(clause) or _QUALIFICATION.search(clause) or _NOT_EMPLOYED.search(clause):
+            return True
+    return False
+
+
 _LEADING_TITLE = re.compile(r"^(?:(?:ceo|cfo|coo|chief|executive|officer|president|chairman|chair|director"
                             r"|general|governor|judge|former|our|the|and|founder|co-founder|vice)\s+)+", re.I)
 
@@ -1097,7 +1120,8 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
             labels.add("BOARD_INDEPENDENCE_STATEMENT")
         if any(p.search(sentence) for p in _DIRECTOR_DETERMINATION):
             labels.add("DIRECTOR_QUALIFICATION_DETERMINATION")
-        if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _acronym_service(sentence, acronyms))
+        if ((any(p.search(sentence) for p in _COMMITTEE_COMPOSITION) or _members_are(sentence)
+             or _acronym_service(sentence, acronyms))
                 and not _MANAGEMENT_MEMBERS.search(sentence) and not _FORMED_EACH_TIME.search(sentence)):
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         stable = _NO_COMPOSITION_CHANGE.search(sentence)

@@ -654,6 +654,36 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "The members of the Audit Committee believe the independent public accounting firm is qualified.",
             own, period_start=START))
 
+    def test_a_members_clause_names_members_or_a_status(self):
+        # JPMorgan FY2022-FY2025 (blocks 3532, 3642, 3413, 3436; #28's question,
+        # Issue #47 comment 5954343457): the audit committee report's disclaimer
+        # says what the committee does, not who sits on it or what they are.
+        own = frozenset({"audit", "compensation", "example"})
+        self.assertEqual([], statement_labels(
+            "The members of the Audit Committee are not professionally engaged in the practice of accounting or "
+            "auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these "
+            "processes.", own, period_start=START))
+        # The statuses the meaning lists still read (Marriott FY2021-FY2022,
+        # Enphase and Macy's every year: "are not employees of the Company",
+        # "are independent under our Standards ...", "are financially literate").
+        for status in ("not employees of the Company", "independent under our Standards for Director Independence",
+                       "financially literate"):
+            self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", statement_labels(
+                "The members of the Audit Committee are " + status + ".", own, period_start=START), status)
+        # A named member reads (constructed).
+        self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", statement_labels(
+            "The members of the Audit Committee include Mr. Smith and Ms. Jones.", own, period_start=START))
+        # The auditor's independence is not the members' status, and a status
+        # after the semicolon is another clause (constructed).
+        self.assertEqual([], statement_labels(
+            "The members of the Audit Committee are responsible for overseeing the independent external auditor.",
+            own, period_start=START))
+        # (The qualification rule reads this sentence as a whole; only the
+        # members clause stops at the semicolon.)
+        self.assertNotIn("COMMITTEE_COMPOSITION_STATEMENT", statement_labels(
+            "The members of the Audit Committee are not professionally engaged in the practice of accounting; "
+            "the Board reviews whether they are financially literate.", own, period_start=START))
+
     def test_a_committee_chair_rotated_at_a_dated_meeting(self):
         # Lumen FY2021-FY2023 (blocks 1047, 1078, 1423): a list of the board's
         # changes, each without a subject. Every reader took it; its date is

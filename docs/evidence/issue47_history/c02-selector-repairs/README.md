@@ -884,3 +884,29 @@
 **未做。**
 - 同一份 FY2025 原件第 3436 块也入选，标签 COMMITTEE_COMPOSITION_STATEMENT。它是审计委员会报告里讲管理层、PwC、内部审计各自职责的段落，结尾是 "the Audit Committee's responsibility is to monitor and oversee these processes"，读起来更像委员会工作描述（所有者口径不包括）。但没有人判读过摩根大通的 C02，这一块本次不改，也不记作已发现的缺陷。
 - 摩根大通 C02 还没有双向判读。修复后的值即使重算，也要先读过才能接受。
+
+## 46. "The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing"：审计委员会报告写的是委员会的职责，不是成员资格
+
+**问题。** #28 问摩根大通 FY2025 代理第 3436 块该怎么处理（[Issue #47 评论 5954343457](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5954343457)）。这一块先分别写管理层、PwC、内部审计的职责，最后一句是 "The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes."。选择器把它选为构成事实（标签 COMMITTEE_COMPOSITION_STATEMENT）。#28 初读认为这是职责说明；另一种读法把"成员不从事会计/审计执业"当成资格事实。
+
+**按现有合同的判断。** 不需要提新的口径问题，现有合同已经能回答。本方 Spec（`catalog/r6/C02_board_disclosures_historical_v2.md`）列出的成员独立性与资格认定是 "financially literate, audit committee financial expert, non-employee director, no member an officer or employee"，并写明 "what a committee or its chair does" 不在范围内。这句话不是认定：没有人认定某位成员符合某项标准；它说的也不是列出的资格。分号后半句写明了用意：委员会的职责是监督这些流程。块里其余内容是管理层、审计师、内部审计各自的职责。所以整块不属于 C02。
+
+另一读法最有力的理由是：合同里的 "no member an officer or employee" 也是一句否定的身份陈述。差别在于，那一项是独立性的条件（高管或雇员不能算独立），所以列在合同里；"不从事会计/审计执业"不对应任何独立性或资格标准，审计委员会财务专家也不要求是执业会计师。同一份原件第 3409 块（四名非管理层董事、每人独立、具备财务素养、是审计委员会财务专家）才是列出的认定，修复前后都在。
+
+**成因。** "members of the X Committee are/were/include/included" 一出现，不论动词后面写什么，都算构成陈述。在 49 份缓存的 C02 代理里，这个句式出现在 16 份文档的 59 句中：55 句后面是人名或合同列出的身份（independent、not employees、financially literate、non-employee directors），另外 4 句就是摩根大通四年里的这句免责说明。
+
+**改动。** 这个句式改为单独读（`_MEMBERS_ARE`、`_members_are`）：动词后面到分号为止的那一段，必须写出人名，或写出 `_QUALIFICATION` 里的身份，或写 "not employees/officers"，才算构成陈述。读之前先去掉"别人的独立性"（`_NOT_DIRECTOR_INDEPENDENCE`），所以 "overseeing the independent external auditor" 不算身份。分号后的话属于另一个分句，不能拿来补这一句的身份。接口不变：`board_composition_facts(document=..., period_start=...)`。
+
+**用例与注错。** `test_a_members_clause_names_members_or_a_status`：
+- 反例：摩根大通原句；构造句 "The members of the Audit Committee are responsible for overseeing the independent external auditor."；分号前不写身份、分号后才写的构造句（这一句的资格规则照样按整句读，此处只断言它不再算构成陈述）。
+- 正例：Marriott、Enphase、Macy's 原件里的三种身份写法；构造句 "The members of the Audit Committee include Mr. Smith and Ms. Jones."。
+
+注错七个：动词后写什么都算、不读这个句式、读过分号、不去掉审计师的独立性、人名不算、"not employees" 不算、列出的身份不算。七个都由该用例抓到（`../c02-composition-facts/fault-injections.json`，共 149/149，对照 95 个用例）。
+
+**量测。**
+- 37 份双向判读（`measured-46-members-clause.json`）：一块不动。误选 4、漏选 9、不一致位置 6，修复前后相同。
+- 12 个有已发布值、但没有判读的位置（`measured-46-jpmorgan-and-unread.json`）：只有摩根大通四年各移走这一块（FY2022 3532、FY2023 3642、FY2024 3413、FY2025 3436），其余八个位置一块不动。
+
+**登记。** 摩根大通 FY2022–FY2025 的 C02 另按坐标登记 `C02_JPMORGAN_<年>_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION`（`../known_result_defects.json`）。这四个值原来已被第 45 节的缺陷撤回；第 45 节条目里"另一个尚未判读的问题"的说法已加 `later` 注明。
+
+**未做。** 摩根大通 C02 仍然没有双向判读。重算后的值也要先读过才能接受。#28 如果接收这一修复，需要在它自己的版本化路径上接入，并在它的普通入口上核对；本方不替它判断它的结果。

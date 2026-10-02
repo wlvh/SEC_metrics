@@ -432,6 +432,23 @@ INJECTIONS = [
     ('ANY_INDEPENDENT_IS_THE_AUDITOR', 'r"independent (?:registered )?public accounting firm|',
      'r"independent\\b|independent (?:registered )?public accounting firm|',
      "test_the_external_auditor_s_independence_is_not_the_members"),
+    # Repair 46: a members clause names members or their status (#28's JPMorgan block 3436).
+    ('ANY_MEMBERS_CLAUSE_IS_COMPOSITION',
+     '        if _mentions_person(clause) or _QUALIFICATION.search(clause) or _NOT_EMPLOYED.search(clause):',
+     '        if True:', "test_a_members_clause_names_members_or_a_status"),
+    ('THE_MEMBERS_CLAUSE_IS_NOT_READ', ' or _members_are(sentence)\n             or _acronym_service',
+     '\n             or _acronym_service', "test_a_members_clause_names_members_or_a_status"),
+    ('THE_CLAUSE_RUNS_PAST_THE_SEMICOLON', 'sentence[match.end():].split(";", 1)[0])', 'sentence[match.end():])',
+     "test_a_members_clause_names_members_or_a_status"),
+    ('THE_AUDITOR_LENDS_THE_CLAUSE_A_STATUS',
+     'clause = _NOT_DIRECTOR_INDEPENDENCE.sub(" ", sentence[match.end():].split(";", 1)[0])',
+     'clause = sentence[match.end():].split(";", 1)[0]', "test_a_members_clause_names_members_or_a_status"),
+    ('A_NAMED_MEMBER_IS_NOT_ENOUGH', 'if _mentions_person(clause) or _QUALIFICATION', 'if _QUALIFICATION',
+     "test_a_members_clause_names_members_or_a_status"),
+    ('NOT_BEING_AN_EMPLOYEE_IS_NO_STATUS', ' or _NOT_EMPLOYED.search(clause):', ':',
+     "test_a_members_clause_names_members_or_a_status"),
+    ('ONLY_NAMES_AND_EMPLOYMENT_ARE_STATUSES', ' or _QUALIFICATION.search(clause) or', ' or',
+     "test_a_members_clause_names_members_or_a_status"),
 ]
 
 

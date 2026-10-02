@@ -5634,7 +5634,8 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3463
-   ]
+   ],
+   "later": "Block 3532, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
   },
   {
    "defect_id": "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -5661,7 +5662,8 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3571
-   ]
+   ],
+   "later": "Block 3642, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
   },
   {
    "defect_id": "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -5688,7 +5690,8 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3344
-   ]
+   ],
+   "later": "Block 3413, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
   },
   {
    "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -5725,6 +5728,115 @@
    },
    "blocks_taken_that_are_not_composition": [
     3367
+   ],
+   "later": "Block 3436, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION"
+   ],
+   "summary": "Block 3532 of the proxy that reports this year - the Audit Committee report's paragraph on the responsibilities of management, PwC and Internal Audit, ending 'The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee's responsibility is to monitor and oversee these processes.' - is selected as a composition fact (label COMMITTEE_COMPOSITION_STATEMENT). Under the composition-fact meaning (catalog/r6/C02_board_disclosures_historical_v2.md: the determinations about members' independence and qualifications are 'financially literate, audit committee financial expert, non-employee director, no member an officer or employee'; 'what a committee or its chair does' is outside) the sentence is the report's statement of the committee's oversight role, not a determination of a member's qualification, and the rest of the block assigns other parties' duties. #28 raised it as an unjudged scope question on its FY2025 result (Issue #47 comment 5954343457); #47, the shared selector's owner, judged it against the Spec. The value was never read or accepted; an earlier entry at this coordinate already withdraws it.",
+   "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
+   "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
+   "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-members-clause.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3532
+   ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION"
+   ],
+   "summary": "Block 3642 of the proxy that reports this year - the Audit Committee report's paragraph on the responsibilities of management, PwC and Internal Audit, ending 'The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee's responsibility is to monitor and oversee these processes.' - is selected as a composition fact (label COMMITTEE_COMPOSITION_STATEMENT). Under the composition-fact meaning (catalog/r6/C02_board_disclosures_historical_v2.md: the determinations about members' independence and qualifications are 'financially literate, audit committee financial expert, non-employee director, no member an officer or employee'; 'what a committee or its chair does' is outside) the sentence is the report's statement of the committee's oversight role, not a determination of a member's qualification, and the rest of the block assigns other parties' duties. #28 raised it as an unjudged scope question on its FY2025 result (Issue #47 comment 5954343457); #47, the shared selector's owner, judged it against the Spec. The value was never read or accepted; an earlier entry at this coordinate already withdraws it.",
+   "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
+   "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
+   "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-members-clause.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3642
+   ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION"
+   ],
+   "summary": "Block 3413 of the proxy that reports this year - the Audit Committee report's paragraph on the responsibilities of management, PwC and Internal Audit, ending 'The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee's responsibility is to monitor and oversee these processes.' - is selected as a composition fact (label COMMITTEE_COMPOSITION_STATEMENT). Under the composition-fact meaning (catalog/r6/C02_board_disclosures_historical_v2.md: the determinations about members' independence and qualifications are 'financially literate, audit committee financial expert, non-employee director, no member an officer or employee'; 'what a committee or its chair does' is outside) the sentence is the report's statement of the committee's oversight role, not a determination of a member's qualification, and the rest of the block assigns other parties' duties. #28 raised it as an unjudged scope question on its FY2025 result (Issue #47 comment 5954343457); #47, the shared selector's owner, judged it against the Spec. The value was never read or accepted; an earlier entry at this coordinate already withdraws it.",
+   "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
+   "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
+   "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-members-clause.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3413
+   ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+    "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION"
+   ],
+   "summary": "Block 3436 of the proxy that reports this year - the Audit Committee report's paragraph on the responsibilities of management, PwC and Internal Audit, ending 'The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee's responsibility is to monitor and oversee these processes.' - is selected as a composition fact (label COMMITTEE_COMPOSITION_STATEMENT). Under the composition-fact meaning (catalog/r6/C02_board_disclosures_historical_v2.md: the determinations about members' independence and qualifications are 'financially literate, audit committee financial expert, non-employee director, no member an officer or employee'; 'what a committee or its chair does' is outside) the sentence is the report's statement of the committee's oversight role, not a determination of a member's qualification, and the rest of the block assigns other parties' duties. #28 raised it as an unjudged scope question on its FY2025 result (Issue #47 comment 5954343457); #47, the shared selector's owner, judged it against the Spec. The value was never read or accepted; an earlier entry at this coordinate already withdraws it.",
+   "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
+   "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
+   "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-members-clause.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-46-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3436
    ]
   }
  ],
