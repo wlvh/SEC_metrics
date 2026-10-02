@@ -16,7 +16,9 @@ from .normal_source_authority import ROOT
 
 SUCCESSOR_MODULES = ('company_source_authority', 'company_handoff',
                      'company_requirement', 'company_runtime_install', 'company_compute',
-                     'company_result_export', 'company_historical_compute')
+                     'company_result_export', 'company_historical_compute',
+                     'company_result_view', 'company_result_read',
+                     'company_processing', 'company_processing_read', 'company_worker_guard')
 
 
 def _replace(path, old, new, count=1):

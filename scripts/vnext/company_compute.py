@@ -10,7 +10,8 @@ from .company_handoff import locked_company, recover_import, _atomic_json
 from .company_source_authority import require_company, need
 
 
-def compute_company(*, state_root, company_id, metric_ids, report_end=None, fiscal_year=None):
+def compute_company(*, state_root, company_id, metric_ids, report_end=None, fiscal_year=None,
+                    processing_package=None, processing_runtime=None):
     """Keep the import lock until all selected Runs and references are durable."""
     with locked_company(state_root) as root:
         current = recover_import(root)
@@ -66,8 +67,18 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
             results = {row['metric_id']: row for row in result['metrics']}
             for metric in ([] if historical else metric_ids):
                 if metric in {'B13', 'D04'} and metric not in ordinary:
+                    if metric == 'D04' and processing_package is not None:
+                        try:
+                            need(processing_runtime is not None, 'COMPANY_PROCESSING_ORIGINAL_RUNTIME_REQUIRED')
+                            from .company_processing import compute_saved_processing
+                            results[metric] = compute_saved_processing(root=root, source=source, admission=admission,
+                                company_id=company_id, packet_root=processing_package, program_root=processing_runtime)
+                        except Exception as error:
+                            results[metric] = {'metric_id': metric, 'status': 'PROCESSING_INPUT_REJECTED',
+                                'reason': str(error), 'business_metric_completed': False}
+                        continue
                     results[metric] = processing_errors.get(metric) or {'metric_id': metric, 'status': 'AI_PROCESSING_INPUT_REQUIRED',
-                        'reason': 'SEC originals and company identity are installed. This CLI does not import assessment registries; replay saved processing input with its original fixed runtime, or use a future authorized processing adapter.',
+                        'reason': 'SEC sources are installed. Supply independently trusted complete D04 processing input with its original fixed runtime. B13 and acquired-source assessment adaptation remain unsupported; new AI calls require a subsequent issue.',
                         'business_metric_completed': False}
                 elif metric == 'C04':
                     from .c04_update_cycle import run_company as run_c04
@@ -87,5 +98,9 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
                                     if (root/'latest_import.json').is_file() else None),
             'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0},
             'production_authorized': False}
-        _atomic_json(root/'company-results.json', report)
+        from .company_result_view import save_execution, build_company_view
+        report['runtime_root'] = str(ROOT)
+        report = save_execution(root=root, report=report)
+        _atomic_json(root/'company-results.json', build_company_view(
+            root=root, company_id=company_id, current=current))
         return report

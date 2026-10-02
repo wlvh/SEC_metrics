@@ -851,3 +851,10 @@ D04作用域回归：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test
 
 
 请求构造短作用域：`PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_native_request_construction`，需要既有固定tokenizers依赖。覆盖完整原字符/输入类型/字段顺序、返回对象突变、实际规则/分词状态变更、源真实性仍逐次执行；只缓存确定性请求字节，原生收据和含义检查不缓存。完整源声明、预算和请求格式未改变。注册形式短回归`tests.vnext.test_registration_event_discovery`使用明确合成metadata；真实4原件及完整metadata检查单列，不依赖私有固定目录或永久missing状态。
+
+
+### #54 公司持续结果与保存处理输入（2026-10-03 北京时间）
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_company_results tests.vnext.test_company_processing -v` 为编排／信任回归，财报计算及渲染明确模拟；不替代真实来源、原生 Run 或内容验收。覆盖 B01+D01 后只更新 B01、多指标首次出口、单项失败／重放拒绝保留其它项、旧年度／历史多期间、混合 closure、已确认缺陷和当前来源未复核。保存处理包按外置信任及原请求／响应登记／运行树字节验证；改答案、伪 LIVE、额外 Result、错公司、别名和程序漂移拒绝。
+
+真实材料与原失败见 `docs/evidence/issue54_company/corrective-results/README.md`。CLI 查询／导出使用 `--runtime-root` 指定各结果的原固定树；D04 原录制材料保持原 V14 和 tokenizer0.22.2，只验证独立 SEC 来源与处理输入接线。原请求／响应不改签，无真实新增 SEC/provider/paid 调用；完整 LIVE 材料、内容独审和 OpenShift 未测部分分别登记。

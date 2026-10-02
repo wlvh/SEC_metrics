@@ -1,0 +1,38 @@
+{
+  "elapsed_seconds": 383.1382220439991,
+  "status": "EXPORTED",
+  "company_id": "jpmorgan_chase",
+  "output_root": "/workspace/work/company-history-two-period-results",
+  "native_candidates": [
+    {
+      "metric_id": "A08",
+      "period": {
+        "fiscal_year": 2022,
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31"
+      },
+      "attempt_id": "a98336cbb08145bcae7423567452bc65",
+      "run_id": "run:historical-period:5537e5e3790f1954ad78b2b9158cd98655812657239270eb3b02d3d5039c162d",
+      "requirement_id": "issue_54_v3",
+      "requirement_closure_hash": "sha256:f4b80ea6b7143b0130c98052e0c470e6660cdb16edda7b802b7bc631d14a6683",
+      "native_path": "native/A08/a98336cbb08145bcae7423567452bc65",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    },
+    {
+      "metric_id": "A08",
+      "period": {
+        "fiscal_year": 2023,
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31"
+      },
+      "attempt_id": "695d894acbd34739be73a3b371831fc9",
+      "run_id": "run:historical-period:b8bb7310c405d85fdfeae07f3f68a2cc99405729914f7e398af7a7509c0437af",
+      "requirement_id": "issue_54_v3",
+      "requirement_closure_hash": "sha256:f4b80ea6b7143b0130c98052e0c470e6660cdb16edda7b802b7bc631d14a6683",
+      "native_path": "native/A08/695d894acbd34739be73a3b371831fc9",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    }
+  ],
+  "failed_candidates": [],
+  "bytes": 685588145
+}

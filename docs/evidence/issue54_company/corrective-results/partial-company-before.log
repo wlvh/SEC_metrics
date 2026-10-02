@@ -1,0 +1,20 @@
+{
+  "scope": "ORCHESTRATION_MOCK_ONLY",
+  "first": [
+    "B01",
+    "D01"
+  ],
+  "partial_update": [
+    "B01"
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}
+Traceback (most recent call last):
+  File "/workspace/work/reproduce_partial_company.py", line 19, in <module>
+    assert {m['metric_id'] for m in second['metrics']}=={'B01','D01'},'PARTIAL_UPDATE_DROPS_PREVIOUS_METRIC'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PARTIAL_UPDATE_DROPS_PREVIOUS_METRIC
