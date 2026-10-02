@@ -44,7 +44,8 @@ from .historical_da_scope_candidate import (COMPOSITION, DIRECT, WITHHELD_REASON
                                             agree, annual_facts, da_scope_answer)
 from .historical_ma_confirmation import (ConfirmationNotRegistered, confirmation_request,
                                          item_id, load_registered_confirmation)
-from .historical_event_items import (CONFIRMATION_REASON, NOT_LOCATED_REASON, SUCCESSOR_EVENT_ROUTES,
+from .historical_event_items import (CONFIRMATION_REASON, HEADED_NOT_LISTED, HEADED_NOT_LISTED_REASON,
+                                     NOT_LOCATED_REASON, SUCCESSOR_EVENT_ROUTES,
                                      EventItemTextError, compact_confirmation,
                                      content_confirmation_candidates, successor_event_route)
 from .historical_event_walk import event_sources, registered_event_sources
@@ -713,7 +714,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         # silently fails to count; the reason names it.
         result, trace = withheld_metric_result(
             compiled_spec=spec, target=target,
-            reason_code=(NOT_LOCATED_REASON if error.category == "IMPLEMENTATION_GAP"
+            reason_code=(HEADED_NOT_LISTED_REASON if str(error).startswith(HEADED_NOT_LISTED + ":")
+                         else NOT_LOCATED_REASON if error.category == "IMPLEMENTATION_GAP"
                          else "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"))
         observations = []
         selection = {"reason_code": result["reason_code"], "reason": str(error),

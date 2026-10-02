@@ -60,6 +60,19 @@ cross-reference that looks like the next heading would cut the item short
 silently. Over the same corpus every end was unique, so neither check refuses
 a saved item; both hold for filings not saved yet.
 
+The candidates are the claims' items, and a claim is EDGAR's header index of
+the filing (hdr.sgml), written from the filer's submission form; the document is
+the filing itself. Where the document heads a candidate item its header does not
+list, the claims miss a candidate, and a count confirmed over them would be one
+short. Over the 794 saved 8-Ks this happens once: Pfizer's December 2023 8-K
+heads "Item 2.01 Completion of Acquisition or Disposition of Assets" (the Seagen
+merger) and its header lists 2.02 (docs/evidence/issue47_history/e01-item-text/
+header-document-census.json). There is no claim to count such an item by, so
+the window stops by name (``HEADED_NOT_LISTED``) rather than being answered
+without it. A heading inside a link is a contents entry, not the item, and does
+not count as headed. The other direction - a listed candidate the document does
+not head - already stops at the item's text.
+
 Not read: exhibits the item incorporates by reference. They are separate
 documents and none of them is saved; each candidate records whether its own
 text incorporates an exhibit, so a confirmation that needs one says so.
@@ -81,6 +94,8 @@ TEXT_VIEW = "deterministic_router._visible_text"
 CONFIRMATION_POLICY = "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENT_V1"
 CONFIRMATION_REASON = "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED"
 NOT_LOCATED_REASON = "HISTORICAL_EVENT_ITEM_TEXT_NOT_LOCATED"
+HEADED_NOT_LISTED = "EVENT_ITEM_HEADED_BUT_NOT_LISTED"
+HEADED_NOT_LISTED_REASON = "HISTORICAL_EVENT_ITEM_HEADED_BUT_NOT_LISTED"
 # A metric whose route the owner replaced, and the file that carries the
 # successor. The frozen catalog keeps the approved route for the ordinary path
 # and for every Run frozen under it.
@@ -322,6 +337,14 @@ def item_text(*, raw_bytes, item_code):
             "shares_the_body_of": shared}
 
 
+def headed_item_codes(*, raw_bytes):
+    """The item codes a document heads itself; a heading inside a link is a contents entry."""
+    text = _visible_text(raw_bytes=raw_bytes)
+    nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
+    return {code for start, end, code in item_headings(text)
+            if not _linked_in_span(nodes=nodes, start=start, end=end)}
+
+
 def _caption_only(gap, *, code):
     """True where ``gap`` - what follows an item's heading - is only that item's own caption."""
     caption = _CAPTIONS.get(code)
@@ -392,6 +415,21 @@ def content_confirmation_candidates(*, repo_root, route, claims, records, keep_t
     _need(route["confirmation"]["policy"] == CONFIRMATION_POLICY,
           "EVENT_ROUTE_CONFIRMATION_POLICY_UNKNOWN:" + str(route["confirmation"].get("policy")))
     codes = [str(code) for code in route["candidate_item_codes"]]
+    listed = {}
+    for claim in claims:
+        attributes = claim["attributes"]
+        listed.setdefault(attributes["accession"], (set(), set()))
+        listed[attributes["accession"]][0].add(attributes["primary_source_reference_id"])
+        listed[attributes["accession"]][1].add(str(attributes["item_code"]))
+    for accession, (references, items) in sorted(listed.items()):
+        _need(len(references) == 1, "EVENT_ITEM_FILING_HAS_TWO_PRIMARY_DOCUMENTS:" + accession,
+              "SOURCE_INTEGRITY_ERROR")
+        reference, raw = _primary_bytes(repo_root=repo_root, records=records,
+                                        reference_id=next(iter(references)))
+        _need(reference["accession"] == accession, "EVENT_ITEM_PRIMARY_IS_ANOTHER_FILING",
+              "SOURCE_INTEGRITY_ERROR")
+        unlisted = sorted((headed_item_codes(raw_bytes=raw) & set(codes)) - items)
+        _need(not unlisted, HEADED_NOT_LISTED + ":" + accession + ":" + ",".join(unlisted))
     candidates = []
     for claim in claims:
         attributes = claim["attributes"]

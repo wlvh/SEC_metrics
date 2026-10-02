@@ -26,11 +26,12 @@ from tools import read_e01_eight_o_ones as reading
 from vnext.canonical import content_hash
 from vnext.deterministic_router import (_compiled_event_spec, _hdr_item_codes, _visible_text,
                                         load_event_route_catalog)
-from vnext.historical_event_items import (CONFIRMATION_REASON, NOT_LOCATED_REASON,
+from vnext.historical_event_items import (CONFIRMATION_REASON, HEADED_NOT_LISTED,
+                                          HEADED_NOT_LISTED_REASON, NOT_LOCATED_REASON,
                                           SUCCESSOR_EVENT_ROUTES, SUCCESSOR_SPEC_DOCUMENTS,
                                           EventItemTextError, content_confirmation_candidates,
-                                          item_headings, item_text, successor_event_route,
-                                          successor_public_notes)
+                                          headed_item_codes, item_headings, item_text,
+                                          successor_event_route, successor_public_notes)
 from vnext.historical_results import _successor_event_spec
 from vnext.specs import compile_spec_file
 from vnext import historical_ma_confirmation as confirmation
@@ -645,11 +646,112 @@ class ARegisteredConfirmationIsCountedAndCheckedAgain(unittest.TestCase):
                 self.assertIn("Credit Agreement", item["text"])
 
 
+# Pfizer's 8-K of 2023-12-14 (0001193125-23-294930), saved by the acquisition
+# and read from its export: the document heads "Item 2.01 Completion of
+# Acquisition or Disposition of Assets" (the Seagen merger) while EDGAR's
+# header lists 2.02, 7.01 and 9.01. The only such disagreement over a candidate
+# code among the 794 saved 8-Ks (e01-item-text/header-document-census.json).
+SEAGEN = {"accession": "0001193125-23-294930",
+          "primary": ("evidence/request_attempts/e8/e8ecd3f1cca451ff4df8f925da1a567437965012cf6684b609a"
+                      "4f712306abbf7/d553734d8k.htm"),
+          "header": ("evidence/request_attempts/44/44d3c60c84fb861da0bdec8f8eb58a371b07286260a0217695a"
+                     "9001d1e36a0dd/0001193125-23-294930.hdr.sgml")}
+
+
+class ACandidateTheHeaderOmitsStopsTheWindow(unittest.TestCase):
+    """The claims are EDGAR's header index; the document is the filing.
+
+    A candidate item the document heads and the header does not list has no
+    claim, so a confirmed count would be one short of what the filings say.
+    The window stops by name instead. The cases other than the saved filing are
+    built in memory and say so.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        catalog = load_event_route_catalog(repo_root=ROOT)
+        cls.route = successor_event_route(repo_root=ROOT, metric_id="E01", frozen_route=catalog["routes"]["E01"])
+
+    def _candidates(self, documents):
+        """Candidates over in-memory filings: (accession, primary bytes, header-listed codes)."""
+        import hashlib
+        root = Path(tempfile.mkdtemp(prefix="e01-header-")).resolve()
+        self.addCleanup(shutil.rmtree, root, True)
+        records, claims = {}, []
+        for n, (accession, raw, listed) in enumerate(documents):
+            (root / ("primary-%d.htm" % n)).write_bytes(raw)
+            asset = "sha256:" + hashlib.sha256(raw).hexdigest()
+            reference = "reference-%d" % n
+            records[reference] = {"record_type": "SOURCE_REFERENCE", "source_reference_id": reference,
+                                  "raw_asset_id": asset, "accession": accession}
+            records[asset] = {"record_type": "RAW_BLOB", "storage_uri": "primary-%d.htm" % n}
+            claims.extend({"verified_claim_id": "claim-%d-%s" % (n, code),
+                           "attributes": {"accession": accession, "item_code": code,
+                                          "primary_source_reference_id": reference}} for code in listed)
+        return content_confirmation_candidates(repo_root=root, route=self.route, claims=claims, records=records)
+
+    def test_the_saved_filing_whose_header_omits_its_item_2_01(self):
+        from tools.acceptance_readings import saved_bytes
+        raw = saved_bytes(repo_root=ROOT, relative=SEAGEN["primary"])
+        listed = _hdr_item_codes(raw_bytes=saved_bytes(repo_root=ROOT, relative=SEAGEN["header"]))
+        self.assertEqual(["2.02", "7.01", "9.01"], sorted(listed))
+        self.assertEqual({"2.01", "7.01", "9.01"}, headed_item_codes(raw_bytes=raw))
+        with self.assertRaises(EventItemTextError) as caught:
+            self._candidates([(SEAGEN["accession"], raw, listed)])
+        self.assertEqual(HEADED_NOT_LISTED + ":" + SEAGEN["accession"] + ":2.01", str(caught.exception))
+        self.assertEqual("IMPLEMENTATION_GAP", caught.exception.category)
+
+    def test_an_unlisted_heading_of_a_code_the_route_does_not_count_is_not_its_business(self):
+        # In memory: the document also heads 2.02, which no E01 candidate is.
+        raw = _html("Item 1.01 Entry into a Material Definitive Agreement.", "The company entered into an agreement.",
+                    "Item 2.02 Results of Operations and Financial Condition.", "Results were announced.",
+                    "SIGNATURES")
+        answer = self._candidates([("0000000000-25-000001", raw, ["1.01"])])
+        self.assertEqual([("0000000000-25-000001", "1.01")],
+                         [(item["accession"], item["item_code"]) for item in answer["candidates"]])
+
+    def test_a_contents_link_to_an_unlisted_candidate_is_not_a_heading(self):
+        # In memory: the only "Item 2.01" is a contents entry.
+        raw = ('<html><body><p><a href="#x">Item 2.01 Completion of Acquisition</a></p>'
+               '<p>Item 7.01 Regulation FD Disclosure.</p><p>A press release was furnished.</p>'
+               '<p>SIGNATURES</p></body></html>').encode("utf-8")
+        answer = self._candidates([("0000000000-25-000002", raw, ["7.01"])])
+        self.assertEqual([], answer["candidates"])
+        self.assertEqual("NO_CANDIDATE_ITEM", answer["status"])
+
+    def test_one_filing_s_omission_stops_the_window_whatever_the_others_list(self):
+        # In memory: a listed candidate in one filing, an unlisted one in another.
+        listed = _html("Item 1.01 Entry into a Material Definitive Agreement.", "An agreement.", "SIGNATURES")
+        unlisted = _html("Item 8.01 Other Events.", "The company completed the acquisition.", "SIGNATURES")
+        with self.assertRaises(EventItemTextError) as caught:
+            self._candidates([("0000000000-25-000003", listed, ["1.01"]),
+                              ("0000000000-25-000004", unlisted, ["9.01"])])
+        self.assertEqual(HEADED_NOT_LISTED + ":0000000000-25-000004:8.01", str(caught.exception))
+
+    def test_the_route_withholds_the_window_with_its_own_reason(self):
+        """The stop reaches the result as its own reason, not as an item that was not found."""
+        import vnext.historical_zero_ai_results as results
+        original = results.content_confirmation_candidates
+
+        def omitted(**kwargs):
+            raise EventItemTextError(HEADED_NOT_LISTED + ":0000000000-25-000005:2.01")
+        results.content_confirmation_candidates = omitted
+        self.addCleanup(setattr, results, "content_confirmation_candidates", original)
+        selection = resolve_period_selection(repo_root=ROOT, company_id="ford_motor_company",
+                                             report_end="2025-12-31")
+        component = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id="ford_motor_company",
+                                                      metric_id="E01", period_selection=selection)
+        self.assertEqual(("WITHHELD", HEADED_NOT_LISTED_REASON),
+                         (component["result"]["publication"], component["result"]["reason_code"]))
+        self.assertEqual(HEADED_NOT_LISTED + ":0000000000-25-000005:2.01", component["selection"]["reason"])
+
+
 class TheReasonsAreNamed(unittest.TestCase):
 
     def test_the_reason_codes(self):
         self.assertEqual(CONFIRMATION_REASON, "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED")
         self.assertEqual(NOT_LOCATED_REASON, "HISTORICAL_EVENT_ITEM_TEXT_NOT_LOCATED")
+        self.assertEqual(HEADED_NOT_LISTED_REASON, "HISTORICAL_EVENT_ITEM_HEADED_BUT_NOT_LISTED")
 
 
 if __name__ == "__main__":
