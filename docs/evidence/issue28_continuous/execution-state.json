@@ -10572,10 +10572,12 @@
   },
   "ci_37029275294": {
     "head": "f6a4e4425a6229d0583a4752a1a58b604a21a33e",
-    "status": "queued",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "observation": "one immediate query after SSH push; current main CI terminal pending",
-    "reference_workflow_not_main_ci": true
+    "reference_workflow_not_main_ci": true,
+    "updated_at": "2026-10-02T16:31:35Z",
+    "scope": "E01 final source guard pushed tree; no semantic credit"
   },
   "current_unique_queue_update": {
     "issue28_section": 3,
@@ -10609,6 +10611,58 @@
     ],
     "business_credits_added": 0,
     "evidence": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/",
-    "next_queue": "Return to C02 fix46; await54 fixed adapter only for affected consumer test"
+    "next_queue": "Return to C02 fix46; await54 fixed adapter only for affected consumer test",
+    "provided_docs_commit": "978e28e9b9b1d7a43d5b2ba83687900a417be4e8",
+    "peer_receipt_url": "https://github.com/wlvh/SEC_metrics/issues/54#issuecomment-5956633120",
+    "server_readback_verified": true
+  },
+  "collab_peer_increment_5ede7c31": {
+    "peer_head": "5ede7c3180ee3e38f57e1dfea579e92fb1176199",
+    "previous_head": "6d7801f7a5f773435a12c8abafb98195d8930bd2",
+    "defect_registry_new_or_changed_entries": 0,
+    "C02_fix46_batch_pinned": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+    "C02_fix47_disposition": "Bulleted card-name changes read, not applied mechanically to this JPM member-clause batch; current/other-company effects to check on card receipt next",
+    "C02_adjudication_rule23": "Read as provider contract interpretation, no receiving business credit or new owner approval inferred",
+    "E01_new_peer_visible_header_fix": "f25d3373 read as later provider delta; own guard already independently reviewed/pinned, no unaffected batch reopen",
+    "issue54_interface_owner_and_paths": "62e4f355 provider note read via changed names; no peer implementation or credit copied"
+  },
+  "c02_member_successor_20261003": {
+    "status": "PROGRAM_NATIVE_COLD_REPEAT_PASS_KNOWN_REMAINING_ROLE_LIMIT_PENDING_INDEPENDENT_SCOPE_REVIEW",
+    "peer_read_sha": "5ede7c3180ee3e38f57e1dfea579e92fb1176199",
+    "received_core_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+    "own_selector": "scripts/vnext/c02_board_composition_28_v4.py",
+    "own_spec": "catalog/r6/C02_board_disclosures_v5.md",
+    "own_wrapper": "scripts/vnext/ordinary_c02_member_update_v4.py",
+    "new_optional_flag": "c02_member_revision=False",
+    "old_selectors_Specs_Run_ids_unchanged": true,
+    "new_scope_meaning": "UNCHANGED_APPROVED_COMPOSITION_FACTS",
+    "known_block3436_removed": true,
+    "positive3409_kept": true,
+    "prior_error3367_not_reintroduced": true,
+    "directed_tests": "PASS3_45.436s_MATERIAL_PLUS_2FAST; SPEC_COMPAT_FAST7_0.044s",
+    "limited_independent_review": "PENDING_PRECISE_PATCH_SHA",
+    "evidence": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/",
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_whole_content_or_390_credit": false,
+    "new_private_result_id": "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7",
+    "grouped_excerpt_count": 32,
+    "selected_original_block_count": 58,
+    "private_run_seconds": 151.686,
+    "cold_seconds": 44.662,
+    "repeat_seconds": 48.337,
+    "repeat_initial_fixture_error_preserved": true,
+    "fast_summary": {
+      "status": "PASSED",
+      "selectors": 149,
+      "failed": [],
+      "duration_seconds": 104.384
+    },
+    "parent_closure": "sha256:1b2fe50b46574602c4a4422f80ab3306bd4a0ce40024c955b64654e58aa0104f",
+    "child_closure": "sha256:3117ac9bf6311c70f0648c2501e47a7438e625aaa2771c5ca92507a92caeec2f",
+    "known_remaining_synthetic_role": "Supervising an outside named auditor mislabeled composition in both old and new core; no observed source-result impact from this sentence"
   }
 }

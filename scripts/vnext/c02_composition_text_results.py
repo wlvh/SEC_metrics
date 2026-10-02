@@ -19,7 +19,7 @@ def _successor(compiled_spec):
     return (compiled_spec['compiled']['metric_id'] == 'C02'
             and compiled_spec['compiled']['disclosure_group'] in
             {'c02_composition_facts_v1', 'c02_composition_grouped_v2',
-             'c02_composition_grouped_v3'})
+             'c02_composition_grouped_v3','c02_composition_grouped_v4'})
 
 
 def _require_spec_policy_pair(*, compiled_spec, source_arguments):
@@ -27,6 +27,7 @@ def _require_spec_policy_pair(*, compiled_spec, source_arguments):
         'c02_composition_facts_v1': 'COMPOSITION_FACTS_V1',
         'c02_composition_grouped_v2': 'COMPOSITION_GROUPED_V2',
         'c02_composition_grouped_v3': 'COMPOSITION_GROUPED_V3',
+        'c02_composition_grouped_v4': 'COMPOSITION_GROUPED_V4',
     }[compiled_spec['compiled']['disclosure_group']]
     old._need(source_arguments.get('c02_selection_policy') == expected,
               'C02_COMPOSITION_SPEC_POLICY_MISMATCH')
@@ -34,7 +35,7 @@ def _require_spec_policy_pair(*, compiled_spec, source_arguments):
 
 def _prepared(*, c02_selection_policy, **source_arguments):
     old._need(c02_selection_policy in {'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2',
-                                      'COMPOSITION_GROUPED_V3'},
+                                      'COMPOSITION_GROUPED_V3','COMPOSITION_GROUPED_V4'},
               'C02_COMPOSITION_SELECTION_POLICY_REQUIRED')
     prepared = old.prepare_business_text_sources(metric_id='C02', **source_arguments)
     proposals = dict(prepared['proposals'])
@@ -43,7 +44,11 @@ def _prepared(*, c02_selection_policy, **source_arguments):
     old._need(len(governance_ids) == 1, 'C02_COMPOSITION_GOVERNANCE_SOURCE_REQUIRED')
     sid = governance_ids[0]
     document = prepared['documents'][sid]
-    if c02_selection_policy == 'COMPOSITION_GROUPED_V3':
+    if c02_selection_policy == 'COMPOSITION_GROUPED_V4':
+        from .c02_board_composition_28_v4 import board_composition_facts as current_facts
+        successor = current_facts(
+            document=document, period_start=source_arguments['target']['period_start'])
+    elif c02_selection_policy == 'COMPOSITION_GROUPED_V3':
         from .c02_board_composition_28_v3 import board_composition_facts as current_facts
         successor = current_facts(
             document=document, period_start=source_arguments['target']['period_start'])
@@ -60,7 +65,7 @@ def _prepared(*, c02_selection_policy, **source_arguments):
               and successor['source_filing'] == proposals[sid]['source_filing']
               and successor['coverage_status'] == proposals[sid]['coverage_status'],
               'C02_COMPOSITION_SOURCE_BINDING_CHANGED')
-    if c02_selection_policy in {'COMPOSITION_GROUPED_V2', 'COMPOSITION_GROUPED_V3'}:
+    if c02_selection_policy in {'COMPOSITION_GROUPED_V2', 'COMPOSITION_GROUPED_V3','COMPOSITION_GROUPED_V4'}:
         from .c02_grouped_source import grouped_governance_source
         document, successor, coverage = grouped_governance_source(
             document=document, proposal=successor,
@@ -80,7 +85,7 @@ def create_deterministic_text_candidate(*, compiled_spec, **source_arguments):
     old._need(compiled_spec['compiled']['metric_id'] == 'C02'
               and compiled_spec['compiled']['disclosure_group'] in
               {'c02_composition_facts_v1', 'c02_composition_grouped_v2',
-               'c02_composition_grouped_v3'}
+               'c02_composition_grouped_v3','c02_composition_grouped_v4'}
               and compiled_spec['compiled']['text_policy']['max_items'] == 64,
               'C02_COMPOSITION_SPEC_REQUIRED')
     _require_spec_policy_pair(compiled_spec=compiled_spec,
@@ -104,7 +109,7 @@ def build_text_evidence(*, compiled_spec, candidate, **source_arguments):
               'C02_COMPOSITION_CANDIDATE_REPLAY_CHANGED')
     checks, normalized, seen = [], {}, set()
     grouped = compiled_spec['compiled']['disclosure_group'] in {
-        'c02_composition_grouped_v2', 'c02_composition_grouped_v3'}
+        'c02_composition_grouped_v2', 'c02_composition_grouped_v3','c02_composition_grouped_v4'}
     for role, claim in sorted(candidate['selected'].items(),
                               key=lambda pair: pair[1]['order']):
         sid = claim['source_reference_id']
