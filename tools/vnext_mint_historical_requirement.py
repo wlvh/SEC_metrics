@@ -213,8 +213,9 @@ NEW_RULE_FILES = (
     # that names litigation only as a list item or a parenthetical example, and
     # states no legal matter of the registrant, leaves the excerpt set. It
     # decides which Item 8 blocks D02 publishes, so both roots check them.
+    # Version 3 of the vocabulary replaces version 2, which keeps its bytes.
     "scripts/vnext/d02_item_8_category_mentions.py",
-    "catalog/r6/D02_item_8_category_mention_v2.json",
+    "catalog/r6/D02_item_8_category_mention_v3.json",
 )
 
 # One module the parent's authority does not name although its own named code

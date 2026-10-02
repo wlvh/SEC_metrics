@@ -33,7 +33,7 @@ only keep more than version 1, never less - and requires the structure that
 evidence has to stand in, read from closed-class words only:
 
 * the keyword's own phrase is no clause (no auxiliary, modal or copula, no
-  relative or subordinating word, no "we") and names no party ("brought by",
+  relative or subordinating word) and names no party ("brought by",
   "against") and not the registrant ("our", "us", "the Company");
 * the phrase is not the first item of its sentence - a keyword there is the
   sentence's subject or the direct object of its own verb ("We face
@@ -44,9 +44,38 @@ evidence has to stand in, read from closed-class words only:
   parenthetical that opens with one;
 * the series is not the subject of a predicate - no item right after it opens
   with a clause word ("..., remains unresolved");
-* the series is not governed by the registrant as subject - its governing item
-  does not open with "we" or "the Company" without a preposition ("We face
-  regulatory actions, litigation and fines").
+* the series is not governed by the registrant ("We face regulatory actions,
+  litigation and fines").
+
+What has to be proven (version 3 of the terms). Version 2 left out "During
+2025, our company faced litigation, regulatory proceedings and fines." (#28's
+scoped review of its copy, 79677ed2, NEEDS_FIX P2): it knew the registrant only
+as "we" or "the Company" at the start of an item, the fronted "During 2025,"
+put the keyword after a comma, and no relation read "faced". Each gap could be
+closed by one more word, and the next sentence would need another, so version 3
+changes what the rule asks: a reading as a category has to be shown, and a
+sentence the closed-class words cannot place stays. It keeps version 2's
+evidence, so again it can only keep more:
+
+* the keyword opens its own item, apart from a determiner ("other
+  litigation"); words before it in the item - "our company faced", "two
+  putative class-action" - may be its own subject and verb, which closed-class
+  words cannot tell from a modifier;
+* an item that names the registrant acting ("we", "the Company", "our
+  company", "the Firm", "the Corporation", "the registrant") is no plain list
+  item, wherever in the item it stands;
+* where the registrant is named before the keyword in its sentence, the series
+  must hang on a closed-class governor: a preposition, "including" or "such
+  as" right before the series' first member ("advise us on finance,
+  regulatory, litigation and other matters"). And the nearest
+  reference to the registrant before that governor must not be the registrant
+  acting in the same clause: "us" in "advise us on" is the one advised, while
+  "our company was hit with regulatory proceedings, litigation and fines" is
+  the registrant's own matter. A relative or subordinating word between the
+  two puts them in different clauses ("We are subject to risks that may cause
+  results to differ, such as competition, litigation, ...");
+* facing a legal matter joins the relations that state one ("faced
+  litigation").
 
 What it decides from and what it does not. A list member is read from the
 words around it, not from what the list is about; the paragraph's
@@ -63,7 +92,8 @@ category. A self-insurance paragraph shows why the two properties must hold
 together: its keyword is a list member ("losses, settlements, litigation costs
 and other factors") and it is a disclosure, because the registrant accrues for
 its own claims. The vocabulary lives in
-``catalog/r6/D02_item_8_category_mention_v2.json``.
+``catalog/r6/D02_item_8_category_mention_v3.json``; versions 1 and 2 keep their
+bytes as history.
 """
 from __future__ import annotations
 
@@ -73,11 +103,11 @@ from pathlib import Path
 from .canonical import content_hash, strict_json_file
 
 RECORD_TYPE = "D02_ITEM_8_CATEGORY_MENTION_TERMS"
-_TERMS_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/D02_item_8_category_mention_v2.json"
+_TERMS_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/D02_item_8_category_mention_v3.json"
 _MENTION_KEYS = {"separator_before", "separator_after", "parenthetical_example", "example_before",
                  "prose", "sentence_boundary", "series_separator", "coordinator", "clause_word",
-                 "clause_starter", "first_person_subject", "party_preposition",
-                 "registrant_reference", "registrant_subject", "preposition"}
+                 "clause_starter_word", "party_preposition", "registrant_reference",
+                 "registrant_actor", "preposition", "head_determiner"}
 
 
 class CategoryMentionTermsError(ValueError):
@@ -87,7 +117,7 @@ class CategoryMentionTermsError(ValueError):
 def _load(path):
     terms = strict_json_file(path=path)
     if (type(terms) is not dict or terms.get("record_type") != RECORD_TYPE
-            or terms.get("schema_version") != 2 or terms.get("metric_id") != "D02"
+            or terms.get("schema_version") != 3 or terms.get("metric_id") != "D02"
             or type(terms.get("category_mention")) is not dict
             or set(terms["category_mention"]) != _MENTION_KEYS
             or type(terms.get("exposure")) is not list or not terms["exposure"]
@@ -106,6 +136,9 @@ _EXPOSURE = tuple((item["name"], re.compile(item["pattern"], re.I))
                   for item in _TERMS["exposure"])
 # A clause word opening an item: the item is a predicate, not a list member.
 _OPENS_WITH_CLAUSE_WORD = re.compile(r"^\W*" + _TERMS["category_mention"]["clause_word"], re.I)
+# A relative or subordinating word opening a stretch of text: it starts a clause.
+_OPENS_WITH_CLAUSE_STARTER = re.compile(r"^\W*" + _TERMS["category_mention"]["clause_starter_word"],
+                                        re.I)
 
 
 def _parenthetical_example(text, start):
@@ -122,13 +155,8 @@ def _list_member(text, start, end):
                 or _MENTION["separator_after"].search(text[end:end + 12]))
 
 
-def _segment(text, start, end):
-    """The text a series lives in, as (offset, text).
-
-    The sentence around the occurrence, or the innermost parenthetical it is
-    open in. Outside, parentheticals are blanked so their separators do not
-    join the series around them.
-    """
+def _sentence(text, start, end):
+    """Where the sentence around an occurrence begins and ends."""
     begin, finish = 0, len(text)
     for boundary in _MENTION["sentence_boundary"].finditer(text):
         if boundary.end() <= start:
@@ -136,6 +164,17 @@ def _segment(text, start, end):
         elif boundary.start() >= end:
             finish = boundary.start()
             break
+    return begin, finish
+
+
+def _segment(text, start, end):
+    """The text a series lives in, as (offset, text).
+
+    The sentence around the occurrence, or the innermost parenthetical it is
+    open in. Outside, parentheticals are blanked so their separators do not
+    join the series around them.
+    """
+    begin, finish = _sentence(text, start, end)
     opened = text.rfind("(", begin, start)
     if opened >= 0 and text.rfind(")", opened, start) < 0:
         close = text.find(")", end, finish)
@@ -163,18 +202,47 @@ def _items(segment):
     return parts
 
 
-def _governed_by_the_registrant(text):
-    return bool(_MENTION["registrant_subject"].search(text)
-                and not _MENTION["preposition"].search(text))
-
-
 def _list_item(text):
     """An item a list can hold: words, but no clause and not the registrant acting."""
     text = text.strip()
     return bool(text and not _MENTION["clause_word"].search(text)
-                and not _MENTION["clause_starter"].search(text)
-                and not _MENTION["first_person_subject"].search(text)
-                and not _governed_by_the_registrant(text))
+                and not _OPENS_WITH_CLAUSE_STARTER.search(text)
+                and not _MENTION["registrant_actor"].search(text))
+
+
+def _last(pattern, text):
+    found = None
+    for found in pattern.finditer(text):
+        pass
+    return found
+
+
+def _governor(parts, index, governing):
+    """Where the series' closed-class governor stands in its segment, or None.
+
+    The series' first plain item holds a preposition - "including" and "such as"
+    among them - and its last one introduces the first member; or the item the
+    walk stopped at ends with a preposition and plain words, the first member.
+    A preposition that opens the sentence ("In our business, ...") governs a
+    fronted phrase, not the series after it.
+    """
+    first, first_start = parts[index][0], parts[index][1]
+    found = _last(_MENTION["preposition"], first)
+    if found is not None and not (first_start == 0 and not re.search(r"\w", first[:found.start()])):
+        return first_start + found.start()
+    if governing is not None:
+        found = _last(_MENTION["preposition"], governing)
+        if found is not None and _list_item(governing[found.end():]):
+            return parts[index - 2][1] + found.start()
+    return None
+
+
+def _registrant_governs(segment, position):
+    """The nearest reference to the registrant before ``position`` is it acting in the same clause."""
+    reference = _last(_MENTION["registrant_reference"], segment[:max(0, position)])
+    return bool(reference is not None
+                and _MENTION["registrant_actor"].match(segment, reference.start())
+                and not _MENTION["clause_starter_word"].search(segment[reference.end():position]))
 
 
 def _structure(text, start, end):
@@ -185,22 +253,32 @@ def _structure(text, start, end):
     k = next(index for index in range(0, len(parts), 2)
              if parts[index][1] <= begin and finish <= parts[index][2])
     head, tail = segment[parts[k][1]:begin], segment[finish:parts[k][2]]
-    if (_MENTION["clause_word"].search(tail) or _MENTION["clause_starter"].search(tail)
+    if (_MENTION["clause_word"].search(tail) or _OPENS_WITH_CLAUSE_STARTER.search(tail)
             or _MENTION["party_preposition"].search(tail)):
         return "KEYWORD_PHRASE_IS_A_CLAUSE_OR_NAMES_A_PARTY"
     if _MENTION["registrant_reference"].search(tail):
         return "KEYWORD_PHRASE_NAMES_THE_REGISTRANT_S_OWN_MATTER"
     if _parenthetical_example(text, start):
+        # The examples are of what the sentence names before the parenthetical:
+        # "our company faces several matters (including litigation, ...)".
+        before = text[_sentence(text, start, end)[0]:text.rfind("(", 0, start)]
+        if _registrant_governs(segment, begin) or _registrant_governs(before, len(before)):
+            return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
         return "PARENTHETICAL_EXAMPLE"
-    if _MENTION["example_before"].search(text[max(0, start - 40):start]):
+    window = max(0, start - 40)
+    example = _MENTION["example_before"].search(text[window:start])
+    if example:
+        if _registrant_governs(segment, window - offset + example.start()):
+            return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
         return "EXAMPLE"
     if k == 0:
         return "GOVERNED_BY_ITS_SENTENCE"
-    if (_MENTION["clause_word"].search(head) or _MENTION["clause_starter"].search(head)
-            or _MENTION["first_person_subject"].search(head)):
+    if _MENTION["clause_word"].search(head) or _OPENS_WITH_CLAUSE_STARTER.search(head):
         return "KEYWORD_PHRASE_IS_A_CLAUSE"
-    if _governed_by_the_registrant(head):
+    if _MENTION["registrant_actor"].search(head):
         return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
+    if not _MENTION["head_determiner"].search(head):
+        return "KEYWORD_PHRASE_FOLLOWS_OTHER_WORDS"
     coordinated, index, governing = False, k, None
     while index >= 2:
         coordinates = parts[index - 1][1]
@@ -214,10 +292,12 @@ def _structure(text, start, end):
             break
         coordinated = coordinated or coordinates
         index -= 2
-    if governing is None:
-        governing = parts[index][0]
-    if _governed_by_the_registrant(governing):
-        return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
+    if _MENTION["registrant_reference"].search(segment[:begin]):
+        position = _governor(parts, index, governing)
+        if _registrant_governs(segment, begin if position is None else position):
+            return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
+        if position is None:
+            return "REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN"
     index = k
     while index + 2 < len(parts):
         following = parts[index + 2][0].strip()

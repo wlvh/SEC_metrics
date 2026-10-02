@@ -155,6 +155,7 @@ class TheRuleTest(unittest.TestCase):
 
 
 V2 = ROOT / "docs/evidence/issue47_history/d02-keyword-repair/v2"
+V3 = ROOT / "docs/evidence/issue47_history/d02-keyword-repair/v3"
 
 
 def _whys(text):
@@ -198,12 +199,16 @@ class TheSeriesStructureTest(unittest.TestCase):
         self.assertEqual(["GOVERNED_BY_ITS_SENTENCE"], _whys(
             "We face litigation, regulatory actions and fines."))
 
-    def test_a_clause_before_the_keyword_in_its_item(self):
+    def test_the_registrant_acting_before_the_keyword_in_its_item(self):
         # ViacomCBS FY2020 block 2382, the one saved Item 8 block version 2 moves.
-        self.assertEqual(["KEYWORD_PHRASE_IS_A_CLAUSE"], _whys(
+        # Version 2 read "we" there as a clause; version 3 names it as the
+        # registrant acting, which is what it is.
+        self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
             "In 2018, we recorded expenses of $128 million primarily for professional fees related "
             "to legal proceedings, investigations at our Company and the evaluation of potential "
             "merger activity."))
+        self.assertEqual(["KEYWORD_PHRASE_IS_A_CLAUSE"], _whys(
+            "In 2018, fees were incurred for legal proceedings, investigations and audits."))
 
     def test_a_series_governed_by_the_registrant_as_subject(self):
         self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
@@ -258,16 +263,119 @@ class TheAddedRelationsTest(unittest.TestCase):
 class TheIndependentBatteryTest(unittest.TestCase):
     """Paragraphs a fresh agent wrote to be hard for a pattern rule, without seeing it.
 
-    Version 1 left out 20 of the 40 that state an actual matter; version 2
-    leaves out none. This battery was run before version 2's vocabulary was
-    final, so it is design material, not a held-out measure.
+    Version 1 left out 20 of the first battery's 40 stated matters; versions 2
+    and 3 leave out none. That battery was run before version 2's vocabulary
+    was final, so it is design material. The second battery was held out for
+    version 3 as drafted: version 2 left out one of its 40 stated matters and
+    version 3 none. Version 3 leaves out fewer category mentions in both - the
+    cautious direction it was written for - and the counts are held so a change
+    shows here.
     """
 
-    def test_no_stated_matter_is_left_out_and_the_leave_count_is_held(self):
-        battery = json.loads((V2 / "independent-battery-1.json").read_text(encoding="utf-8"))
+    def _battery(self, path):
+        battery = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual((40, 25), (len(battery["stay"]), len(battery["leave"])))
+        return battery
+
+    def test_the_first_battery(self):
+        battery = self._battery(V2 / "independent-battery-1.json")
         self.assertEqual([], [text for text in battery["stay"] if _left_out(text)])
-        self.assertEqual(8, sum(_left_out(text) for text in battery["leave"]))
+        self.assertEqual(5, sum(_left_out(text) for text in battery["leave"]))
+
+    def test_the_second_battery_held_out(self):
+        battery = self._battery(V3 / "independent-battery-2.json")
+        self.assertEqual([], [text for text in battery["stay"] if _left_out(text)])
+        self.assertEqual(3, sum(_left_out(text) for text in battery["leave"]))
+
+
+class TheRegistrantsOwnSeriesTest(unittest.TestCase):
+    """#28's scoped review of its copy of version 2 (79677ed2, NEEDS_FIX P2), and what version 3 proves.
+
+    "During 2025, our company faced litigation, regulatory proceedings and
+    fines." states the registrant's own matter and version 2 left it out. Each
+    case below is kept or left out by one condition of version 3 alone; the
+    injections (d02-keyword-repair/v3/injections.json) take each away.
+    """
+
+    def test_the_reviewed_sentence_stays(self):
+        for text in ("During 2025, our company faced litigation, regulatory proceedings and fines.",
+                     "During 2025, the Company faced litigation, regulatory proceedings and fines.",
+                     "During 2025, we faced litigation, regulatory proceedings and fines."):
+            with self.subTest(text):
+                self.assertFalse(_left_out(text))
+        self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
+            "During 2025, our company faced litigation, regulatory proceedings and fines."))
+
+    def test_words_before_the_keyword_in_its_item_are_not_proven_a_modifier(self):
+        # "the Group defended" may be the keyword's own subject and verb; no
+        # closed-class word shows it is not, and no other condition keeps it.
+        text = "During 2025, the Group defended litigation, regulatory proceedings and fines."
+        found = rule.classify(text=text, keyword=_LEGAL)
+        self.assertEqual(["KEYWORD_PHRASE_FOLLOWS_OTHER_WORDS"], _whys(text))
+        self.assertEqual([], found["exposure"])
+        self.assertFalse(found["left_out"])
+        self.assertEqual(["LIST_MEMBER"], _whys("These costs include fees, other litigation and fines."))
+
+    def test_an_item_naming_the_registrant_acting_is_no_list_item(self):
+        # The last sentence is the one only this condition decides: crossed as
+        # a list item, the registrant's clause would let the walk reach "of" in
+        # the first item and read the series as that preposition's.
+        for text in ("During 2025, our company defended regulatory proceedings, litigation and fines.",
+                     "During 2025 our company defended regulatory proceedings, litigation and fines.",
+                     "Costs of compliance rose, and our company defended regulatory proceedings, "
+                     "litigation and fines."):
+            with self.subTest(text):
+                self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(text))
+                self.assertFalse(_left_out(text))
+
+    def test_a_preposition_after_the_registrant_acting_proves_nothing(self):
+        text = "In 2025, our company was hit with regulatory proceedings, litigation and fines."
+        self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(text))
+        self.assertFalse(_left_out(text))
+
+    def test_the_registrant_advised_is_not_the_registrant_acting(self):
+        # "us" in "advise us on" is the one advised: the series is the
+        # preposition's, and the paragraph is an adviser-cost list.
+        for text in ("We engage outside counsel to advise us on finance, regulatory, litigation and "
+                     "other matters.",
+                     "In the normal course of business we retain counsel to advise us on regulatory, "
+                     "litigation and other matters."):
+            with self.subTest(text):
+                self.assertEqual(["LIST_MEMBER"], _whys(text))
+                self.assertTrue(_left_out(text))
+
+    def test_a_clause_between_the_registrant_and_the_governor_separates_them(self):
+        text = ("We are subject to risks that may cause results to differ, such as competition, "
+                "litigation, legislation and regulations.")
+        self.assertEqual(["LIST_MEMBER"], _whys(text))
+        self.assertTrue(_left_out(text))
+        self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
+            "We are subject to risks, such as competition, litigation, legislation and regulations."))
+
+    def test_the_registrant_named_with_no_governor_proven_stays(self):
+        text = "In our business, regulatory matters, litigation and fines increased."
+        self.assertEqual(["REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN"], _whys(text))
+        self.assertFalse(_left_out(text))
+
+    def test_examples_of_the_registrant_s_own_matters_stay(self):
+        for text in ("Our company has matters such as litigation, fines and penalties.",
+                     "Our company has several matters (including litigation, fines and penalties) "
+                     "in Europe."):
+            with self.subTest(text):
+                self.assertEqual("GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT", _whys(text)[0])
+                self.assertFalse(_left_out(text))
+        self.assertTrue(_left_out(
+            "Trade accounts receivable are written off after all reasonable means to collect "
+            "the full amount (including litigation, where appropriate) have been exhausted."))
+
+    def test_facing_a_legal_matter_is_a_relation(self):
+        # A name the closed-class words cannot read as the registrant: only the
+        # relation keeps it.
+        text = "Kestrel faced regulatory proceedings, litigation and fines."
+        found = rule.classify(text=text, keyword=_LEGAL)
+        self.assertEqual(["LIST_MEMBER"], _whys(text))
+        self.assertEqual(["REGISTRANT_FACES_A_LEGAL_MATTER"], found["exposure"])
+        self.assertFalse(found["left_out"])
 
 
 class TheTermsFileTest(unittest.TestCase):
@@ -275,6 +383,7 @@ class TheTermsFileTest(unittest.TestCase):
     def test_another_record_is_refused(self):
         body = json.loads(rule._TERMS_PATH.read_text(encoding="utf-8"))
         for change in ({"record_type": "C02"}, {"metric_id": "D01"}, {"schema_version": 1},
+                       {"schema_version": 2},
                        {"exposure": []},
                        {"exposure": body["exposure"] + [body["exposure"][0]]},
                        {"category_mention": {"prose": "x"}}):
