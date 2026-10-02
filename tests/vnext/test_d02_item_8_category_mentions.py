@@ -35,9 +35,16 @@ def _readings(*, held_out):
 
 
 class TheOlderReadingsTest(unittest.TestCase):
-    """The thirty readings the rule was written beside: every admission decided as read."""
+    """The thirty readings the rule was written beside: no disclosure leaves.
 
-    def test_every_judged_item_8_admission_is_decided_as_the_reader_decided(self):
+    Versions 1 to 3 decided every one of these admissions as read. Version 4
+    keeps three non-disclosures they left out: Pfizer's uncertain-tax-position
+    paragraph, whose "formal administrative and legal proceedings" are the
+    object of "can include" - an open-class verb, so no closed-class governor
+    is proven for the series. That is the measured cost of asking for proof.
+    """
+
+    def test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones(self):
         judged, disagreements = 0, []
         left = {"DISCLOSURE": 0, "NOT_DISCLOSURE": 0}
         for body in _readings(held_out=False):
@@ -48,10 +55,13 @@ class TheOlderReadingsTest(unittest.TestCase):
                 out = _left_out(row["text"])
                 left[row["verdict"]] += out
                 if out != (row["verdict"] == "NOT_DISCLOSURE"):
-                    disagreements.append((body["position"], row["i"], row["verdict"]))
-        self.assertEqual([], disagreements)
+                    disagreements.append((body["position"], row["i"], row["verdict"], _whys(row["text"])))
+        self.assertEqual([("pfizer:2022-12-31", 2555, "NOT_DISCLOSURE", ["NO_CLOSED_CLASS_GOVERNOR_PROVEN"]),
+                          ("pfizer:2023-12-31", 2961, "NOT_DISCLOSURE", ["NO_CLOSED_CLASS_GOVERNOR_PROVEN"]),
+                          ("pfizer:2024-12-31", 2877, "NOT_DISCLOSURE", ["NO_CLOSED_CLASS_GOVERNOR_PROVEN"])],
+                         disagreements)
         self.assertEqual(61, judged)
-        self.assertEqual({"DISCLOSURE": 0, "NOT_DISCLOSURE": 16}, left)
+        self.assertEqual({"DISCLOSURE": 0, "NOT_DISCLOSURE": 13}, left)
 
 
 class TheHeldOutReadingsTest(unittest.TestCase):
@@ -84,8 +94,9 @@ class TheHeldOutReadingsTest(unittest.TestCase):
         self.assertEqual({"kept_disclosure": 10, "lost_disclosure": 0,
                           "left_out_not_disclosure": 9, "kept_not_disclosure": 40},
                          self._counts("jpmorgan_chase"))
+        # Version 3 left out 3 of Pfizer's; version 4 keeps the tax paragraph.
         self.assertEqual({"kept_disclosure": 36, "lost_disclosure": 0,
-                          "left_out_not_disclosure": 3, "kept_not_disclosure": 0},
+                          "left_out_not_disclosure": 2, "kept_not_disclosure": 1},
                          self._counts("pfizer"))
         self.assertEqual({"kept_disclosure": 0, "lost_disclosure": 0,
                           "left_out_not_disclosure": 0, "kept_not_disclosure": 0},
@@ -133,10 +144,16 @@ class TheRuleTest(unittest.TestCase):
             "may cause results to differ, such as competition, litigation, legislation and "
             "regulations."))
 
-    def test_a_settlement_with_a_taxing_authority_is_not_a_matter(self):
-        self.assertTrue(_left_out(
-            "Any settlements with taxing authorities could decrease our uncertain tax positions. "
-            "Finalizing audits can include formal administrative and legal proceedings."))
+    def test_a_series_an_open_class_verb_governs_stays(self):
+        # A reader leaves this tax paragraph out, and versions 1 to 3 did. Its
+        # series is the object of "can include"; "include" is no closed-class
+        # word, so version 4 cannot prove the series a category - the same
+        # shape as "Kestrel defended regulatory proceedings, litigation and
+        # fines." - and keeps it.
+        text = ("Any settlements with taxing authorities could decrease our uncertain tax positions. "
+                "Finalizing audits can include formal administrative and legal proceedings.")
+        self.assertEqual(["NO_CLOSED_CLASS_GOVERNOR_PROVEN"], _whys(text))
+        self.assertFalse(_left_out(text))
 
     def test_a_label_is_never_left_out(self):
         for label in ("Litigation and Regulatory Matters", "A1. Litigation and Other Matters",
@@ -167,13 +184,16 @@ class TheReportedFalseExclusionsTest(unittest.TestCase):
 
     def test_the_two_reported_sentences_stay_by_structure_alone(self):
         # Each occurrence is no category mention, so the paragraph stays whether
-        # or not any exposure word is present.
+        # or not any exposure word is present. Version 4's governor test keeps
+        # both sentences too, so the reason is held, not only the outcome: the
+        # structure must answer them before any proof is asked.
         for text in ("We face litigation, which could result in a significant loss.",
                      "Litigation, brought by a customer against us in 2025, remains unresolved."):
             with self.subTest(text):
                 found = rule.classify(text=text, keyword=_LEGAL)
                 self.assertFalse(found["left_out"])
                 self.assertEqual([False], [item["category_mention"] for item in found["occurrences"]])
+                self.assertEqual(["GOVERNED_BY_ITS_SENTENCE"], _whys(text))
 
 
 class TheSeriesStructureTest(unittest.TestCase):
@@ -186,7 +206,7 @@ class TheSeriesStructureTest(unittest.TestCase):
     def test_the_keyword_s_phrase_names_no_party(self):
         self.assertEqual(["KEYWORD_PHRASE_IS_A_CLAUSE_OR_NAMES_A_PARTY"], _whys(
             "The note covers fines, litigation brought by a former supplier, and penalties."))
-        self.assertEqual(["LIST_MEMBER"], _whys("The note covers fines, litigation, and penalties."))
+        self.assertEqual(["LIST_MEMBER"], _whys("The note reports on fines, litigation, and penalties."))
 
     def test_the_keyword_s_phrase_names_not_the_registrant(self):
         self.assertEqual(["KEYWORD_PHRASE_NAMES_THE_REGISTRANT_S_OWN_MATTER"], _whys(
@@ -226,7 +246,7 @@ class TheSeriesStructureTest(unittest.TestCase):
 
     def test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone(self):
         self.assertEqual(["LIST_MEMBER"], _whys(
-            "Finalizing audits can include formal administrative and legal proceedings."))
+            "Finalizing audits can lead to formal administrative and legal proceedings."))
         self.assertEqual(["NO_COORDINATED_SERIES"], _whys(
             "These audits can include formal reviews and litigation costs."))
 
@@ -264,8 +284,10 @@ class TheIndependentBatteryTest(unittest.TestCase):
     was final, so it is design material. The second battery was held out for
     version 3 as drafted: version 2 left out one of its 40 stated matters and
     version 3 none. Version 3 leaves out fewer category mentions in both - the
-    cautious direction it was written for - and the counts are held so a change
-    shows here.
+    cautious direction it was written for - and version 4 one fewer again in
+    the second ("Other operating expenses comprise ..., insurance and
+    litigation-related costs, ...": "comprise" is an open-class verb). The
+    counts are held so a change shows here.
     """
 
     def _battery(self, path):
@@ -281,7 +303,7 @@ class TheIndependentBatteryTest(unittest.TestCase):
     def test_the_second_battery_held_out(self):
         battery = self._battery(V3 / "independent-battery-2.json")
         self.assertEqual([], [text for text in battery["stay"] if _left_out(text)])
-        self.assertEqual(3, sum(_left_out(text) for text in battery["leave"]))
+        self.assertEqual(2, sum(_left_out(text) for text in battery["leave"]))
 
 
 class TheRegistrantsOwnSeriesTest(unittest.TestCase):
@@ -322,7 +344,7 @@ class TheRegistrantsOwnSeriesTest(unittest.TestCase):
         self.assertEqual(["KEYWORD_PHRASE_FOLLOWS_OTHER_WORDS"], _whys(text))
         self.assertEqual([], found["exposure"])
         self.assertFalse(found["left_out"])
-        self.assertEqual(["LIST_MEMBER"], _whys("These costs include fees, other litigation and fines."))
+        self.assertEqual(["LIST_MEMBER"], _whys("These costs consist of fees, other litigation and fines."))
 
     def test_an_item_naming_the_registrant_acting_is_no_list_item(self):
         # The last sentence is the one only this condition decides: crossed as
@@ -384,13 +406,64 @@ class TheRegistrantsOwnSeriesTest(unittest.TestCase):
             "the full amount (including litigation, where appropriate) have been exhausted."))
 
     def test_facing_a_legal_matter_is_a_relation(self):
-        # A name the closed-class words cannot read as the registrant: only the
-        # relation keeps it.
-        text = "Kestrel faced regulatory proceedings, litigation and fines."
+        # A name the closed-class words cannot read as the registrant, and a
+        # series "for" governs: only the relation keeps it.
+        text = "Kestrel faced claims for refunds, litigation and fines."
         found = rule.classify(text=text, keyword=_LEGAL)
         self.assertEqual(["LIST_MEMBER"], _whys(text))
         self.assertEqual(["REGISTRANT_FACES_A_LEGAL_MATTER"], found["exposure"])
         self.assertFalse(found["left_out"])
+
+
+class TheGovernorIsProvenTest(unittest.TestCase):
+    """Version 4: a list member leaves only when its series' closed-class governor is proven.
+
+    #28 reproduced version 3's two documented limits on its copy (Issue #47
+    comment 5956052190) and asked in what range the exclusion holds; where it
+    cannot be proven, the candidate stays.
+    """
+
+    def test_28_s_sentences_on_version_3(self):
+        for text in ("Kestrel defended regulatory proceedings, litigation and fines.",
+                     "In 2025, litigation, fines and penalties increased."):
+            with self.subTest(text):
+                self.assertEqual(["NO_CLOSED_CLASS_GOVERNOR_PROVEN"], _whys(text))
+                self.assertFalse(_left_out(text))
+        self.assertFalse(_left_out("During 2025, our company faced litigation, regulatory proceedings and fines."))
+        self.assertTrue(_left_out(
+            "We engage outside counsel to advise us on finance, regulatory, litigation and other matters."))
+
+    def test_a_series_with_no_governor_stays_whoever_is_named(self):
+        for text in ("Last year, regulatory proceedings, litigation and fines rose sharply.",
+                     "Acme defended regulatory proceedings, litigation and fines in several states.",
+                     "The note covers fines, litigation, and penalties."):
+            with self.subTest(text):
+                self.assertEqual(["NO_CLOSED_CLASS_GOVERNOR_PROVEN"], _whys(text))
+                self.assertFalse(_left_out(text))
+
+    def test_a_governed_category_list_still_leaves(self):
+        for text in ("These events could result in financial losses, litigation and regulatory fines, "
+                     "as well as other costs.",
+                     "Results may vary because of competition, litigation, legislation and other factors."):
+            with self.subTest(text):
+                self.assertEqual(["LIST_MEMBER"], _whys(text))
+                self.assertTrue(_left_out(text))
+
+    def test_the_registrant_named_with_no_governor_keeps_version_3_s_name(self):
+        self.assertEqual(["REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN"], _whys(
+            "In our business, regulatory matters, litigation and fines increased."))
+
+    def test_the_range_the_proof_does_not_reach(self):
+        # Recorded limits, not wanted answers: both sentences state the
+        # registrant's own matter and version 4 still leaves them out. The
+        # registrant by its own name is no closed-class word, and what a
+        # preposition's noun is about ("costs of") is open-class. If a later
+        # version reads either, this case changes with it.
+        for text in ("In 2025, Kestrel was hit with regulatory proceedings, litigation and fines.",
+                     "The increase reflects costs of settlements, litigation and fines."):
+            with self.subTest(text):
+                self.assertEqual(["LIST_MEMBER"], _whys(text))
+                self.assertTrue(_left_out(text))
 
 
 class TheTermsFileTest(unittest.TestCase):
@@ -398,7 +471,7 @@ class TheTermsFileTest(unittest.TestCase):
     def test_another_record_is_refused(self):
         body = json.loads(rule._TERMS_PATH.read_text(encoding="utf-8"))
         for change in ({"record_type": "C02"}, {"metric_id": "D01"}, {"schema_version": 1},
-                       {"schema_version": 2},
+                       {"schema_version": 2}, {"schema_version": 3},
                        {"exposure": []},
                        {"exposure": body["exposure"] + [body["exposure"][0]]},
                        {"category_mention": {"prose": "x"}}):

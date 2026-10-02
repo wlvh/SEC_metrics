@@ -1,0 +1,89 @@
+{
+  "record_type": "D02_ITEM_8_CATEGORY_MENTION_TERMS",
+  "schema_version": 4,
+  "metric_id": "D02",
+  "reader": "scripts/vnext/d02_item_8_category_mentions.py",
+  "supersedes": "catalog/r6/D02_item_8_category_mention_v3.json",
+  "category_mention": {
+    "separator_before": "(?:,|;|\\band|\\bor|\\bincluding|\\bsuch\\s+as)\\s+(?:(?:the|other|certain|general)\\s+)?$",
+    "separator_after": "^\\s*(?:,|;|and\\b|or\\b)",
+    "parenthetical_example": "^\\(\\s*(?:including|such\\s+as|e\\.g\\.)",
+    "example_before": "(?:\\bincluding|\\bsuch\\s+as)\\s+(?:(?:the|other|certain|general)\\s+)?$",
+    "prose": "[a-z][.;:][\"\\u201d\\u2019)]*(?:\\s|$)",
+    "sentence_boundary": "(?:(?<=[a-z]{2}[.!?])|(?<=[a-z]{2}[.!?][\"\\u201d\\u2019)]))\\s+(?=[\"\\u201c(\\u2022A-Z0-9])",
+    "series_separator": "(?:\\s*[,;]\\s*(?:(?:and/or|and|or|as\\s+well\\s+as)\\b\\s*)?|\\s+(?:and/or|and|or|as\\s+well\\s+as)\\s+)+",
+    "coordinator": "\\b(?:and|or|as\\s+well\\s+as)\\b",
+    "clause_word": "\\b(?:is|are|was|were|be|been|being|am|has|have|had|do|does|did|will|would|shall|should|can|could|may|might|must|remain|remains|remained)\\b",
+    "clause_starter": "^\\W*(?:which|that|who|whom|whose|where|when|while|because|although|though|if|unless|whereas|whether)\\b",
+    "first_person_subject": "\\bwe\\b",
+    "party_preposition": "\\b(?:by|against)\\b",
+    "registrant_reference": "\\b(?:we|us|our|the\\s+(?:company|firm|corporation|registrant))\\b",
+    "registrant_subject": "^\\W*(?:we|the\\s+(?:company|firm|corporation|registrant))\\b",
+    "preposition": "\\b(?:about|against|at|by|for|from|in|into|of|on|over|regarding|to|under|with|within|such\\s+as|including)\\b",
+    "registrant_actor": "\\b(?:we|(?:the|our)\\s+(?:company|firm|corporation|registrant))\\b",
+    "head_determiner": "^\\s*(?:(?:the|other|certain|general)\\s+)*$"
+  },
+  "exposure": [
+    {
+      "name": "REGISTRANT_SUBJECT_TO_A_LEGAL_MATTER",
+      "pattern": "\\b(?:is|are|was|were|be|been|being|become|becomes|remain|remains)\\s+(?:\\w+\\s+){0,4}?(?:subject\\s+to|involved\\s+in|a\\s+party\\s+to|party\\s+to|named\\s+(?:as\\s+)?(?:a\\s+)?(?:defendants?|parties)\\s+in|a\\s+defendant\\s+in)\\s+(?:[\\w,-]+\\s+){0,4}?(?:legal\\s+(?:proceedings?|matters?|actions?|claims?)|litigation|lawsuits?|suits?|claims?|loss\\s+contingenc(?:y|ies)|contingencies|investigations?|disputes?|class\\s+actions?|actions?|proceedings|fines|penalties|complaints?)",
+      "why": "The registrant (or a party it names) is subject to, involved in, party to or a defendant in a legal matter."
+    },
+    {
+      "name": "REGISTRANT_IS_A_PARTY",
+      "pattern": "\\b(?:is|are|was|were)\\s+(?:a\\s+|the\\s+|also\\s+)?(?:defendants?|plaintiffs?)\\b",
+      "why": "A matter 'in which it was a plaintiff'; 'matters in which we are a defendant'."
+    },
+    {
+      "name": "ACCRUAL",
+      "pattern": "\\baccru(?:al|als|e|es|ed|ing)\\b",
+      "why": "An accrual the registrant makes; the adjudicated rule CLAIMS_ACCRUAL_IS_DISCLOSURE (self-insured claims, a litigation accrual review)."
+    },
+    {
+      "name": "RECORDED_LIABILITY_CHARGE_OR_BENEFIT",
+      "pattern": "\\brecord(?:s|ed|ing)?\\s+(?:a|an)?\\s*(?:liability|liabilities|charge|charges|benefit|loss|losses|reserve)\\b",
+      "why": "An amount the registrant records: a benefit from stockholder litigation, a liability for claims."
+    },
+    {
+      "name": "SELF_INSURED",
+      "pattern": "\\bself-insured\\b",
+      "why": "Self-insurance for the registrant's own claims."
+    },
+    {
+      "name": "A_MATTER_IN_A_COURT",
+      "pattern": "\\bfiled\\b|\\bpending\\b|\\balleg(?:e|es|ed|ing|ation|ations)\\b|\\bcourt\\b|\\bsummary\\s+judgment\\b|\\bjudgments?\\s+(?:against|in\\s+favor|was|were|entered)\\b|\\bverdicts?\\b|\\bappeal(?:s|ed)?\\b|\\bdismiss(?:ed|al)?\\b|\\bsubpoena|\\binjunction|\\bplaintiffs?\\b|\\bdefendants?\\b|\\bclass\\s+action|\\bcomplaints?\\b",
+      "why": "The vocabulary of a specific proceeding: a filing, a court, an allegation, a ruling, a party. 'judgments' alone is not here: an accounting estimate is 'based on complex judgments'."
+    },
+    {
+      "name": "SETTLEMENT_OF_A_LEGAL_MATTER",
+      "pattern": "\\bsettl(?:e|ed|es|ement|ements)\\b\\s+(?:\\w+\\s+){0,4}?(?:of\\s+|with\\s+)?(?:\\w+\\s+){0,3}?(?:litigation|lawsuits?|claims?|actions?|cases?|disputes?|matters?|suits?)\\b|\\b(?:litigation|lawsuits?|claims?|disputes?)\\s+settlements?\\b",
+      "why": "A settlement of a legal matter. Settlements with taxing authorities are not one (a tax-position paragraph)."
+    },
+    {
+      "name": "REGISTRANT_EXPOSED_TO_OR_NAMED_IN_A_LEGAL_MATTER",
+      "pattern": "\\b(?:is|are|was|were|be|been|being|become|becomes|remain|remains)\\s+(?:\\w+\\s+){0,4}?(?:exposed\\s+to|named\\s+in)\\s+(?:[\\w,-]+\\s+){0,4}?(?:legal\\s+(?:proceedings?|matters?|actions?|claims?)|litigation|lawsuits?|suits?|claims?|loss\\s+contingenc(?:y|ies)|contingencies|investigations?|disputes?|class\\s+actions?|actions?|proceedings|fines|penalties|complaints?)",
+      "why": "The same relation as being subject to a legal matter, worded as exposure or as being named in one."
+    },
+    {
+      "name": "A_MATTER_AGAINST_THE_REGISTRANT",
+      "pattern": "\\bagainst\\s+(?:us|the\\s+(?:company|firm|corporation|registrant))\\b",
+      "why": "A matter directed at the registrant ('claims against the Company', 'brought against us')."
+    },
+    {
+      "name": "A_MATTER_BROUGHT_BY_OR_AGAINST_A_PARTY",
+      "pattern": "\\b(?:brought|commenced|initiated|instituted|asserted)\\s+(?:\\w+\\s+){0,3}?(?:by|against)\\b",
+      "why": "A matter someone brought or asserted: a category is not brought by anyone."
+    },
+    {
+      "name": "A_SUIT_OR_AN_ARBITRATION",
+      "pattern": "\\bsu(?:e|es|ed|ing)\\b|\\barbitrat(?:ion|ions|or|ors|ed)\\b",
+      "why": "Suing, being sued, or an arbitration: the vocabulary of a particular matter, like 'filed' or 'court'."
+    },
+    {
+      "name": "REGISTRANT_FACES_A_LEGAL_MATTER",
+      "pattern": "\\b(?:face|faces|faced|facing)\\s+(?:[\\w,-]+\\s+){0,4}?(?:legal\\s+(?:proceedings?|matters?|actions?|claims?)|litigation|lawsuits?|suits?|claims?|loss\\s+contingenc(?:y|ies)|contingencies|investigations?|disputes?|class\\s+actions?|actions?|proceedings|fines|penalties|complaints?)",
+      "why": "Facing a legal matter is the relation of being subject to one, worded with the verb: 'our company faced litigation, regulatory proceedings and fines' (#28's review of its copy of version 2)."
+    }
+  ],
+  "why_this_file": "Version 4 of the D02 Item 8 category-mention terms. Version 3 read a coordinated series as a category unless the registrant was named before it; a series with no closed-class word governing it still left - 'Kestrel defended regulatory proceedings, litigation and fines.' (the registrant by its own name, an open-class verb) and 'In 2025, litigation, fines and penalties increased.' (the series as subject) - which #28 reproduced on its copy (Issue #47 comment 5956052190). Version 4 keeps every pattern of version 3 unchanged; its reader now removes a list member only when a closed-class governor is proven for the series (a preposition, 'including' or 'such as' before its first member, not opening the sentence), as version 3 already required where the registrant was named. Every pattern here is closed-class grammar or the vocabulary of a legal matter; business phrases live here rather than in executable code (tools/check_vnext_semantics.py); the file's bytes are recorded by the issue_47_v1 snapshot as a rule file, so a change here moves the Requirement closure."
+}

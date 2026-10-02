@@ -1,0 +1,542 @@
+{
+ "AGAINST_THE_REGISTRANT_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "ANY_SEPARATOR_IS_A_SERIES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_separator_without_a_coordinated_series",
+  "failed_cases": [
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+   "test_a_separator_without_a_coordinated_series"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "AN_OXFORD_COMMA_IS_TWO_SEPARATORS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_oxford_comma_is_one_separator",
+  "failed_cases": [
+   "test_a_list_member_in_a_paragraph_without_a_matter_is_left_out",
+   "test_a_series_with_no_governor_stays_whoever_is_named",
+   "test_an_oxford_comma_is_one_separator",
+   "test_each_relation_keeps_the_paragraph",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_the_first_battery",
+   "test_the_keyword_s_phrase_names_no_party",
+   "test_the_record_says_why"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_CLAUSE_BEFORE_THE_KEYWORD_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_clause_before_the_keyword_in_its_item",
+  "failed_cases": [
+   "test_a_clause_before_the_keyword_in_its_item"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_CLAUSE_BETWEEN_DOES_NOT_SEPARATE_THEM": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_clause_between_the_registrant_and_the_governor_separates_them",
+  "failed_cases": [
+   "test_a_clause_between_the_registrant_and_the_governor_separates_them",
+   "test_judgments_in_an_estimate_are_not_a_matter",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_CLAUSE_IN_THE_KEYWORD_S_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_keyword_s_phrase_is_no_clause",
+  "failed_cases": [
+   "test_the_keyword_s_phrase_is_no_clause"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_COORDINATOR_INTO_THE_GOVERNING_WORDS_COUNTS_WITH_WORDS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+  "failed_cases": [
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_LIST_ITEM_MAY_NAME_THE_REGISTRANT_ACTING": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_item_naming_the_registrant_acting_is_no_list_item",
+  "failed_cases": [
+   "test_an_item_naming_the_registrant_acting_is_no_list_item"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_PARENTHETICAL_READS_ONLY_ITSELF": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_examples_of_the_registrant_s_own_matters_stay",
+  "failed_cases": [
+   "test_examples_of_the_registrant_s_own_matters_stay"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_PARTY_IN_THE_KEYWORD_S_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_keyword_s_phrase_names_no_party",
+  "failed_cases": [
+   "test_the_keyword_s_phrase_names_no_party"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_POSSESSIVE_IS_A_REFERENCE_TOO": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_possessive_is_neither_subject_nor_object",
+  "failed_cases": [
+   "test_a_possessive_is_neither_subject_nor_object"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_PREDICATE_AFTER_THE_SERIES_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_series_that_is_the_subject_of_a_predicate",
+  "failed_cases": [
+   "test_a_series_that_is_the_subject_of_a_predicate"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_SENTENCE_OPENING_PREPOSITION_GOVERNS_THE_SERIES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_registrant_named_with_no_governor_proven_stays",
+  "failed_cases": [
+   "test_28_s_sentences_on_version_3",
+   "test_the_registrant_named_with_no_governor_keeps_version_3_s_name",
+   "test_the_registrant_named_with_no_governor_proven_stays"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_SERIES_WITH_NO_GOVERNOR_LEAVES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_28_s_sentences_on_version_3",
+  "failed_cases": [
+   "test_28_s_sentences_on_version_3",
+   "test_a_series_an_open_class_verb_governs_stays",
+   "test_a_series_with_no_governor_stays_whoever_is_named",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones",
+   "test_the_second_battery_held_out"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "BROUGHT_BY_OR_AGAINST_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 0
+ },
+ "EXAMPLES_DO_NOT_ASK_WHO_GOVERNS_THEM": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_examples_of_the_registrant_s_own_matters_stay",
+  "failed_cases": [
+   "test_examples_of_the_registrant_s_own_matters_stay"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "EXPOSED_TO_OR_NAMED_IN_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "FACING_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_facing_a_legal_matter_is_a_relation",
+  "failed_cases": [
+   "test_facing_a_legal_matter_is_a_relation"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "NO_GOVERNOR_IS_PROOF_ENOUGH": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_registrant_named_with_no_governor_proven_stays",
+  "failed_cases": [
+   "test_28_s_sentences_on_version_3",
+   "test_a_series_an_open_class_verb_governs_stays",
+   "test_a_series_with_no_governor_stays_whoever_is_named",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones",
+   "test_the_registrant_named_with_no_governor_keeps_version_3_s_name",
+   "test_the_registrant_named_with_no_governor_proven_stays",
+   "test_the_second_battery_held_out"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "SUITS_AND_ARBITRATION_ARE_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph",
+   "test_the_first_battery"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_FIRST_ITEM_IS_A_LIST_MEMBER": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_first_item_of_a_sentence_is_governed_by_it",
+  "failed_cases": [
+   "test_the_first_item_of_a_sentence_is_governed_by_it",
+   "test_the_two_reported_sentences_stay_by_structure_alone"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_GOVERNOR_IS_ASKED_ONLY_WHERE_THE_REGISTRANT_IS_NAMED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_series_with_no_governor_stays_whoever_is_named",
+  "failed_cases": [
+   "test_28_s_sentences_on_version_3",
+   "test_a_series_an_open_class_verb_governs_stays",
+   "test_a_series_with_no_governor_stays_whoever_is_named",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones",
+   "test_the_second_battery_held_out"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_ACTING_BEFORE_THE_KEYWORD_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_reviewed_sentence_stays",
+  "failed_cases": [
+   "test_the_reviewed_sentence_stays"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "THE_REGISTRANT_ADVISED_IS_THE_REGISTRANT_ACTING": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_registrant_advised_is_not_the_registrant_acting",
+  "failed_cases": [
+   "test_28_s_sentences_on_version_3",
+   "test_a_list_member_in_a_paragraph_without_a_matter_is_left_out",
+   "test_an_oxford_comma_is_one_separator",
+   "test_each_relation_keeps_the_paragraph",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones",
+   "test_the_record_says_why",
+   "test_the_registrant_advised_is_not_the_registrant_acting",
+   "test_the_second_battery_held_out"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_GOVERNING_THE_SERIES_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_version_two_s_keep_is_never_overturned",
+  "failed_cases": [
+   "test_version_two_s_keep_is_never_overturned"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_IN_THE_KEYWORD_S_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_keyword_s_phrase_names_not_the_registrant",
+  "failed_cases": [
+   "test_the_first_battery",
+   "test_the_keyword_s_phrase_names_not_the_registrant"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_NAMED_ANSWER_LOSES_ITS_NAME": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_registrant_named_with_no_governor_keeps_version_3_s_name",
+  "failed_cases": [
+   "test_the_registrant_named_with_no_governor_keeps_version_3_s_name",
+   "test_the_registrant_named_with_no_governor_proven_stays"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "VERSION_ONE_S_EVIDENCE_ALONE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_two_reported_sentences_stay_by_structure_alone",
+  "failed_cases": [
+   "test_a_clause_before_the_keyword_in_its_item",
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+   "test_a_separator_without_a_coordinated_series",
+   "test_a_series_that_is_the_subject_of_a_predicate",
+   "test_an_example_in_a_parenthetical_is_left_out",
+   "test_examples_of_the_registrant_s_own_matters_stay",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones",
+   "test_the_first_battery",
+   "test_the_first_item_of_a_sentence_is_governed_by_it",
+   "test_the_keyword_s_phrase_is_no_clause",
+   "test_the_keyword_s_phrase_names_no_party",
+   "test_the_keyword_s_phrase_names_not_the_registrant",
+   "test_the_two_reported_sentences_stay_by_structure_alone",
+   "test_version_two_s_keep_is_never_overturned"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "VERSION_TWO_S_CATEGORY_READING_STANDS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_reviewed_sentence_stays",
+  "failed_cases": [
+   "test_28_s_sentences_on_version_3",
+   "test_a_clause_between_the_registrant_and_the_governor_separates_them",
+   "test_a_possessive_is_neither_subject_nor_object",
+   "test_a_preposition_after_the_registrant_acting_proves_nothing",
+   "test_a_series_an_open_class_verb_governs_stays",
+   "test_a_series_with_no_governor_stays_whoever_is_named",
+   "test_an_item_naming_the_registrant_acting_is_no_list_item",
+   "test_examples_of_the_registrant_s_own_matters_stay",
+   "test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones",
+   "test_no_disclosure_leaves_and_the_non_disclosures_kept_are_the_known_ones",
+   "test_the_first_battery",
+   "test_the_registrant_named_with_no_governor_keeps_version_3_s_name",
+   "test_the_registrant_named_with_no_governor_proven_stays",
+   "test_the_reviewed_sentence_stays",
+   "test_the_second_battery_held_out",
+   "test_words_before_the_keyword_in_its_item_are_not_proven_a_modifier"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "WORDS_BEFORE_THE_KEYWORD_ARE_A_MODIFIER": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_words_before_the_keyword_in_its_item_are_not_proven_a_modifier",
+  "failed_cases": [
+   "test_the_first_battery",
+   "test_the_second_battery_held_out",
+   "test_words_before_the_keyword_in_its_item_are_not_proven_a_modifier"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "all_caught": true,
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "files_under_test": {
+  "catalog/r6/D02_item_8_category_mention_v4.json": "sha256:839315f554a61441b770227b08ae4967610fdfb3ac88a112a77e5263a72c69f1",
+  "scripts/vnext/d02_item_8_category_mentions.py": "sha256:ede05ae6671e99727ef84a9161c71c62489c813fe0e62a91354b03e173f9bfca",
+  "tests/vnext/test_d02_item_8_category_mentions.py": "sha256:23517a5e75d6ba225acd4223e73b1660c98a3a7457ca6fc9c1fbbd37f6fbb61c"
+ },
+ "run_in": "a sparse worktree of 9385074a holding scripts, tests, tools, catalog, config, requirements, docs/evidence/issue47_history and evidence, with these three files copied in byte for byte; nothing else read it, and each injection was restored byte for byte"
+}

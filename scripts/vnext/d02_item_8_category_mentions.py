@@ -84,22 +84,42 @@ stays:
 * facing a legal matter joins the relations that state one ("faced
   litigation").
 
+What has to be proven (version 4 of the terms). Version 3 still read a series
+as a category whenever the registrant was not named before it, so a series no
+closed-class word governs left too: "Kestrel defended regulatory proceedings,
+litigation and fines." (the registrant by its own name, an open-class verb)
+and "In 2025, litigation, fines and penalties increased." (the series as a
+subject), both of which version 3's own notes listed and #28 reproduced on its
+copy (Issue #47 comment 5956052190). A list member now leaves only when the
+series' closed-class governor is proven - a preposition, "including" or "such
+as" before its first member, not one opening the sentence - which version 3
+required only where the registrant was named; the registrant acting before
+that governor in its clause still keeps it. Examples after "including" or
+"such as", and parenthetical examples, carry their own governor and are read as
+in version 3. Version 4 only adds a condition to version 3's category reading,
+so a block version 3 keeps cannot leave.
+
 What it decides from and what it does not. A list member is read from the
 words around it, not from what the list is about; the paragraph's
 legal-matter vocabulary is read anywhere in the block, so a paragraph that says
 "pending" or "accrued" about something else stays in (the cautious direction:
 it can keep a paragraph a reader would leave out, and cannot drop one a reader
-would keep for the reasons it reads). Open-class words are not read: a series
-in subject position whose verb is attached to its last item ("In 2025,
-litigation, fines and penalties increased.") still reads as a list, and a
-matter stated in words outside the vocabulary is not seen. A block that is not
-prose - no sentence punctuation, such as a heading "Litigation and Regulatory
-Matters" - is never removed: a label names what follows rather than listing a
-category. A self-insurance paragraph shows why the two properties must hold
+would keep for the reasons it reads). What a removal proves: every keyword in
+the block is a determiner-only list item, or an example, in a series that a
+preposition, "including" or "such as" governs, with no clause, party or
+registrant in its own item and the registrant not acting before the governor in
+its clause; and none of the legal-matter vocabulary appears in the block. What
+it cannot prove, because the words are open-class: what the governor's own
+noun is about ("costs of litigation, settlements and fines" can be the
+registrant's costs); there the block's legal-matter vocabulary is the only
+protection, and a matter stated in words outside it is not seen. A block that
+is not prose - no sentence punctuation, such as a heading "Litigation and
+Regulatory Matters" - is never removed: a label names what follows rather than
+listing a category. A self-insurance paragraph shows why the two properties must hold
 together: its keyword is a list member ("losses, settlements, litigation costs
 and other factors") and it is a disclosure, because the registrant accrues for
 its own claims. The vocabulary lives in
-``catalog/r6/D02_item_8_category_mention_v3.json``; versions 1 and 2 keep their
+``catalog/r6/D02_item_8_category_mention_v4.json``; versions 1 to 3 keep their
 bytes as history.
 """
 from __future__ import annotations
@@ -110,7 +130,7 @@ from pathlib import Path
 from .canonical import content_hash, strict_json_file
 
 RECORD_TYPE = "D02_ITEM_8_CATEGORY_MENTION_TERMS"
-_TERMS_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/D02_item_8_category_mention_v3.json"
+_TERMS_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/D02_item_8_category_mention_v4.json"
 _MENTION_KEYS = {"separator_before", "separator_after", "parenthetical_example", "example_before",
                  "prose", "sentence_boundary", "series_separator", "coordinator", "clause_word",
                  "clause_starter", "first_person_subject", "party_preposition",
@@ -130,7 +150,7 @@ _OPENING = "^\\W*"
 def _load(path):
     terms = strict_json_file(path=path)
     if (type(terms) is not dict or terms.get("record_type") != RECORD_TYPE
-            or terms.get("schema_version") != 3 or terms.get("metric_id") != "D02"
+            or terms.get("schema_version") != 4 or terms.get("metric_id") != "D02"
             or type(terms.get("category_mention")) is not dict
             or set(terms["category_mention"]) != _MENTION_KEYS
             or type(terms.get("exposure")) is not list or not terms["exposure"]
@@ -354,8 +374,6 @@ def _unproven(text, start, end, why):
         return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
     if not _MENTION["head_determiner"].search(head):
         return "KEYWORD_PHRASE_FOLLOWS_OTHER_WORDS"
-    if not _MENTION["registrant_reference"].search(segment[:begin]):
-        return None
     index, governing = k, None
     while index >= 2:
         if not _plain_item(parts[index - 2][0]):
@@ -366,7 +384,12 @@ def _unproven(text, start, end, why):
     if _registrant_governs(segment, begin if position is None else position):
         return "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
     if position is None:
-        return "REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN"
+        # Version 3 asked this only where the registrant was named before the
+        # series, and that answer keeps its name; version 4 asks it of every
+        # series (see the module docstring).
+        if _MENTION["registrant_reference"].search(segment[:begin]):
+            return "REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN"
+        return "NO_CLOSED_CLASS_GOVERNOR_PROVEN"
     return None
 
 
