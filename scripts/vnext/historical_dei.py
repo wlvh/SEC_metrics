@@ -504,6 +504,16 @@ def release_aware_with(function, **overrides):
     if unread:
         raise HistoricalDeiError("HISTORICAL_DEI_OVERRIDE_NAME_NOT_READ:"
                                  + function.__qualname__ + ":" + ",".join(unread))
+    # A name the code only imports inside its body is bound by that import,
+    # never read from the namespace the view replaces: an override of it would
+    # change nothing and read as a change.
+    loaded = {instruction.argval for code in _codes(function.__code__)
+              for instruction in dis.get_instructions(code)
+              if instruction.opname in ("LOAD_GLOBAL", "LOAD_NAME")}
+    imported_only = sorted(set(overrides) - loaded)
+    if imported_only:
+        raise HistoricalDeiError("HISTORICAL_DEI_OVERRIDE_NAME_ONLY_IMPORTED:"
+                                 + function.__qualname__ + ":" + ",".join(imported_only))
     for name, value in overrides.items():
         if not _is_view(value) and reaches_the_dei_question(value):
             raise HistoricalDeiError("HISTORICAL_DEI_OVERRIDE_REACHES_THE_QUESTION:" + name)

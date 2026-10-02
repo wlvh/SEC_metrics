@@ -541,6 +541,21 @@ class AnOverrideViewReplacesOnlyWhatItNames(unittest.TestCase):
                                     "HISTORICAL_DEI_OVERRIDE_NAME_NOT_READ:caller:absent"):
             historical_dei.release_aware_with(module.caller, absent=len)
 
+    def test_a_name_the_code_only_imports_is_refused(self):
+        # The import binds the name inside the body; the namespace the view
+        # replaces is never read for it, so an override would change nothing.
+        module = _fixture_module(
+            "def caller():\n"
+            "    from vnext.text_coverage import build_text_document\n"
+            "    return build_text_document\n")
+
+        def successor():
+            return "successor"
+        with self.assertRaisesRegex(historical_dei.HistoricalDeiError,
+                                    "HISTORICAL_DEI_OVERRIDE_NAME_ONLY_IMPORTED:caller:"
+                                    "build_text_document"):
+            historical_dei.release_aware_with(module.caller, build_text_document=successor)
+
     def test_a_replacement_that_asks_the_question_without_a_view_is_refused(self):
         module = self._module()
         with self.assertRaisesRegex(historical_dei.HistoricalDeiError,

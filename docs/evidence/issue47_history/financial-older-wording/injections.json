@@ -1,0 +1,249 @@
+{
+ "record_type": "ISSUE_47_FINANCIAL_OLDER_WORDING_FAULT_INJECTIONS",
+ "results": [
+  {
+   "as_expected": true,
+   "expected_failing": [],
+   "failing": [],
+   "import_error": null,
+   "injection": "CONTROL_FAST",
+   "module": null,
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [],
+   "failing": [],
+   "import_error": null,
+   "injection": "CONTROL_FILINGS",
+   "module": null,
+   "ran": 9,
+   "tests": "tests.vnext.test_historical_financial_wording_filings"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_resolved_frozen_answer_is_returned_as_it_is"
+   ],
+   "failing": [
+    "test_a_resolved_frozen_answer_is_returned_as_it_is"
+   ],
+   "import_error": null,
+   "injection": "ALWAYS_TAKE_THE_OLDER_ANSWER",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_where_neither_resolves_the_frozen_refusal_stands"
+   ],
+   "failing": [
+    "test_where_neither_resolves_the_frozen_refusal_stands"
+   ],
+   "import_error": null,
+   "injection": "TAKE_AN_UNRESOLVED_OLDER_ANSWER",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_the_older_answer_is_taken_only_where_it_resolves_and_says_so"
+   ],
+   "failing": [
+    "test_the_older_answer_is_taken_only_where_it_resolves_and_says_so"
+   ],
+   "import_error": null,
+   "injection": "TAKE_IT_WITHOUT_SAYING_SO",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_list_that_does_not_put_the_rest_in_corporate_binds_nothing"
+   ],
+   "failing": [
+    "test_a_list_that_does_not_put_the_rest_in_corporate_binds_nothing"
+   ],
+   "import_error": null,
+   "injection": "ANY_REMAINDER_SEGMENT",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_nothing_but_one_colon_is_accepted"
+   ],
+   "failing": [
+    "test_nothing_but_one_colon_is_accepted"
+   ],
+   "import_error": null,
+   "injection": "ANY_GLOSSARY_SEPARATOR",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_heading_or_a_second_unmarked_block_still_ends_the_notes"
+   ],
+   "failing": [
+    "test_a_heading_or_a_second_unmarked_block_still_ends_the_notes"
+   ],
+   "import_error": null,
+   "injection": "ANY_BLOCK_BEFORE_THE_NOTES",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_heading_or_a_second_unmarked_block_still_ends_the_notes"
+   ],
+   "failing": [
+    "test_a_heading_or_a_second_unmarked_block_still_ends_the_notes"
+   ],
+   "import_error": null,
+   "injection": "MANY_GENERAL_NOTES",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_name_the_label_does_not_define_proves_nothing"
+   ],
+   "failing": [
+    "test_a_name_the_label_does_not_define_proves_nothing"
+   ],
+   "import_error": null,
+   "injection": "ANY_NAME_FOR_THE_MEASURE",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_substitution_that_does_not_occur_exactly_once_is_refused"
+   ],
+   "failing": [
+    "test_a_substitution_that_does_not_occur_exactly_once_is_refused"
+   ],
+   "import_error": null,
+   "injection": "A_SUBSTITUTION_MAY_OCCUR_TWICE",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_source_that_changed_after_it_was_loaded_is_refused"
+   ],
+   "failing": [
+    "test_a_source_that_changed_after_it_was_loaded_is_refused"
+   ],
+   "import_error": null,
+   "injection": "NO_SOURCE_IDENTITY_CHECK",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 22,
+   "tests": "tests.vnext.test_historical_financial_wording"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_name_the_code_only_imports_is_refused"
+   ],
+   "failing": [
+    "test_a_name_the_code_only_imports_is_refused"
+   ],
+   "import_error": null,
+   "injection": "AN_IMPORT_ONLY_OVERRIDE_IS_ACCEPTED",
+   "module": "scripts/vnext/historical_dei.py",
+   "ran": 6,
+   "tests": "tests.vnext.test_historical_dei"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a04_does_not_set_aside_a_measure_excluding_another_business"
+   ],
+   "failing": [
+    "test_a04_does_not_set_aside_a_measure_excluding_another_business"
+   ],
+   "import_error": null,
+   "injection": "ANOTHER_EXCLUDED_BUSINESS_IN_THE_LABEL",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 9,
+   "tests": "tests.vnext.test_historical_financial_wording_filings"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a04_does_not_read_an_introduction_excluding_another_business"
+   ],
+   "failing": [
+    "test_a04_does_not_read_an_introduction_excluding_another_business"
+   ],
+   "import_error": null,
+   "injection": "ANOTHER_EXCLUDED_BUSINESS_IN_THE_INTRODUCTION",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 9,
+   "tests": "tests.vnext.test_historical_financial_wording_filings"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a12_does_not_set_aside_a_header_that_states_no_direction"
+   ],
+   "failing": [
+    "test_a12_does_not_set_aside_a_header_that_states_no_direction"
+   ],
+   "import_error": null,
+   "injection": "A_COUNTERFACTUAL_HEADER_IN_ANY_DIRECTION",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 9,
+   "tests": "tests.vnext.test_historical_financial_wording_filings"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a09_does_not_set_aside_a_table_no_longer_named_contents"
+   ],
+   "failing": [
+    "test_a09_does_not_set_aside_a_table_no_longer_named_contents"
+   ],
+   "import_error": null,
+   "injection": "CONTENTS_WITHOUT_THEIR_NAME",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 9,
+   "tests": "tests.vnext.test_historical_financial_wording_filings"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a03_reaches_the_lettered_note_past_the_general_note"
+   ],
+   "failing": [
+    "test_a03_reaches_the_lettered_note_past_the_general_note"
+   ],
+   "import_error": null,
+   "injection": "NO_MEASURE_ABBREVIATION_FOR_A03",
+   "module": "scripts/vnext/historical_financial_wording.py",
+   "ran": 9,
+   "tests": "tests.vnext.test_historical_financial_wording_filings"
+  }
+ ]
+}

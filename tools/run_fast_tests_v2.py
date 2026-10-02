@@ -73,6 +73,8 @@ SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for 
 )
 FAST_TESTS = tuple(s for s in FAST_TESTS if s not in SOURCE_TESTS)
 FAST_TESTS += ("tests.vnext.test_ordinary_source_session",)
+# The successor mechanism and its forms on constructed documents; under a second.
+FAST_TESTS += ("tests.vnext.test_historical_financial_wording",)
 FAST_TESTS += ("tests.vnext.test_ordinary_source_authority",)
 FAST_TESTS += ("tests.vnext.test_continuous_call_ledger",)
 FAST_TESTS += ("tests.vnext.test_continuous_call_policy",)
@@ -330,6 +332,9 @@ SOURCE_TESTS += ("tests.vnext.test_historical_lodging_introduction",)
 # each set against the next proxy read by the frozen resolver: eleven proxies
 # from the export, 29 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_ecd_release",)
+# The financial witnesses' older-wording successors on the bank's FY2021 annual
+# report from the export: one run of each of the five metrics' successors.
+SOURCE_TESTS += ("tests.vnext.test_historical_financial_wording_filings",)
 # The older-year C03 reading across every saved proxy of the registrant,
 # including the export's: 5 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_c03_across_proxies_reading",)
@@ -714,6 +719,9 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest": 39,
     "tests.vnext.test_continuous_semantic_calls": 37,
     "tests.vnext.test_historical_ecd_release": 37,
+    # Measured locally at 160 seconds on a four-core host running five such
+    # jobs; not yet measured in CI.
+    "tests.vnext.test_historical_financial_wording_filings": 160,
     "tests.vnext.test_b06_note_carrying": 36,
     "tests.vnext.test_historical_metadata_context": 34,
     "tests.vnext.test_normal_run_inputs": 34,

@@ -142,6 +142,11 @@ NEW_RULE_FILES = (
     # with the annual preparation handed in. These bytes decide which filing a
     # pinned bank period is read from, so both roots check them.
     "scripts/vnext/historical_financial_results.py",
+    # The financial witnesses' successors for the bank's older annual reports:
+    # the frozen inspectors' own source with listed substitutions, asked only
+    # where the frozen one does not resolve. They decide whether an older
+    # year's A03/A04/A09/A11/A12 resolves at all, so both roots check them.
+    "scripts/vnext/historical_financial_wording.py",
     # Which submissions document a pinned filing is proved against: the main
     # index when its recent block lists the row, else the loaded history block
     # that does. It decides the source set four routes build, so both roots

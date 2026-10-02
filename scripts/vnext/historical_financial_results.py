@@ -68,11 +68,11 @@ from .calculator import (calculate_metric, calculate_observation_metric,
 from .canonical import content_hash, sha256_bytes, sha256_file
 from .deterministic_router import source_set_manifest
 from .financial_results import (RESOLVER, SPEC_PATHS, _ROLES, FinancialResultError,
-                                _actual_period, _fact, _failure_classification,
+                                _actual_period, _failure_classification,
                                 _installed_rule, _need)
 from .historical_annual_input import prepare_historical_annual_input
-from .historical_dei import release_aware
 from .historical_filing_inventory import filing_inventory
+from .historical_financial_wording import fact as financial_wording_fact
 from .normal_annual_input_v2 import exact_json_value
 from .normal_source_authority import ROOT, NormalSourceAuthorityError
 from .observations import scope_key, structured_observation
@@ -82,8 +82,10 @@ from .sources import raw_blob_record, resolve_repository_file, source_reference_
 from .traits import repository_company_traits
 
 # The frozen readers this module calls, answering the DEI namespace question
-# for every taxonomy release (historical_dei).
-_fact = release_aware(_fact)
+# for every taxonomy release (historical_dei), with the financial witnesses
+# reading the older annual reports' wording where the frozen ones do not
+# resolve (historical_financial_wording).
+_fact = financial_wording_fact
 
 RECORD_TYPE = "HISTORICAL_FINANCIAL_COMPONENT"
 SUPPORTED_METRICS = tuple(sorted(SPEC_PATHS))
