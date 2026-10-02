@@ -4050,7 +4050,7 @@
     "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING": {
      "text": "Item 8 is a pointer page, and the range for the statements printed after the items started at the first block that begins with a statement's name: an MD&A heading ('CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS') about 3,500 blocks before the statements. MD&A paragraphs - critical accounting estimates, forward-looking statements, country exposure - came under the keyword.",
      "repair": "historical_text_results.statements_start: the range starts where titles of at least three kinds of primary statement stand together (d02-navigation-repairs/).",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "ITEM_8_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits although every occurrence is a list item or a parenthetical example and the paragraph states no legal matter of the registrant (estimates moved by competition and litigation, receivables written off after litigation, tax positions, cost categories).",
@@ -4059,7 +4059,7 @@
       "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
       "D02_PFIZER_2025_SCOPE_CONTENT_READ"
      ],
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits that states no legal matter of the registrant and that the category-mention rule keeps: another entity's litigation behind a derivative (the Visa class B shares, whose conversion depends on Visa's covered litigation), or a composition list whose paragraph also says 'accrued interest'.",
@@ -4070,7 +4070,7 @@
     },
     "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
      "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
      "repair": "historical_text_results.page_number_blocks reads page numbers printed on alternate sides of the footer (facing pages), so page_structure_furniture finds the footer and the running head (d02-facing-pages/)."
     }
    },
@@ -4084,12 +4084,24 @@
      "run_id": "run:historical-period:4b6a2bbcb925aab604df8e148a2584743bd44e78998ab5f3d4049f3d56099205"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/jpmorgan_chase-2021-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
-   ]
+   ],
+   "recomputed_and_read": {
+    "result_id": "sha256:4a330fe46406c62a3feaad4ddc95766099c65fd691143e6baad10cc635a71411",
+    "run_id": "run:historical-period:6e13dc5387b8f867b70d7fb531737c52dfdd1dbfad158aa81c4a736139a52d25",
+    "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+    "carried_reading": "docs/evidence/issue47_history/d02-older-years/carried/jpmorgan_chase-2021-12-31.json",
+    "carried_reading_sha256": "sha256:3c6a7ba1b4936b7b416198cddfa5119beaec3b13cb71c623aeca9ecaab68e222",
+    "still_wrong": [
+     6401,
+     9147
+    ],
+    "what_this_releases": "nothing: the recomputed result still takes the blocks listed in still_wrong"
+   }
   },
   {
    "company_id": "jpmorgan_chase",
@@ -4252,7 +4264,7 @@
     "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING": {
      "text": "Item 8 is a pointer page, and the range for the statements printed after the items started at the first block that begins with a statement's name: an MD&A heading ('CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS') about 3,500 blocks before the statements. MD&A paragraphs - critical accounting estimates, forward-looking statements, country exposure - came under the keyword.",
      "repair": "historical_text_results.statements_start: the range starts where titles of at least three kinds of primary statement stand together (d02-navigation-repairs/).",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "ITEM_8_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits although every occurrence is a list item or a parenthetical example and the paragraph states no legal matter of the registrant (estimates moved by competition and litigation, receivables written off after litigation, tax positions, cost categories).",
@@ -4261,7 +4273,7 @@
       "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
       "D02_PFIZER_2025_SCOPE_CONTENT_READ"
      ],
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits that states no legal matter of the registrant and that the category-mention rule keeps: another entity's litigation behind a derivative (the Visa class B shares, whose conversion depends on Visa's covered litigation), or a composition list whose paragraph also says 'accrued interest'.",
@@ -4272,7 +4284,7 @@
     },
     "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
      "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
      "repair": "historical_text_results.page_number_blocks reads page numbers printed on alternate sides of the footer (facing pages), so page_structure_furniture finds the footer and the running head (d02-facing-pages/)."
     }
    },
@@ -4286,12 +4298,26 @@
      "run_id": "run:historical-period:a8faf27585cd1e75146ddae55ae16ce791998700721dd6a1ffd1bebb5c82d8b2"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/jpmorgan_chase-2022-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
-   ]
+   ],
+   "recomputed_and_read": {
+    "result_id": "sha256:cb7062b687e2d1fe4311a99afb6e803f6fec91f35cb62e29e962ce2f572ae913",
+    "run_id": "run:historical-period:7cb3d215b929fef29c7d5461c91b06bdb6cf50495d825a0a99f54945e5382634",
+    "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+    "carried_reading": "docs/evidence/issue47_history/d02-older-years/carried/jpmorgan_chase-2022-12-31.json",
+    "carried_reading_sha256": "sha256:882b3943302e585dec7b134d2b97549255c253556076522cc45b55cf97c255b6",
+    "still_wrong": [
+     6435,
+     6436,
+     6437,
+     9129
+    ],
+    "what_this_releases": "nothing: the recomputed result still takes the blocks listed in still_wrong"
+   }
   },
   {
    "company_id": "jpmorgan_chase",
@@ -4454,7 +4480,7 @@
     "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING": {
      "text": "Item 8 is a pointer page, and the range for the statements printed after the items started at the first block that begins with a statement's name: an MD&A heading ('CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS') about 3,500 blocks before the statements. MD&A paragraphs - critical accounting estimates, forward-looking statements, country exposure - came under the keyword.",
      "repair": "historical_text_results.statements_start: the range starts where titles of at least three kinds of primary statement stand together (d02-navigation-repairs/).",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "ITEM_8_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits although every occurrence is a list item or a parenthetical example and the paragraph states no legal matter of the registrant (estimates moved by competition and litigation, receivables written off after litigation, tax positions, cost categories).",
@@ -4463,7 +4489,7 @@
       "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
       "D02_PFIZER_2025_SCOPE_CONTENT_READ"
      ],
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits that states no legal matter of the registrant and that the category-mention rule keeps: another entity's litigation behind a derivative (the Visa class B shares, whose conversion depends on Visa's covered litigation), or a composition list whose paragraph also says 'accrued interest'.",
@@ -4474,7 +4500,7 @@
     },
     "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
      "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
      "repair": "historical_text_results.page_number_blocks reads page numbers printed on alternate sides of the footer (facing pages), so page_structure_furniture finds the footer and the running head (d02-facing-pages/)."
     }
    },
@@ -4488,12 +4514,26 @@
      "run_id": "run:historical-period:baf4af63ec5617161f241f62fde47b30dba7161c395a227d5fc4184fe9dbfc64"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/jpmorgan_chase-2023-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
-   ]
+   ],
+   "recomputed_and_read": {
+    "result_id": "sha256:028133786eb72c13c3807330b095823c37c0947068445709cf8e4a80ad9cb01c",
+    "run_id": "run:historical-period:ff6ed65e964b64ba2061efe1f300a49300f391c5d86c3fffd3de7dc863619345",
+    "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+    "carried_reading": "docs/evidence/issue47_history/d02-older-years/carried/jpmorgan_chase-2023-12-31.json",
+    "carried_reading_sha256": "sha256:45e1c9e874dbe6b58447bd5d1cf4aa5069153b080979a55f9748fa9c8710f665",
+    "still_wrong": [
+     6713,
+     6714,
+     9638,
+     9648
+    ],
+    "what_this_releases": "nothing: the recomputed result still takes the blocks listed in still_wrong"
+   }
   },
   {
    "company_id": "jpmorgan_chase",
@@ -4656,7 +4696,7 @@
     "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING": {
      "text": "Item 8 is a pointer page, and the range for the statements printed after the items started at the first block that begins with a statement's name: an MD&A heading ('CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS') about 3,500 blocks before the statements. MD&A paragraphs - critical accounting estimates, forward-looking statements, country exposure - came under the keyword.",
      "repair": "historical_text_results.statements_start: the range starts where titles of at least three kinds of primary statement stand together (d02-navigation-repairs/).",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "ITEM_8_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits although every occurrence is a list item or a parenthetical example and the paragraph states no legal matter of the registrant (estimates moved by competition and litigation, receivables written off after litigation, tax positions, cost categories).",
@@ -4665,7 +4705,7 @@
       "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
       "D02_PFIZER_2025_SCOPE_CONTENT_READ"
      ],
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits that states no legal matter of the registrant and that the category-mention rule keeps: another entity's litigation behind a derivative (the Visa class B shares, whose conversion depends on Visa's covered litigation), or a composition list whose paragraph also says 'accrued interest'.",
@@ -4676,7 +4716,7 @@
     },
     "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
      "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
      "repair": "historical_text_results.page_number_blocks reads page numbers printed on alternate sides of the footer (facing pages), so page_structure_furniture finds the footer and the running head (d02-facing-pages/)."
     }
    },
@@ -4690,12 +4730,26 @@
      "run_id": "run:historical-period:1345dd015ccfed560c724154d9a9e611a3a66092031b404f7d96f3dca433ee12"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/jpmorgan_chase-2024-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
-   ]
+   ],
+   "recomputed_and_read": {
+    "result_id": "sha256:6358348bbdb8e3a9da1a51a9bfad5dbc47ff3043cb88b42763d30336e00ab275",
+    "run_id": "run:historical-period:6cb994d693038f8b4b54d36d5b78b40104508562d34dd57adc3447ce338c8822",
+    "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+    "carried_reading": "docs/evidence/issue47_history/d02-older-years/carried/jpmorgan_chase-2024-12-31.json",
+    "carried_reading_sha256": "sha256:df53092b588fe0e56bff4a0a438bf591f10b862257f673bbb47e5223fc2a606b",
+    "still_wrong": [
+     6403,
+     6404,
+     9318,
+     9328
+    ],
+    "what_this_releases": "nothing: the recomputed result still takes the blocks listed in still_wrong"
+   }
   },
   {
    "company_id": "jpmorgan_chase",
@@ -4840,7 +4894,7 @@
     "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING": {
      "text": "Item 8 is a pointer page, and the range for the statements printed after the items started at the first block that begins with a statement's name: an MD&A heading ('CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS') about 3,500 blocks before the statements. MD&A paragraphs - critical accounting estimates, forward-looking statements, country exposure - came under the keyword.",
      "repair": "historical_text_results.statements_start: the range starts where titles of at least three kinds of primary statement stand together (d02-navigation-repairs/).",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "ITEM_8_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits although every occurrence is a list item or a parenthetical example and the paragraph states no legal matter of the registrant (estimates moved by competition and litigation, receivables written off after litigation, tax positions, cost categories).",
@@ -4849,7 +4903,7 @@
       "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
       "D02_PFIZER_2025_SCOPE_CONTENT_READ"
      ],
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ"
     },
     "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION": {
      "text": "An Item 8 block the _LEGAL keyword admits that states no legal matter of the registrant and that the category-mention rule keeps: another entity's litigation behind a derivative (the Visa class B shares, whose conversion depends on Visa's covered litigation), or a composition list whose paragraph also says 'accrued interest'.",
@@ -4860,7 +4914,7 @@
     },
     "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
      "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
-     "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+     "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
      "repair": "historical_text_results.page_number_blocks reads page numbers printed on alternate sides of the footer (facing pages), so page_structure_furniture finds the footer and the running head (d02-facing-pages/)."
     }
    },
@@ -4874,12 +4928,26 @@
      "run_id": "run:historical-period:d1bcf67f8d3db602832dbfa0e5aefd7326838a82009ae9a75f6e37a835333d89"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ + REGISTERED_NOT_REPAIRED + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/jpmorgan_chase-2025-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
-   ]
+   ],
+   "recomputed_and_read": {
+    "result_id": "sha256:ee7933020faac5cc0565dd969b22cf8816b5dda8536a99e68b01f5faa5cb4845",
+    "run_id": "run:historical-period:e9a1c6c4b7df79dab11bcd8df4530f6c90520e71714484dba2f5ac093c6a9e40",
+    "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+    "carried_reading": "docs/evidence/issue47_history/d02-older-years/carried/jpmorgan_chase-2025-12-31.json",
+    "carried_reading_sha256": "sha256:8594e100ea4856d0983b37adb21378a98ed275cff0514bcaf7b618933e207d2c",
+    "still_wrong": [
+     6395,
+     6397,
+     9356,
+     9366
+    ],
+    "what_this_releases": "nothing: the recomputed result still takes the blocks listed in still_wrong"
+   }
   },
   {
    "company_id": "pfizer",

@@ -172,11 +172,22 @@ class TheCommittedReadingSaysWhatTheFilingsSayTest(unittest.TestCase):
 class TheRegisterTakesE01FromThisReadingOnlyTest(unittest.TestCase):
 
     def test_accepted_where_no_reading_moves_the_count(self):
+        # Under the approved item rule E01 is accepted from this reading only:
+        # the header count never opens an 8.01. The owner's content-confirmed
+        # definition has readings of its own (tools/read_e01_candidates.py)
+        # under its own Spec; the two never grant each other's results.
+        from tools.acceptance_readings import E01_CANDIDATE_READINGS
         register = json.loads((ROOT / REGISTER).read_text(encoding="utf-8"))
-        e01 = {entry["company_id"]: entry["evidence"] for entry in register["acceptances"]
-               if entry["metric_id"] == "E01"}
-        self.assertEqual({"enphase_energy": READING, "ford_motor_company": READING,
-                          "lumen_technologies": READING, "southwest_airlines": READING}, e01)
+        e01 = [entry for entry in register["acceptances"] if entry["metric_id"] == "E01"]
+        self.assertLessEqual({entry["evidence"] for entry in e01},
+                             {READING, *E01_CANDIDATE_READINGS})
+        item_rule = [entry for entry in e01 if entry["evidence"] == READING]
+        content = [entry for entry in e01 if entry["evidence"] != READING]
+        self.assertEqual({"enphase_energy", "ford_motor_company", "lumen_technologies",
+                          "southwest_airlines"}, {entry["company_id"] for entry in item_rule})
+        specs = [{entry["checked_identity"]["spec_closure_hash"] for entry in group}
+                 for group in (item_rule, content)]
+        self.assertFalse(specs[0] & specs[1])
 
     def test_pfizer_s_defect_withdraws_the_published_zero_and_releases_only_the_repair(self):
         defects = json.loads((ROOT / DEFECTS).read_text(encoding="utf-8"))["defects"]

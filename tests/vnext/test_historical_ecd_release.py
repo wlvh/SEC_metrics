@@ -185,10 +185,13 @@ class TheEcdNamespaceIsWidenedByTheReleaseSuffixOnlyTest(unittest.TestCase):
         widened = historical_dei._WIDENED
         # Every family the view widens, and nothing else: the US GAAP family
         # joined the table when the FY2021 reports' dated releases stopped B06
-        # (docs/evidence/issue47_history/us-gaap-release/).
+        # (docs/evidence/issue47_history/us-gaap-release/), the SRT family when
+        # they stopped the accession route (a bank's capital ratios name an
+        # SRT axis).
         self.assertEqual(set(historical_dei.FROZEN_DEI_NAMESPACE_PATTERNS)
                          | set(historical_dei.FROZEN_ECD_NAMESPACE_PATTERNS)
-                         | set(historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS), set(widened))
+                         | set(historical_dei.FROZEN_US_GAAP_NAMESPACE_PATTERNS)
+                         | set(historical_dei.FROZEN_SRT_NAMESPACE_PATTERNS), set(widened))
         for frozen_pattern in historical_dei.FROZEN_ECD_NAMESPACE_PATTERNS:
             self.assertEqual(ECD_NAMESPACE_PATTERN, widened[frozen_pattern])
             self.assertIsNotNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
@@ -201,6 +204,13 @@ class TheEcdNamespaceIsWidenedByTheReleaseSuffixOnlyTest(unittest.TestCase):
             self.assertEqual(historical_dei.US_GAAP_NAMESPACE_PATTERN, widened[frozen_pattern])
             self.assertIsNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
                 frozen_pattern, "http://xbrl.sec.gov/ecd/2022q4"))
+        for frozen_pattern in historical_dei.FROZEN_SRT_NAMESPACE_PATTERNS:
+            self.assertEqual(historical_dei.SRT_NAMESPACE_PATTERN, widened[frozen_pattern])
+            self.assertIsNotNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
+                frozen_pattern, "http://fasb.org/srt/2021-01-31"))
+            self.assertIsNone(re.fullmatch(frozen_pattern, "http://fasb.org/srt/2021-01-31"))
+            self.assertIsNone(historical_dei.RELEASE_AWARE_RE.fullmatch(
+                frozen_pattern, "http://fasb.org/us-gaap/2021-01-31"))
 
 
 if __name__ == "__main__":

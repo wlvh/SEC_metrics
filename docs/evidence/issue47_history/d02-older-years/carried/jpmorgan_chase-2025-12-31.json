@@ -1,0 +1,1184 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "jpmorgan_chase:2025-12-31",
+ "reader": "independent subagent reader B (held-out round, 2026-10-02; brief verbatim) (carried by tools/read_d02_excerpts.py --carry)",
+ "reader_note": "Value is Item 3's pointer plus all of the incorporated Note 30: the overview, the $0 to about $1.2 billion reasonably possible loss range, every material matter (Amrapali, fair access to banking, FX, interchange, benchmark rates, Russian judgments, the pending derivative suit), reserves and legal expense; within Note 30 only page numbers and a separator are skipped. It also carries four page-furniture blocks from the note pages (three Form 10-K footers, one notes running head) and twelve keyword blocks from the annual report printed after the Items, of which only the guarantees-note sentence placing private-label repurchase-demand liability in litigation reserves and its Note 30 pointer are D02 content; the other ten (credit-rating list, MD&A Russia-exposure pointer, legal-function duties, the MD&A critical-accounting-estimate heading and pointer, forward-looking boilerplate, Visa B-2 accounting, payables composition, a cross-reference list) are not. The outside list holds a contents entry naming Note 30 and forward-looking boilerplate, none of it missing D02 content.",
+ "packet_document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+ "packet_candidate_hash": "sha256:53f42a63de97ded5e7ccd48851cb56447ec12b44cd973b2850c4ed1d2d2320e3",
+ "carried_from": {
+  "reading": "docs/evidence/issue47_history/d02-older-years/judgements/jpmorgan_chase-2025-12-31.json",
+  "reading_sha256": "sha256:254a932ec6e2e543e337df38c4ecb2cf861cf546e05fdbb0be82eb48cb9c9dd2",
+  "packet_document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+  "packet_candidate_hash": "sha256:53eafb63225c6da15deea9f4e2a733e76b5fa6e75c28eec5eed059828b7cf053"
+ },
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 997,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 refers to Note 30 for material legal proceedings",
+   "text": "Refer to Note 30 for a description of the Firm’s material legal proceedings.",
+   "text_sha256": "sha256:fe4815a1311cd76e47a8ccaff8ef67f78a75417d5c68113be00bf044a9f619ec",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 6395,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "Visa B-2 share carrying basis; the litigation is Visa's",
+   "text": "The Visa B-2 shares are subject to certain transfer restrictions and are convertible into Visa Class A common shares (“Visa A shares”) at a specified conversion rate upon final resolution of certain litigation matters involving Visa. The conversion rate of Visa B-2 shares to Visa A shares was 1.5108 at December 31, 2025 and may be adjusted by Visa depending on developments related to the litigation matters. The outcome of those litigation matters, and the effect that the resolution of those matters may have on the conversion rate, is unknown. Accordingly, as of December 31, 2025, there is significant uncertainty regarding when the transfer restrictions on Visa B-2 shares may be terminated and what the final conversion rate for the Visa B-2 shares will be. As a result of these considerations, as well as differences in voting rights, Visa B-2 shares are not considered to be similar to Visa A shares, and are held at their nominal carryover basis.",
+   "text_sha256": "sha256:b6112cd5de06437ed50833dc052884c468721e0275b37614a44b1a25ae1a5a07",
+   "order": 30,
+   "scope": "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 6397,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "derivatives on sold Visa B shares; litigation incidental",
+   "text": "Separately, in connection with sales of Visa B shares prior to 2024, the Firm has entered into derivative instruments with the purchasers of the shares under which the Firm retains the risk associated with changes in the conversion rate. Under the terms of the derivative instruments, the Firm will (a) make or receive payments based on subsequent changes in the conversion rate and (b) make periodic interest payments to the purchasers of the Visa B shares. The payments under the derivative instruments will continue as long as the Visa B-2 shares associated with the previously sold Visa B shares remain subject to transfer restrictions. The derivative instruments are accounted for at fair value using a discounted cash flow methodology based upon the Firm’s estimate of the timing and magnitude of final resolution of the litigation matters. The derivative instruments are recorded in trading liabilities, and changes in fair value are recognized in other income. The notional amount of shares associated with those derivative instruments has been adjusted as a result of the 2024 Visa exchange offer. As of December 31, 2025, the Firm held derivative instruments associated with 11.6 million Visa B-2 shares related to Visa B share sales prior to 2024, which are all subject to similar terms and conditions.",
+   "text_sha256": "sha256:69248d0465d7b65b7aa76f636b91a6b71e8e7a27d2051a992a59ffca39e9b98c",
+   "order": 31,
+   "scope": "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 9356,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "payables composition list; litigation reserves one item",
+   "text": "Accounts payable and other liabilities consist of brokerage payables, which include payables to customers and payables related to security purchases that did not settle; other accrued expenses, such as compensation accruals, credit card rewards liability, accrued interest payables, merchant servicing payables and income tax payables; and all other liabilities, including operating lease liabilities, obligations to return securities received as collateral which are measured at fair value, allowance for lending-related commitments, and litigation reserves.",
+   "text_sha256": "sha256:2b2d6a5a433f2556413176a5b432be40b10e07219b45f5212dedab47a6ecff9b",
+   "order": 32,
+   "scope": "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 9366,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "cross-reference list to several notes",
+   "text": "Refer to Notes 7, 13, 18, 25 and 30 for additional information on accrued interest, allowance for credit losses on lending-related commitments, operating lease liabilities, income taxes and litigation reserves, respectively.",
+   "text_sha256": "sha256:f2e41ecc80a194819dec12317ae83bb2b8bbcbefeec94d0237b2d07650148745",
+   "order": 33,
+   "scope": "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10107,
+   "verdict": "DISCLOSURE",
+   "why": "private-label repurchase-demand liability reserved as litigation",
+   "text": "The liability related to repurchase demands associated with private label securitizations is separately evaluated by the Firm in establishing its litigation reserves.",
+   "text_sha256": "sha256:aa603276ee712d8f58f0937984f974af89b1b728adfffbeeb7b2c5bc2ba06c6c",
+   "order": 34,
+   "scope": "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10108,
+   "verdict": "DISCLOSURE",
+   "why": "pointer to Note 30 for that litigation",
+   "text": "Refer to Note 30 for additional information regarding litigation.",
+   "text_sha256": "sha256:220490555a675c4d1d2d0d2788ffc2d17e7060bd04d8a0dfc54821aaab34160e",
+   "order": 35,
+   "scope": "ITEM_8_STATEMENTS_PRINTED_AFTER_THE_ITEMS"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10159,
+   "verdict": "DISCLOSURE",
+   "why": "title of the incorporated litigation note",
+   "text": "Note 30 – Litigation",
+   "text_sha256": "sha256:ce0285413a154803386cce4e2fe784ed517c37902aa36358f66f47926474de8a",
+   "order": 1,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10160,
+   "verdict": "DISCLOSURE",
+   "why": "contingencies subheading of Note 30",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8",
+   "order": 2,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10161,
+   "verdict": "DISCLOSURE",
+   "why": "overview of pending proceedings, investigations and enforcement matters",
+   "text": "As of December 31, 2025, the Firm and its subsidiaries and affiliates are defendants or respondents in numerous evolving legal proceedings, including private proceedings, public proceedings, government investigations, regulatory enforcement matters, and the matters described below. These range from individual actions involving a single plaintiff to class action lawsuits with potentially millions of class members. Investigations and regulatory enforcement matters involve both formal and informal proceedings, by both governmental agencies and self-regulatory organizations. These legal proceedings are at varying stages of adjudication, arbitration or investigation, and involve each of the Firm’s lines of business in several geographies and varied claims (including common law tort and contract claims and statutory antitrust, securities and consumer protection claims), some of which present novel legal theories.",
+   "text_sha256": "sha256:27e89dec50dd6f614e3074776feec1d23d97b8e8a26d5aa8bd157ccb72ecf934",
+   "order": 3,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10162,
+   "verdict": "DISCLOSURE",
+   "why": "reasonably possible loss range above reserves",
+   "text": "The Firm estimates the aggregate range of reasonably possible losses, in excess of reserves established, for its legal proceedings is from $0 to approximately $1.2 billion at December 31, 2025. This estimated aggregate range of reasonably possible losses was based upon information available as of that date for those proceedings in which the Firm believes that an estimate of reasonably possible loss can be made. For certain matters, the Firm does not believe that such an estimate can be made, as of that date. The Firm’s estimate of the aggregate range of reasonably possible losses involves significant judgment, given:",
+   "text_sha256": "sha256:d8ebdd94dfaf0ae614e629474cb26def8a0f0f4354688be901ec222b18b340ab",
+   "order": 4,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10163,
+   "verdict": "DISCLOSURE",
+   "why": "factor behind the loss-range estimate",
+   "text": "•the number, variety and varying stages of the proceedings, including the fact that many are in preliminary stages,",
+   "text_sha256": "sha256:acc8f4f4148bfbfdfd578990c0053a0100646c2f3481ea896c3e5f25b08a132d",
+   "order": 5,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10164,
+   "verdict": "DISCLOSURE",
+   "why": "factor behind the loss-range estimate",
+   "text": "•the existence in many such proceedings of multiple defendants, including the Firm, whose share of liability (if any) has yet to be determined,",
+   "text_sha256": "sha256:a01705c217834bdea8858aed1e33069be357ff561d100ed8a5eb853b829cbfad",
+   "order": 6,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10165,
+   "verdict": "DISCLOSURE",
+   "why": "factor behind the loss-range estimate",
+   "text": "•the numerous yet-unresolved issues in many of the proceedings, including issues regarding class certification and the scope of many of the claims, and",
+   "text_sha256": "sha256:b782687703b2c285f60cfd5381e28bbd9b3fd09c5d6a197755feab2cb6f8e344",
+   "order": 7,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10166,
+   "verdict": "DISCLOSURE",
+   "why": "factor behind the loss-range estimate",
+   "text": "•the uncertainty of the various potential outcomes of such proceedings, including where the Firm has made assumptions concerning future rulings by the court or other adjudicator, or about the behavior or incentives of adverse parties or regulatory authorities, and those assumptions later prove to be incorrect.",
+   "text_sha256": "sha256:dac5a5250fd581388cde0f1b5fc16441eb4f51d7f1c2be830a16281304e71ffe",
+   "order": 8,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10167,
+   "verdict": "DISCLOSURE",
+   "why": "caveat on the loss-range estimate, first part",
+   "text": "In addition, the outcome of a particular proceeding may be a result that the Firm did not take into account in its estimate because the Firm had deemed the likelihood of that outcome to be remote. Accordingly, the Firm’s estimate of the aggregate range of",
+   "text_sha256": "sha256:d74199d2346fd987212b7660829bb1a825b744609dca0249367c64214235f055",
+   "order": 9,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10168,
+   "verdict": "DISCLOSURE",
+   "why": "caveat on the loss-range estimate, continued",
+   "text": "reasonably possible losses will change from time to time, and actual losses may vary significantly.",
+   "text_sha256": "sha256:58b44f29ba57340c2fa98e7d52b26f91987744c1ec4677384e6be7aeb2b65846",
+   "order": 10,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10169,
+   "verdict": "DISCLOSURE",
+   "why": "lead-in to the material proceedings",
+   "text": "Set forth below are descriptions of the Firm’s material legal proceedings.",
+   "text_sha256": "sha256:7fff7376156aae4bb97fab2bae1120c11acaae84cd9ff229bac1e29a6a0b31cd",
+   "order": 11,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10170,
+   "verdict": "DISCLOSURE",
+   "why": "Indian enforcement investigation and fine",
+   "text": "Amrapali. India’s Enforcement Directorate (“ED”) is investigating J.P. Morgan India Private Limited in connection with investments made in 2010 and 2012 by two offshore funds formerly managed by JPMorganChase entities into residential housing projects developed by the Amrapali Group (“Amrapali”) relating to delays in delivering or failure to deliver residential units. In July 2019, the Supreme Court of India issued an order making preliminary findings that Amrapali and other parties, including unspecified JPMorganChase entities, violated certain criminal currency control and money laundering provisions, and ordered the ED to conduct a further inquiry. The Firm is cooperating with the inquiry. In addition, in August 2021, the ED issued an order fining J.P. Morgan India Private Limited approximately $31.5 million, which the Firm is appealing.",
+   "text_sha256": "sha256:32a880833e1aa62f62a24894be36112b0c04d4614de56fbbcd56414a09c46d20",
+   "order": 12,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10171,
+   "verdict": "DISCLOSURE",
+   "why": "fair-access-to-banking inquiries and civil lawsuit",
+   "text": "Fair Access to Banking. In August 2025, the President of the United States issued an Executive Order entitled “Guaranteeing Fair Banking for All Americans” that addressed access to financial services and directed several actions by certain federal agencies, including a review and revision of their internal policies and manuals. JPMorganChase is responding to requests from government authorities and other external parties regarding, among other things, the Firm’s policies and processes and the provision of services to customers and potential customers. Certain of these matters are at various stages, including reviews, investigations, and legal proceedings, including a civil lawsuit filed in January 2026 in Florida state court by President Donald J. Trump, in his personal capacity, and several affiliated corporate entities, against JPMorgan Chase Bank, N.A. and its CEO.",
+   "text_sha256": "sha256:8ce3859a9a35cb86f4821283cf04887f63814eb51b4fc2d17487231d6550d735",
+   "order": 13,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10172,
+   "verdict": "DISCLOSURE",
+   "why": "FX investigations and antitrust plea, first part",
+   "text": "Foreign Exchange Investigations and Litigation. The Firm previously reported settlements with certain government authorities relating to its foreign exchange (“FX”) sales and trading activities and controls related to those activities. Among those resolutions, in May 2015, the Firm pleaded guilty to a single violation of federal antitrust law. The Department of Labor (\"DOL\") granted the Firm exemptions that permit the Firm and its affiliates to continue to rely on the Qualified Professional Asset Manager exemption under the Employee Retirement Income Security Act (“ERISA”) through the ten-year disqualification period, which began in January 2017. The only remaining FX-related governmental inquiry is a South Africa Competition Commission matter which",
+   "text_sha256": "sha256:a98bf7b8f63aafef089cba80501ab6821ef118d9bf9e84b10fde000c5fbab22a",
+   "order": 14,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10175,
+   "verdict": "DISCLOSURE",
+   "why": "FX matter continued across the page break",
+   "text": "is currently pending before the South Africa Competition Tribunal.",
+   "text_sha256": "sha256:5bfd2198d7065be21bb3ef1d1d7802b044a9bf4eccc393e1dabd65f8c159c3da",
+   "order": 15,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10176,
+   "verdict": "DISCLOSURE",
+   "why": "FX civil actions outside the U.S.",
+   "text": "With respect to civil litigation matters, some FX-related individual and putative class actions filed outside the U.S., including in the U.K., Israel, the Netherlands and Brazil remain. In December 2025, the U.K. Supreme Court confirmed the initial decision of the Competition Appeal Tribunal, which denied a request for class certification on an opt-out basis. In Israel, a settlement in principle has been reached on the putative class action, which remains subject to court approval.",
+   "text_sha256": "sha256:09f2df9db4a3fb954b6aa76983ad832053b0ec344bc3a412bc01dac262e3cdac",
+   "order": 16,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10177,
+   "verdict": "DISCLOSURE",
+   "why": "interchange litigation label and allegations",
+   "text": "Interchange Litigation. Groups of merchants and retail associations filed a series of class action complaints alleging that Visa and Mastercard, as well as certain banks, conspired to set the price of credit and debit card interchange fees and enacted related rules in violation of antitrust laws.",
+   "text_sha256": "sha256:7dc512f5ea653424b2dd1ebf813c6c2aa7fa1a30abbb1e57992b34a2c001eee6",
+   "order": 17,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10178,
+   "verdict": "DISCLOSURE",
+   "why": "interchange settlements and injunctive class",
+   "text": "In September 2018, the parties settled the class action seeking monetary relief. A separate class action seeking injunctive relief continues. In June 2024, the District Court for the Eastern District of New York denied preliminary approval of a settlement of the injunctive class action in which Visa and Mastercard agreed to certain changes to their respective network rules and system-wide reductions in interchange rates for U.S.-based merchants. In November 2025, the parties to that settlement reached a superseding and amended class settlement and submitted the agreement to the District Court for its approval.",
+   "text_sha256": "sha256:4df3d7e4c3c78c8941aa104c16f0cec35eb38fe882abea90d221c026d648132b",
+   "order": 18,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10179,
+   "verdict": "DISCLOSURE",
+   "why": "interchange opt-out merchant actions and trial",
+   "text": "Of the merchants who opted out of the damages class settlement, certain merchants filed individual actions raising similar allegations against Visa and Mastercard, as well as against the Firm and other banks. The defendants have reached settlements with the merchants who opted out representing over 90% of the combined Mastercard-branded and Visa-branded payment card sales volume. The remaining opt out actions are pending. A number of these actions are pending in the United States District Court for the Southern District of New York, and that court has scheduled a trial of the claims brought by several merchants to begin in April 2026.",
+   "text_sha256": "sha256:de786c7648f10cda7eb6ed879012436c1a2269062f033fe56ef62dc9bce241c0",
+   "order": 19,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10180,
+   "verdict": "DISCLOSURE",
+   "why": "benchmark-rate investigations and EU fine, first part",
+   "text": "LIBOR and Other Benchmark Rate Investigations and Litigation. JPMorganChase has responded to inquiries from various governmental agencies and entities around the world relating primarily to the British Bankers Association’s (“BBA”) London Interbank Offered Rate (“LIBOR”) for various currencies and the European Banking Federation’s Euro Interbank Offered Rate (“EURIBOR”). The Firm appealed a December 2016 decision by the European Commission against the Firm and other banks finding an infringement of European antitrust rules relating to EURIBOR. In December 2023, the European General Court annulled the fine imposed by the European",
+   "text_sha256": "sha256:fc1fec6717fc61963b6a0a24f2708c57319194d51ffbb9dbcf8b801e74cd9f5b",
+   "order": 20,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10181,
+   "verdict": "DISCLOSURE",
+   "why": "EU benchmark-rate appeal continued",
+   "text": "Commission, but exercised its discretion to re-impose a fine in an identical amount. In March 2024, the Firm filed an appeal of this decision with the Court of Justice of the European Union, which held a hearing in January 2026 and reserved judgment.",
+   "text_sha256": "sha256:0bbb32c0adba40033c382b61e37928d7c5c7412f1077f9e5535fe4c681808c77",
+   "order": 21,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10182,
+   "verdict": "DISCLOSURE",
+   "why": "benchmark-rate class actions and summary judgment",
+   "text": "In addition, the Firm was named as a defendant along with other banks in various individual and putative class actions related to benchmark rates, including U.S. dollar LIBOR. In September 2025, the United States District Court for the Southern District of New York granted summary judgment in favor of the defendants on all remaining claims related to U.S. dollar LIBOR, decertified the class, and dismissed all claims in their entirety with prejudice to refiling. Plaintiffs have filed an appeal.",
+   "text_sha256": "sha256:be569f73f90becfd1d145e7ff2c20e78643792586fec735cb2d6b278564f17f6",
+   "order": 22,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10183,
+   "verdict": "DISCLOSURE",
+   "why": "Russian sanctions-related litigation and judgments",
+   "text": "Russian Litigation. The Firm is obligated to comply with international sanctions laws, which mandate the blocking of certain assets. These laws apply when assets associated with individuals, companies, products or services are within the scope of the sanctions. The Firm has faced actual and threatened litigation in Russia seeking payments that the Firm cannot make under, and is contractually excused from paying as a result of, relevant sanctions laws. In claims involving the Firm and claims filed against other financial institutions, Russian courts have disregarded the parties’ contractual agreements concerning forum selection and did not recognize foreign sanctions laws as a basis for not making payment. Russian courts have entered judgment against the Firm in a number of claims. This includes one claim for $439 million, for which the courts have stayed the enforcement of the judgment against the Firm's unprotected assets in Russia pending the outcome of an appeal, and a judgment for another claim has been executed against assets held onshore by the Firm in Russia. The total amount of the judgments exceeds the total amount of available assets that the Firm holds in Russia. Russian courts have allowed plaintiffs to withhold dividends due to the Firm’s clients for the purpose of satisfying judgments, which the Firm is opposing as unlawful. The Firm continues to appeal the Russian courts' decisions, but certain judgments are now enforceable against Firm assets in Russia. Russian courts have also ordered interim freezes of Firm assets in Russia (including, among other things, funds in bank accounts, securities, shares in authorized capital, and certain trademarks, of the named defendants) pending a determination of certain underlying claims against the Firm. The Firm has challenged claims being pursued in the Russian courts and related freeze orders in other jurisdictions provided for by the parties’ contractual forum selections. If further claims are enforced despite the actions taken by the Firm to challenge the claims and orders and to seek the proper application of law, the Firm’s assets in Russia could be seized in full, and certain client assets could",
+   "text_sha256": "sha256:02abbf758a68d901da88a42dbb82b768a4711ea8c2512500cc710b2f37d16b6d",
+   "order": 23,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10187,
+   "verdict": "DISCLOSURE",
+   "why": "Russian litigation continued",
+   "text": "also be seized, or the Firm could be prevented from complying with its obligations.",
+   "text_sha256": "sha256:e1418e419b90d6df2e180c258ddddde5c4c8d7d29b0abb459cc68c53a4d43c1d",
+   "order": 24,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10188,
+   "verdict": "DISCLOSURE",
+   "why": "shareholder derivative action",
+   "text": "Shareholder Litigation. A shareholder derivative action purporting to act on behalf of the Firm is pending in the United States District Court for the Eastern District of New York against the Firm, its Board of Directors and certain of its current and former officers relating to historical trading practices by former employees in the precious metals and U.S. treasuries markets and related conduct which were the subject of the Firm’s resolutions with the DOJ, CFTC and SEC in September 2020. Defendants have moved to dismiss the complaint.",
+   "text_sha256": "sha256:1c94dab41cabe2a0b37814ac80f771b0c97e087ee916e8c7ccbabbb012a86768",
+   "order": 25,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10190,
+   "verdict": "DISCLOSURE",
+   "why": "other pending proceedings",
+   "text": "In addition to the various legal proceedings discussed above, JPMorganChase and its subsidiaries are named as defendants or are otherwise involved in a substantial number of other legal proceedings. The Firm believes it has meritorious defenses to the claims asserted against it in its currently outstanding legal proceedings and it intends to defend itself vigorously. Additional legal proceedings may be initiated from time to time in the future.",
+   "text_sha256": "sha256:21ca82e3037a8bcc1f0aa2849ee1eb367f653f74a68f88d96e098075fce2c993",
+   "order": 26,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10191,
+   "verdict": "DISCLOSURE",
+   "why": "litigation reserves policy and legal expense",
+   "text": "The Firm has established reserves for several hundred of its currently outstanding legal proceedings. Under U.S. GAAP for contingencies, the Firm accrues for a litigation-related liability when it is probable that such a liability has been incurred and the amount of the loss can be reasonably estimated. The Firm evaluates its outstanding legal proceedings each quarter to assess its litigation reserves, and makes adjustments in such reserves, upward or downward, as appropriate, based on management’s best judgment after consultation with counsel. The Firm’s legal expense was $361 million, $740 million and $1.4 billion for the years ended December 31, 2025, 2024 and 2023, respectively. There is no assurance that the Firm’s litigation reserves will not need to be adjusted in the future.",
+   "text_sha256": "sha256:276e9b08518b97e60eb8b98f4c9e6e199efee0f36c6d938bb779c84b59198b0b",
+   "order": 27,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10192,
+   "verdict": "DISCLOSURE",
+   "why": "outcome uncertainty statement, first part",
+   "text": "In view of the inherent difficulty of predicting the outcome of legal proceedings, particularly where the claimants seek very large or indeterminate damages, or where the matters present novel legal theories, involve a large number of parties or are in early stages of discovery, the Firm cannot state with confidence what will be the eventual outcomes of the currently pending matters, the timing of their ultimate resolution or the eventual losses, fines, penalties or consequences related to those matters. JPMorganChase believes, based upon its current knowledge and after consultation with counsel, consideration of the material legal proceedings described above and after taking into account its current litigation reserves and its estimated aggregate range of possible losses, that the other legal proceedings currently pending against it should not",
+   "text_sha256": "sha256:05c6c35c30c4a06a327ee00a761e7888ed1656adcf6f2604ba0d98605235f26a",
+   "order": 28,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 10193,
+   "verdict": "DISCLOSURE",
+   "why": "outcome uncertainty and materiality, continued",
+   "text": "have a material adverse effect on the Firm’s consolidated financial condition. The Firm notes, however, that in light of the uncertainties involved in such proceedings, there is no assurance that the ultimate resolution of these matters will not significantly exceed the reserves it has currently accrued or that a matter will not have material reputational consequences. As a result, the outcome of a particular matter may be material to JPMorganChase’s operating results for a particular period, depending on, among other factors, the size of the loss or liability imposed and the level of JPMorganChase’s income for that period.",
+   "text_sha256": "sha256:5ee3285d963676ec4e5646225c1c10e06b0e980c3e4400e0c73ebb95f1441d22",
+   "order": 29,
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10173,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "302",
+   "text_sha256": "sha256:f32828acecb4282c87eaa554d2e1db74e418cd6845843012463a3324028bdd9d",
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10174,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "JPMorgan Chase & Co./2025 Form 10-K",
+   "text_sha256": "sha256:f7ca0a687fa6ac1dc53aafdd278192d067475a35cc697722860f1dc11041d28b",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10184,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "JPMorgan Chase & Co./2025 Form 10-K",
+   "text_sha256": "sha256:f7ca0a687fa6ac1dc53aafdd278192d067475a35cc697722860f1dc11041d28b",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10185,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "303",
+   "text_sha256": "sha256:8bd9c0d453533757387ed019c45617cdc440ba680a67b1a101c85b998ef715c0",
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10186,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "Notes to consolidated financial statements",
+   "text_sha256": "sha256:8e412f342e9fd33395439e68a996ed4285af187ca8e0ddf69f758016ee910a43",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10189,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "decorative separator",
+   "text": "* * *",
+   "text_sha256": "sha256:109510644bb4c21f8eb3bdf0be4db1175a5311a1f6ce66b3f05a8bacae47a8b4",
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10194,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "304",
+   "text_sha256": "sha256:d874e4e4a5df21173b0f83e313151f813bea4f488686efe670ae47f87c177595",
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 10195,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "JPMorgan Chase & Co./2025 Form 10-K",
+   "text_sha256": "sha256:f7ca0a687fa6ac1dc53aafdd278192d067475a35cc697722860f1dc11041d28b",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_30"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 5538,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "JPMorgan Chase & Co./2025 Form 10-K",
+   "text_sha256": "sha256:f7ca0a687fa6ac1dc53aafdd278192d067475a35cc697722860f1dc11041d28b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 5539,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "173",
+   "text_sha256": "sha256:4a8596a7790b5ca9e067da401c018b3206befbcf95c38121854d1a0158e7678a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10852,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "CFTC: Commodity Futures Trading Commission",
+   "text_sha256": "sha256:d5e3921c64b20c1cccfae4d285c0797518f8605b4c23229a1583f1b184601452"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10853,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "CIB: Commercial & Investment Bank",
+   "text_sha256": "sha256:54c89bba9da16090090a089b49574ffcc93e8231d8e9130a22e51984e0f16012"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10854,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "CIO: Chief Investment Office",
+   "text_sha256": "sha256:cea2a485100fb00ef7f3a5802f6166373246348a75fd3a6e6b30f865a6086fb0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10855,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "Client assets: Represent assets under management as well as custody, brokerage, administration and deposit accounts.",
+   "text_sha256": "sha256:3dedd80d8c79d8b42bfc8f734e0b74a21c28c467d602629f08b2e82622697acd"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10856,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "Client deposits and other third-party liabilities: Deposits, as well as deposits that are swept to on-balance sheet liabilities (e.g., commercial paper, federal funds purchased and securities loaned or sold under repurchase agreements) as part of client cash management programs.",
+   "text_sha256": "sha256:d7789497a44538a75a5034e29f734a96d8f6e1165a7df10595264d2feb17acd5"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10857,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "Client investment assets: Represent assets under management as well as custody, brokerage and annuity accounts, and deposits held in investment accounts.",
+   "text_sha256": "sha256:f8ce041cba35c4d266ac004c53f08f3d5e3c2c1e4c246c9a74d120dfcc0c66d3"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10858,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "glossary entry",
+   "text": "CLO: Collateralized loan obligations",
+   "text_sha256": "sha256:f9892251d8a3de0e4f2dc65faf6c056fabe1e9527eb55b03046f856cb9992cb5"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10859,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "320",
+   "text_sha256": "sha256:88820462180e5c893eff2ed73f4ec33e205d1cd5acc4d17fa7b2bca2495d3448"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 10860,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "JPMorgan Chase & Co./2025 Form 10-K",
+   "text_sha256": "sha256:f7ca0a687fa6ac1dc53aafdd278192d067475a35cc697722860f1dc11041d28b"
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 1394,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents entry naming the litigation note; the note itself is taken",
+   "text": "Note 30 - Litigation",
+   "text_sha256": "sha256:923bf2a3c7530ddcc457539fd91ea2e29a42887dc87f7a9bf9d8a767e24f78ed"
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 1510,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "forward-looking boilerplate",
+   "text": "This Form 10-K contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These forward-looking statements are based on the current beliefs and expectations of JPMorganChase’s management, speak only as of the date of this Form 10-K and are subject to significant risks and uncertainties. Refer to Forward-looking Statements on page 160 and Part 1, Item 1A: Risk Factors in this Form 10-K on pages 9–31 for a discussion of certain of those risks and uncertainties and the factors that could cause JPMorganChase’s actual results to differ materially because of those risks and uncertainties. There is no assurance that actual results will be in line with any outlook information set forth herein, and the Firm does not undertake to update any forward-looking statements.",
+   "text_sha256": "sha256:3098d6fcc9c597eb6ec68a8bc1005c593a245d650db54a87f58aced191be2100"
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 1635,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "forward-looking boilerplate",
+   "text": "The statements set forth below are forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. Such forward-looking statements are based on the beliefs and expectations of JPMorganChase’s management, speak only as of the date on which they were made, and are subject to significant risks and uncertainties. Refer to Forward-Looking Statements on page 160 and Part I, Item 1A: Risk Factors on pages 9–31 of this Form 10-K for a further discussion of certain of those risks and uncertainties and the other factors that could cause JPMorganChase’s actual results to differ materially because of those risks and uncertainties. There is no assurance that actual results in 2026 will be in line with the outlook information set forth below, and the Firm does not undertake to update any forward-looking statements.",
+   "text_sha256": "sha256:8c04827161ec69697347348a82609d04a232e9e2935453a44bede6ae03b857a7"
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 3737,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "MD&A credit-rating factors; litigation is one item in a list",
+   "text": "Critical factors in maintaining high credit ratings include a stable and diverse earnings stream, strong capital and liquidity ratios, strong credit quality and risk management controls, and diverse funding sources. Rating agencies continue to evaluate economic and geopolitical trends, regulatory developments, future profitability, risk management practices, and litigation matters, as well as their broader ratings methodologies. Changes in any of these factors could lead to changes in the Firm’s credit ratings.",
+   "text_sha256": "sha256:b5443a6b59004a73c198b817d118dfa715d659529e0ca38c6cd59792f51dc0fb",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   }
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 4799,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "MD&A country-risk exposure; only points to Note 30",
+   "text": "The Firm continues to monitor its exposure to Russia, which corresponds to cash placed with the central bank, but which excludes deposits placed on behalf of clients at the Deposit Insurance Agency of Russia. The Firm currently believes that its remaining exposure to Russia is not material. Refer to Note 30 on page 303 for information concerning Russian litigation.",
+   "text_sha256": "sha256:1b44730115fd66388718698503216cf1f486e509d8e92b1994f65b1dd8bb8e48",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   }
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 4957,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "legal-function duty bullet; generic, no matter disclosed",
+   "text": "•managing actual and potential litigation and enforcement matters, including internal reviews and investigations related to such matters",
+   "text_sha256": "sha256:34a68affeb8e5c52c12c70d43a3bf46cf28175542c465360f16a595ca8aee19a",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   }
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 5072,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "MD&A critical-accounting-estimate heading; outside D02 sources",
+   "text": "Litigation reserves",
+   "text_sha256": "sha256:c5e2dd5cd3f321b2fa08500871685bab8a0ba80a44643137158f72ab4cd49c93",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   }
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 5073,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "critical-accounting-estimate pointer to Note 30; outside D02 sources, adds nothing",
+   "text": "Refer to Note 30 for a description of the significant estimates and judgments associated with establishing litigation reserves.",
+   "text_sha256": "sha256:5d0b74d7e30be1d079234d223291d4ded859524326c79ff9d72db54f64da24f5",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   }
+  },
+  {
+   "kind": "OUTSIDE",
+   "i": 5134,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "forward-looking boilerplate; legal word is the act's name",
+   "text": "From time to time, the Firm has made and will make forward-looking statements. These statements can be identified by the fact that they do not relate strictly to historical or current facts. Forward-looking statements often use words such as “anticipate,” “target,” “expect,” “estimate,” “intend,” “plan,” “goal,” “believe,” or other words of similar meaning. Forward-looking statements provide JPMorganChase’s current expectations or forecasts of future events, circumstances, results or aspirations. JPMorganChase’s disclosures in this 2025 Form 10-K contain forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. The Firm also may make forward-looking statements in its other documents filed or furnished with the SEC. In addition, the Firm’s senior management may make forward-looking statements orally to investors, analysts, representatives of the media and others.",
+   "text_sha256": "sha256:0bb185b1d8db4afa2b5805af6ff5981ece2b56fc1cc3cf04d1d33947a79685e5",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   }
+  },
+  {
+   "kind": "HEADING",
+   "i": 312,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•increased exposure to litigation, or",
+   "text_sha256": "sha256:901129a464f5e2b734eda1e8d704aee8efc30337c6539a7ee8d1792a5bc25836"
+  },
+  {
+   "kind": "HEADING",
+   "i": 346,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•greater exposure in litigation, and",
+   "text_sha256": "sha256:ecad9a11b1fed79698c4d28fe112d7cd84d4de8429b72aeff9f4af20c4e6a703"
+  },
+  {
+   "kind": "HEADING",
+   "i": 506,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet on clearing disputes",
+   "text": "•become involved in disputes and litigation with CCPs, the client’s bankruptcy estate and other creditors, or",
+   "text_sha256": "sha256:12a8d0ac78ab8c66a1b868918c8d9f54792eb749bb491fb074eb71f00bbbcbd6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 543,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet on lending commitments",
+   "text": "•higher than anticipated draws on lending-related commitments, and",
+   "text_sha256": "sha256:f6a8365aab82e5dc155f0bc064742d0a259f174e725e30ecfac27e3b911f5d6e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 636,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•significant exposure to litigation and penalties, and",
+   "text_sha256": "sha256:a010c5bda48393b075e08d54ffe84152bb54e37bcb6567333773392b6a0a9078"
+  },
+  {
+   "kind": "HEADING",
+   "i": 690,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•significant exposure to litigation, investigations by governmental authorities and penalties, and",
+   "text_sha256": "sha256:9acfa38ad729a11e3e03e82d210ba9cbfc7db2491f06a6b8cbc9a40b002c2437"
+  },
+  {
+   "kind": "HEADING",
+   "i": 708,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•higher litigation costs and penalties, or",
+   "text_sha256": "sha256:165bec4179e60d6d8a322563f2505df74757618273046ee8ffda1073009f13d1"
+  },
+  {
+   "kind": "HEADING",
+   "i": 753,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•expose it to litigation or penalties, and",
+   "text_sha256": "sha256:b04ca9eda1fa402b83cca570031f563e107f25c85120b92edacb591964cc4fb2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 789,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•expose JPMorganChase to litigation, investigations by governmental authorities or penalties, or",
+   "text_sha256": "sha256:f7a2ad2738d641e52f14d8967f0fd723b9ad8f3592ecb4dee3e15feb079a686a"
+  },
+  {
+   "kind": "HEADING",
+   "i": 812,
+   "verdict": "NOT_D02",
+   "why": "risk-factor bullet (Item 1A)",
+   "text": "•expose it to litigation and penalties, and",
+   "text_sha256": "sha256:07e9be0e0bc62371da6e598d58526ff839afec19d32b4d2d121627f498c78b94"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1616,
+   "verdict": "NOT_D02",
+   "why": "business metric caption on credit and commitments",
+   "text": "Total credit provided and capital raised (including loans and commitments)",
+   "text_sha256": "sha256:a9e3ac57744a95e4875cb3c342dcd72cfa3a95d5ac8d14735c4c7242c45b5b57"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2234,
+   "verdict": "NOT_D02",
+   "why": "lending-commitments allowance caption",
+   "text": "Allowance for lending-related commitments",
+   "text_sha256": "sha256:13958957654b0221df4dfb06bb70f66f9f8b2eecf2086ed56ca0d8da70f7c462"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2489,
+   "verdict": "NOT_D02",
+   "why": "lending-commitments allowance table row",
+   "text": "Allowance for lending-related commitments2,738 1,976 1,849",
+   "text_sha256": "sha256:244d7a3d819a34eef52aa59bed719a2a338b1ff3a5d00ed2e316917eec9f2a07"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2721,
+   "verdict": "NOT_D02",
+   "why": "lending-commitments allowance caption",
+   "text": "Allowance for lending-related commitments",
+   "text_sha256": "sha256:13958957654b0221df4dfb06bb70f66f9f8b2eecf2086ed56ca0d8da70f7c462"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3084,
+   "verdict": "NOT_D02",
+   "why": "MD&A capital-planning heading",
+   "text": "Contingency Capital Plan",
+   "text_sha256": "sha256:92a541ef5ad84ecc023accc741236abb467ec2b2bd1e262199629d1205c87bc4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3501,
+   "verdict": "NOT_D02",
+   "why": "MD&A liquidity-planning heading",
+   "text": "Contingency funding plan",
+   "text_sha256": "sha256:286c1f2cafce5da22eb0d2dd780644813bf3f80010f880ad719bd17a4f4cb5ef"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3806,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table row",
+   "text": "Lending-related commitments1,817,307",
+   "text_sha256": "sha256:d5cf2be88d1fad7e89338f54237b039ddaa0c45de75e56123e736fde88a01865"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3852,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table row",
+   "text": "Lending-related commitments(e)",
+   "text_sha256": "sha256:4e77054b6e8fbffbfef3643a9b7c6f69f8c7d59fe977014c038f694ba985f3d1"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3859,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table row",
+   "text": "Lending-related commitments(e)(g)",
+   "text_sha256": "sha256:48bff3a53372fe166f778a9099429db86c095a8d464fb89a1493a2aabe262937"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4013,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table row",
+   "text": "Lending-related commitments 595,954 531,467 925 737",
+   "text_sha256": "sha256:a33655e2ba41da7abe0d5ef64bff18e8a7a582a4218cde7c8936c08f344ee280"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4035,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table row",
+   "text": "Lending-related commitments155,797 412,594 27,563 595,954 383,106 212,848 595,954 64",
+   "text_sha256": "sha256:087812f3540f1a0a3192c3075794c4196da4626b2d8aed848c77ff58d2a819a2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4054,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table row",
+   "text": "Lending-related commitments121,283 384,529 25,655 531,467 352,082 179,385 531,467 66",
+   "text_sha256": "sha256:097cc2feb33d6f55345d1b1fe26163d17747f847285bb4799aa276908531ce44"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4181,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table header",
+   "text": "Loans and lending-related commitmentsDerivative receivablesCredit exposure% Investment-grade",
+   "text_sha256": "sha256:6206db16930234ed25e5a173f49321d672145fb0b241b6141536f7e547a6def2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4196,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table header",
+   "text": "Loans and lending-related commitmentsDerivative receivablesCredit exposure% Investment-grade",
+   "text_sha256": "sha256:6206db16930234ed25e5a173f49321d672145fb0b241b6141536f7e547a6def2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4219,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table header",
+   "text": "Loans and lending-related commitmentsDerivative receivablesCredit exposure% Investment-grade",
+   "text_sha256": "sha256:6206db16930234ed25e5a173f49321d672145fb0b241b6141536f7e547a6def2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4233,
+   "verdict": "NOT_D02",
+   "why": "credit exposure table header",
+   "text": "Loans and lending-related commitmentsDerivative receivablesCredit exposure% Investment-grade",
+   "text_sha256": "sha256:6206db16930234ed25e5a173f49321d672145fb0b241b6141536f7e547a6def2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4313,
+   "verdict": "NOT_D02",
+   "why": "MD&A lending-commitments heading",
+   "text": "Lending-related commitments",
+   "text_sha256": "sha256:eaf45672ea3d014d44cb31093c51b133e6135bdf0b7d62878c5140a19c0bd322"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4368,
+   "verdict": "NOT_D02",
+   "why": "credit table row",
+   "text": "Loans and lending-related commitments$9,899 $25,216",
+   "text_sha256": "sha256:49af6719f949fb7addfa0a1542a92401ac3d58e04cf5a191b43bc682560e44db"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4427,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance heading",
+   "text": "Allowance for lending-related commitments",
+   "text_sha256": "sha256:13958957654b0221df4dfb06bb70f66f9f8b2eecf2086ed56ca0d8da70f7c462"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4429,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table row",
+   "text": "Provision for lending-related commitments1 2,200",
+   "text_sha256": "sha256:be16c4ebc29715cfed20a7424a198986357f984b03567fd6ec37a29754f4303b"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4444,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table row",
+   "text": "Total allowance for lending-related commitments$83 $2,200 $2,788 $5,071 $82 $— $2,019 $2,101",
+   "text_sha256": "sha256:da4d5bc752a3b9eebe01ea397f7c8f211d52aadacb017af2c157abb0da33f744"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4537,
+   "verdict": "NOT_D02",
+   "why": "mortgage-commitment risk bullet",
+   "text": "•Risk from changes in the probability of newly originated mortgage commitments closing",
+   "text_sha256": "sha256:adb6e2e053facf52c518602afd999e3b02541dc14851821ba40a8acaa716ddcd"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4539,
+   "verdict": "NOT_D02",
+   "why": "mortgage-commitment risk bullet",
+   "text": "•Mortgage commitments, classified as derivatives",
+   "text_sha256": "sha256:231f2bfe13e837f3f26bf102158a545293f1f55ccb229fe935d38c355304cdff"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4542,
+   "verdict": "NOT_D02",
+   "why": "mortgage-commitment risk bullet",
+   "text": "•Hedges of mortgage commitments, warehouse loans and MSRs, classified as derivatives",
+   "text_sha256": "sha256:b5ec7c23141a46a14b30b0aa188ca66dbcb52561bd288d54cddb776fbbf2ada6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 4986,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance estimate bullet",
+   "text": "•The allowance for lending-related commitments, and",
+   "text_sha256": "sha256:144a3968b9331cf2eec9b54f2335d8ef79e093fc7f9df4819bd7dafa7dcac461"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5005,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance estimate bullet",
+   "text": "•An increase of approximately $1.2 billion for residential real estate loans and lending-related commitments",
+   "text_sha256": "sha256:8055298d539da2c610edb07a691cd014a654d1d7cd6a535c1627a66e15e56b2f"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5007,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance estimate bullet",
+   "text": "•An increase of approximately $5.1 billion for wholesale loans and lending-related commitments",
+   "text_sha256": "sha256:c6f01c226ff803c296a687a336307ad137c89f5c364f191774fc4d51073ad36e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5072,
+   "verdict": "NOT_D02",
+   "why": "MD&A critical-accounting-estimate heading",
+   "text": "Litigation reserves",
+   "text_sha256": "sha256:c5e2dd5cd3f321b2fa08500871685bab8a0ba80a44643137158f72ab4cd49c93"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5319,
+   "verdict": "NOT_D02",
+   "why": "balance-sheet caption",
+   "text": "Commitments and contingencies (refer to Notes 28, 29 and 30)",
+   "text_sha256": "sha256:371f2915912caf73a34162607cfc6d392405c40af955ccf0391f16a9d2e22302"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5535,
+   "verdict": "NOT_D02",
+   "why": "notes-index entry for the guarantees and commitments note",
+   "text": "Off–balance sheet lending-related financial instruments, guarantees, and other commitments",
+   "text_sha256": "sha256:5bba751ecd6f2d7ea54e9c22d9897afde05733c630b7d1a034b8ed51510249d2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5537,
+   "verdict": "NOT_D02",
+   "why": "notes-index (table of contents) entry",
+   "text": "LitigationNote 30page 302",
+   "text_sha256": "sha256:3c591e531ba6e8bd911902209d8753805811517bfd53a279856e0ef4c80b1d78"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5578,
+   "verdict": "NOT_D02",
+   "why": "lending-commitments caption",
+   "text": "Loans and lending-related commitments — wholesale",
+   "text_sha256": "sha256:b2e8bb4a588ccdaf498c45be359a7ba8a25a48da7dc62b87ce1d21f0b2827b05"
+  },
+  {
+   "kind": "HEADING",
+   "i": 5581,
+   "verdict": "NOT_D02",
+   "why": "lending-commitments caption",
+   "text": "lending-related commitments",
+   "text_sha256": "sha256:b119eace122fd6d4b108319de467900a8aa91b8a0930a8cc5e2d8ab48e1fc1b5"
+  },
+  {
+   "kind": "HEADING",
+   "i": 6450,
+   "verdict": "NOT_D02",
+   "why": "lending-commitments caption",
+   "text": "Wholesale lending-related commitments",
+   "text_sha256": "sha256:ee7c94c79ea45087564472adb1fd065b5ea11037fd53ee4a25801f3bab7f227c"
+  },
+  {
+   "kind": "HEADING",
+   "i": 6741,
+   "verdict": "NOT_D02",
+   "why": "mortgage-commitment risk-management caption",
+   "text": "Manage the risk associated with mortgage commitments, warehouse loans and MSRs",
+   "text_sha256": "sha256:c654e32b60a7f375ba8c990de07d0a470cff5de2da3cc7218cbbb336ede37281"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8003,
+   "verdict": "NOT_D02",
+   "why": "loan-sale gains table row",
+   "text": "Net gains/(losses) on sales of loans and lending-related commitments (a)",
+   "text_sha256": "sha256:9d8d726f3b8f38eab8e936b4a5a668e49a525d0b871b45ec4f8f43ced7bfef18"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8642,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance methodology heading",
+   "text": "Methodology for allowances for loan losses and lending-related commitments",
+   "text_sha256": "sha256:cf7549437978cbaba5a454b434c6e322d47e1356be6a75f77d72ef39860e9f00"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8693,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance heading",
+   "text": "Allowance for lending-related commitments",
+   "text_sha256": "sha256:13958957654b0221df4dfb06bb70f66f9f8b2eecf2086ed56ca0d8da70f7c462"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8696,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table row",
+   "text": "Provision for lending-related commitments",
+   "text_sha256": "sha256:d5adb76d420c28db642f223db31eea110f29b558e06cd111bb56b1d0bcb8708e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8721,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table heading",
+   "text": "Allowance for lending-related commitments by impairment methodology",
+   "text_sha256": "sha256:bef6ba3134134645b2c57b282798ad96af0c5123414ecae0fcdcdc099bfc149d"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8727,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table row",
+   "text": "Total allowance for lending-related commitments(d)",
+   "text_sha256": "sha256:0cfa4a4bcb27002fa7a781be8d3b201b9d4c297b44a0108ea10bdb63cad4a18d"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8729,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table heading",
+   "text": "Lending-related commitments by impairment methodology",
+   "text_sha256": "sha256:0eea0be3809402f8fde8e1c71ec1bd1c02c1514536e3bb5f3b5771869ea85854"
+  },
+  {
+   "kind": "HEADING",
+   "i": 8736,
+   "verdict": "NOT_D02",
+   "why": "credit-loss allowance table row",
+   "text": "Total lending-related commitments",
+   "text_sha256": "sha256:a7a0b8279ca619e244f8229e46c9bed73c883edef311673aceb13f1b4da8f5e5"
+  },
+  {
+   "kind": "HEADING",
+   "i": 9975,
+   "verdict": "NOT_D02",
+   "why": "guarantees and commitments note title",
+   "text": "other commitments",
+   "text_sha256": "sha256:022906ee6387bfd90d569ee8b7152cf3bfce789db9565641fd832311606f2da4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 9982,
+   "verdict": "NOT_D02",
+   "why": "guarantees and commitments note heading",
+   "text": "Off–balance sheet lending-related financial instruments, guarantees and other commitments",
+   "text_sha256": "sha256:c67c89d043e395bd1417093d909d0fc7351ecc91bc60ac92169e31b921bd14b0"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10009,
+   "verdict": "NOT_D02",
+   "why": "commitments table row",
+   "text": "Other unfunded commitments to extend credit(d)",
+   "text_sha256": "sha256:547b2a08ba18d0c932adc5e9ac754e0721e3538897fc5902f28d6573971b5ab6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10018,
+   "verdict": "NOT_D02",
+   "why": "guarantees subsection heading",
+   "text": "Other guarantees and commitments",
+   "text_sha256": "sha256:6167a6a9d3f646d7ef521e52a4597ce79ebb1ba5cc87ce01336f3059ac38eecb"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10028,
+   "verdict": "NOT_D02",
+   "why": "guarantees table row",
+   "text": "Exchange & clearing house guarantees and commitments(f)",
+   "text_sha256": "sha256:0cab9cad59115459719f0c53bf5f89b8d313f0a7a6303047ba59f7334533c407"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10030,
+   "verdict": "NOT_D02",
+   "why": "guarantees table row",
+   "text": "Other guarantees and commitments (g)",
+   "text_sha256": "sha256:302a63b095ffa0cee5d2238fbd600f474f23d88c21413c9103b923098c62e29e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10046,
+   "verdict": "NOT_D02",
+   "why": "unfunded commitments subsection heading",
+   "text": "Other unfunded commitments to extend credit",
+   "text_sha256": "sha256:8585398bf2ca062e43a1ea441cc0fff7c1994695958aa1a479955eca1b59d1e9"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10071,
+   "verdict": "NOT_D02",
+   "why": "commitments table row",
+   "text": "Allowance for lending-related commitments$175 $13 $94 $37",
+   "text_sha256": "sha256:24bf240775e92e86c9a0ad49e0d99460305c6d1f39313d212228c2f4c89001a5"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10074,
+   "verdict": "NOT_D02",
+   "why": "commitments table row",
+   "text": "Commitments with collateral$16,969 $540 $16,805 $357",
+   "text_sha256": "sha256:ac6ec78a04970e5e1f9097bfdb7c318c993d2dc0fd72ad8314c707beae488eee"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10159,
+   "verdict": "REACHED",
+   "why": "litigation note title; note taken in full",
+   "text": "Note 30 – Litigation",
+   "text_sha256": "sha256:ce0285413a154803386cce4e2fe784ed517c37902aa36358f66f47926474de8a"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10160,
+   "verdict": "REACHED",
+   "why": "contingencies subsection; taken",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10498,
+   "verdict": "NOT_D02",
+   "why": "financial table row",
+   "text": "Lending-related commitments2,614",
+   "text_sha256": "sha256:19879831166d78b33e4ea0baa5a28219967d6032cf8b56b0d0d923d03a3ad417"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10595,
+   "verdict": "NOT_D02",
+   "why": "financial table row",
+   "text": "All other liabilities, including the allowance for lending-related commitments220,645",
+   "text_sha256": "sha256:7d7c7ab2c8827e584222c70ed93d922c2076f473e6d74c6a74f33758cafcfefd"
+  },
+  {
+   "kind": "HEADING",
+   "i": 10851,
+   "verdict": "NOT_D02",
+   "why": "glossary entry",
+   "text": "CFP: Contingency funding plan",
+   "text_sha256": "sha256:c2228cb8846e55066825c62bdb80c42b0c2df2eeb65ac7b7f272bda132777717"
+  }
+ ]
+}
