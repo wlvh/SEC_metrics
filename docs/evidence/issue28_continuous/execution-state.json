@@ -9119,5 +9119,24 @@
     "jobs_total": 16,
     "updated_at_utc": "2026-10-02T04:28:17Z",
     "scope": "D01 repair/review head only; excludes later E01 and v1.1 local commits"
+  },
+  "ci_d01_selector_split_20261002": {
+    "failed_remote_run_id": 36966491013,
+    "failed_remote_head": "eea7821cc794e87276c06ab583a8623e06a1ccf6",
+    "observed_fast_job": "FAILURE_ONLY_D01_SAVED_SOURCE_SELECTOR_TIMEOUT_30_014_SECONDS_RC124",
+    "overall_run_terminal": "FAILURE_ONE_FAST_JOB_FIFTEEN_OTHER_JOBS_SUCCESS",
+    "repair_scope": "TEST_TIER_ONLY_NO_PRODUCT_OR_REQUIREMENT_BYTES_CHANGED",
+    "fast_full_suite": "145_OF_145_PASS_NEW_D01_SYNTHETIC_0_087_SECONDS_30_SECOND_LIMIT",
+    "saved_source_material": "TWO_REAL_SOURCE_TESTS_PASS_14_161_SECONDS_240_SECOND_LIMIT",
+    "historical_initial_script_error": "UNSUPPORTED_FAST_SHARD_ARGUMENT_RETAINED_NO_SUITE_CREDIT",
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ci-d01-selector-timeout-20261002/",
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "changed_path": "tools/run_fast_tests_v2.py:SOURCE_TESTS append-only selector",
+      "other_runner_functions_and_limits": "UNCHANGED",
+      "potential_downstream": "Stacked #47 branch may inherit one D01 source-material selector; no historical code, ledger, snapshot or worktree operated"
+    },
+    "new_head_ci": "PENDING_PUSH_AND_REMOTE_TERMINAL"
   }
 }
