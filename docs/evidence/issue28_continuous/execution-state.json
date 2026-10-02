@@ -846,6 +846,28 @@
   },
   "subagent_register": [
     {
+      "task_name": "audit_d01_current_865d822",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_d01_marriott_paramount_current",
+      "scope_paths": [
+        "scripts/vnext/d01_emphasis_source.py",
+        "scripts/vnext/d01_emphasis_results.py",
+        "catalog/r6/D01_risk_factor_headings.md",
+        "/private/tmp/issue28-d01-emphasis-paramount-20261002-final/metrics/D01/",
+        "/private/tmp/issue28-d01-emphasis-marriott-20261002-final/metrics/D01/",
+        "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/measure-current.json",
+        "docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/independent-review-865d822/conclusion.md"
+      ],
+      "patch_sha": "865d82205d6b0fa37b11ad15e7000122016c6c8a",
+      "spawned_at": "2026-10-02T04:55:33Z",
+      "ended_at": "2026-10-02T05:07:53Z",
+      "tool_calls": 52,
+      "result_path": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md",
+      "verdict": "PASS_LIMITED_CONTENT_TWO_CURRENT_SAVED_ORIGINALS",
+      "tool_calls_outer": 26,
+      "message_count": 1
+    },
+    {
       "task_name": "review_e01_boundary_2d288bc",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "e01_item_boundary_repair",
@@ -8938,6 +8960,7 @@
       "fast_selectors": 145
     },
     "limited_independent_review": "NEEDS_FIX_PAGE_JOIN_FALSE_POSITIVE_1457E99A",
+    "independent_saved_source_content": {"status": "PASS_LIMITED_CONTENT", "result_ids": ["sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd", "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"], "heading_counts": [38, 38], "original_bytes_and_titles": "76_OF_76_MATCH", "private_run_validation": "NOT_RUN", "formal_390_credit": false, "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"},
     "trusted_summary": {
       "excluded_coordinates": 12,
       "excluded_exact_result_ids": 18
