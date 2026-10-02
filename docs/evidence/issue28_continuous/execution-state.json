@@ -3408,6 +3408,38 @@
       "tool_calls": 68,
       "result_path": "docs/evidence/issue28_continuous/b13-reference-coverage-scan-v2-20261001/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_RECORDED_SCAN_SHAPE_ONLY"
+    },
+    {
+      "task_name": "review_c02audit_df9feaf",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_c02_auditor_successor",
+      "scope_paths": [
+        "scripts/vnext/c02_board_composition_28_v3.py",
+        "catalog/r6/C02_board_disclosures_v4.md",
+        "scripts/vnext/c02_composition_text_results.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_c02_auditor_update_v3.py",
+        "tools/vnext_normal_update.py",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_c02_auditor_successor.py",
+        "tests/vnext/test_normal_c02_composition.py",
+        "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/"
+      ],
+      "patch_sha": "df9feafac6f1a5ff88145e29b1785117ab067bd1",
+      "spawned_at": "2026-10-02T13:52:59+00:00",
+      "ended_at": "2026-10-02T14:06:15.450386+00:00",
+      "tool_calls": 42,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/independent-review-df9feaf/conclusion.md",
+      "verdict": "PASS_LIMITED_NO_NEW_P1_P2",
+      "status": "DONE",
+      "dedup_note": "No live agent, no exact patch/scope register or independent evidence match; tool task name uses required underscore syntax.",
+      "outer_exec_calls": 15,
+      "nested_tool_calls": 27
     }
   ],
   "ci_capacity_20260922": {
@@ -7410,13 +7442,21 @@
     "failed_target_selector_seconds": 240.117,
     "failed_target_return_code": 124,
     "other_selector_duration_shift_ge_10_seconds": false,
-    "local_original_class_tests": {"prototype_seconds": 69.499, "additional_routes_seconds": 14.812, "both_pass": true},
+    "local_original_class_tests": {
+      "prototype_seconds": 69.499,
+      "additional_routes_seconds": 14.812,
+      "both_pass": true
+    },
     "new_target_timeout_seconds": 300,
     "default_source_timeout_seconds": 240,
     "source_selectors_unchanged": true,
     "fast_selectors_unchanged": true,
     "test_assertions_and_product_code_unchanged": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "file_function": "tools/run_fast_tests_v2.py:SOURCE_TIMEOUT_OVERRIDES",
@@ -7433,11 +7473,21 @@
     "result_matches_archived_cold_read": true,
     "reported_da_million_usd": 6592,
     "separately_reported_asset_writeoffs_and_impairments_million_usd": 5270,
-    "segment_da_components_million_usd": [1379, 305, 4874, -4, 38],
+    "segment_da_components_million_usd": [
+      1379,
+      305,
+      4874,
+      -4,
+      38
+    ],
     "current_quality_retained": "APPROX",
     "parent_source_audit_not_independent_review": true,
     "new_result_or_run": false,
-    "new_real_calls": [0, 0, 0]
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ]
   },
   "b03_marriott_contract_amortization_20260929": {
     "status": "EXPLICIT_V14_GUARD_PRIVATE_VALIDATION_AND_EXACT_SHA_REVIEW_PASS_WITH_BOUNDS_LOCAL",
@@ -7462,7 +7512,11 @@
     "independent_review_path": "docs/evidence/issue28_continuous/b03-marriott-contract-amortization-20260929/independent-review-45bcce3/conclusion.md",
     "v13_owned_b03_scope_bytes_unchanged": true,
     "v14_execution_and_three_wiring_receipts_valid": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_functions": [
@@ -7492,7 +7546,11 @@
     "rounded_component_residual_used_as_impairment": false,
     "old_result_id_retained_without_current_credit": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
     "new_result_or_run_created": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "scope_limit": "SAME_ACCESSION_PRIMARY_INLINE_AND_COMPANYFACTS;_NO_CLAIM_OF_FULL_TEXT_ABSENCE_OR_COMPLETE_DA"
   },
   "b03_ford_exact_repair_20260929": {
@@ -7539,17 +7597,41 @@
       "preparation_id": "sha256:36be799dcffef7481a42fdb38d9263b63df8581b27692c30ac09c3db01efe490",
       "selected_coordinate_count": 35,
       "public_row_count": 333,
-      "new_ford_public_rows": ["A03", "A04", "A09", "A11", "A12", "A13"],
-      "ford_inherited_not_currently_selected": ["B06", "B13", "D03", "D04"],
+      "new_ford_public_rows": [
+        "A03",
+        "A04",
+        "A09",
+        "A11",
+        "A12",
+        "A13"
+      ],
+      "ford_inherited_not_currently_selected": [
+        "B06",
+        "B13",
+        "D03",
+        "D04"
+      ],
       "unselected_coordinate_count": 355,
-      "selected_reason_counts": {"PASS": 18, "TRAIT_NOT_APPLICABLE": 16, "RATIO_NUMERATOR_NOT_POSITIVE": 1},
+      "selected_reason_counts": {
+        "PASS": 18,
+        "TRAIT_NOT_APPLICABLE": 16,
+        "RATIO_NUMERATOR_NOT_POSITIVE": 1
+      },
       "first_preparation_script_exit": 1,
       "first_preparation_script_error": "EVIDENCE_SCRIPT_ASSUMED_PUBLIC_ROW_COUNT_327_AFTER_PRODUCT_PREPARATION_SUCCEEDED;_NO_SECOND_PREPARATION",
       "independent_cold_read_exit": 0,
       "cold_read_package_file_count": 27566,
       "cold_read_package_bytes_unchanged": true,
-      "local_elapsed_seconds_from_log_birth_to_last_write": {"complement": 2574.833, "preparation": 1038.079, "cold_read": 987.559},
-      "new_real_calls": [0, 0, 0],
+      "local_elapsed_seconds_from_log_birth_to_last_write": {
+        "complement": 2574.833,
+        "preparation": 1038.079,
+        "cold_read": 987.559
+      },
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
       "full390_acceptance": false,
       "new_complete_company_count": 0,
       "formal_adoption": false,
@@ -7570,17 +7652,34 @@
     "current_private_candidate_credit": true,
     "new_complete_company_count": 0,
     "all390_acceptance": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false,
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_functions": {
-        "scripts/vnext/normal_run_v3.py": ["replay_case explicit saved-route branch; prepare_case/install_normal_inputs/create_normal_run/_binding default bodies unchanged"],
-        "scripts/vnext/ordinary_b03_scope_update.py": ["_run_once_b03 exact source selection", "_verify_candidate native replay"],
-        "config/issue28_normal_results_v2.json": ["explicit B03 Spec route and bound rule paths"],
-        "requirements/issue_28_v13/": ["mutable ordinary decision and execution binding"],
-        "requirements/issue_28_v14/": ["parent identity, execution binding and three wiring receipts"],
-        "tools/run_fast_tests_v2.py": ["one source-material selector appended at list end; runner body unchanged"]
+        "scripts/vnext/normal_run_v3.py": [
+          "replay_case explicit saved-route branch; prepare_case/install_normal_inputs/create_normal_run/_binding default bodies unchanged"
+        ],
+        "scripts/vnext/ordinary_b03_scope_update.py": [
+          "_run_once_b03 exact source selection",
+          "_verify_candidate native replay"
+        ],
+        "config/issue28_normal_results_v2.json": [
+          "explicit B03 Spec route and bound rule paths"
+        ],
+        "requirements/issue_28_v13/": [
+          "mutable ordinary decision and execution binding"
+        ],
+        "requirements/issue_28_v14/": [
+          "parent identity, execution binding and three wiring receipts"
+        ],
+        "tools/run_fast_tests_v2.py": [
+          "one source-material selector appended at list end; runner body unchanged"
+        ]
       },
       "compatibility_evidence": "old Ford Result ID retained; Salesforce old conflict, Southwest positive/idempotence and old success rejection passed; _binding function and default record shape unchanged; previous installed packages retain original identity",
       "downstream_impact": "new mutable V13 closure changes newly generated ordinary Run requirement hashes; #47 stacked consumer must assess its own parent binding; no #47 artifact operated"
@@ -7783,7 +7882,11 @@
       "same_result_as_actual_source_refresh_193": true,
       "old_semantic_exports_disabled": 116,
       "evidence": "docs/evidence/issue28_continuous/ordinary-marriott-current-36-20260929/c04-cli/README.md",
-      "new_real_calls": [0, 0, 0],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
       "new_complete_business_coordinates": 0,
       "new_fiscal_year_update_proven": false
     },
@@ -7793,13 +7896,26 @@
       "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c",
       "source_snapshot_id": "sha256:cd1cc2feff4cfa3347fac80c7b23248ed5026d71b87a0f240c563287ffdef228",
       "evidence": "docs/evidence/issue28_continuous/ordinary-marriott-cli-b01-c04-20260929/README.md",
-      "metric_statuses": {"B01": "CANDIDATE_READY", "C04": "CANDIDATE_READY"},
-      "cold_result_ids": {"B01": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc", "C04": "sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e"},
-      "repeat_metric_statuses": {"B01": "NO_SOURCE_CONTENT_CHANGE", "C04": "NO_SOURCE_CONTENT_CHANGE"},
+      "metric_statuses": {
+        "B01": "CANDIDATE_READY",
+        "C04": "CANDIDATE_READY"
+      },
+      "cold_result_ids": {
+        "B01": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "C04": "sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e"
+      },
+      "repeat_metric_statuses": {
+        "B01": "NO_SOURCE_CONTENT_CHANGE",
+        "C04": "NO_SOURCE_CONTENT_CHANGE"
+      },
       "repeat_successful_attempts_unchanged": true,
       "old_semantic_exports_disabled": 116,
       "original_claims_source_and_active_unchanged": true,
-      "new_real_calls": [0, 0, 0],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
       "new_complete_business_coordinates": 0,
       "authentic_online_new_fiscal_year_update_proven": false
     },
@@ -7813,7 +7929,11 @@
       "same_result_id_count": 36,
       "original_claims_source_and_active_unchanged": true,
       "new_installation_independent_cold_read": false,
-      "new_real_calls": [0, 0, 0],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
       "result_credit": "LIMITED_FRESH_CREATION_ONLY_NO_NEW_BUSINESS_COORDINATE"
     },
     "ci_a728b6c7_20260929": {
@@ -7822,7 +7942,11 @@
       "status": "completed",
       "conclusion": "success",
       "fast_job": "success",
-      "saved_source_material_shards": ["success", "success", "success"],
+      "saved_source_material_shards": [
+        "success",
+        "success",
+        "success"
+      ],
       "source_material_aggregate": "success",
       "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36480879088",
       "business_acceptance_from_ci_alone": false
@@ -7849,7 +7973,11 @@
     "withheld_native_reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
     "B06_successful_attempt_pointer": null,
     "independent_process_replayed_metric_count": 36,
-    "replayed_reason_counts": {"PASS": 19, "TRAIT_NOT_APPLICABLE": 16, "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 1},
+    "replayed_reason_counts": {
+      "PASS": 19,
+      "TRAIT_NOT_APPLICABLE": 16,
+      "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 1
+    },
     "old_semantic_exports_disabled": 116,
     "old_index_business_fields_equal_count": 36,
     "old_index_result_ids_equal_count": 35,
@@ -7860,7 +7988,11 @@
     "local_run_file_birth_elapsed_seconds": 3171.907,
     "local_cold_file_birth_elapsed_seconds": 752.816,
     "original_claims_source_and_active_unchanged": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_complete_company_or_390_coordinate_credit": 0,
     "authentic_online_new_fiscal_year_update_proven": false,
     "formal_adoption": false
@@ -7881,21 +8013,40 @@
     "candidate_ready_count": 35,
     "candidate_withheld_count": 1,
     "withheld_metric": "B06",
-    "reported_calls": {"provider": 0, "paid": 0, "sec": 0},
+    "reported_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
     "original_claims_source_and_active_unchanged": true,
     "cold_read_process_pid": 94393,
     "cold_read_exec_session_id": 70590,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "old_semantic_exports_disabled_create_and_cold": [116, 116],
+    "old_semantic_exports_disabled_create_and_cold": [
+      116,
+      116
+    ],
     "old_index_business_fields_equal_count": 36,
     "old_index_result_ids_equal_count": 33,
-    "different_result_id_metrics": ["B10", "B11", "C04"],
+    "different_result_id_metrics": [
+      "B10",
+      "B11",
+      "C04"
+    ],
     "B06_native_reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
     "B06_successful_attempt_pointer": null,
     "private_native_result_count": 36,
-    "create_new_real_calls_verified": [0, 0, 0],
-    "full_run_new_real_calls": [0, 0, 0],
+    "create_new_real_calls_verified": [
+      0,
+      0,
+      0
+    ],
+    "full_run_new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_complete_company_or_390_coordinate_credit": 0,
     "formal_adoption": false
   },
@@ -7912,22 +8063,44 @@
     "normal_cli_return_code": 0,
     "normal_cli_status": "UPDATES_READY",
     "candidate_ready_count": 36,
-    "reported_calls": {"provider": 0, "paid": 0, "sec": 0},
+    "reported_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
     "original_claims_source_and_active_unchanged": true,
     "cold_read_process_pid": 95631,
     "cold_read_exec_session_id": 70099,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "replayed_reason_counts": {"PASS": 20, "TRAIT_NOT_APPLICABLE": 16},
-    "old_semantic_exports_disabled_create_and_cold": [116, 116],
+    "replayed_reason_counts": {
+      "PASS": 20,
+      "TRAIT_NOT_APPLICABLE": 16
+    },
+    "old_semantic_exports_disabled_create_and_cold": [
+      116,
+      116
+    ],
     "old_index_business_fields_equal_count": 36,
     "old_index_result_ids_equal_count": 33,
-    "different_result_id_metrics": ["B10", "B11", "C04"],
+    "different_result_id_metrics": [
+      "B10",
+      "B11",
+      "C04"
+    ],
     "current_c04_route": "C04_REGISTRATION_FOUR_FORM_UPDATE_V1",
     "private_native_candidate_count": 36,
     "new_complete_company_or_390_coordinate_credit": 0,
-    "create_new_real_calls_verified": [0, 0, 0],
-    "full_run_new_real_calls": [0, 0, 0],
+    "create_new_real_calls_verified": [
+      0,
+      0,
+      0
+    ],
+    "full_run_new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false
   },
   "ordinary_enphase_36_cli_20260929": {
@@ -7943,22 +8116,44 @@
     "normal_cli_return_code": 0,
     "normal_cli_status": "UPDATES_READY",
     "candidate_ready_count": 36,
-    "reported_calls": {"provider": 0, "paid": 0, "sec": 0},
+    "reported_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
     "original_claims_source_and_active_unchanged": true,
     "cold_read_process_pid": 97449,
     "cold_read_exec_session_id": 61080,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "replayed_reason_counts": {"PASS": 20, "TRAIT_NOT_APPLICABLE": 16},
-    "old_semantic_exports_disabled_create_and_cold": [116, 116],
+    "replayed_reason_counts": {
+      "PASS": 20,
+      "TRAIT_NOT_APPLICABLE": 16
+    },
+    "old_semantic_exports_disabled_create_and_cold": [
+      116,
+      116
+    ],
     "old_index_business_fields_equal_count": 36,
     "old_index_result_ids_equal_count": 33,
-    "different_result_id_metrics": ["B10", "B11", "C04"],
+    "different_result_id_metrics": [
+      "B10",
+      "B11",
+      "C04"
+    ],
     "current_c04_route": "C04_REGISTRATION_FOUR_FORM_UPDATE_V1",
     "private_native_candidate_count": 36,
     "new_complete_company_or_390_coordinate_credit": 0,
-    "create_new_real_calls_verified": [0, 0, 0],
-    "full_run_new_real_calls": [0, 0, 0],
+    "create_new_real_calls_verified": [
+      0,
+      0,
+      0
+    ],
+    "full_run_new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false
   },
   "ordinary_lumen_36_cli_20260929": {
@@ -7973,22 +8168,46 @@
     "normal_cli_return_code": 0,
     "normal_cli_status": "UPDATES_READY",
     "candidate_ready_count": 36,
-    "reported_calls": {"provider": 0, "paid": 0, "sec": 0},
+    "reported_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
     "original_claims_source_and_active_unchanged": true,
     "cold_read_process_pid": 99045,
     "cold_read_exec_session_id": 93443,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "replayed_reason_counts": {"PASS": 18, "TRAIT_NOT_APPLICABLE": 16, "DENOMINATOR_NONPOSITIVE": 1, "RATIO_NUMERATOR_NOT_POSITIVE": 1},
-    "old_semantic_exports_disabled_create_and_cold": [116, 116],
+    "replayed_reason_counts": {
+      "PASS": 18,
+      "TRAIT_NOT_APPLICABLE": 16,
+      "DENOMINATOR_NONPOSITIVE": 1,
+      "RATIO_NUMERATOR_NOT_POSITIVE": 1
+    },
+    "old_semantic_exports_disabled_create_and_cold": [
+      116,
+      116
+    ],
     "old_index_business_fields_equal_count": 36,
     "old_index_result_ids_equal_count": 33,
-    "different_result_id_metrics": ["B10", "B11", "C04"],
+    "different_result_id_metrics": [
+      "B10",
+      "B11",
+      "C04"
+    ],
     "current_c04_route": "C04_REGISTRATION_FOUR_FORM_UPDATE_V1",
     "private_native_candidate_count": 36,
     "new_complete_company_or_390_coordinate_credit": 0,
-    "create_new_real_calls_verified": [0, 0, 0],
-    "full_run_new_real_calls": [0, 0, 0],
+    "create_new_real_calls_verified": [
+      0,
+      0,
+      0
+    ],
+    "full_run_new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false
   },
   "ordinary_ford_36_cli_20260929": {
@@ -8008,23 +8227,43 @@
     "B03_execution_failure_reason": "B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT",
     "B03_successful_attempt_pointer": null,
     "B06_successful_attempt_pointer": null,
-    "reported_calls": {"provider": 0, "paid": 0, "sec": 0},
+    "reported_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
     "original_claims_source_and_active_unchanged": true,
     "cold_read_process_pid": 906,
     "cold_read_exec_session_id": 60758,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "old_semantic_exports_disabled_create_and_cold": [116, 116],
+    "old_semantic_exports_disabled_create_and_cold": [
+      116,
+      116
+    ],
     "old_index_comparable_business_fields_equal_count": 35,
     "old_index_noncomparable_metric": "B03",
     "old_index_result_ids_equal_count": 32,
-    "different_result_id_metrics": ["B03", "B10", "B11", "C04"],
+    "different_result_id_metrics": [
+      "B03",
+      "B10",
+      "B11",
+      "C04"
+    ],
     "current_c04_route": "C04_REGISTRATION_FOUR_FORM_UPDATE_V1",
     "B03_and_B06_known_current_credit_limits": true,
     "private_ready_candidate_count": 34,
     "new_complete_company_or_390_coordinate_credit": 0,
-    "create_new_real_calls_verified": [0, 0, 0],
-    "full_run_new_real_calls": [0, 0, 0],
+    "create_new_real_calls_verified": [
+      0,
+      0,
+      0
+    ],
+    "full_run_new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false
   },
   "ordinary_jpmorgan_36_cli_20260929": {
@@ -8041,14 +8280,25 @@
     "candidate_ready_count": 35,
     "candidate_withheld_count": 1,
     "withheld_metric": "B06",
-    "reported_calls": {"provider": 0, "paid": 0, "sec": 0},
+    "reported_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
     "original_claims_source_and_active_unchanged": true,
     "cold_read_process_pid": 3943,
     "cold_read_exec_session_id": 52073,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "replayed_reason_counts": {"PASS": 24, "TRAIT_NOT_APPLICABLE": 11, "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 1},
-    "old_semantic_exports_disabled_create_and_cold": [116, 116],
+    "replayed_reason_counts": {
+      "PASS": 24,
+      "TRAIT_NOT_APPLICABLE": 11,
+      "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 1
+    },
+    "old_semantic_exports_disabled_create_and_cold": [
+      116,
+      116
+    ],
     "old_index_business_fields_equal_count": 36,
     "old_index_result_ids_equal_count": 12,
     "old_index_result_ids_different_count": 24,
@@ -8059,8 +8309,16 @@
     "B06_bank_financing_lease_completeness_pending": true,
     "private_native_candidate_count": 35,
     "new_complete_company_or_390_coordinate_credit": 0,
-    "create_new_real_calls_verified": [0, 0, 0],
-    "full_run_new_real_calls": [0, 0, 0],
+    "create_new_real_calls_verified": [
+      0,
+      0,
+      0
+    ],
+    "full_run_new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false
   },
   "jpm_a03_measurement_period_20260929": {
@@ -8070,7 +8328,10 @@
     "saved_private_result_id": "sha256:a585c22fd762fba696fe935fdd9bd989bbbab8828f8dd9971ad10e0245d7efe4",
     "entity_scope": "firm",
     "aggregation": "average",
-    "actual_measurement_period": ["2025-10-01", "2025-12-31"],
+    "actual_measurement_period": [
+      "2025-10-01",
+      "2025-12-31"
+    ],
     "original_bank_subsidiary_comparison_percent": 115,
     "firm_percent": 111,
     "annual_filing_period_not_used_as_measurement_period": true,
@@ -8078,7 +8339,11 @@
     "current_head_run_replayed_again": false,
     "other_r4_coordinates_validated_by_this_audit": false,
     "new_result_or_run_created": false,
-    "new_real_calls": [0, 0, 0]
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ]
   },
   "ordinary_paramount_36_cli_20260929": {
     "status": "PASS_PRIVATE_SAVED_SOURCE_NORMAL_CLI_35_READY_C04_WITHHELD_COLD36",
@@ -8103,16 +8368,30 @@
     "cold_exec_session_id": 67334,
     "cold_exit_receipt": 0,
     "cold_replayed_metric_count": 36,
-    "replayed_reason_counts": {"PASS": 13, "TRAIT_NOT_APPLICABLE": 16, "ANNUAL_DURATION_OUT_OF_RANGE": 2, "ENTITY_CONTINUITY_NOT_COMPARABLE": 4, "C04_COMPARABLE_AUDITOR_FACTS_MISSING": 1},
+    "replayed_reason_counts": {
+      "PASS": 13,
+      "TRAIT_NOT_APPLICABLE": 16,
+      "ANNUAL_DURATION_OUT_OF_RANGE": 2,
+      "ENTITY_CONTINUITY_NOT_COMPARABLE": 4,
+      "C04_COMPARABLE_AUDITOR_FACTS_MISSING": 1
+    },
     "old_index_business_fields_same_role_equal_count": 36,
     "old_index_result_ids_equal_count": 33,
     "old_index_same_result_event_lookback_count": 6,
-    "old_index_different_result_ids": ["B10", "B11", "C04"],
+    "old_index_different_result_ids": [
+      "B10",
+      "B11",
+      "C04"
+    ],
     "C04_same_registrant_prior_auditor_rule_unresolved": true,
     "private_native_candidate_count": 35,
     "new_complete_company_or_390_coordinate_credit": 0,
     "original_claims_source_and_active_unchanged": true,
-    "new_real_calls_verified_after_completion": [0, 0, 0],
+    "new_real_calls_verified_after_completion": [
+      0,
+      0,
+      0
+    ],
     "formal_adoption": false
   },
   "e01_southwest_source_scope_20260929": {
@@ -8122,13 +8401,20 @@
     "historical_result_id_retained": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
     "historical_value_retained": "2",
     "two_original_item_1_01_bodies_sha_verified": true,
-    "original_item_1_01_subjects": ["shareholder_cooperation_agreement_amendment", "debt_securities_offering"],
+    "original_item_1_01_subjects": [
+      "shareholder_cooperation_agreement_amendment",
+      "debt_securities_offering"
+    ],
     "direct_item_code_without_MA_content_confirmation": true,
     "header_listed_8_01_keyword_matching_does_not_consume_primary_body": true,
     "existing_acquisition_8_01_fixture_omission_reproduced": true,
     "product_definition_pending": "ITEM_CODE_TRANSACTION_LEAD_VS_CONTENT_CONFIRMED_ISSUER_MA_ANNOUNCEMENT",
     "other_E01_coordinates_audited": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "historical_run_or_result_modified": false,
     "all390_acceptance": false
   },
@@ -8163,11 +8449,17 @@
       "rejected_heading_missing_or_ambiguous": 10,
       "rejected_section_end_unproven": 1,
       "current_rule_counted_801_claims": 0,
-      "accepted_catalog_alias_hits": ["PARAMOUNT_0001193125-25-052917_MERGER_COMBINE_TRANSACTION"],
+      "accepted_catalog_alias_hits": [
+        "PARAMOUNT_0001193125-25-052917_MERGER_COMBINE_TRANSACTION"
+      ],
       "paramount_hit_references_already_reported_2024_transaction_agreement": true,
       "new_unique_transaction_or_announcement_count_proven": false,
       "general_801_recall_proven": false,
-      "new_real_calls": [0, 0, 0],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
       "evidence": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/current-801-census.json"
     },
     "general_real_801_layout_coverage_proven": false,
@@ -8175,7 +8467,11 @@
     "saved_section_rebuild_and_mutation_rejection": true,
     "directed_tests": "4/4_PASS_ON_REPAIR_WORKTREE",
     "fast_selectors": "142/142_PASS_97.016_SECONDS_ON_REPAIR2_WORKTREE",
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_native_result_or_run": false,
     "E01_business_definition_decided": false,
     "limited_independent_review": "NEEDS_FIX_7d0f7a69_e01-item-source-v1-20260929/independent-review/conclusion.md",
@@ -8197,17 +8493,31 @@
     "status": "TWO_EXISTING_POSITIVE_COORDINATES_SOURCE_READ_CURRENT_MA_CREDIT_UNVERIFIED",
     "evidence": "docs/evidence/issue28_continuous/e01-additional-positive-scope-20260929/README.md",
     "parent_390_delta": "docs/evidence/issue28_continuous/e01-additional-positive-scope-20260929/delta.json",
-    "audited_companies": ["salesforce", "paramount_skydance_paramount_global"],
-    "historical_values_retained": ["1", "5"],
+    "audited_companies": [
+      "salesforce",
+      "paramount_skydance_paramount_global"
+    ],
+    "historical_values_retained": [
+      "1",
+      "5"
+    ],
     "selected_item_claims_source_hash_verified": 6,
     "distinct_selected_filings": 5,
     "salesforce_filing_is_acquisition_related_credit_agreement": true,
     "paramount_selected_credit_amendments": 2,
     "paramount_completion_same_filing_two_selected_items": true,
     "business_definition_pending": "ITEM_CODE_TRANSACTION_LEAD_VS_CONTENT_CONFIRMED_ISSUER_MA_ANNOUNCEMENT_AND_COUNTING_UNIT",
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_company_result_or_run": false,
-    "other_positive_E01_companies_not_reviewed_here": ["ford_motor_company", "lumen_technologies", "macys"],
+    "other_positive_E01_companies_not_reviewed_here": [
+      "ford_motor_company",
+      "lumen_technologies",
+      "macys"
+    ],
     "historical_run_or_result_modified": false,
     "all390_acceptance": false,
     "issue47_used": false
@@ -8216,11 +8526,26 @@
     "status": "THREE_REMAINING_POSITIVE_COORDINATES_CURRENT_SOURCE_REPREPARED_MA_CREDIT_UNVERIFIED",
     "evidence": "docs/evidence/issue28_continuous/e01-remaining-positive-scope-20260929/README.md",
     "parent_390_delta": "docs/evidence/issue28_continuous/e01-remaining-positive-scope-20260929/delta.json",
-    "audited_companies": ["ford_motor_company", "lumen_technologies", "macys"],
-    "historical_index_values_retained": ["2", "7", "2"],
-    "current_prepared_selected_claim_counts": [2, 7, 2],
+    "audited_companies": [
+      "ford_motor_company",
+      "lumen_technologies",
+      "macys"
+    ],
+    "historical_index_values_retained": [
+      "2",
+      "7",
+      "2"
+    ],
+    "current_prepared_selected_claim_counts": [
+      2,
+      7,
+      2
+    ],
     "selected_item_original_primary_hashes_verified": 11,
-    "approved_current_E01_direct_item_codes": ["1.01", "2.01"],
+    "approved_current_E01_direct_item_codes": [
+      "1.01",
+      "2.01"
+    ],
     "selected_direct_item_code_rule_credit_retained": true,
     "content_confirmed_MA_label_credit_proven": false,
     "keyword_item_8_01_recall_complete": false,
@@ -8231,7 +8556,11 @@
     "positive_E01_selected_claims_with_bounded_source_audit_across_three_evidence_items": 19,
     "zero_value_missed_events_audited": false,
     "business_definition_pending": "ITEM_CODE_TRANSACTION_LEAD_VS_CONTENT_CONFIRMED_ISSUER_MA_ANNOUNCEMENT_AND_COUNTING_UNIT",
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_company_result_or_run": false,
     "historical_run_or_result_modified": false,
     "all390_acceptance": false,
@@ -8280,18 +8609,36 @@
     "recorded_collection_missing_groups_retained": true,
     "copied_object_live_execution_rejected_before_claim": true,
     "altered_original_source_rejected": true,
-    "recorded_test_counts": [1, 1, 0],
-    "new_real_calls": [0, 0, 0],
+    "recorded_test_counts": [
+      1,
+      1,
+      0
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "native_company_result_or_run_created": false,
     "tests": {
       "directed_material": "1/1_PASS_40.345_SECONDS",
       "default_compatibility": "5/5_PASS_107.381_SECONDS_BEFORE_FINAL_EXTERNAL_COPY_GUARD",
       "default_material_compatibility": "3/3_PASS_157.970_SECONDS_ON_FINAL_PRODUCT_CODE",
       "fast_final_tree": "141/141_PASS_95.828_SECONDS",
-      "source_selector_shards": [30, 30, 29]
+      "source_selector_shards": [
+        30,
+        30,
+        29
+      ]
     },
     "limited_independent_review": "PASS_LIMITED_63dad2a2e7b683d3f124c809509d09761dfc572f_docs/evidence/issue28_continuous/d03-current-source-replay-20260929/independent-review/conclusion.md",
-    "current_product_head_main_ci": {"head": "76ebe42ea28eedaac640c70d127475296361d1f3", "run_id": 36498979085, "status": "completed", "conclusion": "success", "jobs_succeeded": 16},
+    "current_product_head_main_ci": {
+      "head": "76ebe42ea28eedaac640c70d127475296361d1f3",
+      "run_id": 36498979085,
+      "status": "completed",
+      "conclusion": "success",
+      "jobs_succeeded": 16
+    },
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_and_functions": [
@@ -8317,11 +8664,19 @@
     "company_review_status": "PENDING",
     "system_approval_eligible": false,
     "recorded_only": true,
-    "recorded_test_ledger_counts": [5, 5, 0],
+    "recorded_test_ledger_counts": [
+      5,
+      5,
+      0
+    ],
     "separate_process_saved_execution_revalidation": true,
     "first_attempt_setup_error_preserved": "run-first.log",
     "native_result_or_run_created": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_company_or_390_credit": 0,
     "limited_independent_review_reused": "PASS_LIMITED_63dad2a2e7b683d3f124c809509d09761dfc572f_NO_NEW_PRODUCT_SOURCE_DIFF"
   },
@@ -8336,7 +8691,11 @@
     "old_semantic_exports_disabled": 116,
     "original_claims_source_and_active_unchanged": true,
     "first_attempt_intentionally_aborted_after_evidence_script_schema_error": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_company_results": 0,
     "authentic_online_new_fiscal_year_update_proven": false,
     "formal_old_entrypoints_retired": false
@@ -8345,14 +8704,23 @@
     "status": "FOUR_CURRENT_DIRECT_DA_SOURCE_RELATIONS_MATCH_ORIGINALS_AND_PRIOR_COLD_READS_WITH_BOUNDED_SCOPE",
     "evidence": "docs/evidence/issue28_continuous/b03-direct-source-sweep-20260929/README.md",
     "tested_product_head": "969de88b748ac6a82e194a797f5443c2c2a90e20",
-    "companies": ["southwest_airlines", "lumen_technologies", "macys", "enphase_energy"],
+    "companies": [
+      "southwest_airlines",
+      "lumen_technologies",
+      "macys",
+      "enphase_energy"
+    ],
     "original_primary_source_log_hashes_verified": true,
     "current_inline_same_subject_period_da_facts_verified": true,
     "specific_separately_reported_impairment_rows_verified": true,
     "prior_independent_cold_result_ids_and_business_fields_match": true,
     "complete_da_scope_proven": false,
     "new_result_or_run": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "original_claims_source_log_and_active_unchanged": true,
     "independent_business_review": false
   },
@@ -8383,7 +8751,11 @@
     "evidence": "docs/evidence/issue28_continuous/ordinary-marriott-b03-failure-isolation-20260930/README.md",
     "tested_product_head": "016d7b25163d824dbafc552a426346d49051ca77",
     "source_snapshot_id": "sha256:517bd322204016d11ec0694654852148538b3e9c3b10138ada4041eacf97b382",
-    "metric_statuses": {"B01": "CANDIDATE_READY", "B03": "EXECUTION_FAILED", "C04": "CANDIDATE_READY"},
+    "metric_statuses": {
+      "B01": "CANDIDATE_READY",
+      "B03": "EXECUTION_FAILED",
+      "C04": "CANDIDATE_READY"
+    },
     "company_status": "UPDATES_PARTIAL",
     "b03_reason": "B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED",
     "b03_successful_attempt": null,
@@ -8393,7 +8765,11 @@
     "private_state_tree_unchanged_by_cold_read": true,
     "original_claims_source_log_and_active_unchanged": true,
     "first_test_setup_failure_preserved": "run-first.log",
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_complete_company_or_390_credit": 0,
     "formal_adoption": false
   },
@@ -8413,8 +8789,15 @@
     "original_failure": "F450_ISO_CURRENCY_TAX_CREDIT_ACCEPTED_AS_CAPACITY_QUALITATIVE_WITH_ZERO_UNRESOLVED_IN_V4",
     "repaired_behavior": "EXPLICIT_V4_AND_SCANNED_SUCCESSOR_REJECT_CURRENCY_NATIVE_EVIDENCE_FOR_POSITIVE_PHYSICAL_FINDING",
     "authentic_192_request_and_source_hashes_preserved": true,
-    "positive_controls": ["SYNTHETIC_NONCURRENCY_NATIVE_NARRATIVE_F451", "EMPTY_OPTIONAL_FINDING_SET"],
-    "negative_controls": ["AUTHENTIC_192_F450_ONLY", "AUTHENTIC_192_F449_WITH_F450_SAME_FINDING", "SYNTHETIC_F450_WITH_SYNTHETIC_F451_SAME_FINDING"],
+    "positive_controls": [
+      "SYNTHETIC_NONCURRENCY_NATIVE_NARRATIVE_F451",
+      "EMPTY_OPTIONAL_FINDING_SET"
+    ],
+    "negative_controls": [
+      "AUTHENTIC_192_F450_ONLY",
+      "AUTHENTIC_192_F449_WITH_F450_SAME_FINDING",
+      "SYNTHETIC_F450_WITH_SYNTHETIC_F451_SAME_FINDING"
+    ],
     "historical_190_current_semantic_revalidation": "PASS_5_FINDINGS_ZERO_UNRESOLVED_NO_TERMINAL_CHANGE",
     "old_190_191_request_structures_preserved": true,
     "directed_tests": "45/45_PASS_FINAL_CODE",
@@ -8431,14 +8814,25 @@
     "repair_v14_requirement_closure_hash": "sha256:bbfa542ba61ffaf131968da7d1f90fee802b5804cdabe28edd08b829450f7256",
     "v13_manifest_unchanged": true,
     "provider_sec_refresh_wiring_validated": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "native_company_result_created": false,
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_and_functions": {
-        "scripts/vnext/capacity_reference_contract.py": ["_currency_numeric_native_refs", "restore_response"],
-        "config/ordinary_scalability_exemptions_v1.json": ["two exact source-reference F syntax exemptions"],
-        "requirements/issue_28_v14/baseline_manifest.json": ["current unfrozen V14 rule and execution bindings"]
+        "scripts/vnext/capacity_reference_contract.py": [
+          "_currency_numeric_native_refs",
+          "restore_response"
+        ],
+        "config/ordinary_scalability_exemptions_v1.json": [
+          "two exact source-reference F syntax exemptions"
+        ],
+        "requirements/issue_28_v14/baseline_manifest.json": [
+          "current unfrozen V14 rule and execution bindings"
+        ]
       },
       "compatibility": "V13 byte-identical; V1-V3 request generation unchanged; V4 prior190 response retains zero unresolved; default shared interfaces and result record shapes unchanged",
       "downstream_impact": "stacked PR may need its own V14 parent binding refresh; #47 branch/worktree/ledger/snapshot/PR not operated"
@@ -8481,7 +8875,7 @@
     "limited_independent_review_path": "docs/evidence/issue28_continuous/d03-context-only-summary-20260930/independent-review/conclusion.md",
     "shared_default_bindings_changed": false,
     "issue47_operated": false
-   },
+  },
   "ci_36746800281": {
     "head": "430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e",
     "run_id": 36746800281,
@@ -8533,7 +8927,7 @@
     "actual_ledger_claim_rows_after": 195,
     "issue47_operated": false,
     "new_head_ci": "PENDING_AFTER_PUSH"
-   },
+  },
   "ci_36763570126": {
     "head": "3d7adf920125a588a3c19f8f14baf23e421cdba2",
     "run_id": 36763570126,
@@ -8633,7 +9027,11 @@
     "native_company_result_or_run": false,
     "new_390_business_coordinate_count": 0,
     "real_call_authorization_expanded": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "actual_ledger_claim_rows_after": 195,
     "formal_adoption": false,
     "issue47_operated": false,
@@ -8667,7 +9065,11 @@
     "production_code_changed": false,
     "new_complete_company_count": 0,
     "new_390_business_coordinate_count": 0,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "issue47_operated": false
   },
   "jpm_history_coherence_20261001": {
@@ -8684,7 +9086,11 @@
     "current_sec_freshness_proven": false,
     "all_39_source_acceptance_proven": false,
     "new_company_or_390_result": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "issue47_operated": false
   },
   "collab_28_47_v1": {
@@ -8699,7 +9105,30 @@
     "peer_read_commit": "49b4127127ec04828b872f08b5b1adf51fb17419",
     "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
     "peer_register_git_blob": "4740055ffe552d1beb688634e8886f68385706bc",
-    "peer_49b_increment": {"register_blob_unchanged": true, "shared_core_code_changed": false, "new_commit": "49b4127127ec04828b872f08b5b1adf51fb17419", "scope": "reading producers and acceptance evidence; B02 same-concept recast notice at issue28 comment 5945127100 requires own current-source impact check; no C02 selector or D02 core patch in this increment", "b02_current_impact": {"status": "TEN_CURRENT_SOURCE_GRAPHS_MEASURED_EIGHT_VALUES_NO_NEW_WITHHOLD", "commit": "ff0b48b5", "integration": "DEFER_CURRENT_BATCH_USE_OWN_VERSIONED_SUCCESSOR_FOR_FUTURE_RECAST"}, "c02_paramount_block168": {"status": "SOURCE_AND_CONTRACT_TWO_READINGS_NOT_CONFIRMED_DEFECT_OR_CREDIT", "source_accession": "0001140361-26-016758", "private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818", "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839"}, "d02_core_owner": {"status": "NO_EXPLICIT_OWNER_IN_REGISTER_AT_49B_PEER_DEFAULT_UNDER_V1_1", "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945747345", "own_role": "CURRENT_SOURCE_COUNTEREXAMPLES_POSITIVES_AND_VERSIONED_ORDINARY_INTEGRATION"}, "d01_status": "EXPLICIT_CURRENT_SUCCESSOR_AND_865D8220_PASS_LIMITED_REUSED_NO_REOPEN", "future_shared_receive": "OWN_VERSIONED_SUCCESSOR_OR_EQUIVALENT; PIN_PEER_COMMIT_AND_BOUND_DEPENDENCIES; NO_PROVIDER_DEVELOPMENT_PATH_BINDING"},
+    "peer_49b_increment": {
+      "register_blob_unchanged": true,
+      "shared_core_code_changed": false,
+      "new_commit": "49b4127127ec04828b872f08b5b1adf51fb17419",
+      "scope": "reading producers and acceptance evidence; B02 same-concept recast notice at issue28 comment 5945127100 requires own current-source impact check; no C02 selector or D02 core patch in this increment",
+      "b02_current_impact": {
+        "status": "TEN_CURRENT_SOURCE_GRAPHS_MEASURED_EIGHT_VALUES_NO_NEW_WITHHOLD",
+        "commit": "ff0b48b5",
+        "integration": "DEFER_CURRENT_BATCH_USE_OWN_VERSIONED_SUCCESSOR_FOR_FUTURE_RECAST"
+      },
+      "c02_paramount_block168": {
+        "status": "SOURCE_AND_CONTRACT_TWO_READINGS_NOT_CONFIRMED_DEFECT_OR_CREDIT",
+        "source_accession": "0001140361-26-016758",
+        "private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818",
+        "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839"
+      },
+      "d02_core_owner": {
+        "status": "NO_EXPLICIT_OWNER_IN_REGISTER_AT_49B_PEER_DEFAULT_UNDER_V1_1",
+        "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945747345",
+        "own_role": "CURRENT_SOURCE_COUNTEREXAMPLES_POSITIVES_AND_VERSIONED_ORDINARY_INTEGRATION"
+      },
+      "d01_status": "EXPLICIT_CURRENT_SUCCESSOR_AND_865D8220_PASS_LIMITED_REUSED_NO_REOPEN",
+      "future_shared_receive": "OWN_VERSIONED_SUCCESSOR_OR_EQUIVALENT; PIN_PEER_COMMIT_AND_BOUND_DEPENDENCIES; NO_PROVIDER_DEVELOPMENT_PATH_BINDING"
+    },
     "own_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "owner_target_decisions": {
       "C02": "COMPOSITION_FACTS",
@@ -8758,13 +9187,13 @@
     },
     "c02_grouped_v3": {
       "status": "PEER4D_SELECTOR_INTEGRATION_PUSHED_LIMITED_REVIEW_PASS_CONTENT_PENDING",
-    "initial_independent_review": {
-      "patch_sha": "f4e4c4f62a1536b8bd265ced3ddf00962aaee9b6",
-      "verdict": "NEEDS_FIX_API_SPEC_POLICY_MISMATCH",
-      "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-grouped-v3/conclusion.md",
-      "ordinary_run_exploit_proven": false,
-      "repair_status": "FIXED_BY_AD83_LIMITED_INDEPENDENT_REVIEW_PASS"
-    },
+      "initial_independent_review": {
+        "patch_sha": "f4e4c4f62a1536b8bd265ced3ddf00962aaee9b6",
+        "verdict": "NEEDS_FIX_API_SPEC_POLICY_MISMATCH",
+        "result_path": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-review-grouped-v3/conclusion.md",
+        "ordinary_run_exploit_proven": false,
+        "repair_status": "FIXED_BY_AD83_LIMITED_INDEPENDENT_REVIEW_PASS"
+      },
       "new_spec": "catalog/r6/C02_board_disclosures_v3.md",
       "new_module": "scripts/vnext/c02_grouped_source.py",
       "source_selected_block_counts": [
@@ -9013,13 +9442,13 @@
       "enphase_independent_process_cold_read": "PASS",
       "marriott_full_96": "EXECUTION_FAILED_NO_C02_SUCCESS_POINTER_WHILE_B01_READY",
       "pfizer_full_79": "SOURCE_MATERIAL_REJECTS_BEFORE_CANDIDATE",
-    "ford_full_80": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
-    "southwest_full_95": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
-    "salesforce_full_63": "PRIVATE_NORMAL_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_BUSINESS_CREDIT",
-    "paramount_full_54": "PRIVATE_NORMAL_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_OLD_ARCHIVED_RESULT_WITHDRAWN",
+      "ford_full_80": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
+      "southwest_full_95": "SOURCE_PROPOSAL_OVER_NATIVE_64_BOUND_NO_NATIVE_RESULT",
+      "salesforce_full_63": "PRIVATE_NORMAL_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_NO_BUSINESS_CREDIT",
+      "paramount_full_54": "PRIVATE_NORMAL_RUN_AND_COLD_READ_PASS_CONTENT_NEEDS_FIX_OLD_ARCHIVED_RESULT_WITHDRAWN",
       "independent_patch_review": "E17_2AFA_AND_C6EAC291_PASS_WITH_BOUNDS_EXCLUDES_FULL_CONTENT_REVIEW",
       "full_business_content_acceptance": false,
-    "current_private_enphase_content_scope": "PRIOR_54_FAILED_NEW_48_PASS_LIMITED_CONTENT_RUN_OPEN_VALIDATION_NOT_RUN_NO_390_CREDIT",
+      "current_private_enphase_content_scope": "PRIOR_54_FAILED_NEW_48_PASS_LIMITED_CONTENT_RUN_OPEN_VALIDATION_NOT_RUN_NO_390_CREDIT",
       "new_calls": [
         0,
         0,
@@ -9038,22 +9467,26 @@
       },
       "prior_e17_private_result_id_retained": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
       "peer60aa_increment": {
-      "latest_peer_234_path_split": "PEER_HISTORICAL_SELECTOR_NOW_V2_OWN_28_BOUND_PATH_UNCHANGED_AND_PEER_REGISTER_HAS_NO_NEW_ENPHASE_2025_DISAGREEMENT",
-      "enphase_48_content_audit": "PASS_LIMITED_48_EXCERPTS_PLUS_BOUNDED_FALSE_NEGATIVE_SCAN_SOURCE_BYTES_VERIFIED",
-      "enphase_48_run_manifest_status": "OPEN",
-      "enphase_48_validation_status": "NOT_RUN",
-      "enphase_48_current_390_credit": false,
-      "changed_shared_file_function": "scripts/vnext/historical_board_composition.py:statement_labels,board_composition_facts,_director_groups; catalog/r6/C02_board_disclosures_v2.md target clarification",
-      "peer_code_blob": "a5f238c61c560daf65affd4aaf3a4e43f7020ca6",
-      "prior_enphase_54_result_retained_no_credit": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
-      "current_enphase_48_result_content_pass_limited": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
-      "normal_update_and_independent_process_cold_read": "PASS_PRIVATE_ZERO_CALL",
-      "targeted_tests": "7_MATERIAL_PLUS_1_CLASSIFIED_SLATE_PASS",
-      "binding_and_three_receipts": "PASS_CURRENT_V13_V14",
-      "new_calls": [0, 0, 0],
-      "shared_with_issue47": "UPSTREAM_FIXED_SELECTOR_BYTE_COPIED_OWN_BINDING_RECOMPUTED_DEFAULT_LEGACY_PATH_UNCHANGED"
-    },
-    "post_review_spec_prose_fix": {
+        "latest_peer_234_path_split": "PEER_HISTORICAL_SELECTOR_NOW_V2_OWN_28_BOUND_PATH_UNCHANGED_AND_PEER_REGISTER_HAS_NO_NEW_ENPHASE_2025_DISAGREEMENT",
+        "enphase_48_content_audit": "PASS_LIMITED_48_EXCERPTS_PLUS_BOUNDED_FALSE_NEGATIVE_SCAN_SOURCE_BYTES_VERIFIED",
+        "enphase_48_run_manifest_status": "OPEN",
+        "enphase_48_validation_status": "NOT_RUN",
+        "enphase_48_current_390_credit": false,
+        "changed_shared_file_function": "scripts/vnext/historical_board_composition.py:statement_labels,board_composition_facts,_director_groups; catalog/r6/C02_board_disclosures_v2.md target clarification",
+        "peer_code_blob": "a5f238c61c560daf65affd4aaf3a4e43f7020ca6",
+        "prior_enphase_54_result_retained_no_credit": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+        "current_enphase_48_result_content_pass_limited": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
+        "normal_update_and_independent_process_cold_read": "PASS_PRIVATE_ZERO_CALL",
+        "targeted_tests": "7_MATERIAL_PLUS_1_CLASSIFIED_SLATE_PASS",
+        "binding_and_three_receipts": "PASS_CURRENT_V13_V14",
+        "new_calls": [
+          0,
+          0,
+          0
+        ],
+        "shared_with_issue47": "UPSTREAM_FIXED_SELECTOR_BYTE_COPIED_OWN_BINDING_RECOMPUTED_DEFAULT_LEGACY_PATH_UNCHANGED"
+      },
+      "post_review_spec_prose_fix": {
         "changed": "catalog/r6/C02_board_disclosures_v2.md explanatory final paragraph only",
         "compiled_and_semantic_prompt_closure_hashes_unchanged": true,
         "spec_file_and_requirement_hashes_changed": true,
@@ -9142,7 +9575,21 @@
       "fast_selectors": 145
     },
     "limited_independent_review": "NEEDS_FIX_PAGE_JOIN_FALSE_POSITIVE_1457E99A",
-    "independent_saved_source_content": {"status": "PASS_LIMITED_CONTENT", "result_ids": ["sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd", "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"], "heading_counts": [38, 38], "original_bytes_and_titles": "76_OF_76_MATCH", "private_run_validation": "NOT_RUN", "formal_390_credit": false, "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"},
+    "independent_saved_source_content": {
+      "status": "PASS_LIMITED_CONTENT",
+      "result_ids": [
+        "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+        "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"
+      ],
+      "heading_counts": [
+        38,
+        38
+      ],
+      "original_bytes_and_titles": "76_OF_76_MATCH",
+      "private_run_validation": "NOT_RUN",
+      "formal_390_credit": false,
+      "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"
+    },
     "trusted_summary": {
       "excluded_coordinates": 12,
       "excluded_exact_result_ids": 18
@@ -9311,7 +9758,11 @@
     "fast_full_suite": "145_OF_145_PASS_NEW_D01_SYNTHETIC_0_087_SECONDS_30_SECOND_LIMIT",
     "saved_source_material": "TWO_REAL_SOURCE_TESTS_PASS_14_161_SECONDS_240_SECOND_LIMIT",
     "historical_initial_script_error": "UNSUPPORTED_FAST_SHARD_ARGUMENT_RETAINED_NO_SUITE_CREDIT",
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "evidence": "docs/evidence/issue28_continuous/ci-d01-selector-timeout-20261002/",
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
@@ -9324,7 +9775,10 @@
   "collab_peer_94c_increment_20261002": {
     "peer_fixed_commit": "94cbc3e7e6af372d0ad8349585241fdbd2d0ed4e",
     "peer_defect_register_git_blob": "7f4413f2b9076ecfaa2c4c7815cd2ed138fe73b6",
-    "new_related_findings": ["HISTORICAL_SOUTHWEST_2022_2023_D01_SINGLE_SPAN_PAGE_FURNITURE", "HISTORICAL_JPMORGAN_2021_A05_PRIOR_ASSETS_RECAST"],
+    "new_related_findings": [
+      "HISTORICAL_SOUTHWEST_2022_2023_D01_SINGLE_SPAN_PAGE_FURNITURE",
+      "HISTORICAL_JPMORGAN_2021_A05_PRIOR_ASSETS_RECAST"
+    ],
     "current_jpmorgan_2025_a05_result_id": "sha256:f8f2a182897cd8ab4dd3f0ad16c399fc8ba259cc4c1706ff4db59e76ffd68639",
     "current_jpmorgan_2025_a05_recast_check": "TARGET_AND_PRIOR_2024_ASSETS_BOTH_4002814000000_NO_NEW_WITHHOLD",
     "current_ten_a05_census": "ONE_APPLICABLE_NUMERIC_JPMORGAN_NO_NEW_GUARD_PROBLEM_NINE_TRAIT_NOT_APPLICABLE",
@@ -9332,7 +9786,11 @@
     "current_cumulative_source_root": "JPMORGAN_A05_A06_PASS_PRIOR_ERROR_NULL_A05_SAME_VALUE_NEW_RESULT_ID_b4af4d3b",
     "current_d01": "TEN_CANDIDATE_HASHES_UNCHANGED_AFTER_PAGE_JOIN_REFUSAL; HISTORICAL_SOUTHWEST_YEARS_NOT_IMPORTED",
     "c02_d02_core_changed": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "evidence": "docs/evidence/issue28_continuous/collab-a05-peer-recast-impact-20261002/",
     "not_an_a05_full_content_or_normal_update_acceptance": true
   },
@@ -9354,7 +9812,11 @@
     "old_archive_git_blob_unchanged": true,
     "legacy_semantic_exports_disabled": 116,
     "protected_claims_source_log_active_unchanged": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "evidence": "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/"
   },
   "collab_peer_104_d02_20261002": {
@@ -9362,12 +9824,21 @@
     "peer_register_git_blob": "b172a201d1c340a030a3aab90f496be91cf7c12a",
     "shared_rule": "D02_ITEM8_CATEGORY_MENTION_MODULE_AND_TERMS_UNWIRED_IN_BOTH_NATIVE_ROUTES",
     "own_pilot": "TEN_CURRENT_PRIVATE_D02_RUNS_83_SELECTED_ITEM8_FOUR_PROPOSED_EXCLUSIONS",
-    "known_false_item8_matched": ["LUMEN_1670", "PFIZER_2175", "PFIZER_2240", "PARAMOUNT_2257"],
+    "known_false_item8_matched": [
+      "LUMEN_1670",
+      "PFIZER_2175",
+      "PFIZER_2240",
+      "PARAMOUNT_2257"
+    ],
     "positive_paramount_2108_retained": true,
     "enphase_item3_755_not_addressed": true,
     "old_four_exact_results_still_withheld": true,
     "no_new_result_or_390_credit": true,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "evidence": "docs/evidence/issue28_continuous/collab-d02-peer104-impact-20261002/",
     "later_peer_route_increment": {
       "fixed_remote_commit_via_github_api": "36c64ab65e84af5e3f37b8f4b47820516fcec97d",
@@ -9399,7 +9870,11 @@
       "wrong_numeric_branch": "REJECTED",
       "parent_requirement_closure_hash": "sha256:bedb8ed34c43826306416473dbd6784cf74127dfdda4877612d40887c82798ec",
       "child_requirement_closure_hash": "sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4",
-      "new_real_calls": [0, 0, 0]
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
     },
     "old_installed_run": "EXACT_ORIGINAL_BYTES_COLD_READ_WITH_FORMULA_BLANK",
     "tamper_negatives": "FOUR_REJECTED_VALID_REPLAY_PASSED",
@@ -9409,10 +9884,25 @@
     "review": "FIRST_NEEDS_FIX_489659E5_RETAINED_REPAIR_3A05F07_PASS_LIMITED",
     "new_head_ci": "SUCCESS_36981316380_0EF64F9C_16_OF_16_COMPLETED_2026_10_02T08_38_33Z",
     "current_390_credit": false,
-    "new_real_calls": [0, 0, 0],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
-      "shared_functions": ["normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3._binding", "normal_run_v3.replay_case", "ordinary_projection.render_ordinary_run", "ordinary_update_cycle._config", "ordinary_update_cycle._descriptor", "ordinary_update_cycle._inspect", "ordinary_update_cycle.run_once"],
+      "shared_functions": [
+        "normal_run_v3.prepare_case",
+        "normal_run_v3.install_normal_inputs",
+        "normal_run_v3.create_normal_run",
+        "normal_run_v3._binding",
+        "normal_run_v3.replay_case",
+        "ordinary_projection.render_ordinary_run",
+        "ordinary_update_cycle._config",
+        "ordinary_update_cycle._descriptor",
+        "ordinary_update_cycle._inspect",
+        "ordinary_update_cycle.run_once"
+      ],
       "default_behavior": "SAME_BINDING_AND_RESULT_BYTES; EXPLICIT_A05_SUCCESSOR_ONLY",
       "downstream": "#47 stacked branch must reconcile mutable V13/V14 bindings and new opt-in module/CLI route; no historical reader or #47 snapshot edited"
     },
@@ -9458,7 +9948,13 @@
     "peer_wired_commit_read_via_exact_github_api": "36c64ab65e84af5e3f37b8f4b47820516fcec97d",
     "peer_source_code_blob": "7c02380ede6757ad6f1ff9528f0abb625d45af07",
     "peer_terms_blob": "03e35435f62800a4a1146685b38bc5da91b38e51",
-    "own_versioned_paths": ["scripts/vnext/d02_item8_category_28_v1.py", "catalog/r6/D02_item8_category_28_v1.json", "scripts/vnext/ordinary_d02_item8_v1.py", "scripts/vnext/d02_text_results_v3.py", "scripts/vnext/ordinary_d02_category_update.py"],
+    "own_versioned_paths": [
+      "scripts/vnext/d02_item8_category_28_v1.py",
+      "catalog/r6/D02_item8_category_28_v1.json",
+      "scripts/vnext/ordinary_d02_item8_v1.py",
+      "scripts/vnext/d02_text_results_v3.py",
+      "scripts/vnext/ordinary_d02_category_update.py"
+    ],
     "frozen_v12_text_results_v2_bytes_unchanged": true,
     "old_default_candidate_equal": true,
     "parent_requirement_closure_hash": "sha256:f1d966d1f5f681975e11302c98ef7df0120d5281cae7e00cddeba752c65a4239",
@@ -9493,7 +9989,11 @@
       "independent_review_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review-gate-0ccf536/conclusion.md",
       "reviewer_tool_calls": "NOT_REPORTED_EXACT_COUNT_NOT_INFERRED",
       "shared_core_owner_notification": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381",
-      "real_calls": [0, 0, 0]
+      "real_calls": [
+        0,
+        0,
+        0
+      ]
     },
     "remaining_known_wrong_enphase_item3_footer": 755,
     "old_four_d02_exact_results_still_withheld": true,
@@ -9501,12 +10001,27 @@
     "current_390_credit": false,
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
-      "shared_functions": ["normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3.replay_case", "normal_run_v3.text_api", "ordinary_remaining_cases.prepare_current_source_case", "ordinary_update_cycle._config", "ordinary_update_cycle._descriptor", "ordinary_update_cycle._inspect", "ordinary_update_cycle.run_once"],
+      "shared_functions": [
+        "normal_run_v3.prepare_case",
+        "normal_run_v3.install_normal_inputs",
+        "normal_run_v3.create_normal_run",
+        "normal_run_v3.replay_case",
+        "normal_run_v3.text_api",
+        "ordinary_remaining_cases.prepare_current_source_case",
+        "ordinary_update_cycle._config",
+        "ordinary_update_cycle._descriptor",
+        "ordinary_update_cycle._inspect",
+        "ordinary_update_cycle.run_once"
+      ],
       "default_behavior": "OLD_D02_V2_INSTALLED_BYTES_UNCHANGED_AND_EXPLICIT_NEW_POLICY_REQUIRED_FOR_SELECTION",
       "downstream": "#47 stacked branch must reconcile mutable V13/V14 identities; no peer runtime or old Result rewrite"
     },
     "evidence": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/",
-    "new_real_calls": [0, 0, 0]
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ]
   },
   "d02_jpm_page_furniture_current_20261002": {
     "status": "TWO_EXACT_28_D02_RESULT_IDS_WITHDRAWN_ONE_COORDINATE",
@@ -9559,7 +10074,11 @@
     "peer_source_commit": "488a61734978adaa57e82ec0654e75a0af284cfb",
     "peer_source_git_blob": "ff6996d2edb4d924ed77e5366bf4561bb8bb8135",
     "peer_code_imported_into_ordinary_route": false,
-    "candidate_item_codes": ["1.01", "2.01", "8.01"],
+    "candidate_item_codes": [
+      "1.01",
+      "2.01",
+      "8.01"
+    ],
     "ten_company_candidate_items": 60,
     "mechanically_readable": 60,
     "named_unresolved": 0,
@@ -9568,7 +10087,11 @@
     "enphase_candidate_count": 0,
     "semantic_result_or_run_created": false,
     "current_390_credit": false,
-    "real_calls": [0, 0, 0],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
     "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
   },
   "e01_current_item_text_source_only_20261002": {
@@ -9578,7 +10101,13 @@
     "own_source_reader": "scripts/vnext/e01_item_text_28_v1.py:item_text",
     "own_source_adapter": "scripts/vnext/ordinary_e01_item_text_input.py:prepare_current_e01_item_text,verify_current_e01_item_text,install_current_e01_item_text",
     "shared_with_issue47": {
-      "affected_files": ["config/issue28_normal_results_v2.json", "requirements/issue_28_v13/decision_register.json", "requirements/issue_28_v13/baseline_manifest.json", "requirements/issue_28_v14/baseline_manifest.json", "requirements/issue_28_v14/transfer_manifest.json"],
+      "affected_files": [
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/decision_register.json",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json"
+      ],
       "default_old_E01_result_path_changed": false,
       "new_explicit_input_record_type": "ORDINARY_E01_SOURCE_BOUND_ITEM_TEXT_V1",
       "peer_runtime_or_historical_registration_imported": false,
@@ -9586,15 +10115,27 @@
       "current_v14_closure_hash": "sha256:71f7e0969a0f315e8826bba6a2778418f9cacc465b9f766c0a6dac0e49f96e6f"
     },
     "ten_company_source_preparation": "PASS_ON_PRE_INSTALLER_ADAPTER_BYTES_60_ITEMS_NOT_FINAL_INPUT_IDS",
-    "final_code_installed_companies": ["enphase_energy", "pfizer", "paramount_skydance_paramount_global"],
-    "final_code_installed_candidate_counts": [0, 3, 14],
+    "final_code_installed_companies": [
+      "enphase_energy",
+      "pfizer",
+      "paramount_skydance_paramount_global"
+    ],
+    "final_code_installed_candidate_counts": [
+      0,
+      3,
+      14
+    ],
     "final_code_cold_read": "PASS_3_OF_3_SAME_INPUT_ID_AND_ITEM_TEXT_SHA_NO_OLD_PRODUCER",
     "final_code_directed_tests": "PASS_3_OF_3",
     "final_code_fast_selectors": "PASS_146_OF_146",
     "ten_company_header_vs_primary_check": "160_SAVED_PRIMARY_FILINGS_ZERO_RECOGNIZED_1_01_2_01_8_01_HEADINGS_MISSING_FROM_HEADER; SAME_HEADING_RULE_NOT_SEMANTIC_ABSENCE_PROOF",
     "semantic_result_or_run_created": false,
     "current_390_credit": false,
-    "real_calls": [0, 0, 0],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
     "review": "PASS_LIMITED_SOURCE_INPUT_ON_DCD36DF; NO_CONTENT_OR_OMISSION_CREDIT",
     "review_result_path": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/independent-review-dcd36df/conclusion.md",
     "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
@@ -9609,7 +10150,18 @@
     "own_versioned_terms": "catalog/r6/D02_item8_category_28_v2.json",
     "own_versioned_selector": "scripts/vnext/ordinary_d02_item8_v2.py:select",
     "shared_with_issue47": {
-      "affected_functions": ["ordinary_remaining_cases.prepare_current_source_case", "d02_text_results_v3.prepare_business_text_sources", "normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3._create_case_run", "normal_run_v3.replay_case", "ordinary_update_cycle.run_once", "ordinary_d02_category_update_v2.run_company", "tools/vnext_normal_update.py:main"],
+      "affected_functions": [
+        "ordinary_remaining_cases.prepare_current_source_case",
+        "d02_text_results_v3.prepare_business_text_sources",
+        "normal_run_v3.prepare_case",
+        "normal_run_v3.install_normal_inputs",
+        "normal_run_v3.create_normal_run",
+        "normal_run_v3._create_case_run",
+        "normal_run_v3.replay_case",
+        "ordinary_update_cycle.run_once",
+        "ordinary_d02_category_update_v2.run_company",
+        "tools/vnext_normal_update.py:main"
+      ],
       "old_default_and_v1_policy_retained": true,
       "old_ordinary_d02_category_update_bytes_retained": true,
       "new_explicit_selector": "ITEM8_V2",
@@ -9622,9 +10174,17 @@
     "two_synthetic_v1_false_exclusions_preserved_by_v2": true,
     "four_company_saved_item8_keyword_candidates": 63,
     "four_company_v1_v2_saved_selection_differences": 0,
-    "known_current_blocks_removed": ["lumen_technologies:1670", "pfizer:2175", "pfizer:2240", "paramount_skydance_paramount_global:2257"],
+    "known_current_blocks_removed": [
+      "lumen_technologies:1670",
+      "pfizer:2175",
+      "pfizer:2240",
+      "paramount_skydance_paramount_global:2257"
+    ],
     "lumen_private_result_id": "sha256:845ef41fd5d00cd8c82d698bc894efb24a86b814dc62f5ab6843d3e41f24ab53",
-    "lumen_private_selected_before_after": [15, 14],
+    "lumen_private_selected_before_after": [
+      15,
+      14
+    ],
     "lumen_pre_guard_native_run": "CANDIDATE_READY_EVIDENCE_PASS_NOT_CONTENT_ACCEPTED",
     "lumen_pre_guard_independent_process_reentry": "NO_SOURCE_CONTENT_CHANGE_SAME_RESULT_NO_SECOND_RUN",
     "first_run_report_script_error": "KEYERROR_AFTER_NATIVE_WRITE_REPAIRED_BY_READ_ONLY_TERMINAL_REPORT_NO_SECOND_RUN",
@@ -9639,7 +10199,11 @@
     "fast_selectors": "PASS_146_OF_146_POST_REVIEW_GUARD_TREE",
     "old_wrong_results_still_withheld": true,
     "new_private_result_current_390_credit": false,
-    "real_calls": [0, 0, 0],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
     "review": "NEEDS_FIX_P2_OUR_COMPANY_FACED_LITIGATION_MISREAD_AS_LIST_ON_79677ED",
     "review_result_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/v2/independent-review-79677ed/conclusion.md",
     "post_review_gate_review": "PASS_GATE_ONLY_ON_B99748A_V2_CONTENT_NEEDS_FIX_UNCHANGED",
@@ -9665,7 +10229,7 @@
     "peer_worktree_ledger_runtime_or_credit_used": false
   },
   "c02_auditor_successor_20261002": {
-    "status": "KNOWN_AUDITOR_SCOPE_ERROR_REPAIRED_PRIVATE_NATIVE_AND_COLD_REPEAT_PASS_PENDING_LIMITED_REVIEW_AND_WHOLE_CONTENT",
+    "status": "LIMITED_REVIEW_PASS_PRIVATE_NATIVE_AND_COLD_REPEAT_PASS_WHOLE_CONTENT_NOT_ACCEPTED",
     "peer_read_head": "54eb39d47718dea25812ea05ceb5a085078ff611",
     "peer_patch_commit": "72858e3c023bed0c90f3217f381aec5725e15fbc",
     "peer_patch_module_git_blob": "6f72f7d6277d1b521d14997966d6ef17f16e50cd",
@@ -9673,7 +10237,16 @@
     "own_spec": "catalog/r6/C02_board_disclosures_v4.md",
     "own_update_wrapper": "scripts/vnext/ordinary_c02_auditor_update_v3.py",
     "shared_with_issue47": {
-      "affected_functions": ["ordinary_remaining_cases.prepare_current_source_case", "c02_composition_text_results._prepared", "normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3.replay_case", "ordinary_update_cycle.run_once", "tools/vnext_normal_update.py:main"],
+      "affected_functions": [
+        "ordinary_remaining_cases.prepare_current_source_case",
+        "c02_composition_text_results._prepared",
+        "normal_run_v3.prepare_case",
+        "normal_run_v3.install_normal_inputs",
+        "normal_run_v3.create_normal_run",
+        "normal_run_v3.replay_case",
+        "ordinary_update_cycle.run_once",
+        "tools/vnext_normal_update.py:main"
+      ],
       "new_optional_flag": "c02_auditor_revision=False",
       "old_shared_default_and_selector_bytes_retained": true,
       "new_policy": "COMPOSITION_GROUPED_V3",
@@ -9696,8 +10269,18 @@
     "unjudged_block3436": "Full source authenticated; duties versus qualification question awaits existing-contract peer alignment; no new defect or acceptance",
     "old_two_wrong_result_ids_still_withdrawn": true,
     "new_result_whole_content_or_390_credit": false,
-    "new_real_calls": [0, 0, 0],
-    "independent_review": "PENDING_EXACT_SHA_INCREMENT_ONLY",
-    "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/"
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "independent_review": {
+      "patch_sha": "df9feafac6f1a5ff88145e29b1785117ab067bd1",
+      "verdict": "PASS_LIMITED_NO_NEW_P1_P2",
+      "result_path": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/independent-review-df9feaf/conclusion.md",
+      "scope": "New auditor phrase, member positive, successor wiring/bindings/defaults; not all selected content or omission direction"
+    },
+    "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/",
+    "tested_commit_equivalence": "PASS_22_FILES; precommit executions retain their original identity"
   }
 }

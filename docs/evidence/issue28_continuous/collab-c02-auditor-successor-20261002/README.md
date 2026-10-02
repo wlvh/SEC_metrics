@@ -11,3 +11,5 @@
 `run.py`通过真实正常CLI、禁网及禁用116个旧语义导出，在新的外部私有根从保存原件创建一次JPMorgan FY2025 C02 Run：`CANDIDATE_READY`，新Result `sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a`，33个可逆分组、59个原始选中块，3367不在新文本而3409保留，Evidence `PASS`。原账本、active、旧C02 Run与390索引哈希均不变；耗时145.601秒。此处的33组/59块不能与旧默认Result的39个逐块摘录直接比较成完成率，当前分组V2到V3的源码选择差异只是一块。程序Run与来源字节通过**不证明**全部59块及漏选方向已按合同验收；新私有Result不进入可信390，原两份错误Result仍按精确身份扣留。
 
 `cold-installed.py`由另一进程只从新Run的安装目录加载选择器和投影器，重验V13执行身份，43.924秒读出同Result及逐字节相同的公开行；`repeat-current.py`再由正常CLI处理同一输入，47.412秒返回`NO_SOURCE_CONTENT_CHANGE`、原成功尝试/Result保留、没有第二Run，成功包的文件及账本/active哈希不变。最终树fast选择器147/147（57.602秒）通过，未全量重跑未变的旧来源长链。创建、冷读、重复测试均在未提交工作树、已记录规则字节和闭包上执行；不能说当时已测未来提交SHA，后续以绑定字节与提交等价核对及精确补丁独审补足身份说明。限定独审仍待精确SHA增量。全部实验真实provider/paid/SEC调用0/0/0，不授生产采纳、Ready、合并、部署或active切换。
+
+精确补丁 `df9feafac6f1a5ff88145e29b1785117ab067bd1` 的限定独审已完成，结论 `PASS_LIMITED_NO_NEW_P1_P2`，见 `independent-review-df9feaf/conclusion.md`。代理亲自核关键原件、受绑定字节、旧默认及短测7项；没有重跑材料/原生/冷读长链或验收全部内容。`tested-commit-equivalence.json`补证22个被测文件与提交及适用安装字节相等，原测试仍明确为提交前执行。3436的疑点、整份内容/漏选方向及可信390解除仍未通过。
