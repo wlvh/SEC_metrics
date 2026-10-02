@@ -6000,6 +6000,54 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "aad8b44a",
+   "own_commit_at_read": "4044014a",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; newly_excluded 17 coordinates / 23 result ids at 7f7b4eb0",
+   "baseline": "Read since eea7821c: twenty commits' messages and file lists, the register diff to 7f7b4eb0, the D02 peer-impact, versioned-binding and two limited-review conclusions.",
+   "increments": [
+    {
+     "commit": "de22326d",
+     "marker": "[shared-with-#47]",
+     "subject": "Bind D02 Item 8 filter in versioned ordinary update",
+     "affects_47": "#28 copied #47's D02 category rule (104876d6 bytes) to its own versioned path; its review found the comma false exclusion. #47 owns the shared rule: repaired as version 2 in 147957c4, notified in Issue #28 comment 5950737671.",
+     "integration": "PROVIDED_FIX"
+    },
+    {
+     "commit": "0ccf5363",
+     "marker": "[shared-with-#47]",
+     "subject": "Suspend D02 successor credit after false exclusion review",
+     "affects_47": "None by itself: #28's gate on its own successor.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "fdeafd43",
+     "marker": null,
+     "subject": "Withhold four E01 financing item results under content target",
+     "affects_47": "None on a #47 value: #47's E01 successor withholds every window with candidate items until a content confirmation is registered, and none is registered.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "15309022",
+     "marker": null,
+     "subject": "Withhold exact JPMorgan D02 page-furniture results",
+     "affects_47": "Same defect class #47 repaired on its own route (facing pages, e76e2953); #47's JPMorgan D02 defects stay registered until the repaired results are read.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "3a05f07c",
+     "marker": "[shared-with-#47]",
+     "subject": "Preserve structural A05 N/A in formula successor",
+     "affects_47": "#28's ordinary successor only; #47's pinned A05 route is unchanged by the merge (no #47 rule file moved).",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }

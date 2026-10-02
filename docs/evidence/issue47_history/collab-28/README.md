@@ -173,7 +173,7 @@
 
 #28 在 `de22326d` 把本方 D02 类别提及规则（固定 `104876d6` 的字节、`36c64ab6` 的接线）复制到自己的版本化路径，限定独审查出一个误删：关键词后面的单个逗号被当成列表证据，`We face litigation, which could result in a significant loss.` 与 `Litigation, brought by a customer against us in 2025, remains unresolved.` 都被移出（[评论 5948676381](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381)）。#28 随后在 `0ccf5363` 暂停了自己的 D02 后继新 Run 与更新信用，等本方修复。
 
-归属：D02 共用规则由本方维护（v1.1 第 4 条；#28 提供反例、必须保住的正例与普通路线接入验证）。修复是规则第 2 版：`scripts/vnext/d02_item_8_category_mentions.py` 加 `catalog/r6/D02_item_8_category_mention_v2.json`，提交见 `../d02-keyword-repair/v2/README.md`。做法是在第 1 版的证据上加结构条件，只读封闭词类：关键词所在短语不是从句、不点名当事方或本公司；不是句子第一项；与另一个列表项用并列连词连起来；这个系列不是谓语的主语，也不由本公司作主语直接支配。另外在暴露词里加了四条关系，都是在一份独立反例集上看到的说法。接口不变，`classify` 多返回每处的原因码。
+归属：D02 共用规则由本方维护（v1.1 第 4 条；#28 提供反例、必须保住的正例与普通路线接入验证）。修复是规则第 2 版：`scripts/vnext/d02_item_8_category_mentions.py` 加 `catalog/r6/D02_item_8_category_mention_v2.json`，提交 `147957c4`，注错记录 `dca84f46`，说明见 `../d02-keyword-repair/v2/README.md`；已在 [Issue #28 评论 5950737671](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5950737671) 通知对方固定这两个文件。做法是在第 1 版的证据上加结构条件，只读封闭词类：关键词所在短语不是从句、不点名当事方或本公司；不是句子第一项；与另一个列表项用并列连词连起来；这个系列不是谓语的主语，也不由本公司作主语直接支配。另外在暴露词里加了四条关系，都是在一份独立反例集上看到的说法。接口不变，`classify` 多返回每处的原因码。
 
 验证（零调用，`../d02-keyword-repair/v2/compare.json`）：
 
