@@ -1,0 +1,101 @@
+{
+ "record_type": "C02_LATEST_YEAR_SELECTION_DIFF",
+ "bound": {
+  "path": "scripts/vnext/historical_board_composition_v2.py",
+  "sha256": "sha256:73ec30fff3642eba9023c894119e10cbfebe63235e9d80bad0adbb106d37ba6b"
+ },
+ "working": {
+  "path": "scripts/vnext/historical_board_composition_v3.py",
+  "sha256": "sha256:d8c1b014a29791b1b9961d87960b872e02ebebd9985063008b95c8de0bced938"
+ },
+ "positions": {
+  "enphase_energy:2025-12-31": {
+   "bound_selects": 48,
+   "working_selects": 48,
+   "added": [],
+   "dropped": []
+  },
+  "ford_motor_company:2025-12-31": {
+   "bound_selects": 82,
+   "working_selects": 84,
+   "added": [
+    411,
+    438
+   ],
+   "dropped": []
+  },
+  "lumen_technologies:2025-12-31": {
+   "bound_selects": 101,
+   "working_selects": 101,
+   "added": [],
+   "dropped": []
+  },
+  "macys:2026-01-31": {
+   "bound_selects": 99,
+   "working_selects": 113,
+   "added": [
+    1755,
+    1757,
+    1758,
+    1759,
+    1760,
+    1761,
+    1762,
+    2235,
+    2237,
+    2238,
+    2239,
+    2240,
+    2241,
+    2242
+   ],
+   "dropped": []
+  },
+  "marriott_international:2025-12-31": {
+   "bound_selects": 98,
+   "working_selects": 99,
+   "added": [
+    1199
+   ],
+   "dropped": []
+  },
+  "paramount_skydance_paramount_global:2024-12-31": {
+   "bound_selects": 68,
+   "working_selects": 68,
+   "added": [],
+   "dropped": []
+  },
+  "paramount_skydance_paramount_global:2025-12-31": {
+   "bound_selects": 63,
+   "working_selects": 63,
+   "added": [],
+   "dropped": []
+  },
+  "pfizer:2025-12-31": {
+   "bound_selects": 80,
+   "working_selects": 80,
+   "added": [],
+   "dropped": []
+  },
+  "salesforce:2026-01-31": {
+   "bound_selects": 64,
+   "working_selects": 65,
+   "added": [
+    602
+   ],
+   "dropped": []
+  },
+  "southwest_airlines:2025-12-31": {
+   "bound_selects": 95,
+   "working_selects": 95,
+   "added": [],
+   "dropped": []
+  }
+ },
+ "positions_that_move": [
+  "ford_motor_company:2025-12-31",
+  "macys:2026-01-31",
+  "marriott_international:2025-12-31",
+  "salesforce:2026-01-31"
+ ]
+}
