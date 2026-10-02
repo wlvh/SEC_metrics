@@ -1,0 +1,63 @@
+{
+ "record_type": "ISSUE_47_E01_HEADER_DOCUMENT_FAULT_INJECTIONS",
+ "class": "tests.vnext.test_historical_event_items.ACandidateTheHeaderOmitsStopsTheWindow",
+ "control": "passed",
+ "results": [
+  {
+   "id": "THE_UNLISTED_HEADING_IS_NOT_CHECKED",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "the window would be confirmed and counted without the Seagen completion",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_saved_filing_whose_header_omits_its_item_2_01",
+   "failed_cases": [
+    "test_one_filing_s_omission_stops_the_window_whatever_the_others_list",
+    "test_the_saved_filing_whose_header_omits_its_item_2_01"
+   ]
+  },
+  {
+   "id": "A_LINKED_HEADING_IS_HEADED",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "a contents entry names an item without heading it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_contents_link_to_an_unlisted_candidate_is_not_a_heading",
+   "failed_cases": [
+    "test_a_contents_link_to_an_unlisted_candidate_is_not_a_heading"
+   ]
+  },
+  {
+   "id": "EVERY_UNLISTED_CODE_STOPS",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "nine saved 8-Ks head a 9.01 their header omits; E01 does not count 9.01",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_unlisted_heading_of_a_code_the_route_does_not_count_is_not_its_business",
+   "failed_cases": [
+    "test_an_unlisted_heading_of_a_code_the_route_does_not_count_is_not_its_business"
+   ]
+  },
+  {
+   "id": "ONLY_THE_FIRST_FILING_IS_CHECKED",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "a window holds many filings and any one of them can carry the omission",
+   "outcome": "CAUGHT",
+   "expected_case": "test_one_filing_s_omission_stops_the_window_whatever_the_others_list",
+   "failed_cases": [
+    "test_one_filing_s_omission_stops_the_window_whatever_the_others_list"
+   ]
+  },
+  {
+   "id": "THE_STOP_READS_AS_AN_ITEM_NOT_FOUND",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "why_it_matters": "an omitted header item and an item whose text was not found are different gaps",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_route_withholds_the_window_with_its_own_reason",
+   "failed_cases": [
+    "test_the_route_withholds_the_window_with_its_own_reason"
+   ]
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
