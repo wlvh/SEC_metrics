@@ -44,6 +44,8 @@ def main(argv=None):
     compute.add_argument('--processing-package', type=Path)
     compute.add_argument('--processing-runtime', type=Path)
     compute.add_argument('--processing-trust-root', type=Path)
+    compute.add_argument('--processing-source-version', type=Path,
+                         help='Separately admitted original baseline company SEC version for exact acquired-source reuse')
     period = compute.add_mutually_exclusive_group()
     period.add_argument('--report-end')
     period.add_argument('--fiscal-year', type=int)
@@ -97,7 +99,8 @@ def main(argv=None):
             result = compute_company(state_root=args.state_root, company_id=args.company,
                                      metric_ids=args.metric, report_end=args.report_end,
                                      fiscal_year=args.fiscal_year, processing_package=args.processing_package,
-                                     processing_runtime=args.processing_runtime)
+                                     processing_runtime=args.processing_runtime,
+                                     processing_source_version=args.processing_source_version)
         elif args.command == 'results':
             from vnext.company_result_view import read_company_results
             result = read_company_results(state_root=args.state_root, company_id=args.company,

@@ -187,9 +187,15 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
         for candidate in candidates:
             manifest = candidate.pop('manifest')
             if 'processing' in pointer.relative_to(root).parts:
-                receipt = strict_json_file(path=Path(candidate['rows_root']).parent/'processing-receipt.json')
+                processing_work = Path(candidate['rows_root']).parent
+                receipt = strict_json_file(path=processing_work/'processing-receipt.json')
+                original_source = strict_json_file(path=processing_work/'processing/processing-source.json')
+                processing_metadata = strict_json_file(path=processing_work/'processing/processing.json')
                 candidate.update(row_layout='processing', result_id=receipt['result_id'],
-                                 saved_processing_mode=receipt['mode'],
+                                 saved_processing_mode=processing_metadata['mode'],
+                                 source_credit=original_source['source_admission']['source_credit'],
+                                 original_source_checkpoint_id=receipt.get('original_source_checkpoint_id'),
+                                 current_source_equivalence_id=receipt.get('current_source_equivalence', {}).get('equivalence_id'),
                                  business_metric_completed=False)
             key = (candidate['metric_id'], candidate['rows_root'], candidate['attempt_id'])
             report, outcome = observations.get(key, ({}, {}))

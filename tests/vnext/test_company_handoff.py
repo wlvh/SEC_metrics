@@ -115,6 +115,23 @@ class CompanyImportTest(unittest.TestCase):
             self.assertNotEqual(0, child.returncode)
             self.assertIn('BlockingIOError', child.stderr)
 
+    def test_nonroot_readonly_packages_install_update_and_recover(self):
+        for package in self.packages:
+            for p in [package,*package.rglob('*')]:p.chmod(p.stat().st_mode & ~0o222)
+        first=self.install(1)
+        self.assertEqual('INSTALLED',first['status'])
+        self.assertEqual(0,self.packages[0].stat().st_mode & 0o222)
+        def interrupt(step):
+            if step=='after_old_source_move':raise RuntimeError('INJECTED_READONLY_INTERRUPTION')
+        with self.assertRaisesRegex(RuntimeError,'INJECTED_READONLY_INTERRUPTION'):self.install(2,interrupt)
+        with handoff.locked_company(self.state):
+            self.assertEqual(first['checkpoint_id'],handoff.recover_import(self.state)['checkpoint_id'])
+        second=self.install(2)
+        self.assertEqual('INSTALLED',second['status'])
+        self.assertEqual(first['source_root'],second['source_root'])
+        self.assertEqual('ALREADY_INSTALLED',self.install(2)['status'])
+        self.assertEqual(0,(self.state/'versions'/second['checkpoint_id'][7:]).stat().st_mode & 0o222)
+
 
 class SourceOnlyRulesTest(unittest.TestCase):
     def test_saved_native_assessment_is_not_collected_as_a_rule(self):

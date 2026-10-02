@@ -20,10 +20,34 @@ def main():
     from vnext.canonical import strict_json_file
     from vnext.requirements import load_requirement_snapshot
     from vnext.requirement_profile_v1 import validate_execution_authority
+    if action == 'current':
+        from vnext.company_source_authority import require_company
+        from vnext.r6_semantic_source import prepare_d04_semantic_source
+        from vnext.d04_native_assessment import native_source
+        metadata = strict_json_file(path=packet/'processing.json')
+        record = strict_json_file(path=packet/'config/ordinary_going_concern_assessment.json')
+        identity = 'issue_54_v2' if (program/'requirements/issue_54_v2').is_dir() else 'issue_54_v1'
+        requirement = load_requirement_snapshot(snapshot_dir=program/'requirements'/identity)
+        validate_execution_authority(repo_root=program, requirement=requirement)
+        require_company(source_root=source, company_id=metadata['company_id'])
+        with patch.object(socket.socket, 'connect', side_effect=ValueError('COMPANY_PROCESSING_NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_PROCESSING_DNS_FORBIDDEN')):
+            current = native_source(prepare_d04_semantic_source(repo_root=source,
+                company_id=metadata['company_id'], ordinary_registered=True),
+                request_context_format=record.get('request_context_format'),
+                complete_response_contract=bool(record.get('response_contract_version')))
+        print(json.dumps({'source':current, 'requirement_closure_hash':requirement['requirement_closure_hash']}))
+        return
     requirement = load_requirement_snapshot(snapshot_dir=program/'requirements/issue_28_v14')
     validate_execution_authority(repo_root=program, requirement=requirement)
     with patch.object(socket.socket, 'connect', side_effect=ValueError('COMPANY_PROCESSING_NETWORK_FORBIDDEN')), \
          patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_PROCESSING_DNS_FORBIDDEN')):
+        if action == 'equivalence':
+            from vnext.capacity_update_input import source_equivalence
+            proof = source_equivalence(current=strict_json_file(path=work/'current-semantic-source.json'),
+                                       original=strict_json_file(path=packet/'processing-source.json'))
+            print(json.dumps(proof))
+            return
         if action == 'export':
             from vnext.capacity_run import prepare_case
             record = strict_json_file(path=program/'config/ordinary_going_concern_assessment.json')
@@ -69,6 +93,12 @@ def main():
                 shutil.copytree(source/directory,view/directory)
             shutil.copyfile(source/'config/company_registry.csv',view/'config/company_registry.csv')
             shutil.copyfile(packet/'config/ordinary_going_concern_assessment.json',view/'config/ordinary_going_concern_assessment.json')
+            # Incoming program and sources may both be read-only. Only this
+            # transient private view is writable, including copied source
+            # directories so its cleanup cannot turn a completed Run into a
+            # failed execution report.
+            for path in [view, *view.rglob('*')]:
+                path.chmod(path.stat().st_mode | (0o700 if path.is_dir() else 0o600))
             # This adapter is explicitly baseline-only. Its raw files retain
             # their original full ledger and ordinary baseline authentication.
             need(not (view/'config/ordinary_source_checkpoint.json').exists(), 'COMPANY_PROCESSING_BASELINE_VIEW_REQUIRED')

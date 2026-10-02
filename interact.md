@@ -3,6 +3,9 @@
 公司来源包可以在未生成AI判断或Result时交付。`tools/vnext_company.py`在显式独立路径导入、计算和导出，每次只处理所选公司；导入失败明确记录，旧结果不冒充新来源完成。B13/D04无既有判断返回需处理输入状态。详见 `docs/company_compute_boundary.md` 及其实际覆盖限制。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 
+公司 `latest-execution.json` 只报告本次请求；`results` 和公司CSV从已有指标/期间/Run读取，局部更新保留其它结果并显示当前来源匹配或未复核。完整已保存D04判断及原V14程序通过独立处理包/信任接入；acquired精确同源复用另需单独准入的原公司SEC版本，完整来源或请求责任变化会拒绝。请求/响应/接受身份保持，入口没有新AI调用权限。
+<!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
+
 确切年度候选可由`tools/vnext_annual_publication.py prepare --policy-id annual_candidate_adoption_v2`
 生成完整待审批包，再用`read --publication-id`通过同一PublicationView读取矩阵、证据
 与原文。没有实际批准也可以核对内容；实际写入必须走`release`的真实批准/激活与

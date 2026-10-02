@@ -1,7 +1,7 @@
 """Independent, authenticated saved processing inputs over the original V14 APIs.
 
-First adapter: complete D04 over byte-matching baseline SEC sources. Acquired
-source equivalence and new AI calls remain explicit unsupported entrances.
+Complete D04 retains its original runtime and source version. An acquired
+company history may reuse it only after whole-source equivalence is checked.
 """
 import json
 import base64
@@ -21,8 +21,10 @@ TRUST_VARIABLE = 'SEC_METRICS_PROCESSING_TRUST_ROOT'
 
 
 def worker(action, program, packet, source, work):
+    work = Path(work)
     child = subprocess.run([sys.executable,'-B',str(Path(__file__).with_name('company_processing_read.py')),
         action,str(program),str(packet),str(source),str(work)],capture_output=True,text=True,
+        cwd=work if work.is_dir() else work.parent,
         env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
     need(child.returncode==0,'COMPANY_PROCESSING_AUTHENTICATION_FAILED:'+(
         child.stderr.strip().splitlines()[-1] if child.stderr.strip() else 'WORKER_FAILED'))
@@ -100,19 +102,56 @@ def authenticate_processing(*, packet_root, program_root, company_id):
     return metadata
 
 
-def compute_saved_processing(*, root, source, admission, company_id, packet_root, program_root):
+def verify_saved_equivalence(*, program_root, packet_root, work, runtime_roots=(), recheck_current=False):
+    """Rebuild the admitted current source; an equivalence JSON is no authority."""
+    receipt = strict_json_file(path=work/'processing-receipt.json')
+    if 'current_source_equivalence' not in receipt:
+        return
+    from .normal_source_authority import ROOT
+    from git_workspace import first_symlink_in_path
+    creator = ROOT if recheck_current else Path(receipt['current_source_runtime_root'])
+    need(creator.is_absolute() and first_symlink_in_path(path=creator) is None and
+         (recheck_current or creator.resolve() in {Path(p).resolve() for p in (runtime_roots or (ROOT,))}),
+         'COMPANY_PROCESSING_CURRENT_SOURCE_RUNTIME_NOT_SUPPLIED')
+    current = worker('current', creator, packet_root,
+                     work/'current-source', work)
+    need(recheck_current or current['requirement_closure_hash'] == receipt['current_source_runtime_closure_hash'],
+         'COMPANY_PROCESSING_CURRENT_SOURCE_RUNTIME_CHANGED')
+    need(current['source'] == strict_json_file(path=work/'current-semantic-source.json'),
+         'COMPANY_PROCESSING_CURRENT_SOURCE_CHANGED')
+    need(worker('equivalence', program_root, packet_root, work/'current-source', work)
+         == receipt['current_source_equivalence'], 'COMPANY_PROCESSING_EQUIVALENCE_CHANGED')
+
+
+def compute_saved_processing(*, root, source, admission, company_id, packet_root, program_root,
+                             source_version=None):
     location=os.environ.get(TRUST_VARIABLE)
     need(location,'COMPANY_PROCESSING_TRUST_ROOT_REQUIRED')
     trust=external(location)
     need(trust!=root and root not in trust.parents and trust not in root.parents,
          'COMPANY_PROCESSING_STATE_TRUST_OVERLAP')
     metadata=authenticate_processing(packet_root=packet_root,program_root=program_root,company_id=company_id)
-    need(admission['original_checkpoint'] is None,'COMPANY_PROCESSING_ACQUIRED_SOURCE_ADAPTER_REQUIRED')
+    acquired = admission['original_checkpoint'] is not None
+    need(not acquired or source_version is not None,
+         'COMPANY_PROCESSING_ORIGINAL_SOURCE_VERSION_REQUIRED')
+    need(acquired or source_version is None, 'COMPANY_PROCESSING_SOURCE_VERSION_ON_BASELINE')
+    original_source = source
+    original_admission = admission
+    if acquired:
+        from .company_source_authority import require_company
+        from .normal_source_authority import ROOT
+        need(any((ROOT/'requirements'/name).is_dir() for name in ('issue_54_v1', 'issue_54_v2')),
+             'COMPANY_PROCESSING_ACQUIRED_RUNTIME_REQUIRED')
+        original_source = external(source_version)
+        original_admission = require_company(source_root=original_source, company_id=company_id)
+        need(original_admission['original_checkpoint'] is None and 'D04' in original_admission['metric_ids'],
+             'COMPANY_PROCESSING_ORIGINAL_BASELINE_SOURCE_VERSION_REQUIRED')
     target=root/'updates/processing/D04'/metadata['requirement_closure_hash'][7:]
     target.mkdir(parents=True,exist_ok=True); pointer=target/'current.json'
     previous=strict_json_file(path=pointer) if pointer.is_file() else None
     fingerprint=content_hash(value={k:metadata[k] for k in
-        ('input_record_id','source_id','mode','requirement_closure_hash')} | {'checkpoint_id':admission['checkpoint_id']})
+        ('input_record_id','source_id','mode','requirement_closure_hash')} | {'checkpoint_id':admission['checkpoint_id']}
+        | ({'original_source_checkpoint_id':original_admission['checkpoint_id']} if acquired else {}))
     reusable = previous and previous['input_fingerprint']==fingerprint
     if previous and not reusable:
         # An older envelope fingerprint must not recreate a byte-identical
@@ -121,9 +160,15 @@ def compute_saved_processing(*, root, source, admission, company_id, packet_root
         receipt=strict_json_file(path=work/'processing-receipt.json')
         registered=strict_json_file(path=work/'data/config/ordinary_going_concern_assessment.json')
         reusable=(receipt['source_checkpoint_id']==admission['checkpoint_id'] and
+            (not acquired or receipt.get('original_source_checkpoint_id')==original_admission['checkpoint_id']) and
             all(registered[k]==metadata[k] for k in ('input_record_id','source_id','mode','requirement_closure_hash')))
     if reusable:
         candidate=previous['candidate']; work=Path(candidate['rows_root']).parent
+        # A new execution may revalidate with its own fixed tree if the entire
+        # semantic packet is still byte-for-byte identical. Keep the old Run
+        # and proof creator identity; cold export uses its supplied old tree.
+        verify_saved_equivalence(program_root=program_root, packet_root=packet_root, work=work,
+                                 recheck_current=True)
         files=worker('replay',program_root,packet_root,source,work)
         for name,raw in files.items():
             need((work/'rows/D04'/name).read_bytes()==base64.b64decode(raw,validate=True),
@@ -135,12 +180,29 @@ def compute_saved_processing(*, root, source, admission, company_id, packet_root
                 'business_metric_completed':False}
     identity=uuid4().hex; work=target/'attempts'/identity;work.mkdir(parents=True)
     try:
-        completed=worker('compute',program_root,packet_root,source,work)
+        equivalence = {}
+        if acquired:
+            # Keep the complete current ledger in its own immutable version.
+            # The original ledger comes from an independently admitted, real
+            # baseline company version: never trim or reset the current one.
+            shutil.copytree(source, work/'current-source')
+            current = worker('current', ROOT, packet_root, work/'current-source', work)
+            _atomic_json(work/'current-semantic-source.json', current['source'])
+            proof = worker('equivalence', program_root, packet_root, work/'current-source', work)
+            equivalence = {'current_source_equivalence':proof,
+                'current_source_runtime_root':str(ROOT),
+                'current_source_runtime_closure_hash':current['requirement_closure_hash'],
+                'original_source_checkpoint_id':original_admission['checkpoint_id']}
+        completed=worker('compute',program_root,packet_root,original_source,work)
+        if acquired:
+            require_company(source_root=original_source, company_id=company_id)
+            require_company(source_root=source, company_id=company_id)
         need(completed['native_assessment_completed'] is True,'COMPANY_PROCESSING_RESULT_WITHHELD')
         # Preserve authenticated processing bytes beside (not inside) SEC data.
         shutil.copytree(packet_root,work/'processing')
         receipt={'processing_id':metadata['processing_id'],'company_id':company_id,
-            'source_checkpoint_id':admission['checkpoint_id'],'runtime_root':str(program_root),**completed}
+            'source_checkpoint_id':admission['checkpoint_id'],'runtime_root':str(program_root),
+            **equivalence, **completed}
         _atomic_json(work/'processing-receipt.json',receipt)
         candidate={'attempt_id':identity,'rows_root':str(work/'rows'),'current_input_matches':True,
                    'processing_id':metadata['processing_id'],'runtime_root':str(program_root)}

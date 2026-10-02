@@ -335,7 +335,13 @@ def _install_locked(package, root, company_id, fault):
         shutil.copytree(package, staging)
         check_package(package_root=staging, company_id=company_id)
         version.parent.mkdir(exist_ok=True)
+        # Moving a read-only directory across parents needs permission to
+        # update its '..' entry on non-root runtimes. Change only this private
+        # copy's root mode, then restore it at the immutable version path.
+        mode = staging.stat().st_mode
+        staging.chmod(mode | 0o200)
         os.rename(staging, version)
+        version.chmod(mode)
     staged = root/('.source-'+uuid4().hex)
     shutil.copytree(version, staged)
     check_package(package_root=staged, company_id=company_id)

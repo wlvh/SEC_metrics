@@ -61,7 +61,7 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 同一 history 的运行路径始终为 `<state-root>/source`；物理版本在 `versions/<checkpoint-id>` 保留。导入和整个计算持有同一个目录锁。导入先完整检查暂存版本，再替换稳定目录并提交 `current_source.json`。重启按提交指针恢复，首次中断的未提交目录被隔离；旧结果保持。`latest_import.json` 保存成功、重复及显式失败；进程突然退出可能留下 `IN_PROGRESS`，下一进程按已提交指针恢复，未完成记录不能当成已导入。目录别名不能绕过这些检查。当前实际验证为 Linux 非 root uid 1000、只读程序、独立可写 state；动态 UID 与真实卷/网络行为未测。
 
-普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。增量 B13 的零 AI 结构性 N/A 使用单独 `--kind native` 固定树（继承原 V14、后继 issue_54_v2）；普通树明确返回 NATIVE_RUNTIME_REQUIRED。完整已保存 D04 可通过独立处理包和其原 V14 固定运行树接入，首个适配仅支持字节匹配的基线来源。B13 判断登记及 acquired-source 的同源处理适配尚未实现，返回明确待处理／拒绝；不计完成或请求新模型调用。来源包仍不携处理答案。
+普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。增量 B13 的零 AI 结构性 N/A 使用单独 `--kind native` 固定树（继承原 V14、后继 issue_54_v2）；普通树明确返回 NATIVE_RUNTIME_REQUIRED。完整已保存 D04 可通过独立处理包和其原 V14 固定运行树接入。基线直接使用其独立 SEC 公司来源；acquired 同源复用还需单独准入的原基线公司来源版本，以及完整原文、主体／期间、来源集合和实质请求责任的等价检查。新账本完整保留，不裁行或转换成基线。B13 判断登记、历史处理或变化后的来源仍返回明确待处理／拒绝；不计完成或请求新模型调用。来源包仍不携处理答案。
 
 历史准备从固定 #47 树调用 `export --history-years 5`，使用其 `declared_frame`；计算选择历史固定树并加 `--report-end YYYY-MM-DD` 或 `--fiscal-year YYYY`。这些消费者的实际通过范围须看证据索引，不能由接口存在推出五年全部业务验收。
 
@@ -73,14 +73,32 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 
+<!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
+
 ## 保存处理输入的实际接口与限制
 
 #28 原接口为 `capacity_assessment_input.load_registered_input(data_root, source, requirement, mode, input_record_id)`；`source` 必须由同版原工厂重建并保持原 source_id/请求集合，登记记录不能改签成新输入。早期只读探针核对合法旧 D04 录制材料、原 V14 规则及固定 tokenizer 0.22.2 的6个请求，当时未创建 Result。收口探针已由下述公司入口生成原生 Run 和公司行；全程未调用模型。
 
 原登记创建端的 `_journal` 位于原固定运行树 `.git/ordinary-source-authority/{capacity-assessments,going-concern-assessments}/<mode>`。本期适配只读完整保存记录，不重新 register，不读取私有 ledger，不新增模型调用。受控准备端 `export-processing --installed-root <原已安装V14输入树> --output-root <处理包> --runtime-output-root <原版只读程序> --trust-root <独立处理信任> --company <公司>` 通过原 loader／来源工厂认证完整 D04，然后分别交付原登记字节、来源身份及原代码。程序不携 SEC／处理登记；只读 Git inventory 属程序，写入不发生在程序 journal。计算加 `--processing-package`、`--processing-runtime`、`--processing-trust-root`；SEC 来源和处理信任分别检查，旧 source_id/input_record_id、请求／响应／接受及 Requirement 不改签。处理源暂存及原生 Run 只写公司 state。
 
-首个材料为合法 RECORDED_TEST_ONLY 六请求，保持原信用，无新业务验收。既有 defined-absence 投影可形成 TEXT_QUAL 公司行，同时保留原 Result 的 WITHHELD 发布状态；这种投影沿用原能力，不能将其说成正式发布。缺输入、错误公司、处理原件／运行树篡改、没有独立信任、与原 source_id 不匹配或 acquired-source 适配未实现时明确拒绝，旧结果不改。完整 LIVE 已保存记录的材料验证、B13 接线、下一期新 AI 调用分别登记，不以录制证明真实调用。
+首个材料为合法 RECORDED_TEST_ONLY 六请求，保持原信用，无新业务验收。既有 defined-absence 投影可形成 TEXT_QUAL 公司行，同时保留原 Result 的 WITHHELD 发布状态；这种投影沿用原能力，不能将其说成正式发布。缺输入、错误公司、处理原件／运行树篡改、没有独立信任或与原 source_id 不匹配时明确拒绝，旧结果不改。现已接收 #28 原173–178完整 LIVE 登记及原V14运行树索引；原处理输入的 LIVE 身份不会授新调用、生产或整家公司内容信用。实际接入范围和失败材料另见证据，不以录制证明真实调用。
 
-保存处理接线目前限定普通基线 D04。历史树收到这些处理参数时显式返回 `COMPANY_PROCESSING_HISTORY_ADAPTER_NOT_IMPLEMENTED`；参数缺原运行树或本次未请求 D04 也拒绝，不默默忽略已交付的判断。历史处理登记的既有消费者仍由 #47 维护；本期没有把当前普通判断套到其他历史期间。
+保存处理接线支持普通基线 D04，以及能通过既有 `capacity_update_input.source_equivalence` 完整检查的 acquired 公司历史。历史树收到这些处理参数时显式返回 `COMPANY_PROCESSING_HISTORY_ADAPTER_NOT_IMPLEMENTED`；参数缺原运行树或本次未请求 D04 也拒绝，不默默忽略已交付的判断。历史处理登记的既有消费者仍由 #47 维护；本期没有把当前普通判断套到其他历史期间。
+
+acquired 复用显式传入 `--processing-source-version <原基线公司SEC包>`；它同样由 `source-trust` 认证、必须属于本公司且准入D04。这个包只能来自合法保存的原SEC版本；不得截取当前账本前缀或重新获取原件来构造它。当前完整混合历史仍在 `<state>/source`，原版本另行只读，处理请求／响应仍只在独立处理包内。程序先以当前固定ordinary/native树重建完整当前语义来源，再用原V14的等价接口比较原处理source：原文／主体／期间／实质请求任何变化都拒绝，不按少数组拼接。
+
+通过后，原V14仅用原公司SEC版本计算；公司state同时保存当前公司来源的完整不可变快照、等价证明及原版本checkpoint。原Run／Result／请求／响应／接受／Requirement保持原身份；单独的当前匹配证明不授新获取信用。公司CSV同时列出当前checkpoint、原SEC版本checkpoint、等价id、原来源信用及LIVE/recorded处理mode。冷导出重建当前来源并重验等价，不能单凭保存的JSON授信；须通过重复 `--runtime-root` 提供原V14与该证明创建时的固定ordinary/native树。再次计算可在调用者自己的固定树核验整个相同语义包，保留旧Run及旧证明，不重签。
+
+```bash
+python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
+  --state-root /srv/sec-metrics/state/enphase_energy \
+  --trust-root /srv/sec-metrics/source-trust --company enphase_energy --metric D04 \
+  --processing-package /srv/sec-metrics/processing/enphase-d04 \
+  --processing-runtime /srv/sec-metrics/runtime/original-v14 \
+  --processing-trust-root /srv/sec-metrics/processing-trust \
+  --processing-source-version /srv/sec-metrics/transfer/enphase-original-baseline
+```
+
+程序／来源／信任可只读。导入只在私有暂存根临时增加跨父目录rename所需权限，再恢复不可变版本的原模式；输入包不改。处理子进程工作目录为外部工作区，私有副本可写并可清理；不将开发checkout、个人HOME、root或特权当作前提。
 
 导出结果带相对 native 路径及逐文件索引。读取旧 Run 应选择创建它的固定运行树与独立 trust；程序、Requirement 或 source admission 的绑定副本必须保留。历史导出复用 #47 已有单进程、按状态失效的 checkpoint replay scope，实际原件和每个原生结果仍验证，不建立新的通用缓存。

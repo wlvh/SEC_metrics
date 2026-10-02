@@ -15,7 +15,8 @@ from .company_result_view import build_company_view, recover_for_read
 from .company_source_authority import need
 
 VIEW_FIELDS = ('company_id', 'run_id', 'result_id', 'requirement_id', 'requirement_closure_hash',
-               'source_checkpoint_id', 'last_checked_source_checkpoint_id', 'current_source_checkpoint_id', 'current_input_matches',
+               'source_checkpoint_id', 'last_checked_source_checkpoint_id', 'current_source_checkpoint_id',
+               'original_source_checkpoint_id', 'current_source_equivalence_id', 'current_input_matches',
                'current_input_status', 'result_validity', 'latest_attempt_status', 'latest_request_status',
                'requested_in_latest_execution', 'source_credit', 'saved_processing_mode', 'native_path')
 
@@ -36,10 +37,12 @@ def replay_candidate(entry, runtime_roots):
         runtime = runtime.resolve()
         if not (runtime/'requirements'/entry['requirement_id']).is_dir(): continue
         if entry['row_layout'] == 'processing':
-            from .company_processing import authenticate_processing, worker
+            from .company_processing import authenticate_processing, verify_saved_equivalence, worker
             work = Path(entry['rows_root']).parent
             try:
                 authenticate_processing(packet_root=work/'processing',program_root=runtime,company_id=entry['company_id'])
+                verify_saved_equivalence(program_root=runtime, packet_root=work/'processing', work=work,
+                                         runtime_roots=roots)
                 result = worker('replay',runtime,work/'processing',work/'data',work)
                 return {name:base64.b64decode(raw,validate=True) for name,raw in result.items()}, str(runtime)
             except Exception as error:

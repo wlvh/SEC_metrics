@@ -215,7 +215,11 @@ class CompanyResultsTest(unittest.TestCase):
         self.manifest(work,'D04','2025-12-31','original-closure')
         manifest=work/'runs/D04/manifest.json';value=json.loads(manifest.read_text())
         value['requirement_id']='issue_28_v14';manifest.write_text(json.dumps(value))
-        _atomic_json(work/'processing-receipt.json',{'result_id':'original-result','mode':'RECORDED_TEST_ONLY'})
+        _atomic_json(work/'processing-receipt.json',{'result_id':'original-result','mode':'LIVE'})
+        (work/'processing').mkdir()
+        _atomic_json(work/'processing/processing.json',{'mode':'RECORDED_TEST_ONLY'})
+        _atomic_json(work/'processing/processing-source.json',{'source_admission':{
+            'source_credit':'PREEXISTING_SAVED_ACQUISITIONS_ONLY'}})
         candidate={'attempt_id':work.name,'rows_root':str(work/'rows'),'current_input_matches':True,
                    'runtime_root':'/original/v14'}
         _atomic_json(target/'current.json',{'attempt_id':work.name,'candidate':candidate})
@@ -225,3 +229,4 @@ class CompanyResultsTest(unittest.TestCase):
         _,rows,_=self.exported()
         self.assertEqual('RECORDED_TEST_ONLY',rows[0]['saved_processing_mode'])
         self.assertEqual('issue_28_v14',rows[0]['requirement_id'])
+        self.assertEqual('PREEXISTING_SAVED_ACQUISITIONS_ONLY',rows[0]['source_credit'])
