@@ -36,6 +36,8 @@ python3 tools/vnext_company.py export \
 
 计算运行树由原固定程序安装。A 类 baseline 默认不改核心文件；增量包使用 `--kind ordinary` 的独立后继运行树。原 `issue_28_v13` 文件、旧 Run 和闭合额度保持原字节；后继只登记公司来源准入与新运行身份，业务规则继承原版本。代码变更发生在新安装树，不写回 #28 checkout。历史另用 `--kind historical`，从 #47 固定树安装，应用其提供的注册补丁，继承 `issue_47_v1` 并形成独立 `issue_54_v3`；不能把该补丁打入普通树。
 
+C01/E01–E05 是实际探针证实的基线例外，也使用 `--kind ordinary`。原事件函数会把已取得 headers census 与程序 checkout 中的原件比较；只读程序没有 SEC 原件。新安装树仅把该比较的权威端接到 `company_event_census.installed_event_filings`：先认证外部 source-trust 点名的公司文件闭包，再核对实际 headers 集合精确相等，复用原窗口／form／accession 解析和补充申报检查。原生安装器在基线账本的快速路径之前保留公司准入及其原件闭包，使 Run 的 data 根也能认证同一 census；不删除完整性检查或让 data 根自证。#47 的历史事件 code-object 遍历复用此分派，历史 coherence 检查保持。所有改动只应用于新固定树并绑定新的 closure；旧 Run 仍用原树，不改签。原普通 journal 拒绝运行时 closure 改变；新规则树使用独立更新历史，保留旧 journal，不重置配置或删尝试。
+
 ```bash
 python3 tools/vnext_company.py install-runtime \
   --kind ordinary --output-root /srv/sec-metrics/runtime/ordinary-v1
@@ -73,10 +75,12 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 ## 保存处理输入的实际接口与限制
 
-#28 原接口为 `capacity_assessment_input.load_registered_input(data_root, source, requirement, mode, input_record_id)`；`source` 必须由同版原工厂重建并保持原 source_id/请求集合，登记记录不能改签成新输入。合法旧 D04 录制材料已在无 `.git`、只读独立目录重放，使用其原 V14 规则及固定 tokenizer 0.22.2，6 个请求完整核对；没有创建 Result 或调用模型。
+#28 原接口为 `capacity_assessment_input.load_registered_input(data_root, source, requirement, mode, input_record_id)`；`source` 必须由同版原工厂重建并保持原 source_id/请求集合，登记记录不能改签成新输入。早期只读探针核对合法旧 D04 录制材料、原 V14 规则及固定 tokenizer 0.22.2 的6个请求，当时未创建 Result。收口探针已由下述公司入口生成原生 Run 和公司行；全程未调用模型。
 
 原登记创建端的 `_journal` 位于原固定运行树 `.git/ordinary-source-authority/{capacity-assessments,going-concern-assessments}/<mode>`。本期适配只读完整保存记录，不重新 register，不读取私有 ledger，不新增模型调用。受控准备端 `export-processing --installed-root <原已安装V14输入树> --output-root <处理包> --runtime-output-root <原版只读程序> --trust-root <独立处理信任> --company <公司>` 通过原 loader／来源工厂认证完整 D04，然后分别交付原登记字节、来源身份及原代码。程序不携 SEC／处理登记；只读 Git inventory 属程序，写入不发生在程序 journal。计算加 `--processing-package`、`--processing-runtime`、`--processing-trust-root`；SEC 来源和处理信任分别检查，旧 source_id/input_record_id、请求／响应／接受及 Requirement 不改签。处理源暂存及原生 Run 只写公司 state。
 
 首个材料为合法 RECORDED_TEST_ONLY 六请求，保持原信用，无新业务验收。既有 defined-absence 投影可形成 TEXT_QUAL 公司行，同时保留原 Result 的 WITHHELD 发布状态；这种投影沿用原能力，不能将其说成正式发布。缺输入、错误公司、处理原件／运行树篡改、没有独立信任、与原 source_id 不匹配或 acquired-source 适配未实现时明确拒绝，旧结果不改。完整 LIVE 已保存记录的材料验证、B13 接线、下一期新 AI 调用分别登记，不以录制证明真实调用。
+
+保存处理接线目前限定普通基线 D04。历史树收到这些处理参数时显式返回 `COMPANY_PROCESSING_HISTORY_ADAPTER_NOT_IMPLEMENTED`；参数缺原运行树或本次未请求 D04 也拒绝，不默默忽略已交付的判断。历史处理登记的既有消费者仍由 #47 维护；本期没有把当前普通判断套到其他历史期间。
 
 导出结果带相对 native 路径及逐文件索引。读取旧 Run 应选择创建它的固定运行树与独立 trust；程序、Requirement 或 source admission 的绑定副本必须保留。历史导出复用 #47 已有单进程、按状态失效的 checkpoint replay scope，实际原件和每个原生结果仍验证，不建立新的通用缓存。

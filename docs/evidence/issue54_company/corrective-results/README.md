@@ -10,7 +10,7 @@ D04：原 review-5207290213 的完整六请求 RECORDED_TEST_ONLY，封印身份
 
 读取 #28 [消费者回执5959346910](https://github.com/wlvh/SEC_metrics/issues/54#issuecomment-5959346910)：固定2a642e56、Marriott C04 FY2025、其 own52捕获／重复无新 Run／错公司拒绝及1003旧文件保护。复用来源认证／导入／C04内核未变部分，不自动算本提交通过。253/e536相对2a的影响为历史／native独立安装分派、恢复和来源不带判断材料；本次再增加结果视图／汇总及独立 D04 处理入口，消费者应补这些接口，原 C04 算法和 journal 未修改。已在#28回链 [5960148666](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5960148666) 请求可读取的173–178完整 LIVE 材料；未取得时只限制该 LIVE 节点。
 
-#47 固定消费者及历史程序继续沿用60c6b4d6/815c7820。实际追加FY2022 A08为759.946s，公司汇总冷导出383.138s、同时包含FY2022与FY2023；FY2023显示NOT_RECHECKED，未伪装成最近FY2022执行成功。保留原FY2023，不扩大为五年全部指标。其消费者尚待独立反馈。
+#47 本方历史程序沿用60c6b4d6/815c7820。实际追加FY2022 A08为759.946s，公司汇总冷导出383.138s、同时包含FY2022与FY2023；FY2023显示NOT_RECHECKED，未伪装成最近FY2022执行成功。保留原FY2023，不扩大为五年全部指标。后续已收到[消费者回执5960340865](https://github.com/wlvh/SEC_metrics/issues/54#issuecomment-5960340865)，固定8c798939材料／2a642e56公司模块：其仅改编号的探针树验证Paramount FY2024三项、Salesforce FY2023五项的结果／行及冷重放，未验业务内容。旧非法编号已在253/e536修为issue_54_v3；事件census读取programme checkout的实际缺口由#54接续修复，详见../event-census/。这份回执不能自动升级为最新提交验收。
 
 e536cdc 主工作流37049750196所有16作业终态成功，生成检查37049750282成功；这是旧head，修后最终head CI另行记录。本期不部署 OpenShift，新增真实 SEC/provider/paid 0/0/0。动态UID／实际集群、全36项、独立业务验收及完整 LIVE D04 未测或待取得，不能由本材料推断完成。
 
@@ -19,4 +19,4 @@ e536cdc 主工作流37049750196所有16作业终态成功，生成检查37049750
 
 实际出口部分失败负例：从B01 Run manifest的SourceReference与input binding定位companyfacts不可变正文及对应headers，只改本任务私有state副本内实际消费文件；两种修改分别使B01 REPLAY_FAILED／WITHHELD，D01原生结果仍进入公司表，EXPORTED_PARTIAL/退出2。正常state／原Run未改，拒绝发生于原RawBlob／request-ledger校验，不是未消费working文件或环境错误。具体locator、前后SHA、原因和计时见company-export-bound-negatives.json；实际脚本保留。
 
-最后元数据列另明确source_credit与saved_processing_mode，避免原SEC保存信用和录制AI判断信用混同；追加组件回归验证该列及原V14身份，32项边界测试通过。分项体积见partition-sizes.json，未测真实传输压缩、集群或全36项。新增入口消费者独审仍待#28/#47，本方回归不冒称独审。
+最后元数据列另明确source_credit与saved_processing_mode，避免原SEC保存信用和录制AI判断信用混同；追加组件回归验证该列及原V14身份，当时32项边界测试通过。后续事件接缝与处理参数范围回归增至40项，见../event-census/。分项体积见partition-sizes.json，未测真实传输压缩、集群或全36项。新增出口／处理入口的消费者补验仍待#28/#47，本方回归不冒称独审。

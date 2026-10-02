@@ -463,8 +463,8 @@
   },
   {
     "file": "corrective-results/README.md",
-    "sha256": "debcc4901f6a774b2490dd248bb352fa6f0312a92413c0ef4369596748a022b9",
-    "bytes": 5079,
+    "sha256": "0fd9b4386c0b2bb7681f63e99d79be1f16f97a89825eb0746cc6ccb2ad105ed9",
+    "bytes": 5627,
     "original_local_path": "/workspace/work/sec-company-compute/docs/evidence/issue54_company/corrective-results/README.md"
   },
   {
@@ -658,5 +658,185 @@
     "sha256": "71a11e3e638003f55cf840d5981cf3439477e59f98ef676b5d96a52474b05410",
     "bytes": 570,
     "original_local_path": "/workspace/work/sec-company-compute/docs/evidence/issue54_company/corrective-results/partition-sizes.json"
+  },
+  {
+    "file": "event-census/unit39.log",
+    "sha256": "a34a3ce06c6aad05f84f4ce9ee48225e6456bc89b6420f6963b95f4042cfc19c",
+    "bytes": 6557,
+    "original_local_path": "/workspace/work/company-corrective-unit39.log"
+  },
+  {
+    "file": "event-census/ordinary-before-and-runtime-change.json",
+    "sha256": "ed06433b8038de5e24c2a5f421a3d905ed44a1dbe158e818ab4530fdce1b81c6",
+    "bytes": 2836,
+    "original_local_path": "/workspace/work/company-event-ordinary-probe.json"
+  },
+  {
+    "file": "event-census/ordinary-first-adapter-import-failure.json",
+    "sha256": "d989ac63a80475244215361f1575ee36871b16151a681cb5442a0874f49a3202",
+    "bytes": 11084,
+    "original_local_path": "/workspace/work/company-event-ordinary-fixed-compute.json"
+  },
+  {
+    "file": "event-census/ordinary-runtime-install.json",
+    "sha256": "62476287c2ee70e46dcd65658508f6f956e112e4abc3a4a1a58633f7722c51bc",
+    "bytes": 669,
+    "original_local_path": "/workspace/work/company-event-ordinary-runtime-v2-install.json"
+  },
+  {
+    "file": "event-census/historical-runtime-install.json",
+    "sha256": "50c0d9a20afc15a890fc7fcbf3bd211d265b77f238292490a182b5380ca3fbaf",
+    "bytes": 672,
+    "original_local_path": "/workspace/work/company-event-historical-runtime-v2-install.json"
+  },
+  {
+    "file": "event-census/ordinary-source-install.json",
+    "sha256": "c4acd200318acaa7b870e582e2e00f1859e8b95c54283b5e550fb64d078a75b2",
+    "bytes": 280,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-install.json"
+  },
+  {
+    "file": "event-census/ordinary-c01-compute.json",
+    "sha256": "7162facc4cda7b13484ff0e8340fd5e7777a1e9c320b97d547365b1d0241d3f4",
+    "bytes": 12790,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-compute.json"
+  },
+  {
+    "file": "event-census/ordinary-six-events-compute.json",
+    "sha256": "d86afbcb3423622ff6d83a936ed72c028105dc60aee1af0987beda6791932320",
+    "bytes": 70714,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-six-compute.json"
+  },
+  {
+    "file": "event-census/ordinary-c01-partial-repeat.json",
+    "sha256": "87dc45ac1e6221bd766254f29a56a0d4d617f4d4dbf50f70ebb2de9304de3600",
+    "bytes": 12348,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-partial-repeat.json"
+  },
+  {
+    "file": "event-census/ordinary-six-export.json",
+    "sha256": "a35572da8975ec787d78cb09e1c9987bc1cbce71b9804d647de2eec7751ec8d6",
+    "bytes": 3929,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-export.json"
+  },
+  {
+    "file": "event-census/source-census-negatives.json",
+    "sha256": "68dbe6de7d7b217f83fb8da5d1a6bfa11791edb2b8200bbe145a14a6b3f668bf",
+    "bytes": 1468,
+    "original_local_path": "/workspace/work/company-event-census-negatives.json"
+  },
+  {
+    "file": "event-census/run-bound-census-negative.json",
+    "sha256": "01224c3cf97e519f7f65adfd18334d3e5dfb6e53a09d4df7e77c9174a22c570f",
+    "bytes": 2765,
+    "original_local_path": "/workspace/work/company-event-bound-export-negative.json"
+  },
+  {
+    "file": "event-census/historical-source-preparation.json",
+    "sha256": "f14f131b66d8c0b6c3b172f224f627134381d15bf053a7e8f8283f549b869a7b",
+    "bytes": 956,
+    "original_local_path": "/workspace/work/company-history-event-source-preparation.json"
+  },
+  {
+    "file": "event-census/historical-source-install.json",
+    "sha256": "53a71cc5f7c8b812f5bb18261865f40fc8b4f837be3baff93760a0b328a22061",
+    "bytes": 271,
+    "original_local_path": "/workspace/work/company-event-historical-v2-install.json"
+  },
+  {
+    "file": "event-census/diagnostic-first-probe.py",
+    "sha256": "aa823aa7b63900af4bf4fffd2549cc8a8bda2dfa42505f0e74a351f2bc1b7336",
+    "bytes": 2545,
+    "original_local_path": "/workspace/work/run_event_probe.py"
+  },
+  {
+    "file": "event-census/diagnostic-census-negatives.py",
+    "sha256": "ddc0f60706e1b9f0cdb5c70c946ca8983ec0f882d128599d4512609f5e9538f5",
+    "bytes": 2368,
+    "original_local_path": "/workspace/work/probe_event_census_negatives.py"
+  },
+  {
+    "file": "event-census/diagnostic-bound-export-negative.py",
+    "sha256": "e8d5c0e4ad4f38e6762097cf90f1b59b858b482a719dd6ae0a682414cd3c8c0e",
+    "bytes": 2514,
+    "original_local_path": "/workspace/work/probe_event_bound_export.py"
+  },
+  {
+    "file": "event-census/diagnostic-historical-fixed-probe.py",
+    "sha256": "9601871e8ad65111fe3b6f57683bc49497595cc56d392dc2f965acd5f97abb99",
+    "bytes": 2051,
+    "original_local_path": "/workspace/work/run_history_event_fixed_probe.py"
+  },
+  {
+    "file": "event-census/historical-before.json",
+    "sha256": "9ffc5765b69838f1fa3df8adf404691cf983aae925085296619a9b16234c1406",
+    "bytes": 1221,
+    "original_local_path": "/workspace/work/company-event-historical-v2-before.json"
+  },
+  {
+    "file": "event-census/ordinary-metrics_matrix.csv",
+    "sha256": "a277349953a6a4a2fbb4ef9d245606d679988e255c250fa547e79adb7f626bb2",
+    "bytes": 22068,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-export/metrics_matrix.csv"
+  },
+  {
+    "file": "event-census/ordinary-metric_evidence.csv",
+    "sha256": "2268729007f01e4e29bf1da5220c302f6e6828aa97d9b0717fe3737f058bd121",
+    "bytes": 29893,
+    "original_local_path": "/workspace/work/company-event-ordinary-v2-export/metric_evidence.csv"
+  },
+  {
+    "file": "event-census/partition-sizes.json",
+    "sha256": "f090f5663af3178f3f892d34b88bb79fd7ee7bd3a1aa58e6ca9c971c89cad25f",
+    "bytes": 923,
+    "original_local_path": "Measured directly from own fixed runtime/state/output trees"
+  },
+  {
+    "file": "event-census/unit40.log",
+    "sha256": "0e2cedb90938c5bf061a217fe8cd180d6356fe01c3cc67786b4b4a8921bfbd94",
+    "bytes": 6724,
+    "original_local_path": "/workspace/work/company-corrective-unit40.log"
+  },
+  {
+    "file": "event-census/d04-final-guard-repeat.json",
+    "sha256": "67be6f24606c08e6b4ec1131985f82a275da28517a566613c3db54d269d2e4a9",
+    "bytes": 1805,
+    "original_local_path": "/workspace/work/company-d04-final-guard-repeat.json"
+  },
+  {
+    "file": "event-census/baseline-final-guard-runtime-install.json",
+    "sha256": "386be748a57c1a336d1966256cf5ffc590f4230117087c18ee4470dc312a2fef",
+    "bytes": 332,
+    "original_local_path": "/workspace/work/company-results-runtime-final-guards-install.json"
+  },
+  {
+    "file": "event-census/historical-after.json",
+    "sha256": "f7638ee6cdfe5b1824e9264ce4613795e9adb6d42f6e644956f605f0dc5e35c3",
+    "bytes": 9337,
+    "original_local_path": "/workspace/work/company-event-historical-v2-after.json"
+  },
+  {
+    "file": "event-census/README.md",
+    "sha256": "a0b7a076281adb9699fefb16770e84f29f44c512f5f85c84a4bb55000c0a57ac",
+    "bytes": 4929,
+    "original_local_path": "/workspace/work/sec-company-compute/docs/evidence/issue54_company/event-census/README.md"
+  },
+  {
+    "file": "event-census/historical-export.json",
+    "sha256": "4dcd5d03b06c1a6b4b36eba0192e4813ee2ac5a741c9d26b3975a567eeb51aa9",
+    "bytes": 861,
+    "original_local_path": "/workspace/work/company-event-historical-v2-export.json"
+  },
+  {
+    "file": "event-census/historical-metrics_matrix.csv",
+    "sha256": "7dec8ffec0be04cb6749115abb8187b590aba2a3038a669f6a235e03db583f2e",
+    "bytes": 7292,
+    "original_local_path": "/workspace/work/company-event-historical-v2-export/metrics_matrix.csv"
+  },
+  {
+    "file": "event-census/historical-metric_evidence.csv",
+    "sha256": "b030d72a397fecb885f99d6aea1da13b10ed83ebfdcc3151af120bedc964b3a7",
+    "bytes": 5196,
+    "original_local_path": "/workspace/work/company-event-historical-v2-export/metric_evidence.csv"
   }
 ]

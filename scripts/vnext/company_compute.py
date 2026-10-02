@@ -37,6 +37,12 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
         from .normal_source_authority import ROOT
         historical = (ROOT/'requirements/issue_54_v3').is_dir()
         native = (ROOT/'requirements/issue_54_v2').is_dir()
+        need((processing_package is None) == (processing_runtime is None),
+             'COMPANY_PROCESSING_PACKAGE_AND_ORIGINAL_RUNTIME_REQUIRED')
+        need(processing_package is None or 'D04' in metric_ids,
+             'COMPANY_PROCESSING_INPUT_REQUIRES_D04')
+        need(not historical or processing_package is None,
+             'COMPANY_PROCESSING_HISTORY_ADAPTER_NOT_IMPLEMENTED')
         need(not native or set(metric_ids) <= {'B13', 'D04'},
              'COMPANY_NATIVE_RUNTIME_METRIC_SCOPE_REQUIRED')
         if not native and (ROOT/'requirements/issue_54_v1').is_dir() and 'B13' in ordinary:

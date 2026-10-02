@@ -105,6 +105,30 @@ class CompanyResultsTest(unittest.TestCase):
         self.assertTrue((output/'metric_evidence.csv').is_file())
         self.assertFalse(next(r for r in rows if r['metric_id']=='D01')['requested_in_latest_execution']=='True')
 
+    def test_processing_arguments_cannot_be_silently_ignored(self):
+        @contextmanager
+        def locked(root): yield Path(root)
+        program=self.root.parent/'program'; program.mkdir()
+        with patch.object(company_compute,'locked_company',locked), \
+             patch.object(company_compute,'recover_import',return_value=self.current), \
+             patch.object(company_compute,'require_company',return_value={
+                 'checkpoint_id':'source-v1','metric_ids':['B01','D04']}), \
+             patch('scripts.vnext.normal_source_authority.ROOT',program), \
+             patch('scripts.vnext.ordinary_d02_category_update_v2.run_company') as financial:
+            with self.assertRaisesRegex(ValueError,'PACKAGE_AND_ORIGINAL_RUNTIME_REQUIRED'):
+                company_compute.compute_company(state_root=self.root,company_id='test_company',
+                    metric_ids=['D04'],processing_package='/separate/processing')
+            with self.assertRaisesRegex(ValueError,'INPUT_REQUIRES_D04'):
+                company_compute.compute_company(state_root=self.root,company_id='test_company',
+                    metric_ids=['B01'],processing_package='/separate/processing',
+                    processing_runtime='/original/runtime')
+            (program/'requirements/issue_54_v3').mkdir(parents=True)
+            with self.assertRaisesRegex(ValueError,'HISTORY_ADAPTER_NOT_IMPLEMENTED'):
+                company_compute.compute_company(state_root=self.root,company_id='test_company',
+                    metric_ids=['D04'],report_end='2023-12-31',processing_package='/separate/processing',
+                    processing_runtime='/original/runtime')
+            financial.assert_not_called()
+
     def test_failed_metric_keeps_old_result_without_claiming_current_success(self):
         self.observe([self.journal('B01'),self.journal('D01')])
         self.observe([self.journal('B01',fail=True)])

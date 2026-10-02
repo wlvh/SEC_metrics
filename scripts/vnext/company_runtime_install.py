@@ -18,7 +18,8 @@ SUCCESSOR_MODULES = ('company_source_authority', 'company_handoff',
                      'company_requirement', 'company_runtime_install', 'company_compute',
                      'company_result_export', 'company_historical_compute',
                      'company_result_view', 'company_result_read',
-                     'company_processing', 'company_processing_read', 'company_worker_guard')
+                     'company_processing', 'company_processing_read', 'company_worker_guard',
+                     'company_event_census')
 
 
 def _replace(path, old, new, count=1):
@@ -147,6 +148,29 @@ def install_runtime(*, output_root, kind='baseline'):
              '_,_,admitted=_validate_checkpoint(source_root,checkpoint,baseline);paths=set()\n'
              '    if checkpoint.get("record_type") == "COMPANY_SOURCE_ADMISSION_V1":\n'
              '        return checkpoint,set(checkpoint["files"])')
+    if kind in {'ordinary', 'historical'}:
+        # The original baseline-ledger fast path returns no checkpoint. The
+        # event census now needs its separately enrolled file closure in each
+        # Run's installed data as well, even when no rows were appended.
+        _replace(output/'scripts/vnext/ordinary_source_authority.py',
+                 'def checkpoint_installation(*,source_root):\n'
+                 '    """Return the trusted checkpoint and all its data dependencies for copying."""\n',
+                 'def checkpoint_installation(*,source_root):\n'
+                 '    """Return the trusted checkpoint and all its data dependencies for copying."""\n'
+                 '    exported=source_root/EXPORT_PATH\n'
+                 '    if exported.is_file() and strict_json_file(path=exported).get("record_type") == "COMPANY_SOURCE_ADMISSION_V1":\n'
+                 '        checkpoint=_trusted_checkpoint(source_root)\n'
+                 '        baseline=strict_json_file(path=ROOT/MANIFEST_PATH)\n'
+                 '        _validate_checkpoint(source_root,checkpoint,baseline)\n'
+                 '        return checkpoint,set(checkpoint["files"])\n')
+        events = 'scripts/vnext/normal_zero_ai_results.py'
+        originals[events] = (output/events).read_text()
+        _replace(output/events, 'from .normal_source_authority import ROOT\n',
+                 'from .normal_source_authority import ROOT\n'
+                 'from .company_event_census import installed_event_filings as _company_event_filings\n')
+        _replace(output/events, 'installed_acquired = _acquired_event_filings(repo_root=ROOT,',
+                 'installed_acquired = _company_event_filings(source_root=repo_root,')
+        modified = (*modified, events)
     patch = ''.join(''.join(difflib.unified_diff(originals[p].splitlines(True),
         (output/p).read_text().splitlines(True), fromfile='a/'+p, tofile='b/'+p)) for p in modified)
     (output/'company-runtime-dispatch.patch').write_text(patch)
