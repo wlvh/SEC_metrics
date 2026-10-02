@@ -15,6 +15,15 @@ from .company_source_authority import EXPORT_PATH, RECORD_TYPE, need
 from .sources import resolve_repository_file
 
 PACKAGE_FILE = 'company-source-package.json'
+# These are saved processing inputs, never program rules or SEC originals.
+# The paths belong to #28's EXPORT_PATHS and #47's existing read interfaces.
+PROCESSING_STATE_PATHS = frozenset({
+    'config/ordinary_capacity_assessment.json',
+    'config/ordinary_going_concern_assessment.json',
+    'config/issue47_historical_going_concern_assessment.json',
+    'config/issue47_historical_ma_confirmation.json',
+    'config/issue47_historical_legal_review.json',
+})
 
 
 def external(path):
@@ -40,7 +49,7 @@ def rule_bindings(requirement_id='issue_28_v13'):
     paths = {p.relative_to(ROOT).as_posix()
              for directory in ('config', 'catalog')
              for p in (ROOT/directory).rglob('*') if p.is_file()
-             and p.relative_to(ROOT).as_posix() != EXPORT_PATH}
+             and p.relative_to(ROOT).as_posix() not in {EXPORT_PATH, *PROCESSING_STATE_PATHS}}
     need(requirement_id in {'issue_28_v13', 'issue_47_v1'},
          'COMPANY_HANDOFF_RULE_REQUIREMENT_UNSUPPORTED')
     authority = strict_json_file(path=ROOT/'requirements'/requirement_id/'baseline_manifest.json')
@@ -48,6 +57,8 @@ def rule_bindings(requirement_id='issue_28_v13'):
     # receipts and old Requirement snapshots stay in the fixed runtime.
     paths.update(p for p in authority['execution_authority']['files']
                  if '/' not in p and not p.endswith('.py'))
+    need(not set(authority['execution_authority']['files']) & PROCESSING_STATE_PATHS,
+         'COMPANY_HANDOFF_PROCESSING_STATE_CLASSIFIED_AS_RULE')
     return {relative: binding(ROOT/relative) for relative in sorted(paths)}
 
 

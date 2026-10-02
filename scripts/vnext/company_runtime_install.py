@@ -10,7 +10,7 @@ import shutil
 import subprocess
 
 from .canonical import canonical_json_bytes, content_hash, strict_json_file
-from .company_handoff import binding, external
+from .company_handoff import binding, external, PROCESSING_STATE_PATHS
 from .company_source_authority import need
 from .normal_source_authority import ROOT
 
@@ -45,6 +45,8 @@ def install_runtime(*, output_root, kind='baseline'):
     from .requirement_profile_v1 import validate_execution_authority
     validate_execution_authority(repo_root=ROOT, requirement=parent)
     paths = set(_authority_files(parent))
+    need(not paths & PROCESSING_STATE_PATHS,
+         'COMPANY_RUNTIME_PROCESSING_STATE_CLASSIFIED_AS_RULE')
     cursor = parent
     while cursor:
         paths.update(cursor.get('execution_authority', {}).get('files', {}))
@@ -60,6 +62,7 @@ def install_runtime(*, output_root, kind='baseline'):
         declared = set(raw_manifest.get('execution_authority', {}).get('files', {}))
         declared.update(raw_manifest.get('new_rule_files', {}))
         paths.update(p for p in declared if not p.endswith('.py') and (ROOT/p).is_file())
+    paths.difference_update(PROCESSING_STATE_PATHS)
     index = strict_json_file(path=ROOT/'docs/evidence/issue28_continuous/frozen-parent-v10-index.json')
     paths.update('docs/evidence/issue28_continuous/frozen-parent-v10/'+p for p in index['files'])
     receipts = frozen_foundation_receipts()

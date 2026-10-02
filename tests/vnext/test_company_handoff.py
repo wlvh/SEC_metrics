@@ -116,5 +116,23 @@ class CompanyImportTest(unittest.TestCase):
             self.assertIn('BlockingIOError', child.stderr)
 
 
+class SourceOnlyRulesTest(unittest.TestCase):
+    def test_saved_native_assessment_is_not_collected_as_a_rule(self):
+        from scripts.vnext.capacity_assessment_input import EXPORT_PATHS
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root/'config').mkdir()
+            (root/'config/ordinary_policy.json').write_text('{"scope":"RULE"}')
+            for relative in EXPORT_PATHS.values():
+                (root/relative).write_text('{"company_id":"other_company","native_requests":[]}')
+            manifest = root/'requirements/issue_28_v13/baseline_manifest.json'
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text('{"execution_authority":{"files":{}}}')
+            with patch.object(handoff, 'ROOT', root):
+                rules = handoff.rule_bindings()
+            self.assertIn('config/ordinary_policy.json', rules)
+            self.assertTrue(set(EXPORT_PATHS.values()).isdisjoint(rules))
+
+
 if __name__ == '__main__':
     unittest.main()
