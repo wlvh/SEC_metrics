@@ -318,6 +318,7 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
           metric_ids == ['C02']), 'UPDATE_C02_AUDITOR_REVISION_SCOPE_INVALID')
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           c02_auditor_revision), 'UPDATE_C02_MEMBER_REVISION_SCOPE_INVALID')
+    _need(not c02_member_revision, 'UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
         if source_identity_root is not None else Path(source_root).resolve())
     identity_source=(source if source_identity_root is None else

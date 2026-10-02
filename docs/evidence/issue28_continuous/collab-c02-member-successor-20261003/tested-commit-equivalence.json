@@ -1,0 +1,142 @@
+{
+  "commit": "ee289953812c197734b543bf5282fe1e44142931",
+  "status": "PASS_BYTE_EQUIVALENCE",
+  "execution_at_commit_claimed": false,
+  "original_execution": "PRE_COMMIT_BOUND_WORKTREE",
+  "verified_files": [
+    {
+      "path": "catalog/r6/C02_board_disclosures_v5.md",
+      "sha256": "e42692700e864d2d170f0039d36a796a5b49f83372cdee367aa8cf6da85172a7",
+      "size": 6173,
+      "installed_equal": true
+    },
+    {
+      "path": "config/issue28_normal_results_v2.json",
+      "sha256": "b16167a51acb3b2348eb9d186e17f4d86deadb3aeffb3b3b4445f85f948737f6",
+      "size": 9079,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/c02_board_composition_28_v4.py",
+      "sha256": "c08aba7cb5f9d985b5f40937d8c54c4d26843e803fd5eff8d53f845ed09506df",
+      "size": 81757,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/c02_composition_text_results.py",
+      "sha256": "21cbfddc612af7385cb3c0b26f3088097e8a3a599d3fab3261a4cff140201790",
+      "size": 13628,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "sha256": "adabf8f61b923f7c615899e2bd243fa55a3dbe875a3d7b048382e23a89578921",
+      "size": 37324,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_c02_member_update_v4.py",
+      "sha256": "23a30b4ea8fec393f62f8943446b6bf419c8869fde06d58382203aadf9b294a6",
+      "size": 3143,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_remaining_cases.py",
+      "sha256": "3e910fccb7a2fc8561e1aafb0bb01dbc5e17dddc3b5e107811b87d728289618a",
+      "size": 11751,
+      "installed_equal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "sha256": "11cc149975457d5e8d4ac34787c037749ef2d4484cb6249a49c022016110ee80",
+      "size": 27366,
+      "installed_equal": true
+    },
+    {
+      "path": "tools/vnext_normal_update.py",
+      "sha256": "dc164f9c5781bdf0060308a270c4984445413fa330e8c0ee631e9ac3f4979038",
+      "size": 6100,
+      "installed_equal": false
+    },
+    {
+      "path": "tests/vnext/test_c02_member_successor.py",
+      "sha256": "7468a96545c16a4d5688fa93ee418fbf32fd080c0e39069957402723d9bd9363",
+      "size": 4650,
+      "installed_equal": false
+    },
+    {
+      "path": "tests/vnext/test_normal_c02_composition.py",
+      "sha256": "7fd33fb4b90b7e496804a56230e80e321e44728be9b3e57aff287fb8a5b65573",
+      "size": 17368,
+      "installed_equal": false
+    },
+    {
+      "path": "tools/run_fast_tests_v2.py",
+      "sha256": "bdf9bc4114fa8e7899e6afdf0a40dfefaa59dd4a07e189dc192cd917ea34f30c",
+      "size": 18819,
+      "installed_equal": false
+    },
+    {
+      "path": "requirements/issue_28_v13/CONTRACT.md",
+      "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "size": 1211,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "sha256": "447bf61d6a9663b8ae222e22b152af477979db7cc128e3ead71f287248170434",
+      "size": 82786,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/decision_register.json",
+      "sha256": "8851e2d41ac5d4642847e4c80c78d5add516bb55aa04825f9f9dbc770e985938",
+      "size": 9732,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/invariant_profile.json",
+      "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "size": 416,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v13/transfer_manifest.json",
+      "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "size": 311,
+      "installed_equal": true
+    },
+    {
+      "path": "requirements/issue_28_v14/CONTRACT.md",
+      "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+      "size": 1605,
+      "installed_equal": false
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "c1c1ca54004d565c7144fcf7f914a6ea887077d0b51f3cb8405adac00c4bd088",
+      "size": 95076,
+      "installed_equal": false
+    },
+    {
+      "path": "requirements/issue_28_v14/decision_register.json",
+      "sha256": "c83648909944ce5ede842d7ae1e6d31ac8320f368eef3b7c2876c13bffb22109",
+      "size": 11100,
+      "installed_equal": false
+    },
+    {
+      "path": "requirements/issue_28_v14/invariant_profile.json",
+      "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+      "size": 418,
+      "installed_equal": false
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "sha256": "2e84f095d8a73deabc747f4aba9241b2fb78be9bc372a817682f84a9bc3c3dae",
+      "size": 520,
+      "installed_equal": false
+    }
+  ],
+  "parent_closure": "sha256:1b2fe50b46574602c4a4422f80ab3306bd4a0ce40024c955b64654e58aa0104f",
+  "child_closure": "sha256:3117ac9bf6311c70f0648c2501e47a7438e625aaa2771c5ca92507a92caeec2f"
+}

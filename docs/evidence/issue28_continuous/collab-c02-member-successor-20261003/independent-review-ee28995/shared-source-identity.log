@@ -1,0 +1,47 @@
+{
+  "patch_sha": "ee289953812c197734b543bf5282fe1e44142931",
+  "peer_source_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+  "peer_path": "scripts/vnext/historical_board_composition_v3.py",
+  "changed_existing_symbols": [
+    "_COMMITTEE_COMPOSITION",
+    "statement_labels"
+  ],
+  "new_symbols": [
+    "_MEMBERS_ARE",
+    "_members_are",
+    "_NOT_EMPLOYED"
+  ],
+  "peer_symbols": [
+    {
+      "symbol": "_members_are",
+      "ast_equal": true,
+      "body_bytes_equal": true
+    },
+    {
+      "symbol": "_MEMBERS_ARE",
+      "ast_equal": true,
+      "body_bytes_equal": true
+    },
+    {
+      "symbol": "_NOT_EMPLOYED",
+      "ast_equal": true,
+      "body_bytes_equal": true
+    },
+    {
+      "symbol": "_mentions_person",
+      "ast_equal": true,
+      "body_bytes_equal": true
+    },
+    {
+      "symbol": "_QUALIFICATION",
+      "ast_equal": true,
+      "body_bytes_equal": true
+    },
+    {
+      "symbol": "_NOT_DIRECTOR_INDEPENDENCE",
+      "ast_equal": true,
+      "body_bytes_equal": true
+    }
+  ],
+  "own_new_module_sha256": "c08aba7cb5f9d985b5f40937d8c54c4d26843e803fd5eff8d53f845ed09506df"
+}

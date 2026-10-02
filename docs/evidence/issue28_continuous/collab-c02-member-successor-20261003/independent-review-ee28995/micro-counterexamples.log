@@ -1,0 +1,103 @@
+{
+  "executed_at_utc": "2026-10-02T17:13:09.864250+00:00",
+  "source": "SYNTHETIC_NON_NATIVE; no current source/result impact asserted",
+  "cases": [
+    {
+      "case": "known_role",
+      "text": "The members of the Audit Committee are responsible for supervising Mr. Smith, our external auditor.",
+      "old_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "new_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "old_candidate_block_indices": [
+        0
+      ],
+      "new_candidate_block_indices": [
+        0
+      ],
+      "new_finding": "SOURCE_EXCERPTS_FOUND"
+    },
+    {
+      "case": "independent_role",
+      "text": "The members of the Audit Committee are responsible for reviewing reports from Alice Smith, the external auditor.",
+      "old_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "new_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "old_candidate_block_indices": [
+        0
+      ],
+      "new_candidate_block_indices": [
+        0
+      ],
+      "new_finding": "SOURCE_EXCERPTS_FOUND"
+    },
+    {
+      "case": "short_surname_members",
+      "text": "The members of the Audit Committee are Jack Ma and John Wu.",
+      "old_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "new_labels": [],
+      "old_candidate_block_indices": [
+        0
+      ],
+      "new_candidate_block_indices": [],
+      "new_finding": "NO_SUPPORTED_STATEMENT_PATTERN"
+    },
+    {
+      "case": "long_surname_control",
+      "text": "The members of the Audit Committee are Jack Smith and John Jones.",
+      "old_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "new_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "old_candidate_block_indices": [
+        0
+      ],
+      "new_candidate_block_indices": [
+        0
+      ],
+      "new_finding": "SOURCE_EXCERPTS_FOUND"
+    }
+  ],
+  "Jack_Ma_and_John_Wu_are_supported_names": true,
+  "mention_guard": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "mixed_source_candidate_evidence_case": [
+    {
+      "spec": "v4",
+      "policy": "COMPOSITION_GROUPED_V3",
+      "selected_text": [
+        "Our Board currently has twelve directors.\nThe members of the Audit Committee are Jack Ma and John Wu."
+      ],
+      "selected_original_blocks": [
+        0,
+        1
+      ],
+      "mechanical_evidence_status": "PASS"
+    },
+    {
+      "spec": "v5",
+      "policy": "COMPOSITION_GROUPED_V4",
+      "selected_text": [
+        "Our Board currently has twelve directors."
+      ],
+      "selected_original_blocks": [
+        0
+      ],
+      "mechanical_evidence_status": "PASS"
+    }
+  ],
+  "native_run_executed": false
+}

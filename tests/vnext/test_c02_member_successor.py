@@ -14,6 +14,26 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class C02MemberScopeFastTest(unittest.TestCase):
+    def test_unreviewed_member_rule_cannot_write_new_runs_or_update_state(self):
+        from vnext.normal_run_v3 import create_normal_run, _create_case_run
+        from vnext.ordinary_update_cycle import run_once
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with self.assertRaisesRegex(ValueError, 'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED'):
+                create_normal_run(data_root=root/'data', run_dir=root/'run',
+                    company_id='jpmorgan_chase', metric_id='C02', c02_composition=True,
+                    c02_grouped=True, c02_auditor_revision=True, c02_member_revision=True)
+            with self.assertRaisesRegex(ValueError, 'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED'):
+                _create_case_run(data_root=root/'data', run_dir=root/'run',
+                    company_id='jpmorgan_chase', metric_id='C02',
+                    case={'input_binding':{'c02_selection_policy':'COMPOSITION_GROUPED_V4'}},
+                    requirement={})
+            with self.assertRaisesRegex(ValueError, 'UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED'):
+                run_once(state_root=root/'state', source_root=ROOT,
+                    company_id='jpmorgan_chase', metric_ids=['C02'],
+                    c02_auditor_revision=True, c02_member_revision=True)
+            self.assertEqual([], list(root.iterdir()))
+
     def test_disclaimer_is_excluded_and_member_determinations_are_preserved(self):
         own = frozenset({'audit', 'compensation'})
         disclaimer = ('The members of the Audit Committee are not professionally engaged '

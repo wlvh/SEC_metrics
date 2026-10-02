@@ -392,6 +392,7 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
     _need(d02_category is not True, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
     _need(d02_category != 'ITEM8_V2', 'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(not c02_member_revision, 'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -414,6 +415,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
 
 def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, requirement, freeze=False):
     """One native record/Review/Result write order for ordinary source routes."""
+    _need(case.get('input_binding', {}).get('c02_selection_policy') != 'COMPOSITION_GROUPED_V4',
+          'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
     if case.get('input_binding', {}).get('d02_category_policy') is not None:
         from .ordinary_d02_item8_v1 import POLICY as suspended_d02_policy
         _need(case['input_binding']['d02_category_policy'] != suspended_d02_policy,
