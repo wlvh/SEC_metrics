@@ -1,0 +1,37 @@
+{
+ "module": "scripts/vnext/historical_zero_ai_results.py",
+ "record_type": "ISSUE_47_B03_GATE_FAULT_INJECTIONS",
+ "results": [
+  {
+   "as_expected": true,
+   "expected_failing": [],
+   "failing": [],
+   "injection": "CONTROL",
+   "ran": 2
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_structural_answer_is_kept_where_the_filing_tags_a_d_and_a_total",
+    "test_an_answer_that_does_not_depend_on_d_and_a_is_not_rewritten"
+   ],
+   "failing": [
+    "test_a_structural_answer_is_kept_where_the_filing_tags_a_d_and_a_total",
+    "test_an_answer_that_does_not_depend_on_d_and_a_is_not_rewritten"
+   ],
+   "injection": "ASK_ANY_PUBLISHED_RESULT",
+   "ran": 2
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_an_answer_that_does_not_depend_on_d_and_a_is_not_rewritten"
+   ],
+   "failing": [
+    "test_an_answer_that_does_not_depend_on_d_and_a_is_not_rewritten"
+   ],
+   "injection": "ASK_ANY_APPLICABLE_PUBLISHED_RESULT",
+   "ran": 2
+  }
+ ]
+}

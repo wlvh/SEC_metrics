@@ -302,3 +302,45 @@ class AComposedTotalBesideAContractCostAmortization(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class AnAnswerThatTookNoDAIsNotAsked(unittest.TestCase):
+    """The D&A question is asked of a value computed from D&A, as #28 asks it.
+
+    The 50-period batch's five JPMorgan B03 positions failed in the Run store:
+    B03 is defined for non-financial companies, the calculator answered the
+    bank with a structural non-applicability, and the question - asked of any
+    published result - found a direct D&A total in the filing the chain had not
+    taken and replaced the answer with an applicable withheld result. JPMorgan's
+    period cannot be selected in this checkout (its saved history blocks are
+    stale; the acquisition's export holds the fresh ones), so the bank is
+    constructed here: Salesforce's own FY2026 filing, whose direct candidates
+    really conflict, with the company's traits replaced by a bank's.
+    """
+
+    def test_a_structural_answer_is_kept_where_the_filing_tags_a_d_and_a_total(self):
+        asked = []
+        real = route.depreciation_scope
+        with patch.object(route, "repository_company_traits", lambda **_: ["financial"]), \
+             patch.object(route, "depreciation_scope",
+                          lambda **kw: asked.append(kw) or real(**kw)):
+            outcome = resolve("salesforce", "2026-01-31")
+        self.assertEqual(("N_A_STRUCTURAL", "PUBLISHED", "TRAIT_NOT_APPLICABLE"),
+                         (outcome["result"]["applicability"], outcome["result"]["publication"],
+                          outcome["result"]["reason_code"]))
+        self.assertEqual([], asked)
+        self.assertNotIn("depreciation_scope", outcome["selection"])
+        # The same filing withholds by name when the company is what it is.
+        self.assertEqual(REASON, resolve("salesforce", "2026-01-31")["result"]["reason_code"])
+
+    def test_an_answer_that_does_not_depend_on_d_and_a_is_not_rewritten(self):
+        # Paramount's successor reports a first period of 146 days: B03 is not
+        # meaningful whatever the D&A is. Made to say a conflict no composition
+        # resolves (constructed), the filing would withhold a passing result.
+        with the_filing_says(fact("DepreciationDepletionAndAmortization", "1200000000", "-6"),
+                             fact("DepreciationAndAmortization", "3631000000", "-6")):
+            outcome = resolve("paramount_skydance_paramount_global", "2025-12-31")
+        self.assertEqual(("APPLICABLE", "PUBLISHED", "NOT_MEANINGFUL",
+                          "ANNUAL_DURATION_OUT_OF_RANGE"),
+                         (outcome["result"]["applicability"], outcome["result"]["publication"],
+                          outcome["result"]["quality"], outcome["result"]["reason_code"]))
+        self.assertNotIn("depreciation_scope", outcome["selection"])

@@ -620,7 +620,15 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             compiled_spec=spec, target=execution_target, company_traits=traits,
             structured_facts=facts, verified_observations=reusable)
         da_scope = None
-        if metric_id == "B03" and result["publication"] == "PUBLISHED":
+        # The question is whether the D&A the chain took is the whole of the
+        # definition's, so it is asked of a value computed from it: a passing
+        # result, as #28's own check asks. A structural answer took no D&A (B03
+        # is defined for non-financial companies), and asking it there turned
+        # a bank's answer into an applicable withheld result the Run store
+        # refused (the bank's five years in the 50-period batch); an answer
+        # such as a first period shorter than a year does not depend on it.
+        if (metric_id == "B03" and result["publication"] == "PUBLISHED"
+                and result["reason_code"] == "PASS"):
             da_scope = depreciation_scope(raw_bytes=reader.primary(prepared["filing"])["raw_bytes"],
                                        period=period, observations=observations)
             if da_scope["status"] == "WITHHOLD":
