@@ -31,6 +31,7 @@ from vnext.historical_event_items import (CONFIRMATION_REASON, HEADED_NOT_LISTED
                                           SUCCESSOR_EVENT_ROUTES, SUCCESSOR_SPEC_DOCUMENTS,
                                           EventItemTextError, content_confirmation_candidates,
                                           headed_item_codes, item_headings, item_text,
+                                          _text_nodes,
                                           successor_event_route, successor_public_notes)
 from vnext.historical_results import _successor_event_spec
 from vnext.specs import compile_spec_file
@@ -89,6 +90,12 @@ def _html(*paragraphs):
             + "</body></html>").encode("utf-8")
 
 
+def _headings(raw):
+    """The item codes the reader heads in ``raw``, in order."""
+    text = _visible_text(raw_bytes=raw)
+    return [code for *_, code in item_headings(text, _text_nodes(raw_bytes=raw, text=text))]
+
+
 class TheItemIsReadFromItsHeading(unittest.TestCase):
 
     @classmethod
@@ -143,12 +150,51 @@ class TheItemIsReadFromItsHeading(unittest.TestCase):
 class HeadingsAndReferences(unittest.TestCase):
     """Constructed text, for shapes no saved 8-K has."""
 
+    H = "Item 2.01 Completion of Acquisition or Disposition of Assets"
+
+    def test_a_reference_word_is_read_in_any_case(self):
+        # #28's controls for its port (4711a488): "SEE Item 2.01 Completion
+        # of ..." is a reference, whatever the case of the word.
+        for word in ("see", "See", "SEE"):
+            self.assertEqual(_headings(_html("Item 8.01 Other Events.", word + " " + self.H + ".")), ["8.01"])
+
+    def test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference(self):
+        self.assertEqual(_headings(_html("Item 8.01 Other Events.", "SEE <br hidden>" + self.H + ".")),
+                         ["8.01"])
+        hidden = '<span style="display:none">' + "x" * 200 + "</span>"
+        self.assertEqual(_headings(_html("Item 8.01 Other Events.", "SEE " + hidden + self.H + ".")), ["8.01"])
+        # A block taken out of the layout breaks no line: "SEE" and the
+        # heading run on, so the heading is still a reference.
+        for removed in ('<div style="display:none">x</div>', "<div hidden>x</div>",
+                        '<div style="color:red; display: none !important">x</div>',
+                        '<span style="display:none"><div>x</div></span>'):
+            self.assertEqual(_headings(_html("Item 8.01 Other Events.", "SEE " + removed + self.H + ".")),
+                             ["8.01"], removed)
+
+    def test_an_unseen_block_still_breaks_the_line(self):
+        # Laid out but unseen, a block still puts the heading on a line of its
+        # own, as a paragraph between them would; "SEE" before it is the
+        # previous block's.
+        for unseen in ('<div style="visibility:hidden">x</div>', '<div style="opacity:0">x</div>',
+                       '<div aria-hidden="true">x</div>'):
+            self.assertEqual(_headings(_html("Item 8.01 Other Events.", "SEE " + unseen + self.H + ".")),
+                             ["8.01", "2.01"], unseen)
+
+    def test_the_previous_block_does_not_make_a_heading_a_reference(self):
+        # A word ending the paragraph before, in either case, is not a
+        # reference to the next paragraph's heading.
+        for before in ("Location: Portland, OR", "The details are set out below; see", "Text continues and"):
+            self.assertEqual(_headings(_html("Item 8.01 Other Events.", before, self.H, "The sale closed.")),
+                             ["8.01", "2.01"], before)
+        # Hidden text before the heading in its own block is not read either.
+        self.assertEqual(_headings(_html("Item 8.01 Other Events.", '<span hidden>see</span>' + self.H)),
+                         ["8.01", "2.01"])
+
     def test_a_quoted_title_is_a_reference(self):
         raw = _html("Item 7.01 Regulation FD Disclosure. On May 1 the Company presented.",
                     "The information in this “Item 8.01 - Other Events” is furnished.",
                     "Item 9.01 Financial Statements and Exhibits.")
-        self.assertEqual([code for *_, code in item_headings(_visible_text(raw_bytes=raw))],
-                         ["7.01", "9.01"])
+        self.assertEqual(_headings(raw), ["7.01", "9.01"])
         with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_TEXT_NOT_LOCATED:8.01"):
             item_text(raw_bytes=raw, item_code="8.01")
 

@@ -112,9 +112,15 @@ _HEADING = re.compile(
 # quote around an item's title. A closed list of English function words, so
 # nothing here names a filer; a checkbox glyph before a heading is not a word
 # on this list, which is why the list is closed rather than "any lowercase".
+# The words are matched in any case ("SEE Item 2.01 Completion of ...") and
+# only in the visible text of the heading's own block (``_visible_before``):
+# #28's review of its port (4711a488) and its controls found an uppercase "SEE"
+# read as no reference, and a word ending the previous paragraph ("... see",
+# "Portland, OR") or hidden text taken into the 40-character window.
 _REFERENCE_BEFORE = re.compile(
     r"(?:\b(?:this|that|these|those|in|into|under|and|or|of|to|see|with|from|by|per|"
-    r"pursuant|such|also)|[\u201c\u2018\"'])\s*$")
+    r"pursuant|such|also)|[\u201c\u2018\"'])\s*$", re.IGNORECASE)
+_REFERENCE_WINDOW = 40
 _SIGNATURES = re.compile(r"\bSIGNATURES?\b")
 # Form 8-K's own captions for the items a successor route reads as candidates,
 # and for the items filers most often head beside them. An item whose text is
@@ -146,6 +152,15 @@ _NONDISPLAY = frozenset(("head", "title", "script", "style", "template", "noscri
                          "ix:hidden"))
 _VOID = frozenset(("area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta",
                    "param", "source", "track", "wbr"))
+# Elements that start or end a block of text. A line break does not: "see<br>
+# Item 2.01" is one sentence. An element taken out of the layout altogether
+# (``_removed``) starts no block either - the text on its two sides runs on -
+# but one laid out and unseen (visibility, opacity, colour, size, an offset)
+# still breaks the line.
+_BLOCK = frozenset(("address", "article", "aside", "blockquote", "body", "center", "dd", "div", "dl",
+                    "dt", "footer", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hr", "html", "li",
+                    "main", "nav", "ol", "p", "pre", "section", "table", "tbody", "td", "tfoot", "th",
+                    "thead", "tr", "ul"))
 _NUMBER = re.compile(r"^([+-]?(?:\d+\.?\d*|\.\d+))(px|pt|em|rem|%|in|cm|mm|pc|ex|ch|vw|vh)?$")
 _OFF_THE_PAGE = 999
 
@@ -153,6 +168,14 @@ _OFF_THE_PAGE = 999
 def _number(value):
     match = _NUMBER.match(value)
     return None if match is None else (float(match.group(1)), match.group(2) or "")
+
+
+def _removed(tag, attributes, style):
+    """Whether the element is out of the layout: no box, so no line break around it."""
+    return (tag in _NONDISPLAY or "hidden" in attributes
+            or any(name == "display" and value.replace("!important", "") == "none"
+                   for name, _, value in (declaration.partition(":")
+                                          for declaration in style.split(";"))))
 
 
 def _hidden_by_style(style):
@@ -185,18 +208,20 @@ def _hidden_by_style(style):
 
 
 class _Visibility(HTMLParser):
-    """The frozen view's text nodes, each with what hides it and whether a link holds it."""
+    """The frozen view's text nodes: what hides each, whether a link holds it, and its block."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.tags, self.stack, self.links, self.nodes = [], [], [], []
+        self.removed, self.block = [], 0
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
         hidden = self.stack[-1] if self.stack else None
         linked = (self.links[-1] if self.links else False) or (tag == "a" and "href" in attributes)
+        style = re.sub(r"\s+", "", attributes.get("style") or "").lower()
+        removed = (self.removed[-1] if self.removed else False) or _removed(tag, attributes, style)
         if hidden is None:
-            style = re.sub(r"\s+", "", attributes.get("style") or "").lower()
             if tag in _NONDISPLAY:
                 hidden = "element:" + tag
             elif "hidden" in attributes:
@@ -206,10 +231,13 @@ class _Visibility(HTMLParser):
             else:
                 hidden = _hidden_by_style(style)
                 hidden = None if hidden is None else "style:" + hidden
+        if tag in _BLOCK and not removed:
+            self.block += 1
         if tag not in _VOID:
             self.tags.append(tag)
             self.stack.append(hidden)
             self.links.append(linked)
+            self.removed.append(removed)
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -219,34 +247,37 @@ class _Visibility(HTMLParser):
     def handle_endtag(self, tag):
         for index in range(len(self.tags) - 1, -1, -1):
             if self.tags[index] == tag:
+                if tag in _BLOCK and not self.removed[index]:
+                    self.block += 1
                 del self.tags[index:]
                 del self.stack[index:]
                 del self.links[index:]
+                del self.removed[index:]
                 return
 
     def handle_data(self, data):
         text = " ".join(data.split())
         if text:
             self.nodes.append((text, self.stack[-1] if self.stack else None,
-                               self.links[-1] if self.links else False))
+                               self.links[-1] if self.links else False, self.block))
 
 
 def _text_nodes(*, raw_bytes, text):
-    """``(start, end, hidden, linked)`` for each node of the frozen view, rebuilt and checked."""
+    """``(start, end, hidden, linked, block)`` for each node of the frozen view, rebuilt and checked."""
     parser = _Visibility()
     parser.feed(raw_bytes.decode("utf-8", errors="replace"))
     parser.close()
-    _need(" ".join(node for node, _, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")
+    _need(" ".join(node for node, _, _, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")
     spans, offset = [], 0
-    for node, hidden, linked in parser.nodes:
-        spans.append((offset, offset + len(node), hidden, linked))
+    for node, hidden, linked, block in parser.nodes:
+        spans.append((offset, offset + len(node), hidden, linked, block))
         offset += len(node) + 1
     return spans
 
 
 def _hidden_in_span(*, nodes, start, end):
     """What hides a node inside [start, end) of the frozen view, or None."""
-    for node_start, node_end, hidden, _ in nodes:
+    for node_start, node_end, hidden, _, _ in nodes:
         if hidden is not None and node_start < end and node_end > start:
             return hidden
     return None
@@ -255,7 +286,21 @@ def _hidden_in_span(*, nodes, start, end):
 def _linked_in_span(*, nodes, start, end):
     """Whether a node inside [start, end) of the frozen view sits inside a link."""
     return any(linked and node_start < end and node_end > start
-               for node_start, node_end, _, linked in nodes)
+               for node_start, node_end, _, linked, _ in nodes)
+
+
+def _visible_before(*, text, nodes, position):
+    """The last ``_REFERENCE_WINDOW`` visible characters before ``position``, within its block.
+
+    Text a reader cannot see and text of another block (the previous
+    paragraph, a table cell before) does not introduce a reference.
+    """
+    own = next((node for node in nodes if node[0] <= position < node[1]), None)
+    if own is None:
+        return ""
+    pieces = [text[start:min(end, position)] for start, end, hidden, _, block in nodes
+              if block == own[4] and hidden is None and start < position]
+    return " ".join(pieces)[-_REFERENCE_WINDOW:]
 
 
 class EventItemTextError(ValueError):
@@ -271,11 +316,15 @@ def _need(condition, reason, category="IMPLEMENTATION_GAP"):
         raise EventItemTextError(reason, category)
 
 
-def item_headings(text):
-    """(start, end, code) for every item heading, in document order."""
+def item_headings(text, nodes):
+    """(start, end, code) for every item heading, in document order.
+
+    ``nodes`` are the view's text nodes (``_text_nodes``); a heading is a
+    reference when its own block's visible text just before it is one.
+    """
     found = []
     for match in _HEADING.finditer(text):
-        if _REFERENCE_BEFORE.search(text[max(0, match.start() - 40):match.start()]):
+        if _REFERENCE_BEFORE.search(_visible_before(text=text, nodes=nodes, position=match.start())):
             continue
         found.append((match.start(), match.end(), match.group(1)))
     return found
@@ -284,7 +333,8 @@ def item_headings(text):
 def item_text(*, raw_bytes, item_code):
     """The item's own text in the frozen visible-text view of ``raw_bytes``."""
     text = _visible_text(raw_bytes=raw_bytes)
-    headings = item_headings(text)
+    nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
+    headings = item_headings(text, nodes)
     runs = []
     for heading in headings:
         if runs and runs[-1][-1][2] == heading[2]:
@@ -321,7 +371,6 @@ def item_text(*, raw_bytes, item_code):
     elif marker == "SIGNATURES":
         _need(len(_SIGNATURES.findall(text, start)) == 1,
               "EVENT_ITEM_END_SIGNATURES_NOT_UNIQUE:" + item_code)
-    nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
     # A heading inside a link is a reference to the item - a contents entry -
     # not the item's own heading. The frozen view does not know links, so an
     # item whose only heading is a link would read the contents as its text.
@@ -343,12 +392,12 @@ def headed_item_codes(*, raw_bytes):
     A heading inside a link is a contents entry. A heading in text a reader
     cannot see - the elements, attributes and styles the item reader names - is
     not one the document shows: #28's review of its port (4711a488) found a
-    display:none "Item 2.01" counted as headed, which stopped a window over
-    nothing a reader could read. Neither counts as headed.
+    display:none heading of a candidate item counted as headed, which stopped
+    a window over nothing a reader could read. Neither counts as headed.
     """
     text = _visible_text(raw_bytes=raw_bytes)
     nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
-    return {code for start, end, code in item_headings(text)
+    return {code for start, end, code in item_headings(text, nodes)
             if not _linked_in_span(nodes=nodes, start=start, end=end)
             and _hidden_in_span(nodes=nodes, start=start, end=end) is None}
 
