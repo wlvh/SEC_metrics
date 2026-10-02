@@ -6,8 +6,8 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 11,
-    "newly_excluded_result_id_count": 17,
+    "newly_excluded_coordinate_count": 12,
+    "newly_excluded_result_id_count": 18,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
@@ -15,6 +15,7 @@
       "lumen_technologies|D02|2025-12-31",
       "macys|C02|2026-01-31",
       "marriott_international|C02|2025-12-31",
+      "marriott_international|D01|2025-12-31",
       "paramount_skydance_paramount_global|C02|2025-12-31",
       "paramount_skydance_paramount_global|D01|2025-12-31",
       "paramount_skydance_paramount_global|D02|2025-12-31",
@@ -95,6 +96,21 @@
       "current_390_credit": false,
       "old_defects_released": false,
       "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-known-source-check.json"
+    },
+    "d01_private_successor": {
+      "source_policy": "D01_EMPHASIS_SOURCE_V2",
+      "paramount_old_result_id": "sha256:a7a52ae7df0eb150b4cc6cf66c08b508056febcfbd013ea7a9ec85026c144cca",
+      "paramount_private_result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+      "marriott_old_result_id": "sha256:6077181e489edc0859d6420a2fea7d1d6384daab5f391fdfc4ee7597008b7762",
+      "marriott_private_result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+      "program_status": "TWO_PRIVATE_NATIVE_UPDATES_AND_COLD_READS_PASS; NOT_CURRENT_390_OR_PRODUCTION_CREDIT",
+      "evidence": "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/",
+      "final_bound_runs": {
+        "paramount_run_id": "run:ordinary-integrated:0c47fd3d513d8536c0c39fee98226859436653a98868ffa31d60155b594765f0",
+        "marriott_run_id": "run:ordinary-integrated:12a7737eba94c1b1ca16d847ce635db114c182e3cf373798ee3d0eb27bb103ce",
+        "requirement_closure_hash": "sha256:077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308",
+        "cold_reads": "BOTH_INDEPENDENT_PROCESS_PASS"
+      }
     }
   },
   "defects": [
@@ -672,7 +688,7 @@
       "run_id": "run:ordinary-integrated:3ab895343886afabb650f73dcb98539ad974fb6993739059edb2c188083843e3",
       "historical_index_same_result_id": true,
       "reported_quality": "EXACT",
-      "repair_state": "PUNCTUATION_BRIDGE_NOT_YET_INTEGRATED_IN_28",
+      "repair_state": "EXPLICIT_SUCCESSOR_PRIVATE_RUN_AND_COLD_PASS_CONTENT_REVIEW_PENDING",
       "current_credit": "WITHDRAWN_CONFIRMED_TRUNCATED_RISK_HEADING",
       "summary": "The original Item 1A source block has a complete U.S./foreign-law risk heading. The exact #28 Result renders only its broken leading-emphasis prefix through U. Other D01 coordinates and headings are not judged by this entry.",
       "source_block": {
@@ -698,7 +714,54 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "D01_MARRIOTT_2025_UNDERLINED_CATEGORY_HEADINGS_OMITTED",
+      "metric_id": "D01",
+      "company_id": "marriott_international",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:6077181e489edc0859d6420a2fea7d1d6384daab5f391fdfc4ee7597008b7762",
+      "run_id": "run:ordinary-integrated:d6e51a6558480a02d6bc6f8973f310eb3482a8fcf8ca31769e4e20a561a25e73",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "EXPLICIT_SUCCESSOR_PRIVATE_RUN_AND_COLD_PASS_CONTENT_REVIEW_PENDING",
+      "current_credit": "WITHDRAWN_CONFIRMED_FOUR_MISSING_SOURCE_HEADINGS",
+      "summary": "Original Item 1A includes four underlined risk-category headings omitted by the old bold-only D01 Result; exact #28 old Result appears in current private Run and retained 390 comparison.",
+      "source_headings": [
+        {
+          "text": "Development and Financing Risks",
+          "block_index": 399,
+          "raw_span_sha256": "d435387f431ab9db19f958de327fdfa15699d27b2d72e44bb9cd2f211c0355b1"
+        },
+        {
+          "text": "General Risk Factors",
+          "block_index": 427,
+          "raw_span_sha256": "cde1d22a490a307e02203142da435f684665b039ded25664d5612cb503e06771"
+        },
+        {
+          "text": "Operational Risks",
+          "block_index": 364,
+          "raw_span_sha256": "6283b349df9ccf3d130afc8b6176585ab28a995d5de4a49990c0662acabd2c2e"
+        },
+        {
+          "text": "Technology, Information Protection, and Privacy Risks",
+          "block_index": 409,
+          "raw_span_sha256": "f30757f2b95da5d9544971c6d32373cf7edd3c99ac9040738d79e8c4f2e9d62b"
+        }
+      ],
+      "peer_origin": {
+        "fixed_commit": "2b4f571ef18274299145c63b4c355aa97c45d030",
+        "defect_id": "D01_MARRIOTT_2025_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/audit-marriott.json",
+        "docs/evidence/issue28_continuous/ordinary-marriott-current-36-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
   ],
-  "latest_peer_read_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353"
+  "latest_peer_read_commit": "2b4f571ef18274299145c63b4c355aa97c45d030"
 }

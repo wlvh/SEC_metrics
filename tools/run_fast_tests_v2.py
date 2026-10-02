@@ -123,6 +123,7 @@ FAST_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03HistoricalReco
 FAST_TESTS += ("tests.vnext.test_e01_item_source.E01ItemSourceTest",)
 FAST_TESTS += ("tests.vnext.test_normal_b02_paired_measure",)
 FAST_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionFastTest",)
+FAST_TESTS += ("tests.vnext.test_d01_emphasis_successor",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)

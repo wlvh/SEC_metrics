@@ -1,0 +1,13 @@
+Direct read-only check outputs transcribed from this review:
+
+known_page_split ERROR TextCoverageError D01_MULTISPAN_HEADING_UNSUPPORTED
+digit_only CANDIDATE 2 ['Regulatory Risks', 'other market risks']
+Regulatory Risks 'Regulatory Risks'
+other market risks 'other market risks'
+SEPARATE_EXACT_SOURCE_SPANS_AND_EVIDENCE=PASS
+
+issue_28_v13 sha256:306300d46105793e9c492088e9fd63a2a16094e7b170c7ceaacd81174c0c02a7
+issue_28_v14 sha256:3112b4766e47e2f59a36c8fae63e631fc7c6a3631b4e360ccbca11bafd920657
+V14_semantics_and_three_receipts=PASS
+TEN_CURRENT_SOURCE_CANDIDATES_MATCH_PRIOR=PASS; SOURCE_LOG_UNCHANGED=PASS
+NATIVE_ARTIFACT_READ=PASS sha256:306300d46105793e9c492088e9fd63a2a16094e7b170c7ceaacd81174c0c02a7 sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd
