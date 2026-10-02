@@ -3562,6 +3562,22 @@
       "dedup_note": "list_agents only completed predecessors; no exact SHA/module register or existing result; own V3 body/guard and declaration are uncovered new delta",
       "outer_exec_calls": 13,
       "nested_tool_calls": 18
+    },
+    {
+      "task_name": "review_d01index_7d1202b",
+      "purpose": "review",
+      "module": "d01index",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/",
+        "docs/evidence/issue28_continuous/known_result_defects.json"
+      ],
+      "patch_sha": "7d1202b06f426ed3fc479c7be4f075327267971e",
+      "spawned_at": "2026-10-02T22:51:00.191030+00:00",
+      "ended_at": "2026-10-02T22:56:54.366510Z",
+      "tool_calls": 16,
+      "result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -10991,9 +11007,10 @@
   "ci_37070847594": {
     "head": "64c95e71eb85590afb66721b61be768087e5124d",
     "run_id": 37070847594,
-    "status": "IN_PROGRESS",
-    "conclusion": null,
-    "observation": "Natural checkpoint read: no finished failures, remaining material jobs incomplete; not terminal proof"
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T22:49:50Z",
+    "scope": "D03 same-test selector scheduling; not unpushed current390 index helper"
   },
   "ci_37071984677": {
     "head": "51f9cd7cccf5814cc1219c467f902aca271d8692",
@@ -11181,7 +11198,7 @@
     "delta": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/delta.json",
     "view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
     "external_view": "/private/tmp/issue28-existing-390-view-20261003.json",
-    "status": "TWO_EXACT_REPLACEMENTS_SELECTED; NEW_INDEX_DIFFERENCE_REVIEW_PENDING",
+    "status": "FIXED_KNOWN_INDEX_BINDING_P2_PARENT12_PASS_INCREMENTAL_REVIEW_PENDING",
     "two_candidates_have_prior_independent_content_and_mechanical_copy_receipts": true,
     "old_index_and_old_Result_Run_unchanged": true,
     "original_registered_bad_coordinates": 19,
@@ -11196,6 +11213,12 @@
       0,
       0,
       0
-    ]
+    ],
+    "first_independent_review": {
+      "sha": "7d1202b06f426ed3fc479c7be4f075327267971e",
+      "verdict": "NEEDS_FIX",
+      "path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
+      "three_binding_counterexamples_preserved": true
+    }
   }
 }
