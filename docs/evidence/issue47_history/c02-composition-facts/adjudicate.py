@@ -288,7 +288,6 @@ RULES = {
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
 CARD_FIELD = re.compile(r"^\s*(?:age\s*:?\s*\d{2}\b|director since\s*:|joined the board\s*:)", re.I)
 NOT_INDEPENDENT = re.compile(r"\bnot\s+(?:considered\s+)?independent\b", re.I)
-NICKNAME = re.compile("(?<=\\S)\\s+(?:[“\"][A-Z][a-z]+[”\"]|\\([A-Z][a-z]+\\))(?=\\s+\\S)")
 BULLETS = "•●▪◦‣⯀■□◆◇◾·"
 NOT_YET = re.compile(r"^\s*director since\s*:?\s*n/?a$", re.I)
 NO_COMMITTEE_FIELD = re.compile(r"^committees?\s*:\s*n/?a$", re.I)
@@ -688,10 +687,9 @@ def decisions_for(position, document, record):
             surname = None
             for j in range(index + 1, min(index + 26, len(blocks))):
                 # The card's name: the first one after the designation that is
-                # no bulleted list entry, its nickname ("Anthony G. (Tony)
-                # Capuano") set aside here so the class does not depend on
-                # which nicknames the selector reads.
-                name = NICKNAME.sub("", texts[j])
+                # no bulleted list entry ("■ DICK’S Sporting Goods" reads as a
+                # name).
+                name = texts[j]
                 if name and name[0] not in BULLETS and person_name(name):
                     tokens = _strip_name(name).replace(",", " ").split()
                     if len(tokens) >= 2:

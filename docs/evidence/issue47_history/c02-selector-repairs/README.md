@@ -910,3 +910,45 @@
 **登记。** 摩根大通 FY2022–FY2025 的 C02 另按坐标登记 `C02_JPMORGAN_<年>_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION`（`../known_result_defects.json`）。这四个值原来已被第 45 节的缺陷撤回；第 45 节条目里"另一个尚未判读的问题"的说法已加 `later` 注明。
 
 **未做。** 摩根大通 C02 仍然没有双向判读。重算后的值也要先读过才能接受。#28 如果接收这一修复，需要在它自己的版本化路径上接入，并在它的普通入口上核对；本方不替它判断它的结果。
+
+## 47. 名片上的姓名不是带项目符号的列表项；列表项和空白块不占名片距离
+
+**问题。**
+- **Marriott FY2022、FY2023**：名片依次印称谓、字段、委员会和"其他上市公司董事会"，后两者都是带 "■"/"⯀" 的列表，最后才印姓名，与称谓相隔 11–15 个原始块。名片距离（`_CARD_REACH = 8`）把列表项和零宽空白块都计入，于是够不到真实姓名，把"其他董事会"列表的第一项当成了董事姓名，例如 "■ DICK’S Sporting Goods"，`person_name` 认它是人名。结果，这两年把错误的"姓名"配到称谓上（误选 825、922、1537），真实姓名和 "Independent Director" 称谓都没选上。
+- **Marriott FY2022 的昵称**：括号写法（"Anthony G. (Tony) Capuano"），原昵称规则只认引号写法。
+- **摩根大通 FY2022**：名片字段印在姓名之前，上一张名片的教育经历列表（"•Graduate of Smith College"）排在它们前面，被读成姓名。Rometty 的名片因此两边都有姓名，被整张丢掉。
+
+**改动**（`historical_board_composition_v3.py`）：
+- `_full_name`：以项目符号开头的行是列表项，不是名片姓名。
+- `_reach`：不打印任何内容的块和列表项都不计入名片距离。单独的项目符号字形仍计入，否则 Macy's 的称谓会越过本名片的委员会行，够到下一张名片的姓名。
+- `_NICKNAME`：夹在两个名字之间、写在括号里的单词也算昵称（"Margaret M. (Meg) McCarthy"）。
+- 去掉第 19 节的 `spacers_free` 参数。第 19 节让委员会标签只按打印出来的块计算距离，例子是 Ford 名片的零宽空白块。本修复之后，空白块在任何距离里都不计入；`spacers_free` 只剩一个作用：委员会标签是否计入单独字形。删除前在 49 份文档上量过把它改为计入，选择一块不动（变体量测），所以删除。没有例子能检验的区分不保留。
+
+**裁定。** 第 23 条 `CARD_DESIGNATION_UNMARKED`（`4d9956bd`）判定：名片上不带 "Independent" 的 "Director" 是构成事实。本次给它补测试类 `AnUnmarkedCardDesignationIsAFact`（`tests/vnext/test_historical_board_composition_filings.py`），并删去这条规则里对昵称的预处理：删去前后 `adjudication.json` 逐字节相同，现有 `person_name` 对两种写法都认，没有例子能检验那一步。
+
+**用例。** `ADirectorCardIsReadOnlyWhenItNamesItsDirector` 下四条：
+- `test_a_bulleted_entry_is_not_the_card_s_name`（Marriott 名片顺序）
+- `test_list_entries_and_blank_blocks_do_not_spend_the_reach`（McCarthy 名片）
+- `test_a_parenthetical_nickname_is_part_of_the_name`
+- `test_the_previous_card_s_list_does_not_make_this_card_ambiguous`（摩根大通 FY2022 的实际块序）
+
+四条在修复前的选择器上都失败。Ford 用例 `test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach` 不变，它现在由空白块规则守住。
+
+**注错。**
+- 选择器（`../c02-composition-facts/fault-injections.json`）：
+  - 新增四个：列表项可作姓名、列表项计入距离、空白块计入距离、括号昵称不算。
+  - 第 19 节针对 `spacers_free` 的两个改为针对现在的规则：空白块计入距离（Ford 用例抓到）、单独字形不计入距离（Macy's 用例抓到）。
+  - "任何引号词都算昵称"那一个，原目标文本随昵称规则改了，改为去掉括号写法后面的同一个前瞻条件。
+- 裁定（`../c02-composition-facts/adjudication-injections.json`，34/34）新增四个：判为非事实、不要求同一代理里有标 "Independent Director" 的名片、不要求在名片上、列表项可作名片姓名。
+
+**量测。**
+- 37 份双向判读（`measured-47-card-names.json`，对 `4d9956bd`）：误选 4 → 1，漏选 9 → 8，不一致的位置 6 → 4。
+  - Marriott FY2022、FY2023 由不一致变为一致：新增真实姓名和称谓，移走被当作姓名的"其他董事会"列表项。FY2022 新增的两处 "Director" 是第 23 条判为事实的块。
+  - Lumen FY2021 新增 745、746（姓名 "HAL STANLEY"/"JONES" 印成两块）和 757（"Independent"），漏选里的 456 恢复；455、457 漏选与 856 误选仍在，与本修复无关。
+  - Paramount 前身 FY2024 新增三处 "Current Director and"，Pfizer FY2022 新增四块（主席与 CEO、首席独立董事及其姓名），判读都是事实。
+  - 最新年十个位置一块不动。
+- 12 个有已发布值、但没有判读的位置（`measured-47-jpmorgan-and-unread.json`）：只有摩根大通 FY2022 新增 978–981，即 Rometty 名片的 "Committees:"、两个委员会和她的姓名，其余十一个位置一块不动。
+
+**未做。**
+- 受影响的已发布值没有重算。Marriott FY2022、FY2023 等位置的 C02 结果仍是旧选择器的结果，已登记的缺陷照旧撤回，要等新闭包下重算、读过之后才能释放。
+- 最新年不受影响，#28 的当期范围不需要接入。

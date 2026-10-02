@@ -487,6 +487,45 @@ class ADutyDoneThroughASubcommitteeIsNotAFact(unittest.TestCase):
         self.assertEqual([], self.decided(self.SETUP, "MIXED"))
 
 
+class AnUnmarkedCardDesignationIsAFact(unittest.TestCase):
+    """"Director" on a card where the filing's other cards print "Independent Director" (CARD_DESIGNATION_UNMARKED).
+
+    Marriott's FY2022 and FY2023 cards print "Director" on the cards of its
+    non-independent directors; its readers took the designation on some
+    cards and left it out on others. The card prints its fields and bulleted
+    lists before the name, and a bulleted other board ("■ DICK’S Sporting
+    Goods") reads as a name, so the card's name is the first one after the
+    designation that is no bulleted entry.
+    """
+
+    POSITION = "example_company:2022-12-31"
+    TEXTS = ["Independent Director", "Age: 64", "Director Since: 2013", "■ Kestrel Sporting Goods",
+             "Avery D. Lindqvist", "Director", "Age: 66", "Director Since: 2008", "■ Kestrel Sporting Goods",
+             "Jane Q. Harrison",
+             "Ms. Harrison is not considered independent because her brother is an executive officer of the Company."]
+
+    def decided(self, texts):
+        sha = [reading.text_sha256(text) for text in texts]
+        document = {"blocks": [{"text": text, "linked": False} for text in texts]}
+        record = {"position": self.POSITION, "selected": [], "pool_facts": [],
+                  "pool": [{"i": i, "text_sha256": h} for i, h in enumerate(sha)]}
+        return {row["i"]: row for row in _adjudicator().decisions_for(self.POSITION, document, record)}
+
+    def test_the_unmarked_designation_is_a_fact_covered_by_its_directors_status(self):
+        row = self.decided(self.TEXTS)[5]
+        self.assertEqual(("CARD_DESIGNATION_UNMARKED", "FACT", "LEFT_OUT_OF_POOL_FACTS", "Harrison", [10]),
+                         (row["rule"], row["decision"], row["reader_verdict"], row["surname"], row["redundant_with"]))
+
+    def test_without_a_marked_card_the_designation_says_nothing(self):
+        texts = list(self.TEXTS)
+        texts[0] = "Director"
+        self.assertEqual({}, self.decided(texts))
+
+    def test_a_designation_off_a_card_is_not_the_class(self):
+        texts = list(self.TEXTS) + ["Director", "Our directors serve one-year terms."]
+        self.assertEqual([5], sorted(self.decided(texts)))
+
+
 class AReadingRefusesTextItDidNotSee(unittest.TestCase):
 
     def test_a_changed_block_text_is_not_judged(self):

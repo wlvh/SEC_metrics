@@ -133,7 +133,7 @@ INJECTIONS = [
      "test_unlabelled_committees_on_the_lines_after_the_tenure"),
     ('NICKNAMES_STAY_IN_THE_NAME', '    t = _NICKNAME.sub("", _BULLET.sub("", clean(text)))', '    t = _BULLET.sub("", clean(text))',
      "test_a_quoted_nickname_between_the_names"),
-    ('ANY_QUOTED_WORD_IS_A_NICKNAME', '[”\\"](?=\\\\s+\\\\S)', '[”\\"]',
+    ('ANY_QUOTED_WORD_IS_A_NICKNAME', '\\\\))(?=\\\\s+\\\\S)")', '\\\\))")',
      "test_a_quoted_nickname_between_the_names"),
     ('MANAGEMENT_SEATS_A_BOARD_COMMITTEE', '\n                and not _MANAGEMENT_MEMBERS.search(sentence) and not', '\n                and not',
      "test_a_committee_of_management_is_not_the_board_s"),
@@ -247,9 +247,13 @@ INJECTIONS = [
      'test_a_footnote_number_printed_against_the_honorific'),
     ('A_LINKED_STATEMENT_IS_NAVIGATION', '        if not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(', '        if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(',
      'test_a_statement_carrying_a_cross_reference_is_read'),
-    ('SPACERS_COUNT_FOR_A_COMMITTEE_LABEL', '        name = _card_name(blocks, i, j, registrant, passable=lambda block: False, spacers_free=True)', '        name = _card_name(blocks, i, j, registrant, passable=lambda block: False)',
+    # Repair 47 made blank blocks free for every reach, and the committee
+    # label's own allowance for lone glyphs (repair 19) moved nothing on the 49
+    # documents (variant measured before removing it), so it was removed.
+    ('SPACER_BLOCKS_COUNT', 'if text and not _LIST_ENTRY.match(text):', 'if not _LIST_ENTRY.match(text):',
      'test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach'),
-    ('SPACERS_ARE_FREE_FOR_A_DESIGNATION', '        name = _card_name(blocks, i, i + 1, registrant, passable=passable)', '        name = _card_name(blocks, i, i + 1, registrant, passable=passable, spacers_free=True)',
+    ('LONE_GLYPHS_ARE_FREE', 'if text and not _LIST_ENTRY.match(text):',
+     'if text and not _LIST_ENTRY.match(text) and not _ONE_BULLET.match(text):',
      'test_a_designation_s_reach_still_counts_every_block'),
     ('A_CHARTER_SET_IS_NOT_READ', 'if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):', 'if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)):',
      'test_the_committees_named_together_on_their_charters'),
@@ -449,6 +453,17 @@ INJECTIONS = [
      "test_a_members_clause_names_members_or_a_status"),
     ('ONLY_NAMES_AND_EMPLOYMENT_ARE_STATUSES', ' or _QUALIFICATION.search(clause) or', ' or',
      "test_a_members_clause_names_members_or_a_status"),
+    # Repair 47: a card's name is no bulleted list entry, and list entries and
+    # blank blocks do not spend the card's reach.
+    ('A_BULLETED_LINE_NAMES_THE_CARD',
+     '    if _BULLET.match(text):\n        return None\n    if block["linked"]', '    if block["linked"]',
+     "test_a_bulleted_entry_is_not_the_card_s_name"),
+    ('LIST_ENTRIES_SPEND_THE_REACH', 'if text and not _LIST_ENTRY.match(text):', 'if text:',
+     "test_list_entries_and_blank_blocks_do_not_spend_the_reach"),
+    ('BLANK_BLOCKS_SPEND_THE_REACH', 'if text and not _LIST_ENTRY.match(text):', 'if not _LIST_ENTRY.match(text):',
+     "test_list_entries_and_blank_blocks_do_not_spend_the_reach"),
+    ('A_PARENTHESISED_NICKNAME_BREAKS_THE_NAME', '|\\\\([A-Z][a-z]+\\\\))(?=', ')(?=',
+     "test_a_parenthetical_nickname_is_part_of_the_name"),
 ]
 
 

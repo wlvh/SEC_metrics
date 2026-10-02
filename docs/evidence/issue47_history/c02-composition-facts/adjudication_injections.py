@@ -134,6 +134,21 @@ INJECTIONS = [
     ('ANY_SUBCOMMITTEE_IS_A_DUTY', ADJ,
      '        if SUBCOMMITTEE_DUTY.match(text):', '        if re.search(r"sub-?committee", text, re.I):',
      'tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact'),
+    ('THE_UNMARKED_DESIGNATION_IS_DECIDED_NOT', ADJ,
+     '"CARD_DESIGNATION_UNMARKED": ("FACT",', '"CARD_DESIGNATION_UNMARKED": ("NOT",',
+     'tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact'),
+    ('NO_MARKED_CARD_IS_NEEDED', ADJ,
+     '    if any(texts[i] == "Independent Director" and on_card(i) for i in range(len(blocks))):',
+     '    if True:',
+     'tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact'),
+    ('A_DESIGNATION_NEED_NOT_BE_ON_A_CARD', ADJ,
+     '            if texts[index] != "Director" or not on_card(index):',
+     '            if texts[index] != "Director":',
+     'tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact'),
+    ('A_BULLETED_ENTRY_NAMES_THE_DESIGNATIONS_CARD', ADJ,
+     '                if name and name[0] not in BULLETS and person_name(name):',
+     '                if name and person_name(name):',
+     'tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact'),
 ]
 RUNNER = textwrap.dedent('''
     import importlib.util, sys, types, unittest

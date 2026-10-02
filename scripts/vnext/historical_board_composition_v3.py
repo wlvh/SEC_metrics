@@ -91,6 +91,7 @@ _BULLET_CHARS = "•●▪◦‣⯀■□◆◇◾·\\-–—*"
 _BULLET = re.compile("^[\\s" + _BULLET_CHARS + "]+")
 _ONE_BULLET = re.compile("^[" + _BULLET_CHARS + "]$")
 _BULLETS_ONLY = re.compile("^[\\s" + _BULLET_CHARS + "]*$")
+_LIST_ENTRY = re.compile("^[" + _BULLET_CHARS + "]\\s*\\S")
 _FOOTNOTE_TAIL = re.compile(r"(?:\s*(?:\(\d{1,2}\)|[*†‡§#+¹²³]+))+\s*$")
 _CHAIR_TAIL = re.compile(
     r"\s*(?:,|\(|–|—|-)\s*(?:committee\s+)?(?:chair(?:man|person|woman)?"
@@ -156,7 +157,9 @@ def clean(text):
 # A nickname printed in quotes between a director's names: "Steven T. “Terry”
 # Clontz", "Isabella D. “Bella” Goren". It stands between two of the name's
 # words, so a defined term ("“Board” means") or a quoted heading is not one.
-_NICKNAME = re.compile("(?<=\\S)\\s+[“\"][A-Z][a-z]+[”\"](?=\\s+\\S)")
+# Marriott's FY2022 cards print it in parentheses instead: "Margaret M. (Meg)
+# McCarthy", "Anthony G. (Tony) Capuano".
+_NICKNAME = re.compile("(?<=\\S)\\s+(?:[“\"][A-Z][a-z]+[”\"]|\\([A-Z][a-z]+\\))(?=\\s+\\S)")
 
 
 def _strip_name(text):
@@ -1217,6 +1220,12 @@ def _full_name(blocks, k, registrant):
     """
     block = blocks[k]
     text = clean(block["text"])
+    # A bulleted line is an entry in a list, not the card's name: Marriott's
+    # cards list the director's other boards ("■ DICK’S Sporting Goods") between
+    # the card's fields and the name, and JPMorgan's FY2022 education lines
+    # ("•Graduate of Smith College") stand before the next card's fields.
+    if _BULLET.match(text):
+        return None
     if block["linked"] or not person_name(text) or re.sub(r"\W", "", text.casefold()) in registrant:
         return None
     if len(_strip_name(text).split()) >= 2:
@@ -1237,38 +1246,37 @@ def _name_from(blocks, j, registrant):
     return split if split == [j, j + 1] else None
 
 
-def _reach(blocks, start, step, spacers_free):
+def _reach(blocks, start, step):
     """Block indices from ``start`` in the direction ``step``, as far as a card reaches.
 
-    The reach is ``_CARD_REACH`` blocks. With ``spacers_free`` only blocks that
-    print something count: Ford's cards put zero-width spacer blocks and lone
-    bullet glyphs between their fields, ten raw blocks from Farley's name to
-    his "Committees: N/A", four of them printed.
+    The reach is ``_CARD_REACH`` blocks. Blocks that print nothing and the
+    entries of a bulleted list do not count: Marriott's cards print the
+    designation, the fields and the director's committees and other boards as
+    bulleted lists, and only then the name, eleven to fifteen raw blocks after
+    the designation; Ford's cards put zero-width spacer blocks between their
+    fields, ten raw blocks from Farley's name to his "Committees: N/A". A lone
+    bullet glyph counts, so a designation on Macy's cards does not pass its own
+    committee lines to the next card's name.
     """
     seen, index = 0, start
     while 0 <= index < len(blocks) and seen < _CARD_REACH:
-        if not spacers_free:
+        text = clean(blocks[index]["text"])
+        if text and not _LIST_ENTRY.match(text):
             seen += 1
-        else:
-            text = clean(blocks[index]["text"])
-            if text and not _ONE_BULLET.match(text):
-                seen += 1
         yield index
         index += step
 
 
-def _card_name(blocks, before, after, registrant, *, passable=_card_field, spacers_free=False):
+def _card_name(blocks, before, after, registrant, *, passable=_card_field):
     """The card's director: the full name after ``after`` or before ``before``.
 
     Card fields (age, tenure, a title, a designation) may stand between the
     name and the field that was read; nothing else may. A name found on both
-    sides belongs to one of two cards and is not chosen. ``spacers_free``
-    measures the reach in printed blocks (see ``_reach``); only the committee
-    label uses it, since a designation that can pass a card's labels and items
-    would then reach the next card's name as well and be dropped as ambiguous.
+    sides belongs to one of two cards and is not chosen. The reach is
+    ``_reach``'s.
     """
     following = None
-    for j in _reach(blocks, after, 1, spacers_free):
+    for j in _reach(blocks, after, 1):
         text = clean(blocks[j]["text"])
         if not text or _ONE_BULLET.match(text):
             continue
@@ -1276,7 +1284,7 @@ def _card_name(blocks, before, after, registrant, *, passable=_card_field, space
         if following or not passable(blocks[j]):
             break
     preceding = None
-    for k in _reach(blocks, before - 1, -1, spacers_free):
+    for k in _reach(blocks, before - 1, -1):
         if not clean(blocks[k]["text"]):
             continue
         preceding = _full_name(blocks, k, registrant)
@@ -1334,7 +1342,7 @@ def _cards(blocks, vocabulary, registrant):
                 break
             if not items:
                 continue
-        name = _card_name(blocks, i, j, registrant, passable=lambda block: False, spacers_free=True)
+        name = _card_name(blocks, i, j, registrant, passable=lambda block: False)
         if name is None:
             continue
         if negative and any(_NOT_YET_DIRECTOR.match(field) for field in _card_fields(blocks, i, name[0])):

@@ -286,7 +286,8 @@ class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
     def test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach(self):
         # Ford's cards (2021, 2023, 2024) interleave zero-width spacer blocks
         # and lone bullet glyphs: ten raw blocks from Farley's name to his
-        # "Committees: N/A", four of them printed.
+        # "Committees: N/A", four of them printed. The spacers print nothing
+        # and do not count; the two glyphs count.
         texts = ["James D. Farley, Jr.", "\u200b \u200b \u200b \u200b", "\u200b", "\u200b \u200b", "▪", "Age: 62",
                  "\u200b", "▪", "Director Since: 2020", "\u200b", "Committees: N/A", "\u200b \u200b",
                  "\u200b Experience: Mr. Farley was elected President and Chief Executive Officer of the company "
@@ -302,6 +303,53 @@ class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
         selected = _selected(texts)
         self.assertEqual(["DIRECTOR_DESIGNATION"], selected.get(2))
         self.assertEqual(["DIRECTOR_NAME"], selected.get(0))
+
+    def test_a_bulleted_entry_is_not_the_card_s_name(self):
+        # Marriott FY2022-FY2023: the designation and fields, the committees
+        # and the director's other boards as bulleted lists, then the name.
+        # The first other board was read as the director (Hobart, McCarthy).
+        texts = ["Independent Director", "Joined the Board: 2023", "Age: 54", "Board Committee Memberships",
+                 "■ None*", "Other Current Public Company Boards", "■ DICK’S Sporting Goods",
+                 "Other Public Company Boards (Past Five Years)", "■ YUM! Brands", "■ Sonic Corporation",
+                 "​​", "Lauren R. Hobart", "Chief Executive Officer, DICK’S Sporting Goods, Inc.",
+                 "Skills and Qualifications"]
+        self.assertEqual({0: ["DIRECTOR_DESIGNATION"], 11: ["DIRECTOR_NAME"]}, _selected(texts, emphasized={0, 11}))
+
+    def test_list_entries_and_blank_blocks_do_not_spend_the_reach(self):
+        # Marriott FY2023: eight printed blocks counted raw, the zero-width one
+        # among them, left McCarthy's name one block out of the designation's
+        # reach once her other boards were no longer taken for her name.
+        texts = ["Independent Director", "Age: 70", "Joined the Board: 2019", "Board Committee Memberships",
+                 "⯀ Audit", "⯀ Technology Oversight (Chair)", "Other Current Public Company", "Boards",
+                 "⯀ Alignment Healthcare", "⯀ American Electric Power Company, Inc.", "⯀ First American Financial Corp.",
+                 "Other Public Company Boards", "(Past Five Years)", "⯀ Brighthouse Financial, Inc.", "​​",
+                 "Margaret M. McCarthy", "Former Executive Vice President, CVS Health Corporation"]
+        self.assertEqual({0: ["DIRECTOR_DESIGNATION"], 15: ["DIRECTOR_NAME"]}, _selected(texts))
+
+    def test_a_parenthetical_nickname_is_part_of_the_name(self):
+        # Marriott FY2022 prints "Margaret M. (Meg) McCarthy" where FY2023
+        # prints "Margaret M. McCarthy"; a quoted nickname was already read.
+        self.assertTrue(person_name("Margaret M. (Meg) McCarthy"))
+        self.assertTrue(person_name("Anthony G. (Tony) Capuano"))
+        # Only between two words of the name: a leading or trailing word in
+        # parentheses is no nickname.
+        self.assertFalse(person_name("(Meg) McCarthy"))
+        self.assertFalse(person_name("Margaret McCarthy (Meg)"))
+
+    def test_the_previous_card_s_list_does_not_make_this_card_ambiguous(self):
+        # JPMorgan FY2022: the fields precede each director's name, so the
+        # previous card's last lines stand before them. "•Trustee, Northwestern
+        # University" was read as a name on that side, and Rometty's card was
+        # left out as standing between two names.
+        texts = ["Other Experience", "•Trustee, Northwestern University", "•Director, Northwestern Memorial Hospital",
+                 "•Member, Business Roundtable", "Education", "•Graduate of Smith College",
+                 "•M.B.A., The Wharton School of the University of Pennsylvania", "Age: 65", "Director since: 2020",
+                 "Committees:", "•Corporate Governance & Nominating Committee",
+                 "•Compensation & Management Development Committee", "Virginia M. Rometty",
+                 "Retired Executive Chairman, President and Chief Executive Officer of IBM"]
+        self.assertEqual({9: ["DIRECTOR_COMMITTEE_LABEL"], 10: ["DIRECTOR_COMMITTEE_ITEM"],
+                          11: ["DIRECTOR_COMMITTEE_ITEM"], 12: ["DIRECTOR_NAME"]},
+                         _selected(texts, emphasized={0, 4, 9}))
 
     def test_a_card_whose_director_is_not_beside_it_is_left_out(self):
         # A paragraph stands between the name and the label: nothing ties them.
