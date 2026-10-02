@@ -130,9 +130,19 @@
       },
       "candidate_index_mapping": {
         "delta": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/delta.json",
-        "status": "SELECTED_IN_DEVELOPMENT_VIEW_INDEX_DIFF_REVIEW_PENDING",
+        "status": "PASS_LIMITED_DELTA_TWO_SAVED_FY2025_REPLACEMENTS_SELECTED",
         "selected_old_results_withheld_after_delta": 17,
         "full390_or_production_credit": false
+      },
+      "current_index_acceptance": {
+        "result_ids": [
+          "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+          "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"
+        ],
+        "status": "EXACT_SAVED_SOURCE_CONTENT_AND_MECHANICAL_COPY_RECEIPTS_WITH_INDEX_DELTA_REVIEW",
+        "index_code_sha": "94955acf434c1ca177718aba35927f205da7ff70",
+        "review": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-94955ac/conclusion.md",
+        "scope": "Two saved FY2025 D01 coordinates only; original audit-time fields retain their date/scope; no general new-source or full390/production credit"
       }
     },
     "private_jpm_auditor_successor_failed_content": {
@@ -159,7 +169,10 @@
       "old_result_rewritten": false,
       "newly_withdrawn_from_trusted_count": 0,
       "evidence": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/"
-    }
+    },
+    "selected_known_defect_coordinates_after_verified_D01_delta": 17,
+    "verified_saved_scope_D01_replacement_count": 2,
+    "existing_current_390_view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py"
   },
   "defects": [
     {

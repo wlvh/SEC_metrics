@@ -3578,6 +3578,24 @@
       "result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
       "verdict": "NEEDS_FIX",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_d01index_94955ac",
+      "purpose": "review",
+      "module": "d01index",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py: newly joint binding and required proof set",
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/test_current_view.py: four new real-reader controls"
+      ],
+      "patch_sha": "94955acf434c1ca177718aba35927f205da7ff70",
+      "spawned_at": "2026-10-02T23:02:03.453853+00:00",
+      "ended_at": "2026-10-02T23:06:08.932294Z",
+      "tool_calls": 12,
+      "result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-94955ac/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "inherited_result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
+      "new_agent_reason": "Previous child ended at 3-message limit; genuine new SHA binding difference not covered. Reuse previous whole-index findings; review increment only.",
+      "ordinary_messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -11198,7 +11216,7 @@
     "delta": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/delta.json",
     "view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
     "external_view": "/private/tmp/issue28-existing-390-view-20261003.json",
-    "status": "FIXED_KNOWN_INDEX_BINDING_P2_PARENT12_PASS_INCREMENTAL_REVIEW_PENDING",
+    "status": "PASS_LIMITED_DELTA_TWO_SAVED_SCOPE_D01_REPLACEMENTS_SELECTED",
     "two_candidates_have_prior_independent_content_and_mechanical_copy_receipts": true,
     "old_index_and_old_Result_Run_unchanged": true,
     "original_registered_bad_coordinates": 19,
@@ -11219,6 +11237,15 @@
       "verdict": "NEEDS_FIX",
       "path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
       "three_binding_counterexamples_preserved": true
-    }
+    },
+    "final_independent_review": {
+      "sha": "94955acf434c1ca177718aba35927f205da7ff70",
+      "path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-94955ac/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "actual_short_tests": 12,
+      "actual_added_controls_rejected": 12,
+      "material_rerun": false
+    },
+    "current_390_saved_scope_D01_credit": true
   }
 }
