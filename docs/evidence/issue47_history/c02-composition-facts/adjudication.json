@@ -93,6 +93,10 @@
   "SUBCOMMITTEE_DUTY": {
    "decision": "NOT",
    "reason": "A committee's duty carried out through a subcommittee describes the committee's work, which the owner's meaning leaves out; it names no member and no decision setting a committee up."
+  },
+  "CARD_DESIGNATION_UNMARKED": {
+   "decision": "FACT",
+   "reason": "A card's designation 'Director', where the filing's other cards print 'Independent Director', marks the director not independent, as a table's unmarked row does; a block naming the same director as not independent states it."
   }
  },
  "decisions": [
@@ -884,6 +888,32 @@
    "reader_verdict": "NOT",
    "reader_why": "plan eligibility; '13 non-employee directors' is neither the board's size nor its independent count",
    "redundant_with": []
+  },
+  {
+   "position": "marriott_international:2022-12-31",
+   "i": 661,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Capuano",
+   "redundant_with": [
+    1054
+   ]
+  },
+  {
+   "position": "marriott_international:2022-12-31",
+   "i": 726,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Harrison",
+   "redundant_with": [
+    1054
+   ]
   },
   {
    "position": "paramount_skydance_paramount_global:2021-12-31",
@@ -2119,6 +2149,32 @@
    "reader_why": "",
    "redundant_with": [
     520
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 664,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Capuano",
+   "redundant_with": [
+    1218
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 765,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Harrison",
+   "redundant_with": [
+    1218
    ]
   },
   {

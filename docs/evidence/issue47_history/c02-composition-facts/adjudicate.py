@@ -181,6 +181,19 @@ SUBCOMMITTEE_DUTY (NOT)
     cybersecurity subcommittee, which includes a board member ..." does. Lumen's
     FY2022 reader took it; its FY2021, FY2023 and FY2024 readers left it out.
 
+CARD_DESIGNATION_UNMARKED (FACT)
+    A director card's designation "Director", on a card (an age, "Joined the
+    Board" or "Director since" field right after it), in a filing whose other
+    cards print "Independent Director". Beside the others it marks the
+    director not independent, as a table's unmarked row does
+    (DIRECTOR_TABLE_NAME). Marriott's FY2023 and FY2024 readers took the four
+    such fields ("card label 'Director' (not 'Independent Director'): not
+    independent"); its FY2022 and FY2025 readers left out the four. A block
+    naming the same director as not independent ("Mr. Anthony Capuano, Mrs.
+    Deborah Harrison, and Mr. David Marriott are considered not independent")
+    states the same fact. A "Director" column heading or a "Director since"
+    heading is no card field and outside the class.
+
 Older years' filings are read from a root restored from the acquisition's
 export by this checkout (``--source-root``). Building a document takes the
 route's input preparation; ``--documents`` names a cache directory (outside
@@ -266,9 +279,17 @@ RULES = {
     "SUBCOMMITTEE_DUTY": ("NOT", "A committee's duty carried out through a subcommittee describes the committee's work, "
                                  "which the owner's meaning leaves out; it names no member and no decision setting a "
                                  "committee up."),
+    "CARD_DESIGNATION_UNMARKED": ("FACT", "A card's designation 'Director', where the filing's other cards print "
+                                          "'Independent Director', marks the director not independent, as a table's "
+                                          "unmarked row does; a block naming the same director as not independent "
+                                          "states it."),
 }
 
 TENURE = re.compile(r"^\s*(?:director since|joined the board)\s*:?", re.I)
+CARD_FIELD = re.compile(r"^\s*(?:age\s*:?\s*\d{2}\b|director since\s*:|joined the board\s*:)", re.I)
+NOT_INDEPENDENT = re.compile(r"\bnot\s+(?:considered\s+)?independent\b", re.I)
+NICKNAME = re.compile("(?<=\\S)\\s+(?:[“\"][A-Z][a-z]+[”\"]|\\([A-Z][a-z]+\\))(?=\\s+\\S)")
+BULLETS = "•●▪◦‣⯀■□◆◇◾·"
 NOT_YET = re.compile(r"^\s*director since\s*:?\s*n/?a$", re.I)
 NO_COMMITTEE_FIELD = re.compile(r"^committees?\s*:\s*n/?a$", re.I)
 _MONTHS = "january|february|march|april|may|june|july|august|september|october|november|december"
@@ -654,6 +675,33 @@ def decisions_for(position, document, record):
                 for part in name:
                     decide(part, "CARD_SUBJECT_NAME", redundant_with=cover, surname=surname, field=index)
                 break
+    # CARD_DESIGNATION_UNMARKED: "Director" on a card, where other cards print
+    # "Independent Director"; covered by a block naming the same director as
+    # not independent.
+    def on_card(index):
+        after = [j for j in range(index + 1, min(index + 6, len(blocks))) if texts[j]][:3]
+        return any(CARD_FIELD.match(texts[j]) for j in after)
+    if any(texts[i] == "Independent Director" and on_card(i) for i in range(len(blocks))):
+        for index in range(len(blocks)):
+            if texts[index] != "Director" or not on_card(index):
+                continue
+            surname = None
+            for j in range(index + 1, min(index + 26, len(blocks))):
+                # The card's name: the first one after the designation that is
+                # no bulleted list entry, its nickname ("Anthony G. (Tony)
+                # Capuano") set aside here so the class does not depend on
+                # which nicknames the selector reads.
+                name = NICKNAME.sub("", texts[j])
+                if name and name[0] not in BULLETS and person_name(name):
+                    tokens = _strip_name(name).replace(",", " ").split()
+                    if len(tokens) >= 2:
+                        surname = tokens[-1]
+                        break
+            cover = [] if surname is None else [
+                j for j in range(len(blocks)) if j != index and usable(j)
+                and any(re.search(r"\b" + re.escape(surname) + r"\b", s) and NOT_INDEPENDENT.search(s)
+                        for s in sentences(texts[j]))]
+            decide(index, "CARD_DESIGNATION_UNMARKED", redundant_with=cover, surname=surname)
     structure = [i for i in range(len(blocks)) if usable(i) and _structure(texts[i])]
     for index in structure:
         decide(index, "CHAIR_CEO_STRUCTURE", redundant_with=structure)
