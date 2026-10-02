@@ -22,9 +22,11 @@ acquisition's export) and asks the route's own functions. What must not move
 is asserted beside what must: D03's candidates, the excerpts that are not
 furniture, and the filings where a rule finds its pattern but moves nothing.
 """
+import json
 import re
 import unittest
 
+from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.saved_filings import saved_filing as _saved
 from vnext import historical_text_results as route
 from vnext import text_coverage
@@ -72,6 +74,10 @@ def proposal_of(built, raw, *, without=None):
     if without == "APPENDED_STATEMENTS":
         saved["appended_statements_range"] = route.appended_statements_range
         route.appended_statements_range = lambda **arguments: None
+    if without == "STATEMENTS_START":
+        # As before the repair: the statements start at the first title after Item 8.
+        saved["statements_start"] = route.statements_start
+        route.statements_start = lambda titles: titles[0][0] if titles else None
     try:
         corrected = route.narrow_document_sections(document=built)
         return corrected, route.referenced_note_candidates(document=corrected, raw_bytes=raw)
@@ -312,6 +318,85 @@ class StatementsPrintedAfterAPointerPageTest(unittest.TestCase):
                          if r["section_id"] == route.APPENDED_STATEMENTS])
         self.assertEqual(excerpts(before), excerpts(found))
         self.assertEqual(excerpts(before, "D03"), excerpts(found, "D03"))
+
+
+class TheStatementsBeginWhereTheyArePrintedTogetherTest(unittest.TestCase):
+    """The appended range starts at the statements, not at a heading that begins with one's name.
+
+    JPMorgan's Item 8 is a pointer page too, and its MD&A opens "CONSOLIDATED
+    BALANCE SHEETS AND CASH FLOWS ANALYSIS" some 3,400 blocks before
+    "Consolidated statements of income". Starting there put the MD&A under the
+    keyword, and the held-out reading of FY2025 judged each such admission not
+    a disclosure (d02-older-years/judgements/jpmorgan_chase-2025-12-31.json).
+    The statements are where titles of at least three kinds stand together.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.corrected, cls.found = proposal("jpm-20251231.htm")
+        _, cls.before = proposal("jpm-20251231.htm", without="STATEMENTS_START")
+
+    @staticmethod
+    def _appended(found):
+        ranges = [r for r in found["checked_ranges"] if r["section_id"] == route.APPENDED_STATEMENTS]
+        assert len(ranges) == 1, ranges
+        return ranges[0]
+
+    def test_jpmorgan_s_range_starts_at_the_income_statement(self):
+        blocks = self.corrected["blocks"]
+        start = self._appended(self.found)["start_block"]
+        old = self._appended(self.before)["start_block"]
+        self.assertEqual("Consolidated statements of income", blocks[start]["text"].strip())
+        self.assertEqual("CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS", blocks[old]["text"].strip())
+        self.assertLess(old, start)
+
+    def test_only_the_mdna_paragraphs_leave_and_each_was_judged_not_a_disclosure(self):
+        start = self._appended(self.found)["start_block"]
+        old = self._appended(self.before)["start_block"]
+        lost = set(excerpts(self.before)) - set(excerpts(self.found))
+        self.assertEqual(set(), set(excerpts(self.found)) - set(excerpts(self.before)))
+        self.assertTrue(lost)
+        self.assertTrue(all(old <= index < start for index in lost), sorted(lost))
+        reading = json.loads((ROOT / "docs/evidence/issue47_history/d02-older-years/judgements/"
+                                     "jpmorgan_chase-2025-12-31.json").read_text(encoding="utf-8"))
+        verdict = {row["i"]: row["verdict"] for row in reading["judgements"] if row["kind"] == "TAKEN"}
+        self.assertEqual({"NOT_DISCLOSURE"}, {verdict[index] for index in lost})
+        disclosures = {index for index, value in verdict.items() if value == "DISCLOSURE"}
+        self.assertEqual(set(), disclosures - set(excerpts(self.found)))
+        self.assertEqual(excerpts(self.before, "D03"), excerpts(self.found, "D03"))
+
+    def test_a_report_whose_statements_open_the_run_keeps_its_range(self):
+        _, found = proposal("m-10k_20220129.htm")
+        _, before = proposal("m-10k_20220129.htm", without="STATEMENTS_START")
+        self.assertEqual(self._appended(before), self._appended(found))
+        self.assertEqual(excerpts(before), excerpts(found))
+
+
+class StatementsStartTest(unittest.TestCase):
+    """The run on constructed titles: each condition held on its own."""
+
+    def test_a_run_of_three_kinds_starts_the_statements(self):
+        titles = [(1705, "BALANCE"), (1706, "BALANCE"), (5229, "INCOME"),
+                  (5271, "COMPREHENSIVE"), (5287, "BALANCE")]
+        self.assertEqual(5229, route.statements_start(titles))
+
+    def test_two_kinds_are_not_the_statements(self):
+        self.assertIsNone(route.statements_start([(10, "BALANCE"), (20, "CASH_FLOWS"), (30, "BALANCE")]))
+
+    def test_a_gap_over_the_bound_breaks_the_run(self):
+        self.assertIsNone(route.statements_start([(0, "INCOME"), (100, "BALANCE"), (401, "CASH_FLOWS")]))
+        self.assertEqual(0, route.statements_start([(0, "INCOME"), (100, "BALANCE"), (400, "CASH_FLOWS")]))
+
+    def test_each_title_has_its_kind(self):
+        for text, kind in (("Consolidated Statements of Comprehensive Income", "COMPREHENSIVE"),
+                           ("Consolidated statements of income", "INCOME"),
+                           ("CONSOLIDATED STATEMENTS OF OPERATIONS", "INCOME"),
+                           ("Consolidated statements of changes in stockholders\u2019 equity", "EQUITY"),
+                           ("Consolidated Statements of Cash Flows", "CASH_FLOWS"),
+                           ("Consolidated balance sheets analysis", "BALANCE"),
+                           ("Consolidated Statements of Operations and Comprehensive Income", "INCOME")):
+            with self.subTest(text):
+                self.assertEqual(kind, route._statement_kind(text))
 
 
 if __name__ == "__main__":

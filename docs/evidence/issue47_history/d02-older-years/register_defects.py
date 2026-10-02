@@ -38,8 +38,12 @@ def entries(readings):
             for judgement in reading["judgements"]:
                 if judgement["verdict"] not in WRONG:
                     continue
+                # A block named on its own ("block:<i>") is asked first: one scope
+                # can hold blocks wrong for different reasons (JPMorgan's
+                # statements range holds MD&A paragraphs, category mentions and
+                # other keyword admissions).
                 key = judgement.get("scope") or judgement["kind"]
-                cause = table.get(key)
+                cause = table.get("block:%d" % judgement["i"], table.get(key))
                 if cause is None:
                     raise SystemExit("NO_CAUSE_FOR_BLOCK:" + position + ":" + str(judgement["i"]) + ":" + key)
                 used.append(cause)

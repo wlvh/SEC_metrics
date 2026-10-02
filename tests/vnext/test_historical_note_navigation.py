@@ -114,14 +114,13 @@ class ThePageNumberIsNotANoteHeading(unittest.TestCase):
                 self.assertEqual(set(headings), set(headings) & page_number_blocks(blocks))
 
     def test_where_navigation_was_unique_it_is_unchanged(self):
-        # FY2025's page 16 is followed by body text, FY2021's range was unique
-        # already; the located ranges are the frozen ones.
-        for case in (PFIZER_2025, PFIZER_2021):
-            frozen = self._navigation(case, _note_references)
-            successor = self._navigation(case, note_references)
-            with self.subTest(case[2]):
-                self.assertEqual([r["range_candidates"] for r in frozen],
-                                 [r["range_candidates"] for r in successor])
+        # FY2025's page 16 is followed by body text; the located range is the
+        # frozen one. FY2021's range was unique already, and moves only for the
+        # split-emphasis Note 17 heading (SplitEmphasisNoteHeadingTest).
+        frozen = self._navigation(PFIZER_2025, _note_references)
+        successor = self._navigation(PFIZER_2025, note_references)
+        self.assertEqual([r["range_candidates"] for r in frozen],
+                         [r["range_candidates"] for r in successor])
 
     def test_macys_numbered_note_headings_are_not_page_numbers(self):
         blocks = self.documents[MACYS_2021[0]]["blocks"]
@@ -171,6 +170,86 @@ class ThePageNumberIsNotANoteHeading(unittest.TestCase):
         self.assertEqual(["UNRESOLVED_NOTE_16A"], frozen["coverage_reasons"])
         self.assertEqual("LOCAL_REQUESTED_RANGES_SCANNED",
                          route._D02_LEGAL_SCAN(document=document)["coverage_status"])
+
+
+NOTE_17 = "Note 17. Segment, Geographic and Other Revenue Information"
+
+
+class SplitEmphasisNoteHeadingTest(unittest.TestCase):
+    """Pfizer FY2021 prints Note 17's number bold, ". " in body weight, the title bold.
+
+    The frozen scan wants the whole block emphasized, so Note 17 was never a
+    heading: Note 16 ran on to the end of Item 8, its lettered sub-note 16A met
+    Note 17's own "A. Segment Information", and the legal proceedings Item 3
+    incorporates were not read. Every expectation is read off the document's
+    blocks by their text; the reading that found it judged 49 skipped blocks
+    of Note 16A legal proceedings (d02-older-years/judgements/pfizer-2021-12-31.json).
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.document = _document(PFIZER_2021)
+        cls.raw = saved_bytes(repo_root=ROOT, relative=PFIZER_2021[0])
+        blocks = cls.document["blocks"]
+        cls.note_17 = next(i for i, b in enumerate(blocks) if b["text"].strip() == NOTE_17)
+
+    def _references(self, function):
+        ranges, _ = _ranges(self.document, ["ITEM_1A", "ITEM_3", "ITEM_8"])
+        return function(self.document, ranges)
+
+    def test_the_heading_is_split_in_the_document_itself(self):
+        block = self.document["blocks"][self.note_17]
+        self.assertFalse(block["emphasized"])
+        self.assertEqual("Note 17", block["leading_emphasis"]["text"])
+        self.assertTrue(route.split_emphasis_note_heading(block))
+
+    def test_note_16_ends_where_note_17_begins(self):
+        frozen = self._references(_note_references)[0]["range_candidates"][0]
+        successor = self._references(note_references)[0]["range_candidates"][0]
+        item_8 = next(r for r in _ranges(self.document, ["ITEM_8"])[0])
+        self.assertEqual(item_8["end_block_exclusive"], frozen["end_block_exclusive"])
+        self.assertEqual(frozen["start_block"], successor["start_block"])
+        self.assertEqual(self.note_17, successor["end_block_exclusive"])
+        self.assertEqual("WIDER_PARENT_NOTE", successor["scope_relation"])
+
+    def test_note_16a_is_located_and_its_legal_proceedings_are_read(self):
+        blocks = self.document["blocks"]
+        proposal = route.referenced_note_candidates(document=self.document, raw_bytes=self.raw)
+        scope = next(r for r in proposal["checked_ranges"] if r["section_id"] == "NOTE_16_SUB_A")
+        self.assertEqual("A. Legal Proceedings", blocks[scope["start_block"]]["text"])
+        self.assertEqual("B. Guarantees and Indemnifications", blocks[scope["end_block_exclusive"]]["text"])
+        reading = json.loads((ROOT / "docs/evidence/issue47_history/d02-older-years/judgements/"
+                                     "pfizer-2021-12-31.json").read_text(encoding="utf-8"))
+        verdicts = {row["i"]: row["verdict"] for row in reading["judgements"] if row["kind"] == "CONTEXT"}
+        taken = {c["block_index"] for c in proposal["D02"]["candidates"]}
+        wrongly_skipped = {i for i, verdict in verdicts.items() if verdict == "WRONGLY_SKIPPED"}
+        self.assertEqual(49, len(wrongly_skipped))
+        self.assertEqual(set(), wrongly_skipped - taken)
+        correctly_skipped = {i for i, verdict in verdicts.items() if verdict == "CORRECTLY_SKIPPED"}
+        self.assertEqual(set(), correctly_skipped & taken)
+
+    def test_nothing_else_moves(self):
+        with mock.patch.object(route, "split_emphasis_note_heading", lambda block: False):
+            before = route.referenced_note_candidates(document=self.document, raw_bytes=self.raw)
+        after = route.referenced_note_candidates(document=self.document, raw_bytes=self.raw)
+        taken = lambda proposal, key: {c["block_index"] for c in proposal[key]["candidates"]}
+        self.assertEqual(set(), taken(before, "D02") - taken(after, "D02"))
+        self.assertEqual(taken(before, "D03"), taken(after, "D03"))
+        self.assertNotIn("NOTE_16_SUB_A", {r["section_id"] for r in before["checked_ranges"]})
+
+    def test_a_block_in_the_same_shape_without_the_explicit_number_is_not_a_heading(self):
+        def block(text, lead, **rest):
+            return {"text": text, "linked": False, "emphasized": False,
+                    "leading_emphasis": {"text": lead}, **rest}
+        for case in (block("2 — NM", "2"),                     # a table cell
+                     block("1 Bank of America", "1"),           # a page footer
+                     block("Note 17. See the discussion of segments above.", "Note 17"),
+                     block(NOTE_17, "Note 17", linked=True),
+                     block(NOTE_17, "Note 17", emphasized=True),  # the frozen scan's own case
+                     block(NOTE_17, "Note 17. Segment")):
+            with self.subTest(case["text"], lead=case["leading_emphasis"]["text"]):
+                self.assertFalse(route.split_emphasis_note_heading(case))
+        self.assertTrue(route.split_emphasis_note_heading(block(NOTE_17, "Note 17")))
 
 
 class APageNumberNeedsTheSequenceBesideTheFooter(unittest.TestCase):

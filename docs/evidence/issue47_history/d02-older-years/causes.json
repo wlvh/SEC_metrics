@@ -4,8 +4,12 @@
  "causes": {
   "KEYWORD_PROXY": {
    "text": "An Item 8 block the _LEGAL keyword admits although the block names litigation only as a category (a cost definition, a legal-fee policy, a list of estimates, the collection of receivables, a tax position). The registered decision d02-content-read/keyword-proxy-decision.json; no measured deterministic rule separates these from the Item 8 blocks the proxy admits rightly.",
-   "same_cause_as": ["D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY", "D02_PFIZER_2025_SCOPE_CONTENT_READ"],
-   "repair_state": "REGISTERED_DECISION_NOT_REPAIRED"
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair": "d02_item_8_category_mentions, wired into the route in 36c64ab6 (d02-keyword-repair/): every block of this cause in the thirty older-year readings is a category mention it leaves out."
   },
   "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY": {
    "text": "Item 3 incorporates a note's 'Pending Matters' and 'Other Proceedings and Disputes' subheadings; the note calls them 'Principal Proceedings' and 'Other Proceedings, Disputes and Contingencies'. With no quoted caption found the route took the whole note, and the value carries the right-of-way table and the purchase commitments the filing did not incorporate.",
@@ -25,17 +29,138 @@
   "ITEM_EIGHT_POINTER_PAGE": {
    "text": "Item 8 is a pointer page; the financial statements are printed after the form's items and the keyword proxy reads Item 8 only, so the self-insurance claims accrual the later years' values carry is never reached.",
    "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+  },
+  "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING": {
+   "text": "Item 8 is a pointer page, and the range for the statements printed after the items started at the first block that begins with a statement's name: an MD&A heading ('CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS') about 3,500 blocks before the statements. MD&A paragraphs - critical accounting estimates, forward-looking statements, country exposure - came under the keyword.",
+   "repair": "historical_text_results.statements_start: the range starts where titles of at least three kinds of primary statement stand together (d02-navigation-repairs/).",
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+  },
+  "ITEM_8_CATEGORY_MENTION": {
+   "text": "An Item 8 block the _LEGAL keyword admits although every occurrence is a list item or a parenthetical example and the paragraph states no legal matter of the registrant (estimates moved by competition and litigation, receivables written off after litigation, tax positions, cost categories).",
+   "repair": "d02_item_8_category_mentions, wired into the route in 36c64ab6 (d02-keyword-repair/).",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
+  },
+  "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION": {
+   "text": "An Item 8 block the _LEGAL keyword admits that states no legal matter of the registrant and that the category-mention rule keeps: another entity's litigation behind a derivative (the Visa class B shares, whose conversion depends on Visa's covered litigation), or a composition list whose paragraph also says 'accrued interest'.",
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY"
+   ],
+   "repair_state": "REGISTERED_NOT_REPAIRED"
+  },
+  "PAGE_FURNITURE_IN_INCORPORATED_NOTE": {
+   "text": "The page footer ('JPMorgan Chase & Co./<year> Form 10-K') and the notes' running head ('Notes to consolidated financial statements') taken as excerpts inside the incorporated Note 30; neither furniture criterion finds them.",
+   "repair_state": "REGISTERED_NOT_REPAIRED"
+  },
+  "SPLIT_EMPHASIS_NOTE_HEADING": {
+   "text": "Note 17's heading prints its number bold, '. ' in body weight and the title bold, so the frozen scan never takes it as a heading. Note 16 ran on to the end of Item 8, the sub-note 16A Item 3 incorporates met Note 17's own 'A.' and was not located, and its legal proceedings were read only where the keyword admitted a paragraph.",
+   "repair": "historical_text_results.split_emphasis_note_heading in the note navigation (d02-navigation-repairs/).",
+   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED"
   }
  },
  "positions": {
-  "lumen_technologies:2021-12-31": {"ITEM_8": "KEYWORD_PROXY", "NOTE_18": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"},
-  "lumen_technologies:2022-12-31": {"ITEM_8": "KEYWORD_PROXY"},
-  "lumen_technologies:2023-12-31": {"ITEM_8": "KEYWORD_PROXY"},
-  "lumen_technologies:2024-12-31": {"ITEM_8": "KEYWORD_PROXY"},
-  "pfizer:2022-12-31": {"ITEM_8": "KEYWORD_PROXY", "NOTE_16_SUB_A": "PAGE_FOOTER_AS_EXCERPT"},
-  "pfizer:2023-12-31": {"ITEM_8": "KEYWORD_PROXY", "ITEM_3": "PAGE_FOOTER_AS_EXCERPT"},
-  "pfizer:2024-12-31": {"ITEM_8": "KEYWORD_PROXY", "ITEM_3": "PAGE_FOOTER_AS_EXCERPT"},
-  "southwest_airlines:2023-12-31": {"ITEM_3": "ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING"},
-  "macys:2022-01-29": {"OUTSIDE": "ITEM_EIGHT_POINTER_PAGE"}
+  "lumen_technologies:2021-12-31": {
+   "ITEM_8": "KEYWORD_PROXY",
+   "NOTE_18": "WHOLE_NOTE_FOR_CAPTIONS_IT_DOES_NOT_CARRY"
+  },
+  "lumen_technologies:2022-12-31": {
+   "ITEM_8": "KEYWORD_PROXY"
+  },
+  "lumen_technologies:2023-12-31": {
+   "ITEM_8": "KEYWORD_PROXY"
+  },
+  "lumen_technologies:2024-12-31": {
+   "ITEM_8": "KEYWORD_PROXY"
+  },
+  "pfizer:2022-12-31": {
+   "ITEM_8": "KEYWORD_PROXY",
+   "NOTE_16_SUB_A": "PAGE_FOOTER_AS_EXCERPT"
+  },
+  "pfizer:2023-12-31": {
+   "ITEM_8": "KEYWORD_PROXY",
+   "ITEM_3": "PAGE_FOOTER_AS_EXCERPT"
+  },
+  "pfizer:2024-12-31": {
+   "ITEM_8": "KEYWORD_PROXY",
+   "ITEM_3": "PAGE_FOOTER_AS_EXCERPT"
+  },
+  "southwest_airlines:2023-12-31": {
+   "ITEM_3": "ITEM_THREE_RUNS_PAST_A_PAGE_FOOT_HEADING"
+  },
+  "macys:2022-01-29": {
+   "OUTSIDE": "ITEM_EIGHT_POINTER_PAGE"
+  },
+  "jpmorgan_chase:2021-12-31": {
+   "NOTE_30": "PAGE_FURNITURE_IN_INCORPORATED_NOTE",
+   "block:3655": "ITEM_8_CATEGORY_MENTION",
+   "block:3665": "ITEM_8_CATEGORY_MENTION",
+   "block:5009": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5120": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5121": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5142": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:6401": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9147": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION"
+  },
+  "jpmorgan_chase:2022-12-31": {
+   "NOTE_30": "PAGE_FURNITURE_IN_INCORPORATED_NOTE",
+   "block:3666": "ITEM_8_CATEGORY_MENTION",
+   "block:3676": "ITEM_8_CATEGORY_MENTION",
+   "block:5042": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5155": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5156": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5196": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:6435": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:6436": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:6437": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9129": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION"
+  },
+  "jpmorgan_chase:2023-12-31": {
+   "NOTE_30": "PAGE_FURNITURE_IN_INCORPORATED_NOTE",
+   "block:3971": "ITEM_8_CATEGORY_MENTION",
+   "block:3976": "ITEM_8_CATEGORY_MENTION",
+   "block:5289": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5403": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5404": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5466": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:6713": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:6714": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9638": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9648": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION"
+  },
+  "jpmorgan_chase:2024-12-31": {
+   "NOTE_30": "PAGE_FURNITURE_IN_INCORPORATED_NOTE",
+   "block:3705": "ITEM_8_CATEGORY_MENTION",
+   "block:3710": "ITEM_8_CATEGORY_MENTION",
+   "block:4817": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:4970": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5085": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5086": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5138": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:6403": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:6404": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9318": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9328": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION"
+  },
+  "jpmorgan_chase:2025-12-31": {
+   "NOTE_30": "PAGE_FURNITURE_IN_INCORPORATED_NOTE",
+   "block:3737": "ITEM_8_CATEGORY_MENTION",
+   "block:4799": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:4957": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5072": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5073": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:5134": "APPENDED_RANGE_STARTS_AT_AN_MDNA_HEADING",
+   "block:6395": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:6397": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9356": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION",
+   "block:9366": "KEYWORD_PROXY_NOT_A_CATEGORY_MENTION"
+  },
+  "pfizer:2021-12-31": {
+   "ITEM_8": "ITEM_8_CATEGORY_MENTION",
+   "CONTEXT": "SPLIT_EMPHASIS_NOTE_HEADING",
+   "HEADING": "SPLIT_EMPHASIS_NOTE_HEADING"
+  }
  }
 }

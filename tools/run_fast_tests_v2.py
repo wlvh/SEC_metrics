@@ -707,7 +707,8 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_historical_source_acquisition": 90,
     "tests.vnext.test_c02_board_reading": 89,
     "tests.vnext.test_history_block_coherence": 87,
-    "tests.vnext.test_historical_d02_route_repairs": 83,
+    # JPMorgan FY2025 and the statements-start cases added; 116 s measured locally.
+    "tests.vnext.test_historical_d02_route_repairs": 125,
     "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest": 79,
     "tests.vnext.test_historical_run_replay": 78,
     "tests.vnext.test_ordinary_income_input": 75,

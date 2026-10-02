@@ -64,9 +64,9 @@ import re
 from .canonical import content_hash, sha256_bytes
 from .records import validate_record
 from . import text_business_candidates as _frozen_candidates
-from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _POLICY_HASH,
-                                       _PROSPECTIVE, _check_document, _excerpt, _note_references,
-                                       _ranges, _substantive)
+from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _PATTERNS,
+                                       _POLICY_HASH, _PROSPECTIVE, _check_document, _excerpt,
+                                       _note_references, _ranges, _substantive)
 from . import text_results_v2 as frozen
 from .d02_item_8_category_mentions import TERMS_HASH as _CATEGORY_TERMS_HASH
 from .d02_item_8_category_mentions import left_out_as_category_mention
@@ -358,6 +358,49 @@ _STATEMENT_TITLE = re.compile(
     r"|shareholders|stockholders|equity))", re.I)
 
 
+# The kind of primary statement a title names. The patterns do not overlap:
+# "statements of comprehensive income" is not an income statement's title, and
+# "statements of operations and comprehensive income" is one.
+_STATEMENT_KINDS = (
+    ("COMPREHENSIVE", re.compile(r"^consolidated statements? of comprehensive", re.I)),
+    ("BALANCE", re.compile(r"^consolidated (?:balance sheets?|statements? of financial "
+                           r"(?:position|condition))", re.I)),
+    ("INCOME", re.compile(r"^consolidated (?:income statements?|statements? of "
+                          r"(?:operations|income|earnings))", re.I)),
+    ("CASH_FLOWS", re.compile(r"^consolidated statements? of cash flows?", re.I)),
+    ("EQUITY", re.compile(r"^consolidated statements? of (?:changes|shareholders|stockholders"
+                          r"|equity)", re.I)),
+)
+# The statements are printed together: at least three kinds, each title within
+# this many blocks of the one before.
+_STATEMENTS_TOGETHER = 3
+_STATEMENT_GAP = 300
+
+
+def _statement_kind(text):
+    return next((kind for kind, pattern in _STATEMENT_KINDS if pattern.match(text)), None)
+
+
+def statements_start(titles):
+    """The first title that opens a run of at least three kinds of primary statement.
+
+    ``titles`` is (block index, kind) in document order. A title that does not
+    open such a run is a heading that happens to begin with a statement's name:
+    JPMorgan's MD&A prints "Consolidated balance sheets analysis" thousands of
+    blocks before its statements.
+    """
+    for begin, (first, _) in enumerate(titles):
+        kinds, last = set(), first
+        for index, kind in titles[begin:]:
+            if index - last > _STATEMENT_GAP:
+                break
+            kinds.add(kind)
+            last = index
+            if len(kinds) >= _STATEMENTS_TOGETHER:
+                return first
+    return None
+
+
 def appended_statements_range(*, document, ranges):
     """The financial statements a report prints after its items when Item 8 only points to them.
 
@@ -371,9 +414,19 @@ def appended_statements_range(*, document, ranges):
 
     Item 8 is a pointer page when it holds none of the primary statements'
     titles and the document prints them after it. The range then runs from the
-    first title after Item 8 to the end of the document; a note an Item
-    incorporates keeps its own blocks (the innermost range owns a block), and the
-    range is read as Item 8 is, through the keyword.
+    statements to the end of the document; a note an Item incorporates keeps
+    its own blocks (the innermost range owns a block), and the range is read as
+    Item 8 is, through the keyword.
+
+    The statements begin where the titles of at least three kinds of primary
+    statement stand together (``statements_start``), not at the first title
+    after Item 8. JPMorgan's report is a pointer page too, and its MD&A opens
+    "CONSOLIDATED BALANCE SHEETS AND CASH FLOWS ANALYSIS" and "Consolidated
+    balance sheets analysis" about 3,500 blocks before "Consolidated statements
+    of income". Starting there put the MD&A - critical accounting estimates,
+    forward-looking statements, country exposure - under the keyword, and the
+    held-out readings judged every such admission not a disclosure (22 in five
+    years). Macy's FY2021 statements open the run, so its range is unchanged.
     """
     item_8 = next((r for r in ranges if r["section_id"] == ITEM_8), None)
     if item_8 is None:
@@ -384,13 +437,14 @@ def appended_statements_range(*, document, ranges):
               and _STATEMENT_TITLE.match(block["text"].strip())]
     if any(item_8["start_block"] <= index < item_8["end_block_exclusive"] for index in titles):
         return None
-    after = [index for index in titles if index >= item_8["end_block_exclusive"]]
-    if not after:
+    start = statements_start([(index, _statement_kind(blocks[index]["text"].strip()))
+                              for index in titles if index >= item_8["end_block_exclusive"]])
+    if start is None:
         return None
-    return {"section_id": APPENDED_STATEMENTS, "start_block": after[0],
+    return {"section_id": APPENDED_STATEMENTS, "start_block": start,
             "end_block_exclusive": len(blocks),
             "scope_relation": "ITEM_8_POINTS_TO_STATEMENTS_PRINTED_AFTER_THE_ITEMS",
-            "caption_text": blocks[after[0]]["text"]}
+            "caption_text": blocks[start]["text"]}
 
 
 def _d02_section(section, text):
@@ -897,6 +951,35 @@ def page_structure_furniture(blocks):
 _PARENTHESIZED_NOTE = re.compile(r"\((\d{1,3}[A-Z]?)\)\s*(?=[A-Za-z])")
 
 
+def split_emphasis_note_heading(block):
+    """A note heading whose "Note <n>" and title are emphasized and whose separator is not.
+
+    The frozen scan takes a heading only when the whole block is emphasized
+    (or the number and the title are blocks of their own). Pfizer's FY2020 and
+    FY2021 reports print Note 17's number bold, the ". " after it in the body
+    weight and the title bold, so the block is not wholly emphasized and Note
+    17 is never a heading. Note 16's range then runs on to the end of Item 8,
+    its lettered sub-note 16A meets a second "A." (Note 17's "A. Segment
+    Information") and cannot be located, and the legal proceedings Item 3
+    incorporates are not read: 49 blocks in FY2021.
+
+    The block counts as a heading when its leading emphasis is exactly an
+    explicit note number ("Note 17", the frozen ``note_identifier`` with the
+    frozen ``explicit_note_prefix``), its whole text is a frozen note heading,
+    and it does not end like a sentence. Measured over the saved annual
+    reports: two blocks, both those headings. A bare number in the same shape
+    is a table cell or a page footer (Bank of America's "1 Bank of America",
+    JPMorgan's "2 — NM"), so the explicit prefix is required.
+    """
+    lead = ((block.get("leading_emphasis") or {}).get("text") or "").strip()
+    text = block["text"].strip()
+    return bool(not block["linked"] and not block.get("emphasized") and len(block["text"]) <= 300
+                and _PATTERNS["explicit_note_prefix"].match(lead)
+                and _PATTERNS["note_identifier"].fullmatch(lead)
+                and _PATTERNS["note_heading"].match(block["text"])
+                and not text.endswith((".", ":", ";", ",")))
+
+
 def note_references(document, ranges):
     """The frozen note navigation over the text the filing means, not the text it prints.
 
@@ -918,6 +1001,11 @@ def note_references(document, ranges):
     16A resolves to the real Note 16, Pfizer FY2021's unique range loses a
     page-number heading candidate, and Lumen's four reports resolve Note 18
     (Note 17 for FY2020).
+
+    A third difference: a note heading printed with its separator in the body
+    weight is shown as emphasized (``split_emphasis_note_heading``), so Pfizer
+    FY2020's and FY2021's Note 16 ends where Note 17 begins. The excerpt
+    records carry no emphasis, so this too never reaches an excerpt.
     """
     blocks = document["blocks"]
     pages = page_number_blocks(blocks)
@@ -930,10 +1018,14 @@ def note_references(document, ranges):
         if parenthesized:
             shown[index] = (parenthesized.group(1) + ") "
                             + block["text"][parenthesized.end():])
-    if not shown:
+    headings = {index for index, block in enumerate(blocks) if split_emphasis_note_heading(block)}
+    if not shown and not headings:
         return _note_references(document, ranges)
-    presented = {**document, "blocks": [{**block, "text": shown[index]} if index in shown else block
-                                        for index, block in enumerate(blocks)]}
+    presented = {**document, "blocks": [
+        {**block, **({"text": shown[index]} if index in shown else {}),
+         **({"emphasized": True} if index in headings else {})}
+        if index in shown or index in headings else block
+        for index, block in enumerate(blocks)]}
     result = _note_references(presented, ranges)
     for reference in result:
         for excerpt in (*reference["source_occurrences"], *reference["heading_candidates"]):

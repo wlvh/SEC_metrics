@@ -110,7 +110,12 @@ TEXT = EVIDENCE + "d02-both-directions-read.json"
 # incorporate, and the headings naming the definition's words); one file per
 # closure its positions compare.
 D02_EXCERPT_READINGS = (EVIDENCE + "d02-older-years-read.json",
-                        EVIDENCE + "d02-older-years-read-round3.json")
+                        EVIDENCE + "d02-older-years-read-round3.json",
+                        # The nine positions read after the category-mention
+                        # rule was frozen: Salesforce FY2022-FY2024 agree;
+                        # JPMorgan's five years and Pfizer FY2021 are
+                        # registered defects.
+                        EVIDENCE + "d02-older-years-read-holdout.json")
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
 # imports none of the route's text modules: one reading for the 30-metric
 # batch's results, one for the three results the underline repair produced and
