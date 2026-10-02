@@ -5,9 +5,12 @@ The heading algorithm is #47's 0097c911 addition, consuming #28's immutable
 the existing cross-reference words without a case distinction. This neither
 classifies M&A nor makes absence claims.
 """
+import re
+
 from .deterministic_router import _visible_text
 from .e01_item_text_28_v1 import (
-    _HEADING, _REFERENCE_BEFORE, _Visibility, _hidden_in_span, _linked_in_span, _need)
+    _HEADING, _NONDISPLAY, _REFERENCE_BEFORE, _Visibility, _hidden_by_style,
+    _hidden_in_span, _linked_in_span, _need)
 
 
 PEER_PATCH_SHA = '0097c911df0e3e62fc681b7bfda2385edfc9bfcc'
@@ -18,7 +21,7 @@ class _HeadingContext(_Visibility):
     """Add block boundaries to the existing text/visibility/link reader."""
     _BOUNDARIES = frozenset(('body', 'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
                             'li', 'tr', 'td', 'th', 'blockquote', 'pre', 'address',
-                            'section', 'article', 'br', 'hr'))
+                            'section', 'article', 'hr'))
 
     def __init__(self):
         super().__init__()
@@ -26,13 +29,22 @@ class _HeadingContext(_Visibility):
         self.node_blocks = []
 
     def handle_starttag(self, tag, attrs):
-        if tag in self._BOUNDARIES:
+        attributes = dict(attrs)
+        visible = not (self.stack and self.stack[-1] is not None)
+        visible = visible and not (
+            tag in _NONDISPLAY or 'hidden' in attributes
+            or (attributes.get('aria-hidden') or '').lower() == 'true'
+            or _hidden_by_style(re.sub(r'\s+', '', attributes.get('style') or '').lower()))
+        if tag in self._BOUNDARIES and visible:
             self.block_number += 1
         super().handle_starttag(tag, attrs)
 
     def handle_endtag(self, tag):
+        visible = next((self.stack[i] is None
+                        for i in range(len(self.tags) - 1, -1, -1)
+                        if self.tags[i] == tag), False)
         super().handle_endtag(tag)
-        if tag in self._BOUNDARIES:
+        if tag in self._BOUNDARIES and visible:
             self.block_number += 1
 
     def handle_data(self, data):
@@ -63,10 +75,10 @@ def headed_item_codes(*, raw_bytes):
             continue
         own_group = next(group for (begin, finish, _, _), group in zip(nodes, groups)
                          if begin <= start < finish)
-        context = ' '.join(text[max(begin, start - 40):min(finish, start)]
+        context = ' '.join(text[begin:min(finish, start)]
                            for (begin, finish, hidden, _), group in zip(nodes, groups)
                            if group == own_group and hidden is None
-                           and begin < start and finish > max(0, start - 40))
+                           and begin < start)[-40:]
         if not _REFERENCE_BEFORE.search(context.lower()):
             found.add(match.group(1))
     return found

@@ -1,0 +1,146 @@
+{
+  "checked_utc": "2026-10-02T15:06:42.321521+00:00",
+  "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+  "scope": "Eight small in-memory controls for the changed visible-block reference mechanism only; no saved material or Result/Run",
+  "rows": [
+    {
+      "name": "hidden_SEE_block",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p style=\"display:none\">SEE</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "actual_headed_codes": [
+        "2.01"
+      ],
+      "matches_expected": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_SEE_block:2.01"
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "prior_OR_block",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p>Location: Portland, OR</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "Location: Portland, OR Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "actual_headed_codes": [
+        "2.01"
+      ],
+      "matches_expected": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-prior_OR_block:2.01"
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "visible_inline_SEE",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><span>SEE </span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [],
+      "actual_headed_codes": [],
+      "matches_expected": true,
+      "empty_header_check": {
+        "returned": []
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "hidden_inline_SEE_before_real",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><span style=\"display:none\">SEE</span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "actual_headed_codes": [
+        "2.01"
+      ],
+      "matches_expected": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_inline_SEE_before_real:2.01"
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "visible_See_then_short_hidden_inline",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><b>See</b><span style=\"display:none\">SECRET</span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "See Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [],
+      "actual_headed_codes": [],
+      "matches_expected": true,
+      "empty_header_check": {
+        "returned": []
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "visible_See_then_long_hidden_inline",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><b>See</b><span style=\"display:none\">SECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRET</span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "See Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [],
+      "actual_headed_codes": [
+        "2.01"
+      ],
+      "matches_expected": false,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-visible_See_then_long_hidden_inline:2.01"
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "same_visible_reference_without_hidden_node",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><b>See</b><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "See Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [],
+      "actual_headed_codes": [],
+      "matches_expected": true,
+      "empty_header_check": {
+        "returned": []
+      },
+      "old_reader_heading_codes": [
+        "2.01"
+      ]
+    },
+    {
+      "name": "linked_contents_then_real",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><a href=\"#real\">Item 2.01 Completion of Acquisition or Disposition of Assets.</a></p><h2 id=\"real\">Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>SIGNATURES</p></body></html>",
+      "visible_text_using_existing_visibility": "Item 2.01 Completion of Acquisition or Disposition of Assets. Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "actual_headed_codes": [
+        "2.01"
+      ],
+      "matches_expected": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-linked_contents_then_real:2.01"
+      },
+      "old_reader_heading_codes": [
+        "2.01",
+        "2.01"
+      ]
+    }
+  ]
+}

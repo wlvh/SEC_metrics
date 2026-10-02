@@ -17,6 +17,22 @@ def html(*paragraphs):
 
 
 class E01HeaderDocumentGuardFastTest(unittest.TestCase):
+    def test_invisible_layout_and_line_breaks_do_not_break_the_same_block_reference(self):
+        for between in ('<br style="display:none">', '<br hidden>',
+                        '<hr hidden>', '<div hidden>not displayed</div>',
+                        '<h2 style="display:none">not displayed</h2>',
+                        '<span hidden>' + ('not displayed ' * 20) + '</span>', '<br>'):
+            raw = ('<html><body><p>SEE ' + between +
+                   'Item 2.01 Completion of Acquisition.</p></body></html>').encode()
+            with self.subTest(between=between):
+                self.assertEqual(set(), headed_item_codes(raw_bytes=raw))
+                self.assertEqual([], check_document_header_items(raw_bytes=raw,
+                    listed_item_codes=[], candidate_item_codes=CANDIDATES,
+                    accession='synthetic'))
+        raw = ('<html><body><p><span hidden>SEE</span><br>'
+               'Item 2.01 Completion of Acquisition.</p></body></html>').encode()
+        self.assertEqual({'2.01'}, headed_item_codes(raw_bytes=raw))
+
     def test_reference_context_is_visible_and_in_the_same_block(self):
         title = '<h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2>'
         for prefix in ('<p style="display:none">SEE</p>',

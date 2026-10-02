@@ -3465,6 +3465,29 @@
       "dedup_note": "C02 reviewer completed; no same SHA/module register or evidence summary",
       "outer_exec_calls": 11,
       "nested_tool_calls": 13
+    },
+    {
+      "task_name": "review_e01scope_df0f455",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_e01_reference_block_scope_repair",
+      "scope_paths": [
+        "scripts/vnext/e01_header_document_guard_28_v1.py",
+        "tests/vnext/test_e01_header_document_guard.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/"
+      ],
+      "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+      "spawned_at": "2026-10-02T15:01:29+00:00",
+      "ended_at": "2026-10-02T15:11:35.651354+00:00",
+      "tool_calls": 32,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-repair-df0f455/conclusion.md",
+      "verdict": "NEEDS_FIX_LIMITED_P2_HIDDEN_BOUNDARY_FALSE_REJECTION",
+      "status": "DONE",
+      "dedup_note": "Previous exact4711 review retained NEEDS_FIX and its agent reached3 messages; this new SHA has uncovered block-context repair only, no duplicate whole E01 review",
+      "outer_exec_calls": 12,
+      "nested_tool_calls": 20
     }
   ],
   "ci_capacity_20260922": {
@@ -10349,7 +10372,7 @@
     ]
   },
   "e01_header_guard_20261002": {
-    "status": "NEW_GUARD_P2_IN_REPAIR_NO_SEMANTIC_OR_RESULT_CREDIT",
+    "status": "HIDDEN_BOUNDARY_INCREMENT_REPAIR; NEXT_REVIEW_FAIL_STOPS_THIS_VARIANT",
     "peer_read_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
     "peer_guard_patch_sha": "0097c911df0e3e62fc681b7bfda2385edfc9bfcc",
     "source_input_module": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
@@ -10456,6 +10479,31 @@
         0,
         0,
         0
+      ],
+      "independent_review": {
+        "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+        "verdict": "NEEDS_FIX_LIMITED_P2_HIDDEN_BOUNDARY_FALSE_REJECTION",
+        "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-repair-df0f455/conclusion.md"
+      }
+    },
+    "visible_boundary_repair": {
+      "status": "BOUNDARY_AND_VISIBLE_CONTEXT_REPAIRED_PASS_6_TARGETED_AND_TWO_COLD_READS_PENDING_FINAL_LIMITED_REVIEW",
+      "directed_tests": "PASS_6_OF_6_17.032_SECONDS",
+      "scalability_binding_audit": "PASS_1_OF_1_11.517_SECONDS",
+      "installed_seconds": 37.658,
+      "cold_seconds": [
+        15.007,
+        17.127
+      ],
+      "parent_closure": "sha256:313038b01c1572ec22814de504667ae599b27ce3a59cb4911f4adada7f6e6433",
+      "child_closure": "sha256:2e6d7d5b1043723e602c112d3b9b43da638d37979652d3e65b4ccfefe28651d3",
+      "legacy_or_default_interface_changed": false,
+      "prior_NEEDS_FIX_records_retained": true,
+      "bounded_stop": "If final incremental review finds new structural issue, suspend this V2 guard variant and continue other work, no more routine boundary patch loop",
+      "new_real_calls": [
+        0,
+        0,
+        0
       ]
     }
   },
@@ -10483,5 +10531,12 @@
     "D02_disposition": "No source revision since recorded v3 known limits; gate unchanged.",
     "peer_current_result_acceptance_copied": false,
     "whole_peer_branch_merged_into_own": false
+  },
+  "ci_37017753679": {
+    "head": "d6f82b229b6f679d704e7d4acab27e421440e60c",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-02T15:07:34Z",
+    "scope": "C02 prior pushed tree only; not later local E01 guard repairs"
   }
 }
