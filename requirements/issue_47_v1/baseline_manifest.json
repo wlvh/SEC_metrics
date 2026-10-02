@@ -303,6 +303,10 @@
     "sha256": "522664bcc63e6de757e2d1b773cf305f46d39074f8942d0a966f14b7f5bcdf54",
     "size": 3023
    },
+   "catalog/r6/D02_item8_category_28_v1.json": {
+    "sha256": "b861ac83823cd7b61e86ad12f3bbcdbd09cec18186d784f46fbfe4798068b0c8",
+    "size": 3944
+   },
    "catalog/r6/D02_item_8_category_mention_v2.json": {
     "sha256": "b96b065f5368f2386aa70535403f7a94660c27ca0db8c2dcd4c3a55ae2fd37c8",
     "size": 6922
@@ -432,8 +436,8 @@
     "size": 3093
    },
    "config/issue28_normal_results_v2.json": {
-    "sha256": "a2e1567266b19e1dec55d3fde16807308ad40e621184e22abe85d4572760fed5",
-    "size": 8083
+    "sha256": "dc8f742a2b1490bdb9daa70b1e4fa6f4483937b5b3746ea2652dd411e0047935",
+    "size": 8270
    },
    "config/issue47_part_iii_statement_admission_v1.json": {
     "sha256": "e76e824d9ff349ee256da204db3239b266fc95818be4bf45572f7d7d3ad5aca5",
@@ -915,9 +919,17 @@
     "sha256": "4916849e4449c0fc4e6720972e63e1d88194eeebc94b1fda1d9fa43a9dc9c233",
     "size": 11383
    },
+   "scripts/vnext/d02_item8_category_28_v1.py": {
+    "sha256": "8f1867a24cd5efe3ac72b3016cf128f383799f21919fc5804c7c26d206f574a3",
+    "size": 6300
+   },
    "scripts/vnext/d02_item_8_category_mentions.py": {
     "sha256": "6ec82bba71030a6f7919e88e21a128075b6f84e158640f4fc564b5fda2fc7180",
     "size": 13255
+   },
+   "scripts/vnext/d02_text_results_v3.py": {
+    "sha256": "2dd46868a1da519952ba5708f76761f2af8ecc963cbfbe4a8a7a5124adb65084",
+    "size": 35086
    },
    "scripts/vnext/d04_native_assessment.py": {
     "sha256": "b68abad3667645ae75551c6e6ecbafcc0b4731d787acc4bbd6926c122becd0b9",
@@ -1232,8 +1244,8 @@
     "size": 17882
    },
    "scripts/vnext/normal_run_v3.py": {
-    "sha256": "62545cc3ddc33b75b29f0293c468ba9fa36f1455ace40fd9d9455fbd72a67fbd",
-    "size": 31235
+    "sha256": "8e9109ef0ae34d507ec93b0dd14fa081e3f8452c1e48efb6b8ed7a4f720d7fa9",
+    "size": 34153
    },
    "scripts/vnext/normal_source_authority.py": {
     "sha256": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e",
@@ -1255,6 +1267,10 @@
     "sha256": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
     "size": 31323
    },
+   "scripts/vnext/ordinary_d02_item8_v1.py": {
+    "sha256": "ca4b4e1adb99f152c9f30f083f6af91177a4a687ea322b0028f33e376b0ffeb7",
+    "size": 2168
+   },
    "scripts/vnext/ordinary_debt_guard.py": {
     "sha256": "f2b8613829efafe395ce77c36a153c277e2e6745bafd3dcaed38ab1a49ce1e1d",
     "size": 4384
@@ -1272,12 +1288,12 @@
     "size": 7684
    },
    "scripts/vnext/ordinary_projection.py": {
-    "sha256": "93b284eedbb6ba0d23425191320543a8624050642f9bbd1d2bb205c168f5b6f1",
-    "size": 14196
+    "sha256": "fa9643e8ca2b662578efa176d7c2ab3a0a0790c6fd49c8a48da81c5051a4dd53",
+    "size": 16101
    },
    "scripts/vnext/ordinary_remaining_cases.py": {
-    "sha256": "288b7d15bdb79578dd620b52dc6fb20dbd23646a7e591637b7013e84226fbfbc",
-    "size": 10151
+    "sha256": "696534677044a674e2f5c05206fbae7e2e22c74cd4681abed28e7e05faa79858",
+    "size": 10669
    },
    "scripts/vnext/ordinary_source_authority.py": {
     "sha256": "153b8eeea1233d3ce33209ba352ef1265eca13ae82326125f9adf1acd793c795",
@@ -1300,8 +1316,8 @@
     "size": 6752
    },
    "scripts/vnext/ordinary_update_cycle.py": {
-    "sha256": "0fc26b1e890ea652d624f30b2ad2b72a8f8532d5dfec6d10ab5343abedf025d8",
-    "size": 23282
+    "sha256": "05a799f910da3f9cb269afea2da80430dbe735949ea088043232f286d4d3d6e0",
+    "size": 24947
    },
    "scripts/vnext/paired_measure_v1.py": {
     "sha256": "226781e3e9f4b5e82f7c27f629fd50e2e8e647f499954b6051da20fe685304bb",
@@ -2073,7 +2089,7 @@
   }
  },
  "parent": {
-  "requirement_closure_hash": "sha256:306300d46105793e9c492088e9fd63a2a16094e7b170c7ceaacd81174c0c02a7",
+  "requirement_closure_hash": "sha256:f916646edeb416ccae056b4233b3c600fcc60a890437a6c59fa31ac15ae1e1fa",
   "requirement_id": "issue_28_v13",
   "snapshot_files": {
    "CONTRACT.md": {
@@ -2081,12 +2097,12 @@
     "size": 1211
    },
    "baseline_manifest.json": {
-    "sha256": "58b60735c7640ff54e37bc9c324d9db5d9b7112190a93e6647081a4f123e40e6",
-    "size": 76625
+    "sha256": "867b9ca30ea95ac357379520b49d04f9353363766c11b05c5aecb14e989bf710",
+    "size": 77929
    },
    "decision_register.json": {
-    "sha256": "453a1a9cd055eb61b50ab0468a8c4634798f69de0183d1d0a96e0c5892b2b348",
-    "size": 8696
+    "sha256": "3bfd752ebd16108b05a59081c66f4bd0a81597ad1a1615fd69ab684922323e2a",
+    "size": 8891
    },
    "invariant_profile.json": {
     "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
