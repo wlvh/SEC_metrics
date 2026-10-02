@@ -10890,12 +10890,58 @@
       "result_path": "docs/evidence/issue28_continuous/collab-e01-layout-successor-20261003/independent-review-8ea442a/conclusion.md",
       "verdict": "PASS_LIMITED_NO_NEW_P1_P2_SOURCE_ONLY"
     },
-    "whole_E01_or_count_Result_Run_credit": false
+    "whole_E01_or_count_Result_Run_credit": false,
+    "peer_comment_server_readback": {
+      "id": 5960167650,
+      "path": "/private/tmp/issue47-e01-receipt-current.json"
+    }
   },
   "collab_peer_increment_4a685996": {
     "read_commit": "4a685996fadaf6423e8027ba04b2cb2fd5d66682",
     "previous_read_commit": "9efcecedc32d70ec00308ccb68bea863461c886b",
     "scope": "Registry release metadata only since preceding read; no E01/C02 core change",
     "disposition": "No peer result acceptance copied; C02 own core NEEDS_FIX and v4 gate remain, E01 fixed9ca pure source received separately"
+  },
+  "ci_37050817540": {
+    "head": "9a6dea271722b21f1f0145b502d14203332276bd",
+    "run_id": 37050817540,
+    "status": "COMPLETED",
+    "conclusion": "FAILURE",
+    "updated_at_utc": "2026-10-02T19:47:01Z",
+    "cause": "source shard1 D03NativeAssessmentTest 240.096s rc124, 32 other selectors passed; dependent aggregate failed",
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-layout-successor-20261003/preceding-ci-source-failure.json"
+  },
+  "ci_37056026061": {
+    "head": "65706fd8ff5f7043241e0715ce6ec6eb3c170692",
+    "run_id": 37056026061,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T20:25:28Z",
+    "scope": "E01 source V3 code and limited review; not uncommitted D03 scheduling or full E01 content acceptance"
+  },
+  "ci_d03_native_selector_20261003": {
+    "status": "LOCAL_SPLIT_RUN_PASS_NEW_HEAD_CI_PENDING",
+    "code_head_at_test": "65706fd8ff5f7043241e0715ce6ec6eb3c170692",
+    "uncommitted_code_delta": [
+      "tools/run_fast_tests_v2.py SOURCE_TESTS class split into all three original methods"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/ci-d03-native-timing-20261003",
+    "actual_runner_two_jobs_seconds": 46.473,
+    "per_selector_seconds": [
+      46.46,
+      36.822,
+      0.124
+    ],
+    "per_case_seconds_unchanged": 240,
+    "test_body_sha256_unchanged": "58675b06bfaaf19734a581c89a0a5512910aaa52b3c37960f1dd687d9f13ea0a",
+    "necessary_selector_list_exception": "replace one class entry rather than append duplicate methods; runner function and workflow untouched",
+    "failed_cache_scope_experiment_retained_and_reverted": true,
+    "runtime_binding_changed": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "independent_review": "No new review; parent timed and checked selector coverage only"
   }
 }

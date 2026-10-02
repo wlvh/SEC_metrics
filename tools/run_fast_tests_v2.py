@@ -145,7 +145,12 @@ SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_set.D03RecordedResponse
 SOURCE_TESTS += ("tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",)
 SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",)
 SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",)
-SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest",)
+# The full class exceeded the 240-second material case limit on 9a6dea27.
+# Keep every original test/guard and the same limit, but schedule its three
+# independent methods as separate material units. No runner body changes.
+SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",)
+SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",)
+SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",)
 SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",)
