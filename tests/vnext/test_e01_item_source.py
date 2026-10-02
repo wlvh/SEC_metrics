@@ -5,6 +5,7 @@ import unittest
 
 from tests.vnext.test_deterministic_router import (COMPANY_ID,
     EVENT_ACCESSION, TARGET_PERIOD, fixture_sources, make_reference)
+from tests.vnext.common import REPO_ROOT
 from vnext.deterministic_router import (adapt_8k_item_index,
                                         source_set_manifest)
 from vnext.e01_item_source import (_visible_801_section,
@@ -13,6 +14,25 @@ from vnext.e01_item_source import (_visible_801_section,
 
 
 class E01ItemSourceTest(unittest.TestCase):
+    def test_saved_pfizer_results_of_other_events_section_is_read(self):
+        raw = (REPO_ROOT / 'evidence/accession_materials/pfizer_78003_'
+               '000007800325000159/pfe-20251113.htm').read_bytes()
+        section = _visible_801_section(raw)
+        text = section['section_text']
+        self.assertTrue(text.startswith('Item 8.01 Results of Other Events'))
+        self.assertIn('Pfizer Inc. (“Pfizer” or the “Company”) completed the previously '
+                      'announced acquisition of Metsera, Inc.', text)
+        self.assertIn('Agreement and Plan of Merger', text)
+        self.assertNotIn('SIGNATURES', text)
+
+    def test_linked_contents_heading_cannot_impersonate_801_section(self):
+        with self.assertRaisesRegex(ValueError,
+                'E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS'):
+            _visible_801_section(
+                b'<html><body><h2><a href="#item801">Item 8.01 Other Events</a></h2>'
+                b'<p>No actual item section follows.</p>'
+                b'<h2>SIGNATURES</h2></body></html>')
+
     def test_header_identity_kept_while_original_801_body_is_available(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -197,7 +217,9 @@ class E01ItemSourceTest(unittest.TestCase):
                                  b'Events</h2><p>A report.</p><h2>Item 9.01 '
                                  b'Financial Statements and Exhibits</h2>'
                                  b'</body></html>')
-        for hidden_style in (b'opacity:0.0', b'color:transparent'):
+        for hidden_style in (b'opacity:0.0', b'color:transparent',
+                             b'color:transparent !important', b'font-size:0!important',
+                             b'left:-1200px'):
             with self.subTest(style=hidden_style), self.assertRaisesRegex(
                     ValueError, 'E01_ITEM_SOURCE_VISIBILITY_UNPROVEN'):
                 _visible_801_section(
@@ -206,6 +228,11 @@ class E01ItemSourceTest(unittest.TestCase):
                     b'assertion.</p><p>Visible disclosure.</p>'
                     b'<h2>Item 9.01 Financial Statements and Exhibits</h2>'
                     b'</body></html>')
+        visible = _visible_801_section(
+            b'<html><body><h2>Item 8.01 Results of Other Events</h2>'
+            b'<p style="color:#000000;position:relative">The registrant '
+            b'completed an acquisition.</p><h2>SIGNATURES</h2></body></html>')
+        self.assertIn('completed an acquisition', visible['section_text'])
 
 
 if __name__ == '__main__':
