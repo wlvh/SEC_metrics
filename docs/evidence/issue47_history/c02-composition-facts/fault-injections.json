@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 92,
- "caught": 138,
- "total": 138,
+ "control_tests_run": 93,
+ "caught": 139,
+ "total": 139,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -1167,6 +1167,14 @@
    "result": "CAUGHT",
    "failed": [
     "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"
+   ]
+  },
+  {
+   "injection": "HAVING_SERVED_IS_A_MEMBERSHIP",
+   "expected": "test_having_served_on_a_committee_is_a_qualification",
+   "result": "CAUGHT",
+   "failed": [
+    "test_having_served_on_a_committee_is_a_qualification"
    ]
   }
  ]

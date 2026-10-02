@@ -557,8 +557,12 @@ _COMMITTEE_COMPOSITION = (
                r"|comprised|made up)\s+(?:entirely\s+|solely\s+|exclusively\s+|wholly\s+)?of\b", re.I),
     re.compile(r"\bcommittee\b[^.;]{0,40}\bconsist(?:s|ed)\s+of\b", re.I),
     re.compile(r"\bmembers of the\b[^.;]{0,60}\bcommittee\b[^.;]{0,20}\b(?:are|were|include|included)\b", re.I),
-    re.compile(r"\b(?:served|serve|serves|serving|sit|sits|sat)\s+(?:as\s+(?:a\s+)?members?\s+)?on\s+(?:the|our"
-               r"|its|each of the)\b[^.;]{0,80}\bcommittees?\b", re.I),
+    # "Having served on" is experience a nominee brings, in a list of
+    # qualifications: "In-depth knowledge of the technology sector and
+    # Salesforce, having served on our Board and its M&A Committee through
+    # periods of immense growth" (Salesforce FY2025, read as no fact).
+    re.compile(r"(?<!\bhaving\s)\b(?:served|serve|serves|serving|sit|sits|sat)\s+(?:as\s+(?:a\s+)?members?\s+)?on\s+"
+               r"(?:the|our|its|each of the)\b[^.;]{0,80}\bcommittees?\b", re.I),
     re.compile(r"\b(?:is|was|serves as|served as|has served as|will serve as|appointed(?: as)?|named(?: as)?"
                r"|designated(?: as)?|elected(?: as)?|became)\s+(?:the\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"
                r"\s+of\s+(?:the|our|its)\b[^.;]{0,60}\bcommittee\b", re.I),

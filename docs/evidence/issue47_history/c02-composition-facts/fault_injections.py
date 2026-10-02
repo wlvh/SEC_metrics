@@ -420,6 +420,9 @@ INJECTIONS = [
      "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"),
     ('ANY_BOARD_S_COUNT_IS_OURS', 'constituting\\s+our\\s+board', 'constituting\\s+(?:our|the)\\s+board',
      "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"),
+    # Repair 44: "having served on our Board and its M&A Committee".
+    ('HAVING_SERVED_IS_A_MEMBERSHIP', 're.compile(r"(?<!\\bhaving\\s)\\b(?:served|serve', 're.compile(r"\\b(?:served|serve',
+     "test_having_served_on_a_committee_is_a_qualification"),
 ]
 
 

@@ -3555,22 +3555,20 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/salesforce-2025-01-31.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1147: Conway's skills bullet: knowledge from past, undated service on the Board and a former M&A Committee (not among the fiscal 2025 committees);); 1 block(s) stating a composition fact that no taken block states (54: letter writer (Lead Independent Director Donald, per signature 70-71) joined the Board in January 2023; rest is the company's transformation). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_NOT_RECOMPUTED",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/salesforce-2025-01-31.json",
     "docs/evidence/issue47_history/c02-older-years/comparison.json",
     "docs/evidence/issue47_history/c02-composition-facts/adjudication-effect.json",
-    "docs/evidence/issue47_history/c02-selector-repairs/measured-20-committee-set.json"
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-20-committee-set.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-44-having-served.json"
    ],
-   "selection_problems": {
-    "wrongly_taken": [
-     1147
-    ]
-   },
+   "selection_problems": {},
    "partial_repair": {
-    "still_open": "0 fact block(s) missed (none) and 1 block(s) taken that state no composition fact (1147); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
-    "committee_set_20": "Repair 20 takes the sentence naming three or more of the board's committees on their charters: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 20 [shared-with-#28])."
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
+    "committee_set_20": "Repair 20 takes the sentence naming three or more of the board's committees on their charters: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 20 [shared-with-#28]).",
+    "having_served_44": "\"Having served on our Board and its M&A Committee\" in a list of qualifications is experience, not a membership: 0 block(s) taken, 1 dropped, judged not a fact by the reading (docs/evidence/issue47_history/c02-selector-repairs/README.md section 44 [shared-with-#28])."
    }
   },
   {

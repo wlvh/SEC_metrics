@@ -620,6 +620,17 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertEqual([], statement_labels(
             "Ms. Park assumed the role of Chief Financial Officer in May 2025.", own, period_start=START))
 
+    def test_having_served_on_a_committee_is_a_qualification(self):
+        # Salesforce FY2025 block 1147, in a nominee's list of qualifications
+        # (read as no fact); FY2026 prints the same line without the committee.
+        own = frozenset({"audit", "compensation", "example"})
+        self.assertEqual([], statement_labels(
+            "•In-depth knowledge of the technology sector and Salesforce, having served on our Board and its M&A "
+            "Committee through periods of immense growth and transformation", own, period_start=START))
+        # Serving on a committee now stays a membership.
+        self.assertEqual(["COMMITTEE_COMPOSITION_STATEMENT"], statement_labels(
+            "Ms. Doe serves on our Audit Committee.", own, period_start=START))
+
     def test_a_committee_chair_rotated_at_a_dated_meeting(self):
         # Lumen FY2021-FY2023 (blocks 1047, 1078, 1423): a list of the board's
         # changes, each without a subject. Every reader took it; its date is

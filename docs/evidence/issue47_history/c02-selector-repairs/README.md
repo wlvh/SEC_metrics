@@ -845,3 +845,17 @@
 共 138/138，对照 92 个用例。
 
 **量测**（`measured-43-proxy-access-board-count.json`）：只新增 Lumen 2021 第 2756 块、2022 第 3663 块、2023 第 4439 块、2024 第 4312 块（读者都判为部分事实），其余位置不变。漏选 11→10，误选 5 不变，最新年不变。
+
+## 44. "having served on our Board and its M&A Committee" 是候选人带来的经验
+
+**问题。** Salesforce 2025 第 1147 块是一位董事候选人资格清单里的一条："•In-depth knowledge of the technology sector and Salesforce, having served on our Board and its M&A Committee through periods of immense growth and transformation"。读者判为非事实（这是资格描述）。选择器按 "served on … Committee" 读成委员会成员，算误选。
+
+**先量后改。** 37 份文档里含 "having served" 的块有 42 块，绝大多数是履历（"having served as …"、"having served on the boards of …"），本来就不被读成成员；只有这一句接着 "on our Board and its … Committee"。在内存里只给委员会任职句式加上"前面不是 having"，37 份文档只移走这一块。同一句在 Salesforce 2026 里没有委员会，本来就不取。
+
+**改动。** 委员会任职句式（"served / serves / sit … on the … committee"）前面是 "having" 时不读。用缩写指称委员会的同类句式（`_acronym_service`）在语料里没有这种写法，不改。
+
+**用例与注错。** `test_having_served_on_a_committee_is_a_qualification`：Salesforce 原句为反例；"Ms. Doe serves on our Audit Committee." 仍是成员（构造正例）。注错 `HAVING_SERVED_IS_A_MEMBERSHIP`（去掉 "having" 的排除）。
+
+共 139/139，对照 93 个用例。
+
+**量测**（`measured-44-having-served.json`）：只移走 Salesforce 2025 第 1147 块（读者判为非事实），该位置现与判读一致。误选 5→4，漏选 9 不变，不一致的位置 7→6，最新年不变。
