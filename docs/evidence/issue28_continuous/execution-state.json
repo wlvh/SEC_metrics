@@ -8404,9 +8404,9 @@
     "rule_version": "COLLAB-28-47-v1",
     "issue28_section": "https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1",
     "issue47_section": "https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1",
-    "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+    "peer_read_commit": "2b4f571ef18274299145c63b4c355aa97c45d030",
     "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
-    "peer_register_git_blob": "670cb629b1b557057132fe4aa7423f51a01bff84",
+    "peer_register_git_blob": "7bf9d63d03a198409c668205135d50655dad1725",
     "own_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "owner_target_decisions": {
       "C02": "COMPOSITION_FACTS",
@@ -8769,5 +8769,106 @@
         "evidence": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/enphase-update-docfix.json"
       }
     }
+  },
+  "d01_emphasis_successor_20261002": {
+    "status": "TWO_CURRENT_SAVED_SOURCE_DEFECTS_MAPPED_AND_PRIVATE_NATIVE_REPAIRS_PASS",
+    "peer_read_commit": "2b4f571ef18274299145c63b4c355aa97c45d030",
+    "peer_source_paths": [
+      "scripts/vnext/historical_text_emphasis.py",
+      "scripts/vnext/historical_risk_results.py"
+    ],
+    "own_changed_functions": {
+      "scripts/vnext/d01_emphasis_source.py": [
+        "UnderlineBlocks",
+        "build_text_document_admitting_underline",
+        "join_headings_split_across_a_page"
+      ],
+      "scripts/vnext/d01_emphasis_results.py": [
+        "prepare_text_sources",
+        "create_deterministic_text_candidate",
+        "build_text_evidence",
+        "reviewed_text_observations",
+        "replay_text_result"
+      ],
+      "scripts/vnext/normal_run_v3.py": [
+        "prepare_case",
+        "install_normal_inputs",
+        "create_normal_run",
+        "replay_case",
+        "text_api"
+      ],
+      "scripts/vnext/ordinary_remaining_cases.py": [
+        "prepare_current_source_case"
+      ],
+      "scripts/vnext/ordinary_update_cycle.py": [
+        "_descriptor",
+        "_inspect",
+        "run_once"
+      ]
+    },
+    "shared_compatibility": "New D01 parameter defaults false; default input binding and frozen V12 files unchanged. Explicit normal update chooses successor. Old installed Runs read by their own identity.",
+    "bindings": {
+      "parent_requirement_closure_hash": "sha256:077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308",
+      "child_requirement_closure_hash": "sha256:499cc1d767a4189bc4394e5b04c56cb36592a475a42676947e216e72c506f79c",
+      "child_execution_authority_hash": "sha256:45784bc0c7f07ebabfb5a2448a369a85fadc9e87759109eded917ec44287b0bb",
+      "changed_paths": [
+        "config/issue28_normal_results_v2.json",
+        "scripts/vnext/d01_emphasis_source.py",
+        "scripts/vnext/d01_emphasis_results.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py"
+      ],
+      "receipt_count": 3,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "default_binding_compatibility_test_pending": true
+    },
+    "current_saved_source_diff": {
+      "companies_checked": 10,
+      "changed_company_ids": [
+        "marriott_international",
+        "paramount_skydance_paramount_global"
+      ],
+      "other_eight_same_heading_text": true
+    },
+    "old_exact_result_ids_withdrawn": {
+      "marriott_international": "sha256:6077181e489edc0859d6420a2fea7d1d6384daab5f391fdfc4ee7597008b7762",
+      "paramount_skydance_paramount_global": "sha256:a7a52ae7df0eb150b4cc6cf66c08b508056febcfbd013ea7a9ec85026c144cca"
+    },
+    "new_final_private_result_ids": {
+      "marriott_international": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+      "paramount_skydance_paramount_global": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd"
+    },
+    "native_status": "BOTH_CANDIDATE_READY_AND_REPEAT_NO_SOURCE_CONTENT_CHANGE_AND_INDEPENDENT_PROCESS_COLD_READ",
+    "tests": {
+      "new_directed": 4,
+      "fast_selectors": 145
+    },
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "trusted_summary": {
+      "excluded_coordinates": 12,
+      "excluded_exact_result_ids": 18
+    },
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "current_390_credit": false,
+    "production_authorized": false,
+    "evidence": "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/"
+  },
+  "ci_36908673854": {
+    "head": "af9e170958aa8907a70e33795c2b6896d9c84ecc",
+    "run_id": 36908673854,
+    "conclusion": "SUCCESS",
+    "jobs_successful": 16,
+    "jobs_total": 16,
+    "updated_at_utc": "2026-10-01T21:15:29Z",
+    "scope": "Previous af9 head only; does not cover D01 successor edits."
   }
 }

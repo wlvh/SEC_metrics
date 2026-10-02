@@ -92,6 +92,8 @@ def _descriptor(cases,configuration):
     body={'company_id':configuration['company_id'],'metric_ids':configuration['metric_ids'],
         'requirement_closure_hash':configuration['requirement_closure_hash'],'targets':targets,'specs':specs,
         'source_contents':[{'source_url':k[0],'accession':k[1],'document_name':k[2],'sha256':v} for k,v in sorted(bodies.items())]}
+    if 'D01' in cases:
+        body['d01_emphasis_policy'] = cases['D01']['input_binding'].get('d01_emphasis_policy')
     native_inputs = {}
     for metric, case in cases.items():
         if metric in {'B13','D04'} and 'registered_input' in case:
@@ -109,7 +111,8 @@ def _inspect(source_root,configuration,native_assessment_ledger=None):
     ledger=sha256_file(path=source_root/'evidence/requests_log.csv')
     cases={m:normal.prepare_case(data_root=source_root,company_id=configuration['company_id'],metric_id=m,
                 **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
-                **({'c02_composition':True,'c02_grouped':True} if m == 'C02' else {}))
+                **({'c02_composition':True,'c02_grouped':True} if m == 'C02' else {}),
+                **({'d01_emphasis':True} if m == 'D01' else {}))
            for m in configuration['metric_ids']}
     _need(sha256_file(path=source_root/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_INSPECTION')
     return cases,_descriptor(cases,configuration),ledger
@@ -299,10 +302,12 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                     normal.install_normal_inputs(data_root=work/'data',source_root=None if source==normal.ROOT else source,
                         company_id=company_id,metric_id=metric,
                         **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
-                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}))
+                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}),
+                        **({'d01_emphasis':True} if metric == 'D01' else {}))
                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,
                         company_id=company_id,metric_id=metric,
-                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}))
+                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}),
+                        **({'d01_emphasis':True} if metric == 'D01' else {}))
                     rendered=render_ordinary_run(data_root=work/'data',run_dir=work/'runs'/metric)
                     hashes={}
                     for name,raw in rendered['files'].items():
