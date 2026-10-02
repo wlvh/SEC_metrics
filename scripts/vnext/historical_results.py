@@ -57,6 +57,14 @@ RUN_INPUT_RECORD_TYPE = "HISTORICAL_ZERO_AI_RUN_INPUT"
 # two concepts name one quantity for that year, as Pfizer's FY2022 10-K does
 # for 2021. Otherwise the metric is withheld by name. It is not rebuilt from
 # another concept: that would choose a measure the approved branch does not.
+# One concept for both years can still read two quantities: the branch takes
+# the prior year from the prior filing as first reported, and a target filing
+# that recasts that year - Pfizer's FY2021 10-K reports 2020 revenue at
+# 41,651,000,000 after moving Meridian to discontinued operations, against the
+# 41,908,000,000 its FY2020 10-K reported - divides a total without the
+# business by one with it. Such a pair is withheld the same way; a target
+# filing that reports the prior year at the prior claim's value, or not at
+# all, leaves the approved branch's answer as it is.
 PAIRED_MEASURE_REASON = "HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE"
 
 
@@ -103,8 +111,6 @@ def paired_measure_problem(*, route, claims, current_claims, accessions):
         if len(used["current"]) != 1 or len(used["prior"]) != 1:
             continue
         current, prior = _claim_view(used["current"][0]), _claim_view(used["prior"][0])
-        if current["concept"] == prior["concept"]:
-            continue
         reported = sorted({str(Decimal(str(claim["value"]))) for claim in current_claims
                            if claim["attributes"]["accession"] == accessions["current"]
                            and claim["locator"]["concept"] == current["concept"]
@@ -114,9 +120,15 @@ def paired_measure_problem(*, route, claims, current_claims, accessions):
         pair = {"current": current, "prior": prior,
                 "target_filing_reports_the_prior_year_under_the_current_concept": reported}
         if reported == [str(Decimal(prior["value"]))]:
-            bridged.append(pair)
+            if current["concept"] != prior["concept"]:
+                bridged.append(pair)
             continue
-        return {"reason_code": PAIRED_MEASURE_REASON, **pair}, bridged
+        if current["concept"] == prior["concept"] and not reported:
+            continue
+        problem = {"reason_code": PAIRED_MEASURE_REASON, **pair}
+        if current["concept"] == prior["concept"]:
+            problem["same_concept_recast"] = True
+        return problem, bridged
     return None, bridged
 
 

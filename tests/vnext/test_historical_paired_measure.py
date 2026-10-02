@@ -7,6 +7,13 @@ that divided product revenue by total revenue. The historical Company Facts
 route now withholds such a pair by name unless the target filing reports the
 prior year under the current claim's concept at the prior claim's value.
 
+One concept can still read two quantities when the target filing recasts the
+prior year: Pfizer's FY2021 10-K reports 2020 revenue at 41,651,000,000 after
+moving Meridian to discontinued operations, and the branch took the
+41,908,000,000 its FY2020 10-K reported. That pair is withheld too; a target
+filing reporting the prior year at the prior claim's value, or not at all,
+asks nothing.
+
 These cases use Pfizer's own saved Company Facts (the checkout's copy carries
 every filing's facts with the accession that reported them). Zero calls.
 """
@@ -20,7 +27,8 @@ from vnext.annual_update import saved_source
 from vnext.zero_ai_r2 import _load_deterministic_catalog
 
 CIK = 78003
-FILINGS = {"FY2021": "0000078003-22-000027", "FY2022": "0000078003-23-000024",
+FILINGS = {"FY2020": "0000078003-21-000038", "FY2021": "0000078003-22-000027",
+           "FY2022": "0000078003-23-000024",
            "FY2023": "0000078003-24-000039", "FY2024": "0000078003-25-000054"}
 
 
@@ -104,14 +112,58 @@ class APairOnTwoConceptsIsKeptOnlyWhereTheFilingJoinsThemTest(unittest.TestCase)
         self.assertEqual(["81288000000"],
                          bridged[0]["target_filing_reports_the_prior_year_under_the_current_concept"])
 
-    def test_one_concept_for_both_years_asks_nothing(self):
+    def test_one_concept_the_target_filing_recasts_is_withheld(self):
+        # FY2021: the contract concept both years. The FY2020 10-K reported
+        # 2020 at 41,908,000,000; the FY2021 10-K reports it at 41,651,000,000
+        # with Meridian in discontinued operations.
         problem, bridged = self._ask(
+            current=_one(self.claims, accession=FILINGS["FY2021"],
+                         concept="RevenueFromContractWithCustomerExcludingAssessedTax",
+                         end="2021-12-31"),
+            prior=_one(self.claims, accession=FILINGS["FY2020"],
+                       concept="RevenueFromContractWithCustomerExcludingAssessedTax",
+                       end="2020-12-31"),
+            target=FILINGS["FY2021"])
+        self.assertEqual(route_module.PAIRED_MEASURE_REASON, problem["reason_code"])
+        self.assertTrue(problem["same_concept_recast"])
+        self.assertEqual("41908000000", problem["prior"]["value"])
+        self.assertEqual(["41651000000"],
+                         problem["target_filing_reports_the_prior_year_under_the_current_concept"])
+        self.assertEqual([], bridged)
+
+    def test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing(self):
+        # FY2024 against FY2023 on Revenues: the FY2024 10-K recasts 2023 to
+        # 59,553,000,000 from 58,496,000,000, so the real pair is withheld; a
+        # prior claim at the reported value (constructed) asks nothing, and so
+        # does a target filing that does not report the year (constructed).
+        current = _one(self.claims, accession=FILINGS["FY2024"], concept="Revenues",
+                       end="2024-12-31")
+        prior = _one(self.claims, accession=FILINGS["FY2023"], concept="Revenues",
+                     end="2023-12-31")
+        problem, _ = self._ask(current=current, prior=prior, target=FILINGS["FY2024"])
+        self.assertTrue(problem["same_concept_recast"])
+        self.assertEqual(["59553000000"],
+                         problem["target_filing_reports_the_prior_year_under_the_current_concept"])
+        self.assertEqual((None, []), self._ask(current=current,
+                                               prior={**prior, "value": "59553000000"},
+                                               target=FILINGS["FY2024"]))
+        unreported = [claim for claim in self.claims
+                      if not (claim["attributes"]["accession"] == FILINGS["FY2024"]
+                              and claim["locator"]["period_end"] == "2023-12-31")]
+        self.assertEqual((None, []), route_module.paired_measure_problem(
+            route=self.route, claims=[current, prior], current_claims=unreported,
+            accessions={"current": FILINGS["FY2024"], "prior": FILINGS["FY2023"]}))
+
+    def test_a_concept_pair_problem_carries_no_recast_mark(self):
+        # The two-concept withholds keep the record they had.
+        problem, _ = self._ask(
             current=_one(self.claims, accession=FILINGS["FY2024"], concept="Revenues",
                          end="2024-12-31"),
-            prior=_one(self.claims, accession=FILINGS["FY2023"], concept="Revenues",
+            prior=_one(self.claims, accession=FILINGS["FY2023"],
+                       concept="RevenueFromContractWithCustomerExcludingAssessedTax",
                        end="2023-12-31"),
             target=FILINGS["FY2024"])
-        self.assertEqual((None, []), (problem, bridged))
+        self.assertNotIn("same_concept_recast", problem)
 
     def test_a_value_the_filing_reports_differently_is_not_a_bridge(self):
         # The target filing must report the prior claim's own value: FY2024's

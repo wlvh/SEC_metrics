@@ -3749,6 +3749,28 @@
     "join_coverage": "JOIN_IN_THE_YEAR now replaces a reader's citation that does not state the same person's join (the roster 84 here), and the reader's dated-join reach takes block 100; only this position moves (measured-16-join-coverage.json; section 16 [shared-with-#28]).",
     "still_open": "Today's selection agrees with the reading under the uniform adjudication. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id. The nomination-rationale question (block 168) stays open with #28."
    }
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "B02",
+   "result_id": null,
+   "period_end": "2021-12-31",
+   "defect_id": "B02_PFIZER_2021_PRIOR_YEAR_AS_FIRST_REPORTED_AGAINST_A_RECAST",
+   "summary": "Published 0.9396773885654290350291113868 = (81,288,000,000 - 41,908,000,000) / 41,908,000,000: both years under RevenueFromContractWithCustomerExcludingAssessedTax, the prior year from the FY2020 10-K as first reported. The FY2021 10-K reports 2020 under the same concept at 41,651,000,000, having moved Meridian to discontinued operations, so the 2021 revenue excludes a business the 2020 figure includes. On the target filing's own comparative the growth is 0.9516.",
+   "root_cause": "B02's approved branch (catalog/deterministic_metrics.json, comparable_annual_revenue) takes revenue_prior from the prior filing (accession_role prior), the year as first reported. The paired-measure check asked only when the two years used different concepts; one concept read on a year the target filing recasts is the same failure of comparability.",
+   "scope_measured": "all 46 B02 and A07 Runs with a value in the 50-period batch, against the saved Company Facts (b02-same-concept-recast/measured-frame4.json): one moves, this one. Across the statement readings, 40 of 46 B02 positions read the target filing's own comparative equal to the prior claim.",
+   "found_by": "the cross-source statement reading of the 50-period batch (content-acceptance/cross-source-read-full-frame.json): Pfizer FY2021 B02 DIFFERS, the other 27 compared values MATCH.",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair": "historical_results.paired_measure_problem now also asks a pair on one concept: where the target filing reports the prior year under that concept at another value than the prior claim, the result is withheld by name, HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE, marked same_concept_recast. A target filing that reports the year at the prior claim's value, or not at all, leaves the approved branch's answer. It does not recompute from the recast value: that would change the branch's approved prior-year source.",
+   "evidence": [
+    "docs/evidence/issue47_history/b02-same-concept-recast/measure.py",
+    "docs/evidence/issue47_history/b02-same-concept-recast/measured-frame4.json",
+    "docs/evidence/issue47_history/b02-same-concept-recast/injections.json",
+    "docs/evidence/issue47_history/content-acceptance/cross-source-read-full-frame.json"
+   ],
+   "same_cause_as": [
+    "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE"
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
