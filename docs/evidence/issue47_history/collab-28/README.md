@@ -183,3 +183,17 @@
 - #28 核过的四处排除（Lumen 1670、Pfizer 2175/2240、Paramount 2257）仍移出，Paramount 2108 仍保留。
 
 接入时要知道：提案里只要有被移出的块，就会记下规则词表的哈希（`item_8_category_mentions_left_out.terms_hash`）。所以对 Lumen、Pfizer、Paramount 2025 这类有移出块的申报，即使移出的块不变，候选哈希也会变。仍然做不到的写在 v2 README：读不到开放词类；系列作主语、谓语动词贴在最后一项上时（"In 2025, litigation, fines and penalties increased."）仍会当成列表。
+
+### C02 Paramount FY2025 第 168 块（#28 询问的范围问题）
+
+#28 问（[评论 5945743839](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839)）："We believe Mr. Thornton is qualified to serve as a member of our Board because of his extensive investment and management experience" 是否属于 C02 要取的资格认定。
+
+本方倾向：不取。理由按已批决定和现行 Spec：
+
+1. 所有者原文是"包括董事会规模、独立董事人数、委员会设置、成员、主席，以及相关独立性和资格认定；不扩展到一般治理流程"。"相关"把资格认定系在前面这些构成要素上。Spec 举的例子（财务素养、审计委员会财务专家、非雇员董事、成员不是高管）都是决定某人能否担任某个构成角色的认定。
+2. 这句话是 Item 401(e) 要求披露的"导致结论认为此人应担任董事的经验、资格、特质或技能"，也就是提名理由。两份 Spec 都把提名与评估程序放在范围之外。
+3. 第 168 块前半段列的是 Thornton 在其他机构的董事席位，Spec 明确排除"另一机构的董事会或委员会"。摘录按整块取，取这一块就会把范围外的内容一起放进值里。
+
+实测（`../c02-composition-facts/qualification-narratives.json`，零调用；37 个已双向判读的位置）：带"任职资格"类句子的位置有 19 个，共 34 块，其中 11 块已因别的事实入选。逐位董事的"qualified to serve as a member of our Board"只出现在 Paramount FY2025：10 块中 9 块已因任职日期入选，只有第 168 块没有。其余未入选的块是技能矩阵导语和提名标准，读者都判为非事实，两种读法下都不会进入值。所以两种读法的输出差别只有这一块。
+
+若 #28 仍认为现行合同不能排除"取"这种读法，按 v1.1 把两种读法的输出影响集中成一个用户问题。
