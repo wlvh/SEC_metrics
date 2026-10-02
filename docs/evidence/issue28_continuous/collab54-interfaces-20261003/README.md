@@ -60,3 +60,21 @@ Fable五条基线探针按外部报告承接；隐藏checkout evidence及逐字�
 路径用明确参数/安装配对，个人HOME只是本方现有LIVE许可定位，**不是新的OpenShift接口默认**。本期没有root/unshare依赖、镜像/集群部署或Databricks适配。建议下一步先由#54留单公司B类增量与真实C类失败证据，再约定最小信任登记/选择接口；#28不另造公司包或重做原五条基线。AGENTS文档入口在V13/V14执行/规则列表无直接绑定，本文只改职责/链接，不改变运行接口或权威。
 
 验证边界：实际JSON/身份小核；实际源码静态追踪；读取他人Fable报告与本方旧长链日志。三个类别分别登记，未复跑全部基线、没有新AI/SEC请求、新正确公司结果或#54验收信用。
+## #28 接收固定 #54 公司消费者后的定向验证
+
+本方消费程序固定 `2a642e56a8e2f88c884c92cd350cf742f5dd8cfa`，本方源码现场 `4835cff7d8e009db0f2341decf93e630a5d381eb`。在本方外部测试根安装独立 `issue_54_v1` 程序；实际身份和五文件摘要见 `consumer-v1/actual-identities.json`。没有将 #54 分支合入PR43，也没有操作提供方工作树。
+
+实际来源是 #28 原累计根的真实保存 `source-inputs`。完整52次捕获混合历史先由原校验器验证；准备代码使用原已登记journal的逐字节副本，明确登记于 `source-pin.json`，这是测试准备，不是包自行授信或新的获取许可。导出包保留完整原请求账本、原checkpoint元数据和历史身份，只携目标公司原件；计算信任由准备端写入独立 `source-trust`，计算子进程只读它，不读该journal副本。最终程序没有Git alternates、没有SEC原件目录，不依赖准备端Git对象。
+
+| 实际路径 | 结果 | 本次信用边界 |
+|---|---|---|
+| Marriott C04 | 公司源包安装→专用更新→私有原生Run和公开行；创建36.045秒 | 同财年保存原件消费；Run OPEN，未作整份内容/完整390验收或正式采纳 |
+| 同一C04重入 | 独立进程12.920秒，NO_SOURCE_CONTENT_CHANGE，同成功attempt，无第二Run | 复验和重复触发，不是新财年在线更新 |
+| 错误公司导入 | 真实Enphase包导入Marriott状态被COMPANY_SOURCE_WRONG_COMPANY拒绝；来源指针和1003个已有来源/Run文件不变 | latest_import保留FAILED；随后C04旧有效源重入12.344秒成功，未掩盖失败 |
+| Enphase B13/D04 | 新显式B13+D04源范围正确安装；两项均AI_PROCESSING_INPUT_REQUIRED，无updates/Run树 | 源包不含旧AI/Result；合法已登记处理输入尚缺独立导入接线，不等于必须重新付费 |
+
+C04 Result=`sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e`，Run=`run:ordinary-integrated:8e44490b6f67ad7e180bd1a7d6c1de1c189755b28d401aac3637336f261754d9`，Requirement=`sha256:a696cae10ff914708fcf8f4f7dce0f19ae2ba8523a0eff1ff47eeb62a27a598c`。所有写入只发生在本方临时准备/信任/公司state；C04实际journal在 `state-marriott_international/updates/metrics/C04-registration-v3/`，每attempt有intent/terminal/data/runs/rows，原Run安装快照保留。稳定来源为同一 `state-marriott_international/source`；本次错误导入验证了恢复边界，没有重复执行提供方全部导入故障测试或构造真实下一财年。
+
+`consumer-probe.py`、`consumer-negative.py`与 `consumer-v1/`日志/JSON区分实际执行和静态核对。原主driver初次检查无run_manifest文件，后续实际检查确认D04连updates树也没有；源代码仅补强这个证据断言，不重跑通过材料。第一次shell nohup没有开始即退出，空日志保留；实际测试用nohup加独立进程组启动，运行和完成信号另存。原调用根顶层文件、源log及active前后哈希相同，新增真实provider/paid/SEC=0/0/0。
+
+计算使用Python open和网络守卫，Mac实际uid501，程序tracked文件无差异；不是内核级子进程隔离、只读挂载、动态UID或OpenShift验证。没有新完整39指标公司，不扩张Fable基线B01信用，也不将旧E01/D02当新口径金标。既有D04十家及190历史原件/身份不改；B13完整公司和新的源→合法处理输入导入仍属各自责任。

@@ -495,6 +495,10 @@ FAST_TESTS += ("tests.vnext.test_c02_auditor_successor.C02AuditorScopeFastTest",
 SOURCE_TESTS += ("tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",)
 FAST_TESTS += ("tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardFastTest",)
 SOURCE_TESTS += ("tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_c02_member_successor.C02MemberScopeFastTest",)
+SOURCE_TESTS += ("tests.vnext.test_c02_member_successor.C02MemberScopeMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorFastTest",)
+SOURCE_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

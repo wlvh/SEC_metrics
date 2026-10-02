@@ -1,0 +1,232 @@
+{
+  "static_utc": "2026-10-02T19:36:23.027899+00:00",
+  "parent_closure_recomputed": "sha256:7644b72b80a1a316bc04c3cd9bc486510d779adb844777e63c59d8d39ed424de",
+  "child_closure_recomputed": "sha256:367c186100561726d28025fa1fa97a531835912b5e4e1618498f3eb38e0be3ab",
+  "child_execution_authority_recomputed": "sha256:93ff5367240cf31d4b40476c64ff45619d8edcf6873d931d0b60cb093239c12d",
+  "rule_config_and_decision_agree": true,
+  "new_sources_parent_child_exact": {
+    "scripts/vnext/e01_item_text_28_v2.py": {
+      "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+      "size": 16302
+    },
+    "scripts/vnext/e01_header_document_guard_28_v2.py": {
+      "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+      "size": 718
+    },
+    "scripts/vnext/ordinary_e01_item_text_input_v3.py": {
+      "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
+      "size": 11269
+    },
+    "config/issue28_normal_results_v2.json": {
+      "sha256": "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30",
+      "size": 9235
+    }
+  },
+  "child_parent_five_files_exact": {
+    "decision_register.json": {
+      "sha256": "a33308498180d6cac1c564af756c80014804d79363f5a1199d06f0fdf010b3d1",
+      "size": 9894
+    },
+    "baseline_manifest.json": {
+      "sha256": "28ff632705390c1a6002dd7795e16f5debcbbc0a1b11bc4163e521e5075549d5",
+      "size": 83796
+    },
+    "invariant_profile.json": {
+      "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "size": 416
+    },
+    "CONTRACT.md": {
+      "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "size": 1211
+    },
+    "transfer_manifest.json": {
+      "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "size": 311
+    }
+  },
+  "policy_only_appended_three_rule_paths": true,
+  "parent_baseline_leaf_diffs": [
+    [
+      "/execution_authority/files/config/issue28_normal_results_v2.json/sha256",
+      "b16167a51acb3b2348eb9d186e17f4d86deadb3aeffb3b3b4445f85f948737f6",
+      "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30"
+    ],
+    [
+      "/execution_authority/files/config/issue28_normal_results_v2.json/size",
+      9079,
+      9235
+    ],
+    [
+      "/execution_authority/files/scripts/vnext/e01_header_document_guard_28_v2.py",
+      "ADDED",
+      {
+        "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+        "size": 718
+      }
+    ],
+    [
+      "/execution_authority/files/scripts/vnext/e01_item_text_28_v2.py",
+      "ADDED",
+      {
+        "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+        "size": 16302
+      }
+    ],
+    [
+      "/execution_authority/files/scripts/vnext/ordinary_e01_item_text_input_v3.py",
+      "ADDED",
+      {
+        "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
+        "size": 11269
+      }
+    ],
+    [
+      "/new_rule_files/config/issue28_normal_results_v2.json/sha256",
+      "b16167a51acb3b2348eb9d186e17f4d86deadb3aeffb3b3b4445f85f948737f6",
+      "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30"
+    ],
+    [
+      "/new_rule_files/config/issue28_normal_results_v2.json/size",
+      9079,
+      9235
+    ],
+    [
+      "/new_rule_files/scripts/vnext/e01_header_document_guard_28_v2.py",
+      "ADDED",
+      {
+        "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+        "size": 718
+      }
+    ],
+    [
+      "/new_rule_files/scripts/vnext/e01_item_text_28_v2.py",
+      "ADDED",
+      {
+        "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+        "size": 16302
+      }
+    ],
+    [
+      "/new_rule_files/scripts/vnext/ordinary_e01_item_text_input_v3.py",
+      "ADDED",
+      {
+        "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
+        "size": 11269
+      }
+    ]
+  ],
+  "child_baseline_leaf_diffs": [
+    [
+      "/execution_authority/files/config/issue28_normal_results_v2.json/sha256",
+      "b16167a51acb3b2348eb9d186e17f4d86deadb3aeffb3b3b4445f85f948737f6",
+      "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30"
+    ],
+    [
+      "/execution_authority/files/config/issue28_normal_results_v2.json/size",
+      9079,
+      9235
+    ],
+    [
+      "/execution_authority/files/scripts/vnext/e01_header_document_guard_28_v2.py",
+      "ADDED",
+      {
+        "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+        "size": 718
+      }
+    ],
+    [
+      "/execution_authority/files/scripts/vnext/e01_item_text_28_v2.py",
+      "ADDED",
+      {
+        "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+        "size": 16302
+      }
+    ],
+    [
+      "/execution_authority/files/scripts/vnext/ordinary_e01_item_text_input_v3.py",
+      "ADDED",
+      {
+        "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
+        "size": 11269
+      }
+    ],
+    [
+      "/parent/requirement_closure_hash",
+      "sha256:c6a27c7d42656a5939253d49398f0fa269505f62a92fb3a9bf15f981b4fbe2e2",
+      "sha256:7644b72b80a1a316bc04c3cd9bc486510d779adb844777e63c59d8d39ed424de"
+    ],
+    [
+      "/parent/snapshot_files/baseline_manifest.json/sha256",
+      "b37c7df1c36df7acab349eaf5c26b8360b6b3e81038d80c681d8c7449b7c0f0f",
+      "28ff632705390c1a6002dd7795e16f5debcbbc0a1b11bc4163e521e5075549d5"
+    ],
+    [
+      "/parent/snapshot_files/baseline_manifest.json/size",
+      82786,
+      83796
+    ],
+    [
+      "/parent/snapshot_files/decision_register.json/sha256",
+      "8851e2d41ac5d4642847e4c80c78d5add516bb55aa04825f9f9dbc770e985938",
+      "a33308498180d6cac1c564af756c80014804d79363f5a1199d06f0fdf010b3d1"
+    ],
+    [
+      "/parent/snapshot_files/decision_register.json/size",
+      9732,
+      9894
+    ]
+  ],
+  "receipt_diffs_only_identity": {
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": [
+      [
+        "/execution_authority_hash",
+        "sha256:056641dedf84a814d330ed2d02c37ec90894f59f18d701addddd3e7057d06ca3",
+        "sha256:93ff5367240cf31d4b40476c64ff45619d8edcf6873d931d0b60cb093239c12d"
+      ],
+      [
+        "/requirement_closure_hash",
+        "sha256:2af6547b8cced3739a6dd654a8ff2b426d4dd473213d67db938727fb39f0ef02",
+        "sha256:367c186100561726d28025fa1fa97a531835912b5e4e1618498f3eb38e0be3ab"
+      ]
+    ],
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": [
+      [
+        "/execution_authority_hash",
+        "sha256:056641dedf84a814d330ed2d02c37ec90894f59f18d701addddd3e7057d06ca3",
+        "sha256:93ff5367240cf31d4b40476c64ff45619d8edcf6873d931d0b60cb093239c12d"
+      ]
+    ],
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": [
+      [
+        "/execution_authority_hash",
+        "sha256:056641dedf84a814d330ed2d02c37ec90894f59f18d701addddd3e7057d06ca3",
+        "sha256:93ff5367240cf31d4b40476c64ff45619d8edcf6873d931d0b60cb093239c12d"
+      ]
+    ]
+  },
+  "installed_disk_checks": [
+    {
+      "company": "enphase_energy",
+      "installed_root": "/private/tmp/issue28-e01-layout-v3-installed-20261003/enphase_energy",
+      "v13_execution_files_same_bytes": 400,
+      "parent_and_child_five_files_same_bytes": true,
+      "record_and_cold_fields_match": true,
+      "cold_is_existing_log_not_rerun": true
+    },
+    {
+      "company": "pfizer",
+      "installed_root": "/private/tmp/issue28-e01-layout-v3-installed-20261003/pfizer",
+      "v13_execution_files_same_bytes": 400,
+      "parent_and_child_five_files_same_bytes": true,
+      "record_and_cold_fields_match": true,
+      "cold_is_existing_log_not_rerun": true
+    }
+  ],
+  "complete_requirement_loader_replayed": false,
+  "no_legacy_default_source_changed": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

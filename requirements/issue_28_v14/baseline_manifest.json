@@ -7,15 +7,15 @@
   "contract_revision": "continuous-calls-and-b13-v1",
   "parent": {
     "requirement_id": "issue_28_v13",
-    "requirement_closure_hash": "sha256:313038b01c1572ec22814de504667ae599b27ce3a59cb4911f4adada7f6e6433",
+    "requirement_closure_hash": "sha256:7644b72b80a1a316bc04c3cd9bc486510d779adb844777e63c59d8d39ed424de",
     "snapshot_files": {
       "decision_register.json": {
-        "sha256": "83ee3d4f2bfe6c204ce82793b452f9a381b973bce6b31b43ec607c30b8219d97",
-        "size": 9524
+        "sha256": "a33308498180d6cac1c564af756c80014804d79363f5a1199d06f0fdf010b3d1",
+        "size": 9894
       },
       "baseline_manifest.json": {
-        "sha256": "44c268ecf0e3745ccc1880630a4b30ba7dd079eae31a0bc3f996dc15a17ceedf",
-        "size": 81784
+        "sha256": "28ff632705390c1a6002dd7795e16f5debcbbc0a1b11bc4163e521e5075549d5",
+        "size": 83796
       },
       "invariant_profile.json": {
         "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
@@ -749,8 +749,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "dea252a4db8a0611cf6d6634d0bb4d4a75b137bd7636e561d2f74db05b5b1673",
-        "size": 8879
+        "sha256": "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30",
+        "size": 9235
       },
       "config/issue28_recovery_110_v1.json": {
         "sha256": "9af01a329f156b6d98708909db2c14656ad2bdc1a2690386c03e2eead66d2df2",
@@ -1369,8 +1369,8 @@
         "size": 17882
       },
       "scripts/vnext/normal_run_v3.py": {
-        "sha256": "8978fff64d442f2f7bbfe1f75d6743e89e2c6b4b44665828622f75ef550256f4",
-        "size": 36160
+        "sha256": "ffb07907645fe8181725077b593f7ed8900013f6fadf1a2ae49d5dbce7fbb5ae",
+        "size": 37564
       },
       "scripts/vnext/normal_source_authority.py": {
         "sha256": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e",
@@ -1433,8 +1433,8 @@
         "size": 14054
       },
       "scripts/vnext/ordinary_remaining_cases.py": {
-        "sha256": "73a6b3c728430acf9814bfeb756fedddc0e145c695e45fa5412f7364655b6b7a",
-        "size": 11313
+        "sha256": "3e910fccb7a2fc8561e1aafb0bb01dbc5e17dddc3b5e107811b87d728289618a",
+        "size": 11751
       },
       "scripts/vnext/ordinary_source_authority.py": {
         "sha256": "153b8eeea1233d3ce33209ba352ef1265eca13ae82326125f9adf1acd793c795",
@@ -1457,8 +1457,8 @@
         "size": 6752
       },
       "scripts/vnext/ordinary_update_cycle.py": {
-        "sha256": "4da408c978fb2fb691e44b857a855ab73e40ad4f8233277115cc6f4e65763c3a",
-        "size": 26464
+        "sha256": "b1dbb1d18408324742c236017f3883245c5b40a680992e0826c978611eb19f9b",
+        "size": 27448
       },
       "scripts/vnext/projection_independence.py": {
         "sha256": "f1742cd38df7db8ad55a1e6ccd1f7e016fa92080753cfbe9d6f73e68a1ce0e7a",
@@ -2157,8 +2157,8 @@
         "size": 16379
       },
       "tools/vnext_normal_update.py": {
-        "sha256": "e1a3e6537d4cd3fe9d2040bbab989b797de8728c9c192b4946217ee0380fb60c",
-        "size": 6101
+        "sha256": "dc164f9c5781bdf0060308a270c4984445413fa330e8c0ee631e9ac3f4979038",
+        "size": 6100
       },
       "catalog/r6/B03_impairment_excluded_v1.md": {
         "sha256": "c7cd1b462271b3aa1c5766a997fbb968d8e168650e412f6973c6e1dffa2116c6",
@@ -2189,8 +2189,8 @@
         "size": 5134
       },
       "scripts/vnext/c02_composition_text_results.py": {
-        "sha256": "123c6c45951e98977ec209f1d4001c07460dc9ee56ea3e96b9b22b08f45003c7",
-        "size": 13155
+        "sha256": "21cbfddc612af7385cb3c0b26f3088097e8a3a599d3fab3261a4cff140201790",
+        "size": 13628
       },
       "scripts/vnext/historical_board_composition.py": {
         "sha256": "a514ceffd0855733222526e38c170840d789b07bcef5e82cda096b4942cf4158",
@@ -2282,6 +2282,30 @@
       },
       "scripts/vnext/ordinary_e01_item_text_input_v2.py": {
         "sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e",
+        "size": 11269
+      },
+      "catalog/r6/C02_board_disclosures_v5.md": {
+        "sha256": "e42692700e864d2d170f0039d36a796a5b49f83372cdee367aa8cf6da85172a7",
+        "size": 6173
+      },
+      "scripts/vnext/c02_board_composition_28_v4.py": {
+        "sha256": "c08aba7cb5f9d985b5f40937d8c54c4d26843e803fd5eff8d53f845ed09506df",
+        "size": 81757
+      },
+      "scripts/vnext/ordinary_c02_member_update_v4.py": {
+        "sha256": "23a30b4ea8fec393f62f8943446b6bf419c8869fde06d58382203aadf9b294a6",
+        "size": 3143
+      },
+      "scripts/vnext/e01_item_text_28_v2.py": {
+        "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+        "size": 16302
+      },
+      "scripts/vnext/e01_header_document_guard_28_v2.py": {
+        "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+        "size": 718
+      },
+      "scripts/vnext/ordinary_e01_item_text_input_v3.py": {
+        "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
         "size": 11269
       }
     },

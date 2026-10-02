@@ -137,7 +137,22 @@
       "status": "PRIVATE_NATIVE_AND_COLD_REPEAT_PASS_CONTENT_ERROR_3436_NO_CREDIT",
       "newly_withdrawn_from_trusted_count": 0,
       "reason": "This private successor was never given current trusted credit; 19 coordinates / 27 old Result exclusions remain.",
-      "shared_fix46_received": false
+      "shared_fix46_received": true,
+      "old_result_not_rewritten_or_released": true
+    },
+    "private_jpm_member_successor_pending_content": {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7",
+      "status": "PRIVATE_PROGRAM_RUN_COLD_REPEAT_PASS; CONTENT_UNVERIFIED_CORE_NEEDS_FIX_NEW_V4_WRITES_SUSPENDED",
+      "specific_source_improvement": "3436 removed, 3409 retained; no full58-content or omitted-direction acceptance",
+      "new_synthetic_counterexamples_not_claimed_in_current_original": true,
+      "current_390_credit": false,
+      "production_credit": false,
+      "old_result_rewritten": false,
+      "newly_withdrawn_from_trusted_count": 0,
+      "evidence": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/"
     }
   },
   "defects": [
@@ -1137,8 +1152,13 @@
       ],
       "released": [],
       "original_record_retained": true,
-      "whole_result_was_never_accepted": true
+      "whole_result_was_never_accepted": true,
+      "latest_disposition": {
+        "successor_result_id": "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7",
+        "received_core_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+        "status": "3436_SPECIFICALLY_REMOVED_IN_PRIVATE_SUCCESSOR; CORE_REVIEW_NEEDS_FIX_AND_WRITES_SUSPENDED; OLD_RESULT_NOT_RELEASED"
+      }
     }
   ],
-  "latest_peer_read_commit": "6d7801f7a5f773435a12c8abafb98195d8930bd2"
+  "latest_peer_read_commit": "4a685996fadaf6423e8027ba04b2cb2fd5d66682"
 }
