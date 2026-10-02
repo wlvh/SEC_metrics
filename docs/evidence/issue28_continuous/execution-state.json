@@ -3562,6 +3562,40 @@
       "dedup_note": "list_agents only completed predecessors; no exact SHA/module register or existing result; own V3 body/guard and declaration are uncovered new delta",
       "outer_exec_calls": 13,
       "nested_tool_calls": 18
+    },
+    {
+      "task_name": "review_d01index_7d1202b",
+      "purpose": "review",
+      "module": "d01index",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/",
+        "docs/evidence/issue28_continuous/known_result_defects.json"
+      ],
+      "patch_sha": "7d1202b06f426ed3fc479c7be4f075327267971e",
+      "spawned_at": "2026-10-02T22:51:00.191030+00:00",
+      "ended_at": "2026-10-02T22:56:54.366510Z",
+      "tool_calls": 16,
+      "result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_d01index_94955ac",
+      "purpose": "review",
+      "module": "d01index",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py: newly joint binding and required proof set",
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/test_current_view.py: four new real-reader controls"
+      ],
+      "patch_sha": "94955acf434c1ca177718aba35927f205da7ff70",
+      "spawned_at": "2026-10-02T23:02:03.453853+00:00",
+      "ended_at": "2026-10-02T23:06:08.932294Z",
+      "tool_calls": 12,
+      "result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-94955ac/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "inherited_result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
+      "new_agent_reason": "Previous child ended at 3-message limit; genuine new SHA binding difference not covered. Reuse previous whole-index findings; review increment only.",
+      "ordinary_messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -10647,10 +10681,10 @@
   },
   "current_unique_queue_update": {
     "issue28_section": 3,
-    "head": "f6a4e442",
+    "head": "51f9cd7cccf5814cc1219c467f902aca271d8692",
     "server_readback": true,
-    "shared_collab_v1_1_untouched": true,
-    "next_actual_task": "Receive C02 fix46 at own successor paths; no new M&A semantic or D02 credit"
+    "shared_collab_v1_1_and_section6_untouched": true,
+    "next_actual_task": "D01 current390 exact replacement index; limited difference review; unresolved B13/D03/C02/D02 and company updates remain"
   },
   "collab54_interface_20261003": {
     "version": "COMPANY-SEPARATION-v2.1-20261002",
@@ -10890,12 +10924,420 @@
       "result_path": "docs/evidence/issue28_continuous/collab-e01-layout-successor-20261003/independent-review-8ea442a/conclusion.md",
       "verdict": "PASS_LIMITED_NO_NEW_P1_P2_SOURCE_ONLY"
     },
-    "whole_E01_or_count_Result_Run_credit": false
+    "whole_E01_or_count_Result_Run_credit": false,
+    "peer_comment_server_readback": {
+      "id": 5960167650,
+      "path": "/private/tmp/issue47-e01-receipt-current.json"
+    }
   },
   "collab_peer_increment_4a685996": {
     "read_commit": "4a685996fadaf6423e8027ba04b2cb2fd5d66682",
     "previous_read_commit": "9efcecedc32d70ec00308ccb68bea863461c886b",
     "scope": "Registry release metadata only since preceding read; no E01/C02 core change",
     "disposition": "No peer result acceptance copied; C02 own core NEEDS_FIX and v4 gate remain, E01 fixed9ca pure source received separately"
+  },
+  "ci_37050817540": {
+    "head": "9a6dea271722b21f1f0145b502d14203332276bd",
+    "run_id": 37050817540,
+    "status": "COMPLETED",
+    "conclusion": "FAILURE",
+    "updated_at_utc": "2026-10-02T19:47:01Z",
+    "cause": "source shard1 D03NativeAssessmentTest 240.096s rc124, 32 other selectors passed; dependent aggregate failed",
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-layout-successor-20261003/preceding-ci-source-failure.json"
+  },
+  "ci_37056026061": {
+    "head": "65706fd8ff5f7043241e0715ce6ec6eb3c170692",
+    "run_id": 37056026061,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T20:25:28Z",
+    "scope": "E01 source V3 code and limited review; not uncommitted D03 scheduling or full E01 content acceptance"
+  },
+  "ci_d03_native_selector_20261003": {
+    "status": "LOCAL_SPLIT_RUN_PASS_NEW_HEAD_CI_PENDING",
+    "code_head_at_test": "65706fd8ff5f7043241e0715ce6ec6eb3c170692",
+    "uncommitted_code_delta": [
+      "tools/run_fast_tests_v2.py SOURCE_TESTS class split into all three original methods"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/ci-d03-native-timing-20261003",
+    "actual_runner_two_jobs_seconds": 46.473,
+    "per_selector_seconds": [
+      46.46,
+      36.822,
+      0.124
+    ],
+    "per_case_seconds_unchanged": 240,
+    "test_body_sha256_unchanged": "58675b06bfaaf19734a581c89a0a5512910aaa52b3c37960f1dd687d9f13ea0a",
+    "necessary_selector_list_exception": "replace one class entry rather than append duplicate methods; runner function and workflow untouched",
+    "failed_cache_scope_experiment_retained_and_reverted": true,
+    "runtime_binding_changed": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "independent_review": "No new review; parent timed and checked selector coverage only"
+  },
+  "collab_peer_increment_51250475": {
+    "peer_read_commit": "51250475b4ea5b115a4e37e3a8913b4bdc59e6bd",
+    "own_head_at_read": "64c95e71eb85590afb66721b61be768087e5124d",
+    "baseline_peer_read": "4a685996fadaf6423e8027ba04b2cb2fd5d66682",
+    "shared_C02_source_commit": "3db230ee86d460874ebb1789e6de3e103ba1a65a",
+    "disposition": "Repair48 covers own46 bounded counterexamples; new own successor/affected content checks pending. Existing qualification-duty residue acknowledged, no whole C02 credit or v4 gate release. Other increment merges own upstream/records peer read; no new own E01/D02 policy or acceptance credit.",
+    "parent_function_probe": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/repair48-statement-probe.json",
+    "observed": "Two member-clause fixes and legitimate independence control pass; acknowledged qualification inside duty still yields COMMITTEE_MEMBER_QUALIFICATION. No raw current source exposure established. Gate retained, provider owns correction."
+  },
+  "collab54_saved_live_processing_20261003": {
+    "provider_sha": "8a521e32204866021955f8330080a024db5f1b3c",
+    "consumer_head_at_test": "64c95e71eb85590afb66721b61be768087e5124d",
+    "evidence": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/processing-live-v1",
+    "status": "PASS_EXPORT_AUTHENTICATION_ACQUIRED_ADAPTER_REQUIRED",
+    "input_record_id": "sha256:44801106654d1a1fa57ed9120f8238e832c7cfe8ce5072976ff628cb6871f314",
+    "ordinals": [
+      173,
+      174,
+      175,
+      176,
+      177,
+      178
+    ],
+    "mode": "LIVE",
+    "export_seconds": 13.641,
+    "authentication_and_refusal_seconds": 0.488,
+    "original_runtime_git_commit": "fd31d639aa3a1315d85ea2ac87f83b855bdf20d8",
+    "git_exact_runtime_members": 661,
+    "runtime_exception": "original outputs/scalability_audit.csv 56 bytes supplied",
+    "raw_company_source_package_unchanged": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_result_or_390_credit": false,
+    "openshift_tested": false,
+    "remaining_owner": "#54 acquired-source processing equivalence adapter; #28 consumer validation",
+    "first_evidence_path_failure_retained": true,
+    "server_receipt": {
+      "id": 5962391576,
+      "server_readback": true
+    }
+  },
+  "ci_37070847594": {
+    "head": "64c95e71eb85590afb66721b61be768087e5124d",
+    "run_id": 37070847594,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T22:49:50Z",
+    "scope": "D03 same-test selector scheduling; not unpushed current390 index helper"
+  },
+  "ci_37071984677": {
+    "head": "51f9cd7cccf5814cc1219c467f902aca271d8692",
+    "run_id": 37071984677,
+    "status": "QUEUED",
+    "conclusion": null,
+    "observation": "One immediate read after push; not terminal proof"
+  },
+  "d01_formal_copy_receipts_20261003": {
+    "status": "PASS_TWO_EXACT_RUN_COPY_MECHANICAL_RECEIPTS",
+    "actual_installed_closure": "sha256:077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308",
+    "driver_head": "51f9cd7cccf5814cc1219c467f902aca271d8692",
+    "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/mechanical-receipts.md",
+    "results": [
+      {
+        "company_id": "paramount_skydance_paramount_global",
+        "driver_label": "paramount_skydance",
+        "run_copy": "/private/tmp/issue28-d01-validation-copies-20261003-final/paramount_skydance/run",
+        "seconds": 13.896,
+        "original_files_unchanged": true,
+        "mechanical_result": {
+          "status": "PASSED_MECHANICAL_COPY_ONLY",
+          "receipt": {
+            "status": "PASSED",
+            "view_id": "run:sha256:885bb3a0fd063aa385dd66b705a6d74002048826572f2b0fab7ddc8271bcd95d",
+            "checks": [
+              {
+                "check": "REVIEW_BINDINGS",
+                "status": "PASS"
+              },
+              {
+                "check": "REVIEW_ASSETS",
+                "status": "PASS"
+              },
+              {
+                "check": "REPOSITORY_BINDINGS",
+                "status": "PASS"
+              },
+              {
+                "check": "RESULT_EXACT_SET",
+                "status": "PASS"
+              },
+              {
+                "check": "RECORD_GRAPH_REPLAY",
+                "status": "PASS"
+              },
+              {
+                "check": "EXECUTION_SEMANTICS",
+                "status": "PASS"
+              },
+              {
+                "check": "ARTIFACT_EXACT_SET",
+                "status": "PASS"
+              }
+            ],
+            "artifact_hashes": {
+              "records.jsonl": {
+                "sha256": "b3e8b306d197444b1c98ab65d8e04e980e13534ab70dac3031edcff11f4809d4",
+                "size": 181523
+              },
+              "review/sha256:76ad073f05e07ba4d056eb113263832a48686bbf65bca64dc58e64dd79a374f2/review.md": {
+                "sha256": "0f6bd71132c6485112f5d64dbeee8b03ca7bcb9fc6818510d872875d990496f9",
+                "size": 14116
+              },
+              "review/sha256:76ad073f05e07ba4d056eb113263832a48686bbf65bca64dc58e64dd79a374f2/review_context.json": {
+                "sha256": "a498c5843fc50d2c9a2c555931b17393fa1d76607db46c0cea13092d16ba8b7b",
+                "size": 41227
+              },
+              "review_decisions.jsonl": {
+                "sha256": "c9ab28a42ddfbbaba74dc6eb8648e088fbb255aefb33533a85c7a7818b5fb0f1",
+                "size": 1573
+              }
+            },
+            "record_type": "VALIDATION_RECEIPT",
+            "validation_receipt_id": "sha256:41c68b06bab8b269ea8fbc85b3e35d57d0004b48d76fe971b926e0cf106d2d65"
+          },
+          "run_id": "run:ordinary-integrated:0c47fd3d513d8536c0c39fee98226859436653a98868ffa31d60155b594765f0",
+          "requirement_id": "issue_28_v13",
+          "requirement_closure_hash": "sha256:077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308",
+          "runtime_module": "/private/tmp/issue28-d01-emphasis-paramount-20261002-final/metrics/D01/attempts/2bf85d7f0f6a4cf9b43447c3e018408a/data/scripts/vnext/run_store.py",
+          "result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+          "frozen": false,
+          "new_calls": [
+            0,
+            0,
+            0
+          ]
+        },
+        "changed_copy_files": [
+          "validation.json"
+        ]
+      },
+      {
+        "company_id": "marriott_international",
+        "driver_label": "marriott_international",
+        "run_copy": "/private/tmp/issue28-d01-validation-copies-20261003-final/marriott_international/run",
+        "seconds": 8.408,
+        "original_files_unchanged": true,
+        "mechanical_result": {
+          "status": "PASSED_MECHANICAL_COPY_ONLY",
+          "receipt": {
+            "status": "PASSED",
+            "view_id": "run:sha256:80bafa787e653db4f6deef900ca7c6d98ec1e87f47f9d1cec86958dc13a096c4",
+            "checks": [
+              {
+                "check": "REVIEW_BINDINGS",
+                "status": "PASS"
+              },
+              {
+                "check": "REVIEW_ASSETS",
+                "status": "PASS"
+              },
+              {
+                "check": "REPOSITORY_BINDINGS",
+                "status": "PASS"
+              },
+              {
+                "check": "RESULT_EXACT_SET",
+                "status": "PASS"
+              },
+              {
+                "check": "RECORD_GRAPH_REPLAY",
+                "status": "PASS"
+              },
+              {
+                "check": "EXECUTION_SEMANTICS",
+                "status": "PASS"
+              },
+              {
+                "check": "ARTIFACT_EXACT_SET",
+                "status": "PASS"
+              }
+            ],
+            "artifact_hashes": {
+              "records.jsonl": {
+                "sha256": "409d3a909e4f64488e15677539bb9bf5a124b1b0fedd5cc8da0bb21c5c595d33",
+                "size": 170425
+              },
+              "review/sha256:1a05fe4146a61ffb26aefe4a5c99cbd9a43f96d11a4642df072aefd3da3e1894/review.md": {
+                "sha256": "1ebd141b145fdbd37a7b41ae8efd66f849f2fc4d56363d2678f6f8c2c24d3839",
+                "size": 12780
+              },
+              "review/sha256:1a05fe4146a61ffb26aefe4a5c99cbd9a43f96d11a4642df072aefd3da3e1894/review_context.json": {
+                "sha256": "3697822beed9e07e9d525a456b6804a7f4b3d8910b31c227a08615004ac70903",
+                "size": 38581
+              },
+              "review_decisions.jsonl": {
+                "sha256": "c7838d2ddd3d141e1215a229fad2de54e1c579e8d7daede788643aa9a30fc754",
+                "size": 1558
+              }
+            },
+            "record_type": "VALIDATION_RECEIPT",
+            "validation_receipt_id": "sha256:607b09802ef3d29c29667b85cf94e1a2faa689c87713debc131c170889c50943"
+          },
+          "run_id": "run:ordinary-integrated:12a7737eba94c1b1ca16d847ce635db114c182e3cf373798ee3d0eb27bb103ce",
+          "requirement_id": "issue_28_v13",
+          "requirement_closure_hash": "sha256:077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308",
+          "runtime_module": "/private/tmp/issue28-d01-emphasis-marriott-20261002-final/metrics/D01/attempts/5fa26e4007ef4ce1aee75cd5869d836b/data/scripts/vnext/run_store.py",
+          "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+          "frozen": false,
+          "new_calls": [
+            0,
+            0,
+            0
+          ]
+        },
+        "changed_copy_files": [
+          "validation.json"
+        ]
+      }
+    ],
+    "existing_content_read_reused": true,
+    "original_NOT_RUN_and_Result_preserved": true,
+    "old_erroneous_results_not_released": true,
+    "new_company_results_or_390_credit": 0,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "report": "docs/evidence/issue28_continuous/collab-d01-content-20261002/mechanical-corrected-summary.json"
+  },
+  "current_390_D01_candidate_integration_20261003": {
+    "evidence": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/README.md",
+    "delta": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/delta.json",
+    "view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
+    "external_view": "/private/tmp/issue28-existing-390-view-20261003.json",
+    "status": "PASS_LIMITED_DELTA_TWO_SAVED_SCOPE_D01_REPLACEMENTS_SELECTED",
+    "two_candidates_have_prior_independent_content_and_mechanical_copy_receipts": true,
+    "old_index_and_old_Result_Run_unchanged": true,
+    "original_registered_bad_coordinates": 19,
+    "original_registered_bad_result_ids": 27,
+    "selected_known_defect_coordinates_after_replacements": 17,
+    "coordinate_denominator": 390,
+    "new_complete_company_result": 0,
+    "other_coordinates_new_clearance": false,
+    "full_current_head_reexecution": false,
+    "all390_acceptance": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "first_independent_review": {
+      "sha": "7d1202b06f426ed3fc479c7be4f075327267971e",
+      "verdict": "NEEDS_FIX",
+      "path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
+      "three_binding_counterexamples_preserved": true
+    },
+    "final_independent_review": {
+      "sha": "94955acf434c1ca177718aba35927f205da7ff70",
+      "path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-94955ac/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "actual_short_tests": 12,
+      "actual_added_controls_rejected": 12,
+      "material_rerun": false
+    },
+    "current_390_saved_scope_D01_credit": true
+  },
+  "collab54_D01_consumer_20261003": {
+    "provider_sha": "8a521e32204866021955f8330080a024db5f1b3c",
+    "consumer_head_at_test": "511ef6831b034c55708c1efec630e01ad4b60b59",
+    "evidence": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-d01-v1",
+    "status": "PASS_COMPANY_D01_SUCCESSOR_NATIVE_AND_INDEPENDENT_PROCESS_REPEAT",
+    "actual_policy": "D01_EMPHASIS_SOURCE_V2",
+    "manifest_identity": {
+      "run_id": "run:ordinary-integrated:430a68ada7e0765c3ae14a7a65b925e1197852fd23dadd2a03b10042504b752e",
+      "company_id": "marriott_international",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "requirement_id": "issue_54_v1",
+      "requirement_closure_hash": "sha256:3ff69e00ee10536557e9ae38b262dbb99d3b16c630061758353ddf748e66ecaa"
+    },
+    "same_previously_reviewed_38_titles": true,
+    "steps": [
+      {
+        "name": "runtime-install",
+        "exit": 0,
+        "seconds": 2.201,
+        "root": "/private/tmp/issue28-company-consumer-20261003/provider-code",
+        "guarded": false
+      },
+      {
+        "name": "source-export",
+        "exit": 0,
+        "seconds": 41.527,
+        "root": "/private/tmp/issue28-company-consumer-20261003/provider-code",
+        "guarded": false
+      },
+      {
+        "name": "source-install",
+        "exit": 0,
+        "seconds": 0.656,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+        "guarded": true
+      },
+      {
+        "name": "compute",
+        "exit": 0,
+        "seconds": 26.885,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+        "guarded": true
+      },
+      {
+        "name": "repeat",
+        "exit": 0,
+        "seconds": 9.117,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+        "guarded": true
+      }
+    ],
+    "actual_same_history_terminal_entries": [
+      {
+        "attempt_id": "81df2fefdd90448dbc73a543ff0b34ca",
+        "status": "NO_SOURCE_CONTENT_CHANGE"
+      },
+      {
+        "attempt_id": "2c5dc1f926e44949b4021ac19415cb18",
+        "status": "CANDIDATE_READY"
+      }
+    ],
+    "same_history_native_Run_count": 1,
+    "protected_bytes_unchanged": true,
+    "compute_does_not_read_original_acquisition_checkout_or_journal": true,
+    "openshift_tested": false,
+    "online_new_fiscal_year_tested": false,
+    "new_complete_company": 0,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "ci_37073021498": {
+    "head": "a31342deb658bc7b1b0b65b5307eb24be4f55e51",
+    "run_id": 37073021498,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T23:19:11Z",
+    "scope": "Prior shared evidence and unchanged main runtime; not subsequent current390 view code"
+  },
+  "collab_peer_increment_52d94470": {
+    "peer_read_commit": "52d94470d2f18b25f50f5fc5c6e69ef88f5e7eda",
+    "baseline": "51250475b4ea5b115a4e37e3a8913b4bdc59e6bd",
+    "register_blob": "0edfca788fd2c6a0938bae98ad10b06ced4bff84",
+    "source_core_increment": false,
+    "relevant_increment": "#47 own historical requirement minter adds observed imports and investigates model request identity; no own D01/C02/E01 core difference or acceptance credit copied"
   }
 }

@@ -1,0 +1,6 @@
+{"status": "FAILED_COPY_VALIDATION", "results": [{"company_id": "paramount_skydance", "original_attempt": "/private/tmp/issue28-d01-emphasis-paramount-20261002-final/metrics/D01/attempts/2bf85d7f0f6a4cf9b43447c3e018408a", "installed_code_data_root": "/private/tmp/issue28-d01-emphasis-paramount-20261002-final/metrics/D01/attempts/2bf85d7f0f6a4cf9b43447c3e018408a/data", "run_copy": "/private/tmp/issue28-d01-validation-copies-20261003/paramount_skydance/run", "return_code": 1, "seconds": 0.147, "original_files_unchanged": true}]}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-d01-content-20261002/validate-copies.py", line 65, in <module>
+    assert row['original_files_unchanged'] and done.returncode==0, 'READ_RAW_FAILURE_LOG'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: READ_RAW_FAILURE_LOG

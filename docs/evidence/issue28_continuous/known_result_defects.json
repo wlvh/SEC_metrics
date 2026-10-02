@@ -127,6 +127,22 @@
         "run_validation": "NOT_RUN",
         "current_390_credit": false,
         "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"
+      },
+      "candidate_index_mapping": {
+        "delta": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/delta.json",
+        "status": "PASS_LIMITED_DELTA_TWO_SAVED_FY2025_REPLACEMENTS_SELECTED",
+        "selected_old_results_withheld_after_delta": 17,
+        "full390_or_production_credit": false
+      },
+      "current_index_acceptance": {
+        "result_ids": [
+          "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+          "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"
+        ],
+        "status": "EXACT_SAVED_SOURCE_CONTENT_AND_MECHANICAL_COPY_RECEIPTS_WITH_INDEX_DELTA_REVIEW",
+        "index_code_sha": "94955acf434c1ca177718aba35927f205da7ff70",
+        "review": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-94955ac/conclusion.md",
+        "scope": "Two saved FY2025 D01 coordinates only; original audit-time fields retain their date/scope; no general new-source or full390/production credit"
       }
     },
     "private_jpm_auditor_successor_failed_content": {
@@ -153,7 +169,10 @@
       "old_result_rewritten": false,
       "newly_withdrawn_from_trusted_count": 0,
       "evidence": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/"
-    }
+    },
+    "selected_known_defect_coordinates_after_verified_D01_delta": 17,
+    "verified_saved_scope_D01_replacement_count": 2,
+    "existing_current_390_view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py"
   },
   "defects": [
     {
@@ -755,7 +774,14 @@
         "docs/evidence/issue28_continuous/ordinary-paramount-current-36-cli-20260929/comparison.json"
       ],
       "released": [],
-      "original_record_retained": true
+      "original_record_retained": true,
+      "replacement_candidate_validation": {
+        "result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+        "exact_original_content_review": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md",
+        "mechanical_copy_receipt_id": "sha256:41c68b06bab8b269ea8fbc85b3e35d57d0004b48d76fe971b926e0cf106d2d65",
+        "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/mechanical-receipts.md",
+        "scope": "Two exact saved-source candidates only; not current390 integration or production; original erroneous Result remains unreleased"
+      }
     },
     {
       "defect_id": "D01_MARRIOTT_2025_UNDERLINED_CATEGORY_HEADINGS_OMITTED",
@@ -802,7 +828,14 @@
         "docs/evidence/issue28_continuous/ordinary-marriott-current-36-20260929/comparison.json"
       ],
       "released": [],
-      "original_record_retained": true
+      "original_record_retained": true,
+      "replacement_candidate_validation": {
+        "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+        "exact_original_content_review": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md",
+        "mechanical_copy_receipt_id": "sha256:607b09802ef3d29c29667b85cf94e1a2faa689c87713debc131c170889c50943",
+        "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/mechanical-receipts.md",
+        "scope": "Two exact saved-source candidates only; not current390 integration or production; original erroneous Result remains unreleased"
+      }
     },
     {
       "defect_id": "E01_PFIZER_2025_8_01_BODY_NOT_READ",
@@ -1160,5 +1193,5 @@
       }
     }
   ],
-  "latest_peer_read_commit": "4a685996fadaf6423e8027ba04b2cb2fd5d66682"
+  "latest_peer_read_commit": "52d94470d2f18b25f50f5fc5c6e69ef88f5e7eda"
 }

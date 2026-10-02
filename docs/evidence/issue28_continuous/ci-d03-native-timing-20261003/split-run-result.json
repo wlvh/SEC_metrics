@@ -1,0 +1,43 @@
+{
+  "head": "65706fd8ff5f7043241e0715ce6ec6eb3c170692",
+  "worktree_changes": [
+    "tools/run_fast_tests_v2.py: selector decomposition only"
+  ],
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "interpreter": "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+  "completed_at": "2026-10-02T22:05:48.240407+00:00",
+  "jobs": 2,
+  "duration_seconds": 46.473,
+  "tests": [
+    {
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+      "return_code": 0,
+      "duration_seconds": 46.46,
+      "timeout_seconds": 240,
+      "stdout_tail": "",
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 46.328s\n\nOK\n"
+    },
+    {
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+      "return_code": 0,
+      "duration_seconds": 36.822,
+      "timeout_seconds": 240,
+      "stdout_tail": "",
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 36.690s\n\nOK\n"
+    },
+    {
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+      "return_code": 0,
+      "duration_seconds": 0.124,
+      "timeout_seconds": 240,
+      "stdout_tail": "",
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.010s\n\nOK\n"
+    }
+  ],
+  "status": "PASSED",
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}
