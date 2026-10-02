@@ -9,3 +9,5 @@
 开始时曾尝试直接从**仓库自带的旧来源根**重建 JPMorgan A05，得到既有 `NORMAL_COMPANYFACTS_PRIOR_HISTORY_SNAPSHOT_CONFLICT`，因而没有选中上年 claim。该根不能用来判断已归档有值 Run，也不能代表已刷新的 #28 累计来源根；上面的重新执行把两者分开了。脚本禁网，账本与累计来源日志哈希前后不变，没有发 SEC/模型请求、修改旧 Run、重新打包或动用 #47 运行根。
 
 同一 peer 增量的 Southwest D01 多跨度旧证据缺陷与本方已做的跨页误合停用方向一致。本方十家当期候选在 `865d8220` 已逐一核对前后哈希未变，Paramount/Marriott 两份私有内容又完成限定原文复核；无需为历史 Southwest 两年重审当前十家。D02 共用核心和 C02 选择器在本次 peer 增量未改，原定归属和待决范围不变。
+
+`measure_current_ten.py`另从同一个#28当前累计来源根依配置十家公司顺序重建A05：在现有适用性规则下，九家为`TRAIT_NOT_APPLICABLE`，仅JPMorgan FY2025有值；该唯一有值结果对固定peer新护栏仍无问题。`current-ten.json`逐家保留准确终态、Result身份、选中claim与前期来源状态。故没有遗漏另一家当期有值A05的同类重述缺陷，也没有因此新扣留；这仍非新规则已经接入普通运行或所有A05原文内容均独立审完。
