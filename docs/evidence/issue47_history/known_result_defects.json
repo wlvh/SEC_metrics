@@ -5471,6 +5471,124 @@
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2021-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
    ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+   ],
+   "summary": "Block 3463 of the proxy that reports this year - 'The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm's independent external auditor is in the best interests of ...' with PwC's tenure since 1965 - is selected as a composition fact (label COMMITTEE_MEMBER_QUALIFICATION). It reports a decision about the external auditor; it states no board size, membership, committee, chair, or independence or qualification determination of a director, so under the owner's composition-fact target it is not C02 content. #28 found it in its own FY2025 result (Issue #47 comment 5949695188); the same paragraph is selected in #47's published results for FY2022-FY2025, each checked on #47's saved proxy. This coordinate's published result in the 50-period batch (result sha256:f84f273f9babbbed2f7f9b37d0dc3b67a36e4373309194ea3a38fb223d61dac0, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e) contains it. The value was never read or accepted; it is withdrawn so that it does not count as a delivered value.",
+   "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
+   "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
+   "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-external-auditor.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3463
+   ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+   ],
+   "summary": "Block 3571 of the proxy that reports this year - 'The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm's independent external auditor is in the best interests of ...' with PwC's tenure since 1965 - is selected as a composition fact (label COMMITTEE_MEMBER_QUALIFICATION). It reports a decision about the external auditor; it states no board size, membership, committee, chair, or independence or qualification determination of a director, so under the owner's composition-fact target it is not C02 content. #28 found it in its own FY2025 result (Issue #47 comment 5949695188); the same paragraph is selected in #47's published results for FY2022-FY2025, each checked on #47's saved proxy. This coordinate's published result in the 50-period batch (result sha256:98d1cf96833a0ef069430032a497512f691a8eeb254e0d2ee53fb166f5134100, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e) contains it. The value was never read or accepted; it is withdrawn so that it does not count as a delivered value.",
+   "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
+   "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
+   "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-external-auditor.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3571
+   ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+   ],
+   "summary": "Block 3344 of the proxy that reports this year - 'The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm's independent external auditor is in the best interests of ...' with PwC's tenure since 1965 - is selected as a composition fact (label COMMITTEE_MEMBER_QUALIFICATION). It reports a decision about the external auditor; it states no board size, membership, committee, chair, or independence or qualification determination of a director, so under the owner's composition-fact target it is not C02 content. #28 found it in its own FY2025 result (Issue #47 comment 5949695188); the same paragraph is selected in #47's published results for FY2022-FY2025, each checked on #47's saved proxy. This coordinate's published result in the 50-period batch (result sha256:72e949f9422e16ad84880f0d1da3347b5a93e7173fc0de4faa261f10ba6e17b4, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e) contains it. The value was never read or accepted; it is withdrawn so that it does not count as a delivered value.",
+   "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
+   "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
+   "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-external-auditor.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "blocks_taken_that_are_not_composition": [
+    3344
+   ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+    "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+   ],
+   "summary": "Block 3367 of the proxy that reports this year - 'The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm's independent external auditor is in the best interests of ...' with PwC's tenure since 1965 - is selected as a composition fact (label COMMITTEE_MEMBER_QUALIFICATION). It reports a decision about the external auditor; it states no board size, membership, committee, chair, or independence or qualification determination of a director, so under the owner's composition-fact target it is not C02 content. #28 found it in its own FY2025 result (Issue #47 comment 5949695188); the same paragraph is selected in #47's published results for FY2022-FY2025, each checked on #47's saved proxy. This coordinate's published result in the 50-period batch (result sha256:5ecfb3fa76fdb946e2f3eee30f71528fc19d5a73f9cc74375979c1a1cfadbec1, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e) contains it. The value was never read or accepted; it is withdrawn so that it does not count as a delivered value.",
+   "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
+   "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
+   "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-selector-repairs/README.md",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-external-auditor.json",
+    "docs/evidence/issue47_history/c02-selector-repairs/measured-45-jpmorgan-and-unread.json"
+   ],
+   "original_record_retained": true,
+   "peer_origin": {
+    "commit": "4e81fc19245ec7375f01d0591b4a19771591e828",
+    "comment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5949695188",
+    "defect_id": [
+     "C02_JPMORGAN_2025_AUDITOR_RETENTION_PRIVATE_NORMAL_UPDATE",
+     "C02_JPMORGAN_2025_AUDITOR_RETENTION_ARCHIVED_390"
+    ],
+    "register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+    "same_source": "#28's raw asset sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476 is the bytes #47's FY2025 document is built from"
+   },
+   "blocks_taken_that_are_not_composition": [
+    3367
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -6113,6 +6231,40 @@
      "marker": "[shared-with-#47]",
      "subject": "Preserve structural A05 N/A in formula successor",
      "affects_47": "#28's ordinary successor only; #47's pinned A05 route is unchanged by the merge (no #47 rule file moved).",
+     "integration": "MERGED"
+    }
+   ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "3275aa7b",
+   "own_commit_at_read": "099d48fe",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; unchanged since 4e81fc19, which added two exact-result C02 entries for JPMorgan FY2025",
+   "baseline": "Read since aad8b44a: three commits' messages and file lists, the E01 item-input README and its limited-review conclusion; and 4e81fc19, which lies before aad8b44a but was not listed at that read.",
+   "increments": [
+    {
+     "commit": "4e81fc19",
+     "marker": null,
+     "subject": "Withhold exact JPMorgan C02 auditor-retention results",
+     "affects_47": "Yes. Block 3367 of JPMorgan's FY2025 proxy (continued retention of PwC as the independent external auditor) is selected as a composition fact by the shared selector #47 maintains; the same paragraph is in #47's published FY2022-FY2025 results. Not listed at the aad8b44a read although that read covered it.",
+     "integration": "PROVIDED_FIX: c02-selector-repairs/README.md section 45 [shared-with-#28]; defects C02_JPMORGAN_2022..2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+    },
+    {
+     "commit": "dcd36df3",
+     "marker": "[shared-with-#47]",
+     "subject": "Bind current E01 item text source inputs",
+     "affects_47": "None on a #47 value. #28 pinned #47's item reader historical_event_items.py at 488a6173 (blob ff6996d2, still #47's file byte for byte) in its own path scripts/vnext/e01_item_text_28_v1.py. Its note that candidates come from the header index, so an Item heading the header does not list is not ruled out, holds for #47's E01 candidates and readings too; recorded as an open limitation, not checked yet.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "3275aa7b",
+     "marker": null,
+     "subject": "Record limited review of current E01 item inputs",
+     "affects_47": "None: #28's review of its own source input (PASS_LIMITED_SOURCE_INPUT); it gives #47 no credit.",
      "integration": "MERGED"
     }
    ]

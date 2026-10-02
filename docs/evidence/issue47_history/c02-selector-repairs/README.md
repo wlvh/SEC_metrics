@@ -859,3 +859,28 @@
 共 139/139，对照 93 个用例。
 
 **量测**（`measured-44-having-served.json`）：只移走 Salesforce 2025 第 1147 块（读者判为非事实），该位置现与判读一致。误选 5→4，漏选 9 不变，不一致的位置 7→6，最新年不变。
+
+## 45. "the Firm's independent external auditor"：外部审计师的独立性不是委员会成员的独立性
+
+**问题。** #28 在摩根大通 FY2025 代理原件上核对（[Issue #47 评论 5949695188](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5949695188)，#28 登记在 `4e81fc19`）：第 3367 块 "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm's independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. …" 被选为构成事实（标签 COMMITTEE_MEMBER_QUALIFICATION）。这段说的是审计委员会和董事会对外部审计师的决定，没有写董事人数、成员、委员会设置、主席，也没有任何董事的独立性或资格认定；按所有者"构成事实"的口径不属于 C02。本方往年结果也选了它：摩根大通 FY2022–FY2025 四个已发布值各含同一段（3463、3571、3344、3367），都在本方保存的代理上核对过；FY2025 那份与 #28 读的是同一份字节（raw asset `sha256:bea52712…`）。
+
+**成因。** COMMITTEE_MEMBER_QUALIFICATION 在一句话同时出现资格词、指称委员会成员的词和状态动词时成立。这里的 "independent" 在 "the Firm's independent external auditor" 里，修饰的是审计师。选择器排除"别人的独立性"的写法（`_NOT_DIRECTOR_INDEPENDENCE`）已有 "independent registered public accounting firm"、"independent auditors/accountants"、顾问和律师，但没有 "independent external/outside auditor"。
+
+**改动。** `_NOT_DIRECTOR_INDEPENDENCE` 允许 "independent" 与 "auditor(s)/accountant(s)" 之间出现 "external" 或 "outside"。只补这一种写法，不另造"决策主语是委员会、决定对象是审计师"的判断；同一句里成员自己的 "independent" 仍照常读。接口不变：`board_composition_facts(document=..., period_start=...)`。
+
+**用例与注错。** `test_the_external_auditor_s_independence_is_not_the_members`：
+- 反例：摩根大通原句；构造句 "The members of the Audit Committee believe the independent public accounting firm is qualified."（没有 "registered" 也要排除）。
+- 正例：构造句 "The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC."；构造句 "The members of the Audit Committee are independent and oversee the Firm's independent external auditor."，证明只去掉审计师那一处，成员的独立性仍是认定。
+
+注错三个：`THE_EXTERNAL_AUDITOR_IS_A_DIRECTOR`（去掉 external/outside）、`ONLY_THE_REGISTERED_FIRM_IS_THE_AUDITOR`（"registered" 改为必有）、`ANY_INDEPENDENT_IS_THE_AUDITOR`（任何 "independent" 都算别人的）。三个都由该用例抓到，第三个还让另外三个用例失败。共 142/142，对照 94 个用例。
+
+**量测。**
+- 37 份双向判读（`measured-45-external-auditor.json`）：一块不动。误选 4、漏选 9、不一致位置 6 不变。
+- 有已发布值、但没有判读的 12 个位置（`measured-45-jpmorgan-and-unread.json`，由 `measure_unread.py` 产出）：摩根大通 FY2022–FY2025、Pfizer FY2021、Salesforce FY2022–FY2024、Southwest FY2021–FY2024。只有摩根大通四年各移走这一段，其余八个位置一块不动。摩根大通 FY2021 没有 C02 结果：路线在代理封面名称身份检查处停下（`HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED`）。
+- #28 要求保住的正例：同一份 FY2025 原件第 3409 块，修复前后都入选。它写明审计委员会由四名非管理层董事组成、每名成员独立、具备财务素养并是审计委员会财务专家。
+
+**登记。** 摩根大通 FY2022–FY2025 的 C02 按坐标登记缺陷 `C02_JPMORGAN_<年>_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION`（`../known_result_defects.json`）。这四个值从未被读过或接受，登记后不再算交付值。已发布结果是 50 期间批次（闭包 `500ddf5f`）的版本，还没有重算。
+
+**未做。**
+- 同一份 FY2025 原件第 3436 块也入选，标签 COMMITTEE_COMPOSITION_STATEMENT。它是审计委员会报告里讲管理层、PwC、内部审计各自职责的段落，结尾是 "the Audit Committee's responsibility is to monitor and oversee these processes"，读起来更像委员会工作描述（所有者口径不包括）。但没有人判读过摩根大通的 C02，这一块本次不改，也不记作已发现的缺陷。
+- 摩根大通 C02 还没有双向判读。修复后的值即使重算，也要先读过才能接受。

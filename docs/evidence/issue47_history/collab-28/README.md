@@ -114,6 +114,7 @@
 | 42 | Lumen 2023 "the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks" 写成名词、年份在职务之前，带日期离任句式都要动词，读不到；以它为覆盖的脚注（"when our Vice Chairman retired and was not replaced"）也算漏选 | `6241253f` | `test_our_vice_chairman_s_retirement_dated_in_the_year`；注错 `AN_OFFICER_RETIREMENT_IS_NOT_READ`、`AN_OFFICER_RETIREMENT_IS_ALWAYS_THIS_YEAR`、`ANY_VICE_CHAIRMAN_IS_OURS` | 新句式 "retirement in <年份> of our [former] Vice Chairman"，按带日期离任规则读（目标年度或之后、写出人名）；"of our" 把它与董事在别家公司的退休分开。只新增这一块，Lumen 2023 现与判读一致；漏选 13→11，误选不变，最新年不变（`../c02-selector-repairs/measured-42-vice-chairman-retirement.json`） |
 | 43 | Lumen 代理访问条款里的 "Based on the 11 directors constituting our Board immediately following the meeting, … would be required …" 被政策否决整句跳过；四份判读都判为部分事实，2022 没有别的块覆盖 | `ab31c364` | `test_the_board_s_size_on_which_a_proxy_access_limit_is_based`；注错 `THE_PROXY_ACCESS_COUNT_IS_VETOED`、`ANY_BOARD_S_COUNT_IS_OURS` | 新增 `_CONSTITUTING_THE_BOARD`（"<人数> directors constituting our Board"），在政策否决之前读为董事会规模。只新增 Lumen 2021–2024 这四块，漏选 11→10，误选不变，最新年不变（`../c02-selector-repairs/measured-43-proxy-access-board-count.json`） |
 | 44 | Salesforce 2025 候选人资格清单里的 "having served on our Board and its M&A Committee through periods of immense growth" 被委员会任职句式读成成员；读者判为非事实（资格描述） | `16835c17` | `test_having_served_on_a_committee_is_a_qualification`；注错 `HAVING_SERVED_IS_A_MEMBERSHIP` | 委员会任职句式前面是 "having" 时不读。37 份文档只移走这一块，Salesforce 2025 现与判读一致；误选 5→4，漏选不变，最新年不变（`../c02-selector-repairs/measured-44-having-served.json`） |
+| 45 | "the Firm's independent external auditor"：审计委员会和董事会续聘外部审计师的决定被读成成员资格认定（#28 在摩根大通 FY2025 原件第 3367 块发现，[评论 5949695188](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5949695188)） | 见本次提交 | `test_the_external_auditor_s_independence_is_not_the_members`；注错 `THE_EXTERNAL_AUDITOR_IS_A_DIRECTOR`、`ONLY_THE_REGISTERED_FIRM_IS_THE_AUDITOR`、`ANY_INDEPENDENT_IS_THE_AUDITOR` | 排除别人独立性的写法补上 "independent external/outside auditor"。37 份判读一块不动；没有判读的 12 个已发布位置里只有摩根大通 FY2022–FY2025 各移走这一段（3463、3571、3344、3367），其余八个不动；#28 要求保住的同件正例第 3409 块（成员组成、独立、财务专家）仍入选（`../c02-selector-repairs/measured-45-external-auditor.json`、`measured-45-jpmorgan-and-unread.json`） |
 
 这些修复都不让任何坐标重新获得信用：选择仍与判读不一致的坐标继续撤回；已经一致的坐标，其已发布结果是旧版本算的，要等重算、重读后按结果编号释放。修复 7–12 是否、何时接入 #28 的普通路线由 #28 自己处置；#47 不代为宣布普通路线已通过。
 
@@ -197,3 +198,13 @@
 实测（`../c02-composition-facts/qualification-narratives.json`，零调用；37 个已双向判读的位置）：带"任职资格"类句子的位置有 19 个，共 34 块，其中 11 块已因别的事实入选。逐位董事的"qualified to serve as a member of our Board"只出现在 Paramount FY2025：10 块中 9 块已因任职日期入选，只有第 168 块没有。其余未入选的块是技能矩阵导语和提名标准，读者都判为非事实，两种读法下都不会进入值。所以两种读法的输出差别只有这一块。
 
 若 #28 仍认为现行合同不能排除"取"这种读法，按 v1.1 把两种读法的输出影响集中成一个用户问题。
+
+## 2026-10-02 读到 #28 `3275aa7b`
+
+### C02 摩根大通第 3367 块（#28 反例、本方修复）
+
+#28 在 `4e81fc19` 撤回了它摩根大通 FY2025 的两个 C02 结果身份：第 3367 块写的是审计委员会和董事会认为续聘 PwC 作为独立外部审计师符合股东利益，不是董事会构成（[评论 5949695188](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5949695188)）。这块是本方维护的共用选择器选进来的。本方在自己保存的代理上核对：FY2022–FY2025 四个已发布值都含同一段，FY2025 与 #28 读的是同一份字节。修复是上表第 45 项：只补 "independent external/outside auditor" 这一种写法，接口不变；同件第 3409 块（审计委员会成员组成、独立性、财务专家）仍入选。摩根大通 C02 四个年度按坐标登记缺陷；本方没有摩根大通 C02 的判读，所以修复不让任何值获得接受。同件第 3436 块（审计委员会报告里讲各方职责的段落）也入选，读起来像委员会工作描述，没人判读过，本次不改，记在第 45 节"未做"。
+
+### E01 条目读取器（#28 消费本方固定版本）
+
+#28 在 `dcd36df3` 把本方 `historical_event_items.py` 固定在 `488a6173`（Git blob `ff6996d2`，与本方现在的文件逐字节相同）放进它自己的 `scripts/vnext/e01_item_text_28_v1.py`，`3275aa7b` 是它的限定独审（PASS_LIMITED_SOURCE_INPUT）。本方没有改这个文件，不需要再提供什么。#28 的审阅记了一个局限：候选条目来自 SEC 头文件的条目索引，没有证明主文件里不存在头文件漏列的条目标题。这对本方 E01 的候选与头文件阅读同样成立，记为未核对的局限，没有当成已知缺陷。

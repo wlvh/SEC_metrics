@@ -466,8 +466,13 @@ def sentences(text):
     return [s for s in _SENTENCE.split(t) if s.strip()]
 
 
+# The external auditor's independence is not a director's: "continued
+# retention of PwC as the Firm’s independent external auditor" (JPMorgan FY2025
+# block 3367, #28's counterexample) said "independent" beside "members of the
+# Audit Committee" and read as their qualification.
 _NOT_DIRECTOR_INDEPENDENCE = re.compile(
-    r"independent registered public accounting firm|independent (?:auditors?|accountants?)"
+    r"independent (?:registered )?public accounting firm|independent (?:(?:external|outside) )?(?:auditors?"
+    r"|accountants?)"
     r"|independent (?:compensation )?(?:consultants?|advisors?|advisers?|counsel|legal counsel)"
     r"|independent third[- ]part(?:y|ies)|auditor independence"
     r"|independence of (?:the )?(?:firm|auditors?|consultants?|advisors?)"

@@ -631,6 +631,29 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertEqual(["COMMITTEE_COMPOSITION_STATEMENT"], statement_labels(
             "Ms. Doe serves on our Audit Committee.", own, period_start=START))
 
+    def test_the_external_auditor_s_independence_is_not_the_members(self):
+        # JPMorgan FY2025 block 3367, #28's counterexample (Issue #47 comment
+        # 5949695188): the committee and the Board decide about the auditor.
+        own = frozenset({"audit", "compensation", "example"})
+        self.assertEqual([], statement_labels(
+            "The members of the Audit Committee and the Board believe that continued retention of PwC as the "
+            "Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders.",
+            own, period_start=START))
+        # The same filing's determination about the members stays (block 3409).
+        self.assertIn("COMMITTEE_MEMBER_QUALIFICATION", statement_labels(
+            "The Board has also determined that each member is financially literate and is an audit committee "
+            "financial expert as defined by the SEC.", own, period_start=START))
+        # Only the auditor's phrase is set aside: the members' own independence
+        # in the same sentence still reads (constructed).
+        self.assertIn("COMMITTEE_MEMBER_QUALIFICATION", statement_labels(
+            "The members of the Audit Committee are independent and oversee the Firm’s independent external "
+            "auditor.", own, period_start=START))
+        # The firm without "registered" (JPMorgan FY2025 block 1188 names it so;
+        # the sentence is constructed).
+        self.assertEqual([], statement_labels(
+            "The members of the Audit Committee believe the independent public accounting firm is qualified.",
+            own, period_start=START))
+
     def test_a_committee_chair_rotated_at_a_dated_meeting(self):
         # Lumen FY2021-FY2023 (blocks 1047, 1078, 1423): a list of the board's
         # changes, each without a subject. Every reader took it; its date is

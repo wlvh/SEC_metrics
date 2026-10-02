@@ -423,6 +423,15 @@ INJECTIONS = [
     # Repair 44: "having served on our Board and its M&A Committee".
     ('HAVING_SERVED_IS_A_MEMBERSHIP', 're.compile(r"(?<!\\bhaving\\s)\\b(?:served|serve', 're.compile(r"\\b(?:served|serve',
      "test_having_served_on_a_committee_is_a_qualification"),
+    # Repair 45: the external auditor's independence (#28's JPMorgan counterexample).
+    ('THE_EXTERNAL_AUDITOR_IS_A_DIRECTOR', '|independent (?:(?:external|outside) )?(?:auditors?"',
+     '|independent (?:auditors?"', "test_the_external_auditor_s_independence_is_not_the_members"),
+    ('ONLY_THE_REGISTERED_FIRM_IS_THE_AUDITOR', 'r"independent (?:registered )?public accounting firm|',
+     'r"independent registered public accounting firm|',
+     "test_the_external_auditor_s_independence_is_not_the_members"),
+    ('ANY_INDEPENDENT_IS_THE_AUDITOR', 'r"independent (?:registered )?public accounting firm|',
+     'r"independent\\b|independent (?:registered )?public accounting firm|',
+     "test_the_external_auditor_s_independence_is_not_the_members"),
 ]
 
 
