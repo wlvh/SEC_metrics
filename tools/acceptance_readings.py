@@ -164,7 +164,10 @@ DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH, DEBT_TO_EQUITY_
 # inspectors: one file per closure its positions compare - the 50-period batch,
 # and the round that ran the older-wording successors.
 BANK_MEASURES_FULL_FRAME = EVIDENCE + "bank-measures-read-full-frame.json"
-BANK_MEASURES_READINGS = (BANK_MEASURES_FULL_FRAME,)
+# The same reader on the targeted round whose Runs carry the older-wording
+# successors (targeted-round-004c5771): twelve values the batch withheld.
+BANK_MEASURES_ROUND = EVIDENCE + "bank-measures-read-round-004c5771.json"
+BANK_MEASURES_READINGS = (BANK_MEASURES_FULL_FRAME, BANK_MEASURES_ROUND)
 # The bank's A01, A02, A05-A08 and A10 read off its annual reports' inline XBRL
 # by tools/read_bank_statement_facts.py with the catalog's approved concepts
 # and formulas, the prior year from the prior annual report.

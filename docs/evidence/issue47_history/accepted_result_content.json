@@ -450,6 +450,78 @@
    "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A03_JPMORGAN_2021",
+   "accepted_value": "1.11",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:cd76379dc7c465cb2517fc7163aa9e1a42c2c660467f46a3fbd39d12190cc878",
+     "run_id": "run:historical-period:957f4b362e4239a85a3e1eab8b2ebd32295650d6a8fafcbafe64751de27a7f83"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-10-01",
+    "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+    "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A03",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "reads": [
+     {
+      "figure": "111",
+      "row": [
+       "Firm Liquidity coverage ratio (“LCR”) (average) (d)",
+       "111",
+       "110",
+       "116"
+      ],
+      "table_ordinal": 63,
+      "window": [
+       "2021-10-01",
+       "2021-12-31"
+      ]
+     },
+     {
+      "figure": "111",
+      "row": [
+       "LCR",
+       "111",
+       "%",
+       "112",
+       "%",
+       "110",
+       "%"
+      ],
+      "table_ordinal": 198,
+      "window": [
+       "2021-10-01",
+       "2021-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A03_JPMORGAN_2022",
    "accepted_value": "1.12",
    "checked_identity": {
@@ -479,6 +551,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A03",
@@ -522,6 +597,78 @@
    "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A03_JPMORGAN_2023",
+   "accepted_value": "1.13",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:4d9ce1615fe5db956b31696746b57f1001784dfc0b6f05be182b337bed41adf9",
+     "run_id": "run:historical-period:6256123e0d7f9349a4a1a81a76f0b13fc71432ef242ce324d32e742e46cd924d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-10-01",
+    "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+    "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A03",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "reads": [
+     {
+      "figure": "113",
+      "row": [
+       "Firm Liquidity coverage ratio (“LCR”) (average) (b)",
+       "113",
+       "112",
+       "111"
+      ],
+      "table_ordinal": 65,
+      "window": [
+       "2023-10-01",
+       "2023-12-31"
+      ]
+     },
+     {
+      "figure": "113",
+      "row": [
+       "LCR",
+       "113",
+       "%",
+       "112",
+       "%",
+       "112",
+       "%"
+      ],
+      "table_ordinal": 207,
+      "window": [
+       "2023-10-01",
+       "2023-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A03_JPMORGAN_2024",
    "accepted_value": "1.13",
    "checked_identity": {
@@ -551,6 +698,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A03",
@@ -623,6 +773,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A03",
@@ -666,6 +819,122 @@
    "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A04_JPMORGAN_2021",
+   "accepted_value": "0.0164",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:7ddc7e869aa3d1134b87990f77dd1e6f47293f0154852435e71df9c6bbaf2bfa",
+     "run_id": "run:historical-period:7c77915af703efc5075d372cf2a2c6cc4cb24b2dfd587fa07661b201211db6e6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+    "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A04",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "reads": [
+     {
+      "figure": "1.64",
+      "row": [
+       "Net yield on average interest-earning assets – managed basis",
+       "1.64",
+       "%",
+       "1.98",
+       "%",
+       "2.46",
+       "%"
+      ],
+      "table_ordinal": 97,
+      "window": [
+       "2021-01-01",
+       "2021-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A04_JPMORGAN_2022",
+   "accepted_value": "0.02",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:a29bf3a446adca6593b4d5bcc6e18607e0eb0f389ca6169dc0f1169ad2633247",
+     "run_id": "run:historical-period:6e207eaeb054dd54858972e1c89127d727b6150537f493894bc43b1eddf81cb3"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+    "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A04",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "reads": [
+     {
+      "figure": "2.00",
+      "row": [
+       "Net yield on average interest-earning assets – managed basis",
+       "2.00",
+       "%",
+       "1.64",
+       "%",
+       "1.98",
+       "%"
+      ],
+      "table_ordinal": 96,
+      "window": [
+       "2022-01-01",
+       "2022-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A04_JPMORGAN_2023",
    "accepted_value": "0.027",
    "checked_identity": {
@@ -695,6 +964,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A04",
@@ -753,6 +1025,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A04",
@@ -811,6 +1086,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A04",
@@ -2352,6 +2630,174 @@
    "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A09_JPMORGAN_2021",
+   "accepted_value": "0.0072",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:2c550c1f3dc1a2063a8a84a678dcbae3b619759c10944fb1da80f67649cd15ac",
+     "run_id": "run:historical-period:0af23617cead6eefc2a648c77ad9d2d39b5e1dcbb3fbe821ccfe8d6ece1130bd"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+    "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A09",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "reads": [
+     {
+      "figure": "0.72",
+      "row": [
+       "Firmwide nonaccrual loans to total loans outstanding",
+       "0.72",
+       "%",
+       "1.04",
+       "%"
+      ],
+      "table_ordinal": 221,
+      "window": [
+       "2021-12-31",
+       "2021-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A09_JPMORGAN_2022",
+   "accepted_value": "0.0059",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:1f937eb72b422849afd5af43705f138a08a033a37adbced8e1a57ef16ed3ed52",
+     "run_id": "run:historical-period:c1f918faf6352b58a6cf05098dca5ceb62cd7305f3b7611f0cd4accfc3bcd529"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-12-31",
+    "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+    "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A09",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "reads": [
+     {
+      "figure": "0.59",
+      "row": [
+       "Firmwide nonaccrual loans to total loans outstanding",
+       "0.59",
+       "%",
+       "0.72",
+       "%"
+      ],
+      "table_ordinal": 223,
+      "window": [
+       "2022-12-31",
+       "2022-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A09_JPMORGAN_2023",
+   "accepted_value": "0.0052",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:ba9abedb73dd27f7ca80936757603a3956160459f4947af5989949d012a29a21",
+     "run_id": "run:historical-period:bab153b67181a6366fd4508524604e1a7b2ce591cb026665b0c5cae5452bf867"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-12-31",
+    "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+    "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A09",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "reads": [
+     {
+      "figure": "0.52",
+      "row": [
+       "Firmwide nonaccrual loans to total loans outstanding",
+       "0.52",
+       "%",
+       "0.59",
+       "%"
+      ],
+      "table_ordinal": 230,
+      "window": [
+       "2023-12-31",
+       "2023-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A09_JPMORGAN_2024",
    "accepted_value": "0.0066",
    "checked_identity": {
@@ -2381,6 +2827,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A09",
@@ -2437,6 +2886,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A09",
@@ -2819,6 +3271,294 @@
    "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A11_JPMORGAN_2021",
+   "accepted_value": "3113000000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:d39c0a20ac1abf0966d27c4f33c00c4a8431f1e4326ba0c37cee2f9dfa9805f2",
+     "run_id": "run:historical-period:b1f552ad14800c987576538b467b0cbf9f5479d8ad591fad9bcd6a757aa1ad6a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+    "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A11",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "reads": [
+     {
+      "figure": "3,113",
+      "row": [
+       "Total assets under management",
+       "3,113",
+       "2,716",
+       "2,328"
+      ],
+      "table_ordinal": 153,
+      "window": [
+       "2021-12-31",
+       "2021-12-31"
+      ]
+     },
+     {
+      "figure": "3,113",
+      "row": [
+       "Total assets under management",
+       "$",
+       "3,113",
+       "$",
+       "2,716",
+       "$",
+       "2,328"
+      ],
+      "table_ordinal": 153,
+      "window": [
+       "2021-12-31",
+       "2021-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A11_JPMORGAN_2022",
+   "accepted_value": "2766000000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:88d39f3d9c73d6b879b704a533f21097834f6bc70e26ca2a3cadc4b56749679d",
+     "run_id": "run:historical-period:0eb320167bed57535c5329fa783c390a99616747bfb82126500ed3f40c3b328f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-12-31",
+    "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+    "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A11",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "reads": [
+     {
+      "figure": "2,766",
+      "row": [
+       "Total assets under management",
+       "2,766",
+       "3,113",
+       "2,716"
+      ],
+      "table_ordinal": 154,
+      "window": [
+       "2022-12-31",
+       "2022-12-31"
+      ]
+     },
+     {
+      "figure": "2,766",
+      "row": [
+       "Total assets under management",
+       "$",
+       "2,766",
+       "$",
+       "3,113",
+       "$",
+       "2,716"
+      ],
+      "table_ordinal": 154,
+      "window": [
+       "2022-12-31",
+       "2022-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A11_JPMORGAN_2023",
+   "accepted_value": "3422000000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:6626c7346ec17f13717e741c46d9933924384c752b924afe45d167ab6a4d1348",
+     "run_id": "run:historical-period:a5ce244091818bf908eec85d790ace06ef481850521866c9a219bccb156b1ad0"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-12-31",
+    "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+    "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A11",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "reads": [
+     {
+      "figure": "3,422",
+      "row": [
+       "Total assets under management",
+       "3,422",
+       "2,766",
+       "3,113"
+      ],
+      "table_ordinal": 161,
+      "window": [
+       "2023-12-31",
+       "2023-12-31"
+      ]
+     },
+     {
+      "figure": "3,422",
+      "row": [
+       "Total assets under management",
+       "$",
+       "3,422",
+       "$",
+       "2,766",
+       "$",
+       "3,113"
+      ],
+      "table_ordinal": 161,
+      "window": [
+       "2023-12-31",
+       "2023-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A11_JPMORGAN_2024",
+   "accepted_value": "4045000000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:823cf7659972167e912c057249da6b186fd02e58b65d1e76d76a4a996d97ab7d",
+     "run_id": "run:historical-period:f86c7c4618fe6ea2f6b552c0fac495109c86ad7b03ff08997a071cd329b0f8e0"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+    "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A11",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "reads": [
+     {
+      "figure": "4,045",
+      "row": [
+       "Total assets under management",
+       "4,045",
+       "3,422",
+       "2,766"
+      ],
+      "table_ordinal": 156,
+      "window": [
+       "2024-12-31",
+       "2024-12-31"
+      ]
+     },
+     {
+      "figure": "4,045",
+      "row": [
+       "Total assets under management",
+       "$",
+       "4,045",
+       "$",
+       "3,422",
+       "$",
+       "2,766"
+      ],
+      "table_ordinal": 156,
+      "window": [
+       "2024-12-31",
+       "2024-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A11_JPMORGAN_2025",
    "accepted_value": "4791000000000",
    "checked_identity": {
@@ -2848,6 +3588,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A11",
@@ -2891,6 +3634,70 @@
    "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A12_JPMORGAN_2021",
+   "accepted_value": "55000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "result_id": "sha256:5ba6630342ed34686176393c66fb2a2177c756155bb616347e0072fbb1a23926",
+     "run_id": "run:historical-period:bd6ccb19f4e0de5766b5d14b31c5fcc5675b4840f2c95ee6125911adac6bca49"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+    "spec_closure_hash": "sha256:338264b583c2d2458cb3f73d060e1a42fa9d90a20e51be961394fc27ae62b213",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
+   "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
+   "metric_id": "A12",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "reads": [
+     {
+      "figure": "55",
+      "row": [
+       "Total VaR",
+       "$",
+       "55",
+       "$",
+       "24",
+       "$",
+       "153",
+       "$",
+       "95",
+       "$",
+       "32",
+       "$",
+       "164"
+      ],
+      "table_ordinal": 286,
+      "window": [
+       "2021-01-01",
+       "2021-12-31"
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A12_JPMORGAN_2022",
    "accepted_value": "58000000",
    "checked_identity": {
@@ -2920,6 +3727,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A12",
@@ -2984,6 +3794,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A12",
@@ -3049,6 +3862,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A12",
@@ -3113,6 +3929,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A12",
@@ -3177,6 +3996,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A13",
@@ -3234,6 +4056,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A13",
@@ -3291,6 +4116,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A13",
@@ -3348,6 +4176,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A13",
@@ -3405,6 +4236,9 @@
     "value_kind": null
    },
    "company_id": "jpmorgan_chase",
+   "confirmed_by": [
+    "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json"
+   ],
    "evidence": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
    "method": "the bank's annual report read by tools/read_bank_measures.py, which imports none of the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): the document split on <table>, each row's cells with the tags stripped, and each measure read from the row the report names it by - net yield on average interest-earning assets on the managed basis, firmwide nonaccrual loans to total loans outstanding, total assets under management, Total VaR in the Avg. column of the table split into Avg., Min and Max, Total international under the target year's rows of the table whose first figure column is revenue, and the registrant's LCR in the table of averages for the three months ended on the period's end together with the selected financial data's firm LCR average - in the target year's column found from the table's own header, in the scale the header states. Every table that names the measure and states the year is read, and they must agree; the window is the one the table's header states (the year ended, the date, or the three months ended) and must be the result's measurement window.",
    "metric_id": "A13",
@@ -64476,6 +65310,7 @@
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round3.json",
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
+  "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
   "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -64495,6 +65330,12 @@
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json": {
    "acceptances_contributed": 18,
    "content_sha256": "sha256:65559571cb7638cc04ec82caa0b8ba2ce329f87d71edc84484ac0e51ea8afe8a",
+   "positions_examined": 5,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json": {
+   "acceptances_contributed": 30,
+   "content_sha256": "sha256:882e50304dbc260c77a5f7a00e37c17f881cb66f2ec9c5667c742827b2133e86",
    "positions_examined": 5,
    "positions_examined_is_null_because": null
   },

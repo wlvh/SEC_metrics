@@ -3852,7 +3852,7 @@
    "root_cause": "B02's approved branch (catalog/deterministic_metrics.json, comparable_annual_revenue) takes revenue_prior from the prior filing (accession_role prior), the year as first reported. The paired-measure check asked only when the two years used different concepts; one concept read on a year the target filing recasts is the same failure of comparability.",
    "scope_measured": "all 46 B02 and A07 Runs with a value in the 50-period batch, against the saved Company Facts (b02-same-concept-recast/measured-frame4.json): one moves, this one. Across the statement readings, 40 of 46 B02 positions read the target filing's own comparative equal to the prior claim.",
    "found_by": "the cross-source statement reading of the 50-period batch (content-acceptance/cross-source-read-full-frame.json): Pfizer FY2021 B02 DIFFERS, the other 27 compared values MATCH.",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
    "repair": "historical_results.paired_measure_problem now also asks a pair on one concept: where the target filing reports the prior year under that concept at another value than the prior claim, the result is withheld by name, HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE, marked same_concept_recast. A target filing that reports the year at the prior claim's value, or not at all, leaves the approved branch's answer. It does not recompute from the recast value: that would change the branch's approved prior-year source.",
    "evidence": [
     "docs/evidence/issue47_history/b02-same-concept-recast/measure.py",
@@ -3862,6 +3862,17 @@
    ],
    "same_cause_as": [
     "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:38bffb79be809cfe450e5c8945a7ab80b75534f3d653a4e601dbb997b5224702",
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "run_id": "run:historical-period:c4ac951632138d4627851cbeeca8433027c72ba3b9e811ccc41925ea5bc100a5",
+     "public_row_hash": "sha256:ddeccafdac09c75798ebba3363201ca06a743d88936d954ae3eb4cacd4db4dad",
+     "read_by": "docs/evidence/issue47_history/targeted-round-004c5771/rerun-results.json",
+     "what_this_releases": "This withheld result and no other: HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE, frozen, public row written, read back by a separate process. The published 0.9396773885654290350291113868 the 50-period batch holds, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a value. It has none: the target filing restates the prior year under the same concept, and recomputing from the restated figure would change the approved branch's prior-year source. Nor that any batch has re-run under this version."
+    }
    ]
   },
   {
@@ -3874,7 +3885,7 @@
    "root_cause": "A05's approved branch (catalog/deterministic_metrics.json, average_denominator_ratio) takes assets_prior from the prior filing (accession_role prior). It is the same failure of comparability as the Pfizer FY2021 B02 recast, on a balance at two year ends rather than a flow over two years.",
    "scope_measured": "all 10 A05 and A06 Runs with a value in the 50-period batch, against the saved Company Facts (b02-same-concept-recast/measured-frame4-a05-a06.json): one moves, this one. The bank statement-facts reading of the same batch, read off the two annual reports' inline XBRL, finds the same restatement and no other (content-acceptance/bank-statement-facts-read-full-frame.json: A05 FY2021 NOT_READ, PRIOR_YEAR_RESTATED_IN_THE_TARGET; A06 five years MATCH).",
    "found_by": "the bank statement-facts reading of the 50-period batch (tools/read_bank_statement_facts.py), which reads a prior-filing component only where the target report states that year at the same value.",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
    "repair": "The rule written for Pfizer FY2021 B02 (historical_results.paired_measure_problem, same_concept_recast, 336ab3ae) already asks every pair the catalog reads from both filings, A05's assets among them; the batch's result was computed under a closure before that rule. The targeted round on a closure that carries it must withhold this position by name, HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE; a release then names that withheld result and its closure. The rule's own measurement covered only B02 and A07; this entry is what that measurement left out.",
    "evidence": [
     "docs/evidence/issue47_history/b02-same-concept-recast/measure.py",
@@ -3883,6 +3894,17 @@
    ],
    "same_cause_as": [
     "B02_PFIZER_2021_PRIOR_YEAR_AS_FIRST_REPORTED_AGAINST_A_RECAST"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:2f1f21c9289ddf08f03b5ba2784ed55b30cc50c66ecca6b09a128516c8a89f73",
+     "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+     "run_id": "run:historical-period:b5a3ba0ecda01b3d2251d214f9c67bf7bb77f68c0fa56979f8e6f706a364d1ca",
+     "public_row_hash": "sha256:517dd473fd0451acf1806653c16758995cbc3e0256d16d3af1ce91e30ead1f78",
+     "read_by": "docs/evidence/issue47_history/targeted-round-004c5771/rerun-results.json",
+     "what_this_releases": "This withheld result and no other: HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE, frozen, public row written, read back by a separate process. The published 0.01355861265326514473806383999 the 50-period batch holds, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a value. It has none: the target filing restates the prior year under the same concept, and recomputing from the restated figure would change the approved branch's prior-year source. Nor that any batch has re-run under this version."
+    }
    ]
   },
   {
