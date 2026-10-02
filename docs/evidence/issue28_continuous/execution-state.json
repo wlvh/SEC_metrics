@@ -846,6 +846,25 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_e01_boundary_2d288bc",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "e01_item_boundary_repair",
+      "scope_paths": [
+        "scripts/vnext/e01_item_source.py",
+        "tests/vnext/test_e01_item_source.py",
+        "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
+        "docs/evidence/issue28_continuous/collab-e01-item-boundary-20261002/"
+      ],
+      "patch_sha": "2d288bc31aa076df6388f0b87a0d7bd961d1db54",
+      "spawned_at": "2026-10-02T04:26:29Z",
+      "ended_at": "2026-10-02T04:33:51Z",
+      "tool_calls": 40,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-item-boundary-20261002/independent-review-2d288bc/conclusion.md",
+      "verdict": "PASS_LIMITED_E01_SOURCE_BOUNDARY_INCREMENT",
+      "tool_calls_outer": 10,
+      "message_count": 3
+    },
+    {
       "task_name": "review_e01_source_bc37a27",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "e01_item_source_visibility",
@@ -8465,12 +8484,18 @@
     "issue47_operated": false
   },
   "collab_28_47_v1": {
-    "rule_version": "COLLAB-28-47-v1",
+    "rule_version": "COLLAB-28-47-v1.1",
+    "rule_text_sha256": "e10c6cedf26e476b3350c28c58410664a99ad6dcb1a5458cc0d662a978d9c3c6",
+    "agents_single_mirror": "AGENTS.md:COLLAB-28-47-v1.1",
+    "agents_in_v13_v14_execution_authority": false,
+    "own_head_at_v1_1_read": "2d288bc31aa076df6388f0b87a0d7bd961d1db54",
+    "own_remote_at_v1_1_read": "8dfe514740129e22ce915ce4b12688a1d44a539c",
     "issue28_section": "https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1",
     "issue47_section": "https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1",
-    "peer_read_commit": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
+    "peer_read_commit": "49b4127127ec04828b872f08b5b1adf51fb17419",
     "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
     "peer_register_git_blob": "4740055ffe552d1beb688634e8886f68385706bc",
+    "peer_49b_increment": {"register_blob_unchanged": true, "shared_core_code_changed": false, "new_commit": "49b4127127ec04828b872f08b5b1adf51fb17419", "scope": "reading producers and acceptance evidence; B02 same-concept recast notice at issue28 comment 5945127100 requires own current-source impact check; no C02 selector or D02 core patch in this increment"},
     "own_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "owner_target_decisions": {
       "C02": "COMPOSITION_FACTS",
@@ -9023,7 +9048,7 @@
     "status": "FIRST_REVIEW_P1_SOURCE_BOUNDARIES_REPAIRED_OFFLINE",
     "first_review": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
     "first_review_verdict": "NEEDS_FIX_RETAINED",
-    "repair_review": "PENDING_EXACT_SHA",
+    "repair_review": "PASS_LIMITED_2D288BC3",
     "changed_code": "scripts/vnext/e01_item_source.py",
     "linked_801_toc_not_body": true,
     "linked_following_901_refused": true,
