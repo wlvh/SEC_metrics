@@ -46,10 +46,11 @@ def _visibility_uncertain(style):
                                             'transform', 'z-index', 'background',
                                             'background-color')):
         return True
-    for key in ('left', 'top', 'text-indent', 'margin-left', 'margin-top'):
+    for key in ('left', 'right', 'top', 'bottom', 'text-indent',
+                'margin-left', 'margin-right', 'margin-top', 'margin-bottom'):
         offset = declarations.get(key, '')
-        match = re.fullmatch(r'(-\d+(?:\.\d+)?)(?:px|pt)?', offset)
-        if match and float(match.group(1)) <= -999:
+        match = re.fullmatch(r'([+-]?\d+(?:\.\d+)?)(?:px|pt|em|rem|%)?', offset)
+        if match and abs(float(match.group(1))) >= 999:
             return True
     return False
 
@@ -82,7 +83,8 @@ class _ItemSectionParser(HTMLParser):
         if emphasized and not hidden:
             for ancestor in self.stack:
                 ancestor['emphasized'] = True
-        linked = tag == 'a' and bool(attributes.get('href'))
+        linked = (bool(self.stack and self.stack[-1]['linked'])
+                  or tag == 'a' and bool(attributes.get('href')))
         if linked and not hidden:
             for ancestor in self.stack:
                 ancestor['linked'] = True
@@ -125,35 +127,36 @@ def _visible_801_section(raw_bytes):
     visible = ' '.join(parser.words)
     headings = {}
     for start, end, emphasized, tag, linked in parser.blocks:
-        if start == end or not emphasized or linked:
+        if start == end or not emphasized:
             continue
         block = ' '.join(parser.words[start:end]).strip()
         match = _ITEM_HEADING.fullmatch(block)
         if match is not None:
             headings.setdefault((start, end),
-                                (match.group(1), match.group(2), tag))
+                                (match.group(1), match.group(2), tag, linked))
         elif block.upper() == 'SIGNATURES':
-            headings.setdefault((start, end), ('SIGNATURES', '', tag))
-    starts = [(start, end, tag) for (start, end), (code, title, tag)
-              in headings.items() if code == '8.01']
+            headings.setdefault((start, end), ('SIGNATURES', '', tag, linked))
+    starts = [(start, end, tag) for (start, end), (code, title, tag, linked)
+              in headings.items() if code == '8.01' and not linked]
     _need(len(starts) == 1, 'ITEM_801_HEADING_MISSING_OR_AMBIGUOUS')
     start_word, heading_end, heading_tag = starts[0]
-    after = sorted((begin, code, title) for (begin, _), (code, title, tag)
+    after = sorted((begin, code, title, linked) for (begin, _), (code, title, tag, linked)
                    in headings.items() if begin >= heading_end
                    and tag == heading_tag)
     _need(bool(after), 'ITEM_801_SECTION_END_UNPROVEN')
-    end_word, end_code, end_title = after[0]
+    end_word, end_code, end_title, end_linked = after[0]
+    _need(not end_linked, 'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(end_code == 'SIGNATURES' or
           (end_code == '9.01' and
            end_title.lower() == 'financial statements and exhibits'),
           'ITEM_801_BOUNDARY_AMBIGUOUS')
-    _need(not any(code == '9.01' for _, code, _ in after[1:]),
+    _need(not any(code == '9.01' for _, code, _, _ in after[1:]),
           'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(sum(code == '9.01' and begin >= heading_end
-              for (begin, _), (code, _, _) in headings.items()) <= 1,
+              for (begin, _), (code, _, _, _) in headings.items()) <= 1,
           'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(not any(heading_end <= begin < end_word
-                  for (begin, _), (_, _, tag) in headings.items()
+                  for (begin, _), (_, _, tag, _) in headings.items()
                   if tag != heading_tag), 'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(end_word > heading_end, 'ITEM_801_SECTION_EMPTY')
     section = ' '.join(parser.words[start_word:end_word])

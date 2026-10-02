@@ -846,6 +846,25 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_e01_source_bc37a27",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "e01_item_source_visibility",
+      "scope_paths": [
+        "scripts/vnext/e01_item_source.py",
+        "tests/vnext/test_e01_item_source.py",
+        "docs/evidence/issue28_continuous/collab-e01-pfizer-20261002/audit.json",
+        "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/"
+      ],
+      "patch_sha": "bc37a2779c4b687073594b0155cf84e7a5774711",
+      "spawned_at": "2026-10-02T04:10:03Z",
+      "ended_at": "2026-10-02T04:21:15Z",
+      "tool_calls": 52,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
+      "verdict": "NEEDS_FIX_LINKED_BOUNDARY_AND_OFFSCREEN_TEXT",
+      "tool_calls_outer": 16,
+      "message_count": 2
+    },
+    {
       "task_name": "review_d01_page_865d822",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "ordinary_d01_page_boundary",
@@ -8997,7 +9016,30 @@
       0
     ],
     "trusted_summary": "13_COORDINATES_19_EXACT_RESULT_IDENTITIES_WITHDRAWN",
-    "independent_review": "PENDING_EXACT_SHA",
+    "independent_review": "NEEDS_FIX_BC37A277_LINKED_BOUNDARY_AND_OFFSCREEN_TEXT",
     "evidence": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/"
+  },
+  "e01_item_boundary_repair_20261002": {
+    "status": "FIRST_REVIEW_P1_SOURCE_BOUNDARIES_REPAIRED_OFFLINE",
+    "first_review": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
+    "first_review_verdict": "NEEDS_FIX_RETAINED",
+    "repair_review": "PENDING_EXACT_SHA",
+    "changed_code": "scripts/vnext/e01_item_source.py",
+    "linked_801_toc_not_body": true,
+    "linked_following_901_refused": true,
+    "large_position_offsets_refused": true,
+    "saved_pfizer_source_id_unchanged": "sha256:8458bfb36890ae178463cd166ff4161925619a44429e92818ef94fdcf54d08d4",
+    "directed_final_tree_tests": 6,
+    "fast_final_tree_selectors": 145,
+    "v13_v14_runtime_binding_changed": false,
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "current_390_credit": false,
+    "production_authorized": false,
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-item-boundary-20261002/"
   }
 }

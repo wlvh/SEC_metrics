@@ -26,12 +26,27 @@ class E01ItemSourceTest(unittest.TestCase):
         self.assertNotIn('SIGNATURES', text)
 
     def test_linked_contents_heading_cannot_impersonate_801_section(self):
-        with self.assertRaisesRegex(ValueError,
-                'E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS'):
-            _visible_801_section(
-                b'<html><body><h2><a href="#item801">Item 8.01 Other Events</a></h2>'
-                b'<p>No actual item section follows.</p>'
-                b'<h2>SIGNATURES</h2></body></html>')
+        for linked in (
+                b'<h2><a href="#item801">Item 8.01 Other Events</a></h2>',
+                b'<a href="#item801"><h2>Item 8.01 Other Events</h2></a>'):
+            with self.subTest(linked=linked), self.assertRaisesRegex(
+                    ValueError, 'E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS'):
+                _visible_801_section(
+                    b'<html><body>' + linked
+                    + b'<p>No actual item section follows.</p>'
+                    b'<h2>SIGNATURES</h2></body></html>')
+        for boundary in (
+                b'<h2><a href="#item901">Item 9.01 Financial Statements and '
+                b'Exhibits</a></h2>',
+                b'<a href="#item901"><h2>Item 9.01 Financial Statements and '
+                b'Exhibits</h2></a>'):
+            with self.subTest(boundary=boundary), self.assertRaisesRegex(
+                    ValueError, 'E01_ITEM_SOURCE_ITEM_801_BOUNDARY_AMBIGUOUS'):
+                _visible_801_section(
+                    b'<html><body><h2>Item 8.01 Other Events</h2>'
+                    b'<p>An acquisition is reported.</p>' + boundary
+                    + b'<p>Exhibit item must not enter 8.01.</p>'
+                    b'<h2>SIGNATURES</h2></body></html>')
 
     def test_header_identity_kept_while_original_801_body_is_available(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -219,7 +234,9 @@ class E01ItemSourceTest(unittest.TestCase):
                                  b'</body></html>')
         for hidden_style in (b'opacity:0.0', b'color:transparent',
                              b'color:transparent !important', b'font-size:0!important',
-                             b'left:-1200px'):
+                             b'left:-1200px', b'position:absolute;right:-1200px',
+                             b'position:fixed;bottom:-1200px',
+                             b'position:absolute;left:1200px'):
             with self.subTest(style=hidden_style), self.assertRaisesRegex(
                     ValueError, 'E01_ITEM_SOURCE_VISIBILITY_UNPROVEN'):
                 _visible_801_section(
