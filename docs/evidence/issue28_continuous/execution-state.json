@@ -9500,5 +9500,31 @@
     "current_390_credit": false,
     "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
+  },
+  "e01_current_item_text_source_only_20261002": {
+    "status": "VERSIONED_ORDINARY_SOURCE_INPUT_AND_THREE_INSTALLED_COLD_READS_PASS_PENDING_EXACT_SHA_REVIEW",
+    "peer_source_commit": "488a61734978adaa57e82ec0654e75a0af284cfb",
+    "peer_source_git_blob": "ff6996d2edb4d924ed77e5366bf4561bb8bb8135",
+    "own_source_reader": "scripts/vnext/e01_item_text_28_v1.py:item_text",
+    "own_source_adapter": "scripts/vnext/ordinary_e01_item_text_input.py:prepare_current_e01_item_text,verify_current_e01_item_text,install_current_e01_item_text",
+    "shared_with_issue47": {
+      "affected_files": ["config/issue28_normal_results_v2.json", "requirements/issue_28_v13/decision_register.json", "requirements/issue_28_v13/baseline_manifest.json", "requirements/issue_28_v14/baseline_manifest.json", "requirements/issue_28_v14/transfer_manifest.json"],
+      "default_old_E01_result_path_changed": false,
+      "new_explicit_input_record_type": "ORDINARY_E01_SOURCE_BOUND_ITEM_TEXT_V1",
+      "peer_runtime_or_historical_registration_imported": false,
+      "current_v13_closure_hash": "sha256:8a667e941f234dd623138d8bdce46668f9f947c045bafda62b8a47f203f12b6b",
+      "current_v14_closure_hash": "sha256:71f7e0969a0f315e8826bba6a2778418f9cacc465b9f766c0a6dac0e49f96e6f"
+    },
+    "ten_company_source_preparation": "PASS_ON_PRE_INSTALLER_ADAPTER_BYTES_60_ITEMS_NOT_FINAL_INPUT_IDS",
+    "final_code_installed_companies": ["enphase_energy", "pfizer", "paramount_skydance_paramount_global"],
+    "final_code_installed_candidate_counts": [0, 3, 14],
+    "final_code_cold_read": "PASS_3_OF_3_SAME_INPUT_ID_AND_ITEM_TEXT_SHA_NO_OLD_PRODUCER",
+    "final_code_directed_tests": "PASS_3_OF_3",
+    "final_code_fast_selectors": "PASS_146_OF_146",
+    "semantic_result_or_run_created": false,
+    "current_390_credit": false,
+    "real_calls": [0, 0, 0],
+    "review": "PENDING_EXACT_SHA_LIMITED_INDEPENDENT_REVIEW",
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
   }
 }
