@@ -31,8 +31,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 from acceptance_readings import (BANK_MEASURES_READINGS, BANK_STATEMENT_READINGS,  # noqa: E402
-                                 C02_COMPOSITION,
-                                 C02_COMPOSITION_READINGS,
+                                 C02_COMPOSITION_READINGS, C02_LATEST_READINGS,
                                  C02_OLDER_YEARS_READINGS, C03_ACROSS_PROXIES, COMPENSATION, CROSS,
                                  CROSS_READINGS,
                                  D01_READINGS, D02_EXCERPT_READINGS, DEBT_TO_EQUITY_READINGS,
@@ -229,12 +228,13 @@ C02_OLDER_YEARS_METHOD = (
  "because it is the whole text payload.")
 C02_OLDER_YEARS_LIMIT = (
  "what is established is that this excerpt set states the composition facts the reading "
- "found in this document and nothing the reading judged outside the meaning. The older "
- "years are material the selection rules were not written on; but the pool is a rule "
- "too - a fact stated only in a long block that uses none of the pool's words and lies "
- "more than sixteen blocks from one is not read - and the readers are agents of one "
- "model family whose judgements were not sampled by a person. It does not establish "
- + COMMON)
+ "found in this document and nothing the reading judged outside the meaning. It is not a "
+ "held-out test: repairs 7 to 45 of the selector and the unified adjudication were written "
+ "against these same older-year readings, so this is agreement with a reading of the "
+ "material the rules were fitted on. The pool is a rule too - a fact stated only in a long "
+ "block that uses none of the pool's words and lies more than sixteen blocks from one is "
+ "not read - and the readers are agents of one model family whose judgements were not "
+ "sampled by a person. It does not establish " + COMMON)
 
 HEADINGS_LIMIT = (
  "what is established is that this heading set is the set the approved source "
@@ -329,7 +329,7 @@ def _method_and_limit(position):
         return E01_METHOD, E01_LIMIT
     if path in E01_CANDIDATE_READINGS:
         return E01_CANDIDATES_METHOD, E01_CANDIDATES_LIMIT
-    if path == C02_COMPOSITION:
+    if path in C02_LATEST_READINGS:
         return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
     if path in C02_OLDER_YEARS_READINGS:
         return C02_OLDER_YEARS_METHOD, C02_OLDER_YEARS_LIMIT
@@ -485,6 +485,32 @@ def _differs_in_the_spec_only(first, entry):
                     for field in ACCEPTANCE_IDENTITY_FIELDS if field != "spec_closure_hash"))
 
 
+def _another_result_passes_a_membership_reading(first, entry):
+    """Two C02 readings of two results at one coordinate, each accepted on its own.
+
+    C02's reading does not accept a value by equality: it accepts an excerpt
+    set when every selected block is within the meaning and no fact the reader
+    found is missed. Two selections of one filing that differ in which blocks
+    restate a fact can both pass, so two different values at one coordinate are
+    two acceptances here, one per result - not a disagreement. Each binds only
+    its own result, and an open coordinate-level defect withdraws whichever
+    result it is not released for. Only C02 readings qualify, and only when the
+    two name different results: one result cannot carry two values.
+    """
+    from vnext.historical_coverage import ACCEPTANCE_IDENTITY_FIELDS
+    first_identity, identity = first["checked_identity"], entry["checked_identity"]
+    first_result = (first_identity.get("bound_from") or {}).get("result_id")
+    result = (identity.get("bound_from") or {}).get("result_id")
+    return (first["evidence"] in C02_COMPOSITION_READINGS
+            and entry["evidence"] in C02_COMPOSITION_READINGS
+            and all(first[field] == entry[field] for field in _CONFIRMATION_FIELDS
+                    if field != "accepted_value")
+            and first["accepted_value"] != entry["accepted_value"]
+            and first_result is not None and result is not None and first_result != result
+            and all(first_identity.get(field) == identity.get(field)
+                    for field in ACCEPTANCE_IDENTITY_FIELDS))
+
+
 def _merge_confirmations(entries):
     """One acceptance per identifier; a later reading of the same fact confirms it.
 
@@ -501,6 +527,9 @@ def _merge_confirmations(entries):
         identifier = entry["acceptance_id"]
         if identifier in kept and _differs_in_the_spec_only(kept[identifier], entry):
             identifier += "_SPEC_" + entry["checked_identity"]["spec_closure_hash"][7:15].upper()
+            entry["acceptance_id"] = identifier
+        elif identifier in kept and _another_result_passes_a_membership_reading(kept[identifier], entry):
+            identifier += "_VALUE_" + entry["accepted_value"][7:15].upper()
             entry["acceptance_id"] = identifier
         if identifier not in kept:
             kept[identifier] = entry

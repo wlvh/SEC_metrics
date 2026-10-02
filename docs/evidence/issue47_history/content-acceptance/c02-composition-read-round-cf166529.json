@@ -1,0 +1,674 @@
+{
+ "adjudication": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+ "adjudication_sha256": "sha256:e8a1a4f198b62bfb9e2e2f3a7d5700aa47147e1192203bacb6dd9577ebc1e4d0",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "per_position": {
+  "enphase-2025": {
+   "adjudicated_blocks": [
+    57,
+    210,
+    212,
+    232,
+    243,
+    390,
+    429,
+    452,
+    2338,
+    2360,
+    2364
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:6bc15360fcd843f60081a70717f400ef06fe5f34aac2a9ce95f1bc167fc86219",
+     "run_id": "run:historical-period:04a77aff29213612e154374364195a7215ebab1c91a09fb63a5298a862663031"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013",
+     "0001463101-26-000026"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "counts": {
+    "found_outside_the_selection": 28,
+    "resting_on_adjudication": 11,
+    "selected": 48,
+    "selected_fact": 37,
+    "selected_mixed": 11
+   },
+   "governance_accession": "0001463101-26-000026",
+   "governance_document": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 48,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/enphase_energy-2025-12-31.json",
+   "reading_sha256": "sha256:b74e836cee982965499d7875351da30aeba05168fd95e527b80900caa5afaaab",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:c94b35a9aa95131d4b327265ac23f259a7703c4d4035d1a0225af642f7b650cf",
+   "verdict": "MATCH"
+  },
+  "ford-2025": {
+   "adjudicated_blocks": [
+    32,
+    42,
+    146,
+    155,
+    164,
+    178,
+    185,
+    192,
+    201,
+    209,
+    220,
+    230,
+    239,
+    251,
+    262,
+    271,
+    905,
+    906,
+    919,
+    920,
+    934,
+    944,
+    945,
+    956,
+    977,
+    978,
+    990,
+    991,
+    1006,
+    1007,
+    1022,
+    1035,
+    1048,
+    1063,
+    1080,
+    1081,
+    1092,
+    1093
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:72dd04611ed6e7a44d7169801329fecdeaf6c1f4e6b897ad1f040d95ea0c88d3",
+     "run_id": "run:historical-period:0a8a8dbbbb784fe090356bde460a268738b4f71b5f581f1652cff44463979ec7"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "37996"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000037996-26-000015",
+     "0001552781-26-000164"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "ford_motor_company",
+   "counts": {
+    "found_outside_the_selection": 115,
+    "resting_on_adjudication": 38,
+    "selected": 84,
+    "selected_fact": 73,
+    "selected_mixed": 9
+   },
+   "governance_accession": "0001552781-26-000164",
+   "governance_document": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 84,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/ford_motor_company-2025-12-31.json",
+   "reading_sha256": "sha256:452c5bdd85fa54b9963e5c8ffedda84f2dd16689fd7eff01a4ec84a12648f01a",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:03ac5e3fbbb23b4e228f74b2a6c1e8f9fa23bff2aca09fa94e134121adaf9d7a",
+   "verdict": "MATCH"
+  },
+  "lumen-2025": {
+   "adjudicated_blocks": [
+    577,
+    598,
+    633,
+    648,
+    673,
+    690,
+    712,
+    734,
+    760,
+    864,
+    1346,
+    1370
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:306effb5f72c10221ad7f205550ed676d051317c2b46612d87b3b36552b8cac9",
+     "run_id": "run:historical-period:12cc4475e711ecaa2fb5310a5851cafe3beb1df35f1f66327fec6f6a10be47d6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "18926"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000018926-26-000014",
+     "0000018926-26-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "lumen_technologies",
+   "counts": {
+    "found_outside_the_selection": 56,
+    "resting_on_adjudication": 12,
+    "selected": 101,
+    "selected_fact": 88,
+    "selected_mixed": 12
+   },
+   "governance_accession": "0000018926-26-000024",
+   "governance_document": "evidence/accession_materials/lumen_technologies_18926_000001892626000024/lumn-20260401.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 101,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/lumen_technologies-2025-12-31.json",
+   "reading_sha256": "sha256:b88ac305f7e567301fdc6e7a1a82b5b4de4570a915f1aa5bf04f0f672360683c",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:24eae7a2afe17ff8ab3f2d90587e4eadf85494affc55164b041fcbc35c5821ca",
+   "verdict": "MATCH"
+  },
+  "macys-2026": {
+   "adjudicated_blocks": [
+    51,
+    442,
+    508,
+    521,
+    561,
+    594,
+    632,
+    671,
+    704,
+    743,
+    783,
+    820,
+    849,
+    1755,
+    2235,
+    2294
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:1ad56e8141bfdefa9c3287eceebbe19d2b5733fb39a0f7597a47401da3395c4a",
+     "run_id": "run:historical-period:d14e760cadf2939eed88928669d16277c68d28c0ebffc28dd0913903af72fb36"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001104659-26-037752",
+     "0001628280-26-021721"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "counts": {
+    "found_outside_the_selection": 10,
+    "resting_on_adjudication": 16,
+    "selected": 113,
+    "selected_fact": 96,
+    "selected_mixed": 5
+   },
+   "governance_accession": "0001104659-26-037752",
+   "governance_document": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+   "period_end": "2026-01-31",
+   "published_excerpts": 113,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/macys-2026-01-31.json",
+   "reading_sha256": "sha256:383933801a851a6ee947e10ecf20657bc3f74526158becbc0f1bd774def1e89e",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:956c37a2f6d5a16fad4ba34e1787a6144c8097d1622168264b50f5fe2b340bf3",
+   "verdict": "MATCH"
+  },
+  "marriott-2025": {
+   "adjudicated_blocks": [
+    520,
+    521,
+    664,
+    765,
+    1155
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:17f591c46da5506a85616e889cc4dfe87ebcfe7d2d6fa9d05f1cf97b7e3fa1d8",
+     "run_id": "run:historical-period:31f12326365181b4b972f9d312304e0849299878131b887080cc1c33c6495a7e"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001048286-26-000007",
+     "0001140361-26-011590"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "counts": {
+    "found_outside_the_selection": 90,
+    "resting_on_adjudication": 5,
+    "selected": 99,
+    "selected_fact": 84,
+    "selected_mixed": 13
+   },
+   "governance_accession": "0001140361-26-011590",
+   "governance_document": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 99,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/marriott_international-2025-12-31.json",
+   "reading_sha256": "sha256:fadb64bbc23f64a8787d4e4465839224991f7768cdba177fc25df54aab30facc",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:ec76c37db0eb0777a14eae7b464ff9c38c65a74ee97f50772edb1e1b23c64acb",
+   "verdict": "MATCH"
+  },
+  "paramount-2024": {
+   "adjudicated_blocks": [
+    418
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:5affe34d4c97e2b24dcaf5eee59fad3fae76f425674fccce39b7d15a1daf35ab",
+     "run_id": "run:historical-period:e0dbd368b3782880f186dbd4e902067ad2f9dcf479a048fb597333cb405952a6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "813828"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-25-000005",
+     "0001140361-25-021135"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "counts": {
+    "found_outside_the_selection": 39,
+    "resting_on_adjudication": 1,
+    "selected": 68,
+    "selected_fact": 63,
+    "selected_mixed": 5
+   },
+   "governance_accession": "0001140361-25-021135",
+   "governance_document": "evidence/accession_materials/paramount_skydance_paramount_global_813828_000114036125021135/ny20047871x1_def14a.htm",
+   "period_end": "2024-12-31",
+   "published_excerpts": 68,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2024-12-31.json",
+   "reading_sha256": "sha256:b6331fa29ce55d6517e65b68eb3ae8a761f7e03c18937a85ab1041bcef7b33e6",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:b3d51af28dd8d26f069b11c222458a0bc2dd71e77ca3ec54513c254e7bc3f9bd",
+   "verdict": "MATCH"
+  },
+  "paramount-2025": {
+   "adjudicated_blocks": [
+    89,
+    97,
+    100,
+    105,
+    110,
+    113,
+    117,
+    122,
+    126,
+    129,
+    133,
+    138,
+    143,
+    146,
+    150,
+    155,
+    159,
+    162,
+    166,
+    194,
+    200,
+    280,
+    699,
+    1593
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:92d7ba976824bf5edbef2bf489df050623d8b9fed2aab908c7ef1243f94f1084",
+     "run_id": "run:historical-period:1d9965811b8f4c9771b39a79b600f6424e324f047527bd4b351e8786780fe200"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "2041610"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-26-016758",
+     "0002041610-26-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "counts": {
+    "found_outside_the_selection": 16,
+    "resting_on_adjudication": 24,
+    "selected": 63,
+    "selected_fact": 50,
+    "selected_mixed": 13
+   },
+   "governance_accession": "0001140361-26-016758",
+   "governance_document": "evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 63,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+   "reading_sha256": "sha256:a8f1bac0781a3647d5ff7fde3f8883ee70917930bd8181e06c3c6b4f28d44a4e",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:d6db1e205bc9cb4732c9705a930b305aa7468cfb62db7ac39aff0ee7030f9514",
+   "verdict": "MATCH"
+  },
+  "pfizer-2025": {
+   "adjudicated_blocks": [],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:4c2f45ccd5a00d651ad6b3912ec4ef448ee0f0a60ff83e6ae2dcde9d583cd24e",
+     "run_id": "run:historical-period:fe4c21f66e911e92e40a7dd0ec15b631ba1dc4317604c6a724b1a9cfd2a3b491"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-26-000026",
+     "0000078003-26-000033"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "counts": {
+    "found_outside_the_selection": 60,
+    "resting_on_adjudication": 0,
+    "selected": 80,
+    "selected_fact": 66,
+    "selected_mixed": 14
+   },
+   "governance_accession": "0000078003-26-000033",
+   "governance_document": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 80,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/pfizer-2025-12-31.json",
+   "reading_sha256": "sha256:86ed22d5f825db2239c4b7a5f0557da26637ed08e48839c575d35e88bc3f3282",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:4def97d93891b389e9f23037f6ca0bdb6be63c963695e6b25c03bab7e1be7070",
+   "verdict": "MATCH"
+  },
+  "salesforce-2026": {
+   "adjudicated_blocks": [
+    49,
+    76,
+    602,
+    919,
+    933,
+    1122,
+    1123,
+    1129,
+    1157,
+    1158,
+    1162,
+    1194,
+    1195,
+    1202,
+    1233,
+    1234,
+    1238,
+    1276,
+    1277,
+    1284,
+    1314,
+    1315,
+    1321,
+    1354,
+    1355,
+    1361,
+    1393,
+    1394,
+    1400,
+    1430,
+    1431,
+    1437,
+    1473,
+    1508,
+    1509,
+    1514,
+    1552,
+    1553,
+    1560,
+    1595,
+    1596,
+    1602,
+    2976,
+    4300,
+    5123
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:5e4b29d1c70404571e8a514fee14dac421ddf493302d294665880bc4f5ea4095",
+     "run_id": "run:historical-period:c928f666e72700c3f88f954fa5aa260364e3a67b88a83b8bba053c45c8a5b045"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-26-000060",
+     "0001108524-26-000085"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "salesforce",
+   "counts": {
+    "found_outside_the_selection": 101,
+    "resting_on_adjudication": 45,
+    "selected": 65,
+    "selected_fact": 41,
+    "selected_mixed": 15
+   },
+   "governance_accession": "0001108524-26-000085",
+   "governance_document": "evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+   "period_end": "2026-01-31",
+   "published_excerpts": 65,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json",
+   "reading_sha256": "sha256:920e6a6da790b02ea65f1e01bc920e19e542ac39574e06e1a5dd10e352f03444",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:7356cad13d1bc82c3775ad2e02ee6e719f5738831aef843fa3cbe1bf4fc94ce4",
+   "verdict": "MATCH"
+  },
+  "southwest-2025": {
+   "adjudicated_blocks": [],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+     "result_id": "sha256:98b7aa0db0e221630ebca198390f2a6c829d9e7c1195ddb14fe105b95efdef01",
+     "run_id": "run:historical-period:b3e5fea6dc6e353fd869320b38df4cf84b58396ab8207ba43e0f7dbfe8fb541b"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-26-000004",
+     "0001193125-26-127237"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "southwest_airlines",
+   "counts": {
+    "found_outside_the_selection": 69,
+    "resting_on_adjudication": 0,
+    "selected": 95,
+    "selected_fact": 85,
+    "selected_mixed": 10
+   },
+   "governance_accession": "0001193125-26-127237",
+   "governance_document": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
+   "period_end": "2025-12-31",
+   "published_excerpts": 95,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/southwest_airlines-2025-12-31.json",
+   "reading_sha256": "sha256:6e0ec5d23bbf66cc07daff0dc58dfe0f4c3e748443f659aff8cbe6599d82acc6",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:acad685022ad8ea053b6decf602b1e9f41c1b3fc1978808430b7427c914883f8",
+   "verdict": "MATCH"
+  }
+ },
+ "reader": "tools/read_c02_composition.py",
+ "record_type": "ISSUE_47_C02_COMPOSITION_READ",
+ "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6"
+}

@@ -287,6 +287,38 @@ class ASecondReadingOfOneFactConfirmsItTest(unittest.TestCase):
                 generator._merge_confirmations([self._entry("first.json"),
                                                 self._entry("second.json", **change)])
 
+    def _c02(self, evidence, value, result):
+        reading = generator.C02_COMPOSITION_READINGS[evidence]
+        return self._entry(reading, metric_id="C02", acceptance_id="CONTENT_C02_X_2023",
+                           accepted_value="sha256:" + value * 64,
+                           identity={"bound_from": {"result_id": "sha256:" + result * 64}})
+
+    def test_two_c02_results_each_passing_its_reading_are_two_acceptances(self):
+        """C02 accepts by membership, so two selections of one filing can both pass."""
+        merged = generator._merge_confirmations([self._c02(0, "a", "1"), self._c02(1, "b", "2"),
+                                                 self._c02(2, "b", "2")])
+        self.assertEqual(["CONTENT_C02_X_2023", "CONTENT_C02_X_2023_VALUE_BBBBBBBB"],
+                         [entry["acceptance_id"] for entry in merged])
+        self.assertEqual([generator.C02_COMPOSITION_READINGS[2]], merged[1]["confirmed_by"])
+
+    def test_one_c02_result_cannot_carry_two_values(self):
+        with self.assertRaisesRegex(generator.RegisterError, "READINGS_DISAGREE_ON_ONE_COORDINATE"):
+            generator._merge_confirmations([self._c02(0, "a", "1"), self._c02(1, "b", "1")])
+
+    def test_another_value_of_another_result_still_stops_outside_c02(self):
+        """Equality metrics: two results with two values at one coordinate disagree."""
+        with self.assertRaisesRegex(generator.RegisterError, "READINGS_DISAGREE_ON_ONE_COORDINATE"):
+            generator._merge_confirmations([
+                self._entry("first.json", identity={"bound_from": {"result_id": "sha256:" + "1" * 64}}),
+                self._entry("second.json", accepted_value="6",
+                            identity={"bound_from": {"result_id": "sha256:" + "2" * 64}})])
+
+    def test_two_c02_values_with_another_filing_still_stop(self):
+        changed = self._c02(1, "b", "2")
+        changed["checked_identity"]["filings"] = ["0000000000-24-000002"]
+        with self.assertRaisesRegex(generator.RegisterError, "READINGS_DISAGREE_ON_ONE_COORDINATE"):
+            generator._merge_confirmations([self._c02(0, "a", "1"), changed])
+
     def test_readings_that_disagree_on_one_coordinate_stop_the_build(self):
         for change in ({"accepted_value": "6"},
                        {"identity": {"filings": ["0000000000-24-000002"]}},

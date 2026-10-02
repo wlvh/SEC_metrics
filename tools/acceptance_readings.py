@@ -86,12 +86,15 @@ E01_CANDIDATE_READINGS = (E01_CANDIDATES, E01_CANDIDATES_BATCH, E01_CANDIDATES_F
 # c02-composition-facts/, compared with the published results by
 # tools/read_c02_composition.py.
 C02_COMPOSITION = EVIDENCE + "c02-composition-read.json"
+# The same ten readings compared with targeted-round-cf166529's results (the
+# selector through repair 45, the recorded adjudication).
+C02_COMPOSITION_ROUND = EVIDENCE + "c02-composition-read-round-cf166529.json"
+C02_LATEST_READINGS = (C02_COMPOSITION, C02_COMPOSITION_ROUND)
 # Older years, read from packets (the selection and a pool around it) by
 # independent readers against c02-older-years/reader-brief.md and compared the
 # same way; one file per closure its positions compare.
-C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read.json",
-                            EVIDENCE + "c02-older-years-read-round3.json")
-C02_COMPOSITION_READINGS = (C02_COMPOSITION, *C02_OLDER_YEARS_READINGS)
+C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read-round-cf166529.json",)
+C02_COMPOSITION_READINGS = (*C02_LATEST_READINGS, *C02_OLDER_YEARS_READINGS)
 GOVERNANCE = EVIDENCE + "governance-read.json"
 # C04 for the 50-period batch's years the checkout does not hold, over a root
 # restored from the export (tools/read_governance_facts.py --source-root).
@@ -187,10 +190,7 @@ READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONE
             *GOVERNANCE_READINGS,
             TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
             *DEBT_TO_EQUITY_READINGS,
-            # The older-year C02 readings (C02_OLDER_YEARS_READINGS) join when
-            # their acceptance files are written: they are being read, and no
-            # older-year C02 value is accepted yet.
-            C02_COMPOSITION,
+            *C02_COMPOSITION_READINGS,
             *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES, *BANK_MEASURES_READINGS,
             *BANK_STATEMENT_READINGS)
 # The company periods the readings cover are data, not code: tools/ is scanned
