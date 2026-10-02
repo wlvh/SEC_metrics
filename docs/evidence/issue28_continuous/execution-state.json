@@ -10829,5 +10829,40 @@
     "conclusion": "SUCCESS",
     "updated_at_utc": "2026-10-02T18:48:46Z",
     "scope": "Current C02 member/suspension code and preceding interface documents; does not erase core NEEDS_FIX or accept company consumer content"
+  },
+  "e01_layout_successor_20261003": {
+    "status": "PROGRAM_SOURCE_INSTALL_AND_TWO_COLD_READS_PASS_PRECISE_DELTA_REVIEW_PENDING",
+    "source_commit": "9caada4ed62d02321d32fbb8249407b992de7154",
+    "peer_read_commit": "4a685996fadaf6423e8027ba04b2cb2fd5d66682",
+    "reader": "scripts/vnext/e01_item_text_28_v2.py",
+    "guard": "scripts/vnext/e01_header_document_guard_28_v2.py",
+    "adapter": "scripts/vnext/ordinary_e01_item_text_input_v3.py",
+    "record_type": "ORDINARY_E01_SOURCE_BOUND_ITEM_TEXT_V3",
+    "old_v1_v2_source_and_record_id_unchanged": true,
+    "responsibility_change": "Guard and item-boundary read use shared visible same-block context; removed versus laid-out hidden block distinguished; no M&A confirmation or counting change",
+    "directed_fast": "4/4 PASS",
+    "source_material": "1/1 PASS12.566s; Enphase6/0 and Pfizer9/3 source identity/items/checks unchanged",
+    "source_audit": "1/1 PASS",
+    "install_seconds": 36.828,
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-layout-successor-20261003",
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_company_result_or_390_credit": 0,
+    "parent_child_wiring": "binding-after.json; exact rule-list omission first failure retained",
+    "full_fast": {
+      "status": "PASSED",
+      "seconds": 56.78,
+      "selector_count": 150,
+      "scope": "New pre-commit binding tree only"
+    }
+  },
+  "collab_peer_increment_4a685996": {
+    "read_commit": "4a685996fadaf6423e8027ba04b2cb2fd5d66682",
+    "previous_read_commit": "9efcecedc32d70ec00308ccb68bea863461c886b",
+    "scope": "Registry release metadata only since preceding read; no E01/C02 core change",
+    "disposition": "No peer result acceptance copied; C02 own core NEEDS_FIX and v4 gate remain, E01 fixed9ca pure source received separately"
   }
 }

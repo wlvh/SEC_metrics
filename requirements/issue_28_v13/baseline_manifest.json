@@ -206,8 +206,8 @@
       "size": 4861
     },
     "config/issue28_normal_results_v2.json": {
-      "sha256": "b16167a51acb3b2348eb9d186e17f4d86deadb3aeffb3b3b4445f85f948737f6",
-      "size": 9079
+      "sha256": "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30",
+      "size": 9235
     },
     "config/normal_accession_metrics_v1.json": {
       "sha256": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
@@ -444,6 +444,18 @@
     "scripts/vnext/ordinary_c02_member_update_v4.py": {
       "sha256": "23a30b4ea8fec393f62f8943446b6bf419c8869fde06d58382203aadf9b294a6",
       "size": 3143
+    },
+    "scripts/vnext/e01_item_text_28_v2.py": {
+      "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+      "size": 16302
+    },
+    "scripts/vnext/e01_header_document_guard_28_v2.py": {
+      "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+      "size": 718
+    },
+    "scripts/vnext/ordinary_e01_item_text_input_v3.py": {
+      "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
+      "size": 11269
     }
   },
   "execution_authority": {
@@ -793,8 +805,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "b16167a51acb3b2348eb9d186e17f4d86deadb3aeffb3b3b4445f85f948737f6",
-        "size": 9079
+        "sha256": "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30",
+        "size": 9235
       },
       "config/issue_15_release_plan.json": {
         "sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
@@ -2035,6 +2047,18 @@
       "scripts/vnext/ordinary_c02_member_update_v4.py": {
         "sha256": "23a30b4ea8fec393f62f8943446b6bf419c8869fde06d58382203aadf9b294a6",
         "size": 3143
+      },
+      "scripts/vnext/e01_item_text_28_v2.py": {
+        "sha256": "5e01ab4c98d958464c789a3ce0613037c3344c5436d3ad815d7674f90e665397",
+        "size": 16302
+      },
+      "scripts/vnext/e01_header_document_guard_28_v2.py": {
+        "sha256": "f4e9a1f7e705710e42fbec6d6eeb3a4fef6bff7162d3645fc36dcf08d587c764",
+        "size": 718
+      },
+      "scripts/vnext/ordinary_e01_item_text_input_v3.py": {
+        "sha256": "55d7934329beb551baf3bea0200dcb16a4c5c8c27aff2b4032abac1fdccb7035",
+        "size": 11269
       }
     },
     "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
