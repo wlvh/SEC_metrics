@@ -8495,7 +8495,7 @@
     "peer_read_commit": "49b4127127ec04828b872f08b5b1adf51fb17419",
     "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
     "peer_register_git_blob": "4740055ffe552d1beb688634e8886f68385706bc",
-    "peer_49b_increment": {"register_blob_unchanged": true, "shared_core_code_changed": false, "new_commit": "49b4127127ec04828b872f08b5b1adf51fb17419", "scope": "reading producers and acceptance evidence; B02 same-concept recast notice at issue28 comment 5945127100 requires own current-source impact check; no C02 selector or D02 core patch in this increment"},
+    "peer_49b_increment": {"register_blob_unchanged": true, "shared_core_code_changed": false, "new_commit": "49b4127127ec04828b872f08b5b1adf51fb17419", "scope": "reading producers and acceptance evidence; B02 same-concept recast notice at issue28 comment 5945127100 requires own current-source impact check; no C02 selector or D02 core patch in this increment", "b02_current_impact": {"status": "TEN_CURRENT_SOURCE_GRAPHS_MEASURED_EIGHT_VALUES_NO_NEW_WITHHOLD", "commit": "ff0b48b5", "integration": "DEFER_CURRENT_BATCH_USE_OWN_VERSIONED_SUCCESSOR_FOR_FUTURE_RECAST"}, "c02_paramount_block168": {"status": "SOURCE_AND_CONTRACT_TWO_READINGS_NOT_CONFIRMED_DEFECT_OR_CREDIT", "source_accession": "0001140361-26-016758", "private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818", "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839"}, "d02_core_owner": {"status": "NO_EXPLICIT_OWNER_IN_REGISTER_AT_49B_PEER_DEFAULT_UNDER_V1_1", "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945747345", "own_role": "CURRENT_SOURCE_COUNTEREXAMPLES_POSITIVES_AND_VERSIONED_ORDINARY_INTEGRATION"}, "d01_status": "EXPLICIT_CURRENT_SUCCESSOR_AND_865D8220_PASS_LIMITED_REUSED_NO_REOPEN", "future_shared_receive": "OWN_VERSIONED_SUCCESSOR_OR_EQUIVALENT; PIN_PEER_COMMIT_AND_BOUND_DEPENDENCIES; NO_PROVIDER_DEVELOPMENT_PATH_BINDING"},
     "own_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "owner_target_decisions": {
       "C02": "COMPOSITION_FACTS",
@@ -9087,5 +9087,14 @@
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/collab-b02-recast-impact-20261002/"
+  },
+  "ci_36960852837": {
+    "head": "8dfe514740129e22ce915ce4b12688a1d44a539c",
+    "run_id": 36960852837,
+    "conclusion": "SUCCESS",
+    "jobs_successful": 16,
+    "jobs_total": 16,
+    "updated_at_utc": "2026-10-02T04:28:17Z",
+    "scope": "D01 repair/review head only; excludes later E01 and v1.1 local commits"
   }
 }
