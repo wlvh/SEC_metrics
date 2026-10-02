@@ -846,6 +846,44 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_e01_boundary_2d288bc",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "e01_item_boundary_repair",
+      "scope_paths": [
+        "scripts/vnext/e01_item_source.py",
+        "tests/vnext/test_e01_item_source.py",
+        "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
+        "docs/evidence/issue28_continuous/collab-e01-item-boundary-20261002/"
+      ],
+      "patch_sha": "2d288bc31aa076df6388f0b87a0d7bd961d1db54",
+      "spawned_at": "2026-10-02T04:26:29Z",
+      "ended_at": "2026-10-02T04:33:51Z",
+      "tool_calls": 40,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-item-boundary-20261002/independent-review-2d288bc/conclusion.md",
+      "verdict": "PASS_LIMITED_E01_SOURCE_BOUNDARY_INCREMENT",
+      "tool_calls_outer": 10,
+      "message_count": 3
+    },
+    {
+      "task_name": "review_e01_source_bc37a27",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "e01_item_source_visibility",
+      "scope_paths": [
+        "scripts/vnext/e01_item_source.py",
+        "tests/vnext/test_e01_item_source.py",
+        "docs/evidence/issue28_continuous/collab-e01-pfizer-20261002/audit.json",
+        "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/"
+      ],
+      "patch_sha": "bc37a2779c4b687073594b0155cf84e7a5774711",
+      "spawned_at": "2026-10-02T04:10:03Z",
+      "ended_at": "2026-10-02T04:21:15Z",
+      "tool_calls": 52,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
+      "verdict": "NEEDS_FIX_LINKED_BOUNDARY_AND_OFFSCREEN_TEXT",
+      "tool_calls_outer": 16,
+      "message_count": 2
+    },
+    {
       "task_name": "review_d01_page_865d822",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "ordinary_d01_page_boundary",
@@ -8446,12 +8484,18 @@
     "issue47_operated": false
   },
   "collab_28_47_v1": {
-    "rule_version": "COLLAB-28-47-v1",
+    "rule_version": "COLLAB-28-47-v1.1",
+    "rule_text_sha256": "e10c6cedf26e476b3350c28c58410664a99ad6dcb1a5458cc0d662a978d9c3c6",
+    "agents_single_mirror": "AGENTS.md:COLLAB-28-47-v1.1",
+    "agents_in_v13_v14_execution_authority": false,
+    "own_head_at_v1_1_read": "2d288bc31aa076df6388f0b87a0d7bd961d1db54",
+    "own_remote_at_v1_1_read": "8dfe514740129e22ce915ce4b12688a1d44a539c",
     "issue28_section": "https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1",
     "issue47_section": "https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1",
-    "peer_read_commit": "2b4f571ef18274299145c63b4c355aa97c45d030",
+    "peer_read_commit": "49b4127127ec04828b872f08b5b1adf51fb17419",
     "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
-    "peer_register_git_blob": "7bf9d63d03a198409c668205135d50655dad1725",
+    "peer_register_git_blob": "4740055ffe552d1beb688634e8886f68385706bc",
+    "peer_49b_increment": {"register_blob_unchanged": true, "shared_core_code_changed": false, "new_commit": "49b4127127ec04828b872f08b5b1adf51fb17419", "scope": "reading producers and acceptance evidence; B02 same-concept recast notice at issue28 comment 5945127100 requires own current-source impact check; no C02 selector or D02 core patch in this increment", "b02_current_impact": {"status": "TEN_CURRENT_SOURCE_GRAPHS_MEASURED_EIGHT_VALUES_NO_NEW_WITHHOLD", "commit": "ff0b48b5", "integration": "DEFER_CURRENT_BATCH_USE_OWN_VERSIONED_SUCCESSOR_FOR_FUTURE_RECAST"}, "c02_paramount_block168": {"status": "SOURCE_AND_CONTRACT_TWO_READINGS_NOT_CONFIRMED_DEFECT_OR_CREDIT", "source_accession": "0001140361-26-016758", "private_result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818", "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839"}, "d02_core_owner": {"status": "NO_EXPLICIT_OWNER_IN_REGISTER_AT_49B_PEER_DEFAULT_UNDER_V1_1", "technical_alignment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945747345", "own_role": "CURRENT_SOURCE_COUNTEREXAMPLES_POSITIVES_AND_VERSIONED_ORDINARY_INTEGRATION"}, "d01_status": "EXPLICIT_CURRENT_SUCCESSOR_AND_865D8220_PASS_LIMITED_REUSED_NO_REOPEN", "future_shared_receive": "OWN_VERSIONED_SUCCESSOR_OR_EQUIVALENT; PIN_PEER_COMMIT_AND_BOUND_DEPENDENCIES; NO_PROVIDER_DEVELOPMENT_PATH_BINDING"},
     "own_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "owner_target_decisions": {
       "C02": "COMPOSITION_FACTS",
@@ -8958,5 +9002,99 @@
     "current_390_credit": false,
     "production_authorized": false,
     "evidence": "docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/"
+  },
+  "e01_pfizer_8_01_20261002": {
+    "status": "OLD_ZERO_WITHDRAWN_EXACT_RESULT_NO_REPLACEMENT",
+    "peer_fixed_read": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
+    "peer_defect_id": "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+    "own_old_result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+    "old_run_id": "run:ordinary-integrated:2c62a157bbfa54c892c3b376e3605ce5d7a6f854b4880bb94fcd65a1fc481f3c",
+    "accession": "0000078003-25-000159",
+    "old_matcher_returns_empty_for_this_8_01": true,
+    "current_trusted_summary": {
+      "excluded_coordinates": 13,
+      "excluded_exact_result_ids": 19
+    },
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-pfizer-20261002/",
+    "next_engineering_boundary": "EXPLICIT_ORDINARY_8_01_BODY_SOURCE_AND_CONTENT_CONFIRMED_M_AND_A_WITH_DEDUP_NOT_YET_COMPLETE"
+  },
+  "e01_item_source_repair_20261002": {
+    "status": "EXPLICIT_SAVED_PFIZER_8_01_BODY_READABLE_NOT_NATIVE_E01_RESULT",
+    "fixed_peer_read": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
+    "own_function": "scripts/vnext/e01_item_source.py:bound_801_primary_section",
+    "saved_positive_source_id": "sha256:8458bfb36890ae178463cd166ff4161925619a44429e92818ef94fdcf54d08d4",
+    "directed_final_tree_tests": 6,
+    "exploratory_fast_run": "STARTED_BEFORE_FINAL_LINKED_HEADING_GUARD_NO_FINAL_TREE_CREDIT",
+    "v13_v14_runtime_binding_changed": false,
+    "old_frozen_route_result_changed": false,
+    "e01_business_content_confirmation_complete": false,
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "trusted_summary": "13_COORDINATES_19_EXACT_RESULT_IDENTITIES_WITHDRAWN",
+    "independent_review": "NEEDS_FIX_BC37A277_LINKED_BOUNDARY_AND_OFFSCREEN_TEXT",
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/"
+  },
+  "e01_item_boundary_repair_20261002": {
+    "status": "FIRST_REVIEW_P1_SOURCE_BOUNDARIES_REPAIRED_OFFLINE",
+    "first_review": "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md",
+    "first_review_verdict": "NEEDS_FIX_RETAINED",
+    "repair_review": "PASS_LIMITED_2D288BC3",
+    "changed_code": "scripts/vnext/e01_item_source.py",
+    "linked_801_toc_not_body": true,
+    "linked_following_901_refused": true,
+    "large_position_offsets_refused": true,
+    "saved_pfizer_source_id_unchanged": "sha256:8458bfb36890ae178463cd166ff4161925619a44429e92818ef94fdcf54d08d4",
+    "directed_final_tree_tests": 6,
+    "fast_final_tree_selectors": 145,
+    "v13_v14_runtime_binding_changed": false,
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "current_390_credit": false,
+    "production_authorized": false,
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-item-boundary-20261002/"
+  },
+  "b02_same_concept_recast_20261002": {
+    "status": "CURRENT_TEN_SAVED_SOURCE_IMPACT_MEASURED_NO_NEW_RESULT_WITHDRAWAL",
+    "peer_fixed_read": "49b4127127ec04828b872f08b5b1adf51fb17419",
+    "peer_original_rule_commit": "336ab3ae15b6c0af0c0c06982f87f54bff67209a",
+    "peer_guard_git_blob": "3ff21a217218b8095c80bd781624901f496690c8",
+    "own_bound_guard": "scripts/vnext/paired_measure_v1.py",
+    "current_positive_b02_count": 8,
+    "non_numeric": {
+      "jpmorgan_chase": "TRAIT_NOT_APPLICABLE",
+      "paramount_skydance_paramount_global": "ENTITY_CONTINUITY_NOT_COMPARABLE"
+    },
+    "newly_withheld_by_peer_guard": [],
+    "integration_decision": "DEFER_THIS_BATCH_NO_CURRENT_RESULT_CHANGED; FUTURE_B02_RULE_BATCH_USE_OWN_EXPLICIT_VERSIONED_SUCCESSOR_AND_TEST_SAME_CONCEPT_RECAST",
+    "old_run_or_result_rewritten": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/collab-b02-recast-impact-20261002/"
+  },
+  "ci_36960852837": {
+    "head": "8dfe514740129e22ce915ce4b12688a1d44a539c",
+    "run_id": 36960852837,
+    "conclusion": "SUCCESS",
+    "jobs_successful": 16,
+    "jobs_total": 16,
+    "updated_at_utc": "2026-10-02T04:28:17Z",
+    "scope": "D01 repair/review head only; excludes later E01 and v1.1 local commits"
   }
 }

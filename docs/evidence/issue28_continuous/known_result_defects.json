@@ -6,8 +6,8 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 12,
-    "newly_excluded_result_id_count": 18,
+    "newly_excluded_coordinate_count": 13,
+    "newly_excluded_result_id_count": 19,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
@@ -20,7 +20,8 @@
       "paramount_skydance_paramount_global|D01|2025-12-31",
       "paramount_skydance_paramount_global|D02|2025-12-31",
       "pfizer|C02|2025-12-31",
-      "pfizer|D02|2025-12-31"
+      "pfizer|D02|2025-12-31",
+      "pfizer|E01|2025-12-31"
     ],
     "all_390_currently_validated": false,
     "other_coordinates_not_cleared_by_this_audit": true,
@@ -761,7 +762,44 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_PFIZER_2025_8_01_BODY_NOT_READ",
+      "metric_id": "E01",
+      "company_id": "pfizer",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+      "run_id": "run:ordinary-integrated:2c62a157bbfa54c892c3b376e3605ce5d7a6f854b4880bb94fcd65a1fc481f3c",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CURRENT_8_01_BODY_ROUTE_NOT_YET_IMPLEMENTED",
+      "current_credit": "WITHDRAWN_CONFIRMED_FALSE_ZERO_FOR_CONTENT_CONFIRMED_M_AND_A",
+      "summary": "The exact #28 old Result reports zero although its authenticated 2025-11-13 Pfizer 8.01 primary body says Pfizer completed the Metsera acquisition under a merger agreement; the old matcher tests a generated hdr item label instead of this body.",
+      "source": {
+        "accession": "0000078003-25-000159",
+        "source_references": {
+          "fy_8k_primary": "sha256:1a47848c3657589557d8c1e8ffa667f839f38670ec0f80459e7dc4fdb424ab40",
+          "fy_8k_header": "sha256:e2537f8cba8921ce5a2e1929c37d03481aac6226447ab12b42679dc4f235bd4d"
+        },
+        "raw_assets": {
+          "fy_8k_primary": "sha256:7c006c40f40cafebc70a0b397d2da2603a1cb3fb5fe2a31a27fb0eca96296f2e",
+          "fy_8k_header": "sha256:40e6234f226035221d9d7d71a5a66ffd165b882a858d96827b6dd50db0bdcd1b"
+        },
+        "old_hdr_generated_brief": "8-K item 8.01 parsed from hdr.sgml"
+      },
+      "peer_origin": {
+        "fixed_commit": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
+        "defect_id": "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-pfizer-20261002/audit.json",
+        "docs/evidence/issue28_continuous/ordinary-pfizer-current-36-cli-20260929/comparison.json"
+      ],
+      "released": [],
+      "original_record_retained": true
     }
   ],
-  "latest_peer_read_commit": "2b4f571ef18274299145c63b4c355aa97c45d030"
+  "latest_peer_read_commit": "49b4127127ec04828b872f08b5b1adf51fb17419"
 }

@@ -25,6 +25,36 @@ _HEADING_TAGS = frozenset(('p', 'div', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 _ITEM_HEADING = re.compile(r'^Item\s+(\d{1,2}\.\d{2})\s+(.+?)\.?$', re.I)
 
 
+def _visibility_uncertain(style):
+    """Reject hiding declarations, while admitting ordinary visible ink/layout."""
+    declarations = {name: value.replace('!important', '')
+                    for name, value in (part.split(':', 1)
+                                        for part in style.split(';') if ':' in part)}
+    color = declarations.get('color', '')
+    if color == 'transparent' or re.fullmatch(r'rgba\([^)]*,0*\.?0*\)', color):
+        return True
+    opacity = declarations.get('opacity')
+    if opacity is not None:
+        try:
+            if float(opacity.rstrip('%')) * (0.01 if opacity.endswith('%') else 1) < 0.1:
+                return True
+        except ValueError:
+            return True
+    if re.fullmatch(r'0(?:\.0+)?(?:px|pt|em|rem|%)?', declarations.get('font-size', '')):
+        return True
+    if any(key in declarations for key in ('clip', 'clip-path', 'filter',
+                                            'transform', 'z-index', 'background',
+                                            'background-color')):
+        return True
+    for key in ('left', 'right', 'top', 'bottom', 'text-indent',
+                'margin-left', 'margin-right', 'margin-top', 'margin-bottom'):
+        offset = declarations.get(key, '')
+        match = re.fullmatch(r'([+-]?\d+(?:\.\d+)?)(?:px|pt|em|rem|%)?', offset)
+        if match and abs(float(match.group(1))) >= 999:
+            return True
+    return False
+
+
 class _ItemSectionParser(HTMLParser):
     """Keep text positions and actual block boundaries, excluding hidden DOM."""
 
@@ -41,11 +71,7 @@ class _ItemSectionParser(HTMLParser):
                               'stylesheet' in (attributes.get('rel') or '').lower()):
             self.uncertain_visibility = True
         style = re.sub(r'\s+', '', attributes.get('style') or '').lower()
-        if tag not in _VOID_TAGS and (
-                re.search(r'(?:^|;)(?:opacity|color|background|background-color|'
-                          r'clip|clip-path|filter|position|transform|z-index):',
-                          style) or
-                re.search(r'(?:^|;)font-size:0(?:[^0-9]|$)', style)):
+        if tag not in _VOID_TAGS and _visibility_uncertain(style):
             self.uncertain_visibility = True
         hidden = (bool(self.stack and self.stack[-1]['hidden'])
                   or tag in _NONDISPLAY_TAGS or 'hidden' in attributes
@@ -57,9 +83,15 @@ class _ItemSectionParser(HTMLParser):
         if emphasized and not hidden:
             for ancestor in self.stack:
                 ancestor['emphasized'] = True
+        linked = (bool(self.stack and self.stack[-1]['linked'])
+                  or tag == 'a' and bool(attributes.get('href')))
+        if linked and not hidden:
+            for ancestor in self.stack:
+                ancestor['linked'] = True
         if tag not in _VOID_TAGS:
             self.stack.append({'tag': tag, 'start': len(self.words),
-                               'hidden': hidden, 'emphasized': emphasized})
+                               'hidden': hidden, 'emphasized': emphasized,
+                               'linked': linked})
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -77,7 +109,7 @@ class _ItemSectionParser(HTMLParser):
                                     element['emphasized'] or
                                     element['tag'] in ('h1', 'h2', 'h3', 'h4',
                                                        'h5', 'h6'),
-                                    element['tag']))
+                                    element['tag'], element['linked']))
         del self.stack[matching:]
 
     def handle_data(self, data):
@@ -94,37 +126,37 @@ def _visible_801_section(raw_bytes):
     _need(not parser.uncertain_visibility, 'VISIBILITY_UNPROVEN')
     visible = ' '.join(parser.words)
     headings = {}
-    for start, end, emphasized, tag in parser.blocks:
+    for start, end, emphasized, tag, linked in parser.blocks:
         if start == end or not emphasized:
             continue
         block = ' '.join(parser.words[start:end]).strip()
         match = _ITEM_HEADING.fullmatch(block)
         if match is not None:
             headings.setdefault((start, end),
-                                (match.group(1), match.group(2), tag))
+                                (match.group(1), match.group(2), tag, linked))
         elif block.upper() == 'SIGNATURES':
-            headings.setdefault((start, end), ('SIGNATURES', '', tag))
-    starts = [(start, end, tag) for (start, end), (code, title, tag)
-              in headings.items()
-              if code == '8.01' and title.lower() == 'other events']
+            headings.setdefault((start, end), ('SIGNATURES', '', tag, linked))
+    starts = [(start, end, tag) for (start, end), (code, title, tag, linked)
+              in headings.items() if code == '8.01' and not linked]
     _need(len(starts) == 1, 'ITEM_801_HEADING_MISSING_OR_AMBIGUOUS')
     start_word, heading_end, heading_tag = starts[0]
-    after = sorted((begin, code, title) for (begin, _), (code, title, tag)
+    after = sorted((begin, code, title, linked) for (begin, _), (code, title, tag, linked)
                    in headings.items() if begin >= heading_end
                    and tag == heading_tag)
     _need(bool(after), 'ITEM_801_SECTION_END_UNPROVEN')
-    end_word, end_code, end_title = after[0]
+    end_word, end_code, end_title, end_linked = after[0]
+    _need(not end_linked, 'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(end_code == 'SIGNATURES' or
           (end_code == '9.01' and
            end_title.lower() == 'financial statements and exhibits'),
           'ITEM_801_BOUNDARY_AMBIGUOUS')
-    _need(not any(code == '9.01' for _, code, _ in after[1:]),
+    _need(not any(code == '9.01' for _, code, _, _ in after[1:]),
           'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(sum(code == '9.01' and begin >= heading_end
-              for (begin, _), (code, _, _) in headings.items()) <= 1,
+              for (begin, _), (code, _, _, _) in headings.items()) <= 1,
           'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(not any(heading_end <= begin < end_word
-                  for (begin, _), (_, _, tag) in headings.items()
+                  for (begin, _), (_, _, tag, _) in headings.items()
                   if tag != heading_tag), 'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(end_word > heading_end, 'ITEM_801_SECTION_EMPTY')
     section = ' '.join(parser.words[start_word:end_word])

@@ -1,0 +1,32 @@
+{
+  "record_type": "ISSUE28_E01_PFIZER_2025_EXACT_ZERO_SOURCE_CONFLICT",
+  "status": "CONFIRMED_OLD_ZERO_EXCLUDES_RELEVANT_8_01_BODY",
+  "company_id": "pfizer",
+  "metric_id": "E01",
+  "period_end": "2025-12-31",
+  "old_result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+  "old_run_id": "run:ordinary-integrated:2c62a157bbfa54c892c3b376e3605ce5d7a6f854b4880bb94fcd65a1fc481f3c",
+  "historical_390_same_old_result_id": true,
+  "accession": "0000078003-25-000159",
+  "source_references": {
+    "fy_8k_primary": "sha256:1a47848c3657589557d8c1e8ffa667f839f38670ec0f80459e7dc4fdb424ab40",
+    "fy_8k_header": "sha256:e2537f8cba8921ce5a2e1929c37d03481aac6226447ab12b42679dc4f235bd4d"
+  },
+  "raw_assets": {
+    "fy_8k_primary": "sha256:7c006c40f40cafebc70a0b397d2da2603a1cb3fb5fe2a31a27fb0eca96296f2e",
+    "fy_8k_header": "sha256:40e6234f226035221d9d7d71a5a66ffd165b882a858d96827b6dd50db0bdcd1b"
+  },
+  "visible_item_excerpt": "Item 8.01 Results of Other Events On November 13, 2025, Pfizer Inc. (“Pfizer” or the “Company”) completed the previously announced acquisition of Metsera, Inc., a Delaware corporation (“Metsera”), pursuant to the Agreement and Plan of Merger, dated as of September 21, 2025, as amended by Amendment No. 1 to the Agreement and Plan of Merger, dated as of November 7, 2025, by and among the Company, Metsera and Mayfair Merger Sub, Inc., a Delaware corporation and wholly owned subsidiary of the Company (as amended, the “Merger Agreement”). Pursuant to the Merger Agreement, each issued and outstanding share of Metsera common stock (other than certain shares set forth in the Merger Agreement) was converted into the right to receive $65.60 in cash at closing, representing an enterprise value of approximately $7.0 billion, and one non-transferable contingent value right entitling holders to potential additional payments of up to $20.65 per share in cash tied to the achievement of three specific ",
+  "old_hdr_generated_brief": "8-K item 8.01 parsed from hdr.sgml",
+  "old_matcher_returns_empty_for_this_8_01": true,
+  "peer_fixed_read": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
+  "peer_defect_id": "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+  "peer_result_credit_not_copied": true,
+  "old_run_result_sources_preserved": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_limit": "One exact old #28 Result and one saved 8.01 body; no new E01 value, de-duplication or complete company result."
+}
