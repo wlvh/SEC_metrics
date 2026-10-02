@@ -1,0 +1,30 @@
+{
+  "record_type": "ISSUE28_A05_FORMULA_REPLAY_NEGATIVES",
+  "run_id": "run:ordinary-integrated:bd2fa58d45c992e9c2f161fe30ee100e5e45e35d05daca99304344fe6344199a",
+  "binding_path": "/private/tmp/issue28-a05-formula-successor-20261002/state/jpmorgan_chase/metrics/A05-formula-v1/attempts/51c74213416e4ea69f8bdc60f93b49b0/data/ordinary_integrated_bindings/bd2fa58d45c992e9c2f161fe30ee100e5e45e35d05daca99304344fe6344199a.json",
+  "valid_native_replay_passed": true,
+  "checks": [
+    {
+      "case": "unknown_policy",
+      "rejected_with": "ORDINARY_A05_FORMULA_REPLAY_POLICY_CHANGED"
+    },
+    {
+      "case": "policy_omitted",
+      "rejected_with": "ORDINARY_INTEGRATED_INPUT_BINDING_CHANGED"
+    },
+    {
+      "case": "wrong_metric",
+      "rejected_with": "ORDINARY_A05_FORMULA_REPLAY_POLICY_CHANGED"
+    },
+    {
+      "case": "wrong_metric_or_non_boolean_flag",
+      "rejected_with": "ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC"
+    }
+  ],
+  "saved_binding_modified": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -486,6 +486,10 @@ SOURCE_TESTS += ("tests.vnext.test_d02_excerpt_reading",)
 # what must not move asserted beside what must. Builds thirteen annual reports.
 SOURCE_TESTS += ("tests.vnext.test_historical_d02_route_repairs",)
 SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
+FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
+SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
+SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

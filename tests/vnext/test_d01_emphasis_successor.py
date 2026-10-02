@@ -1,12 +1,8 @@
-"""D01 source headings survive split markup without changing the old route."""
-import copy
+"""Short D01 source-heading and page-boundary counterexamples."""
 import unittest
 
 from tests.vnext.test_text_coverage import BODY, annual, binding
 from vnext.d01_emphasis_source import build_text_document_admitting_underline
-from vnext.d01_emphasis_results import POLICY, build_text_evidence, create_deterministic_text_candidate
-from vnext.normal_run_v3 import prepare_case
-from vnext.normal_source_authority import ROOT
 from vnext.risk_signals import risk_factor_headings
 from vnext.text_coverage import build_text_document
 
@@ -47,51 +43,6 @@ class D01EmphasisSuccessorTest(unittest.TestCase):
         document = build_text_document_admitting_underline(**args)
         self.assertEqual(['Regulatory Risks', 'other market risks'],
                          [row['text'] for row in risk_factor_headings(document=document)['headings']])
-
-    def test_current_saved_filings_replay_exact_candidate_and_evidence(self):
-        for company, count in [('paramount_skydance_paramount_global', 38),
-                               ('marriott_international', 38)]:
-            with self.subTest(company=company):
-                case = prepare_case(data_root=ROOT, company_id=company, metric_id='D01',
-                                    d01_emphasis=True)
-                args = case['text_arguments']
-                self.assertEqual(POLICY, args['d01_emphasis_policy'])
-                candidate = create_deterministic_text_candidate(**args)
-                self.assertEqual(count, len(candidate['selected']))
-                evidence = build_text_evidence(candidate=candidate, **args)
-                self.assertEqual('PASS', evidence['status'])
-                if company.startswith('paramount'):
-                    self.assertTrue(any('changes in U.S. or foreign laws' in claim['text']
-                                        for claim in candidate['selected'].values()))
-                else:
-                    old_case = prepare_case(data_root=ROOT, company_id=company,
-                                            metric_id='D01')
-                    old_candidate = create_deterministic_text_candidate(
-                        **old_case['text_arguments'])
-                    self.assertEqual(34, len(old_candidate['selected']))
-                changed = copy.deepcopy(candidate)
-                changed['selected']['excerpt_0']['text'] += ' altered'
-                with self.assertRaises(ValueError):
-                    build_text_evidence(candidate=changed, **args)
-                raw_id = args['source_references'][0]['raw_asset_id']
-                tampered = {**args, 'raw_bytes_by_id': {**args['raw_bytes_by_id'],
-                            raw_id: args['raw_bytes_by_id'][raw_id] + b'changed'}}
-                with self.assertRaisesRegex(ValueError, 'TEXT_SOURCE_BYTES_CHANGED'):
-                    create_deterministic_text_candidate(**tampered)
-
-    def test_default_route_and_wrong_metric_do_not_switch_policy(self):
-        original = prepare_case(data_root=ROOT, company_id='paramount_skydance_paramount_global',
-                                metric_id='D01')
-        self.assertNotIn('d01_emphasis_policy', original['text_arguments'])
-        candidate = create_deterministic_text_candidate(**original['text_arguments'])
-        self.assertTrue(any(claim['text'] == 'Failures to comply with or changes in U'
-                            for claim in candidate['selected'].values()))
-        with self.assertRaisesRegex(ValueError, 'D01_EMPHASIS_SPEC_INVALID'):
-            wrong = {**original['text_arguments'], 'd01_emphasis_policy': POLICY}
-            wrong['compiled_spec'] = {'compiled': {**wrong['compiled_spec']['compiled'],
-                                                   'metric_id': 'C02'}}
-            create_deterministic_text_candidate(**wrong)
-
 
 if __name__ == '__main__':
     unittest.main()

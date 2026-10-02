@@ -12,11 +12,13 @@ from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
 from .normal_annual_input_v2 import prepare_saved_annual_input
 from .normal_numeric_projection import _period_label, _objects, _filings, _selected_financial_locators, _evidence_context, _raw_value
-from .normal_run_v3 import REQUIREMENT_ID, replay_case
+from .normal_run_v3 import A05_FORMULA_POLICY, REQUIREMENT_ID, replay_case
 from .run_store import _mechanically_replay_open_run, load_frozen_run
 
 
 POLICY_PATH = "config/ordinary_public_projection_v1.json"
+A05_FORMULA_TEXT = ("Selected net income / ((current period-end total assets + "
+                    "prior period-end total assets) / 2)")
 
 
 def _need(condition, reason):
@@ -83,6 +85,35 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
     indexes = projector._record_indexes(runs=[(manifest,records)])
     trace = indexes["traces"][result["trace_id"]]
     ordered,_ = projector._ordered_observations(trace=trace,observations=indexes["observations"],projection=projection)
+    presentation = case.get('presentation_policy')
+    _need(presentation in {None, A05_FORMULA_POLICY},
+          'ORDINARY_PRESENTATION_SUCCESSOR_UNKNOWN')
+    if presentation is not None:
+        _need(metric == 'A05' and projection.get('formula','') == '' and
+              spec['compiled']['canonical_unit'] == 'ratio',
+              'ORDINARY_A05_PRESENTATION_SCOPE_CHANGED')
+        route = strict_json_file(path=data_root/'catalog/deterministic_metrics.json')['metrics']['A05']
+        branches = route['branches']
+        _need(len(branches) == 1 and branches[0]['branch_id'] == 'average_assets'
+              and branches[0]['formula_id'] == 'average_denominator_ratio'
+              and [component['role'] for component in branches[0]['components']] ==
+                  ['net_income','assets_current','assets_prior'],
+              'ORDINARY_A05_APPROVED_FORMULA_CHANGED')
+        if result['publication'] == 'PUBLISHED':
+            if result['applicability'] == 'N_A_STRUCTURAL':
+                _need(result['quality'] == 'NONE' and result['value'] is None
+                      and result['reason_code'] == 'TRAIT_NOT_APPLICABLE'
+                      and not ordered,
+                      'ORDINARY_A05_STRUCTURAL_RESULT_CHANGED')
+            else:
+                _need(result['applicability'] == 'APPLICABLE'
+                      and result['quality'] == 'EXACT'
+                      and result['value'] is not None
+                      and len(ordered) == 1
+                      and ordered[0]['source_binding'].get('selected_branch_id') ==
+                          'average_assets',
+                      'ORDINARY_A05_SELECTED_BRANCH_CHANGED')
+                projection = {**projection, 'formula': A05_FORMULA_TEXT}
     view = {"compiled":{"name":item["name"] or spec["compiled"]["name"],"reported_unit":spec["compiled"]["reported_unit"],"legacy_projection":projection}}
     baseline = {key:"" for key in publication.METRIC_FIELDS}
     baseline.update(company=company["display_name"],cik=company["primary_cik"],metric_id=metric,

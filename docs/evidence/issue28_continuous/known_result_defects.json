@@ -6,14 +6,19 @@
   "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
-    "newly_excluded_coordinate_count": 13,
-    "newly_excluded_result_id_count": 19,
+    "newly_excluded_coordinate_count": 19,
+    "newly_excluded_result_id_count": 27,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
+      "ford_motor_company|E01|2025-12-31",
+      "jpmorgan_chase|C02|2025-12-31",
+      "jpmorgan_chase|D02|2025-12-31",
       "lumen_technologies|C02|2025-12-31",
       "lumen_technologies|D02|2025-12-31",
+      "lumen_technologies|E01|2025-12-31",
       "macys|C02|2026-01-31",
+      "macys|E01|2026-01-31",
       "marriott_international|C02|2025-12-31",
       "marriott_international|D01|2025-12-31",
       "paramount_skydance_paramount_global|C02|2025-12-31",
@@ -21,7 +26,8 @@
       "paramount_skydance_paramount_global|D02|2025-12-31",
       "pfizer|C02|2025-12-31",
       "pfizer|D02|2025-12-31",
-      "pfizer|E01|2025-12-31"
+      "pfizer|E01|2025-12-31",
+      "southwest_airlines|E01|2025-12-31"
     ],
     "all_390_currently_validated": false,
     "other_coordinates_not_cleared_by_this_audit": true,
@@ -111,6 +117,16 @@
         "marriott_run_id": "run:ordinary-integrated:12a7737eba94c1b1ca16d847ce635db114c182e3cf373798ee3d0eb27bb103ce",
         "requirement_closure_hash": "sha256:077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308",
         "cold_reads": "BOTH_INDEPENDENT_PROCESS_PASS"
+      },
+      "limited_content_audit": {
+        "status": "PASS_LIMITED_CONTENT_TWO_SAVED_FY2025_RESULTS",
+        "result_ids": [
+          "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+          "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"
+        ],
+        "run_validation": "NOT_RUN",
+        "current_390_credit": false,
+        "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"
       }
     }
   },
@@ -689,7 +705,7 @@
       "run_id": "run:ordinary-integrated:3ab895343886afabb650f73dcb98539ad974fb6993739059edb2c188083843e3",
       "historical_index_same_result_id": true,
       "reported_quality": "EXACT",
-      "repair_state": "EXPLICIT_SUCCESSOR_PRIVATE_RUN_AND_COLD_PASS_CONTENT_REVIEW_PENDING",
+      "repair_state": "EXPLICIT_SUCCESSOR_PRIVATE_RUN_COLD_AND_LIMITED_ORIGINAL_CONTENT_PASS_NOT_FORMAL_390",
       "current_credit": "WITHDRAWN_CONFIRMED_TRUNCATED_RISK_HEADING",
       "summary": "The original Item 1A source block has a complete U.S./foreign-law risk heading. The exact #28 Result renders only its broken leading-emphasis prefix through U. Other D01 coordinates and headings are not judged by this entry.",
       "source_block": {
@@ -725,7 +741,7 @@
       "run_id": "run:ordinary-integrated:d6e51a6558480a02d6bc6f8973f310eb3482a8fcf8ca31769e4e20a561a25e73",
       "historical_index_same_result_id": true,
       "reported_quality": "EXACT",
-      "repair_state": "EXPLICIT_SUCCESSOR_PRIVATE_RUN_AND_COLD_PASS_CONTENT_REVIEW_PENDING",
+      "repair_state": "EXPLICIT_SUCCESSOR_PRIVATE_RUN_COLD_AND_LIMITED_ORIGINAL_CONTENT_PASS_NOT_FORMAL_390",
       "current_credit": "WITHDRAWN_CONFIRMED_FOUR_MISSING_SOURCE_HEADINGS",
       "summary": "Original Item 1A includes four underlined risk-category headings omitted by the old bold-only D01 Result; exact #28 old Result appears in current private Run and retained 390 comparison.",
       "source_headings": [
@@ -799,7 +815,262 @@
       ],
       "released": [],
       "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_FORD_MOTOR_COMPANY_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "ford_motor_company",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+      "run_id": "run:ordinary-integrated:f28dd33ba10563af0449e3ef91a81368a03d16a9ee84fca38feb8f0d9d15f6d4",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0000037996-25-000067",
+        "selected_claim_id": "sha256:58727704a5d010eb360c72a7a235619fd756081d2f625da3477c8949508826be",
+        "primary_source_reference_id": "sha256:23ad85e7ca07d3d1e445866aa617b26d8ed7b6f4e24461131cbc24edd21b37e0",
+        "primary_raw_asset_id": "sha256:1dcd486c08b5c9b89709db6817b2875f7a6e3616f7fada4d4ed1257706ce71bf",
+        "header_source_reference_id": "sha256:87819c7a5528566f4855cbe121b99710e8f69f1e0c1fa769f5c488760bcd4edc",
+        "header_raw_asset_id": "sha256:79f659e205d6ae5ce305a3fd34031c6ac1deac8ed716918df5b6706f03c2b636",
+        "visible_anchor": "Twenty-Second Amendment"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_LUMEN_TECHNOLOGIES_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "lumen_technologies",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+      "run_id": "run:ordinary-integrated:62afa828503d710eaed49b86b2c42b05056b14a2bd15f6f5b3a9e3a0bc61ac39",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0000018926-25-000039",
+        "selected_claim_id": "sha256:ef278a53b32abb8c08970d03fc1a07c04ddec50fc00ba000602963c8b1c66d53",
+        "primary_source_reference_id": "sha256:2686b715657ba459c8915a68eb85fb496310bbfebe4d70f66b880aab83121545",
+        "primary_raw_asset_id": "sha256:9a9f2888c361468efefe5f53a8dfad8c292766acd9f8d67843ab9d826a73b846",
+        "header_source_reference_id": "sha256:1cbc0f01de9e5a372003d08d27dc9f24dd62c1411cdda416010dde808b98057c",
+        "header_raw_asset_id": "sha256:1c7d914072c22b537ea03bd30daac52c31f383930a82a2cc523d559073381c04",
+        "visible_anchor": "refinanced all of the outstanding secured term B-1 loan facilities"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_MACYS_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "macys",
+      "period_end": "2026-01-31",
+      "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+      "run_id": "run:ordinary-integrated:407de6f88021822af224689b08576835d5f149692a62e821f9e3fbb57a600601",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0000794367-25-000087",
+        "selected_claim_id": "sha256:83d4059228f1043652e9fe457f95c92b6cc6be1555d2a97e41c96428b4d899d4",
+        "primary_source_reference_id": "sha256:5d4dab753dd0bf14df45edd2da1b8a714176bc385235698d95ce8cc5c49453bf",
+        "primary_raw_asset_id": "sha256:017f60c99c1e20cd3dec91bb7c164c947fe72f19a40fc1258ecec17002632e11",
+        "header_source_reference_id": "sha256:04832929bac17c666fb8052b6cf93f76be5f3860b76f66e155ad86bac3e8c74a",
+        "header_raw_asset_id": "sha256:72a18a63a9eafce52700d79c206c786e213c515702220bc624e6bacdf25bf9b5",
+        "visible_anchor": "Refinancing and Extension of Existing Asset-Based Credit Facility"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "defect_id": "E01_SOUTHWEST_AIRLINES_2025_DIRECT_ITEM_FINANCING",
+      "metric_id": "E01",
+      "company_id": "southwest_airlines",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
+      "run_id": "run:ordinary-integrated:63ab88f8dd10e74ac4ecdebfce2531e3f9552141a855c11519ad35940e5c72cd",
+      "historical_index_same_result_id": true,
+      "reported_quality": "EXACT",
+      "repair_state": "CONTENT_CONFIRMED_M_AND_A_SUCCESSOR_NOT_YET_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_1_01_FINANCING_IS_NOT_M_AND_A_ANNOUNCEMENT",
+      "summary": "The old direct-item count includes a verified 1.01 claim whose original primary 8-K describes financing rather than a content-confirmed M&A announcement. The old Result remains historically intact but cannot satisfy the adopted E01 target.",
+      "source": {
+        "accession": "0001193125-25-262544",
+        "selected_claim_id": "sha256:8e53b0d3e57d5f015e1c87e8484a09ec24131ec2198063192e7469eb12049845",
+        "primary_source_reference_id": "sha256:5c3b61ee6824072a7b0b98083f9d305671a78ae0a8b1a954ca3d91241dd03251",
+        "primary_raw_asset_id": "sha256:37240895db1e2f9e69e4001f213a0db27a77fb693b1e346b1e9d701491ea6e54",
+        "header_source_reference_id": "sha256:92a368eefa8aedc8c08eec16f8b09d71fce6734e3594649deabd9f3b7a691323",
+        "header_raw_asset_id": "sha256:2bebd6703a7b136ec96be70304942614c8aeca924a056f10857c13e50f6c1701",
+        "visible_anchor": "public offering of $1,500,000,000 aggregate principal amount of debt securities"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true
+    },
+    {
+      "metric_id": "D02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "PAGE_FURNITURE_SELECTION_REPAIR_NOT_YET_OWNED_OR_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_10K_PAGE_FURNITURE_IS_NOT_LEGAL_DISCLOSURE",
+      "summary": "The saved D02 text includes the annual-report footer and a running financial-statement header as if they were litigation disclosures; source content and the exact affected Result identity are retained.",
+      "peer_origin": {
+        "fixed_read_commit": "e76e2953d96005f2fde60e46118a9fbd495c5dfe",
+        "register_blob": "80335204c5c19ef721eec4a6c0e934d754a3a836",
+        "evidence_path": "docs/evidence/issue47_history/d02-facing-pages/README.md",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-jpm-page-furniture-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "D02_JPMORGAN_2025_PAGE_FURNITURE_PRIVATE_NORMAL_UPDATE",
+      "result_id": "sha256:7256aa80eeb53c368a87c26fe7318d230a9233401112171fe8288a5ce6dd7c08",
+      "run_id": "run:ordinary-integrated:b454778f89ee046f7ba937d608953dd549d0b76a1a4218c4d7811f99c40284bb",
+      "source_blocks": [
+        {
+          "role": "excerpt_15",
+          "block_index": 10174,
+          "text": "JPMorgan Chase & Co./2025 Form 10-K",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "350f452ade5992dad92103fc1fedd3f72c56b13f896df008bb03c806d83986f1"
+        },
+        {
+          "role": "excerpt_25",
+          "block_index": 10184,
+          "text": "JPMorgan Chase & Co./2025 Form 10-K",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "350f452ade5992dad92103fc1fedd3f72c56b13f896df008bb03c806d83986f1"
+        },
+        {
+          "role": "excerpt_26",
+          "block_index": 10186,
+          "text": "Notes to consolidated financial statements",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "8e412f342e9fd33395439e68a996ed4285af187ca8e0ddf69f758016ee910a43"
+        },
+        {
+          "role": "excerpt_33",
+          "block_index": 10195,
+          "text": "JPMorgan Chase & Co./2025 Form 10-K",
+          "section_id": "NOTE_30",
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "source_accession": "0001628280-26-008131",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "raw_span_sha256": "350f452ade5992dad92103fc1fedd3f72c56b13f896df008bb03c806d83986f1"
+        }
+      ],
+      "native_evidence_status": "PASS_BUT_CONTENT_WRONG"
+    },
+    {
+      "metric_id": "D02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "PAGE_FURNITURE_SELECTION_REPAIR_NOT_YET_OWNED_OR_ACCEPTED",
+      "current_credit": "WITHDRAWN_SELECTED_10K_PAGE_FURNITURE_IS_NOT_LEGAL_DISCLOSURE",
+      "summary": "The saved D02 text includes the annual-report footer and a running financial-statement header as if they were litigation disclosures; source content and the exact affected Result identity are retained.",
+      "peer_origin": {
+        "fixed_read_commit": "e76e2953d96005f2fde60e46118a9fbd495c5dfe",
+        "register_blob": "80335204c5c19ef721eec4a6c0e934d754a3a836",
+        "evidence_path": "docs/evidence/issue47_history/d02-facing-pages/README.md",
+        "peer_result_credit_not_copied": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-d02-jpm-page-furniture-20261002/audit.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "D02_JPMORGAN_2025_PAGE_FURNITURE_ARCHIVED_390",
+      "result_id": "sha256:3c7230d0dae3e7e7cb91ae748f2904f84f9df00bb741cb3382f1b395e377cd59",
+      "run_id": "run:ordinary-integrated:d2c6edc8a6f5b1489f0ade8b7741f860b200d313ff9b6170a69eefd441cb01be",
+      "archived_value_footer_occurrences": 3,
+      "archived_value_running_head_occurrences": 1
+    },
+    {
+      "metric_id": "C02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_COMPOSITION_SELECTOR_CONTENT_SCOPE_REPAIR_PENDING",
+      "current_credit": "WITHDRAWN_AUDITOR_RETENTION_IS_NOT_BOARD_COMPOSITION",
+      "summary": "A selected original proxy block reports the Audit Committee and Board view about retaining PwC as external auditor, not a fact about board size, membership, committees, independence or director qualifications under the adopted C02 target.",
+      "source_block": {
+        "block_index": 3367,
+        "role": "excerpt_31",
+        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
+        "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+        "source_accession": "0000019617-26-000096",
+        "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+        "raw_span_sha256": "deab07ffbaa55d1cefa40eafbf427e19a46167bcdeea7c11f18de45025647c03"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/audit.json",
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_PRIVATE_NORMAL_UPDATE",
+      "result_id": "sha256:43465c499be32cbdb37722b653be4a43cc0bf12998aaccbe7e27559ab42d831b",
+      "run_id": "run:ordinary-integrated:d2a38686e99b48c6fb0dbbcd323f7a2ac53f3d6f071388c8a118d075ebd381a4",
+      "native_evidence_status": "PASS_BUT_OUT_OF_TARGET_CONTENT"
+    },
+    {
+      "metric_id": "C02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "reported_quality": "EXACT",
+      "repair_state": "SHARED_COMPOSITION_SELECTOR_CONTENT_SCOPE_REPAIR_PENDING",
+      "current_credit": "WITHDRAWN_AUDITOR_RETENTION_IS_NOT_BOARD_COMPOSITION",
+      "summary": "A selected original proxy block reports the Audit Committee and Board view about retaining PwC as external auditor, not a fact about board size, membership, committees, independence or director qualifications under the adopted C02 target.",
+      "source_block": {
+        "block_index": 3367,
+        "role": "excerpt_31",
+        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
+        "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+        "source_accession": "0000019617-26-000096",
+        "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+        "raw_span_sha256": "deab07ffbaa55d1cefa40eafbf427e19a46167bcdeea7c11f18de45025647c03"
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/audit.json",
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_ARCHIVED_390",
+      "result_id": "sha256:5f6ec648144fa842c833b3a46cb390d9d5e46f67854083bb5ace3c0adf708400",
+      "run_id": "run:ordinary-integrated:f5525c123ee549e5ccb638c9e3dfa322254498899522104fb6a1dd969debe08d",
+      "archived_390_value_contains_excerpt": true
     }
   ],
-  "latest_peer_read_commit": "49b4127127ec04828b872f08b5b1adf51fb17419"
+  "latest_peer_read_commit": "ebac1015497b97d35e2357781fbbfc0b613fb57a"
 }

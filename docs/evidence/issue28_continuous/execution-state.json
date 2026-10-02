@@ -846,6 +846,140 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_d02gate_0ccf536",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_d02_item8_gate",
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "tests/vnext/test_d02_item8_current_material.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/binding-after-gate.json",
+        "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/guard-existing.json"
+      ],
+      "patch_sha": "0ccf536368c5be71e633f7f15b5a317d02ec8f99",
+      "spawned_at": "2026-10-02T09:08:21Z",
+      "ended_at": "2026-10-02T09:15:13Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review-gate-0ccf536/conclusion.md",
+      "verdict": "PASS_GATE_ONLY_PRIOR_NEEDS_FIX_UNCHANGED"
+    },
+    {
+      "task_name": "review_d02item8_de22326",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_d02_item8_v1",
+      "scope_paths": [
+        "scripts/vnext/ordinary_d02_item8_v1.py",
+        "scripts/vnext/d02_item8_category_28_v1.py",
+        "catalog/r6/D02_item8_category_28_v1.json",
+        "scripts/vnext/d02_text_results_v3.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_d02_category_update.py",
+        "tools/vnext_normal_update.py",
+        "tests/vnext/test_d02_item8_current_material.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/"
+      ],
+      "patch_sha": "de22326da963f83771241c0f6e968ed33b810f70",
+      "spawned_at": "2026-10-02T08:48:52Z",
+      "ended_at": "2026-10-02T09:01:03Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_COMMA_FALSE_EXCLUSION"
+    },
+    {
+      "task_name": "review_a05na_3a05f07",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "a05_formula_structural_na_repair",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py",
+        "tests/vnext/test_a05_formula_material.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/independent-review/conclusion.md",
+        "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/na-repair-final.json"
+      ],
+      "patch_sha": "3a05f07ce49cb640f8a1155a16aba40b47abbfdd",
+      "spawned_at": "2026-10-02T07:48:52Z",
+      "ended_at": "2026-10-02T07:55:21Z",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/independent-review-repair-3a05f07/conclusion.md",
+      "verdict": "PASS_LIMITED_STRUCTURAL_NA_REPAIR",
+      "tool_calls_outer": 9,
+      "message_count": 3
+    },
+    {
+      "task_name": "review_a05formula_489659e",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "a05_formula_successor",
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_projection.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_a05_formula_update.py",
+        "tools/vnext_normal_update.py",
+        "tests/vnext/test_a05_formula_successor.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/"
+      ],
+      "patch_sha": "489659e556517ce3fc669cf7d5a9b1acf34a25c3",
+      "spawned_at": "2026-10-02T07:20:05Z",
+      "ended_at": "2026-10-02T07:32:16Z",
+      "tool_calls": 57,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_NONFINANCIAL_STRUCTURAL_NA",
+      "tool_calls_outer": 23,
+      "message_count": 4,
+      "message_limit_exceeded_by": 1
+    },
+    {
+      "task_name": "audit_a05original_cbce8c3",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_a05_jpmorgan_current",
+      "scope_paths": [
+        "catalog/deterministic_metrics.json",
+        "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/result.json",
+        "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/original-content.json",
+        "/private/tmp/issue28-jpm-a05-current-20261002/state/jpmorgan_chase/metrics/A05/",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/request_attempts/"
+      ],
+      "patch_sha": "cbce8c37afeba590cee6fc1584753469ccea6ec2",
+      "spawned_at": "2026-10-02T06:07:03Z",
+      "ended_at": "2026-10-02T06:27:57Z",
+      "tool_calls": 48,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_ORIGINAL_CONTENT",
+      "tool_calls_outer": 17,
+      "message_count": 3
+    },
+    {
+      "task_name": "audit_d01_current_865d822",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "ordinary_d01_marriott_paramount_current",
+      "scope_paths": [
+        "scripts/vnext/d01_emphasis_source.py",
+        "scripts/vnext/d01_emphasis_results.py",
+        "catalog/r6/D01_risk_factor_headings.md",
+        "/private/tmp/issue28-d01-emphasis-paramount-20261002-final/metrics/D01/",
+        "/private/tmp/issue28-d01-emphasis-marriott-20261002-final/metrics/D01/",
+        "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/measure-current.json",
+        "docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/independent-review-865d822/conclusion.md"
+      ],
+      "patch_sha": "865d82205d6b0fa37b11ad15e7000122016c6c8a",
+      "spawned_at": "2026-10-02T04:55:33Z",
+      "ended_at": "2026-10-02T05:07:53Z",
+      "tool_calls": 52,
+      "result_path": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md",
+      "verdict": "PASS_LIMITED_CONTENT_TWO_CURRENT_SAVED_ORIGINALS",
+      "tool_calls_outer": 26,
+      "message_count": 1
+    },
+    {
       "task_name": "review_e01_boundary_2d288bc",
       "purpose": "LIMITED_INDEPENDENT_REVIEW",
       "module": "e01_item_boundary_repair",
@@ -8938,6 +9072,7 @@
       "fast_selectors": 145
     },
     "limited_independent_review": "NEEDS_FIX_PAGE_JOIN_FALSE_POSITIVE_1457E99A",
+    "independent_saved_source_content": {"status": "PASS_LIMITED_CONTENT", "result_ids": ["sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd", "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8"], "heading_counts": [38, 38], "original_bytes_and_titles": "76_OF_76_MATCH", "private_run_validation": "NOT_RUN", "formal_390_credit": false, "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"},
     "trusted_summary": {
       "excluded_coordinates": 12,
       "excluded_exact_result_ids": 18
@@ -9096,5 +9231,274 @@
     "jobs_total": 16,
     "updated_at_utc": "2026-10-02T04:28:17Z",
     "scope": "D01 repair/review head only; excludes later E01 and v1.1 local commits"
+  },
+  "ci_d01_selector_split_20261002": {
+    "failed_remote_run_id": 36966491013,
+    "failed_remote_head": "eea7821cc794e87276c06ab583a8623e06a1ccf6",
+    "observed_fast_job": "FAILURE_ONLY_D01_SAVED_SOURCE_SELECTOR_TIMEOUT_30_014_SECONDS_RC124",
+    "overall_run_terminal": "FAILURE_ONE_FAST_JOB_FIFTEEN_OTHER_JOBS_SUCCESS",
+    "repair_scope": "TEST_TIER_ONLY_NO_PRODUCT_OR_REQUIREMENT_BYTES_CHANGED",
+    "fast_full_suite": "145_OF_145_PASS_NEW_D01_SYNTHETIC_0_087_SECONDS_30_SECOND_LIMIT",
+    "saved_source_material": "TWO_REAL_SOURCE_TESTS_PASS_14_161_SECONDS_240_SECOND_LIMIT",
+    "historical_initial_script_error": "UNSUPPORTED_FAST_SHARD_ARGUMENT_RETAINED_NO_SUITE_CREDIT",
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ci-d01-selector-timeout-20261002/",
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "changed_path": "tools/run_fast_tests_v2.py:SOURCE_TESTS append-only selector",
+      "other_runner_functions_and_limits": "UNCHANGED",
+      "potential_downstream": "Stacked #47 branch may inherit one D01 source-material selector; no historical code, ledger, snapshot or worktree operated"
+    },
+    "new_head_ci": "36968995325_AT_187b4d43_SUCCESS_16_OF_16_COMPLETED_2026_10_02T06_20_40Z"
+  },
+  "collab_peer_94c_increment_20261002": {
+    "peer_fixed_commit": "94cbc3e7e6af372d0ad8349585241fdbd2d0ed4e",
+    "peer_defect_register_git_blob": "7f4413f2b9076ecfaa2c4c7815cd2ed138fe73b6",
+    "new_related_findings": ["HISTORICAL_SOUTHWEST_2022_2023_D01_SINGLE_SPAN_PAGE_FURNITURE", "HISTORICAL_JPMORGAN_2021_A05_PRIOR_ASSETS_RECAST"],
+    "current_jpmorgan_2025_a05_result_id": "sha256:f8f2a182897cd8ab4dd3f0ad16c399fc8ba259cc4c1706ff4db59e76ffd68639",
+    "current_jpmorgan_2025_a05_recast_check": "TARGET_AND_PRIOR_2024_ASSETS_BOTH_4002814000000_NO_NEW_WITHHOLD",
+    "current_ten_a05_census": "ONE_APPLICABLE_NUMERIC_JPMORGAN_NO_NEW_GUARD_PROBLEM_NINE_TRAIT_NOT_APPLICABLE",
+    "repository_bundled_old_source_root": "NORMAL_COMPANYFACTS_PRIOR_HISTORY_SNAPSHOT_CONFLICT_NOT_CURRENT_CUMULATIVE_INPUT",
+    "current_cumulative_source_root": "JPMORGAN_A05_A06_PASS_PRIOR_ERROR_NULL_A05_SAME_VALUE_NEW_RESULT_ID_b4af4d3b",
+    "current_d01": "TEN_CANDIDATE_HASHES_UNCHANGED_AFTER_PAGE_JOIN_REFUSAL; HISTORICAL_SOUTHWEST_YEARS_NOT_IMPORTED",
+    "c02_d02_core_changed": false,
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/collab-a05-peer-recast-impact-20261002/",
+    "not_an_a05_full_content_or_normal_update_acceptance": true
+  },
+  "ordinary_jpm_a05_current_update_20261002": {
+    "tested_commit": "6e2c78b57df05d33c596ea7ecaaff2b0e51b429d",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "source_snapshot_id": "sha256:a5dcc4af3d1eae0cd4af880a794a5deab6731772bf767c53b3d959a2cf519baa",
+    "requirement_closure_hash": "sha256:3112b4766e47e2f59a36c8fae63e631fc7c6a3631b4e360ccbca11bafd920657",
+    "first_update": "CANDIDATE_READY_109_839_SECONDS",
+    "cold_reentry": "NO_SOURCE_CONTENT_CHANGE_40_858_SECONDS_NO_SECOND_RUN",
+    "old_result_id_retained": "sha256:f8f2a182897cd8ab4dd3f0ad16c399fc8ba259cc4c1706ff4db59e76ffd68639",
+    "new_private_result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+    "value": "0.01353819078340816975991354239",
+    "direct_original_content_check": "TWO_AUTHENTICATED_10K_HTML_FOUR_CONTEXT_VALUES_AND_APPROVED_RATIO_MATCH",
+    "independent_original_content": "PASS_LIMITED_ORIGINAL_CONTENT_CBCE8C37_TWO_10K_NOT_390",
+    "issuer_roa_display_difference": "ISSUER_REPORTED_1_29_PERCENT_OWN_APPROVED_FORMULA_1_353819_PERCENT_PUBLIC_ROW_FORMULA_CURRENTLY_EMPTY",
+    "new_run_validation": "NOT_RUN",
+    "current_390_credit": false,
+    "old_archive_git_blob_unchanged": true,
+    "legacy_semantic_exports_disabled": 116,
+    "protected_claims_source_log_active_unchanged": true,
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ordinary-jpm-a05-current-20261002/"
+  },
+  "collab_peer_104_d02_20261002": {
+    "peer_fixed_commit": "104876d6cfae7812d93fd5b8a4bb0e0f97959fff",
+    "peer_register_git_blob": "b172a201d1c340a030a3aab90f496be91cf7c12a",
+    "shared_rule": "D02_ITEM8_CATEGORY_MENTION_MODULE_AND_TERMS_UNWIRED_IN_BOTH_NATIVE_ROUTES",
+    "own_pilot": "TEN_CURRENT_PRIVATE_D02_RUNS_83_SELECTED_ITEM8_FOUR_PROPOSED_EXCLUSIONS",
+    "known_false_item8_matched": ["LUMEN_1670", "PFIZER_2175", "PFIZER_2240", "PARAMOUNT_2257"],
+    "positive_paramount_2108_retained": true,
+    "enphase_item3_755_not_addressed": true,
+    "old_four_exact_results_still_withheld": true,
+    "no_new_result_or_390_credit": true,
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/collab-d02-peer104-impact-20261002/",
+    "later_peer_route_increment": {
+      "fixed_remote_commit_via_github_api": "36c64ab65e84af5e3f37b8f4b47820516fcec97d",
+      "peer_register_blob_unchanged": "b172a201d1c340a030a3aab90f496be91cf7c12a",
+      "peer_change": "ITEM8_CATEGORY_MENTION_RULE_WIRED_IN_HISTORICAL_ROUTE_AND_REVIEW_POOL",
+      "peer_read_method": "GITHUB_COMPARE_AND_EXACT_CONTENT_API_AFTER_GIT_HTTPS_FETCH_TIMED_OUT_45_SECONDS",
+      "own_consumption": "NOT_YET_IMPORTED_OWN_VERSIONED_ROUTE_REQUIRED",
+      "own_old_result_credit": "FOUR_EXACT_D02_RESULTS_STILL_WITHHELD",
+      "remaining_peer_stated_limits": "JPMORGAN_40_HELD_OUT_NONDISCLOSURES_REMAIN;_ENPHASE_ITEM3_FOOTER_SEPARATE"
+    }
+  },
+  "ordinary_a05_formula_successor_20261002": {
+    "status": "REPAIRED_NUMERIC_AND_STRUCTURAL_NA_PRIVATE_NORMAL_CLI_PASS_LIMITED_REVIEW_REMOTE_CI_SUCCESS_AT_0EF64F9C",
+    "source": "JPMORGAN_FY2025_CURRENT_AUTHENTICATED_ISSUE28_CUMULATIVE_INPUTS",
+    "presentation_policy": "A05_APPROVED_AVERAGE_ASSETS_FORMULA_V1",
+    "old_default_binding_bytes_equal": true,
+    "numeric_result_id_unchanged": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+    "new_private_run_state_path": "metrics/A05-formula-v1",
+    "new_public_formula": "Selected net income / ((current period-end total assets + prior period-end total assets) / 2)",
+    "new_first_status": "CANDIDATE_READY",
+    "new_cold_status": "NO_SOURCE_CONTENT_CHANGE_NO_SECOND_RUN",
+    "new_private_run_manifest": "OPEN_VALIDATION_NOT_RUN",
+    "structural_na_repair": {
+      "first_review": "NEEDS_FIX_489659E5_RETAINED",
+      "repaired_projection_branch": "NUMERIC_BRANCH_STRICT; N_A_STRUCTURAL_NO_OBSERVATION_NO_FORMULA",
+      "marriott_native_material": "TWO_OF_TWO_PASS_SOURCE_SELECTOR_23_318_SECONDS_UNDER_240",
+      "marriott_current_cli": "CANDIDATE_READY_THEN_NO_SOURCE_CONTENT_CHANGE_NO_SECOND_RUN",
+      "jpmorgan_repaired_numeric_cli": "CANDIDATE_READY_SAME_RESULT_ID_AND_FORMULA",
+      "wrong_numeric_branch": "REJECTED",
+      "parent_requirement_closure_hash": "sha256:bedb8ed34c43826306416473dbd6784cf74127dfdda4877612d40887c82798ec",
+      "child_requirement_closure_hash": "sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4",
+      "new_real_calls": [0, 0, 0]
+    },
+    "old_installed_run": "EXACT_ORIGINAL_BYTES_COLD_READ_WITH_FORMULA_BLANK",
+    "tamper_negatives": "FOUR_REJECTED_VALID_REPLAY_PASSED",
+    "fast_selectors": "146_OF_146_PASSED_FIRST_PATCH; FINAL_REPAIR_AFFECTED_SHORT_2_OF_2_AND_SOURCE_2_OF_2_PASSED",
+    "parent_requirement_closure_hash": "sha256:bedb8ed34c43826306416473dbd6784cf74127dfdda4877612d40887c82798ec",
+    "child_requirement_closure_hash": "sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4",
+    "review": "FIRST_NEEDS_FIX_489659E5_RETAINED_REPAIR_3A05F07_PASS_LIMITED",
+    "new_head_ci": "SUCCESS_36981316380_0EF64F9C_16_OF_16_COMPLETED_2026_10_02T08_38_33Z",
+    "current_390_credit": false,
+    "new_real_calls": [0, 0, 0],
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "shared_functions": ["normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3._binding", "normal_run_v3.replay_case", "ordinary_projection.render_ordinary_run", "ordinary_update_cycle._config", "ordinary_update_cycle._descriptor", "ordinary_update_cycle._inspect", "ordinary_update_cycle.run_once"],
+      "default_behavior": "SAME_BINDING_AND_RESULT_BYTES; EXPLICIT_A05_SUCCESSOR_ONLY",
+      "downstream": "#47 stacked branch must reconcile mutable V13/V14 bindings and new opt-in module/CLI route; no historical reader or #47 snapshot edited"
+    },
+    "evidence": "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/"
+  },
+  "e01_direct_item_financing_current_20261002": {
+    "status": "FOUR_EXACT_OLD_E01_RESULTS_WITHDRAWN_FOR_ADOPTED_CONTENT_TARGET",
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-direct-item-current-20261002/",
+    "own_old_result_ids": [
+      "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+      "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+      "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+      "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9"
+    ],
+    "companies": [
+      "ford_motor_company",
+      "lumen_technologies",
+      "macys",
+      "southwest_airlines"
+    ],
+    "old_values": {
+      "ford_motor_company": "2",
+      "lumen_technologies": "7",
+      "macys": "2",
+      "southwest_airlines": "2"
+    },
+    "current_trusted_summary": {
+      "excluded_coordinates": 17,
+      "excluded_exact_result_ids": 23
+    },
+    "paramount_and_salesforce_current_1_01": "POSSIBLE_FINANCING_AND_M_AND_A_CONTEXT_NOT_CLASSIFIED",
+    "old_runs_and_results_preserved": true,
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "d02_item8_versioned_current_20261002": {
+    "status": "FIRST_REVIEW_NEEDS_FIX_P2_FALSE_EXCLUSION_NATIVE_CREDIT_SUSPENDED",
+    "peer_source_commit": "104876d6cfae7812d93fd5b8a4bb0e0f97959fff",
+    "peer_wired_commit_read_via_exact_github_api": "36c64ab65e84af5e3f37b8f4b47820516fcec97d",
+    "peer_source_code_blob": "7c02380ede6757ad6f1ff9528f0abb625d45af07",
+    "peer_terms_blob": "03e35435f62800a4a1146685b38bc5da91b38e51",
+    "own_versioned_paths": ["scripts/vnext/d02_item8_category_28_v1.py", "catalog/r6/D02_item8_category_28_v1.json", "scripts/vnext/ordinary_d02_item8_v1.py", "scripts/vnext/d02_text_results_v3.py", "scripts/vnext/ordinary_d02_category_update.py"],
+    "frozen_v12_text_results_v2_bytes_unchanged": true,
+    "old_default_candidate_equal": true,
+    "parent_requirement_closure_hash": "sha256:f1d966d1f5f681975e11302c98ef7df0120d5281cae7e00cddeba752c65a4239",
+    "child_requirement_closure_hash": "sha256:f8e1bd43989cf4d5bd1e3f86177a9af20d835e1000dce37a5ace3fd93176764c",
+    "post_review_gate_parent_requirement_closure_hash": "sha256:f916646edeb416ccae056b4233b3c600fcc60a890437a6c59fa31ac15ae1e1fa",
+    "post_review_gate_child_requirement_closure_hash": "sha256:ccce1faa6c84132271d20f2ba7a8e13f66262cebbe65ff8074b2345df3ee0621",
+    "three_wiring_receipts": "IDENTITY_ONLY_PASS_NOT_NEW_FACTORY_CONTROLLER_ZERO_EGRESS_RUN",
+    "directed_current_source_tests": "TWO_OF_TWO_PASS_FINAL_62_565_SECONDS",
+    "fast_selectors": "146_OF_146_PASS_59_274_SECONDS",
+    "lumen_original_selected": 15,
+    "lumen_new_selected": 14,
+    "lumen_removed_original_block": 1670,
+    "lumen_old_result_id_still_withheld": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+    "lumen_new_private_result_id": "sha256:da6c0000c7c45b04c2dec00927bcbf94de959d8270199a07c2bc89704a68411c",
+    "lumen_new_private_run_id": "run:ordinary-integrated:11d74bd11fcdb479e300cb9394992e433bab4c71cffd0ca1ea1aeb86dd02a75b",
+    "lumen_normal_first_and_cold": "CANDIDATE_READY_66_819_SECONDS_THEN_NO_SOURCE_CONTENT_CHANGE_40_092_SECONDS_NO_SECOND_RUN",
+    "first_independent_review": {
+      "patch_sha": "de22326da963f83771241c0f6e968ed33b810f70",
+      "verdict": "NEEDS_FIX_P2_COMMA_FALSE_EXCLUSION",
+      "result_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review/conclusion.md",
+      "counterexample": "WE_FACE_LITIGATION_COMMA_WHICH_CURRENT_RULE_LEFT_OUT_TRUE",
+      "existing_four_source_exclusions": "INDEPENDENT_ORIGINAL_CHECK_SUPPORTS_ALL_FOUR",
+      "new_current_result_credit": false
+    },
+    "post_review_gate": {
+      "new_d02_category_normal_run": "REJECTED_BEFORE_RUN_WRITE",
+      "new_d02_category_ordinary_update": "UPDATE_BLOCKED_BEFORE_STATE_WRITE",
+      "pre_gate_lumen_private_success_pointer": "PRESERVED_HASH_UNCHANGED_NO_REACTIVATION",
+      "guard_short_test": "ONE_OF_ONE_PASS",
+      "final_tree_fast": "146_OF_146_PASS_57_748_SECONDS",
+      "independent_review": "PASS_GATE_ONLY_0CCF536_PRIOR_RULE_NEEDS_FIX_UNCHANGED",
+      "independent_review_path": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/independent-review-gate-0ccf536/conclusion.md",
+      "reviewer_tool_calls": "NOT_REPORTED_EXACT_COUNT_NOT_INFERRED",
+      "shared_core_owner_notification": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381",
+      "real_calls": [0, 0, 0]
+    },
+    "remaining_known_wrong_enphase_item3_footer": 755,
+    "old_four_d02_exact_results_still_withheld": true,
+    "new_private_content_credit": false,
+    "current_390_credit": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "shared_functions": ["normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3.replay_case", "normal_run_v3.text_api", "ordinary_remaining_cases.prepare_current_source_case", "ordinary_update_cycle._config", "ordinary_update_cycle._descriptor", "ordinary_update_cycle._inspect", "ordinary_update_cycle.run_once"],
+      "default_behavior": "OLD_D02_V2_INSTALLED_BYTES_UNCHANGED_AND_EXPLICIT_NEW_POLICY_REQUIRED_FOR_SELECTION",
+      "downstream": "#47 stacked branch must reconcile mutable V13/V14 identities; no peer runtime or old Result rewrite"
+    },
+    "evidence": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/",
+    "new_real_calls": [0, 0, 0]
+  },
+  "d02_jpm_page_furniture_current_20261002": {
+    "status": "TWO_EXACT_28_D02_RESULT_IDS_WITHDRAWN_ONE_COORDINATE",
+    "peer_fixed_read_via_github_api": "e76e2953d96005f2fde60e46118a9fbd495c5dfe",
+    "peer_register_blob": "80335204c5c19ef721eec4a6c0e934d754a3a836",
+    "private_result_id": "sha256:7256aa80eeb53c368a87c26fe7318d230a9233401112171fe8288a5ce6dd7c08",
+    "archived_390_result_id": "sha256:3c7230d0dae3e7e7cb91ae748f2904f84f9df00bb741cb3382f1b395e377cd59",
+    "original_verified_non_disclosure_block_indexes": [
+      10174,
+      10184,
+      10186,
+      10195
+    ],
+    "trusted_summary": {
+      "excluded_coordinates": 18,
+      "excluded_exact_result_ids": 25
+    },
+    "source_and_old_runs_retained": true,
+    "new_result_or_run": false,
+    "peer_repair_imported": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/collab-d02-jpm-page-furniture-20261002/"
+  },
+  "c02_jpm_auditor_retention_current_20261002": {
+    "status": "TWO_EXACT_OLD_C02_RESULT_IDS_WITHDRAWN_ONE_COORDINATE",
+    "old_private_result_id": "sha256:43465c499be32cbdb37722b653be4a43cc0bf12998aaccbe7e27559ab42d831b",
+    "old_archived_390_result_id": "sha256:5f6ec648144fa842c833b3a46cb390d9d5e46f67854083bb5ace3c0adf708400",
+    "original_source_block_index": 3367,
+    "current_grouped_v3_still_selects_original_block": true,
+    "current_grouped_v3_view_block_index": 3343,
+    "trusted_summary": {
+      "excluded_coordinates": 19,
+      "excluded_exact_result_ids": 27
+    },
+    "old_runs_results_source_retained": true,
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/"
+  },
+  "e01_current_item_text_feasibility_20261002": {
+    "status": "TEN_CURRENT_SAVED_SOURCE_SETS_SIXTY_OF_SIXTY_ITEM_TEXT_MECHANICALLY_READABLE_NO_CONTENT_CONFIRMATION",
+    "peer_source_commit": "488a61734978adaa57e82ec0654e75a0af284cfb",
+    "peer_source_git_blob": "ff6996d2edb4d924ed77e5366bf4561bb8bb8135",
+    "peer_code_imported_into_ordinary_route": false,
+    "candidate_item_codes": ["1.01", "2.01", "8.01"],
+    "ten_company_candidate_items": 60,
+    "mechanically_readable": 60,
+    "named_unresolved": 0,
+    "largest_company_item_text_chars": 83432,
+    "largest_single_item_text_chars": 36041,
+    "enphase_candidate_count": 0,
+    "semantic_result_or_run_created": false,
+    "current_390_credit": false,
+    "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-item-text-feasibility-20261002/"
   }
 }
