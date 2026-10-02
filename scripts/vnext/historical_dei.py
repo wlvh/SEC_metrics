@@ -93,9 +93,19 @@ ECD_NAMESPACE_PATTERN = r"https?://xbrl\.sec\.gov/ecd/\d{4}(?:q[1-4]|-\d{2}-\d{2
 FROZEN_US_GAAP_NAMESPACE_PATTERNS = (r"https?://fasb\.org/us-gaap/[0-9]{4}",
                                      r"https?://fasb\.org/us-gaap/\d{4}")
 US_GAAP_NAMESPACE_PATTERN = r"https?://fasb\.org/us-gaap/[0-9]{4}(?:-\d{2}-\d{2})?"
+# The FASB's SRT taxonomy is released with US GAAP and named the same way
+# (``srt/<year>-<month>-<day>`` through 2021). No frozen code holds the pattern
+# as a constant; the accession policy file spells it
+# (config/normal_accession_metrics_v1.json), and the bank capital ratios'
+# required scope names an SRT axis, so a bank's ratios in a report of that era
+# stopped at NORMAL_ACCESSION_STANDARD_NAMESPACE_CHANGED. Read through
+# ``release_aware_pattern``.
+FROZEN_SRT_NAMESPACE_PATTERNS = (r"https?://fasb\.org/srt/[0-9]{4}",)
+SRT_NAMESPACE_PATTERN = r"https?://fasb\.org/srt/[0-9]{4}(?:-\d{2}-\d{2})?"
 _WIDENED = {**{p: DEI_NAMESPACE_PATTERN for p in FROZEN_DEI_NAMESPACE_PATTERNS},
             **{p: ECD_NAMESPACE_PATTERN for p in FROZEN_ECD_NAMESPACE_PATTERNS},
-            **{p: US_GAAP_NAMESPACE_PATTERN for p in FROZEN_US_GAAP_NAMESPACE_PATTERNS}}
+            **{p: US_GAAP_NAMESPACE_PATTERN for p in FROZEN_US_GAAP_NAMESPACE_PATTERNS},
+            **{p: SRT_NAMESPACE_PATTERN for p in FROZEN_SRT_NAMESPACE_PATTERNS}}
 _CONTAINERS = (dict, list, tuple, set, frozenset)
 _ATTRIBUTE_LOADS = ("LOAD_ATTR", "LOAD_METHOD")
 _NAME_LOADS = ("LOAD_GLOBAL", "LOAD_NAME", "LOAD_FAST", "LOAD_DEREF")
@@ -122,6 +132,20 @@ def is_us_gaap_namespace(uri):
 
 def _frozen_pattern(pattern):
     return isinstance(pattern, str) and pattern in _WIDENED
+
+
+def release_aware_pattern(pattern):
+    """The release-aware form of a frozen namespace pattern a policy file spells.
+
+    The view answers a frozen pattern held in code; a pattern read from a
+    policy file is data the view cannot see, so a successor that passes the
+    policy to the frozen reader asks for each pattern's release-aware form
+    here. Anything that is not one of the frozen patterns is refused by name:
+    widening an arbitrary pattern would read as a release fix.
+    """
+    if not _frozen_pattern(pattern):
+        raise HistoricalDeiError("HISTORICAL_DEI_NOT_A_FROZEN_NAMESPACE_PATTERN:" + repr(pattern)[:120])
+    return _WIDENED[pattern]
 
 
 class _ReleaseAwareRe:

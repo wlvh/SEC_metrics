@@ -9,6 +9,20 @@ facts are read from when the period is pinned.
 It exists as a successor file because ``scripts/vnext/normal_accession_results.py``
 is byte-bound by the ``issue_28_v13`` rule set; changing it would stop every
 existing ordinary Run from loading its own Requirement.
+
+One difference from the frozen reader, and only where it refuses: the policy
+file spells the US GAAP, SRT and DEI namespaces as a year alone, and the FASB
+named its releases through 2021 with the release date after the year
+(``us-gaap/<year>-<month>-<day>``, ``srt/<year>-<month>-<day>``). A report of
+that era stops at NORMAL_ACCESSION_STANDARD_NAMESPACE_CHANGED (a required scope
+names an SRT axis) or NORMAL_ACCESSION_CONCEPT_NAMESPACE_NOT_APPROVED (the concept's own
+namespace) - a program that cannot read the release, not a missing
+disclosure. ``inspect_with_dated_releases`` runs the frozen inspection first;
+only when it refuses for one of those two reasons is the same inspection run
+again with each namespace pattern replaced by its release-aware form
+(``historical_dei.release_aware_pattern``: the date form, nothing else), and
+the inspection then records that it did. A report whose namespaces are the
+year alone is read by the frozen inspection and its records are unchanged.
 """
 import copy
 from pathlib import Path
@@ -18,6 +32,7 @@ from sec_urls import companyfacts_url, submissions_url
 from .calculator import metric_is_applicable, withheld_metric_result, calculate_observation_metric
 from .canonical import content_hash, sha256_file, strict_json_file
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware_pattern
 from .historical_filing_inventory import filing_inventory
 from .normal_accession_results import (POLICY_PATH, _AUTHORITY, NormalAccessionError,
                                        inspect_ordinary_accession_facts)
@@ -35,9 +50,46 @@ from .zero_ai_r2 import (_load_deterministic_catalog, _compiled_deterministic_sp
 RECORD_TYPE = "HISTORICAL_ACCESSION_NATIVE_RESULTS"
 
 
+# The frozen reader's two refusals that mean "this namespace release is not
+# the year alone", and the policy keys that spell those namespaces.
+DATED_RELEASE_REFUSALS = ("NORMAL_ACCESSION_STANDARD_NAMESPACE_CHANGED",
+                          "NORMAL_ACCESSION_CONCEPT_NAMESPACE_NOT_APPROVED")
+NAMESPACE_POLICY_KEYS = ("us_gaap_namespace_pattern", "srt_namespace_pattern",
+                         "dei_namespace_pattern")
+
+
 def _need(condition, reason):
     if not condition:
         raise NormalAccessionError(reason)
+
+
+def release_aware_policy(policy):
+    """The policy with each namespace pattern replaced by its release-aware form."""
+    return {**policy, **{key: release_aware_pattern(policy[key]) for key in NAMESPACE_POLICY_KEYS}}
+
+
+def inspect_with_dated_releases(**arguments):
+    """The frozen inspection, run again release-aware only when it refuses for a release.
+
+    Returns the inspection and the policy it was run with. Any other refusal
+    is the frozen one, raised or recorded as the frozen reader leaves it.
+    """
+    try:
+        inspection = inspect_ordinary_accession_facts(**arguments)
+    except NormalAccessionError as error:
+        if str(error) not in DATED_RELEASE_REFUSALS:
+            raise
+        refused = [str(error)]
+    else:
+        refused = sorted({conflict["reason"] for conflict in inspection["conflicts"]}
+                         & set(DATED_RELEASE_REFUSALS))
+        if not refused:
+            return inspection, arguments["policy"]
+    policy = release_aware_policy(arguments["policy"])
+    inspection = inspect_ordinary_accession_facts(**{**arguments, "policy": policy})
+    return ({**inspection, "dated_release_successor": {
+        "frozen_refusal": refused,
+        "namespace_patterns": {key: policy[key] for key in NAMESPACE_POLICY_KEYS}}}, policy)
 
 
 def resolve_historical_accession_metrics(*, repo_root: Path, company_id: str, period_selection):
@@ -111,7 +163,7 @@ def resolve_historical_accession_metrics(*, repo_root: Path, company_id: str, pe
                       "HISTORICAL_ACCESSION_AMENDED_TARGET_NOT_IMPLEMENTED")
                 _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
                       "HISTORICAL_ACCESSION_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
-                inspection = inspect_ordinary_accession_facts(
+                inspection, used_policy = inspect_with_dated_releases(
                     raw_bytes=source["raw_bytes"], source_reference=source["source_reference"],
                     source_set_manifest=manifest, expected_cik=prepared["entity"],
                     period_end=period["period_end"], route=catalog["metrics"][metric_id],
@@ -133,7 +185,7 @@ def resolve_historical_accession_metrics(*, repo_root: Path, company_id: str, pe
                                     "source_role": reference["source_role"],
                                     "source_set_manifest_id": manifest["source_set_manifest_id"],
                                     "verified_claim_ids": [c["verified_claim_id"] for c in selected],
-                                    "ordinary_policy_hash": content_hash(value=policy),
+                                    "ordinary_policy_hash": content_hash(value=used_policy),
                                     "source_measure": item["measure"]})
                 result, trace = calculate_observation_metric(compiled_spec=spec, target=target,
                                                              company_traits=traits,
