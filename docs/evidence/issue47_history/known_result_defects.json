@@ -6622,6 +6622,33 @@
      "integration": "MERGED_AND_REMINTED (481945f0)"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "978e28e9",
+   "own_commit_at_read": "4f4091b7",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; unchanged since f6a4e442",
+   "baseline": "Read since f6a4e442: one commit and its file list (docs/evidence/issue28_continuous/collab54-interfaces-20261003/, continuation.md, execution-state.json, AGENTS.md); merged as 5b1f66ef.",
+   "increments": [
+    {
+     "commit": "978e28e9",
+     "marker": "[shared-with-#54]",
+     "subject": "Document native inputs, C04 and trust boundaries for company hand-over",
+     "affects_47": "None for #47's results: documentation of #28's ordinary interfaces for #54. Its findings on the shared machinery agree with #47's own measurement (docs/evidence/issue47_history/collab-54/README.md section 5): checkpoint_installation has no company parameter and installs every admitted capture, the trust checkpoint is read from the code root's .git, and the computing side cannot be made company-only by directory naming alone.",
+     "integration": "MERGED (5b1f66ef); no snapshot, closure or receipt moved (mint --check unchanged)"
+    }
+   ],
+   "replies": [
+    {
+     "to": "#28 comments 5956051577 (E01) and 5956052190 (D02) on Issue #47",
+     "comment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5957449714",
+     "what": "E01: #47's reader repaired (9caada4e) and the earlier 'does not reproduce' corrected (4f4091b7). D02: rule v4 (c024b50c) removes a list member only under a proven closed-class governor; the provable range and its open-class residue stated, with the measured cost (Pfizer's tax-authority paragraph, FY2020-FY2024, returns)."
+    }
+   ]
   }
  ]
 }
