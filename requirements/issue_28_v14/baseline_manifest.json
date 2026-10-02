@@ -7,15 +7,15 @@
   "contract_revision": "continuous-calls-and-b13-v1",
   "parent": {
     "requirement_id": "issue_28_v13",
-    "requirement_closure_hash": "sha256:51890efc877ffc6124184a064ff17671652301ba1ecf1106e02b5a31e19a5483",
+    "requirement_closure_hash": "sha256:9900fbc56b809b19d86f688521a3372dd9576a329262a03ee656d42bcf356c6c",
     "snapshot_files": {
       "decision_register.json": {
-        "sha256": "2ee5980add0d483330521c7a5a2d8aac00776d13f9e621c692384fa1a8beb3c9",
-        "size": 9408
+        "sha256": "83ee3d4f2bfe6c204ce82793b452f9a381b973bce6b31b43ec607c30b8219d97",
+        "size": 9524
       },
       "baseline_manifest.json": {
-        "sha256": "7ff736eb87746a7d32a2df4d41ebaa35924ec9db6695cafa86b7fc81492499fd",
-        "size": 81094
+        "sha256": "b077dd052e6ddae795a11f084b5dc78548ab17269689d7a975c0cf0637070161",
+        "size": 81784
       },
       "invariant_profile.json": {
         "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
@@ -749,8 +749,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "45519d79515c45950a1d14e530e365c4a6c34c7c69d55733458a91ceb1eb554a",
-        "size": 8767
+        "sha256": "dea252a4db8a0611cf6d6634d0bb4d4a75b137bd7636e561d2f74db05b5b1673",
+        "size": 8879
       },
       "config/issue28_recovery_110_v1.json": {
         "sha256": "9af01a329f156b6d98708909db2c14656ad2bdc1a2690386c03e2eead66d2df2",
@@ -2275,6 +2275,14 @@
       "scripts/vnext/ordinary_c02_auditor_update_v3.py": {
         "sha256": "cc909d984b21979cb3cd786c5e314511aa1db747de64f352e755f50896cea551",
         "size": 3106
+      },
+      "scripts/vnext/e01_header_document_guard_28_v1.py": {
+        "sha256": "fbb91a55ba974e6e0812045368c4f0d3dd609517cbbe9ff54589ced6883a343f",
+        "size": 1618
+      },
+      "scripts/vnext/ordinary_e01_item_text_input_v2.py": {
+        "sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e",
+        "size": 11269
       }
     },
     "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"

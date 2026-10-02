@@ -1,0 +1,98 @@
+{
+  "record_type": "ISSUE28_PEER_D02_V3_BOUNDED_DIAGNOSIS",
+  "peer_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
+  "module_git_blob": "5198e9028620c2b57c0d7328d73a56260a61d9db",
+  "module_sha256": "85d09ae72d44f898ebca71ae0fd0d1b6c9bef153708f6289f8fdd60db6e492c2",
+  "terms_sha256": "085310fdfcfa5fede670158145b24a384354e8ba4878d3baf27ff461e0afe5de",
+  "rows": [
+    {
+      "case": "reported_P2",
+      "text": "During 2025, our company faced litigation, regulatory proceedings and fines.",
+      "actual": {
+        "occurrences": [
+          {
+            "start": 31,
+            "end": 41,
+            "text": "litigation",
+            "category_mention": false,
+            "why": "GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"
+          }
+        ],
+        "exposure": [
+          "REGISTRANT_FACES_A_LEGAL_MATTER"
+        ],
+        "prose": true,
+        "left_out": false,
+        "terms_hash": "sha256:d4fe49d43d466403ea5e4dc052c54737dfe34cf5429457a4802574deac19ec5d"
+      }
+    },
+    {
+      "case": "known_named_subject_limit",
+      "text": "Kestrel defended regulatory proceedings, litigation and fines.",
+      "actual": {
+        "occurrences": [
+          {
+            "start": 41,
+            "end": 51,
+            "text": "litigation",
+            "category_mention": true,
+            "why": "LIST_MEMBER"
+          }
+        ],
+        "exposure": [],
+        "prose": true,
+        "left_out": true,
+        "terms_hash": "sha256:d4fe49d43d466403ea5e4dc052c54737dfe34cf5429457a4802574deac19ec5d"
+      }
+    },
+    {
+      "case": "known_open_verb_limit",
+      "text": "In 2025, litigation, fines and penalties increased.",
+      "actual": {
+        "occurrences": [
+          {
+            "start": 9,
+            "end": 19,
+            "text": "litigation",
+            "category_mention": true,
+            "why": "LIST_MEMBER"
+          }
+        ],
+        "exposure": [],
+        "prose": true,
+        "left_out": true,
+        "terms_hash": "sha256:d4fe49d43d466403ea5e4dc052c54737dfe34cf5429457a4802574deac19ec5d"
+      }
+    },
+    {
+      "case": "adviser_category_control",
+      "text": "We engage outside counsel to advise us on finance, regulatory, litigation and other matters.",
+      "actual": {
+        "occurrences": [
+          {
+            "start": 63,
+            "end": 73,
+            "text": "litigation",
+            "category_mention": true,
+            "why": "LIST_MEMBER"
+          }
+        ],
+        "exposure": [],
+        "prose": true,
+        "left_out": true,
+        "terms_hash": "sha256:d4fe49d43d466403ea5e4dc052c54737dfe34cf5429457a4802574deac19ec5d"
+      }
+    }
+  ],
+  "material_type": "FOUR_SYNTHETIC_SENTENCES; NO_RESULT_IMPACT_INFERRED",
+  "reported_P2_closed_at_function_only": true,
+  "known_remaining_exclusion_limits_reproduced": true,
+  "own_v2_runtime_gate": "REMAINS_SUSPENDED",
+  "v3_code_received_into_runtime": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "whole_result_credit": false
+}
