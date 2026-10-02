@@ -2,6 +2,62 @@
  "acceptance_rule": "An acceptance covers a position only while the value it names, and the identity its reading recorded, are what that position still carries. A later Run computing something else, from other filings, over another window or under another unit, scope or meaning, has not been checked. A result a defect withdraws is never accepted, whatever is written here.",
  "acceptances": [
   {
+   "acceptance_id": "CONTENT_A01_JPMORGAN_2021",
+   "accepted_value": "0.15",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+     "result_id": "sha256:2266e9dab122a592eb8d761bd384a00d381c3bbd31f59e76ab5b9b38031ca4c8",
+     "run_id": "run:historical-period:b6970de121f20d8feb29972ff06dad630536a516c1276ca094f7bdcd6beea8f1"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+    "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-round-66569eec.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A01",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "TierOneRiskBasedCapitalToRiskWeightedAssets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "0.150"
+       }
+      },
+      "concept": "TierOneRiskBasedCapitalToRiskWeightedAssets",
+      "role": "tier_one_ratio",
+      "value": "0.150"
+     }
+    ],
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A01_JPMORGAN_2022",
    "accepted_value": "0.149",
    "checked_identity": {
@@ -222,6 +278,62 @@
     "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
     "formula_id": "direct",
     "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A02_JPMORGAN_2021",
+   "accepted_value": "0.131",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+     "result_id": "sha256:06a635d1dc65d2761ae37999ed74b0cb17f94df2affc2aa53941bfc82b1ffd08",
+     "run_id": "run:historical-period:287584d360d5033829057353c242b66573df43cbeb355ff73aac8db80b795f9c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+    "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-round-66569eec.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A02",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "CommonEquityTier1CapitaltoRiskWeightedAssets": {
+        "namespaces": [
+         "jpm"
+        ],
+        "problem": null,
+        "value": "0.131"
+       }
+      },
+      "concept": "CommonEquityTier1CapitaltoRiskWeightedAssets",
+      "role": "cet1_ratio",
+      "value": "0.131"
+     }
+    ],
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm"
    },
    "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
@@ -23035,6 +23147,46 @@
     "tables_naming_the_scope_literal": 1
    },
    "what_this_does_not_establish": "what is established is that the row under the approved scope carries this value. It does not establish that the scope is the right scope, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B12_SALESFORCE_2022",
+   "accepted_value": "43700000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+     "result_id": "sha256:07c162bc77c8246d61f1ced7545a35000bdcf7b811421868c034350988e7d4cf",
+     "run_id": "run:historical-period:d9cffb42be4099d04c8340a3591399b5c01839525b9ee7f64db00b19ce69558d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-22-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-01-31",
+    "period_start": "2022-01-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2022.json",
+   "method": "the filing's own inline XBRL fact for remaining performance obligation at the period end, undimensioned, against the accession-instance value the route published.",
+   "metric_id": "B12",
+   "period_end": "2022-01-31",
+   "read_from": {
+    "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+    "context": "instant 2022-01-31, no explicit members",
+    "document": "evidence/request_attempts/ad/ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91/crm-20220131.htm"
+   },
+   "what_this_does_not_establish": "that RPO is a good substitute for ARR, which is a product question the approved definition already answers by naming it a substitute. It establishes that the published figure is the registrant's own reported remaining performance obligation at the period end."
   },
   {
    "acceptance_id": "CONTENT_B12_SALESFORCE_2023",
@@ -65298,6 +65450,7 @@
   "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2023.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2024.json",
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2022.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json",
@@ -65311,7 +65464,8 @@
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
-  "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json"
+  "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+  "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-round-66569eec.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
@@ -65343,6 +65497,12 @@
    "acceptances_contributed": 32,
    "content_sha256": "sha256:a2f5cfcd73503e5d656ba0f8451e715625e56632f8dc933127d764613e2de217",
    "positions_examined": 5,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-round-66569eec.json": {
+   "acceptances_contributed": 2,
+   "content_sha256": "sha256:1c32187e996053ca9fc8568c6e49d8a03a9e3200d7f43632f445dbb33cc436c7",
+   "positions_examined": 1,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json": {
@@ -65576,6 +65736,12 @@
   "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json": {
    "acceptances_contributed": 1,
    "content_sha256": "sha256:5a08b16b315bdfe8cd0f027b5df8f4ac5d11f5895b16ab63ae2cdd02d930866f",
+   "positions_examined": null,
+   "positions_examined_is_null_because": "this reading's shape carries no per_position map"
+  },
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2022.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:f17238ddc3e1fa74910273bf8388ceaf0e333c2c056614f2db4362ebd464503c",
    "positions_examined": null,
    "positions_examined_is_null_because": "this reading's shape carries no per_position map"
   },

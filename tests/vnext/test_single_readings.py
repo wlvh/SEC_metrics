@@ -81,8 +81,9 @@ class TheRemainingPerformanceObligationTest(unittest.TestCase):
                       _load("rpo-read.json")["facts_not_taken"])
 
     def test_the_older_years_are_each_read_from_their_own_filing(self):
-        """Salesforce FY2023/FY2024, read the same way from the export."""
-        for name in ("rpo-read-salesforce-2023.json", "rpo-read-salesforce-2024.json"):
+        """Salesforce FY2022-FY2024, read the same way from the export."""
+        for name in ("rpo-read-salesforce-2022.json", "rpo-read-salesforce-2023.json",
+                     "rpo-read-salesforce-2024.json"):
             with self.subTest(name):
                 row = _load(name)
                 raw = saved_bytes(repo_root=ROOT, relative=row["read_from"]["document"])

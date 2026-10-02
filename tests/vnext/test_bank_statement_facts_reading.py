@@ -81,8 +81,8 @@ class TheCommittedReadingReDerives(unittest.TestCase):
             self.assertIn("MATCH", {row["verdict"] for row in rows}, path)
             # A published value goes unread only where the target report restates
             # the prior year the result took from the prior filing.
-            self.assertEqual({"PRIOR_YEAR_RESTATED_IN_THE_TARGET"},
-                             {row["why_not_read"] for row in rows if row["verdict"] == "NOT_READ"})
+            self.assertLessEqual({row["why_not_read"] for row in rows if row["verdict"] == "NOT_READ"},
+                                 {"PRIOR_YEAR_RESTATED_IN_THE_TARGET"}, path)
 
     def test_the_restated_prior_year_end_is_what_the_reading_found(self):
         """FY2021 A05: the FY2021 report restates total assets at the end of 2020."""

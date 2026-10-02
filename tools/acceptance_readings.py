@@ -149,7 +149,10 @@ RPO_BATCH = EVIDENCE + "rpo-read-batch.json"
 # The 50-period batch's two older years, one file per position (the shape is
 # a single coordinate), each from that year's own filing.
 RPO_FULL_FRAME = (EVIDENCE + "rpo-read-salesforce-2023.json", EVIDENCE + "rpo-read-salesforce-2024.json")
-RPO_READINGS = (RPO, RPO_BATCH, *RPO_FULL_FRAME)
+# Salesforce FY2022, whose dated FASB release the accession route reads from
+# targeted-round-66569eec on: compared with that round's result.
+RPO_ROUND = (EVIDENCE + "rpo-read-salesforce-2022.json",)
+RPO_READINGS = (RPO, RPO_BATCH, *RPO_FULL_FRAME, *RPO_ROUND)
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
@@ -172,7 +175,10 @@ BANK_MEASURES_READINGS = (BANK_MEASURES_FULL_FRAME, BANK_MEASURES_ROUND)
 # by tools/read_bank_statement_facts.py with the catalog's approved concepts
 # and formulas, the prior year from the prior annual report.
 BANK_STATEMENT_FULL_FRAME = EVIDENCE + "bank-statement-facts-read-full-frame.json"
-BANK_STATEMENT_READINGS = (BANK_STATEMENT_FULL_FRAME,)
+# JPMorgan FY2021 A01/A02, which the batch withheld and targeted-round-66569eec
+# published once the accession route read the dated FASB release.
+BANK_STATEMENT_ROUND = EVIDENCE + "bank-statement-facts-read-round-66569eec.json"
+BANK_STATEMENT_READINGS = (BANK_STATEMENT_FULL_FRAME, BANK_STATEMENT_ROUND)
 READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES,
             *GOVERNANCE_READINGS,
             TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
