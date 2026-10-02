@@ -30,7 +30,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (BANK_MEASURES_READINGS, C02_COMPOSITION,  # noqa: E402
+from acceptance_readings import (BANK_MEASURES_READINGS, BANK_STATEMENT_READINGS,  # noqa: E402
+                                 C02_COMPOSITION,
                                  C02_COMPOSITION_READINGS,
                                  C02_OLDER_YEARS_READINGS, C03_ACROSS_PROXIES, COMPENSATION, CROSS,
                                  CROSS_READINGS,
@@ -98,6 +99,22 @@ BANK_MEASURES_LIMIT = (
  "row is the measure the definition asks for and covers the whole issuer (the glossary, "
  "segment, introduction and footnote witnesses): this reading takes the report's own "
  "row label for that. Nor does it establish " + COMMON)
+BANK_STATEMENT_METHOD = (
+ "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py "
+ "with the statement reader's parser (every value a decimal, scale and sign applied, "
+ "duplicates consistent or no value) and the approved concepts, periods, filings and "
+ "formulas of catalog/deterministic_metrics.json - the definition, not the route's code, "
+ "none of which it imports. A component the catalog takes from the prior filing is read "
+ "from the prior annual report, and the target report's comparative for that year must "
+ "equal it. The capital ratios read only facts carrying exactly the required dimensions; "
+ "a fact the filer tags under its own namespace with the approved name is read and its "
+ "namespace recorded. The route reads Company Facts (and, for the capital ratios, the "
+ "accession's XBRL instance), so for most components this is another source for the same "
+ "facts; for the capital ratios it is the same facts in another file.")
+BANK_STATEMENT_LIMIT = (
+ "what is established is that the approved concepts carry these values in these filings "
+ "for these periods and that the catalog's formula produces the published number. It does "
+ "not establish " + COMMON)
 LODGING_LIMIT = ("what is established is that the row under the approved scope "
                  "carries this value. It does not establish that the scope is "
                  "the right scope, nor " + COMMON)
@@ -240,6 +257,9 @@ def _read_from(position):
         return {"document": case["document"],
                 "reads": [{key: read[key] for key in ("table_ordinal", "row", "figure", "window")
                            if key in read} for read in row["reads"]]}
+    if path in BANK_STATEMENT_READINGS:
+        return {"document": case["document"], "prior_document": case["prior_document"],
+                "formula_id": row["formula_id"], "components": row["components"]}
     if path in LODGING_READINGS:
         return {"document": case["document"], "table_ordinal": case["read"]["table_ordinal"],
                 "row_text": case["read"]["row_text"],
@@ -299,6 +319,8 @@ def _method_and_limit(position):
         return STATEMENT_METHOD, STATEMENT_LIMIT
     if path in BANK_MEASURES_READINGS:
         return BANK_MEASURES_METHOD, BANK_MEASURES_LIMIT
+    if path in BANK_STATEMENT_READINGS:
+        return BANK_STATEMENT_METHOD, BANK_STATEMENT_LIMIT
     if path in LODGING_READINGS:
         return LODGING_METHOD, LODGING_LIMIT
     if path in EVENT_READINGS:

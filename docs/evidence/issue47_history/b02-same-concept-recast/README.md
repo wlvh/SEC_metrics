@@ -25,3 +25,11 @@
 - `tests/vnext/test_historical_paired_measure.py`：Pfizer FY2021 真实的同概念重述被扣留；FY2024 对 FY2023 的 Revenues 是另一个真实重述（595.53 亿对首次报告的 584.96 亿），也被扣留；把上年取值改成目标年报报的数、或从目标年报的声明里去掉上一年（构造），都不问；概念不同的扣留不带重述标记，原记录不变。
 - 注错（`injections.py`，内存里改模块副本，不改检出文件）：四个注错——恢复"同概念不问"、把没报上年当成重述、给每个问题都标重述、把同概念的组合记成桥接——各由为它写的用例抓到，结果在 `injections.json`。
 - 缺陷按坐标登记 `B02_PFIZER_2021_PRIOR_YEAR_AS_FIRST_REPORTED_AGAINST_A_RECAST`，撤回 frame4 发布的值；等新闭包下的定向重跑给出扣留结果后，按结果编号与闭包释放。
+
+## 补测：A05 与 A06（这条规则当初没量到的两项）
+
+上面的测量只问了 B02 与 A07。这条规则问的是"已批分支从当年和上年两份申报各读一次的每一组概念"，A05 的总资产、A06 的股东权益也是这样读的：上年末余额取自上一年的申报。所以它们一直在规则的范围里，只是当初没被量到。银行报表阅读（`tools/read_bank_statement_facts.py`）读出了 JPMorgan FY2021 的 A05 不一致：FY2021 年报在同一概念 `Assets` 下报的 2020 年末总资产是 3,384,757,000,000，而发布值用的是 FY2020 年报首次报告的 3,386,071,000,000。
+
+`measure.py` 加了 `--metrics`（不带它时问 B02、A07，重新运行与 `measured-frame4.json` 逐字节相同）；A05、A06 配对的是时点余额，Company Facts 的时点事实没有起始日，声明里起始日等于期末，测量按这个写法把时点事实也交给检查。frame4 中 A05、A06 有值的 10 个位置，只有 JPMorgan FY2021 的 A05 移动（`measured-frame4-a05-a06.json`），与报表阅读找到的是同一处，A06 五年都不动。两条路径互相独立：一条读两份年报自己的 inline XBRL，一条读保存的 Company Facts。
+
+规则本身不用改：frame4 的结果是在加这条规则之前的闭包下算的。缺陷按坐标登记为 `A05_JPMORGAN_2021_PRIOR_YEAR_ASSETS_AS_FIRST_REPORTED_AGAINST_A_RECAST`，撤回 frame4 的发布值；带这条规则的闭包下定向重跑出扣留结果后，按结果编号与闭包释放。

@@ -76,8 +76,9 @@ def window_candidates(*, filings, cik, start, end, codes, header=None):
 
 def main():
     from bind_acceptance_readings import identity_for
-    from read_event_counts import (_case, _case_input, filings_in_index, history_blocks_reached,
-                                   restored_root_headers)
+    from read_event_counts import (_case, _case_input, block_filings, filings_in_index,
+                                   history_blocks_reached, restored_root_headers, unique_filings)
+    from sec_urls import submissions_file_url
     from sec_urls import submissions_url
     from vnext.annual_update import saved_source
     from vnext.historical_coverage import select_receipt
@@ -111,11 +112,17 @@ def main():
         start, end = period["period_start"], period["period_end"]
         submissions = json.loads(saved["raw"])
         # A window a history block may reach holds filings this index's recent
-        # table does not list; counting only the recent table would call it empty.
-        reached = history_blocks_reached(submissions, start)
-        if reached:
-            raise SystemExit("WINDOW_REACHES_A_HISTORY_BLOCK:" + label + ":" + ",".join(reached))
-        seen, unreadable = window_candidates(filings=filings_in_index(submissions), cik=cik,
+        # table does not list; counting only the recent table would call it
+        # empty. Each block it may reach is read, and refused unless it is the
+        # block its index declares (read_event_counts.block_filings).
+        filings, blocks = filings_in_index(submissions), {}
+        for name in history_blocks_reached(submissions, start):
+            block = saved_source(repo_root=source, url=submissions_file_url(file_name=name))
+            if block is None:
+                raise SystemExit("HISTORY_BLOCK_NOT_SAVED:" + label + ":" + name)
+            blocks[name] = block["proof"]["request_repo_relative_path"]
+            filings.extend(block_filings(submissions=submissions, name=name, raw=block["raw"]))
+        seen, unreadable = window_candidates(filings=unique_filings(filings), cik=cik,
                                              start=start, end=end, codes=codes, header=header)
         candidates = {basis: sum(len(entry["candidate_items"]) for entry in entries)
                       for basis, entries in seen.items()}
@@ -136,6 +143,7 @@ def main():
                     "filings_in_window": [entry["accession"] for entry in seen["filing_date"]],
                     "filings": seen, "headers_not_saved": unreadable,
                     "candidate_items_by_basis": candidates, "published": published,
+                    "history_blocks": blocks,
                     "result_reason_code": None if result is None else result.get("reason_code"),
                     "verdict": verdict}
         if published is not None:

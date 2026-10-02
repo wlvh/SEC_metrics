@@ -72,17 +72,23 @@ class TheOlderWindowsAreReadOffTheExportTest(unittest.TestCase):
     the acquisition's export, so the zero is recomputed without the root.
     """
 
-    BATCH = "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json"
-
     def test_every_committed_position_recounts_from_the_bytes_it_names(self):
-        from tools.acceptance_readings import saved_bytes
-        from tools.read_event_counts import header_items, items_of
-        rows = json.loads((ROOT / self.BATCH).read_text(encoding="utf-8"))["per_position"]
+        from tools.acceptance_readings import E01_CANDIDATE_READINGS, saved_bytes
+        from tools.read_event_counts import (block_filings, header_items, items_of,
+                                             unique_filings)
+        rows = {(path, label): row for path in E01_CANDIDATE_READINGS if path != READING
+                for label, row in json.loads((ROOT / path).read_text(encoding="utf-8"))[
+                    "per_position"].items()}
         self.assertTrue(rows)
-        for label, row in rows.items():
-            with self.subTest(label):
+        for (path, label), row in rows.items():
+            with self.subTest(path=path, label=label):
                 submissions = json.loads(saved_bytes(repo_root=ROOT,
                                                      relative=row["submissions_index"]))
+                # The history blocks the window reached, read back by the paths recorded.
+                filings = filings_in_index(submissions)
+                for name, block in sorted(row.get("history_blocks", {}).items()):
+                    filings.extend(block_filings(submissions=submissions, name=name,
+                                                 raw=saved_bytes(repo_root=ROOT, relative=block)))
                 recorded = {entry["accession"]: entry["header"]
                             for entries in row["filings"].values() for entry in entries
                             if "header" in entry}
@@ -96,7 +102,7 @@ class TheOlderWindowsAreReadOffTheExportTest(unittest.TestCase):
                     return (items_of(saved_bytes(repo_root=ROOT, relative=recorded[accession])
                                      .decode("utf-8", errors="replace")), recorded[accession])
                 seen, unreadable = reader.window_candidates(
-                    filings=filings_in_index(submissions), cik=int(submissions["cik"]),
+                    filings=unique_filings(filings), cik=int(submissions["cik"]),
                     start=row["window"][0], end=row["window"][1], codes=reader.candidate_codes(),
                     header=header)
                 self.assertEqual(row["filings"], seen)

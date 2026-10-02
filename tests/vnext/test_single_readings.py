@@ -80,6 +80,20 @@ class TheRemainingPerformanceObligationTest(unittest.TestCase):
         self.assertIn({"instant": row["period_end"], "members": [], "value": "63400000000.0"},
                       _load("rpo-read.json")["facts_not_taken"])
 
+    def test_the_older_years_are_each_read_from_their_own_filing(self):
+        """Salesforce FY2023/FY2024, read the same way from the export."""
+        for name in ("rpo-read-salesforce-2023.json", "rpo-read-salesforce-2024.json"):
+            with self.subTest(name):
+                row = _load(name)
+                raw = saved_bytes(repo_root=ROOT, relative=row["read_from"]["document"])
+                self.assertEqual(row["document_sha256"], hashlib.sha256(raw).hexdigest())
+                value, not_taken = single.read_instant_fact(
+                    text=raw.decode("utf-8-sig", errors="replace"),
+                    concept="us-gaap:RevenueRemainingPerformanceObligation",
+                    period_end=row["period_end"])
+                self.assertEqual((Decimal(row["read"]), row["facts_not_taken"]), (value, not_taken))
+                self.assertEqual(("MATCH", row["published"]), (row["verdict"], str(int(value))))
+
 
 class TheCompensationTableTest(unittest.TestCase):
 

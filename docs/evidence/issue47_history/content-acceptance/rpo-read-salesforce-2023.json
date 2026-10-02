@@ -1,0 +1,59 @@
+{
+ "and_what_the_definition_insists_on": "B12 is explicitly the RPO/cRPO substitute and explicitly not ARR or churn. The public row carries that: its notes template is 'RPO != ARR; cRPO != ARR. Selected accession instance fact.' The reading checks the number; this checks that the number is not published under the name of something else.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "checked_identity": {
+  "bound_from": {
+   "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+   "result_id": "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d",
+   "run_id": "run:historical-period:5a48c651933111d4463caf6af470549aac0dc8a257e3c01bbfcfa2bc160b3e65"
+  },
+  "checked_against_the_reading": [
+   "value",
+   "filings_contain_the_filing_the_reading_opened"
+  ],
+  "entities": [],
+  "established_by": "RECORDED_AT_READING_TIME",
+  "filings": [
+   "0001108524-23-000011"
+  ],
+  "not_named_by_the_reading": [
+   "window"
+  ],
+  "period_end": "2023-01-31",
+  "period_start": "2023-01-31",
+  "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+  "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+  "unit": "USD",
+  "value_kind": null
+ },
+ "company_id": "salesforce",
+ "document_sha256": "577ba795230254fd897c3430920e4aa5a236ecaac6ef6fc99a691942e0966f15",
+ "facts_not_taken": [
+  {
+   "instant": "2022-01-31",
+   "members": [],
+   "value": "43700000000.0"
+  }
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "metric_id": "B12",
+ "period_end": "2023-01-31",
+ "production_authorized": false,
+ "published": "48600000000",
+ "read": "48600000000",
+ "read_from": {
+  "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+  "context": "instant 2023-01-31, no explicit members",
+  "document": "evidence/request_attempts/57/577ba795230254fd897c3430920e4aa5a236ecaac6ef6fc99a691942e0966f15/crm-20230131.htm"
+ },
+ "reader": "tools/read_single_facts.py",
+ "record_type": "ISSUE_47_RPO_READ",
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
+ "verdict": "MATCH",
+ "what_this_does_not_establish": "that RPO is a good substitute for ARR, which is a product question the approved definition already answers by naming it a substitute. It establishes that the published figure is the registrant's own reported remaining performance obligation at the period end.",
+ "what_this_is": "B12 read from the filing's own inline XBRL. The route resolves it from the accession instance, so this is the same kind of cross-source check as the statement metrics: the same fact, reached through the primary document rather than through the accession's fact set."
+}

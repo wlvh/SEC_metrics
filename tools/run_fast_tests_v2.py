@@ -341,6 +341,10 @@ SOURCE_TESTS += ("tests.vnext.test_c03_across_proxies_reading",)
 # The bank-measures reading re-derived from the five saved annual reports
 # (checkout and export) and its guards on constructed tables: 20 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_bank_measures_reading",)
+# The bank statement-facts reading (A01, A02, A05-A08, A10 off the inline XBRL)
+# re-derived from the five annual reports and their prior reports, and its
+# guards on constructed documents: 6 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_bank_statement_facts_reading",)
 # The XBRL instances an annual accession's index lists, declared for C04 and
 # B06 and checked against the frozen reader run for real: 52 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_instance_sources",)
@@ -783,6 +787,8 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_c03_across_proxies_reading": 6,
     # Measured locally at 20 seconds; not yet measured in CI.
     "tests.vnext.test_bank_measures_reading": 20,
+    # Measured locally at 6 seconds; not yet measured in CI.
+    "tests.vnext.test_bank_statement_facts_reading": 6,
     "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_balance_cannot_inherit_an_unspecified_date": 5,
     "tests.vnext.test_e01_eight_o_one_reading": 3,
     "tests.vnext.test_event_count_reading": 2,

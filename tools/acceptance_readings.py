@@ -78,7 +78,10 @@ E01_EIGHT_O_ONES = EVIDENCE + "e01-eight-o-one-read.json"
 E01_CANDIDATES = EVIDENCE + "e01-content-confirmed-read.json"
 # The same reading of the 41-period batch's older windows, over a restored root.
 E01_CANDIDATES_BATCH = EVIDENCE + "e01-content-confirmed-read-batch.json"
-E01_CANDIDATE_READINGS = (E01_CANDIDATES, E01_CANDIDATES_BATCH)
+# The 50-period batch's two older Salesforce windows, which reach a history
+# block: the reading reads it, refused unless it is the block its index declares.
+E01_CANDIDATES_FULL_FRAME = EVIDENCE + "e01-content-confirmed-read-full-frame.json"
+E01_CANDIDATE_READINGS = (E01_CANDIDATES, E01_CANDIDATES_BATCH, E01_CANDIDATES_FULL_FRAME)
 # C02 under the owner's composition-fact meaning: the two-direction reading of
 # c02-composition-facts/, compared with the published results by
 # tools/read_c02_composition.py.
@@ -138,20 +141,30 @@ D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
 RPO = EVIDENCE + "rpo-read.json"
 # Another year's B12, read the same way from that year's own filing.
 RPO_BATCH = EVIDENCE + "rpo-read-batch.json"
-RPO_READINGS = (RPO, RPO_BATCH)
+# The 50-period batch's two older years, one file per position (the shape is
+# a single coordinate), each from that year's own filing.
+RPO_FULL_FRAME = (EVIDENCE + "rpo-read-salesforce-2023.json", EVIDENCE + "rpo-read-salesforce-2024.json")
+RPO_READINGS = (RPO, RPO_BATCH, *RPO_FULL_FRAME)
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 # The same reading of the 41-period batch's older years, over a restored root.
 DEBT_TO_EQUITY_BATCH = EVIDENCE + "debt-to-equity-read-batch.json"
-DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH)
+# The 50-period batch's Salesforce FY2024, over the restored root.
+DEBT_TO_EQUITY_FULL_FRAME = EVIDENCE + "debt-to-equity-read-full-frame.json"
+DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH, DEBT_TO_EQUITY_FULL_FRAME)
 # The bank's A03, A04, A09, A11, A12 and A13 read off its annual report's own
 # tables by tools/read_bank_measures.py, which imports none of the financial
 # inspectors: one file per closure its positions compare - the 50-period batch,
 # and the round that ran the older-wording successors.
 BANK_MEASURES_FULL_FRAME = EVIDENCE + "bank-measures-read-full-frame.json"
 BANK_MEASURES_READINGS = (BANK_MEASURES_FULL_FRAME,)
+# The bank's A01, A02, A05-A08 and A10 read off its annual reports' inline XBRL
+# by tools/read_bank_statement_facts.py with the catalog's approved concepts
+# and formulas, the prior year from the prior annual report.
+BANK_STATEMENT_FULL_FRAME = EVIDENCE + "bank-statement-facts-read-full-frame.json"
+BANK_STATEMENT_READINGS = (BANK_STATEMENT_FULL_FRAME,)
 READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES,
             *GOVERNANCE_READINGS,
             TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
@@ -160,7 +173,8 @@ READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONE
             # their acceptance files are written: they are being read, and no
             # older-year C02 value is accepted yet.
             C02_COMPOSITION,
-            *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES, *BANK_MEASURES_READINGS)
+            *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES, *BANK_MEASURES_READINGS,
+            *BANK_STATEMENT_READINGS)
 # The company periods the readings cover are data, not code: tools/ is scanned
 # as production Python for identity literals and fixed dates.
 POSITIONS = "docs/evidence/issue47_history/reading-producers/positions.json"
@@ -476,18 +490,24 @@ def positions(*, repo_root: Path, path: str, body):
                 reading=path, label=label, slot=case, company_id=case["company_id"],
                 metric_id="B06", period_end=case["period_end"], published=case["published"],
                 verdict=case["verdict"], filings=[accession]))
-    elif path in BANK_MEASURES_READINGS:
-        # One row per metric, each with the window the table's own header gives.
+    elif path in BANK_MEASURES_READINGS or path in BANK_STATEMENT_READINGS:
+        # One row per metric, each with the window it was read for. A component
+        # taken from the prior annual report names that filing too.
         for label, case in sorted(body["per_position"].items()):
             accession, _ = accession_of_document(repo_root=repo_root, document=case["document"])
             for metric, row in sorted(case["metrics"].items()):
                 if row.get("published") is None:
                     continue
+                filings = [accession]
+                if any(component["accession_role"] == "prior"
+                       for component in row.get("components", ())):
+                    filings.append(accession_of_document(repo_root=repo_root,
+                                                         document=case["prior_document"])[0])
                 found.append(_position(
                     reading=path, label=label, slot=row, company_id=case["company_id"],
                     metric_id=metric, period_end=case["period_end"],
                     published=row["published"], verdict=row["verdict"],
-                    filings=[accession], window=row["window"], case=case))
+                    filings=filings, window=row["window"], case=case))
     elif path in RPO_READINGS:
         found.append(_position(
             reading=path, label=body["company_id"].split("_")[0] + "-" + body["period_end"][:4],

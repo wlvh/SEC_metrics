@@ -3771,6 +3771,27 @@
    "same_cause_as": [
     "B02_PFIZER_2023_PRODUCT_REVENUE_OVER_TOTAL_REVENUE"
    ]
+  },
+  {
+   "company_id": "jpmorgan_chase",
+   "metric_id": "A05",
+   "result_id": null,
+   "period_end": "2021-12-31",
+   "defect_id": "A05_JPMORGAN_2021_PRIOR_YEAR_ASSETS_AS_FIRST_REPORTED_AGAINST_A_RECAST",
+   "summary": "Published 0.01355861265326514473806383999 = 48,334,000,000 / ((3,743,567,000,000 + 3,386,071,000,000) / 2): total assets at the end of 2020 from the FY2020 10-K as first reported. The FY2021 10-K reports total assets at 2020-12-31 under the same concept (Assets) at 3,384,757,000,000, so the average mixes the year end as first reported with a target filing that restates it.",
+   "root_cause": "A05's approved branch (catalog/deterministic_metrics.json, average_denominator_ratio) takes assets_prior from the prior filing (accession_role prior). It is the same failure of comparability as the Pfizer FY2021 B02 recast, on a balance at two year ends rather than a flow over two years.",
+   "scope_measured": "all 10 A05 and A06 Runs with a value in the 50-period batch, against the saved Company Facts (b02-same-concept-recast/measured-frame4-a05-a06.json): one moves, this one. The bank statement-facts reading of the same batch, read off the two annual reports' inline XBRL, finds the same restatement and no other (content-acceptance/bank-statement-facts-read-full-frame.json: A05 FY2021 NOT_READ, PRIOR_YEAR_RESTATED_IN_THE_TARGET; A06 five years MATCH).",
+   "found_by": "the bank statement-facts reading of the 50-period batch (tools/read_bank_statement_facts.py), which reads a prior-filing component only where the target report states that year at the same value.",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair": "The rule written for Pfizer FY2021 B02 (historical_results.paired_measure_problem, same_concept_recast, 336ab3ae) already asks every pair the catalog reads from both filings, A05's assets among them; the batch's result was computed under a closure before that rule. The targeted round on a closure that carries it must withhold this position by name, HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE; a release then names that withheld result and its closure. The rule's own measurement covered only B02 and A07; this entry is what that measurement left out.",
+   "evidence": [
+    "docs/evidence/issue47_history/b02-same-concept-recast/measure.py",
+    "docs/evidence/issue47_history/b02-same-concept-recast/measured-frame4-a05-a06.json",
+    "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json"
+   ],
+   "same_cause_as": [
+    "B02_PFIZER_2021_PRIOR_YEAR_AS_FIRST_REPORTED_AGAINST_A_RECAST"
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

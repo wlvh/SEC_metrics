@@ -2,6 +2,454 @@
  "acceptance_rule": "An acceptance covers a position only while the value it names, and the identity its reading recorded, are what that position still carries. A later Run computing something else, from other filings, over another window or under another unit, scope or meaning, has not been checked. A result a defect withdraws is never accepted, whatever is written here.",
  "acceptances": [
   {
+   "acceptance_id": "CONTENT_A01_JPMORGAN_2022",
+   "accepted_value": "0.149",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:f0d51267257e2514eea95034cf13f1bef1b90e3093171838542def63574caeb7",
+     "run_id": "run:historical-period:b4bded1341b7e1906c870f71e8c93258a01b79685cabe526008fb42eaf482753"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-12-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A01",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "TierOneRiskBasedCapitalToRiskWeightedAssets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "0.149"
+       }
+      },
+      "concept": "TierOneRiskBasedCapitalToRiskWeightedAssets",
+      "role": "tier_one_ratio",
+      "value": "0.149"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A01_JPMORGAN_2023",
+   "accepted_value": "0.166",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:5863c8eeb3d134d3b6493351f2b5b3355c5462d7cdf346d2b454c455fe416b0d",
+     "run_id": "run:historical-period:146aecfe32ec83fb233bd9f96ebaf1dc24e7a1c28e70a4a79fccfbc5aecf2bcc"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-12-31",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A01",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "TierOneRiskBasedCapitalToRiskWeightedAssets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "0.166"
+       }
+      },
+      "concept": "TierOneRiskBasedCapitalToRiskWeightedAssets",
+      "role": "tier_one_ratio",
+      "value": "0.166"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A01_JPMORGAN_2024",
+   "accepted_value": "0.168",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:643053ecb1330811e9348f526ff222e78be2dcfc0dbfe7dc56bfa7f4933add29",
+     "run_id": "run:historical-period:eea51634e61af4a6d0252d17734af88c1528d30abb062d120a4d3691117613e0"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A01",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "TierOneRiskBasedCapitalToRiskWeightedAssets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "0.168"
+       }
+      },
+      "concept": "TierOneRiskBasedCapitalToRiskWeightedAssets",
+      "role": "tier_one_ratio",
+      "value": "0.168"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A01_JPMORGAN_2025",
+   "accepted_value": "0.155",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:5638d4ded3bce318c12cbfc0a27981a7914708f489d72b20cd9447b760fdc14b",
+     "run_id": "run:historical-period:bc40317a5375a3e77cecaa11d7ab05f2ac7fcc20a7da1a767cbb3b6813eeb2b5"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "TierOneRiskBasedCapitalToRiskWeightedAssets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "0.155"
+       }
+      },
+      "concept": "TierOneRiskBasedCapitalToRiskWeightedAssets",
+      "role": "tier_one_ratio",
+      "value": "0.155"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A02_JPMORGAN_2022",
+   "accepted_value": "0.132",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:84d67d35712d42f031f3ec2604fced0b3c237f0cfe194279052f45bd361fcef6",
+     "run_id": "run:historical-period:6fa415e1e57e2be2fbcb1477e449834e5b83bafb4baa7a171c6db13fb1bc9285"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-12-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A02",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "CommonEquityTier1CapitaltoRiskWeightedAssets": {
+        "namespaces": [
+         "jpm"
+        ],
+        "problem": null,
+        "value": "0.132"
+       }
+      },
+      "concept": "CommonEquityTier1CapitaltoRiskWeightedAssets",
+      "role": "cet1_ratio",
+      "value": "0.132"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A02_JPMORGAN_2023",
+   "accepted_value": "0.15",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:b7692573ec90fee2d04797b3b9b56efbd9502693e9bd7810f854073fc8937415",
+     "run_id": "run:historical-period:6083949f3803babe1c011b6ada44d7ce641752c8e82cc0522b7e216899b62a34"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-12-31",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A02",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "CommonEquityTier1CapitaltoRiskWeightedAssets": {
+        "namespaces": [
+         "jpm"
+        ],
+        "problem": null,
+        "value": "0.150"
+       }
+      },
+      "concept": "CommonEquityTier1CapitaltoRiskWeightedAssets",
+      "role": "cet1_ratio",
+      "value": "0.150"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A02_JPMORGAN_2024",
+   "accepted_value": "0.157",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:a4d6dd121276f5b9b394ea943e33522839b24cdc5ce12ec759d45860a39021ca",
+     "run_id": "run:historical-period:cefbe77ff11e3c5e20e5e3de26d07a10b19c90d01e03e369979672519e964e4a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A02",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "CommonEquityTier1CapitaltoRiskWeightedAssets": {
+        "namespaces": [
+         "jpm"
+        ],
+        "problem": null,
+        "value": "0.157"
+       }
+      },
+      "concept": "CommonEquityTier1CapitaltoRiskWeightedAssets",
+      "role": "cet1_ratio",
+      "value": "0.157"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A02_JPMORGAN_2025",
+   "accepted_value": "0.146",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:9146faccec45b7ef1834c16bcfa1050a696201cb85f770f468a5cfb75b2c154d",
+     "run_id": "run:historical-period:324870a2ac861c648d538e714d571b6d9bab4acfd891f02be95591a4d2fb5b7d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "CommonEquityTier1CapitaltoRiskWeightedAssets": {
+        "namespaces": [
+         "jpm"
+        ],
+        "problem": null,
+        "value": "0.146"
+       }
+      },
+      "concept": "CommonEquityTier1CapitaltoRiskWeightedAssets",
+      "role": "cet1_ratio",
+      "value": "0.146"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "direct",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A03_JPMORGAN_2022",
    "accepted_value": "1.12",
    "checked_identity": {
@@ -392,6 +840,1518 @@
    "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_A05_JPMORGAN_2022",
+   "accepted_value": "0.01016990785916637311706488189",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:2964842246074e829403661b5cf41026fed1a77763964820fe54d18b07068a0c",
+     "run_id": "run:historical-period:4b3dbea6c8a58411c6dd63848310fd9741358392f2ae2d222ff2c1917ba9e483"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272",
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:e0ecf50b6a31a389933921d927ba00ca640b5b49002526cb537afa70be1e7ca3",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A05",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "37676000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "37676000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "3665743000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_current",
+      "value": "3665743000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "3743567000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_prior",
+      "target_report_states": "3743567000000",
+      "value": "3743567000000"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A05_JPMORGAN_2023",
+   "accepted_value": "0.0131417865955474082419412672",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:eff353663e10f7a717e535cb7b8441c01c65f1da500f75501b6b50ca8dfd995d",
+     "run_id": "run:historical-period:e8c318643a0c5fde26ae10c495b2645e955adb52450170b9f27a848f06488a97"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231",
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:e0ecf50b6a31a389933921d927ba00ca640b5b49002526cb537afa70be1e7ca3",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A05",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "49552000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "49552000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "3875393000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_current",
+      "value": "3875393000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "3665743000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_prior",
+      "target_report_states": "3665743000000",
+      "value": "3665743000000"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A05_JPMORGAN_2024",
+   "accepted_value": "0.01484373284428804675987823118",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:567e930a3bc076bfa5843688a4d1f87f63c2337a788c765372ad4727968269de",
+     "run_id": "run:historical-period:00072df97ddaea46e8592f670baa1be611be333b48c5171317a9ccd37a1f570f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225",
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:e0ecf50b6a31a389933921d927ba00ca640b5b49002526cb537afa70be1e7ca3",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A05",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "58471000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "58471000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "4002814000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_current",
+      "value": "4002814000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "3875393000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_prior",
+      "target_report_states": "3875393000000",
+      "value": "3875393000000"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A05_JPMORGAN_2025",
+   "accepted_value": "0.01353819078340816975991354239",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:dc198a07fa31475522e25787cf004fbcfaf21ece21fd545d3c76e416885e0442",
+     "run_id": "run:historical-period:ebe878e5c687d7a22708d01fec85d453425dd19fd737ecff7db8cc9a070af83c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270",
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:e0ecf50b6a31a389933921d927ba00ca640b5b49002526cb537afa70be1e7ca3",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "57048000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "57048000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "4424900000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_current",
+      "value": "4424900000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "Assets": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "4002814000000"
+       }
+      },
+      "concept": "Assets",
+      "role": "assets_prior",
+      "target_report_states": "4002814000000",
+      "value": "4002814000000"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A06_JPMORGAN_2021",
+   "accepted_value": "0.1685635618268085603533508521",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:4f79a7775627e7e5fbc278fa4c4332b4dd90b91af3bec15bd78290b1eca74ba4",
+     "run_id": "run:historical-period:60dedfe4232cb4316528e60cfd44a312ab0d3e071f47f25c9c71f212e09ba60a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-21-000236",
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+    "spec_closure_hash": "sha256:db527edadcca6b1b16a6442dd42972c51ec1b9a45b54e3faf636387980327ee2",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A06",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "48334000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "48334000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "294127000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_current",
+      "value": "294127000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "279354000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_prior",
+      "target_report_states": "279354000000",
+      "value": "279354000000"
+     }
+    ],
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A06_JPMORGAN_2022",
+   "accepted_value": "0.1284863903529487994898194077",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:e4d7703515c4cff1021af1658c22b182b9f3e0e4e746390cb92658789ce94122",
+     "run_id": "run:historical-period:bc980ec8ce0b789121a1fe04645096b23ba6771bdd34ae1c9dde38342026ffd9"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272",
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:db527edadcca6b1b16a6442dd42972c51ec1b9a45b54e3faf636387980327ee2",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A06",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "37676000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "37676000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "292332000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_current",
+      "value": "292332000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "294127000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_prior",
+      "target_report_states": "294127000000",
+      "value": "294127000000"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A06_JPMORGAN_2023",
+   "accepted_value": "0.1597910385192112349043066058",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:26d74e26212bd08aa499c08e083095d00200a05883b57b009814c8f082e2bb08",
+     "run_id": "run:historical-period:884a0180d591fb416e672495f9273eb22e606083a877f106e7c864f77d9347e6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231",
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:db527edadcca6b1b16a6442dd42972c51ec1b9a45b54e3faf636387980327ee2",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A06",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "49552000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "49552000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "327878000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_current",
+      "value": "327878000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "292332000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_prior",
+      "target_report_states": "292332000000",
+      "value": "292332000000"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A06_JPMORGAN_2024",
+   "accepted_value": "0.1738562907724237180287703899",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:4e3c537c8208415f0bef389860dbba2bcba766a7ea102b370029776fa630b841",
+     "run_id": "run:historical-period:7319be94ca517ddb32c0e59ea2f44f824c2a9e648020ad874cd5de1d678fb02a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225",
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:db527edadcca6b1b16a6442dd42972c51ec1b9a45b54e3faf636387980327ee2",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A06",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "58471000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "58471000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "344758000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_current",
+      "value": "344758000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "327878000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_prior",
+      "target_report_states": "327878000000",
+      "value": "327878000000"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A06_JPMORGAN_2025",
+   "accepted_value": "0.1613357541615054383791763528",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:5c306ed4bcc8315f3bc4ebba17ecc4e161217426294b9cc9cbb31c803fb0239d",
+     "run_id": "run:historical-period:63e465c71cdc5b21b8f011b33ce7c8d2ef77e775b57610185972b1dafd64cd62"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270",
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:db527edadcca6b1b16a6442dd42972c51ec1b9a45b54e3faf636387980327ee2",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A06",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "57048000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income",
+      "value": "57048000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "362438000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_current",
+      "value": "362438000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "StockholdersEquity": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "344758000000"
+       }
+      },
+      "concept": "StockholdersEquity",
+      "role": "equity_prior",
+      "target_report_states": "344758000000",
+      "value": "344758000000"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "average_denominator_ratio",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A07_JPMORGAN_2021",
+   "accepted_value": "19203000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:23e1182df7005d58105f534bcc063893d6c49019e2100154819257e107d2d7f1",
+     "run_id": "run:historical-period:1211e21b90d5992dcd9e4e51c78475ae95518cfb9728b0b957567906ff5fb542"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-21-000236",
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+    "spec_closure_hash": "sha256:3735428ca12d51893ed0b3e20a9563cb95cf7f90b4bcef3b2bcec9a947893b50",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A07",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "48334000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_current",
+      "value": "48334000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "29131000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_prior",
+      "target_report_states": "29131000000",
+      "value": "29131000000"
+     }
+    ],
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "formula_id": "difference",
+    "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A07_JPMORGAN_2022",
+   "accepted_value": "-10658000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:07c2f39d70811893b091912c6ab1de033d536e99706fa9e65d8f328d177c1815",
+     "run_id": "run:historical-period:477e2278a55c6598d31252969d4fe2f03507b020f7070804c92bf0a000c23bc6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272",
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:3735428ca12d51893ed0b3e20a9563cb95cf7f90b4bcef3b2bcec9a947893b50",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A07",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "37676000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_current",
+      "value": "37676000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "48334000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_prior",
+      "target_report_states": "48334000000",
+      "value": "48334000000"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "difference",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A07_JPMORGAN_2023",
+   "accepted_value": "11876000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:ae6f2bbc854a3d18a009c3e882e84c8e85a116a35242a7fea4949cca0957857f",
+     "run_id": "run:historical-period:07d674e5437223f0c41e524634d32e9f8f78587a4c7957296c720ce027f81ea1"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231",
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:3735428ca12d51893ed0b3e20a9563cb95cf7f90b4bcef3b2bcec9a947893b50",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A07",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "49552000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_current",
+      "value": "49552000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "37676000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_prior",
+      "target_report_states": "37676000000",
+      "value": "37676000000"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "difference",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A07_JPMORGAN_2024",
+   "accepted_value": "8919000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:6f130dc0a4c3a014da9572426cfcde2781508186a9d4bea19b198c1725db1126",
+     "run_id": "run:historical-period:4b81fe656d876a6a57ca9fb2ebc24c20f427e5cce4a9bfaf167e24c4337d43d3"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225",
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:3735428ca12d51893ed0b3e20a9563cb95cf7f90b4bcef3b2bcec9a947893b50",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A07",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "58471000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_current",
+      "value": "58471000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "49552000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_prior",
+      "target_report_states": "49552000000",
+      "value": "49552000000"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "difference",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A07_JPMORGAN_2025",
+   "accepted_value": "-1423000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:57188a8c70b9ba6c6c5d157544087862e390ec3987b11d5cb0c5df0a5301b540",
+     "run_id": "run:historical-period:c232b67bafd2e36e9d91eaf6993d64149ca5c866123ac09892da168599cafe6d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270",
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:3735428ca12d51893ed0b3e20a9563cb95cf7f90b4bcef3b2bcec9a947893b50",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A07",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "57048000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_current",
+      "value": "57048000000"
+     },
+     {
+      "accession_role": "prior",
+      "approved_concepts_seen": {
+       "NetIncomeLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "58471000000"
+       }
+      },
+      "concept": "NetIncomeLoss",
+      "role": "net_income_prior",
+      "target_report_states": "58471000000",
+      "value": "58471000000"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "difference",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A08_JPMORGAN_2021",
+   "accepted_value": "1.325495593660989084513773394",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:1adf91e16ca6cbf4049d140bc4ca2c1c1c8fca89acfdcf482076538a48016dd8",
+     "run_id": "run:historical-period:6b063b4929502cba533d6c2b7300bb8e241e7e4bf9f035221a9aea4e543eeaf5"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+    "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A08",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NoninterestIncome": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "69338000000"
+       }
+      },
+      "concept": "NoninterestIncome",
+      "role": "noninterest_income",
+      "value": "69338000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "InterestIncomeExpenseNet": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "52311000000"
+       }
+      },
+      "concept": "InterestIncomeExpenseNet",
+      "role": "net_interest_income",
+      "value": "52311000000"
+     }
+    ],
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A08_JPMORGAN_2022",
+   "accepted_value": "0.929171038824763903462749213",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:a120a521e1387d412bc5e20318ac233a7ff1610fbf0935931da2e71a52c64547",
+     "run_id": "run:historical-period:96f8ee19b16a36e3bea1138c8a4394f0555cdbd7600391a5e70de3da4c9c9bae"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A08",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NoninterestIncome": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "61985000000"
+       }
+      },
+      "concept": "NoninterestIncome",
+      "role": "noninterest_income",
+      "value": "61985000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "InterestIncomeExpenseNet": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "66710000000"
+       }
+      },
+      "concept": "InterestIncomeExpenseNet",
+      "role": "net_interest_income",
+      "value": "66710000000"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A08_JPMORGAN_2023",
+   "accepted_value": "0.771136030111911456641312019",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:8a69de81df6436bb2d554b53d8e41d73033e766337ac756b79df2dffd5401160",
+     "run_id": "run:historical-period:53a0a190f5125557a33b106aa3b854419ca04012674d80d40072afb3ddee252c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A08",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NoninterestIncome": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "68837000000"
+       }
+      },
+      "concept": "NoninterestIncome",
+      "role": "noninterest_income",
+      "value": "68837000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "InterestIncomeExpenseNet": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "89267000000"
+       }
+      },
+      "concept": "InterestIncomeExpenseNet",
+      "role": "net_interest_income",
+      "value": "89267000000"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A08_JPMORGAN_2024",
+   "accepted_value": "0.9178034844409880863657474914",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:10c713ba8599ef033497899e63057d7bf31b48debce634531ae1e89971ac7516",
+     "run_id": "run:historical-period:ce745fa5cfd1642827f46017b1c288e0d830b5ec3546c6427679f3eb7bbe3d61"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A08",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NoninterestIncome": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "84973000000"
+       }
+      },
+      "concept": "NoninterestIncome",
+      "role": "noninterest_income",
+      "value": "84973000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "InterestIncomeExpenseNet": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "92583000000"
+       }
+      },
+      "concept": "InterestIncomeExpenseNet",
+      "role": "net_interest_income",
+      "value": "92583000000"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A08_JPMORGAN_2025",
+   "accepted_value": "0.9115807340506899405928145595",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:986df77a66417dfd9aa019994b99c70ca0a72e3b7bbc24fea3c75ee073c3845e",
+     "run_id": "run:historical-period:721eb61eb072b71ae08567745dc7c07333d31c0e2573772e92930b6d359916e7"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "NoninterestIncome": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "87004000000"
+       }
+      },
+      "concept": "NoninterestIncome",
+      "role": "noninterest_income",
+      "value": "87004000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "InterestIncomeExpenseNet": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "95443000000"
+       }
+      },
+      "concept": "InterestIncomeExpenseNet",
+      "role": "net_interest_income",
+      "value": "95443000000"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_A09_JPMORGAN_2024",
    "accepted_value": "0.0066",
    "checked_identity": {
@@ -502,6 +2462,361 @@
     ]
    },
    "what_this_does_not_establish": "what is established is that the row the report names carries this value for this window. It does not establish what the route's witnesses establish - that the named row is the measure the definition asks for and covers the whole issuer (the glossary, segment, introduction and footnote witnesses): this reading takes the report's own row label for that. Nor does it establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A10_JPMORGAN_2021",
+   "accepted_value": "0.01622045404600645808874625571",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:a5b086ea168460a94299438dd5ec526a41c908088532e043efb7cbc8e13eb058",
+     "run_id": "run:historical-period:9ef4a8f003c45ff75650c5a9e93f6b5b7690f1ae48cf4573bf221ddb6a7dad24"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+    "spec_closure_hash": "sha256:f8a5d6747d7e4d250993643766b19b83ab12f39ddbe3b0e9e341fe00cf5c5ffb",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A10",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "16386000000"
+       }
+      },
+      "concept": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+      "role": "allowance",
+      "value": "16386000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "1010206000000"
+       }
+      },
+      "concept": "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+      "role": "loans_before_allowance",
+      "value": "1010206000000"
+     }
+    ],
+    "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A10_JPMORGAN_2022",
+   "accepted_value": "0.01810392456667504896301204664",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:3098e65d06f2be25fa1388709faf3c9b3f217e7056adf06ecdcf35cd2f27444a",
+     "run_id": "run:historical-period:189a7a0be5e59a725d50fd0b64a1cc23dddf0f778b2af67f54911d08215879d7"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000231"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-12-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:f8a5d6747d7e4d250993643766b19b83ab12f39ddbe3b0e9e341fe00cf5c5ffb",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A10",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "19726000000"
+       }
+      },
+      "concept": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+      "role": "allowance",
+      "value": "19726000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "1089598000000"
+       }
+      },
+      "concept": "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+      "role": "loans_before_allowance",
+      "value": "1089598000000"
+     }
+    ],
+    "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A10_JPMORGAN_2023",
+   "accepted_value": "0.01750372793491923458274454082",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:930f131340168460bd1bb9c588f5f5121c4cfe64273a9e1f7628761f628fdc95",
+     "run_id": "run:historical-period:e6ebf74eafd2a61e256c291fb558ee7e2219eaf7cf3df9893e24ebb160030355"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000225"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-12-31",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:f8a5d6747d7e4d250993643766b19b83ab12f39ddbe3b0e9e341fe00cf5c5ffb",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A10",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "22420000000"
+       }
+      },
+      "concept": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+      "role": "allowance",
+      "value": "22420000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "1280870000000"
+       }
+      },
+      "concept": "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+      "role": "loans_before_allowance",
+      "value": "1280870000000"
+     }
+    ],
+    "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A10_JPMORGAN_2024",
+   "accepted_value": "0.0187328311236620780399972299",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:269eb57ec8e8c374d9e375c457202a3ae617d5b41c4cd4414f4bfc2e491af3c3",
+     "run_id": "run:historical-period:55a0655063e8ea023903b13fc1ee4c21dba335ba878b14117939fcec1bb79089"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000270"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:f8a5d6747d7e4d250993643766b19b83ab12f39ddbe3b0e9e341fe00cf5c5ffb",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A10",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "24345000000"
+       }
+      },
+      "concept": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+      "role": "allowance",
+      "value": "24345000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "1299590000000"
+       }
+      },
+      "concept": "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+      "role": "loans_before_allowance",
+      "value": "1299590000000"
+     }
+    ],
+    "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_A10_JPMORGAN_2025",
+   "accepted_value": "0.01828725144704575539159843992",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:daa6abba85f6cab2b42192583d9e0e0419305785a6c57ae05e48d7e8f3ca11e8",
+     "run_id": "run:historical-period:32b15d31b9f7d2e03fe81aa8ba0a7252f13bb53b44ceff9cbd16bf29af1cc466"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-008131"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:f8a5d6747d7e4d250993643766b19b83ab12f39ddbe3b0e9e341fe00cf5c5ffb",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
+   "method": "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py with the statement reader's parser (every value a decimal, scale and sign applied, duplicates consistent or no value) and the approved concepts, periods, filings and formulas of catalog/deterministic_metrics.json - the definition, not the route's code, none of which it imports. A component the catalog takes from the prior filing is read from the prior annual report, and the target report's comparative for that year must equal it. The capital ratios read only facts carrying exactly the required dimensions; a fact the filer tags under its own namespace with the approved name is read and its namespace recorded. The route reads Company Facts (and, for the capital ratios, the accession's XBRL instance), so for most components this is another source for the same facts; for the capital ratios it is the same facts in another file.",
+   "metric_id": "A10",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": [
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "25765000000"
+       }
+      },
+      "concept": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+      "role": "allowance",
+      "value": "25765000000"
+     },
+     {
+      "accession_role": "current",
+      "approved_concepts_seen": {
+       "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss": {
+        "namespaces": [
+         "us-gaap"
+        ],
+        "problem": null,
+        "value": "1408905000000"
+       }
+      },
+      "concept": "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+      "role": "loans_before_allowance",
+      "value": "1408905000000"
+     }
+    ],
+    "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "formula_id": "ratio",
+    "prior_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the approved concepts carry these values in these filings for these periods and that the catalog's formula produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_A11_JPMORGAN_2025",
@@ -12589,6 +14904,72 @@
    "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_B06_SALESFORCE_2024",
+   "accepted_value": "0.1743620695436408141367400999",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:90bcc9d059bb3ded5bf2510efff0a2972309a5e9b1e121d41f95ef43630c2e7d",
+     "run_id": "run:historical-period:9a202f72634210d11ae31283555f74a3d8415ae69487738c0efcab0b96d1f013"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-24-000005"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-01-31",
+    "period_start": "2024-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-full-frame.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2024-01-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:ConvertibleDebtCurrent",
+      "value": "999000000"
+     },
+     {
+      "caption": "Noncurrent debt",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "8427000000"
+     }
+    ],
+    "document": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm",
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "59646000000"
+    },
+    "finance_leases": {
+     "add": "974000000",
+     "concept": "us-gaap:FinanceLeaseLiability",
+     "evidence": [
+      "Accrued expenses and other liabilities",
+      "Other noncurrent liabilities"
+     ],
+     "treatment": "OUTSIDE_THE_DEBT_ROWS"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_B06_SALESFORCE_2025",
    "accepted_value": "0.1489382570741994016968270315",
    "checked_identity": {
@@ -19820,6 +22201,86 @@
     "tables_naming_the_scope_literal": 1
    },
    "what_this_does_not_establish": "what is established is that the row under the approved scope carries this value. It does not establish that the scope is the right scope, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B12_SALESFORCE_2023",
+   "accepted_value": "48600000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d",
+     "run_id": "run:historical-period:5a48c651933111d4463caf6af470549aac0dc8a257e3c01bbfcfa2bc160b3e65"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-23-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-01-31",
+    "period_start": "2023-01-31",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2023.json",
+   "method": "the filing's own inline XBRL fact for remaining performance obligation at the period end, undimensioned, against the accession-instance value the route published.",
+   "metric_id": "B12",
+   "period_end": "2023-01-31",
+   "read_from": {
+    "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+    "context": "instant 2023-01-31, no explicit members",
+    "document": "evidence/request_attempts/57/577ba795230254fd897c3430920e4aa5a236ecaac6ef6fc99a691942e0966f15/crm-20230131.htm"
+   },
+   "what_this_does_not_establish": "that RPO is a good substitute for ARR, which is a product question the approved definition already answers by naming it a substitute. It establishes that the published figure is the registrant's own reported remaining performance obligation at the period end."
+  },
+  {
+   "acceptance_id": "CONTENT_B12_SALESFORCE_2024",
+   "accepted_value": "56900000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:6d2bd920725a13ee869b915753226b403ac33de70a80ef98ed32e28f8aa53eff",
+     "run_id": "run:historical-period:43ccb05e5da234fcc649df10df8bfb61626e4da6b7a40138f57019e55435ed95"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-24-000005"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-01-31",
+    "period_start": "2024-01-31",
+    "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+    "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2024.json",
+   "method": "the filing's own inline XBRL fact for remaining performance obligation at the period end, undimensioned, against the accession-instance value the route published.",
+   "metric_id": "B12",
+   "period_end": "2024-01-31",
+   "read_from": {
+    "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+    "context": "instant 2024-01-31, no explicit members",
+    "document": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm"
+   },
+   "what_this_does_not_establish": "that RPO is a good substitute for ARR, which is a product question the approved definition already answers by naming it a substitute. It establishes that the published figure is the registrant's own reported remaining performance obligation at the period end."
   },
   {
    "acceptance_id": "CONTENT_B12_SALESFORCE_2025",
@@ -35510,6 +37971,195 @@
     "window": [
      "2025-01-01",
      "2025-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that no item the definition reads as a candidate was filed in the window, so zero needs no confirmation. It establishes nothing about a window with candidates, and does not establish that the candidate items are the right ones to read - a transaction announced only under 7.01 is outside them - nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_E01_CONTENT_CONFIRMED_SALESFORCE_2023",
+   "accepted_value": "0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:58f33e8741fff06f0dbb1242757a3f965406d945ae5e92cba6d6352c546fab1b",
+     "run_id": "run:historical-period:ffeddd978869534238879a4d41e823988cd16a9227a37221f307de28ff6710a8"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-22-000010",
+     "0001108524-22-000019",
+     "0001108524-22-000030",
+     "0001108524-22-000038",
+     "0001108524-22-000047",
+     "0001108524-22-000049",
+     "0001108524-22-000054",
+     "0001108524-22-000058",
+     "0001108524-22-000059",
+     "0001108524-22-000063",
+     "0001108524-23-000003",
+     "0001193125-22-094496",
+     "0001193125-22-214922",
+     "0001193125-23-017661"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-01-31",
+    "period_start": "2022-02-01",
+    "scope_key": "sha256:56be5ab9e37f886195c7e6327b2bede90394b7edcfe4092b309224e487d90f7c",
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-full-frame.json",
+   "method": "under the owner's content-confirmed definition (catalog/r6/E01_content_confirmed_ma_v1.json), the window's 8-K and 8-K/A filings from the ledger's latest saved submissions index and each one's item codes from its own SEC header, by tools/read_e01_candidates.py, which calls none of the route's discovery, claim or item code; counted under both the filing date and the report date. Accepted only where the window holds no candidate item (1.01, 2.01, 8.01) under either basis and every header in it is saved: that answer needs no content confirmation.",
+   "metric_id": "E01",
+   "period_end": "2023-01-31",
+   "read_from": {
+    "candidate_items_by_basis": {
+     "filing_date": 0,
+     "report_date": 0
+    },
+    "eight_k_filings_in_window": 14,
+    "item_codes": [
+     [
+      "5.02",
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.05",
+      "9.01"
+     ],
+     [
+      "5.03",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.03",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2022-02-01",
+     "2023-01-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that no item the definition reads as a candidate was filed in the window, so zero needs no confirmation. It establishes nothing about a window with candidates, and does not establish that the candidate items are the right ones to read - a transaction announced only under 7.01 is outside them - nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_E01_CONTENT_CONFIRMED_SALESFORCE_2024",
+   "accepted_value": "0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:ceab39ec5fc405a15d28bef4a7bd2c645481ab87636e9eba973d735d224a4cf9",
+     "run_id": "run:historical-period:ac8d27f85c3db2218f5c9b5be57fbeb5d0602686681b1e25484861a24fe57e2a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-23-000007",
+     "0001108524-23-000021",
+     "0001108524-23-000029",
+     "0001108524-23-000037",
+     "0001108524-23-000046"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-01-31",
+    "period_start": "2023-02-01",
+    "scope_key": "sha256:8715d9acc89656dae7a4be7d39314730969fa79672bd27958d2a392c822bd2f1",
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-full-frame.json",
+   "method": "under the owner's content-confirmed definition (catalog/r6/E01_content_confirmed_ma_v1.json), the window's 8-K and 8-K/A filings from the ledger's latest saved submissions index and each one's item codes from its own SEC header, by tools/read_e01_candidates.py, which calls none of the route's discovery, claim or item code; counted under both the filing date and the report date. Accepted only where the window holds no candidate item (1.01, 2.01, 8.01) under either basis and every header in it is saved: that answer needs no content confirmation.",
+   "metric_id": "E01",
+   "period_end": "2024-01-31",
+   "read_from": {
+    "candidate_items_by_basis": {
+     "filing_date": 0,
+     "report_date": 0
+    },
+    "eight_k_filings_in_window": 5,
+    "item_codes": [
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "7.01",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2023-02-01",
+     "2024-01-31"
     ]
    },
    "what_this_does_not_establish": "what is established is that no item the definition reads as a candidate was filed in the window, so zero needs no confirmation. It establishes nothing about a window with candidates, and does not establish that the candidate items are the right ones to read - a transaction announced only under 7.01 is outside them - nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
@@ -61655,16 +64305,21 @@
   "docs/evidence/issue47_history/content-acceptance/d01-latest-years-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json",
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2023.json",
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2024.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json",
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json",
+  "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round3.json",
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-full-frame.json",
-  "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json"
+  "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
+  "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
@@ -61683,6 +64338,12 @@
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json": {
    "acceptances_contributed": 18,
    "content_sha256": "sha256:65559571cb7638cc04ec82caa0b8ba2ce329f87d71edc84484ac0e51ea8afe8a",
+   "positions_examined": 5,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json": {
+   "acceptances_contributed": 32,
+   "content_sha256": "sha256:a2f5cfcd73503e5d656ba0f8451e715625e56632f8dc933127d764613e2de217",
    "positions_examined": 5,
    "positions_examined_is_null_because": null
   },
@@ -61806,6 +64467,12 @@
    "positions_examined": 2,
    "positions_examined_is_null_because": null
   },
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-full-frame.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:90874a015a41319eac8fe9b35983bc852af27661421a5621249d85ba6984fc9c",
+   "positions_examined": 1,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json": {
    "acceptances_contributed": 4,
    "content_sha256": "sha256:c0c177821c68861f92e052619a457c402a7deb41df7317708372aae6e58651d2",
@@ -61815,6 +64482,12 @@
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json": {
    "acceptances_contributed": 2,
    "content_sha256": "sha256:dd0fe983c766fe96d393d8150a419d5e4517d17400347d0416c870ff7ecc6524",
+   "positions_examined": 2,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-full-frame.json": {
+   "acceptances_contributed": 2,
+   "content_sha256": "sha256:8038f3bb5861ba24e43dfa286b57999746736f5653591174ee3336712faeb5de",
    "positions_examined": 2,
    "positions_examined_is_null_because": null
   },
@@ -61899,6 +64572,18 @@
   "docs/evidence/issue47_history/content-acceptance/rpo-read-batch.json": {
    "acceptances_contributed": 1,
    "content_sha256": "sha256:5a08b16b315bdfe8cd0f027b5df8f4ac5d11f5895b16ab63ae2cdd02d930866f",
+   "positions_examined": null,
+   "positions_examined_is_null_because": "this reading's shape carries no per_position map"
+  },
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2023.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:fb2b1f001c59cccaddfde397f816fac554a95ebb1d0992c8e3c49afdc916cedb",
+   "positions_examined": null,
+   "positions_examined_is_null_because": "this reading's shape carries no per_position map"
+  },
+  "docs/evidence/issue47_history/content-acceptance/rpo-read-salesforce-2024.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:5c616b96066de6f7c3da5e5ce0e5e075b7eab361965dd5befd20e2454898bc6d",
    "positions_examined": null,
    "positions_examined_is_null_because": "this reading's shape carries no per_position map"
   },
