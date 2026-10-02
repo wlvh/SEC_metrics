@@ -24,7 +24,7 @@ def main(argv=None):
     export.add_argument('--history-years', type=int, choices=[5])
     runtime = sub.add_parser('install-runtime', help='Install a separately bound fixed computing runtime')
     runtime.add_argument('--output-root', required=True, type=Path)
-    runtime.add_argument('--kind', choices=['baseline', 'ordinary', 'historical'], default='baseline')
+    runtime.add_argument('--kind', choices=['baseline', 'ordinary', 'native', 'historical'], default='baseline')
     install = sub.add_parser('install', help='Validate and import at the stable company source path')
     install.add_argument('--package-root', required=True, type=Path)
     install.add_argument('--state-root', required=True, type=Path)

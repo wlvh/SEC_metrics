@@ -1,0 +1,256 @@
+{
+  "elapsed_seconds": 90.60221678800008,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "marriott_international",
+  "source_checkpoint_id": "sha256:f4c231078c8742ef6265661bfa25422ef24ad89324e0010d3087777e1483f796",
+  "source_root": "/workspace/work/company-final-baseline-v3/marriott_international/source",
+  "metric_ids": [
+    "B01",
+    "B13"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "3ccdc435cd0745e7a7320fd769e68f66",
+      "latest_attempt": "3ccdc435cd0745e7a7320fd769e68f66",
+      "successful_attempt": "3ccdc435cd0745e7a7320fd769e68f66",
+      "previous_successful_attempt": null,
+      "last_verified_candidate": {
+        "attempt_id": "3ccdc435cd0745e7a7320fd769e68f66",
+        "targets": {
+          "B01": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "B01": {
+            "applicability": "APPLICABLE",
+            "company_id": "marriott_international",
+            "metric_id": "B01",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+            "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+            "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+            "trace_id": "sha256:1828a144f4508a873f104fe50753aa9b95b42ef3026adce3b4f106c2bbd9625f",
+            "unit": "USD",
+            "value": "26186000000"
+          }
+        },
+        "rows_root": "/workspace/work/company-final-baseline-v3/marriott_international/updates/metrics/B01/attempts/3ccdc435cd0745e7a7320fd769e68f66/rows"
+      },
+      "new_candidate_created": true,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "3ccdc435cd0745e7a7320fd769e68f66",
+        "configuration_id": "sha256:a9fb1b43cbc823c09b9a9b33d18aa3355e56c3b125b1468c888eedd911e35130",
+        "intent_id": "sha256:3474bb9857004b7e6220831cafb3b02965a2ea3dae121a11cdb636d2915cbd05",
+        "status": "CANDIDATE_READY",
+        "completed_at": "2026-10-02T17:10:29.939731+00:00",
+        "input": {
+          "company_id": "marriott_international",
+          "metric_ids": [
+            "B01"
+          ],
+          "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+          "targets": {
+            "B01": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "B01": {
+              "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+              "accession": "0001048286-26-000007",
+              "document_name": "CIK0001048286.json",
+              "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+              "accession": "",
+              "document_name": "CIK0001048286.json",
+              "sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "mar-20251231.htm",
+              "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+            }
+          ],
+          "content_id": "sha256:3153ae8336a55d4c1029988112623f301803dfdc9bb727c3ebb42f83a8d8f4f0"
+        },
+        "metrics": {
+          "B01": {
+            "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+            "publication": "PUBLISHED",
+            "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+            "files": {
+              "metrics_matrix.csv": "380c06e9cafc808a31f788e7629e9b8a1d8cc2f51f2984b8ba6fc3cdae4ff93b",
+              "metric_evidence.csv": "55f78cc218510561dc6115ada76b1f7884d45be0886485a5ccd277bc873a62c6"
+            }
+          }
+        },
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:06c8d6fdb0811cfc4abc51fa71b249d5823bdebdcb5dad9160d7ceb46c7050e9"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    },
+    {
+      "metric_id": "B13",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "44bf29ee658443b19492bfed29ab1a48",
+      "latest_attempt": "44bf29ee658443b19492bfed29ab1a48",
+      "successful_attempt": "44bf29ee658443b19492bfed29ab1a48",
+      "previous_successful_attempt": null,
+      "last_verified_candidate": {
+        "attempt_id": "44bf29ee658443b19492bfed29ab1a48",
+        "targets": {
+          "B13": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "B13": {
+            "applicability": "N_A_STRUCTURAL",
+            "company_id": "marriott_international",
+            "metric_id": "B13",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "NONE",
+            "reason_code": "TRAIT_NOT_APPLICABLE",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:376e6bda8877a7ae39a8f53055091125ce8b1a825275cfe6495bcb735b313411",
+            "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+            "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+            "text_payload": null,
+            "trace_id": "sha256:046d7f2d1b1d512a2446ee17dab85502c77d99c68a1bdde5865295402b39c692",
+            "unit": null,
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "rows_root": "/workspace/work/company-final-baseline-v3/marriott_international/updates/metrics/B13/attempts/44bf29ee658443b19492bfed29ab1a48/rows"
+      },
+      "new_candidate_created": true,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "44bf29ee658443b19492bfed29ab1a48",
+        "configuration_id": "sha256:4233c86dca72efb734c123733e82a8384b6834da5323fa2ec50bef6cd3950994",
+        "intent_id": "sha256:e5a18862c824598fbfeaa512507db6e890c926040e58f91fc46e564e3a18e639",
+        "status": "CANDIDATE_READY",
+        "completed_at": "2026-10-02T17:11:20.275415+00:00",
+        "input": {
+          "company_id": "marriott_international",
+          "metric_ids": [
+            "B13"
+          ],
+          "requirement_closure_hash": "sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56",
+          "targets": {
+            "B13": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "B13": {
+              "B13": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+              "accession": "0001048286-26-000007",
+              "document_name": "CIK0001048286.json",
+              "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+              "accession": "",
+              "document_name": "CIK0001048286.json",
+              "sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "mar-20251231.htm",
+              "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+            }
+          ],
+          "content_id": "sha256:1a6c7635f4b9871a33ecf6208c9ae98dc80793ab9f4adbb25c6feab3eadfe33d"
+        },
+        "metrics": {
+          "B13": {
+            "result_id": "sha256:376e6bda8877a7ae39a8f53055091125ce8b1a825275cfe6495bcb735b313411",
+            "publication": "PUBLISHED",
+            "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+            "files": {
+              "metrics_matrix.csv": "68236c9bbffef191915807904f3df56643e2923e16ca924231733065c535e047",
+              "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+            },
+            "native_assessment_completed": true
+          }
+        },
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:197c97b92303d9d74ec94ee7d5f93625f233f5a06a53c6d2263bb26a53ef2a2d"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "compute_seconds": "89.668848",
+  "source_installation": {
+    "checkpoint_id": "sha256:f4c231078c8742ef6265661bfa25422ef24ad89324e0010d3087777e1483f796",
+    "company_id": "marriott_international",
+    "package_root": "/workspace/work/baseline-company-packages/marriott_international",
+    "source_root": "/workspace/work/company-final-baseline-v3/marriott_international/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

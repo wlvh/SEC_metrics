@@ -12,7 +12,6 @@ from .company_source_authority import require_company, need
 
 def compute_company(*, state_root, company_id, metric_ids, report_end=None, fiscal_year=None):
     """Keep the import lock until all selected Runs and references are durable."""
-    from .ordinary_d02_category_update_v2 import run_company
     with locked_company(state_root) as root:
         current = recover_import(root)
         need(current is not None, 'COMPANY_COMPUTE_SOURCE_NOT_INSTALLED')
@@ -35,7 +34,15 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
                     'reason': str(error), 'error_type': type(error).__name__,
                     'business_metric_completed': False}
         from .normal_source_authority import ROOT
-        historical = (ROOT/'requirements/issue_54_history_v1').is_dir()
+        historical = (ROOT/'requirements/issue_54_v3').is_dir()
+        native = (ROOT/'requirements/issue_54_v2').is_dir()
+        need(not native or set(metric_ids) <= {'B13', 'D04'},
+             'COMPANY_NATIVE_RUNTIME_METRIC_SCOPE_REQUIRED')
+        if not native and (ROOT/'requirements/issue_54_v1').is_dir() and 'B13' in ordinary:
+            ordinary.remove('B13')
+            processing_errors['B13'] = {'metric_id': 'B13', 'status': 'NATIVE_RUNTIME_REQUIRED',
+                'reason': 'Use the fixed native runtime for acquired-company B13; its parent is issue_28_v14.',
+                'business_metric_completed': False}
         need(historical or report_end is None and fiscal_year is None,
              'COMPANY_COMPUTE_PERIOD_REQUIRES_HISTORY_RUNTIME')
         # This child process is computing only. Recorded capture occurs in
@@ -44,17 +51,23 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
              patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_COMPUTE_DNS_FORBIDDEN')):
             if historical:
                 from .company_historical_compute import compute_historical
-                result = compute_historical(root=root, source=source, company_id=company_id,
-                    metric_ids=metric_ids, report_end=report_end, fiscal_year=fiscal_year)
+                from .normal_history_plan import checkpoint_replayed_once
+                # Reuse #47's existing state-keyed, single-thread replay scope.
+                # Every selected proof is still checked; a changed source root
+                # or installed data directory gets a fresh full replay.
+                with checkpoint_replayed_once():
+                    result = compute_historical(root=root, source=source, company_id=company_id,
+                        metric_ids=metric_ids, report_end=report_end, fiscal_year=fiscal_year)
             else:
-                result = (run_company(state_root=root/'updates', source_root=source,
+                from .ordinary_d02_category_update_v2 import run_company
+                result = (run_company(state_root=root/('updates/native-v1' if native else 'updates'), source_root=source,
                                  company_id=company_id, metric_ids=ordinary)
                       if ordinary else {'company_id': company_id, 'metrics': []})
             results = {row['metric_id']: row for row in result['metrics']}
             for metric in ([] if historical else metric_ids):
                 if metric in {'B13', 'D04'} and metric not in ordinary:
                     results[metric] = processing_errors.get(metric) or {'metric_id': metric, 'status': 'AI_PROCESSING_INPUT_REQUIRED',
-                        'reason': 'SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.',
+                        'reason': 'SEC originals and company identity are installed. This CLI does not import assessment registries; replay saved processing input with its original fixed runtime, or use a future authorized processing adapter.',
                         'business_metric_completed': False}
                 elif metric == 'C04':
                     from .c04_update_cycle import run_company as run_c04
@@ -67,6 +80,7 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
         report = {'record_type': 'COMPANY_COMPUTATION_REFERENCES_V1',
             'company_id': company_id, 'source_checkpoint_id': admission['checkpoint_id'],
             'source_root': str(source), 'metric_ids': metric_ids,
+            'period_request': {'report_end': report_end, 'fiscal_year': fiscal_year},
             'metrics': [results[m] for m in metric_ids],
             'compute_seconds': format(time.monotonic()-start, '.6f'),
             'source_installation': (strict_json_file(path=root/'latest_import.json')

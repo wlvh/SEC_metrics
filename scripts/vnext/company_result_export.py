@@ -38,12 +38,14 @@ def export_results(*, state_root, output_root, company_id):
                     manifest = strict_json_file(path=manifest_path)
                     need(manifest['company_id'] == company_id,
                          'COMPANY_RESULT_NATIVE_RUN_WRONG_COMPANY')
-                    historical = manifest['requirement_id'] == 'issue_54_history_v1'
+                    historical = manifest['requirement_id'] == 'issue_54_v3'
                     if historical:
                         from .historical_projection import render_historical_run
+                        from .normal_history_plan import checkpoint_replayed_once
                         from .publication import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
-                        rendered = render_historical_run(data_root=work/'data',
-                            run_dir=manifest_path.parent, frozen=manifest['status'] == 'FROZEN')
+                        with checkpoint_replayed_once():
+                            rendered = render_historical_run(data_root=work/'data',
+                                run_dir=manifest_path.parent, frozen=manifest['status'] == 'FROZEN')
                         expected = {'metrics_matrix.csv': _csv_bytes(rows=[rendered['row']], fieldnames=METRIC_FIELDS),
                                     'metric_evidence.csv': _csv_bytes(rows=rendered['evidence'], fieldnames=EVIDENCE_FIELDS)}
                         row_directory = rows

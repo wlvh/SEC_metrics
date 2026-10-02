@@ -34,7 +34,7 @@ python3 tools/vnext_company.py export \
 
 `source-trust` 是准备端安装的独立信任登记；计算端只读。包自己携带的 JSON/哈希不能注册自己，也不能把 recorded 提升为 LIVE。允许保存原获取信用，但不因此获得新获取或生产权限。
 
-计算运行树由原固定程序安装。A 类 baseline 默认不改核心文件；增量包使用 `--kind ordinary` 的独立后继运行树。原 `issue_28_v13` 文件、旧 Run 和闭合额度保持原字节；后继只登记公司来源准入与新运行身份，业务规则继承原版本。代码变更发生在新安装树，不写回 #28 checkout。历史另用 `--kind historical`，从 #47 固定树安装，应用其提供的注册补丁，继承 `issue_47_v1` 并形成独立 `issue_54_history_v1`；不能把该补丁打入普通树。
+计算运行树由原固定程序安装。A 类 baseline 默认不改核心文件；增量包使用 `--kind ordinary` 的独立后继运行树。原 `issue_28_v13` 文件、旧 Run 和闭合额度保持原字节；后继只登记公司来源准入与新运行身份，业务规则继承原版本。代码变更发生在新安装树，不写回 #28 checkout。历史另用 `--kind historical`，从 #47 固定树安装，应用其提供的注册补丁，继承 `issue_47_v1` 并形成独立 `issue_54_v3`；不能把该补丁打入普通树。
 
 ```bash
 python3 tools/vnext_company.py install-runtime \
@@ -57,9 +57,9 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 | 独立来源信任登记 | 受控准备端写 | 只读 |
 | 每公司持久 state | 安装写版本、intent、pointer | 写原生 Run、journal、结果与证据 |
 
-同一 history 的运行路径始终为 `<state-root>/source`；物理版本在 `versions/<checkpoint-id>` 保留。导入和整个计算持有同一个目录锁。导入先完整检查暂存版本，再替换稳定目录并提交 `current_source.json`。重启按提交指针恢复，首次中断的未提交目录被隔离；旧结果保持。`latest_import.json` 区分导入成功、重复、失败及进程中断。目录别名不能绕过这些检查。当前实际验证为 Linux 非 root uid 1000、只读程序、独立可写 state；动态 UID 与真实卷/网络行为未测。
+同一 history 的运行路径始终为 `<state-root>/source`；物理版本在 `versions/<checkpoint-id>` 保留。导入和整个计算持有同一个目录锁。导入先完整检查暂存版本，再替换稳定目录并提交 `current_source.json`。重启按提交指针恢复，首次中断的未提交目录被隔离；旧结果保持。`latest_import.json` 保存成功、重复及显式失败；进程突然退出可能留下 `IN_PROGRESS`，下一进程按已提交指针恢复，未完成记录不能当成已导入。目录别名不能绕过这些检查。当前实际验证为 Linux 非 root uid 1000、只读程序、独立可写 state；动态 UID 与真实卷/网络行为未测。
 
-普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。B13/D04 没有已有合法判断时返回 `AI_PROCESSING_INPUT_REQUIRED`，保留来源和公司身份，不能算指标完成。本期不调用业务模型；保存的处理输入与 SEC 来源分开交接，其消费者接线证据仍单独登记。
+普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。增量 B13 的零 AI 结构性 N/A 使用单独 `--kind native` 固定树（继承原 V14、后继 issue_54_v2）；普通树明确返回 NATIVE_RUNTIME_REQUIRED。本 CLI 尚未连接适用 B13/D04 的独立判断登记库，返回 `AI_PROCESSING_INPUT_REQUIRED`，保留来源和公司身份，不能算指标完成。已保存判断使用其原固定运行树重放，与 SEC 来源分开交接；本期不调用业务模型。D04 的已登记输入读取已实测，不能扩大成新来源包的 D04 Result。
 
 历史准备从固定 #47 树调用 `export --history-years 5`，使用其 `declared_frame`；计算选择历史固定树并加 `--report-end YYYY-MM-DD` 或 `--fiscal-year YYYY`。这些消费者的实际通过范围须看证据索引，不能由接口存在推出五年全部业务验收。
 
@@ -68,3 +68,11 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 实际实验、失败位置、分项体积和耗时见 [证据索引](evidence/issue54_company/README.md)。十家公司来源导出不等于全部 36 项或 30–60 分钟验收。Fable 外部报告保留原信用，尚未取得的原脚本/日志不记成本方复跑。
 
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
+## 保存处理输入的实际接口与限制
+
+#28 原接口为 `capacity_assessment_input.load_registered_input(data_root, source, requirement, mode, input_record_id)`；`source` 必须由同版原工厂重建并保持原 source_id/请求集合，登记记录不能改签成新输入。合法旧 D04 录制材料已在无 `.git`、只读独立目录重放，使用其原 V14 规则及固定 tokenizer 0.22.2，6 个请求完整核对；没有创建 Result 或调用模型。
+
+原登记创建端的 `_journal` 位于该固定运行树 `.git/ordinary-source-authority/{capacity-assessments,going-concern-assessments}/<mode>` 目录；无 `.git` 读取端可以消费保存的 config 登记副本。本 CLI 不向只读程序登记新判断，也不把旧登记塞进来源包。将判断登记创建/读取连接到公司的独立可写处理状态仍需 #28 消费者核对，并在下一期内网 AI 接线时完成；当前限制明确呈现在结果状态中。
+
+导出结果带相对 native 路径及逐文件索引。读取旧 Run 应选择创建它的固定运行树与独立 trust；程序、Requirement 或 source admission 的绑定副本必须保留。历史导出复用 #47 已有单进程、按状态失效的 checkpoint replay scope，实际原件和每个原生结果仍验证，不建立新的通用缓存。

@@ -14,12 +14,21 @@ def compute_historical(*, root, source, company_id, metric_ids, report_end=None,
     from .historical_run_receipts import read_run_receipt
     need((report_end is None) != (fiscal_year is None),
          'COMPANY_HISTORY_EXACTLY_ONE_PERIOD_REQUIRED')
-    selection = resolve_period_selection(repo_root=source, company_id=company_id,
-                                         report_end=report_end, fiscal_year=fiscal_year)
+    try:
+        selection = resolve_period_selection(repo_root=source, company_id=company_id,
+                                             report_end=report_end, fiscal_year=fiscal_year)
+    except Exception as error:
+        return {'company_id': company_id, 'metrics': [
+            {'metric_id': metric, 'status': 'INPUT_FAILED',
+             'reason': str(error), 'error_type': type(error).__name__,
+             'business_metric_completed': False} for metric in metric_ids]}
     outcomes = []
     for metric in metric_ids:
         target = root/'updates/historical'/selection['target_report_end']/metric
+        previous = None
         try:
+            pointer = target/'current.json'
+            previous = strict_json_file(path=pointer) if pointer.is_file() else None
             prepared = prepare_historical_run_input(repo_root=source, company_id=company_id,
                                                     metric_id=metric, period_selection=selection)
             fingerprint = content_hash(value={
@@ -27,8 +36,6 @@ def compute_historical(*, root, source, company_id, metric_ids, report_end=None,
                 'period_selection_id': selection['selection_id'],
                 'spec_closures': {key: spec['spec_closure_hash']
                                   for key, spec in prepared['compiled_specs'].items()}})
-            pointer = target/'current.json'
-            previous = strict_json_file(path=pointer) if pointer.is_file() else None
             if previous and previous['input_fingerprint'] == fingerprint:
                 work = target/'attempts'/previous['attempt_id']
                 render_historical_run(data_root=work/'data', run_dir=work/'runs'/metric, frozen=True)
@@ -63,6 +70,9 @@ def compute_historical(*, root, source, company_id, metric_ids, report_end=None,
             failure = {'metric_id': metric, 'status': 'UPDATE_BLOCKED',
                        'reason': str(error), 'error_type': type(error).__name__,
                        'business_metric_completed': False}
+            if previous:
+                failure['last_verified_candidate'] = {
+                    **previous['candidate'], 'current_input_matches': False}
             _atomic_json(target/'latest_failure.json', failure)
             outcomes.append(failure)
     return {'company_id': company_id, 'metrics': outcomes}

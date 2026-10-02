@@ -25,13 +25,13 @@ def _replace(path, old, new, count=1):
     path.write_text(text.replace(old, new))
 
 
-def install_runtime(*, output_root, kind='ordinary'):
+def install_runtime(*, output_root, kind='baseline'):
     """Install fixed source/rules and a new identity; do not re-sign old Runs."""
     output = external(output_root)
     need(not output.exists(), 'COMPANY_RUNTIME_OUTPUT_EXISTS')
-    need(kind in {'baseline', 'ordinary', 'historical'}, 'COMPANY_RUNTIME_KIND_INVALID')
-    parent_id = 'issue_47_v1' if kind == 'historical' else 'issue_28_v13'
-    requirement_id = 'issue_54_history_v1' if kind == 'historical' else 'issue_54_v1'
+    need(kind in {'baseline', 'ordinary', 'native', 'historical'}, 'COMPANY_RUNTIME_KIND_INVALID')
+    parent_id = {'historical': 'issue_47_v1', 'native': 'issue_28_v14'}.get(kind, 'issue_28_v13')
+    requirement_id = {'historical': 'issue_54_v3', 'native': 'issue_54_v2'}.get(kind, 'issue_54_v1')
     from .annual_runtime import _authority_files
     from .annual_continuity_sources import frozen_foundation_receipts
     from .requirements import load_requirement_snapshot
@@ -77,13 +77,16 @@ def install_runtime(*, output_root, kind='ordinary'):
                 'production_authorized': False}
     upstream_modified = ()
     if kind == 'historical':
-        upstream = ROOT/'docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch'
+        patches = list((ROOT/'docs/evidence/issue47_history').glob(
+            'native-run-*/0001-register-issue47-v1.patch'))
+        need(len(patches) == 1, 'COMPANY_RUNTIME_HISTORY_REGISTRATION_PATCH_AMBIGUOUS')
+        upstream = patches[0]
         patch_text = upstream.read_text()
         subprocess.run(['git', 'apply', str(upstream)], cwd=output, check=True, capture_output=True)
         upstream_modified = tuple(line.split(' b/', 1)[1] for line in patch_text.splitlines()
                                   if line.startswith('diff --git '))
         (output/'company-history-upstream-registration.patch').write_text(patch_text)
-    run_module = 'normal_run_v3' if kind == 'ordinary' else 'historical_run'
+    run_module = 'historical_run' if kind == 'historical' else 'normal_run_v3'
     modified = ('scripts/vnext/requirement_profile.py', 'scripts/vnext/run_store.py',
                 'scripts/vnext/'+run_module+'.py', 'scripts/vnext/ordinary_source_authority.py',
                 'scripts/vnext/records.py')
@@ -94,13 +97,32 @@ def install_runtime(*, output_root, kind='ordinary'):
     # installed ordinary runtime and Requirement; no mixed-generation tree.
     old_id = '"'+parent_id+'"'
     count = (output/modified[1]).read_text().count(old_id)
+    need(count > 0, 'COMPANY_RUNTIME_UPSTREAM_RUN_DISPATCH_MISSING')
     _replace(output/modified[1], old_id, '"'+requirement_id+'"', count=count)
-    _replace(output/modified[2], 'REQUIREMENT_ID = '+old_id,
+    _replace(output/modified[2], 'REQUIREMENT_ID = "'+('issue_28_v13' if kind == 'native' else parent_id)+'"',
              'REQUIREMENT_ID = "'+requirement_id+'"')
     # The manifest's coordinate validator independently owns fiscal labels.
     # Register the new runtime there as well, including non-calendar years.
-    record_count = (output/modified[4]).read_text().count(old_id)
-    _replace(output/modified[4], old_id, '"'+requirement_id+'"', count=record_count)
+    record_id = '"issue_28_v13"' if kind == 'native' else old_id
+    record_count = (output/modified[4]).read_text().count(record_id)
+    need(record_count > 0, 'COMPANY_RUNTIME_UPSTREAM_COORDINATE_DISPATCH_MISSING')
+    _replace(output/modified[4], record_id, '"'+requirement_id+'"', count=record_count)
+    if kind == 'native':
+        native_literal = "'issue_28_v14'"
+        native_count = (output/modified[2]).read_text().count(native_literal)
+        need(native_count > 0, 'COMPANY_RUNTIME_UPSTREAM_NATIVE_REPLAY_MISSING')
+        _replace(output/modified[2], native_literal, "'"+requirement_id+"'", count=native_count)
+        _replace(output/modified[1], '"issue_28_v12", "issue_28_v13"}',
+                 '"issue_28_v12", "issue_28_v13", "'+requirement_id+'"}')
+        capacity = 'scripts/vnext/capacity_run.py'
+        originals[capacity] = (output/capacity).read_text()
+        _replace(output/capacity, 'from .continuous_call_policy import REQUIREMENT_ID',
+                 'REQUIREMENT_ID = "'+requirement_id+'"')
+        controller = 'scripts/vnext/ordinary_update_cycle.py'
+        originals[controller] = (output/controller).read_text()
+        _replace(output/controller, 'from .continuous_call_policy import REQUIREMENT_ID',
+                 'from .capacity_run import REQUIREMENT_ID', count=2)
+        modified = (*modified, capacity, controller)
     _replace(output/modified[3], 'def _validate_checkpoint(data_root,checkpoint,baseline):\n',
              'def _validate_checkpoint(data_root,checkpoint,baseline):\n'
              '    if checkpoint.get("record_type") == "COMPANY_SOURCE_ADMISSION_V1":\n'

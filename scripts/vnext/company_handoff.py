@@ -109,6 +109,13 @@ def export_company(*, source_root, output_root, trust_root, company_id,
             fields = directory.name.rsplit('_', 2)
             if directory.is_dir() and len(fields) == 3 and fields[1].isdigit() and int(fields[1]) in ciks:
                 paths.update(p.relative_to(source).as_posix() for p in directory.glob('*.hdr.sgml'))
+    # The header census can include prior/window-external documents. Carry
+    # their own ledger-referenced HTTP headers and all attempts too.
+    urls.update(row['source_url'] for row in rows if row['repo_relative_path'] in paths)
+    for row in rows:
+        if row['source_url'] in urls:
+            paths.update(row[field] for field in ('repo_relative_path', 'headers_repo_relative_path')
+                         if row[field] and (source/row[field]).is_file())
     files = {}
     for relative in sorted(paths):
         path = resolve_repository_file(repo_root=source, repo_relative_path=relative)
@@ -163,6 +170,14 @@ def export_company(*, source_root, output_root, trust_root, company_id,
                 'rules': sum(v['size'] for v in rule_files.values()),
                 'admission': len(canonical_json_bytes(value=checkpoint))}}
         write_immutable_bytes(path=staged/PACKAGE_FILE, content=canonical_json_bytes(value=metadata))
+        # Freeze the exact copied closure before enrolling it. Concurrent
+        # acquisition or a changed source between hashing and copying cannot
+        # publish an unusable or partly updated package as verified.
+        from .company_source_authority import _validate_admission_bytes
+        _validate_admission_bytes(staged, checkpoint, baseline)
+        for relative, declared in rule_files.items():
+            need(binding(staged/relative) == declared,
+                 'COMPANY_HANDOFF_RULE_CHANGED_DURING_EXPORT:'+relative)
         # Independent preparer-owned registration. Import/compute only read
         # this directory; a source package cannot install or replace it.
         trust.mkdir(parents=True, exist_ok=True)

@@ -31,7 +31,7 @@ def main():
     def guard(event, values):
         if event != 'open' or not isinstance(values[0], (str, bytes, os.PathLike)):
             return
-        path = Path(os.fsdecode(values[0])).absolute()
+        path = Path(os.fsdecode(values[0])).resolve()
         if any(path == denied or denied in path.parents for denied in args.deny_read):
             raise ValueError('PROBE_FORBIDDEN_READ:'+str(path))
     sys.addaudithook(guard)
@@ -46,12 +46,22 @@ def main():
         raise ValueError('PROBE_RUN_STATE_UNSUPPORTED')
     replay(args.run_dir, args.data_root)
     baseline_seconds = time.monotonic()-start
-    bindings = list((args.data_root/'ordinary_integrated_bindings').glob('*.json'))
-    if len(bindings) != 1:
-        raise ValueError('PROBE_EXACTLY_ONE_BOUND_INPUT_REQUIRED')
-    binding = strict_json_file(path=bindings[0])
-    proof = next(p for p in binding['input_binding']['source_proofs']
-                 if p['request_locator_kind'] == 'IMMUTABLE_ATTEMPT')
+    # Locate the bytes from this Run's own SourceReference/RawBlob records.
+    # This works for ordinary and historical Runs without selecting an
+    # unconsumed working copy or requiring a particular binding directory.
+    from vnext.canonical import strict_json_loads
+    from vnext.batch_workflow import validate_request_attempt_binding
+    records = [strict_json_loads(text=line) for line in
+               (args.run_dir/'records.jsonl').read_text().splitlines()]
+    blobs = {r['raw_asset_id']: r for r in records if r['record_type'] == 'RAW_BLOB'}
+    source = next(r for r in records if r['record_type'] == 'SOURCE_REFERENCE'
+                  and r['raw_asset_id'] in blobs)
+    proof = validate_request_attempt_binding(repo_root=args.data_root,
+        source_url=source['source_url'], content_sha256=source['raw_asset_id'][7:],
+        accession=source['accession'], document_name=source['document_name'],
+        request_attempt_id=source['request_attempt_id'], require_immutable=True)
+    if proof['request_repo_relative_path'] != blobs[source['raw_asset_id']]['storage_uri']:
+        raise ValueError('PROBE_RUN_RAW_LOCATOR_DIFFERS')
     probes = []
     for field in ('request_repo_relative_path', 'request_headers_repo_relative_path'):
         sandbox = output/field
@@ -62,7 +72,7 @@ def main():
         target.write_bytes(target.read_bytes()+b'\nBOUND_RUN_NEGATIVE_PROBE\n')
         start = time.monotonic()
         try:
-                replay(sandbox/'run', sandbox/'data')
+            replay(sandbox/'run', sandbox/'data')
         except Exception as error:
             result = {'field': field, 'path': proof[field], 'before_sha256': before,
                       'status': 'REJECTED', 'error_type': type(error).__name__,
@@ -72,6 +82,7 @@ def main():
         probes.append(result)
     report = {'status': 'PASSED', 'positive_seconds': baseline_seconds,
               'source_request_attempt_id': proof['request_attempt_id'],
+              'source_reference_id': source['source_reference_id'],
               'negative_probes': probes, 'uid': os.getuid(),
               'denied_read_roots': [str(p) for p in args.deny_read],
               'new_business_calls': [0, 0, 0], 'production_authorized': False}

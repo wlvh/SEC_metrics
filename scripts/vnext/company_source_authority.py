@@ -54,6 +54,15 @@ def validate_checkpoint(data_root, checkpoint, baseline):
     """Recheck the whole ledger and every retained byte, then admit scoped IDs."""
     need(checkpoint == trusted_checkpoint(data_root),
          'COMPANY_SOURCE_TRUST_RECORD_CHANGED')
+    return _validate_admission_bytes(data_root, checkpoint, baseline)
+
+
+def _validate_admission_bytes(data_root, checkpoint, baseline):
+    """Pure closure check used before the preparer installs any trust record.
+
+    Computing admission always enters through validate_checkpoint and its
+    independent trust check; this helper does not authorize an input itself.
+    """
     need(checkpoint['checkpoint_id'] == content_hash(value={
         k: v for k, v in checkpoint.items() if k != 'checkpoint_id'}),
          'COMPANY_SOURCE_ADMISSION_CHANGED')

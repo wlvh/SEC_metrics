@@ -5,7 +5,8 @@ from .canonical import content_hash, sha256_file, strict_json_file
 from .requirement_profile_v1 import PROFILE_SNAPSHOT_FILES, RequirementProfileError
 from .sources import resolve_repository_file
 
-PARENTS = {'issue_54_v1': 'issue_28_v13', 'issue_54_history_v1': 'issue_47_v1'}
+PARENTS = {'issue_54_v1': 'issue_28_v13', 'issue_54_v3': 'issue_47_v1',
+           'issue_54_v2': 'issue_28_v14'}
 PROFILE_REQUIREMENT_GENERATION = 'COMPANY_SEPARATION_V1'
 
 

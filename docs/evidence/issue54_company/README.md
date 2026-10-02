@@ -1,40 +1,56 @@
 # #54 公司交接实测材料
 
-本目录对应 `COMPANY-SEPARATION-v2.1-20261002`，起点 PR55 `0442896740c2f320fa999f932bc4d4ae0bfdf856` / 普通程序 `0bc24734736bb1e6cb34fbcf7ab9fece6951764e`。唯一当前执行记录在 [#54 §7](https://github.com/wlvh/SEC_metrics/issues/54)，本页只索引可复核证据；没有 Ready、合并、采纳、部署或 active 权限。新增真实 SEC/provider/paid 调用全部为 0/0/0。
+对应 `COMPANY-SEPARATION-v2.1-20261002`，接续 PR55 `0442896740c2f320fa999f932bc4d4ae0bfdf856`，普通父程序 `0bc24734736bb1e6cb34fbcf7ab9fece6951764e`。唯一当前执行记录在 [#54 §7](https://github.com/wlvh/SEC_metrics/issues/54)，本目录保存可复核材料。新增真实 SEC/provider/paid 全部 0/0/0；没有 Ready、合并、采纳、部署或 active 权限。
 
-`file-index.json` 登记保存文件的原路径、字节数、SHA256。原输入来自既有提交或有封印的保存归档，未重新获取。记录中的本地路径只描述这次执行，不是产品默认路径。
+`file-index.json` 逐文件登记原路径、字节数及 SHA256；`diagnostic-*.py` 是本次实际诊断脚本，包含执行目录，不能当作产品默认路径。输入来自原提交或封印归档，没有重新获取。产品命令和读写位置见 [运行说明](../../company_compute_boundary.md)。保存包、固定运行树及旧 Run 都按原字节保留；不同固定运行树的 Requirement closure 不混用。
 
-| 范围 | 本方实际结果 | 限制 |
+| 范围 | 本方实跑 | 覆盖限制 |
 |---|---|---|
-| A 已提交公司基线 | 十个公司来源包导出；Marriott B01 原核心固定树原生候选 | 不是十公司所有指标验收；JPM metadata refresh、Salesforce/Paramount unresolved 按原声明保留 |
-| B 同历史仅目标新捕获 | 原 recorded 获取 JPM submissions，一次新捕获；独立原核心树 A08 成功、只读程序重复成功 | 全部 RECORDED_TEST_ONLY，非真实获取 |
-| B v1→v2 | 同 ledger/root 再追加 JPM 新捕获；稳定 source_root 安装，A08 新候选，重复为 NO_SOURCE_CONTENT_CHANGE | 第二次包含明确 synthetic metadata 标记，不算真实新财报 |
-| C #28 已保存混合增量 | 完整13捕获（JPM/Salesforce）校验；原验证器拒绝缺 Salesforce 原件的裁剪；后继公司准入后 JPM A08成功 | B通过没有替代C；旧账本/行号/原检查点全保留 |
-| C #47 已保存混合历史 | 固定60c6b4d6获取归档完整恢复1547追加行，原冻结获取验证器通过 | 公司包/原生历史消费者独立记录，恢复成功不等于公司包或业务通过 |
-| 导入事务 | 十二个测试通过，包含三个中断点、首次中断、重试、旧结果保留、跨公司、非前缀、别名与另一进程锁 | 使用已认证包替身，不能代替来源真实性验证 |
-| 实际Run原件负例 | A08 OPEN原生冷重放成功；实际绑定 body 变更报 RawBlob changed，实际绑定 headers 变更报 request-ledger invalid | 不是改未消费 working副本；不是FROZEN业务验收 |
-| 非root/只读 | uid1000，固定程序 chmod a-w，另进程重复成功；禁止读原采集账本与checkout SEC evidence | Python审计/网络守卫不是集群网络策略；OpenShift未部署、动态UID未测 |
-| 特殊入口 | Salesforce C04专用入口独立公司包 CANDIDATE_READY（81.433609s）；JPM INPUT_FAILED原因保留；B13/D04来源包不含答案，需合法处理输入 | 不把接口存在或录制结果写成真实业务完成；保存AI输入接线另验 |
+| A 已提交基线 | 十公司导出及独立安装；Marriott B01、B13结构性 N/A、D01文本原生候选；核心未改 | JPM待刷新、Salesforce/Paramount未解依赖按原声明保留；不是十公司36项业务验收 |
+| B 同历史仅目标新捕获 | 原 recorded 获取 JPM submissions；独立原核心 A08；第二次同 ledger capture、稳定 source_root 更新及重复 | RECORDED_TEST_ONLY；第二次有明确 synthetic metadata 标记，不算真实新财报 |
+| B 后续无关公司／目标失败 | 同账本追加 Marriott metadata，JPM不新建候选；再追加 JPM 503，明确 INPUT_FAILED并保留旧成功 | 这组混合录制只检验更新边界，不能代替实际C |
+| C #28 已保存混合增量 | 完整13捕获验证；原验证器在缺Salesforce原件的裁剪上实际拒绝；公司准入后 JPM A08、Salesforce C04独立计算 | 旧账本、行号、检查点及原获取信用保留；无新增LIVE额度 |
+| C #47 已保存混合历史 | 固定接口归档完整恢复1547追加行；JPM五年来源公司包；2023-12-31 A08原生 FROZEN Run、重复、导出及冷读 | 只验证该公司／期间／指标接缝，非全部五年业务；消费者独审尚无回执 |
+| 实际导入中断 | 新来源移入、指针提交前强制进程退出91；另进程恢复v1并复用；重试v2后旧Run722文件未变 | 本地进程中断，非断电／所有存储后端保证 |
+| 实际绑定负例 | 普通OPEN及历史FROZEN冷重放；从Run记录定位正文与对应headers，篡改均因目标校验拒绝 | 未改原执行者或未消费working副本；不是内容独审 |
+| 特殊入口 | C04专用更新；基线及增量B13零AI N/A；保存D04登记输入6请求只读重放 | 适用B13/D04判断登记未连接本CLI，明确AI_PROCESSING_INPUT_REQUIRED；旧答案不随来源包交付 |
+| 非root／只读 | uid1000，四类固定程序 chmod a-w，独立可写state；审计阻断原采集根及checkout evidence | 动态UID、OpenShift卷／网络／SCC和集群部署未测 |
 
-最小改动面来自实际C失败：原完整来源验证必须在准备端完成；计算端使用独立安装的公司准入，核对完整账本元数据及携带原件/headers，不再要求其他公司的原件。普通/历史分别安装后继Requirement运行树，旧快照与Run不重签。baseline仍提供不改核心的运行树。程序、规则、来源、持久state和独立信任登记的路径与命令见 [运行说明](../../company_compute_boundary.md)。
+最小修改来自实际失败：原完整历史验证在准备端完成，计算端使用独立安装的公司准入，检查完整账本元数据与携带原件／headers。基线默认零核心修改；增量普通、V14 native、历史分别形成 `issue_54_v1/v2/v3` 固定运行树，继承原规则及未完成责任。旧Run不重签；历史注册补丁只进入新历史树，未修改#28路径。
 
-## 来源及信用
+## 输入与信用
 
-- #28 保存包：`docs/evidence/issue28_continuous/ordinary-document-identity/material-index.json` / `material.tar.gz`；SHA绑定恢复见 `mixed-28-full-restore.json`。两份旧规则引用已漂移，通过原 `ordinary-continuity-policy/native-continuity-material.tar.gz` 的成员绑定取回确切旧字节，未重签或用新规则覆盖旧材料。
-- #47 固定接口：[60c6b4d6](https://github.com/wlvh/SEC_metrics/blob/60c6b4d6/docs/evidence/issue47_history/collab-54/README.md)，消费者固定815c7820；恢复自身封印的 `evidence/issue47_acquired`。审批的旧预算根保留在审计记录中，但本次没有访问或消费该预算。
-- Fable在PR43 0bc24734的五路线报告只按#54 §2外部报告引用。其原脚本/日志尚未取得，本方没有冒称复跑。旧E01=0、D02文本及已登记业务缺陷不作为金标。
+- #28：`docs/evidence/issue28_continuous/ordinary-document-identity/material-index.json` / `material.tar.gz`，完整恢复见 `mixed-28-full-restore.json`。两个漂移旧规则通过原 `ordinary-continuity-policy/native-continuity-material.tar.gz` 的成员绑定取回，未换成新规则。
+- #47：[60c6b4d6固定说明](https://github.com/wlvh/SEC_metrics/blob/60c6b4d6/docs/evidence/issue47_history/collab-54/README.md)，消费者815c7820，恢复 `evidence/issue47_acquired` 原封印历史。完整恢复不是公司包通过的替代证据。实际导出曾因其intent字段 `allowance_binding_id` 与#28的 `binding_id` 不同失败，已按真实结构适配。
+- D04：原 `review-5207290213/recorded-native-material-index.json` / `recorded-native-material.tar.xz`，全部824成员按封印验证。独立无.git只读目录，以原V14规则和tokenizers 0.22.2读取 Enphase登记输入；保留原source_id/input_record_id及六请求。未产生新来源包的D04 Result，`new_source_package_metric_completed=false`。原登记创建journal的路径和当前公司CLI限制见运行说明。
+- Fable原探针脚本／日志仍未取得；#54 §2的五路线仅按外部报告引用。本方最小基线检查不冒称复跑其全部实验。旧E01=0、D02输出和已登记业务错误不作金标。
 
-## 本轮计时和体积
+## 实际耗时与体积
 
-| 实际对象 | 准备/安装 | 计算/重放 | 体积 |
-|---|---|---|---|
-| B首次capture+原公司导出 | 32.348246s（含capture） | 原树A08 84.005421s；只读重复34.287575s | 导出58,073,868 bytes |
-| 产品B首次 | 安装日志独立保存 | A08 63.431903s | 分项见包元数据 |
-| 产品B第二捕获 | 稳定路径安装1.194141s | 86.776237s；重复29.171636s | 第二包原件58,389,020、账本/registry536,979、规则4,154,123 bytes |
-| 产品C #28 JPM | 完整恢复未单独计时 | A08 107.732688s | 原件/metadata/规则分项另登记 |
-| A Marriott原核心 | runtime安装2.535702s | B01 38.369146s | 来源分项见baseline-company-export-summary.json |
-| 实际Run负例 | 仅隔离复制 | 正向13.560475s；body拒绝0.142287s；headers拒绝0.232892s | 绑定locator/hash在bound-run-probes.json |
+计时为wall time。Linux Python3.12.14、uid1000，5 CPU affinity、cgroup 4 CPU配额／16GiB；部分材料并行运行，非隔离CPU基准，见 `material-environment.json`。规则／程序版本及每包携带文件绑定见 `runtime-inventory.json`、`package-inventory.json`。
 
-十家公司首次来源导出12–19s/公司（两个并发准备进程）；实际原件约18–53MB/公司，共享规则每包4,154,123 bytes，全局账本和registry每包535,903 bytes。准备耗时含真实原件验证，不包含新SEC请求。未单测的压缩传输、所有36项、完整历史业务及OpenShift耗时标为未测，不能从本表推算30–60分钟承诺。
+| 实际对象 | 准备／安装 | 计算／重放／导出 |
+|---|---|---|
+| B首捕获、原核心 | 32.348246s含捕获 | A08 84.005421s；只读重复34.287575s |
+| B第二捕获 | 稳定路径安装1.194141s | A08 86.776237s；重复29.171636s |
+| B无关metadata／最新失败 | 捕获均录制，新增真实0 | 不变36.575350s；503后INPUT_FAILED 22.757884s |
+| C #28 JPM | 完整恢复未单独计时 | A08 107.732688s |
+| C #28 Salesforce | 来源导出25.020664s | C04 81.433609s；最终scope树另跑100.617192s计算阶段；重复28.978141s，导出21.279218s |
+| A Marriott | 原核心树安装2.535702s | B01 38.369146s；B01/B13联跑及D01另有原JSON，D01端到端78.546383s |
+| 增量JPM B13 | 独立V14后继树 | 67.965340s；重复27.584048s；导出24.569603s；B13/D04边界85.191130s |
+| 实际v1→v2恢复 | 首装1.068285s；中断1.614752s；重试1.875651s | 首算66.468076s；恢复重复36.372338s；v2重算98.879645s；722文件不变 |
+| C #47 JPM来源 | 完整恢复未单独计时；公司导出828.851315s | FY2023 A08首轮631.775606s；另一固定树673.282557s；重复328.134948s |
+| C #47 Run及导出 | 原件、规则和证据都携带 | 原生冷重放256.505182s；初版未用既有scope导出498.101672s；导出后新位置冷读104.532697s |
+| 保存D04输入 | 完整封印恢复，未单独计时 | 13.005559s；只读另进程14.442452s |
 
-`fast-report.json` 为119入口、四workers、30s/case：117通过、两项TIMEOUT，162.525s。同轮材料计算竞争CPU；单项重跑 structured 24.625s通过，balance两次30s仍timeout。未因此提高上限或宣称fast全绿。旧初始checkout不含该测试，不能拿其ImportError作为有效baseline对照。必要后续检查及消费者独立审阅状态在#54唯一记录更新。
+十公司来源首次导出12–19s/公司（两个准备进程）；原件约18–53MB/公司，基线共享规则4,154,123 bytes、全局账本／registry535,903 bytes。C47 JPM公司包原件302,212,896、账本／registry1,478,951、规则4,217,661、准入7,187,165 bytes；包含379个声明／捕获／头文件关联URL，携带827文件，完整全球元数据但不要求其他公司原件。运行树程序／规则约24.9–33.7MB，Git inventory另约6.2–8.3MB。历史导出342,776,691 bytes／1573文件。
+
+B v2未压缩完整交接物63,419,441 bytes，新／变更成员5,859,698 bytes；当前安装复制完整包，没有传输去重。压缩、实际网络传输、每公司36项、完整历史业务和OpenShift耗时均 `NOT_MEASURED`，不推算30–60分钟承诺。
+
+## 回归及审阅
+
+12项事务／信任单测通过，真实材料另验：只读独立trust、缺实际capture正文／headers、账本manifest变更、规则副本变更、跨公司均拒绝。普通与历史实际Run负例完整保留locator/hash及拒绝原因。源码编译及Git差异检查通过；capability alignment需在文档提交后按真实HEAD检查，不把未提交文档校验失败当代码漏洞。
+
+本地fast119入口四workers／30s：117通过、两项TIMEOUT。structured单项24.625s通过；balance固定0bc24734原核心／原测试／原JPM字节对照仍30s超时，不改限时或宣称本地全绿。远端2a642e56的fast与多数原生Run检查通过，保存来源shard0被本方历史补丁日期字面量触发原审计；已改为唯一上游补丁定位，原失败测试16.698s通过。current-instant构建通过、后续负例于30分钟作业限时取消；同base旧CI曾通过，不能直接定为继承失败。最终head以GitHub检查实况为准。
+
+历史导出已接入#47既有、按状态失效的单进程checkpoint replay scope，与计算入口一致；范围和原件验证保留。这个增量的实际导出计时随后加入原材料。向#28／#47的接口核对与消费者独审直接回链Issue；尚无独审回执，执行者自查、录制和原生机械重放均不冒称独立业务验收。
