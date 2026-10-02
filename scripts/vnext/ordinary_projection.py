@@ -100,9 +100,20 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
                   ['net_income','assets_current','assets_prior'],
               'ORDINARY_A05_APPROVED_FORMULA_CHANGED')
         if result['publication'] == 'PUBLISHED':
-            _need(len(ordered) == 1 and ordered[0]['source_binding'].get('selected_branch_id') ==
-                  'average_assets', 'ORDINARY_A05_SELECTED_BRANCH_CHANGED')
-            projection = {**projection, 'formula': A05_FORMULA_TEXT}
+            if result['applicability'] == 'N_A_STRUCTURAL':
+                _need(result['quality'] == 'NONE' and result['value'] is None
+                      and result['reason_code'] == 'TRAIT_NOT_APPLICABLE'
+                      and not ordered,
+                      'ORDINARY_A05_STRUCTURAL_RESULT_CHANGED')
+            else:
+                _need(result['applicability'] == 'APPLICABLE'
+                      and result['quality'] == 'EXACT'
+                      and result['value'] is not None
+                      and len(ordered) == 1
+                      and ordered[0]['source_binding'].get('selected_branch_id') ==
+                          'average_assets',
+                      'ORDINARY_A05_SELECTED_BRANCH_CHANGED')
+                projection = {**projection, 'formula': A05_FORMULA_TEXT}
     view = {"compiled":{"name":item["name"] or spec["compiled"]["name"],"reported_unit":spec["compiled"]["reported_unit"],"legacy_projection":projection}}
     baseline = {key:"" for key in publication.METRIC_FIELDS}
     baseline.update(company=company["display_name"],cik=company["primary_cik"],metric_id=metric,

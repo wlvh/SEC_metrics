@@ -161,6 +161,7 @@ SOURCE_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterp
 SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
 FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
+SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
