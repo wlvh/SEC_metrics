@@ -1020,7 +1020,7 @@
       "company_id": "jpmorgan_chase",
       "period_end": "2025-12-31",
       "reported_quality": "EXACT",
-      "repair_state": "SHARED_COMPOSITION_SELECTOR_CONTENT_SCOPE_REPAIR_PENDING",
+      "repair_state": "SHARED_FIX45_RECEIVED_VERSIONED_NATIVE_CANDIDATE_CONTENT_ACCEPTANCE_PENDING",
       "current_credit": "WITHDRAWN_AUDITOR_RETENTION_IS_NOT_BOARD_COMPOSITION",
       "summary": "A selected original proxy block reports the Audit Committee and Board view about retaining PwC as external auditor, not a fact about board size, membership, committees, independence or director qualifications under the adopted C02 target.",
       "source_block": {
@@ -1034,21 +1034,36 @@
       },
       "evidence": [
         "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/audit.json",
-        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json"
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json",
+        "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/README.md"
       ],
       "released": [],
       "original_record_retained": true,
       "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_PRIVATE_NORMAL_UPDATE",
       "result_id": "sha256:43465c499be32cbdb37722b653be4a43cc0bf12998aaccbe7e27559ab42d831b",
       "run_id": "run:ordinary-integrated:d2a38686e99b48c6fb0dbbcd323f7a2ac53f3d6f071388c8a118d075ebd381a4",
-      "native_evidence_status": "PASS_BUT_OUT_OF_TARGET_CONTENT"
+      "native_evidence_status": "PASS_BUT_OUT_OF_TARGET_CONTENT",
+      "received_shared_fix": {
+        "peer_read_commit": "54eb39d47718dea25812ea05ceb5a085078ff611",
+        "peer_patch_commit": "72858e3c023bed0c90f3217f381aec5725e15fbc",
+        "own_selector": "scripts/vnext/c02_board_composition_28_v3.py",
+        "own_spec": "catalog/r6/C02_board_disclosures_v4.md",
+        "new_private_result_id": "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+        "known_block_3367_absent": true,
+        "member_positive_3409_preserved": true,
+        "native_run_cold_repeat": "PASS_SAVED_SOURCE_PRIVATE_ONLY",
+        "whole_result_accepted": false,
+        "independent_diff_review": "PENDING_EXACT_SHA",
+        "separate_unjudged_block_3436": "SOURCE_READ_PENDING_CONTRACT_BASED_PEER_ALIGNMENT_NOT_NEW_DEFECT",
+        "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/"
+      }
     },
     {
       "metric_id": "C02",
       "company_id": "jpmorgan_chase",
       "period_end": "2025-12-31",
       "reported_quality": "EXACT",
-      "repair_state": "SHARED_COMPOSITION_SELECTOR_CONTENT_SCOPE_REPAIR_PENDING",
+      "repair_state": "SHARED_FIX45_RECEIVED_VERSIONED_NATIVE_CANDIDATE_CONTENT_ACCEPTANCE_PENDING",
       "current_credit": "WITHDRAWN_AUDITOR_RETENTION_IS_NOT_BOARD_COMPOSITION",
       "summary": "A selected original proxy block reports the Audit Committee and Board view about retaining PwC as external auditor, not a fact about board size, membership, committees, independence or director qualifications under the adopted C02 target.",
       "source_block": {
@@ -1062,15 +1077,30 @@
       },
       "evidence": [
         "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/audit.json",
-        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json"
+        "docs/evidence/issue28_continuous/collab-c02-jpm-auditor-20261002/v3-impact.json",
+        "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/README.md"
       ],
       "released": [],
       "original_record_retained": true,
       "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_ARCHIVED_390",
       "result_id": "sha256:5f6ec648144fa842c833b3a46cb390d9d5e46f67854083bb5ace3c0adf708400",
       "run_id": "run:ordinary-integrated:f5525c123ee549e5ccb638c9e3dfa322254498899522104fb6a1dd969debe08d",
-      "archived_390_value_contains_excerpt": true
+      "archived_390_value_contains_excerpt": true,
+      "received_shared_fix": {
+        "peer_read_commit": "54eb39d47718dea25812ea05ceb5a085078ff611",
+        "peer_patch_commit": "72858e3c023bed0c90f3217f381aec5725e15fbc",
+        "own_selector": "scripts/vnext/c02_board_composition_28_v3.py",
+        "own_spec": "catalog/r6/C02_board_disclosures_v4.md",
+        "new_private_result_id": "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+        "known_block_3367_absent": true,
+        "member_positive_3409_preserved": true,
+        "native_run_cold_repeat": "PASS_SAVED_SOURCE_PRIVATE_ONLY",
+        "whole_result_accepted": false,
+        "independent_diff_review": "PENDING_EXACT_SHA",
+        "separate_unjudged_block_3436": "SOURCE_READ_PENDING_CONTRACT_BASED_PEER_ALIGNMENT_NOT_NEW_DEFECT",
+        "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/"
+      }
     }
   ],
-  "latest_peer_read_commit": "ebac1015497b97d35e2357781fbbfc0b613fb57a"
+  "latest_peer_read_commit": "54eb39d47718dea25812ea05ceb5a085078ff611"
 }

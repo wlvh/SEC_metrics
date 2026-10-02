@@ -60,7 +60,7 @@ def _d02_v2_policy():
 
 
 def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
-            a05_formula=False,d02_category=False):
+            a05_formula=False,d02_category=False,c02_auditor_revision=False):
     policy=normal._policy(normal.ROOT)
     _need(policy['provider_enabled'] is False and policy['sec_fetch_enabled'] is False
           and policy['freeze_enabled'] is False,'UPDATE_ZERO_EGRESS_RUNTIME_REQUIRED')
@@ -74,6 +74,8 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
     _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
           and (not d02_category or metrics == ['D02']),
           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
+    _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+          metrics == ['C02']), 'UPDATE_C02_AUDITOR_REVISION_SCOPE_INVALID')
     requirement_id = normal.REQUIREMENT_ID
     if native:
         from .continuous_call_policy import REQUIREMENT_ID as requirement_id
@@ -92,6 +94,8 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
         else:
             from .ordinary_d02_item8_v2 import POLICY
         body['d02_category_policy'] = POLICY
+    if c02_auditor_revision:
+        body['c02_selection_policy'] = 'COMPOSITION_GROUPED_V3'
     path=root/'configuration.json'
     if path.exists():
         configured=_read(path)
@@ -117,6 +121,8 @@ def _descriptor(cases,configuration):
         body['a05_formula_policy'] = cases['A05']['presentation_policy']
     if 'D02' in cases and 'd02_category_policy' in cases['D02']['input_binding']:
         body['d02_category_policy'] = cases['D02']['input_binding']['d02_category_policy']
+    if 'C02' in cases and cases['C02']['input_binding'].get('c02_selection_policy') == 'COMPOSITION_GROUPED_V3':
+        body['c02_selection_policy'] = 'COMPOSITION_GROUPED_V3'
     native_inputs = {}
     for metric, case in cases.items():
         if metric in {'B13','D04'} and 'registered_input' in case:
@@ -134,7 +140,9 @@ def _inspect(source_root,configuration,native_assessment_ledger=None):
     ledger=sha256_file(path=source_root/'evidence/requests_log.csv')
     cases={m:normal.prepare_case(data_root=source_root,company_id=configuration['company_id'],metric_id=m,
                 **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
-                **({'c02_composition':True,'c02_grouped':True} if m == 'C02' else {}),
+                **({'c02_composition':True,'c02_grouped':True,
+                    'c02_auditor_revision':configuration.get('c02_selection_policy') ==
+                        'COMPOSITION_GROUPED_V3'} if m == 'C02' else {}),
                 **({'d01_emphasis':True} if m == 'D01' else {}),
                 **({'a05_formula':True} if m == 'A05' and
                     configuration.get('a05_formula_policy') == normal.A05_FORMULA_POLICY else {}),
@@ -293,12 +301,15 @@ def _recover(root,state,configuration,verify_candidate=None):
 
 
 def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
-             source_identity_root=None,a05_formula=False,d02_category=False):
+             source_identity_root=None,a05_formula=False,d02_category=False,
+             c02_auditor_revision=False):
     """Check one company's current input and keep a durable candidate history."""
     _need(type(d02_category) is bool or d02_category == 'ITEM8_V2',
           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
     _need(d02_category is not True, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
     _need(d02_category != 'ITEM8_V2', 'UPDATE_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
+    _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+          metric_ids == ['C02']), 'UPDATE_C02_AUDITOR_REVISION_SCOPE_INVALID')
     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
         if source_identity_root is not None else Path(source_root).resolve())
     identity_source=(source if source_identity_root is None else
@@ -313,7 +324,8 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
             processing_root=source,requirement=processing_requirement)
     with _locked(root):
         configuration=_config(root,identity_source,company_id,metric_ids,
-                              native_assessment_mode,a05_formula,d02_category)
+                              native_assessment_mode,a05_formula,d02_category,
+                              c02_auditor_revision=c02_auditor_revision)
         state=_recover(root,_state(root,configuration),configuration)
         previous=None;successful_results={}
         if state['successful_attempt'] is not None:
@@ -337,13 +349,15 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                     normal.install_normal_inputs(data_root=work/'data',source_root=None if source==normal.ROOT else source,
                         company_id=company_id,metric_id=metric,
                         **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
-                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}),
+                        **({'c02_composition':True,'c02_grouped':True,
+                            'c02_auditor_revision':c02_auditor_revision} if metric == 'C02' else {}),
                         **({'d01_emphasis':True} if metric == 'D01' else {}),
                         **({'a05_formula':True} if a05_formula else {}),
                         **({'d02_category':d02_category} if d02_category else {}))
                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,
                         company_id=company_id,metric_id=metric,
-                        **({'c02_composition':True,'c02_grouped':True} if metric == 'C02' else {}),
+                        **({'c02_composition':True,'c02_grouped':True,
+                            'c02_auditor_revision':c02_auditor_revision} if metric == 'C02' else {}),
                         **({'d01_emphasis':True} if metric == 'D01' else {}),
                         **({'a05_formula':True} if a05_formula else {}),
                         **({'d02_category':d02_category} if d02_category else {}))

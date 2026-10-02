@@ -95,13 +95,16 @@ def _registered_update_kwargs(metric_id, options, company_id):
 def prepare_case(*, data_root, company_id, metric_id, registered_update_options=None,
                  native_assessment_ledger=None, c04_event_forms=None,
                  c02_composition=False, c02_grouped=False, d01_emphasis=False,
-                 a05_formula=False, d02_category=False):
+                 a05_formula=False, d02_category=False, c02_auditor_revision=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
           'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
     _need(type(c02_grouped) is bool and (not c02_grouped or (c02_composition and metric_id == 'C02')),
           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
+    _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+          (c02_composition and c02_grouped and metric_id == 'C02')),
+          'ORDINARY_C02_AUDITOR_REVISION_SCOPE_WRONG_METRIC')
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
@@ -182,7 +185,8 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
         from .ordinary_remaining_cases import prepare_current_source_case
         old = prepare_current_source_case(data_root=data_root,company_id=company_id,
             metric_id=metric_id,c02_composition=c02_composition,c02_grouped=c02_grouped,
-            d01_emphasis=d01_emphasis,d02_category=d02_category)
+            d01_emphasis=d01_emphasis,d02_category=d02_category,
+            c02_auditor_revision=c02_auditor_revision)
         annual = prepare_saved_annual_input(repo_root=data_root,company_id=company_id)
         year = annual["table_input"]["target_period"]["fiscal_year"]
         if year != old["target_period"]["fiscal_year"]:
@@ -244,13 +248,16 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
                           registered_update_options=None, native_assessment_ledger=None,
                           c04_event_forms=None, c02_composition=False, c02_grouped=False,
                           d01_emphasis=False, a05_formula=False,
-                          d02_category=False):
+                          d02_category=False, c02_auditor_revision=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
           'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
     _need(type(c02_grouped) is bool and (not c02_grouped or (c02_composition and metric_id == 'C02')),
           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
+    _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+          (c02_composition and c02_grouped and metric_id == 'C02')),
+          'ORDINARY_C02_AUDITOR_REVISION_SCOPE_WRONG_METRIC')
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
@@ -277,13 +284,15 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
     case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id,
         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
         c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
-        a05_formula=a05_formula,d02_category=d02_category)
+        a05_formula=a05_formula,d02_category=d02_category,
+        c02_auditor_revision=c02_auditor_revision)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
     _install_case_inputs(data_root=data_root,source_root=source_root,company_id=company_id,case=case,requirement=requirement)
     rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
         c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
-        a05_formula=a05_formula,d02_category=d02_category)
+        a05_formula=a05_formula,d02_category=d02_category,
+        c02_auditor_revision=c02_auditor_revision)
     _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
     return rebuilt
 
@@ -352,13 +361,16 @@ def text_api(metric_id, c02_composition=False):
 def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False,
                       c04_event_forms=None, c02_composition=False, c02_grouped=False,
                       d01_emphasis=False, a05_formula=False,
-                      d02_category=False):
+                      d02_category=False, c02_auditor_revision=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
           'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
     _need(type(c02_grouped) is bool and (not c02_grouped or (c02_composition and metric_id == 'C02')),
           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
+    _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+          (c02_composition and c02_grouped and metric_id == 'C02')),
+          'ORDINARY_C02_AUDITOR_REVISION_SCOPE_WRONG_METRIC')
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
@@ -378,7 +390,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
         c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
-        a05_formula=a05_formula,d02_category=d02_category)
+        a05_formula=a05_formula,d02_category=d02_category,
+        c02_auditor_revision=c02_auditor_revision)
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
@@ -466,10 +479,12 @@ def replay_case(*, data_root, manifest, spec=None):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_REPLAY_METRIC_CHANGED')
     c02_policy = saved.get('input_binding', {}).get('c02_selection_policy')
-    _need(c02_policy in {None, 'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2'},
+    _need(c02_policy in {None, 'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2',
+                        'COMPOSITION_GROUPED_V3'},
           'ORDINARY_C02_COMPOSITION_REPLAY_POLICY_CHANGED')
-    c02_composition = c02_policy in {'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2'}
-    c02_grouped = c02_policy == 'COMPOSITION_GROUPED_V2'
+    c02_composition = c02_policy in {'COMPOSITION_FACTS_V1', 'COMPOSITION_GROUPED_V2',
+                                    'COMPOSITION_GROUPED_V3'}
+    c02_grouped = c02_policy in {'COMPOSITION_GROUPED_V2', 'COMPOSITION_GROUPED_V3'}
     _need(not c02_composition or metric_id == 'C02',
           'ORDINARY_C02_COMPOSITION_REPLAY_METRIC_CHANGED')
     from .d01_emphasis_results import POLICY as d01_policy_value
@@ -499,6 +514,7 @@ def replay_case(*, data_root, manifest, spec=None):
             metric_id=metric_id,
             **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
             c02_composition=c02_composition,c02_grouped=c02_grouped,
+            c02_auditor_revision=c02_policy == 'COMPOSITION_GROUPED_V3',
             d01_emphasis=d01_policy is not None,
             a05_formula=a05_policy is not None,
             d02_category=('ITEM8_V2' if d02_policy is not None and d02_policy == d02_policy_v2
