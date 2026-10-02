@@ -1059,6 +1059,8 @@ C02 核心事实核查：`PYTHONPATH=scripts python3 -m unittest tests.vnext.tes
 
 **D01 跨页标题改为具名拒绝（2026-10-02）**：上一段的合并已删去，`tests.vnext.test_historical_page_split_headings` 改写为 19 例（saved-source 层，本机约 16 秒）。`historical_text_emphasis.split_heading_requires_multispan` 只认"不以句末结束的整块强调标题、页码、带链接的目录行、小写开头的整块强调续句"四块相邻的版式，构建器遇到即以 `D01_MULTISPAN_HEADING_UNSUPPORTED` 拒绝：Southwest FY2022/FY2023 按名拒绝，版式正好落在批次合并过的三处，跨两半的一个跨度里确有页码与目录行（合并时声明文字不是跨度原文的证据），路线候选按名拒绝；Southwest FY2025、Enphase FY2025 重建出批次记录的文档；构造块逐条守版式条件（含 #28 独审"两个标题之间只有一个数字"的反例）；构造整份年报走通构建器。50 份 D01 申报的前后量测 `d01-risk-headings/page-boundary/measured-before.json`、`measured-after.json`（48 份文档与候选逐字节不变）。注错 `page-boundary/injections.py`。
 
+**E01 条目读取：视窗外文字与只在链接里的标题（2026-10-02）**：`tests.vnext.test_historical_event_items` 新增 `AHeadingInsideALinkIsAReferenceNotTheItem` 类（5 例）与视窗外两例。`position:absolute;right:-1200px`、`bottom:-1200px`、正的大偏移等七种写法按名拒绝，几个点的偏移和没有文字的定位元素不算；条目自己的标题在 `<a href>` 里按名拒绝（`EVENT_ITEM_HEADING_IS_A_LINK`），`<a name>` 不算链接，带链接的下一个条目标题仍结束本条目。反例来自 #28 对它自己读取器的独审（`7fc74694`），在本方读取器上逐条复现后修复。已存 8-K 的 306 个候选条目修改前后逐个相同（`e01-item-text/all_saved_items.py`）。注错 `e01-item-text/visibility_injections.py`（14 个）。
+
 **E01 往年窗口的零值从导出重算（2026-09-30）**：`tools/read_e01_candidates.py` 新增 `--source-root`，在导出恢复的根上读往年窗口：头文件取账本里最近一次成功的那份并记下路径，窗口够到历史分片即停，恢复根上的阅读必须写进自己的文件。`tests.vnext.test_e01_candidate_reading.TheOlderWindowsAreReadOffTheExportTest` 不用恢复根，按记下的索引与头文件路径从检出或导出读回字节，逐位置重算候选条目。Enphase FY2022、FY2024 窗口里没有 1.01/2.01/8.01，零值接受。
 
 **阅读工具一次进程只读一遍导出（2026-09-30）**：`tools/acceptance_readings` 从导出取文件时，原来每次都打开归档并按名字取成员，gzip 归档因此每次从头解压；接受登记增到 600 条后，`test_acceptance_identity` 由 0.2 秒涨到 87 秒，超过快速层 30 秒上限。现在导出索引与每个归档里的小成员（保存的头文件）在一个进程里按"路径、大小、修改时间"各读一遍，文件变了就重读；每次读取仍核对索引记下的摘要。该模块 87 秒降到 2 秒，事件计数阅读 66 秒降到 3 秒。

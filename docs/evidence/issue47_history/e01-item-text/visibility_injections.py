@@ -22,7 +22,8 @@ import shutil
 import tempfile
 
 REPO = Path(__file__).resolve().parents[4]
-CLASS = "tests.vnext.test_historical_event_items.TextAReaderCannotSeeNeverEntersTheItem"
+CLASSES = ("tests.vnext.test_historical_event_items.TextAReaderCannotSeeNeverEntersTheItem",
+           "tests.vnext.test_historical_event_items.AHeadingInsideALinkIsAReferenceNotTheItem")
 ITEMS = "scripts/vnext/historical_event_items.py"
 
 INJECTIONS = [
@@ -66,15 +67,44 @@ INJECTIONS = [
      "expect": "test_a_second_signatures_word_is_refused_rather_than_cut_at",
      "why": "an upper-case SIGNATURE word inside the item would end it there silently"},
     {"id": "THE_REBUILT_VIEW_IS_TRUSTED",
-     "old": '    _need(" ".join(node for node, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")\n',
+     "old": '    _need(" ".join(node for node, _, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")\n',
      "new": "",
      "expect": "test_a_view_the_check_cannot_rebuild_is_refused_not_trusted",
      "why": "offsets from a rebuild that differs from the frozen view point at the wrong nodes"},
     {"id": "HIDDEN_TEXT_OUTSIDE_THE_SPAN_REFUSES",
-     "old": '        if hidden is not None and offset < end and offset + len(node) > start:\n',
+     "old": '        if hidden is not None and node_start < end and node_end > start:\n',
      "new": '        if hidden is not None:\n',
      "expect": "test_hidden_text_outside_the_item_is_not_this_item_s",
      "why": "every saved 8-K has hidden text above its first item; refusing on it refuses every item"},
+    # Added with the repair of #28's counterexamples (7fc74694).
+    {"id": "OFF_THE_PAGE_ONLY_TO_THE_LEFT_OR_UP",
+     "old": '        if (name in ("text-indent", "left", "right", "top", "bottom", "margin-left", "margin-top")\n'
+            '                and number is not None and abs(number[0]) >= _OFF_THE_PAGE):\n',
+     "new": '        if (name in ("text-indent", "left", "top", "margin-left", "margin-top")\n'
+            '                and number is not None and number[0] <= -_OFF_THE_PAGE):\n',
+     "expect": "test_text_moved_off_the_page_any_way_is_refused",
+     "why": "#28's review found text moved off by right/bottom or a large positive offset read as visible"},
+    {"id": "ANY_OFFSET_HIDES",
+     "old": '                and number is not None and abs(number[0]) >= _OFF_THE_PAGE):\n',
+     "new": '                and number is not None and abs(number[0]) > 0):\n',
+     "expect": "test_a_small_offset_or_an_empty_positioned_element_is_not_hiding",
+     "why": "a hanging indent or a few points of offset leaves text where a reader sees it"},
+    {"id": "A_LINKED_HEADING_STARTS_THE_ITEM",
+     "old": '    _need(not _linked_in_span(nodes=nodes, start=start, end=heading_end),\n'
+            '          "EVENT_ITEM_HEADING_IS_A_LINK:" + item_code)\n',
+     "new": "",
+     "expect": "test_an_item_headed_only_by_a_link_is_refused",
+     "why": "a contents entry would be read as the item, and the contents as its text"},
+    {"id": "THE_LINK_IS_NOT_INHERITED",
+     "old": '        linked = (self.links[-1] if self.links else False) or (tag == "a" and "href" in attributes)\n',
+     "new": '        linked = tag == "a" and "href" in attributes\n',
+     "expect": "test_an_item_headed_only_by_a_link_is_refused",
+     "why": "a heading element inside the link is the link's text; the flag must reach it"},
+    {"id": "AN_ANCHOR_IS_A_LINK",
+     "old": '        linked = (self.links[-1] if self.links else False) or (tag == "a" and "href" in attributes)\n',
+     "new": '        linked = (self.links[-1] if self.links else False) or tag == "a"\n',
+     "expect": "test_an_anchor_without_href_is_not_a_link",
+     "why": "a named anchor marks where the heading is; it points nowhere"},
 ]
 
 
@@ -117,7 +147,7 @@ def main():
         try:
             path.write_text(original.decode("utf-8").replace(injection["old"], injection["new"]),
                             encoding="utf-8")
-            run = subprocess.run([sys.executable, "-m", "unittest", CLASS], cwd=REPO, env=_isolated_env(),
+            run = subprocess.run([sys.executable, "-m", "unittest", *CLASSES], cwd=REPO, env=_isolated_env(),
                                  capture_output=True, text=True, timeout=1800)
         finally:
             path.write_bytes(original)
@@ -135,7 +165,7 @@ def main():
         print(injection["id"], results[-1]["outcome"], failed, flush=True)
     out = Path(__file__).with_name("visibility-injections.json")
     out.write_text(json.dumps({"record_type": "ISSUE_47_E01_ITEM_VISIBILITY_FAULT_INJECTIONS",
-                               "file": ITEMS, "class": CLASS, "results": results,
+                               "file": ITEMS, "classes": list(CLASSES), "results": results,
                                "calls": [0, 0, 0]}, indent=1, ensure_ascii=False) + "\n",
                    encoding="utf-8")
     return 0 if all(item["outcome"] == "CAUGHT" for item in results) else 1

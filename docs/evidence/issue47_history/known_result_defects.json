@@ -4323,6 +4323,134 @@
     }
    ],
    "note": "No authority file moved; the issue_47_v1 snapshot is unchanged by this merge."
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "rule_text_sha256": "9894aa2e05fc23e6b6c5fb431ab9462824a05aa6024321238e501b94addac6ea",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "eea7821c",
+   "own_commit_at_read": "41aa2b05",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT_19_ENTRIES",
+   "what_that_state_means": "Two entries more than at af9e1709: D01 Paramount 2025 is unchanged; new are the D02 entries already read and E01_PFIZER_2025_8_01_BODY_NOT_READ, #28's exact result for the defect #47 registered as E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM. None names a #47 result.",
+   "baseline": "Read since af9e1709: eleven commits' messages and file lists, the register diff, the D01 and E01 review conclusions, the B02 impact note.",
+   "increments": [
+    {
+     "commit": "1457e99a",
+     "marker": "[shared-with-#47]",
+     "subject": "Repair current D01 source heading replay",
+     "touches": [
+      "scripts/vnext/d01_emphasis_source.py",
+      "scripts/vnext/d01_emphasis_results.py"
+     ],
+     "affects_47": "None by itself: #28's own versioned copy of historical_text_emphasis.py at 2b4f571e for its ordinary D01.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "6425c239",
+     "marker": null,
+     "subject": "Record bounded D01 source review finding",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/independent-review-1457e99/"
+     ],
+     "affects_47": "Yes. Both findings are about the page join #28 copied from this route. Checked on #47's own Runs, not assumed: the single-span representation is wrong in #47's Southwest FY2022/FY2023 results (the span reads '... 36 Table of Contents ...' between the halves); the lone-digit misjoin is latent here (no batch filing has it).",
+     "integration": "DISPOSED: d01-risk-headings/page-boundary/README.md; defects D01_SOUTHWEST_2022/2023_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT"
+    },
+    {
+     "commit": "865d8220",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold unsupported D01 page joins",
+     "touches": [
+      "scripts/vnext/d01_emphasis_source.py",
+      "tests/vnext/test_d01_emphasis_successor.py"
+     ],
+     "affects_47": "The repair #47 needs: refuse the known four-block layout, join nothing.",
+     "integration": "PORTED into scripts/vnext/historical_text_emphasis.py (same layout predicate, D01_MULTISPAN_HEADING_UNSUPPORTED); 48 of 50 batch D01 filings rebuild the batch's documents and candidates byte for byte, the two Southwest years refuse by name."
+    },
+    {
+     "commit": "8dfe5147",
+     "marker": null,
+     "subject": "Record limited D01 page-boundary review",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/independent-review-865d822/"
+     ],
+     "affects_47": "None. #28's review of its own repair; it gives #47 no credit and #47 takes none.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "9fecf381",
+     "marker": "[shared-with-#47]",
+     "subject": "Withhold exact Pfizer E01 false zero",
+     "touches": [
+      "docs/evidence/issue28_continuous/known_result_defects.json"
+     ],
+     "affects_47": "None. #28 withholds its own result for the defect #47 found; #47's own register already withdraws #47's.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "bc37a277",
+     "marker": null,
+     "subject": "Repair explicit E01 8.01 source reading",
+     "touches": [
+      "scripts/vnext/e01_item_source.py",
+      "tests/vnext/test_e01_item_source.py"
+     ],
+     "affects_47": "None by itself: #28's own reader, a different implementation from historical_event_items.py.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "7fc74694",
+     "marker": null,
+     "subject": "Record E01 source review counterexamples",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-e01-item-read-20261002/independent-review-bc37a27/conclusion.md"
+     ],
+     "affects_47": "Yes, checked against #47's own reader rather than assumed. (1) Text positioned off the page by right/bottom, or by a large positive offset, is not one of the styles historical_event_items._hidden_by_style refuses, so #47's reader would read it as the item's text. (2) #47's reader works on the frozen visible-text view, which does not know links: an item heading that exists only inside a link (a contents entry) would be taken as the item's start; with a contents entry and a real heading the item is refused as headed twice. No saved 8-K has either (all 56 candidate items located uniquely, none hidden), and no E01 confirmation has been called, so no result moves.",
+     "integration": "OWN_REPAIR: e01-item-text (see its README); #28's code is not ported, the implementations differ."
+    },
+    {
+     "commit": "2d288bc3",
+     "marker": null,
+     "subject": "Withhold ambiguous E01 item boundaries and hidden text",
+     "touches": [
+      "scripts/vnext/e01_item_source.py"
+     ],
+     "affects_47": "#28's repair of the two counterexamples in its own reader.",
+     "integration": "MERGED; not ported (different implementation)"
+    },
+    {
+     "commit": "7891f254",
+     "marker": null,
+     "subject": "Sync COLLAB-28-47-v1.1 and record E01 source review",
+     "touches": [
+      "AGENTS.md"
+     ],
+     "affects_47": "None. Its v1.1 block is the same as #47's; the merge leaves AGENTS.md as #47 committed it (1b1fba70).",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "ff0b48b5",
+     "marker": null,
+     "subject": "Measure current B02 impact of same-concept recast guard",
+     "touches": [
+      "docs/evidence/issue28_continuous/collab-b02-recast-impact-20261002/"
+     ],
+     "affects_47": "None. #28 measured #47's 336ab3ae guard on its ten current B02 values (no new withhold) and pins its own version later.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "eea7821c",
+     "marker": null,
+     "subject": "Record v1.1 shared-impact decisions and D01 CI terminal",
+     "touches": [
+      "docs/evidence/issue28_continuous/execution-state.json"
+     ],
+     "affects_47": "None. Records #28's side of the C02 block 168 question and the D02 ownership note, both answered on Issue #47.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }

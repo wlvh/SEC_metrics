@@ -181,6 +181,66 @@ class HeadingsAndReferences(unittest.TestCase):
         self.assertNotIn("Pursuant", text["text"])
 
 
+class AHeadingInsideALinkIsAReferenceNotTheItem(unittest.TestCase):
+    """A contents entry is a link to the item, not the item's heading.
+
+    The frozen view does not know links, so an 8-K whose only "Item 8.01"
+    heading sits inside a link would read the contents as the item's text.
+    #28's review of its own reader found that shape (7fc74694); this reader
+    refuses it by name. With a contents entry and a real heading the item is
+    headed twice and refused for that, as before.
+    """
+
+    def test_an_item_headed_only_by_a_link_is_refused(self):
+        raw = ('<html><body><a href="#i801"><h2>Item 8.01 Other Events</h2></a>'
+               '<p>Directory, not body.</p>'
+               '<a href="#i901"><h2>Item 9.01 Financial Statements and Exhibits</h2></a>'
+               '<p>SIGNATURES</p></body></html>').encode("utf-8")
+        with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_HEADING_IS_A_LINK:8.01"):
+            item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_a_link_inside_the_heading_counts_too(self):
+        raw = ('<html><body><h2><a href="#i801">Item 8.01 Other Events</a></h2>'
+               '<p>Directory, not body.</p><p>SIGNATURES</p></body></html>').encode("utf-8")
+        with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_HEADING_IS_A_LINK:8.01"):
+            item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_an_anchor_without_href_is_not_a_link(self):
+        raw = ('<html><body><a name="i801"></a><h2><a name="x">Item 8.01 Other Events</a></h2>'
+               '<p>The Company acquired Acme.</p><p>SIGNATURES</p></body></html>').encode("utf-8")
+        self.assertIn("acquired Acme", item_text(raw_bytes=raw, item_code="8.01")["text"])
+
+    def test_a_linked_next_heading_still_ends_the_item(self):
+        # #28's reader skipped a linked 9.01 heading and read on into it; this
+        # one ends the item at any next item heading, linked or not.
+        raw = ('<html><body><h2>Item 8.01 Other Events</h2><p>The Company acquired Acme.</p>'
+               '<h2><a href="#exhibits">Item 9.01 Financial Statements and Exhibits</a></h2>'
+               '<p>Exhibit item should be excluded.</p><p>SIGNATURES</p></body></html>').encode("utf-8")
+        text = item_text(raw_bytes=raw, item_code="8.01")
+        self.assertEqual("NEXT_ITEM_HEADING", text["end_marker"])
+        self.assertNotIn("Exhibit item", text["text"])
+
+    def test_a_contents_list_beside_the_real_heading_is_refused(self):
+        # A contents list names the next item too, so its entry and the real
+        # heading are two headings of the item: refused as headed twice.
+        raw = ('<html><body><a href="#i801">Item 8.01 Other Events</a>'
+               '<a href="#i901">Item 9.01 Financial Statements and Exhibits</a>'
+               '<h2>Item 8.01 Other Events</h2><p>The Company acquired Acme.</p>'
+               '<h2>Item 9.01 Financial Statements and Exhibits</h2>'
+               '<p>SIGNATURES</p></body></html>').encode("utf-8")
+        with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_HEADED_MORE_THAN_ONCE:8.01"):
+            item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_a_contents_entry_right_before_the_real_heading_is_refused(self):
+        # Without anything between them the two read as one heading run, and
+        # the run starts inside a link: refused all the same.
+        raw = ('<html><body><a href="#i801">Item 8.01 Other Events</a>'
+               '<h2>Item 8.01 Other Events</h2><p>The Company acquired Acme.</p>'
+               '<p>SIGNATURES</p></body></html>').encode("utf-8")
+        with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_HEADING_IS_A_LINK:8.01"):
+            item_text(raw_bytes=raw, item_code="8.01")
+
+
 class TextAReaderCannotSeeNeverEntersTheItem(unittest.TestCase):
     """The frozen view keeps hidden text; an item span that holds any is refused.
 
@@ -248,6 +308,28 @@ class TextAReaderCannotSeeNeverEntersTheItem(unittest.TestCase):
                       "opacity:1", "background-color:#cceeff", "position:relative"):
             with self.subTest(style):
                 raw = self._item('<p style="' + style + '">The Company acquired Acme.</p>')
+                self.assertIn("acquired Acme", item_text(raw_bytes=raw, item_code="8.01")["text"])
+
+    def test_text_moved_off_the_page_any_way_is_refused(self):
+        # #28's review of its own reader (7fc74694) found right/bottom and large
+        # positive offsets read as visible; so did this reader's style check.
+        for style in ("position:absolute;right:-1200px", "position:fixed;bottom:-1200px",
+                      "position:absolute;left:1200px", "position:absolute;top:-1200px",
+                      "margin-left:1200px", "text-indent:1500px"):
+            with self.subTest(style):
+                raw = self._item('<p style="' + style + '">The Company acquired Acme.</p>')
+                with self.assertRaisesRegex(EventItemTextError,
+                                            "EVENT_ITEM_TEXT_A_READER_CANNOT_SEE:8.01:style:"):
+                    item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_a_small_offset_or_an_empty_positioned_element_is_not_hiding(self):
+        # Saved filings put empty absolutely positioned elements at bottom:0,
+        # and indent text by a few points; neither moves text off the page.
+        for middle in ('<p style="position:absolute;bottom:0"> </p><p>The Company acquired Acme.</p>',
+                       '<p style="position:relative;left:12px">The Company acquired Acme.</p>',
+                       '<p style="text-indent:36pt">The Company acquired Acme.</p>'):
+            with self.subTest(middle):
+                raw = self._item(middle)
                 self.assertIn("acquired Acme", item_text(raw_bytes=raw, item_code="8.01")["text"])
 
     def test_hidden_text_outside_the_item_is_not_this_item_s(self):

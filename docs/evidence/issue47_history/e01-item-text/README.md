@@ -79,3 +79,18 @@ Pfizer 在两种读法下都是 1，但路线不做内容判断就无法知道�
 E01 的正式匹配语义（待决定）；附件是否属于 8.01 正文；本帧其他期间（往年 8-K 正文未保存）；Paramount 与 JPMorgan 的 E01：前身 FY2024 的 Part III 修订现已按整段说明读成已批类别，事件窗口清除后 E01 因两份 8.01 正文带 "Transaction" 按名扣留（`../part-iii-statement-review/targeted-runs.json`）；继任 FY2025 仍缺 9 份前身 8-K 正文；JPMorgan 被期间选择与一份失败头文件挡住。零新增调用。
 
 **2026-09-29 字节码隔离后的重跑**：`fault_injections.py` 的 9 个注错里，4 个的目标是 629f1ed8 用内容确认替换掉的关键词分支（被编辑的文本已不存在），无法重跑，原记录描述当时的代码；其余 5 个在隔离字节码后重跑全部被抓到（`fault-injections-rerun-2026-09-29.json`），`visibility_injections.py` 的 9 个结论与抓到它的用例逐一相同。见 `../injection-bytecode-isolation/`。
+
+## #28 读取器的两类反例，在本方读取器上核对与修复（2026-10-02）
+
+#28 对它自己的 8.01 读取组件（`e01_item_source.py`，提交 `bc37a277`）做的限定独审给出两类反例（`7fc74694`，离线合成 HTML）。两套实现不同：本方从冻结的可见文本视图读条目，不看 HTML 结构。所以没有照搬结论，逐条拿反例试本方 `historical_event_items.item_text`：
+
+1. **移到视窗外的文字。** `_hidden_by_style` 只拒绝 `text-indent/left/top/margin-left/margin-top` 不超过 −999 的偏移；`position:absolute;right:-1200px`、`position:fixed;bottom:-1200px` 和正的大偏移都被当成可见。本方同样成立。现在这七个属性的偏移绝对值达到 999 即拒（`EVENT_ITEM_TEXT_A_READER_CANNOT_SEE`）。没有文字的定位元素（已存申报里的 `position:absolute;bottom:0`）和几个点的缩进不受影响。
+2. **只在链接里的条目标题。** 冻结视图不知道链接；一份 8-K 若只有目录里那个带链接的"Item 8.01"，本方会把目录当成条目起点、把目录文字当正文。本方同样成立（#28 的另一半——跳过带链接的 9.01 结束标题——本方不成立：任何下一个条目标题都结束本条目）。现在重建视图时同时记下每个文字节点是否在 `<a href>` 里，条目自己的标题在链接里就按名拒绝（`EVENT_ITEM_HEADING_IS_A_LINK`）；`<a name>` 锚点不算链接。目录与正文标题都在时，本方原本就以"标题出现两次"拒绝，不变。
+
+两条都是拒绝，不是猜测：读不出的条目按实现缺口扣留，不是披露结论。
+
+**量测**：`all_saved_items.py` 走遍恢复根请求账本里的每个 8-K 头文件（检出与获取导出），读每个候选条目（1.01、2.01、8.01）。修改前后各跑一次：306 个条目，305 个能读、1 个原本就因结束标题不唯一被拒，**修改前后逐个相同，没有条目移动**。E01 确认请求计量（`../e01-content-confirmed/request-measurement.json`）重算后逐字节不变。所以这次修复今天不移动任何结果或请求；它挡的是将来遇到这两种写法的申报。
+
+**验证**：`tests/vnext/test_historical_event_items.py` 新增七例（视窗外六种写法、小偏移与空定位元素不算隐藏；只在链接里的标题、标题里的链接、无 href 的锚点、带链接的下一个标题仍结束本条目、目录与正文标题并存）。注错见 `visibility_injections.py`（新增 5 个，旧的两个因代码改动更新了目标文字）。
+
+**没有覆盖的**：外部样式表、`transform`、`clip`、白色文字等其余渲染情形仍不检测；遇到时的做法是扩展检查而不是放行。

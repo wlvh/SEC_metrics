@@ -159,22 +159,27 @@ def _hidden_by_style(style):
             return name + ":" + value
         if name == "font-size" and number is not None and number[0] == 0:
             return name + ":" + value
-        if (name in ("text-indent", "left", "top", "margin-left", "margin-top")
-                and number is not None and number[0] <= -_OFF_THE_PAGE):
+        # An offset this large moves the text off the page whichever way it
+        # points: left or up past the page's start, or right or down past where
+        # a reader looks. #28's review of its own reader found right/bottom and
+        # large positive offsets admitted (7fc74694); this reader had them too.
+        if (name in ("text-indent", "left", "right", "top", "bottom", "margin-left", "margin-top")
+                and number is not None and abs(number[0]) >= _OFF_THE_PAGE):
             return name + ":" + value
     return None
 
 
 class _Visibility(HTMLParser):
-    """The frozen view's text nodes, each with what hides it, if anything."""
+    """The frozen view's text nodes, each with what hides it and whether a link holds it."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.tags, self.stack, self.nodes = [], [], []
+        self.tags, self.stack, self.links, self.nodes = [], [], [], []
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
         hidden = self.stack[-1] if self.stack else None
+        linked = (self.links[-1] if self.links else False) or (tag == "a" and "href" in attributes)
         if hidden is None:
             style = re.sub(r"\s+", "", attributes.get("style") or "").lower()
             if tag in _NONDISPLAY:
@@ -189,6 +194,7 @@ class _Visibility(HTMLParser):
         if tag not in _VOID:
             self.tags.append(tag)
             self.stack.append(hidden)
+            self.links.append(linked)
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -200,26 +206,41 @@ class _Visibility(HTMLParser):
             if self.tags[index] == tag:
                 del self.tags[index:]
                 del self.stack[index:]
+                del self.links[index:]
                 return
 
     def handle_data(self, data):
         text = " ".join(data.split())
         if text:
-            self.nodes.append((text, self.stack[-1] if self.stack else None))
+            self.nodes.append((text, self.stack[-1] if self.stack else None,
+                               self.links[-1] if self.links else False))
 
 
-def _hidden_in_span(*, raw_bytes, text, start, end):
-    """What hides a node inside [start, end) of the frozen view, or None."""
+def _text_nodes(*, raw_bytes, text):
+    """``(start, end, hidden, linked)`` for each node of the frozen view, rebuilt and checked."""
     parser = _Visibility()
     parser.feed(raw_bytes.decode("utf-8", errors="replace"))
     parser.close()
-    _need(" ".join(node for node, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")
-    offset = 0
-    for node, hidden in parser.nodes:
-        if hidden is not None and offset < end and offset + len(node) > start:
-            return hidden
+    _need(" ".join(node for node, _, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")
+    spans, offset = [], 0
+    for node, hidden, linked in parser.nodes:
+        spans.append((offset, offset + len(node), hidden, linked))
         offset += len(node) + 1
+    return spans
+
+
+def _hidden_in_span(*, nodes, start, end):
+    """What hides a node inside [start, end) of the frozen view, or None."""
+    for node_start, node_end, hidden, _ in nodes:
+        if hidden is not None and node_start < end and node_end > start:
+            return hidden
     return None
+
+
+def _linked_in_span(*, nodes, start, end):
+    """Whether a node inside [start, end) of the frozen view sits inside a link."""
+    return any(linked and node_start < end and node_end > start
+               for node_start, node_end, _, linked in nodes)
 
 
 class EventItemTextError(ValueError):
@@ -285,7 +306,13 @@ def item_text(*, raw_bytes, item_code):
     elif marker == "SIGNATURES":
         _need(len(_SIGNATURES.findall(text, start)) == 1,
               "EVENT_ITEM_END_SIGNATURES_NOT_UNIQUE:" + item_code)
-    hidden = _hidden_in_span(raw_bytes=raw_bytes, text=text, start=start, end=end)
+    nodes = _text_nodes(raw_bytes=raw_bytes, text=text)
+    # A heading inside a link is a reference to the item - a contents entry -
+    # not the item's own heading. The frozen view does not know links, so an
+    # item whose only heading is a link would read the contents as its text.
+    _need(not _linked_in_span(nodes=nodes, start=start, end=heading_end),
+          "EVENT_ITEM_HEADING_IS_A_LINK:" + item_code)
+    hidden = _hidden_in_span(nodes=nodes, start=start, end=end)
     _need(hidden is None, "EVENT_ITEM_TEXT_A_READER_CANNOT_SEE:" + item_code + ":" + str(hidden))
     body = text[start:end]
     return {"item_code": item_code, "text_view": TEXT_VIEW, "rule": RULE,
