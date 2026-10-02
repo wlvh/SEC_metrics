@@ -42,3 +42,45 @@
 ## 4. 执行端原件
 
 本方已取得的原件都在分支上的导出件里（`evidence/issue47_acquired/`，含两份批准下的全部行），用 `tools/vnext_historical_sec.py restore --export evidence/issue47_acquired --out <新目录>` 可在一个有本方代码树（及上述同一受信基线）的 clone 里恢复成可校验的数据根；不需要复制任何私有日志，也不动用任何调用额度。录制夹具（`RECORDED_TEST_ONLY`）与真实获取的记录分开标明。
+
+## 5. 必要适配点与读写位置（COMPANY-SEPARATION-v2.1，2026-10-02 实测）
+
+#54 下一步的单公司实验依次是：在现有录制机制下新增捕获、导出、在新环境恢复并准入、计算。本节按这个顺序写本方入口，列出实测到的、必须由交接设计回答的问题。实测在一份代码副本上进行：副本只读，计算时用 `env -i HOME=/nonexistent`，来源根是由 `evidence/issue47_acquired/` 恢复出的数据根。材料见 `compute-side-probe/`。
+
+### 5.1 实验经过的本方入口
+
+- **捕获**：`historical_sec_session.recorded_historical_session(root=…, response=…)` 只做录制测试（`RECORDED_TEST_ONLY`），不开网络，不给真实获取信用，配置了预算根就拒绝。`capture_pending(company_id=…)` 只取 `declared_frame(repo_root, company_id, years=5)` 声明的行，所以账本实际引用的历史原件、前期和窗口外依赖、前身 CIK 的申报、历史分片都在其中。`register_checkpoint()` 先用冻结的 `validate_acquisition_checkpoint` 重放；通过后，才把检查点写进本检出的 `.git/ordinary-source-authority/acquired/<账本 sha256>.json`。
+- **导出**：`historical_source_export.export_acquisition(ledger_root=…)` 按账本行号分组，只导出受信基线 984 行之后追加的行。导出前要求账本已登记，且冻结重放接受。
+- **恢复**：`restore_acquisition(export_dir, out_root)` 要求 `out_root` 不存在，并要求读取方 `config/normal_candidate_sources_v1.json` 的摘要与导出记录一致（现为 `6bdb4835…`）。它先装入整份受信基线，再叠加导出的行，然后做冻结重放；检出有 `.git` 目录时才写登记。
+- **准入与计算**：先 `historical_run.install_historical_run_inputs(…, source_root=<恢复出的 source-inputs>)`，它调用与 #28 共用的冻结安装 `normal_run_v3._install_case_inputs`；再依次 `create_historical_run`、`render_historical_run(persist=True)`，最后在另一进程 `load_frozen_run`。
+
+### 5.2 必要适配点
+
+1. **同一账本里的获取原件不能按公司裁剪。** 冻结的 `validate_acquisition_checkpoint` 对账本里每个成功行调用 `_proof`，要求该行点名的不可变尝试（正文与头文件）在被校验的数据根里。`checkpoint_installation` 把这些路径全部列为依赖，冻结安装再把它们拷进每个 Run 的数据根。共有 44 个模块经已绑定的名字调用 `verify_ordinary_source_proofs`，包括 #28 的普通路线和本方的历史路线。因此，交接物若只带本公司在该账本里的获取原件，会在第一条别家公司的成功行处被拒。受信基线里别家公司的原件不受此限：基线行只在被某条证明用到时才检查。实测体量：导出件 52 MB（gzip）；Marriott FY2023 一个期间的数据根 684 MB，其中 `evidence/request_attempts` 占 650 MB、3098 个文件，就是 1547 个获取行的正文和头文件，加上该期间用到的少量基线原件。可选做法有两种：
+   - **A**：交接物带上同一账本全部成功行的获取原件，只按公司裁剪基线原件和计算输入。冻结校验不用改，代价是每个数据根都带约 650 MB 的别家公司原件。
+   - **B**：给共用的校验和安装写后继版本，允许“账本行在、原件不在”。这是对冻结共用核心的改动，按 v2.1 要先确定实现者和接入版本，本方再在自己的入口验证。
+   “最终计算端不能被要求先安装全部公司”是否排除 A，由 #54 按接口判断；若排除，B 是唯一路线。
+2. **计算端目前必须在 git 工作区里运行。** 冻结共用安装 `_install_case_inputs` 经 `annual_runtime._authority_files` 在代码根执行 `git ls-files catalog config`，列出要装进数据根的规则文件。实测：在去掉 `.git` 的副本上，三个指标（B01、B04、D01）都停在安装阶段，错误是 `git ls-files … exit status 128`。普通路线共用这个函数，所以普通和历史路线都受影响。给副本补一个只有索引的 `.git` 后（`git init`，对象用 alternates 指向原仓库，`git read-tree <提交>`，共 9.3 MB，不含历史），安装、建 Run、公共行、另一进程冷读全部通过。所以 OpenShift 镜像有两种做法：带一个与代码同一提交的 git 索引，并且 `.git` 必须是目录（读取信任日志时也要求目录，`git worktree` 那种文件形式的 `.git` 不行）；或者给共用安装写一个不依赖 git 的后继，这同样是共用核心改动，处理方式同第 1 条。
+3. **信任锚在哪里。** `ordinary_source_authority._trusted_checkpoint`：代码根有 `.git` 时，读 `.git/ordinary-source-authority/{recorded|acquired}/<账本 sha256>.json`；没有 `.git` 时，读代码根下的单个文件 `config/ordinary_source_checkpoint.json`。因为第 2 条，实际只剩前一种。日志按账本 sha256 分文件存放，所以不同的获取历史（本方 1547 行的账本、#54 单公司录制产生的账本）可以各登记一条、互不干扰；每个数据根只带一本账本，不拼接。**本次实测为图省事，把来源准备端登记出的那一条检查点直接复制进了计算端副本的信任日志。这只是实测捷径，不能当作交接方式**，等于复制私有日志冒充授权。正式做法要在两者中选一：计算端对交接物自己做一遍冻结重放，再登记（需要交接物带够校验所需的全部材料，见第 1 条；且计算端的 `.git/ordinary-source-authority/acquired/` 要可写）；或者由经过审查的构建步骤写入这条登记，并按摘要钉住。
+4. **HOME 与可写的代码目录。** 本方的恢复和计算路径不读 HOME（实测 `HOME=/nonexistent`）。计算运行前后，代码树（含 `.git`）的 14213 个文件逐个比对路径、大小和修改时间，全部未变。字节码缓存用 `PYTHONPYCACHEPREFIX` 指到可写目录；不设时，Python 遇到只读目录会静默不写。唯一涉及 HOME 的路径是 SEC 真实获取的账本根 `/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1`。它写在已批准的许可 `config/issue47_historical_calls_v1.json` 里，批准正文按摘要钉住，只用于真实获取，不用于恢复或计算。在 OpenShift 上换到别的位置就等于新许可，需要所有者另行批准；#54 本期的录制实验不涉及它。
+
+### 5.3 读写位置
+
+| 阶段 | 读 | 写 |
+|---|---|---|
+| 来源准备（捕获、登记、导出、恢复） | 固定提交的代码树；受信基线 `config/normal_candidate_sources_v1.json` 与检出里的 `evidence/`；导出件 `evidence/issue47_acquired/` | 捕获：调用方给的账本根和数据根。登记与恢复：代码树的 `.git/ordinary-source-authority/acquired/`（不可变写入：相同字节可重写，不同字节拒绝）。恢复：新的 `out_root`（`source-inputs/`、`ledger/`、`import-record.json`） |
+| 计算（安装、建 Run、公共行、冷读） | 固定提交的代码树及其 git 索引；信任日志里该账本那一条；来源根（只读，可以是挂载的稳定路径；安装只从它拷出，不改它） | 每个期间一个数据根（不得与代码树或来源根重叠，`HISTORICAL_RUN_SOURCE_AND_OUTPUT_OVERLAP`）；Run 目录及其父目录（行收据写在 Run 目录旁边）；`TMPDIR`；字节码缓存目录 |
+
+容器里的 source_root 只要求是稳定路径，不要求覆盖物理来源：安装从它拷贝到数据根，并按账本和证明核对字节。
+
+### 5.4 重启、重复执行与固定输入
+
+- **恢复**：`out_root` 必须不存在。被打断时留下的半成品要删除或换个名字再恢复。登记是不可变写入，同一检查点重复登记没有副作用。
+- **获取**：每个槽位按“意图 → 请求 → 终态”的顺序写。会话重启时如有槽位没有终态，会话停下；结果未知（UNKNOWN）不自动重试，交给人决定。录制实验也是这样。
+- **计算**：数据根按期间新建；`period_runs.py` 会跳过已完成的期间。固定输入重跑得到同样的 run_id 和 result_id，见 5.5 的对照。每个 Run 绑定 Requirement closure、账本 sha256 和检查点；换代码版本不改旧 Run，旧 Run 用它自己绑定的运行时冷读。
+
+### 5.5 收据检查与原生冷重放分开报告
+
+- **收据哈希检查**：`historical_run_receipts.read_run_receipt` / `collect_run_receipts` 只核对 Run 清单里三个文件的哈希，不重放、不重算。
+- **原生冷重放**：`historical_run.load_frozen_run` 在另一进程从数据根重建输入，校验来源证明，再重放记录。
+- **本次实测**：Marriott FY2023 的 B01（23,713,000,000）、B04（3,083,000,000）、D01 在副本里出了公共行；另一进程冷读三个 Run 都是 FROZEN，run 和 result 与创建时一致；B04 在关闭推导缓存时又冷读一次，结果相同。与完整检出的对照见 `compute-side-probe/README.md`。
