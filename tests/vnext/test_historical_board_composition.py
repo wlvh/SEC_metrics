@@ -732,6 +732,42 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
             "The members of the Audit Committee are not professionally engaged in the practice of accounting; "
             "the Board reviews whether they are financially literate.", own, period_start=START))
 
+    def test_a_members_clause_opens_with_the_members_or_their_status(self):
+        # #28's review ee28995 of the rule above (Issue #47 comment 5958422081);
+        # its sentences are constructed. A short surname is a surname: the
+        # first version required three letters and missed this list.
+        own = frozenset({"audit", "compensation", "example"})
+        for members in ("are Jack Ma and John Wu", "are Jack Ma (Chair) and John Wu", "are Mr. Ma (Chair) and Ms. Wu",
+                        "are Yo-Yo Ma, Amy Li and Bo Xu", "are Messrs. Smith and Jones",
+                        "are Mr Henderson, Ms Goren and Mr Lewis", "include Jack Ma"):
+            self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", statement_labels(
+                "The members of the Audit Committee " + members + ".", own, period_start=START), members)
+        # A person named inside a duty is someone the members deal with.
+        for duty in ("are responsible for supervising Mr. Smith, our external auditor.",
+                     "are responsible for reviewing reports from Alice Smith, the external auditor."):
+            self.assertEqual([], statement_labels("The members of the Audit Committee " + duty, own,
+                                                  period_start=START), duty)
+        # So is a status word inside one: only the words that open the
+        # complement say what the members are.
+        self.assertEqual([], statement_labels(
+            "The members of the Audit Committee were responsible for ensuring that officers are not employees "
+            "of competitors.", own, period_start=START))
+        # What may come before the members or their status (constructed).
+        for opening in ("currently Jack Ma and John Wu", "now Jack Ma and John Wu", "all independent",
+                        "each independent", "both independent", "also independent",
+                        "audit committee financial experts", "“independent,” as required by the listing standards"):
+            self.assertIn("COMMITTEE_COMPOSITION_STATEMENT", statement_labels(
+                "The members of the Audit Committee are " + opening + ".", own, period_start=START), opening)
+        # A process is no status, wherever a person or a status follows.
+        self.assertEqual([], statement_labels(
+            "The members of the Audit Committee are elected annually by the Board.", own, period_start=START))
+
+    def test_the_named_members_are_taken_beside_a_board_count(self):
+        # #28's two-block case: with the members missed, a board count alone
+        # remained and the mechanical Evidence still passed.
+        self.assertEqual({0, 1}, set(_selected(["Our Board currently has twelve directors.",
+                                                "The members of the Audit Committee are Jack Ma and John Wu."])))
+
     def test_a_committee_chair_rotated_at_a_dated_meeting(self):
         # Lumen FY2021-FY2023 (blocks 1047, 1078, 1423): a list of the board's
         # changes, each without a subject. Every reader took it; its date is

@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 99,
- "caught": 153,
- "total": 153,
+ "control_tests_run": 101,
+ "caught": 158,
+ "total": 158,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -98,6 +98,8 @@
     "test_a_join_is_dated_as_precisely_as_it_is_printed",
     "test_a_join_written_as_a_noun_is_dated_too",
     "test_a_long_title_before_the_join",
+    "test_a_members_clause_names_members_or_a_status",
+    "test_a_members_clause_opens_with_the_members_or_their_status",
     "test_a_named_director_s_term_ending_at_a_meeting",
     "test_appointed_with_an_office_and_as_a_member_of_the_board",
     "test_committee_board_and_leadership_facts",
@@ -1206,7 +1208,6 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_determination_qualified_by_a_rule_is_still_a_determination",
-    "test_a_members_clause_names_members_or_a_status",
     "test_a_statement_carrying_a_cross_reference_is_read",
     "test_committee_board_and_leadership_facts",
     "test_the_external_auditor_s_independence_is_not_the_members"
@@ -1217,7 +1218,8 @@
    "expected": "test_a_members_clause_names_members_or_a_status",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_clause_names_members_or_a_status"
+    "test_a_members_clause_names_members_or_a_status",
+    "test_a_members_clause_opens_with_the_members_or_their_status"
    ]
   },
   {
@@ -1225,23 +1227,9 @@
    "expected": "test_a_members_clause_names_members_or_a_status",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_clause_names_members_or_a_status"
-   ]
-  },
-  {
-   "injection": "THE_CLAUSE_RUNS_PAST_THE_SEMICOLON",
-   "expected": "test_a_members_clause_names_members_or_a_status",
-   "result": "CAUGHT",
-   "failed": [
-    "test_a_members_clause_names_members_or_a_status"
-   ]
-  },
-  {
-   "injection": "THE_AUDITOR_LENDS_THE_CLAUSE_A_STATUS",
-   "expected": "test_a_members_clause_names_members_or_a_status",
-   "result": "CAUGHT",
-   "failed": [
-    "test_a_members_clause_names_members_or_a_status"
+    "test_a_members_clause_names_members_or_a_status",
+    "test_a_members_clause_opens_with_the_members_or_their_status",
+    "test_the_named_members_are_taken_beside_a_board_count"
    ]
   },
   {
@@ -1249,7 +1237,9 @@
    "expected": "test_a_members_clause_names_members_or_a_status",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_clause_names_members_or_a_status"
+    "test_a_members_clause_names_members_or_a_status",
+    "test_a_members_clause_opens_with_the_members_or_their_status",
+    "test_the_named_members_are_taken_beside_a_board_count"
    ]
   },
   {
@@ -1265,7 +1255,67 @@
    "expected": "test_a_members_clause_names_members_or_a_status",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_clause_names_members_or_a_status"
+    "test_a_members_clause_names_members_or_a_status",
+    "test_a_members_clause_opens_with_the_members_or_their_status"
+   ]
+  },
+  {
+   "injection": "A_STATUS_ANYWHERE_IN_THE_CLAUSE",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_names_members_or_a_status",
+    "test_a_members_clause_opens_with_the_members_or_their_status"
+   ]
+  },
+  {
+   "injection": "A_PERSON_ANYWHERE_IN_THE_CLAUSE",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_opens_with_the_members_or_their_status",
+    "test_the_named_members_are_taken_beside_a_board_count"
+   ]
+  },
+  {
+   "injection": "A_SURNAME_NEEDS_THREE_LETTERS",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_opens_with_the_members_or_their_status",
+    "test_the_named_members_are_taken_beside_a_board_count"
+   ]
+  },
+  {
+   "injection": "NOTHING_MAY_COME_BEFORE_THE_MEMBERS",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_opens_with_the_members_or_their_status"
+   ]
+  },
+  {
+   "injection": "THE_EXPERT_TERM_IS_NO_STATUS",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_opens_with_the_members_or_their_status"
+   ]
+  },
+  {
+   "injection": "AN_HONORIFIC_OPENS_NO_NAME",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_opens_with_the_members_or_their_status"
+   ]
+  },
+  {
+   "injection": "THE_SENTENCE_S_PERIOD_STAYS_ON_THE_NAME",
+   "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_members_clause_opens_with_the_members_or_their_status"
    ]
   },
   {

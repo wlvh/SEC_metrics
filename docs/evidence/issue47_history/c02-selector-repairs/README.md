@@ -952,3 +952,38 @@
 **未做。**
 - 受影响的已发布值没有重算。Marriott FY2022、FY2023 等位置的 C02 结果仍是旧选择器的结果，已登记的缺陷照旧撤回，要等新闭包下重算、读过之后才能释放。
 - 最新年不受影响，#28 的当期范围不需要接入。
+
+## 48. 成员从句只读动词后开头的词：名单或身份；两个字母的姓也是姓
+
+**问题。** #28 对第 46 节做限定独审（`ee289953`，结论 NEEDS_FIX，[Issue #47 评论 5958422081](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5958422081) ），给了两条构造反例，都在本方 `_v3`（含修复 46、47）上复现：
+
+- 第 46 节带来的退步："The members of the Audit Committee are Jack Ma and John Wu." 是明确的成员名单，第 46 节之前入选，之后漏选。来源里再有一块董事人数时，只剩人数入选，机械 Evidence 仍然 PASS。
+- 第 46 节之前就有的问题："The members of the Audit Committee are responsible for reviewing reports from Alice Smith, the external auditor." 被当成委员构成。
+
+**成因。** 第 46 节在动词后、分号前的整段里找人名或身份，用的是 `_mentions_person` 和 `_QUALIFICATION.search`。
+
+- `_mentions_person` 是为另一个问题写的（成员变动句有没有点名某人）。它要求无称谓姓名的最后一个词至少三个字母，用来排除 "Agentic AI" 这种以缩写结尾的词组。Ma、Wu 只有两个字母，所以读不出。
+- 在整段里任何位置找，职责从句里提到的人（被监督的审计师）或身份词，都会被当成成员的名字或身份。构造句 "were responsible for ensuring that officers are not employees of competitors" 同样被当成构成陈述。
+
+**改动**（`_members_are`）：动词后的词是"成员是什么"，所以只读开头：
+
+- 开头是合同列出的身份（independent、financially literate、financial experts、non-employee directors、not employees/officers 等），或 SEC 用语 "audit committee financial experts"；
+- 或者，按名单分隔符切出的第一项是人名：称谓加大写词（"Mr. Ma"），或 `person_name` 认的姓名。`person_name` 是本模块读名单时用的判断，认 "Jack Ma"，不认 "Agentic AI"，也会去掉 "(Chair)"。
+- 开头之前只允许量词（all、each、both）、"composed of" 句式已经允许的副词（currently、now、also）或开引号。
+
+同时去掉两步：在分号处截断、先剔除审计师的独立性。只读开头以后，第一个名单项本来就在分号处结束；而 49 份缓存代理里这个句式的 59 个从句，以及所有构造句，都没有以审计师开头。两步都没有能区分它们的例子了。
+
+**普查。** 49 份缓存代理里这 59 个从句：55 个以身份开头，4 个是摩根大通的免责说明。没有一个以人名开头，也没有一个是职责从句。所以在真实材料上不会移动任何块；两条反例都是构造句。
+
+**用例。** `test_a_members_clause_opens_with_the_members_or_their_status` 与 `test_the_named_members_are_taken_beside_a_board_count`（#28 的两块例子），在修复前的选择器上都失败。
+
+**注错**（`../c02-composition-facts/fault-injections.json`，158/158，对照 101 个用例）：
+
+- 第 46 节原有七个：针对"读过分号"和"不剔除审计师独立性"的两个，所针对的步骤已删除，随之删除；另外四个改指新代码，仍由第 46 节的用例抓到；"不读这个句式"不变。
+- 新增七个，都由新用例抓到：身份可以在任何位置、人名可以在任何位置、姓需三个字母（即 #28 报的退步）、开头前什么都不允许、"audit committee financial experts" 不算身份、称谓不算开头、句号留在姓名上。
+
+**量测。** 37 份判读（`measured-48-members-clause-opening.json`，对 `1a69b3f7`）和 12 个未判读位置（`measured-48-jpmorgan-and-unread.json`）：一块不动。已发布值不受影响，不需要重算。
+
+**不读的写法**（都没有真实例子）：动词和名单之间插入的成分（"are, in the Board's judgment, independent"）；名单前的头衔（"are Chairman Jane Smith and …"）；没有称谓、只写两个字母的单个姓（"are Ma, Wu and Li"，`person_name` 把单个短词当缩写）。
+
+**同类问题在另一条规则里还在。** `COMMITTEE_MEMBER_QUALIFICATION` 按"同一句里有资格词、成员指称和状态动词"判断，构造句 "The members of the Compensation Committee are responsible for determining whether executives are independent." 仍被它取。37 份判读里它没有造成误选（剩下唯一的误选是 Lumen FY2021 第 856 块，是另一家机构的名称），没有真实例子，本次不改，作为已知局限告诉 #28。

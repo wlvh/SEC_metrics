@@ -964,18 +964,41 @@ _CAPITAL_SPAN = re.compile("\\b[A-Z][\\w’'\\-]+(?:\\s+(?:[A-Z]\\.?|[A-Z][\\w�
 # not professionally engaged in the practice of accounting or auditing; as noted
 # above, the Audit Committee's responsibility is to monitor and oversee these
 # processes" (JPMorgan FY2022-FY2025, #28's question on block 3436), says what
-# the committee does, which the meaning leaves out. The clause ends at a
-# semicolon, so the oversight half cannot lend it a status.
+# the committee does, which the meaning leaves out.
+#
+# The names or the status must open what follows the verb, because that is what
+# the members are. A person or a status named inside a duty is something the
+# members deal with: "are responsible for reviewing reports from Alice Smith,
+# the external auditor" (#28's review ee28995 of this rule). The members' names
+# are read as a list of names is read anywhere here, so "Jack Ma and John Wu"
+# names two members; the first version took any full name from
+# _mentions_person, whose three-letter surname answers another question, and
+# missed them. Only a quantifier, an adverb of the kind the "composed of" rule
+# allows, or an opening quote may come first ("are “independent,” as required
+# by ..."). The first version also ended the clause at a semicolon and set the
+# auditor's independence aside before looking anywhere in it for a status. Now
+# only the opening is read: the first name ends at a semicolon as at a comma,
+# and in none of the 59 such clauses of the 49 saved proxies, nor in a
+# constructed one, does the auditor open the complement. Neither step had a
+# case left, and both are gone.
 _MEMBERS_ARE = re.compile(r"\bmembers of the\b[^.;]{0,60}\bcommittee\b[^.;]{0,20}\b(?:are|were|include|included)\b",
                           re.I)
 _NOT_EMPLOYED = re.compile(r"\bnot\s+(?:officers?|employees?)\b", re.I)
+_COMPLEMENT_LEAD = re.compile(r"^\s*(?:(?:all|each|both|currently|now|also)\s+)*[“\"‘']?", re.I)
+# The SEC's own term puts the committee's name before the status.
+_EXPERT_TERM = re.compile(r"^audit committee\s+(?=financial experts?\b)", re.I)
+_HONORIFIC_OPEN = re.compile(r"^(?:Mr|Ms|Mrs|Dr|Messrs|Mses)\b\.?\s+[A-Z]")
 
 
 def _members_are(sentence):
-    """True when a "members of the ... Committee are" clause names members or their status."""
+    """True when a "members of the ... Committee are" clause opens with members or their status."""
     for match in _MEMBERS_ARE.finditer(sentence):
-        clause = _NOT_DIRECTOR_INDEPENDENCE.sub(" ", sentence[match.end():].split(";", 1)[0])
-        if _mentions_person(clause) or _QUALIFICATION.search(clause) or _NOT_EMPLOYED.search(clause):
+        rest = sentence[match.end():]
+        complement = rest[_COMPLEMENT_LEAD.match(rest).end():]
+        if _QUALIFICATION.match(_EXPERT_TERM.sub("", complement)) or _NOT_EMPLOYED.match(complement):
+            return True
+        first = _LIST_SEPARATOR.split(_LIST_END.sub("", complement), 1)[0].strip()
+        if _HONORIFIC_OPEN.match(first) or person_name(first):
             return True
     return False
 

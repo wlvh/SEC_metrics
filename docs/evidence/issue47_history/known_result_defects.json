@@ -7079,6 +7079,69 @@
      "what": "E01: #47's reader repaired (9caada4e) and the earlier 'does not reproduce' corrected (4f4091b7). D02: rule v4 (c024b50c) removes a list member only under a proven closed-class governor; the provable range and its open-class residue stated, with the measured cost (Pfizer's tax-authority paragraph, FY2020-FY2024, returns)."
     }
    ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "65706fd8",
+   "own_commit_at_read": "1a69b3f7",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; changed in 4835cff7 (C02 member successor status, defect latest_disposition), 9a6dea27 and 8ea442a3 (latest_peer_read_commit only)",
+   "baseline": "Read since 978e28e9: seven commits ee289953..65706fd8, their messages, file lists and the two collab READMEs with their review conclusions; merged as c78e68a8, re-minted 1a69b3f7.",
+   "increments": [
+    {
+     "commit": "ee289953",
+     "marker": "[shared-with-#47]",
+     "subject": "Receive member-clause repair with bounded ordinary evidence",
+     "affects_47": "#28 took repair 46 (4fcb1eba) into its own c02_board_composition_28_v4.py; its bounded review found two P2s in the shared core, both reproduced on #47's _v3: two-letter surnames missed by the member clause (a regression of repair 46) and a person named inside a duty taken as a member (inherited). #47 maintains the core.",
+     "integration": "REPAIRED in #47 repair 48 (c02-selector-repairs/README.md section 48): 49 positions, no block moved; injections 158/158"
+    },
+    {
+     "commit": "c98ab43c",
+     "marker": "[shared-with-#47]",
+     "subject": "Suspend C02 member revision after bounded review findings",
+     "affects_47": "None for #47's results: #28 blocks writes of its own v4 results; #47's selector and results are not involved.",
+     "integration": "MERGED; no #47 file moved"
+    },
+    {
+     "commit": "719e1fe4",
+     "marker": "[shared-with-#47]",
+     "subject": "Record C02 prewrite gate review without core credit",
+     "affects_47": "None: review of #28's write gate; restates the two core P2s as open.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "4835cff7",
+     "marker": "[shared-with-#47]",
+     "subject": "Keep C02 member candidate separate from content acceptance",
+     "affects_47": "None for #47's results: #28's register records its JPMorgan FY2025 C02 successor (bc85895a...) as content-unverified and its old result as not released. #47's JPMorgan C02 coordinates stay withdrawn by #47's own defects; nothing here is copied as credit.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "9a6dea27",
+     "marker": "[shared-with-#54]",
+     "subject": "Verify scoped C04 consumer and explicit AI input limits",
+     "affects_47": "None for #47's results: #28's consumer check of #54's company package for its ordinary C04/B13/D04. Its findings on checkpoint and journal trust agree with #47's own (collab-54/README.md section 5).",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "8ea442a3",
+     "marker": "[shared-with-#47]",
+     "subject": "Receive visible-block E01 reader in explicit ordinary V3 input",
+     "affects_47": "None: #28 copied #47's 9caada4e reader byte for byte into its own path; #47's file is unchanged.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "65706fd8",
+     "marker": "[shared-with-#47]",
+     "subject": "Record limited E01 V3 layout review and old-version boundary",
+     "affects_47": "None new: PASS_LIMITED for #28's copy; the inherited limit it names (a non-empty hidden node in an item body is refused whole) holds for #47's reader too.",
+     "integration": "MERGED"
+    }
+   ],
+   "parent_snapshot_moved": "The base moved issue_28_v13's register and closure (313038b0 -> 7644b72b); CI on 4a685996 failed on that until the merge and re-mint (1a69b3f7). tests.vnext.test_historical_sec_session, one of the three failing modules, ran on the merged tree: 214 tests OK in 807 s."
   }
  ]
 }

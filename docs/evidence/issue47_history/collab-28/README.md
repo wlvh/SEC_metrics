@@ -238,3 +238,14 @@
 #28 问（[评论 5954343457](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5954343457)）第 3436 块末句 "The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes." 算不算资格认定。现有合同能回答，不需要提新的口径问题：Spec 列出的成员认定是财务素养、审计委员会财务专家、非雇员董事、成员不是高管或雇员；"委员会做什么"不在范围内。这句话没有认定任何人符合任何标准，也不是列出的资格；后半句写明它在说委员会的监督职责。块里其余内容是管理层、PwC、内部审计的职责。所以整块不属于 C02，#28 的初读成立。
 
 这也是本方选择器的缺陷：任何 "members of the … Committee are …" 都被当成构成陈述。修复 46（`4fcb1eba`，[shared-with-#28]）要求动词后面到分号为止写出人名或列出的身份。37 份双向判读一块不动；12 个未判读的已发布位置里只有摩根大通四年各移走这一块（3532、3642、3413、3436），第 3409 块保留。详见 `../c02-selector-repairs/README.md` 第 46 节。摩根大通 FY2022–FY2025 按坐标另登记一条缺陷；本方仍没有摩根大通 C02 的判读，所以重算后的值也要先读过才能接受。
+
+## 2026-10-02 读到 #28 `65706fd8`
+
+### C02 修复 46 的两条独审反例（本方修复 48）
+
+#28 在 `ee289953` 把修复 46 的成员从句放进它自己的 `c02_board_composition_28_v4.py`，限定独审结论 NEEDS_FIX（[评论 5958422081](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5958422081) ），并在 `c98ab43c` 让新 v4 在写入前停用。两条反例都在本方复现：修复 46 用 `_mentions_person` 找人名，要求姓至少三个字母，漏掉 "Jack Ma and John Wu"；在整段里任何位置找，把职责从句里提到的审计师当成成员。修复 48 改为只读动词后开头的词：名单或列出的身份，开头前只允许量词、副词和开引号；分号截断和审计师独立性剔除两步没有能区分的例子了，一并删除。49 个位置一块不动，注错 158/158。详见 `../c02-selector-repairs/README.md` 第 48 节。#28 若接收，需改的是 `_members_are` 及其三个新名字（`_COMPLEMENT_LEAD`、`_EXPERT_TERM`、`_HONORIFIC_OPEN`），依赖 `_QUALIFICATION`、`_NOT_EMPLOYED`、`_LIST_SEPARATOR`、`_LIST_END`、`person_name`；接口不变。另一条规则 `COMMITTEE_MEMBER_QUALIFICATION` 的同类局限（职责从句里的资格词）没有真实例子，本次不改，已写明。
+
+### E01 布局读取（#28 消费本方固定版本）
+
+#28 在 `8ea442a3` 把本方 `9caada4e` 从 `RULE` 到 `_primary_bytes` 之前逐字节放进 `e01_item_text_28_v2.py`，`65706fd8` 是它的限定独审（PASS_LIMITED）。本方不需要改任何文件。独审记下的继承局限（正文里有非空的隐藏节点时整体保守拒绝，可能降低自动完成率）本方同样存在。
+
