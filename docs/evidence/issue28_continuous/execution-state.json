@@ -9207,5 +9207,33 @@
     "no_new_result_or_390_credit": true,
     "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/collab-d02-peer104-impact-20261002/"
+  },
+  "ordinary_a05_formula_successor_20261002": {
+    "status": "EXPLICIT_VERSIONED_PRIVATE_NORMAL_UPDATE_AND_COLD_PASS_FAST146_REVIEW_AND_REMOTE_CI_PENDING",
+    "source": "JPMORGAN_FY2025_CURRENT_AUTHENTICATED_ISSUE28_CUMULATIVE_INPUTS",
+    "presentation_policy": "A05_APPROVED_AVERAGE_ASSETS_FORMULA_V1",
+    "old_default_binding_bytes_equal": true,
+    "numeric_result_id_unchanged": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+    "new_private_run_state_path": "metrics/A05-formula-v1",
+    "new_public_formula": "Selected net income / ((current period-end total assets + prior period-end total assets) / 2)",
+    "new_first_status": "CANDIDATE_READY",
+    "new_cold_status": "NO_SOURCE_CONTENT_CHANGE_NO_SECOND_RUN",
+    "new_private_run_manifest": "OPEN_VALIDATION_NOT_RUN",
+    "old_installed_run": "EXACT_ORIGINAL_BYTES_COLD_READ_WITH_FORMULA_BLANK",
+    "tamper_negatives": "FOUR_REJECTED_VALID_REPLAY_PASSED",
+    "fast_selectors": "146_OF_146_PASSED_FINAL_SOURCE_TREE",
+    "parent_requirement_closure_hash": "sha256:09d94805522a5f9737fbb3cc9c8a0e97219eaba2e92b6bc416d781937aa59f7",
+    "child_requirement_closure_hash": "sha256:82912dfd3c81ee8c3f67815d51fd50c0b43d18e98a177df45625b9aa7dfa7bc3",
+    "review": "PENDING_EXACT_PATCH_SHA",
+    "new_head_ci": "PENDING_PUSH",
+    "current_390_credit": false,
+    "new_real_calls": [0, 0, 0],
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "shared_functions": ["normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3._binding", "normal_run_v3.replay_case", "ordinary_projection.render_ordinary_run", "ordinary_update_cycle._config", "ordinary_update_cycle._descriptor", "ordinary_update_cycle._inspect", "ordinary_update_cycle.run_once"],
+      "default_behavior": "SAME_BINDING_AND_RESULT_BYTES; EXPLICIT_A05_SUCCESSOR_ONLY",
+      "downstream": "#47 stacked branch must reconcile mutable V13/V14 bindings and new opt-in module/CLI route; no historical reader or #47 snapshot edited"
+    },
+    "evidence": "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/"
   }
 }

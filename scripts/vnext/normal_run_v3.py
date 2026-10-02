@@ -23,6 +23,7 @@ REQUIREMENT_ID = "issue_28_v13"
 PREFIX = "run:ordinary-integrated:"
 POLICY_PATH = "config/issue28_normal_results_v2.json"
 BINDING_DIRECTORY = "ordinary_integrated_bindings"
+A05_FORMULA_POLICY = "A05_APPROVED_AVERAGE_ASSETS_FORMULA_V1"
 
 
 def _need(condition, reason):
@@ -93,7 +94,8 @@ def _registered_update_kwargs(metric_id, options, company_id):
 
 def prepare_case(*, data_root, company_id, metric_id, registered_update_options=None,
                  native_assessment_ledger=None, c04_event_forms=None,
-                 c02_composition=False, c02_grouped=False, d01_emphasis=False):
+                 c02_composition=False, c02_grouped=False, d01_emphasis=False,
+                 a05_formula=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
@@ -102,6 +104,8 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
+    _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
+          'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import prepare_case as prepare_capacity_case
         options=_registered_update_kwargs(metric_id, registered_update_options, company_id)
@@ -204,6 +208,11 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
     if debt_input is not None:
         from .b06_current_input import bind_current_debt_input
         case = bind_current_debt_input(case=case,packet=debt_input,repo_root=data_root)
+    if a05_formula:
+        _need(case['kind'] == 'STRUCTURED' and
+              case['input_binding']['record_type'] == 'ORDINARY_ZERO_AI_RUN_INPUT',
+              'ORDINARY_A05_FORMULA_SOURCE_ROUTE_CHANGED')
+        case['presentation_policy'] = A05_FORMULA_POLICY
     _need(set(case["compiled_specs"]) == {metric_id,*case["compiled_specs"][metric_id]["compiled"]["dependencies"]},
           "ORDINARY_INTEGRATED_DEPENDENCY_SET_CHANGED")
     for metric,path in case["spec_paths"].items():
@@ -212,18 +221,24 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
 
 
 def _binding(case, requirement):
-    return exact_json_value({"record_type":"ORDINARY_INTEGRATED_RUN_BINDING","kind":case["kind"],
+    body = {"record_type":"ORDINARY_INTEGRATED_RUN_BINDING","kind":case["kind"],
         "primary_metric_id":case["primary_metric_id"],"input_binding":case["input_binding"],
         "source_admission":case["admission"],"spec_paths":case["spec_paths"],
         "spec_closure_hashes":{key:value["spec_closure_hash"] for key,value in case["compiled_specs"].items()},
         "target_period":case["target_period"],"requirement_closure_hash":requirement["requirement_closure_hash"],
-        "production_authorized":False})
+        "production_authorized":False}
+    if 'presentation_policy' in case:
+        _need(case['primary_metric_id'] == 'A05' and
+              case['presentation_policy'] == A05_FORMULA_POLICY,
+              'ORDINARY_A05_FORMULA_POLICY_CHANGED')
+        body['presentation_policy'] = A05_FORMULA_POLICY
+    return exact_json_value(body)
 
 
 def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
                           registered_update_options=None, native_assessment_ledger=None,
                           c04_event_forms=None, c02_composition=False, c02_grouped=False,
-                          d01_emphasis=False):
+                          d01_emphasis=False, a05_formula=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
@@ -232,6 +247,8 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
+    _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
+          'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import install_inputs
         root=ROOT if source_root is None else source_root
@@ -250,12 +267,14 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
           "ORDINARY_INTEGRATED_SOURCE_AND_OUTPUT_OVERLAP")
     case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id,
         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
-        c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis)
+        c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
+        a05_formula=a05_formula)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
     _install_case_inputs(data_root=data_root,source_root=source_root,company_id=company_id,case=case,requirement=requirement)
     rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
-        c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis)
+        c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
+        a05_formula=a05_formula)
     _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
     return rebuilt
 
@@ -320,7 +339,7 @@ def text_api(metric_id, c02_composition=False):
 
 def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False,
                       c04_event_forms=None, c02_composition=False, c02_grouped=False,
-                      d01_emphasis=False):
+                      d01_emphasis=False, a05_formula=False):
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
@@ -329,6 +348,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
+    _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
+          'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -338,7 +359,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
     case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
-        c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis)
+        c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
+        a05_formula=a05_formula)
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
@@ -430,6 +452,10 @@ def replay_case(*, data_root, manifest, spec=None):
     _need(d01_policy in {None, d01_policy_value} and
           (d01_policy is None or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_REPLAY_POLICY_CHANGED')
+    a05_policy = saved.get('presentation_policy')
+    _need(a05_policy in {None, A05_FORMULA_POLICY} and
+          (a05_policy is None or metric_id == 'A05'),
+          'ORDINARY_A05_FORMULA_REPLAY_POLICY_CHANGED')
     if saved.get('input_binding', {}).get('route') == 'B03_EXACT_IMPAIRMENT_EXCLUSION_V1':
         _need(metric_id == 'B03', 'ORDINARY_B03_ADJUSTED_REPLAY_METRIC_CHANGED')
         from .b03_impairment_adjusted_run import prepare_case as prepare_adjusted_b03
@@ -440,7 +466,8 @@ def replay_case(*, data_root, manifest, spec=None):
             metric_id=metric_id,
             **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
             c02_composition=c02_composition,c02_grouped=c02_grouped,
-            d01_emphasis=d01_policy is not None)
+            d01_emphasis=d01_policy is not None,
+            a05_formula=a05_policy is not None)
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
