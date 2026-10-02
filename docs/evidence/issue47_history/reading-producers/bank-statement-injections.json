@@ -1,0 +1,113 @@
+{
+ "reader": "tools/read_bank_statement_facts.py",
+ "record_type": "ISSUE_47_BANK_STATEMENT_READER_FAULT_INJECTIONS",
+ "results": [
+  {
+   "as_expected": true,
+   "expected_failing": [],
+   "failing": [],
+   "injection": "CONTROL",
+   "ran": 12,
+   "what": "nothing"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_prior_year_the_target_restates_is_not_read",
+    "test_every_position_re_derives_from_the_two_reports_it_names"
+   ],
+   "failing": [
+    "test_a_prior_year_the_target_restates_is_not_read",
+    "test_every_position_re_derives_from_the_two_reports_it_names"
+   ],
+   "injection": "NO_RESTATEMENT_CHECK",
+   "ran": 12,
+   "what": "a prior year the target report restates is read from the prior filing anyway"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_prior_component_is_read_from_the_prior_filing",
+    "test_a_prior_year_the_target_restates_is_not_read",
+    "test_every_position_re_derives_from_the_two_reports_it_names"
+   ],
+   "failing": [
+    "test_a_prior_component_is_read_from_the_prior_filing",
+    "test_a_prior_year_the_target_restates_is_not_read",
+    "test_every_position_re_derives_from_the_two_reports_it_names"
+   ],
+   "injection": "PRIOR_FROM_THE_TARGET",
+   "ran": 12,
+   "what": "a component the catalog takes from the prior filing is read from the target"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_capital_ratios_need_exactly_the_required_dimensions",
+    "test_every_position_re_derives_from_the_two_reports_it_names"
+   ],
+   "failing": [
+    "test_capital_ratios_need_exactly_the_required_dimensions",
+    "test_every_position_re_derives_from_the_two_reports_it_names"
+   ],
+   "injection": "SUBSET_DIMENSIONS",
+   "ran": 12,
+   "what": "a fact carrying more dimensions than the catalog requires is used"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_every_position_re_derives_from_the_two_reports_it_names",
+    "test_two_namespaces_that_disagree_give_no_value"
+   ],
+   "failing": [
+    "test_every_position_re_derives_from_the_two_reports_it_names",
+    "test_two_namespaces_that_disagree_give_no_value"
+   ],
+   "injection": "US_GAAP_ONLY",
+   "ran": 12,
+   "what": "a fact the filer tags under its own namespace with the approved name is not read"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_every_position_re_derives_from_the_two_reports_it_names",
+    "test_the_first_approved_concept_wins"
+   ],
+   "failing": [
+    "test_every_position_re_derives_from_the_two_reports_it_names",
+    "test_the_first_approved_concept_wins"
+   ],
+   "injection": "LAST_CONCEPT_FIRST",
+   "ran": 12,
+   "what": "the approved concepts are tried in another order"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_every_position_re_derives_from_the_two_reports_it_names",
+    "test_the_average_denominator_is_the_mean_of_the_two_year_ends"
+   ],
+   "failing": [
+    "test_every_position_re_derives_from_the_two_reports_it_names",
+    "test_the_average_denominator_is_the_mean_of_the_two_year_ends"
+   ],
+   "injection": "AVERAGE_WITHOUT_HALVING",
+   "ran": 12,
+   "what": "the average denominator is the sum of the two year ends"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_no_import_names_a_route_module"
+   ],
+   "failing": [
+    "test_no_import_names_a_route_module"
+   ],
+   "injection": "IMPORT_A_ROUTE_MODULE",
+   "ran": 12,
+   "what": "the reader importing the route's structured-fact module"
+  }
+ ],
+ "suite": "tests.vnext.test_bank_statement_facts_reading"
+}

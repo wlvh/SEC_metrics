@@ -24,7 +24,7 @@ an underline and nothing else.
 The bold stack restates the frozen ``font-weight`` rule, which is a second copy
 of a rule and is held to the original mechanically: with
 ``admit_underline=False`` this parser must produce blocks identical to the
-frozen one, which ``tests/vnext/test_historical_text_emphasis.py`` requires on
+frozen one, which ``tests/vnext/test_historical_risk_headings.py`` requires on
 every saved filing.
 
 The document builder does not restate ``build_text_document``. It runs the
@@ -57,6 +57,28 @@ too, and it opens an audit-report exclusion on Southwest's hyperlinked index
 line that swallows 849 blocks including five confirmed legal-contingency ones.
 The sibling rule's own ``not linked`` check would close that, but neither is
 needed while the successor parser stays on this route.
+
+A heading the filing runs over a page is refused, not joined. Southwest lets
+three risk-factor headings break at the foot of a page: the first half ends a
+block, the page number and the next page's linked "Table of Contents" line
+follow, and the rest opens the next page as its own bold block, beginning
+mid-sentence. An earlier version of this module joined the halves and recorded
+the joined heading with one raw span from the first half's start to the second
+half's end. Under the TEXT_V1 claim a heading is one verbatim excerpt of one
+raw span, and that span holds the page number and the contents line between
+the halves: the claim's text was not the text of its own span (measured on the
+batch's Southwest FY2022 Run: the span reads "... adverse weather or 36 Table
+of Contents a localized disaster ..."). The evidence check compared the text
+with the block's emphasis field and hashed the span, so it passed what it
+could not see. The join's predicate was also too loose - any run of page
+numbers or contents lines between two emphasised blocks, so two headings with
+a lone digit between them would have been joined (no batch filing had that).
+#28 found both on its copy of this rule (865d8220, independent review of
+1457e99a). The known layout - an unterminated heading, a page number, the
+linked contents line, a lower-case continuation - now stops the document with
+D01_MULTISPAN_HEADING_UNSUPPORTED, an implementation gap: the filing states the
+heading; this route cannot yet represent one heading as two spans. Every other
+layout is left as the frozen parser leaves it, and a lone digit joins nothing.
 """
 from __future__ import annotations
 
@@ -83,11 +105,10 @@ _BRIDGE = re.compile(r"[^\w\s]{1,2}")
 UNCHANGED_BLOCK_FIELDS = ("block_index", "text", "linked", "raw_start_byte",
                           "raw_end_byte", "raw_span_sha256")
 EMPHASIS_FIELDS = ("emphasized", "leading_emphasis")
-# What may lie between the two halves of a heading the filing runs over a page:
-# the page number and the linked "Table of Contents" line at the next page's
-# head. Measured on Southwest's FY2022 and FY2023 reports, the only filings of
-# the corpus where a heading runs over a page; nothing else is page furniture
-# here, so a heading followed by any body text is never joined to anything.
+# The one page-split layout recognised: between the two halves of a heading,
+# the page number and then the linked "Table of Contents" line at the next
+# page's head. Measured on Southwest's FY2022 and FY2023 reports, the only
+# filings of the batch where a heading runs over a page.
 _PAGE_NUMBER = re.compile(r"\d{1,3}")
 _CONTENTS_LINK = "table of contents"
 # A block that ends like this ends its sentence; a heading cut by a page does not.
@@ -242,18 +263,15 @@ def build_text_document_admitting_underline(*, raw_bytes: bytes, raw_blob, sourc
             prefix["raw_end_byte"] = offsets[prefix.pop("end")] + bom_size
             prefix["raw_span_sha256"] = sha256_bytes(
                 content=raw_bytes[prefix["raw_start_byte"]:prefix["raw_end_byte"]])
-    joined = join_headings_split_across_a_page(
-        blocks=blocks, section=document["sections"].get("ITEM_1A"), raw_bytes=raw_bytes)
+    _need(not split_heading_requires_multispan(
+        blocks=blocks, section=document["sections"].get("ITEM_1A")),
+        "D01_MULTISPAN_HEADING_UNSUPPORTED")
     for widened, frozen in zip(blocks, document["blocks"]):
         _need(set(widened) == set(frozen), "HISTORICAL_EMPHASIS_BLOCK_SHAPE_CHANGED")
         _need(all(widened[field] == frozen[field] for field in UNCHANGED_BLOCK_FIELDS),
               "HISTORICAL_EMPHASIS_CHANGED_MORE_THAN_THE_EMPHASIS_FIELDS")
     body = {key: value for key, value in document.items() if key != "text_document_id"}
     body["blocks"] = blocks
-    # Only a document where a join happened carries the record, so every other
-    # document is byte for byte what it was before this rule existed.
-    if joined:
-        body["headings_joined_across_a_page"] = joined
     return {**body, "text_document_id": content_hash(value=body)}
 
 
@@ -262,62 +280,29 @@ def _heading_only(block):
     return prefix is not None and not block["linked"] and prefix["text"] == block["text"]
 
 
-def _page_furniture(block):
-    text = block["text"].strip()
-    return (bool(_PAGE_NUMBER.fullmatch(text))
-            or (block["linked"] and text.casefold() == _CONTENTS_LINK))
+def split_heading_requires_multispan(*, blocks, section):
+    """Whether Item 1A holds a heading the filing runs over a page.
 
-
-def join_headings_split_across_a_page(*, blocks, section, raw_bytes):
-    """Join the two halves of a heading the filing runs over a page, in Item 1A.
-
-    One heading is one line of D01. Southwest lets three risk-factor headings
-    run over the foot of a page: the first half ends a block, the page number
-    and the next page's linked "Table of Contents" line follow, and the rest
-    opens the next page as its own bold block, beginning mid-sentence. The
-    frozen selector takes every emphasised block as a heading, so the value
-    listed each half as a line and neither line was the heading.
-
-    A pair is joined only when all of these hold: both blocks are emphasised
-    whole and not linked; only page furniture lies between them, and some does
-    (the page break is what explains two blocks); the first does not end a
-    sentence; the second begins with a lower-case letter. The last is what
-    keeps a category label at the foot of a page apart from the heading that
-    opens the next one - measured, two such pairs in the corpus (Enphase
-    FY2025, Southwest FY2025), both left as two headings.
-
-    The joined heading is recorded where it starts: the first block's leading
-    emphasis carries both halves' text and a raw span from the first half's
-    start to the second half's end, and the second block's leading emphasis is
-    folded into it. Block text and every other field stay the frozen parser's.
-
-    Returns the joins made, as ``{"first_block", "second_block",
-    "furniture_blocks"}`` records.
+    The layout: a block emphasised whole and not linked that does not end a
+    sentence, then a page number, then the linked "Table of Contents" line,
+    then a block emphasised whole and not linked that begins with a lower-case
+    letter. The four must be adjacent. A heading of that layout cannot be one
+    verbatim excerpt of one raw span, so the caller refuses the document. A
+    page number alone between two headings is not this layout: two headings
+    stay two headings.
     """
     if not section or section.get("status") != "LOCATED" or len(section["candidates"]) != 1:
-        return []
+        return False
     scope = section["candidates"][0]
     start, end = scope["start_block"], scope["end_block_exclusive"]
-    joined, index = [], start
-    while index < end:
+    for index in range(start, max(start, end - 3)):
         block = blocks[index]
-        following = index + 1
-        while following < end and _page_furniture(blocks[following]):
-            following += 1
+        page, contents, continuation = blocks[index + 1:index + 4]
         if (_heading_only(block) and not _SENTENCE_END.search(block["text"])
-                and index + 1 < following < end and _heading_only(blocks[following])
-                and blocks[following]["text"][:1].islower()):
-            second = blocks[following]
-            first_prefix, second_prefix = block["leading_emphasis"], second["leading_emphasis"]
-            raw_start, raw_end = first_prefix["raw_start_byte"], second_prefix["raw_end_byte"]
-            block["leading_emphasis"] = {
-                "text": block["text"] + " " + second["text"],
-                "raw_start_byte": raw_start, "raw_end_byte": raw_end,
-                "raw_span_sha256": sha256_bytes(content=raw_bytes[raw_start:raw_end])}
-            second["leading_emphasis"] = None
-            joined.append({"first_block": index, "second_block": following,
-                           "furniture_blocks": list(range(index + 1, following))})
-            index = following + 1
-            continue
-        index += 1
-    return joined
+                and _PAGE_NUMBER.fullmatch(page["text"].strip())
+                and contents["linked"]
+                and contents["text"].strip().casefold() == _CONTENTS_LINK
+                and _heading_only(continuation)
+                and continuation["text"][:1].islower()):
+            return True
+    return False

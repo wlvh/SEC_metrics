@@ -2014,6 +2014,37 @@
      "what_this_releases": "This result and no other: the value the 41-period batch published, with the halves as lines of their own, and any other result at this coordinate stays withdrawn.",
      "what_it_does_not_assert": "that any full batch has re-run under this version."
     }
+   ],
+   "later": "The join that repaired this entry is itself withdrawn: its single raw span carries the page furniture between the halves (D01_SOUTHWEST_2022_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT). The route now refuses this filing by name, D01_MULTISPAN_HEADING_UNSUPPORTED; this entry's release stands for what it says - the two half-headings are no longer published as lines."
+  },
+  {
+   "company_id": "southwest_airlines",
+   "metric_id": "D01",
+   "result_id": null,
+   "period_end": "2022-12-31",
+   "defect_id": "D01_SOUTHWEST_2022_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT",
+   "summary": "The repaired result joins the headings the filing runs over a page (first half at blocks 524 and 636) and records each joined heading with one raw span across the page break. The span's own text carries the page number and 'Table of Contents' between the halves (measured: '... adverse weather or 36 Table of Contents a localized disaster ...'), so the excerpt is not a verbatim excerpt of the span it names. The heading text is the filing's; the evidence record is not.",
+   "root_cause": "historical_text_emphasis.join_headings_split_across_a_page (removed) recorded a heading the filing runs over a page with one raw span from the first half's start to the second half's end and the two halves' text joined. Under the TEXT_V1 claim a heading is one verbatim excerpt of one raw span; the span held the page number and the linked 'Table of Contents' line between the halves, so the claim's text was not its span's text. build_text_evidence compares the claim with the block's emphasis field and hashes the span, so it passed what it could not see.",
+   "confirmed_in": {
+    "result_id": "sha256:758ecf624c05c8f54e9b333082aa5c859f98c12ad4719c3d1fd7e98ccaabcd49",
+    "requirement_closure_hashes": [
+     "sha256:e667d42cbccb0f33e5aef7a1948f128a29f91473671643297d75461befe922ff",
+     "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e"
+    ],
+    "how": "the frame4 Run's own candidate records: each joined claim's raw span decoded and compared with its text (test_historical_page_split_headings.test_one_span_across_the_halves_holds_the_page_furniture)."
+   },
+   "found_by": "#28's limited independent review of its copy of this rule (Issue #47 comment 5945148937; 6425c239, 865d8220), then checked on this route's own Runs rather than assumed from #28's.",
+   "scope_measured": "all 50 D01 Runs of the 50-period batch (d01-risk-headings/page-boundary/measured-before.json): joins happened only here; every join had the page number and the linked contents line between its halves, so the second finding - a lone digit between two headings would join them - had no instance in the batch.",
+   "repair_state": "RULE_FIXED_REFUSED_BY_NAME",
+   "repair": "The join is removed. historical_text_emphasis.split_heading_requires_multispan recognises the one layout (unterminated heading, page number, linked contents line, lower-case continuation) and the document builder stops with D01_MULTISPAN_HEADING_UNSUPPORTED - an implementation gap, not a disclosure absence: this route cannot yet represent one heading as two spans. Rebuilt with the refusal, the batch's other 48 D01 filings give the batch's documents and candidates byte for byte (page-boundary/measured-after.json). No result replaces this one, so nothing is released; a multi-span successor would be a new excerpt contract, aligned with #28 first.",
+   "acceptance_note": "CONTENT_D01_SOUTHWEST_2022 accepted this result's heading text, which the reading still finds right; the withdrawal is of the evidence record, and withdrawal wins over acceptance.",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/page-boundary/measured-before.json",
+    "docs/evidence/issue47_history/d01-risk-headings/page-boundary/measured-after.json",
+    "tests/vnext/test_historical_page_split_headings.py"
+   ],
+   "same_cause_as": [
+    "D01_SOUTHWEST_2023_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT"
    ]
   },
   {
@@ -2046,6 +2077,37 @@
      "what_this_releases": "This result and no other: the value the 41-period batch published, with the halves as lines of their own, and any other result at this coordinate stays withdrawn.",
      "what_it_does_not_assert": "that any full batch has re-run under this version."
     }
+   ],
+   "later": "The join that repaired this entry is itself withdrawn: its single raw span carries the page furniture between the halves (D01_SOUTHWEST_2023_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT). The route now refuses this filing by name, D01_MULTISPAN_HEADING_UNSUPPORTED; this entry's release stands for what it says - the two half-headings are no longer published as lines."
+  },
+  {
+   "company_id": "southwest_airlines",
+   "metric_id": "D01",
+   "result_id": null,
+   "period_end": "2023-12-31",
+   "defect_id": "D01_SOUTHWEST_2023_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT",
+   "summary": "The repaired result joins the heading the filing runs over a page (first half at block 562) and records each joined heading with one raw span across the page break. The span's own text carries the page number and 'Table of Contents' between the halves (measured: '... adverse weather or 36 Table of Contents a localized disaster ...'), so the excerpt is not a verbatim excerpt of the span it names. The heading text is the filing's; the evidence record is not.",
+   "root_cause": "historical_text_emphasis.join_headings_split_across_a_page (removed) recorded a heading the filing runs over a page with one raw span from the first half's start to the second half's end and the two halves' text joined. Under the TEXT_V1 claim a heading is one verbatim excerpt of one raw span; the span held the page number and the linked 'Table of Contents' line between the halves, so the claim's text was not its span's text. build_text_evidence compares the claim with the block's emphasis field and hashes the span, so it passed what it could not see.",
+   "confirmed_in": {
+    "result_id": "sha256:b6ad49376adcf12f1ef2da7190b947bd5d7413c6451267b3b77e456401f48151",
+    "requirement_closure_hashes": [
+     "sha256:e667d42cbccb0f33e5aef7a1948f128a29f91473671643297d75461befe922ff",
+     "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e"
+    ],
+    "how": "the frame4 Run's own candidate records: each joined claim's raw span decoded and compared with its text (test_historical_page_split_headings.test_one_span_across_the_halves_holds_the_page_furniture)."
+   },
+   "found_by": "#28's limited independent review of its copy of this rule (Issue #47 comment 5945148937; 6425c239, 865d8220), then checked on this route's own Runs rather than assumed from #28's.",
+   "scope_measured": "all 50 D01 Runs of the 50-period batch (d01-risk-headings/page-boundary/measured-before.json): joins happened only here; every join had the page number and the linked contents line between its halves, so the second finding - a lone digit between two headings would join them - had no instance in the batch.",
+   "repair_state": "RULE_FIXED_REFUSED_BY_NAME",
+   "repair": "The join is removed. historical_text_emphasis.split_heading_requires_multispan recognises the one layout (unterminated heading, page number, linked contents line, lower-case continuation) and the document builder stops with D01_MULTISPAN_HEADING_UNSUPPORTED - an implementation gap, not a disclosure absence: this route cannot yet represent one heading as two spans. Rebuilt with the refusal, the batch's other 48 D01 filings give the batch's documents and candidates byte for byte (page-boundary/measured-after.json). No result replaces this one, so nothing is released; a multi-span successor would be a new excerpt contract, aligned with #28 first.",
+   "acceptance_note": "CONTENT_D01_SOUTHWEST_2023 accepted this result's heading text, which the reading still finds right; the withdrawal is of the evidence record, and withdrawal wins over acceptance.",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/page-boundary/measured-before.json",
+    "docs/evidence/issue47_history/d01-risk-headings/page-boundary/measured-after.json",
+    "tests/vnext/test_historical_page_split_headings.py"
+   ],
+   "same_cause_as": [
+    "D01_SOUTHWEST_2022_JOINED_HEADING_SPAN_IS_NOT_ITS_TEXT"
    ]
   },
   {
