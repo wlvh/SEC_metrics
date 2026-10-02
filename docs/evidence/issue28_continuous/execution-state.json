@@ -846,6 +846,31 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_d01_emphasis_1457e99",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "ordinary_d01_emphasis",
+      "scope_paths": [
+        "scripts/vnext/d01_emphasis_source.py",
+        "scripts/vnext/d01_emphasis_results.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "config/issue28_normal_results_v2.json",
+        "tests/vnext/test_d01_emphasis_successor.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/"
+      ],
+      "patch_sha": "1457e99a5a00d390d58183ddc3d244f2ab1f82af",
+      "spawned_at": "2026-10-02T02:43:38Z",
+      "ended_at": "2026-10-02T03:15:52Z",
+      "tool_calls": 72,
+      "result_path": "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/independent-review-1457e99/conclusion.md",
+      "verdict": "NEEDS_FIX_PAGE_JOIN_FALSE_POSITIVE",
+      "tool_calls_outer": 26,
+      "message_count": 2
+    },
+    {
       "task_name": "audit_c02paramount_2c861c8",
       "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
       "module": "ordinary_c02_paramount_peer4d_delta",
@@ -8848,7 +8873,7 @@
       "new_directed": 4,
       "fast_selectors": 145
     },
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "NEEDS_FIX_PAGE_JOIN_FALSE_POSITIVE_1457E99A",
     "trusted_summary": {
       "excluded_coordinates": 12,
       "excluded_exact_result_ids": 18
@@ -8870,5 +8895,48 @@
     "jobs_total": 16,
     "updated_at_utc": "2026-10-01T21:15:29Z",
     "scope": "Previous af9 head only; does not cover D01 successor edits."
+  },
+  "d01_page_boundary_repair_20261002": {
+    "status": "PAGE_JOIN_FALSE_ACCEPTANCE_REMOVED_KNOWN_MULTISPAN_WITHHELD",
+    "first_review": "docs/evidence/issue28_continuous/collab-d01-source-successor-20261002/independent-review-1457e99/conclusion.md",
+    "first_review_verdict": "NEEDS_FIX_RETAINED",
+    "new_review": "PENDING_EXACT_REPAIR_SHA",
+    "changed_code": "scripts/vnext/d01_emphasis_source.py",
+    "current_saved_source_candidates": "TEN_OF_TEN_EXACT_PRIOR_CANDIDATE_HASHES",
+    "new_page_boundary_tests": [
+      "ONLY_DIGIT_DOES_NOT_JOIN",
+      "KNOWN_MULTISPAN_WITHHELD"
+    ],
+    "native": {
+      "paramount_result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+      "first_status": "CANDIDATE_READY",
+      "repeat_status": "NO_SOURCE_CONTENT_CHANGE",
+      "cold_read_result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd"
+    },
+    "fast_selectors": 145,
+    "bindings": {
+      "parent_requirement_closure_hash": "sha256:306300d46105793e9c492088e9fd63a2a16094e7b170c7ceaacd81174c0c02a7",
+      "child_requirement_closure_hash": "sha256:3112b4766e47e2f59a36c8fae63e631fc7c6a3631b4e360ccbca11bafd920657",
+      "child_execution_authority_hash": "sha256:1886cc58e9c3521c8117085ba1a4207a13dbf71f63dc95b88a9887966837c2f3",
+      "changed_paths": [
+        "scripts/vnext/d01_emphasis_source.py"
+      ],
+      "receipt_count": 3,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "default_binding_compatibility_test_pending": true
+    },
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "trusted_summary_unchanged": "12_COORDINATES_18_EXACT_RESULT_IDENTITIES_WITHDRAWN",
+    "current_390_credit": false,
+    "production_authorized": false,
+    "evidence": "docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/"
   }
 }

@@ -1,4 +1,4 @@
-"""Explicit D01 document view for underline and split risk-factor headings.
+"""Explicit D01 document view for underline and split-markup risk headings.
 
 This is targeted reuse of #47's historical_text_emphasis.py at fixed commit
 2b4f571e, with its historical DEI wrapper removed. The frozen builder still
@@ -10,8 +10,10 @@ the D01-emphasis input policy; C02/D02 and old D01 Runs keep their old parser.
 Underline has its own stack so cancelling it never cancels bold. A one- or
 two-character punctuation gap is crossed only when emphasis resumes, which
 keeps a bold lead sentence separate from the following ordinary paragraph.
-Page joins require both emphasized halves and only documented page furniture
-between them. Each repaired heading remains tied to an original raw span.
+The current TEXT_V1 claim records one contiguous raw span. A known heading
+split across a page cannot be represented as one verbatim excerpt under that
+contract, so a page-number/Table of Contents/continuation pattern is withheld
+until a separately reviewed multi-span successor exists.
 """
 from __future__ import annotations
 
@@ -192,18 +194,15 @@ def build_text_document_admitting_underline(*, raw_bytes: bytes, raw_blob, sourc
             prefix["raw_end_byte"] = offsets[prefix.pop("end")] + bom_size
             prefix["raw_span_sha256"] = sha256_bytes(
                 content=raw_bytes[prefix["raw_start_byte"]:prefix["raw_end_byte"]])
-    joined = join_headings_split_across_a_page(
-        blocks=blocks, section=document["sections"].get("ITEM_1A"), raw_bytes=raw_bytes)
+    _need(not split_heading_requires_multispan(
+        blocks=blocks, section=document["sections"].get("ITEM_1A")),
+        "D01_MULTISPAN_HEADING_UNSUPPORTED")
     for widened, frozen in zip(blocks, document["blocks"]):
         _need(set(widened) == set(frozen), "HISTORICAL_EMPHASIS_BLOCK_SHAPE_CHANGED")
         _need(all(widened[field] == frozen[field] for field in UNCHANGED_BLOCK_FIELDS),
               "HISTORICAL_EMPHASIS_CHANGED_MORE_THAN_THE_EMPHASIS_FIELDS")
     body = {key: value for key, value in document.items() if key != "text_document_id"}
     body["blocks"] = blocks
-    # Only a document where a join happened carries the record, so every other
-    # document is byte for byte what it was before this rule existed.
-    if joined:
-        body["headings_joined_across_a_page"] = joined
     return {**body, "text_document_id": content_hash(value=body)}
 
 
@@ -212,62 +211,20 @@ def _heading_only(block):
     return prefix is not None and not block["linked"] and prefix["text"] == block["text"]
 
 
-def _page_furniture(block):
-    text = block["text"].strip()
-    return (bool(_PAGE_NUMBER.fullmatch(text))
-            or (block["linked"] and text.casefold() == _CONTENTS_LINK))
-
-
-def join_headings_split_across_a_page(*, blocks, section, raw_bytes):
-    """Join the two halves of a heading the filing runs over a page, in Item 1A.
-
-    One heading is one line of D01. Southwest lets three risk-factor headings
-    run over the foot of a page: the first half ends a block, the page number
-    and the next page's linked "Table of Contents" line follow, and the rest
-    opens the next page as its own bold block, beginning mid-sentence. The
-    frozen selector takes every emphasised block as a heading, so the value
-    listed each half as a line and neither line was the heading.
-
-    A pair is joined only when all of these hold: both blocks are emphasised
-    whole and not linked; only page furniture lies between them, and some does
-    (the page break is what explains two blocks); the first does not end a
-    sentence; the second begins with a lower-case letter. The last is what
-    keeps a category label at the foot of a page apart from the heading that
-    opens the next one - measured, two such pairs in the corpus (Enphase
-    FY2025, Southwest FY2025), both left as two headings.
-
-    The joined heading is recorded where it starts: the first block's leading
-    emphasis carries both halves' text and a raw span from the first half's
-    start to the second half's end, and the second block's leading emphasis is
-    folded into it. Block text and every other field stay the frozen parser's.
-
-    Returns the joins made, as ``{"first_block", "second_block",
-    "furniture_blocks"}`` records.
-    """
+def split_heading_requires_multispan(*, blocks, section):
+    """Recognize the known page-split layout without inventing one raw span."""
     if not section or section.get("status") != "LOCATED" or len(section["candidates"]) != 1:
-        return []
+        return False
     scope = section["candidates"][0]
     start, end = scope["start_block"], scope["end_block_exclusive"]
-    joined, index = [], start
-    while index < end:
+    for index in range(start, max(start, end - 3)):
         block = blocks[index]
-        following = index + 1
-        while following < end and _page_furniture(blocks[following]):
-            following += 1
+        page, contents, continuation = blocks[index + 1:index + 4]
         if (_heading_only(block) and not _SENTENCE_END.search(block["text"])
-                and index + 1 < following < end and _heading_only(blocks[following])
-                and blocks[following]["text"][:1].islower()):
-            second = blocks[following]
-            first_prefix, second_prefix = block["leading_emphasis"], second["leading_emphasis"]
-            raw_start, raw_end = first_prefix["raw_start_byte"], second_prefix["raw_end_byte"]
-            block["leading_emphasis"] = {
-                "text": block["text"] + " " + second["text"],
-                "raw_start_byte": raw_start, "raw_end_byte": raw_end,
-                "raw_span_sha256": sha256_bytes(content=raw_bytes[raw_start:raw_end])}
-            second["leading_emphasis"] = None
-            joined.append({"first_block": index, "second_block": following,
-                           "furniture_blocks": list(range(index + 1, following))})
-            index = following + 1
-            continue
-        index += 1
-    return joined
+                and _PAGE_NUMBER.fullmatch(page["text"].strip())
+                and contents["linked"]
+                and contents["text"].strip().casefold() == _CONTENTS_LINK
+                and _heading_only(continuation)
+                and continuation["text"][:1].islower()):
+            return True
+    return False

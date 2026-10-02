@@ -1,6 +1,5 @@
 """D01 source headings survive split markup without changing the old route."""
 import copy
-import hashlib
 import unittest
 
 from tests.vnext.test_text_coverage import BODY, annual, binding
@@ -31,24 +30,23 @@ class D01EmphasisSuccessorTest(unittest.TestCase):
                 self.assertEqual(before[field], after[field])
         self.assertNotIn('Further explanation', new['blocks'][3]['leading_emphasis']['text'])
 
-    def test_page_split_requires_furniture_and_lowercase_continuation(self):
+    def test_page_split_is_withheld_until_two_raw_spans_can_be_bound(self):
         replacement = ('<p><b>Changes in our operations could</b></p>'
                        '<p>42</p><p><a href="#toc">Table of Contents</a></p>'
-                       '<p><b>affect our results.</b></p>'
-                       '<p><b>General Risks</b></p>'
-                       '<p>43</p><p><a href="#toc">Table of Contents</a></p>'
-                       '<p><b>Additional Risks</b></p>')
+                       '<p><b>affect our results.</b></p>')
+        args = binding(annual(BODY.replace(
+            '<p>A supply constraint could affect production.</p>', replacement)))
+        with self.assertRaisesRegex(ValueError, 'D01_MULTISPAN_HEADING_UNSUPPORTED'):
+            build_text_document_admitting_underline(**args)
+
+    def test_one_digit_between_separate_headings_is_not_a_page_join(self):
+        replacement = ('<p><b>Regulatory Risks</b></p><p>1</p>'
+                       '<p><b>other market risks</b></p>')
         args = binding(annual(BODY.replace(
             '<p>A supply constraint could affect production.</p>', replacement)))
         document = build_text_document_admitting_underline(**args)
-        headings = [row['text'] for row in risk_factor_headings(document=document)['headings']]
-        self.assertEqual(['Changes in our operations could affect our results.',
-                          'General Risks', 'Additional Risks'], headings)
-        self.assertEqual(1, len(document['headings_joined_across_a_page']))
-        joined = document['blocks'][document['headings_joined_across_a_page'][0]['first_block']]
-        prefix = joined['leading_emphasis']
-        self.assertEqual(prefix['raw_span_sha256'], hashlib.sha256(
-            args['raw_bytes'][prefix['raw_start_byte']:prefix['raw_end_byte']]).hexdigest())
+        self.assertEqual(['Regulatory Risks', 'other market risks'],
+                         [row['text'] for row in risk_factor_headings(document=document)['headings']])
 
     def test_current_saved_filings_replay_exact_candidate_and_evidence(self):
         for company, count in [('paramount_skydance_paramount_global', 38),
