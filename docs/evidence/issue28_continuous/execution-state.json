@@ -8449,9 +8449,9 @@
     "rule_version": "COLLAB-28-47-v1",
     "issue28_section": "https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1",
     "issue47_section": "https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1",
-    "peer_read_commit": "2b4f571ef18274299145c63b4c355aa97c45d030",
+    "peer_read_commit": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
     "peer_register_path": "docs/evidence/issue47_history/known_result_defects.json",
-    "peer_register_git_blob": "7bf9d63d03a198409c668205135d50655dad1725",
+    "peer_register_git_blob": "4740055ffe552d1beb688634e8886f68385706bc",
     "own_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
     "owner_target_decisions": {
       "C02": "COMPOSITION_FACTS",
@@ -8958,5 +8958,26 @@
     "current_390_credit": false,
     "production_authorized": false,
     "evidence": "docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/"
+  },
+  "e01_pfizer_8_01_20261002": {
+    "status": "OLD_ZERO_WITHDRAWN_EXACT_RESULT_NO_REPLACEMENT",
+    "peer_fixed_read": "bc0a2ac7ed1c89ac5d3c309d52f4519898ba6ee7",
+    "peer_defect_id": "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+    "own_old_result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+    "old_run_id": "run:ordinary-integrated:2c62a157bbfa54c892c3b376e3605ce5d7a6f854b4880bb94fcd65a1fc481f3c",
+    "accession": "0000078003-25-000159",
+    "old_matcher_returns_empty_for_this_8_01": true,
+    "current_trusted_summary": {
+      "excluded_coordinates": 13,
+      "excluded_exact_result_ids": 19
+    },
+    "new_result_or_run": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-pfizer-20261002/",
+    "next_engineering_boundary": "EXPLICIT_ORDINARY_8_01_BODY_SOURCE_AND_CONTENT_CONFIRMED_M_AND_A_WITH_DEDUP_NOT_YET_COMPLETE"
   }
 }
