@@ -1,0 +1,13 @@
+PATCH 3a05f07ce49cb640f8a1155a16aba40b47abbfdd
+SCOPE ordinary_projection.py, A05 material test, selector, V13/V14 binding, existing evidence
+git diff --check 3a05f07^ 3a05f07: PASS
+python3 -m unittest tests.vnext.test_a05_formula_successor: 2 tests, OK
+V13 validate_execution_authority: sha256:bedb8ed34c43826306416473dbd6784cf74127dfdda4877612d40887c82798ec
+V14 validate_execution_authority: sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4
+ordinary_projection.py SHA256 fa9643e8ca2b662578efa176d7c2ab3a0a0790c6fd49c8a48da81c5051a4dd53 size 16101
+Private Marriott Run record: PUBLISHED N_A_STRUCTURAL NONE null; row formula/value empty; validation NOT_RUN
+Private JPMorgan Run record: PUBLISHED APPLICABLE EXACT 0.01353819078340816975991354239; formula shown; validation NOT_RUN
+Submitted source material selector: PASSED 23.318s/240s; source test 2 tests/24.461s; read only
+Submitted normal CLI: first CANDIDATE_READY, repeat NO_SOURCE_CONTENT_CHANGE; read only
+Submitted wrong numeric branch negative: ORDINARY_A05_SELECTED_BRANCH_CHANGED; read only
+First review: NEEDS_FIX retained; current limited verdict PASS_LIMITED

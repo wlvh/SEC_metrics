@@ -16,4 +16,6 @@ JPMorgan FY2025 的已核对 Result 为 `0.01353819078340816975991354239`（约1
 
 修后仅修改显式展示分支的判定：`PUBLISHED/N_A_STRUCTURAL/NONE/TRAIT_NOT_APPLICABLE`须保持零观测、空值和空公式；`PUBLISHED/APPLICABLE/EXACT`有值分支仍须唯一的`average_assets`观测，错误分支拒绝。`rebind_na_repair.py`只重绑变动的投影字节与必要父子身份、三收据，不覆盖首版`binding-before/after.json`。新增保存来源[完整材料测试](../../../../tests/vnext/test_a05_formula_material.py)在240秒层23.318秒完成两项：Marriott合法N/A能投影，注入假数值观测被拒。首次测试工具误显式传入仓库自身作为“外部来源根”、次次测试类把`run`属性误作测试方法，均为测试接线错误；修正后完整原件测试通过，不把先前错误说成业务断言。
 
-最终闭包下，JPM当前累积来源正常CLI再次给数值候选`b4af4d3b…`和同一公式，另从Marriott保存来源实际正常CLI得到`CANDIDATE_READY`、空数值/空公式，重复运行`NO_SOURCE_CONTENT_CHANGE`且未创建第二Run；实际数值分支错误选择仍被拒。`na-repair-final.json`核对最终产品字节、V14闭包、两个结果类别、原始值身份与来源限时。修后没有重做此前已通过的全部146项fast，受影响短测2/2和新source选择器2/2已实跑；新head远端CI与修后精确限定独审仍单独待核。两份私有Run保持`OPEN/NOT_RUN`，正式390及生产信用仍为false。
+最终闭包下，JPM当前累积来源正常CLI再次给数值候选`b4af4d3b…`和同一公式，另从Marriott保存来源实际正常CLI得到`CANDIDATE_READY`、空数值/空公式，重复运行`NO_SOURCE_CONTENT_CHANGE`且未创建第二Run；实际数值分支错误选择仍被拒。`na-repair-final.json`核对最终产品字节、V14闭包、两个结果类别、原始值身份与来源限时。修后没有重做此前已通过的全部146项fast，受影响短测2/2和新source选择器2/2已实跑；新head远端CI仍待实际终态。两份私有Run保持`OPEN/NOT_RUN`，正式390及生产信用仍为false。
+
+对`3a05f07`修后增量的[限定独审](independent-review-repair-3a05f07/conclusion.md)为`PASS_LIMITED`：审阅者亲跑短测2/2、亲核当前V13/V14绑定及两份私有Run/公开行，读取而未重跑23.318秒的材料测试和正常CLI日志。它明确不覆盖全PR或最终390，也保留首审`NEEDS_FIX`。同一审阅提醒：三份接线收据重绑只证明身份一致，尚无此树上provider/SEC factory→controller的禁网实跑；下一条真实业务请求前必须单独核对最终接线。审阅39工具、3条消息，无调用或推送。
