@@ -11,3 +11,5 @@ JPMorgan FY2025 的已核对 Result 为 `0.01353819078340816975991354239`（约1
 实际新私有更新107.857秒返回`CANDIDATE_READY`，异进程冷重入40.483秒返回`NO_SOURCE_CONTENT_CHANGE`且无第二Run。旧安装代码重放旧Run所得公开行与旧保存字节一致、公式仍空；新旧`metrics_matrix.csv`逐字段仅`formula`不同，`metric_evidence.csv`逐字节相同，Result ID同为`b4af4d3b…`。真实新Run的正常回放通过，删掉/篡改公式合同及错指标等四项负例被拒。最终代码树固定fast套件146/146通过；`final-tree.json`核对了实际被测代码文件哈希、行字节与这些材料。
 
 本次不重算或重新购买A05原始值，不改变旧Result ID、历史Run、正式active或#47运行根。私有新Run的manifest为`OPEN`、`validation.json=NOT_RUN`；单家公司一个解释更清楚的私有候选不等于390坐标统一验收、生产发布或发行人ROA口径已证同一。真实provider/paid/SEC调用均为0。共享影响限`normal_run_v3.prepare_case/install_normal_inputs/create_normal_run/_binding/replay_case`、`ordinary_update_cycle`和`ordinary_projection`的带默认值后继分支，及#28正常CLI分流；按`[shared-with-#47]`登记，#47自行核对堆叠接入。
+
+对精确`489659e5`的首轮[限定独审](independent-review/conclusion.md)为`NEEDS_FIX`：Marriott A05合法`TRAIT_NOT_APPLICABLE`原生结果也有`publication=PUBLISHED`，却没有数值观测；新投影仅凭PUBLISHED要求一个`average_assets`观测，致正常CLI报`ORDINARY_A05_SELECTED_BRANCH_CHANGED`。审阅使用真实保存来源完成安装→Run→投影反例，不是纯静态猜测。JPM正向、旧默认绑定、旧包回读仍按各自证据保留，但不能据此宣称自动更新已完成。旧审阅发现及审阅代理57工具/4消息（超过3条上限一条）保持原义；下一提交只修这个增量并补非金融公司完整正例。接线收据目前已更新哈希，但审阅指出还欠新执行树的factory/controller禁网接线核对，下一条真实请求前不能仅凭收据哈希给接线信用。

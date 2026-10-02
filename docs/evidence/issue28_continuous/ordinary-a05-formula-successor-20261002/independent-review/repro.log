@@ -1,0 +1,15 @@
+patch_sha=489659e556517ce3fc669cf7d5a9b1acf34a25c3
+source_snapshot_id=sha256:3c3898f395548049fc67a14d4309326f7dd8a6f0f415a65ad83fc41cbf963f95
+company=marriott_international
+metric=A05
+network=socket.connect/getaddrinfo and sec_http.urlopen patched to fail
+operation=install_normal_inputs(a05_formula=True) -> create_normal_run(a05_formula=True) -> render_ordinary_run
+run_created PUBLISHED NONE
+result_reason_code TRAIT_NOT_APPLICABLE
+verified_observation_count 0
+render_exception ValueError ORDINARY_A05_SELECTED_BRANCH_CHANGED
+independent_control=jpmorgan_chase PUBLISHED EXACT observation_count=1 selected_branch_id=average_assets
+python3 -m unittest tests.vnext.test_a05_formula_successor: Ran 2 tests in 0.002s, OK
+current_requirements: v13 sha256:09d94805522a5f9737fbbf3cc9c8a0e97219eaba2e92b6bc416d781937aa59f7; v14 sha256:82912dfd3c81ee8c3f67815d51fd50c0b43d18e98a177df45625b9aa7dfa7bc3
+product_file_hashes_match_private_run=5/5
+Decimal28(57048000000 / ((4424900000000 + 4002814000000) / 2)) = 0.01353819078340816975991354239

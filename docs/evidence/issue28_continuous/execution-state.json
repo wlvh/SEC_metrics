@@ -846,6 +846,31 @@
   },
   "subagent_register": [
     {
+      "task_name": "review_a05formula_489659e",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "a05_formula_successor",
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_projection.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_a05_formula_update.py",
+        "tools/vnext_normal_update.py",
+        "tests/vnext/test_a05_formula_successor.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/"
+      ],
+      "patch_sha": "489659e556517ce3fc669cf7d5a9b1acf34a25c3",
+      "spawned_at": "2026-10-02T07:20:05Z",
+      "ended_at": "2026-10-02T07:32:16Z",
+      "tool_calls": 57,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-a05-formula-successor-20261002/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_NONFINANCIAL_STRUCTURAL_NA",
+      "tool_calls_outer": 23,
+      "message_count": 4,
+      "message_limit_exceeded_by": 1
+    },
+    {
       "task_name": "audit_a05original_cbce8c3",
       "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
       "module": "ordinary_a05_jpmorgan_current",
@@ -9209,7 +9234,7 @@
     "evidence": "docs/evidence/issue28_continuous/collab-d02-peer104-impact-20261002/"
   },
   "ordinary_a05_formula_successor_20261002": {
-    "status": "EXPLICIT_VERSIONED_PRIVATE_NORMAL_UPDATE_AND_COLD_PASS_FAST146_REVIEW_AND_REMOTE_CI_PENDING",
+    "status": "NUMERIC_PRIVATE_UPDATE_PASS_BUT_NONFINANCIAL_STRUCTURAL_NA_REVIEW_NEEDS_FIX",
     "source": "JPMORGAN_FY2025_CURRENT_AUTHENTICATED_ISSUE28_CUMULATIVE_INPUTS",
     "presentation_policy": "A05_APPROVED_AVERAGE_ASSETS_FORMULA_V1",
     "old_default_binding_bytes_equal": true,
@@ -9224,7 +9249,7 @@
     "fast_selectors": "146_OF_146_PASSED_FINAL_SOURCE_TREE",
     "parent_requirement_closure_hash": "sha256:09d94805522a5f9737fbb3cc9c8a0e97219eaba2e92b6bc416d781937aa59f7",
     "child_requirement_closure_hash": "sha256:82912dfd3c81ee8c3f67815d51fd50c0b43d18e98a177df45625b9aa7dfa7bc3",
-    "review": "PENDING_EXACT_PATCH_SHA",
+    "review": "NEEDS_FIX_489659E5_NONFINANCIAL_A05_NA_PROJECTION",
     "new_head_ci": "PENDING_PUSH",
     "current_390_credit": false,
     "new_real_calls": [0, 0, 0],
