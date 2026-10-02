@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.company_import_transaction",
+        "type": "capability",
+        "status": "active",
+        "statement": "Draft公司来源导入在独立state保持稳定source_root、不可变版本和共同计算锁；三个中断位置及首次导入中断恢复旧提交或隔离未提交输入，失败保留旧结果，重复安装幂等，跨公司及非前缀历史拒绝。交易测试替身只验证事务边界；真实原件准入、业务值、普通/历史及OpenShift验收各按独立证据说明，不由该测试推断。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_company_handoff.py::CompanyImportTest",
+        "test_status": "automated_recorded",
+        "since": "2026-10-02"
+      },
+      {
         "anchor_id": "CAPABILITY.current_income_statement_scope",
         "type": "capability",
         "status": "active",

@@ -24,6 +24,11 @@ jobs:
       - name: Install pinned offline request tokenizer
         run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
 
+      - name: Verify company import transactions
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority
+
       - name: Run fast suite
         env:
           PYTHONDONTWRITEBYTECODE: "1"

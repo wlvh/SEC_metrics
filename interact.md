@@ -1,5 +1,8 @@
 # SEC_metrics 用户可观察行为
 
+公司来源包可以在未生成AI判断或Result时交付。`tools/vnext_company.py`在显式独立路径导入、计算和导出，每次只处理所选公司；导入失败明确记录，旧结果不冒充新来源完成。B13/D04无既有判断返回需处理输入状态。详见 `docs/company_compute_boundary.md` 及其实际覆盖限制。
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
 确切年度候选可由`tools/vnext_annual_publication.py prepare --policy-id annual_candidate_adoption_v2`
 生成完整待审批包，再用`read --publication-id`通过同一PublicationView读取矩阵、证据
 与原文。没有实际批准也可以核对内容；实际写入必须走`release`的真实批准/激活与

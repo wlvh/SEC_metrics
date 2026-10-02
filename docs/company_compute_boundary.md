@@ -1,6 +1,6 @@
 # 公司级来源交接与独立计算
 
-**状态：开发目标说明，尚未实现或验收。** 本页在 2026-10-02 建立；不声明任何新的运行能力、来源信用、测试通过或生产许可。
+**状态：Draft 开发接口；实际覆盖见证据索引。** 对应 `COMPANY-SEPARATION-v2.1-20261002`。当前接口不授生产、active 切换或部署权限。
 
 任务范围、连续执行委托、接口责任和唯一当前队列见 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54)。本页用于承接最终的稳定使用说明，不复制 Issue 进度或建立另一份待办。
 
@@ -14,8 +14,57 @@
 
 [Issue #28](https://github.com/wlvh/SEC_metrics/issues/28) 保留普通指标、正常更新、统一生产与旧路径退出责任；[Issue #47](https://github.com/wlvh/SEC_metrics/issues/47) 保留五年历史期间、依赖和业务验收责任。#54 负责两阶段边界、公司运行和集成验证，不复制业务内核，不重建正式发布、选版或认证平台。
 
-内网脚本调用、Databricks 接入、内网 AI 调用和部署不属于本期。新增真实 SEC/provider/paid 业务调用、Ready、合并及正式发布仍需各自明确授权。
+首个内网平台为 OpenShift。镜像、任务、卷、网络、脚本及内网 AI 接线留给下一 Issue；本期没有集群部署或 OpenShift 验收。新增真实 SEC/provider/paid 调用为 0/0/0。
 
 ## 使用与证据
 
-可执行命令、实际输入输出目录、兼容版本和验证材料尚未交付，不能依据本页运行所谓新入口。实现完成后由 #54 执行者在本页补充经过验证的示例，并按实际变化同步既有能力、架构和测试文档；未完成内容仍在 Issue 的唯一队列中维护。
+`tools/vnext_company.py` 提供 `export`、`install-runtime`、`install`、`compute`、`export-results`。所有路径必须显式传入、绝对且无 symlink，输出不得覆盖程序或 active 工作区。下面的 `/srv/sec-metrics` 是部署方选择的示例，不要求该目录、个人 HOME、root 或特权功能。
+
+来源准备端先用原机制校验完整来源历史。A 类读取已提交基线；B 类使用原 recorded 获取会话，在同一个 `ledger.root/source-inputs` 追加目标公司；C 类可以在准备端恢复合法保存的混合获取归档。不能删账本行、改行号、拼接不同历史或另设真实额度。然后执行：
+
+```bash
+python3 tools/vnext_company.py export \
+  --source-root /srv/sec-metrics/prepared-history/source-inputs \
+  --output-root /srv/sec-metrics/transfer/jpmorgan-v1 \
+  --trust-root /srv/sec-metrics/source-trust \
+  --company jpmorgan_chase --metric A08
+```
+
+公司包保留整个请求账本、manifest、注册信息和原检查点元数据；按经验证的依赖声明及目标公司捕获引用收集原件和 headers，包括 legacy 保存位置、旧尝试、前期、窗口外、前身 CIK、历史分片和事件头文件。全局元数据可以出现其他公司，其他公司原件不会随包交付。来源包没有 Result 或 AI 答案前置。
+
+`source-trust` 是准备端安装的独立信任登记；计算端只读。包自己携带的 JSON/哈希不能注册自己，也不能把 recorded 提升为 LIVE。允许保存原获取信用，但不因此获得新获取或生产权限。
+
+计算运行树由原固定程序安装。A 类 baseline 默认不改核心文件；增量包使用 `--kind ordinary` 的独立后继运行树。原 `issue_28_v13` 文件、旧 Run 和闭合额度保持原字节；后继只登记公司来源准入与新运行身份，业务规则继承原版本。代码变更发生在新安装树，不写回 #28 checkout。历史另用 `--kind historical`，从 #47 固定树安装，应用其提供的注册补丁，继承 `issue_47_v1` 并形成独立 `issue_54_history_v1`；不能把该补丁打入普通树。
+
+```bash
+python3 tools/vnext_company.py install-runtime \
+  --kind ordinary --output-root /srv/sec-metrics/runtime/ordinary-v1
+python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py install \
+  --package-root /srv/sec-metrics/transfer/jpmorgan-v1 \
+  --state-root /srv/sec-metrics/state/jpmorgan_chase \
+  --trust-root /srv/sec-metrics/source-trust --company jpmorgan_chase
+python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
+  --state-root /srv/sec-metrics/state/jpmorgan_chase \
+  --trust-root /srv/sec-metrics/source-trust --company jpmorgan_chase --metric A08
+```
+
+规则只有计算运行树中固定的一版。包携带经校验的同版 config/catalog 和必要根目录定义；导入逐文件核对。Run 安装仍保留自己的旧规则与原件副本供回读，不为省空间删除。
+
+| 位置 | 准备/安装 | 计算 |
+|---|---|---|
+| 固定程序、规则、Requirement 与 Git inventory | 构建新运行树时写 | 只读，计算不写镜像 `.git` |
+| 来源交接包 | 准备端创建不可变目录 | 导入读取 |
+| 独立来源信任登记 | 受控准备端写 | 只读 |
+| 每公司持久 state | 安装写版本、intent、pointer | 写原生 Run、journal、结果与证据 |
+
+同一 history 的运行路径始终为 `<state-root>/source`；物理版本在 `versions/<checkpoint-id>` 保留。导入和整个计算持有同一个目录锁。导入先完整检查暂存版本，再替换稳定目录并提交 `current_source.json`。重启按提交指针恢复，首次中断的未提交目录被隔离；旧结果保持。`latest_import.json` 区分导入成功、重复、失败及进程中断。目录别名不能绕过这些检查。当前实际验证为 Linux 非 root uid 1000、只读程序、独立可写 state；动态 UID 与真实卷/网络行为未测。
+
+普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。B13/D04 没有已有合法判断时返回 `AI_PROCESSING_INPUT_REQUIRED`，保留来源和公司身份，不能算指标完成。本期不调用业务模型；保存的处理输入与 SEC 来源分开交接，其消费者接线证据仍单独登记。
+
+历史准备从固定 #47 树调用 `export --history-years 5`，使用其 `declared_frame`；计算选择历史固定树并加 `--report-end YYYY-MM-DD` 或 `--fiscal-year YYYY`。这些消费者的实际通过范围须看证据索引，不能由接口存在推出五年全部业务验收。
+
+`export-results` 在公司锁内导出结果引用、最新导入状态、现有候选的原生 Run/data/rows，以及文件哈希索引。旧结果与当前来源是否一致分别登记。普通候选保持 OPEN，回读用既有原生 OPEN replay；FROZEN Run 才使用 `load_frozen_run`。生产发布状态继续由原流程决定。
+
+实际实验、失败位置、分项体积和耗时见 [证据索引](evidence/issue54_company/README.md)。十家公司来源导出不等于全部 36 项或 30–60 分钟验收。Fable 外部报告保留原信用，尚未取得的原脚本/日志不记成本方复跑。
+
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->

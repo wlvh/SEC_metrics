@@ -1,5 +1,8 @@
 # SEC_metrics 测试与验证流程
 
+公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
 ## 正常年度输入选择
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_annual_input -v`在保存真实材料上检查非自然财年、52周期间、修订与普通原件分离、十公司保留/故障隔离，以及季度冒充年度、错主体、缺历史分片和后来来源失败反例。测试禁止网络及旧结果读取，不模拟财务答案。组件通过只证明输入准备，未证明指标执行或新SEC发现。fast入口逐项登记以保持30秒单项上限。

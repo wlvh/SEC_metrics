@@ -1,0 +1,77 @@
+"""One company, one pinned source version, existing ordinary update/Run APIs."""
+import json
+from pathlib import Path
+import socket
+import time
+from unittest.mock import patch
+
+from .canonical import strict_json_file
+from .company_handoff import locked_company, recover_import, _atomic_json
+from .company_source_authority import require_company, need
+
+
+def compute_company(*, state_root, company_id, metric_ids, report_end=None, fiscal_year=None):
+    """Keep the import lock until all selected Runs and references are durable."""
+    from .ordinary_d02_category_update_v2 import run_company
+    with locked_company(state_root) as root:
+        current = recover_import(root)
+        need(current is not None, 'COMPANY_COMPUTE_SOURCE_NOT_INSTALLED')
+        source = root/'source'
+        admission = require_company(source_root=source, company_id=company_id)
+        need(metric_ids and len(metric_ids) == len(set(metric_ids))
+             and set(metric_ids) <= set(admission['metric_ids']),
+             'COMPANY_COMPUTE_METRIC_OUTSIDE_PACKAGE_SCOPE')
+        start = time.monotonic()
+        ordinary = [m for m in metric_ids if m not in {'B13', 'D04', 'C04'}]
+        processing_errors = {}
+        if 'B13' in metric_ids:
+            try:
+                from .capacity_utilization_source import policy
+                _, approved = policy()
+                if company_id not in approved['applicable_company_ids']:
+                    ordinary.append('B13')
+            except Exception as error:
+                processing_errors['B13'] = {'metric_id': 'B13', 'status': 'UPDATE_BLOCKED',
+                    'reason': str(error), 'error_type': type(error).__name__,
+                    'business_metric_completed': False}
+        from .normal_source_authority import ROOT
+        historical = (ROOT/'requirements/issue_54_history_v1').is_dir()
+        need(historical or report_end is None and fiscal_year is None,
+             'COMPANY_COMPUTE_PERIOD_REQUIRES_HISTORY_RUNTIME')
+        # This child process is computing only. Recorded capture occurs in
+        # the preparation process. Provider and SEC dispatch are impossible.
+        with patch.object(socket.socket, 'connect', side_effect=ValueError('COMPANY_COMPUTE_NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_COMPUTE_DNS_FORBIDDEN')):
+            if historical:
+                from .company_historical_compute import compute_historical
+                result = compute_historical(root=root, source=source, company_id=company_id,
+                    metric_ids=metric_ids, report_end=report_end, fiscal_year=fiscal_year)
+            else:
+                result = (run_company(state_root=root/'updates', source_root=source,
+                                 company_id=company_id, metric_ids=ordinary)
+                      if ordinary else {'company_id': company_id, 'metrics': []})
+            results = {row['metric_id']: row for row in result['metrics']}
+            for metric in ([] if historical else metric_ids):
+                if metric in {'B13', 'D04'} and metric not in ordinary:
+                    results[metric] = processing_errors.get(metric) or {'metric_id': metric, 'status': 'AI_PROCESSING_INPUT_REQUIRED',
+                        'reason': 'SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.',
+                        'business_metric_completed': False}
+                elif metric == 'C04':
+                    from .c04_update_cycle import run_company as run_c04
+                    results[metric] = {'metric_id': metric, **run_c04(
+                        state_root=root/'updates/metrics/C04-registration-v3',
+                        source_root=source, company_id=company_id)['metrics'][0]}
+        # The package is unchanged throughout compute, and the original Run
+        # installers preserve their own source and rule copies for old replay.
+        require_company(source_root=source, company_id=company_id)
+        report = {'record_type': 'COMPANY_COMPUTATION_REFERENCES_V1',
+            'company_id': company_id, 'source_checkpoint_id': admission['checkpoint_id'],
+            'source_root': str(source), 'metric_ids': metric_ids,
+            'metrics': [results[m] for m in metric_ids],
+            'compute_seconds': format(time.monotonic()-start, '.6f'),
+            'source_installation': (strict_json_file(path=root/'latest_import.json')
+                                    if (root/'latest_import.json').is_file() else None),
+            'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0},
+            'production_authorized': False}
+        _atomic_json(root/'company-results.json', report)
+        return report

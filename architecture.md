@@ -1,5 +1,8 @@
 # SEC_metrics 架构说明
 
+公司交接入口见 `docs/company_compute_boundary.md`。来源准备校验完整获取历史，再携带完整账本元数据和目标公司的依赖原件；计算只读固定程序/规则与独立信任登记，每公司state持有导入及计算共用锁。baseline保持原核心，实际增量/历史使用各自后继固定树，旧Run不重签。
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
 ### 确切年度候选的正式采纳接线
 
 `annual_adoption_policy`按有限已知ID核对冻结政策字节；历史v1仍是隔离规则，v2只
