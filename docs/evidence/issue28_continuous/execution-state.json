@@ -3554,13 +3554,15 @@
       ],
       "patch_sha": "c98ab43cfb7c4c568827daa9223a6fcdda96cf76",
       "spawned_at": "2026-10-02T17:48:24+00:00",
-      "ended_at": "2026-10-02T17:58:01+00:00",
+      "ended_at": "2026-10-02T17:58:01.644168+00:00",
       "tool_calls": 31,
       "ordinary_messages": 3,
       "result_path": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/independent-review-gate-c98ab43/conclusion.md",
       "verdict": "PASS_GATE_ONLY_CORE_NEEDS_FIX_RETAINED",
       "status": "DONE",
-      "dedup_note": "Prior core reviewer DONE3 messages; only new prewrite gate diff, no core rerun"
+      "dedup_note": "Prior core reviewer DONE3 messages; only new prewrite gate diff, no core rerun",
+      "outer_exec_calls": 11,
+      "nested_tool_calls": 20
     }
   ],
   "ci_capacity_20260922": {
@@ -10738,6 +10740,32 @@
         0,
         0
       ]
-    }
+    },
+    "shared_impact_files_functions": {
+      "scripts/vnext/normal_run_v3.py": [
+        "prepare_case/install_normal_inputs/create_normal_run optional c02_member_revision=False",
+        "_create_case_run new policy-specific prewrite suspension"
+      ],
+      "scripts/vnext/ordinary_remaining_cases.py": [
+        "prepare_current_source_case optional c02_member_revision=False"
+      ],
+      "scripts/vnext/ordinary_update_cycle.py": [
+        "update_config/run_once optional c02_member_revision=False; explicit revision prewrite suspension"
+      ],
+      "scripts/vnext/c02_composition_text_results.py": [
+        "explicit COMPOSITION_GROUPED_V4 selector and Spec routing only"
+      ],
+      "scripts/vnext/ordinary_c02_member_update_v4.py": [
+        "new dedicated wrapper and state suffix; old wrapper default unchanged"
+      ]
+    },
+    "candidate_acceptance_state": "PROGRAM_REPLAY_ONLY_CONTENT_UNVERIFIED_CORE_NEEDS_FIX; NO_TRUSTED_OR_390_CREDIT"
+  },
+  "ci_37033647485": {
+    "head": "978e28e9b9b1d7a43d5b2ba83687900a417be4e8",
+    "run_id": 37033647485,
+    "conclusion": "SUCCESS",
+    "updated_at_utc": "2026-10-02T17:08:37Z",
+    "scope": "Main workflow terminal at the #54 interface-document head; not the later C02 member/gate code."
   }
 }
