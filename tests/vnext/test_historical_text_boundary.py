@@ -23,6 +23,8 @@ from vnext.historical_spec_revision import compile_historical_spec_file
 from vnext.specs import compile_spec_file
 from vnext.text_coverage import build_text_document
 from vnext.text_results_v2 import TextResultV2Error, text_policy
+from vnext.d02_item_8_category_mentions import left_out_as_category_mention
+from vnext.text_business_candidates import _LEGAL
 
 PFIZER = "pfizer"
 MACYS = "macys"
@@ -107,6 +109,23 @@ def _build_frozen_document(prepared, company_id):
         expected_period_end=prepared["target_period"]["period_end"])
 
 
+def _category_mentions(document):
+    """Item 8 blocks the category-mention rule leaves out, computed from the document.
+
+    The rule's own function asked of every keyword block in the document's
+    Item 8 ranges - not the route's record of what it left out, for the reason
+    the officer and audit removals are computed rather than listed: a guarantee
+    handed its answer by the code under test would not be one.
+    """
+    found = set()
+    for scope in document["sections"]["ITEM_8"]["candidates"]:
+        for index in range(scope["start_block"], scope["end_block_exclusive"]):
+            text = document["blocks"][index]["text"]
+            if _LEGAL.search(text) and left_out_as_category_mention(text=text, keyword=_LEGAL):
+                found.add(index)
+    return found
+
+
 class FormUnnumberedItemBoundaryTest(unittest.TestCase):
     def test_item_three_stops_at_the_caption_block_the_filing_itself_carries(self):
         """The expectation is the caption's own block index, read from the document.
@@ -138,7 +157,7 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         self.assertEqual(document["text_document_id"], corrected["frozen_text_document_id"])
         self.assertNotEqual(document["text_document_id"], corrected["text_document_id"])
 
-    def test_nothing_outside_the_two_deliberate_removals_is_lost(self):
+    def test_nothing_outside_the_three_deliberate_removals_is_lost(self):
         """The no-under-capture guarantee, stated on the excerpt sets.
 
         It was a strict-subset assertion on the candidate. Two things changed
@@ -154,6 +173,12 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         section from its own caption, the audit report from the same span rule
         the successor applies - rather than listed by index, because a
         guarantee that had to be handed the answer would not be one.
+
+        The third is the Item 8 category mentions (d02_item_8_category_mentions):
+        a keyword paragraph whose every occurrence is a list item or a
+        parenthetical example and which states no legal matter of the
+        registrant. It is computed the same way, from the rule asked of the
+        document's Item 8 blocks.
         """
         spec, prepared = _text_arguments(PFIZER, "2025-12-31")
         document = _frozen_document(prepared, PFIZER)
@@ -175,13 +200,16 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
                        document=document,
                        ranges=document["sections"]["ITEM_8"]["candidates"])["spans"]
                    for index in range(span["start_block"], span["end_block_exclusive"])}
-        self.assertEqual(set(), (had - kept) - officer - audited)
+        category = _category_mentions(document)
+        self.assertEqual(set(), (had - kept) - officer - audited - category)
         self.assertEqual(set(), kept & officer)
         self.assertEqual(set(), kept & audited)
-        # Both removals actually removed something, so neither half of the
+        self.assertEqual(set(), kept & category)
+        # Each removal actually removed something, so no part of the
         # subtraction above is idle.
         self.assertTrue(had & officer)
         self.assertTrue(had & audited)
+        self.assertTrue(had & category)
 
     def test_a_signature_line_naming_an_officer_does_not_close_an_item(self):
         """Macy's block 774 sits inside Item 8 and names a chief executive officer.
@@ -219,7 +247,11 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
 
         The block numbers below were read out of those filings, not returned by
         the code under test, and the third assertion is that nothing the frozen
-        derivation selected is lost.
+        derivation selected is lost but the Item 8 category mentions the
+        category-mention rule leaves out (Lumen's counsel-fee policy, 1670;
+        Paramount's list of covenant add-backs, 2257), computed from the
+        document by the rule rather than listed. Marriott has none, so there the
+        assertion is the old one.
         """
         cases = [
             (MARRIOTT, "2025-12-31",
@@ -243,9 +275,11 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
                 self.assertEqual("PASS", evidence["status"])
                 kept = {claim["block_index"] for claim in after["selected"].values()}
                 had = {claim["block_index"] for claim in before["selected"].values()}
+                category = _category_mentions(_frozen_document(prepared, company))
                 self.assertEqual(set(), set(include) - kept)
                 self.assertEqual(set(), set(exclude) & kept)
-                self.assertEqual(set(), had - kept)
+                self.assertEqual(set(), (had - kept) - category)
+                self.assertEqual(set(), kept & category)
 
     def test_a_quoted_note_title_names_the_whole_note_not_a_caption_in_it(self):
         """Salesforce quotes Note 14's own title, which is not a limit inside it.
@@ -481,16 +515,18 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         for index in (3827, 3844, 3867, 3894, 3915):
             self.assertNotIn(index, selected)
 
-    def test_four_of_the_six_are_gone_and_the_keyword_two_are_still_open(self):
-        """The repair is four of the six, and the register says which four.
+    def test_the_audit_report_four_and_the_keyword_two_are_gone(self):
+        """The audit-report repair took four of the six; the category-mention rule the other two.
 
         The audit report is not Item 3, not the legal proceedings section and
         not a contingencies note, so the four blocks of the auditor's critical
         audit matter leave. The two admitted on a single keyword - a
         credit-loss policy whose match is "written off after all reasonable
         means to collect ... (including litigation, where appropriate)" and a
-        risk list containing the word - are a different defect and stay, named,
-        so a later change cannot quietly decide them.
+        risk list containing the word - are a different defect: each names
+        litigation only as a list item or a parenthetical example in a
+        paragraph that states no legal matter of the registrant, and the
+        category-mention rule (d02_item_8_category_mentions) leaves them out.
         """
         _, prepared = _text_arguments(PFIZER, "2025-12-31")
         from vnext.historical_spec_revision import compile_historical_spec_file as revised
@@ -502,7 +538,10 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
                 **{"compiled_spec": spec, **prepared["text_arguments"]})
         selected = {claim["block_index"] for claim in candidate["selected"].values()}
         self.assertEqual(set(), {1881, 1882, 1883, 1884} & selected)
-        self.assertTrue({2175, 2240} <= selected)
+        # The two keyword errors were left standing here so that a later change
+        # could not quietly decide them; the category-mention rule
+        # (d02_item_8_category_mentions) now decides them openly.
+        self.assertEqual(set(), {2175, 2240} & selected)
         # And the two that belong there are still there. A narrowing that
         # reached them would satisfy the line above and be wrong.
         self.assertTrue({2302, 2351} <= selected)
@@ -701,10 +740,14 @@ class PageFurnitureInEveryScopeTest(unittest.TestCase):
         a named repair and by exactly one block: Lumen gains the underlined
         case label "Blum" (41 to 42) and Enphase loses its page-numbered
         footer (18 to 17) - see test_historical_d02_marks, which asserts that
-        each is the only block its rule moves.
+        each is the only block its rule moves. The Item 8 category-mention
+        rule moved three more: Pfizer's credit-loss policy and estimate risk
+        list (2175, 2240; 96 to 94) and Lumen's counsel-fee policy (1670; 42
+        to 41) - see test_historical_d02_category_route, which asserts those
+        are the only blocks it moves.
         """
-        for company_id, report_end, excerpts in ((PFIZER, "2025-12-31", 96),
-                                                 (LUMEN, "2025-12-31", 42),
+        for company_id, report_end, excerpts in ((PFIZER, "2025-12-31", 94),
+                                                 (LUMEN, "2025-12-31", 41),
                                                  (SALESFORCE, "2026-01-31", 15),
                                                  (SOUTHWEST, "2025-12-31", 25),
                                                  (ENPHASE, "2025-12-31", 17)):

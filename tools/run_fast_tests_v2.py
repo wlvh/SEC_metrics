@@ -312,6 +312,9 @@ SOURCE_TESTS += ("tests.vnext.test_historical_event_items",)
 # date: JPMorgan FY2021 and Salesforce FY2022 from the export, two year-only
 # reports from the checkout; 131 seconds measured beside a running batch.
 SOURCE_TESTS += ("tests.vnext.test_historical_accession_releases",)
+# D02's route leaving Item 8 category mentions out on three saved latest-year
+# reports, with the rule stubbed out for the before side; 47 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_d02_category_route",)
 # The candidate B03 D&A rule on the nine filings the cross-source reading opened,
 # with the frozen fact parser's output compared fact by fact; 10 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_candidate",)
@@ -579,6 +582,7 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Resolves the latest accession metrics for two companies, then four saved
     # reports; 131 seconds measured beside a running batch.
     "tests.vnext.test_historical_accession_releases": 480,
+    "tests.vnext.test_historical_d02_category_route": 480,
     # Parses the two Paramount amendments and their originals for each case.
     "tests.vnext.test_historical_amendment_note": 480,
     # One complete C04 source refresh passed locally in 227.794s; the prior
@@ -671,6 +675,7 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 167,
     "tests.vnext.test_historical_event_items": 167,
     "tests.vnext.test_historical_accession_releases": 90,
+    "tests.vnext.test_historical_d02_category_route": 60,
     "tests.vnext.test_normal_companyfacts_results": 163,
     "tests.vnext.test_regulatory_fact_review": 163,
     "tests.vnext.test_historical_period_results": 160,

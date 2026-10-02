@@ -144,24 +144,31 @@ class ThePacketIsTheRouteSelectionTest(unittest.TestCase):
         self.assertEqual([claim["text"] for claim in excerpts],
                          [row["text"] for row in self.packet["taken"]])
 
-    def test_the_registered_keyword_errors_are_item_8_excerpts(self):
+    def test_the_registered_keyword_errors_are_left_out_and_shown_as_skipped(self):
+        # 2175 (estimates) and 2240 (receivables) were the registered keyword
+        # errors; the category-mention rule leaves them out, and the packet
+        # lists them as skipped so a reading judges what the rule removed.
         item_8 = [row["i"] for row in self.packet["taken"] if row["scope"] == "ITEM_8"]
-        self.assertEqual([2175, 2240, 2302, 2351], item_8)
+        self.assertEqual([2302, 2351], item_8)
+        left_out = [row["i"] for row in self.packet["skipped"]
+                    if row.get("left_out_by") == "D02_ITEM_8_CATEGORY_MENTION"]
+        self.assertEqual([2175, 2240], left_out)
 
     def test_the_skipped_blocks_are_inside_the_narrow_scopes_and_not_taken(self):
         taken = {row["i"] for row in self.packet["taken"]}
         narrow = [r for r in self.packet["ranges"] if r["section_id"] not in ("ITEM_1A", "ITEM_8")]
-        for row in self.packet["skipped"]:
+        inside_rows = [row for row in self.packet["skipped"] if "left_out_by" not in row]
+        for row in inside_rows:
             self.assertNotIn(row["i"], taken)
             self.assertTrue(any(r["start_block"] <= row["i"] < r["end_block_exclusive"]
                                 for r in narrow))
         inside = sum(r["end_block_exclusive"] - r["start_block"] for r in narrow)
-        self.assertEqual(inside, len(self.packet["skipped"])
+        self.assertEqual(inside, len(inside_rows)
                          + sum(1 for row in self.packet["taken"] if row["scope"] != "ITEM_8"))
 
     def test_the_note_16a_skips_are_page_furniture(self):
-        texts = {row["text"] for row in self.packet["skipped"]}
-        self.assertEqual(25, len(self.packet["skipped"]))
+        texts = {row["text"] for row in self.packet["skipped"] if "left_out_by" not in row}
+        self.assertEqual(25, len([row for row in self.packet["skipped"] if "left_out_by" not in row]))
         self.assertTrue({"Pfizer Inc.", "2025 Form 10-K"} <= texts)
 
     def test_every_heading_names_one_of_the_definition_s_words_and_is_not_a_link(self):

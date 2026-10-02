@@ -205,7 +205,12 @@ class ARegistrationIsCheckedAgainUnderTheCurrentCode(unittest.TestCase):
 
 
 class OnARealFilingOnlyItem8Changes(unittest.TestCase):
-    """Lumen FY2025: the keyword admits blocks 1670 (legal fees), 3382 and 3383 (litigation)."""
+    """Lumen FY2025: the keyword admits 3382 and 3383 (litigation); 1670 (legal fees) it no longer does.
+
+    1670 names litigation only among the matters counsel advises on, so the
+    category-mention rule leaves it out of the keyword part; it stays in the
+    pool and among the blocks a review must decide, because it carries the word.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -270,7 +275,8 @@ class OnARealFilingOnlyItem8Changes(unittest.TestCase):
                  for scope in proposal["checked_ranges"] if scope["section_id"].startswith("NOTE_")]
         self.assertTrue(notes)
         self.assertEqual([], [index for index in pool if any(a <= index < b for a, b in notes)])
-        self.assertEqual([1670, 3382, 3383], keyword)
+        self.assertEqual([3382, 3383], keyword)
+        self.assertIn(1670, pool)
         self.assertGreater(len(pool), 1000)
 
     def reviewed(self, records):
@@ -296,7 +302,7 @@ class OnARealFilingOnlyItem8Changes(unittest.TestCase):
         before, after = self.d02(self.plain), self.d02(prepared)
         self.assertEqual([c for c in before if c["section_id"] != "ITEM_8"],
                          [c for c in after if c["section_id"] != "ITEM_8"])
-        self.assertEqual([1670, 3382, 3383],
+        self.assertEqual([3382, 3383],
                          [c["block_index"] for c in before if c["section_id"] == "ITEM_8"])
         self.assertEqual(sorted([3382, 3383, int(self.extra[1:])]),
                          [c["block_index"] for c in after if c["section_id"] == "ITEM_8"])
@@ -304,7 +310,7 @@ class OnARealFilingOnlyItem8Changes(unittest.TestCase):
                             for c in after if c["section_id"] == "ITEM_8"))
         coverage = next(iter(prepared["coverages"].values()))
         self.assertEqual(self.record["input_record_id"], coverage["item_8_selection"]["input_record_id"])
-        self.assertEqual([1670], coverage["item_8_selection"]["keyword_admissions_left_out"])
+        self.assertEqual([], coverage["item_8_selection"]["keyword_admissions_left_out"])
         self.assertNotEqual(next(iter(self.plain["coverages"].values()))["coverage_hash"],
                             coverage["coverage_hash"])
 
@@ -351,7 +357,7 @@ class OnARealFilingOnlyItem8Changes(unittest.TestCase):
         drifted = copy.deepcopy(self.plain)
         proposal = next(iter(drifted["proposals"].values()))
         proposal["D02"]["candidates"] = [c for c in proposal["D02"]["candidates"]
-                                         if c["block_index"] != 1670]
+                                         if c["block_index"] != 3382]
         with self.assertRaisesRegex(TextResultV2Error,
                                     "HISTORICAL_D02_REVIEW_POOL_DISAGREES_WITH_THE_PROPOSAL"):
             legal_review_request(prepared=drifted, source_arguments=self.args)

@@ -160,14 +160,22 @@ def make_packet(*, document, proposal, candidate):
             "labels": by_index[index]["labels"], "text": blocks[index]["text"],
             "text_sha256": text_sha256(blocks[index]["text"])})
     chosen = set(taken_indices)
-    for index in sorted(scope_of):
+    # Item 8 keyword blocks the category-mention rule left out are judged as
+    # skipped blocks: a removal nobody reads is how a rule loses a disclosure
+    # unseen. Absent from a proposal made before the rule, so older packets are
+    # unchanged.
+    left_out = {row["block_index"]: row["section_id"] for row in
+                (proposal.get("item_8_category_mentions_left_out") or {}).get("blocks", [])}
+    for index in sorted(set(scope_of) | set(left_out)):
         if index in chosen:
             continue
         block = blocks[index]
         rows["skipped"].append({
-            "i": index, "scope": scope_of[index], "text": block["text"],
+            "i": index, "scope": scope_of.get(index, left_out.get(index)), "text": block["text"],
             "text_sha256": text_sha256(block["text"]), "linked": bool(block.get("linked")),
-            "emphasized": bool(block.get("emphasized"))})
+            "emphasized": bool(block.get("emphasized")),
+            **({"left_out_by": "D02_ITEM_8_CATEGORY_MENTION"} if index in left_out
+               and index not in scope_of else {})})
     for block in blocks:
         text = block["text"].strip()
         if (block.get("linked") or len(text) > 120 or text.endswith(NOT_A_HEADING_END)
@@ -208,7 +216,7 @@ def make_packet(*, document, proposal, candidate):
                 break
             context.add(j)
     rows["context"] = [{"i": j, "text": blocks[j]["text"], "text_sha256": text_sha256(blocks[j]["text"])}
-                       for j in sorted(context - chosen - set(scope_of))]
+                       for j in sorted(context - chosen - set(scope_of) - set(left_out))]
     # The keyword proxy scans only the Item 8 range. Where a filing's Item 8 is a
     # cross-reference page (Macy's FY2021: "Information called for by this item
     # is set forth in the Company's Consolidated Financial Statements"), the

@@ -24,13 +24,23 @@ def _left_out(text):
     return rule.left_out_as_category_mention(text=text, keyword=_LEGAL)
 
 
+HELD_OUT = "held-out round"
+
+
+def _readings(*, held_out):
+    for path in sorted(OLDER.glob("*.json")):
+        body = json.loads(path.read_text(encoding="utf-8"))
+        if (HELD_OUT in body["reader"]) == held_out:
+            yield body
+
+
 class TheOlderReadingsTest(unittest.TestCase):
+    """The thirty readings the rule was written beside: every admission decided as read."""
 
     def test_every_judged_item_8_admission_is_decided_as_the_reader_decided(self):
         judged, disagreements = 0, []
         left = {"DISCLOSURE": 0, "NOT_DISCLOSURE": 0}
-        for path in sorted(OLDER.glob("*.json")):
-            body = json.loads(path.read_text(encoding="utf-8"))
+        for body in _readings(held_out=False):
             for row in body["judgements"]:
                 if row["kind"] != "TAKEN" or row.get("scope") not in ITEM_8_SCOPES:
                     continue
@@ -42,6 +52,44 @@ class TheOlderReadingsTest(unittest.TestCase):
         self.assertEqual([], disagreements)
         self.assertEqual(61, judged)
         self.assertEqual({"DISCLOSURE": 0, "NOT_DISCLOSURE": 16}, left)
+
+
+class TheHeldOutReadingsTest(unittest.TestCase):
+    """Positions judged after the rule was frozen (104876d6), by readers who did not know it.
+
+    JPMorgan's five years were not looked at before the freeze; Pfizer FY2021's
+    keyword blocks were, while drafting, so it is counted apart. The rule may
+    leave a non-disclosure in - it is only one of the reasons a block can be
+    wrong - but it must never take a disclosure out. The counts are the
+    measurement and are held exactly, so a change to the rule shows here.
+    """
+
+    def _counts(self, company_id):
+        counts = {"kept_disclosure": 0, "lost_disclosure": 0,
+                  "left_out_not_disclosure": 0, "kept_not_disclosure": 0}
+        for body in _readings(held_out=True):
+            if not body["position"].startswith(company_id + ":"):
+                continue
+            for row in body["judgements"]:
+                if row["kind"] != "TAKEN" or row.get("scope") not in ITEM_8_SCOPES:
+                    continue
+                out = _left_out(row["text"])
+                if row["verdict"] == "DISCLOSURE":
+                    counts["lost_disclosure" if out else "kept_disclosure"] += 1
+                else:
+                    counts["left_out_not_disclosure" if out else "kept_not_disclosure"] += 1
+        return counts
+
+    def test_no_disclosure_is_lost_and_the_counts_are_the_measured_ones(self):
+        self.assertEqual({"kept_disclosure": 10, "lost_disclosure": 0,
+                          "left_out_not_disclosure": 9, "kept_not_disclosure": 40},
+                         self._counts("jpmorgan_chase"))
+        self.assertEqual({"kept_disclosure": 36, "lost_disclosure": 0,
+                          "left_out_not_disclosure": 3, "kept_not_disclosure": 0},
+                         self._counts("pfizer"))
+        self.assertEqual({"kept_disclosure": 0, "lost_disclosure": 0,
+                          "left_out_not_disclosure": 0, "kept_not_disclosure": 0},
+                         self._counts("salesforce"))
 
 
 class TheRuleTest(unittest.TestCase):

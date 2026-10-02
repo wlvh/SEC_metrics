@@ -209,6 +209,12 @@ NEW_RULE_FILES = (
     # decides the value those periods publish, so both roots check them.
     "scripts/vnext/historical_proxy_compensation.py",
     "catalog/r6/C03_proxy_compensation_table_v1.md",
+    # D02's Item 8 category-mention rule and its vocabulary: a keyword paragraph
+    # that names litigation only as a list item or a parenthetical example, and
+    # states no legal matter of the registrant, leaves the excerpt set. It
+    # decides which Item 8 blocks D02 publishes, so both roots check them.
+    "scripts/vnext/d02_item_8_category_mentions.py",
+    "catalog/r6/D02_item_8_category_mention_v1.json",
 )
 
 # One module the parent's authority does not name although its own named code

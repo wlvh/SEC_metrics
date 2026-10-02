@@ -68,6 +68,8 @@ from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _
                                        _PROSPECTIVE, _check_document, _excerpt, _note_references,
                                        _ranges, _substantive)
 from . import text_results_v2 as frozen
+from .d02_item_8_category_mentions import TERMS_HASH as _CATEGORY_TERMS_HASH
+from .d02_item_8_category_mentions import left_out_as_category_mention
 from .historical_board_composition_v3 import board_composition_facts
 from .historical_dei import release_aware, release_aware_with
 from . import historical_proxy_identity as proxy_identity
@@ -398,9 +400,24 @@ def _d02_section(section, text):
     every substantive block in them counts; Item 8 at large is not, so a block
     there needs the legal keyword. Both the ordinary path and the hyperlinked
     one below ask this, because restating it in two places is how they drift.
+
+    The keyword admits wherever the word stands. A paragraph where every
+    occurrence is one item of a list or an example in a parenthetical, and
+    which states no legal matter of the registrant, is a category mention and
+    stays out (``d02_item_8_category_mentions``): a list of cost categories, of
+    matters counsel advises on, of risks that move estimates, of covenant
+    add-backs. ``item_8_review_pool`` asks this too, so the review request's
+    keyword part is still exactly the proposal's Item 8 excerpts.
     """
     return bool(section == "ITEM_3" or section.startswith("NOTE_")
-                or section in (ITEM_8, APPENDED_STATEMENTS) and _LEGAL.search(text))
+                or section in (ITEM_8, APPENDED_STATEMENTS) and _LEGAL.search(text)
+                and not left_out_as_category_mention(text=text, keyword=_LEGAL))
+
+
+def _category_mention(section, text):
+    """An Item 8 keyword block the category-mention rule leaves out, for the record."""
+    return bool(section in (ITEM_8, APPENDED_STATEMENTS) and _LEGAL.search(text)
+                and left_out_as_category_mention(text=text, keyword=_LEGAL))
 
 
 def _hyperlinked_sentence(*, document, block):
@@ -1040,7 +1057,7 @@ def referenced_note_candidates(*, document, raw_bytes):
     audit = audit_report_spans(document=document, ranges=ranges)
     audited = {index for span in audit["spans"]
                for index in range(span["start_block"], span["end_block_exclusive"])}
-    legal, regulatory, excluded = [], [], []
+    legal, regulatory, excluded, category_mentions = [], [], [], []
     for scope in ranges:
         section = scope["section_id"]
         furniture = set(scope.get("repeated_furniture_blocks", ()))
@@ -1059,14 +1076,19 @@ def referenced_note_candidates(*, document, raw_bytes):
                 # regulatory set on every filing at the same time, which is the
                 # mistake the audit-report rule already made once.
                 elif (index not in audited and index not in running_header
-                      and _hyperlinked_sentence(document=document, block=block)
-                      and _d02_section(section, block["text"])):
-                    legal.append(_excerpt(
-                        document, block, section,
-                        ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
-                         else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
+                      and _hyperlinked_sentence(document=document, block=block)):
+                    if _d02_section(section, block["text"]):
+                        legal.append(_excerpt(
+                            document, block, section,
+                            ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
+                             else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
+                    elif _category_mention(section, block["text"]):
+                        category_mentions.append({"block_index": index, "section_id": section})
                 continue
             text = block["text"]
+            if (index not in running_header and index not in audited
+                    and _category_mention(section, text)):
+                category_mentions.append({"block_index": index, "section_id": section})
             if _d02_section(section, text) and index not in running_header:
                 # Only D02's branch. The first version skipped the whole block,
                 # which silently took the same blocks out of D03's regulatory
@@ -1100,6 +1122,11 @@ def referenced_note_candidates(*, document, raw_bytes):
                                        "basis": "APPROVED_SOURCE_IS_ITEM_3_LEGAL_"
                                                 "PROCEEDINGS_AND_CONTINGENCIES_NOTES"}}
                if excluded else {}),
+            # Recorded only where the rule left a block out, so a filing with
+            # none keeps the proposal it had.
+            **({"item_8_category_mentions_left_out": {
+                "blocks": category_mentions, "terms_hash": _CATEGORY_TERMS_HASH,
+                "rule": "d02_item_8_category_mentions"}} if category_mentions else {}),
             "D02": {"finding_status": "SOURCE_EXCERPTS_FOUND" if legal
                     else "NO_SUPPORTED_SOURCE_LANGUAGE", "candidates": legal,
                     "interpretation": "VERBATIM_LEGAL_DISCLOSURES_NOT_TOTAL_CASE_OR_LIABILITY_ASSERTION"},
