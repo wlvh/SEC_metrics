@@ -146,6 +146,15 @@
      "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
      "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under this version; named for that version on its own.",
      "what_it_does_not_assert": "that any position outside docs/evidence/issue47_history/native-run-batch-2026-09-27/later-closure-check-62a5d959.json ran under this version, or anything about results with another result_id."
+    },
+    {
+     "result_id": "sha256:b45420aed7649b8c5157cf1d882fd731a0f9c8e6abb18a04ffa2fb4180d320f1",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:33835245bbf9f97a91ae428cb95b462322c057b3617d0958c5ce0a8d20c6028e",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2025: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/pfizer-2025-12-31.json",
+     "reading_sha256": "sha256:920446279556c871c05beaf6f3f4a69f972aeeea3776ca9604b3f9bda32febc3",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
    ],
    "repair": "Three steps, all landed. scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. scripts/vnext/historical_spec_revision.py raises what a Spec may declare, without changing specs.py. scripts/vnext/historical_text_protocol.py raises what ORDERED_NEWLINE_V1 will render, without changing text_results.py. The route declares catalog/r6/D02_legal_disclosures_v2.md.",
@@ -271,7 +280,7 @@
     "still_open": "blocks 2175 and 2240, and with them the _LEGAL keyword standing in for 'is this a legal-proceedings disclosure'. Measured across the same six filings: the proxy admits 17 Item 8 blocks, 14 of them correctly - Pfizer's 2302 and 2351, Southwest's five, Marriott's three, Lumen's two and Enphase's two - and 3 wrongly, Pfizer's two plus Lumen's 1670. Narrowing the proxy would cost the fourteen to remove the three, so the repair has to be surgical and is not taken on six filings at one period each. See docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json."
    },
    "period_end": "2025-12-31",
-   "repair_state": "TEN_OF_THIRTEEN_REPAIRED_TWO_KEYWORD_ITEMS_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "TEN_OF_THIRTEEN_REPAIRED_TWO_KEYWORD_ITEMS_REPAIRED_RECOMPUTED_AND_READ",
    "result_id": null,
    "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against.",
    "summary": "The 92-item set was not the 92 it should be: six items outside the approved source and seven in-scope sub-headings missing. Seven headings were recovered (92 to 99) and the four audit-report items were then excluded (99 to 95). Two items remain - accounting-policy paragraphs admitted on a single occurrence of the word litigation - and they are a different defect with a different cause.",
@@ -287,7 +296,18 @@
    "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set.",
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves blocks 2175 and 2240 out and keeps the disclosures beside it (tests/vnext/test_historical_d02_category_route.py). The withdrawn result stays withdrawn until the recomputed one is read."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:b45420aed7649b8c5157cf1d882fd731a0f9c8e6abb18a04ffa2fb4180d320f1",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:33835245bbf9f97a91ae428cb95b462322c057b3617d0958c5ce0a8d20c6028e",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2025: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/pfizer-2025-12-31.json",
+     "reading_sha256": "sha256:920446279556c871c05beaf6f3f4a69f972aeeea3776ca9604b3f9bda32febc3",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "lumen_technologies",
@@ -306,7 +326,7 @@
    ],
    "metric_id": "D02",
    "period_end": "2025-12-31",
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "result_id": null,
    "same_cause_as": [
     "D02_PFIZER_2025_SCOPE_CONTENT_READ"
@@ -322,7 +342,18 @@
    "why_it_was_missing": "The census named this block in prose inside the Pfizer entry's still_open note - 'Pfizer's two plus Lumen's 1670' - which the machine-read layer never sees. So the repository had found the error and was still counting the result as verified: known_content_defect was 1 when two coordinates were known bad. Finding an error and withdrawing it are two separate acts and only the second one moves a number.",
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves this block out and keeps the disclosures beside it (tests/vnext/test_historical_d02_category_route.py). The withdrawn result stays withdrawn until the recomputed one is read."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:564014faca73a50545565eda14456b01dc798e1dcbf9781ea9cb7d49a33ae099",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:476d9c389e040af8af6c1105323d0878cb240de968d8f0cf2fe3c96198ef2145",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (lumen-2025: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/lumen_technologies-2025-12-31.json",
+     "reading_sha256": "sha256:70ca3c63c3591e71f106145bc3e2b9ae980d5e40dd145d1b6c74b2fef64fb0ed",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "pfizer",
@@ -414,6 +445,15 @@
      "read_by": "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
      "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under this version; named for that version on its own.",
      "what_it_does_not_assert": "that any position outside docs/evidence/issue47_history/native-run-batch-2026-09-27/later-closure-check-62a5d959.json ran under this version, or anything about results with another result_id."
+    },
+    {
+     "result_id": "sha256:b45420aed7649b8c5157cf1d882fd731a0f9c8e6abb18a04ffa2fb4180d320f1",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:33835245bbf9f97a91ae428cb95b462322c057b3617d0958c5ce0a8d20c6028e",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2025: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/pfizer-2025-12-31.json",
+     "reading_sha256": "sha256:920446279556c871c05beaf6f3f4a69f972aeeea3776ca9604b3f9bda32febc3",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
    ]
   },
@@ -433,7 +473,7 @@
    ],
    "metric_id": "D02",
    "period_end": "2025-12-31",
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "result_id": null,
    "same_cause_as": [
     "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
@@ -460,7 +500,18 @@
    },
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves this block out and keeps the disclosures beside it (tests/vnext/test_historical_d02_category_route.py). The withdrawn result stays withdrawn until the recomputed one is read."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:b4e497799819c142a6ee8dc2ff7fd4b5480b0fd072f0dac6a1989a3b8135ff93",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:e7cf9953aea2d57e105691a9f87113aa338750480c33958b2cbfa52b4e0fc491",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (paramount-2025: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+     "reading_sha256": "sha256:08e5865d956be22097a04f4a52fc54b9966771aeb7f14a3fb6d62be2ce2b542e",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "enphase_energy",
@@ -1025,6 +1076,15 @@
      "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
      "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under this version; named for that version on its own.",
      "what_it_does_not_assert": "that any position outside docs/evidence/issue47_history/native-run-batch-2026-09-27/later-closure-check-62a5d959.json ran under this version, or anything about results with another result_id."
+    },
+    {
+     "result_id": "sha256:564014faca73a50545565eda14456b01dc798e1dcbf9781ea9cb7d49a33ae099",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:476d9c389e040af8af6c1105323d0878cb240de968d8f0cf2fe3c96198ef2145",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (lumen-2025: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/lumen_technologies-2025-12-31.json",
+     "reading_sha256": "sha256:70ca3c63c3591e71f106145bc3e2b9ae980d5e40dd145d1b6c74b2fef64fb0ed",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
    ]
   },
@@ -2161,7 +2221,7 @@
      "run_id": "run:historical-period:1a3705d4914a26b577bb301dabe227b55744ac3680606d16884a2f1040e1fdd8"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2024-12-31.json",
@@ -2169,7 +2229,18 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:ce090b12f449efee6b9273dc9b5b3d8bd969d880ed92ce272709974ab86e4fdd",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:92f1318d9cde8e1828aa0a2296bd5c1ae00825b46648447319b1d08bdc684af2",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (lumen-2024: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried/lumen_technologies-2024-12-31.json",
+     "reading_sha256": "sha256:38a3f7bc6cd1fc21c053634d9e152d68d9dffd84d65b646a74810217dfb28849",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "macys",
@@ -2334,7 +2405,7 @@
      "run_id": "run:historical-period:9c61cae02a3e613f24a6ad1433ddba74cfc92758001a676a9a9d5cc8ded0caa9"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2022-12-31.json",
@@ -2342,7 +2413,18 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:50ee31b0fb8f93655fdc5b00796a4028984a51d70f126a75af223e72ed8df522",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:f8d1197dcdb80506216fe356f5ef2036d20486292f987dbe578ff7d3c58c1dad",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2022: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried/pfizer-2022-12-31.json",
+     "reading_sha256": "sha256:273686498fac34a9b252c30190a3d38da2c86a32e37af7cc7d136365410e286c",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "pfizer",
@@ -2418,7 +2500,7 @@
      "run_id": "run:historical-period:91efcf5345a70e4026bd1eea683b805c42e3e9a1cefdb473f74ee99869ef1390"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2023-12-31.json",
@@ -2426,7 +2508,18 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:6f2563ad55d6b3f57c92529023d482361d16248881ad4140f66a3a635473c78c",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:c02ccc35c63ebfecab31af27887be7e30081c7341750ea01768a786a1b38d019",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2023: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried/pfizer-2023-12-31.json",
+     "reading_sha256": "sha256:55774ef0c34f5e6dbb8fbce28bc9e4d10131c8617d55723113bfcf533d73d870",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "southwest_airlines",
@@ -2669,7 +2762,7 @@
      "run_id": "run:historical-period:0ff1b6c826ff267843b018ba0ea90382d31dc00dc251986c3329611681d473d1"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2022-12-31.json",
@@ -2677,7 +2770,18 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:2cce3ce5dc4a4ec2fa7fd72fffb6a6b9a3a2994ce095361b7468cea587559165",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:75ac85b6ccd1513ae5c22b1b2f6531f07dc7b44b42ada7770fa7fac875baa1d1",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (lumen-2022: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried/lumen_technologies-2022-12-31.json",
+     "reading_sha256": "sha256:2a141ec8a3a9afc99bca8a5978a50d9f701924c6559905c2cc82f4f677d93630",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "lumen_technologies",
@@ -2730,7 +2834,7 @@
      "run_id": "run:historical-period:b1e2d80b82a012c39a3ca59baa1f72352c888e4292963e98f5b33a5202ffa45e"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2023-12-31.json",
@@ -2738,7 +2842,18 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:25c44256d7e81e7e0530b3121b9d37d7459bc018c954de4b6a8afd52b733149f",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:8d6243b84bce21bdfeb9031e67c88339af47ef0be1bb154415c4ae59c8b46c92",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (lumen-2023: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried/lumen_technologies-2023-12-31.json",
+     "reading_sha256": "sha256:0b518f17db38a0ddcc9dfcd7f57e242f47d40faef3d6a8e232147f1b25cd3e31",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "pfizer",
@@ -2814,7 +2929,7 @@
      "run_id": "run:historical-period:8cb68fe1c6caf40f1bb551d5fb0179949688c5af09711cb0718bf65990b0f76f"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2024-12-31.json",
@@ -2822,7 +2937,18 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:8f2e79aebec2c16faa4b8df13d1a6447e14b300a6ea44786503d8d17f4a1a079",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:d8cbba8520ed35bd56cc018a3304499d1c03c07419f0e4a6087cdb495105136c",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2024: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried/pfizer-2024-12-31.json",
+     "reading_sha256": "sha256:cae5e8a18c3ab7643c8541f615e45a61d779df709f3ad1fc754ab2bf56ff1ac0",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "defect_id": "C02_ENPHASE_2021_OLDER_YEAR_READING_DISAGREES",
@@ -5465,11 +5591,22 @@
      "run_id": "run:historical-period:e9365caa6b1de129bd3dd25dce17457bffb2486f2803600d4d4e2ec9ba628adc"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2021-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:8fc8a981163a1fef2a47f232b093f316c86422d61e0a216409b1b509c468fc80",
+     "requirement_closure_hash": "sha256:1e1ef948c84a75d30b2b68635412a74b8ef90a76ff921f21328cba9a802253e3",
+     "run_id": "run:historical-period:571e99c49f4cd04a84e2d9c7fd2c80747ca81997fcbd7597c5bde19e7ffab1c7",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json (pfizer-2021: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/targeted-round-1e1ef948/judgements/pfizer-2021-12-31.json",
+     "reading_sha256": "sha256:88c6787ab7ce94c2488eb49cf06378be2ae7efd0b6fff62859e1f304e479721e",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
+    }
    ]
   },
   {

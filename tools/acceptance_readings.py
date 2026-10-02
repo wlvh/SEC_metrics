@@ -115,7 +115,11 @@ D02_EXCERPT_READINGS = (EVIDENCE + "d02-older-years-read.json",
                         # rule was frozen: Salesforce FY2022-FY2024 agree;
                         # JPMorgan's five years and Pfizer FY2021 are
                         # registered defects.
-                        EVIDENCE + "d02-older-years-read-holdout.json")
+                        EVIDENCE + "d02-older-years-read-holdout.json",
+                        # The rerun on the category rule's version 2: Lumen
+                        # FY2022-FY2025, Pfizer FY2021-FY2025, Paramount
+                        # FY2025, all read in both directions and agreeing.
+                        EVIDENCE + "d02-read-round-1e1ef948.json")
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
 # imports none of the route's text modules: one reading for the 30-metric
 # batch's results, one for the three results the underline repair produced and

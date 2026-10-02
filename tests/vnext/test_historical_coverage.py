@@ -1483,11 +1483,33 @@ class LumenContentDefectIsRegisteredTest(unittest.TestCase):
     """
 
     def test_the_register_names_lumen_where_the_census_does(self):
-        defects = known_result_defects(repo_root=ROOT)
-        companies = {(d["company_id"], d["metric_id"], d["period_end"]) for d in defects
-                     if d.get("result_id") is None and not d.get("released")}
-        self.assertIn(("lumen_technologies", "D02", "2025-12-31"), companies)
-        self.assertIn(("pfizer", "D02", "2025-12-31"), companies)
+        """Both coordinates stay registered, and a later release cannot reach back.
+
+        This first asserted the two entries were unreleased. A targeted round
+        later recomputed both values and a reading accepted them, so each entry
+        now names that result and closure in a release. What has to hold is
+        that the entries still exist at both coordinates and that the result the
+        census found wrong is still withdrawn by them.
+        """
+        from vnext.historical_coverage import _matching_defect
+        defects = {d["defect_id"]: d for d in known_result_defects(repo_root=ROOT)}
+        lumen = defects["D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY"]
+        pfizer = defects["D02_PFIZER_2025_SCOPE_CONTENT_READ"]
+        self.assertEqual(("lumen_technologies", "D02", "2025-12-31", None),
+                         (lumen["company_id"], lumen["metric_id"], lumen["period_end"], lumen.get("result_id")))
+        self.assertEqual(("pfizer", "D02", "2025-12-31", None),
+                         (pfizer["company_id"], pfizer["metric_id"], pfizer["period_end"], pfizer.get("result_id")))
+        for entry in (lumen, pfizer):
+            for release in entry.get("released", []):
+                self.assertTrue(release["result_id"].startswith("sha256:"))
+                self.assertTrue(release["requirement_closure_hash"].startswith("sha256:"))
+        confirmed = lumen["confirmed_in"]["result_id"]
+        for release in lumen.get("released", []):
+            # The census's result under any closure a release names.
+            receipt = {"requirement_closure_hash": release["requirement_closure_hash"]}
+            self.assertIs(lumen, _matching_defect(
+                defects=[lumen], company_id="lumen_technologies", metric_id="D02",
+                report_end="2025-12-31", result={"result_id": confirmed}, receipt=receipt))
 
     def test_the_two_entries_name_one_shared_cause(self):
         """Two coordinates, one defect. Registering them as unrelated would

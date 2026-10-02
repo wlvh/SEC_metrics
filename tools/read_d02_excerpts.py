@@ -552,6 +552,9 @@ def main(argv=None):
     parser.add_argument("--reading-dir", type=Path, default=READING_DIR)
     args = parser.parse_args(argv)
     source_root = args.source_root.resolve()
+    # Readings are recorded by their path in the repository, so a relative
+    # --reading-dir is taken from where the command runs.
+    args.reading_dir = Path(args.reading_dir).resolve()
     if args.carry:
         if not args.position or args.runs_root:
             raise SystemExit("A_CARRY_NAMES_ITS_POSITIONS")
@@ -585,8 +588,13 @@ def main(argv=None):
         reading = merge_answer(packet=packet, answer=answer, reader=args.reader,
                                adjudications=load_adjudications())
         company_id, report_end = packet["position"].rsplit(":", 1)
-        READING_DIR.mkdir(parents=True, exist_ok=True)
-        target = READING_DIR / (company_id + "-" + report_end + ".json")
+        # A committed reading is evidence an acceptance names by its hash: a
+        # second reading of the same position goes to a directory of its own
+        # (--reading-dir), never over the first.
+        target = args.reading_dir / (company_id + "-" + report_end + ".json")
+        if target.exists():
+            raise SystemExit("D02_READING_EXISTS:" + str(target))
+        target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json.dumps(reading, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         print(target.relative_to(REPO), read_position(packet=packet, reading=reading)["verdict"])
         return 0
