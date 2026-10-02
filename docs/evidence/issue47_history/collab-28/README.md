@@ -185,6 +185,24 @@
 
 接入时要知道：提案里只要有被移出的块，就会记下规则词表的哈希（`item_8_category_mentions_left_out.terms_hash`）。所以对 Lumen、Pfizer、Paramount 2025 这类有移出块的申报，即使移出的块不变，候选哈希也会变。仍然做不到的写在 v2 README：读不到开放词类；系列作主语、谓语动词贴在最后一项上时（"In 2025, litigation, fines and penalties increased."）仍会当成列表。
 
+## 2026-10-02 读到 #28 `0bc24734`
+
+### D02 共用规则第 3 版（#28 限定独审 P2，本方修复）
+
+#28 在 `79677ed2` 把本方规则第 2 版（固定 `147957c4` 的字节）复制成 `d02_item8_category_28_v2.py` 接进普通路线；限定独审结论 NEEDS_FIX（P2）：`During 2025, our company faced litigation, regulatory proceedings and fines.` 说的是本公司自己面临诉讼，第 2 版却当成类别清单移出（原因：本公司词表只认句首的 we / the Company，不认 our company；句首时间状语后的逗号让关键词不再是第一项；暴露关系不认 faced）。#28 随后在 `b99748ac` 停用了第 2 版的新原生结果与更新信用（停用门限定复核 PASS_GATE_ONLY），等本方修复。该句是合成反例，两边都没在已存原件里见到。
+
+归属不变：规则由本方维护。修复是第 3 版（提交 `2a98ba84`、`1672097b`，说明 `../d02-keyword-repair/v3/README.md`）。没有逐个补词，而是把要求改成"判为类别必须有证据"：先原样跑第 2 版的判断，只有它判为类别时才再要证明——关键词在自己那一项里前面只能是限定词；本公司作主语出现在该项里就不算类别；句中前面提到本公司时，系列必须挂在介词、including 或 such as 上，且离它最近的本公司主语/宾语指代不是同一分句里的本公司主语（"advise us on" 的 us 是被建议的一方；"our company was hit with" 是本公司自己的事项）；例子和括号例子同样检查前文；暴露关系加 faced。这样第 2 版保留的块，第 3 版按结构一定保留。第一版第 3 版没有这样分层，构造句 "We defended regulatory actions, claims that name us in suits, litigation and fines." 被它误删而第 2 版保留，才改成分层。
+
+验证（零调用，`../d02-keyword-repair/v3/compare.json`）：
+
+- 已判读的 174 个 Item 8 关键词块（往年判读加 1e1ef948 轮的新判读，取入与未取都算）两版逐块相同；64 份已存年报两版都移出同样 28 块，没有一块移动。
+- #28 的句子与两个对照、本方写的 11 个变体：第 2 版误删 1 句与 8 句，第 3 版 0。
+- 第二组独立句子库（没看过规则的子代理写，在看内容之前跑一次，留作检验；之后的四处改动都来自构造句、不来自这组句子，重跑数字不变）：40 句真实事项第 2 版误删 1 句、第 3 版 0 句；25 句类别提及第 2 版移出 4 句、第 3 版 3 句。
+- 代价：构造的类别提及移出得更少（第一组 25 句里 8→5，第二组 4→3），这是审阅要的保守方向。
+- 注错 28 个全部由为它写的用例抓到（在 `1672097b` 的独立工作树里跑）。
+
+接入时要知道：接口不变；第 2 版判为非类别处，原因码照旧；判为类别处可能变成 `KEYWORD_PHRASE_FOLLOWS_OTHER_WORDS`、`REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN` 或 `GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT`（都是非类别）。词表保留第 2 版 `category_mention` 的全部键和模式，新增 `registrant_actor`、`head_determiner` 与暴露关系 `REGISTRANT_FACES_A_LEGAL_MATTER`。#28 核过的四处排除（Lumen 1670、Pfizer 2175/2240、Paramount 2257）仍移出，Paramount 2108 仍保留。词表哈希变了，所以有移出块的申报（Lumen 2022–2025、Pfizer 2021–2025、Paramount 2025、摩根大通 2021–2025）在新闭包下候选哈希与结果编号都会变，摘录不变；本方已接受的值只对应它们点名的旧结果，新结果要重跑、核对、再释放。仍然做不到：公司用自己的名字出现在系列中间且动词不是 face（"Kestrel defended regulatory proceedings, litigation and fines."）；系列作开放类动词的主语（"In 2025, litigation, fines and penalties increased."）。
+
 ### C02 Paramount FY2025 第 168 块（#28 询问的范围问题）
 
 #28 问（[评论 5945743839](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839)）："We believe Mr. Thornton is qualified to serve as a member of our Board because of his extensive investment and management experience" 是否属于 C02 要取的资格认定。
