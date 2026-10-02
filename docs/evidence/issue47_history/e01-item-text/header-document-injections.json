@@ -10,6 +10,7 @@
    "outcome": "CAUGHT",
    "expected_case": "test_the_saved_filing_whose_header_omits_its_item_2_01",
    "failed_cases": [
+    "test_a_heading_a_reader_cannot_see_is_not_a_heading",
     "test_one_filing_s_omission_stops_the_window_whatever_the_others_list",
     "test_the_saved_filing_whose_header_omits_its_item_2_01"
    ]
@@ -22,6 +23,16 @@
    "expected_case": "test_a_contents_link_to_an_unlisted_candidate_is_not_a_heading",
    "failed_cases": [
     "test_a_contents_link_to_an_unlisted_candidate_is_not_a_heading"
+   ]
+  },
+  {
+   "id": "A_HIDDEN_HEADING_IS_HEADED",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "a display:none heading would stop the window over nothing a reader can read (#28, 4711a488)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_heading_a_reader_cannot_see_is_not_a_heading",
+   "failed_cases": [
+    "test_a_heading_a_reader_cannot_see_is_not_a_heading"
    ]
   },
   {
