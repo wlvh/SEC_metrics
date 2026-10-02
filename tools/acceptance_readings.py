@@ -1,6 +1,7 @@
 """Where each content reading keeps its per-position conclusions.
 
-Nine shapes: a statement read keyed by label with one row per metric, a
+Ten shapes: a statement read keyed by label with one row per metric, the
+bank's measures read off its tables with a window per metric, a
 lodging table keyed by label, an event window with its filing list, E01's
 item 8.01 reading over the same windows, governance rows beside a period, a D02
 text reading, the D01 heading readings (one shape, one file per round of results), an older
@@ -38,7 +39,10 @@ CROSS_OLDER_YEARS = EVIDENCE + "cross-source-read-older-years.json"
 # The full-frame batch's older-year statement values, read off the export the
 # same way against the batch's own closure.
 CROSS_BATCH = EVIDENCE + "cross-source-read-batch.json"
-CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III, CROSS_OLDER_YEARS, CROSS_BATCH)
+# The 50-period batch's years no earlier reading reached (older Salesforce and
+# Pfizer FY2021), over the root restored from the export.
+CROSS_FULL_FRAME = EVIDENCE + "cross-source-read-full-frame.json"
+CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III, CROSS_OLDER_YEARS, CROSS_BATCH, CROSS_FULL_FRAME)
 LODGING = EVIDENCE + "lodging-table-read.json"
 # Marriott's older years, read off the export against the round that ran them.
 LODGING_OLDER_YEARS = EVIDENCE + "lodging-table-read-older-years.json"
@@ -55,10 +59,15 @@ EVENTS_BATCH = EVIDENCE + "event-count-read-batch.json"
 # A successor registrant's year, over the approved successor window and the
 # 8-Ks of every registered CIK, against the same batch.
 EVENTS_SUCCESSOR = EVIDENCE + "event-count-read-successor.json"
-EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR, EVENTS_BATCH, EVENTS_SUCCESSOR)
+# The 50-period batch's windows the earlier readings did not reach, most of
+# them over history blocks the extension re-saved (read and checked against
+# their index by tools/read_event_counts.py).
+EVENTS_FULL_FRAME = EVIDENCE + "event-count-read-full-frame.json"
+EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR, EVENTS_BATCH, EVENTS_SUCCESSOR,
+                  EVENTS_FULL_FRAME)
 # Readings made over a restored root: their index is the restored ledger's
 # latest copy, which the checkout's ledger does not necessarily name.
-RESTORED_ROOT_EVENT_READINGS = (EVENTS_BATCH, EVENTS_SUCCESSOR)
+RESTORED_ROOT_EVENT_READINGS = (EVENTS_BATCH, EVENTS_SUCCESSOR, EVENTS_FULL_FRAME)
 # E01 counts an 8.01 only once a keyword in its text confirms it, which a count
 # of header item codes cannot check. Every 8.01 in the E01 windows is read here
 # by tools/read_e01_eight_o_ones.py, under each reading of that confirmation.
@@ -81,11 +90,16 @@ C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read.json",
                             EVIDENCE + "c02-older-years-read-round3.json")
 C02_COMPOSITION_READINGS = (C02_COMPOSITION, *C02_OLDER_YEARS_READINGS)
 GOVERNANCE = EVIDENCE + "governance-read.json"
+# C04 for the 50-period batch's years the checkout does not hold, over a root
+# restored from the export (tools/read_governance_facts.py --source-root).
+GOVERNANCE_FULL_FRAME = EVIDENCE + "governance-read-full-frame.json"
+GOVERNANCE_READINGS = (GOVERNANCE, GOVERNANCE_FULL_FRAME)
 # An older year's C03, read from every saved proxy that tags it (a year is
 # reported again by each later proxy) by tools/read_c03_across_proxies.py; one
 # file per closure its positions compare.
 C03_ACROSS_PROXIES = (EVIDENCE + "c03-across-proxies-read-batch.json",
-                      EVIDENCE + "c03-across-proxies-read-round3.json")
+                      EVIDENCE + "c03-across-proxies-read-round3.json",
+                      EVIDENCE + "c03-across-proxies-read-full-frame.json")
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D02's older years, read in both directions by tools/read_d02_excerpts.py from
 # packets built off the saved filings (excerpts, blocks skipped inside Item 3
@@ -132,14 +146,21 @@ DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 # The same reading of the 41-period batch's older years, over a restored root.
 DEBT_TO_EQUITY_BATCH = EVIDENCE + "debt-to-equity-read-batch.json"
 DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH)
-READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
+# The bank's A03, A04, A09, A11, A12 and A13 read off its annual report's own
+# tables by tools/read_bank_measures.py, which imports none of the financial
+# inspectors: one file per closure its positions compare - the 50-period batch,
+# and the round that ran the older-wording successors.
+BANK_MEASURES_FULL_FRAME = EVIDENCE + "bank-measures-read-full-frame.json"
+BANK_MEASURES_READINGS = (BANK_MEASURES_FULL_FRAME,)
+READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONES,
+            *GOVERNANCE_READINGS,
             TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
             *DEBT_TO_EQUITY_READINGS,
             # The older-year C02 readings (C02_OLDER_YEARS_READINGS) join when
             # their acceptance files are written: they are being read, and no
             # older-year C02 value is accepted yet.
             C02_COMPOSITION,
-            *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES)
+            *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES, *BANK_MEASURES_READINGS)
 # The company periods the readings cover are data, not code: tools/ is scanned
 # as production Python for identity literals and fixed dates.
 POSITIONS = "docs/evidence/issue47_history/reading-producers/positions.json"
@@ -379,7 +400,7 @@ def positions(*, repo_root: Path, path: str, body):
                 published=case["published"], verdict=case["verdict"],
                 filings=case["filings_in_window"], window=case["window"],
                 filings_are_the_whole_set=True))
-    elif path == GOVERNANCE:
+    elif path in GOVERNANCE_READINGS:
         for label, case in sorted(body["per_position"].items()):
             for metric in ("C03", "C04"):
                 row = case.get(metric)
@@ -455,6 +476,18 @@ def positions(*, repo_root: Path, path: str, body):
                 reading=path, label=label, slot=case, company_id=case["company_id"],
                 metric_id="B06", period_end=case["period_end"], published=case["published"],
                 verdict=case["verdict"], filings=[accession]))
+    elif path in BANK_MEASURES_READINGS:
+        # One row per metric, each with the window the table's own header gives.
+        for label, case in sorted(body["per_position"].items()):
+            accession, _ = accession_of_document(repo_root=repo_root, document=case["document"])
+            for metric, row in sorted(case["metrics"].items()):
+                if row.get("published") is None:
+                    continue
+                found.append(_position(
+                    reading=path, label=label, slot=row, company_id=case["company_id"],
+                    metric_id=metric, period_end=case["period_end"],
+                    published=row["published"], verdict=row["verdict"],
+                    filings=[accession], window=row["window"], case=case))
     elif path in RPO_READINGS:
         found.append(_position(
             reading=path, label=body["company_id"].split("_")[0] + "-" + body["period_end"][:4],

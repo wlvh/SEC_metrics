@@ -20,6 +20,21 @@ listed. Published values come from a named runs root and closure.
 Usage:
     python3 tools/read_governance_facts.py --runs-root <flat runs root> \
         --closure sha256:<closure the compared results ran under>
+
+A year whose filings only the acquisition saved is read over a root restored
+from its export, into a reading of its own, for C04 only:
+
+    python3 tools/read_governance_facts.py --runs-root <root> --closure sha256:<...> \
+        --source-root <restored root> --case <label>=<company_id>:<report_end> \
+        --events <event-count reading that read the window> --output <reading path>
+
+There the previous year's AuditorName is read from the root's accession
+materials when they hold the accession, and otherwise from its request ledger:
+the latest GET of the primary document or the XBRL instance in that
+accession's directory, which must have succeeded and whose saved bytes must
+have the digest the ledger recorded. The path read is recorded, so the test
+reads the same bytes back out of the export. C03 is not read there: a year's
+CEO pay across every proxy that reports it is tools/read_c03_across_proxies.py.
 """
 import argparse
 import collections
@@ -214,7 +229,38 @@ def proxy_documents(cik):
     return declared, sorted(documents)
 
 
-def _auditor_names_in_accession(*, cik, accession, primary=None):
+def _ledger_documents(*, root, rows, cik, accession, primary):
+    """The accession's primary document and XBRL instances as the ledger last saved them."""
+    prefix = "https://www.sec.gov/Archives/edgar/data/{}/{}/".format(
+        int(cik), accession.replace("-", ""))
+    urls = sorted({row["source_url"] for row in rows if row["source_url"].startswith(prefix)
+                   and row["method"] == "GET"
+                   and (row["source_url"][len(prefix):] == primary
+                        or row["source_url"].endswith("_htm.xml"))},
+                  key=lambda url: (url[len(prefix):] != primary, url))
+    for url in urls:
+        saved = latest_saved(root=root, rows=rows, url=url)
+        if saved is not None:
+            yield saved[0].decode("utf-8-sig", errors="replace"), saved[1]
+
+
+def latest_saved(*, root, rows, url):
+    """``(bytes, repo_relative_path)`` of the ledger's latest GET of ``url``, or None.
+
+    None when the ledger never asked for it or its latest request failed; saved
+    bytes without the digest the ledger recorded stop the reading.
+    """
+    import hashlib
+    matching = [row for row in rows if row["source_url"] == url and row["method"] == "GET"]
+    if not matching or matching[-1]["status_code"] != "200" or matching[-1]["error"]:
+        return None
+    data = (root / matching[-1]["repo_relative_path"]).read_bytes()
+    if hashlib.sha256(data).hexdigest() != matching[-1]["content_sha256"]:
+        raise SystemExit("SAVED_BYTES_DIFFER_FROM_THE_LEDGER:" + url)
+    return data, matching[-1]["repo_relative_path"]
+
+
+def _auditor_names_in_accession(*, cik, accession, primary=None, root=REPO, rows=None):
     """dei:AuditorName from a saved document of this accession.
 
     Returns (names, repository path) or ([], None). The primary document is
@@ -228,7 +274,7 @@ def _auditor_names_in_accession(*, cik, accession, primary=None):
     the one the period selection already chose.
     """
     digits = accession.replace("-", "")
-    for directory in sorted(glob.glob(str(REPO / "evidence/accession_materials")
+    for directory in sorted(glob.glob(str(root / "evidence/accession_materials")
                                       + "/*_" + str(int(cik)) + "_" + digits)):
         candidates = []
         if primary and (Path(directory) / primary).exists():
@@ -239,7 +285,13 @@ def _auditor_names_in_accession(*, cik, accession, primary=None):
                                                   errors="replace"),
                               "dei:AuditorName")
             if names:
-                return names, str(candidate.relative_to(REPO))
+                return names, str(candidate.relative_to(root))
+    # A restored root: what only the acquisition saved, through its ledger.
+    for text, path in (_ledger_documents(root=root, rows=rows, cik=cik, accession=accession,
+                                         primary=primary) if rows is not None else ()):
+        names = text_fact(text, "dei:AuditorName")
+        if names:
+            return names, path
     return [], None
 
 
@@ -249,7 +301,8 @@ def _number(value):
 
 
 def read_case(*, company_id, label, period, cik, source_document, selection,
-              published, event_items):
+              published, event_items, root=REPO, rows=None, metrics=("C03", "C04"),
+              read_text=None, auditor_names=None):
     """C03 and C04 for one pinned period, read from the saved documents.
 
     Args:
@@ -261,7 +314,17 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
         event_items: The window's filings with their item codes, or None
             when no event reading read this position's window - which is
             not the same as a window with no 8-K, and reads nothing.
+        root, rows: The data root read and, for a restored root, its request
+            ledger rows, through which a filing only the acquisition saved is
+            read.
+        metrics: What is read; a restored-root reading reads C04 only.
+        read_text, auditor_names: How the test reads back the bytes a reading
+            recorded; by default, off ``root``.
     """
+    read_text = read_text or (lambda relative: (root / relative).read_text(
+        encoding="utf-8-sig", errors="replace"))
+    auditor_names = auditor_names or (lambda **kw: _auditor_names_in_accession(
+        root=root, rows=rows, **kw))
     prior = selection.get("prior_filing") or {}
     entry = {"company_id": company_id,
              "period": [period["period_start"], period["period_end"]],
@@ -270,6 +333,20 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
              "target_document": source_document, "cik": cik,
              "prior_filing": {key: prior.get(key) for key in
                               ("accessionNumber", "primaryDocument")} if prior else None}
+    if "C03" not in metrics:
+        entry["C03"] = {"published": published.get("C03"), "read": None,
+                        "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE",
+                        "verdict": ("NO_PUBLISHED_VALUE" if published.get("C03") is None
+                                    else "NOT_READ")}
+    else:
+        _read_c03(entry=entry, cik=cik, period=period, published=published)
+    _read_c04(entry=entry, source_document=source_document, selection=selection,
+              published=published, event_items=event_items, cik=cik,
+              read_text=read_text, auditor_names=auditor_names)
+    return entry
+
+
+def _read_c03(*, entry, cik, period, published):
     hits = []
     declared, documents = proxy_documents(cik)
     key = (period["period_start"], period["period_end"])
@@ -305,8 +382,11 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
                     "verdict": ("NO_PUBLISHED_VALUE" if c03 is None
                                 else "NOT_READ" if value is None
                                 else "MATCH" if value == Decimal(c03) else "DIFFERS")}
-    names = {"target": text_fact((REPO / source_document).read_text(
-        encoding="utf-8-sig", errors="replace"), "dei:AuditorName")}
+
+
+def _read_c04(*, entry, source_document, selection, published, event_items, cik,
+              read_text, auditor_names):
+    names = {"target": text_fact(read_text(source_document), "dei:AuditorName")}
     # The prior filing is the one the period selection names; recomputing it
     # was the source of two earlier defects (a truncated error string, and a
     # prior period end made by replacing the year - a date a 52/53-week
@@ -316,7 +396,7 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
     if not prior_filing.get("accessionNumber"):
         prior_note = "THE_SELECTION_NAMES_NO_PRIOR_FILING"
     else:
-        prior_names, prior_read_from = _auditor_names_in_accession(
+        prior_names, prior_read_from = auditor_names(
             cik=cik, accession=prior_filing["accessionNumber"],
             primary=prior_filing.get("primaryDocument"))
         if not prior_names:
@@ -352,7 +432,6 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
                     "verdict": ("NO_PUBLISHED_VALUE" if c04 is None
                                 else "NOT_READ" if value is None
                                 else "MATCH" if value == Decimal(c04) else "DIFFERS")}
-    return entry
 
 
 def window_items(*, events, label):
@@ -374,13 +453,26 @@ def window_items(*, events, label):
     return sorted(found), found[sorted(found)[0]]
 
 
-def _case_input(*, company_id, report_end):
+def _case(text):
+    """``label=company_id:report_end`` from the command line."""
+    label, _, rest = text.partition("=")
+    company_id, _, report_end = rest.partition(":")
+    if not (label and company_id and report_end):
+        raise SystemExit("CASE_NOT_LABEL_EQUALS_COMPANY_COLON_PERIOD:" + text)
+    return company_id, report_end, label
+
+
+def _case_input(*, company_id, report_end, source_root=REPO):
     from vnext.historical_annual_input import prepare_historical_annual_input
+    from vnext.normal_history_plan import checkpoint_replayed_once
     from vnext.normal_period_selection import resolve_period_selection
-    selection = resolve_period_selection(repo_root=REPO, company_id=company_id,
-                                         report_end=report_end)
-    prepared = prepare_historical_annual_input(repo_root=REPO, company_id=company_id,
-                                               period_selection=selection)
+    # A restored root's saved sources are proved through its acquisition
+    # checkpoint; one replay per ledger state.
+    with checkpoint_replayed_once():
+        selection = resolve_period_selection(repo_root=source_root, company_id=company_id,
+                                             report_end=report_end)
+        prepared = prepare_historical_annual_input(repo_root=source_root, company_id=company_id,
+                                                   period_selection=selection)
     return (selection, prepared["original_input"]["table_input"]["target_period"],
             str(int(prepared["entity"])),
             prepared["original_input"]["table_input"]["source_repo_relative_path"])
@@ -397,7 +489,24 @@ def main():
     parser.add_argument("--events", action="append",
                         help="an event-count reading whose windows give the 8-K item "
                              "codes (default: " + EVENTS + "); may be repeated")
+    parser.add_argument("--case", action="append", type=_case,
+                        help="label=company_id:report_end; replaces the default cases")
+    parser.add_argument("--output", default=OUT)
+    parser.add_argument("--source-root", type=Path, default=None,
+                        help="a data root holding filings the checkout does not, such as "
+                             "one restored from the acquisition's export (C04 only)")
     arguments = parser.parse_args()
+    if (arguments.case or arguments.source_root is not None) and arguments.output == OUT:
+        raise SystemExit("A_CASE_OR_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    source = REPO if arguments.source_root is None else arguments.source_root.resolve()
+    rows = None
+    metrics = ("C03", "C04")
+    if arguments.source_root is not None:
+        import csv
+        with (source / "evidence/requests_log.csv").open(encoding="utf-8", newline="") as opened:
+            rows = list(csv.DictReader(opened))
+        metrics = ("C04",)
+    output = REPO / arguments.output
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
@@ -405,11 +514,16 @@ def main():
     event_readings = arguments.events or [EVENTS]
     events = {path: json.loads((REPO / path).read_text(encoding="utf-8"))["per_position"]
               for path in event_readings}
-    previous = json.loads((REPO / OUT).read_text(encoding="utf-8"))
+    main_body = json.loads((REPO / OUT).read_text(encoding="utf-8"))
+    previous = (json.loads(output.read_text(encoding="utf-8")) if output.exists()
+                else {key: main_body[key] for key in ("record_type", "issue", "what_this_is",
+                                                      "production_authorized") if key in main_body}
+                | {"same_method_as": OUT})
     positions = {}
-    for company_id, report_end, label in CASES:
+    for company_id, report_end, label in (arguments.case or CASES):
         selection, period, cik, document = _case_input(company_id=company_id,
-                                                       report_end=report_end)
+                                                       report_end=report_end,
+                                                       source_root=source)
         published = {}
         for metric in ("C03", "C04"):
             result = select_receipt(found=index.get((company_id, metric, report_end), []),
@@ -419,9 +533,10 @@ def main():
         window_from, event_items = window_items(events=events, label=label)
         entry = read_case(company_id=company_id, label=label, period=period, cik=cik,
                           source_document=document, selection=selection,
-                          published=published, event_items=event_items)
+                          published=published, event_items=event_items,
+                          root=source, rows=rows, metrics=metrics)
         entry["C04"]["eight_k_window_read_by"] = window_from
-        for metric in ("C03", "C04"):
+        for metric in metrics:
             row = entry[metric]
             if row["published"] is None:
                 continue
@@ -452,8 +567,10 @@ def main():
                  "eight_k_windows_from": event_readings,
                  "needed_facts_not_read": UNREAD, "per_position": positions,
                  "calls": {"provider": 0, "paid": 0, "sec": 0}})
-    (REPO / OUT).write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)
-                            + "\n", encoding="utf-8")
+    if arguments.source_root is not None:
+        body["metrics_read"] = list(metrics)
+    output.write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)
+                      + "\n", encoding="utf-8")
     return 0
 
 

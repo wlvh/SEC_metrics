@@ -62,8 +62,16 @@ def _recount(label):
         path = indexes[registrant]
         submissions = json.loads(saved_bytes(repo_root=ROOT, relative=path))
         cik = int(submissions["cik"])
+        filings = reader.filings_in_index(submissions)
+        # The history blocks the reading read, in the index's own order.
+        blocks = row.get("history_blocks", {}).get(str(cik), {})
+        for item in submissions["filings"]["files"]:
+            if item["name"] in blocks:
+                filings.extend(reader.block_filings(
+                    submissions=submissions, name=item["name"],
+                    raw=saved_bytes(repo_root=ROOT, relative=blocks[item["name"]])))
         each, admitted, missing = reader.count_window(
-            filings=reader.filings_in_index(submissions), cik=cik, start=row["window"][0],
+            filings=reader.unique_filings(filings), cik=cik, start=row["window"][0],
             end=row["window"][1], header=header, metrics=sorted(row["metrics"]))
         for basis in counts:
             counts[basis].update(each[basis])
@@ -80,7 +88,9 @@ class TheReaderIsNotTheRouteTest(unittest.TestCase):
         imported = set()
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module:
+                # "from vnext import x" names the module in its alias.
                 imported.add(node.module)
+                imported.update(node.module + "." + alias.name for alias in node.names)
             elif isinstance(node, ast.Import):
                 imported.update(alias.name for alias in node.names)
         for route_module in ("deterministic_router", "zero_ai_r2", "normal_zero_ai_results",
@@ -169,6 +179,51 @@ class APartialWindowIsNotCountedTest(unittest.TestCase):
         self.assertIn("CIK0000078003-submissions-001.json",
                       reader.history_blocks_reached(index, "2021-01-01"))
         self.assertEqual([], reader.history_blocks_reached(index, "2025-01-01"))
+
+    def test_a_stale_history_block_is_refused_not_read_around(self):
+        # The checkout's JPMorgan block 007 was cut from another partition than
+        # the index the checkout saved: it holds none of the filings that index
+        # declares for it. The acquisition re-saved the blocks; this one is the old.
+        from sec_urls import submissions_file_url, submissions_url
+        from vnext.annual_update import saved_source
+        index = json.loads(saved_source(repo_root=ROOT, url=submissions_url(cik=19617))["raw"])
+        name = "CIK0000019617-submissions-007.json"
+        block = saved_source(repo_root=ROOT, url=submissions_file_url(file_name=name))
+        with self.assertRaisesRegex(SystemExit, "HISTORY_BLOCK_IS_NOT_THE_ONE_ITS_INDEX_DECLARES"):
+            reader.block_filings(submissions=index, name=name, raw=block["raw"])
+
+    def test_a_block_must_hold_what_its_index_declares(self):
+        def block(*days):
+            return json.dumps({"form": ["8-K"] * len(days), "reportDate": list(days),
+                               "filingDate": list(days),
+                               "accessionNumber": ["a%d" % i for i in range(len(days))]})
+        index = {"filings": {"files": [{"name": "b", "filingFrom": "2021-01-01",
+                                        "filingTo": "2021-06-30", "filingCount": 2}]}}
+        # The day after the declared end is SEC's, and the older block's.
+        self.assertEqual(2, len(reader.block_filings(submissions=index, name="b",
+                                                     raw=block("2021-01-04", "2021-07-01"))))
+        for raw in (block("2021-01-04"), block("2021-01-04", "2021-07-02"),
+                    block("2020-12-31", "2021-01-04")):
+            with self.subTest(raw), self.assertRaisesRegex(
+                    SystemExit, "HISTORY_BLOCK_IS_NOT_THE_ONE_ITS_INDEX_DECLARES"):
+                reader.block_filings(submissions=index, name="b", raw=raw)
+
+    def test_the_same_filing_listed_twice_must_say_the_same(self):
+        one = {"form": "8-K", "accessionNumber": "a", "filingDate": "2021-01-04",
+               "reportDate": "2021-01-04"}
+        self.assertEqual([one], reader.unique_filings([one, dict(one)]))
+        with self.assertRaisesRegex(SystemExit, "A_FILING_IS_LISTED_TWICE_DIFFERENTLY"):
+            reader.unique_filings([one, {**one, "form": "8-K/A"}])
+
+    def test_a_reading_over_blocks_records_and_recounts_them(self):
+        over_blocks = {label: row for label, row in _committed().items()
+                       if row.get("history_blocks")}
+        self.assertTrue(over_blocks)
+        for label, row in over_blocks.items():
+            with self.subTest(label):
+                for paths in row["history_blocks"].values():
+                    for path in paths.values():
+                        self.assertTrue(path.startswith("evidence/"))
 
     def test_an_unreadable_header_is_not_a_count_even_when_the_numbers_agree(self):
         self.assertEqual("NOT_READ", reader.verdict(published="2", by_filing_date=2,

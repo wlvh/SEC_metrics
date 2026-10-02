@@ -30,12 +30,13 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (C02_COMPOSITION, C02_COMPOSITION_READINGS,  # noqa: E402
+from acceptance_readings import (BANK_MEASURES_READINGS, C02_COMPOSITION,  # noqa: E402
+                                 C02_COMPOSITION_READINGS,
                                  C02_OLDER_YEARS_READINGS, C03_ACROSS_PROXIES, COMPENSATION, CROSS,
                                  CROSS_READINGS,
                                  D01_READINGS, D02_EXCERPT_READINGS, DEBT_TO_EQUITY_READINGS,
                                  E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
-                                 EVENT_READINGS, GOVERNANCE, LODGING, LODGING_READINGS, READINGS, RPO_READINGS, TEXT, load,
+                                 EVENT_READINGS, GOVERNANCE, GOVERNANCE_READINGS, LODGING, LODGING_READINGS, READINGS, RPO_READINGS, TEXT, load,
                                  positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
@@ -76,6 +77,27 @@ STATEMENT_LIMIT = ("what is established is that the concept the definition "
                    "names carries this value in this filing for this period "
                    "and that the stated arithmetic produces the published "
                    "number. It does not establish " + COMMON)
+BANK_MEASURES_METHOD = (
+ "the bank's annual report read by tools/read_bank_measures.py, which imports none of "
+ "the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): "
+ "the document split on <table>, each row's cells with the tags stripped, and each "
+ "measure read from the row the report names it by - net yield on average "
+ "interest-earning assets on the managed basis, firmwide nonaccrual loans to total "
+ "loans outstanding, total assets under management, Total VaR in the Avg. column of the "
+ "table split into Avg., Min and Max, Total international under the target year's rows "
+ "of the table whose first figure column is revenue, and the registrant's LCR in the "
+ "table of averages for the three months ended on the period's end together with the "
+ "selected financial data's firm LCR average - in the target year's column found from "
+ "the table's own header, in the scale the header states. Every table that names the "
+ "measure and states the year is read, and they must agree; the window is the one the "
+ "table's header states (the year ended, the date, or the three months ended) and must "
+ "be the result's measurement window.")
+BANK_MEASURES_LIMIT = (
+ "what is established is that the row the report names carries this value for this "
+ "window. It does not establish what the route's witnesses establish - that the named "
+ "row is the measure the definition asks for and covers the whole issuer (the glossary, "
+ "segment, introduction and footnote witnesses): this reading takes the report's own "
+ "row label for that. Nor does it establish " + COMMON)
 LODGING_LIMIT = ("what is established is that the row under the approved scope "
                  "carries this value. It does not establish that the scope is "
                  "the right scope, nor " + COMMON)
@@ -214,6 +236,10 @@ def _read_from(position):
                 "finance_leases": case["finance_leases"]}
     if path in CROSS_READINGS:
         return {"document": case["document"], "concepts_that_answered": case["concepts_used"]}
+    if path in BANK_MEASURES_READINGS:
+        return {"document": case["document"],
+                "reads": [{key: read[key] for key in ("table_ordinal", "row", "figure", "window")
+                           if key in read} for read in row["reads"]]}
     if path in LODGING_READINGS:
         return {"document": case["document"], "table_ordinal": case["read"]["table_ordinal"],
                 "row_text": case["read"]["row_text"],
@@ -240,7 +266,7 @@ def _read_from(position):
                     "aliases_anywhere_in_the_primary_document", "decision")}
                     for entry in case["eight_o_ones"]],
                 "counts_under_each_reading": case["counts"]}
-    if path == GOVERNANCE:
+    if path in GOVERNANCE_READINGS:
         if position["metric_id"] == "C03":
             return {"proxies": row["proxies_reporting_the_target_period"]}
         return {"auditor_this_year": row["auditor_named_in_the_target_filing"],
@@ -271,6 +297,8 @@ def _method_and_limit(position):
         return DEBT_TO_EQUITY_METHOD, DEBT_TO_EQUITY_LIMIT
     if path in CROSS_READINGS:
         return STATEMENT_METHOD, STATEMENT_LIMIT
+    if path in BANK_MEASURES_READINGS:
+        return BANK_MEASURES_METHOD, BANK_MEASURES_LIMIT
     if path in LODGING_READINGS:
         return LODGING_METHOD, LODGING_LIMIT
     if path in EVENT_READINGS:
@@ -283,7 +311,7 @@ def _method_and_limit(position):
         return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
     if path in C02_OLDER_YEARS_READINGS:
         return C02_OLDER_YEARS_METHOD, C02_OLDER_YEARS_LIMIT
-    if path == GOVERNANCE:
+    if path in GOVERNANCE_READINGS:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path in C03_ACROSS_PROXIES:
         if position["case"].get("read_as") == "FIRST_REPORTED":

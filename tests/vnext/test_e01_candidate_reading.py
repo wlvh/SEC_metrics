@@ -56,6 +56,9 @@ class TheCandidateReadingIsTheSavedHeaders(unittest.TestCase):
         tree = ast.parse((ROOT / "tools/read_e01_candidates.py").read_text(encoding="utf-8"))
         imported = {node.module for node in ast.walk(tree)
                     if isinstance(node, ast.ImportFrom) and node.module}
+        # "from vnext import x" names the module in its alias.
+        imported |= {node.module + "." + alias.name for node in ast.walk(tree)
+                     if isinstance(node, ast.ImportFrom) and node.module for alias in node.names}
         self.assertFalse({name for name in imported
                           if name.startswith("vnext.") and ("zero_ai" in name or "event_items" in name
                                                             or "deterministic_router" in name)})

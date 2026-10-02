@@ -30,7 +30,9 @@ class TheReaderIsNotTheRouteTest(unittest.TestCase):
         imported = set()
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module:
+                # "from vnext import x" names the module in its alias.
                 imported.add(node.module)
+                imported.update(node.module + "." + alias.name for alias in node.names)
             elif isinstance(node, ast.Import):
                 imported.update(alias.name for alias in node.names)
         for route_module in ("governance_signals", "historical_governance_results",
@@ -113,6 +115,68 @@ class TheCommittedReadingRederivesTest(unittest.TestCase):
                                              label="x"))
         with self.assertRaisesRegex(SystemExit, "EVENT_READINGS_DISAGREE_ON_A_WINDOW"):
             reader.window_items(events={"one.json": rows, "two.json": other}, label="x")
+
+    def test_a_restored_root_reading_rederives_from_the_bytes_it_recorded(self):
+        """C04 over the export: this year's 10-K and last year's instance, by path."""
+        from tools.acceptance_readings import GOVERNANCE_FULL_FRAME, saved_bytes
+        body = json.loads((ROOT / GOVERNANCE_FULL_FRAME).read_text(encoding="utf-8"))
+        self.assertEqual(["C04"], body["metrics_read"])
+        read_from = 0
+        for label, row in body["per_position"].items():
+            read_by = row["C04"]["eight_k_window_read_by"]
+            items = None if read_by is None else json.loads((ROOT / read_by[0]).read_text(
+                encoding="utf-8"))["per_position"][label]["filings"]["filing_date"]
+            recorded = row["C04"]["previous_year_read_from"]
+
+            def text(relative):
+                return saved_bytes(repo_root=ROOT, relative=relative).decode(
+                    "utf-8-sig", errors="replace")
+
+            def names(**_):
+                return ((reader.text_fact(text(recorded), "dei:AuditorName"), recorded)
+                        if recorded else ([], None))
+            read_from += bool(recorded and recorded.startswith("evidence/request_attempts/"))
+            entry = reader.read_case(
+                company_id=row["company_id"], label=label,
+                period={"period_start": row["period"][0], "period_end": row["period"][1]},
+                cik=row["cik"], source_document=row["target_document"],
+                selection={"prior_filing": row["prior_filing"]},
+                published={"C03": row["C03"]["published"], "C04": row["C04"]["published"]},
+                event_items=items, metrics=("C04",), read_text=text, auditor_names=names)
+            with self.subTest(label):
+                for metric in ("C03", "C04"):
+                    self.assertEqual({k: v for k, v in row[metric].items()
+                                      if k not in ("checked_identity", "eight_k_window_read_by")},
+                                     entry[metric])
+        # Most previous years were saved only by the acquisition.
+        self.assertGreater(read_from, 0)
+
+    def test_the_ledger_s_latest_copy_must_have_its_recorded_digest(self):
+        import csv
+        import hashlib
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "evidence").mkdir()
+            body = b'<dei:AuditorName contextRef="c">FIRM LLP</dei:AuditorName>'
+            (root / "evidence/x_htm.xml").write_bytes(body)
+            url = "https://www.sec.gov/Archives/edgar/data/1/000000000122000001/x_htm.xml"
+            row = {"method": "GET", "source_url": url, "status_code": "200", "error": "",
+                   "repo_relative_path": "evidence/x_htm.xml",
+                   "content_sha256": hashlib.sha256(body).hexdigest()}
+            self.assertEqual((["FIRM LLP"], "evidence/x_htm.xml"),
+                             reader._auditor_names_in_accession(
+                                 cik="1", accession="0000000001-22-000001", primary="x.htm",
+                                 root=root, rows=[row]))
+            # A failed latest request is not read around.
+            self.assertEqual(([], None), reader._auditor_names_in_accession(
+                cik="1", accession="0000000001-22-000001", primary="x.htm", root=root,
+                rows=[row, {**row, "status_code": "503"}]))
+            with self.assertRaisesRegex(SystemExit, "SAVED_BYTES_DIFFER_FROM_THE_LEDGER"):
+                reader._auditor_names_in_accession(
+                    cik="1", accession="0000000001-22-000001", primary="x.htm", root=root,
+                    rows=[{**row, "content_sha256": "0" * 64}])
 
     def test_every_recorded_identity_was_recorded_when_the_reading_was_made(self):
         for label, row in _committed().items():

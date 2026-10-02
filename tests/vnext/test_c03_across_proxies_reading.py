@@ -34,7 +34,9 @@ class TheReaderIsNotTheRouteTest(unittest.TestCase):
         imported = set()
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module:
+                # "from vnext import x" names the module in its alias.
                 imported.add(node.module)
+                imported.update(node.module + "." + alias.name for alias in node.names)
             elif isinstance(node, ast.Import):
                 imported.update(alias.name for alias in node.names)
         for route_module in ("governance_signals", "historical_governance_results",

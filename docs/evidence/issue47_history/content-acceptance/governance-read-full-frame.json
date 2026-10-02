@@ -1,0 +1,2471 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "eight_k_windows_from": [
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json",
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "metrics_read": [
+  "C04"
+ ],
+ "needed_facts_not_read": [],
+ "per_position": {
+  "enphase-2022": {
+   "C03": {
+    "published": "16627977",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:f2164a0d62725a403ba9f4b959f0c7ba90a1062323478f72e81b74d40a48da2e",
+      "run_id": "run:historical-period:9ac2afde4a56e48d6277be66173a5f9465fb39e1cbe77b5118a32f264bb4674f"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001463101-22-000007",
+      "0001463101-22-000010",
+      "0001463101-22-000016",
+      "0001463101-22-000037",
+      "0001463101-22-000052",
+      "0001463101-22-000063",
+      "0001463101-22-000082",
+      "0001463101-22-000093",
+      "0001463101-22-000111",
+      "0001463101-23-000025"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/d2/d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a/enph-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1463101",
+   "company_id": "enphase_energy",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001463101-22-000016",
+    "primaryDocument": "enph-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/55/55eb2f2cb82a3468b4a8df2703042d1c47edffc4b77dad01734761ff8250f76b/enph-20221231.htm"
+  },
+  "enphase-2023": {
+   "C03": {
+    "published": "19527534",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:c1074024c1acbe691020d9493beabc9f286da2e9c48675466a6bbdffe486285e",
+      "run_id": "run:historical-period:3180596918bf8f8e956639baec5813ed0d0307c4236015516b264da5464d9e43"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001463101-23-000015",
+      "0001463101-23-000025",
+      "0001463101-23-000041",
+      "0001463101-23-000083",
+      "0001463101-23-000106",
+      "0001463101-23-000138",
+      "0001463101-23-000163",
+      "0001463101-23-000184",
+      "0001463101-24-000024"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/55/55eb2f2cb82a3468b4a8df2703042d1c47edffc4b77dad01734761ff8250f76b/enph-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1463101",
+   "company_id": "enphase_energy",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001463101-23-000025",
+    "primaryDocument": "enph-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/e2/e20f1ff0b674b7c7a82f9654b03956dd4402bb375ebf2e90878f08772f3631c8/enph-20231231.htm"
+  },
+  "enphase-2024": {
+   "C03": {
+    "published": "12630005",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:41406cd6222251a7f0e1543a662225cb7eedf7a04e9bb9cead8cbcfddc216fc8",
+      "run_id": "run:historical-period:f9fe1567bef77b27451e20c5f4c83d26f1ed21444f9ed52abe3f17f1c1c19d00"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001463101-24-000013",
+      "0001463101-24-000024",
+      "0001463101-24-000052",
+      "0001463101-24-000070",
+      "0001463101-24-000072",
+      "0001463101-24-000088",
+      "0001463101-24-000116",
+      "0001463101-24-000140",
+      "0001463101-24-000145",
+      "0001463101-25-000024"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/e2/e20f1ff0b674b7c7a82f9654b03956dd4402bb375ebf2e90878f08772f3631c8/enph-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1463101",
+   "company_id": "enphase_energy",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001463101-24-000024",
+    "primaryDocument": "enph-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/27/275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe/enph-20241231.htm"
+  },
+  "ford-2022": {
+   "C03": {
+    "published": "20996146",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:e53cd666a4cf7a4560e2d68a764faace6248fa18c0baec555eb4274806420427",
+      "run_id": "run:historical-period:afb8318b58b537b365aae5d3a17c613b76a7514e41348a3ec869bb37c17fb6d1"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000037996-22-000002",
+      "0000037996-22-000005",
+      "0000037996-22-000008",
+      "0000037996-22-000012",
+      "0000037996-22-000013",
+      "0000037996-22-000015",
+      "0000037996-22-000017",
+      "0000037996-22-000019",
+      "0000037996-22-000023",
+      "0000037996-22-000026",
+      "0000037996-22-000028",
+      "0000037996-22-000034",
+      "0000037996-22-000038",
+      "0000037996-22-000040",
+      "0000037996-22-000042",
+      "0000037996-22-000044",
+      "0000037996-22-000047",
+      "0000037996-22-000050",
+      "0000037996-22-000052",
+      "0000037996-22-000056",
+      "0000037996-22-000060",
+      "0000037996-22-000064",
+      "0000037996-22-000066",
+      "0000037996-22-000072",
+      "0000037996-22-000076",
+      "0000037996-22-000079",
+      "0000037996-22-000081",
+      "0000037996-22-000085",
+      "0000037996-23-000012",
+      "0001104659-22-091583"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/7b/7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d/f-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "37996",
+   "company_id": "ford_motor_company",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000037996-22-000013",
+    "primaryDocument": "f-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/34/34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80/f-20221231.htm"
+  },
+  "ford-2023": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:dd97af092073dabb3033a62851668fd91315350e28c656022bf9e6aa4e6de8cb",
+      "run_id": "run:historical-period:0f34d2406bbf37ad7cbb8b25ffc56e60a0663b929c2c285606557fef85e2deac"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000037996-23-000002",
+      "0000037996-23-000004",
+      "0000037996-23-000006",
+      "0000037996-23-000011",
+      "0000037996-23-000012",
+      "0000037996-23-000014",
+      "0000037996-23-000018",
+      "0000037996-23-000021",
+      "0000037996-23-000023",
+      "0000037996-23-000025",
+      "0000037996-23-000028",
+      "0000037996-23-000032",
+      "0000037996-23-000034",
+      "0000037996-23-000036",
+      "0000037996-23-000042",
+      "0000037996-23-000044",
+      "0000037996-23-000047",
+      "0000037996-23-000053",
+      "0000037996-23-000055",
+      "0000037996-23-000057",
+      "0000037996-23-000059",
+      "0000037996-23-000061",
+      "0000037996-23-000066",
+      "0000037996-23-000087",
+      "0000037996-23-000089",
+      "0000037996-23-000116",
+      "0000037996-23-000117",
+      "0000037996-24-000009"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/34/34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80/f-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "37996",
+   "company_id": "ford_motor_company",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000037996-23-000012",
+    "primaryDocument": "f-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/9a/9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f/f-20231231.htm"
+  },
+  "ford-2024": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:05209e50c12f7150b0544522da233688b92a7fcbb745680f96681bb55ea6c0b9",
+      "run_id": "run:historical-period:24e8bd6bd6d5f5b2dee6113dc4d7b63e0966c19bbae1a05504bb767abf6e73c1"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000037996-24-000002",
+      "0000037996-24-000004",
+      "0000037996-24-000008",
+      "0000037996-24-000009",
+      "0000037996-24-000063",
+      "0000037996-24-000065",
+      "0000037996-24-000067",
+      "0000037996-24-000071",
+      "0000037996-24-000074",
+      "0000037996-24-000077",
+      "0000037996-24-000079",
+      "0000037996-24-000134",
+      "0000037996-24-000137",
+      "0000037996-24-000143",
+      "0000037996-24-000150",
+      "0000037996-24-000174",
+      "0000037996-24-000176",
+      "0000037996-24-000180",
+      "0000037996-24-000183",
+      "0000037996-24-000189",
+      "0000037996-24-000191",
+      "0000037996-24-000195",
+      "0000037996-24-000235",
+      "0000037996-25-000013"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/9a/9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f/f-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "37996",
+   "company_id": "ford_motor_company",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000037996-24-000009",
+    "primaryDocument": "f-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/9b/9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da/f-20241231.htm"
+  },
+  "jpmorgan-2022": {
+   "C03": {
+    "published": "34848606",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:d813706cf7bf4d5262b6d4183ccb3ce55cfbeb86492b577fc544b0ee7136b224",
+      "run_id": "run:historical-period:459d1923af9b87a76c33741876e37f2f21ada40ae1cea55f719b556a684a1562"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000019617-22-000079",
+      "0000019617-22-000081",
+      "0000019617-22-000136",
+      "0000019617-22-000272",
+      "0000019617-22-000313",
+      "0000019617-22-000315",
+      "0000019617-22-000367",
+      "0000019617-22-000369",
+      "0000019617-22-000392",
+      "0000019617-22-000395",
+      "0000019617-22-000410",
+      "0000019617-22-000412",
+      "0000019617-22-000414",
+      "0000019617-22-000486",
+      "0000019617-22-000488",
+      "0000019617-23-000231",
+      "0000950103-22-008083",
+      "0001193125-22-000220",
+      "0001193125-22-017078",
+      "0001193125-22-052112",
+      "0001193125-22-120273",
+      "0001193125-22-173846",
+      "0001193125-22-200868",
+      "0001193125-22-204833",
+      "0001193125-22-218556",
+      "0001193125-22-236574",
+      "0001193125-22-244747",
+      "0001193125-22-255590",
+      "0001193125-22-305905"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "19617",
+   "company_id": "jpmorgan_chase",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000019617-22-000272",
+    "primaryDocument": "jpm-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm"
+  },
+  "jpmorgan-2023": {
+   "C03": {
+    "published": "35093780",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:7b85049abc82d3ba61e868a4b45baca1f77989809b7dfe4e841abbd0cef4aaf3",
+      "run_id": "run:historical-period:7135b1e357794397fba5128c47413472fe120d480d646fd6353402c136b9658f"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000019617-23-000063",
+      "0000019617-23-000077",
+      "0000019617-23-000082",
+      "0000019617-23-000083",
+      "0000019617-23-000104",
+      "0000019617-23-000231",
+      "0000019617-23-000297",
+      "0000019617-23-000304",
+      "0000019617-23-000306",
+      "0000019617-23-000382",
+      "0000019617-23-000388",
+      "0000019617-23-000408",
+      "0000019617-23-000413",
+      "0000019617-23-000415",
+      "0000019617-23-000418",
+      "0000019617-23-000425",
+      "0000019617-23-000428",
+      "0000019617-23-000501",
+      "0000019617-23-000508",
+      "0000019617-23-000510",
+      "0000019617-23-000517",
+      "0000019617-24-000225",
+      "0000950103-23-005982",
+      "0001193125-23-056441",
+      "0001193125-23-158957",
+      "0001193125-23-192268",
+      "0001193125-23-260837",
+      "0001628280-23-011546"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "19617",
+   "company_id": "jpmorgan_chase",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000019617-23-000231",
+    "primaryDocument": "jpm-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm"
+  },
+  "jpmorgan-2024": {
+   "C03": {
+    "published": "37683462",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:d9948ac0a6108862f92caaf6598bd919d85ef0958a7ab233f8073623d0f66608",
+      "run_id": "run:historical-period:39ab1c9ceda6143b1044aa883be4183578c4c904a2195f9a794172b07432359f"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000019617-24-000049",
+      "0000019617-24-000063",
+      "0000019617-24-000079",
+      "0000019617-24-000109",
+      "0000019617-24-000166",
+      "0000019617-24-000225",
+      "0000019617-24-000275",
+      "0000019617-24-000315",
+      "0000019617-24-000318",
+      "0000019617-24-000330",
+      "0000019617-24-000402",
+      "0000019617-24-000404",
+      "0000019617-24-000411",
+      "0000019617-24-000434",
+      "0000019617-24-000435",
+      "0000019617-24-000446",
+      "0000019617-24-000448",
+      "0000019617-24-000555",
+      "0000019617-24-000558",
+      "0000019617-24-000595",
+      "0000019617-24-000660",
+      "0000019617-25-000270",
+      "0000950103-24-007646",
+      "0001193125-24-065885",
+      "0001193125-24-073915",
+      "0001193125-24-104926",
+      "0001193125-24-182227",
+      "0001193125-24-183855",
+      "0001193125-24-203699",
+      "0001193125-24-228029",
+      "0001193125-24-241062",
+      "0001193125-24-268103",
+      "0001628280-24-001950"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "19617",
+   "company_id": "jpmorgan_chase",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000019617-24-000225",
+    "primaryDocument": "jpm-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm"
+  },
+  "jpmorgan-2025": {
+   "C03": {
+    "published": "40632724",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:766f54b3498df906dacf40fc76a8b934639fa304519cf80143fb3a4ba8a5cb2a",
+      "run_id": "run:historical-period:0ad6d4393f005f1c20f205f48b3df1cd2f779f9e263e0d8631c87027ea174525"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000019617-25-000040",
+      "0000019617-25-000042",
+      "0000019617-25-000056",
+      "0000019617-25-000270",
+      "0000019617-25-000332",
+      "0000019617-25-000334",
+      "0000019617-25-000483",
+      "0000019617-25-000485",
+      "0000019617-25-000509",
+      "0000019617-25-000510",
+      "0000019617-25-000518",
+      "0000019617-25-000520",
+      "0000019617-25-000907",
+      "0000019617-25-001100",
+      "0001193125-25-006009",
+      "0001193125-25-012230",
+      "0001193125-25-013396",
+      "0001193125-25-020070",
+      "0001193125-25-078015",
+      "0001193125-25-089203",
+      "0001193125-25-163423",
+      "0001193125-25-246803",
+      "0001628280-25-044845",
+      "0001628280-25-044887",
+      "0001628280-26-008131"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/jpmorgan_chase_19617_000001961725000270/jpm-20241231_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "19617",
+   "company_id": "jpmorgan_chase",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000019617-25-000270",
+    "primaryDocument": "jpm-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm"
+  },
+  "lumen-2022": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:1e6626803e3411170e89c8be58731c1bf5839980aefa2973c658f0625283f0b5",
+      "run_id": "run:historical-period:f2627657bcd2c67bcbf1cad41bf2822b364a965d8eacd65671bf809eb1aec78d"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000018926-22-000003",
+      "0000018926-22-000007",
+      "0000018926-22-000021",
+      "0000018926-22-000028",
+      "0000018926-22-000038",
+      "0000018926-23-000013",
+      "0001193125-22-085992",
+      "0001193125-22-115219",
+      "0001193125-22-155157",
+      "0001193125-22-186318",
+      "0001193125-22-201125",
+      "0001193125-22-208798",
+      "0001193125-22-216214",
+      "0001193125-22-226596",
+      "0001193125-22-227525",
+      "0001193125-22-239624",
+      "0001193125-22-243230",
+      "0001193125-22-246556",
+      "0001193125-22-250671",
+      "0001193125-22-256267",
+      "0001193125-22-256669",
+      "0001193125-22-256899",
+      "0001193125-22-275822",
+      "0001193125-22-285243",
+      "0001193125-22-304791"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/d7/d71a12108032256fd7ee6b95bd70b4cb4fb24e6652a57b3e8b8852651c81b7d4/lumn-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "18926",
+   "company_id": "lumen_technologies",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000018926-22-000007",
+    "primaryDocument": "lumn-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/d7/d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7/lumn-20221231.htm"
+  },
+  "lumen-2023": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:461277e48c2bee00c48a241b82b934593243b4b14367dfcb6085fa9eb818d658",
+      "run_id": "run:historical-period:c84514da5980c89c558b9f1951a3b136969c33b0a31067fc829e925cc38e8e27"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000018926-23-000005",
+      "0000018926-23-000008",
+      "0000018926-23-000013",
+      "0000018926-23-000047",
+      "0000018926-23-000084",
+      "0000018926-23-000098",
+      "0000018926-24-000016",
+      "0001193125-23-022790",
+      "0001193125-23-072884",
+      "0001193125-23-079847",
+      "0001193125-23-088265",
+      "0001193125-23-103762",
+      "0001193125-23-124147",
+      "0001193125-23-149305",
+      "0001193125-23-160567",
+      "0001193125-23-204601",
+      "0001193125-23-267280",
+      "0001193125-23-268312",
+      "0001193125-23-270407",
+      "0001193125-23-280748",
+      "0001193125-23-300446"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/d7/d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7/lumn-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "18926",
+   "company_id": "lumen_technologies",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000018926-23-000013",
+    "primaryDocument": "lumn-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/57/57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac/lumn-20231231.htm"
+  },
+  "lumen-2024": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:af6407499f0bb53fff254506c034f0ab896e0dc195674bce6ca35649638bad00",
+      "run_id": "run:historical-period:ae455437afa2136e4d3c33b397c79a4bc860faac331352e7b0b10c9379d8f629"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000018926-24-000008",
+      "0000018926-24-000016",
+      "0000018926-24-000053",
+      "0000018926-24-000093",
+      "0000018926-24-000110",
+      "0000018926-25-000010",
+      "0001193125-24-014926",
+      "0001193125-24-042860",
+      "0001193125-24-074789",
+      "0001193125-24-080820",
+      "0001193125-24-107066",
+      "0001193125-24-131970",
+      "0001193125-24-141826",
+      "0001193125-24-193967",
+      "0001193125-24-212207",
+      "0001193125-24-220282",
+      "0001193125-24-224881",
+      "0001193125-24-233129",
+      "0001193125-24-246216",
+      "0001193125-24-255246",
+      "0001193125-24-261431",
+      "0001193125-24-266181"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/57/57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac/lumn-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "18926",
+   "company_id": "lumen_technologies",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000018926-24-000016",
+    "primaryDocument": "lumn-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/f4/f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297/lumn-20241231.htm"
+  },
+  "macys-2023": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG, LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG, LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:ac6af8d76cedde218f8b8e18e09ad2c841920ad889dfda5f8a57d5339fe2693a",
+      "run_id": "run:historical-period:913b325ef553418f9dc924099ad40707292836490d0b9378c4a7ff327c461e98"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001564590-22-005771",
+      "0001564590-22-006912",
+      "0001564590-22-007181",
+      "0001564590-22-008161",
+      "0001564590-22-008314",
+      "0001564590-22-008536",
+      "0001564590-22-008991",
+      "0001564590-22-009671",
+      "0001564590-22-011726",
+      "0001564590-22-012326",
+      "0001564590-22-020991",
+      "0001564590-22-021327",
+      "0001564590-22-029553",
+      "0001564590-22-029910",
+      "0001564590-22-035903",
+      "0001564590-22-037892",
+      "0001628280-23-009154"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-01-28",
+     "period_start": "2022-01-30",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "794367",
+   "company_id": "macys",
+   "period": [
+    "2022-01-30",
+    "2023-01-28"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001564590-22-011726",
+    "primaryDocument": "m-10k_20220129.htm"
+   },
+   "target_document": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm"
+  },
+  "macys-2024": {
+   "C03": {
+    "published": "11821259",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG, LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG, LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:b784386713ad775f6726d61a32b1795e71cd5c48357903cd421a91b79e734a97",
+      "run_id": "run:historical-period:b453e311d8db81d73a4c473da4a175552028b6cd5134ff7a144c4b2d1e5fef1e"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000794367-23-000005",
+      "0000794367-23-000011",
+      "0000794367-23-000030",
+      "0000794367-23-000055",
+      "0000794367-23-000061",
+      "0000794367-23-000084",
+      "0000794367-24-000007",
+      "0000794367-24-000010",
+      "0001628280-23-005942",
+      "0001628280-23-009154",
+      "0001628280-23-020415",
+      "0001628280-23-030169",
+      "0001628280-23-039210",
+      "0001628280-24-012734"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-02-03",
+     "period_start": "2023-01-29",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "794367",
+   "company_id": "macys",
+   "period": [
+    "2023-01-29",
+    "2024-02-03"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-23-009154",
+    "primaryDocument": "m-20230128.htm"
+   },
+   "target_document": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm"
+  },
+  "macys-2025": {
+   "C03": {
+    "published": "16452108",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG, LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG, LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:3351743c40c9082188920e2841a97c2b0956bf6896570217845190dc87eb8dcd",
+      "run_id": "run:historical-period:c57b1709ff3a7cf8831e1b44fd1b6658cdf5720bdd7410dc40517836ee4f5d77"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000794367-24-000013",
+      "0000794367-24-000146",
+      "0000794367-24-000186",
+      "0000794367-24-000195",
+      "0000794367-24-000199",
+      "0000794367-24-000203",
+      "0000794367-25-000008",
+      "0001104659-24-045589",
+      "0001104659-24-079708",
+      "0001104659-24-096940",
+      "0001628280-24-007023",
+      "0001628280-24-012734",
+      "0001628280-24-024437",
+      "0001628280-24-037971",
+      "0001628280-24-050691",
+      "0001628280-25-014315"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-02-01",
+     "period_start": "2024-02-04",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "794367",
+   "company_id": "macys",
+   "period": [
+    "2024-02-04",
+    "2025-02-01"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-24-012734",
+    "primaryDocument": "m-20240203.htm"
+   },
+   "target_document": "evidence/request_attempts/29/29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549/m-20250201.htm"
+  },
+  "marriott-2022": {
+   "C03": {
+    "published": "18686271",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:808d8227057cf9259409a64c80a664cbe955047953eb556ded111cb32002403d",
+      "run_id": "run:historical-period:ba134683d40c1fca8632a7ea278ff395b25055f502b42af065f3c0cd4584a52c"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001193125-22-039831",
+      "0001193125-22-241012",
+      "0001193125-22-306017",
+      "0001193125-22-310088",
+      "0001628280-22-002652",
+      "0001628280-22-002666",
+      "0001628280-22-012143",
+      "0001628280-22-013845",
+      "0001628280-22-020030",
+      "0001628280-22-027939",
+      "0001628280-23-003485"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1048286",
+   "company_id": "marriott_international",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-22-002666",
+    "primaryDocument": "mar-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm"
+  },
+  "marriott-2023": {
+   "C03": {
+    "published": "22664045",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:691c040d0d38f7ddb8f63b2169ed48f4183e2955b5bbe2f191568b58fa77359e",
+      "run_id": "run:historical-period:9597041e1dd5494e23672f48e68704d39945ac72a62e0884e449625394b7dff9"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001193125-23-032570",
+      "0001193125-23-070726",
+      "0001193125-23-080530",
+      "0001193125-23-145681",
+      "0001193125-23-145683",
+      "0001193125-23-203849",
+      "0001193125-23-236173",
+      "0001628280-23-003441",
+      "0001628280-23-003485",
+      "0001628280-23-014748",
+      "0001628280-23-026343",
+      "0001628280-23-033068",
+      "0001628280-23-036166",
+      "0001628280-24-004372"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1048286",
+   "company_id": "marriott_international",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-23-003485",
+    "primaryDocument": "mar-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+  },
+  "marriott-2024": {
+   "C03": {
+    "published": "21934093",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:89616d4ae8b1a97223f9c12a26ff2f248353c8c28b9b15a0e0b32fec0eda76fb",
+      "run_id": "run:historical-period:6988975fb7ddc236f72e8d9608e95ca0413f76327838363e37d5089886a39581"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001193125-24-042833",
+      "0001193125-24-139064",
+      "0001193125-24-198910",
+      "0001628280-24-004335",
+      "0001628280-24-004372",
+      "0001628280-24-019458",
+      "0001628280-24-033622",
+      "0001628280-24-037852",
+      "0001628280-24-044831",
+      "0001628280-25-004818"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/marriott_international_1048286_000162828024004372/mar-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1048286",
+   "company_id": "marriott_international",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-24-004372",
+    "primaryDocument": "mar-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+  },
+  "paramount-2022": {
+   "C03": {
+    "published": "32046006",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:5b10db97f122be1db2ca8b83c4451f489de0d52b11491044b76cb03457a18222",
+      "run_id": "run:historical-period:84cecf2f347eca380739e1a07d45cff6cb84654faf0bf0cd68159985c4bc7acb"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000813828-22-000005",
+      "0000813828-22-000011",
+      "0000813828-22-000013",
+      "0000813828-22-000018",
+      "0000813828-22-000025",
+      "0000813828-22-000043",
+      "0000813828-22-000046",
+      "0000813828-23-000005",
+      "0001193125-22-043390",
+      "0001193125-22-089830",
+      "0001193125-22-137594",
+      "0001193125-22-211797",
+      "0001193125-22-275401"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/01/01df1ef3ea555d8d1bea3636f3afa0f9fb3087749644a5ba9400765a6f27b85e/viac-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "813828",
+   "company_id": "paramount_skydance_paramount_global",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000813828-22-000005",
+    "primaryDocument": "viac-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/b8/b83348f2e85185bef09c0295cf83503b753e99d924d5469217bb53d994b7fbad/para-20221231.htm"
+  },
+  "paramount-2023": {
+   "C03": {
+    "published": "31257129",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:e51c350f6c5b060a661978711e7ac1a0a1712125d883a2ae6b7834facdfc0f53",
+      "run_id": "run:historical-period:ddeedfda07099f861f26860953a0c8480c4be8f6088b628514d6969b2a9e8870"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000813828-23-000005",
+      "0000813828-23-000009",
+      "0000813828-23-000011",
+      "0000813828-23-000017",
+      "0000813828-23-000021",
+      "0000813828-23-000027",
+      "0000813828-23-000029",
+      "0000813828-23-000036",
+      "0000813828-24-000007",
+      "0000947871-23-000311",
+      "0000947871-23-001031",
+      "0000947871-23-001056",
+      "0000947871-23-001094",
+      "0001193125-23-040704",
+      "0001193125-23-135025",
+      "0001193125-23-204978",
+      "0001193125-23-269353"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/b8/b83348f2e85185bef09c0295cf83503b753e99d924d5469217bb53d994b7fbad/para-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "813828",
+   "company_id": "paramount_skydance_paramount_global",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000813828-23-000005",
+    "primaryDocument": "para-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/6b/6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b/para-20231231.htm"
+  },
+  "paramount-2024": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:2dd117a7b9bda3f5b81ac2bb5553b70baaaa25c63355390d0a8b5b91b416f545",
+      "run_id": "run:historical-period:6821bda5c8085c11d12943974f96e99a979577fcea05eeb972edb0f0d1c999ea"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000813828-24-000007",
+      "0000813828-24-000009",
+      "0000813828-24-000018",
+      "0000813828-24-000023",
+      "0000813828-24-000028",
+      "0000813828-24-000033",
+      "0000813828-24-000034",
+      "0000813828-24-000038",
+      "0000813828-24-000042",
+      "0000813828-24-000063",
+      "0000813828-24-000069",
+      "0000813828-24-000073",
+      "0000813828-24-000075",
+      "0000813828-24-000081",
+      "0000813828-24-000083",
+      "0000813828-24-000085",
+      "0000813828-24-000087",
+      "0000813828-25-000005",
+      "0001193125-24-050664",
+      "0001193125-24-122356",
+      "0001193125-24-177535",
+      "0001193125-24-196053",
+      "0001193125-24-196972",
+      "0001193125-24-253719",
+      "0001193125-25-096776"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": null,
+    "eight_k_window_read_by": null,
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/6b/6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b/para-20231231.htm",
+    "published": "0",
+    "read": null,
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "NOT_READ",
+    "why_not_read": "THE_8K_WINDOW_WAS_NOT_READ"
+   },
+   "cik": "813828",
+   "company_id": "paramount_skydance_paramount_global",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000813828-24-000007",
+    "primaryDocument": "para-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm"
+  },
+  "pfizer-2022": {
+   "C03": {
+    "published": "33017453",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:affe0ee0d9207b87ae4017388ce906c276b47b703856910d5cd5031c2c713bd5",
+      "run_id": "run:historical-period:9829e488b9ad4e5cb533734fd0f0fb725232bf3ca3493f6eef191ce9ca96f61e"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000078003-22-000003",
+      "0000078003-22-000027",
+      "0000078003-22-000057",
+      "0000078003-22-000062",
+      "0000078003-22-000066",
+      "0000078003-22-000068",
+      "0000078003-22-000091",
+      "0000078003-22-000098",
+      "0000078003-22-000107",
+      "0000078003-23-000024",
+      "0001193125-22-088144",
+      "0001193125-22-145661"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/a6/a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8/pfe-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "78003",
+   "company_id": "pfizer",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000078003-22-000027",
+    "primaryDocument": "pfe-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/3f/3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e/pfe-20221231.htm"
+  },
+  "pfizer-2023": {
+   "C03": {
+    "published": "21562064",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:85f4a2be164ec989c5f15efc56f9026800ebe79e33a0ed550ba4c27999dc8914",
+      "run_id": "run:historical-period:d434c48dbfdb2c60820d23af4f794dd72007466e0e47421626fd0b6acf1cc1a0"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000078003-23-000004",
+      "0000078003-23-000019",
+      "0000078003-23-000024",
+      "0000078003-23-000081",
+      "0000078003-23-000085",
+      "0000078003-23-000099",
+      "0000078003-23-000111",
+      "0000078003-23-000118",
+      "0000078003-23-000120",
+      "0000078003-24-000039",
+      "0001193125-23-068538",
+      "0001193125-23-144089",
+      "0001193125-23-149364",
+      "0001193125-23-294930",
+      "0001193125-23-295562",
+      "0001628280-23-014368",
+      "0001628280-23-014759"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/3f/3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e/pfe-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "78003",
+   "company_id": "pfizer",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000078003-23-000024",
+    "primaryDocument": "pfe-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/e8/e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0/pfe-20231231.htm"
+  },
+  "pfizer-2024": {
+   "C03": {
+    "published": "24648727",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:23ffdcf641ec218ada4f8d2fcc66d73f37b955dfa21d75467dbe7908e29fd3d6",
+      "run_id": "run:historical-period:f888f9438ca3e93b923a44c68bb054930020e73bb617f45caa53794eb361d990"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000078003-24-000006",
+      "0000078003-24-000017",
+      "0000078003-24-000039",
+      "0000078003-24-000101",
+      "0000078003-24-000103",
+      "0000078003-24-000113",
+      "0000078003-24-000127",
+      "0000078003-24-000130",
+      "0000078003-24-000144",
+      "0000078003-24-000155",
+      "0000078003-24-000185",
+      "0000078003-24-000188",
+      "0000078003-24-000195",
+      "0000078003-25-000054"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/e8/e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0/pfe-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "78003",
+   "company_id": "pfizer",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000078003-24-000039",
+    "primaryDocument": "pfe-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/05/05b77064b72e16b39bc80dfa10d12d18e4b470c0df63c2cb89d3884e813bb97f/pfe-20241231.htm"
+  },
+  "salesforce-2023": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:abe7f05cd79b53bbe80c768cb0f98c49f36aa1fda63b7a9c26656e2a9f2558f7",
+      "run_id": "run:historical-period:d00ec230853fb8662c0f0709394535ea5c4b91e23bb272406f0b84ed158cd2af"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001108524-22-000010",
+      "0001108524-22-000013",
+      "0001108524-22-000019",
+      "0001108524-22-000030",
+      "0001108524-22-000038",
+      "0001108524-22-000047",
+      "0001108524-22-000049",
+      "0001108524-22-000054",
+      "0001108524-22-000058",
+      "0001108524-22-000059",
+      "0001108524-22-000063",
+      "0001108524-23-000003",
+      "0001108524-23-000011",
+      "0001193125-22-094496",
+      "0001193125-22-214922",
+      "0001193125-23-017661"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-01-31",
+     "period_start": "2022-02-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/ad/ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91/crm-20220131.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1108524",
+   "company_id": "salesforce",
+   "period": [
+    "2022-02-01",
+    "2023-01-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001108524-22-000013",
+    "primaryDocument": "crm-20220131.htm"
+   },
+   "target_document": "evidence/request_attempts/57/577ba795230254fd897c3430920e4aa5a236ecaac6ef6fc99a691942e0966f15/crm-20230131.htm"
+  },
+  "salesforce-2024": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:eb4554a9f9086d3bb22abc7a1263b1e0e15904331963a85cad98511c9c3073aa",
+      "run_id": "run:historical-period:ff02f1c6f6699560c15208ef670a38ae49adabeb0d4315269331aa28c1744b7e"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001108524-23-000007",
+      "0001108524-23-000011",
+      "0001108524-23-000021",
+      "0001108524-23-000029",
+      "0001108524-23-000037",
+      "0001108524-23-000046",
+      "0001108524-24-000005"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-01-31",
+     "period_start": "2023-02-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/57/577ba795230254fd897c3430920e4aa5a236ecaac6ef6fc99a691942e0966f15/crm-20230131.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1108524",
+   "company_id": "salesforce",
+   "period": [
+    "2023-02-01",
+    "2024-01-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001108524-23-000011",
+    "primaryDocument": "crm-20230131.htm"
+   },
+   "target_document": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm"
+  },
+  "salesforce-2025": {
+   "C03": {
+    "published": "55074656",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:e4648fe70f0d5a28ecd9e72d08dec75591e2af897fd99939f024e9198b6e2ef4",
+      "run_id": "run:historical-period:b229f7b58dabcb348a9c41b141c7c557dddc9cb2fda255de37a1b1239ded2d44"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001108524-24-000002",
+      "0001108524-24-000005",
+      "0001108524-24-000007",
+      "0001108524-24-000014",
+      "0001108524-24-000020",
+      "0001108524-24-000024",
+      "0001108524-24-000033",
+      "0001108524-24-000036",
+      "0001108524-25-000006",
+      "0001193125-24-251243"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-01-31",
+     "period_start": "2024-02-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1108524",
+   "company_id": "salesforce",
+   "period": [
+    "2024-02-01",
+    "2025-01-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001108524-24-000005",
+    "primaryDocument": "crm-20240131.htm"
+   },
+   "target_document": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm"
+  },
+  "southwest-2022": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young, LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:f9069c2ed18349a3d73f1190ca166020baa2ad3b1cd2ed5e801a45aba3930c72",
+      "run_id": "run:historical-period:e73d0c5af9edd05e3a515e5c31cc39c8bed1da00176b4e846de7ffea3fa98c19"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000092380-22-000003",
+      "0000092380-22-000007",
+      "0000092380-22-000009",
+      "0000092380-22-000012",
+      "0000092380-22-000016",
+      "0000092380-22-000022",
+      "0000092380-22-000025",
+      "0000092380-22-000036",
+      "0000092380-22-000039",
+      "0000092380-22-000043",
+      "0000092380-22-000053",
+      "0000092380-22-000055",
+      "0000092380-22-000058",
+      "0000092380-22-000063",
+      "0000092380-23-000010"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2022-12-31",
+     "period_start": "2022-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/64/64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d/luv-20211231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": true,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "92380",
+   "company_id": "southwest_airlines",
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000092380-22-000007",
+    "primaryDocument": "luv-20211231.htm"
+   },
+   "target_document": "evidence/request_attempts/a6/a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2/luv-20221231.htm"
+  },
+  "southwest-2023": {
+   "C03": {
+    "published": "9307298",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:7b3e28c0973a1d4f82daac51fab631ee99a625a6a53fef1c53ddfaec0dd397e8",
+      "run_id": "run:historical-period:445065341c55c6f538842d57c44ddae0bc0305fd7d78f11fa22d7f1e12d1daf3"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000092380-23-000004",
+      "0000092380-23-000007",
+      "0000092380-23-000010",
+      "0000092380-23-000013",
+      "0000092380-23-000017",
+      "0000092380-23-000021",
+      "0000092380-23-000026",
+      "0000092380-23-000029",
+      "0000092380-23-000033",
+      "0000092380-23-000036",
+      "0000092380-23-000040",
+      "0000092380-23-000044",
+      "0000092380-23-000047",
+      "0000092380-23-000055",
+      "0000092380-24-000027"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/a6/a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2/luv-20221231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "92380",
+   "company_id": "southwest_airlines",
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000092380-23-000010",
+    "primaryDocument": "luv-20221231.htm"
+   },
+   "target_document": "evidence/request_attempts/54/5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3/luv-20231231.htm"
+  },
+  "southwest-2024": {
+   "C03": {
+    "published": "10562384",
+    "read": null,
+    "verdict": "NOT_READ",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:54fdade1635530a1c5307d22b7cfa8d24ce4f409c0c20d87892f0f88452a5c81",
+      "run_id": "run:historical-period:a5009a575b0ccde214483df595f021c6886a29c4c79f2dde692755dcc262e965"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000092380-24-000003",
+      "0000092380-24-000026",
+      "0000092380-24-000027",
+      "0000092380-24-000047",
+      "0000092380-24-000053",
+      "0000092380-24-000058",
+      "0000092380-24-000094",
+      "0000092380-24-000098",
+      "0000092380-24-000101",
+      "0000092380-24-000108",
+      "0000092380-24-000116",
+      "0000092380-24-000121",
+      "0000092380-24-000122",
+      "0000092380-24-000145",
+      "0000092380-24-000174",
+      "0000092380-25-000024",
+      "0001193125-24-174642",
+      "0001193125-24-216328",
+      "0001193125-24-242286",
+      "0001193125-24-243459",
+      "0001193125-24-253187"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/54/5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3/luv-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "92380",
+   "company_id": "southwest_airlines",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000092380-24-000027",
+    "primaryDocument": "luv-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/cb/cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0/luv-20241231.htm"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_governance_facts.py",
+ "record_type": "ISSUE_47_GOVERNANCE_READ",
+ "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+ "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window."
+}

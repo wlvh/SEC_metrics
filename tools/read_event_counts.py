@@ -40,11 +40,17 @@ back out of the export. E01 is not counted over such a root: its keyword rule
 reads every saved document of a filing, and a filing only the acquisition
 saved has its primary document only.
 
-Two things are refused rather than counted. A window that reaches a history
-block stops the reading: this reads the index's recent table, and a count over
-part of a window is not a count of it. A filing in the window whose header
-cannot be read makes the position NOT_READ, even when the count it did make
-happens to equal the published value.
+A window that reaches a history block is read over the blocks too: each
+block the window may reach is read from the ledger's latest successful copy,
+and only if the block is the one its index declares - as many filings as the
+index says, every one filed inside the declared range or on the day SEC leaves
+after it. A block that is not is refused, not read around: a count over a
+stale block is not a count of the window. The blocks read are recorded with
+the position, so the test reads the same bytes back.
+
+A filing in the window whose header cannot be read makes the position
+NOT_READ, even when the count it did make happens to equal the published
+value.
 
 A successor registrant's year is counted over the window the approved policy
 gives it (``catalog/zero_ai_public_projection.json``'s
@@ -194,11 +200,43 @@ def event_window(*, company_id, period, cik, root=REPO):
     return (start, period["period_end"]), sorted(roles, key=int), policy
 
 
-def filings_in_index(submissions):
-    recent = submissions["filings"]["recent"]
-    columns = {name: recent[name] for name in
-               ("form", "accessionNumber", "filingDate", "reportDate")}
+def _rows(table, where):
+    columns = {name: table[name] for name in ("form", "accessionNumber", "filingDate", "reportDate")}
+    if len({len(values) for values in columns.values()}) != 1:
+        raise SystemExit("FILING_COLUMNS_OF_UNEQUAL_LENGTH:" + where)
     return [dict(zip(columns, values)) for values in zip(*columns.values())]
+
+
+def filings_in_index(submissions):
+    return _rows(submissions["filings"]["recent"], "recent")
+
+
+def block_filings(*, submissions, name, raw):
+    """A history block's filings, refused unless it is the block its index declares.
+
+    The index declares each block's range and number of filings. SEC leaves
+    one day between two blocks' ranges and files that day's filings in the
+    older block, so a filing may be dated the day after the declared end.
+    """
+    declared = [item for item in submissions["filings"]["files"] if item["name"] == name]
+    if len(declared) != 1:
+        raise SystemExit("HISTORY_BLOCK_NOT_DECLARED_ONCE:" + name)
+    declared = declared[0]
+    rows = _rows(json.loads(raw), name)
+    last = (date.fromisoformat(declared["filingTo"]) + timedelta(days=1)).isoformat()
+    if len(rows) != int(declared["filingCount"]) or any(
+            not declared["filingFrom"] <= row["filingDate"] <= last for row in rows):
+        raise SystemExit("HISTORY_BLOCK_IS_NOT_THE_ONE_ITS_INDEX_DECLARES:" + name)
+    return rows
+
+
+def unique_filings(filings):
+    """One entry per accession; the same accession listed twice must say the same."""
+    kept = {}
+    for filing in filings:
+        if kept.setdefault(filing["accessionNumber"], filing) != filing:
+            raise SystemExit("A_FILING_IS_LISTED_TWICE_DIFFERENTLY:" + filing["accessionNumber"])
+    return list(kept.values())
 
 
 def count_window(*, filings, cik, start, end, header=None, metrics=None):
@@ -291,7 +329,7 @@ def _case_input(*, company_id, report_end, source_root=REPO):
 
 def main():
     from bind_acceptance_readings import identity_for
-    from sec_urls import submissions_url
+    from sec_urls import submissions_file_url, submissions_url
     from vnext.annual_update import saved_source
     from vnext.historical_coverage import select_receipt
     from vnext.historical_run_receipts import collect_run_receipts, index_receipts
@@ -339,7 +377,7 @@ def main():
                              + json.dumps(sorted(measured)))
         counts = {basis: collections.Counter() for basis in ("filing_date", "report_date")}
         seen = {basis: [] for basis in counts}
-        unreadable, indexes = [], {}
+        unreadable, indexes, blocks = [], {}, {}
         for registrant in ciks:
             url = submissions_url(cik=int(registrant))
             saved = saved_source(repo_root=source, url=url)
@@ -347,12 +385,15 @@ def main():
                 raise SystemExit("SUBMISSIONS_INDEX_NOT_SAVED:" + url)
             indexes[registrant] = saved["proof"]["request_repo_relative_path"]
             submissions = json.loads(saved["raw"])
-            reached = history_blocks_reached(submissions, start)
-            if reached:
-                raise SystemExit("WINDOW_REACHES_A_HISTORY_BLOCK:" + label + ":"
-                                 + ",".join(reached))
+            filings = filings_in_index(submissions)
+            for name in history_blocks_reached(submissions, start):
+                block = saved_source(repo_root=source, url=submissions_file_url(file_name=name))
+                if block is None:
+                    raise SystemExit("HISTORY_BLOCK_NOT_SAVED:" + label + ":" + name)
+                blocks.setdefault(registrant, {})[name] = block["proof"]["request_repo_relative_path"]
+                filings.extend(block_filings(submissions=submissions, name=name, raw=block["raw"]))
             each, admitted, missing = count_window(
-                filings=filings_in_index(submissions), cik=registrant, start=start, end=end,
+                filings=unique_filings(filings), cik=registrant, start=start, end=end,
                 header=header, metrics=metrics)
             for basis in counts:
                 counts[basis].update(each[basis])
@@ -398,6 +439,8 @@ def main():
                 ("E01 is not counted over a restored root: its keyword rule reads every "
                  "saved document of a filing, and a filing only the acquisition saved "
                  "has its primary document only"))}
+        if blocks:
+            positions[label]["history_blocks"] = blocks
         if len(ciks) > 1:
             positions[label].update({"window_policy": policy, "registered_ciks": ciks,
                                      "submissions_indexes": indexes})
