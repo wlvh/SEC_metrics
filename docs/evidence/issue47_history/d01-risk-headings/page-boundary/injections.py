@@ -32,12 +32,16 @@ harness.INJECTIONS = {
         "test_both_reports_are_refused_by_name"),
     "A_LONE_PAGE_NUMBER_IS_THE_LAYOUT": (
         ROUTE,
+        "    for index in range(start, max(start, end - 3)):\n"
+        "        block = blocks[index]\n"
         "        page, contents, continuation = blocks[index + 1:index + 4]\n"
         "        if (_heading_only(block) and not _SENTENCE_END.search(block[\"text\"])\n"
         "                and _PAGE_NUMBER.fullmatch(page[\"text\"].strip())\n"
         "                and contents[\"linked\"]\n"
         "                and contents[\"text\"].strip().casefold() == _CONTENTS_LINK\n"
         "                and _heading_only(continuation)\n",
+        "    for index in range(start, max(start, end - 2)):\n"
+        "        block = blocks[index]\n"
         "        page, contents, continuation = blocks[index + 1], None, blocks[index + 2]\n"
         "        if (_heading_only(block) and not _SENTENCE_END.search(block[\"text\"])\n"
         "                and _PAGE_NUMBER.fullmatch(page[\"text\"].strip())\n"

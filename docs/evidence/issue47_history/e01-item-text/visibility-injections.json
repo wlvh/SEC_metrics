@@ -1,7 +1,10 @@
 {
  "record_type": "ISSUE_47_E01_ITEM_VISIBILITY_FAULT_INJECTIONS",
  "file": "scripts/vnext/historical_event_items.py",
- "class": "tests.vnext.test_historical_event_items.TextAReaderCannotSeeNeverEntersTheItem",
+ "classes": [
+  "tests.vnext.test_historical_event_items.TextAReaderCannotSeeNeverEntersTheItem",
+  "tests.vnext.test_historical_event_items.AHeadingInsideALinkIsAReferenceNotTheItem"
+ ],
  "results": [
   {
    "id": "VISIBILITY_IS_NOT_CHECKED",
@@ -10,10 +13,11 @@
    "expected_case": "test_hidden_text_inside_the_item_is_refused",
    "failed_cases": [
     "test_hidden_text_inside_the_item_is_refused",
+    "test_text_moved_off_the_page_any_way_is_refused",
     "test_text_styled_so_it_cannot_be_seen_is_refused",
     "test_the_refusals_are_implementation_gaps_not_disclosure_findings"
    ],
-   "suite_result": "Ran 9 tests in 0.410s FAILED (failures=18)"
+   "suite_result": "Ran 17 tests in 0.763s FAILED (failures=24)"
   },
   {
    "id": "IX_HIDDEN_IS_DISPLAYED",
@@ -23,7 +27,7 @@
    "failed_cases": [
     "test_hidden_text_inside_the_item_is_refused"
    ],
-   "suite_result": "Ran 9 tests in 0.504s FAILED (failures=1)"
+   "suite_result": "Ran 17 tests in 0.647s FAILED (failures=1)"
   },
   {
    "id": "ONLY_AN_EXACT_ZERO_OPACITY_HIDES",
@@ -33,7 +37,7 @@
    "failed_cases": [
     "test_text_styled_so_it_cannot_be_seen_is_refused"
    ],
-   "suite_result": "Ran 9 tests in 0.497s FAILED (failures=2)"
+   "suite_result": "Ran 17 tests in 0.680s FAILED (failures=2)"
   },
   {
    "id": "TRANSPARENT_COLOUR_IS_VISIBLE",
@@ -43,7 +47,7 @@
    "failed_cases": [
     "test_text_styled_so_it_cannot_be_seen_is_refused"
    ],
-   "suite_result": "Ran 9 tests in 0.443s FAILED (failures=2)"
+   "suite_result": "Ran 17 tests in 0.658s FAILED (failures=2)"
   },
   {
    "id": "ANY_INLINE_COLOUR_OR_POSITION_IS_UNCERTAIN",
@@ -51,10 +55,11 @@
    "outcome": "CAUGHT",
    "expected_case": "test_ordinary_formatting_is_not_hiding",
    "failed_cases": [
+    "test_a_small_offset_or_an_empty_positioned_element_is_not_hiding",
     "test_every_saved_candidate_reads_the_text_it_read_before",
     "test_ordinary_formatting_is_not_hiding"
    ],
-   "suite_result": "Ran 9 tests in 0.494s FAILED (errors=39)"
+   "suite_result": "Ran 17 tests in 0.744s FAILED (errors=40)"
   },
   {
    "id": "THE_END_HEADING_IS_COUNTED_BY_RUNS",
@@ -64,7 +69,7 @@
    "failed_cases": [
     "test_a_cross_reference_that_looks_like_the_next_heading_is_refused"
    ],
-   "suite_result": "Ran 9 tests in 0.494s FAILED (failures=1)"
+   "suite_result": "Ran 17 tests in 0.683s FAILED (failures=1)"
   },
   {
    "id": "THE_SIGNATURES_ARE_NOT_CHECKED",
@@ -74,7 +79,7 @@
    "failed_cases": [
     "test_a_second_signatures_word_is_refused_rather_than_cut_at"
    ],
-   "suite_result": "Ran 9 tests in 0.554s FAILED (failures=1)"
+   "suite_result": "Ran 17 tests in 0.642s FAILED (failures=1)"
   },
   {
    "id": "THE_REBUILT_VIEW_IS_TRUSTED",
@@ -84,7 +89,7 @@
    "failed_cases": [
     "test_a_view_the_check_cannot_rebuild_is_refused_not_trusted"
    ],
-   "suite_result": "Ran 9 tests in 0.513s FAILED (failures=1)"
+   "suite_result": "Ran 17 tests in 0.622s FAILED (failures=1)"
   },
   {
    "id": "HIDDEN_TEXT_OUTSIDE_THE_SPAN_REFUSES",
@@ -95,7 +100,61 @@
     "test_every_saved_candidate_reads_the_text_it_read_before",
     "test_hidden_text_outside_the_item_is_not_this_item_s"
    ],
-   "suite_result": "Ran 9 tests in 0.524s FAILED (errors=57)"
+   "suite_result": "Ran 17 tests in 0.742s FAILED (errors=57)"
+  },
+  {
+   "id": "OFF_THE_PAGE_ONLY_TO_THE_LEFT_OR_UP",
+   "why_it_matters": "#28's review found text moved off by right/bottom or a large positive offset read as visible",
+   "outcome": "CAUGHT",
+   "expected_case": "test_text_moved_off_the_page_any_way_is_refused",
+   "failed_cases": [
+    "test_text_moved_off_the_page_any_way_is_refused"
+   ],
+   "suite_result": "Ran 17 tests in 0.621s FAILED (failures=5)"
+  },
+  {
+   "id": "ANY_OFFSET_HIDES",
+   "why_it_matters": "a hanging indent or a few points of offset leaves text where a reader sees it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_small_offset_or_an_empty_positioned_element_is_not_hiding",
+   "failed_cases": [
+    "test_a_small_offset_or_an_empty_positioned_element_is_not_hiding",
+    "test_every_saved_candidate_reads_the_text_it_read_before",
+    "test_ordinary_formatting_is_not_hiding"
+   ],
+   "suite_result": "Ran 17 tests in 0.609s FAILED (errors=52)"
+  },
+  {
+   "id": "A_LINKED_HEADING_STARTS_THE_ITEM",
+   "why_it_matters": "a contents entry would be read as the item, and the contents as its text",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_item_headed_only_by_a_link_is_refused",
+   "failed_cases": [
+    "test_a_contents_entry_right_before_the_real_heading_is_refused",
+    "test_a_link_inside_the_heading_counts_too",
+    "test_an_item_headed_only_by_a_link_is_refused"
+   ],
+   "suite_result": "Ran 17 tests in 0.687s FAILED (failures=3)"
+  },
+  {
+   "id": "THE_LINK_IS_NOT_INHERITED",
+   "why_it_matters": "a heading element inside the link is the link's text; the flag must reach it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_item_headed_only_by_a_link_is_refused",
+   "failed_cases": [
+    "test_an_item_headed_only_by_a_link_is_refused"
+   ],
+   "suite_result": "Ran 17 tests in 0.659s FAILED (failures=1)"
+  },
+  {
+   "id": "AN_ANCHOR_IS_A_LINK",
+   "why_it_matters": "a named anchor marks where the heading is; it points nowhere",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_anchor_without_href_is_not_a_link",
+   "failed_cases": [
+    "test_an_anchor_without_href_is_not_a_link"
+   ],
+   "suite_result": "Ran 17 tests in 0.603s FAILED (errors=1)"
   }
  ],
  "calls": [
