@@ -14,11 +14,13 @@
     "series_separator": "(?:\\s*[,;]\\s*(?:(?:and/or|and|or|as\\s+well\\s+as)\\b\\s*)?|\\s+(?:and/or|and|or|as\\s+well\\s+as)\\s+)+",
     "coordinator": "\\b(?:and|or|as\\s+well\\s+as)\\b",
     "clause_word": "\\b(?:is|are|was|were|be|been|being|am|has|have|had|do|does|did|will|would|shall|should|can|could|may|might|must|remain|remains|remained)\\b",
-    "clause_starter_word": "\\b(?:which|that|who|whom|whose|where|when|while|because|although|though|if|unless|whereas|whether)\\b",
+    "clause_starter": "^\\W*(?:which|that|who|whom|whose|where|when|while|because|although|though|if|unless|whereas|whether)\\b",
+    "first_person_subject": "\\bwe\\b",
     "party_preposition": "\\b(?:by|against)\\b",
     "registrant_reference": "\\b(?:we|us|our|the\\s+(?:company|firm|corporation|registrant))\\b",
-    "registrant_actor": "\\b(?:we|(?:the|our)\\s+(?:company|firm|corporation|registrant))\\b",
+    "registrant_subject": "^\\W*(?:we|the\\s+(?:company|firm|corporation|registrant))\\b",
     "preposition": "\\b(?:about|against|at|by|for|from|in|into|of|on|over|regarding|to|under|with|within|such\\s+as|including)\\b",
+    "registrant_actor": "\\b(?:we|(?:the|our)\\s+(?:company|firm|corporation|registrant))\\b",
     "head_determiner": "^\\s*(?:(?:the|other|certain|general)\\s+)*$"
   },
   "exposure": [
@@ -83,5 +85,5 @@
       "why": "Facing a legal matter is the relation of being subject to one, worded with the verb: 'our company faced litigation, regulatory proceedings and fines' (#28's review of its copy of version 2)."
     }
   ],
-  "why_this_file": "Version 3 of the D02 Item 8 category-mention terms. Version 2 left out 'During 2025, our company faced litigation, regulatory proceedings and fines.': its registrant vocabulary knew 'we' and 'the Company' but not 'our company', a fronted phrase put the keyword after a comma, and no relation read 'faced' (#28's scoped review of its copy, 79677ed2, NEEDS_FIX P2). Version 3 keeps version 2's evidence and reads a list member only where the list is proven: the keyword opens its own item apart from a determiner (head_determiner); no item that names the registrant acting (registrant_actor: we, the or our company, firm, corporation, registrant) is a plain list item; and where the registrant is named before the keyword in its sentence, the series must hang on a closed-class governor (a preposition, 'including' or 'such as') whose nearest registrant reference is not the registrant acting in the same clause. Facing a legal matter joins the exposure list. Every pattern here is closed-class grammar or the vocabulary of a legal matter; business phrases live here rather than in executable code (tools/check_vnext_semantics.py); the file's bytes are recorded by the issue_47_v1 snapshot as a rule file, so a change here moves the Requirement closure."
+  "why_this_file": "Version 3 of the D02 Item 8 category-mention terms. Version 2 left out 'During 2025, our company faced litigation, regulatory proceedings and fines.': its registrant vocabulary knew 'we' and 'the Company' only at the start of an item, a fronted phrase put the keyword after a comma, and no relation read 'faced' (#28's scoped review of its copy, 79677ed2, NEEDS_FIX P2). Version 3 keeps version 2's vocabulary and decision unchanged and adds what a category reading must also prove: registrant_actor (the registrant acting: we, the or our company, firm, corporation, registrant, anywhere in an item) and head_determiner (the only words that may stand before the keyword in its item); the governor test reads the existing preposition list and the clause starters' words anywhere. Facing a legal matter joins the exposure list. Every pattern here is closed-class grammar or the vocabulary of a legal matter; business phrases live here rather than in executable code (tools/check_vnext_semantics.py); the file's bytes are recorded by the issue_47_v1 snapshot as a rule file, so a change here moves the Requirement closure."
 }

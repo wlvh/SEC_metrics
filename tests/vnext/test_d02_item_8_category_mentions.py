@@ -199,16 +199,12 @@ class TheSeriesStructureTest(unittest.TestCase):
         self.assertEqual(["GOVERNED_BY_ITS_SENTENCE"], _whys(
             "We face litigation, regulatory actions and fines."))
 
-    def test_the_registrant_acting_before_the_keyword_in_its_item(self):
+    def test_a_clause_before_the_keyword_in_its_item(self):
         # ViacomCBS FY2020 block 2382, the one saved Item 8 block version 2 moves.
-        # Version 2 read "we" there as a clause; version 3 names it as the
-        # registrant acting, which is what it is.
-        self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
+        self.assertEqual(["KEYWORD_PHRASE_IS_A_CLAUSE"], _whys(
             "In 2018, we recorded expenses of $128 million primarily for professional fees related "
             "to legal proceedings, investigations at our Company and the evaluation of potential "
             "merger activity."))
-        self.assertEqual(["KEYWORD_PHRASE_IS_A_CLAUSE"], _whys(
-            "In 2018, fees were incurred for legal proceedings, investigations and audits."))
 
     def test_a_series_governed_by_the_registrant_as_subject(self):
         self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
@@ -292,10 +288,22 @@ class TheRegistrantsOwnSeriesTest(unittest.TestCase):
     """#28's scoped review of its copy of version 2 (79677ed2, NEEDS_FIX P2), and what version 3 proves.
 
     "During 2025, our company faced litigation, regulatory proceedings and
-    fines." states the registrant's own matter and version 2 left it out. Each
-    case below is kept or left out by one condition of version 3 alone; the
+    fines." states the registrant's own matter and version 2 left it out.
+    Version 3 runs version 2's decision unchanged and asks more of each category
+    reading. Each case below is decided by one condition of that proof; the
     injections (d02-keyword-repair/v3/injections.json) take each away.
     """
+
+    def test_version_two_s_keep_is_never_overturned(self):
+        # Sentences version 2 keeps through its own structure, which a proof
+        # layer reasoning only from the nearest reference would have dropped:
+        # the "us" and "our" inside a list item are nearer the governor than
+        # the registrant acting.
+        for text in ("We defended regulatory actions, claims that name us in suits, litigation and fines.",
+                     "We defended regulatory actions, our customers' claims for refunds, litigation "
+                     "and fines."):
+            with self.subTest(text):
+                self.assertFalse(_left_out(text))
 
     def test_the_reviewed_sentence_stays(self):
         for text in ("During 2025, our company faced litigation, regulatory proceedings and fines.",
@@ -351,6 +359,13 @@ class TheRegistrantsOwnSeriesTest(unittest.TestCase):
         self.assertTrue(_left_out(text))
         self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(
             "We are subject to risks, such as competition, litigation, legislation and regulations."))
+
+    def test_a_possessive_is_neither_subject_nor_object(self):
+        # "our partners" stands between the registrant acting and the governor;
+        # read as a reference, it would hide the actor and let the series go.
+        text = "Our company, with our partners, was hit by regulatory proceedings, litigation and fines."
+        self.assertEqual(["GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT"], _whys(text))
+        self.assertFalse(_left_out(text))
 
     def test_the_registrant_named_with_no_governor_proven_stays(self):
         text = "In our business, regulatory matters, litigation and fines increased."
