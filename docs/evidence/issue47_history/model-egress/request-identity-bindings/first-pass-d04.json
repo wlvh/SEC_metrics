@@ -1,0 +1,278 @@
+{
+ "position": "marriott_international:2023-12-31",
+ "base": {
+  "semantic_source_id": "sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8",
+  "digests": [
+   "sha256:747f62c1d9a1b4b8e324ead0f159805b9a86b7e639092e556c4e887a05e36498",
+   "sha256:324f28f648f7e0d90272a658aea87580b009d9b61728dd1a535b1c9fd758ad56",
+   "sha256:993791c6e85746d21d91f121234cfaefab09b72ef91857b4643a5ec4405cdc64",
+   "sha256:2478c41eb2e2d5229ceecd1a214632bc155effa627503a23e63195067f0fa754"
+  ]
+ },
+ "loaded_module_count": 105,
+ "rows": [
+  {
+   "label": "all_other_loaded_modules",
+   "perturbed": [
+    "scripts/git_workspace.py",
+    "scripts/sec_http.py",
+    "scripts/sec_pipeline.py",
+    "scripts/sec_urls.py",
+    "scripts/validation_provenance.py",
+    "scripts/vnext/__init__.py",
+    "scripts/vnext/ai_adapter.py",
+    "scripts/vnext/annual_adoption_policy.py",
+    "scripts/vnext/annual_input.py",
+    "scripts/vnext/annual_repair_budget.py",
+    "scripts/vnext/annual_update.py",
+    "scripts/vnext/batch_workflow.py",
+    "scripts/vnext/calculator.py",
+    "scripts/vnext/canonical.py",
+    "scripts/vnext/capacity_program_roles.py",
+    "scripts/vnext/capacity_quantity_roles.py",
+    "scripts/vnext/capacity_quantity_scope.py",
+    "scripts/vnext/capacity_reference_contract.py",
+    "scripts/vnext/capacity_semantic_review.py",
+    "scripts/vnext/capacity_text_results.py",
+    "scripts/vnext/capacity_utilization_source.py",
+    "scripts/vnext/constraints.py",
+    "scripts/vnext/continuous_call_ledger.py",
+    "scripts/vnext/continuous_call_policy.py",
+    "scripts/vnext/continuous_request_context.py",
+    "scripts/vnext/continuous_sec_acquisition.py",
+    "scripts/vnext/d04_native_assessment.py",
+    "scripts/vnext/deterministic_router.py",
+    "scripts/vnext/evidence.py",
+    "scripts/vnext/going_concern_source.py",
+    "scripts/vnext/governance_compensation_table.py",
+    "scripts/vnext/governance_signals.py",
+    "scripts/vnext/historical_dei.py",
+    "scripts/vnext/historical_spec_revision.py",
+    "scripts/vnext/invocation_control.py",
+    "scripts/vnext/native_request_construction.py",
+    "scripts/vnext/native_unit_index.py",
+    "scripts/vnext/normal_governance_input.py",
+    "scripts/vnext/normal_source_authority.py",
+    "scripts/vnext/observations.py",
+    "scripts/vnext/offline_execution_session.py",
+    "scripts/vnext/ordinary_source_authority.py",
+    "scripts/vnext/projector.py",
+    "scripts/vnext/provider_runtime.py",
+    "scripts/vnext/publication.py",
+    "scripts/vnext/qualification.py",
+    "scripts/vnext/r4_label_policy.py",
+    "scripts/vnext/r6_regulatory_semantics.py",
+    "scripts/vnext/r6_semantic_review.py",
+    "scripts/vnext/r6_semantic_verification.py",
+    "scripts/vnext/reader.py",
+    "scripts/vnext/reader_input.py",
+    "scripts/vnext/records.py",
+    "scripts/vnext/regulatory_investigation_candidates.py",
+    "scripts/vnext/regulatory_statement_facts.py",
+    "scripts/vnext/render.py",
+    "scripts/vnext/requirement_profile.py",
+    "scripts/vnext/requirement_profile_v1.py",
+    "scripts/vnext/requirement_profile_v10.py",
+    "scripts/vnext/requirement_profile_v11.py",
+    "scripts/vnext/requirement_profile_v12.py",
+    "scripts/vnext/requirement_profile_v13.py",
+    "scripts/vnext/requirement_profile_v14.py",
+    "scripts/vnext/requirement_profile_v2.py",
+    "scripts/vnext/requirement_profile_v3.py",
+    "scripts/vnext/requirement_profile_v4.py",
+    "scripts/vnext/requirement_profile_v5.py",
+    "scripts/vnext/requirement_profile_v6.py",
+    "scripts/vnext/requirement_profile_v7.py",
+    "scripts/vnext/requirement_profile_v8.py",
+    "scripts/vnext/requirement_profile_v9.py",
+    "scripts/vnext/requirements.py",
+    "scripts/vnext/resource_limits.py",
+    "scripts/vnext/review.py",
+    "scripts/vnext/run_store.py",
+    "scripts/vnext/scope_contract.py",
+    "scripts/vnext/source_strategy.py",
+    "scripts/vnext/sources.py",
+    "scripts/vnext/specs.py",
+    "scripts/vnext/stage_a_snapshot.py",
+    "scripts/vnext/states.py",
+    "scripts/vnext/table_context_attestation.py",
+    "scripts/vnext/table_context_measurement.py",
+    "scripts/vnext/table_grid.py",
+    "scripts/vnext/table_payload.py",
+    "scripts/vnext/table_qualification_freeze.py",
+    "scripts/vnext/table_task_contracts.py",
+    "scripts/vnext/text_business_candidates.py",
+    "scripts/vnext/text_coverage.py",
+    "scripts/vnext/text_results.py",
+    "scripts/vnext/text_results_v2.py",
+    "scripts/vnext/text_review.py",
+    "scripts/vnext/traits.py"
+   ],
+   "seconds": 21,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/normal_history_catalog.py",
+   "perturbed": [
+    "scripts/vnext/normal_history_catalog.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_MOVED",
+   "digests_moved": true
+  },
+  {
+   "label": "scripts/vnext/r6_semantic_source.py",
+   "perturbed": [
+    "scripts/vnext/r6_semantic_source.py"
+   ],
+   "seconds": 21,
+   "outcome": "ID_MOVED",
+   "digests_moved": true
+  },
+  {
+   "label": "scripts/vnext/capacity_semantic_source.py",
+   "perturbed": [
+    "scripts/vnext/capacity_semantic_source.py"
+   ],
+   "seconds": 21,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/fiscal_year_labels.py",
+   "perturbed": [
+    "scripts/vnext/fiscal_year_labels.py"
+   ],
+   "seconds": 21,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/normal_annual_input_v2.py",
+   "perturbed": [
+    "scripts/vnext/normal_annual_input_v2.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/historical_fiscal_labels.py",
+   "perturbed": [
+    "scripts/vnext/historical_fiscal_labels.py"
+   ],
+   "seconds": 19,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/historical_semantic_source.py",
+   "perturbed": [
+    "scripts/vnext/historical_semantic_source.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/historical_annual_input.py",
+   "perturbed": [
+    "scripts/vnext/historical_annual_input.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/normal_period_selection.py",
+   "perturbed": [
+    "scripts/vnext/normal_period_selection.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/normal_annual_input.py",
+   "perturbed": [
+    "scripts/vnext/normal_annual_input.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/continuous_semantic_calls.py",
+   "perturbed": [
+    "scripts/vnext/continuous_semantic_calls.py"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "scripts/vnext/historical_semantic_results.py",
+   "perturbed": [
+    "scripts/vnext/historical_semantic_results.py"
+   ],
+   "seconds": 19,
+   "outcome": "ID_SAME",
+   "digests_moved": false
+  },
+  {
+   "label": "config/normal_candidate_sources_v1.json",
+   "perturbed": [
+    "config/normal_candidate_sources_v1.json"
+   ],
+   "seconds": 20,
+   "outcome": "ID_MOVED",
+   "digests_moved": true
+  },
+  {
+   "label": "config/normal_fiscal_year_labels_v1.json",
+   "perturbed": [
+    "config/normal_fiscal_year_labels_v1.json"
+   ],
+   "seconds": 20,
+   "outcome": "ID_MOVED",
+   "digests_moved": true
+  },
+  {
+   "label": "config/normal_period_selection_v1.json",
+   "perturbed": [
+    "config/normal_period_selection_v1.json"
+   ],
+   "seconds": 20,
+   "outcome": "ID_MOVED",
+   "digests_moved": true
+  },
+  {
+   "label": "catalog/r6/semantic_source_v1.json",
+   "perturbed": [
+    "catalog/r6/semantic_source_v1.json"
+   ],
+   "seconds": 20,
+   "outcome": "ID_MOVED",
+   "digests_moved": true
+  },
+  {
+   "label": "catalog/r6/semantic_review_v5.json",
+   "perturbed": [
+    "catalog/r6/semantic_review_v5.json"
+   ],
+   "seconds": 20,
+   "outcome": "ID_SAME",
+   "digests_moved": true
+  },
+  {
+   "label": "config/company_registry.csv",
+   "perturbed": [
+    "config/company_registry.csv"
+   ],
+   "seconds": 3,
+   "outcome": "BUILD_FAILED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  }
+ ]
+}

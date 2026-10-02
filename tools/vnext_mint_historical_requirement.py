@@ -295,6 +295,23 @@ AUTHORITY_ADDITIONS = (
     # under imports, as requirement_profile_v11 is above.
     "scripts/vnext/ordinary_a05_formula_update.py",
     "scripts/vnext/ordinary_b03_scope_update.py",
+    # Loaded but not run, by this generation's own release-aware view
+    # (historical_dei, added 2026-09-29): to decide whether a frozen function
+    # reaches the DEI question, its walk imports the modules the function names
+    # inside its body, and #28's reconstruct_requests names the D03 and B13
+    # branches' modules there. So their module-level code runs in every process
+    # that imports historical_semantic_results - the model-call runner among
+    # them, whose bound-code check refused exactly these six when the egress
+    # verification was re-sealed (measured by running the live egress cases with
+    # the check's full list recorded; docs/evidence/issue47_history/model-egress/
+    # unbound-after-the-view/). No historical Run calls them. The 2026-09-28
+    # seal predates the view, which is why it passed.
+    "scripts/vnext/capacity_program_roles.py",
+    "scripts/vnext/capacity_quantity_roles.py",
+    "scripts/vnext/capacity_reference_contract.py",
+    "scripts/vnext/r6_regulatory_semantics.py",
+    "scripts/vnext/r6_semantic_verification.py",
+    "scripts/vnext/regulatory_statement_facts.py",
 )
 
 # Three files the parent already binds, whose bytes a historical Run needs to be

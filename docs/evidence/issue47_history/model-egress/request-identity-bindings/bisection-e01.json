@@ -1,0 +1,128 @@
+{
+ "metric": "E01",
+ "position": "pfizer:2025-12-31",
+ "base_ids": {
+  "source_id": "sha256:fa00a13b99de9c412e60ea31e554bf4fbdf251d88c64e6990b4becbde4ab2f33",
+  "request_ids": [
+   "sha256:bccfda8803a7b0db6a076a153b553d082aab8b972351a40aefa63276f4a15346"
+  ],
+  "body_digests": [
+   "sha256:01e2446cb97c68f34962b6b24b39136fd2f45ed1cd45d5a0df12a76bf6afbb4b"
+  ]
+ },
+ "candidates": 122,
+ "found": [
+  {
+   "file": "config/company_registry.csv",
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  }
+ ],
+ "runs": [
+  {
+   "files": 122,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 61,
+   "seconds": 11,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 61,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 30,
+   "seconds": 12,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 31,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 15,
+   "seconds": 12,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 16,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 8,
+   "seconds": 12,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 8,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 4,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 2,
+   "seconds": 12,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "catalog/r6/text_results_v2_policy.json",
+    "catalog/zero_ai_public_projection.json"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv",
+   "perturbed": [
+    "config/annual_amendment_scope_v1.json",
+    "config/company_registry.csv"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 12,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "config/annual_amendment_scope_v1.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv",
+   "perturbed": [
+    "config/company_registry.csv"
+   ]
+  },
+  {
+   "files": 4,
+   "seconds": 12,
+   "outcome": "SAME",
+   "moved_fields": []
+  }
+ ],
+ "not_perturbed": []
+}

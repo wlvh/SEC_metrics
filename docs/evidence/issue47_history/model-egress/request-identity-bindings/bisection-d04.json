@@ -1,0 +1,506 @@
+{
+ "metric": "D04",
+ "position": "marriott_international:2023-12-31",
+ "base_ids": {
+  "source_id": "sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8",
+  "request_ids": [
+   "sha256:5c73fd9e90db901c5bfc1a4043a643008df6c6fdfffdad95f6e2e98282cbe925",
+   "sha256:19c732449333cbbbe30ecde3fc466ca588f3ff297c2aa053537c63ac1d4ad5eb",
+   "sha256:5813f2c24ab13499459631c2a2df392aba32394b4ba8778db60da06f76612b12",
+   "sha256:d01dc15d197e751b2ffc398b296b307e7c69314f171931f3492294bd1a160498"
+  ],
+  "body_digests": [
+   "sha256:747f62c1d9a1b4b8e324ead0f159805b9a86b7e639092e556c4e887a05e36498",
+   "sha256:324f28f648f7e0d90272a658aea87580b009d9b61728dd1a535b1c9fd758ad56",
+   "sha256:993791c6e85746d21d91f121234cfaefab09b72ef91857b4643a5ec4405cdc64",
+   "sha256:2478c41eb2e2d5229ceecd1a214632bc155effa627503a23e63195067f0fa754"
+  ]
+ },
+ "candidates": 117,
+ "found": [
+  {
+   "file": "scripts/vnext/normal_history_catalog.py",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "file": "scripts/vnext/r6_semantic_source.py",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "file": "catalog/r6/semantic_review_v5.json",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids"
+   ]
+  },
+  {
+   "file": "catalog/r6/semantic_source_v1.json",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "file": "config/company_registry.csv",
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "file": "config/normal_candidate_sources_v1.json",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "file": "config/normal_fiscal_year_labels_v1.json",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "file": "config/normal_period_selection_v1.json",
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  }
+ ],
+ "runs": [
+  {
+   "files": 116,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 58,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 29,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 29,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 14,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 15,
+   "seconds": 21,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 7,
+   "seconds": 21,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 3,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "scripts/vnext/native_unit_index.py",
+    "scripts/vnext/normal_annual_input.py",
+    "scripts/vnext/normal_annual_input_v2.py"
+   ]
+  },
+  {
+   "files": 4,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "scripts/vnext/normal_governance_input.py",
+    "scripts/vnext/normal_history_catalog.py"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "scripts/vnext/normal_governance_input.py"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 21,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "scripts/vnext/normal_history_catalog.py"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "scripts/vnext/normal_period_selection.py",
+    "scripts/vnext/normal_source_authority.py"
+   ]
+  },
+  {
+   "files": 8,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 58,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 29,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 14,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 7,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 3,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "scripts/vnext/r6_regulatory_semantics.py",
+    "scripts/vnext/r6_semantic_review.py",
+    "scripts/vnext/r6_semantic_source.py"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "scripts/vnext/r6_regulatory_semantics.py"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "scripts/vnext/r6_semantic_review.py",
+    "scripts/vnext/r6_semantic_source.py"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 21,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "scripts/vnext/r6_semantic_review.py"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "scripts/vnext/r6_semantic_source.py"
+   ]
+  },
+  {
+   "files": 4,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 7,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 15,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 29,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 14,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 15,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 7,
+   "seconds": 20,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 8,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 4,
+   "seconds": 21,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "catalog/r6/semantic_review_v5.json",
+    "catalog/r6/semantic_source_v1.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids"
+   ],
+   "perturbed": [
+    "catalog/r6/semantic_review_v5.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 21,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "catalog/r6/semantic_source_v1.json"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 21,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "catalog/r6/text_business_candidates_v1.json",
+    "catalog/r6/text_results_v2_policy.json"
+   ]
+  },
+  {
+   "files": 4,
+   "seconds": 4,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 2,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv",
+   "perturbed": [
+    "config/company_registry.csv",
+    "config/normal_candidate_sources_v1.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv",
+   "perturbed": [
+    "config/company_registry.csv"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "config/normal_candidate_sources_v1.json"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "config/normal_fiscal_year_labels_v1.json",
+    "config/normal_period_selection_v1.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 21,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "config/normal_fiscal_year_labels_v1.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 20,
+   "outcome": "MOVED",
+   "moved_fields": [
+    "body_digests",
+    "request_ids",
+    "source_id"
+   ],
+   "perturbed": [
+    "config/normal_period_selection_v1.json"
+   ]
+  }
+ ],
+ "not_perturbed": [
+  "config/tokenizers/deepseek_v41/tokenizer.json.gz"
+ ]
+}
