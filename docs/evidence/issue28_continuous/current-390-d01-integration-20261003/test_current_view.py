@@ -64,6 +64,14 @@ class CurrentViewTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.view(delta)
 
+    def test_successor_release_does_not_clear_selected_original_bad_identity(self):
+        defects = deepcopy(self.defects)
+        defect = next(d for d in defects['defects'] if d['company_id'] == 'pfizer' and d['metric_id'] == 'E01')
+        defect['released'] = [{'result_id': 'sha256:' + 'a' * 64, 'scope': 'separately verified successor'}]
+        row = next(r for r in self.view(defects=defects)['rows'] if r['company_id'] == 'pfizer' and r['metric_id'] == 'E01')
+        self.assertIsNone(row['value'])
+        self.assertEqual('WITHHELD_KNOWN_RESULT_DEFECT', row['current_display_status'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -93,7 +93,9 @@ def assemble(parent, prior_deltas, d01_delta, defects):
     for defect in defects['defects']:
         key = (defect['company_id'], defect['metric_id'])
         result_id = rows[key]['implementation_identity'].get('result_id')
-        if result_id and result_id == defect.get('result_id') and not defect.get('released'):
+        # The register keeps the defective identity; releases describe separately
+        # verified successors and cannot clear that original content identity.
+        if result_id and result_id == defect.get('result_id'):
             row = rows[key]
             row['value'] = None
             row['current_display_status'] = 'WITHHELD_KNOWN_RESULT_DEFECT'
