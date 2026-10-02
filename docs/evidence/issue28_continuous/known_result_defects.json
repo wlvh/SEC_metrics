@@ -128,6 +128,16 @@
         "current_390_credit": false,
         "evidence": "docs/evidence/issue28_continuous/collab-d01-content-20261002/conclusion.md"
       }
+    },
+    "private_jpm_auditor_successor_failed_content": {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+      "status": "PRIVATE_NATIVE_AND_COLD_REPEAT_PASS_CONTENT_ERROR_3436_NO_CREDIT",
+      "newly_withdrawn_from_trusted_count": 0,
+      "reason": "This private successor was never given current trusted credit; 19 coordinates / 27 old Result exclusions remain.",
+      "shared_fix46_received": false
     }
   },
   "defects": [
@@ -1053,8 +1063,8 @@
         "member_positive_3409_preserved": true,
         "native_run_cold_repeat": "PASS_SAVED_SOURCE_PRIVATE_ONLY",
         "whole_result_accepted": false,
-        "independent_diff_review": "PENDING_EXACT_SHA",
-        "separate_unjudged_block_3436": "SOURCE_READ_PENDING_CONTRACT_BASED_PEER_ALIGNMENT_NOT_NEW_DEFECT",
+        "independent_diff_review": "PASS_LIMITED_DF9FEAFA_AUDITOR_SCOPE_ONLY",
+        "separate_unjudged_block_3436": "NOW_CONFIRMED_OTHER_CONTENT_ERROR_IN_NEW_PRIVATE_RESULT; FIX46_NOT_YET_RECEIVED; NO_CREDIT",
         "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/"
       }
     },
@@ -1096,11 +1106,39 @@
         "member_positive_3409_preserved": true,
         "native_run_cold_repeat": "PASS_SAVED_SOURCE_PRIVATE_ONLY",
         "whole_result_accepted": false,
-        "independent_diff_review": "PENDING_EXACT_SHA",
-        "separate_unjudged_block_3436": "SOURCE_READ_PENDING_CONTRACT_BASED_PEER_ALIGNMENT_NOT_NEW_DEFECT",
+        "independent_diff_review": "PASS_LIMITED_DF9FEAFA_AUDITOR_SCOPE_ONLY",
+        "separate_unjudged_block_3436": "NOW_CONFIRMED_OTHER_CONTENT_ERROR_IN_NEW_PRIVATE_RESULT; FIX46_NOT_YET_RECEIVED; NO_CREDIT",
         "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/"
       }
+    },
+    {
+      "defect_id": "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_PRIVATE_AUDITOR_SUCCESSOR",
+      "metric_id": "C02",
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+      "run_id": "run:ordinary-integrated:50ff1db850f9f8d261001198dd18a0e0a67cf3d60fdda9993aa843925ecf9f58",
+      "reported_quality": "EXACT",
+      "current_credit": "NOT_GRANTED_PRIVATE_CANDIDATE_HAS_CONTENT_ERROR",
+      "repair_state": "SHARED_FIX46_AVAILABLE_NOT_YET_RECEIVED_OWN_VERSION",
+      "summary": "No board size, member identity, chair or independence/qualification determination. Negative professional-practice disclaimer explains oversight duties; it is not the approved not-officer/employee independence status. Same source block3409 supplies explicit positive determinations.",
+      "source_block": {
+        "block_index": 3436,
+        "source_accession": "0000019617-26-000096",
+        "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+        "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+        "raw_span_sha256": "8f96b7c9f8fb1e3553eb03871933f7dc2f7323b4c35b0016f894f31337c9d580",
+        "text": "Management is responsible for the Firm’s internal control over financial reporting, the financial reporting process and JPMorganChase’s Consolidated Financial Statements. PwC is responsible for performing an independent audit of JPMorganChase’s Consolidated Financial Statements and of the effectiveness of internal control over financial reporting in accordance with auditing standards promulgated by the PCAOB. The Firm’s Internal Audit function, under the direction of the General Auditor, is independent of the Firm’s businesses and the Independent Risk Management function. Internal Audit reports directly to the Audit Committee (and administratively to the Firm’s CEO) and is responsible for preparing an annual audit plan and conducting internal audits intended to independently test and evaluate the Firm’s governance, risk management and internal controls. The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes.",
+        "own_scope_reading": "SEPARATE_UNJUDGED_SCOPE_QUESTION",
+        "why": "The paragraph assigns management/auditor/Internal Audit responsibilities, then says committee members do not practise accounting and monitor the processes. It appears to describe duties; whether the final negative professional-practice statement is a qualification fact needs contract-based peer alignment. No new defect or acceptance credit is recorded here."
+      },
+      "evidence": [
+        "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/3436-contract-alignment.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "whole_result_was_never_accepted": true
     }
   ],
-  "latest_peer_read_commit": "54eb39d47718dea25812ea05ceb5a085078ff611"
+  "latest_peer_read_commit": "6d7801f7a5f773435a12c8abafb98195d8930bd2"
 }

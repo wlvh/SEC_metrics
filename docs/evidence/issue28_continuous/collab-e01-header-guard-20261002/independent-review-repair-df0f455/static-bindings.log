@@ -1,0 +1,84 @@
+{
+  "checked_utc": "2026-10-02T15:09:16.894620+00:00",
+  "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+  "scope": "Static Git-object/hash/field verification of repair increments only; no Requirement closure loader, installation, material or cold replay run",
+  "v13_manifest_changed_fields": [
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.sha256",
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.size",
+    "new_rule_files.scripts/vnext/e01_header_document_guard_28_v1.py.sha256",
+    "new_rule_files.scripts/vnext/e01_header_document_guard_28_v1.py.size"
+  ],
+  "v14_manifest_changed_fields": [
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.sha256",
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.size",
+    "parent.requirement_closure_hash",
+    "parent.snapshot_files.baseline_manifest.json.sha256"
+  ],
+  "v13_guard_execution_matches": true,
+  "v13_guard_new_rule_matches": true,
+  "v14_guard_execution_matches": true,
+  "other_execution_bindings_unchanged": {
+    "v13": {
+      "scripts/vnext/ordinary_e01_item_text_input_v2.py": true,
+      "scripts/vnext/e01_item_text_28_v1.py": true,
+      "scripts/vnext/ordinary_e01_item_text_input.py": true,
+      "scripts/vnext/deterministic_router.py": true
+    },
+    "v14": {
+      "scripts/vnext/ordinary_e01_item_text_input_v2.py": true,
+      "scripts/vnext/e01_item_text_28_v1.py": true,
+      "scripts/vnext/ordinary_e01_item_text_input.py": true,
+      "scripts/vnext/deterministic_router.py": true
+    }
+  },
+  "v14_parent_snapshot_bindings": {
+    "decision_register.json": true,
+    "baseline_manifest.json": true,
+    "invariant_profile.json": true,
+    "CONTRACT.md": true,
+    "transfer_manifest.json": true
+  },
+  "v14_execution_authority_hash": "sha256:185d7ca80cc4b1e13e4a79047e7969348f1fced051aa5a5308f6ce40d8dc3f7d",
+  "binding_record_execution_hash_matches": true,
+  "v14_parent_closure_matches_after_record": true,
+  "v14_transfer_closure_matches_after_record": true,
+  "before_record_guard_identity_matches_parent": true,
+  "three_receipts": {
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": {
+      "changed_fields": [
+        "execution_authority_hash",
+        "requirement_closure_hash"
+      ],
+      "execution_hash_matches": true,
+      "before_hash_matches": true,
+      "only_identity_fields_changed": true,
+      "requirement_closure_matches": true
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": {
+      "changed_fields": [
+        "execution_authority_hash"
+      ],
+      "execution_hash_matches": true,
+      "before_hash_matches": true,
+      "only_identity_fields_changed": true,
+      "requirement_closure_matches": true
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": {
+      "changed_fields": [
+        "execution_authority_hash"
+      ],
+      "execution_hash_matches": true,
+      "before_hash_matches": true,
+      "only_identity_fields_changed": true,
+      "requirement_closure_matches": true
+    }
+  },
+  "source_provenance_guard_sha_matches": true,
+  "source_provenance_peer_function_sha_matches": true,
+  "unchanged_config_and_v13_decisions": {
+    "config/issue28_normal_results_v2.json": true,
+    "requirements/issue_28_v13/decision_register.json": true,
+    "requirements/issue_28_v14/decision_register.json": true
+  },
+  "bindings_all_boolean_checks_pass": true
+}

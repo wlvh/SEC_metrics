@@ -1,0 +1,27 @@
+{
+  "record_type": "ISSUE28_E01_HEADED_SOURCE_GUARD_PROVENANCE",
+  "peer_source_commit": "0097c911df0e3e62fc681b7bfda2385edfc9bfcc",
+  "peer_source_module": "scripts/vnext/historical_event_items.py",
+  "peer_git_blob": "5118de2ddcf38faba72c2b7578b036d5e43f8485",
+  "peer_headed_function": "def headed_item_codes(*, raw_bytes):\n    \"\"\"The item codes a document heads itself; a heading inside a link is a contents entry.\"\"\"\n    text = _visible_text(raw_bytes=raw_bytes)\n    nodes = _text_nodes(raw_bytes=raw_bytes, text=text)\n    return {code for start, end, code in item_headings(text)\n            if not _linked_in_span(nodes=nodes, start=start, end=end)}",
+  "peer_headed_function_sha256": "cca3d096f5bc598c8533dca20ca6a0060c723eb46bec92f5c98d99678a0bbadd",
+  "own_guard": "scripts/vnext/e01_header_document_guard_28_v1.py",
+  "own_guard_sha256": "54502a58b3ef5775197fa114eb454234307067212bb81217214a45816b5042f7",
+  "unchanged_item_reader": "scripts/vnext/e01_item_text_28_v1.py",
+  "old_source_adapter_unchanged": true,
+  "adaptations": [
+    "Use existing visibility spans to omit hidden headings; peer function alone includes a display:none candidate heading",
+    "Use the existing reference-before rule without case distinction; initial short test found See Item misread as heading",
+    "Authenticate and compare raw headers against generated claims, check every discovered filing even when header has zero claims"
+  ],
+  "no_peer_historical_runtime_or_results_copied": true,
+  "semantic_or_result_credit": false,
+  "repair_scope": "Reference-before words apply only to visible text in the same HTML block; candidates come from immutable heading regex, not prefiltered flat references",
+  "original_failed_review": "independent-review-4711a48/conclusion.md",
+  "final_boundary_delta": [
+    "Hidden elements or ancestors never change visible block numbers",
+    "br remains inside its paragraph",
+    "40-character reference window counts visible text, not long hidden nodes"
+  ],
+  "prior_failed_scope_review": "independent-review-repair-df0f455/conclusion.md"
+}

@@ -3440,6 +3440,75 @@
       "dedup_note": "No live agent, no exact patch/scope register or independent evidence match; tool task name uses required underscore syntax.",
       "outer_exec_calls": 15,
       "nested_tool_calls": 27
+    },
+    {
+      "task_name": "review_e01guard_4711a48",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_e01_body_header_guard",
+      "scope_paths": [
+        "scripts/vnext/e01_header_document_guard_28_v1.py",
+        "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+        "tests/vnext/test_e01_header_document_guard.py",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/"
+      ],
+      "patch_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+      "spawned_at": "2026-10-02T14:34:24+00:00",
+      "ended_at": "2026-10-02T14:43:50.225344+00:00",
+      "tool_calls": 24,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-4711a48/conclusion.md",
+      "verdict": "NEEDS_FIX_LIMITED_P2_REFERENCE_PREFIX_SCOPE",
+      "status": "DONE",
+      "dedup_note": "C02 reviewer completed; no same SHA/module register or evidence summary",
+      "outer_exec_calls": 11,
+      "nested_tool_calls": 13
+    },
+    {
+      "task_name": "review_e01scope_df0f455",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_e01_reference_block_scope_repair",
+      "scope_paths": [
+        "scripts/vnext/e01_header_document_guard_28_v1.py",
+        "tests/vnext/test_e01_header_document_guard.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/"
+      ],
+      "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+      "spawned_at": "2026-10-02T15:01:29+00:00",
+      "ended_at": "2026-10-02T15:11:35.651354+00:00",
+      "tool_calls": 32,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-repair-df0f455/conclusion.md",
+      "verdict": "NEEDS_FIX_LIMITED_P2_HIDDEN_BOUNDARY_FALSE_REJECTION",
+      "status": "DONE",
+      "dedup_note": "Previous exact4711 review retained NEEDS_FIX and its agent reached3 messages; this new SHA has uncovered block-context repair only, no duplicate whole E01 review",
+      "outer_exec_calls": 12,
+      "nested_tool_calls": 20
+    },
+    {
+      "task_name": "review_e01visible_0de97ec",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_e01_visible_boundary_final_increment",
+      "scope_paths": [
+        "scripts/vnext/e01_header_document_guard_28_v1.py",
+        "tests/vnext/test_e01_header_document_guard.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/"
+      ],
+      "patch_sha": "0de97ec9e280e578c809320c6c18c65381070f99",
+      "spawned_at": "2026-10-02T15:30:15+00:00",
+      "ended_at": "2026-10-02T15:41:45.987793+00:00",
+      "tool_calls": 32,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-visible-0de97ec/conclusion.md",
+      "verdict": "PASS_LIMITED_VISIBLE_BOUNDARY_REPAIR_NO_NEW_P1_P2",
+      "status": "DONE",
+      "dedup_note": "All prior reviewers DONE at3 ordinary messages; new SHA only last visible-boundary delta. A further NEEDS_FIX stops this guard variant; no duplicate earlier review."
     }
   ],
   "ci_capacity_20260922": {
@@ -10266,7 +10335,7 @@
     "jpm_repeat_seconds": 47.412,
     "jpm_repeat_status": "NO_SOURCE_CONTENT_CHANGE_SAME_RESULT_NO_SECOND_RUN",
     "old_run_390_index_ledger_active_unchanged": true,
-    "unjudged_block3436": "Full source authenticated; duties versus qualification question awaits existing-contract peer alignment; no new defect or acceptance",
+    "unjudged_block3436": "RESOLVED_EXISTING_CONTRACT_EXCLUDE_STANDALONE_SELECTED_BLOCK; NEW_PRIVATE_RESULT_HAS_CONTENT_ERROR_NO_CREDIT",
     "old_two_wrong_result_ids_still_withdrawn": true,
     "new_result_whole_content_or_390_credit": false,
     "new_real_calls": [
@@ -10282,5 +10351,220 @@
     },
     "evidence": "docs/evidence/issue28_continuous/collab-c02-auditor-successor-20261002/",
     "tested_commit_equivalence": "PASS_22_FILES; precommit executions retain their original identity"
+  },
+  "collab_c02_auditor_receipt_20261002": {
+    "source_review_sha": "df9feafac6f1a5ff88145e29b1785117ab067bd1",
+    "evidence_pushed_head": "d6f82b229b6f679d704e7d4acab27e421440e60c",
+    "peer_note_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5954343457",
+    "server_readback": true,
+    "issue28_queue_updated_readback": true,
+    "whole_result_credit": false
+  },
+  "collab_peer_increment_60c6b4d6": {
+    "peer_head": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
+    "previous_head": "54eb39d47718dea25812ea05ceb5a085078ff611",
+    "known_defect_registry_git_blob": "3a348c296c0b04d24380393d96c201950811b7f0",
+    "known_defect_registry_changed_entries": 0,
+    "shared_notices_read": [
+      "2a98ba84",
+      "1672097b",
+      "815c7820"
+    ],
+    "D02_disposition": "Original reported P2 no longer left out in v3 function; README-admitted named actor and open-verb series still left out; not adopted, old gates stay. Four synthetic sentences verified, not actual result impact.",
+    "E01_disposition": "0097c911 headed/document guard in explicit source-input successor development; no semantic or Result credit.",
+    "C02_batch_stays_fixed": "72858e3c; unrelated peer increment does not reopen completed auditor-scope batch"
+  },
+  "d02_peer_v3_read_20261002": {
+    "status": "KNOWN_REMAINING_LIMITS_FUNCTIONALLY_REPRODUCED_NOT_ADOPTED",
+    "peer_read_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
+    "evidence": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/v2/peer-v3-known-limits.json",
+    "reported_original_P2": "function check repaired",
+    "remaining_cases": [
+      "Kestrel defended regulatory proceedings, litigation and fines.",
+      "In 2025, litigation, fines and penalties increased."
+    ],
+    "real_originals_affected_by_these_sentences": "NOT_ESTABLISHED",
+    "runtime_v3_received": false,
+    "v1_v2_gate_stays": true,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "e01_header_guard_20261002": {
+    "status": "PASS_LIMITED_SOURCE_INPUT_V2_VISIBILITY_SCOPE_PROGRAM_INSTALL_AND_COLD; NO_SEMANTIC_RESULT_CREDIT",
+    "peer_read_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
+    "peer_guard_patch_sha": "0097c911df0e3e62fc681b7bfda2385edfc9bfcc",
+    "source_input_module": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+    "source_guard_module": "scripts/vnext/e01_header_document_guard_28_v1.py",
+    "old_V1_reader_and_adapter_unchanged": true,
+    "all_discovered_filings_checked_even_without_header_claims": true,
+    "guard_adaptations": [
+      "Skip spans hidden under existing item reader visibility rules",
+      "Apply existing reference words without case distinction",
+      "Verify actual raw header and derived claim set before text/header comparison"
+    ],
+    "directed_tests": "PASS_4_OF_4_17.511_SECONDS",
+    "installed_rows": [
+      {
+        "company_id": "enphase_energy",
+        "installed_root": "/private/tmp/issue28-e01-header-v2-installed-20261002/enphase_energy",
+        "candidate_count": 0,
+        "old_input_id": "sha256:aaea1ec7e9330df1a51a5388f34b7fc4cb25d5693647598e0ff371bcdfa001af",
+        "header_document_checks": 6,
+        "record_type": "ORDINARY_E01_SOURCE_BOUND_ITEM_TEXT_V2",
+        "guard_source_commit": "0097c911df0e3e62fc681b7bfda2385edfc9bfcc",
+        "installed_guard_sha256": "fbb91a55ba974e6e0812045368c4f0d3dd609517cbbe9ff54589ced6883a343f",
+        "installed_input_id": "sha256:e684b6d3a0d925c3b0de4cdf649760d606bb880c9f805485e70c734a6d0a4649",
+        "item_text_sha256": [],
+        "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "installed_reader_sha256": "6d55c88f53278ce2d6a5027965e7e787a306292d7978880cd1b66ff41d9001c7",
+        "installed_adapter_sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e"
+      },
+      {
+        "company_id": "pfizer",
+        "installed_root": "/private/tmp/issue28-e01-header-v2-installed-20261002/pfizer",
+        "candidate_count": 3,
+        "old_input_id": "sha256:b1cb4585e37bdee6acae6c8feb3284ae417d19a39b14dc4f8800d8e65793a82f",
+        "header_document_checks": 9,
+        "record_type": "ORDINARY_E01_SOURCE_BOUND_ITEM_TEXT_V2",
+        "guard_source_commit": "0097c911df0e3e62fc681b7bfda2385edfc9bfcc",
+        "installed_guard_sha256": "fbb91a55ba974e6e0812045368c4f0d3dd609517cbbe9ff54589ced6883a343f",
+        "installed_input_id": "sha256:7ddc22c2cd113fdcea9fcb8372d20e3647d6e99d9c46694bfa0e1e556fbb073c",
+        "item_text_sha256": [
+          "sha256:44c08d64c9ac9667fe8680ba4effcaa797dacb8dfd8208b97ceb04006e581e3d",
+          "sha256:23c69078f2f3ed4df3e50be989053afa01407ac9a8915ee81f83fbee0f39a425",
+          "sha256:3db9327bfdbfc10513d3fcbbf21ff442ff71e8ce84ec5e1e56e6369e1b5bc12a"
+        ],
+        "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "installed_reader_sha256": "6d55c88f53278ce2d6a5027965e7e787a306292d7978880cd1b66ff41d9001c7",
+        "installed_adapter_sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e"
+      }
+    ],
+    "installed_seconds": 39.351,
+    "cold_rows": [
+      {
+        "company_id": "enphase_energy",
+        "input_id": "sha256:e684b6d3a0d925c3b0de4cdf649760d606bb880c9f805485e70c734a6d0a4649",
+        "candidate_count": 0,
+        "header_document_checks": 6,
+        "elapsed_seconds": 14.821
+      },
+      {
+        "company_id": "pfizer",
+        "input_id": "sha256:7ddc22c2cd113fdcea9fcb8372d20e3647d6e99d9c46694bfa0e1e556fbb073c",
+        "candidate_count": 3,
+        "header_document_checks": 9,
+        "elapsed_seconds": 16.973
+      }
+    ],
+    "tested_parent_closure": "sha256:9900fbc56b809b19d86f688521a3372dd9576a329262a03ee656d42bcf356c6c",
+    "tested_child_closure": "sha256:765dbb645a193d1b5ff72f789cbb4b66344c9ab7d87272e8bd067ea77ec05140",
+    "fast": {
+      "status": "PASSED",
+      "selectors": 148,
+      "failed": [],
+      "duration_seconds": 104.546,
+      "evidence_tier": "FAST_LOCAL_ONLY"
+    },
+    "tested_tree": "UNCOMMITTED_FINAL_BOUND_WORKTREE",
+    "existing_wiring_receipts": "PASS_3_BYTE_IDENTITY_ONLY_NO_NEW_LIVE_GRANT",
+    "semantic_confirmation_status": "NOT_PERFORMED",
+    "new_Result_Run_company_or_390_credit": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/",
+    "independent_review": {
+      "patch_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+      "verdict": "NEEDS_FIX_LIMITED_P2_REFERENCE_PREFIX_SCOPE",
+      "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-4711a48/conclusion.md"
+    },
+    "tested_commit_byte_equivalence": "PASS_15_COMMITTED_FILES_TWO_INSTALLED_PARENT_RUNTIMES; execution remained precommit",
+    "repair": {
+      "status": "REFERENCE_SCOPE_REPAIRED_TARGETED_AND_TWO_INSTALLED_COLD_PASS_PENDING_LIMITED_INCREMENT_REVIEW",
+      "directed_tests": "PASS_5_OF_5_16.882_SECONDS",
+      "parent_closure": "sha256:ee62ab6a3170318bacfac41d9ccf31a83f2c631516fc9ce0eff85940bc9d0c79",
+      "child_closure": "sha256:821182bd168d4fe736bf899db06bccd8f9b4585a4d0a83bf276ef7d5a3454af8",
+      "installed_seconds": 38.387,
+      "cold_seconds": [
+        14.768,
+        16.829
+      ],
+      "whole_fast_current_tree": "NOT_RERUN_UNCHANGED_SELECTORS; PRE_REPAIR148_PASS_IS_HISTORICAL",
+      "prior_failed_review_retained": true,
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "independent_review": {
+        "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+        "verdict": "NEEDS_FIX_LIMITED_P2_HIDDEN_BOUNDARY_FALSE_REJECTION",
+        "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-repair-df0f455/conclusion.md"
+      }
+    },
+    "visible_boundary_repair": {
+      "status": "BOUNDARY_AND_VISIBLE_CONTEXT_REPAIRED_PASS_6_TARGETED_AND_TWO_COLD_READS_PENDING_FINAL_LIMITED_REVIEW",
+      "directed_tests": "PASS_6_OF_6_17.032_SECONDS",
+      "scalability_binding_audit": "PASS_1_OF_1_11.517_SECONDS",
+      "installed_seconds": 37.658,
+      "cold_seconds": [
+        15.007,
+        17.127
+      ],
+      "parent_closure": "sha256:313038b01c1572ec22814de504667ae599b27ce3a59cb4911f4adada7f6e6433",
+      "child_closure": "sha256:2e6d7d5b1043723e602c112d3b9b43da638d37979652d3e65b4ccfefe28651d3",
+      "legacy_or_default_interface_changed": false,
+      "prior_NEEDS_FIX_records_retained": true,
+      "bounded_stop": "If final incremental review finds new structural issue, suspend this V2 guard variant and continue other work, no more routine boundary patch loop",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "independent_review": {
+        "patch_sha": "0de97ec9e280e578c809320c6c18c65381070f99",
+        "verdict": "PASS_LIMITED_VISIBLE_BOUNDARY_REPAIR_NO_NEW_P1_P2",
+        "result_path": "docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-visible-0de97ec/conclusion.md",
+        "scope": "Exact last visible-boundary/visible-window increment; inherits prior source-provenance reviews, no whole E01 credit"
+      },
+      "tested_commit_byte_equivalence": "PASS13_SOURCE_TEST_REQUIREMENT_FILES_TWO_INSTALLED_PARENT_RUNTIMES; not retroactive execution at SHA"
+    }
+  },
+  "c02_fix46_next": {
+    "peer_read_sha": "6d7801f7a5f773435a12c8abafb98195d8930bd2",
+    "peer_fix_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
+    "own_original_and_contract_checked": true,
+    "next": "Receive only related member-clause delta on a new own versioned selector/Spec/wrapper; preserve v3/old Run and independently validate 3436 removal/3409 retention/current material and cold."
+  },
+  "collab_peer_increment_6d7801f7": {
+    "peer_read_sha": "6d7801f7a5f773435a12c8abafb98195d8930bd2",
+    "previous_sha": "60c6b4d6a2cbe7a7df69fc839600629c0785701c",
+    "defect_register_blob": "eaef9547ccbbbf399c8b12873c4a5d4b5b8ca11e",
+    "changed_entries": [
+      "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
+      "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+      "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+      "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
+      "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION"
+    ],
+    "C02_disposition": "Own3436 verified standalone selected, existing contract excludes duties disclaimer; no new owner meaning decision; new private53 has no credit. Shared fix46 available to receive next.",
+    "D02_disposition": "No source revision since recorded v3 known limits; gate unchanged.",
+    "peer_current_result_acceptance_copied": false,
+    "whole_peer_branch_merged_into_own": false
+  },
+  "ci_37017753679": {
+    "head": "d6f82b229b6f679d704e7d4acab27e421440e60c",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-02T15:07:34Z",
+    "scope": "C02 prior pushed tree only; not later local E01 guard repairs"
   }
 }

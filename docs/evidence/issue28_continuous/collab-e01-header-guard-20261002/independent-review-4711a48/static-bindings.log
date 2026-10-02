@@ -1,0 +1,59 @@
+{
+  "v13_changed_execution_bindings": {
+    "config/issue28_normal_results_v2.json": true,
+    "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input_v2.py": true
+  },
+  "v13_old_dependencies_bound": {
+    "scripts/vnext/e01_item_text_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input.py": true,
+    "scripts/vnext/normal_zero_ai_results.py": true,
+    "scripts/vnext/deterministic_router.py": true
+  },
+  "v13_added_new_rule_bindings": {
+    "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input_v2.py": true
+  },
+  "v14_changed_execution_bindings": {
+    "config/issue28_normal_results_v2.json": true,
+    "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input_v2.py": true
+  },
+  "v14_old_dependencies_bound": {
+    "scripts/vnext/e01_item_text_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input.py": true,
+    "scripts/vnext/normal_zero_ai_results.py": true,
+    "scripts/vnext/deterministic_router.py": true
+  },
+  "v14_parent_snapshot_bindings": {
+    "decision_register.json": true,
+    "baseline_manifest.json": true,
+    "invariant_profile.json": true,
+    "CONTRACT.md": true,
+    "transfer_manifest.json": true
+  },
+  "v14_execution_authority_hash": "sha256:3c399cd48b055c79e7a13dccf6795e077cba074d13aee14c4a0525ef54ce5445",
+  "v14_parent_closure_reference_matches_after_receipt": true,
+  "three_receipts_current_execution_hash": {
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": true,
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": true,
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": true
+  },
+  "receipt_other_fields_unchanged": {
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": true,
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": true,
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": true
+  },
+  "same_except_rule_paths_config/issue28_normal_results_v2.json": true,
+  "same_except_rule_paths_requirements/issue_28_v13/decision_register.json": true,
+  "exact_sha_execution_files_after_counterexamples": {
+    "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input_v2.py": true,
+    "scripts/vnext/e01_item_text_28_v1.py": true,
+    "scripts/vnext/deterministic_router.py": true,
+    "scripts/vnext/canonical.py": true,
+    "tests/vnext/test_e01_header_document_guard.py": true
+  },
+  "scope": "Independent static Git-object byte and field comparison only. Requirement closure loading, installation and cold replay were not repeated; those executions are read-only prior evidence.",
+  "checked_utc": "2026-10-02T14:41:54.562563+00:00"
+}

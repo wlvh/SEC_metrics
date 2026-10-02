@@ -1,0 +1,86 @@
+{
+  "checked_utc": "2026-10-02T14:40:12.870729+00:00",
+  "patch_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+  "method": "In-memory counterexamples only; no saved SEC material, no Result/Run",
+  "examples": [
+    {
+      "name": "real_heading",
+      "synthetic_only": true,
+      "raw_html": "<html><body><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>The company completed an acquisition.</p><p>SIGNATURES</p></body></html>",
+      "old_reader_heading_codes": [
+        "2.01"
+      ],
+      "guard_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-real_heading:2.01"
+      }
+    },
+    {
+      "name": "hidden_uppercase_reference_before_real_heading",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p style=\"display:none\">SEE</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>The company completed an acquisition.</p><p>SIGNATURES</p></body></html>",
+      "old_reader_heading_codes": [
+        "2.01"
+      ],
+      "guard_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "hidden_neutral_prefix_before_real_heading",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p style=\"display:none\">DOCUMENT</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>The company completed an acquisition.</p><p>SIGNATURES</p></body></html>",
+      "old_reader_heading_codes": [
+        "2.01"
+      ],
+      "guard_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_neutral_prefix_before_real_heading:2.01"
+      }
+    },
+    {
+      "name": "independent_visible_block_ends_state_abbreviation",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p>Location: Portland, OR</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>The company completed an acquisition.</p><p>SIGNATURES</p></body></html>",
+      "old_reader_heading_codes": [
+        "2.01"
+      ],
+      "guard_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "actual_uppercase_inline_cross_reference",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p>SEE Item 2.01 Completion of Acquisition or Disposition of Assets.</p><p>SIGNATURES</p></body></html>",
+      "old_reader_heading_codes": [
+        "2.01"
+      ],
+      "guard_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "linked_contents_then_real_heading",
+      "synthetic_only": true,
+      "raw_html": "<html><body><p><a href=\"#real\">Item 2.01 Completion of Acquisition or Disposition of Assets.</a></p><h2 id=\"real\">Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>The company completed an acquisition.</p><p>SIGNATURES</p></body></html>",
+      "old_reader_heading_codes": [
+        "2.01",
+        "2.01"
+      ],
+      "guard_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-linked_contents_then_real_heading:2.01"
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "checked_utc": "2026-10-02T15:07:32.584100+00:00",
+  "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+  "parent_sha": "4711a488d850b9cf488efcbd745d5108eb18b8e4",
+  "method": "Both guard versions executed from exact Git/worktree-equivalent bytes in memory with unchanged dependencies; no file or installed runtime mutation",
+  "scope": "Hidden break controls for new block-number mechanism; long-hidden-text control is inherited and not reported as new regression",
+  "rows": [
+    {
+      "name": "no_break",
+      "raw_html": "<html><body><p><b>SEE</b><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "new_regression": false,
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "hidden_attribute_break",
+      "raw_html": "<html><body><p><b>SEE</b><br hidden><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [],
+      "new_regression": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_attribute_break:2.01"
+      }
+    },
+    {
+      "name": "hidden_style_break",
+      "raw_html": "<html><body><p><b>SEE</b><br style=\"display:none\"><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [],
+      "new_regression": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_style_break:2.01"
+      }
+    },
+    {
+      "name": "hidden_wrapper_empty_break",
+      "raw_html": "<html><body><p><b>SEE</b><span style=\"display:none\"><br></span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [],
+      "new_regression": true,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_wrapper_empty_break:2.01"
+      }
+    },
+    {
+      "name": "long_hidden_text",
+      "raw_html": "<html><body><p><b>SEE</b><span style=\"display:none\">SECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRET</span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [],
+      "new_regression": false,
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-long_hidden_text:2.01"
+      }
+    }
+  ]
+}

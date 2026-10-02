@@ -1,0 +1,180 @@
+{
+  "checked_utc": "2026-10-02T15:37:08.037379+00:00",
+  "patch_sha": "0de97ec9e280e578c809320c6c18c65381070f99",
+  "parent_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+  "method": "Small synthetic controls, exact parent guard executed in memory; current guard preflight-equal to patch; unchanged inherited visibility and regex",
+  "status": "PASS_SMALL_CONTROLS",
+  "rows": [
+    {
+      "name": "hidden_style_break",
+      "raw_html": "<html><body><p><b>SEE</b><br style=\"display:none\"><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "hidden_attribute_break",
+      "raw_html": "<html><body><p><b>SEE</b><br hidden><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "hidden_ancestor_break",
+      "raw_html": "<html><body><p><b>SEE</b><span hidden><br></span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "hidden_ancestor_nested_blocks",
+      "raw_html": "<html><body><div><b>SEE</b><div hidden><section><h2>not displayed</h2><hr></section></div><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></div><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "long_hidden_node",
+      "raw_html": "<html><body><p><b>SEE</b><span style=\"display:none\">SECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRET</span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "nondisplay_ancestor_blocks",
+      "raw_html": "<html><body><div>SEE <template><section>not displayed</section></template>Item 2.01 Completion of Acquisition or Disposition of Assets.</div><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "visible_br_same_paragraph",
+      "raw_html": "<html><body><p><b>See</b><br><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "See Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "hidden_see_same_paragraph_br",
+      "raw_html": "<html><body><p><span hidden>SEE</span><br><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_see_same_paragraph_br:2.01"
+      }
+    },
+    {
+      "name": "hidden_see_prior_block",
+      "raw_html": "<html><body><p style=\"display:none\">SEE</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-hidden_see_prior_block:2.01"
+      }
+    },
+    {
+      "name": "prior_visible_or_block",
+      "raw_html": "<html><body><p>Location: Portland, OR</p><h2>Item 2.01 Completion of Acquisition or Disposition of Assets.</h2><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "Location: Portland, OR Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-prior_visible_or_block:2.01"
+      }
+    },
+    {
+      "name": "true_inline_reference",
+      "raw_html": "<html><body><p><b>See</b> <span hidden>not displayed</span><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "See Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [],
+      "patch_headed_codes": [],
+      "expected_headed_codes": [],
+      "empty_header_check": {
+        "returned": []
+      }
+    },
+    {
+      "name": "visible_nested_block_remains_boundary",
+      "raw_html": "<html><body><div>SEE<div><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></div></div><p>SIGNATURES</p></body></html>",
+      "visible_text_by_inherited_reader": "SEE Item 2.01 Completion of Acquisition or Disposition of Assets. SIGNATURES",
+      "parent_headed_codes": [
+        "2.01"
+      ],
+      "patch_headed_codes": [
+        "2.01"
+      ],
+      "expected_headed_codes": [
+        "2.01"
+      ],
+      "empty_header_check": {
+        "rejected": "ORDINARY_E01_ITEM_HEADED_BUT_NOT_LISTED:synthetic-visible_nested_block_remains_boundary:2.01"
+      }
+    }
+  ],
+  "no_material_or_install_or_cold_or_full_fast_execution": true
+}
