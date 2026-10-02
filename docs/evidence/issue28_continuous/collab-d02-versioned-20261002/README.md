@@ -14,6 +14,6 @@
 
 修后只在普通新 Run 与更新入口加停用门：`d02_category=True` 在写 Run 或更新状态前明确拒绝；`_create_case_run` 也拒绝直接绕过。`guard-existing.py` 对先前的 Lumen 私有成功指针重入返回 `UPDATE_BLOCKED`，指针哈希不变、没有新尝试/Result；之前的私有Run/记录仍可独立读取，**其 `PUBLISHED/EXACT` 只是当时程序通过，不转为当前内容信用**。冻结 V2、旧默认和其它指标路径不受此门影响。`binding-before-gate.json`/`binding-after-gate.json`分开保存停用前后V13/V14身份，不能把停用后的闭包写成此前 Lumen Run 的创建身份。修后新增短测和受影响快测/独审分别登记，不重做上述保存原件长链。
 
-停用门后的单项短测 `guard-short.log` 1/1 及最终树 fast `fast-gate.log` 146/146（57.748秒）均通过；先前保存来源定向2/2和Lumen创建/冷读只对停用前源码成立。停用门补丁的精确限定独审及最终head CI另验。
+停用门后的单项短测 `guard-short.log` 1/1 及最终树 fast `fast-gate.log` 146/146（57.748秒）均通过；先前保存来源定向2/2和Lumen创建/冷读只对停用前源码成立。[`0ccf5363`限定独审](independent-review-gate-0ccf536/conclusion.md)只对停用门给出 `PASS_GATE_ONLY`，原 `de22326d NEEDS_FIX` 不变。审阅者独立检查旧成功指针重入、三处前置拒绝和V13/V14身份；没有重新运行长链、完整读取14项业务内容或核验最终head CI。最终head CI仍待远端终态。
 
 本次没有改变 D02 业务定义、模型／SEC预算或生产权限。后继接收若规则字节改变，需要重新核对本方固定副本的实际差异与来源；不自动追平对方历史分支。
