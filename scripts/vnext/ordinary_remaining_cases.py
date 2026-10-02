@@ -32,7 +32,7 @@ def _current_structured_preparation(*,data_root,company_id,metric_id):
 
 def prepare_current_source_case(*, data_root, company_id, metric_id,
                                 c02_composition=False, c02_grouped=False,
-                                d01_emphasis=False):
+                                d01_emphasis=False, d02_category=False):
     """Pure discovery and source reconstruction; no caller-owned business facts."""
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == "C02"),
           "NORMAL_C02_COMPOSITION_WRONG_METRIC")
@@ -40,6 +40,8 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
           "NORMAL_C02_GROUPED_SCOPE_INVALID")
     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == "D01"),
           "NORMAL_D01_EMPHASIS_SCOPE_INVALID")
+    _need(type(d02_category) is bool and (not d02_category or metric_id == "D02"),
+          "NORMAL_D02_CATEGORY_SCOPE_INVALID")
     if c02_composition:
         from .normal_run_v3 import _policy as current_policy
         policy = current_policy(data_root)
@@ -66,6 +68,12 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
                                       "c02_selection_policy": selection_policy}
             case["spec_path"] = ("catalog/r6/C02_board_disclosures_v3.md" if c02_grouped
                                  else "catalog/r6/C02_board_disclosures_v2.md")
+        if d02_category:
+            from .ordinary_d02_item8_v1 import POLICY
+            case['input_binding'] = {'d02_category_policy': POLICY,
+                                     'source_input_binding': prepared['input_binding']}
+            case['text_arguments'] = {**case['text_arguments'],
+                                      'd02_category_policy': POLICY}
     elif metric_id == "D01":
         from .ordinary_text_input import current_text_sources
         prepared, admission, records, references = current_text_sources(repo_root=data_root, company_id=company_id)

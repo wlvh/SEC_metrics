@@ -9265,7 +9265,7 @@
     }
   },
   "ordinary_a05_formula_successor_20261002": {
-    "status": "REPAIRED_NUMERIC_AND_STRUCTURAL_NA_PRIVATE_NORMAL_CLI_PASS_LIMITED_REVIEW_REMOTE_CI_PENDING",
+    "status": "REPAIRED_NUMERIC_AND_STRUCTURAL_NA_PRIVATE_NORMAL_CLI_PASS_LIMITED_REVIEW_REMOTE_CI_SUCCESS_AT_0EF64F9C",
     "source": "JPMORGAN_FY2025_CURRENT_AUTHENTICATED_ISSUE28_CUMULATIVE_INPUTS",
     "presentation_policy": "A05_APPROVED_AVERAGE_ASSETS_FORMULA_V1",
     "old_default_binding_bytes_equal": true,
@@ -9292,7 +9292,7 @@
     "parent_requirement_closure_hash": "sha256:bedb8ed34c43826306416473dbd6784cf74127dfdda4877612d40887c82798ec",
     "child_requirement_closure_hash": "sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4",
     "review": "FIRST_NEEDS_FIX_489659E5_RETAINED_REPAIR_3A05F07_PASS_LIMITED",
-    "new_head_ci": "PENDING_PUSH",
+    "new_head_ci": "SUCCESS_36981316380_0EF64F9C_16_OF_16_COMPLETED_2026_10_02T08_38_33Z",
     "current_390_credit": false,
     "new_real_calls": [0, 0, 0],
     "shared_with_issue47": {
@@ -9336,5 +9336,39 @@
       0,
       0
     ]
+  },
+  "d02_item8_versioned_current_20261002": {
+    "status": "LUMEN_PRIVATE_NATIVE_AND_INDEPENDENT_COLD_PASS_CONTENT_UNVALIDATED_REVIEW_PENDING",
+    "peer_source_commit": "104876d6cfae7812d93fd5b8a4bb0e0f97959fff",
+    "peer_wired_commit_read_via_exact_github_api": "36c64ab65e84af5e3f37b8f4b47820516fcec97d",
+    "peer_source_code_blob": "7c02380ede6757ad6f1ff9528f0abb625d45af07",
+    "peer_terms_blob": "03e35435f62800a4a1146685b38bc5da91b38e51",
+    "own_versioned_paths": ["scripts/vnext/d02_item8_category_28_v1.py", "catalog/r6/D02_item8_category_28_v1.json", "scripts/vnext/ordinary_d02_item8_v1.py", "scripts/vnext/d02_text_results_v3.py", "scripts/vnext/ordinary_d02_category_update.py"],
+    "frozen_v12_text_results_v2_bytes_unchanged": true,
+    "old_default_candidate_equal": true,
+    "parent_requirement_closure_hash": "sha256:f1d966d1f5f681975e11302c98ef7df0120d5281cae7e00cddeba752c65a4239",
+    "child_requirement_closure_hash": "sha256:f8e1bd43989cf4d5bd1e3f86177a9af20d835e1000dce37a5ace3fd93176764c",
+    "three_wiring_receipts": "IDENTITY_ONLY_PASS_NOT_NEW_FACTORY_CONTROLLER_ZERO_EGRESS_RUN",
+    "directed_current_source_tests": "TWO_OF_TWO_PASS_FINAL_62_565_SECONDS",
+    "fast_selectors": "146_OF_146_PASS_59_274_SECONDS",
+    "lumen_original_selected": 15,
+    "lumen_new_selected": 14,
+    "lumen_removed_original_block": 1670,
+    "lumen_old_result_id_still_withheld": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+    "lumen_new_private_result_id": "sha256:da6c0000c7c45b04c2dec00927bcbf94de959d8270199a07c2bc89704a68411c",
+    "lumen_new_private_run_id": "run:ordinary-integrated:11d74bd11fcdb479e300cb9394992e433bab4c71cffd0ca1ea1aeb86dd02a75b",
+    "lumen_normal_first_and_cold": "CANDIDATE_READY_66_819_SECONDS_THEN_NO_SOURCE_CONTENT_CHANGE_40_092_SECONDS_NO_SECOND_RUN",
+    "remaining_known_wrong_enphase_item3_footer": 755,
+    "old_four_d02_exact_results_still_withheld": true,
+    "new_private_content_credit": false,
+    "current_390_credit": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "shared_functions": ["normal_run_v3.prepare_case", "normal_run_v3.install_normal_inputs", "normal_run_v3.create_normal_run", "normal_run_v3.replay_case", "normal_run_v3.text_api", "ordinary_remaining_cases.prepare_current_source_case", "ordinary_update_cycle._config", "ordinary_update_cycle._descriptor", "ordinary_update_cycle._inspect", "ordinary_update_cycle.run_once"],
+      "default_behavior": "OLD_D02_V2_INSTALLED_BYTES_UNCHANGED_AND_EXPLICIT_NEW_POLICY_REQUIRED_FOR_SELECTION",
+      "downstream": "#47 stacked branch must reconcile mutable V13/V14 identities; no peer runtime or old Result rewrite"
+    },
+    "evidence": "docs/evidence/issue28_continuous/collab-d02-versioned-20261002/",
+    "new_real_calls": [0, 0, 0]
   }
 }
