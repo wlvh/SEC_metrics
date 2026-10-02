@@ -15,3 +15,5 @@
 在后继补丁中，`ITEM8_V2`的新普通Run、内部`_create_case_run`和更新均于写入前返回`*_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED`；旧v1继续原有停用，未选后继的默认路径与其它指标仍运行。`binding-before-guard.json`与`binding-after-guard.json`分开登记停用前后未冻结需求身份，最终V13闭包 `sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d`、V14闭包 `sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56`及三收据通过。`guard-existing-v2.json`证明重入已完成的私有Lumen状态返回`UPDATE_BLOCKED`，原指针和尝试集合逐字节不变；`cold-old-v2-run.json`由独立进程只用该Run自己的安装运行时重读出同Result，原Run、账本和active哈希不变。停用后短测1/1、fast146/146通过，先前未变的四公司材料对照和私有Run不重复执行。
 
 因此当前结论是：v2来源选择与原生保存机制有实测能力，**v2业务选择规则尚有已证实误删且新信用已停用**。原有四个错误旧Result继续按精确身份扣留；Lumen两个私有演练Run及Result都保留历史记录，但新的私有Result不领取当前390或生产信用。待#47共用负责人修复此反例后，本方只接新增字节和受影响正反、运行/回读差异；不能给现有v2改一个名字就解除停用。
+
+停用补丁 `b99748ac` 的[限定独审](independent-review-gate-b99748a/conclusion.md)为 `PASS_GATE_ONLY`：审阅者独立短测1/1、V13/V14身份、语义绑定和接线收据通过，核对新Run/内部直达/更新三处均在写入前拒绝；旧私有Run冷读和fast146/146仅检查提交方证据，未重跑。此结论**不覆盖或撤销** `79677ed2 NEEDS_FIX`，也不释放D02结果。
