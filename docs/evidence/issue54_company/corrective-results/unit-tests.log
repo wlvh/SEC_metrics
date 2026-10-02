@@ -19,6 +19,7 @@ test_historical_two_periods_and_partial_third_request (tests.vnext.test_company_
 test_legacy_report_subset_does_not_limit_journal_view (tests.vnext.test_company_results.CompanyResultsTest.test_legacy_report_subset_does_not_limit_journal_view) ... ok
 test_one_replay_failure_does_not_hide_other_metrics (tests.vnext.test_company_results.CompanyResultsTest.test_one_replay_failure_does_not_hide_other_metrics) ... ok
 test_ordinary_prior_year_remains_in_view (tests.vnext.test_company_results.CompanyResultsTest.test_ordinary_prior_year_remains_in_view) ... ok
+test_processing_result_exposes_original_mode_and_runtime (tests.vnext.test_company_results.CompanyResultsTest.test_processing_result_exposes_original_mode_and_runtime) ... ok
 test_source_switch_does_not_claim_untouched_results_match (tests.vnext.test_company_results.CompanyResultsTest.test_source_switch_does_not_claim_untouched_results_match) ... ok
 test_successful_pointer_cannot_be_changed_to_an_earlier_candidate (tests.vnext.test_company_results.CompanyResultsTest.test_successful_pointer_cannot_be_changed_to_an_earlier_candidate) ... ok
 test_wrong_company_run_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_wrong_company_run_rejected) ... ok
@@ -31,6 +32,6 @@ test_self_rehash_cannot_enroll_or_promote_processing (tests.vnext.test_company_p
 test_wrong_company_rejected (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_wrong_company_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 31 tests in 0.121s
+Ran 32 tests in 0.140s
 
 OK

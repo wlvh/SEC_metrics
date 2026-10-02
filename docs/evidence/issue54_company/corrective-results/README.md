@@ -13,3 +13,10 @@ D04：原 review-5207290213 的完整六请求 RECORDED_TEST_ONLY，封印身份
 #47 固定消费者及历史程序继续沿用60c6b4d6/815c7820。实际追加FY2022 A08为759.946s，公司汇总冷导出383.138s、同时包含FY2022与FY2023；FY2023显示NOT_RECHECKED，未伪装成最近FY2022执行成功。保留原FY2023，不扩大为五年全部指标。其消费者尚待独立反馈。
 
 e536cdc 主工作流37049750196所有16作业终态成功，生成检查37049750282成功；这是旧head，修后最终head CI另行记录。本期不部署 OpenShift，新增真实 SEC/provider/paid 0/0/0。动态UID／实际集群、全36项、独立业务验收及完整 LIVE D04 未测或待取得，不能由本材料推断完成。
+
+
+最终固定基线 c17 wrapper 与原 V14 混合：Enphase B01-only17.414s为NO_SOURCE_CONTENT_CHANGE，原 D04仍在视图；公司汇总157.312s同时导出B01／D04，Requirement分别为issue_28_v13／issue_28_v14及各自closure。两组输入/原生路径分明，D04仍RECORDED_TEST_ONLY。更早临时baseline树保有修前processing指针读取代码，两次B01原生步骤已完成，但报告阶段拒绝；保留固定树版本，改用最终树复核，旧Run没有改签。更早两次混合导出153.123／153.159s也有两行，只证明出口，不能冒称那两次compute CLI成功。
+
+实际出口部分失败负例：从B01 Run manifest的SourceReference与input binding定位companyfacts不可变正文及对应headers，只改本任务私有state副本内实际消费文件；两种修改分别使B01 REPLAY_FAILED／WITHHELD，D01原生结果仍进入公司表，EXPORTED_PARTIAL/退出2。正常state／原Run未改，拒绝发生于原RawBlob／request-ledger校验，不是未消费working文件或环境错误。具体locator、前后SHA、原因和计时见company-export-bound-negatives.json；实际脚本保留。
+
+最后元数据列另明确source_credit与saved_processing_mode，避免原SEC保存信用和录制AI判断信用混同；追加组件回归验证该列及原V14身份，32项边界测试通过。分项体积见partition-sizes.json，未测真实传输压缩、集群或全36项。新增入口消费者独审仍待#28/#47，本方回归不冒称独审。

@@ -184,3 +184,20 @@ class CompanyResultsTest(unittest.TestCase):
         p=self.root/'updates/metrics/B01/current.json';v=json.loads(p.read_text());v['successful_attempt']=one['last_verified_candidate']['attempt_id']
         p.write_text(json.dumps(v))
         with self.assertRaisesRegex(ValueError,'SUCCESSFUL_POINTER_CHANGED'):self.view()
+
+    def test_processing_result_exposes_original_mode_and_runtime(self):
+        target=self.root/'updates/processing/D04'/'original-closure'
+        work=target/'attempts'/('a'*32)
+        self.manifest(work,'D04','2025-12-31','original-closure')
+        manifest=work/'runs/D04/manifest.json';value=json.loads(manifest.read_text())
+        value['requirement_id']='issue_28_v14';manifest.write_text(json.dumps(value))
+        _atomic_json(work/'processing-receipt.json',{'result_id':'original-result','mode':'RECORDED_TEST_ONLY'})
+        candidate={'attempt_id':work.name,'rows_root':str(work/'rows'),'current_input_matches':True,
+                   'runtime_root':'/original/v14'}
+        _atomic_json(target/'current.json',{'attempt_id':work.name,'candidate':candidate})
+        self.observe([{'metric_id':'D04','status':'CANDIDATE_READY','last_verified_candidate':candidate}])
+        view=self.view();self.assertEqual('processing',view['metrics'][0]['row_layout'])
+        self.assertFalse(view['metrics'][0]['business_metric_completed'])
+        _,rows,_=self.exported()
+        self.assertEqual('RECORDED_TEST_ONLY',rows[0]['saved_processing_mode'])
+        self.assertEqual('issue_28_v14',rows[0]['requirement_id'])

@@ -113,6 +113,7 @@ def _ordinary_candidates(root, pointer, company):
                     yield {'metric_id': metric, 'attempt_id': identity, 'rows_root': str(work/'rows'),
                            'manifest': manifest, 'journal': str(target.relative_to(root)),
                            'result_id': terminal['metrics'][metric]['result_id'],
+                           'source_credit': terminal['metrics'][metric].get('source_credit'),
                            'journal_latest_status': latest['status'],
                            'journal_latest_error': latest.get('error'), 'row_layout': 'ordinary'}
         identity = intent['previous_attempt']

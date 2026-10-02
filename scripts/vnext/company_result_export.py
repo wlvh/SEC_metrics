@@ -17,7 +17,7 @@ from .company_source_authority import need
 VIEW_FIELDS = ('company_id', 'run_id', 'result_id', 'requirement_id', 'requirement_closure_hash',
                'source_checkpoint_id', 'last_checked_source_checkpoint_id', 'current_source_checkpoint_id', 'current_input_matches',
                'current_input_status', 'result_validity', 'latest_attempt_status', 'latest_request_status',
-               'requested_in_latest_execution', 'native_path')
+               'requested_in_latest_execution', 'source_credit', 'saved_processing_mode', 'native_path')
 
 
 def replay_candidate(entry, runtime_roots):
