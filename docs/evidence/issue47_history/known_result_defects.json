@@ -6551,6 +6551,33 @@
      "integration": "MERGED_AND_REMINTED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "d6f82b22",
+   "own_commit_at_read": "1b20df61",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; changed in df9feafa: #28's two JPMorgan FY2025 C02 entries record the received repair 45 (received_shared_fix, new private result sha256:53f2aa84..., not accepted) and name block 3436 as an unjudged question for the shared owner",
+   "baseline": "Read since 0bc24734: two commits, their file lists, the collab-c02-auditor-successor-20261002 README, source-boundary-read.json and the limited review conclusion.",
+   "increments": [
+    {
+     "commit": "df9feafa",
+     "marker": "[shared-with-#47]",
+     "subject": "Receive C02 auditor-scope repair on versioned ordinary route",
+     "affects_47": "None on a #47 value: #28 copied repair 45's expression into its own path (scripts/vnext/c02_board_composition_28_v3.py) and recorded it in issue_28_v13, so issue_47_v1's parent closure moved. Its question on block 3436 (Issue #47 comment 5954343457) is answered by the Spec and is a #47 selector defect as well, in JPMorgan FY2022-FY2025.",
+     "integration": "MERGED_AND_REMINTED (4ad20447); PROVIDED_FIX: C02 repair 46 (4fcb1eba) [shared-with-#28]"
+    },
+    {
+     "commit": "d6f82b22",
+     "marker": "[shared-with-#47]",
+     "subject": "Record limited C02 successor review and tested byte identity",
+     "affects_47": "None: evidence only.",
+     "integration": "NOT_NEEDED"
+    }
+   ]
   }
  ]
 }

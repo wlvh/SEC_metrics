@@ -226,3 +226,15 @@
 ### E01 条目读取器（#28 消费本方固定版本）
 
 #28 在 `dcd36df3` 把本方 `historical_event_items.py` 固定在 `488a6173`（Git blob `ff6996d2`，与本方现在的文件逐字节相同）放进它自己的 `scripts/vnext/e01_item_text_28_v1.py`，`3275aa7b` 是它的限定独审（PASS_LIMITED_SOURCE_INPUT）。本方没有改这个文件，不需要再提供什么。#28 的审阅记了一个局限：候选条目来自 SEC 头文件的条目索引，没有证明主文件里不存在头文件漏列的条目标题。这对本方 E01 的候选与头文件阅读同样成立，记为未核对的局限，没有当成已知缺陷。
+
+## 2026-10-02 读到 #28 `d6f82b22`
+
+### C02 修复 45 的接收（#28 在自己的路径上）
+
+#28 在 `df9feafa` 把本方修复 45 的表达式放进它自己的 `scripts/vnext/c02_board_composition_28_v3.py`，并记入 `issue_28_v13`；`d6f82b22` 是它的限定独审。本方不需要改任何文件；父快照因此移动，本方在 `4ad20447` 合并并重铸（父闭包 `51890efc…`）。
+
+### C02 摩根大通第 3436 块（#28 询问，本方按合同回答并修复）
+
+#28 问（[评论 5954343457](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5954343457)）第 3436 块末句 "The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes." 算不算资格认定。现有合同能回答，不需要提新的口径问题：Spec 列出的成员认定是财务素养、审计委员会财务专家、非雇员董事、成员不是高管或雇员；"委员会做什么"不在范围内。这句话没有认定任何人符合任何标准，也不是列出的资格；后半句写明它在说委员会的监督职责。块里其余内容是管理层、PwC、内部审计的职责。所以整块不属于 C02，#28 的初读成立。
+
+这也是本方选择器的缺陷：任何 "members of the … Committee are …" 都被当成构成陈述。修复 46（`4fcb1eba`，[shared-with-#28]）要求动词后面到分号为止写出人名或列出的身份。37 份双向判读一块不动；12 个未判读的已发布位置里只有摩根大通四年各移走这一块（3532、3642、3413、3436），第 3409 块保留。详见 `../c02-selector-repairs/README.md` 第 46 节。摩根大通 FY2022–FY2025 按坐标另登记一条缺陷；本方仍没有摩根大通 C02 的判读，所以重算后的值也要先读过才能接受。
