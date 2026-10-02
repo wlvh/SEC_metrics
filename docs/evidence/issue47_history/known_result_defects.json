@@ -7142,6 +7142,82 @@
     }
    ],
    "parent_snapshot_moved": "The base moved issue_28_v13's register and closure (313038b0 -> 7644b72b); CI on 4a685996 failed on that until the merge and re-mint (1a69b3f7). tests.vnext.test_historical_sec_session, one of the three failing modules, ran on the merged tree: 214 tests OK in 807 s."
+  },
+  {
+   "read_on": "2026-10-02",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "899001f7",
+   "own_commit_at_read": "32e63c2b",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; changed in a31342de (replacement_candidate_validation on #28's Paramount and Marriott FY2025 D01 defects), e286ff24 and 511ef683 (candidate_index_mapping and current_index_acceptance for two FY2025 D01 results; 17 coordinates still select a known defect), 51f9cd7c and 899001f7 (latest_peer_read_commit, now #47's 52d94470)",
+   "baseline": "Read since 65706fd8: nine commits 64c95e71..899001f7, their messages and file lists, the D01 integration README, the 94955ac limited review conclusion and the C02 repair48 statement probe; merged as 32e63c2b. Outside #28's evidence only tools/run_fast_tests_v2.py changed; mint --check unchanged, so no parent closure or issue_47_v1 snapshot moved.",
+   "increments": [
+    {
+     "commit": "64c95e71",
+     "marker": "[shared-with-#47]",
+     "subject": "Schedule unchanged D03 native material methods independently",
+     "affects_47": "None for #47's results. The CI weight table #47 maintains in tools/run_fast_tests_v2.py still weighs the whole D03 class (209 s) and leaves its three methods at the 30 s default.",
+     "integration": "MERGED; weights for the three methods updated in #47's next commit"
+    },
+    {
+     "commit": "51f9cd7c",
+     "marker": "[shared-with-#54]",
+     "subject": "Provide original LIVE D04 inputs and verify processing boundary",
+     "affects_47": "None: #28's ordinary D04 inputs for #54's processing check; #47's D04 registrations are keyed by #47's own pinned sources and nothing here is read.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "a31342de",
+     "marker": "[shared-with-#47]",
+     "subject": "Bind D01 copy validation receipts and C02 repair48 scope",
+     "affects_47": "None for #47's values. #28's probe of repair 48 (3db230ee) confirms its two member-clause examples now answer as required and keeps the residue #47 named when it delivered repair 48 (a duty sentence naming independent directors still gets the member-qualification label); no production import.",
+     "integration": "MERGED; the residue stays open in #47's C02 record"
+    },
+    {
+     "commit": "e286ff24",
+     "marker": "[shared-with-#47]",
+     "subject": "Select reviewed D01 replacements in the existing 390 evidence view",
+     "affects_47": "None for #47's values. The two results #28 now selects for Paramount and Marriott FY2025 D01 (6795449b..., 99c76e50...) have the same result ids as #47's repaired historical results at those coordinates, which #47 has read and accepted. Same id across two routes shows the two computations agree on the same filing; it is not taken as evidence that the value is right.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "7d1202b0",
+     "marker": "[shared-with-#47]",
+     "subject": "Keep original defective identities withheld after successor release",
+     "affects_47": "None: the rule #28 states (a release names the successor; the original erroneous result stays withheld) is the rule #47's register already applies.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "94955acf",
+     "marker": "[shared-with-#47]",
+     "subject": "Bind D01 view rows to the exact checked Run and receipt",
+     "affects_47": "None: #28's 390 view reader.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "511ef683",
+     "marker": "[shared-with-#47]",
+     "subject": "Record limited review and two D01 development-index restorations",
+     "affects_47": "None for #47's results: PASS_LIMITED_DELTA on #28's reader increment only.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "9abf82fc",
+     "marker": "[shared-with-#54]",
+     "subject": "Verify company D01 successor selection and repeat without capture dependencies",
+     "affects_47": "None for #47's results. #28's ordinary consumer of #54's 8a521e32 computes Marriott FY2025 D01 as 99c76e50, the same id #47's historical route gives; #47 checks the same #54 commit at its own historical entry separately.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "899001f7",
+     "marker": "[shared-with-#54]",
+     "subject": "Distinguish no-change journal entries from new native Runs",
+     "affects_47": "None for #47's results: correction of #28's own count in its #54 consumer summary.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }

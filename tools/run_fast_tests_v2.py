@@ -685,7 +685,13 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_continuous_sec_acquisition": 227,
     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 214,
     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 211,
-    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest": 209,
+    # The class weighed 209 s in CI; #28 now schedules its three methods
+    # separately (64c95e71). Split by #28's per-method subprocess times
+    # (46.5, 36.8 and 0.1 s locally, ci-d03-native-timing-20261003), not yet
+    # measured in CI.
+    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result": 116,
+    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit": 92,
+    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest": 1,
     "tests.vnext.test_normal_zero_ai_results": 193,
     "tests.vnext.test_historical_board_composition_filings": 175,
     "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest": 173,
