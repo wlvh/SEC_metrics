@@ -3910,6 +3910,24 @@
       "verdict": "COMPLETE_LIMITED_NATIVE_FACTS01_INPUT_DIAGNOSIS_UNRESOLVED_NO_NATIVE_CREDIT",
       "message_count": 2,
       "elapsed_seconds": 909.832279
+    },
+    {
+      "task_name": "diagnose_d03facts23_07634fe",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_facts23_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/2",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts23"
+      ],
+      "patch_sha": "07634fe8b6aefa583eaba37353c9446c815f02a8",
+      "spawned_at": "2026-10-03T14:41:49.227462+00:00",
+      "ended_at": "2026-10-03T14:57:34.580924+00:00",
+      "tool_calls": 36,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts23/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_NATIVE_FACTS23_INPUT_DIAGNOSIS_UNRESOLVED_NO_NATIVE_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 869.894,
+      "elapsed_scope": "From first recorded clock; earlier first command conservatively about16.58min total"
     }
   ],
   "ci_capacity_20260922": {
@@ -12427,6 +12445,42 @@
     "source_continuation_structure_verified": "f-408 -> f-408-1(owner3) -> f-408-2(owner4); not matter identity",
     "native_or_target_model_credit": false,
     "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "d03_native_facts23_development_20261003": {
+    "state": "THIRD_NEW_FORMAT_RAW_RESPONSE_EXISTING_CHECKER_SAVE_AND_COLD_PASS_LIMITED",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts23/README.md",
+    "tested_base_sha": "07634fe8b6aefa583eaba37353c9446c815f02a8",
+    "uncommitted_evidence_adapter": true,
+    "native_units_read": 2,
+    "native_facts_read": 431,
+    "visible_context_rows": 1965,
+    "request_sha256": "596ef5aa691c7c65c0c10e9ef24656a8fc3bc350b3db81ead74c05773975a7c7",
+    "response_sha256": "70fe1a24627ff171efadbfbc24eca50841a73418d92a65343467d7df69722e12",
+    "findings": 3,
+    "unresolved": 5,
+    "scope_current_involvement": "UNRESOLVED",
+    "output_reference_tokens": 2103,
+    "processing_sha256": "150b026284f38525a54a98e77faa2215135992389b781abacaa1b572ca257934",
+    "checks_seconds": 0.172,
+    "cold_seconds": 0.133,
+    "new_request_response_indices_available": [
+      1,
+      2,
+      4
+    ],
+    "new_plan_request_response_indices_missing": [
+      0,
+      3,
+      5
+    ],
+    "remaining_native_units_not_model_read": 4,
+    "all_source_company_acceptance": false,
+    "case4_and_facts01_processor_bytes_unchanged": true,
+    "new_business_calls": [
       0,
       0,
       0

@@ -1,0 +1,117 @@
+{
+  "reviewed_unit_ids": [
+    "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+    "sha256:734d6521a7c143c93d94125039f289bb10301651fcadafd74dcdf7b7acbc31d6"
+  ],
+  "findings": [
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Marriott income-tax settlements and the relationship to governmental tax examinations",
+      "event_dates": [],
+      "reported_context_times": [
+        "2023 and 2024 unrecognized-tax-benefit reconciliation periods",
+        "Tax years through 2022; 2023 and 2024 tax-year audits",
+        "Year-end 2025 status snapshot"
+      ],
+      "status": "Actual historical settlements are reported; the supplied context expressly reports ongoing tax audits, but an investigation/enforcement linkage and case identity are not established.",
+      "evidence": [
+        {
+          "unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+          "kind": "NATIVE_FACT",
+          "source_index": 546
+        },
+        {
+          "unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+          "kind": "NATIVE_FACT",
+          "source_index": 550
+        },
+        {
+          "unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+          "kind": "NATIVE_FACT",
+          "source_index": 554
+        },
+        {
+          "unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+          "kind": "NATIVE_FACT",
+          "source_index": 507
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1201
+        }
+      ],
+      "description": "The native reconciliation reports decreases of $9 million in 2023 and $2 million in 2024 attributable to settlements with taxing authorities. The recipient/taxpayer is the Company; the native settlement rows do not identify a particular authority, case, investigated conduct, or investigation/enforcement relation. Visible Note 6 states that the IRS examined the federal returns, all issues through tax year 2022 were settled as of year-end 2025, 2023 and 2024 tax-year audits are ongoing, and foreign, state and local returns are under examination. These actual tax procedures cannot automatically be called D03 investigations, nor can their relation be definitively excluded. Native fact 507 is only the INCOME TAXES heading with continuedat f-497-1; that continuation object is not supplied here. Tax years and accounting periods are not dates of the settlement or audit actions. The 2025 statute-of-limitations reduction is not a newly disclosed enforcement settlement."
+    },
+    {
+      "kind": "PRIVATE_OR_INTERNAL_ACTION",
+      "subject": "Consumer litigation concerning the Starwood reservations database Data Security Incident",
+      "event_dates": [
+        "2025-06-03"
+      ],
+      "reported_context_times": [
+        "2018-11-30 incident announcement and native c-98 context date",
+        "2025-12-31 loss-accrual snapshot"
+      ],
+      "status": "Consumer suits remain defended; class certification was reversed, individual New York cases followed, and MDL mediation is reported.",
+      "evidence": [
+        {
+          "unit_id": "sha256:734d6521a7c143c93d94125039f289bb10301651fcadafd74dcdf7b7acbc31d6",
+          "kind": "NATIVE_FACT",
+          "source_index": 678
+        },
+        {
+          "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1313
+        },
+        {
+          "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1316
+        }
+      ],
+      "description": "Native fact 678 reports 100 in unit lawsuit, with the explicit member ClassActionLawsuitsRelatedToDataSecurityIncidentMember and context c-98. The visible context specifies approximately 100 suits filed by consumers and others against the Company in U.S. and Canadian courts after the incident announcement. The Fourth Circuit reversed class certification on June 3, 2025; some plaintiffs subsequently filed individual New York actions, and the Company reports mediation and a year-end loss accrual. Courts deciding these private claims are not investigating governmental actors. The exact November 30, 2018 context/announcement date is not established as the filing date of these suits and is not used as their event date. This lawsuit count is not a regulatory-investigation count."
+    },
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Native Note 7 continuation and the current status of governmental inquiries concerning the Starwood Data Security Incident",
+      "event_dates": [],
+      "reported_context_times": [
+        "2025 annual filing context; no explicit date for the aggregate governmental-status change"
+      ],
+      "status": "The supplied visible context reports most inquiries/investigations resolved or apparently inactive; the status of the remainder and exact native continuation attribution are unproved.",
+      "evidence": [
+        {
+          "unit_id": "sha256:734d6521a7c143c93d94125039f289bb10301651fcadafd74dcdf7b7acbc31d6",
+          "kind": "NATIVE_FACT",
+          "source_index": 662
+        },
+        {
+          "unit_id": "sha256:734d6521a7c143c93d94125039f289bb10301651fcadafd74dcdf7b7acbc31d6",
+          "kind": "NATIVE_FACT",
+          "source_index": 678
+        },
+        {
+          "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1317
+        },
+        {
+          "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1318
+        }
+      ],
+      "description": "Native fact 662 contains the COMMITMENTS AND CONTINGENCIES heading and continuedat f-652-1, while native fact 678 independently identifies the Starwood consumer-lawsuit context. In the corresponding visible Note 7, U.S. federal, U.S. state and foreign governmental inquiries/investigations are described as mostly resolved or no longer appearing active, with uncertainty regarding regulatory inquiries/investigations and possible losses. This establishes a governmental-status disclosure in the supporting context, but not that every matter is closed, any identified remainder is currently active, or the loss uncertainty is an express current action. The continuation objects and their id-chain mapping are not part of these assigned fact units; the heading must not be silently expanded into a fully verified native investigation fact. Retain the association for later review with the continuation/visible assessment owners; it is not another company matter or a confirmed current-investigation count."
+    }
+  ],
+  "scope_current_involvement": "UNRESOLVED",
+  "unresolved": [
+    "The responsibility scope is only native fact units 2 and 3 (431 facts). All 1965 visible blocks were read as context; no whole-company absence or current count follows from this partial request.",
+    "All ten continuedat attributes were retained, including f-497-1 and f-652-1, but no native continuation objects are supplied in this request. The full visible text supports contextual reading without proving the exact native XML continuation chain.",
+    "Whether the reported tax examinations or historical tax settlements are linked to a D03 governmental investigation/enforcement matter is not established by the supplied source. Current audits are actual, but actual government procedures are not sufficient alone.",
+    "Most governmental Starwood matters resolved or apparently inactive does not identify the status of every remaining matter; possible unestimated losses do not establish current involvement.",
+    "Context-only EPA correspondence (block 453), the FTC/AG resolutions and conditional future enforcement (blocks 416 and 438), and other visible-only matters are not emitted as additional assigned-native findings. Their assessment belongs to the complete plan owners."
+  ]
+}
