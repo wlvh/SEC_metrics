@@ -1,0 +1,539 @@
+{
+  "start_utc": "2026-10-03T10:03:58.791944+00:00",
+  "fixed_patch_sha": "79b43ba5dd99104a73fde05e9a379aadf2c59ccc",
+  "files": {
+    "input.json": {
+      "bytes": 993179,
+      "sha256": "4e8ad21792171e869d031a9091ff54a1217e311d67a8c6425dca3cc95384d52b"
+    },
+    "measurement.json": {
+      "bytes": 1309,
+      "sha256": "6b2914eee89a5a55e8eec5255b31127981519bd6375c9c68ef6ad17671a4d29b"
+    },
+    "prompt.txt": {
+      "bytes": 3059,
+      "sha256": "99f0f915d97d03f15b66a910a36f4196b7dc91df50dd45c867ac49fc2155a7b8"
+    },
+    "request-body.json": {
+      "bytes": 766124,
+      "sha256": "b126b60f89d7be3a68afb0e2a23914fdf22bcad85c8a428a72eb1dac7e35f844"
+    }
+  },
+  "input_shape": {
+    "company": "Enphase Energy, Inc.",
+    "cik": "0001463101",
+    "filing": "0001463101-26-000013",
+    "form": "10-K",
+    "report_date": "2025-12-31",
+    "filing_date": "2026-02-17",
+    "visible_columns": {
+      "type": "list",
+      "length": 3,
+      "first_shape": {
+        "type": "str",
+        "length": 11
+      }
+    },
+    "visible_rows": {
+      "type": "list",
+      "length": 2709,
+      "first_shape": {
+        "type": "list",
+        "length": 3,
+        "first_shape": {
+          "type": "int",
+          "length": null
+        }
+      }
+    },
+    "visible_unit_bounds": {
+      "type": "list",
+      "length": 7,
+      "first_shape": {
+        "type": "list",
+        "length": 3,
+        "first_shape": {
+          "type": "int",
+          "length": null
+        }
+      }
+    },
+    "native_unit_indexes": {
+      "type": "list",
+      "length": 2,
+      "first_shape": {
+        "type": "int",
+        "length": null
+      }
+    },
+    "native_units": {
+      "type": "list",
+      "length": 2,
+      "first_shape": {
+        "kind": [
+          "str",
+          12
+        ],
+        "payload": [
+          "dict",
+          5
+        ]
+      }
+    },
+    "shared_source_dictionaries": {
+      "contexts": {
+        "c-1": [
+          "dict",
+          2
+        ],
+        "c-10": [
+          "dict",
+          2
+        ],
+        "c-11": [
+          "dict",
+          2
+        ],
+        "c-12": [
+          "dict",
+          2
+        ],
+        "c-13": [
+          "dict",
+          2
+        ],
+        "c-14": [
+          "dict",
+          2
+        ],
+        "c-2": [
+          "dict",
+          2
+        ],
+        "c-3": [
+          "dict",
+          2
+        ],
+        "c-345": [
+          "dict",
+          2
+        ],
+        "c-347": [
+          "dict",
+          2
+        ],
+        "c-350": [
+          "dict",
+          2
+        ],
+        "c-352": [
+          "dict",
+          2
+        ],
+        "c-4": [
+          "dict",
+          2
+        ],
+        "c-475": [
+          "dict",
+          2
+        ],
+        "c-49": [
+          "dict",
+          2
+        ],
+        "c-5": [
+          "dict",
+          2
+        ],
+        "c-6": [
+          "dict",
+          2
+        ],
+        "c-62": [
+          "dict",
+          2
+        ],
+        "c-7": [
+          "dict",
+          2
+        ],
+        "c-8": [
+          "dict",
+          2
+        ],
+        "c-84": [
+          "dict",
+          2
+        ],
+        "c-85": [
+          "dict",
+          2
+        ],
+        "c-86": [
+          "dict",
+          2
+        ],
+        "c-87": [
+          "dict",
+          2
+        ],
+        "c-88": [
+          "dict",
+          2
+        ],
+        "c-9": [
+          "dict",
+          2
+        ],
+        "c-15": [
+          "dict",
+          2
+        ],
+        "c-16": [
+          "dict",
+          2
+        ],
+        "c-17": [
+          "dict",
+          2
+        ],
+        "c-18": [
+          "dict",
+          2
+        ],
+        "c-19": [
+          "dict",
+          2
+        ],
+        "c-20": [
+          "dict",
+          2
+        ],
+        "c-21": [
+          "dict",
+          2
+        ],
+        "c-22": [
+          "dict",
+          2
+        ],
+        "c-23": [
+          "dict",
+          2
+        ],
+        "c-24": [
+          "dict",
+          2
+        ],
+        "c-25": [
+          "dict",
+          2
+        ],
+        "c-26": [
+          "dict",
+          2
+        ],
+        "c-27": [
+          "dict",
+          2
+        ],
+        "c-28": [
+          "dict",
+          2
+        ],
+        "c-29": [
+          "dict",
+          2
+        ],
+        "c-30": [
+          "dict",
+          2
+        ],
+        "c-31": [
+          "dict",
+          2
+        ],
+        "c-32": [
+          "dict",
+          2
+        ],
+        "c-33": [
+          "dict",
+          2
+        ],
+        "c-34": [
+          "dict",
+          2
+        ],
+        "c-35": [
+          "dict",
+          2
+        ],
+        "c-36": [
+          "dict",
+          2
+        ],
+        "c-37": [
+          "dict",
+          2
+        ],
+        "c-38": [
+          "dict",
+          2
+        ],
+        "c-39": [
+          "dict",
+          2
+        ],
+        "c-40": [
+          "dict",
+          2
+        ],
+        "c-41": [
+          "dict",
+          2
+        ],
+        "c-42": [
+          "dict",
+          2
+        ],
+        "c-43": [
+          "dict",
+          2
+        ]
+      },
+      "units": {
+        "number": [
+          "dict",
+          2
+        ],
+        "rate": [
+          "dict",
+          2
+        ],
+        "segment": [
+          "dict",
+          2
+        ],
+        "shares": [
+          "dict",
+          2
+        ],
+        "usd": [
+          "dict",
+          2
+        ],
+        "usdPerShare": [
+          "dict",
+          2
+        ]
+      },
+      "namespace_environments": {
+        "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445": [
+          "dict",
+          19
+        ]
+      },
+      "xml_style_attributes": {}
+    },
+    "required_anchor_columns": {
+      "type": "list",
+      "length": 2,
+      "first_shape": {
+        "type": "str",
+        "length": 10
+      }
+    },
+    "required_anchors": {
+      "type": "list",
+      "length": 5,
+      "first_shape": {
+        "type": "list",
+        "length": 2,
+        "first_shape": {
+          "type": "int",
+          "length": null
+        }
+      }
+    }
+  },
+  "read_ranges": [
+    {
+      "file": "prompt.txt",
+      "start_byte": 0,
+      "end_byte": 3059,
+      "complete": true
+    },
+    {
+      "file": "input.json",
+      "start_character": 0,
+      "end_character": 100000,
+      "emitted_without_tool_truncation_pending_check": false,
+      "note": "exec outer output truncated; whole range reread in halves"
+    },
+    {
+      "file": "input.json",
+      "start_character": 0,
+      "end_character": 50000,
+      "complete": false,
+      "note": "outer result contained truncation marker; superseded by full lossless compact sequential read"
+    }
+  ],
+  "tool_calls_conservative": 58,
+  "ordinary_messages": 0,
+  "lossless_representation": {
+    "characters": 731687,
+    "sha256_utf8": "5d3ebf545c49d7da71fb9ce7e0351b163732b6d9a4a8c1419d1246dae990e09c",
+    "roundtrip_equal": true,
+    "transform": "JSON whitespace removed only; all scalar values, array order, shared dictionaries and columns preserved"
+  },
+  "compact_read_ranges": [
+    {
+      "start_character": 0,
+      "end_character": 35000,
+      "complete": true
+    },
+    {
+      "start_character": 35000,
+      "end_character": 70000,
+      "complete": true
+    },
+    {
+      "start_character": 70000,
+      "end_character": 105000,
+      "complete": true
+    },
+    {
+      "start_character": 105000,
+      "end_character": 140000,
+      "complete": true
+    },
+    {
+      "start_character": 140000,
+      "end_character": 175000,
+      "complete": true
+    },
+    {
+      "start_character": 175000,
+      "end_character": 210000,
+      "complete": true
+    },
+    {
+      "start_character": 210000,
+      "end_character": 245000,
+      "complete": true
+    },
+    {
+      "start_character": 245000,
+      "end_character": 280000,
+      "complete": true
+    },
+    {
+      "start_character": 280000,
+      "end_character": 315000,
+      "complete": true
+    },
+    {
+      "start_character": 315000,
+      "end_character": 350000,
+      "complete": true
+    },
+    {
+      "start_character": 350000,
+      "end_character": 385000,
+      "complete": true
+    },
+    {
+      "start_character": 385000,
+      "end_character": 420000,
+      "complete": true
+    },
+    {
+      "start_character": 420000,
+      "end_character": 455000,
+      "complete": true
+    },
+    {
+      "start_character": 455000,
+      "end_character": 490000,
+      "complete": true
+    },
+    {
+      "start_character": 490000,
+      "end_character": 525000,
+      "complete": true
+    },
+    {
+      "start_character": 525000,
+      "end_character": 560000,
+      "complete": true
+    },
+    {
+      "start_character": 560000,
+      "end_character": 595000,
+      "complete": true
+    },
+    {
+      "start_character": 595000,
+      "end_character": 630000,
+      "complete": true
+    },
+    {
+      "start_character": 630000,
+      "end_character": 665000,
+      "complete": true
+    },
+    {
+      "start_character": 665000,
+      "end_character": 700000,
+      "complete": true
+    },
+    {
+      "start_character": 700000,
+      "end_character": 731687,
+      "complete": true
+    }
+  ],
+  "request_message_checks": {
+    "system_equals_prompt": true,
+    "user_equals_input": true
+  },
+  "provided_measurement": {
+    "request_sha256": "b126b60f89d7be3a68afb0e2a23914fdf22bcad85c8a428a72eb1dac7e35f844",
+    "request_bytes": 766124,
+    "rendered_prompt_sha256": "098e6a49e601cc72123a061c16c782202704b5ca311ef88c0be8ab62a27fa531",
+    "rendered_prompt_bytes": 737527,
+    "input_tokens": 195392,
+    "output_reserve_tokens": 4096,
+    "context_tokens": 199488,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 4096
+    }
+  },
+  "input_full_lossless_read_complete": true,
+  "final_read_status": "Complete lossless compact input, system prompt and measurement consumed; earlier truncations superseded",
+  "ordinary_messages_total_including_final": 1,
+  "completion_utc": "2026-10-03T10:16:16.261135+00:00",
+  "logged_elapsed_seconds": 737.469191,
+  "response_generated_once": true,
+  "response_raw_bytes_preserved": true
+}

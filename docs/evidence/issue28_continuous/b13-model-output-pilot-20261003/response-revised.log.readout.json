@@ -1,0 +1,2482 @@
+{
+  "status": "OUTPUT_REFERENCE_LIMIT_REJECTED",
+  "response_sha256": "b5c10c4b693eb33dd88dd956c7057ae18613660f22c46d29e8d0e77c108c8d6a",
+  "reference_output_tokens": 4900,
+  "raw_answer_unchanged": {
+    "reviewed_unit_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "relevant": [
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "2025 overview; quarterly",
+        "scope": "Combined U.S. in-house/Flex microinverter manufacturing",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 809,
+            "quote": "combined manufacturing capacity of approximately five-million microinverters per quarter"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "AVAILABLE_CAPACITY",
+            "source_value": "approximately five-million",
+            "unit": "microinverters per quarter",
+            "period": "per quarter"
+          }
+        ],
+        "unresolved": [
+          "Availability in each 2025 quarter unspecified."
+        ]
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "November 2025 commencement; filing properties",
+        "scope": "Arlington, Texas in-house manufacturing/warehouse, formerly Salcomp",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 282,
+            "quote": "we commenced Enphase manufacturing at our Arlington, Texas facility"
+          },
+          {
+            "unit_index": 4,
+            "kind": "B",
+            "source_index": 1560,
+            "quote": "the Company commenced in-house manufacturing at the Texas facility"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 737,
+            "quote": "Manufacturing facility and warehouse facilityArlington, U.S.Leased227,344Jan-2031"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "OTHER",
+            "source_value": "227,344",
+            "unit": "approximate square feet",
+            "period": "Filing properties listing"
+          }
+        ],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Added by filing; dates unspecified",
+        "scope": "South Carolina and Texas manufacturing sites",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 282,
+            "quote": "added several new production lines across the two sites"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "OTHER",
+            "source_value": "several",
+            "unit": "new production lines",
+            "period": "Dates unspecified"
+          }
+        ],
+        "unresolved": [
+          "Exact count and line capacities unspecified."
+        ]
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current arrangements",
+        "scope": "Certain IQ microinverters/batteries, EV chargers, IQ Gateway; Flex, Salcomp India, Sunwoda",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 281,
+            "quote": "We outsource the manufacturing of some of our products to third-party contract manufacturers."
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 420,
+            "quote": "We outsource the manufacturing of some of our products to third-party contract manufacturers."
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 834,
+            "quote": "We outsource some of our manufacturing to third-party contract manufacturers"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current footprint",
+        "scope": "Significant U.S. relocation; limited China/India contract manufacturing; imported components",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 306,
+            "quote": "continuing to utilize contract manufacturing in China and India"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 410,
+            "quote": "retaining limited contract manufacturing in China and India"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 818,
+            "quote": "continuing to utilize contract manufacturing in China and India"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current sourcing; alternatives being sought",
+        "scope": "LFP battery cells exclusively sourced from Chinese vendors; alternative expertise/capacity challenging",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 307,
+            "quote": "supplied exclusively by two vendors located in China"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 410,
+            "quote": "supplied solely via our two suppliers in China"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 819,
+            "quote": "supplied exclusively by two vendors located in China"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "OTHER",
+            "source_value": "two",
+            "unit": "Chinese LFP-cell vendors",
+            "period": "Current sourcing"
+          }
+        ],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Foreseeable future; management belief",
+        "scope": "Capacity relative to anticipated product demand",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 834,
+            "quote": "sufficient production capacity to meet the anticipated demand"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Forward-looking expectations",
+        "scope": "Quarterly microinverter production capability",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 146,
+            "quote": "our expectations about the number of microinverter units that can be produced per quarter"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Prospective market expansion",
+        "scope": "Manufacturing management",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 443,
+            "quote": "our ability to manage manufacturing capacity and production"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase",
+        "time": "Historically; periods unspecified",
+        "scope": "Capacity/material/logistics/labor/customer/facility/process constraints reduced yields and production capacity",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 454,
+            "quote": "have historically caused, and may in the future cause, reduced manufacturing yields"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Affected products, facilities and loss magnitude unspecified."
+        ]
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future",
+        "scope": "Manufacturing yield/capacity risks from capacity/material/labor/logistics/process constraints",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 454,
+            "quote": "may in the future cause, reduced manufacturing yields"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 643,
+            "quote": "quality control or yield problems in our manufacturing operations"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Hypothetical increased rejection/rework",
+        "scope": "Manufacturing quality control; yields and capacity",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 454,
+            "quote": "would result in our experiencing lower yields, gross profit and production capacity"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase",
+        "time": "Past; periods unspecified",
+        "scope": "Manufacturing delays/disruptions/quality problems",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 452,
+            "quote": "We have in the past and may in the future experience delays, disruptions or quality control problems"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase",
+        "time": "From time to time in the past",
+        "scope": "New-product introduction; temporary product-line suspension",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 455,
+            "quote": "has from time to time caused, and may in the future cause, temporary suspension of product lines"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future",
+        "scope": "Manufacturing problems; shipment delays",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 170,
+            "quote": "Manufacturing problems could result in delays in product shipments"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 449,
+            "quote": "Manufacturing problems could result in delays in product shipments"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 452,
+            "quote": "may in the future experience delays, disruptions or quality control problems"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future process changes/new-product introduction",
+        "scope": "Production errors and temporary line suspension/delay",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 452,
+            "quote": "requiring a temporary suspension or delay in our production line"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 455,
+            "quote": "may in the future cause, temporary suspension of product lines"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future manufacturer problems/unavailability",
+        "scope": "Contract production volumes/quality; interrupted supply to customers",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 165,
+            "quote": "our business and operations could be disrupted if we encounter problems with these contract manufacturers"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 419,
+            "quote": "our business and operations could be disrupted if we encounter problems with these contract manufacturers"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 423,
+            "quote": "Any significant interruption in manufacturing would require us to reduce our supply of products"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current vulnerability",
+        "scope": "Small contract-manufacturer group; possible capacity constraints/yield-control limitations",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 421,
+            "quote": "makes us vulnerable to possible capacity constraints"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Current contractual conditions",
+        "scope": "Supply not committed for a period or quantity",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 421,
+            "quote": "not obligated to supply products to us for any period, in any specified quantity"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Future constrained supply",
+        "scope": "Enphase orders may lose priority relative to other customers",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 422,
+            "quote": "fulfilling our orders may not be considered a priority"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and its component suppliers",
+        "time": "Future component-sourcing failure",
+        "scope": "Sole/limited-source ASICs and lithium-ion batteries; production cessation and delivery disruption",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 167,
+            "quote": "If we are unable to source these components and products on a timely basis"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 430,
+            "quote": "If we are unable to source these components and products on a timely basis"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 431,
+            "quote": "stop producing our components"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Future raw-material sourcing/cost constraints",
+        "scope": "Manufacturing/packaging; copper, aluminum, silicon, petroleum inputs; output timing/customer supply",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 168,
+            "quote": "production time and product costs could increase"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 434,
+            "quote": "production time and product costs could increase"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 435,
+            "quote": "suppliers may extend lead times, limit supplies or increase prices due to capacity constraints"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 834,
+            "quote": "shortages in the supply of certain key raw materials could adversely affect our ability"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Potential rejection of nonconforming materials",
+        "scope": "Output declines/delays",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 435,
+            "quote": "reject raw materials that do not meet our specifications, resulting in potential delays or declines in output"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Future facility/component disruption",
+        "scope": "Equipment/material/process/climate/geopolitical/health failures; yields and shipments",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 453,
+            "quote": "could adversely impact manufacturing yields or delay product shipments"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Future disasters/health/technical events",
+        "scope": "Global facilities/infrastructure/supply-chain damage, closure or interruption",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 557,
+            "quote": "could disrupt our supply chain, result in damage to or closures of our facilities"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 691,
+            "quote": "Our worldwide operations could be subject to natural disasters"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 695,
+            "quote": "damage or destroy any part of our facilities or those of our contract manufacturer"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future adverse country conditions",
+        "scope": "International production interruptions and export restrictions",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 694,
+            "quote": "production delays, general business interruptions, delays from difficulties in obtaining export licenses"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Adverse intellectual-property outcome",
+        "scope": "Manufacturing products embodying asserted rights may stop",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 515,
+            "quote": "stop manufacturing, selling, incorporating or using products that embody the asserted intellectual property"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current planning method",
+        "scope": "Production based on customer-demand estimates",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 595,
+            "quote": "We manufacture our products according to our estimates of customer demand."
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Future demand/production forecasting errors",
+        "scope": "Underestimated demand: shortages; overestimated requirements: excess components/inventory",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 190,
+            "quote": "product shortages, delays in product shipment or excess product inventory"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 594,
+            "quote": "product shortages, delays in product shipment or excess product inventory"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 596,
+            "quote": "if we overestimate our production requirements, we or our contract manufacturers may purchase excess components and build excess inventory"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 655,
+            "quote": "forecast our customer demand and manufacturing requirements, and manage our inventory"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase/solar equipment vendors",
+        "time": "Past; periods unspecified",
+        "scope": "Supply-chain/macroeconomic conditions impaired meeting end-customer needs",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 398,
+            "quote": "have caused and may continue to cause various negative effects, including an inability to meet the needs"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Physical production loss versus other causes not allocated."
+        ]
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase/solar equipment vendors",
+        "time": "Future",
+        "scope": "Supply-chain/macroeconomic conditions may impair meeting end-customer needs",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 398,
+            "quote": "may continue to cause various negative effects, including an inability to meet the needs"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "No specific production restriction quantified."
+        ]
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase's suppliers/partners",
+        "time": "Prospective macroeconomic weakness",
+        "scope": "Partner manufacturing capability",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 378,
+            "quote": "ability to meet development commitments and manufacturing capability"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Solar PV industry",
+        "time": "Prospective growth conditions",
+        "scope": "Production raw-material/component availability",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 391,
+            "quote": "key raw materials and components used in the production of solar PV systems"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Industry context does not establish Enphase factory capacity."
+        ]
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future expanded tariffs/trade barriers",
+        "scope": "Imported components and manufacturing at competitive cost",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 308,
+            "quote": "source necessary components, manufacture products at competitive cost"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 410,
+            "quote": "could harm our ability to obtain necessary product components"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 822,
+            "quote": "source necessary components, manufacture products at competitive cost"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Prospective performance condition",
+        "scope": "Timely, cost-effective manufacturing/delivery meeting customer requirements",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 641,
+            "quote": "manufacture and deliver products to our customers in a timely and cost-effective manner"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "Enphase",
+        "time": "FY2025 and FY2024",
+        "scope": "Microinverters sold; manufacturing origins unspecified",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 883,
+            "quote": "we sold approximately 6.4 million microinverter units and shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "approximately 6.4 million",
+            "unit": "microinverter units sold",
+            "period": "Year ended December 31, 2025"
+          },
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "approximately 6.5 million",
+            "unit": "microinverter units",
+            "period": "Year ended December 31, 2024"
+          }
+        ],
+        "unresolved": []
+      },
+      {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "Enphase",
+        "time": "FY2025 and FY2024",
+        "scope": "IQ Battery shipments",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 883,
+            "quote": "shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "706.1",
+            "unit": "MWh of IQ Batteries shipped",
+            "period": "Year ended December 31, 2025"
+          },
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "521",
+            "unit": "MWh of IQ Batteries shipped",
+            "period": "Year ended December 31, 2024"
+          }
+        ],
+        "unresolved": []
+      },
+      {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "Enphase",
+        "time": "Cumulative through December 31, 2025",
+        "scope": "Worldwide microinverters shipped",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 202,
+            "quote": "shipped approximately 86.4 million microinverters"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 804,
+            "quote": "shipped approximately 86.4 million microinverters"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "approximately 86.4 million",
+            "unit": "microinverters shipped",
+            "period": "Cumulative through December 31, 2025"
+          }
+        ],
+        "unresolved": []
+      },
+      {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Applicability period unresolved",
+        "scope": "All product assembly/final testing said to be in third-party China/India facilities",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 691,
+            "quote": "all product assembly and final testing of our products"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Conflicts with explicit Texas in-house commencement and U.S. footprint; no invented carve-out."
+        ]
+      }
+    ],
+    "required_assessments": [
+      {
+        "anchor_index": 0,
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "relevant_indexes": [
+          8
+        ],
+        "reason": "443: prospective manufacturing-management condition."
+      },
+      {
+        "anchor_index": 1,
+        "kind": "HISTORICAL_STATEMENT",
+        "relevant_indexes": [
+          9,
+          10,
+          11
+        ],
+        "reason": "454: historical constraints, future constraints and conditional rejection/rework remain distinct."
+      },
+      {
+        "anchor_index": 2,
+        "kind": "CAPACITY_QUALITATIVE",
+        "relevant_indexes": [
+          0
+        ],
+        "reason": "809: combined domestic quarterly physical capacity."
+      },
+      {
+        "anchor_index": 3,
+        "kind": "CAPACITY_QUALITATIVE",
+        "relevant_indexes": [
+          6,
+          21
+        ],
+        "reason": "834: qualitative future capacity sufficiency; separate conditional material-shortage restriction."
+      },
+      {
+        "anchor_index": 4,
+        "kind": "OTHER_CONTEXT",
+        "relevant_indexes": [],
+        "reason": "1022: inventory-cost allocation policy, not observed low utilization or measured physical output/capacity; repeated in 1398."
+      }
+    ],
+    "unresolved": [
+      "Source subset only; no company-level absence conclusion. Sales, shipments, product/installed storage or power ratings, money, floor area, line/vendor counts and accounting normal-utilization policy are not measured actual production. No arithmetic, annualization or worldwide extension of U.S. quarterly capacity. Same-facility, same-period actual output remains unresolved. Historical/conditional risk statements do not establish FY2025 measured losses. Native units 7/8 and shared dictionaries were read; unrelated financial/governance facts and individual product specifications are not production-capacity proposals."
+    ]
+  },
+  "resolved_proposals": [
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "2025 overview; quarterly",
+        "scope": "Combined U.S. in-house/Flex microinverter manufacturing",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 809,
+            "quote": "combined manufacturing capacity of approximately five-million microinverters per quarter"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "AVAILABLE_CAPACITY",
+            "source_value": "approximately five-million",
+            "unit": "microinverters per quarter",
+            "period": "per quarter"
+          }
+        ],
+        "unresolved": [
+          "Availability in each 2025 quarter unspecified."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 809,
+          "quote": "combined manufacturing capacity of approximately five-million microinverters per quarter",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "November 2025 commencement; filing properties",
+        "scope": "Arlington, Texas in-house manufacturing/warehouse, formerly Salcomp",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 282,
+            "quote": "we commenced Enphase manufacturing at our Arlington, Texas facility"
+          },
+          {
+            "unit_index": 4,
+            "kind": "B",
+            "source_index": 1560,
+            "quote": "the Company commenced in-house manufacturing at the Texas facility"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 737,
+            "quote": "Manufacturing facility and warehouse facilityArlington, U.S.Leased227,344Jan-2031"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "OTHER",
+            "source_value": "227,344",
+            "unit": "approximate square feet",
+            "period": "Filing properties listing"
+          }
+        ],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 282,
+          "quote": "we commenced Enphase manufacturing at our Arlington, Texas facility",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 4,
+          "kind": "B",
+          "source_index": 1560,
+          "quote": "the Company commenced in-house manufacturing at the Texas facility",
+          "original_unit_id": "sha256:270e5d5d6f8307066f62ef93e9e542c612e8b09e4ca1ba393cbea6aadbd6e2ad",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 737,
+          "quote": "Manufacturing facility and warehouse facilityArlington, U.S.Leased227,344Jan-2031",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Added by filing; dates unspecified",
+        "scope": "South Carolina and Texas manufacturing sites",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 282,
+            "quote": "added several new production lines across the two sites"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "OTHER",
+            "source_value": "several",
+            "unit": "new production lines",
+            "period": "Dates unspecified"
+          }
+        ],
+        "unresolved": [
+          "Exact count and line capacities unspecified."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 282,
+          "quote": "added several new production lines across the two sites",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current arrangements",
+        "scope": "Certain IQ microinverters/batteries, EV chargers, IQ Gateway; Flex, Salcomp India, Sunwoda",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 281,
+            "quote": "We outsource the manufacturing of some of our products to third-party contract manufacturers."
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 420,
+            "quote": "We outsource the manufacturing of some of our products to third-party contract manufacturers."
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 834,
+            "quote": "We outsource some of our manufacturing to third-party contract manufacturers"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 281,
+          "quote": "We outsource the manufacturing of some of our products to third-party contract manufacturers.",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 420,
+          "quote": "We outsource the manufacturing of some of our products to third-party contract manufacturers.",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 834,
+          "quote": "We outsource some of our manufacturing to third-party contract manufacturers",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current footprint",
+        "scope": "Significant U.S. relocation; limited China/India contract manufacturing; imported components",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 306,
+            "quote": "continuing to utilize contract manufacturing in China and India"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 410,
+            "quote": "retaining limited contract manufacturing in China and India"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 818,
+            "quote": "continuing to utilize contract manufacturing in China and India"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 306,
+          "quote": "continuing to utilize contract manufacturing in China and India",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 410,
+          "quote": "retaining limited contract manufacturing in China and India",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 818,
+          "quote": "continuing to utilize contract manufacturing in China and India",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current sourcing; alternatives being sought",
+        "scope": "LFP battery cells exclusively sourced from Chinese vendors; alternative expertise/capacity challenging",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 307,
+            "quote": "supplied exclusively by two vendors located in China"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 410,
+            "quote": "supplied solely via our two suppliers in China"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 819,
+            "quote": "supplied exclusively by two vendors located in China"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "OTHER",
+            "source_value": "two",
+            "unit": "Chinese LFP-cell vendors",
+            "period": "Current sourcing"
+          }
+        ],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 307,
+          "quote": "supplied exclusively by two vendors located in China",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 410,
+          "quote": "supplied solely via our two suppliers in China",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 819,
+          "quote": "supplied exclusively by two vendors located in China",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Foreseeable future; management belief",
+        "scope": "Capacity relative to anticipated product demand",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 834,
+            "quote": "sufficient production capacity to meet the anticipated demand"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 834,
+          "quote": "sufficient production capacity to meet the anticipated demand",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Forward-looking expectations",
+        "scope": "Quarterly microinverter production capability",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 146,
+            "quote": "our expectations about the number of microinverter units that can be produced per quarter"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 146,
+          "quote": "our expectations about the number of microinverter units that can be produced per quarter",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Prospective market expansion",
+        "scope": "Manufacturing management",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 443,
+            "quote": "our ability to manage manufacturing capacity and production"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 443,
+          "quote": "our ability to manage manufacturing capacity and production",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase",
+        "time": "Historically; periods unspecified",
+        "scope": "Capacity/material/logistics/labor/customer/facility/process constraints reduced yields and production capacity",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 454,
+            "quote": "have historically caused, and may in the future cause, reduced manufacturing yields"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Affected products, facilities and loss magnitude unspecified."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 454,
+          "quote": "have historically caused, and may in the future cause, reduced manufacturing yields",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future",
+        "scope": "Manufacturing yield/capacity risks from capacity/material/labor/logistics/process constraints",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 454,
+            "quote": "may in the future cause, reduced manufacturing yields"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 643,
+            "quote": "quality control or yield problems in our manufacturing operations"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 454,
+          "quote": "may in the future cause, reduced manufacturing yields",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 643,
+          "quote": "quality control or yield problems in our manufacturing operations",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Hypothetical increased rejection/rework",
+        "scope": "Manufacturing quality control; yields and capacity",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 454,
+            "quote": "would result in our experiencing lower yields, gross profit and production capacity"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 454,
+          "quote": "would result in our experiencing lower yields, gross profit and production capacity",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase",
+        "time": "Past; periods unspecified",
+        "scope": "Manufacturing delays/disruptions/quality problems",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 452,
+            "quote": "We have in the past and may in the future experience delays, disruptions or quality control problems"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 452,
+          "quote": "We have in the past and may in the future experience delays, disruptions or quality control problems",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase",
+        "time": "From time to time in the past",
+        "scope": "New-product introduction; temporary product-line suspension",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 455,
+            "quote": "has from time to time caused, and may in the future cause, temporary suspension of product lines"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 455,
+          "quote": "has from time to time caused, and may in the future cause, temporary suspension of product lines",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future",
+        "scope": "Manufacturing problems; shipment delays",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 170,
+            "quote": "Manufacturing problems could result in delays in product shipments"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 449,
+            "quote": "Manufacturing problems could result in delays in product shipments"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 452,
+            "quote": "may in the future experience delays, disruptions or quality control problems"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 170,
+          "quote": "Manufacturing problems could result in delays in product shipments",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 449,
+          "quote": "Manufacturing problems could result in delays in product shipments",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 452,
+          "quote": "may in the future experience delays, disruptions or quality control problems",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future process changes/new-product introduction",
+        "scope": "Production errors and temporary line suspension/delay",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 452,
+            "quote": "requiring a temporary suspension or delay in our production line"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 455,
+            "quote": "may in the future cause, temporary suspension of product lines"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 452,
+          "quote": "requiring a temporary suspension or delay in our production line",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 455,
+          "quote": "may in the future cause, temporary suspension of product lines",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future manufacturer problems/unavailability",
+        "scope": "Contract production volumes/quality; interrupted supply to customers",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 165,
+            "quote": "our business and operations could be disrupted if we encounter problems with these contract manufacturers"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 419,
+            "quote": "our business and operations could be disrupted if we encounter problems with these contract manufacturers"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 423,
+            "quote": "Any significant interruption in manufacturing would require us to reduce our supply of products"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 165,
+          "quote": "our business and operations could be disrupted if we encounter problems with these contract manufacturers",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 419,
+          "quote": "our business and operations could be disrupted if we encounter problems with these contract manufacturers",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 423,
+          "quote": "Any significant interruption in manufacturing would require us to reduce our supply of products",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current vulnerability",
+        "scope": "Small contract-manufacturer group; possible capacity constraints/yield-control limitations",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 421,
+            "quote": "makes us vulnerable to possible capacity constraints"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 421,
+          "quote": "makes us vulnerable to possible capacity constraints",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Current contractual conditions",
+        "scope": "Supply not committed for a period or quantity",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 421,
+            "quote": "not obligated to supply products to us for any period, in any specified quantity"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 421,
+          "quote": "not obligated to supply products to us for any period, in any specified quantity",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Future constrained supply",
+        "scope": "Enphase orders may lose priority relative to other customers",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 422,
+            "quote": "fulfilling our orders may not be considered a priority"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 422,
+          "quote": "fulfilling our orders may not be considered a priority",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and its component suppliers",
+        "time": "Future component-sourcing failure",
+        "scope": "Sole/limited-source ASICs and lithium-ion batteries; production cessation and delivery disruption",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 167,
+            "quote": "If we are unable to source these components and products on a timely basis"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 430,
+            "quote": "If we are unable to source these components and products on a timely basis"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 431,
+            "quote": "stop producing our components"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 167,
+          "quote": "If we are unable to source these components and products on a timely basis",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 430,
+          "quote": "If we are unable to source these components and products on a timely basis",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 431,
+          "quote": "stop producing our components",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Future raw-material sourcing/cost constraints",
+        "scope": "Manufacturing/packaging; copper, aluminum, silicon, petroleum inputs; output timing/customer supply",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 168,
+            "quote": "production time and product costs could increase"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 434,
+            "quote": "production time and product costs could increase"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 435,
+            "quote": "suppliers may extend lead times, limit supplies or increase prices due to capacity constraints"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 834,
+            "quote": "shortages in the supply of certain key raw materials could adversely affect our ability"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 168,
+          "quote": "production time and product costs could increase",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 434,
+          "quote": "production time and product costs could increase",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 435,
+          "quote": "suppliers may extend lead times, limit supplies or increase prices due to capacity constraints",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 834,
+          "quote": "shortages in the supply of certain key raw materials could adversely affect our ability",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Potential rejection of nonconforming materials",
+        "scope": "Output declines/delays",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 435,
+            "quote": "reject raw materials that do not meet our specifications, resulting in potential delays or declines in output"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 435,
+          "quote": "reject raw materials that do not meet our specifications, resulting in potential delays or declines in output",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase's contract manufacturers",
+        "time": "Future facility/component disruption",
+        "scope": "Equipment/material/process/climate/geopolitical/health failures; yields and shipments",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 453,
+            "quote": "could adversely impact manufacturing yields or delay product shipments"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 453,
+          "quote": "could adversely impact manufacturing yields or delay product shipments",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Future disasters/health/technical events",
+        "scope": "Global facilities/infrastructure/supply-chain damage, closure or interruption",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 557,
+            "quote": "could disrupt our supply chain, result in damage to or closures of our facilities"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 691,
+            "quote": "Our worldwide operations could be subject to natural disasters"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 695,
+            "quote": "damage or destroy any part of our facilities or those of our contract manufacturer"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 557,
+          "quote": "could disrupt our supply chain, result in damage to or closures of our facilities",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 691,
+          "quote": "Our worldwide operations could be subject to natural disasters",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 695,
+          "quote": "damage or destroy any part of our facilities or those of our contract manufacturer",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future adverse country conditions",
+        "scope": "International production interruptions and export restrictions",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 694,
+            "quote": "production delays, general business interruptions, delays from difficulties in obtaining export licenses"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 694,
+          "quote": "production delays, general business interruptions, delays from difficulties in obtaining export licenses",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Adverse intellectual-property outcome",
+        "scope": "Manufacturing products embodying asserted rights may stop",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 515,
+            "quote": "stop manufacturing, selling, incorporating or using products that embody the asserted intellectual property"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 515,
+          "quote": "stop manufacturing, selling, incorporating or using products that embody the asserted intellectual property",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Current planning method",
+        "scope": "Production based on customer-demand estimates",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 595,
+            "quote": "We manufacture our products according to our estimates of customer demand."
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 595,
+          "quote": "We manufacture our products according to our estimates of customer demand.",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase and contract manufacturers",
+        "time": "Future demand/production forecasting errors",
+        "scope": "Underestimated demand: shortages; overestimated requirements: excess components/inventory",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 190,
+            "quote": "product shortages, delays in product shipment or excess product inventory"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 594,
+            "quote": "product shortages, delays in product shipment or excess product inventory"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 596,
+            "quote": "if we overestimate our production requirements, we or our contract manufacturers may purchase excess components and build excess inventory"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 655,
+            "quote": "forecast our customer demand and manufacturing requirements, and manage our inventory"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 190,
+          "quote": "product shortages, delays in product shipment or excess product inventory",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 594,
+          "quote": "product shortages, delays in product shipment or excess product inventory",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 596,
+          "quote": "if we overestimate our production requirements, we or our contract manufacturers may purchase excess components and build excess inventory",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 655,
+          "quote": "forecast our customer demand and manufacturing requirements, and manage our inventory",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "HISTORICAL_STATEMENT",
+        "subject": "Enphase/solar equipment vendors",
+        "time": "Past; periods unspecified",
+        "scope": "Supply-chain/macroeconomic conditions impaired meeting end-customer needs",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 398,
+            "quote": "have caused and may continue to cause various negative effects, including an inability to meet the needs"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Physical production loss versus other causes not allocated."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 398,
+          "quote": "have caused and may continue to cause various negative effects, including an inability to meet the needs",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase/solar equipment vendors",
+        "time": "Future",
+        "scope": "Supply-chain/macroeconomic conditions may impair meeting end-customer needs",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 398,
+            "quote": "may continue to cause various negative effects, including an inability to meet the needs"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "No specific production restriction quantified."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 398,
+          "quote": "may continue to cause various negative effects, including an inability to meet the needs",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase's suppliers/partners",
+        "time": "Prospective macroeconomic weakness",
+        "scope": "Partner manufacturing capability",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 378,
+            "quote": "ability to meet development commitments and manufacturing capability"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 378,
+          "quote": "ability to meet development commitments and manufacturing capability",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Solar PV industry",
+        "time": "Prospective growth conditions",
+        "scope": "Production raw-material/component availability",
+        "evidence": [
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 391,
+            "quote": "key raw materials and components used in the production of solar PV systems"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Industry context does not establish Enphase factory capacity."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 391,
+          "quote": "key raw materials and components used in the production of solar PV systems",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Future expanded tariffs/trade barriers",
+        "scope": "Imported components and manufacturing at competitive cost",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 308,
+            "quote": "source necessary components, manufacture products at competitive cost"
+          },
+          {
+            "unit_index": 1,
+            "kind": "B",
+            "source_index": 410,
+            "quote": "could harm our ability to obtain necessary product components"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 822,
+            "quote": "source necessary components, manufacture products at competitive cost"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 308,
+          "quote": "source necessary components, manufacture products at competitive cost",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 1,
+          "kind": "B",
+          "source_index": 410,
+          "quote": "could harm our ability to obtain necessary product components",
+          "original_unit_id": "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 822,
+          "quote": "source necessary components, manufacture products at competitive cost",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CONDITIONAL_OR_BOILERPLATE",
+        "subject": "Enphase",
+        "time": "Prospective performance condition",
+        "scope": "Timely, cost-effective manufacturing/delivery meeting customer requirements",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 641,
+            "quote": "manufacture and deliver products to our customers in a timely and cost-effective manner"
+          }
+        ],
+        "quantities": [],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 641,
+          "quote": "manufacture and deliver products to our customers in a timely and cost-effective manner",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "Enphase",
+        "time": "FY2025 and FY2024",
+        "scope": "Microinverters sold; manufacturing origins unspecified",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 883,
+            "quote": "we sold approximately 6.4 million microinverter units and shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "approximately 6.4 million",
+            "unit": "microinverter units sold",
+            "period": "Year ended December 31, 2025"
+          },
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "approximately 6.5 million",
+            "unit": "microinverter units",
+            "period": "Year ended December 31, 2024"
+          }
+        ],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 883,
+          "quote": "we sold approximately 6.4 million microinverter units and shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "Enphase",
+        "time": "FY2025 and FY2024",
+        "scope": "IQ Battery shipments",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 883,
+            "quote": "shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "706.1",
+            "unit": "MWh of IQ Batteries shipped",
+            "period": "Year ended December 31, 2025"
+          },
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "521",
+            "unit": "MWh of IQ Batteries shipped",
+            "period": "Year ended December 31, 2024"
+          }
+        ],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 883,
+          "quote": "shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "Enphase",
+        "time": "Cumulative through December 31, 2025",
+        "scope": "Worldwide microinverters shipped",
+        "evidence": [
+          {
+            "unit_index": 0,
+            "kind": "B",
+            "source_index": 202,
+            "quote": "shipped approximately 86.4 million microinverters"
+          },
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 804,
+            "quote": "shipped approximately 86.4 million microinverters"
+          }
+        ],
+        "quantities": [
+          {
+            "role": "SALES_OR_SHIPMENTS",
+            "source_value": "approximately 86.4 million",
+            "unit": "microinverters shipped",
+            "period": "Cumulative through December 31, 2025"
+          }
+        ],
+        "unresolved": []
+      },
+      "resolved_references": [
+        {
+          "unit_index": 0,
+          "kind": "B",
+          "source_index": 202,
+          "quote": "shipped approximately 86.4 million microinverters",
+          "original_unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "original_kind": "VISIBLE_BLOCK"
+        },
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 804,
+          "quote": "shipped approximately 86.4 million microinverters",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    },
+    {
+      "proposal": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "Enphase",
+        "time": "Applicability period unresolved",
+        "scope": "All product assembly/final testing said to be in third-party China/India facilities",
+        "evidence": [
+          {
+            "unit_index": 2,
+            "kind": "B",
+            "source_index": 691,
+            "quote": "all product assembly and final testing of our products"
+          }
+        ],
+        "quantities": [],
+        "unresolved": [
+          "Conflicts with explicit Texas in-house commencement and U.S. footprint; no invented carve-out."
+        ]
+      },
+      "resolved_references": [
+        {
+          "unit_index": 2,
+          "kind": "B",
+          "source_index": 691,
+          "quote": "all product assembly and final testing of our products",
+          "original_unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "original_kind": "VISIBLE_BLOCK"
+        }
+      ]
+    }
+  ],
+  "native_result_created": false,
+  "semantic_acceptance": false,
+  "full29unit_or_company_acceptance": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
