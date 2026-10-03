@@ -149,7 +149,9 @@ def _export_current(program, work, output, company, key, environment, processing
             args.extend(['--runtime-root', absolute(processing[field])])
     if processing.get('trust_root'):
         args.extend(['--processing-trust-root', absolute(processing['trust_root'])])
-    exported = _invoke(program, args, report_file=output/'stages/export-results.json', environment=environment)
+    controller = strict_json_file(path=work/'local-company.json').get('preparation_program_root')
+    exported = _invoke(absolute(controller) if controller else program, args,
+        report_file=output/'stages/export-results.json', environment=environment)
     if destination.is_dir():
         import shutil
         for name in ('metrics_matrix.csv', 'metric_evidence.csv', 'company-results.json'):

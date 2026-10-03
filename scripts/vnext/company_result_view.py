@@ -141,7 +141,10 @@ def _measurement_period(entry, manifest):
     """
     records = Path(entry['rows_root']).parent/'runs'/entry['metric_id']/'records.jsonl'
     expected = manifest.get('records_file_hash')
-    if not expected:
+    # Ordinary SUCCESSOR_RUN manifests retain the initial empty-stream hash;
+    # their append-only records are authenticated by native replay instead.
+    if not expected or (manifest.get('record_type') == 'SUCCESSOR_RUN'
+                        and expected == sha256_bytes(content=b'')):
         return {'measurement_period': None, 'measurement_period_status': 'NOT_AVAILABLE'}
     try:
         raw = records.read_bytes()

@@ -42,6 +42,13 @@ class CompanyLocalTest(unittest.TestCase):
             'catalog/r5/B13_capacity_disclosures_v1.md':'hash','catalog/metrics/B01_revenue.md':'hash'}}))
         self.assertFalse(local.native_run({'spec_file_hashes':{'catalog/fake/B13.md':'hash'}}))
 
+    def test_ordinary_initial_empty_manifest_hash_does_not_claim_records_are_invalid(self):
+        from scripts.vnext.company_result_view import _measurement_period
+        from scripts.vnext.canonical import sha256_bytes
+        record = _measurement_period({'rows_root':str(self.root/'rows'),'metric_id':'B01'},
+            {'record_type':'SUCCESSOR_RUN','records_file_hash':sha256_bytes(content=b'')})
+        self.assertEqual(record, {'measurement_period':None,'measurement_period_status':'NOT_AVAILABLE'})
+
     def test_relative_alias_rejected_before_resolving(self):
         target = self.root/'target'
         target.mkdir()
