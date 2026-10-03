@@ -1,0 +1,35 @@
+{
+ "record_type": "ISSUE_47_D04_PRE_CALL_REFERENCE_CHECKS",
+ "results": [
+  {
+   "case": "CONTROL",
+   "expected": "WRITTEN",
+   "got": "WRITTEN",
+   "as_expected": true
+  },
+  {
+   "case": "A_JUDGEMENT_IS_MISSING",
+   "expected": "D04_REFERENCE_CUE_NOT_JUDGED_EXACTLY_ONCE",
+   "got": "D04_REFERENCE_CUE_NOT_JUDGED_EXACTLY_ONCE",
+   "as_expected": true
+  },
+  {
+   "case": "THE_WALK_SKIPS_THE_BLOCKS",
+   "expected": "D04_REFERENCE_SEARCH_MISSED_A_REQUIRED_CANDIDATE",
+   "got": "D04_REFERENCE_SEARCH_MISSED_A_REQUIRED_CANDIDATE",
+   "as_expected": true
+  },
+  {
+   "case": "ASSESSMENT_WORDING_PRESENT",
+   "expected": "D04_REFERENCE_FOUND_ASSESSMENT_WORDING",
+   "got": "D04_REFERENCE_FOUND_ASSESSMENT_WORDING",
+   "as_expected": true
+  }
+ ],
+ "all_as_expected": true,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

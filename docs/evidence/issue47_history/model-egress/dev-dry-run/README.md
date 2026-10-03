@@ -69,6 +69,19 @@
 
 其余 14 个没有演练：每个 7.8 万到 19.4 万参考 token，开发上下文能否读完说明不了 DeepSeek 能否读完；内容方面，#28 的真实 D04 结果也没有经过语义验收（`semantic_correctness_verified: false`），#47 的 D04 往年结果付费后同样要两向阅读，不因为合同检查通过就接受。
 
+## D04 的付费前参照（2026-10-03，在任何付费回答之前写成）
+
+E01、D02 的参照在演练时就写好了；D04 只核了两个请求。付费回答要两向读，参照必须先于回答存在——看过回答再写的参照很容易与回答一致。`d04_reference.py` 读 16 个已批 D04 请求实际发出的消息（`dump_requests.py <目录> D04` 在运行包上的渲染，逐个对 `d04-inputs-index.json` 核摘要），遍历请求里作为申报内容提供的每个字符串（单元及其引用的共享来源字典，共约 590 万字符），搜两遍：
+
+- 持续经营评估会用的措辞（`going concern`、`substantial doubt`、`continue as a going`）：**16 个请求里 0 处**；
+- 粗心的回答可能读成评估的更宽线索（doubt、ability to continue、bankrupt、cease operations、chapter 11、next 12 months）：26 处，每一处都必须恰好落在一条记录下的判断里，否则脚本停下——没人判过的上下文不能默认无害。六条判断：酒店业主/特许经营者破产（Marriott 风险因素，讲的是别人）、一年内到期的合同金额（债务、过渡税、担保）、税务头寸、节目预付款分类、坏账准备（"doubtful" 一词）、Paramount 第 340 块（"ability to continue to attract … subscribers"，即流媒体用户获取风险）。
+
+**预期**（`d04-reference.json`）：三个位置都是"所提供的单元里没有披露持续经营疑虑"。付费回答如果对目标注册人给出 `DOUBT_DISCLOSED`、`DOUBT_ALLEVIATED` 或 `NO_DOUBT_DECLARATION`，就是错的——单元里没有任何评估措辞，定义也写明普通风险、到期表或无保留意见都不能代替评估；Paramount 请求 1 的必评块 340 只能归为 `VALUATION_OR_OTHER_MEANING`（定义自己举的例子就是"ability to continue recruiting"）或 `CONDITIONAL_OR_BOILERPLATE`，归为 `UNRESOLVED` 也算错（块本身足以判断）。把判过的线索按可接受类别列出来不算错，也不改变结果，只是定义不鼓励。
+
+**它看不到的**：用两种模式都不匹配的说法写出的疑虑；除命中处以外没有逐块通读；以及 DeepSeek 是否真的读了每个单元——一个长请求答"无发现"，与跳过单元的回答在这里分不开，合同的覆盖检查（每个单元都要作答）只能部分回答。
+
+`d04_reference_injections.py`（结果 `d04-reference-injections.json`）在内存里打破三处守卫：少一条判断、遍历跳过 blocks、单元里出现评估措辞——各自按名停下，对照写出参照。零调用。
+
 ## 没做的
 
 - 这只是一个开发上下文、一次回答；没有测同一请求多次回答是否稳定。
