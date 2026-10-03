@@ -1,0 +1,880 @@
+{
+ "record_type": "ISSUE_47_C02_QUALIFICATION_RATIONALES",
+ "for": "#28's reply on Issue #47, comment 5968966522",
+ "position": "pfizer:2022-12-31",
+ "filing": {
+  "form": "DEF 14A",
+  "accession": "0000078003-23-000040",
+  "filing_date": "2023-03-16",
+  "primary_document": "pfe-20230315.htm",
+  "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000040/pfe-20230315.htm",
+  "raw_asset_id": "sha256:cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626",
+  "document_id": "sha256:399838af038cdf04e554a9d7e7e5d6e2c9c580e02e8de06b09c493dc9dd862aa",
+  "source_reference_id": "sha256:4f5d3d72a0c8b1089665903d74375e30d367eb74afe65d342b944b7ba18390d5"
+ },
+ "input": {
+  "input_sha256": "6770d51db7964cc1f9d0c9223e55c2f7d3c772ea7c036338d7bda42a5d06e934",
+  "task_sha256": "eb9ac6f4592dc8ea93d92a99198a4f1a53ae12c42545d376a8f31e134370203b",
+  "answer_sha256": "aad0dee49dccd3afc06c35c221a816626dcb5d79f116f380a02182d5ad0d3037",
+  "how_to_rebuild": "prepare_inputs.py on a root restored from the committed SEC export; files must match inputs-index.json"
+ },
+ "reading": {
+  "file": "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
+  "reader": "independent subagent reading, 2026-10-01 (one packet)",
+  "read_as": "independent subagent reading: a fresh agent given c02-older-years/reader-brief.md and the packet, not the selector's rules or any earlier reading",
+  "matched_by": "block index and the block text hash the reading recorded"
+ },
+ "disputed_blocks": [
+  413,
+  3131,
+  3137,
+  3138
+ ],
+ "statements": [
+  {
+   "statement": {
+    "kind": "member_qualification",
+    "statement": "The independent Directors assessed Shantanu Narayen as well-qualified to continue serving as Lead Independent Director.",
+    "source_blocks": [
+     723,
+     724,
+     3140
+    ],
+    "stated_time": "December 2022"
+   },
+   "disputed_blocks": [],
+   "cited_blocks": [
+    {
+     "block": 723,
+     "text": "In December 2022, following a thorough review by the Governance & Sustainability Committee, the independent Directors evaluated the Board’s leadership structure and considered the factors described above. The Committee, along with the other independent Directors, determined that continuing to combine the roles of Chairman and CEO would be in the best interests of the company and its shareholders. The company can more effectively execute its strategies with a Chair that has deep scientific and industry expertise, along with extensive company knowledge. The combined role, coupled with the strong Lead Independent Director, has enabled the Board to be responsive to challenges and opportunities as they continue to arise. This structure served the Board and Pfizer well in 2022. Dr. Bourla’s 25-plus years of solid leadership and business acumen proved to be especially beneficial during Pfizer’s evolution into a more focused, science-driven global biopharmaceutical company, well-positioned to lead as a scientific powerhouse, and deliver meaningful value to patients around the world. Under his leadership, Pfizer delivered very strong results during 2022 and is well-positioned for future potential long-term growth.",
+     "text_sha256": "sha256:48646e279987196b981fa4824b26cbb6616bb37ba90324211698c7d60d23d6b5",
+     "raw_start_byte": 480481,
+     "raw_end_byte": 481727,
+     "raw_span_sha256": "68882a6542eaa4051a598db5c0f672d7f35a973f6bf6b9bfa45eeee469fba391",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "Independent Directors decided to keep the Chairman and CEO roles combined in Bourla; the rest is rationale",
+      "listed_as": "pool_facts"
+     }
+    },
+    {
+     "block": 724,
+     "text": "The independent Directors also re-elected Mr. Shantanu Narayen as Lead Independent Director. During Mr. Narayen’s ten years as a Director and five years as Lead Independent Director, he has consistently demonstrated strong leadership skills and risk oversight abilities in addition to deep expertise in technology and product innovation. His skills, global leadership experience, and commitment to the Board make him well-qualified to continue to serve in this role. Accordingly, the independent Directors remain confident in Mr. Narayen’s abilities to continue as Lead Independent Director.",
+     "text_sha256": "sha256:4319fecdd6a2d76dec37e6d52f5698433586316fc88b8151577b4897031deb43",
+     "raw_start_byte": 481892,
+     "raw_end_byte": 482624,
+     "raw_span_sha256": "14f991e59cd10ae538e915e213e2ede482d2c0b40a719c1e0a19d27346c4f3c9",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "Independent Directors re-elected Narayen as Lead Independent Director; the rest is his tenure and qualifications",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 3140,
+     "text": "In addition, Mr. Narayen, who has served as Lead Independent Director since 2018, was recently re-elected by the Board’s independent Directors to continue serving as Lead Independent Director. During Mr. Narayen’s ten years as a Director and five years as Lead Independent Director, he has consistently demonstrated strong and independent leadership. His skills, strong independence, global leadership experience from his role at Adobe Inc., and commitment to the Board make him well-qualified to serve in this role.",
+     "text_sha256": "sha256:96b87c37bbfc5cda4bc009f036e30a3a7446e49fe29816c53373ec7d3bbb6d39",
+     "raw_start_byte": 2142951,
+     "raw_end_byte": 2143479,
+     "raw_span_sha256": "d3b6c7023b46c9e8efa88c61200351b21da270ec2718da34c9e29b1268c6b0fb",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "Narayen Lead Independent Director since 2018, re-elected by the independent Directors; the rest is tenure and qualifications",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  },
+  {
+   "statement": {
+    "kind": "member_qualification",
+    "statement": "The independent Directors based keeping Dr. Bourla as Chairman and CEO on their belief that he has extensive biopharmaceutical industry and regulatory knowledge and the leadership and vision necessary to lead the Board.",
+    "source_blocks": [
+     3131,
+     3136,
+     3137,
+     3138
+    ],
+    "stated_time": "late 2022"
+   },
+   "disputed_blocks": [
+    3131,
+    3137,
+    3138
+   ],
+   "cited_blocks": [
+    {
+     "block": 3131,
+     "text": "In late 2022, during the Board’s annual review of its leadership structure, the independent Directors considered the merits of separating, or continuing with the status quo, and combining the roles of Chairman and CEO, considering the company’s performance under the current operating and governance environment, executive leadership changes, and investor feedback. Notably, Pfizer has engaged with many of the company’s largest institutional investors over the years on the topic of board",
+     "text_sha256": "sha256:097a236f61195aa5f7663246a85ca4fe5360616d10931a642a03dd27629fa78e",
+     "raw_start_byte": 2137317,
+     "raw_end_byte": 2137825,
+     "raw_span_sha256": "df02e1ec6980de037cc2482085bfeca38e48bc7b8eea6a6dbff6cece9c246f1f",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3136,
+     "text": "Following the annual review by the Governance & Sustainability Committee and the other independent Directors, the independent Directors unanimously determined to maintain the current leadership structure, with Dr. Bourla as Chairman and CEO and Mr. Shantanu Narayen as Lead Independent Director. These determinations were based on the independent Directors’ belief that Dr. Bourla:",
+     "text_sha256": "sha256:d7f5ae86a9b2ff0aaf1b79ab2713dd013c93046f7a0b4a3bee717f895d515f81",
+     "raw_start_byte": 2140269,
+     "raw_end_byte": 2140660,
+     "raw_span_sha256": "b3c6efd87271414b07982fa8621a054740af6dff6b9e58757d61b2d5a0d81f8e",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "Independent Directors kept Bourla as Chairman and CEO and Narayen as Lead Independent Director",
+      "listed_as": "pool_facts"
+     }
+    },
+    {
+     "block": 3137,
+     "text": "•has extensive experience in and knowledge of the research-based biopharmaceutical industry and regulatory environment; and",
+     "text_sha256": "sha256:69ef29fb64f06bd67711767b6ff84a50397bf69698fa6b04d9c90078aef300f4",
+     "raw_start_byte": 2140847,
+     "raw_end_byte": 2141123,
+     "raw_span_sha256": "2f09c87f06c656a5ad8450c96fceb4a366bfd278808362be9ac0f8679cb3d433",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 3138,
+     "text": "•demonstrates the leadership and vision necessary to lead the Board and the company by driving scientific and commercial innovation and creating shareholder value.",
+     "text_sha256": "sha256:c61f00be33453bae25ded769d71041e073ddf912d40ab4f562ce56cd09c2cb4f",
+     "raw_start_byte": 2141328,
+     "raw_end_byte": 2141644,
+     "raw_span_sha256": "1471ce80ed1968ec0c1e56b39ec2c1b699cb6acfefad74da5fa16718e3ae7653",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    }
+   ]
+  },
+  {
+   "statement": {
+    "kind": "member_qualification",
+    "statement": "All Audit Committee members are financially literate and qualify as Audit Committee Financial Experts.",
+    "source_blocks": [
+     804,
+     820,
+     821
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "disputed_blocks": [],
+   "cited_blocks": [
+    {
+     "block": 804,
+     "text": "The Audit Committee",
+     "text_sha256": "sha256:251eedd856588deefbb3b347f7c00c8816d693bc0e17579b2aed19a2f5654e48",
+     "raw_start_byte": 528687,
+     "raw_end_byte": 528706,
+     "raw_span_sha256": "251eedd856588deefbb3b347f7c00c8816d693bc0e17579b2aed19a2f5654e48",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "Audit Committee page title",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 820,
+     "text": "•All Members are Independent and Financially Literate",
+     "text_sha256": "sha256:62697e6ec9f9649ea719912eaf3088a2e52fbd0854aae49d79f434babe263ae4",
+     "raw_start_byte": 538046,
+     "raw_end_byte": 538255,
+     "raw_span_sha256": "cd9c6b605e3174dcf3b148eb2d0a1d2989b6370a44933de0135200a2a964b223",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "All Audit members independent and financially literate",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 821,
+     "text": "•All Members qualify as “Audit Committee Financial Experts”",
+     "text_sha256": "sha256:455fff26fb8df2b2217535088e3b389dd5e164428ded76d45be45f51240d2d91",
+     "raw_start_byte": 538442,
+     "raw_end_byte": 538669,
+     "raw_span_sha256": "cdcaefbb64fa6e8b74ccc2b258cb6476f5baeaff4258904b2b2d218cdcc01c38",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "All Audit members are audit committee financial experts",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  },
+  {
+   "statement": {
+    "kind": "member_qualification",
+    "statement": "All Compensation Committee members are non-employee directors as defined in Rule 16b-3 under the Securities Exchange Act of 1934.",
+    "source_blocks": [
+     823,
+     838
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "disputed_blocks": [],
+   "cited_blocks": [
+    {
+     "block": 823,
+     "text": "The Compensation Committee",
+     "text_sha256": "sha256:18dff4249987e46b560d43a5825688804d4faf7dab59ad54e855f33a0f1cdd05",
+     "raw_start_byte": 540228,
+     "raw_end_byte": 540254,
+     "raw_span_sha256": "18dff4249987e46b560d43a5825688804d4faf7dab59ad54e855f33a0f1cdd05",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "Compensation Committee page title",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 838,
+     "text": "•All Members are “non-employee directors” as defined in Rule 16b-3 under the Securities Exchange Act of 1934",
+     "text_sha256": "sha256:d11b2341f387bb035431dd92f34c9c53d8473e1dbb97e89f9e65614ec566269c",
+     "raw_start_byte": 548243,
+     "raw_end_byte": 548519,
+     "raw_span_sha256": "c1eb496243d83f35e808317615818cf4c3f08bf1ed45fa8bd9df0b993aeca4af",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "All Compensation members are Rule 16b-3 non-employee directors (status determination)",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  },
+  {
+   "statement": {
+    "kind": "member_qualification",
+    "statement": "Based on evaluations and review of the current Board composition, the Governance & Sustainability Committee and the Board determined the criteria for Board membership have been satisfied and believe each nominee brings a strong and unique set of perspectives, experiences and skills.",
+    "source_blocks": [
+     364,
+     413
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "disputed_blocks": [
+    413
+   ],
+   "cited_blocks": [
+    {
+     "block": 364,
+     "text": "The Board and each Committee conduct annual evaluations to help ensure that each of its members individually, and the Board as a whole, continue to meet the criteria for Board membership. Based on these activities and their review of the current composition of the Board, the Governance & Sustainability Committee and the Board determined that the criteria for Board membership have been satisfied.",
+     "text_sha256": "sha256:51a02753a3c8b4f127594c54c9a624127f282306e979feeefb7ed830bafe9a3a",
+     "raw_start_byte": 259752,
+     "raw_end_byte": 260154,
+     "raw_span_sha256": "11be5f7a06de84544ee933f41f02b03151bb9e41f69cddc82ae5e583b1090477",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "NOT",
+      "why": "Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 413,
+     "text": "The Governance & Sustainability Committee and the Board believe that each nominee for Director brings a strong and unique set of perspectives, experiences and skills to Pfizer that creates an effective and well-functioning Board.",
+     "text_sha256": "sha256:4cb3fc1396cca50db8b1f2dc73d53e1871875ec2f71ca853be9e99c5f18b4c59",
+     "raw_start_byte": 289581,
+     "raw_end_byte": 289815,
+     "raw_span_sha256": "91717f8f7bc5e6be3c71fa1e70c1e18d88db6340c6f4d38571173409eeb1d300",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    }
+   ]
+  },
+  {
+   "statement": {
+    "kind": "member_qualification",
+    "statement": "The Governance & Sustainability Committee assessed the qualifications of Directors for Committee service and their independence, and determined all Directors comply with the Corporate Governance Principles and have sufficient time, energy and attention to serve on the Board.",
+    "source_blocks": [
+     894,
+     895,
+     897
+    ],
+    "stated_time": "2022 and early 2023"
+   },
+   "disputed_blocks": [],
+   "cited_blocks": [
+    {
+     "block": 894,
+     "text": "Governance & Sustainability Committee Report",
+     "text_sha256": "sha256:8d07632368270a471c10a9c218459ad8d45478dccce04f6e47e09f6c7ba441f8",
+     "raw_start_byte": 577563,
+     "raw_end_byte": 577611,
+     "raw_span_sha256": "571df7549a955a7234d74632c0949bb7ef8ae89ffd71de7bc2d0348e861b22f3",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 895,
+     "text": "The following are examples of how we worked to achieve the Board’s objectives to maintain and enhance Pfizer's record of excellence in corporate governance and Board oversight in 2022 and early 2023.",
+     "text_sha256": "sha256:dd317d63f821af31fef12eacc080737462d2083717965d7a4f1a4ed76a5fa817",
+     "raw_start_byte": 577776,
+     "raw_end_byte": 577981,
+     "raw_span_sha256": "fb35e9457bc0302f2809a57e3774e48e099c40b475516d76078e0a2874695709",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 897,
+     "text": "Board and Committee Matters: We assessed the Director’s qualifications for serving on various Committees and their independence. We also evaluated the effectiveness of the Board and its Committees and reviewed, among other factors, Director service on other boards and other commitments held by Directors. As a result, we determined that all Directors are in compliance with the company’s Corporate Governance Principles and have sufficient time, energy, and attention to effectively serve on our Board. In addition, the Committee reviewed the existing Board and Committee self-evaluation process to determine whether the Board should refine the process to include a third-party facilitator and individual Director evaluations, following which the Committee decided to use a third-party provider to conduct the Board and Committee evaluations in 2023. Additionally, the Committee reviewed and, where appropriate, recommended changes to our Corporate Governance Principles and other governance documents, including updating our Corporate Governance Principles to reflect that non-employee Directors will not be nominated for election to the Board after their 73rd birthday, except in the case of a non-employee Director with less than 15 years of service. In such a case, the Director will have a term limit of up to 15 years. We also reviewed and revised the non-employee Director compensation program, in consultation with Meridian Compensation Partners, LLC.",
+     "text_sha256": "sha256:ee025975f701e68cbfd0026462099b3af28452f94085fc5b681064e6d2c77f79",
+     "raw_start_byte": 578805,
+     "raw_end_byte": 580406,
+     "raw_span_sha256": "9552a50655c4dc8993209363aa1baf1345bff5e73ebb295d8eebbe6d733b10a8",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "NOT",
+      "why": "G&S report on assessment and evaluation process, overboarding compliance, retirement-age policy and director pay review; no composition outcome",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  }
+ ],
+ "passages": [
+  {
+   "first": 355,
+   "last": 364,
+   "what": "Item 1 - Election of Directors: the slate, the general criteria for Board membership and the annual evaluation against them",
+   "blocks": [
+    {
+     "block": 355,
+     "text": "All twelve members of our Board are standing for re-election. In an uncontested Director election, the number of votes cast “for” a Director nominee must exceed the number of votes cast “against” that nominee. Our Corporate Governance Principles contain detailed procedures to be followed in the event that one or more Directors do not receive a majority of the votes cast “for” his or her election at the Annual Meeting. Each nominee elected as a Director will continue in office until our next Annual Meeting and until his or her successor has been duly elected and qualified, or until a Director’s earlier death, resignation, removal or retirement. While we expect each nominee to be able to serve if elected, if any nominee is not able to serve, the persons appointed by the Board and named as proxies in the proxy materials or, if applicable, their substitutes (the Proxy Committee), may vote their proxies for substitute nominees, unless the Board chooses to reduce the number of Directors.",
+     "text_sha256": "sha256:68a3bd9f559da149c94dd52e2b143210d386397fca91746bbcac955d1f0b7a60",
+     "raw_start_byte": 255055,
+     "raw_end_byte": 256093,
+     "raw_span_sha256": "9ded646f10e098b302be2f363ce61108c12012697fd81abab290598c473d1836",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "All twelve Board members stand for re-election (size 12); the rest is the voting standard and substitute-nominee procedure",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 356,
+     "text": "Criteria for Board Membership",
+     "text_sha256": "sha256:8a3d15d20557e0baa87ae67d813a893fc433c697e427d14f0bc4848a21bff569",
+     "raw_start_byte": 256275,
+     "raw_end_byte": 256304,
+     "raw_span_sha256": "8a3d15d20557e0baa87ae67d813a893fc433c697e427d14f0bc4848a21bff569",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 357,
+     "text": "GENERAL CRITERIA",
+     "text_sha256": "sha256:22b61594d1597d1756cf807bf87a10b28f06fa12a905b094fd3f8c871625bc39",
+     "raw_start_byte": 256486,
+     "raw_end_byte": 256502,
+     "raw_span_sha256": "22b61594d1597d1756cf807bf87a10b28f06fa12a905b094fd3f8c871625bc39",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 358,
+     "text": "•Proven integrity and independence, with a record of substantial achievement in an area of relevance to Pfizer",
+     "text_sha256": "sha256:7835ae238725d2b1a91911dfcf5b456588ab45e082e5df19540c2d0f0a50b62f",
+     "raw_start_byte": 256707,
+     "raw_end_byte": 256970,
+     "raw_span_sha256": "d5e684281530da845c0f5bc4b1ad86833159e8c80c26bbae954d66bf8216e4c1",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 359,
+     "text": "•Ability and sufficient time, energy and attention to make a meaningful contribution to the Board’s advising, counseling and oversight roles",
+     "text_sha256": "sha256:326d3c363ea4b0f50ec14e5c17863fb3b3000eede179ecc234fe62cc66133ace",
+     "raw_start_byte": 257175,
+     "raw_end_byte": 257474,
+     "raw_span_sha256": "2043762268601f9d4e4148e130a948d8295e12f4a59ae2e5f7aa595a3a0c76ad",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 360,
+     "text": "•Prior or current leadership experience with major complex organizations, including within the scientific, government service, educational, finance, marketing, technology or not-for-profit sectors, with some members of the Board being widely recognized as leaders in the fields of medicine or biological sciences",
+     "text_sha256": "sha256:7e52d33d9d4a6fd60ee41b05f1d1a68f2298edf33d7e5385d47757ef67a41c16",
+     "raw_start_byte": 257679,
+     "raw_end_byte": 258144,
+     "raw_span_sha256": "1d1b0ab0dad46e73322c3ee42833a620ebf57ce68d34774cb65b5fc1eab033c3",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 361,
+     "text": "•Commitment to enhancing Pfizer’s long-term growth",
+     "text_sha256": "sha256:ce951c146db131aa705aa8b1ccf0058a098a0a58556f908b0584a3d410511758",
+     "raw_start_byte": 258349,
+     "raw_end_byte": 258558,
+     "raw_span_sha256": "43520d394a43876c76e0eb399c2ca46009ff37e56d0ba24b57b859893c9c45f7",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 362,
+     "text": "•Broad experience, diverse perspectives, and the ability to exercise sound judgment, and a judicious and critical temperament that will enable objective appraisal of management’s plans and programs",
+     "text_sha256": "sha256:cb46e8ed0a9d5cbcbe0e9c341a72de36737cc9aafdb96a4eaa1c2143946a8d6a",
+     "raw_start_byte": 258763,
+     "raw_end_byte": 259119,
+     "raw_span_sha256": "ee8028066e95e128c55cf3cf63bb5acc38328cbe7b911a8f2d4f523d0959b699",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 363,
+     "text": "•Diversity with respect to gender, age, race, ethnicity, background, professional experience and perspectives",
+     "text_sha256": "sha256:6f78931436da4299b784f26c29f1ff549ca38fdbd6b3a07e21539a7c5bd2263b",
+     "raw_start_byte": 259325,
+     "raw_end_byte": 259587,
+     "raw_span_sha256": "4d233f4e88b4abd0e07a03978085c25474759591f2613cbf5d18c3dd9705850b",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 364,
+     "text": "The Board and each Committee conduct annual evaluations to help ensure that each of its members individually, and the Board as a whole, continue to meet the criteria for Board membership. Based on these activities and their review of the current composition of the Board, the Governance & Sustainability Committee and the Board determined that the criteria for Board membership have been satisfied.",
+     "text_sha256": "sha256:51a02753a3c8b4f127594c54c9a624127f282306e979feeefb7ed830bafe9a3a",
+     "raw_start_byte": 259752,
+     "raw_end_byte": 260154,
+     "raw_span_sha256": "11be5f7a06de84544ee933f41f02b03151bb9e41f69cddc82ae5e583b1090477",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "NOT",
+      "why": "Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  },
+  {
+   "first": 412,
+   "last": 414,
+   "what": "Item 1 - Election of Directors: 'Our 2023 Director Nominees' and the head of the nominee table",
+   "blocks": [
+    {
+     "block": 412,
+     "text": "Our 2023 Director Nominees",
+     "text_sha256": "sha256:b38029159fec4074cddce1ff968bde85fa69ff1e6e1c7e686c27f3244b935c4d",
+     "raw_start_byte": 289390,
+     "raw_end_byte": 289416,
+     "raw_span_sha256": "b38029159fec4074cddce1ff968bde85fa69ff1e6e1c7e686c27f3244b935c4d",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 413,
+     "text": "The Governance & Sustainability Committee and the Board believe that each nominee for Director brings a strong and unique set of perspectives, experiences and skills to Pfizer that creates an effective and well-functioning Board.",
+     "text_sha256": "sha256:4cb3fc1396cca50db8b1f2dc73d53e1871875ec2f71ca853be9e99c5f18b4c59",
+     "raw_start_byte": 289581,
+     "raw_end_byte": 289815,
+     "raw_span_sha256": "91717f8f7bc5e6be3c71fa1e70c1e18d88db6340c6f4d38571173409eeb1d300",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 414,
+     "text": "NameAgeIndependentDirector SinceAuditCompensation",
+     "text_sha256": "sha256:3b4d2988db109b7b576189cc7926f2c8e7508daf5b3e98966ae53c0afa6b0ea7",
+     "raw_start_byte": 291815,
+     "raw_end_byte": 293054,
+     "raw_span_sha256": "8937a84e0d491b2c42ef4e40e74b7a22a8ab06801207049b5048d658b5c7b956",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "Nominee-table header naming the Audit and Compensation committee columns",
+      "listed_as": "pool_facts"
+     }
+    }
+   ]
+  },
+  {
+   "first": 3095,
+   "last": 3099,
+   "what": "Item 6 - Independent Board Chairman Policy: a shareholder proposal and its resolution",
+   "blocks": [
+    {
+     "block": 3095,
+     "text": "Item 6 – Independent Board Chairman Policy",
+     "text_sha256": "sha256:e080b43f963bcc1b7b13e8a62333e7dc3bd134435da0b84696efb42e42e4a1b2",
+     "raw_start_byte": 2121327,
+     "raw_end_byte": 2121375,
+     "raw_span_sha256": "6e21685694c3c8bb9169157f604469301d766ba3def278db1d0036af1c168701",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3096,
+     "text": "Mr. Kenneth Steiner, 14 Stoner Ave., 2M, Great Neck, NY 11021-2100, who represents that he owns no less than 100 shares of Pfizer common stock, has notified Pfizer that he will present the following proposal at the 2023 Annual Meeting:",
+     "text_sha256": "sha256:7fe6074b8643017ecc3e7a0e7ed4a19dd34f71c0ad105ee08ab3b755bade3fef",
+     "raw_start_byte": 2121540,
+     "raw_end_byte": 2121775,
+     "raw_span_sha256": "7fe6074b8643017ecc3e7a0e7ed4a19dd34f71c0ad105ee08ab3b755bade3fef",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 3097,
+     "text": "The Shareholder’s Resolution",
+     "text_sha256": "sha256:0fd9626bd3982747197d4bfb7b6e444e0136437b3f18089a9a4f388ca9ba7312",
+     "raw_start_byte": 2121957,
+     "raw_end_byte": 2121991,
+     "raw_span_sha256": "59ec236231838cb7a7d437dfcd4560c18d24d8d0dc2795e047eed52ca210e2a5",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3098,
+     "text": "Proposal 6 — Independent Board Chairman",
+     "text_sha256": "sha256:2478530a4d6499a951405411d111dddb4f56e23edba9f9c16a01904068501fe6",
+     "raw_start_byte": 2122174,
+     "raw_end_byte": 2122470,
+     "raw_span_sha256": "dbd9f14a15029819119888937c757fcec42ec68d8ec497ebf4a82c9014edd83a",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3099,
+     "text": "Shareholders request that the Board of Directors adopt an enduring policy, and amend the governing documents as necessary in order that 2 separate people hold the office of the Chairman and the office of the CEO as follows:",
+     "text_sha256": "sha256:7eee16f6bd3ef0e4de350a69a021909d66352118084d8e1949b3bed7f5bbbdc8",
+     "raw_start_byte": 2122827,
+     "raw_end_byte": 2123050,
+     "raw_span_sha256": "7eee16f6bd3ef0e4de350a69a021909d66352118084d8e1949b3bed7f5bbbdc8",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    }
+   ]
+  },
+  {
+   "first": 3116,
+   "last": 3117,
+   "what": "The Board of Directors' Statement in Opposition to the Proposal",
+   "blocks": [
+    {
+     "block": 3116,
+     "text": "Board of Directors’ Statement in Opposition to the Proposal",
+     "text_sha256": "sha256:5b4014ee2afa8bd0045c8fab78f642eced1aa03a810814d6087b69c9c97b197c",
+     "raw_start_byte": 2129418,
+     "raw_end_byte": 2129483,
+     "raw_span_sha256": "06acaf2f640597bee58242d8a4cc2d6015fe5dfcef184283e81e499f7c98ade5",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3117,
+     "text": "The Board of Directors recommends a vote AGAINST this proposal.",
+     "text_sha256": "sha256:39f6c05e022b334c42daa8e3c50be16c4663a4bd461fa620c3d7e1ada700fdb8",
+     "raw_start_byte": 2129663,
+     "raw_end_byte": 2129982,
+     "raw_span_sha256": "41dbd78d9f28d984cc1ba08e4dc19a641e222f28f791e83c8f017693cab82864",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    }
+   ]
+  },
+  {
+   "first": 3127,
+   "last": 3140,
+   "what": "The statement in opposition, continued: why the Board keeps a flexible leadership structure, its annual review, the reasons for keeping the combined Chairman and CEO, and the Lead Independent Director",
+   "blocks": [
+    {
+     "block": 3127,
+     "text": "A FLEXIBLE LEADERSHIP STRUCTURE IS THE MOST EFFECTIVE FOR PFIZER AND OUR SHAREHOLDERS",
+     "text_sha256": "sha256:92eb65dbce5878cee89025e9c7221fd1b6d98fb39bbdb18ee2578a68f8af2cad",
+     "raw_start_byte": 2134896,
+     "raw_end_byte": 2134981,
+     "raw_span_sha256": "92eb65dbce5878cee89025e9c7221fd1b6d98fb39bbdb18ee2578a68f8af2cad",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 3128,
+     "text": "The Board considers it important to maintain the flexibility to implement the leadership structure best suited for Pfizer and our shareholders at any given time. This flexibility is reflected in our Corporate Governance Principles, which provide that the independent Directors of the company annually elect a Chairman of the Board based on the recommendation of the Governance & Sustainability Committee following its thorough annual review of the Board’s leadership structure. The Chairman may or may not be the CEO of the company, but if the Chairman is the CEO, the independent Directors also elect a Lead Independent Director with significant authority and well-defined responsibilities as discussed below.",
+     "text_sha256": "sha256:c0f741b2104a7d62c057da14ae74ba3d880a8154e8b8971d5c7680620b4eef39",
+     "raw_start_byte": 2135146,
+     "raw_end_byte": 2135867,
+     "raw_span_sha256": "a25f303c337db8fd86080bde4d5b2308e98f8cc50288211e1825235626f0b1b0",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3129,
+     "text": "The Board’s independent Directors, with their diverse backgrounds and experiences in business, healthcare, medicine, public policy, and academics, have deep knowledge about the company, our industry, and the functioning of the Board. Therefore, they are best positioned to evaluate the Board’s optimal leadership structure. The Board believes the leadership structure best suited to meet the needs of Pfizer and our shareholders should be based on the particular circumstances and challenges confronting the Board and the company at any given time, as well as the individual skills and experiences that may be required for an effective Chairman. Given the dynamic and competitive environment in which we operate, the Board believes that the right leadership structure may vary as circumstances warrant, and it does not view any one particular Board leadership structure as preferred.",
+     "text_sha256": "sha256:1432396f7abea6a87ccef35fcd5f9d9ac293a0d82b97954a1764043bcc565fcc",
+     "raw_start_byte": 2136032,
+     "raw_end_byte": 2136928,
+     "raw_span_sha256": "b2ddffc0f080384eade5482470884bcdce57b9527ecb35e4d24bd463e2c1fc69",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3130,
+     "text": "ANNUAL REVIEW OF BOARD LEADERSHIP STRUCTURE",
+     "text_sha256": "sha256:fd89ace4734987faa43e460456018668d7492adfba66635c107697f8a2f82121",
+     "raw_start_byte": 2137109,
+     "raw_end_byte": 2137152,
+     "raw_span_sha256": "fd89ace4734987faa43e460456018668d7492adfba66635c107697f8a2f82121",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3131,
+     "text": "In late 2022, during the Board’s annual review of its leadership structure, the independent Directors considered the merits of separating, or continuing with the status quo, and combining the roles of Chairman and CEO, considering the company’s performance under the current operating and governance environment, executive leadership changes, and investor feedback. Notably, Pfizer has engaged with many of the company’s largest institutional investors over the years on the topic of board",
+     "text_sha256": "sha256:097a236f61195aa5f7663246a85ca4fe5360616d10931a642a03dd27629fa78e",
+     "raw_start_byte": 2137317,
+     "raw_end_byte": 2137825,
+     "raw_span_sha256": "df02e1ec6980de037cc2482085bfeca38e48bc7b8eea6a6dbff6cece9c246f1f",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3132,
+     "text": "90",
+     "text_sha256": "sha256:69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763",
+     "raw_start_byte": 2138655,
+     "raw_end_byte": 2138657,
+     "raw_span_sha256": "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 3133,
+     "text": "Pfizer 2023 Proxy Statement",
+     "text_sha256": "sha256:3a9a3a17c3b68c80105a3e70e63be61ce981c79588b05c5206074c92c50fb246",
+     "raw_start_byte": 2138924,
+     "raw_end_byte": 2139081,
+     "raw_span_sha256": "63cc03fe659ee2d7c164358379366de487d9c0cdf5eae0498ac941d05abf1bf4",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3134,
+     "text": "Shareholder Proposals",
+     "text_sha256": "sha256:cfedb774dc851b90002010ccfc4ed70dc0ffce029cbe5d967542c0384377f5a7",
+     "raw_start_byte": 2139692,
+     "raw_end_byte": 2139713,
+     "raw_span_sha256": "cfedb774dc851b90002010ccfc4ed70dc0ffce029cbe5d967542c0384377f5a7",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3135,
+     "text": "leadership structure and, while there are some varying views, many of our investors support the Board’s approach and the maintaining of its flexibility to choose its optimal leadership structure.",
+     "text_sha256": "sha256:d037deb4c178a2576e142609010a2c34ec726a7eaeaffc7c50fdc3cd6e5f066a",
+     "raw_start_byte": 2139902,
+     "raw_end_byte": 2140104,
+     "raw_span_sha256": "7d2fc1c81568d714e957631341231f7fb85e7ee5f270b8db1d40067cbd4c247f",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3136,
+     "text": "Following the annual review by the Governance & Sustainability Committee and the other independent Directors, the independent Directors unanimously determined to maintain the current leadership structure, with Dr. Bourla as Chairman and CEO and Mr. Shantanu Narayen as Lead Independent Director. These determinations were based on the independent Directors’ belief that Dr. Bourla:",
+     "text_sha256": "sha256:d7f5ae86a9b2ff0aaf1b79ab2713dd013c93046f7a0b4a3bee717f895d515f81",
+     "raw_start_byte": 2140269,
+     "raw_end_byte": 2140660,
+     "raw_span_sha256": "b3c6efd87271414b07982fa8621a054740af6dff6b9e58757d61b2d5a0d81f8e",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "Independent Directors kept Bourla as Chairman and CEO and Narayen as Lead Independent Director",
+      "listed_as": "pool_facts"
+     }
+    },
+    {
+     "block": 3137,
+     "text": "•has extensive experience in and knowledge of the research-based biopharmaceutical industry and regulatory environment; and",
+     "text_sha256": "sha256:69ef29fb64f06bd67711767b6ff84a50397bf69698fa6b04d9c90078aef300f4",
+     "raw_start_byte": 2140847,
+     "raw_end_byte": 2141123,
+     "raw_span_sha256": "2f09c87f06c656a5ad8450c96fceb4a366bfd278808362be9ac0f8679cb3d433",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+    },
+    {
+     "block": 3138,
+     "text": "•demonstrates the leadership and vision necessary to lead the Board and the company by driving scientific and commercial innovation and creating shareholder value.",
+     "text_sha256": "sha256:c61f00be33453bae25ded769d71041e073ddf912d40ab4f562ce56cd09c2cb4f",
+     "raw_start_byte": 2141328,
+     "raw_end_byte": 2141644,
+     "raw_span_sha256": "1471ce80ed1968ec0c1e56b39ec2c1b699cb6acfefad74da5fa16718e3ae7653",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3139,
+     "text": "The Board believes the company can more effectively execute its strategies with a Chairman that has deep scientific and industry expertise, along with extensive company knowledge at this time. The combined role, coupled with the strong Lead Independent Director, provides independent oversight, and has enabled the Board to be responsive to challenges and opportunities as they continue to arise. Dr. Bourla’s 25-plus years of solid leadership and business acumen proved to be especially beneficial during Pfizer’s evolution into a more focused, innovative science-based biopharmaceutical products business. Under his leadership, 2022 was a record-breaking year for Pfizer, both from a financial perspective and as a force for good in the world. We continued to supply our vaccines and medicines to help address the COVID-19 pandemic, while executing on our strategic priorities, accelerating our pipeline and fortifying our future potential for long-term growth.",
+     "text_sha256": "sha256:6a89729bd7e890e7b03ce2a4fbceac53bf5f588eb67594d3deecfa2fafb22edb",
+     "raw_start_byte": 2141809,
+     "raw_end_byte": 2142786,
+     "raw_span_sha256": "aa9f6e9a83639cabe02f957b16aedf933e85c9217e142460b30bda434987e34c",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 3140,
+     "text": "In addition, Mr. Narayen, who has served as Lead Independent Director since 2018, was recently re-elected by the Board’s independent Directors to continue serving as Lead Independent Director. During Mr. Narayen’s ten years as a Director and five years as Lead Independent Director, he has consistently demonstrated strong and independent leadership. His skills, strong independence, global leadership experience from his role at Adobe Inc., and commitment to the Board make him well-qualified to serve in this role.",
+     "text_sha256": "sha256:96b87c37bbfc5cda4bc009f036e30a3a7446e49fe29816c53373ec7d3bbb6d39",
+     "raw_start_byte": 2142951,
+     "raw_end_byte": 2143479,
+     "raw_span_sha256": "d3b6c7023b46c9e8efa88c61200351b21da270ec2718da34c9e29b1268c6b0fb",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "Narayen Lead Independent Director since 2018, re-elected by the independent Directors; the rest is tenure and qualifications",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  },
+  {
+   "first": 720,
+   "last": 724,
+   "what": "Governance: Board Leadership Structure and its 2022 annual review",
+   "blocks": [
+    {
+     "block": 720,
+     "text": "BOARD LEADERSHIP STRUCTURE",
+     "text_sha256": "sha256:22cf40c5b5f17c77dce704892fdb5930791b6b62eab54e7f4f9364a7aafd1bbd",
+     "raw_start_byte": 478451,
+     "raw_end_byte": 478477,
+     "raw_span_sha256": "22cf40c5b5f17c77dce704892fdb5930791b6b62eab54e7f4f9364a7aafd1bbd",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 721,
+     "text": "Given the dynamic and competitive environment in which we operate, the Board believes that its optimal leadership structure may vary as circumstances warrant. Our Corporate Governance Principles provide the Board with flexibility to determine its optimal model for independent Board leadership at any given time. The Board does not view any particular board leadership structure as preferred. The independent Directors evaluate the Board’s leadership structure at least annually. During its review, the Governance & Sustainability Committee considers the company’s current operating environment, peers’ Board leadership structures, best practices and investor feedback. When and if the positions of Chairman and CEO are combined, or the Chairman is not an independent Board member, the independent Directors will elect a strong Lead Independent Director with a clearly defined role and responsibilities. Please see the Charter of the Lead Independent Director available at https://investors.pfizer.com/Investors/Corporate-Governance/The-Pfizer-Board-Policies/default.aspx.",
+     "text_sha256": "sha256:9347e059c4a3b9c0167a45cebf810f804f601154484d6b12f0a15296b71465c0",
+     "raw_start_byte": 478660,
+     "raw_end_byte": 479754,
+     "raw_span_sha256": "8042aa97e0fdb8d27da19603f70853a361c6f456aef1df39702cb4dac0584566",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 722,
+     "text": "2022 ANNUAL REVIEW OF LEADERSHIP STRUCTURE",
+     "text_sha256": "sha256:40f3e5898b32452e5a8e98e775bc805aa8fe52eb7ce37c8d55216c2ad64b1bd1",
+     "raw_start_byte": 480274,
+     "raw_end_byte": 480316,
+     "raw_span_sha256": "40f3e5898b32452e5a8e98e775bc805aa8fe52eb7ce37c8d55216c2ad64b1bd1",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 723,
+     "text": "In December 2022, following a thorough review by the Governance & Sustainability Committee, the independent Directors evaluated the Board’s leadership structure and considered the factors described above. The Committee, along with the other independent Directors, determined that continuing to combine the roles of Chairman and CEO would be in the best interests of the company and its shareholders. The company can more effectively execute its strategies with a Chair that has deep scientific and industry expertise, along with extensive company knowledge. The combined role, coupled with the strong Lead Independent Director, has enabled the Board to be responsive to challenges and opportunities as they continue to arise. This structure served the Board and Pfizer well in 2022. Dr. Bourla’s 25-plus years of solid leadership and business acumen proved to be especially beneficial during Pfizer’s evolution into a more focused, science-driven global biopharmaceutical company, well-positioned to lead as a scientific powerhouse, and deliver meaningful value to patients around the world. Under his leadership, Pfizer delivered very strong results during 2022 and is well-positioned for future potential long-term growth.",
+     "text_sha256": "sha256:48646e279987196b981fa4824b26cbb6616bb37ba90324211698c7d60d23d6b5",
+     "raw_start_byte": 480481,
+     "raw_end_byte": 481727,
+     "raw_span_sha256": "68882a6542eaa4051a598db5c0f672d7f35a973f6bf6b9bfa45eeee469fba391",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "Independent Directors decided to keep the Chairman and CEO roles combined in Bourla; the rest is rationale",
+      "listed_as": "pool_facts"
+     }
+    },
+    {
+     "block": 724,
+     "text": "The independent Directors also re-elected Mr. Shantanu Narayen as Lead Independent Director. During Mr. Narayen’s ten years as a Director and five years as Lead Independent Director, he has consistently demonstrated strong leadership skills and risk oversight abilities in addition to deep expertise in technology and product innovation. His skills, global leadership experience, and commitment to the Board make him well-qualified to continue to serve in this role. Accordingly, the independent Directors remain confident in Mr. Narayen’s abilities to continue as Lead Independent Director.",
+     "text_sha256": "sha256:4319fecdd6a2d76dec37e6d52f5698433586316fc88b8151577b4897031deb43",
+     "raw_start_byte": 481892,
+     "raw_end_byte": 482624,
+     "raw_span_sha256": "14f991e59cd10ae538e915e213e2ede482d2c0b40a719c1e0a19d27346c4f3c9",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "Independent Directors re-elected Narayen as Lead Independent Director; the rest is his tenure and qualifications",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  },
+  {
+   "first": 894,
+   "last": 898,
+   "what": "Governance: the Governance & Sustainability Committee Report",
+   "blocks": [
+    {
+     "block": 894,
+     "text": "Governance & Sustainability Committee Report",
+     "text_sha256": "sha256:8d07632368270a471c10a9c218459ad8d45478dccce04f6e47e09f6c7ba441f8",
+     "raw_start_byte": 577563,
+     "raw_end_byte": 577611,
+     "raw_span_sha256": "571df7549a955a7234d74632c0949bb7ef8ae89ffd71de7bc2d0348e861b22f3",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 895,
+     "text": "The following are examples of how we worked to achieve the Board’s objectives to maintain and enhance Pfizer's record of excellence in corporate governance and Board oversight in 2022 and early 2023.",
+     "text_sha256": "sha256:dd317d63f821af31fef12eacc080737462d2083717965d7a4f1a4ed76a5fa817",
+     "raw_start_byte": 577776,
+     "raw_end_byte": 577981,
+     "raw_span_sha256": "fb35e9457bc0302f2809a57e3774e48e099c40b475516d76078e0a2874695709",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+    },
+    {
+     "block": 896,
+     "text": "Board Leadership Structure: In late 2022, the Committee and the independent Directors conducted a thorough annual review of the Board’s leadership structure, and the independent Directors unanimously determined to maintain the current leadership structure, with Dr. Bourla as Chairman and Chief Executive Officer, and Mr. Narayen as Lead Independent Director.",
+     "text_sha256": "sha256:73010baca7ba3a21abdc9c4080c11a7ed950bca87d83c2acea3d323b06d77029",
+     "raw_start_byte": 578146,
+     "raw_end_byte": 578640,
+     "raw_span_sha256": "1a29b6a4c36c00c9b98f0f5f83ab6ead41be6be57302b0d1f67675b4b1b652cc",
+     "taken_by_the_route_selector": false,
+     "older_year_reading": {
+      "verdict": "FACT",
+      "why": "Bourla stays Chairman and CEO and Narayen Lead Independent Director (leadership determination)",
+      "listed_as": "pool_facts"
+     }
+    },
+    {
+     "block": 897,
+     "text": "Board and Committee Matters: We assessed the Director’s qualifications for serving on various Committees and their independence. We also evaluated the effectiveness of the Board and its Committees and reviewed, among other factors, Director service on other boards and other commitments held by Directors. As a result, we determined that all Directors are in compliance with the company’s Corporate Governance Principles and have sufficient time, energy, and attention to effectively serve on our Board. In addition, the Committee reviewed the existing Board and Committee self-evaluation process to determine whether the Board should refine the process to include a third-party facilitator and individual Director evaluations, following which the Committee decided to use a third-party provider to conduct the Board and Committee evaluations in 2023. Additionally, the Committee reviewed and, where appropriate, recommended changes to our Corporate Governance Principles and other governance documents, including updating our Corporate Governance Principles to reflect that non-employee Directors will not be nominated for election to the Board after their 73rd birthday, except in the case of a non-employee Director with less than 15 years of service. In such a case, the Director will have a term limit of up to 15 years. We also reviewed and revised the non-employee Director compensation program, in consultation with Meridian Compensation Partners, LLC.",
+     "text_sha256": "sha256:ee025975f701e68cbfd0026462099b3af28452f94085fc5b681064e6d2c77f79",
+     "raw_start_byte": 578805,
+     "raw_end_byte": 580406,
+     "raw_span_sha256": "9552a50655c4dc8993209363aa1baf1345bff5e73ebb295d8eebbe6d733b10a8",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "NOT",
+      "why": "G&S report on assessment and evaluation process, overboarding compliance, retirement-age policy and director pay review; no composition outcome",
+      "listed_as": "selected"
+     }
+    },
+    {
+     "block": 898,
+     "text": "Board Succession Planning: We continued our Board succession planning to identify and assess potential Director candidates. We considered several factors, including a review of our skills matrix. We conducted a needs assessment and considered a diverse pool of candidates based on recommendations provided by our Chairman and CEO, the independent Directors, management, external advisors, the Board’s evaluation and other resources. The Board did not elect any new Directors during 2022.",
+     "text_sha256": "sha256:98a79ba49f3dc39053d2271a46032d7e7a3d2007f0540f8c650e8d4a28193746",
+     "raw_start_byte": 580571,
+     "raw_end_byte": 581192,
+     "raw_span_sha256": "86ee0a1759482061308524519339815343a16df653243cd2dd708771d62b399c",
+     "taken_by_the_route_selector": true,
+     "older_year_reading": {
+      "verdict": "MIXED",
+      "why": "No new Directors elected during 2022; the rest is succession-planning process",
+      "listed_as": "selected"
+     }
+    }
+   ]
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
