@@ -1,0 +1,442 @@
+{
+ "record_type": "ISSUE_47_C02_DEV_EXTRACTION_HAND_REVIEW",
+ "comparison": "docs/evidence/issue47_history/c02-model-method/comparison.json",
+ "reviewer": "the executor, reading every listed block in the filing's source text; not an independent reading",
+ "classes": {
+  "CONVENTION_TENURE": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+  "CONTEXT": "CONTEXT_BLOCK: a heading, field label, name line or process sentence cited beside the block that states the fact; #28's task allows shared context, #47's readings judge blocks one by one. States no other fact.",
+  "QUALIFICATION_MEANING": "QUALIFICATION_MEANING: a nomination rationale or the independent directors' belief about the chair, which #28's task counts as the filing's qualification assessment and #47 does not (the pending meaning item with #28).",
+  "FACT_BY_47_CLASS": "A block #47's own unified adjudication classes make a fact, which its wording-bound patterns, the reading and the selector missed.",
+  "FACT_BEARING": "A block that states a composition fact the reading did not take.",
+  "FACT": "A composition fact no reader saw.",
+  "LABEL_ONLY": "A label whose fact the answer cites from the lines under it.",
+  "COVERED_BY_OTHER_CITATIONS": "The fact is stated by the answer from other blocks.",
+  "ATTRIBUTION_OPEN": "Not the registrant's statement; the answer keeps it unresolved.",
+  "CONTEXT_FIELD_LABEL": "A field label cited with its value."
+ },
+ "summary_by_class": {
+  "ford_motor_company:2022-12-31": {
+   "FACT_BY_47_CLASS": 2,
+   "FACT_BEARING": 1,
+   "CONVENTION_TENURE": 5,
+   "LABEL_ONLY": 3,
+   "ATTRIBUTION_OPEN": 1
+  },
+  "lumen_technologies:2021-12-31": {
+   "FACT_BEARING": 2,
+   "CONVENTION_TENURE": 11,
+   "COVERED_BY_OTHER_CITATIONS": 1
+  },
+  "pfizer:2022-12-31": {
+   "CONTEXT": 5,
+   "QUALIFICATION_MEANING": 4,
+   "CONVENTION_TENURE": 12,
+   "FACT_BY_47_CLASS": 2,
+   "CONTEXT_FIELD_LABEL": 1,
+   "FACT": 1
+  }
+ },
+ "rows": [
+  {
+   "position": "ford_motor_company:2022-12-31",
+   "facts": 42,
+   "unresolved": 5,
+   "cited_blocks": 127,
+   "selector_blocks": 82,
+   "answer_tokens": 3189,
+   "input_tokens": 108109,
+   "model_vs_reading_counts": {
+    "wrongly_taken": 8,
+    "missed": 4,
+    "unread": 0
+   },
+   "selector_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "missed": [
+     1255,
+     4535
+    ],
+    "wrongly_taken": [],
+    "unread": []
+   },
+   "review": {
+    "wrongly_taken": [
+     {
+      "i": 778,
+      "class": "FACT_BY_47_CLASS",
+      "why": "Its last sentence states the independence finding: 'None of the relationships described above was material under the independence standards'. #47's class INDEPENDENCE_RELATIONSHIP_DETERMINATION is FACT; the rule's pattern matches only Macy's wording, the reader judged NOT.",
+      "text": "From time to time during the past three years, Ford purchased goods and services from, sold goods and services to, or financing arrangements were provided by, various companies with which certain directors were or are affiliated either as a member of such company’s board of directors or, in the case"
+     },
+     {
+      "i": 1062,
+      "class": "FACT_BEARING",
+      "why": "Names three sitting directors and the Executive Chair (membership, leadership); the reader judged NOT, unlike Ford 2021 block 760 of the same kind.",
+      "text": "The Ford family’s nearly 120 years of active involvement with and stewardship of the Company is continued on our Board through Executive Chair William Clay Ford, Jr., his daughter Alexandra Ford English, and her second cousin Henry Ford III."
+     },
+     {
+      "i": 1066,
+      "class": "FACT_BY_47_CLASS",
+      "why": "'Each of the nominees for director is now a member of the Board': #47's class NOMINEES_ARE_SITTING_DIRECTORS is FACT; its pattern requires 'is currently a member', so the variant was never adjudicated and the selector does not take it.",
+      "text": "Each of the nominees for director is now a member of the Board of Directors, which met seven times during 2022. Each of the incumbent nominees for director attended at least 75% of the combined Board and committee meetings held during the periods served by such nominee in 2022. The nominees provided"
+     },
+     {
+      "i": 1242,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2021"
+     },
+     {
+      "i": 1260,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2020"
+     },
+     {
+      "i": 1265,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2021"
+     },
+     {
+      "i": 1279,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 1988"
+     },
+     {
+      "i": 1298,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2020 (also served 2012-2017)"
+     }
+    ],
+    "missed": [
+     {
+      "i": 585,
+      "class": "LABEL_ONLY",
+      "why": "The committee page's 'MEMBERS' label; the answer cites every member line under it (587-593).",
+      "text": "MEMBERS"
+     },
+     {
+      "i": 630,
+      "class": "LABEL_ONLY",
+      "why": "As 585; members 632-638 cited.",
+      "text": "MEMBERS"
+     },
+     {
+      "i": 664,
+      "class": "LABEL_ONLY",
+      "why": "As 585; members 666-672 cited.",
+      "text": "MEMBERS"
+     },
+     {
+      "i": 4535,
+      "class": "ATTRIBUTION_OPEN",
+      "why": "A shareholder proponent's text calling Earley Lead Director; the answer keeps it as unresolved ('only shareholder proponent text, not the company'), the reader took it. Not the registrant's statement; left open.",
+      "text": "Anthony Earley, Lead Director and Chair of the management pay committee"
+     }
+    ],
+    "unread": []
+   }
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "facts": 34,
+   "unresolved": 2,
+   "cited_blocks": 156,
+   "selector_blocks": 58,
+   "answer_tokens": 2262,
+   "input_tokens": 149158,
+   "model_vs_reading_counts": {
+    "wrongly_taken": 12,
+    "missed": 1,
+    "unread": 1
+   },
+   "selector_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "missed": [
+     455,
+     457
+    ],
+    "wrongly_taken": [
+     856
+    ],
+    "unread": []
+   },
+   "review": {
+    "wrongly_taken": [
+     {
+      "i": 492,
+      "class": "FACT_BEARING",
+      "why": "'Independent' is the label half of the '91% Independent' graphic (block 491 holds '91%'): the nominees' independence share, the same fact the reader took from Ford's '64% of the Director Nominees are Independent'.",
+      "text": "Independent"
+     },
+     {
+      "i": 529,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2021"
+     },
+     {
+      "i": 563,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2016"
+     },
+     {
+      "i": 592,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2009"
+     },
+     {
+      "i": 617,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2017"
+     },
+     {
+      "i": 659,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2017"
+     },
+     {
+      "i": 692,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2017"
+     },
+     {
+      "i": 729,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 1992"
+     },
+     {
+      "i": 756,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2020"
+     },
+     {
+      "i": 787,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2011"
+     },
+     {
+      "i": 818,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2009"
+     },
+     {
+      "i": 858,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director since: 2017"
+     }
+    ],
+    "missed": [
+     {
+      "i": 2687,
+      "class": "COVERED_BY_OTHER_CITATIONS",
+      "why": "'Election of the 11 director nominees': the answer states the board of 11 from blocks 452 and 2756.",
+      "text": "Election of the 11 director nominees named herein"
+     }
+    ],
+    "unread": [
+     {
+      "i": 491,
+      "class": "FACT_BEARING",
+      "why": "'91%' half of the independence graphic; see 492.",
+      "text": "91%"
+     }
+    ]
+   }
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "facts": 34,
+   "unresolved": 0,
+   "cited_blocks": 149,
+   "selector_blocks": 83,
+   "answer_tokens": 2204,
+   "input_tokens": 104636,
+   "model_vs_reading_counts": {
+    "wrongly_taken": 22,
+    "missed": 0,
+    "unread": 3
+   },
+   "selector_vs_reading": {
+    "verdict": "READING_AGREES",
+    "missed": [],
+    "wrongly_taken": [],
+    "unread": []
+   },
+   "review": {
+    "wrongly_taken": [
+     {
+      "i": 410,
+      "class": "CONTEXT",
+      "why": "CONTEXT_BLOCK: a heading, field label, name line or process sentence cited beside the block that states the fact; #28's task allows shared context, #47's readings judge blocks one by one. States no other fact.",
+      "text": "Independence Assessment. Together with Pfizer’s legal counsel, the Governance & Sustainability Committee reviewed the applicable legal and NYSE standards for Board and Committee member independence, as well as our Standards. A summary of the answers to annual questionnaires completed by each of the "
+     },
+     {
+      "i": 413,
+      "class": "QUALIFICATION_MEANING",
+      "why": "QUALIFICATION_MEANING: a nomination rationale or the independent directors' belief about the chair, which #28's task counts as the filing's qualification assessment and #47 does not (the pending meaning item with #28).",
+      "text": "The Governance & Sustainability Committee and the Board believe that each nominee for Director brings a strong and unique set of perspectives, experiences and skills to Pfizer that creates an effective and well-functioning Board."
+     },
+     {
+      "i": 485,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2017"
+     },
+     {
+      "i": 504,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2018"
+     },
+     {
+      "i": 526,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2020"
+     },
+     {
+      "i": 549,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2015"
+     },
+     {
+      "i": 569,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2019"
+     },
+     {
+      "i": 584,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2011"
+     },
+     {
+      "i": 606,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2020"
+     },
+     {
+      "i": 615,
+      "class": "FACT_BY_47_CLASS",
+      "why": "Littman's card name; with his committee field (624) a fact, #47's CARD_SUBJECT_NAME makes the name a fact. The reading never saw 624.",
+      "text": "Dan R. Littman, M.D., Ph.D."
+     },
+     {
+      "i": 622,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2018"
+     },
+     {
+      "i": 623,
+      "class": "CONTEXT_FIELD_LABEL",
+      "why": "'Board Committees:' - the label of Littman's committee field (624).",
+      "text": "Board Committees:"
+     },
+     {
+      "i": 644,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2013"
+     },
+     {
+      "i": 665,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2007"
+     },
+     {
+      "i": 687,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2020"
+     },
+     {
+      "i": 704,
+      "class": "CONVENTION_TENURE",
+      "why": "CARD_TENURE_FIELD: #28's task keeps 'existing membership/tenure' in board_membership and asks for the blocks that establish each member's time; #47's adjudication CARD_TENURE_FIELD says tenure is NOT a composition fact. A convention conflict between the two contracts, not a model error.",
+      "text": "Director Since: 2014"
+     },
+     {
+      "i": 803,
+      "class": "CONTEXT",
+      "why": "CONTEXT_BLOCK: a heading, field label, name line or process sentence cited beside the block that states the fact; #28's task allows shared context, #47's readings judge blocks one by one. States no other fact.",
+      "text": "BOARD COMMITTEES"
+     },
+     {
+      "i": 894,
+      "class": "CONTEXT",
+      "why": "CONTEXT_BLOCK: a heading, field label, name line or process sentence cited beside the block that states the fact; #28's task allows shared context, #47's readings judge blocks one by one. States no other fact.",
+      "text": "Governance & Sustainability Committee Report"
+     },
+     {
+      "i": 895,
+      "class": "CONTEXT",
+      "why": "CONTEXT_BLOCK: a heading, field label, name line or process sentence cited beside the block that states the fact; #28's task allows shared context, #47's readings judge blocks one by one. States no other fact.",
+      "text": "The following are examples of how we worked to achieve the Board’s objectives to maintain and enhance Pfizer's record of excellence in corporate governance and Board oversight in 2022 and early 2023."
+     },
+     {
+      "i": 1719,
+      "class": "CONTEXT",
+      "why": "CONTEXT_BLOCK: a heading, field label, name line or process sentence cited beside the block that states the fact; #28's task allows shared context, #47's readings judge blocks one by one. States no other fact.",
+      "text": "Role of the Compensation Committee"
+     },
+     {
+      "i": 3131,
+      "class": "QUALIFICATION_MEANING",
+      "why": "QUALIFICATION_MEANING: a nomination rationale or the independent directors' belief about the chair, which #28's task counts as the filing's qualification assessment and #47 does not (the pending meaning item with #28).",
+      "text": "In late 2022, during the Board’s annual review of its leadership structure, the independent Directors considered the merits of separating, or continuing with the status quo, and combining the roles of Chairman and CEO, considering the company’s performance under the current operating and governance "
+     },
+     {
+      "i": 3138,
+      "class": "QUALIFICATION_MEANING",
+      "why": "QUALIFICATION_MEANING: a nomination rationale or the independent directors' belief about the chair, which #28's task counts as the filing's qualification assessment and #47 does not (the pending meaning item with #28).",
+      "text": "•demonstrates the leadership and vision necessary to lead the Board and the company by driving scientific and commercial innovation and creating shareholder value."
+     }
+    ],
+    "missed": [],
+    "unread": [
+     {
+      "i": 409,
+      "class": "FACT_BY_47_CLASS",
+      "why": "'We reviewed our transactions with and payments to each of these entities and found that these transactions/payments ... were below the levels set forth in our Standards': INDEPENDENCE_RELATIONSHIP_DETERMINATION. Outside the reading's pool.",
+      "text": "Drs. Desmond-Hellmann, Hobbs, Hockfield and Littman, and Mr. Echevarria, are employed at medical, scientific or academic institutions with which Pfizer engages in ordinary-course business transactions. Mr. Narayen is the chief executive officer of Adobe Inc., a company with which Pfizer engages in o"
+     },
+     {
+      "i": 624,
+      "class": "FACT",
+      "why": "Littman's committees on his card ('Governance & Sustainability, Regulatory and Compliance and Science and Technology'); no pool word, so no reader saw it.",
+      "text": "Governance & Sustainability, Regulatory and Compliance and Science and Technology"
+     },
+     {
+      "i": 3137,
+      "class": "QUALIFICATION_MEANING",
+      "why": "QUALIFICATION_MEANING: a nomination rationale or the independent directors' belief about the chair, which #28's task counts as the filing's qualification assessment and #47 does not (the pending meaning item with #28).",
+      "text": "•has extensive experience in and knowledge of the research-based biopharmaceutical industry and regulatory environment; and"
+     }
+    ]
+   }
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

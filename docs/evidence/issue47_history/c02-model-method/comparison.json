@@ -1,0 +1,803 @@
+{
+ "record_type": "ISSUE_47_C02_DEV_EXTRACTION_COMPARISON",
+ "what_this_is": "development-context extractions on #28's C02 task, checked by #28's mechanical checks and compared block by block with #47's readings; not DeepSeek, no call, no result credit",
+ "rows": [
+  {
+   "position": "ford_motor_company:2022-12-31",
+   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2022-12-31.json",
+   "document_id": "sha256:d9e03815fca27270051eb74e1b9636f922307e06f1b4c1ba5fef9507235f2580",
+   "reading_packet_document_id": "sha256:d9e03815fca27270051eb74e1b9636f922307e06f1b4c1ba5fef9507235f2580",
+   "answer_sha256": "ad147845432f30f33b4e04cd286cbdc358d12adc27be7c8f3caf96cb7dac9d9c",
+   "answer_tokens": 3189,
+   "input_tokens": 108109,
+   "contract_check": "PASSED",
+   "quotation_preview": {
+    "unique_cited_blocks": 127,
+    "quote_groups": 56,
+    "quote_characters": 15065
+   },
+   "facts": 42,
+   "unresolved": 5,
+   "kinds": {
+    "board_size": 3,
+    "membership_change": 1,
+    "board_independence": 5,
+    "committee_independence": 6,
+    "member_qualification": 2,
+    "board_leadership": 3,
+    "committee_structure": 1,
+    "committee_membership": 7,
+    "board_membership": 14
+   },
+   "cited_blocks": 127,
+   "selector_blocks": 82,
+   "model_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "counts": {
+     "selected": 127,
+     "selected_fact": 97,
+     "selected_mixed": 21,
+     "found_outside_the_selection": 30,
+     "resting_on_adjudication": 1
+    },
+    "wrongly_taken": [
+     {
+      "i": 778,
+      "text": "From time to time during the past three years, Ford purchased goods and services from, sold goods and services to, or financing arrangements were provided by, various companies with which certain directors were or are affiliated either as a member of such company’s board of directors or, in the case of Ms. Mooney and Messrs. May, Thornton, and Weinberg, as an officer of such a company. In addition",
+      "facts_citing": [
+       {
+        "kind": "board_independence",
+        "statement": "In its independence determinations the Board found none of the considered business, financing and charitable relationships involving Mooney, May, Thornton, Weinberg, Earley, Kennard, Veihmeyer and Vojvodich Radakovich material."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1062,
+      "text": "The Ford family’s nearly 120 years of active involvement with and stewardship of the Company is continued on our Board through Executive Chair William Clay Ford, Jr., his daughter Alexandra Ford English, and her second cousin Henry Ford III.",
+      "facts_citing": [
+       {
+        "kind": "board_leadership",
+        "statement": "The CEO and Chair roles are separate: William Clay Ford, Jr. is Chair of the Board and Executive Chair; James D. Farley, Jr. is President and CEO."
+       },
+       {
+        "kind": "board_membership",
+        "statement": "Alexandra Ford English is a current director and nominee; director since 2021, first elected at the 2021 Annual Meeting."
+       },
+       {
+        "kind": "board_membership",
+        "statement": "Henry Ford III is a current director and nominee; director since 2021, first elected at the 2021 Annual Meeting."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1066,
+      "text": "Each of the nominees for director is now a member of the Board of Directors, which met seven times during 2022. Each of the incumbent nominees for director attended at least 75% of the combined Board and committee meetings held during the periods served by such nominee in 2022. The nominees provided the following information about themselves as of the latest practical date. For each director nomin",
+      "facts_citing": [
+       {
+        "kind": "board_size",
+        "statement": "The Board has 14 directors: all 14 director nominees for election at the 2023 annual meeting are current Board members, each serving until the next annual meeting."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1242,
+      "text": "Director Since: 2021",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Alexandra Ford English is a current director and nominee; director since 2021, first elected at the 2021 Annual Meeting."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1260,
+      "text": "Director Since: 2020",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "James D. Farley, Jr. is a current director and nominee since 2020 with no committee assignments (Committees: N/A)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1265,
+      "text": "Director Since: 2021",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Henry Ford III is a current director and nominee; director since 2021, first elected at the 2021 Annual Meeting."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1279,
+      "text": "Director Since: 1988",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "William Clay Ford, Jr. is a current director and nominee; director since 1988."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1298,
+      "text": "Director Since: 2020 (also served 2012-2017)",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Jon M. Huntsman, Jr. is a current director and nominee; director since 2020, having also served 2012-2017."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     }
+    ],
+    "missed": [
+     {
+      "i": 585,
+      "text": "MEMBERS",
+      "facts_citing": [],
+      "reading_why": "Finance Committee page MEMBERS heading",
+      "redundant_with": []
+     },
+     {
+      "i": 630,
+      "text": "MEMBERS",
+      "facts_citing": [],
+      "reading_why": "NG Committee page MEMBERS heading",
+      "redundant_with": []
+     },
+     {
+      "i": 664,
+      "text": "MEMBERS",
+      "facts_citing": [],
+      "reading_why": "SIP Committee page MEMBERS heading",
+      "redundant_with": []
+     },
+     {
+      "i": 4535,
+      "text": "Anthony Earley, Lead Director and Chair of the management pay committee",
+      "facts_citing": [],
+      "reading_why": "Shareholder proponent's text (not the company's): Anthony Earley was Lead Director and chair of the pay committee (past roles)",
+      "redundant_with": []
+     }
+    ],
+    "unread": [],
+    "other": {}
+   },
+   "selector_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "missed": [
+     1255,
+     4535
+    ],
+    "wrongly_taken": [],
+    "unread": []
+   },
+   "unresolved_items": [
+    {
+     "source_blocks": [
+      4535
+     ],
+     "reason": "Only shareholder proponent text, not the company, calls Anthony Earley Lead Director and Chair of the management pay committee (2021 vote context); whether Thornton succeeded him as Lead Independent Director in 2022 is not stated."
+    },
+    {
+     "source_blocks": [
+      404,
+      789
+     ],
+     "reason": "B789 counts 14 then-current members at the 2022 annual meeting while B404 says the Board went from 15 to 14 when Earley retired following that meeting; whether Earley was counted is not stated."
+    },
+    {
+     "source_blocks": [
+      413,
+      1092
+     ],
+     "reason": "Board committee grid (B413-B472) and skills/diversity matrix (B1092-B1228) lost column association; no membership, chair or attribute was inferred from them."
+    },
+    {
+     "source_blocks": [
+      1251,
+      1252,
+      1253,
+      1254
+     ],
+     "reason": "Detached card fields (Director Since 2020/2021, Committees: N/A, Sustainability, Innovation and Policy; Finance) precede the Farley and Henry Ford III names with ambiguous ownership; not used."
+    },
+    {
+     "source_blocks": [
+      1066
+     ],
+     "reason": "The Board's nominee-level conclusions (Reasons for Nomination) were not extracted as formal member qualification determinations."
+    }
+   ]
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2021-12-31.json",
+   "document_id": "sha256:5b4c457a4ba660069988903f104af070e98f15b30fcef7590e2348b2dcbaa03d",
+   "reading_packet_document_id": "sha256:5b4c457a4ba660069988903f104af070e98f15b30fcef7590e2348b2dcbaa03d",
+   "answer_sha256": "6d6f7e47725f1b07b1a939b227101e0e41b205f39ed5175a79c7524a68c88787",
+   "answer_tokens": 2262,
+   "input_tokens": 149158,
+   "contract_check": "PASSED",
+   "quotation_preview": {
+    "unique_cited_blocks": 156,
+    "quote_groups": 46,
+    "quote_characters": 11667
+   },
+   "facts": 34,
+   "unresolved": 2,
+   "kinds": {
+    "board_size": 2,
+    "board_membership": 12,
+    "board_independence": 4,
+    "board_leadership": 3,
+    "membership_change": 5,
+    "committee_structure": 1,
+    "committee_membership": 5,
+    "member_qualification": 1,
+    "committee_independence": 1
+   },
+   "cited_blocks": 156,
+   "selector_blocks": 58,
+   "model_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "counts": {
+     "selected": 156,
+     "selected_fact": 126,
+     "selected_mixed": 17,
+     "found_outside_the_selection": 5,
+     "resting_on_adjudication": 2
+    },
+    "wrongly_taken": [
+     {
+      "i": 492,
+      "text": "Independent",
+      "facts_citing": [
+       {
+        "kind": "board_independence",
+        "statement": "10 of the 11 directors/nominees (91%) are independent; all directors other than the CEO are independent."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 529,
+      "text": "Director since: 2021",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Quincy L. Allen is a director (Director since 2021)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 563,
+      "text": "Director since: 2016",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Martha Helena Bejar is a director (Director since 2016)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 592,
+      "text": "Director since: 2009",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Peter C. Brown is a director (Director since 2009)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 617,
+      "text": "Director since: 2017",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Kevin P. Chilton is a director (Director since 2017)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 659,
+      "text": "Director since: 2017",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Steven T. “Terry” Clontz is a director (Director since 2017)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 692,
+      "text": "Director since: 2017",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "T. Michael Glenn is a director (Director since 2017)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 729,
+      "text": "Director since: 1992",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "W. Bruce Hanks is a director (Director since 1992)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 756,
+      "text": "Director since: 2020",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Hal Stanley Jones is a director (Director since 2020)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 787,
+      "text": "Director since: 2011",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Michael Roberts is a director (Director since 2011)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 818,
+      "text": "Director since: 2009",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Laurie Siegel is a director (Director since 2009)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 858,
+      "text": "Director since: 2017",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Jeffrey K. Storey, President and CEO, is a director (Director since 2017)."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     }
+    ],
+    "missed": [
+     {
+      "i": 2687,
+      "text": "Election of the 11 director nominees named herein",
+      "facts_citing": [],
+      "reading_why": "Election of the 11 director nominees (board of 11).",
+      "redundant_with": []
+     }
+    ],
+    "unread": [
+     {
+      "i": 491,
+      "text": "91%",
+      "facts_citing": [
+       {
+        "kind": "board_independence",
+        "statement": "10 of the 11 directors/nominees (91%) are independent; all directors other than the CEO are independent."
+       }
+      ]
+     }
+    ],
+    "other": {}
+   },
+   "selector_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "missed": [
+     455,
+     457
+    ],
+    "wrongly_taken": [
+     856
+    ],
+    "unread": []
+   },
+   "unresolved_items": [
+    {
+     "source_blocks": [
+      1047,
+      568,
+      943
+     ],
+     "reason": "The 2020 NCG Committee Chair rotation does not name the outgoing or incoming chair; when current chair Bejar took the role is not stated."
+    },
+    {
+     "source_blocks": [
+      471
+     ],
+     "reason": "Retirements of several directors announced in connection with adding Mr. Jones are not tied to named directors or dates in this filing."
+    }
+   ]
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
+   "document_id": "sha256:399838af038cdf04e554a9d7e7e5d6e2c9c580e02e8de06b09c493dc9dd862aa",
+   "reading_packet_document_id": "sha256:84d819d83bfe1cb4dc81cb4b2a33341095af77a4fc3f307e799080db8ab569cc",
+   "answer_sha256": "aad0dee49dccd3afc06c35c221a816626dcb5d79f116f380a02182d5ad0d3037",
+   "answer_tokens": 2204,
+   "input_tokens": 104636,
+   "contract_check": "PASSED",
+   "quotation_preview": {
+    "unique_cited_blocks": 149,
+    "quote_groups": 54,
+    "quote_characters": 20834
+   },
+   "facts": 34,
+   "unresolved": 0,
+   "kinds": {
+    "board_size": 1,
+    "board_independence": 1,
+    "board_leadership": 2,
+    "member_qualification": 6,
+    "committee_structure": 1,
+    "committee_membership": 6,
+    "committee_independence": 2,
+    "board_membership": 14,
+    "membership_change": 1
+   },
+   "cited_blocks": 149,
+   "selector_blocks": 83,
+   "model_vs_reading": {
+    "verdict": "READING_DISAGREES",
+    "counts": {
+     "selected": 149,
+     "selected_fact": 107,
+     "selected_mixed": 15,
+     "found_outside_the_selection": 39,
+     "resting_on_adjudication": 2
+    },
+    "wrongly_taken": [
+     {
+      "i": 410,
+      "text": "Independence Assessment. Together with Pfizer’s legal counsel, the Governance & Sustainability Committee reviewed the applicable legal and NYSE standards for Board and Committee member independence, as well as our Standards. A summary of the answers to annual questionnaires completed by each of the Directors and a report of transactions with Director-affiliated entities were also made available to",
+      "facts_citing": [
+       {
+        "kind": "board_independence",
+        "statement": "The Board determined that all current Directors other than Dr. Albert Bourla are independent: 11 independent Directors, namely Susan Desmond-Hellmann, Scott Gottlieb, Helen H. Hobbs, Susan Hockfield, Dan R. Littman, Suzanne Nora Johnson, Ronald E. Blaylock, Joseph J. Echevarria, Shantanu Narayen, James Quincey and James C. Smith; the determination relied on the Governance & Sustainability Committee report, including a review finding director-affiliated transactions below the Standards thresholds."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 413,
+      "text": "The Governance & Sustainability Committee and the Board believe that each nominee for Director brings a strong and unique set of perspectives, experiences and skills to Pfizer that creates an effective and well-functioning Board.",
+      "facts_citing": [
+       {
+        "kind": "member_qualification",
+        "statement": "Based on evaluations and review of the current Board composition, the Governance & Sustainability Committee and the Board determined the criteria for Board membership have been satisfied and believe each nominee brings a strong and unique set of perspectives, experiences and skills."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 485,
+      "text": "Director Since: 2017",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Ronald E. Blaylock is a current Director, Director Since 2017."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 504,
+      "text": "Director Since: 2018",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Albert Bourla is a current Director, Director Since 2018."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 526,
+      "text": "Director Since: 2020",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Susan Desmond-Hellmann is a current Director, Director Since 2020."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 549,
+      "text": "Director Since: 2015",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Joseph J. Echevarria is a current Director, Director Since 2015."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 569,
+      "text": "Director Since: 2019",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Scott Gottlieb is a current Director, Director Since 2019."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 584,
+      "text": "Director Since: 2011",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Helen H. Hobbs is a current Director, Director Since 2011."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 606,
+      "text": "Director Since: 2020",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Susan Hockfield is a current Director, Director Since 2020."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 615,
+      "text": "Dan R. Littman, M.D., Ph.D.",
+      "facts_citing": [
+       {
+        "kind": "committee_membership",
+        "statement": "Governance & Sustainability Committee: Chair Joseph J. Echevarria; other members Susan Desmond-Hellmann, Helen H. Hobbs and Dan R. Littman."
+       },
+       {
+        "kind": "committee_membership",
+        "statement": "Regulatory and Compliance Committee: Chair Scott Gottlieb; other members Helen H. Hobbs, Susan Hockfield, Dan R. Littman and Suzanne Nora Johnson."
+       },
+       {
+        "kind": "committee_membership",
+        "statement": "Science and Technology Committee: Chair Helen H. Hobbs; other members Susan Desmond-Hellmann, Scott Gottlieb, Susan Hockfield and Dan R. Littman."
+       },
+       {
+        "kind": "board_membership",
+        "statement": "Dan R. Littman is a current Director, Director Since 2018."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 622,
+      "text": "Director Since: 2018",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Dan R. Littman is a current Director, Director Since 2018."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 623,
+      "text": "Board Committees:",
+      "facts_citing": [
+       {
+        "kind": "committee_membership",
+        "statement": "Governance & Sustainability Committee: Chair Joseph J. Echevarria; other members Susan Desmond-Hellmann, Helen H. Hobbs and Dan R. Littman."
+       },
+       {
+        "kind": "committee_membership",
+        "statement": "Regulatory and Compliance Committee: Chair Scott Gottlieb; other members Helen H. Hobbs, Susan Hockfield, Dan R. Littman and Suzanne Nora Johnson."
+       },
+       {
+        "kind": "committee_membership",
+        "statement": "Science and Technology Committee: Chair Helen H. Hobbs; other members Susan Desmond-Hellmann, Scott Gottlieb, Susan Hockfield and Dan R. Littman."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 644,
+      "text": "Director Since: 2013",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Shantanu Narayen is a current Director, Director Since 2013."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 665,
+      "text": "Director Since: 2007",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "Suzanne Nora Johnson is a current Director, Director Since 2007."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 687,
+      "text": "Director Since: 2020",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "James Quincey is a current Director, Director Since 2020."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 704,
+      "text": "Director Since: 2014",
+      "facts_citing": [
+       {
+        "kind": "board_membership",
+        "statement": "James C. Smith is a current Director, Director Since 2014."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 803,
+      "text": "BOARD COMMITTEES",
+      "facts_citing": [
+       {
+        "kind": "committee_structure",
+        "statement": "The Board has five committees: Audit; Compensation; Governance & Sustainability; Regulatory and Compliance; Science and Technology."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 894,
+      "text": "Governance & Sustainability Committee Report",
+      "facts_citing": [
+       {
+        "kind": "member_qualification",
+        "statement": "The Governance & Sustainability Committee assessed the qualifications of Directors for Committee service and their independence, and determined all Directors comply with the Corporate Governance Principles and have sufficient time, energy and attention to serve on the Board."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 895,
+      "text": "The following are examples of how we worked to achieve the Board’s objectives to maintain and enhance Pfizer's record of excellence in corporate governance and Board oversight in 2022 and early 2023.",
+      "facts_citing": [
+       {
+        "kind": "member_qualification",
+        "statement": "The Governance & Sustainability Committee assessed the qualifications of Directors for Committee service and their independence, and determined all Directors comply with the Corporate Governance Principles and have sufficient time, energy and attention to serve on the Board."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 1719,
+      "text": "Role of the Compensation Committee",
+      "facts_citing": [
+       {
+        "kind": "committee_independence",
+        "statement": "All members of the Audit, Compensation, Governance & Sustainability, Regulatory and Compliance, and Science and Technology Committees are independent Directors."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 3131,
+      "text": "In late 2022, during the Board’s annual review of its leadership structure, the independent Directors considered the merits of separating, or continuing with the status quo, and combining the roles of Chairman and CEO, considering the company’s performance under the current operating and governance environment, executive leadership changes, and investor feedback. Notably, Pfizer has engaged with m",
+      "facts_citing": [
+       {
+        "kind": "member_qualification",
+        "statement": "The independent Directors based keeping Dr. Bourla as Chairman and CEO on their belief that he has extensive biopharmaceutical industry and regulatory knowledge and the leadership and vision necessary to lead the Board."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     },
+     {
+      "i": 3138,
+      "text": "•demonstrates the leadership and vision necessary to lead the Board and the company by driving scientific and commercial innovation and creating shareholder value.",
+      "facts_citing": [
+       {
+        "kind": "member_qualification",
+        "statement": "The independent Directors based keeping Dr. Bourla as Chairman and CEO on their belief that he has extensive biopharmaceutical industry and regulatory knowledge and the leadership and vision necessary to lead the Board."
+       }
+      ],
+      "reading_why": "read in the pool and left out of the facts"
+     }
+    ],
+    "missed": [],
+    "unread": [
+     {
+      "i": 409,
+      "text": "Drs. Desmond-Hellmann, Hobbs, Hockfield and Littman, and Mr. Echevarria, are employed at medical, scientific or academic institutions with which Pfizer engages in ordinary-course business transactions. Mr. Narayen is the chief executive officer of Adobe Inc., a company with which Pfizer engages in ordinary-course business transactions. Dr. Gottlieb is a Resident Fellow of the American Enterprise I",
+      "facts_citing": [
+       {
+        "kind": "board_independence",
+        "statement": "The Board determined that all current Directors other than Dr. Albert Bourla are independent: 11 independent Directors, namely Susan Desmond-Hellmann, Scott Gottlieb, Helen H. Hobbs, Susan Hockfield, Dan R. Littman, Suzanne Nora Johnson, Ronald E. Blaylock, Joseph J. Echevarria, Shantanu Narayen, James Quincey and James C. Smith; the determination relied on the Governance & Sustainability Committee report, including a review finding director-affiliated transactions below the Standards thresholds."
+       }
+      ]
+     },
+     {
+      "i": 624,
+      "text": "Governance & Sustainability, Regulatory and Compliance and Science and Technology",
+      "facts_citing": [
+       {
+        "kind": "committee_membership",
+        "statement": "Governance & Sustainability Committee: Chair Joseph J. Echevarria; other members Susan Desmond-Hellmann, Helen H. Hobbs and Dan R. Littman."
+       },
+       {
+        "kind": "committee_membership",
+        "statement": "Regulatory and Compliance Committee: Chair Scott Gottlieb; other members Helen H. Hobbs, Susan Hockfield, Dan R. Littman and Suzanne Nora Johnson."
+       },
+       {
+        "kind": "committee_membership",
+        "statement": "Science and Technology Committee: Chair Helen H. Hobbs; other members Susan Desmond-Hellmann, Scott Gottlieb, Susan Hockfield and Dan R. Littman."
+       }
+      ]
+     },
+     {
+      "i": 3137,
+      "text": "•has extensive experience in and knowledge of the research-based biopharmaceutical industry and regulatory environment; and",
+      "facts_citing": [
+       {
+        "kind": "member_qualification",
+        "statement": "The independent Directors based keeping Dr. Bourla as Chairman and CEO on their belief that he has extensive biopharmaceutical industry and regulatory knowledge and the leadership and vision necessary to lead the Board."
+       }
+      ]
+     }
+    ],
+    "other": {}
+   },
+   "selector_vs_reading": {
+    "verdict": "READING_AGREES",
+    "missed": [],
+    "wrongly_taken": [],
+    "unread": []
+   },
+   "unresolved_items": []
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}
