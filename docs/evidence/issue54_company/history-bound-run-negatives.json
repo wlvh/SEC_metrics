@@ -1,0 +1,39 @@
+{
+  "status": "PASSED",
+  "positive_seconds": 256.5051815529996,
+  "source_request_attempt_id": "request:attempt:820e366379fd257e18a8abb89138f7d8a2af2edbc84a85c443a21a0dd76829d6",
+  "source_reference_id": "sha256:8dd6d64cd94bd94f9a5cda19fa0528f91ef05f07eb1702d333f16c66f3eb06bc",
+  "negative_probes": [
+    {
+      "field": "request_repo_relative_path",
+      "path": "evidence/request_attempts/f3/f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03/CIK0000019617.json",
+      "before_sha256": "f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03",
+      "status": "REJECTED",
+      "error_type": "RunStoreError",
+      "reason": "Run RawBlob bytes changed",
+      "seconds": 0.1954230439996536
+    },
+    {
+      "field": "request_headers_repo_relative_path",
+      "path": "evidence/request_attempts/f3/f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03/CIK0000019617.json.c1d9b94dc2bafe4ecf6327fdf0d736d53ad0b6f6e07ed9a9bb66268479500c8d.headers.json",
+      "before_sha256": "c1d9b94dc2bafe4ecf6327fdf0d736d53ad0b6f6e07ed9a9bb66268479500c8d",
+      "status": "REJECTED",
+      "error_type": "BatchWorkflowError",
+      "reason": "Request-ledger locator evidence is invalid",
+      "seconds": 0.3167288380000173
+    }
+  ],
+  "uid": 1000,
+  "denied_read_roots": [
+    "/workspace/SEC_metrics",
+    "/workspace/work/history-preparation",
+    "/workspace/work/history-mixed-restored",
+    "/workspace/work/sec-company-compute/evidence"
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false
+}

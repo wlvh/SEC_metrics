@@ -1,5 +1,13 @@
 # SEC_metrics 测试与验证流程
 
+本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。真实SEC首次＋重复运行尚待许可，不把录制准入换成LIVE。
+<!-- capability-anchor: CAPABILITY.local_company_run -->
+
+公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
+
+公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
 ## 正常年度输入选择
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_annual_input -v`在保存真实材料上检查非自然财年、52周期间、修订与普通原件分离、十公司保留/故障隔离，以及季度冒充年度、错主体、缺历史分片和后来来源失败反例。测试禁止网络及旧结果读取，不模拟财务答案。组件通过只证明输入准备，未证明指标执行或新SEC发现。fast入口逐项登记以保持30秒单项上限。
@@ -848,3 +856,10 @@ D04作用域回归：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test
 
 
 请求构造短作用域：`PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_native_request_construction`，需要既有固定tokenizers依赖。覆盖完整原字符/输入类型/字段顺序、返回对象突变、实际规则/分词状态变更、源真实性仍逐次执行；只缓存确定性请求字节，原生收据和含义检查不缓存。完整源声明、预算和请求格式未改变。注册形式短回归`tests.vnext.test_registration_event_discovery`使用明确合成metadata；真实4原件及完整metadata检查单列，不依赖私有固定目录或永久missing状态。
+
+
+### #54 公司持续结果与保存处理输入（2026-10-03 北京时间）
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_company_results tests.vnext.test_company_processing -v` 为编排／信任回归，财报计算及渲染明确模拟；不替代真实来源、原生 Run 或内容验收。覆盖 B01+D01 后只更新 B01、多指标首次出口、单项失败／重放拒绝保留其它项、旧年度／历史多期间、混合 closure、已确认缺陷和当前来源未复核。保存处理包按外置信任及原请求／响应登记／运行树字节验证；改答案、伪 LIVE、额外 Result、错公司、别名和程序漂移拒绝。
+
+真实材料与原失败见 `docs/evidence/issue54_company/corrective-results/README.md`。CLI 查询／导出使用 `--runtime-root` 指定各结果的原固定树；D04 原录制材料保持原 V14 和 tokenizer0.22.2，只验证独立 SEC 来源与处理输入接线。原请求／响应不改签，无真实新增 SEC/provider/paid 调用；完整 LIVE 材料、内容独审和 OpenShift 未测部分分别登记。

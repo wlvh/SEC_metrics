@@ -1,0 +1,305 @@
+{
+  "record_type": "LOCAL_NATIVE_ORCHESTRATION_RECORDED_HTTP_EVIDENCE",
+  "http_only_replaced": true,
+  "sources": "existing saved URL/body/header fixtures on controlled preparation side only",
+  "source_admission_calculation_and_cold_replay_mocked": false,
+  "business_acceptance": false,
+  "all_39_calculated": false,
+  "phases": [
+    {
+      "phase": "first",
+      "status": "FLOW_COMPLETED",
+      "elapsed_seconds": "251.954381",
+      "flow_completed": true,
+      "source_execution_mode": "RECORDED_TEST_ONLY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "actual_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "filingDate": "2026-02-10",
+        "reportDate": "2025-12-31",
+        "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-13881",
+        "filmNumber": "26614897",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 12393244,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "mar-20251231.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "selected_metrics": [
+        "B01",
+        "D01"
+      ],
+      "program_root": "/workspace/work/local-native-run/programs/a7c7f1812a05555056cae6082fa804f2fa9cbf7e75d1eee7e925844bc18b6afe",
+      "source_checkpoint_id": null,
+      "summary_bytes": 751334,
+      "captured_count": 29,
+      "reused_count": 0,
+      "native_metrics": [
+        {
+          "metric_id": "B01",
+          "attempt_id": "d822f11cf6204604b96a61dd6e69e5e6",
+          "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+          "run_id": "run:ordinary-integrated:58756cad929d284ea9ab123197eabf168b1b31947147bdfddcd80b5d4633e44f",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "requirement_id": "issue_54_v4",
+          "requirement_closure_hash": "sha256:76b1ef3322056a2d8d4ad85be2b77877e91d0e9a761e7375859531752c4c73e0",
+          "source_checkpoint_id": "sha256:693aaf4511c4f8b22b575fbc38e22311383526f1bbc8cb6d4ac0ec07397e4a46",
+          "current_input_matches": true,
+          "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+          "replay_status": "PASSED",
+          "native_path": "native/B01/d822f11cf6204604b96a61dd6e69e5e6",
+          "native_row_hashes": {
+            "metric_evidence.csv": "55f78cc218510561dc6115ada76b1f7884d45be0886485a5ccd277bc873a62c6",
+            "metrics_matrix.csv": "8b1c5bc357b235637348ebf00b296644592a42fbfbd42f7a6bcbb2ed9b813768"
+          }
+        },
+        {
+          "metric_id": "D01",
+          "attempt_id": "f3a61905f2c440c3aebea7cc60eceee9",
+          "result_id": "sha256:2c52d630eaca52a5c547b32a9a6affa2799576597d24a129ee07d0fee02b524d",
+          "run_id": "run:ordinary-integrated:5fce3fd07c068d5c68a53e53becb843b66cc1d8ac85f1176a502b5866023c00c",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "requirement_id": "issue_54_v4",
+          "requirement_closure_hash": "sha256:76b1ef3322056a2d8d4ad85be2b77877e91d0e9a761e7375859531752c4c73e0",
+          "source_checkpoint_id": "sha256:693aaf4511c4f8b22b575fbc38e22311383526f1bbc8cb6d4ac0ec07397e4a46",
+          "current_input_matches": true,
+          "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+          "replay_status": "PASSED",
+          "native_path": "native/D01/f3a61905f2c440c3aebea7cc60eceee9",
+          "native_row_hashes": {
+            "metric_evidence.csv": "54448e3067372b2e1e6143442c86c359365261f4cf4f460cd53fce41ab96f4af",
+            "metrics_matrix.csv": "459e68f708d6748ec52835cfb6345c8bcf97f067cb3acfb01c1ec01c06be9ede"
+          }
+        }
+      ],
+      "table_metric_count": 39,
+      "stage_seconds": {
+        "acquire": "163.177480",
+        "handoff": "5.831377",
+        "install": "0.732533",
+        "compute": "59.732113",
+        "export-results": "19.699075"
+      },
+      "run_manifests": 2
+    },
+    {
+      "phase": "repeat",
+      "status": "FLOW_COMPLETED",
+      "elapsed_seconds": "62.896171",
+      "flow_completed": true,
+      "source_execution_mode": "RECORDED_TEST_ONLY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "actual_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "filingDate": "2026-02-10",
+        "reportDate": "2025-12-31",
+        "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-13881",
+        "filmNumber": "26614897",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 12393244,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "mar-20251231.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "selected_metrics": [
+        "B01"
+      ],
+      "program_root": "/workspace/work/local-native-run/programs/a7c7f1812a05555056cae6082fa804f2fa9cbf7e75d1eee7e925844bc18b6afe",
+      "source_checkpoint_id": null,
+      "summary_bytes": 589986,
+      "captured_count": 2,
+      "reused_count": 27,
+      "native_metrics": [
+        {
+          "metric_id": "B01",
+          "attempt_id": "d822f11cf6204604b96a61dd6e69e5e6",
+          "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+          "run_id": "run:ordinary-integrated:58756cad929d284ea9ab123197eabf168b1b31947147bdfddcd80b5d4633e44f",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "requirement_id": "issue_54_v4",
+          "requirement_closure_hash": "sha256:76b1ef3322056a2d8d4ad85be2b77877e91d0e9a761e7375859531752c4c73e0",
+          "source_checkpoint_id": "sha256:693aaf4511c4f8b22b575fbc38e22311383526f1bbc8cb6d4ac0ec07397e4a46",
+          "current_input_matches": true,
+          "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+          "replay_status": "PASSED",
+          "native_path": "native/B01/d822f11cf6204604b96a61dd6e69e5e6",
+          "native_row_hashes": {
+            "metric_evidence.csv": "55f78cc218510561dc6115ada76b1f7884d45be0886485a5ccd277bc873a62c6",
+            "metrics_matrix.csv": "8b1c5bc357b235637348ebf00b296644592a42fbfbd42f7a6bcbb2ed9b813768"
+          }
+        },
+        {
+          "metric_id": "D01",
+          "attempt_id": "f3a61905f2c440c3aebea7cc60eceee9",
+          "result_id": "sha256:2c52d630eaca52a5c547b32a9a6affa2799576597d24a129ee07d0fee02b524d",
+          "run_id": "run:ordinary-integrated:5fce3fd07c068d5c68a53e53becb843b66cc1d8ac85f1176a502b5866023c00c",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "requirement_id": "issue_54_v4",
+          "requirement_closure_hash": "sha256:76b1ef3322056a2d8d4ad85be2b77877e91d0e9a761e7375859531752c4c73e0",
+          "source_checkpoint_id": "sha256:693aaf4511c4f8b22b575fbc38e22311383526f1bbc8cb6d4ac0ec07397e4a46",
+          "current_input_matches": null,
+          "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+          "replay_status": "PASSED",
+          "native_path": "native/D01/f3a61905f2c440c3aebea7cc60eceee9",
+          "native_row_hashes": {
+            "metric_evidence.csv": "54448e3067372b2e1e6143442c86c359365261f4cf4f460cd53fce41ab96f4af",
+            "metrics_matrix.csv": "459e68f708d6748ec52835cfb6345c8bcf97f067cb3acfb01c1ec01c06be9ede"
+          }
+        }
+      ],
+      "table_metric_count": 39,
+      "stage_seconds": {
+        "acquire": "25.972433",
+        "handoff": "6.180383",
+        "install": "1.090213",
+        "compute": "10.188011",
+        "export-results": "19.447289"
+      },
+      "run_manifests": 2
+    },
+    {
+      "phase": "compact_repeat",
+      "status": "FLOW_COMPLETED",
+      "elapsed_seconds": "67.729080",
+      "flow_completed": true,
+      "source_execution_mode": "RECORDED_TEST_ONLY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "actual_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "filingDate": "2026-02-10",
+        "reportDate": "2025-12-31",
+        "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-13881",
+        "filmNumber": "26614897",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 12393244,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "mar-20251231.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "selected_metrics": [
+        "B01"
+      ],
+      "program_root": "/workspace/work/local-native-run/programs/a7c7f1812a05555056cae6082fa804f2fa9cbf7e75d1eee7e925844bc18b6afe",
+      "source_checkpoint_id": null,
+      "summary_bytes": 12651,
+      "captured_count": 2,
+      "reused_count": 27,
+      "native_metrics": [
+        {
+          "metric_id": "B01",
+          "attempt_id": "d822f11cf6204604b96a61dd6e69e5e6",
+          "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+          "run_id": "run:ordinary-integrated:58756cad929d284ea9ab123197eabf168b1b31947147bdfddcd80b5d4633e44f",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "requirement_id": "issue_54_v4",
+          "requirement_closure_hash": "sha256:76b1ef3322056a2d8d4ad85be2b77877e91d0e9a761e7375859531752c4c73e0",
+          "source_checkpoint_id": "sha256:693aaf4511c4f8b22b575fbc38e22311383526f1bbc8cb6d4ac0ec07397e4a46",
+          "current_input_matches": true,
+          "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+          "replay_status": "PASSED",
+          "native_path": "native/B01/d822f11cf6204604b96a61dd6e69e5e6",
+          "native_row_hashes": {
+            "metric_evidence.csv": "55f78cc218510561dc6115ada76b1f7884d45be0886485a5ccd277bc873a62c6",
+            "metrics_matrix.csv": "8b1c5bc357b235637348ebf00b296644592a42fbfbd42f7a6bcbb2ed9b813768"
+          }
+        },
+        {
+          "metric_id": "D01",
+          "attempt_id": "f3a61905f2c440c3aebea7cc60eceee9",
+          "result_id": "sha256:2c52d630eaca52a5c547b32a9a6affa2799576597d24a129ee07d0fee02b524d",
+          "run_id": "run:ordinary-integrated:5fce3fd07c068d5c68a53e53becb843b66cc1d8ac85f1176a502b5866023c00c",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "requirement_id": "issue_54_v4",
+          "requirement_closure_hash": "sha256:76b1ef3322056a2d8d4ad85be2b77877e91d0e9a761e7375859531752c4c73e0",
+          "source_checkpoint_id": "sha256:693aaf4511c4f8b22b575fbc38e22311383526f1bbc8cb6d4ac0ec07397e4a46",
+          "current_input_matches": null,
+          "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+          "replay_status": "PASSED",
+          "native_path": "native/D01/f3a61905f2c440c3aebea7cc60eceee9",
+          "native_row_hashes": {
+            "metric_evidence.csv": "54448e3067372b2e1e6143442c86c359365261f4cf4f460cd53fce41ab96f4af",
+            "metrics_matrix.csv": "459e68f708d6748ec52835cfb6345c8bcf97f067cb3acfb01c1ec01c06be9ede"
+          }
+        }
+      ],
+      "table_metric_count": 39,
+      "stage_seconds": {
+        "acquire": "28.830852",
+        "handoff": "6.968883",
+        "install": "1.315275",
+        "compute": "10.271835",
+        "export-results": "20.324296"
+      },
+      "run_manifests": 2
+    }
+  ]
+}

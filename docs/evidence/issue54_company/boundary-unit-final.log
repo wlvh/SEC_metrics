@@ -1,0 +1,17 @@
+test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) ... ok
+test_import_and_compute_lock_blocks_another_process (tests.vnext.test_company_handoff.CompanyImportTest.test_import_and_compute_lock_blocks_another_process) ... ok
+test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) ... ok
+test_nonprefix_history_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_nonprefix_history_cannot_replace_committed_source) ... ok
+test_symlink_paths_and_unowned_sources_are_refused (tests.vnext.test_company_handoff.CompanyImportTest.test_symlink_paths_and_unowned_sources_are_refused) ... ok
+test_wrong_company_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_wrong_company_cannot_replace_committed_source) ... ok
+test_alias_to_trusted_record_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_alias_to_trusted_record_is_refused) ... ok
+test_cross_company_is_refused_before_source_discovery (tests.vnext.test_company_source_authority.CompanyTrustTest.test_cross_company_is_refused_before_source_discovery) ... ok
+test_exact_independent_record_is_accepted (tests.vnext.test_company_source_authority.CompanyTrustTest.test_exact_independent_record_is_accepted) ... ok
+test_matching_id_with_changed_content_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_matching_id_with_changed_content_is_refused) ... ok
+test_package_cannot_supply_its_own_trust_directory (tests.vnext.test_company_source_authority.CompanyTrustTest.test_package_cannot_supply_its_own_trust_directory) ... ok
+test_rehashing_package_does_not_install_new_authority (tests.vnext.test_company_source_authority.CompanyTrustTest.test_rehashing_package_does_not_install_new_authority) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.048s
+
+OK

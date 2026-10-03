@@ -1,0 +1,37 @@
+{
+  "elapsed_seconds": 141.06506552000064,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:386a34df6fa99f8500c7d7e341aec9dc793f3f26a997380fce70b724e68aec54",
+  "source_root": "/workspace/work/company-event-historical-state/source",
+  "metric_ids": [
+    "C01"
+  ],
+  "period_request": {
+    "report_end": "2023-12-31",
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "C01",
+      "status": "UPDATE_BLOCKED",
+      "reason": "[Errno 2] No such file or directory: '/workspace/work/company-history-runtime-export-scope/evidence/accession_materials'",
+      "error_type": "FileNotFoundError",
+      "business_metric_completed": false
+    }
+  ],
+  "compute_seconds": "77.803271",
+  "source_installation": {
+    "checkpoint_id": "sha256:386a34df6fa99f8500c7d7e341aec9dc793f3f26a997380fce70b724e68aec54",
+    "company_id": "jpmorgan_chase",
+    "package_root": "/workspace/work/company-history-jpm-event-source",
+    "source_root": "/workspace/work/company-event-historical-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

@@ -1,0 +1,37 @@
+{
+  "status": "SOURCE_AND_RUNTIME_EXCLUDE_SAVED_PROCESSING",
+  "saved_processing_company": "enphase_energy",
+  "target_source_company": "marriott_international",
+  "saved_input_record_id": "sha256:bf458e88fcc28a2165ea36cb91a1e30316187e6d306eb0472de0aabfe2673291",
+  "saved_processing_sha256": "5a441d7e4514dcc04346e0f9d65e91a0fc789b27afc188b5e854c05810766ea6",
+  "rules_identical_with_and_without_saved_processing": true,
+  "runtime_contains_processing_state": false,
+  "package_contains_processing_state": false,
+  "source_checkpoint_id": "sha256:c1b86d41985c23e529b8f68923eaa0ee5a76102583321cfedbb71b77ec06f353",
+  "source_sizes_bytes": {
+    "originals": 20857598,
+    "ledger_and_registry": 535903,
+    "rules": 4154123,
+    "admission": 41354
+  },
+  "runtime": {
+    "status": "RUNTIME_INSTALLED",
+    "runtime_root": "/workspace/work/company-source-only-runtime",
+    "requirement_id": "issue_28_v13",
+    "dispatch_files": [],
+    "sec_originals_installed": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false
+  },
+  "elapsed_seconds": 6.897152248999191,
+  "original_processing_material_preserved": true,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

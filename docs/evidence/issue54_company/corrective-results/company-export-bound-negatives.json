@@ -1,0 +1,41 @@
+{
+  "status": "PASSED",
+  "scope": "REAL_RUN_BOUND_INPUTS_PRIVATE_COPIES",
+  "probes": [
+    {
+      "field": "request_repo_relative_path",
+      "run_id": "run:ordinary-integrated:006ee806ca7680491e299b53fdd9b0c1a71ed00db7c457a9b01773b9049fd8ab",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+      "actual_bound_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "before_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "after_sha256": "81ad3e08bdc3dbca0ec7ea1e0e3a592c88d16d994beb6654aaa03352cd446d7f",
+      "status": "EXPORTED_PARTIAL",
+      "reason": "COMPANY_RESULT_REPLAY_FAILED: vnext.run_store.RunStoreError: Run RawBlob bytes changed",
+      "other_metric_exported": [
+        "D01"
+      ],
+      "seconds": 27.804078422999737
+    },
+    {
+      "field": "request_headers_repo_relative_path",
+      "run_id": "run:ordinary-integrated:006ee806ca7680491e299b53fdd9b0c1a71ed00db7c457a9b01773b9049fd8ab",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+      "actual_bound_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
+      "before_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
+      "after_sha256": "72df22633706202f01641881b1332acbebcf7a00a870c5c3cc23f69bcc18f152",
+      "status": "EXPORTED_PARTIAL",
+      "reason": "COMPANY_RESULT_REPLAY_FAILED: vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid",
+      "other_metric_exported": [
+        "D01"
+      ],
+      "seconds": 28.25527776599847
+    }
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

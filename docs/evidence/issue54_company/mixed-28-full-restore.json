@@ -1,0 +1,32 @@
+{
+  "status": "FULL_MIXED_CHECKPOINT_VALIDATED",
+  "checkpoint_id": "sha256:20f696819182dea693309b9fa088d17b685705f55b39ff8d3dc5919671f3577d",
+  "ledger_sha256": "2dbe3bf94152eeec20946d4b8725bf703bc3c35fea6ade51f75f25588f030dd0",
+  "captures": 13,
+  "companies": [
+    "jpmorgan_chase",
+    "salesforce"
+  ],
+  "real_sec_credit": true,
+  "repairs": [
+    {
+      "path": "actual-ledger/source-inputs/config/issue28_normal_results_v2.json",
+      "original_archive": "/workspace/work/sec-company-compute/docs/evidence/issue28_continuous/ordinary-continuity-policy/native-continuity-material.tar.gz",
+      "member": "continuity-policy-native-first/data/paramount_skydance_paramount_global/config/issue28_normal_results_v2.json",
+      "sha256": "fe256b7daf6fdb9af95551196841efb2f5b44272d2343d7d05c1c3b5c6817447",
+      "size": 7068
+    },
+    {
+      "path": "actual-ledger/source-inputs/config/ordinary_public_projection_v1.json",
+      "original_archive": "/workspace/work/sec-company-compute/docs/evidence/issue28_continuous/ordinary-continuity-policy/native-continuity-material.tar.gz",
+      "member": "continuity-policy-native-first/data/paramount_skydance_paramount_global/config/ordinary_public_projection_v1.json",
+      "sha256": "56d4191d1813e8ad27a0649eda8b956e3a28d89ac52830eeff8f429b97b51141",
+      "size": 29067
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

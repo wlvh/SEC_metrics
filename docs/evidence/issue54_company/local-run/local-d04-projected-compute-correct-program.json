@@ -1,0 +1,48 @@
+{
+  "elapsed_seconds": 398.34711038900423,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "enphase_energy",
+  "source_checkpoint_id": "sha256:47b2cff802d1616c0481cd6fa7613212837ccf222eb6da972e728868cd01d294",
+  "source_root": "/workspace/work/local-recorded-d04/state/source",
+  "metric_ids": [
+    "D04"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "D04",
+      "status": "CANDIDATE_READY",
+      "last_verified_candidate": {
+        "attempt_id": "f062a87b2eb648c1a7abf87962720d75",
+        "rows_root": "/workspace/work/local-recorded-d04/state/updates/processing/D04/568ab1eb52f4f44721e94a871efe78caf389862213a9c9278201c31b7e67c8d2/attempts/f062a87b2eb648c1a7abf87962720d75/rows",
+        "current_input_matches": true,
+        "processing_id": "sha256:7f49d9ddd34de91cfbd2acf117c2bbf771e83931fd4ccde72d6843960f0a92c7",
+        "runtime_root": "/workspace/work/company-d04-live-program"
+      },
+      "saved_processing_mode": "LIVE",
+      "new_candidate_created": true,
+      "native_assessment_completed": true,
+      "business_metric_completed": false
+    }
+  ],
+  "compute_seconds": "397.424948",
+  "source_installation": {
+    "checkpoint_id": "sha256:47b2cff802d1616c0481cd6fa7613212837ccf222eb6da972e728868cd01d294",
+    "company_id": "enphase_energy",
+    "package_root": "/workspace/work/local-recorded-d04/handoff",
+    "source_root": "/workspace/work/local-recorded-d04/state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "runtime_root": "/workspace/work/local-runtime-projection",
+  "execution_id": "6c2200ce5c7845f39e410fc67a196f2e",
+  "recorded_at": "2026-10-03T12:29:57.638186+00:00"
+}

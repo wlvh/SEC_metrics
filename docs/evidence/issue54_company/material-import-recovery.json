@@ -1,0 +1,62 @@
+{
+  "status": "PASSED",
+  "uid": 1000,
+  "runtime_read_only": true,
+  "denied_roots": [
+    "/workspace/SEC_metrics",
+    "/workspace/work/probe-b/ledger",
+    "/workspace/work/sec-company-compute/evidence"
+  ],
+  "stable_source_root": "/workspace/work/company-recovery-release-state/source",
+  "first_checkpoint": "sha256:7bdb123bb3d1421620491abb46eae784629bd14269c764841429ff2f4cf2665a",
+  "updated_checkpoint": "sha256:06b3629f57aa3528bf29103c754d73245814e2d0686c96089e4754b27032cd15",
+  "results": [
+    {
+      "operation": "install",
+      "exit_code": 0,
+      "seconds": 1.0682848540000123,
+      "log": "company-recovery-release-first-install.log"
+    },
+    {
+      "operation": "compute",
+      "exit_code": 0,
+      "seconds": 66.46807622699998,
+      "log": "company-recovery-release-first-compute.log"
+    },
+    {
+      "operation": "abrupt_exit_after_new_source_move",
+      "exit_code": 91,
+      "seconds": 1.6147523979998368,
+      "committed_pointer_unchanged": true,
+      "old_report_unchanged": true
+    },
+    {
+      "operation": "compute",
+      "exit_code": 0,
+      "seconds": 36.37233821799964,
+      "log": "company-recovery-release-restart-compute.log"
+    },
+    {
+      "operation": "install",
+      "exit_code": 0,
+      "seconds": 1.8756507930002044,
+      "log": "company-recovery-release-retry-install.log"
+    },
+    {
+      "operation": "compute",
+      "exit_code": 0,
+      "seconds": 98.87964513400038,
+      "log": "company-recovery-release-update-compute.log"
+    },
+    {
+      "operation": "verify_old_run_bytes_after_update",
+      "files": 722,
+      "unchanged": true
+    }
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

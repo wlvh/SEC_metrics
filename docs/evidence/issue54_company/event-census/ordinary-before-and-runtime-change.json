@@ -1,0 +1,91 @@
+{
+  "company_id": "marriott_international",
+  "uid": 1000,
+  "scope": "REAL_SAVED_SOURCES_FIXED_RUNTIME_COMPARISON",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "stages": [
+    {
+      "stage": "install",
+      "runtime_root": "/workspace/work/company-results-runtime-c17",
+      "seconds": 0.84172594499978,
+      "exit_code": 0,
+      "metrics": null,
+      "status": "INSTALLED",
+      "requirement_id": null
+    },
+    {
+      "stage": "before",
+      "runtime_root": "/workspace/work/company-results-runtime-c17",
+      "seconds": 6.573447516999295,
+      "exit_code": 2,
+      "metrics": [
+        {
+          "metric_id": "C01",
+          "status": "INPUT_FAILED",
+          "attempt_id": "9c4309e197d04bd0994a35cfe90c4814",
+          "latest_attempt": "9c4309e197d04bd0994a35cfe90c4814",
+          "successful_attempt": null,
+          "previous_successful_attempt": null,
+          "last_verified_candidate": null,
+          "new_candidate_created": false,
+          "terminal": {
+            "record_type": "ORDINARY_UPDATE_TERMINAL",
+            "attempt_id": "9c4309e197d04bd0994a35cfe90c4814",
+            "configuration_id": "sha256:8956a58d3cc223bd97faaf04876e56cedc7a9d6c9dfbbc608a85cf9d634b7162",
+            "intent_id": "sha256:b5e5c81ad38b5075d91a6333360d74d2e97b5922ddab3a93ea16c3c32eb46ecd",
+            "status": "INPUT_FAILED",
+            "completed_at": "2026-10-02T20:52:46.372381+00:00",
+            "input": null,
+            "metrics": {},
+            "error": {
+              "error_type": "FileNotFoundError",
+              "reason": "[Errno 2] No such file or directory: '/workspace/work/company-results-runtime-c17/evidence/accession_materials'"
+            },
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "record_id": "sha256:e2aa98d3acf2b0823e86439288c56b7aae9de4f82e6a9b4c418e56a79112fe0d"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        }
+      ],
+      "status": null,
+      "requirement_id": null
+    },
+    {
+      "stage": "after",
+      "runtime_root": "/workspace/work/company-event-ordinary-runtime",
+      "seconds": 1.3101519820011163,
+      "exit_code": 2,
+      "metrics": [
+        {
+          "metric_id": "C01",
+          "status": "UPDATE_BLOCKED",
+          "error_type": "OrdinaryUpdateError",
+          "reason": "UPDATE_CONFIGURATION_OR_RUNTIME_CHANGED",
+          "last_verified_candidate": null,
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        }
+      ],
+      "status": null,
+      "requirement_id": null
+    }
+  ]
+}
