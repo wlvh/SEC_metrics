@@ -27,3 +27,28 @@ FINAL_ACTUAL_TOOL_COUNT=46 (23 functions.exec plus 23 nested exec_command)
 FINAL_ORDINARY_MESSAGE_COUNT=2 (1 opening commentary and 1 final report; 0 questions)
 RESPONSE_AFTER_CHECKS=unchanged; no rewrite
 HARD_LIMITS=46 <= 80 tools; elapsed from first explicit timestamp under 90 minutes; 2 <= 3 ordinary messages
+
+INCREMENT2_ASSOCIATED_PATCH_SHA=97c3016fcfd2e5efc989ddc56c3e9dcdf99e8a1f
+INCREMENT2_ALLOWED_INPUT_DIRECTORY=/private/tmp/issue28-c02-blind-source-pilot2-20261003/
+INCREMENT2_FIRST_RECORDED_UTC=2026-10-03T05:29:34.173974+00:00
+INCREMENT2_TIMING_NOTE=new prompt-only read preceded this first explicit increment clock sample
+INCREMENT2_READS=prompt first; metadata/context complete; request body exact-content matching; source and locator hashes matched previously read bytes
+INCREMENT2_SOURCE_READING=reused prior complete B0-B2783 reading after exact source/locator SHA256 identity check; no full-document reread
+INCREMENT2_RESPONSE=one model-authored write to response-v2.log; original response.log not read or modified
+INCREMENT2_VALIDATION_BOUNDARY=JSON parse, locator reference existence and input hashes only; no semantic rules, expected-answer comparison or token-count recomputation
+INCREMENT2_TOOL_COUNT_AT_WRITE=6; CUMULATIVE_TOOL_COUNT_AT_WRITE=52
+INCREMENT2_CREDIT=development increment using same model and same source; not fresh independent holdout or production validation
+INCREMENT2_MECHANICAL_CHECKS={"json_parse": "PASS", "facts": 41, "unresolved": 4, "locator_references": "PASS", "missing_locator_ids": [], "source_matches_previously_read_bytes": true, "locators_match_v1": true, "source_hash_matches_metadata": true, "request_hash_matches_measurement": true}
+INCREMENT2_INPUT_SHA256 prompt.txt 79050bdb87447723e45ac83270dd7413e8420dcef5d204ea6f1e7b40c652d292
+INCREMENT2_INPUT_SHA256 source.txt 3fb17ff46af9c5d95a46d927a76a61eadcd7cebc02da267df14dd72a1e835062
+INCREMENT2_INPUT_SHA256 metadata.json 6a6379b6b01952000c45389b6917bed81ff9f109b3d936093a7d293c023b9d37
+INCREMENT2_INPUT_SHA256 locators.json cf5b73fb243ba952ed8e8e897a2b7c0c333b10bed3b757d108da646bc7be243d
+INCREMENT2_INPUT_SHA256 request-body.json 4ec3827cab6b905dc2c34ca60c5871d3f62abeefbdb813d305382160484386eb
+INCREMENT2_INPUT_SHA256 context-measurement.json 18300aa4ae9163745e17d765408d20e258c1fb1304e242db9874fa0f999ef699
+INCREMENT2_UTC_END=2026-10-03T05:33:42.673859+00:00
+INCREMENT2_FINAL_TOOL_COUNT=8 (4 functions.exec plus 4 exec_command)
+CUMULATIVE_FINAL_TOOL_COUNT=54 (27 functions.exec plus 27 exec_command)
+INCREMENT2_ORDINARY_MESSAGES=1 final only; no opening commentary or questions
+CUMULATIVE_FINAL_ORDINARY_MESSAGE_COUNT=3 (1 opening commentary and 2 final reports; 0 questions)
+INCREMENT2_RESPONSE_AFTER_CHECKS=unchanged; original response.log and first conclusion text preserved
+CUMULATIVE_LIMITS=54 <= 80 tools; 3 <= 3 ordinary messages; elapsed from first explicit clock remains below 90 minutes

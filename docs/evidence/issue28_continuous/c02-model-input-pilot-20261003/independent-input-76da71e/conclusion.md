@@ -18,3 +18,16 @@
 实际阅读范围、UTC 计时及工具/消息计数见 execution.log。完整原件 B0–B2783 均已阅读；B1900–B2099 首次返回出现工具输出截断，其缺口通过 B2030–B2059 完整补读覆盖。
 
 这项结论只诊断输入、抽取任务及表达限制，不授 LIVE、原生 Run/Result、390 指标、正式采纳或生产信用。
+
+
+2026-10-03 同源未覆盖增量：任务关联补丁 97c3016fcfd2e5efc989ddc56c3e9dcdf99e8a1f（仅记录任务给定身份，未读代码）。
+
+先读 pilot2 的新 prompt；随后核验其 source.txt 与 locators.json 的 SHA256 分别仍为 3fb17ff46af9c5d95a46d927a76a61eadcd7cebc02da267df14dd72a1e835062、cf5b73fb243ba952ed8e8e897a2b7c0c333b10bed3b757d108da646bc7be243d，与本模型此前完整阅读的字节相同。因此复用已覆盖 B0–B2783 的实际阅读，不重复大原件读取。新 request 的 system 严格等于新 prompt，user 严格等于同一 source，无额外答案材料。
+
+按新任务独立重新形成并一次写入 response-v2.log；没有读取或改写 response.log，也没有接收提供方预期答案。这不是通过旧响应批量改类别获得的结果。新原文明确增加 board_membership 和 member_qualification，要求把现有任职、任期和拟提名置于前者，membership_change 只表述确实发生的变化。新抽取遵守这些边界，并给被拆开的个人卡片补上姓名、标题/角色和相应时间引用。
+
+一般董事适任性现在有合法表达位置：七位董事的 Key Skills and Qualifications 段落 B392/B404/B417/B431/B441/B454/B467 本身是在评价他们给本公司董事会带来的价值；与单纯列学历、工作经历的 Career Highlights 不同。新 JSON 把这些话准确归属为申报文件的评价，没有把它们称为本模型独立核实的学历、资历或客观资格。审计委员财务阅读能力、Gomo/Mora 的 SEC 财务专家认定仍归属董事会实际判断，没有套用候选人一般标准 B566 或股权计划的假设性规则。
+
+第一轮的类别缺口在新任务中得到表达上的解决；原件的 Kothandaraman 月份矛盾、pricing/network-security 子组名单与主席、Strategic Committee 主席及管理层正式成员关系仍然未决。未因 prompt 变更或同源哈希一致获得内容正确性、真实模型能力或生产信用。原首轮结论、response.log 原样保留；本次仅追加范围说明并记录新模型原始抽取。
+
+新 context-measurement 报告 88,916 输入 tokens、4,096 输出预留、93,012 总量、200,000 上限和 fits=true。本次仍只引用其报告值，未复核 tokenizer 或运行真实 DeepSeek 调用。原始 JSON 的工具检查只做解析、locator 引用存在及输入哈希，未加载语义验证器。所用模型仍为同一执行者；此增量不是新的独立留出验证，也不授 LIVE、原生、390 或生产信用。增量与累计工具/普通消息计数、UTC 记录追加于 execution.log。
