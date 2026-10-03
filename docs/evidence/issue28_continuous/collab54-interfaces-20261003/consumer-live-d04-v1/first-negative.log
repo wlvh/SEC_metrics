@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+  File "/private/tmp/issue28-company-consumer-20261003/runtime-303-live-d04/scripts/vnext/company_processing.py", line 116, in verify_saved_equivalence
+    current = worker('current', creator, packet_root,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-company-consumer-20261003/runtime-303-live-d04/scripts/vnext/company_processing.py", line 29, in worker
+    need(child.returncode==0,'COMPANY_PROCESSING_AUTHENTICATION_FAILED:'+(
+  File "/private/tmp/issue28-company-consumer-20261003/runtime-303-live-d04/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_PROCESSING_AUTHENTICATION_FAILED:ValueError: COMPANY_SOURCE_BYTES_CHANGED:evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json.85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127.headers.json
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+AssertionError: COMPANY_PROCESSING_AUTHENTICATION_FAILED:ValueError: COMPANY_SOURCE_BYTES_CHANGED:evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json.85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127.headers.json

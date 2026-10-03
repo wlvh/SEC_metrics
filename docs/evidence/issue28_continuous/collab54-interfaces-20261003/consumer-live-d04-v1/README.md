@@ -1,0 +1,17 @@
+# 原LIVE D04判断与真实52捕获公司来源：消费者接通
+
+消费固定#54 `303d751f29e57dc68ab7848b6b184dc4ab8c4b83`，本方当时head899001f7。复用此前已认证导出的44801106/6fbbc924/原V14 568ab1eb处理输入及662文件原程序，不重导出旧AI、不改变173–178请求/响应/终态或调用计数。源包、处理包、源/处理trust及两个程序根分别保存；没有把AI/Result混入SEC来源。
+
+初次误将原Run的安装数据当作完整来源准备根，导出被 `COMPANY_SOURCE_DECLARED_LOCATOR_NOT_CARRIED` 拒绝：安装只含实际消费的不可变正文，没有供来源发现使用的submissions working locator。失败日志和脚本保留。改用原仓库完整的真实基线SEC树；其完整请求日志与原Run安装日志逐字节相同，不从当前52历史截取前缀、不补造旧原件或修改原Run。已成功的新运行时安装2.142秒直接复用。
+
+原真实基线公司版本导出3.200秒；当前源来自#28原52捕获混合历史，公司范围导出31.025秒，全部账本/原checkpoint保持，只带Enphase原件。当前公司导入0.859秒。实际会社入口194.293秒返回CANDIDATE_READY，LIVE mode，Run128f6cca…及Result7bf9ea83…均与原完整候选相同，原V14需求身份保持。原Result仍WITHHELD，原定义的规定范围文字投影为TEXT_QUAL；不是新模型判断或财务健康保证。
+
+当前语义source4810c0be…与原source6fbbc924…在完整正文、主体/期间、原件集合及实质请求责任上由原source_equivalence核对，等价id a108b727…，其中new_provider_execution、original_provider_bytes_rewritten、new_acquisition_credit均false。当前完整公司来源另存work/current-source及current-semantic-source.json，旧基线另存独立版本，没有拼接或裁行。另一进程重入91.240秒得到NO_SOURCE_CONTENT_CHANGE、同成功attempt、一个原生Run。原ledger根文件、source log、active及登记JSON前后SHA保持。
+
+负例从**当前等价检查实际引用**的SourceProof定位submissions不可变HTTP header，只改另一私有current-source副本。新增当前来源重建在0.657秒拒绝 `COMPANY_SOURCE_BYTES_CHANGED`，旧原生Run/处理程序和原成功source header不变。第一份负例只因预期错误码写成BOUND_FILE_CHANGED失败，真实拒绝已经发生；保留日志并只纠正测试预期，复用同一私有篡改副本，不重跑计算/长冷读。
+
+本目录previous-52-source-checkpoint.json是前次2a642e56生成的公司checkpoint的**原字节副本**；../enphase-52-existing-source-index.json列其61个源成员、完整52捕获身份、准备journal出处、Git可取成员及既有归档定位。源码fd31d639中51成员相同，完整ledger/manifest及8个更早Enphase原件不从该提交猜补。提供现存完整索引，不再打包旧源树、重生成旧MANIFEST或重新获取；接收方自行按其受控信任机制核验，不复制本方结果信用。当前试验的新公司版本和旧基线也分别保存。
+
+准备端允许读本方已有受信原件/登记；计算与重入用独立外部源/处理trust，Python守卫拒绝读取原checkout、privateledger及prep根、拒绝open写程序、禁socket/DNS。可写位置仅新公司state/work与报告，主程序/旧处理输入独立。不宣称内核隔离、动态UID、OpenShift集群或传输性能。
+
+新增能力是原合法LIVE判断在已登记相同内容的当前公司源版本上零调用消费及可读重入，不是新增D04公司（原已10/10）、新财年在线更新、B13完整公司、全390或正式生产。不同正文/期间/主体/请求集合仍须新处理接口及其权限；190单组和失败机会不借此复活。
