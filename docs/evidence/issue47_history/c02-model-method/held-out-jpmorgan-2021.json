@@ -1,0 +1,657 @@
+{
+ "record_type": "ISSUE_47_C02_DEV_HELD_OUT_CHECK",
+ "position": "jpmorgan_chase:2021-12-31",
+ "why_held_out": "JPMorgan's 2022 proxy became readable only after the image-cover repair (e14d3ca9); none of the 49 selector repairs, none of the adjudication rules and none of #28's prompt was written on it, and its two-direction reading (../c02-older-years/judgements/jpmorgan_chase-2021-12-31.json) was made before this answer existed",
+ "not_part_of_the_fixed_sample": "the three fixed positions were answered once with no correction; this position is an added held-out check, also answered once, nothing corrected",
+ "answer": "answers/jpmorgan_chase-2021-12-31.json",
+ "answer_sha256": "87d1534bd897f3ab3bf28fd1efae6f2fda7a6cae2027ece8c5545f8509375965",
+ "answer_tokens": 2439,
+ "input_tokens": 102548,
+ "contract_check": "PASSED",
+ "facts": 36,
+ "unresolved": [
+  {
+   "source_blocks": [
+    1129,
+    1130,
+    1131,
+    1132,
+    1133,
+    1134,
+    1135,
+    1136,
+    1137,
+    1140,
+    1141,
+    1143,
+    1144,
+    1145,
+    1146
+   ],
+   "reason": "Specific Purpose Committee memberships appear only as A/B codes in the flattened Current Board committee membership table, whose column association is lost; the codes appear to place Burke, Combs, Hobson and Rometty on A (Markets Compliance) and Bammann, Crown and Neal on B (Omnibus), and the legend refers to 2021, but no other block confirms these memberships, so they are not extracted as facts."
+  },
+  {
+   "source_blocks": [
+    1110,
+    1111,
+    1112
+   ],
+   "reason": "Members and chairs of the Stock Committee and the Executive Committee are not identified in the supplied source; absence is not claimed."
+  }
+ ],
+ "kinds": {
+  "board_size": 2,
+  "board_independence": 1,
+  "committee_independence": 4,
+  "committee_structure": 3,
+  "board_leadership": 4,
+  "board_membership": 11,
+  "committee_membership": 7,
+  "member_qualification": 3,
+  "membership_change": 1
+ },
+ "model_vs_reading": {
+  "verdict": "READING_DISAGREES",
+  "counts": {
+   "selected": 146,
+   "selected_fact": 96,
+   "selected_mixed": 19,
+   "found_outside_the_selection": 17,
+   "resting_on_adjudication": 0
+  },
+  "wrongly_taken": [
+   {
+    "i": 366,
+    "text": "Director since 2004",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Stephen B. Burke has been a director since 2004."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 373,
+    "text": "Director since 2013",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Linda B. Bammann has been a director since 2013."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 381,
+    "text": "Director since 2016",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Todd A. Combs has been a director since 2016."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 388,
+    "text": "Director since 2004",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "James S. Crown has been a director since 2004."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 393,
+    "text": "Director since 2004",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "James Dimon has been a director since 2004."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 396,
+    "text": "Director since 2012",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Timothy P. Flynn has been a director since 2012."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 399,
+    "text": "Director since 2018",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Mellody Hobson has been a director since 2018."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 403,
+    "text": "Director since 2014",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Michael A. Neal has been a director since 2014."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 408,
+    "text": "Director since 2020",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Phebe N. Novakovic has been a director since 2020."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 411,
+    "text": "Director since 2020",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Virginia M. Rometty has been a director since 2020."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 609,
+    "text": "Director since: 2004",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Stephen B. Burke has been a director since 2004."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 634,
+    "text": "Director since: 2013",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Linda B. Bammann has been a director since 2013."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 665,
+    "text": "Director since: 2016",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Todd A. Combs has been a director since 2016."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 684,
+    "text": "Director since: 2004",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "James S. Crown has been a director since 2004."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 739,
+    "text": "Director since: 2012",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Timothy P. Flynn has been a director since 2012."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 772,
+    "text": "Director since: 2018",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Mellody Hobson has been a director since 2018."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 796,
+    "text": "Director since: 2014",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Michael A. Neal has been a director since 2014."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 823,
+    "text": "Director since: 2020",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Phebe N. Novakovic has been a director since 2020."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 849,
+    "text": "Director since: 2020",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "Virginia M. Rometty has been a director since 2020."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 888,
+    "text": "•Consumer credit: credit cards issued to directors Bammann, Combs, Crown, Flynn, Hobson, Neal, Novakovic and/or their immediate family members",
+    "facts_citing": [
+     {
+      "kind": "board_independence",
+      "statement": "Nine of ten directors are independent (all except CEO James Dimon): after reviewing ordinary-course credit and goods/services relationships, the Board determined each non-management director (Bammann, Burke, Combs, Crown, Flynn, Hobson, Neal, Novakovic, Rometty) independent under NYSE and Firm standards."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 889,
+    "text": "•Wholesale credit: extensions of credit and other financial and financial advisory products and services provided to: Berkshire Hathaway Inc., for which Mr. Combs is an Investment Officer, and its subsidiaries; Henry Crown and Company, for which Mr. Crown is Chairman and Chief Executive Officer, and other Crown family-owned entities; Ariel Investments, LLC, for which Ms. Hobson is Co-Chief Executi",
+    "facts_citing": [
+     {
+      "kind": "board_independence",
+      "statement": "Nine of ten directors are independent (all except CEO James Dimon): after reviewing ordinary-course credit and goods/services relationships, the Board determined each non-management director (Bammann, Burke, Combs, Crown, Flynn, Hobson, Neal, Novakovic, Rometty) independent under NYSE and Firm standards."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 890,
+    "text": "•Goods and services: commercial office space leased by the Firm from subsidiaries of companies in which Mr. Crown and members of his immediate family have indirect ownership interests; purchases from Berkshire Hathaway subsidiaries of private aviation services, professional services related to the Firm’s corporate-owned aircraft, desktop displays and other merchandising fixtures primarily for reta",
+    "facts_citing": [
+     {
+      "kind": "board_independence",
+      "statement": "Nine of ten directors are independent (all except CEO James Dimon): after reviewing ordinary-course credit and goods/services relationships, the Board determined each non-management director (Bammann, Burke, Combs, Crown, Flynn, Hobson, Neal, Novakovic, Rometty) independent under NYSE and Firm standards."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 950,
+    "text": "Annual election of all directors by majority vote",
+    "facts_citing": [
+     {
+      "kind": "board_size",
+      "statement": "The Board has 10 directors: all 10 nominees (Burke, Bammann, Combs, Crown, Dimon, Flynn, Hobson, Neal, Novakovic, Rometty) are current directors, and all directors are elected annually."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 969,
+    "text": "In March 2022, the independent directors conducted a review of the Board’s leadership structure. This review was conducted first by the Corporate Governance & Nominating Committee, which considered the factors on page 23, the",
+    "facts_citing": [
+     {
+      "kind": "board_leadership",
+      "statement": "In the March 2022 leadership review, the Governance Committee recommended re-appointing Burke as Lead Independent Director, and the independent directors determined to maintain the current structure with Burke serving as Lead Independent Director."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 982,
+    "text": "The Board reviews its leadership structure not less than annually, and conducted its most recent review in March 2022, considering the following factors:",
+    "facts_citing": [
+     {
+      "kind": "board_leadership",
+      "statement": "In the March 2022 leadership review, the Governance Committee recommended re-appointing Burke as Lead Independent Director, and the independent directors determined to maintain the current structure with Burke serving as Lead Independent Director."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 1148,
+    "text": "All directors of the Firm were elected by shareholders in 2021 and comprise the full Boards of JPMorgan Chase Bank, National Association (the “Bank”) and an intermediate holding company, JPMorgan Chase Holdings LLC (the “IHC”). Mr. Burke is the independent Chair of the Board of the Bank; IHC does not have a Chair of the Board.",
+    "facts_citing": [
+     {
+      "kind": "board_membership",
+      "statement": "All directors of the Firm were elected by shareholders in 2021."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 1387,
+    "text": "The members of the CMDC are listed on page 26. No member of the CMDC is or ever was a JPMorgan Chase officer or",
+    "facts_citing": [
+     {
+      "kind": "committee_independence",
+      "statement": "No CMDC member is or ever was a JPMorgan Chase officer or employee except Linda B. Bammann, who previously served as an officer 15 years before joining the CMDC and 8 years before joining the Board."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 3356,
+    "text": "Dated as of March 14, 2022",
+    "facts_citing": [
+     {
+      "kind": "committee_membership",
+      "statement": "The Audit Committee comprised three non-management directors: Timothy P. Flynn (Chair), Michael A. Neal and Phebe N. Novakovic."
+     },
+     {
+      "kind": "committee_independence",
+      "statement": "The Board determined each Audit Committee member has no material relationship with the Firm and is independent under NYSE listing standards and SEC audit committee independence standards."
+     },
+     {
+      "kind": "member_qualification",
+      "statement": "The Board determined each Audit Committee member is financially literate and an audit committee financial expert as defined by the SEC."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 3535,
+    "text": "•The Board's recruitment process has resulted in the election of three women directors in the past four years, one of whom is a person of color. Our Board is comprised of individuals with diverse experiences, skills and backgrounds, as described on page 13.",
+    "facts_citing": [
+     {
+      "kind": "membership_change",
+      "statement": "Three women directors were elected to the Board in the past four years, one of whom is a person of color."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   },
+   {
+    "i": 3545,
+    "text": "Candidates are nominated based on the skills, experience, personal attributes and tenure needed to guide the Firm’s strategy, and to effectively oversee the Firm’s risk management and internal control framework, and management’s execution of its responsibilities. As a result, the Board represents a diverse mix of viewpoints and maintains fresh perspectives. The Board's recruitment process has resu",
+    "facts_citing": [
+     {
+      "kind": "membership_change",
+      "statement": "Three women directors were elected to the Board in the past four years, one of whom is a person of color."
+     }
+    ],
+    "reading_why": "read in the pool and left out of the facts"
+   }
+  ],
+  "missed": [
+   {
+    "i": 1131,
+    "text": "Specific",
+    "facts_citing": [],
+    "reading_why": "Header of the Specific Purpose column (with 1132, the rows and legend 1144-1146: who sits on which Specific Purpose Committee); not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1132,
+    "text": "Purpose1",
+    "facts_citing": [],
+    "reading_why": "Header of the Specific Purpose column (with 1131, the rows and legend 1144-1146); not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1133,
+    "text": "Stephen B. Burke2",
+    "facts_citing": [],
+    "reading_why": "Burke's membership-table row: Lead Independent Director (footnote 1147), CMDC Chair, Governance, Markets Compliance (A); LID and principal seats also in 613/617 (selected); not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1134,
+    "text": "ChairMemberA",
+    "facts_citing": [],
+    "reading_why": "Burke: CMDC Chair, Governance member, Markets Compliance Committee (A); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1135,
+    "text": "Linda B. BammannMemberChairB",
+    "facts_citing": [],
+    "reading_why": "Bammann: CMDC member, Risk Chair, Omnibus Committee (B); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1136,
+    "text": "Todd A. CombsMemberChairA",
+    "facts_citing": [],
+    "reading_why": "Combs: CMDC member, Governance Chair, Markets Compliance Committee (A); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1137,
+    "text": "James S. CrownChairMemberB",
+    "facts_citing": [],
+    "reading_why": "Crown: PRC Chair, Risk member, Omnibus Committee (B); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1138,
+    "text": "James Dimon",
+    "facts_citing": [],
+    "reading_why": "Dimon's row in the current membership table: a director on no committee; not in the selection: that Dimon sits on no committee is stated only by his empty row in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1140,
+    "text": "Mellody HobsonMemberMemberA",
+    "facts_citing": [],
+    "reading_why": "Hobson: PRC member, Risk member, Markets Compliance Committee (A); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1141,
+    "text": "Michael A. NealMemberMemberB",
+    "facts_citing": [],
+    "reading_why": "Neal: Audit member, PRC member, Omnibus Committee (B); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   },
+   {
+    "i": 1143,
+    "text": "Virginia M. RomettyMemberMemberA",
+    "facts_citing": [],
+    "reading_why": "Rometty: CMDC member, Governance member, Markets Compliance Committee (A); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table",
+    "redundant_with": []
+   }
+  ],
+  "unread": [
+   {
+    "i": 400,
+    "text": "53Co-Chief Executive Officer and President of Ariel Investments, LLC1Public Responsibility;",
+    "facts_citing": [
+     {
+      "kind": "committee_membership",
+      "statement": "Public Responsibility Committee members: James S. Crown (Chair), Mellody Hobson and Michael A. Neal."
+     }
+    ]
+   }
+  ],
+  "other": {}
+ },
+ "selector_vs_reading": {
+  "verdict": "READING_DISAGREES",
+  "missed": [
+   42,
+   43,
+   45,
+   55,
+   56,
+   325,
+   392,
+   394,
+   527,
+   717,
+   718,
+   723,
+   951,
+   1041,
+   1052,
+   1062,
+   1064,
+   1111,
+   1112,
+   1115,
+   1116,
+   1130,
+   1131,
+   1132,
+   1133,
+   1134,
+   1135,
+   1136,
+   1137,
+   1138,
+   1140,
+   1141,
+   1143,
+   1144,
+   1145,
+   1146,
+   3510
+  ],
+  "wrongly_taken": [
+   531,
+   971,
+   3511,
+   3513
+  ],
+  "unread": []
+ },
+ "hand_review": {
+  "reviewer": "the executor, reading every listed block in the filing's source text; not an independent reading",
+  "model_wrongly_taken": {
+   "CONVENTION_TENURE": [
+    366,
+    373,
+    381,
+    388,
+    393,
+    396,
+    399,
+    403,
+    408,
+    411,
+    609,
+    634,
+    665,
+    684,
+    739,
+    772,
+    796,
+    823,
+    849
+   ],
+   "CONTEXT": {
+    "888": "relationship categories the independence review considered, cited beside the determination",
+    "889": "relationship categories the independence review considered, cited beside the determination",
+    "890": "relationship categories the independence review considered, cited beside the determination",
+    "950": "a governance practice (annual majority-vote election), cited beside the board size",
+    "969": "the leadership-review process, cited beside the determination",
+    "982": "the leadership-review process, cited beside the determination",
+    "1148": "all directors were elected in 2021 and also form the boards of the bank subsidiaries; the reading took neither",
+    "1387": "first half of a sentence split by a page break; the reading took the second half (1388), which carries the exception",
+    "3356": "the Audit Committee report's date line, cited with its signatures",
+    "3535": "recruitment over four years (three women directors elected), not the year's change",
+    "3545": "nomination criteria, cited beside the recruitment sentence"
+   }
+  },
+  "model_missed": {
+   "TABLE_ONLY_SEATS_LEFT_UNRESOLVED": [
+    1131,
+    1132,
+    1133,
+    1134,
+    1135,
+    1136,
+    1137,
+    1138,
+    1140,
+    1141,
+    1143
+   ],
+   "why": "the Specific Purpose Committee seats are stated only in the membership table's A/B column; in the block text the table's columns are flattened, and the answer lists them as unresolved for that reason (naming the right assignment as what the codes appear to show) instead of stating them - the input format, not the reading of the text, loses them"
+  },
+  "model_unread": {
+   "400": "Hobson's Public Responsibility seat in the nominee table; the reading's pool did not reach it (its reader says so); the answer cites it correctly"
+  },
+  "fact_level": "all 36 statements read against their cited blocks: the Chair (Dimon, combined with CEO), the five principal, the Stock and Executive, and the two Specific Purpose Committees by name, every principal committee's members and chair, the Lead Independent Director, the independence, financial-expert and risk-expertise determinations, and the CMDC member exception are stated as the filing states them; the three screen flags are names or words the filing gives in other blocks (fact-support row below), not misattributions",
+  "selector_on_the_same_reading": "4 wrongly taken (531, 971, 3511, 3513) and 37 missed; the value names no Chair and its excerpt order places Dimon's title after another director's name (C02_JPMORGAN_2021_FIRST_READING_OF_A_NEW_LAYOUT_DISAGREES)"
+ },
+ "fact_support_screen": {
+  "position": "jpmorgan_chase-2021-12-31",
+  "facts": 36,
+  "flagged": [
+   {
+    "fact": 2,
+    "kind": "board_independence",
+    "statement": "Nine of ten directors are independent (all except CEO James Dimon): after reviewing ordinary-course credit and goods/services relationships, the Board determined each non-management director (Bammann, Burke, Combs, Crown, Flynn, Hobson, Neal, Novakovic, Rometty) independent under NYSE and Firm standards.",
+    "source_blocks": [
+     357,
+     885,
+     888,
+     889,
+     890,
+     891
+    ],
+    "numbers_not_in_cited_blocks": [],
+    "words_not_in_cited_blocks": [
+     "Dimon",
+     "Nine"
+    ]
+   },
+   {
+    "fact": 5,
+    "kind": "committee_structure",
+    "statement": "The Board has five principal standing committees: Audit, Compensation & Management Development (CMDC), Corporate Governance & Nominating (Governance), Public Responsibility (PRC) and Risk.",
+    "source_blocks": [
+     1041
+    ],
+    "numbers_not_in_cited_blocks": [],
+    "words_not_in_cited_blocks": [
+     "Development"
+    ]
+   },
+   {
+    "fact": 33,
+    "kind": "member_qualification",
+    "statement": "The Board determined that Risk Committee chair Linda B. Bammann has experience identifying, assessing and managing risk exposures of large, complex financial firms under Federal Reserve rules.",
+    "source_blocks": [
+     1052
+    ],
+    "numbers_not_in_cited_blocks": [],
+    "words_not_in_cited_blocks": [
+     "Linda"
+    ]
+   }
+  ]
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}
