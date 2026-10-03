@@ -1,0 +1,330 @@
+{
+ "record_type": "ISSUE_47_D02_DEV_REVIEW_COMPARISON",
+ "what_this_is": "development-context answers to D02's Item 8 review contract on older positions, checked by the contract and compared with #47's two-direction readings; not DeepSeek, no call, no result credit",
+ "rows": [
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "answer_sha256": "d9a8e8a66a2b50873b32d49c498b92a0eb37b9aa97fc188e6f19793df695b505",
+   "answer_tokens": 1022,
+   "blocks": 1294,
+   "must_decide": 33,
+   "contract_check": "PASSED",
+   "withheld": null,
+   "unsettled": [],
+   "route_item_8_selection": [
+    "b1194",
+    "b2644",
+    "b2645"
+   ],
+   "route_disagrees_with_the_reading": [],
+   "route_selection_not_judged_by_the_reading": [],
+   "decided": 33,
+   "in_scope": [
+    "b1194",
+    "b1632",
+    "b1634",
+    "b2643",
+    "b2644",
+    "b2645",
+    "b2646"
+   ],
+   "added": [
+    "b1634"
+   ],
+   "reading_item_8_blocks": 9,
+   "agree": [
+    {
+     "block_id": "b1188",
+     "reading": "NOT_DISCLOSURE",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "SG&A definition; litigation expense only listed as a cost category",
+     "text": "•Selling, general and administrative expenses are corporate overhead and other operating expenses. These expenses include: employee-related expenses (such as salaries, wages, internal commissions, benefits and professional fees) directly attributable to selling products or services and employee-rela"
+    },
+    {
+     "block_id": "b1194",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "loss-contingency accrual recognition policy (probable and estimable, net of probable recoveries)",
+     "text": "For matters not related to income taxes, if a loss contingency is considered probable and the amount can be reasonably estimated, we recognize an expense for the estimated loss. If we have the potential to recover a portion of the estimated loss from a third party, we make a separate assessment of r"
+    },
+    {
+     "block_id": "b1223",
+     "reading": "NOT_DISCLOSURE",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+     "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received."
+    },
+    {
+     "block_id": "b2644",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "registrant subject to claims, legal proceedings and contingent liabilities",
+     "text": "We are subject to various claims, legal proceedings and other contingent liabilities, including the matters described below, which individually or in the aggregate could materially affect our financial condition, future results of operations or cash flows. As a matter of course, we are prepared to b"
+    },
+    {
+     "block_id": "b2645",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "litigation accrual policy and aggregate accrued amounts",
+     "text": "Irrespective of its merits, litigation may be both lengthy and disruptive to our operations and could cause significant expenditure and diversion of management attention. We review our litigation accrual liabilities on a quarterly basis, but in accordance with applicable accounting guidelines only e"
+    },
+    {
+     "block_id": "b1070",
+     "reading": "NOT_D02",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "balance sheet caption",
+     "text": "COMMITMENTS AND CONTINGENCIES (Note 18)"
+    },
+    {
+     "block_id": "b2643",
+     "reading": "REACHED",
+     "answer": "IN_SCOPE",
+     "reading_why": "contingencies note heading; its claims paragraphs and incorporated captions are taken",
+     "text": "(18) Commitments, Contingencies and Other Items"
+    },
+    {
+     "block_id": "b2675",
+     "reading": "NOT_D02",
+     "answer": "NOT_LISTED",
+     "reading_why": "rental and right-of-way commitments",
+     "text": "Future Rental Commitments and ROW Agreements"
+    },
+    {
+     "block_id": "b2684",
+     "reading": "NOT_D02",
+     "answer": "NOT_LISTED",
+     "reading_why": "purchase commitments",
+     "text": "Purchase Commitments"
+    }
+   ],
+   "disagree": [],
+   "reading_blocks_not_in_request": [],
+   "in_scope_not_judged_by_the_reading": [
+    {
+     "block_id": "b1632",
+     "how": "IN_SCOPE",
+     "quote": "Lumen evaluates each program and establishes a liability under the principles of ASC 450 if it is probable support payments will be recaptured or a penalty will be imposed.",
+     "text": "Lumen participates in various U.S. federal and state programs under which government support payments are received to offset costs associated with providing services in targeted locations such as unserved or underserved high-cost or rural areas, or for certain types of customers, including non-profit organizations, educational institutions and local governmental bodies. Support payments may be con"
+    },
+    {
+     "block_id": "b1634",
+     "how": "ALSO_IN_SCOPE",
+     "quote": "The government has the right to audit our compliance with the CAF II program and the ultimate outcome of any remaining examinations is unknown, but could result in a liability to us in excess of our reserve accruals established for these matters.",
+     "text": "Between 2015 and 2021, we received approximately $500 million annually through the FCC's Connect America Fund II (\"CAF II\"), a federal multi-year recurring subsidy program for more extensive broadband deployment in price-cap ILEC territories. For this program, which ended on December 31, 2021, we were required to meet certain specified infrastructure buildout requirements in 33 states by the end o"
+    },
+    {
+     "block_id": "b2646",
+     "how": "IN_SCOPE",
+     "quote": "In this Note, when we refer to a class action as \"putative\" it is because a class has been alleged, but not certified, in that matter.",
+     "text": "In this Note, when we refer to a class action as \"putative\" it is because a class has been alleged, but not certified, in that matter."
+    }
+   ]
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "answer_sha256": "040b87b798a270410666c43c3a046387155cda54fee88bf350f0b4ffe2150747",
+   "answer_tokens": 1689,
+   "blocks": 1362,
+   "must_decide": 64,
+   "contract_check": "PASSED",
+   "withheld": null,
+   "unsettled": [],
+   "route_item_8_selection": [
+    "b2110",
+    "b2555"
+   ],
+   "route_disagrees_with_the_reading": [
+    {
+     "block_id": "b2555",
+     "reading": "NOT_DISCLOSURE",
+     "route": "TAKEN"
+    }
+   ],
+   "route_selection_not_judged_by_the_reading": [],
+   "decided": 64,
+   "in_scope": [
+    "b2109",
+    "b2110",
+    "b2170",
+    "b2360",
+    "b2373",
+    "b3437",
+    "b3438"
+   ],
+   "added": [],
+   "reading_item_8_blocks": 10,
+   "agree": [
+    {
+     "block_id": "b1980",
+     "reading": "NOT_DISCLOSURE",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "critical-estimates boilerplate; litigation only in a list of risks",
+     "text": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and thei"
+    },
+    {
+     "block_id": "b2041",
+     "reading": "NOT_DISCLOSURE",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "receivables write-off policy 'including litigation'",
+     "text": "In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory and legal environments, country and political risk, and other relevant current and future forecasted macroeconomic factors"
+    },
+    {
+     "block_id": "b2110",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "Note 1S policy: registrant's legal/environmental contingencies and accruals",
+     "text": "We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, such as patent litigation, product liability and other product-related litigation, commercial and other asserted or unasserted matters, environmental claims and proceedings, governmen"
+    },
+    {
+     "block_id": "b2555",
+     "reading": "NOT_DISCLOSURE",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "uncertain tax positions; legal proceedings with tax authorities incidental",
+     "text": "Any settlements or statutes of limitations expirations could result in a significant decrease in our uncertain tax positions. We estimate that it is reasonably possible that within the next 12 months, our gross unrecognized tax benefits, exclusive of interest, could decrease by as much as $100 milli"
+    },
+    {
+     "block_id": "b1808",
+     "reading": "NOT_D02",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "balance sheet caption",
+     "text": "Commitments and Contingencies"
+    },
+    {
+     "block_id": "b2093",
+     "reading": "NOT_D02",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "income tax contingencies policy heading",
+     "text": "Q. Tax Assets and Liabilities and Income Tax Contingencies"
+    },
+    {
+     "block_id": "b2109",
+     "reading": "REACHED",
+     "answer": "IN_SCOPE",
+     "reading_why": "Note 1S legal/environmental contingencies; 2110 taken",
+     "text": "S. Legal and Environmental Contingencies"
+    },
+    {
+     "block_id": "b2516",
+     "reading": "NOT_D02",
+     "answer": "OUT_OF_SCOPE",
+     "reading_why": "tax contingencies",
+     "text": "D. Tax Contingencies"
+    },
+    {
+     "block_id": "b3437",
+     "reading": "REACHED",
+     "answer": "IN_SCOPE",
+     "reading_why": "contingencies note; its Note 16A legal content is taken",
+     "text": "Note 16. Contingencies and Certain Commitments"
+    },
+    {
+     "block_id": "b3578",
+     "reading": "NOT_D02",
+     "answer": "NOT_LISTED",
+     "reading_why": "purchase/contractual commitments",
+     "text": "C. Certain Commitments"
+    }
+   ],
+   "disagree": [],
+   "reading_blocks_not_in_request": [],
+   "in_scope_not_judged_by_the_reading": [
+    {
+     "block_id": "b2170",
+     "how": "IN_SCOPE",
+     "quote": "amount to resolve a MDL relating to EpiPen against the Company in the U.S. District Court for the District of Kansas for $345 million",
+     "text": "(a)In 2022, Discontinued operations—net of tax relates to post-close adjustments. In 2021, Discontinued operations—net of tax primarily includes (i) the operations of Meridian prior to its sale on December 31, 2021 recognized in Income/(loss) from discontinued operations—net of tax, which includes a pre-tax amount to resolve a MDL relating to EpiPen against the Company in the U.S. District Court f"
+    },
+    {
+     "block_id": "b2360",
+     "how": "IN_SCOPE",
+     "quote": "Certain legal matters, net(d)",
+     "text": "Certain legal matters, net(d)"
+    },
+    {
+     "block_id": "b2373",
+     "how": "IN_SCOPE",
+     "quote": "2022 primarily includes certain product liability and other expenses related to products discontinued and/or divested by Pfizer.",
+     "text": "(d)2022 primarily includes certain product liability and other expenses related to products discontinued and/or divested by Pfizer. 2021 primarily includes certain product liability expenses related to products discontinued and/or divested by Pfizer, and to a lesser extent, legal obligations related to pre-acquisition commitments."
+    },
+    {
+     "block_id": "b3438",
+     "how": "IN_SCOPE",
+     "quote": "We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, including tax and legal contingencies, guarantees and indemnifications.",
+     "text": "We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, including tax and legal contingencies, guarantees and indemnifications. The following outlines our legal contingencies, guarantees and indemnifications. For a discussion of our tax contingencies, see Note 5D."
+    }
+   ]
+  },
+  {
+   "position": "southwest_airlines:2023-12-31",
+   "answer_sha256": "5cbc17c135a145dace19fb11c2a26deb6035b1c039482012b2418e5b46e77211",
+   "answer_tokens": 694,
+   "blocks": 835,
+   "must_decide": 24,
+   "contract_check": "PASSED",
+   "withheld": null,
+   "unsettled": [],
+   "route_item_8_selection": [
+    "b1488",
+    "b1657",
+    "b1658"
+   ],
+   "route_disagrees_with_the_reading": [],
+   "route_selection_not_judged_by_the_reading": [],
+   "decided": 24,
+   "in_scope": [
+    "b1488",
+    "b1619",
+    "b1656",
+    "b1657",
+    "b1658"
+   ],
+   "added": [],
+   "reading_item_8_blocks": 5,
+   "agree": [
+    {
+     "block_id": "b1488",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "DOT investigation of the disruption and $107 million settlement accrual",
+     "text": "Based on the Company's wide-scale operational disruption, the Company could be subject to fines and/or penalties resulting from investigations by government agencies as well as litigation from Customers and Shareholders. On October 27, 2023, the Department of Transportation (the \"DOT\") notified the "
+    },
+    {
+     "block_id": "b1657",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "ordinary-course legal claims and loss-accrual policy",
+     "text": "The Company is from time to time subject to various legal proceedings and claims arising in the ordinary course of business and records a liability for such claims when it is probable that a loss will be incurred and the amount is reasonably estimable."
+    },
+    {
+     "block_id": "b1658",
+     "reading": "DISCLOSURE",
+     "answer": "IN_SCOPE",
+     "reading_why": "USERRA class action; possible loss not estimable",
+     "text": "The Company is a defendant in class action litigation asserting it has not provided paid short-term military leave to certain employees, in violation of the federal Uniformed Services Employment and Reemployment Rights Act (“USERRA”). The United States District Court for the Northern District of Cal"
+    },
+    {
+     "block_id": "b1619",
+     "reading": "REACHED",
+     "answer": "IN_SCOPE",
+     "reading_why": "commitments and contingencies note; its contingencies paragraphs are taken",
+     "text": "5. COMMITMENTS AND CONTINGENCIES"
+    },
+    {
+     "block_id": "b1656",
+     "reading": "REACHED",
+     "answer": "IN_SCOPE",
+     "reading_why": "contingencies subsection; 1657-1658 are taken",
+     "text": "Contingencies"
+    }
+   ],
+   "disagree": [],
+   "reading_blocks_not_in_request": [],
+   "in_scope_not_judged_by_the_reading": []
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}
