@@ -181,7 +181,7 @@
       "evidence": "docs/evidence/issue28_continuous/collab-c02-member-successor-20261003/"
     },
     "selected_known_defect_coordinates_after_verified_D01_delta": 17,
-    "verified_saved_scope_D01_replacement_count": 2,
+    "verified_saved_scope_D01_replacement_count": 3,
     "existing_current_390_view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
     "legacy_product_scope_pending": {
       "exact_result_id_count": 20,
@@ -207,7 +207,9 @@
         0,
         0
       ]
-    }
+    },
+    "current_reader_selection": "--include-jpm-reviewed (older two-result default retained)",
+    "current_reader_credit_scope": "Three exact saved-source D01 only, not complete390; original historical defect counts and IDs retained"
   },
   "defects": [
     {
@@ -1238,8 +1240,23 @@
       "peer_defect_id": "D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING",
       "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
       "own_evidence": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/audit.json",
-      "repair_state": "CONFIRMED_OWN_CURRENT_RESULT_WITHHELD; FIXED_PEER_PENDING_PATCH_NOT_YET_CONSUMED",
-      "released": []
+      "repair_state": "EXPLICIT_V3_SUCCESSOR_EXACT_SAVED_HEADING_CONTENT_COPY_MECHANICAL_AND_READER_PASS_LIMITED",
+      "released": [
+        {
+          "result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+          "run_id": "run:ordinary-integrated:557e26f5cc3e1ffe4ee5d79947a2911de78929852384ab69b4807e831e5e6ec1",
+          "period_end": "2025-12-31",
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "scope": "EXACT_SAVED_ITEM1A_HEADING_CONTENT_AND_MECHANICAL_COPY_IN_DEVELOPMENT_390_VIEW",
+          "original_result_not_released": true,
+          "proof": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/delta.json",
+          "independent_content": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md",
+          "receiver_patch": "bec78d987d1fb0af708cfda1e4c4fd94a43607f0",
+          "receiver_review": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-reader-review/conclusion.md",
+          "formal_adoption_or_active_credit": false
+        }
+      ],
+      "current_credit": "ORIGINAL_ERRONEOUS_RESULT_STILL_WITHDRAWN; VERIFIED_SUCCESSOR_SELECTED_EXPLICITLY"
     }
   ],
   "latest_peer_read_commit": "a651c48c34e95660b3f470b5f22398b718f800ed",

@@ -3805,6 +3805,24 @@
       "dedup_note": "No live agent. Existing D01 full-content audit covers Paramount/Marriott only; exact 31beeab header review expressly excludes full JPM56-content credit. This once-only original-read scope is new, not a repeat code review. Underscore name required by spawn schema.",
       "ordinary_messages": 3,
       "elapsed_minutes": 9.5
+    },
+    {
+      "task_name": "review_d01jpm_bec78d9",
+      "purpose": "review",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
+        "docs/evidence/issue28_continuous/d01-jpm-content-20261003/test_reader.py",
+        "docs/evidence/issue28_continuous/d01-jpm-content-20261003/delta.json"
+      ],
+      "patch_sha": "bec78d987d1fb0af708cfda1e4c4fd94a43607f0",
+      "spawned_at": "2026-10-03T08:55:55.891439+00:00",
+      "ended_at": "2026-10-03T09:06:37.220448+00:00",
+      "tool_calls": 35,
+      "result_path": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-reader-review/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "dedup_note": "No live agent; original-read audit is DONE and a distinct purpose. Old94955ac reader proof binding and31beeab source fix reused. New optional third-result receiver is genuinely uncovered; no same SHA/scope review evidence.",
+      "ordinary_messages": 3,
+      "elapsed_minutes": 7.554
     }
   ],
   "ci_capacity_20260922": {
@@ -12024,7 +12042,7 @@
     "remaining": "All-unit model output and cross-request relation/conflict handling, exact native persistence/replay, limited review and real-call permission. Six request measurement is one company only and not a new execution grant."
   },
   "d01_jpm_saved_content_20261003": {
-    "state": "ORIGINAL_CONTENT_AND_EXACT_COPY_MECHANICAL_PASS_RECEIVER_REVIEW_PENDING",
+    "state": "EXACT_SAVED_CONTENT_MECHANICAL_AND_RECEIVER_REVIEW_PASS_LIMITED",
     "evidence": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/README.md",
     "result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
     "source_raw_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
@@ -12039,7 +12057,7 @@
     "existing_reader_tests": 19,
     "view_candidate_selected_known_defects": 17,
     "view_candidate_D01_saved_restorations": 3,
-    "current_view_credit": false,
+    "current_view_credit": true,
     "new_calls": [
       0,
       0,
@@ -12047,7 +12065,12 @@
     ],
     "peer47_read": "d84f41f2ea2c1730482221b53eb97aaac54392d5",
     "production_code_or_binding_changed": false,
-    "receiver_selection": "--include-jpm-reviewed"
+    "receiver_selection": "--include-jpm-reviewed",
+    "receiver_patch_sha": "bec78d987d1fb0af708cfda1e4c4fd94a43607f0",
+    "tested_uncommitted_tree_matches_commit_files": true,
+    "credit_scope": "This exact saved-source heading result in explicit development view only, not complete Run/current automatic-update/production acceptance.",
+    "receiver_review_path": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-reader-review/conclusion.md",
+    "receiver_review_verdict": "PASS_LIMITED_DELTA"
   },
   "last_confirmed_main_ci": {
     "head_sha": "6219efe68b10fe50e4829d19b89f9a787019b57f",
