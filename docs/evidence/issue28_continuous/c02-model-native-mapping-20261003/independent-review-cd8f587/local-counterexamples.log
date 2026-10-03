@@ -1,0 +1,18 @@
+start_utc=2026-10-03T06:51:48.994165+00:00
+audit_guard=deny_all_socket_events_subprocess_Popen_os_system
+timeout_seconds=120
+sample=enphase_energy; Paramount unchanged long-chain logs reused
+PASS positive actual-source replay, 4 exact native objects, 41 facts and 4 unresolved preserved, no Result/Run/provider attempt seconds=6.694
+PASS rejected SYSTEM_public_factory SYSTEM review requires exact enum scope evidence seconds=0.0
+PASS rejected request_bytes_changed C02_MODEL_EXTERNAL_PROCESSING_IDENTITY_CHANGED seconds=0.004
+PASS rejected response_bytes_changed C02_MODEL_EXTERNAL_PROCESSING_IDENTITY_CHANGED seconds=0.004
+PASS rejected wrong_expected_review_unit C02_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED seconds=0.003
+PASS rejected extra_native_record C02_MODEL_SAVED_RECORD_SET_CHANGED seconds=0.001
+PASS rejected source_text_omission_with_new_external_wire_hash C02_MODEL_REQUEST_SOURCE_OR_RESOURCE_CHANGED seconds=4.226
+PASS rejected fully_resealed_changed_answer_under_original_external_native_identities C02_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED seconds=0.003
+PASS protected_original_pending_and_source_ledger_bytes_unchanged
+new_business_calls=0/0/0
+network_or_subprocess_events=0
+elapsed_seconds=16.362
+status=PASS_LOCAL_CONTROLS
+end_utc=2026-10-03T06:52:05.355610+00:00

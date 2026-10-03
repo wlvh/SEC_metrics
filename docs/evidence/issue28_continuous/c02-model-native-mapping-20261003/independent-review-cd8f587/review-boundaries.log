@@ -1,0 +1,15 @@
+patch_sha=cd8f5872c2fbbd78400f73f9dce56c9aa0716cfb
+final_HEAD=cd8f5872c2fbbd78400f73f9dce56c9aa0716cfb
+PASS exact_commit_and_saved_evidence_bytes scripts/vnext/c02_model_processing.py 734256bab876bbf2fcbabdfa0acdc21a3776f4e86870cf68b048b576f04a4e39
+PASS exact_commit_and_saved_evidence_bytes catalog/r6/C02_model_source_development_v1.md 38bcbca15f0c2113c6ed8a17ea960f59b14570c738956703049ed83c1ce3d899
+PASS exact_commit_and_saved_evidence_bytes tests/vnext/test_c02_model_processing.py 8e82119c9b0be5c2ec519d4a6448f4989b1355c2fb8d983366188766bcd95005
+PASS exact_commit_and_saved_evidence_bytes tools/run_fast_tests_v2.py 4f2a7654b443802ed17318850e78ca2e822b89abf32db21aa7f219aba7f55a07
+PASS protected_default_Requirement_configuration_and_existing_C02_core_Specs_diff_empty
+Final git status (preexisting execution-state modification retained):
+M docs/evidence/issue28_continuous/execution-state.json
+?? docs/evidence/issue28_continuous/c02-model-native-mapping-20261003/independent-review-cd8f587/
+review_start_utc=2026-10-03T06:45:52Z
+review_end_utc=2026-10-03T06:55:50Z
+tool_calls=35 (13 outer; 22 nested)
+ordinary_messages=3 including final
+review_output_files=conclusion.md,local-counterexamples.log,provenance.log,short-tests.log

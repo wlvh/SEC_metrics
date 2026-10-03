@@ -1,0 +1,9 @@
+review_start_utc=2026-10-03T06:45:52Z
+patch_sha=cd8f5872c2fbbd78400f73f9dce56c9aa0716cfb
+initial_HEAD=cd8f5872c2fbbd78400f73f9dce56c9aa0716cfb
+initial_dirty=docs/evidence/issue28_continuous/execution-state.json
+Live Issue #28 body read using gh issue view at review start; sections 5.5 and 5.8 retain independent development review versus DeepSeek and production credit. No issue mutations.
+scripts/vnext/c02_model_processing.py 734256bab876bbf2fcbabdfa0acdc21a3776f4e86870cf68b048b576f04a4e39
+catalog/r6/C02_model_source_development_v1.md 38bcbca15f0c2113c6ed8a17ea960f59b14570c738956703049ed83c1ce3d899
+tests/vnext/test_c02_model_processing.py 8e82119c9b0be5c2ec519d4a6448f4989b1355c2fb8d983366188766bcd95005
+tools/run_fast_tests_v2.py 4f2a7654b443802ed17318850e78ca2e822b89abf32db21aa7f219aba7f55a07
