@@ -69,13 +69,14 @@ def preview(*, response, document, raw):
         'target_model_verified': False, 'new_business_calls': [0, 0, 0]}
 
 
-def original(input_dir):
+def original(input_dir, *, attempt=DEFAULT, company_id='enphase_energy', cik='1463101',
+             expected_source_sha=SOURCE_SHA):
     meta = json.loads((input_dir / 'metadata.json').read_text())
-    raw = (DEFAULT / 'data' / meta['raw_blob']['storage_uri']).read_bytes()
-    assert hashlib.sha256(raw).hexdigest() == meta['source_sha256'] == SOURCE_SHA
+    raw = (attempt / 'data' / meta['raw_blob']['storage_uri']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == meta['source_sha256'] == expected_source_sha
     doc = governance_source_document(raw_bytes=raw, raw_blob=meta['raw_blob'],
-        source_reference=meta['source_reference'], company_id='enphase_energy',
-        cik='1463101', filing=meta['filing'])
+        source_reference=meta['source_reference'], company_id=company_id,
+        cik=cik, filing=meta['filing'])
     expected = '\n'.join('[B{}]\n{}\n'.format(i, b['text']) for i, b in enumerate(doc['blocks']))
     assert (input_dir / 'source.txt').read_text() == expected
     assert hashlib.sha256(expected.encode()).hexdigest() == meta['input_sha256']
