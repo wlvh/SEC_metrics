@@ -12489,15 +12489,19 @@
     "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
-    "head_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
-    "draft_pr": 43,
+    "head_sha": "dc9850ca7c854c7bc1b6f05cb4224886c1829dd7",
     "branch": "task/b06-new-source",
-    "new_calls": [
+    "pr": 43,
+    "draft": true,
+    "current_ci": 37146162255,
+    "terminal": null,
+    "code_reviewed_sha": "f5db8911a47ef1b6e08551f7a2946ec5734e68ee",
+    "code_tree_vs_reviewed": "Only review logs and execution/continuation records changed after exact reviewed product SHA",
+    "new_real_calls": [
       0,
       0,
       0
-    ],
-    "native_goal_status": "active"
+    ]
   },
   "shared_increment_read_f07d089c": {
     "peer_read_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
@@ -12800,9 +12804,10 @@
   "ci_0eec48cb": {
     "head_sha": "0eec48cbb6b71a1bf5be47ce32e2702636bbe76a",
     "run_id": 37144143813,
-    "state": "queued",
+    "state": "in_progress",
     "terminal": null,
-    "read": "IMMEDIATE_AFTER_PUSH_ONCE"
+    "read": "NATURAL_CHECKPOINT_NOT_TERMINAL",
+    "updated_at": "2026-10-03T18:52:26Z"
   },
   "shared_increment_read_32f9696e": {
     "peer_read_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
@@ -12918,5 +12923,136 @@
     "normal_update_ready": false,
     "patch_sha": "f5db8911a47ef1b6e08551f7a2946ec5734e68ee",
     "read_scope_limit": "development-input.json attachment not authenticated by native reader; source/actual wires/native records/context/display and external identities verified; no locator-history authority from attachment alone."
+  },
+  "ci_dc9850ca": {
+    "head_sha": "dc9850ca7c854c7bc1b6f05cb4224886c1829dd7",
+    "run_id": 37146162255,
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
+    "updated_at": "2026-10-03T18:57:51Z"
+  },
+  "issue28_queue_server_readback_20261004": {
+    "updated_at": "2026-10-03T19:00:13Z",
+    "body_sha256": "4b6b64fb947e882f2c1fe6cbfffae00a9999528e9dc35ee330e36d5eb627914c",
+    "edited_scope": "Current navigation and two existing C02/D03 rows; common collaboration/goal/method/permissions sections unchanged",
+    "next": "D03 actual-source positive/negative business validation and fixed-route gap; C02 core repair remains peer owner, narrow qualification decision pending. No third developer correction or new real call."
+  },
+  "d03_jpm_original_unit_development_20261004": {
+    "state": "AUTHENTICATED_NEXT_COMPANY_FULL_VISIBLE_TOO_LARGE; BOUNDED_WHOLE_UNIT_INPUT_READY_FOR_BLIND_DEVELOPER_READ",
+    "evidence": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/README.md",
+    "full_visible": {
+      "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "input_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004",
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+      "source_seconds": 19.626,
+      "documents": 1,
+      "units_total": 130,
+      "visible_units": 23,
+      "visible_rows": 11146,
+      "native_units_total": 107,
+      "request_sha256": "d9c8b641f189ecd81d605d218083e76d48b2688ddf52338d908356319925ffa6",
+      "measurement": {
+        "request_sha256": "d9c8b641f189ecd81d605d218083e76d48b2688ddf52338d908356319925ffa6",
+        "request_bytes": 1375475,
+        "rendered_prompt_sha256": "99ed5ff15c483d0b389ef0d9be164b2eb8dc8e96adfd8fdaf32e7a5cbf9ead67",
+        "rendered_prompt_bytes": 1352601,
+        "input_tokens": 330532,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 334628,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": false,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      },
+      "full_company_input": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "bounded_unit_input": {
+      "input_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004/source-unit-pilot",
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+      "owner_units": 1,
+      "context_only_units": 1,
+      "original_unit_count": 130,
+      "whole_source_coverage": false,
+      "company_native_acceptance": false,
+      "request_sha256": "ff62244c598060e9e94bd4c310187147f7635ca99c3f85588093c3fafc508fd6",
+      "prompt_sha256": "f506056ca0d0bac5cc1c126b6f5a7bc3e53cda10f6b31f38bca525720c731f00",
+      "measurement": {
+        "request_sha256": "ff62244c598060e9e94bd4c310187147f7635ca99c3f85588093c3fafc508fd6",
+        "request_bytes": 322118,
+        "rendered_prompt_sha256": "1474eec6bcfe5d06f412c50b5dfe1ed88b3cc6005bf18d7095b12fb65e07e27a",
+        "rendered_prompt_bytes": 308364,
+        "input_tokens": 96456,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 100552,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      },
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "parent_reference": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/parent-reference.md",
+    "parent_reference_scope": "Full Note30/risk aggregate/alias; not full11146block omission audit. Whole one owner plus whole context unit delivered, 2/130 source units only.",
+    "model_response": "NOT_YET_GENERATED",
+    "code_changed": false,
+    "real_call_permission_added": false,
+    "company_result_created": false,
+    "calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "shared_increment_read_231a204d": {
+    "peer_read_sha": "231a204dc6ae11a4005e0151e47270ea65e0b553",
+    "prior_read_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
+    "scope": "Peer own Enphase historical B06 acceptance and seven own E01 live exports; shared defect register unchanged; no D03 core changes or receiving acceptance copied."
   }
 }
