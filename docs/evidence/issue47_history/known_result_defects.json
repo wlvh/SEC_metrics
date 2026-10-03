@@ -7344,6 +7344,33 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "1f627251",
+   "own_commit_at_read": "ff36e20d",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; unchanged since 899001f7",
+   "baseline": "Read since 899001f7: two commits, their messages and file lists, the Salesforce B03 conclusion (98f3d416) and #47 comment 5963721625; merged as ff36e20d. Every changed file is under docs/evidence/issue28_continuous/ and none is among the paths requirements/issue_47_v1/baseline_manifest.json binds, so no parent closure or issue_47_v1 snapshot moved.",
+   "increments": [
+    {
+     "commit": "98f3d416",
+     "marker": "[shared-with-#47]",
+     "subject": "Audit Salesforce D&A source relations without inventing an impairment amount",
+     "affects_47": "None for #47's values. #28's full reading of the FY2026 annual report finds acquired-intangible amortization of 692+995=1,687 million in the income-statement footnotes, the same subtotal #47 recorded in b03-depreciation-scope/finding.json, and keeps the ordinary B03 withheld: the right-of-use impairment split, operating ROU amortization and a complete non-overlapping bridge are not in the filing. #47's historical Salesforce FY2026 B03 is already withheld by B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN and its coordinate defect is released only for that withheld result, so nothing moves. The reading uses AmortizationOfAboveAndBelowMarketLeases only to say its visible text is acquired-intangible amortization; #47's candidate rule does not read that concept.",
+     "integration": "MERGED; no change"
+    },
+    {
+     "commit": "1f627251",
+     "marker": "[shared-with-#54]",
+     "subject": "Consume original LIVE D04 on the full 52-capture company source",
+     "affects_47": "None: #28's ordinary consumer of #54's company source; #47's D04 registrations are keyed by #47's own pinned sources and nothing here is read.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }
