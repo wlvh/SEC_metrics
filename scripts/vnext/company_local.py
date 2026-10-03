@@ -96,13 +96,14 @@ def configure_task(work, company_id, sec_allowance):
     need(type(sec_allowance) is int and 0 < sec_allowance <= 120, 'LOCAL_SEC_ALLOWANCE_INVALID')
     configuration = work/'local-company.json'
     identity = {'company_id': company_id, 'sec_allowance': sec_allowance}
+    saved = {}
     if configuration.exists():
         saved = strict_json_file(path=configuration)
         need(all(saved.get(k) == v for k, v in identity.items()), 'LOCAL_WORK_COMPANY_OR_ALLOWANCE_CHANGED')
     else:
         _atomic_json(configuration, identity)
     program = prepare_program(work)
-    _atomic_json(configuration, {**identity, 'program_root': str(program)})
+    _atomic_json(configuration, {**saved, **identity, 'program_root': str(program)})
     return program
 
 

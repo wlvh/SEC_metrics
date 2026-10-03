@@ -214,6 +214,13 @@ class CompanyLocalTest(unittest.TestCase):
         (program/'requirements/issue_54_v4').mkdir(parents=True)
         with patch.object(local, 'prepare_program', return_value=program):
             self.assertEqual(local.configure_task(work, 'marriott_international', 120), program)
+            configuration = work/'local-company.json'
+            saved = json.loads(configuration.read_text())
+            saved['preparation_program_root'] = str(work/'programs/fixed-preparer')
+            configuration.write_text(json.dumps(saved))
+            local.configure_task(work, 'marriott_international', 120)
+            self.assertEqual(json.loads(configuration.read_text())['preparation_program_root'],
+                             saved['preparation_program_root'])
         with patch.object(local, 'prepare_program') as changed:
             with self.assertRaisesRegex(ValueError, 'COMPANY_OR_ALLOWANCE_CHANGED'):
                 local.configure_task(work, 'marriott_international', 119)
