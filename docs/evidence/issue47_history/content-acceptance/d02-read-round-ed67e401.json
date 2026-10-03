@@ -1,0 +1,319 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "not_covered": "Item 8 outside the incorporated scopes, except the blocks the keyword proxy took, the headings naming contingencies, legal proceedings, litigation or commitments, and the blocks under an Item 8 heading naming contingencies, legal proceedings, litigation or legal matters; after Item 8, keyword blocks outside every range are read",
+ "per_position": {
+  "macys-2022": {
+   "accession": "0001564590-22-011726",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:35780fa91b18347127aa775720ffe98a2f9bd825c9575879aaed21daa913a304",
+     "run_id": "run:historical-period:91cf874d5de0f312f811a4cc2c96a9d6cf86ca5dc4d0e3e87cc2fab990441c3c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001564590-22-011726"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-01-29",
+    "period_start": "2021-01-31",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "counts": {
+    "context": 0,
+    "covered_elsewhere": 0,
+    "headings": 1,
+    "outside": 0,
+    "skipped": 0,
+    "taken": 3,
+    "taken_through_item_8": 1
+   },
+   "document": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm",
+   "period_end": "2022-01-29",
+   "published_excerpts": 3,
+   "published_excerpts_are_the_taken_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/macys-2022-01-29.json",
+   "reading_sha256": "sha256:3d72428d8cb76f41194d69823cb428c5ce08b55f522aa66c1e7b6cb8725f424c",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "taken_texts_render_the_published_value": true,
+   "value_sha256": "sha256:e9483f045f9ef101a0781cebbcd528ec2e1039d9198c61b1021107e1e3c9ea94",
+   "verdict": "MATCH"
+  },
+  "pfizer-2021": {
+   "accession": "0000078003-22-000027",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:fe50a7ca6454af59f15c4326aa6d27329290e0708806704f926a9258ca244442",
+     "run_id": "run:historical-period:0d235719322eaa7c750b734b5f880451b30a1c89cfd5c946835e7db77cd6f6fa"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-22-000027"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "counts": {
+    "context": 84,
+    "covered_elsewhere": 1,
+    "headings": 18,
+    "outside": 0,
+    "skipped": 26,
+    "taken": 111,
+    "taken_through_item_8": 3
+   },
+   "document": "evidence/request_attempts/a6/a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8/pfe-20211231.htm",
+   "period_end": "2021-12-31",
+   "published_excerpts": 111,
+   "published_excerpts_are_the_taken_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/pfizer-2021-12-31.json",
+   "reading_sha256": "sha256:b4d38fa65472f8426091346047980f74dfa9229ed3baf0813bef9f9fafe33c8e",
+   "reading_verdict": "READING_DISAGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "taken_texts_render_the_published_value": true,
+   "value_sha256": "sha256:f0cb5f7ecc59c88d56c441089a7f00efa42a949055b86c4b7c1b8af1ed6d994c",
+   "verdict": "DIFFERS"
+  },
+  "pfizer-2022": {
+   "accession": "0000078003-23-000024",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:c9a16ffe6e3d5ab872cbc5470c7234b68b62fff82be93ea84869c9879fca308b",
+     "run_id": "run:historical-period:61fb3114f78052dc7599ec0b2de4f0b60ad474ccca61f07c8fcb2539eb30bdb5"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-23-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "counts": {
+    "context": 53,
+    "covered_elsewhere": 1,
+    "headings": 17,
+    "outside": 0,
+    "skipped": 26,
+    "taken": 114,
+    "taken_through_item_8": 2
+   },
+   "document": "evidence/request_attempts/3f/3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e/pfe-20221231.htm",
+   "period_end": "2022-12-31",
+   "published_excerpts": 114,
+   "published_excerpts_are_the_taken_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/pfizer-2022-12-31.json",
+   "reading_sha256": "sha256:c1718404718e6484bf5580714b661aa1b167325b6b23221029f5fcaa38adcb48",
+   "reading_verdict": "READING_DISAGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "taken_texts_render_the_published_value": true,
+   "value_sha256": "sha256:e6b4c4a5bd46aa0d16fc9ab4f4de22d4ec459d5913355f18cfd262f62e6460a6",
+   "verdict": "DIFFERS"
+  },
+  "pfizer-2023": {
+   "accession": "0000078003-24-000039",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:139eead41936095c56be13b832e41a3b294b7b25fbcbb953c50dc0921c613e30",
+     "run_id": "run:historical-period:c1f6750cecc88fb12172b14c21ce2056bbacafba65d7af6f7540beafac450583"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-24-000039"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "counts": {
+    "context": 58,
+    "covered_elsewhere": 1,
+    "headings": 17,
+    "outside": 0,
+    "skipped": 40,
+    "taken": 119,
+    "taken_through_item_8": 3
+   },
+   "document": "evidence/request_attempts/e8/e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0/pfe-20231231.htm",
+   "period_end": "2023-12-31",
+   "published_excerpts": 119,
+   "published_excerpts_are_the_taken_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/pfizer-2023-12-31.json",
+   "reading_sha256": "sha256:0334423a3a198bdc7a020c5e3add3150e4f391b414b8cb4f9697f4eadec72975",
+   "reading_verdict": "READING_DISAGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "taken_texts_render_the_published_value": true,
+   "value_sha256": "sha256:520a5c5948dce2c79c2df0fc7d4360ca93ca1e7c40926471f1c1ed263cac0e99",
+   "verdict": "DIFFERS"
+  },
+  "pfizer-2024": {
+   "accession": "0000078003-25-000054",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:c6f371bf0a8398c6f983f3ae223ec68f16acc6fadd5066f6c93f4a5f424934dc",
+     "run_id": "run:historical-period:6dbe6d685a398f1457dde6beb2cdf41012cc3b5d6a08b30f32cfa7aad43aeb60"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-25-000054"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "counts": {
+    "context": 66,
+    "covered_elsewhere": 1,
+    "headings": 16,
+    "outside": 0,
+    "skipped": 35,
+    "taken": 107,
+    "taken_through_item_8": 3
+   },
+   "document": "evidence/request_attempts/05/05b77064b72e16b39bc80dfa10d12d18e4b470c0df63c2cb89d3884e813bb97f/pfe-20241231.htm",
+   "period_end": "2024-12-31",
+   "published_excerpts": 107,
+   "published_excerpts_are_the_taken_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/pfizer-2024-12-31.json",
+   "reading_sha256": "sha256:f967a964463c9793d42726eeb8cee0ce57b997c1d286a72e254d4aaf4d4f6856",
+   "reading_verdict": "READING_DISAGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "taken_texts_render_the_published_value": true,
+   "value_sha256": "sha256:48b64e0f2ccfc198790e803121d3430691288d805f99260cf6e2437c8c338656",
+   "verdict": "DIFFERS"
+  },
+  "southwest-2023": {
+   "accession": "0000092380-24-000027",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:bbd6784c4654feddcd5de71a94708edb932b7fa8d9138674b8243b721712a7b5",
+     "run_id": "run:historical-period:644b8a114c46f32f996929fe11355f17cdd67e2734e2d937243eeb0115d85fdb"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-24-000027"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "southwest_airlines",
+   "counts": {
+    "context": 37,
+    "covered_elsewhere": 0,
+    "headings": 10,
+    "outside": 0,
+    "skipped": 6,
+    "taken": 17,
+    "taken_through_item_8": 3
+   },
+   "document": "evidence/request_attempts/54/5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3/luv-20231231.htm",
+   "period_end": "2023-12-31",
+   "published_excerpts": 17,
+   "published_excerpts_are_the_taken_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/southwest_airlines-2023-12-31.json",
+   "reading_sha256": "sha256:802d0a96881db863b626b86a7a50130873b88695b6a57f40b3209921634eb0ce",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "taken_texts_render_the_published_value": true,
+   "value_sha256": "sha256:40c052f8ed62f7bde1415497451b6e3b9b05f41892739671b67841720e28c188",
+   "verdict": "MATCH"
+  }
+ },
+ "reader": "tools/read_d02_excerpts.py",
+ "record_type": "ISSUE_47_D02_EXCERPTS_READ",
+ "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c"
+}

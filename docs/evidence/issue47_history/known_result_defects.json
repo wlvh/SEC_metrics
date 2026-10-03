@@ -2505,11 +2505,22 @@
      "run_id": "run:historical-period:34f88343d29be6b4f1d9f13452ce9c6dca54e1584a92d836c331c159afa341c9"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RESULT_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/macys-2022-01-29.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:35780fa91b18347127aa775720ffe98a2f9bd825c9575879aaed21daa913a304",
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "run_id": "run:historical-period:91cf874d5de0f312f811a4cc2c96a9d6cf86ca5dc4d0e3e87cc2fab990441c3c",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json (macys-2022: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/macys-2022-01-29.json",
+     "reading_sha256": "sha256:3d72428d8cb76f41194d69823cb428c5ce08b55f522aa66c1e7b6cb8725f424c",
+     "what_this_releases": "This defect, this result and this Requirement closure only; other versions remain withdrawn."
+    }
    ]
   },
   {
@@ -2631,7 +2642,7 @@
      "run_id": "run:historical-period:9c61cae02a3e613f24a6ad1433ddba74cfc92758001a676a9a9d5cc8ded0caa9"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
+   "repair_state": "V4_RESULT_RECOMPUTED_READING_STILL_DISAGREES",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2022-12-31.json",
@@ -2650,7 +2661,13 @@
      "reading_sha256": "sha256:273686498fac34a9b252c30190a3d38da2c86a32e37af7cc7d136365410e286c",
      "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
-   ]
+   ],
+   "current_v4_reading": {
+    "reading": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
+    "result_id": "sha256:c9a16ffe6e3d5ab872cbc5470c7234b68b62fff82be93ea84869c9879fca308b",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "verdict": "DIFFERS"
+   }
   },
   {
    "company_id": "pfizer",
@@ -2726,7 +2743,7 @@
      "run_id": "run:historical-period:91efcf5345a70e4026bd1eea683b805c42e3e9a1cefdb473f74ee99869ef1390"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
+   "repair_state": "V4_RESULT_RECOMPUTED_READING_STILL_DISAGREES",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2023-12-31.json",
@@ -2745,7 +2762,13 @@
      "reading_sha256": "sha256:55774ef0c34f5e6dbb8fbce28bc9e4d10131c8617d55723113bfcf533d73d870",
      "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
-   ]
+   ],
+   "current_v4_reading": {
+    "reading": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
+    "result_id": "sha256:139eead41936095c56be13b832e41a3b294b7b25fbcbb953c50dc0921c613e30",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "verdict": "DIFFERS"
+   }
   },
   {
    "company_id": "southwest_airlines",
@@ -2783,11 +2806,22 @@
      "run_id": "run:historical-period:0e37b69d58a4ae1cbd5c492e4ff63f1e1b2ea883a5637985daa562f03bb9462a"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RESULT_RECOMPUTED_AND_READ",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/southwest_airlines-2023-12-31.json",
     "docs/evidence/issue47_history/d02-older-years/causes.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:bbd6784c4654feddcd5de71a94708edb932b7fa8d9138674b8243b721712a7b5",
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "run_id": "run:historical-period:644b8a114c46f32f996929fe11355f17cdd67e2734e2d937243eeb0115d85fdb",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json (southwest-2023: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/southwest_airlines-2023-12-31.json",
+     "reading_sha256": "sha256:802d0a96881db863b626b86a7a50130873b88695b6a57f40b3209921634eb0ce",
+     "what_this_releases": "This defect, this result and this Requirement closure only; other versions remain withdrawn."
+    }
    ]
   },
   {
@@ -2927,7 +2961,7 @@
      "run_id": "run:historical-period:8a21db6794f429d9a343e7356fa86e013e4f002a18861efa488a8825deec71ec"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_NOT_YET_RECOMPUTED + ROUTE_REPAIRED_NOT_YET_RECOMPUTED",
+   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_NAMED_REFUSAL_REMAINS",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/lumen_technologies-2021-12-31.json",
@@ -2935,6 +2969,12 @@
    ],
    "repair_progress": {
     "KEYWORD_PROXY": "d02_item_8_category_mentions, wired into the route in 36c64ab6, leaves out every block of this cause in this position (design measurement: 16 of 16 keyword-proxy admissions the older readings judged not a disclosure; held-out JPMorgan: no disclosure lost). The withdrawn result stays withdrawn; a release names the recomputed result and its closure once it has been read (docs/evidence/issue47_history/d02-keyword-repair/README.md)."
+   },
+   "recomputed_refusal": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/lumen-d02-2021/matrix-lumen-d02-2021.json",
+    "error_type": "TextResultV2Error",
+    "error": "HISTORICAL_TEXT_BOUNDARY_NAVIGATION_INCOMPLETE:['UNRESOLVED_INCORPORATED_CAPTION_NOTE_18']",
+    "stage": "FAILED"
    }
   },
   {
@@ -3155,7 +3195,7 @@
      "run_id": "run:historical-period:8cb68fe1c6caf40f1bb551d5fb0179949688c5af09711cb0718bf65990b0f76f"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
+   "repair_state": "V4_RESULT_RECOMPUTED_READING_STILL_DISAGREES",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2024-12-31.json",
@@ -3174,7 +3214,13 @@
      "reading_sha256": "sha256:cae5e8a18c3ab7643c8541f615e45a61d779df709f3ad1fc754ab2bf56ff1ac0",
      "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
-   ]
+   ],
+   "current_v4_reading": {
+    "reading": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
+    "result_id": "sha256:c6f371bf0a8398c6f983f3ae223ec68f16acc6fadd5066f6c93f4a5f424934dc",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "verdict": "DIFFERS"
+   }
   },
   {
    "defect_id": "C02_ENPHASE_2021_OLDER_YEAR_READING_DISAGREES",
@@ -6164,7 +6210,7 @@
      "run_id": "run:historical-period:e9365caa6b1de129bd3dd25dce17457bffb2486f2803600d4d4e2ec9ba628adc"
     }
    },
-   "repair_state": "ROUTE_REPAIRED_RECOMPUTED_AND_READ + ROUTE_REPAIRED_RECOMPUTED_AND_READ",
+   "repair_state": "V4_RESULT_RECOMPUTED_READING_STILL_DISAGREES",
    "evidence": [
     "docs/evidence/issue47_history/d02-older-years/README.md",
     "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2021-12-31.json",
@@ -6180,7 +6226,13 @@
      "reading_sha256": "sha256:88c6787ab7ce94c2488eb49cf06378be2ae7efd0b6fff62859e1f304e479721e",
      "what_this_releases": "this entry, for this result under this version only: the targeted round's recomputed result, whose excerpts the reading judged in both directions with nothing wrong or missing. Any other result at this coordinate stays withdrawn by it."
     }
-   ]
+   ],
+   "current_v4_reading": {
+    "reading": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
+    "result_id": "sha256:fe50a7ca6454af59f15c4326aa6d27329290e0708806704f926a9258ca244442",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "verdict": "DIFFERS"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -6197,7 +6249,7 @@
    "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
    "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
    "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6208,7 +6260,13 @@
    "blocks_taken_that_are_not_composition": [
     3463
    ],
-   "later": "Block 3532, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
+   "later": "Block 3532, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46).",
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2022_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -6225,7 +6283,7 @@
    "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
    "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
    "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6236,7 +6294,13 @@
    "blocks_taken_that_are_not_composition": [
     3571
    ],
-   "later": "Block 3642, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
+   "later": "Block 3642, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46).",
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:afd9d5da8b860d09949b62d7260ad5ece55fe53a7c9fe62cd94a68f7642e9056",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2023_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -6253,7 +6317,7 @@
    "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
    "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
    "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6264,7 +6328,13 @@
    "blocks_taken_that_are_not_composition": [
     3344
    ],
-   "later": "Block 3413, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
+   "later": "Block 3413, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46).",
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:e6592e8557bd2c2b60ccb0d51f09ddd3ec59c12360c03c1941b260edf86767ed",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2024_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION",
@@ -6281,7 +6351,7 @@
    "root_cause": "COMMITTEE_MEMBER_QUALIFICATION fires on a sentence with a qualification word, a reference to committee members and a state verb. 'independent' matched in 'the Firm's independent external auditor', which describes the auditor. The words that name someone else's independence (_NOT_DIRECTOR_INDEPENDENCE) covered the 'independent registered public accounting firm', 'independent auditors/accountants', consultants and counsel, but not an 'independent external' or 'outside' auditor.",
    "scope_measured": "Selector at HEAD 2801e574 against the repaired one: on the 37 two-direction-read positions nothing moves (c02-selector-repairs/measured-45-external-auditor.json); on JPMorgan's four C02 documents each loses exactly this paragraph (FY2022 3463, FY2023 3571, FY2024 3344, FY2025 3367) and nothing else, and the Audit Committee composition, independence and financial-expert statement (FY2025 block 3409) stays. JPMorgan FY2021 has no C02 result: the route stops on the cover-name identity check (HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED).",
    "found_by": "#28's independent content check of its own FY2025 result (peer_origin), confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 45, [shared-with-#28]); the published result is the batch's and is not recomputed. Even recomputed it would not be accepted: no reading of JPMorgan's C02 exists, and block 3436 (the Audit Committee report's paragraph on management's, PwC's and Internal Audit's responsibilities, labelled COMMITTEE_COMPOSITION_STATEMENT) is a separate unjudged question.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6302,7 +6372,13 @@
    "blocks_taken_that_are_not_composition": [
     3367
    ],
-   "later": "Block 3436, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46)."
+   "later": "Block 3436, the 'separate unjudged question' above, was judged against the Spec after #28's question (Issue #47 comment 5954343457) and registered as C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION (repair 46).",
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:87a90fabdf2ace13408bdee0532cbd07034c14953ad663e30258eb52e1102bb0",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2025_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2022_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
@@ -6319,7 +6395,7 @@
    "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
    "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
    "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6329,7 +6405,13 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3532
-   ]
+   ],
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2022_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2023_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
@@ -6346,7 +6428,7 @@
    "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
    "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
    "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6356,7 +6438,13 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3642
-   ]
+   ],
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:afd9d5da8b860d09949b62d7260ad5ece55fe53a7c9fe62cd94a68f7642e9056",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2023_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2024_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
@@ -6373,7 +6461,7 @@
    "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
    "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
    "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6383,7 +6471,13 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3413
-   ]
+   ],
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:e6592e8557bd2c2b60ccb0d51f09ddd3ec59c12360c03c1941b260edf86767ed",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2024_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "defect_id": "C02_JPMORGAN_2025_COMMITTEE_ROLE_DISCLAIMER_TAKEN_AS_COMPOSITION",
@@ -6400,7 +6494,7 @@
    "root_cause": "The members clause ('members of the ... Committee are/were/include/included') was read as a composition statement whatever followed the verb. Across the 49 cached C02 proxies it occurs in 59 sentences of 16 documents; 55 go on to a listed status (independent, not employees, financially literate, non-employee directors) and the 4 others are this disclaimer.",
    "scope_measured": "Selector at HEAD 4ad20447 against repair 46: the 37 two-direction-read positions do not move (c02-selector-repairs/measured-46-members-clause.json: wrongly taken 4, missed 9, positions disagreeing 6, before and after); of the 12 published positions nobody has read, only JPMorgan FY2022-FY2025 move, each losing exactly this block (measured-46-jpmorgan-and-unread.json). Block 3409 (FY2025: four non-management members, each independent, financially literate and an audit committee financial expert) stays.",
    "found_by": "#28's question on block 3436 of its own FY2025 result (Issue #47 comment 5954343457), judged by #47 against the Spec and confirmed on #47's saved proxies for FY2022-FY2025",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_OTHER_CONTENT_DEFECTS_OPEN",
    "why_not_repaired_yet": "Repaired in the shared selector (c02-selector-repairs/README.md section 46, [shared-with-#28]); the published result is the batch's and is not recomputed, and no reading of JPMorgan's C02 exists, so a recomputed value would still need a two-direction reading before acceptance.",
    "evidence": [
     "docs/evidence/issue47_history/c02-selector-repairs/README.md",
@@ -6410,7 +6504,13 @@
    "original_record_retained": true,
    "blocks_taken_that_are_not_composition": [
     3436
-   ]
+   ],
+   "new_round": {
+    "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+    "result_id": "sha256:87a90fabdf2ace13408bdee0532cbd07034c14953ad663e30258eb52e1102bb0",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "not_released_because": "C02_JPMORGAN_2025_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING"
+   }
   },
   {
    "company_id": "jpmorgan_chase",
@@ -6610,6 +6710,110 @@
     3510
    ],
    "adjudication_not_applied": "The uniform adjudication (c02-composition-facts/adjudicate.py) was not re-run over this reading. Applied in memory it decides four of its blocks: 971, 3511 and 3513 FACT under CHAIR_CEO_STRUCTURE (the reader: NOT) and 717 NOT under CARD_TENURE_FIELD (the reader: MIXED). On the three the reader is taken: the rule's own text excludes statements about policy or proposals, and they are a policy for the next CEO transition, the shareholder outreach on it, and a rebuttal of the proposal - the rule's pattern (and the selector's, which took all three) reaches wording it was not written on. Recorded, not repaired, for the reason why_not_repaired_yet gives; under the rules as written the position would still disagree: 717 would no longer count as missed, the other 36 missed blocks would, and 531 stays wrongly taken."
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2022_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "result_id": null,
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "summary": "The new result takes the card's Chairman and CEO title without its adjacent James Dimon name. The source explicitly names the Stock and Executive standing committees, but the selection takes only the number of additional committees. A limited read in both directions establishes these counterexamples, without claiming the full pool has been judged or a complete error count. The new set is rejected; the original auditor-retention and role-disclaimer repairs do not establish whole-value correctness.",
+   "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+   "confirmed_in": {
+    "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+    "run_id": "run:historical-period:4d1303c0648311cc35b1ff4286d4a3f1a0484289b739240b9995e4f04921fbe7",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "candidate_hash": "sha256:3de0244678142b3e8d24fb5f83201ae4553a0ad3e6a67eb80f4aedc3a6e4cd59",
+    "document_id": "sha256:d1f869424fd7f09480ce8bb72aeda0f4e987cf917cef002a847055c93fa6d65b"
+   },
+   "selection_problems": {
+    "name_block": 805,
+    "title_block": 806,
+    "omitted_committee_blocks": [
+     1245,
+     1246
+    ]
+   },
+   "scope_limit": "The named selected and omitted blocks, read with their adjacent original blocks. These are sufficient counterexamples to accepting the set. The rest of the 2,123-2,409 pool blocks per filing has not been fully judged; this is not a completed whole-packet reading and claims no complete error count."
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2023_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "result_id": null,
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "summary": "The new result takes the card's Chairman and CEO title without its adjacent James Dimon name. The source explicitly names the Stock and Executive standing committees, but the selection takes only the number of additional committees. A limited read in both directions establishes these counterexamples, without claiming the full pool has been judged or a complete error count. The new set is rejected; the original auditor-retention and role-disclaimer repairs do not establish whole-value correctness.",
+   "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+   "confirmed_in": {
+    "result_id": "sha256:afd9d5da8b860d09949b62d7260ad5ece55fe53a7c9fe62cd94a68f7642e9056",
+    "run_id": "run:historical-period:06f405c5d0b58da15d63f7ebbafa68e13ec3c3fc7bf995015daee7b17a38aa17",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "candidate_hash": "sha256:1875f5c6291843287cb8c4a9178def699f6f740f837ec5d522a756ee83f5f198",
+    "document_id": "sha256:5bb3737a672560a43d0adcdaeec3846bab105fb49b14bb5f6ad45a08bcc74443"
+   },
+   "selection_problems": {
+    "name_block": 747,
+    "title_block": 748,
+    "omitted_committee_blocks": [
+     1190,
+     1191
+    ]
+   },
+   "scope_limit": "The named selected and omitted blocks, read with their adjacent original blocks. These are sufficient counterexamples to accepting the set. The rest of the 2,123-2,409 pool blocks per filing has not been fully judged; this is not a completed whole-packet reading and claims no complete error count."
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2024_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "summary": "The new result takes the card's Chairman and CEO title without its adjacent James Dimon name. The source explicitly names the Stock and Executive standing committees, but the selection takes only the number of additional committees. A limited read in both directions establishes these counterexamples, without claiming the full pool has been judged or a complete error count. The new set is rejected; the original auditor-retention and role-disclaimer repairs do not establish whole-value correctness.",
+   "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+   "confirmed_in": {
+    "result_id": "sha256:e6592e8557bd2c2b60ccb0d51f09ddd3ec59c12360c03c1941b260edf86767ed",
+    "run_id": "run:historical-period:82ccd50cc4cf90a286604be0439aef82dbee8fe06c18e04200eb4414bb527485",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "candidate_hash": "sha256:c39194d6168c82a46bf0ec060c3d77c4ddcb6e44192943c6d1517e1883ac56d5",
+    "document_id": "sha256:aecc5aa6852181c1dfc70327fc6acbad329cd6c8eea06aa743e260826f822d2c"
+   },
+   "selection_problems": {
+    "name_block": 771,
+    "title_block": 772,
+    "omitted_committee_blocks": [
+     1232,
+     1233
+    ]
+   },
+   "scope_limit": "The named selected and omitted blocks, read with their adjacent original blocks. These are sufficient counterexamples to accepting the set. The rest of the 2,123-2,409 pool blocks per filing has not been fully judged; this is not a completed whole-packet reading and claims no complete error count."
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2025_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "summary": "The new result takes the card's Chairman and CEO title without its adjacent James Dimon name. The source explicitly names the Stock and Executive standing committees, but the selection takes only the number of additional committees. A limited read in both directions establishes these counterexamples, without claiming the full pool has been judged or a complete error count. The new set is rejected; the original auditor-retention and role-disclaimer repairs do not establish whole-value correctness.",
+   "evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+   "confirmed_in": {
+    "result_id": "sha256:87a90fabdf2ace13408bdee0532cbd07034c14953ad663e30258eb52e1102bb0",
+    "run_id": "run:historical-period:6988fa00b37e83a1141b258147af0f8355707ea45729d80de53bc713240b19e1",
+    "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+    "candidate_hash": "sha256:b3c5337d836affa84795b1418d93cc9fe552d5ca7b024d5ffd9ae2df75a44e22",
+    "document_id": "sha256:fd0b54f27a38a0a6487908d48e55b316c3e6bb0ce217f29e0cf0678164992952"
+   },
+   "selection_problems": {
+    "name_block": 766,
+    "title_block": 767,
+    "omitted_committee_blocks": [
+     1244,
+     1245
+    ]
+   },
+   "scope_limit": "The named selected and omitted blocks, read with their adjacent original blocks. These are sufficient counterexamples to accepting the set. The rest of the 2,123-2,409 pool blocks per filing has not been fully judged; this is not a completed whole-packet reading and claims no complete error count."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

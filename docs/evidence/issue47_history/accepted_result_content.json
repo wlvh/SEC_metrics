@@ -40546,6 +40546,58 @@
    "what_this_does_not_establish": "that the rest of Item 8 holds no litigation disclosure: outside the incorporated scopes it is read only where the keyword proxy took a block and under the headings that name the definition's words, so a disclosure under a heading worded otherwise, or under none, is not read (the proxy's registered decision); nor that the reader is independent of the model family that wrote the rules; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D02_MACYS_2022",
+   "accepted_value": "sha256:e9483f045f9ef101a0781cebbcd528ec2e1039d9198c61b1021107e1e3c9ea94",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:35780fa91b18347127aa775720ffe98a2f9bd825c9575879aaed21daa913a304",
+     "run_id": "run:historical-period:91cf874d5de0f312f811a4cc2c96a9d6cf86ca5dc4d0e3e87cc2fab990441c3c"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001564590-22-011726"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-01-29",
+    "period_start": "2021-01-31",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
+   "method": "a packet built from the saved annual report by tools/read_d02_excerpts.py through the route's own selection - every excerpt with its scope, every block skipped inside Item 3 and the note scopes Item 3 incorporates, the blocks under an Item 8 heading naming contingencies, legal proceedings or litigation in a note Item 3 does not incorporate, and every heading naming those words - judged block by block by an independent reader (a fresh-context subagent of the same model family, not a person) against the brief in d02-older-years/reader-brief.md; the reading carries each judged block's text, covers the packet exactly, and its excerpts render the value; the result's candidate hash is the one recomputed from the filing.",
+   "metric_id": "D02",
+   "period_end": "2022-01-29",
+   "read_from": {
+    "counts": {
+     "context": 0,
+     "covered_elsewhere": 0,
+     "headings": 1,
+     "outside": 0,
+     "skipped": 0,
+     "taken": 3,
+     "taken_through_item_8": 1
+    },
+    "document": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm",
+    "published_excerpts": 3,
+    "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/macys-2022-01-29.json",
+    "reading_sha256": "sha256:3d72428d8cb76f41194d69823cb428c5ce08b55f522aa66c1e7b6cb8725f424c"
+   },
+   "what_this_does_not_establish": "that the rest of Item 8 holds no litigation disclosure: outside the incorporated scopes it is read only where the keyword proxy took a block and under the headings that name the definition's words, so a disclosure under a heading worded otherwise, or under none, is not read (the proxy's registered decision); nor that the reader is independent of the model family that wrote the rules; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D02_MACYS_2023",
    "accepted_value": "sha256:c237b6af50ce2fb32ccea7772aae37fa85113f54898bfb7b3edbad6d71b8201e",
    "checked_identity": {
@@ -41839,6 +41891,58 @@
     "published_excerpts": 15,
     "reading": "docs/evidence/issue47_history/d02-older-years/judgements/southwest_airlines-2022-12-31.json",
     "reading_sha256": "sha256:1e49a93d951e0966a5abd998f07673cfcf2714326b92cfdf26d344e3026588cc"
+   },
+   "what_this_does_not_establish": "that the rest of Item 8 holds no litigation disclosure: outside the incorporated scopes it is read only where the keyword proxy took a block and under the headings that name the definition's words, so a disclosure under a heading worded otherwise, or under none, is not read (the proxy's registered decision); nor that the reader is independent of the model family that wrote the rules; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_SOUTHWEST_2023",
+   "accepted_value": "sha256:40c052f8ed62f7bde1415497451b6e3b9b05f41892739671b67841720e28c188",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:bbd6784c4654feddcd5de71a94708edb932b7fa8d9138674b8243b721712a7b5",
+     "run_id": "run:historical-period:644b8a114c46f32f996929fe11355f17cdd67e2734e2d937243eeb0115d85fdb"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-24-000027"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "southwest_airlines",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
+   "method": "a packet built from the saved annual report by tools/read_d02_excerpts.py through the route's own selection - every excerpt with its scope, every block skipped inside Item 3 and the note scopes Item 3 incorporates, the blocks under an Item 8 heading naming contingencies, legal proceedings or litigation in a note Item 3 does not incorporate, and every heading naming those words - judged block by block by an independent reader (a fresh-context subagent of the same model family, not a person) against the brief in d02-older-years/reader-brief.md; the reading carries each judged block's text, covers the packet exactly, and its excerpts render the value; the result's candidate hash is the one recomputed from the filing.",
+   "metric_id": "D02",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "counts": {
+     "context": 37,
+     "covered_elsewhere": 0,
+     "headings": 10,
+     "outside": 0,
+     "skipped": 6,
+     "taken": 17,
+     "taken_through_item_8": 3
+    },
+    "document": "evidence/request_attempts/54/5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3/luv-20231231.htm",
+    "published_excerpts": 17,
+    "reading": "docs/evidence/issue47_history/d02-older-years/carried-ed67e401/southwest_airlines-2023-12-31.json",
+    "reading_sha256": "sha256:802d0a96881db863b626b86a7a50130873b88695b6a57f40b3209921634eb0ce"
    },
    "what_this_does_not_establish": "that the rest of Item 8 holds no litigation disclosure: outside the incorporated scopes it is read only where the keyword proxy took a block and under the headings that name the definition's words, so a disclosure under a heading worded otherwise, or under none, is not read (the proxy's registered decision); nor that the reader is independent of the model family that wrote the rules; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
@@ -68503,6 +68607,7 @@
   "docs/evidence/issue47_history/content-acceptance/d02-older-years-read-round3.json",
   "docs/evidence/issue47_history/content-acceptance/d02-older-years-read-holdout.json",
   "docs/evidence/issue47_history/content-acceptance/d02-read-round-1e1ef948.json",
+  "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json",
   "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json",
   "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
@@ -68737,6 +68842,12 @@
    "acceptances_contributed": 10,
    "content_sha256": "sha256:3c7d39ee3a663edddb19ead8cc4a2c3043e16c788a1277cdb2245fdb9e4be024",
    "positions_examined": 10,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/d02-read-round-ed67e401.json": {
+   "acceptances_contributed": 2,
+   "content_sha256": "sha256:2973adeeb15bf941cfd831772ab7c086d752d2fff88409598d15c5092107b762",
+   "positions_examined": 6,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json": {

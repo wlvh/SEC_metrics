@@ -1,0 +1,288 @@
+{
+ "record_type": "ISSUE_47_C02_LIMITED_FIRST_REJECTION",
+ "reader": "Codex executor; original packet text only, no external business source",
+ "runtime_tree": "68025386 plus registration patch",
+ "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+ "scope": "The named selected and omitted blocks, read with their adjacent original blocks. These are sufficient counterexamples to accepting the set. The rest of the 2,123-2,409 pool blocks per filing has not been fully judged; this is not a completed whole-packet reading and claims no complete error count.",
+ "positions": [
+  {
+   "position": "jpmorgan_chase:2022-12-31",
+   "document_id": "sha256:d1f869424fd7f09480ce8bb72aeda0f4e987cf917cef002a847055c93fa6d65b",
+   "candidate_hash": "sha256:3de0244678142b3e8d24fb5f83201ae4553a0ad3e6a67eb80f4aedc3a6e4cd59",
+   "selected_count": 57,
+   "pool_count": 2376,
+   "direction_value_to_source": {
+    "head_without_owner": [
+     {
+      "i": 806,
+      "kind": "SELECTED",
+      "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co.",
+      "text_sha256": "sha256:b1e9928ee0b7d7fe524aa460fbb6a7301902c729c5257fe2cad87de9aab849a8"
+     },
+     {
+      "i": 805,
+      "kind": "POOL",
+      "text": "James Dimon",
+      "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+     }
+    ],
+    "outside_composition_target": [
+     {
+      "i": 1104,
+      "kind": "SELECTED",
+      "text": "Last year, as part of the Board's annual review of its leadership structure the Board considered the potential separation of the Chair and CEO positions in the context of succession planning. The Board has adopted a general policy, upon the next CEO transition, that the Chair and CEO positions shall be separate, subject to the Board's determination of the leadership structure that best serves the Firm and its shareholders at that time. This policy is reflected in the Firm's Governance Principles and reinforces the Board's longstanding commitment to independent oversight while also maintaining the Board's ability to fulfill its fiduciary duty to determine the leadership structure that best serves shareholders.",
+      "text_sha256": "sha256:761a1c8817e34679079816bcac17596879bd4449804d72c98a7230a1a4c5ab6d"
+     }
+    ]
+   },
+   "direction_source_to_value": {
+    "omitted_name": {
+     "i": 805,
+     "kind": "POOL",
+     "text": "James Dimon",
+     "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    "omitted_committee_names": [
+     {
+      "i": 1245,
+      "kind": "POOL",
+      "text": "Stock Committee: The committee is responsible for implementing the declaration of dividends, authorizing the issuance of stock, administering the dividend reinvestment plan and implementing share repurchase plans. The committee acts within Board-approved limitations and capital plans.",
+      "text_sha256": "sha256:59a286bb0ff98a4e5474deb6a6101e55455e83b11ad09cc9c62d21e5d9ec2a99"
+     },
+     {
+      "i": 1246,
+      "kind": "POOL",
+      "text": "Executive Committee: The committee may exercise all the powers of the Board that lawfully may be delegated, but with the expectation that it will not take material actions absent special circumstances.",
+      "text_sha256": "sha256:2b89ae5a551b7690474b5babda54e805b4a22b7907cb483146989ce7eb4bfa22"
+     }
+    ]
+   },
+   "judgement": "REJECTED_LIMITED_CONTENT_READ",
+   "reason": "The adjacent card states James Dimon is the Chairman and CEO, but the selection includes the title without his name. Both additional standing committees are expressly named in the original text, but only their count is taken. The listed pure governance policies are outside composition facts.",
+   "run": {
+    "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+    "run_id": "run:historical-period:4d1303c0648311cc35b1ff4286d4a3f1a0484289b739240b9995e4f04921fbe7",
+    "candidate_same_as_packet": true,
+    "full_name_occurs_in_value": false
+   },
+   "source": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961723000281/jpm-20230403.htm",
+    "accession": "0000019617-23-000281",
+    "document_name": "jpm-20230403.htm",
+    "source_reference_id": "sha256:d83643736b86e730eca329007cf572769996b74ca7305f45acc825224ce30c1f",
+    "request_attempt_id": "request:attempt:915caa175449632638046385a81636da8ad7d8630a7c51c62f33d5fd7dd2cef1",
+    "repo_relative_path": "evidence/request_attempts/2a/2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f/jpm-20230403.htm",
+    "content_sha256": "sha256:2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f"
+   }
+  },
+  {
+   "position": "jpmorgan_chase:2023-12-31",
+   "document_id": "sha256:5bb3737a672560a43d0adcdaeec3846bab105fb49b14bb5f6ad45a08bcc74443",
+   "candidate_hash": "sha256:1875f5c6291843287cb8c4a9178def699f6f740f837ec5d522a756ee83f5f198",
+   "selected_count": 62,
+   "pool_count": 2409,
+   "direction_value_to_source": {
+    "head_without_owner": [
+     {
+      "i": 748,
+      "kind": "SELECTED",
+      "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co.",
+      "text_sha256": "sha256:b1e9928ee0b7d7fe524aa460fbb6a7301902c729c5257fe2cad87de9aab849a8"
+     },
+     {
+      "i": 747,
+      "kind": "POOL",
+      "text": "James Dimon",
+      "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+     }
+    ],
+    "outside_composition_target": []
+   },
+   "direction_source_to_value": {
+    "omitted_name": {
+     "i": 747,
+     "kind": "POOL",
+     "text": "James Dimon",
+     "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    "omitted_committee_names": [
+     {
+      "i": 1190,
+      "kind": "POOL",
+      "text": "Stock Committee: The committee is responsible for implementing the declaration of dividends, authorizing the issuance of stock, administering the dividend reinvestment plan and implementing share repurchase plans. The committee acts within Board-approved limitations and capital plans.",
+      "text_sha256": "sha256:59a286bb0ff98a4e5474deb6a6101e55455e83b11ad09cc9c62d21e5d9ec2a99"
+     },
+     {
+      "i": 1191,
+      "kind": "POOL",
+      "text": "Executive Committee: The committee may exercise all the powers of the Board that lawfully may be delegated, but with the expectation that it will not take material actions absent special circumstances.",
+      "text_sha256": "sha256:2b89ae5a551b7690474b5babda54e805b4a22b7907cb483146989ce7eb4bfa22"
+     }
+    ]
+   },
+   "judgement": "REJECTED_LIMITED_CONTENT_READ",
+   "reason": "The adjacent card states James Dimon is the Chairman and CEO, but the selection includes the title without his name. Both additional standing committees are expressly named in the original text, but only their count is taken. The listed pure governance policies are outside composition facts.",
+   "run": {
+    "result_id": "sha256:afd9d5da8b860d09949b62d7260ad5ece55fe53a7c9fe62cd94a68f7642e9056",
+    "run_id": "run:historical-period:06f405c5d0b58da15d63f7ebbafa68e13ec3c3fc7bf995015daee7b17a38aa17",
+    "candidate_same_as_packet": true,
+    "full_name_occurs_in_value": false
+   },
+   "source": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961724000273/jpm-20240406.htm",
+    "accession": "0000019617-24-000273",
+    "document_name": "jpm-20240406.htm",
+    "source_reference_id": "sha256:152bff0fed92060edbd79e870e92c12bbebc39b39ac8bc0834a4f8de93bd520b",
+    "request_attempt_id": "request:attempt:ec20650f05c7615d2d7ce648bdf588c2b4380e94a8968446e617341e8562c8c6",
+    "repo_relative_path": "evidence/request_attempts/a7/a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741/jpm-20240406.htm",
+    "content_sha256": "sha256:a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741"
+   }
+  },
+  {
+   "position": "jpmorgan_chase:2024-12-31",
+   "document_id": "sha256:aecc5aa6852181c1dfc70327fc6acbad329cd6c8eea06aa743e260826f822d2c",
+   "candidate_hash": "sha256:c39194d6168c82a46bf0ec060c3d77c4ddcb6e44192943c6d1517e1883ac56d5",
+   "selected_count": 62,
+   "pool_count": 2123,
+   "direction_value_to_source": {
+    "head_without_owner": [
+     {
+      "i": 772,
+      "kind": "SELECTED",
+      "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co.",
+      "text_sha256": "sha256:b1e9928ee0b7d7fe524aa460fbb6a7301902c729c5257fe2cad87de9aab849a8"
+     },
+     {
+      "i": 771,
+      "kind": "POOL",
+      "text": "James Dimon",
+      "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+     }
+    ],
+    "outside_composition_target": [
+     {
+      "i": 1494,
+      "kind": "SELECTED",
+      "text": "As stated in the Governance Principles, each director retains all shares of the Firm’s common stock he or she purchased on the open market or received pursuant to his or her service as a Board member for as long as he or she serves on our Board absent any exceptions discussed by the Governance Committee. In addition, shares held personally by a director may not be held in margin accounts or otherwise pledged as collateral, nor may the economic risk of such shares be hedged. Further information on the Firm’s “Anti-hedging/anti-pledging provisions” can be found on page 50.",
+      "text_sha256": "sha256:10ee495c5a95a7217ca3791ddbd48420c2a3520923c9af2f925294ad6a0bddd4"
+     }
+    ]
+   },
+   "direction_source_to_value": {
+    "omitted_name": {
+     "i": 771,
+     "kind": "POOL",
+     "text": "James Dimon",
+     "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    "omitted_committee_names": [
+     {
+      "i": 1232,
+      "kind": "POOL",
+      "text": "Stock Committee: The committee is responsible for implementing the declaration of dividends, authorizing the issuance of stock, administering the dividend reinvestment plan and implementing share repurchase plans. The committee acts within Board-approved limitations and capital plans.",
+      "text_sha256": "sha256:59a286bb0ff98a4e5474deb6a6101e55455e83b11ad09cc9c62d21e5d9ec2a99"
+     },
+     {
+      "i": 1233,
+      "kind": "POOL",
+      "text": "Executive Committee: The committee may exercise all the powers of the Board that lawfully may be delegated, but with the expectation that it will not take material actions absent special circumstances.",
+      "text_sha256": "sha256:2b89ae5a551b7690474b5babda54e805b4a22b7907cb483146989ce7eb4bfa22"
+     }
+    ]
+   },
+   "judgement": "REJECTED_LIMITED_CONTENT_READ",
+   "reason": "The adjacent card states James Dimon is the Chairman and CEO, but the selection includes the title without his name. Both additional standing committees are expressly named in the original text, but only their count is taken. The listed pure governance policies are outside composition facts.",
+   "run": {
+    "result_id": "sha256:e6592e8557bd2c2b60ccb0d51f09ddd3ec59c12360c03c1941b260edf86767ed",
+    "run_id": "run:historical-period:82ccd50cc4cf90a286604be0439aef82dbee8fe06c18e04200eb4414bb527485",
+    "candidate_same_as_packet": true,
+    "full_name_occurs_in_value": false
+   },
+   "source": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000321/jpm-20250405.htm",
+    "accession": "0000019617-25-000321",
+    "document_name": "jpm-20250405.htm",
+    "source_reference_id": "sha256:9b194d23d66fd5ac34456a61424b4be39fe0856084ed5a7cb906bb3b212d7aec",
+    "request_attempt_id": "request:attempt:a1e3acc37e4f8373e04fae4fd47427ff2386b91763e0f7ec01896a7f770bbc2a",
+    "repo_relative_path": "evidence/request_attempts/08/085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c/jpm-20250405.htm",
+    "content_sha256": "sha256:085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c"
+   }
+  },
+  {
+   "position": "jpmorgan_chase:2025-12-31",
+   "document_id": "sha256:fd0b54f27a38a0a6487908d48e55b316c3e6bb0ce217f29e0cf0678164992952",
+   "candidate_hash": "sha256:b3c5337d836affa84795b1418d93cc9fe552d5ca7b024d5ffd9ae2df75a44e22",
+   "selected_count": 58,
+   "pool_count": 2154,
+   "direction_value_to_source": {
+    "head_without_owner": [
+     {
+      "i": 767,
+      "kind": "SELECTED",
+      "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co.",
+      "text_sha256": "sha256:b1e9928ee0b7d7fe524aa460fbb6a7301902c729c5257fe2cad87de9aab849a8"
+     },
+     {
+      "i": 766,
+      "kind": "POOL",
+      "text": "James Dimon",
+      "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+     }
+    ],
+    "outside_composition_target": [
+     {
+      "i": 1504,
+      "kind": "SELECTED",
+      "text": "As stated in the Governance Principles, each director retains all shares of the Firm’s common stock he or she purchased on the open market or received pursuant to his or her service as a Board member for as long as he or she serves on our Board absent any exceptions discussed by the Governance Committee. In addition, shares held personally by a director may not be held in margin accounts or otherwise pledged as collateral, nor may the economic risk of such shares be hedged. Further information on the Firm’s “Anti-hedging/anti-pledging provisions” can be found on page 50.",
+      "text_sha256": "sha256:10ee495c5a95a7217ca3791ddbd48420c2a3520923c9af2f925294ad6a0bddd4"
+     }
+    ]
+   },
+   "direction_source_to_value": {
+    "omitted_name": {
+     "i": 766,
+     "kind": "POOL",
+     "text": "James Dimon",
+     "text_sha256": "sha256:4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    "omitted_committee_names": [
+     {
+      "i": 1244,
+      "kind": "POOL",
+      "text": "Stock Committee: The committee is responsible for implementing the declaration of dividends, authorizing the issuance of stock, administering the dividend reinvestment plan and implementing share repurchase plans. The committee acts within Board-approved limitations and capital plans.",
+      "text_sha256": "sha256:59a286bb0ff98a4e5474deb6a6101e55455e83b11ad09cc9c62d21e5d9ec2a99"
+     },
+     {
+      "i": 1245,
+      "kind": "POOL",
+      "text": "Executive Committee: The committee may exercise all the powers of the Board that lawfully may be delegated, but with the expectation that it will not take material actions absent special circumstances.",
+      "text_sha256": "sha256:2b89ae5a551b7690474b5babda54e805b4a22b7907cb483146989ce7eb4bfa22"
+     }
+    ]
+   },
+   "judgement": "REJECTED_LIMITED_CONTENT_READ",
+   "reason": "The adjacent card states James Dimon is the Chairman and CEO, but the selection includes the title without his name. Both additional standing committees are expressly named in the original text, but only their count is taken. The listed pure governance policies are outside composition facts.",
+   "run": {
+    "result_id": "sha256:87a90fabdf2ace13408bdee0532cbd07034c14953ad663e30258eb52e1102bb0",
+    "run_id": "run:historical-period:6988fa00b37e83a1141b258147af0f8355707ea45729d80de53bc713240b19e1",
+    "candidate_same_as_packet": true,
+    "full_name_occurs_in_value": false
+   },
+   "source": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000096/jpm-20260402.htm",
+    "accession": "0000019617-26-000096",
+    "document_name": "jpm-20260402.htm",
+    "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+    "request_attempt_id": "request:attempt:3719764472367abe06b66a5d19e4366931c8d4ebe3fe6296ff268cb0bc5f7d10",
+    "repo_relative_path": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+    "content_sha256": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476"
+   }
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "acceptance_granted": false
+}
