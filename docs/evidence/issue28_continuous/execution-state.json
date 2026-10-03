@@ -3596,6 +3596,24 @@
       "inherited_result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-7d1202b/conclusion.md",
       "new_agent_reason": "Previous child ended at 3-message limit; genuine new SHA binding difference not covered. Reuse previous whole-index findings; review increment only.",
       "ordinary_messages": 1
+    },
+    {
+      "task_name": "audit_b03sf_899001f",
+      "purpose": "one_time_large_original_audit",
+      "module": "b03sf_fullscope",
+      "scope_paths": [
+        "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+        "catalog/r6/B03_impairment_excluded_v1.md",
+        "docs/evidence/issue28_continuous/b03-salesforce-exact-amount-census-20260929/"
+      ],
+      "patch_sha": "899001f79250cef05a0d71d50e611db956806fe0",
+      "original_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+      "spawned_at": "2026-10-02T23:50:36.495326+00:00",
+      "ended_at": "2026-10-03T00:04:42Z",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/b03-salesforce-full-scope-audit-20261003/conclusion.md",
+      "verdict": "FULL_FINANCIAL_SCOPE_READ_COMPONENT_ONLY_TOTAL_UNPROVEN",
+      "ordinary_messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -11339,5 +11357,26 @@
     "register_blob": "0edfca788fd2c6a0938bae98ad10b06ced4bff84",
     "source_core_increment": false,
     "relevant_increment": "#47 own historical requirement minter adds observed imports and investigates model request identity; no own D01/C02/E01 core difference or acceptance credit copied"
+  },
+  "salesforce_B03_full_original_audit_20261003": {
+    "source_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "code_at_read": "899001f79250cef05a0d71d50e611db956806fe0",
+    "scope": "Financial pages53-92 all statements/notes1-14 and MD&A38-49; other pages located only",
+    "evidence": "docs/evidence/issue28_continuous/b03-salesforce-full-scope-audit-20261003/conclusion.md",
+    "new_exact_reported_component_million_usd": 1687,
+    "component_relation": "Purchase intangible amortization allocated692+995; reported million-dollar precision",
+    "full_exclusive_impairment_free_total_established": false,
+    "missing_relationships": [
+      "ROU impairment exact amount within CF total",
+      "operating ROU amortization separately quantified",
+      "PPE/finance ROU expense bridge and exhaustive decomposition"
+    ],
+    "current_B03_credit_restored": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "family_child_read_not_independent_human_acceptance": true
   }
 }

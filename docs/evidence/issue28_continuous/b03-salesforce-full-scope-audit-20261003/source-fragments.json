@@ -1,0 +1,1515 @@
+{
+  "source_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+  "byte_ranges": "zero-based [start,end_exclusive), original ASCII bytes",
+  "scope": "Only financial/narrative fragments selected after reading complete statements; not a repeated label census",
+  "fragments": [
+    {
+      "id": "OPS_MAIN",
+      "raw_start": 1082962,
+      "raw_end_exclusive": 1139079,
+      "bytes": 56117,
+      "sha256": "f1815351654762921ded55ff1c8b43bc705a18e3c2b05c394971dc97bdf7d6a2",
+      "visible_text": "4\t\t\tFiscal Year Ended January 31,\n2026\t\t2025\t\t2024\nRevenues:\nSubscription and support\t\t\t\t\t$\t39,388 \t\t\t$\t35,679 \t\t\t$\t32,537\nProfessional services and other\t\t\t\t\t2,137 \t\t\t2,216 \t\t\t2,320\nTotal revenues\t\t\t\t\t41,525 \t\t\t37,895 \t\t\t34,857\nCost of revenues (1)(2):\nSubscription and support \t\t\t\t\t6,796 \t\t\t6,198 \t\t\t6,177\nProfessional services and other \t\t\t\t\t2,474 \t\t\t2,445 \t\t\t2,364\nTotal cost of revenues\t\t\t\t\t9,270 \t\t\t8,643 \t\t\t8,541\nGross profit\t\t\t\t\t32,255 \t\t\t29,252 \t\t\t26,316\nOperating expenses (1)(2):\nResearch and development\t\t\t\t\t5,993 \t\t\t5,493 \t\t\t4,906\nSales and marketing\t\t\t\t\t14,345 \t\t\t13,257 \t\t\t12,877\nGeneral and administrative\t\t\t\t\t3,000 \t\t\t2,836 \t\t\t2,534\nRestructuring\t\t\t\t\t586 \t\t\t461 \t\t\t988\nTotal operating expenses\t\t\t\t\t23,924 \t\t\t22,047 \t\t\t21,305\nIncome from operations\t\t\t\t\t8,331 \t\t\t7,205 \t\t\t5,011\nGains (losses) on strategic investments, net \t\t\t\t\t1,017 \t\t\t(121)\t\t\t(277)\nOther income\t\t\t\t\t172 \t\t\t354 \t\t\t216\nIncome before provision for income taxes\t\t\t\t\t9,520 \t\t\t7,438 \t\t\t4,950\nProvision for income taxes\t\t\t\t\t(2,063)\t\t\t(1,241)\t\t\t(814)\nNet income\t\t\t\t\t$\t7,457 \t\t\t$\t6,197 \t\t\t$\t4,136\nBasic net income per share\t\t\t\t\t$\t7.85 \t\t\t$\t6.44 \t\t\t$\t4.25\nDiluted net income per share\t\t\t\t\t$\t7.80 \t\t\t$\t6.36 \t\t\t$\t4.20\nShares used in computing basic net income per share\t\t\t\t\t950 \t\t\t962 \t\t\t974\nShares used in computing diluted net income per share\t\t\t\t\t956 \t\t\t974 \t\t\t984",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "39,388",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-6",
+            "decimals": "-6",
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-135"
+          },
+          "raw_start": 1087213,
+          "raw_end_exclusive": 1087414,
+          "sha256": "1cbf5351a2d56b3f3c594d1e72da7944f01d9b8d3797ec157bf7317258d40222"
+        },
+        {
+          "text": "2,137",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-9",
+            "decimals": "-6",
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-138"
+          },
+          "raw_start": 1089790,
+          "raw_end_exclusive": 1089990,
+          "sha256": "4acd3bed8b2942b85d07879c10b243b777a243b7dd9cc45d6f678e5be409fa43"
+        },
+        {
+          "text": "41,525",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-141"
+          },
+          "raw_start": 1091974,
+          "raw_end_exclusive": 1092175,
+          "sha256": "131eaa3da0b429d10c61950a66a373090f8bd75e6790d626968c2a7c91505676"
+        },
+        {
+          "text": "6,796",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-6",
+            "decimals": "-6",
+            "name": "us-gaap:CostOfGoodsAndServicesSold",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-144"
+          },
+          "raw_start": 1095017,
+          "raw_end_exclusive": 1095192,
+          "sha256": "ebc24e2ff92c56482a562c940024239c4c33ac688d7d24e8a2b6b65a96dc88b7"
+        },
+        {
+          "text": "2,474",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-9",
+            "decimals": "-6",
+            "name": "us-gaap:CostOfGoodsAndServicesSold",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-147"
+          },
+          "raw_start": 1097113,
+          "raw_end_exclusive": 1097288,
+          "sha256": "0b5664b2879bfd7512f3e8b4c825656e47cb971f2bbca3848b5b587ade9a2749"
+        },
+        {
+          "text": "9,270",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:CostOfGoodsAndServicesSold",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-150"
+          },
+          "raw_start": 1099230,
+          "raw_end_exclusive": 1099405,
+          "sha256": "1ea35b70d5414380f299091c392fd502b923689ae4f1299e4e36df520945880a"
+        },
+        {
+          "text": "32,255",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:GrossProfit",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-153"
+          },
+          "raw_start": 1101473,
+          "raw_end_exclusive": 1101634,
+          "sha256": "813f771d795330a07cf3e0793fbf01ad1e96a2fe25bb3297aafb1dc849070bdf"
+        },
+        {
+          "text": "5,993",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ResearchAndDevelopmentExpense",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-156"
+          },
+          "raw_start": 1104397,
+          "raw_end_exclusive": 1104575,
+          "sha256": "d1384a013c47c6e95631dbc7f0b6c93fa891cf01841452cd1c7dcf8717d3f63e"
+        },
+        {
+          "text": "14,345",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:SellingAndMarketingExpense",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-159"
+          },
+          "raw_start": 1106491,
+          "raw_end_exclusive": 1106667,
+          "sha256": "e36066cb65529c7204bbe460bbdc01677e714ebbbdaea53a147bea7cd2d844e6"
+        },
+        {
+          "text": "3,000",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:GeneralAndAdministrativeExpense",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-162"
+          },
+          "raw_start": 1108586,
+          "raw_end_exclusive": 1108766,
+          "sha256": "b6385bda5b6f12bd7329aa4ff129160ff260846307ecda487910dadfae76e006"
+        },
+        {
+          "text": "586",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RestructuringCharges",
+            "scale": "6",
+            "id": "f-165"
+          },
+          "raw_start": 1110680,
+          "raw_end_exclusive": 1110818,
+          "sha256": "eb9657d4f53fa0cc81f2cd1594205dc941ead69a63346e59404ec74e3465421a"
+        },
+        {
+          "text": "23,924",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:OperatingExpenses",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-168"
+          },
+          "raw_start": 1113074,
+          "raw_end_exclusive": 1113241,
+          "sha256": "5fbdae6e6419ab96ab4c93756115f05534fbabf41de0bbcb1fbf4c0df188f253"
+        },
+        {
+          "text": "8,331",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:OperatingIncomeLoss",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-171"
+          },
+          "raw_start": 1115288,
+          "raw_end_exclusive": 1115456,
+          "sha256": "6d8ea5f249c6c154cf13dd06bc570d0cd9c5110a9c44186b9f06e37fbfcdfd39"
+        },
+        {
+          "text": "1,017",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:GainLossOnInvestments",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-174"
+          },
+          "raw_start": 1118292,
+          "raw_end_exclusive": 1118462,
+          "sha256": "8561fbc4c12aab1117e51394bcd1ecc49bd76ebfcd98c1765f82af3d3a306081"
+        },
+        {
+          "text": "172",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:OtherNonoperatingIncomeExpense",
+            "scale": "6",
+            "id": "f-177"
+          },
+          "raw_start": 1120294,
+          "raw_end_exclusive": 1120442,
+          "sha256": "5f3488dc5fa762b9a0cf2050a24b694ce11b32a4acc415e37ebff09692173078"
+        },
+        {
+          "text": "9,520",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-180"
+          },
+          "raw_start": 1122339,
+          "raw_end_exclusive": 1122579,
+          "sha256": "13a70fc8238d57b5fb7ec8ac562e86738dcc92ca8d8580a0606321e1f3df2464"
+        },
+        {
+          "text": "2,063",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:IncomeTaxExpenseBenefit",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-183"
+          },
+          "raw_start": 1124763,
+          "raw_end_exclusive": 1124935,
+          "sha256": "9522e7fc5b281b90da2e6f2e1c4cf8f149d9a9588ff2584945e15be0316a3dd9"
+        },
+        {
+          "text": "7,457",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:NetIncomeLoss",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-186"
+          },
+          "raw_start": 1127037,
+          "raw_end_exclusive": 1127199,
+          "sha256": "4a693b0d6c0276c146ef08ed7ef3405d756b55a4d20afb881a3d43d6b5d478aa"
+        },
+        {
+          "text": "7.85",
+          "attributes": {
+            "unitref": "usdPerShare",
+            "contextref": "c-1",
+            "decimals": "2",
+            "name": "us-gaap:EarningsPerShareBasic",
+            "scale": "0",
+            "id": "f-189"
+          },
+          "raw_start": 1130339,
+          "raw_end_exclusive": 1130486,
+          "sha256": "2ec7d0e627703cb5ebd399b9e0062340c6e1116519c8e20ef6b3832a6dc73d74"
+        },
+        {
+          "text": "7.80",
+          "attributes": {
+            "unitref": "usdPerShare",
+            "contextref": "c-1",
+            "decimals": "2",
+            "name": "us-gaap:EarningsPerShareDiluted",
+            "scale": "0",
+            "id": "f-192"
+          },
+          "raw_start": 1133156,
+          "raw_end_exclusive": 1133305,
+          "sha256": "d5eec61890fd8a66f65a9d1d98cf20ec2de1b34b670bc4dd4affd5f4cc823a8b"
+        },
+        {
+          "text": "950",
+          "attributes": {
+            "unitref": "shares",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic",
+            "scale": "6",
+            "id": "f-195"
+          },
+          "raw_start": 1135587,
+          "raw_end_exclusive": 1135753,
+          "sha256": "8ed39fe0b86b2a11c32f108bd84a529f5509c1f7e7bd21956d416c8e0a505336"
+        },
+        {
+          "text": "956",
+          "attributes": {
+            "unitref": "shares",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+            "scale": "6",
+            "id": "f-198"
+          },
+          "raw_start": 1137652,
+          "raw_end_exclusive": 1137820,
+          "sha256": "b1eb7d2eff589c4b8af3e8da9ebda805f881aa607df242a45f6174a631bf2d82"
+        }
+      ]
+    },
+    {
+      "id": "OPS_INTANGIBLE_AMORTIZATION",
+      "raw_start": 1139478,
+      "raw_end_exclusive": 1147021,
+      "bytes": 7543,
+      "sha256": "57739f189eebe3a3800fdfaabff07c10860efba713b9b8eef9076a05b01f31ad",
+      "visible_text": "Fiscal Year Ended January 31,\n2026\t\t2025\t\t2024\nCost of revenues\t\t\t\t\t$\t692 \t\t\t$\t750 \t\t\t$\t978\nSales and marketing\t\t\t\t\t995 \t\t\t901 \t\t\t891",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "692",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-14",
+            "decimals": "-6",
+            "name": "crm:AmortizationOfPurchasedIntangiblesFromBusinessCombinations",
+            "scale": "6",
+            "id": "f-201"
+          },
+          "raw_start": 1142493,
+          "raw_end_exclusive": 1142666,
+          "sha256": "c07622c75223bc2d5f40deedaef3fa9ed872c032aee6b07d9fef02166c488f6e"
+        },
+        {
+          "text": "995",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-17",
+            "decimals": "-6",
+            "name": "crm:AmortizationOfPurchasedIntangiblesFromBusinessCombinations",
+            "scale": "6",
+            "id": "f-204"
+          },
+          "raw_start": 1145177,
+          "raw_end_exclusive": 1145350,
+          "sha256": "1a168e1f1d8c7104d634912fe6ed8ee3f198541575cee912a0fccd62e85e3b32"
+        }
+      ],
+      "caption_raw_start": 1139327,
+      "caption_raw_end_exclusive": 1139428,
+      "caption_sha256": "04dfc044043222dc82a9478ff0433392b0719fc95ff0733007e53ba0be9fa0ee",
+      "caption_text": "Amounts include amortization of intangible assets acquired through business combinations, as follows:"
+    },
+    {
+      "id": "CF_MAIN",
+      "raw_start": 1287305,
+      "raw_end_exclusive": 1366147,
+      "bytes": 78842,
+      "sha256": "d1f116ccdfcf692229e9a6301dc17e387462b4bbc976d15bcd10992b22c010bb",
+      "visible_text": "4\t\t\tFiscal Year Ended January 31,\n2026\t\t2025\t\t2024\nOperating activities:\nNet income\t\t\t\t\t$\t7,457 \t\t\t$\t6,197 \t\t\t$\t4,136\nAdjustments to reconcile net income to net cash provided by operating activities:\nDepreciation and amortization (1)\t\t\t\t\t3,631 \t\t\t3,477 \t\t\t3,959\nAmortization of costs capitalized to obtain revenue contracts, net\t\t\t\t\t2,197 \t\t\t2,095 \t\t\t1,925\nStock-based compensation expense\t\t\t\t\t3,509 \t\t\t3,183 \t\t\t2,787\n(Gains) losses on strategic investments, net \t\t\t\t\t(1,017)\t\t\t121 \t\t\t277\nChanges in assets and liabilities, net of business combinations:\nAccounts receivable, net\t\t\t\t\t(2,160)\t\t\t(490)\t\t\t(659)\nCosts capitalized to obtain revenue contracts, net\t\t\t\t\t(2,811)\t\t\t(2,121)\t\t\t(1,872)\nPrepaid expenses and other current assets and other assets\t\t\t\t\t819 \t\t\t(1,495)\t\t\t(843)\nAccounts payable and accrued expenses and other liabilities \t\t\t\t\t1,014 \t\t\t1,089 \t\t\t(478)\nOperating lease liabilities\t\t\t\t\t(567)\t\t\t(548)\t\t\t(621)\nUnearned revenue\t\t\t\t\t2,924 \t\t\t1,584 \t\t\t1,623\nNet cash provided by operating activities\t\t\t\t\t14,996 \t\t\t13,092 \t\t\t10,234\nInvesting activities:\nBusiness combinations, net of cash acquired\t\t\t\t\t(9,268)\t\t\t(2,734)\t\t\t(82)\nPurchases of strategic investments\t\t\t\t\t(1,958)\t\t\t(539)\t\t\t(496)\nSales of strategic investments\t\t\t\t\t184 \t\t\t126 \t\t\t108\nPurchases of marketable securities\t\t\t\t\t(3,763)\t\t\t(6,879)\t\t\t(3,761)\nSales of marketable securities\t\t\t\t\t4,414 \t\t\t4,143 \t\t\t1,511\nMaturities of marketable securities\t\t\t\t\t2,395 \t\t\t3,378 \t\t\t2,129\nCapital expenditures\t\t\t\t\t(594)\t\t\t(658)\t\t\t(736)\nNet cash used in investing activities\t\t\t\t\t(8,590)\t\t\t(3,163)\t\t\t(1,327)\nFinancing activities:\nProceeds from issuance of debt, net of issuance costs\t\t\t\t\t6,000 \t\t\t0 \t\t\t0\nRepurchases of common stock\t\t\t\t\t(12,596)\t\t\t(7,829)\t\t\t(7,620)\nPayments for taxes related to net share settlement of equity awards\t\t\t\t\t(351)\t\t\t0 \t\t\t0\nProceeds from employee stock plans\t\t\t\t\t1,039 \t\t\t1,540 \t\t\t1,954\nPrincipal payments on financing obligations \t\t\t\t\t(584)\t\t\t(603)\t\t\t(629)\nRepayments of debt\t\t\t\t\t0 \t\t\t(1,000)\t\t\t(1,182)\nPayments of dividends and dividend equivalents\t\t\t\t\t(1,587)\t\t\t(1,537)\t\t\t0\nNet cash used in financing activities\t\t\t\t\t(8,079)\t\t\t(9,429)\t\t\t(7,477)\nEffect of exchange rate changes\t\t\t\t\t152 \t\t\t(124)\t\t\t26\nNet increase (decrease) in cash and cash equivalents\t\t\t\t\t(1,521)\t\t\t376 \t\t\t1,456\nCash and cash equivalents, beginning of period\t\t\t\t\t8,848 \t\t\t8,472 \t\t\t7,016\nCash and cash equivalents, end of period\t\t\t\t\t$\t7,327 \t\t\t$\t8,848 \t\t\t$\t8,472",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "7,457",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:NetIncomeLoss",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-317"
+          },
+          "raw_start": 1291227,
+          "raw_end_exclusive": 1291389,
+          "sha256": "1a72566033dfc8e7674072609f0eaaca4146ddf7adaeacb91fbff7f0f17ae72e"
+        },
+        {
+          "text": "3,631",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:DepreciationAndAmortization",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-320"
+          },
+          "raw_start": 1294477,
+          "raw_end_exclusive": 1294653,
+          "sha256": "28988af8d19d11b675b27b323a6c622a17e801286310e30c696a25728e9eb11f"
+        },
+        {
+          "text": "2,197",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:CapitalizedContractCostAmortization",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-323"
+          },
+          "raw_start": 1296612,
+          "raw_end_exclusive": 1296796,
+          "sha256": "2c9fad61a6239f5fb77d57677e2b74829508a31dba9f1961b898ff68421515ee"
+        },
+        {
+          "text": "3,509",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ShareBasedCompensation",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-326"
+          },
+          "raw_start": 1298737,
+          "raw_end_exclusive": 1298908,
+          "sha256": "f2bc24d3b1660de873162d91ca0814bbc4a7b6a150e242e10229119509bfd633"
+        },
+        {
+          "text": "1,017",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:GainLossOnInvestments",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-329"
+          },
+          "raw_start": 1301226,
+          "raw_end_exclusive": 1301396,
+          "sha256": "35265250cb42713bc6148f60f7b22ff7daa572ce90000cf5f533a3a1c8b90be8"
+        },
+        {
+          "text": "2,160",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:IncreaseDecreaseInAccountsReceivable",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-332"
+          },
+          "raw_start": 1304809,
+          "raw_end_exclusive": 1304994,
+          "sha256": "9d6b61ac1e375aa8ea0400d69a332cb200e30107ed302b36f3e6010922a96ed2"
+        },
+        {
+          "text": "2,811",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "crm:IncreaseDecreaseInCapitalizedContractCosts",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-335"
+          },
+          "raw_start": 1306881,
+          "raw_end_exclusive": 1307068,
+          "sha256": "bf00364cd2c93586466534a0f24bd336fdbeed2415e1620cd43bbd333a448d98"
+        },
+        {
+          "text": "819",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "sign": "-",
+            "name": "us-gaap:IncreaseDecreaseInPrepaidDeferredExpenseAndOtherAssets",
+            "scale": "6",
+            "id": "f-338"
+          },
+          "raw_start": 1309028,
+          "raw_end_exclusive": 1309209,
+          "sha256": "53fb9f292a2e60e08ecb8e6c6999165eec002efa216c5c1e531e2683873cd8ce"
+        },
+        {
+          "text": "1,014",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:IncreaseDecreaseInAccountsPayableAndAccruedLiabilities",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-341"
+          },
+          "raw_start": 1311955,
+          "raw_end_exclusive": 1312158,
+          "sha256": "54552db048885a5f9b5bdb5d2b9b26118302d7442dae5b43e75850eb5d5eff8b"
+        },
+        {
+          "text": "567",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "sign": "-",
+            "name": "us-gaap:IncreaseDecreaseInOperatingLeaseLiability",
+            "scale": "6",
+            "id": "f-344"
+          },
+          "raw_start": 1314107,
+          "raw_end_exclusive": 1314275,
+          "sha256": "d9458fed66b27e871b661aff55bf32013872911cde992edff261e9c71bc8061a"
+        },
+        {
+          "text": "2,924",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:IncreaseDecreaseInContractWithCustomerLiability",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-347"
+          },
+          "raw_start": 1316155,
+          "raw_end_exclusive": 1316351,
+          "sha256": "beac831a480595a22272d86245bb1949952f0586585a5bca3826c99de40a8d39"
+        },
+        {
+          "text": "14,996",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-350"
+          },
+          "raw_start": 1318354,
+          "raw_end_exclusive": 1318546,
+          "sha256": "bf2fea62396799550ca5686422189231f2b9509f71ca8eaad8792d24369253df"
+        },
+        {
+          "text": "9,268",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsToAcquireBusinessesNetOfCashAcquired",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-353"
+          },
+          "raw_start": 1321464,
+          "raw_end_exclusive": 1321657,
+          "sha256": "bda3f95ec67f8c8470b1c810f33fc776b981d80d35db6bd753b9872cd8c6bdfc"
+        },
+        {
+          "text": "1,958",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsToAcquireLongtermInvestments",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-356"
+          },
+          "raw_start": 1323565,
+          "raw_end_exclusive": 1323750,
+          "sha256": "8c1e9e42ad64a5ec8bfc3f8e54a77f446353af513eb79c902767aae218685d81"
+        },
+        {
+          "text": "184",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ProceedsFromSaleOfLongtermInvestments",
+            "scale": "6",
+            "id": "f-359"
+          },
+          "raw_start": 1325607,
+          "raw_end_exclusive": 1325762,
+          "sha256": "34c0eb19d7bf474f52ef2936eab3962b74724f393611610b3d2d61695c4cbfd9"
+        },
+        {
+          "text": "3,763",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsToAcquireAvailableForSaleSecuritiesDebt",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-362"
+          },
+          "raw_start": 1327639,
+          "raw_end_exclusive": 1327835,
+          "sha256": "a36cbdb3677c5d1b1990be50dc2d56e2d2a5356d65ea2adac170e3a843bb1dfd"
+        },
+        {
+          "text": "4,414",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ProceedsFromSaleOfAvailableForSaleSecuritiesDebt",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-365"
+          },
+          "raw_start": 1329776,
+          "raw_end_exclusive": 1329973,
+          "sha256": "2ea665d1f0cc910aa470674d55e56db75e10c2e30b32fe71f2276074f13f7cb9"
+        },
+        {
+          "text": "2,395",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ProceedsFromMaturitiesPrepaymentsAndCallsOfAvailableForSaleSecurities",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-368"
+          },
+          "raw_start": 1331934,
+          "raw_end_exclusive": 1332152,
+          "sha256": "f5968b8939026c52e115ed89fbc7200541c4dd6bbaae114ea35e17445d216188"
+        },
+        {
+          "text": "594",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+            "scale": "6",
+            "id": "f-371"
+          },
+          "raw_start": 1334141,
+          "raw_end_exclusive": 1334301,
+          "sha256": "65891660624b572aded29a5ff7aa7485a585672343c1e3a4f3656f9c69565000"
+        },
+        {
+          "text": "8,590",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "sign": "-",
+            "name": "us-gaap:NetCashProvidedByUsedInInvestingActivities",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-374"
+          },
+          "raw_start": 1336216,
+          "raw_end_exclusive": 1336416,
+          "sha256": "951ca6541215fecd088bc0ece8b8d358b39011c104592279f78dd7aecb98b880"
+        },
+        {
+          "text": "6,000",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ProceedsFromIssuanceOfMediumTermNotes",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-377"
+          },
+          "raw_start": 1339346,
+          "raw_end_exclusive": 1339532,
+          "sha256": "c0baf219c9c8b3bca689d4ccee0f40e28917ca5781a16c988153361ffd77be44"
+        },
+        {
+          "text": "12,596",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-380"
+          },
+          "raw_start": 1341787,
+          "raw_end_exclusive": 1341971,
+          "sha256": "0aaee0b8f86c47705bf630e16c34dafcff20e9cdc115a5872e5197a793fe0d00"
+        },
+        {
+          "text": "351",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsRelatedToTaxWithholdingForShareBasedCompensation",
+            "scale": "6",
+            "id": "f-383"
+          },
+          "raw_start": 1343924,
+          "raw_end_exclusive": 1344098,
+          "sha256": "d6c9a03db5cc4c0989f79126d91985c79924e516316dbf7044080107a8165c58"
+        },
+        {
+          "text": "1,039",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:ProceedsFromStockPlans",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-386"
+          },
+          "raw_start": 1346003,
+          "raw_end_exclusive": 1346174,
+          "sha256": "ea3c00f2457e81f68c69938fa670bb6f8355cecb276442a875d94f1227ec89bb"
+        },
+        {
+          "text": "584",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:FinanceLeasePrincipalPayments",
+            "scale": "6",
+            "id": "f-389"
+          },
+          "raw_start": 1348093,
+          "raw_end_exclusive": 1348240,
+          "sha256": "833dc492002aeb42736f04ce60004ab65af92c514e57f0a8a5f94479e1f68675"
+        },
+        {
+          "text": "0",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RepaymentsOfLongTermLinesOfCredit",
+            "scale": "6",
+            "id": "f-392"
+          },
+          "raw_start": 1350071,
+          "raw_end_exclusive": 1350220,
+          "sha256": "83c3b59c6caadff2dc33a09c16285800faccd51f8ec6585c29cdffa56cf6631f"
+        },
+        {
+          "text": "1,587",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:PaymentsOfDividends",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-395"
+          },
+          "raw_start": 1352155,
+          "raw_end_exclusive": 1352323,
+          "sha256": "28d9b2cc0258a23a9783037f4c439f53e757220e11448121302299a95ff91121"
+        },
+        {
+          "text": "8,079",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "sign": "-",
+            "name": "us-gaap:NetCashProvidedByUsedInFinancingActivities",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-398"
+          },
+          "raw_start": 1354225,
+          "raw_end_exclusive": 1354425,
+          "sha256": "ebd25f52ecf415aac1d5ac0f25f038b369b0ab9b6e3b18da93ed7cf88124f4b2"
+        },
+        {
+          "text": "152",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:EffectOfExchangeRateOnCashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents",
+            "scale": "6",
+            "id": "f-401"
+          },
+          "raw_start": 1356549,
+          "raw_end_exclusive": 1356750,
+          "sha256": "31bf27f4f380444df2b46de40940e7b75880a5c5343255605e8a32062c0538be"
+        },
+        {
+          "text": "1,521",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "sign": "-",
+            "name": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-404"
+          },
+          "raw_start": 1358886,
+          "raw_end_exclusive": 1359154,
+          "sha256": "7221dcbef5df2e9caaf55919877add22f36011b8679413d9a5560f98826ed600"
+        }
+      ]
+    },
+    {
+      "id": "CF_FOOTNOTE",
+      "raw_start": 1366340,
+      "raw_end_exclusive": 1366507,
+      "bytes": 167,
+      "sha256": "e71608e6cfce5b9f5b765e491910664ebe8c6b3899f1dc60b1ab371083042732",
+      "visible_text": "Includes amortization of intangible assets acquired through business combinations, depreciation of fixed assets and amortization and impairment of right-of-use assets.",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "PPE_BALANCES",
+      "raw_start": 1728910,
+      "raw_end_exclusive": 1743830,
+      "bytes": 14920,
+      "sha256": "94ba9329c8cbb7d331aebd02e2355e97faf8ab90a4449095e062a03193777cdb",
+      "visible_text": "As of January 31,\n2026\t\t2025\nLand \t$\t357 \t\t\t$\t293\nBuildings and building improvements \t500 \t\t\t492\nComputers, equipment and software\t4,104 \t\t\t4,345\nFurniture and fixtures\t245 \t\t\t232\nLeasehold improvements\t1,617 \t\t\t1,556\nProperty and equipment, gross\t6,823 \t\t\t6,918\nLess accumulated depreciation and amortization\t(3,703)\t\t\t(3,682)\nProperty and equipment, net\t$\t3,120 \t\t\t$\t3,236",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "PPE_ANNUAL_DA",
+      "raw_start": 1743854,
+      "raw_end_exclusive": 1744643,
+      "bytes": 789,
+      "sha256": "bc81e5ac9c5e7a15859678bdda56b34504ad9412ed5d1631ec9bc313588231e7",
+      "visible_text": "Depreciation and amortization of fixed assets totaled $1.2 billion, $1.0 billion and $1.1 billion during fiscal 2026, 2025 and 2024, respectively.",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "1.2",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-8",
+            "name": "us-gaap:DepreciationDepletionAndAmortization",
+            "scale": "9",
+            "id": "f-792"
+          },
+          "raw_start": 1744074,
+          "raw_end_exclusive": 1744228,
+          "sha256": "627eb5af1677cd7659de16bd615e10b675ed12cf257135e771c174bea43d7bb7"
+        }
+      ]
+    },
+    {
+      "id": "LEASE_EXPENSE",
+      "raw_start": 1748384,
+      "raw_end_exclusive": 1764048,
+      "bytes": 15664,
+      "sha256": "7d84b4d00fd1a4e8c89e69e51ddd7ab5dad60021b96874b46832ac4144908d38",
+      "visible_text": "Fiscal Year Ended January 31,\n2026\t\t2025\t\t2024\nOperating lease cost\t\t\t$\t614 \t\t\t$\t684 \t\t\t$\t1,041\nFinance lease cost:\nAmortization of right-of-use assets \t\t\t$\t375 \t\t\t$\t303 \t\t\t$\t264\nInterest on lease liabilities \t\t\t25 \t\t\t28 \t\t\t29\nTotal finance lease cost\t\t\t$\t400 \t\t\t$\t331 \t\t\t$\t293",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "614",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:OperatingLeaseCost",
+            "scale": "6",
+            "id": "f-803"
+          },
+          "raw_start": 1751166,
+          "raw_end_exclusive": 1751302,
+          "sha256": "65414dbaf1f0d5cc0bb899369004ad43bd2102d39281cfb4212bab32a4932342"
+        },
+        {
+          "text": "375",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:FinanceLeaseRightOfUseAssetAmortization",
+            "scale": "6",
+            "id": "f-806"
+          },
+          "raw_start": 1755143,
+          "raw_end_exclusive": 1755300,
+          "sha256": "7441e49b4ac34154a04064a31564a4295fbdaaf532e072b66183d008314a9a66"
+        },
+        {
+          "text": "25",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:FinanceLeaseInterestExpense",
+            "scale": "6",
+            "id": "f-809"
+          },
+          "raw_start": 1757516,
+          "raw_end_exclusive": 1757660,
+          "sha256": "815070ad2796699fc3632909204393ea55f769fe457d4b373f1d3fe8124bf27e"
+        },
+        {
+          "text": "400",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "crm:FinanceLeaseCost",
+            "scale": "6",
+            "id": "f-812"
+          },
+          "raw_start": 1759740,
+          "raw_end_exclusive": 1759870,
+          "sha256": "35ff8b225bb93f42421acf974e07e454471f40d85b1a52b94aeea93ef04dc21a"
+        }
+      ]
+    },
+    {
+      "id": "LEASE_CASH_FLOW",
+      "raw_start": 1764324,
+      "raw_end_exclusive": 1776582,
+      "bytes": 12258,
+      "sha256": "f8a03dcfc0443169d05edc7e2307b5e2f0b81e408697d60836ce1a1422af94a8",
+      "visible_text": "Fiscal Year Ended January 31,\n2026\t\t2025\t\t2024\nCash paid for amounts included in the measurement of lease liabilities:\nOperating cash outflows for operating leases\t\t\t$\t695 \t\t\t$\t628 \t\t\t$\t716\nOperating cash outflows for finance leases \t\t\t25 \t\t\t27\t\t29\nFinancing cash outflows for finance leases\t\t\t367 \t\t\t380\t\t347\nRight-of-use assets obtained in exchange for lease obligations:\nOperating leases\t\t\t255 \t\t\t345\t\t456",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "695",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:OperatingLeasePayments",
+            "scale": "6",
+            "id": "f-815"
+          },
+          "raw_start": 1767859,
+          "raw_end_exclusive": 1767999,
+          "sha256": "d49927fb6970a9477c2bf24f526ca7f34171372364b042a1c37770f5f0e9c3fd"
+        },
+        {
+          "text": "25",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:FinanceLeaseInterestPaymentOnLiability",
+            "scale": "6",
+            "id": "f-818"
+          },
+          "raw_start": 1770820,
+          "raw_end_exclusive": 1770975,
+          "sha256": "6c876ee8cb9d2d3ff46dca1af985d74e5cf266fc78248accf34ab30fa1d85a08"
+        },
+        {
+          "text": "367",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "crm:PrincipalPaymentsFinanceLeasesAndFinanceObligations",
+            "scale": "6",
+            "id": "f-821"
+          },
+          "raw_start": 1772573,
+          "raw_end_exclusive": 1772738,
+          "sha256": "1fd34369a9eb9932af4a1c11d590c3885d142dea06a4ee2b4ab4b857d8c64048"
+        },
+        {
+          "text": "255",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RightOfUseAssetObtainedInExchangeForOperatingLeaseLiability",
+            "scale": "6",
+            "id": "f-824"
+          },
+          "raw_start": 1775022,
+          "raw_end_exclusive": 1775199,
+          "sha256": "fc6dd8e0853f1e9be514e97380ba9c348198d36964dbdc15f1c6198512615074"
+        }
+      ]
+    },
+    {
+      "id": "LEASE_BALANCES",
+      "raw_start": 1777080,
+      "raw_end_exclusive": 1797748,
+      "bytes": 20668,
+      "sha256": "03cfc7bedb3ab72e5800721d39d78e23bcc66e67c55d8d11b59929541425250f",
+      "visible_text": "As of January 31,\n2026\t\t2025\nOperating leases:\nOperating lease right-of-use assets\t$\t2,003 \t\t\t$\t2,157\nOperating lease liabilities, current\t$\t548 \t\t\t$\t579\nNoncurrent operating lease liabilities\t2,189 \t\t\t2,380\nTotal operating lease liabilities\t$\t2,737 \t\t\t$\t2,959\nFinance leases:\nComputers, equipment and software\t$\t1,427 \t\t\t$\t1,520\nAccumulated depreciation\t(813)\t\t\t(708)\nProperty and equipment, net\t$\t614 \t\t\t$\t812\nAccrued expenses and other liabilities \t$\t275 \t\t\t$\t337\nOther noncurrent liabilities \t260 \t\t\t341\nTotal finance lease liabilities\t$\t535 \t\t\t$\t678",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "INTANGIBLE_MOVEMENT",
+      "raw_start": 1898894,
+      "raw_end_exclusive": 1930920,
+      "bytes": 32026,
+      "sha256": "6df1553578e35f31c6566896bdd7346eaff119536b3c98c82b23acc6f1c57fee",
+      "visible_text": "Intangible Assets, Gross\t\tAccumulated Amortization\t\tIntangible Assets, Net\t\tWeighted\nAverage\nRemaining Useful Life (Years)\nJanuary 31, 2025\t\tAdditions and retirements, net\t\tJanuary 31, 2026\t\tJanuary 31, 2025\t\tExpense and retirements, net\t\tJanuary 31, 2026\t\tJanuary 31, 2025\t\tJanuary 31, 2026\t\tJanuary 31, 2026\nAcquired developed technology\t$\t2,958 \t\t\t$\t1,838 \t\t\t$\t4,796 \t\t\t$\t(1,753)\t\t\t$\t(654)\t\t\t$\t(2,407)\t\t\t$\t1,205 \t\t\t$\t2,389 \t\t\t4.4\nCustomer relationships\t6,894 \t\t\t1,765 \t\t\t8,659 \t\t\t(3,820)\t\t\t(820)\t\t\t(4,640)\t\t\t3,074 \t\t\t4,019 \t\t\t6.3\nOther (1)\t331 \t\t\t353 \t\t\t684 \t\t\t(182)\t\t\t(95)\t\t\t(277)\t\t\t149 \t\t\t407 \t\t\t2.1\nTotal\t$\t10,183 \t\t\t$\t3,956 \t\t\t$\t14,139 \t\t\t$\t(5,755)\t\t\t$\t(1,569)\t\t\t$\t(7,324)\t\t\t$\t4,428 \t\t\t$\t6,815 \t\t\t5.4",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "1,838",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-287",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAdditionsAndRetirementsNet",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-975"
+          },
+          "raw_start": 1905866,
+          "raw_end_exclusive": 1906066,
+          "sha256": "c3163fd631ed15669fb6d61be7c7890f394fb6d9d1b2aae5a287531c24ddb8b1"
+        },
+        {
+          "text": "654",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-287",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAmortizationExpenseAndRetirementsNet",
+            "scale": "6",
+            "id": "f-978"
+          },
+          "raw_start": 1908517,
+          "raw_end_exclusive": 1908696,
+          "sha256": "3b3532d18cdb3142bcbecf32e3fcac2d973bb833c15ad68c292437a43989b1db"
+        },
+        {
+          "text": "1,765",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-290",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAdditionsAndRetirementsNet",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-984"
+          },
+          "raw_start": 1913011,
+          "raw_end_exclusive": 1913211,
+          "sha256": "0e5af593bf90b7305f0c1e8dc5493f621c2f4c8225259d6fb7ff1047675c3734"
+        },
+        {
+          "text": "820",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-290",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAmortizationExpenseAndRetirementsNet",
+            "scale": "6",
+            "id": "f-987"
+          },
+          "raw_start": 1914798,
+          "raw_end_exclusive": 1914977,
+          "sha256": "28c564222f3864ef68acebdbccfdf207f0a71739adc3ff60b4ee3e28b72ffc18"
+        },
+        {
+          "text": "353",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-293",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAdditionsAndRetirementsNet",
+            "scale": "6",
+            "id": "f-993"
+          },
+          "raw_start": 1918329,
+          "raw_end_exclusive": 1918498,
+          "sha256": "8c7a6238ab7efd709313b2885979670aa41d5b8dc8e5833b53d5525e6b8bed2f"
+        },
+        {
+          "text": "95",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-293",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAmortizationExpenseAndRetirementsNet",
+            "scale": "6",
+            "id": "f-996"
+          },
+          "raw_start": 1920023,
+          "raw_end_exclusive": 1920201,
+          "sha256": "d9d031873db299616580c5644d7a0787434242da69953cee20dbeac4df5faef2"
+        },
+        {
+          "text": "3,956",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAdditionsAndRetirementsNet",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-1002"
+          },
+          "raw_start": 1924200,
+          "raw_end_exclusive": 1924399,
+          "sha256": "b534fc871f6e35d3fdbd220961cd00573ee247cf0f506c7abe2a202653a0d6e7"
+        },
+        {
+          "text": "1,569",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "crm:FiniteLivedIntangibleAssetsAmortizationExpenseAndRetirementsNet",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-1005"
+          },
+          "raw_start": 1927146,
+          "raw_end_exclusive": 1927355,
+          "sha256": "e3db54910549661d102bd0e03a4a328b2b9a61f73224eae8a3c23a00133cdf9e"
+        }
+      ]
+    },
+    {
+      "id": "INTANGIBLE_ANNUAL_AMORTIZATION",
+      "raw_start": 1931251,
+      "raw_end_exclusive": 1932071,
+      "bytes": 820,
+      "sha256": "1e5dec7fd7e726636413dc383b846286766f6b6336667e2e8abf753cfc42c65d",
+      "visible_text": "Amortization of intangible assets resulting from business combinations for fiscal 2026, 2025 and 2024 was $1.7 billion, $1.6 billion, and $1.9 billion, respectively.",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "1.7",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-8",
+            "name": "us-gaap:AmortizationOfAboveAndBelowMarketLeases",
+            "scale": "9",
+            "id": "f-1010"
+          },
+          "raw_start": 1931518,
+          "raw_end_exclusive": 1931676,
+          "sha256": "1fb1e17561daa8fa174eb79a696357e8ba22be67b5a03e92c2d01333e9d9b065"
+        }
+      ]
+    },
+    {
+      "id": "RESTRUCTURING_ANNUAL",
+      "raw_start": 2007131,
+      "raw_end_exclusive": 2008620,
+      "bytes": 1489,
+      "sha256": "ed955c0fdef13a1f95c5b2e3369a365f805b865891752b0e20943f63015ed0db",
+      "visible_text": "The Company has undertaken various restructuring initiatives to improve operating margins and continue advancing its ongoing commitment to profitable growth, which have included a reduction of the Company’s workforce, select data center exits, and office space reductions within certain markets. The Company continues to evaluate and operationalize future programs to drive further operational efficiencies, optimize its management structure and increase cost optimization efforts to realize long-term sustainable growth. The Company recognized $586 million, $461 million and $988 million in restructuring charges during fiscal 2026, 2025, and 2024 respectively, which were primarily comprised of workforce reductions that include charges for employee transition, severance payments, employee benefits and stock-based compensation, as well as charges for data center exits and office space reductions.",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "586",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RestructuringCharges",
+            "scale": "6",
+            "id": "f-1098"
+          },
+          "raw_start": 2007842,
+          "raw_end_exclusive": 2007981,
+          "sha256": "5e29ba9d7cbe11feca9332a023fe226f5126ec9f436114337b46c8b3dc829c5a"
+        }
+      ]
+    },
+    {
+      "id": "MDA_RESTRUCTURING_DEFINITION",
+      "raw_start": 646491,
+      "raw_end_exclusive": 646952,
+      "bytes": 461,
+      "sha256": "10e0604dc5aaa5240c7ef20ce7aa8b6fc120bacc6afa6e2ba9f896a5d2191791",
+      "visible_text": "Restructuring consists of charges related to employee transition, severance payments, employee benefits and stock-based compensation, as well as data center exits, office space reductions and impairment charges associated with long-lived assets. Restructuring excludes allocated overhead.",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "PPE_POLICY",
+      "raw_start": 1428384,
+      "raw_end_exclusive": 1432112,
+      "bytes": 3728,
+      "sha256": "b00ec65adf923377cb5c6ac836e70d2ccb8aad20dd17dba18a08d29552130219",
+      "visible_text": "Property and equipment are stated at cost less accumulated depreciation. Depreciation is calculated on a straight-line basis over the estimated useful lives of those assets as follows:\nBuildings and building improvements\n10 to 40 years\nComputers, equipment and software\n3 to 5 years\nFurniture and fixtures\t5 years\nLeasehold improvements\nShorter of the estimated lease term or 10 years",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "LEASE_ASSET_CLASSIFICATION",
+      "raw_start": 1433245,
+      "raw_end_exclusive": 1434423,
+      "bytes": 1178,
+      "sha256": "863b19ab3d68a299b40782328ac952b7fcf67eaa564f153eec124c274b470d3f",
+      "visible_text": "The Company has entered into operating and finance leases for corporate offices, data centers, and equipment. The Company determines if an arrangement is a lease at inception and classifies its leases at commencement. Operating leases are included in operating lease right-of-use (“ROU”) assets and current and noncurrent operating lease liabilities on the Company’s consolidated balance sheets. Assets (also referred to as ROU assets) and liabilities recognized from finance leases are included in property and equipment, accrued expenses and other liabilities and other noncurrent liabilities, respectively, on the Company’s consolidated balance sheets. ROU assets represent the Company's right to use an underlying asset for the lease term. The corresponding lease liabilities represent its obligation to make lease payments arising from the lease. The Company does not recognize ROU assets or lease liabilities for leases with a term of 12 months or less for any asset classes.",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "LEASE_EXPENSE_POLICY",
+      "raw_start": 1436465,
+      "raw_end_exclusive": 1436888,
+      "bytes": 423,
+      "sha256": "0cc6cc0b2d470bdbc3d97630b8fbd0b2c2fa900c414a65ed404da4e4a355e9d2",
+      "visible_text": "Lease expense for operating leases, which includes amortization expense of ROU assets, is recognized on a straight-line basis over the lease term. Amortization expense of finance lease ROU assets is recognized on a straight-line basis over the lease",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "LEASE_RETIREMENT_ASSETS",
+      "raw_start": 1438073,
+      "raw_end_exclusive": 1438545,
+      "bytes": 472,
+      "sha256": "943da8363516b40a90f28d7e11bca230887edce9433bed7a102c151ae9d18738",
+      "visible_text": "On the lease commencement date, the Company also establishes assets and liabilities for the present value of estimated future costs to retire long-lived assets at the termination or expiration of a lease. Such assets are included in property and equipment, net and are amortized over the lease term.",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "LEASE_IMPAIRMENT_POLICY",
+      "raw_start": 1438545,
+      "raw_end_exclusive": 1439320,
+      "bytes": 775,
+      "sha256": "7f29aef47bb5b9f5b9e1ed90e52754beb5ddcc080af525e6eda798aa4b93e9eb",
+      "visible_text": "The Company has entered into subleases or has made decisions and taken actions to sublease or discontinue use of certain leased assets. Similar to other long-lived assets discussed below, management tests ROU assets for impairment whenever events or changes in circumstances indicate that the carrying amount of such assets may not be recoverable. For leased assets, such circumstances would include the decision to discontinue use prior to the end of the minimum lease term or subleases, in the case of office space, for which estimated cash flows do not fully cover the costs of the associated lease.",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "LONG_LIVED_IMPAIRMENT_POLICY",
+      "raw_start": 1440524,
+      "raw_end_exclusive": 1441433,
+      "bytes": 909,
+      "sha256": "d53bb6178ee250e3c04cd1d56d84399fb3cfeb2ffa627ba1d201173321cc8faa",
+      "visible_text": "The Company evaluates intangible assets and other long-lived assets for possible impairment whenever events or changes in circumstances indicate that the carrying amount of such assets may not be recoverable, including, but not limited to, significant adverse changes in business climate, market conditions or other events that indicate an asset's carrying amount may not be recoverable. Recoverability of these assets is measured by comparing the carrying amount of each asset group to the future undiscounted cash flows the asset is expected to generate. If the undiscounted cash flows used in the test for recoverability are less than the carrying amount of these assets, the carrying amount of such assets is reduced to fair value.",
+      "fy2026_tagged_numbers": []
+    },
+    {
+      "id": "CONTRACT_COST_IMPAIRMENT",
+      "raw_start": 1416190,
+      "raw_end_exclusive": 1417019,
+      "bytes": 829,
+      "sha256": "14473157d59033a4716ef7e49be69f1a898e61e0fcaf26c5573875e8b2a4502e",
+      "visible_text": "Amortization of capitalized costs to obtain revenue contracts is included in sales and marketing expense in the accompanying consolidated statements of operations. There were no impairments of costs to obtain revenue contracts for fiscal 2026 and 2025.",
+      "fy2026_tagged_numbers": [
+        {
+          "text": "no",
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "INF",
+            "name": "us-gaap:CapitalizedContractCostImpairmentLoss",
+            "format": "ixt:fixed-zero",
+            "scale": "0",
+            "id": "f-437"
+          },
+          "raw_start": 1416734,
+          "raw_end_exclusive": 1416913,
+          "sha256": "b10e3a03db9255ca8539344ee24ad9b8d72db37910eb2536adde4a8e83ed6150"
+        }
+      ]
+    }
+  ],
+  "contexts": {
+    "c-6": {
+      "raw_start": 6825,
+      "raw_end_exclusive": 7235,
+      "sha256": "9af73e8831a0a87c80d8a7d04158af7285befacd40b4eb73fae3e52e0c60c97c",
+      "raw_context": "<xbrli:context id=\"c-6\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">crm:SubscriptionandSupportMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-7": {
+      "raw_start": 7235,
+      "raw_end_exclusive": 7645,
+      "sha256": "f071d250c283d9de885c169fb4623c18c4122628d760f3faceda833ec3b19140",
+      "raw_context": "<xbrli:context id=\"c-7\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">crm:SubscriptionandSupportMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-02-01</xbrli:startDate><xbrli:endDate>2025-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-8": {
+      "raw_start": 7645,
+      "raw_end_exclusive": 8055,
+      "sha256": "408ecd15fef81f03c31998c98f42110be2051c3b0895e017ff7a7ad6b5a24232",
+      "raw_context": "<xbrli:context id=\"c-8\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">crm:SubscriptionandSupportMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-02-01</xbrli:startDate><xbrli:endDate>2024-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-9": {
+      "raw_start": 8055,
+      "raw_end_exclusive": 8471,
+      "sha256": "571c038933b48222de96c03c4ddbe03513fc466b4740c95b06a5fb27830c485d",
+      "raw_context": "<xbrli:context id=\"c-9\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">crm:ProfessionalServicesandOtherMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-10": {
+      "raw_start": 8471,
+      "raw_end_exclusive": 8888,
+      "sha256": "7d686fd2e82de4ef296a3823a213e3225225769dc8a24006eb74e6efbc24641a",
+      "raw_context": "<xbrli:context id=\"c-10\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">crm:ProfessionalServicesandOtherMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-02-01</xbrli:startDate><xbrli:endDate>2025-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-11": {
+      "raw_start": 8888,
+      "raw_end_exclusive": 9305,
+      "sha256": "833f37aad9e774fe568796d609d5afa4e8c0a719f6012bc8d42365dedbad3847",
+      "raw_context": "<xbrli:context id=\"c-11\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">crm:ProfessionalServicesandOtherMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-02-01</xbrli:startDate><xbrli:endDate>2024-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-1": {
+      "raw_start": 5690,
+      "raw_end_exclusive": 5953,
+      "sha256": "dfecc499c5c7dc668efa0f138a70ff981c23d01157f51dc1f4b5800e98118074",
+      "raw_context": "<xbrli:context id=\"c-1\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-12": {
+      "raw_start": 9305,
+      "raw_end_exclusive": 9569,
+      "sha256": "4edbea6fb2a7eb306033120b06bc72807e2bbd4f959057739c96b0ef8fd9e4c3",
+      "raw_context": "<xbrli:context id=\"c-12\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2024-02-01</xbrli:startDate><xbrli:endDate>2025-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-13": {
+      "raw_start": 9569,
+      "raw_end_exclusive": 9833,
+      "sha256": "6c31b19c6cd10b9ad10ae53408c74e9a98e6b7c63e5b15469e5a0c25d211b320",
+      "raw_context": "<xbrli:context id=\"c-13\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2023-02-01</xbrli:startDate><xbrli:endDate>2024-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-14": {
+      "raw_start": 9833,
+      "raw_end_exclusive": 10248,
+      "sha256": "67b57e44f7d5abc8795e139f9b7add04daf4d33f3f2f70332ee96c70730e28c6",
+      "raw_context": "<xbrli:context id=\"c-14\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeStatementLocationAxis\">us-gaap:CostOfSalesMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-15": {
+      "raw_start": 10248,
+      "raw_end_exclusive": 10663,
+      "sha256": "65222d1ec11cfaac25ace685bf81b6c73542500e67e4095090f79f49b61c7c71",
+      "raw_context": "<xbrli:context id=\"c-15\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeStatementLocationAxis\">us-gaap:CostOfSalesMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-02-01</xbrli:startDate><xbrli:endDate>2025-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-16": {
+      "raw_start": 10663,
+      "raw_end_exclusive": 11078,
+      "sha256": "3fbf4dfe8f120f5057c214a7c0d957985fcce83f51e1736c21db6dbe77a4569a",
+      "raw_context": "<xbrli:context id=\"c-16\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeStatementLocationAxis\">us-gaap:CostOfSalesMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-02-01</xbrli:startDate><xbrli:endDate>2024-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-17": {
+      "raw_start": 11078,
+      "raw_end_exclusive": 11508,
+      "sha256": "df620777a6685d1946231353ee803e41f87c9a8e64f65396a97d33d313973510",
+      "raw_context": "<xbrli:context id=\"c-17\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeStatementLocationAxis\">us-gaap:SellingAndMarketingExpenseMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-18": {
+      "raw_start": 11508,
+      "raw_end_exclusive": 11938,
+      "sha256": "e0a60a2ce2434d2c864b284e26925527680d4d2ab1dc6ce2a40dcd2d81409a30",
+      "raw_context": "<xbrli:context id=\"c-18\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeStatementLocationAxis\">us-gaap:SellingAndMarketingExpenseMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-02-01</xbrli:startDate><xbrli:endDate>2025-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-19": {
+      "raw_start": 11938,
+      "raw_end_exclusive": 12368,
+      "sha256": "73af46c44343db9fbfb83e1f21a51c9de2149a1eb35d83f0ef94240b104d74ef",
+      "raw_context": "<xbrli:context id=\"c-19\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeStatementLocationAxis\">us-gaap:SellingAndMarketingExpenseMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-02-01</xbrli:startDate><xbrli:endDate>2024-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-5": {
+      "raw_start": 6607,
+      "raw_end_exclusive": 6825,
+      "sha256": "d17fa5f8d7b2d7ee808d214e4bb3ab6fe265903a9f3c9eaeeb3bc92fd1bbb7b8",
+      "raw_context": "<xbrli:context id=\"c-5\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-45": {
+      "raw_start": 22415,
+      "raw_end_exclusive": 22634,
+      "sha256": "d3c090a8e01fe462155d5203e3d67ea0357d378db6db810408fd5319182e5c26",
+      "raw_context": "<xbrli:context id=\"c-45\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2024-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-34": {
+      "raw_start": 18153,
+      "raw_end_exclusive": 18372,
+      "sha256": "b40690ecdfafcb405ecccc8e194bf8ccef51813c4b46499759bace63fe60b4d2",
+      "raw_context": "<xbrli:context id=\"c-34\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2023-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-4": {
+      "raw_start": 6389,
+      "raw_end_exclusive": 6607,
+      "sha256": "56cea1eda90e0dc5365bcda547061b7d974396fb9c54803e960c4b9b13097743",
+      "raw_context": "<xbrli:context id=\"c-4\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-249": {
+      "raw_start": 120308,
+      "raw_end_exclusive": 120680,
+      "sha256": "e4799271cfd0fd3f4d5c13774bf0c94cbfe1d88ffd2141d3695c5a1d7b7b5eda",
+      "raw_context": "<xbrli:context id=\"c-249\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:LandMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-250": {
+      "raw_start": 120680,
+      "raw_end_exclusive": 121052,
+      "sha256": "7c34d08c6b9b971c85bd0691b529fa1aaa08e987281c49664cbddfe7a02d4b61",
+      "raw_context": "<xbrli:context id=\"c-250\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:LandMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-251": {
+      "raw_start": 121052,
+      "raw_end_exclusive": 121451,
+      "sha256": "8e96dbbc53bb940b2513bfc6534f85d8778825f64a2d8ab969abf0a9c77c1c65",
+      "raw_context": "<xbrli:context id=\"c-251\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:BuildingAndBuildingImprovementsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-252": {
+      "raw_start": 121451,
+      "raw_end_exclusive": 121850,
+      "sha256": "9baf1aa6adc5b3638adadf33d348107194993faed56176ecf528f3f5d06533c9",
+      "raw_context": "<xbrli:context id=\"c-252\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:BuildingAndBuildingImprovementsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-253": {
+      "raw_start": 121850,
+      "raw_end_exclusive": 122242,
+      "sha256": "9b7e0e27f5189194fc5db3b5e75ed6489f2077523cc935c06d39922afb70f16c",
+      "raw_context": "<xbrli:context id=\"c-253\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">crm:ComputerEquipmentAndSoftwareMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-254": {
+      "raw_start": 122242,
+      "raw_end_exclusive": 122634,
+      "sha256": "b84c4c19265628f8273b70654d9995d1d4ce5a8fa8cbbabab1e415737fd9a228",
+      "raw_context": "<xbrli:context id=\"c-254\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">crm:ComputerEquipmentAndSoftwareMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-78": {
+      "raw_start": 37733,
+      "raw_end_exclusive": 38120,
+      "sha256": "e105277b014c7e161262d3e01440b546acbed2f1c3939b69c750006f5eefaabd",
+      "raw_context": "<xbrli:context id=\"c-78\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:FurnitureAndFixturesMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-255": {
+      "raw_start": 122634,
+      "raw_end_exclusive": 123022,
+      "sha256": "f71a3bc7059ef03733338f68bfa2bb03a37220e8a70ddf4bc376ce80990e61d0",
+      "raw_context": "<xbrli:context id=\"c-255\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:FurnitureAndFixturesMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-256": {
+      "raw_start": 123022,
+      "raw_end_exclusive": 123411,
+      "sha256": "87aaf1cb338ca518c631c919dbcfbb17b5c9322e25a94af952b7aa1e21e622ab",
+      "raw_context": "<xbrli:context id=\"c-256\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:LeaseholdImprovementsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-257": {
+      "raw_start": 123411,
+      "raw_end_exclusive": 123800,
+      "sha256": "8419ee3efc8fc0a31cdfd29e4f31fdc29d561d2d27aa0db24c06bed32ae679a4",
+      "raw_context": "<xbrli:context id=\"c-257\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:PropertyPlantAndEquipmentByTypeAxis\">us-gaap:LeaseholdImprovementsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-286": {
+      "raw_start": 136654,
+      "raw_end_exclusive": 137055,
+      "sha256": "94ccc4529c34c6f57a31e8ba2ca73f1ec10cfd094eba81f1ff5c181bf44e16e7",
+      "raw_context": "<xbrli:context id=\"c-286\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:DevelopedTechnologyRightsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-287": {
+      "raw_start": 137055,
+      "raw_end_exclusive": 137501,
+      "sha256": "f6a6a83d3e9474ca87ac0fecfd200e696e3365a082860b4f36b41e21c5ecfb37",
+      "raw_context": "<xbrli:context id=\"c-287\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:DevelopedTechnologyRightsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-288": {
+      "raw_start": 137501,
+      "raw_end_exclusive": 137902,
+      "sha256": "0815f3b92d8e6f689384b83d966e267b8dae83dc3d67de1b5c901ba172934ff7",
+      "raw_context": "<xbrli:context id=\"c-288\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:DevelopedTechnologyRightsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-289": {
+      "raw_start": 137902,
+      "raw_end_exclusive": 138299,
+      "sha256": "d1ec0be63c4058f39483c6d8403dc7e5e70c81525068a4d5dcc79076751e7319",
+      "raw_context": "<xbrli:context id=\"c-289\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:CustomerRelationshipsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-290": {
+      "raw_start": 138299,
+      "raw_end_exclusive": 138741,
+      "sha256": "d287bf80af79e14531540c6c308a4bf648b8792c8b0b791269fc6f7e8ac901ab",
+      "raw_context": "<xbrli:context id=\"c-290\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:CustomerRelationshipsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-291": {
+      "raw_start": 138741,
+      "raw_end_exclusive": 139138,
+      "sha256": "636cd80fc564d0f60c7178bde782bb37b7f12ee744ba767662e9fa66e83db212",
+      "raw_context": "<xbrli:context id=\"c-291\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:CustomerRelationshipsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-292": {
+      "raw_start": 139138,
+      "raw_end_exclusive": 139535,
+      "sha256": "f04f0b53384fa45c64bda31ac534894fc51d2a18681caa678cabbd466299a2e6",
+      "raw_context": "<xbrli:context id=\"c-292\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:OtherIntangibleAssetsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-293": {
+      "raw_start": 139535,
+      "raw_end_exclusive": 139977,
+      "sha256": "54d22fb7c443c5c600afb1063af90c094694fdf6dd4348a27b6fa8c5658f1701",
+      "raw_context": "<xbrli:context id=\"c-293\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:OtherIntangibleAssetsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-02-01</xbrli:startDate><xbrli:endDate>2026-01-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-294": {
+      "raw_start": 139977,
+      "raw_end_exclusive": 140374,
+      "sha256": "7415c2d057b2bca7306d363b93b45ee3ccca2ffb4ffaa9fd47713097bc5d442e",
+      "raw_context": "<xbrli:context id=\"c-294\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis\">us-gaap:OtherIntangibleAssetsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>"
+    }
+  }
+}
