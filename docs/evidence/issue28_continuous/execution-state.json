@@ -3823,6 +3823,23 @@
       "dedup_note": "No live agent; original-read audit is DONE and a distinct purpose. Old94955ac reader proof binding and31beeab source fix reused. New optional third-result receiver is genuinely uncovered; no same SHA/scope review evidence.",
       "ordinary_messages": 3,
       "elapsed_minutes": 7.554
+    },
+    {
+      "task_name": "diagnose_b13input_79b43ba",
+      "purpose": "SPECIFIED_FAILED_INPUT_MODEL_DIAGNOSIS",
+      "scope_paths": [
+        "/private/tmp/issue28-b13-source-only-input-20261003/"
+      ],
+      "patch_sha": "79b43ba5dd99104a73fde05e9a379aadf2c59ccc",
+      "spawned_at": "2026-10-03T10:02:46.189222+00:00",
+      "ended_at": "2026-10-03T10:47:35.955237+00:00",
+      "tool_calls": 72,
+      "result_path": "docs/evidence/issue28_continuous/b13-model-output-pilot-20261003/independent-input/conclusion.md",
+      "verdict": "DEVELOPMENT_METHOD_NOT_READY_REVISED_OUTPUT4900_EXCEEDS4096",
+      "dedup_note": "No live agent or sameSHA/input-method diagnosis; prior419ddb1 once-only four-unit original check is reused. This tests the new source-only task on failure192 inputs plus complete visible context, not another original byte audit or development split. Input includes no prior answer or parent reference. Underscore naming required by tool schema.",
+      "ordinary_messages": 3,
+      "elapsed_minutes": 31.67,
+      "increment_patch_sha": "706ca43cc5ad0b9af7e449fbbd892c6008c37369"
     }
   ],
   "ci_capacity_20260922": {
@@ -12074,11 +12091,11 @@
     "technical_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5967591464"
   },
   "last_confirmed_main_ci": {
-    "head_sha": "6219efe68b10fe50e4829d19b89f9a787019b57f",
-    "run_id": 37107361465,
+    "head_sha": "06d109f626f1388eeda5b0fc8bf7ad24c20ac072",
+    "run_id": 37112012826,
     "status": "completed",
     "conclusion": "success",
-    "updated_at": "2026-10-03T08:26:10Z"
+    "updated_at": "2026-10-03T09:49:17Z"
   },
   "current_head_ci_observation": {
     "sha": "06d109f626f1388eeda5b0fc8bf7ad24c20ac072",
@@ -12114,7 +12131,7 @@
     "first_diff_failure": "Unquoted absent known_result* glob in zsh; subsequent literal-path diff succeeds. Fetch itself succeeded."
   },
   "b13_model_output_pilot_20261003": {
-    "state": "SOURCE_REFERENCE_AND_MEASURED_DEVELOPMENT_INPUT_READY_FOR_BLIND_DIAGNOSIS",
+    "state": "INITIAL_INCOMPLETE_AND_ONLY_REVISION_EXCEEDS_OUTPUT_LIMIT_BATCH_ENDED",
     "evidence": "docs/evidence/issue28_continuous/b13-model-output-pilot-20261003/",
     "failure_source": "calls/0192",
     "source_subset_units": 9,
@@ -12131,10 +12148,20 @@
       0
     ],
     "real_authorized": false,
-    "developer_model_executed": false,
-    "task_revisions_used": 0,
-    "task_revisions_remaining": 1,
+    "developer_model_executed": true,
+    "task_revisions_used": 1,
+    "task_revisions_remaining": 0,
     "old_group1_original_check_reused": "docs/evidence/issue28_continuous/b13-enphase-group1-source-check-20260930/conclusion.md",
-    "input_scope_note": "All oldfailure192 units plus complete visible context from same annual source; not all29unit or company acceptance. Parent reference excluded from model input."
+    "input_scope_note": "All oldfailure192 units plus complete visible context from same annual source; not all29unit or company acceptance. Parent reference excluded from model input.",
+    "initial_proposals": 14,
+    "initial_output_reference_tokens": 3002,
+    "revised_proposals": 39,
+    "revised_output_reference_tokens": 4900,
+    "extra_output_tokens": 804,
+    "revised_request_sha256": "f4cd9e262737fa74e502cd38313014addff1492903f331f8ff98795fcc30e845",
+    "revised_context_tokens": 199609,
+    "mechanical_checks": 8,
+    "semantic_or_native_credit": false,
+    "next_method_decision": "Current all-proposal single-response task stopped. A responsibility split with shared full context would require measured exact coverage/mapping and a new bounded decision; no third compression or paid third group1 attempt."
   }
 }
