@@ -1,0 +1,81 @@
+{
+ "record_type": "ISSUE_47_NORMAL_DELIVERY_READ",
+ "reader": "vnext.historical_coverage normal receipt/row/acceptance/defect readers",
+ "positions": [
+  {
+   "company_id": "macys",
+   "metric_id": "C02",
+   "report_end": "2022-01-29",
+   "layers": {
+    "native_run": {
+     "proven": true,
+     "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+     "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1",
+     "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6"
+    },
+    "public_row": {
+     "proven": true,
+     "row_hash": "sha256:4272db943ebdf08264501d017d206447d8299f9ae2bf11948177a13ccd8f8d46",
+     "evidence_count": 89,
+     "receipt_id": "sha256:ff1f43d9553c3ef04a45e97dfa808b697822d4d25dc05455f959f61e31f164c9",
+     "period_selection_id": "sha256:8d7f4145f157c5d6f40de061b2a9dd60f5cea507f9a2e980b1a362a9fabf4107",
+     "rendered_by": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+     "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+     "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+     "also_rendered_by": 0
+    },
+    "content_acceptance": {
+     "proven": true,
+     "reason": null,
+     "acceptances_not_applied": [],
+     "accepted_by": "CONTENT_C02_MACYS_2022",
+     "accepted_value": "sha256:396dd609ab9f700ad734453c04d64a195acc4778a665719cb28bf0700a3d40e3",
+     "what_the_acceptance_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. It is not a held-out test: repairs 7 to 45 of the selector and the unified adjudication were written against these same older-year readings, so this is agreement with a reading of the material the rules were fitted on. The pool is a rule too - a fact stated only in a long block that uses none of the pool's words and lies more than sixteen blocks from one is not read - and the readers are agents of one model family whose judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result.",
+     "withdrawn_by": null,
+     "released_defect_ids": [
+      "C02_MACYS_2022_OLDER_YEAR_READING_DISAGREES"
+     ]
+    }
+   }
+  },
+  {
+   "company_id": "enphase_energy",
+   "metric_id": "B06",
+   "report_end": "2024-12-31",
+   "layers": {
+    "native_run": {
+     "proven": true,
+     "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+     "requirement_closure_hash": "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac",
+     "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a"
+    },
+    "public_row": {
+     "proven": true,
+     "row_hash": "sha256:a76b1332ad5ee0e290b8d97d2cad52b9484ae76fc040442200f94f2a47e93c3e",
+     "evidence_count": 3,
+     "receipt_id": "sha256:0c91627c4f090204e641345118d3af68d02c003126c277cc6a86da385fe91813",
+     "period_selection_id": "sha256:4082a8b473a307a84515550ead8bf783d09da20d18dc2cb380fbdbfe5527aebc",
+     "rendered_by": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+     "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+     "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+     "also_rendered_by": 0
+    },
+    "content_acceptance": {
+     "proven": true,
+     "reason": null,
+     "acceptances_not_applied": [],
+     "accepted_by": "CONTENT_B06_ENPHASE_2024",
+     "accepted_value": "1.563451362278755750189672227",
+     "what_the_acceptance_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result.",
+     "withdrawn_by": null,
+     "released_defect_ids": []
+    }
+   }
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
