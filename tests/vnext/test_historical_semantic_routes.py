@@ -309,9 +309,11 @@ class ARegisteredAssessmentTravelsToATextResultTest(unittest.TestCase):
 class TheLiveSessionRefusesByNameTest(unittest.TestCase):
 
     def test_without_an_allowance(self):
-        self.assertFalse((ROOT / session_module.ALLOWANCE_PATH).exists())
-        with self.assertRaisesRegex(ValueError, "ISSUE_47_MODEL_ALLOWANCE_NOT_GRANTED"):
-            session_module.live_historical_model_session()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.assertFalse((root / session_module.ALLOWANCE_PATH).exists())
+            with self.assertRaisesRegex(ValueError, "ISSUE_47_MODEL_ALLOWANCE_NOT_GRANTED"):
+                session_module.live_historical_model_session(repo_root=root)
 
     def test_an_allowance_alone_does_not_open_a_provider_path(self):
         with tempfile.TemporaryDirectory() as directory:

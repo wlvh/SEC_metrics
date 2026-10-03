@@ -1,0 +1,25 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "marker_comment_body": "Issue #47 model ledger start marker, posted by the executor. The live path reads this issue's comments and refuses unless the earliest marker for this approval is unedited, was posted on this issue by the repository owner's account and matches the local start record beside the ledger, whose random number is not published here.\n\n```json\n{\n \"budget_root\": \"/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1\",\n \"created_at\": \"2026-10-03T18:22:19Z\",\n \"delegation_body_sha256\": \"9a368413797ddef13ecaf98dfa9f4f3b55a6a8db6f035605f761828e38883e6c\",\n \"delegation_url\": \"https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5970103848\",\n \"host\": {\n  \"ca_bundle_sha256\": \"43e169bf3454bc74c12d3df8c1403f0b4e7da135bf5959f8ab31eb634896bf73\",\n  \"github_reader\": \"github_rest_reader\",\n  \"https_proxy\": \"http://172.31.7.237:8080\"\n },\n \"record_type\": \"ISSUE_47_MODEL_LEDGER_START\",\n \"requirement_id\": \"issue_47_v1\",\n \"schema_version\": 1,\n \"start_record_sha256\": \"ea3224696762f1d2237164448589652262258b6f193efbcca29d3c54cc280630\"\n}\n```\n",
+ "record": {
+  "budget_root": "/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1",
+  "created_at": "2026-10-03T18:22:19Z",
+  "delegation_body_sha256": "9a368413797ddef13ecaf98dfa9f4f3b55a6a8db6f035605f761828e38883e6c",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5970103848",
+  "host": {
+   "ca_bundle_sha256": "43e169bf3454bc74c12d3df8c1403f0b4e7da135bf5959f8ab31eb634896bf73",
+   "github_reader": "github_rest_reader",
+   "https_proxy": "http://172.31.7.237:8080"
+  },
+  "record_type": "ISSUE_47_MODEL_LEDGER_START",
+  "requirement_id": "issue_47_v1",
+  "schema_version": 1,
+  "start_record_sha256": "ea3224696762f1d2237164448589652262258b6f193efbcca29d3c54cc280630"
+ },
+ "start_record": "/root/.local/state/sec_metrics/.issue47-historical-model-cloud-v1.start.json",
+ "status": "LEDGER_START_WRITTEN"
+}

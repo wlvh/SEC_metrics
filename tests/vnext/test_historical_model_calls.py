@@ -101,10 +101,14 @@ class TheAllowanceIsVerifiedNotMerelyPresent(unittest.TestCase):
                 calls.model_allowance(repo_root=Path(directory))
 
     def test_there_is_none_today(self):
-        self.assertFalse((ROOT / calls.ALLOWANCE_PATH).exists())
-        with self.assertRaisesRegex(calls.HistoricalModelCallError,
-                                    "ISSUE_47_MODEL_ALLOWANCE_NOT_GRANTED:" + calls.ALLOWANCE_PATH):
-            calls.model_allowance()
+        # The owner-approved allowance is now recorded in the checkout.
+        # An absent allowance must still fail before any ledger or socket.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.assertFalse((root / calls.ALLOWANCE_PATH).exists())
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_ALLOWANCE_NOT_GRANTED:" + calls.ALLOWANCE_PATH):
+                calls.model_allowance(repo_root=root)
 
     def test_a_well_formed_one_is_read_and_github_is_what_proves_it(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,0 +1,76 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "definition": "period-end carrying debt, finance leases included, over the parent's stockholders' equity (02_指标定义 B06; catalog/r5/B06_*_v4..v6 keep it)",
+ "per_position": {
+  "enphase-2024": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:LongTermDebtCurrent",
+      "value": "101291000"
+     },
+     {
+      "caption": "Debt, non-current",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "1201089000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "833016000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac",
+     "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+     "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-25-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:c094c3cfbb647d922ab7b2d64d3a5b548a56f12de5a92117ee5d4777f8f3e957",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "document": "evidence/request_attempts/27/275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe/enph-20241231.htm",
+   "document_sha256": "275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe",
+   "equity": "833016000",
+   "finance_leases": {
+    "add": "0",
+    "evidence": "does not have any finance leases",
+    "treatment": "NONE"
+   },
+   "period_end": "2024-12-31",
+   "published": "1.563451362278755750189672227",
+   "read": "1.563451362278755750189672227",
+   "total_debt": "1302380000",
+   "verdict": "MATCH",
+   "why": null
+  }
+ },
+ "reader": "tools/read_debt_to_equity.py",
+ "record_type": "ISSUE_47_B06_BALANCE_SHEET_READING",
+ "requirement_closure_hash": "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac"
+}

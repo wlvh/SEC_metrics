@@ -11,3 +11,5 @@
 `approval-comment-body.proposed.json` 仅把 `budget_root` 从 `/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1` 改为 `/workspace/work/issue47-historical-model-cloud-v1`。其余字节不变；8,898 字节，SHA-256 `63fe811cd5a0de2c7b1bf993ecf04d3172ddbbd672e0cb1b4346fae30854e7e1`。它不是许可，也未安装或执行。
 
 所有者可选：换到可访问原账本路径的环境，沿用原评论；或本人在 Issue #47 发布这份完整修订正文，执行者再按当前机制记录新正文身份、重建固定代码包并登记。执行者不能代发批准、改写原评论或仅凭自己换路径继续。代码、补丁、收据、请求、额度、顺序和停止条件均不因此改变。
+
+后续同日已在标准Docker容器里访问同一宿主机的原路径，原许可未改，首次E01成功并导出，见 `../runtime-original-path-docker/`。上文是当时的拒绝与提案；路径提案未采用，不需要所有者再发布它。

@@ -15660,6 +15660,68 @@
    "what_this_does_not_establish": "what is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_B06_ENPHASE_2024",
+   "accepted_value": "1.563451362278755750189672227",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac",
+     "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+     "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-25-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:c094c3cfbb647d922ab7b2d64d3a5b548a56f12de5a92117ee5d4777f8f3e957",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-round-421eb921.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:LongTermDebtCurrent",
+      "value": "101291000"
+     },
+     {
+      "caption": "Debt, non-current",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "1201089000"
+     }
+    ],
+    "document": "evidence/request_attempts/27/275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe/enph-20241231.htm",
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "833016000"
+    },
+    "finance_leases": {
+     "add": "0",
+     "evidence": "does not have any finance leases",
+     "treatment": "NONE"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_B06_ENPHASE_2025",
    "accepted_value": "1.107959077222837051285943352",
    "checked_identity": {
@@ -68684,6 +68746,7 @@
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-round-3fba0e84.json",
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-round-421eb921.json",
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read-round-cf166529.json",
   "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-cf166529.json",
@@ -68928,6 +68991,12 @@
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-round-3fba0e84.json": {
    "acceptances_contributed": 1,
    "content_sha256": "sha256:5e5bfae789066ff9797afbcc4da975acb21790a1653282eae65cac970f77e8d1",
+   "positions_examined": 1,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read-round-421eb921.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:9697518665290a7bbc5e8df146029f2ed4c5c8434fd745abd93cb895ae126cd7",
    "positions_examined": 1,
    "positions_examined_is_null_because": null
   },

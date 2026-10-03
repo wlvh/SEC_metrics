@@ -197,7 +197,8 @@ DEBT_TO_EQUITY_FULL_FRAME = EVIDENCE + "debt-to-equity-read-full-frame.json"
 # (targeted-round-3fba0e84).
 DEBT_TO_EQUITY_ROUND = EVIDENCE + "debt-to-equity-read-round-3fba0e84.json"
 DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH, DEBT_TO_EQUITY_FULL_FRAME,
-                           DEBT_TO_EQUITY_ROUND)
+                           DEBT_TO_EQUITY_ROUND,
+                           EVIDENCE + "debt-to-equity-read-round-421eb921.json")
 # The bank's A03, A04, A09, A11, A12 and A13 read off its annual report's own
 # tables by tools/read_bank_measures.py, which imports none of the financial
 # inspectors: one file per closure its positions compare - the 50-period batch,
