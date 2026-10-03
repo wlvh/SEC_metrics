@@ -93,29 +93,40 @@
 4. ~~出口补丁在哪里应用~~：已由 2026-09-29 的决定回答——只在执行者虚拟机里的 #47 运行树应用（应用在同一检出会让 13 个 #28 世代的执行授权失效）。
 5. ~~E01 读附件~~（已答：只按条目自身文字）：只按条目自身文字确认（推荐先这样跑，已知至少一个窗口会按名扣留），还是另行申请取回相关 8-K 的 EX-99 附件。
 
-## 批准前后的步骤（2026-09-29 起在执行者虚拟机里；所有者只发评论、给密钥）
+## 批准前后的步骤（2026-10-03 起按固定运行包执行；所有者只发评论、给密钥）
 
-以下由执行者在虚拟机里做，除非写明“所有者”。运行树是带注册补丁与出口补丁的 #47 运行树，与检出分开。
+以下由执行者在虚拟机里做，除非写明“所有者”。**调用只在固定运行包里发出**：封存提交加注册补丁与出口补丁、在其上重铸的快照（`run-package.json` 记下封存提交、两份补丁、收据与批准正文的摘要）。开发分支之后的提交不进入运行包的代码；新会话从分支检出里用 `build_run_package.py build` 重建运行包，收据绑定的每个文件都必须逐字节等于收据；然后用包自己的代码重算批准正文点名的每个请求（不发送）：每个位置的摘要必须等于计量，每个授予点名的摘要必须正好是它覆盖的那些位置的，合计等于上限。任何一项不符都在做任何事之前停下——否则会在所有者已批准、已给密钥之后，停在第一次认领。只有四类文件从检出带入：收据本身、批准正文（两者都按 `run-package.json` 的摘要核对）、登记后提交的批准记录与许可、分支上已有的模型账本导出（带上它们，已导出的批准不能重新开跑，落后于导出的账本也被拒）。
 
 ```
-# 执行者，批准之前：在运行树里重封离线验证，在检出里按新收据生成批准正文
-git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch
-git apply docs/evidence/issue47_history/model-egress/egress-registration.patch
-python3 tools/vnext_mint_historical_requirement.py
-python3 docs/evidence/issue47_history/model-egress/verify.py --copies 3
-python3 docs/evidence/issue47_history/model-egress/propose_model_allowance.py   # 在检出里
+# 执行者，批准之前：在封存树里重封离线验证，在封存树的副本里生成批准正文，
+# 在检出里记录运行包，并重建一次核对（收据绑定的文件，以及包内重算的 35 个请求摘要）
+python3 docs/evidence/issue47_history/model-egress/verify.py --copies 3                   # 封存树
+python3 docs/evidence/issue47_history/model-egress/propose_model_allowance.py              # 封存树副本
+python3 docs/evidence/issue47_history/model-egress/build_run_package.py record --sealed-commit <封存提交>
 
 # 所有者：把 approval-comment-body.json 的正文原样发布为 Issue #47 的评论
-#         （网页粘贴，或本人登录的 gh issue comment 47 --body-file ...）
+#         （网页粘贴，或本人登录的 gh issue comment 47 --body-file ...）；
+#         建专用 DeepSeek 密钥并在账户侧设消费上限，按名 DEEPSEEK_API_KEY 加进环境设置
 
-# 执行者，在拿到密钥的新会话里（运行树）
+# 执行者，在拿到密钥的新会话里：先重建运行包，之后的命令都在运行包目录里执行
+python3 docs/evidence/issue47_history/model-egress/build_run_package.py build <运行包目录>
+cd <运行包目录>
 python3 tools/vnext_historical_model.py register-approval --approval-url <评论 URL>
 python3 tools/vnext_historical_model.py start     # 打印标记评论正文；执行者把它发到 Issue #47
-python3 tools/vnext_historical_model.py run --metric D04 --position marriott_international:2023-12-31 ...
-python3 tools/vnext_historical_model.py run --metric E01 --position ...
-python3 tools/vnext_historical_model.py run --metric D02 --position ...
+python3 tools/vnext_historical_model.py run --metric E01 --position ford_motor_company:2025-12-31   # 先只发一个
 python3 tools/vnext_historical_model_export.py export   # 写到 evidence/issue47_model_calls/<批准摘要前 16 位>/
-# 执行者：把导出目录复制回检出，提交并推送；之后按普通历史 Run 建原生 Run 与公共行
+# 执行者：把导出目录与登记写出的三个文件复制回分支检出，提交并推送；之后再继续。
+#   同一提交里改写两个断言“检出里没有许可”的用例（test_historical_model_calls 的
+#   test_there_is_none_today、test_historical_semantic_routes 的 test_without_an_allowance），
+#   改为在临时树里断言“没有许可就按名拒绝”：登记之后检出里有许可是预期状态
+python3 tools/vnext_historical_model.py run --metric E01 --position <其余 6 个窗口> ...
+python3 tools/vnext_historical_model.py run --metric D02 --position <12 个位置> ...
+python3 tools/vnext_historical_model.py run --metric D04 --position marriott_international:2023-12-31 \
+    --position marriott_international:2024-12-31 --position paramount_skydance_paramount_global:2024-12-31
+python3 tools/vnext_historical_model_export.py export   # 每组跑完都导出、复制回检出、提交、推送
+# 之后按普通历史 Run 建原生 Run 与公共行，再两向阅读验收
 ```
 
-各组的完整位置见上表。`register-approval` 从 GitHub 读回评论，核对作者、未编辑、未经 App 代发与正文摘要，然后写出许可、批准记录与 `granted-model-ledger.json`——只有记在这份记录所授予账本里的计数调用，其 LIVE 登记才会被 Run 读取。`run` 遇停止以退出码 3 结束并说明原因；再次运行从账本继续，已认领的请求不会再发。每次运行后都导出并推送，不等全部跑完。
+顺序按所有者选定的 E01→D02→D04。各组的完整位置见上表。`register-approval` 从 GitHub 读回评论，核对作者、未编辑、未经 App 代发与正文摘要，然后写出许可、批准记录与 `granted-model-ledger.json`——只有记在这份记录所授予账本里的计数调用，其 LIVE 登记才会被 Run 读取。`run` 遇停止以退出码 3 结束并说明原因，任何停止条件都让整份许可停下（所有者的决定）；再次运行从账本继续，已认领的请求不会再发。35 是上限，不是必须用完的量。第一次调用之后立即导出并推送，把“只有标记评论防护”的窗口压到最短；之后每组跑完都导出并推送，不等全部跑完。
+
+**消费上限怎么定**：35 个请求的参考输入合计 3,037,062 token（E01 43,109、D02 417,576、D04 2,576,377），输出每个请求最多 4,096 token、合计最多 143,360 token。按 DeepSeek 当时的价目，用这两个量算出上限并留余量。服务商报的计数与参考分词器不一致时，那次调用之后调用路径就停下，所以计数偏离最多发生在一个请求上；账户侧上限是代码之外的那道控制。
