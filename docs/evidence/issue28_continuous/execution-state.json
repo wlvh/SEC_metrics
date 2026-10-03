@@ -3787,6 +3787,24 @@
       "incremental_tools": 6,
       "incremental_messages": 1,
       "no_more_followup_due_message_cap": true
+    },
+    {
+      "task_name": "audit_d01jpm_ea6293c",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "scope_paths": [
+        "catalog/r6/D01_risk_factor_headings.md",
+        "/private/tmp/issue28-d01-running-header-v3-20261003-final/jpmorgan_chase/metrics/D01-header-v3/attempts/bb9e9ce65d9f4fdfa3547b885fcae875/runs/D01/records.jsonl",
+        "/private/tmp/issue28-d01-running-header-v3-20261003-final/jpmorgan_chase/metrics/D01-header-v3/attempts/bb9e9ce65d9f4fdfa3547b885fcae875/data/evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm"
+      ],
+      "patch_sha": "ea6293c5081ca6fe74c936574bc9dca497a33e3c",
+      "spawned_at": "2026-10-03T08:31:47.905731+00:00",
+      "ended_at": "2026-10-03T08:44:18.578592+00:00",
+      "tool_calls": 24,
+      "result_path": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md",
+      "verdict": "PASS_LIMITED_SAVED_JPM_56_HEADING_CONTENT",
+      "dedup_note": "No live agent. Existing D01 full-content audit covers Paramount/Marriott only; exact 31beeab header review expressly excludes full JPM56-content credit. This once-only original-read scope is new, not a repeat code review. Underscore name required by spawn schema.",
+      "ordinary_messages": 3,
+      "elapsed_minutes": 9.5
     }
   ],
   "ci_capacity_20260922": {
@@ -12004,5 +12022,38 @@
     "representation_and_output_scope_only": true,
     "actual_full_source_call_plan_unchanged": true,
     "remaining": "All-unit model output and cross-request relation/conflict handling, exact native persistence/replay, limited review and real-call permission. Six request measurement is one company only and not a new execution grant."
+  },
+  "d01_jpm_saved_content_20261003": {
+    "state": "ORIGINAL_CONTENT_AND_EXACT_COPY_MECHANICAL_PASS_RECEIVER_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/README.md",
+    "result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+    "source_raw_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "heading_count": 56,
+    "full_item1a_title_content_read": true,
+    "native_original_status": "OPEN",
+    "native_original_validation": "NOT_RUN",
+    "mechanical_copy_status": "PASSED",
+    "mechanical_seconds": 37.558,
+    "original_attempt_unchanged": true,
+    "new_reader_tests": 7,
+    "existing_reader_tests": 19,
+    "view_candidate_selected_known_defects": 17,
+    "view_candidate_D01_saved_restorations": 3,
+    "current_view_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "peer47_read": "d84f41f2ea2c1730482221b53eb97aaac54392d5",
+    "production_code_or_binding_changed": false,
+    "receiver_selection": "--include-jpm-reviewed"
+  },
+  "last_confirmed_main_ci": {
+    "head_sha": "6219efe68b10fe50e4829d19b89f9a787019b57f",
+    "run_id": 37107361465,
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-03T08:26:10Z"
   }
 }
