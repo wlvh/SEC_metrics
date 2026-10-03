@@ -42,6 +42,20 @@
         "since": "2026-10-02"
       },
       {
+        "anchor_id": "CAPABILITY.company_result_period_and_validity",
+        "type": "capability",
+        "status": "active",
+        "statement": "Draft公司结果视图保留Run归档period，另从哈希核验的原生结果或冷重放投影读取measurement_period；不从财年推测事件窗口。公司CSV分别列归档期间、测量窗口和核验状态。已登记缺陷仍按结果编号与Requirement closure双绑定释放；同结果仅在其它运行版本获释放时显示CURRENT_RUNTIME_RELEASE_REQUIRED及原接受引用，公司值仍扣留，不说成新内容错误或当前版本通过。不同结果、未释放缺陷和重放失败继续扣留。编排回归明确模拟底层计算，真实历史事件及固定D02登记对照分别保存，不授业务接受或生产信用。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_company_results.py::CompanyResultsTest.test_other_runtime_release_explains_hold_without_releasing_current_result",
+        "test_status": "automated_partial_scenario",
+        "since": "2026-10-03"
+      },
+      {
         "anchor_id": "CAPABILITY.current_income_statement_scope",
         "type": "capability",
         "status": "active",

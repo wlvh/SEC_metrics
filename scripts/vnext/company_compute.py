@@ -59,12 +59,8 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
         with patch.object(socket.socket, 'connect', side_effect=ValueError('COMPANY_COMPUTE_NETWORK_FORBIDDEN')), \
              patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_COMPUTE_DNS_FORBIDDEN')):
             if historical:
-                from .company_historical_compute import compute_historical
-                from .normal_history_plan import checkpoint_replayed_once
-                # Reuse #47's existing state-keyed, single-thread replay scope.
-                # Every selected proof is still checked; a changed source root
-                # or installed data directory gets a fresh full replay.
-                with checkpoint_replayed_once():
+                from .company_historical_compute import compute_historical, historical_compute_scope
+                with historical_compute_scope():
                     result = compute_historical(root=root, source=source, company_id=company_id,
                         metric_ids=metric_ids, report_end=report_end, fiscal_year=fiscal_year)
             else:

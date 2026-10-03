@@ -4,6 +4,8 @@
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 
 公司 `latest-execution.json` 只报告本次请求；`results` 和公司CSV从已有指标/期间/Run读取，局部更新保留其它结果并显示当前来源匹配或未复核。完整已保存D04判断及原V14程序通过独立处理包/信任接入；acquired精确同源复用另需单独准入的原公司SEC版本，完整来源或请求责任变化会拒绝。请求/响应/接受身份保持，入口没有新AI调用权限。
+
+公司视图的 `period` 是归档坐标，另列原生结果的测量窗口及其核验状态。缺陷对同一结果只在别的运行版本释放时，当前版本仍扣留，明确显示 `CURRENT_RUNTIME_RELEASE_REQUIRED` 并带原释放引用，不把它说成新发现的内容错误，也不自动接受当前版本。
 <!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
 
 确切年度候选可由`tools/vnext_annual_publication.py prepare --policy-id annual_candidate_adoption_v2`
@@ -541,3 +543,5 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
 
 私有完整版本将选中原生行与前驱其余行一起交给统一读取入口；继承行保持原信用。该演练没有正式发布/active切换权，现有公开读取仍返回已采纳版本，不能把开发私有预览称为生产结果。
 <!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->
+
+<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->

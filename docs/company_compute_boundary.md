@@ -67,6 +67,43 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 `compute` 返回本次请求报告，并保存 `latest-execution.json` 与薄执行观察。`results`／`company-results.json` 从原每指标 journal、期间 current 指针和 native Run 生成公司视图；局部请求不删除其它指标及年份。既有成功指针仍由原消费者管理，不新增正式选版或 active。视图区分创建来源、最近核验来源、当前来源匹配／失败／未复核、Run／Requirement closure、最新请求及已确认缺陷。
 
+`period` 保留兼容含义：Run 的归档坐标（`period_role=RUN_ARCHIVE_COORDINATE`），不是事件的计数窗口。`measurement_period` 从原生结果读取，标明仅核文件哈希还是已独立重放；缺少可核原生记录时为不可用，不用财年推测。Paramount FY2025 的归档坐标从2025-01-01开始，六事件实际窗口从2024-01-01开始，均到2025-12-31。公司CSV额外列出归档期间与测量窗口；原投影期间字段保持原义。
+
+缺陷释放仍须同时匹配结果编号和 Requirement closure。相同结果仅在其它运行版本已释放时，显示 `CURRENT_RUNTIME_RELEASE_REQUIRED`，`defect_holds` 保留原释放的运行版本、阅读与接受引用，公司值仍扣留。这表示当前版本未被既有登记释放，不表示新发现了内容错误；结果不同或没有适用释放仍显示 `CONFIRMED_INVALID`。机械回读不替代内容接受。
+
+### 来源交接、局部更新和公司导出的完整示例
+
+下面以已保存 Marriott 基线的 B01/D01 为例；目录是调用方选择的挂载位置。准备端负责原完整来源验证和受控安装信任，计算端只接收该公司包、固定程序和独立信任登记。接入采集器、卷/镜像及网络是下一期。
+
+```bash
+# 在受控准备端执行，PREP 是本交付源码，FULL_SOURCE 是已有受信完整来源。
+PREP=/srv/sec-metrics/preparation/program
+FULL_SOURCE=/srv/sec-metrics/preparation/source
+TRANSFER=/srv/sec-metrics/transfer/marriott-baseline
+TRUST=/srv/sec-metrics/source-trust
+PROGRAM=/srv/sec-metrics/runtime/baseline
+STATE=/srv/sec-metrics/state/marriott_international
+python3 "$PREP/tools/vnext_company.py" export --source-root "$FULL_SOURCE" \
+  --output-root "$TRANSFER" --trust-root "$TRUST" \
+  --company marriott_international --metric B01 --metric D01
+python3 "$PREP/tools/vnext_company.py" install-runtime --kind baseline --output-root "$PROGRAM"
+# 将 PROGRAM、TRANSFER、TRUST 分别交付到计算端；程序和信任登记可只读。
+python3 "$PROGRAM/tools/vnext_company.py" install --package-root "$TRANSFER" \
+  --state-root "$STATE" --trust-root "$TRUST" --company marriott_international
+python3 "$PROGRAM/tools/vnext_company.py" compute --state-root "$STATE" \
+  --trust-root "$TRUST" --company marriott_international --metric B01 --metric D01
+# 只更新 B01，D01 及其原生 Run 仍在公司视图中。
+python3 "$PROGRAM/tools/vnext_company.py" compute --state-root "$STATE" \
+  --trust-root "$TRUST" --company marriott_international --metric B01
+python3 "$PROGRAM/tools/vnext_company.py" results --state-root "$STATE" \
+  --trust-root "$TRUST" --company marriott_international --runtime-root "$PROGRAM"
+python3 "$PROGRAM/tools/vnext_company.py" export-results --state-root "$STATE" \
+  --trust-root "$TRUST" --company marriott_international --runtime-root "$PROGRAM" \
+  --output-root /srv/sec-metrics/output/marriott-update-001
+```
+
+最后目录包含公司 `metrics_matrix.csv`、`metric_evidence.csv`、视图、本次执行报告及原生输入/结果索引；输出目录必须是新目录。后续来源包仍安装到同一 `STATE/source`，计算固定一次版本。增量普通用 `--kind ordinary`，历史用独立 `--kind historical` 并传 `--report-end` 或 `--fiscal-year`；不要用新运行树继续旧闭包的普通 journal。混合运行树导出重复提供每个创建树的 `--runtime-root`。D04另按下面的独立处理示例接入。
+
 `export-results` 冷重放候选并保留每项 native Run/data/rows，同时生成公司 `metrics_matrix.csv` 和 `metric_evidence.csv`。先复用既有投影字段，再追加身份和状态列；旧值保留原期间，失败／未复核不算本次更新成功。`--runtime-root` 可重复，混合普通／历史／原生闭包分别在其固定树的新进程读取；来源规则也须与其中正确树逐文件匹配。单项重放失败形成 WITHHELD 行并返回 EXPORTED_PARTIAL／退出2，其它候选仍导出；缺少全部必要来源规则树在消费前拒绝。`--defects-file` 只读原 known_result_defects 登记，按精确结果／期间／解除身份扣留；未提供登记不代表没有缺陷，机械重放不授内容验收信用。旧原生字节保持，生产发布仍由原流程决定。
 
 实际实验、失败位置、分项体积和耗时见 [证据索引](evidence/issue54_company/README.md)。十家公司来源导出不等于全部 36 项或 30–60 分钟验收。Fable 外部报告保留原信用，尚未取得的原脚本/日志不记成本方复跑。
@@ -101,4 +138,6 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 程序／来源／信任可只读。导入只在私有暂存根临时增加跨父目录rename所需权限，再恢复不可变版本的原模式；输入包不改。处理子进程工作目录为外部工作区，私有副本可写并可清理；不将开发checkout、个人HOME、root或特权当作前提。
 
-导出结果带相对 native 路径及逐文件索引。读取旧 Run 应选择创建它的固定运行树与独立 trust；程序、Requirement 或 source admission 的绑定副本必须保留。历史导出复用 #47 已有单进程、按状态失效的 checkpoint replay scope，实际原件和每个原生结果仍验证，不建立新的通用缓存。
+导出结果带相对 native 路径及逐文件索引。读取旧 Run 应选择创建它的固定运行树与独立 trust；程序、Requirement 或 source admission 的绑定副本必须保留。历史计算和冷读复用 #47 已有单进程、按状态失效的检查点重放、输入派生及不可变XBRL解析作用域；每个新数据状态仍完整核验，每个结果仍独立冷读。新历史安装树把外置来源信任目录同时纳入派生状态键及审计读集合，信任改变会失效，不豁免原验证。六指标仍分别安装独立数据目录；本期没有长期缓存或共享可变输入。
+
+<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->

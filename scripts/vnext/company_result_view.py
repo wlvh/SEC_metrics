@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from .canonical import content_hash, strict_json_file
+from .canonical import content_hash, sha256_bytes, strict_json_file, strict_json_loads
 from .company_handoff import _atomic_json
 from .company_source_authority import need
 
@@ -133,6 +133,31 @@ def _historical_candidate(root, pointer, company):
             'journal_latest_status': 'CANDIDATE_READY'}
 
 
+def _measurement_period(entry, manifest):
+    """Read the result's window, without inferring it from the Run coordinate.
+
+    This is a manifest hash read, not native replay or content acceptance.
+    Older records without a sealed records hash leave the window unavailable.
+    """
+    records = Path(entry['rows_root']).parent/'runs'/entry['metric_id']/'records.jsonl'
+    expected = manifest.get('records_file_hash')
+    if not expected:
+        return {'measurement_period': None, 'measurement_period_status': 'NOT_AVAILABLE'}
+    try:
+        raw = records.read_bytes()
+        need(sha256_bytes(content=raw) == expected, 'COMPANY_RESULT_RECORDS_CHANGED')
+        found = [record for line in raw.decode('utf-8').splitlines()
+                 if (record := strict_json_loads(text=line)).get('record_type') == 'METRIC_RESULT'
+                 and record.get('metric_id') == entry['metric_id']
+                 and record.get('result_id') == entry['result_id']]
+        need(len(found) == 1, 'COMPANY_RESULT_MEASUREMENT_RECORD_AMBIGUOUS')
+        return {'measurement_period': {k: found[0][k] for k in ('period_start', 'period_end')},
+                'measurement_period_status': 'NATIVE_RECORD_HASH_VERIFIED_NOT_REPLAYED'}
+    except Exception as error:
+        return {'measurement_period': None, 'measurement_period_status': 'NATIVE_RECORD_INVALID',
+                'measurement_period_reason': str(error)}
+
+
 def _defects(entry, registry):
     matched = []
     for defect in registry.get('defects', []):
@@ -148,7 +173,13 @@ def _defects(entry, registry):
             if any(r.get('result_id') == entry.get('result_id') and
                    r.get('requirement_closure_hash') == entry['requirement_closure_hash'] for r in released):
                 continue
-        matched.append(defect['defect_id'])
+        other = defect.get('released', [])
+        if isinstance(other, dict): other = [other]
+        other = [r for r in other if r.get('result_id') == entry.get('result_id')
+                 and r.get('requirement_closure_hash') != entry['requirement_closure_hash']]
+        matched.append({'defect_id': defect['defect_id'],
+            'reason': 'CURRENT_RUNTIME_RELEASE_REQUIRED' if other else 'REGISTERED_DEFECT_UNRELEASED',
+            'releases_in_other_runtimes': other})
     return matched
 
 
@@ -230,8 +261,14 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
                 {m['metric_id'] for m in latest_report.get('metrics', [])} and
                 (not requested.get('report_end') or requested['report_end'] == entry['period']['period_end']) and
                 (not requested.get('fiscal_year') or requested['fiscal_year'] == entry['period']['fiscal_year']))
-            entry['confirmed_defects'] = _defects(entry, defect_registry or {})
-            if entry['confirmed_defects']: entry['result_validity'] = 'CONFIRMED_INVALID'
+            entry['period_role'] = 'RUN_ARCHIVE_COORDINATE'
+            entry.update(_measurement_period(entry, manifest))
+            entry['defect_holds'] = _defects(entry, defect_registry or {})
+            entry['confirmed_defects'] = [d['defect_id'] for d in entry['defect_holds']]
+            if entry['defect_holds']:
+                entry['result_validity'] = ('CURRENT_RUNTIME_RELEASE_REQUIRED'
+                    if all(d['reason'] == 'CURRENT_RUNTIME_RELEASE_REQUIRED' for d in entry['defect_holds'])
+                    else 'CONFIRMED_INVALID')
             entry['view_key'] = content_hash(value={k: entry[k] for k in ('journal', 'metric_id', 'period', 'run_id')})
             entries.append(entry)
     # Failed/pending requests with no native record are still visible.

@@ -18,7 +18,9 @@ VIEW_FIELDS = ('company_id', 'run_id', 'result_id', 'requirement_id', 'requireme
                'source_checkpoint_id', 'last_checked_source_checkpoint_id', 'current_source_checkpoint_id',
                'original_source_checkpoint_id', 'current_source_equivalence_id', 'current_input_matches',
                'current_input_status', 'result_validity', 'latest_attempt_status', 'latest_request_status',
-               'requested_in_latest_execution', 'source_credit', 'saved_processing_mode', 'native_path')
+               'requested_in_latest_execution', 'source_credit', 'saved_processing_mode', 'native_path',
+               'period_role', 'archive_period_start', 'archive_period_end', 'archive_fiscal_year',
+               'measurement_period_start', 'measurement_period_end', 'measurement_period_status', 'defect_holds')
 
 
 def replay_candidate(entry, runtime_roots):
@@ -95,14 +97,26 @@ def export_results(*, state_root, output_root, company_id, runtime_roots=(), def
                     shutil.copytree(work, destination)
                     entry['native_path'] = destination.relative_to(staged).as_posix()
                     entry['replay_status'] = 'PASSED'; entry['runtime_root'] = runtime
-                    if entry['result_validity'] != 'CONFIRMED_INVALID': entry['result_validity'] = 'REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED'
+                    projected = _rows(expected['metrics_matrix.csv'])
+                    need(len(projected) == 1, 'COMPANY_RESULT_PROJECTED_ROW_SET_CHANGED')
+                    entry['measurement_period'] = {k: projected[0].get(k) for k in ('period_start', 'period_end')}
+                    entry['measurement_period_status'] = 'NATIVE_REPLAY_VERIFIED'
+                    held = entry['result_validity'] in {'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED'}
+                    if not held: entry['result_validity'] = 'REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED'
+                    entry.update(archive_period_start=entry['period'].get('period_start'),
+                                 archive_period_end=entry['period'].get('period_end'),
+                                 archive_fiscal_year=entry['period'].get('fiscal_year'))
+                    measurement = entry.get('measurement_period') or {}
+                    entry.update(measurement_period_start=measurement.get('period_start'),
+                                 measurement_period_end=measurement.get('period_end'))
                     metadata = {k: entry.get(k) for k in VIEW_FIELDS}
-                    for row in _rows(expected['metrics_matrix.csv']):
+                    metadata['defect_holds'] = canonical_json_bytes(value=entry.get('defect_holds', [])).decode().strip()
+                    for row in projected:
                         need(row['metric_id'] == entry['metric_id'] and row['period_end'] == entry['period']['period_end'],
                              'COMPANY_RESULT_PROJECTED_COORDINATE_CHANGED')
-                        if entry['result_validity'] == 'CONFIRMED_INVALID':
+                        if held:
                             row = {**row, 'value': '', 'status': 'WITHHELD',
-                                   'notes': row.get('notes', '')+'; CONFIRMED_INVALID:'+','.join(entry['confirmed_defects'])}
+                                   'notes': row.get('notes', '')+'; '+entry['result_validity']+':'+','.join(entry['confirmed_defects'])}
                         metric_rows.append({**row, **metadata})
                     evidence_rows.extend({**row, **metadata} for row in _rows(expected['metric_evidence.csv']))
                     native.append({k: entry.get(k) for k in ('metric_id', 'period', 'attempt_id', 'run_id',

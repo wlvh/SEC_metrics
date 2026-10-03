@@ -171,6 +171,22 @@ def install_runtime(*, output_root, kind='baseline'):
         _replace(output/events, 'installed_acquired = _acquired_event_filings(repo_root=ROOT,',
                  'installed_acquired = _company_event_filings(source_root=repo_root,')
         modified = (*modified, events)
+    if kind == 'historical':
+        # #47's existing derivation memo audits all reads before remembering
+        # an answer. Company admission additionally reads external trust:
+        # fingerprint that tree too; do not waive its out-of-key read check.
+        memo = 'scripts/vnext/historical_derivation_memo.py'
+        originals[memo] = (output/memo).read_text()
+        _replace(output/memo,
+                 '    trees = {named: (), runtime: (os.path.join(runtime, ".git", "objects"),)}\n',
+                 '    trees = {named: (), runtime: (os.path.join(runtime, ".git", "objects"),)}\n'
+                 '    from .company_source_authority import memo_read_roots\n'
+                 '    for tree in memo_read_roots():\n'
+                 '        trees.setdefault(tree, ())\n')
+        _replace(output/memo, '        allowed = (named, runtime)\n',
+                 '        from .company_source_authority import memo_read_roots\n'
+                 '        allowed = (named, runtime, *memo_read_roots())\n')
+        modified = (*modified, memo)
     patch = ''.join(''.join(difflib.unified_diff(originals[p].splitlines(True),
         (output/p).read_text().splitlines(True), fromfile='a/'+p, tofile='b/'+p)) for p in modified)
     (output/'company-runtime-dispatch.patch').write_text(patch)

@@ -1,9 +1,20 @@
 """Company boundary over #47's pinned period, installation and native Run APIs."""
 from uuid import uuid4
+from contextlib import contextmanager
 
 from .canonical import content_hash, strict_json_file
 from .company_handoff import _atomic_json
 from .company_source_authority import need
+
+
+@contextmanager
+def historical_compute_scope():
+    """Reuse #47's bounded, state-keyed batch mechanisms; keep inputs separate."""
+    from .historical_run_replay import run_checks_replay_once
+    from .historical_derivation_memo import derived_once_per_state
+    from .historical_xbrl_parse import xbrl_parsed_once
+    with run_checks_replay_once(), derived_once_per_state(), xbrl_parsed_once():
+        yield
 
 
 def compute_historical(*, root, source, company_id, metric_ids, report_end=None, fiscal_year=None):

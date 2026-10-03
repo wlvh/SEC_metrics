@@ -154,5 +154,28 @@ def require_company(*, source_root, company_id):
     checkpoint = trusted_checkpoint(source_root)
     need(checkpoint['company_id'] == company_id, 'COMPANY_SOURCE_WRONG_COMPANY')
     baseline = strict_json_file(path=ROOT/MANIFEST_PATH)
-    validate_checkpoint(source_root, checkpoint, baseline)
+    if (ROOT/'requirements/issue_54_v3').is_dir():
+        # The historical batch's existing state-keyed verifier still performs
+        # the full check for every changed state. Census admission must enter
+        # that same verifier instead of bypassing it on every derivation.
+        from .ordinary_source_authority import _validate_checkpoint
+        _validate_checkpoint(source_root, checkpoint, baseline)
+    else:
+        validate_checkpoint(source_root, checkpoint, baseline)
     return checkpoint
+
+
+def memo_read_roots():
+    """Additional authenticated-read dependency of #47's derivation scope.
+
+    This nominates no authority: the frozen validator still authenticates the
+    record. The entire external trust tree must also be in the existing memo's
+    state key and audited read set, so changing trust invalidates its answer.
+    """
+    from git_workspace import first_symlink_in_path
+    location = os.environ.get(TRUST_VARIABLE)
+    need(bool(location), 'COMPANY_SOURCE_TRUST_ROOT_REQUIRED')
+    root = Path(location)
+    need(root.is_absolute() and root.is_dir() and first_symlink_in_path(path=root) is None,
+         'COMPANY_SOURCE_TRUST_ROOT_ALIAS')
+    return (str(root.resolve()),)

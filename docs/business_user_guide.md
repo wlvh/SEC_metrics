@@ -1,6 +1,8 @@
 # SEC_metrics：业务人员首次使用指南
 
 公司独立计算提供待审核的公司矩阵及证据表；局部更新保留已存在的其它指标和期间。查看每行的期间、来源版本、当前匹配/未复核及有效性，旧值不计成本次更新成功。已保存的完整D04判断可独立接入；来源改变或判断不完整时保留缺口，本入口不会调用新模型。这个Draft出口的固定程序、来源和信任要求见[公司接口说明](company_compute_boundary.md)。
+
+归档财年与实际测量窗口分别显示：例如 Paramount FY2025 的事件可能覆盖2024-01-01至2025-12-31。相同结果在其它运行版本已获缺陷释放、当前版本尚未释放时，仍扣留公司值并显示原接受引用；这不是新的内容错误结论，也不是当前版本已通过。
 <!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
 
 已保存的两项候选可以生成完整待审核版本，用`read --publication-id`查看该版本的
@@ -328,3 +330,5 @@ NOT_MEANINGFUL可以表示当前主体只报告不足一年的期间，而非没
 有限刷新可自动发现并取得所需来源，报告各指标新尝试与历史有效结果。某项未完成不会把其他无依赖结果抹去；旧结果仍按原期间显示。完整来源的程序范围文字、实际计算值、结构性不适用和实现失败分别阅读，不因存在一条记录就视为390项全部验收。私有发布演练不会改变当前正式结果，正式采纳仍待集中确认。入口及具体边界见[普通刷新说明](ordinary_refresh_cycle.md)。
 <!-- capability-anchor: CAPABILITY.ordinary_refresh_native_draft -->
 <!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->
+
+<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->

@@ -25,9 +25,11 @@ def main():
          patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_RESULT_DNS_FORBIDDEN')):
         if layout == 'historical':
             from vnext.historical_projection import render_historical_run
-            from vnext.normal_history_plan import checkpoint_replayed_once
+            from vnext.historical_run_replay import run_checks_replay_once
+            from vnext.historical_derivation_memo import derived_once_per_state
+            from vnext.historical_xbrl_parse import xbrl_parsed_once
             from vnext.publication import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
-            with checkpoint_replayed_once():
+            with run_checks_replay_once(), derived_once_per_state(), xbrl_parsed_once():
                 rendered = render_historical_run(data_root=work/'data', run_dir=work/'runs'/metric,
                                                 frozen=manifest['status'] == 'FROZEN')
             files = {'metrics_matrix.csv': _csv_bytes(rows=[rendered['row']], fieldnames=METRIC_FIELDS),

@@ -13,6 +13,7 @@ from scripts.vnext.company_result_view import build_company_view, save_execution
 from scripts.vnext.company_handoff import _atomic_json
 from scripts.vnext.ordinary_update_cycle import _record
 from scripts.vnext.publication import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
+from scripts.vnext.canonical import sha256_file
 
 
 class CompanyResultsTest(unittest.TestCase):
@@ -171,6 +172,47 @@ class CompanyResultsTest(unittest.TestCase):
         self.assertEqual('CONFIRMED_INVALID',rows[0]['result_validity'])
         self.assertEqual('',rows[0]['value']); self.assertEqual('WITHHELD',rows[0]['status'])
         self.assertEqual(1,len(result['native_candidates']))
+
+    def test_archive_coordinate_and_wider_measurement_window_stay_distinct(self):
+        outcome = self.journal('C01')
+        work = Path(outcome['last_verified_candidate']['rows_root']).parent
+        records = work/'runs/C01/records.jsonl'
+        records.write_text(json.dumps({'record_type':'METRIC_RESULT','metric_id':'C01',
+            'result_id':'result-C01-2025-12-31','period_start':'2024-01-01','period_end':'2025-12-31'})+'\n')
+        path = records.parent/'manifest.json'; manifest=json.loads(path.read_text())
+        manifest['records_file_hash']=sha256_file(path=records); _atomic_json(path,manifest)
+        rows=work/'rows/C01/metrics_matrix.csv'
+        row=list(csv.DictReader(io.StringIO(rows.read_text())))[0]
+        row['period_start']='2024-01-01'; rows.write_bytes(_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS))
+        self.observe([outcome]); entry=self.view()['metrics'][0]
+        self.assertEqual('2025-01-01',entry['period']['period_start'])
+        self.assertEqual('RUN_ARCHIVE_COORDINATE',entry['period_role'])
+        self.assertEqual('2024-01-01',entry['measurement_period']['period_start'])
+        _, exported, _ = self.exported()
+        self.assertEqual('2025-01-01',exported[0]['archive_period_start'])
+        self.assertEqual('2024-01-01',exported[0]['measurement_period_start'])
+        self.assertEqual('NATIVE_REPLAY_VERIFIED',exported[0]['measurement_period_status'])
+        records.write_text(records.read_text().replace('2024-01-01','2023-01-01'))
+        entry=self.view()['metrics'][0]
+        self.assertIsNone(entry['measurement_period'])
+        self.assertEqual('NATIVE_RECORD_INVALID',entry['measurement_period_status'])
+
+    def test_other_runtime_release_explains_hold_without_releasing_current_result(self):
+        self.observe([self.journal('D02',closure='current-runtime')])
+        release={'result_id':'result-D02-2025-12-31','requirement_closure_hash':'accepted-runtime',
+                 'accepted_by':'existing/reading.json','run_id':'original-run'}
+        defect={'defect_id':'coordinate-defect','company_id':'test_company','metric_id':'D02',
+                'period_end':'2025-12-31','result_id':None,'released':[release]}
+        registry={'defects':[defect]}; entry=self.view(registry)['metrics'][0]
+        self.assertEqual('CURRENT_RUNTIME_RELEASE_REQUIRED',entry['result_validity'])
+        self.assertEqual(release,entry['defect_holds'][0]['releases_in_other_runtimes'][0])
+        _, rows, _ = self.exported(registry=registry)
+        self.assertEqual('WITHHELD',rows[0]['status']); self.assertEqual('',rows[0]['value'])
+        self.assertIn('CURRENT_RUNTIME_RELEASE_REQUIRED',rows[0]['notes'])
+        release['result_id']='different-result'
+        self.assertEqual('CONFIRMED_INVALID',self.view(registry)['metrics'][0]['result_validity'])
+        release.update(result_id='result-D02-2025-12-31',requirement_closure_hash='current-runtime')
+        self.assertEqual([],self.view(registry)['metrics'][0]['confirmed_defects'])
 
     def test_one_replay_failure_does_not_hide_other_metrics(self):
         self.observe([self.journal('B01'),self.journal('D01')])
