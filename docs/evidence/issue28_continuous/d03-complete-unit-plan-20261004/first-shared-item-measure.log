@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-complete-unit-plan-20261004/measure-shared-item-context.py", line 53, in <module>
+    _share_xml_styles(items,context_shared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 51, in _share_xml_styles
+    need('data-b13-style-ref=' not in obj[key], 'B13_SOURCE_RESERVED_STYLE_MARKER')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_SOURCE_RESERVED_STYLE_MARKER

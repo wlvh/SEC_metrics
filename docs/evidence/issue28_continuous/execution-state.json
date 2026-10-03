@@ -12523,15 +12523,14 @@
     "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
-    "head_sha": "dc9850ca7c854c7bc1b6f05cb4224886c1829dd7",
+    "head_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
     "branch": "task/b06-new-source",
     "pr": 43,
     "draft": true,
-    "current_ci": 37146162255,
+    "current_ci": 37150607827,
     "terminal": null,
-    "code_reviewed_sha": "f5db8911a47ef1b6e08551f7a2946ec5734e68ee",
-    "code_tree_vs_reviewed": "Only review logs and execution/continuation records changed after exact reviewed product SHA",
-    "new_real_calls": [
+    "change_scope": "Only retained development input/reference/answers/checks, no product code/default/binding change",
+    "calls": [
       0,
       0,
       0
@@ -12961,16 +12960,16 @@
   "ci_dc9850ca": {
     "head_sha": "dc9850ca7c854c7bc1b6f05cb4224886c1829dd7",
     "run_id": 37146162255,
-    "state": "queued",
-    "terminal": null,
-    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
-    "updated_at": "2026-10-03T18:57:51Z"
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL_EXACT_HEAD",
+    "updated_at": "2026-10-03T20:07:23Z"
   },
   "issue28_queue_server_readback_20261004": {
-    "updated_at": "2026-10-03T19:00:13Z",
-    "body_sha256": "4b6b64fb947e882f2c1fe6cbfffae00a9999528e9dc35ee330e36d5eb627914c",
-    "edited_scope": "Current navigation and two existing C02/D03 rows; common collaboration/goal/method/permissions sections unchanged",
-    "next": "D03 actual-source positive/negative business validation and fixed-route gap; C02 core repair remains peer owner, narrow qualification decision pending. No third developer correction or new real call."
+    "updated_at": "2026-10-03T20:12:41Z",
+    "body_sha256": "fd36c29df643cc38c33adea3d8c1cb66e53abbcadd054e4ecf9eb15ffd629950",
+    "edited_scope": "Current navigation and D03 existing row; common/permission sections unchanged",
+    "next": "Full-source task/context and resource plan beyond bounded unit experiment, no third correction or D03 live request."
   },
   "d03_jpm_original_unit_development_20261004": {
     "state": "BOUNDED_BATCH_ENDED_INITIAL_PLUS_ONE_CORRECTION; ACTUAL_POSITIVE_CASES_AND_TIME_FIELD_FIXED_NO_COMPANY_CREDIT",
@@ -13101,5 +13100,97 @@
     "peer_read_sha": "231a204dc6ae11a4005e0151e47270ea65e0b553",
     "prior_read_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
     "scope": "Peer own Enphase historical B06 acceptance and seven own E01 live exports; shared defect register unchanged; no D03 core changes or receiving acceptance copied."
+  },
+  "ci_41d9d859": {
+    "head_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
+    "run_id": 37150607827,
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE",
+    "updated_at": "2026-10-03T20:10:50Z"
+  },
+  "shared_increment_read_c74ce046": {
+    "peer_read_sha": "c74ce04630b57c2a03d9f1bd7b293b97e21da734",
+    "prior_read_sha": "231a204dc6ae11a4005e0151e47270ea65e0b553",
+    "scope": "Peer own E01/D04 real export and known-defect updates read. E01 Pfizer old identity release is peer-only; new Marriott FY2023/FY2024 D02 paid omissions do not automatically apply to #28 FY2025. Current Marriott D02 is already withheld under own existing defect, no credit imported or new metric-wide withdrawal. No shared D03 source core change."
+  },
+  "d03_complete_unit_plan_20261004": {
+    "state": "FULL_OWNERSHIP_RESOURCE_MEASURED; CONTEXT_AND_OUTPUT_PLAN_NOT_READY",
+    "evidence": "docs/evidence/issue28_continuous/d03-complete-unit-plan-20261004/README.md",
+    "own_base_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
+    "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+    "whole_unit_context": {
+      "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "owned_units_once": true,
+      "source_payloads_roundtrip": true,
+      "requests_if_single_unit": 130,
+      "fits_count": 87,
+      "oversized_count": 43,
+      "native_physical_link_count": 294,
+      "unresolved_physical_links": [],
+      "maximum_context": 591694,
+      "seconds": 27.227,
+      "semantic_context_sufficiency_verified": false,
+      "prompt_input_shared_representation_not_yet_blind_tested": true,
+      "live_authorized": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "shared_item_context": {
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "owned_units_once": true,
+      "original_owner_unit_count": 130,
+      "owner_payloads_roundtrip": true,
+      "xml_context_slice_hashes_verified": true,
+      "physical_link_count": 294,
+      "unresolved_physical_links": [],
+      "request_count_if_one_unit": 130,
+      "fits_count": 101,
+      "oversized_count": 29,
+      "maximum_context": 496266,
+      "seconds": 22.723,
+      "model_blind_input_not_tested": true,
+      "semantic_context_sufficiency_verified": false,
+      "complete_company_ready": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "first_scan_190k": {
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "original_unit_count": 130,
+      "ownership_complete_once": true,
+      "request_count_first_scan": 38,
+      "all_first_scan_requests_fit": true,
+      "maximum_context": 186082,
+      "maximum_owner_units_per_scan": 4,
+      "grouping_input_target_not_service_limit": 190000,
+      "followup_context_request_count_unmeasured": true,
+      "followup_dynamic_cap_unfixed": true,
+      "output4096_or_semantic_coverage_unverified": true,
+      "complete_company_ready": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ],
+      "seconds": 26.069
+    },
+    "first_scan_is_not_total_call_cap": true,
+    "semantic_acceptance": false,
+    "company_result_created": false,
+    "real_purpose_permission_added": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "A bounded exact-context followup/output contract and full task cap, no more blind source-unit correction; new representation needs actual input-only validation before live."
   }
 }
