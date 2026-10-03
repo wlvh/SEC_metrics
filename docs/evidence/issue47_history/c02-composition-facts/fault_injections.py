@@ -33,6 +33,20 @@ HERE = Path(__file__).resolve().parent
 SUITE = "tests.vnext.test_historical_board_composition"
 
 INJECTIONS = [
+    ("NO_OWNER_AFTER_OTHER_DIRECTORSHIPS",
+     '        if name is None and bare_heading:\n            name = _name_after_other_directorships(blocks, j, registrant)',
+     '', 'test_a_bare_committee_heading_can_precede_other_directorships'),
+    ("TAKE_A_BARE_CARD_HEADING_AS_A_FACT",
+     '        if match:\n            taken.append((i,',
+     '        if match or bare_heading:\n            taken.append((i,',
+     'test_a_bare_committee_heading_beside_the_director_is_context'),
+    ("ANY_THREE_LINES_LABEL_OTHER_DIRECTORSHIPS",
+     '        if " ".join(heading).casefold() == "other current public directorships":',
+     '        if " ".join(heading).casefold() == "other current public directorships" or j == start + 3:',
+     'test_a_bare_committee_heading_can_precede_other_directorships'),
+    ("NO_TENURE_FOR_THE_OWNER_AFTER_OTHER_DIRECTORSHIPS",
+     'and re.match(r"^director since\\b", clean(blocks[after]["text"]), re.I)',
+     'and True', 'test_a_bare_committee_heading_can_precede_other_directorships'),
     ("SKIP_MATRIX_MARKS_AS_LIST_BULLETS", "        if _ONE_BULLET.match(text) or not text:\n            j += 1",
      "        if _BULLETS_ONLY.match(text):\n            j += 1", "test_a_matrix_column_of_directors_is_not_a_roster"),
     ("READ_ANOTHER_BODY_AS_THIS_BOARD", "        if _other_organization(sentence, own_words):\n            continue\n",

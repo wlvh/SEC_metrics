@@ -261,6 +261,37 @@ class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
                  "• Nominating and Governance Committee", "BARBARA M. BYRNE", "Ms. Byrne has served as a member."]
         self.assertEqual({1, 2, 3, 4}, set(_selected(texts)))
 
+    def test_a_bare_committee_heading_can_precede_other_directorships(self):
+        texts = ["COMMITTEES", "·", "Audit Committee (Chair)", "OTHER CURRENT", "PUBLIC", "DIRECTORSHIPS",
+                 "·", "Example Industries", "·", "Another Corporation", "Barbara M. Byrne",
+                 "Director since January 2020", "Age 61 | Independent"]
+        selected = _selected(texts, emphasized={0, 3, 4, 5, 10})
+        self.assertIn(2, selected)
+        self.assertIn(10, selected)
+        self.assertNotIn(0, selected)
+        self.assertNotIn(7, selected)
+        self.assertNotIn(9, selected)
+        # The heading still needs an identified director. A different heading
+        # or a biography between the list and the name ends this card.
+        for replacement in ["Career highlights", "An account of the executive's career. " * 5]:
+            with self.subTest(replacement=replacement):
+                changed = texts[:10] + [replacement] + texts[10:]
+                self.assertNotIn(2, _selected(changed, emphasized={0, 3, 4, 5, 10, 11}))
+        self.assertNotIn(2, _selected(texts[:-2], emphasized={0, 3, 4, 5, 10}))
+        no_tenure = texts.copy()
+        no_tenure[11] = "Age 61"
+        self.assertNotIn(2, _selected(no_tenure, emphasized={0, 3, 4, 5, 10}))
+        different_list = texts.copy()
+        different_list[5] = "MEMBERSHIPS"
+        self.assertNotIn(2, _selected(different_list, emphasized={0, 3, 4, 5, 10}))
+
+    def test_a_bare_committee_heading_beside_the_director_is_context(self):
+        texts = ["Committees", "• Audit Committee", "Barbara M. Byrne", "Director since January 2020"]
+        selected = _selected(texts, emphasized={0, 2})
+        self.assertEqual({1: ["DIRECTOR_COMMITTEE_ITEM"], 2: ["DIRECTOR_NAME"]}, selected)
+        texts[0] = "Committees Audit"
+        self.assertEqual({}, _selected(texts, emphasized={0, 2}))
+
     def test_unlabelled_committees_on_the_lines_after_the_tenure(self):
         # Enphase's older proxies print each director's committees on the
         # lines after "Director since", with no "Committees:" label.

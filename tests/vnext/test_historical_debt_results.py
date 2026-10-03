@@ -28,6 +28,7 @@ import vnext.normal_bond_debt_results as bond
 import vnext.normal_inclusive_debt_results as inclusive
 
 from contextlib import ExitStack  # noqa: E402
+from vnext.historical_derivation_memo import derived_once_per_state  # noqa: E402
 from vnext.historical_xbrl_parse import xbrl_parsed_once  # noqa: E402
 
 # Each document's inline XBRL is parsed once for the module
@@ -38,6 +39,11 @@ _PARSED_ONCE = ExitStack()
 
 
 def setUpModule():
+    # The unchanged preparations recur in this module. Their guarded memo
+    # gives each caller its own answer and rechecks the source state before
+    # reuse; compared with the cold suite, all eight resolved cases are byte
+    # identical. The parsing block still owns the documents themselves.
+    _PARSED_ONCE.enter_context(derived_once_per_state())
     _PARSED_ONCE.enter_context(xbrl_parsed_once())
 
 

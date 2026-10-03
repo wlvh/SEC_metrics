@@ -2,10 +2,43 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 102,
- "caught": 161,
- "total": 161,
+ "control_tests_run": 104,
+ "caught": 165,
+ "total": 165,
  "results": [
+  {
+   "injection": "NO_OWNER_AFTER_OTHER_DIRECTORSHIPS",
+   "expected": "test_a_bare_committee_heading_can_precede_other_directorships",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_bare_committee_heading_can_precede_other_directorships"
+   ]
+  },
+  {
+   "injection": "TAKE_A_BARE_CARD_HEADING_AS_A_FACT",
+   "expected": "test_a_bare_committee_heading_beside_the_director_is_context",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_bare_committee_heading_beside_the_director_is_context",
+    "test_a_bare_committee_heading_can_precede_other_directorships"
+   ]
+  },
+  {
+   "injection": "ANY_THREE_LINES_LABEL_OTHER_DIRECTORSHIPS",
+   "expected": "test_a_bare_committee_heading_can_precede_other_directorships",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_bare_committee_heading_can_precede_other_directorships"
+   ]
+  },
+  {
+   "injection": "NO_TENURE_FOR_THE_OWNER_AFTER_OTHER_DIRECTORSHIPS",
+   "expected": "test_a_bare_committee_heading_can_precede_other_directorships",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_bare_committee_heading_can_precede_other_directorships"
+   ]
+  },
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
    "expected": "test_a_matrix_column_of_directors_is_not_a_roster",
@@ -161,6 +194,8 @@
    "expected": "test_a_card_uses_the_filing_s_own_short_forms",
    "result": "CAUGHT",
    "failed": [
+    "test_a_bare_committee_heading_beside_the_director_is_context",
+    "test_a_bare_committee_heading_can_precede_other_directorships",
     "test_a_bulleted_entry_is_not_the_card_s_name",
     "test_a_card_between_two_names_is_not_given_either",
     "test_a_card_uses_the_filing_s_own_short_forms",
@@ -196,6 +231,7 @@
    "expected": "test_a_title_line_at_this_registrant_and_not_elsewhere",
    "result": "CAUGHT",
    "failed": [
+    "test_a_bare_committee_heading_can_precede_other_directorships",
     "test_a_card_uses_the_filing_s_own_short_forms",
     "test_a_members_line_written_as_a_sentence",
     "test_a_quoted_nickname_between_the_names",
@@ -309,6 +345,7 @@
    "expected": "test_a_roster_marked_with_each_glyph_filings_print",
    "result": "CAUGHT",
    "failed": [
+    "test_a_bare_committee_heading_can_precede_other_directorships",
     "test_a_roster_marked_with_each_glyph_filings_print"
    ]
   },

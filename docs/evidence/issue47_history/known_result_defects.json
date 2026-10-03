@@ -3760,7 +3760,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2022-01-29.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1089: a criterion (past committee-chair service) for choosing a lead independent director; names no one and states no composition); 48 block(s) stating a composition fact that no taken block states (640: Blake chairs the CMD Committee (card field); his CMD membership also in 1153; 642: Blake on the Finance Committee (card field)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
@@ -3786,6 +3786,11 @@
     "missed": [
      810
     ]
+   },
+   "repair_50": {
+    "evidence": "docs/evidence/issue47_history/c02-selector-repairs/repair-50/measured-38.json",
+    "selection_agrees_with_existing_reading": true,
+    "native_result_recomputed": false
    }
   },
   {

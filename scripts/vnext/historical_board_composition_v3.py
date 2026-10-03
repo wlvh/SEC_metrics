@@ -1340,6 +1340,40 @@ def _card_fields(blocks, label, name):
             if _card_field(blocks[k])]
 
 
+def _name_after_other_directorships(blocks, start, registrant):
+    """A name and tenure following the card's other-directorships list.
+
+    The list is explicitly labelled; its company names do not identify the
+    director. The next emphasised full name must be followed by the card's
+    tenure field. A paragraph or a different emphasised heading ends the
+    search, so it cannot cross a biography to another card.
+    """
+    heading = []
+    j = start
+    while j < min(len(blocks), start + 3):
+        heading.append(clean(blocks[j]["text"]))
+        j += 1
+        if " ".join(heading).casefold() == "other current public directorships":
+            break
+    else:
+        return None
+    for k in range(j, min(len(blocks), j + _CARD_REACH)):
+        block = blocks[k]
+        text = clean(block["text"])
+        if len(text) > 120 or block["linked"]:
+            return None
+        if not block.get("emphasized"):
+            continue
+        name = _name_from(blocks, k, registrant)
+        after = name[-1] + 1 if name else k + 1
+        if (name and after < len(blocks)
+                and re.match(r"^director since\b", clean(blocks[after]["text"]), re.I)
+                and not blocks[after]["linked"]):
+            return name
+        return None
+    return None
+
+
 def _cards(blocks, vocabulary, registrant):
     """A director card: its committee label, its items and the director it names.
 
@@ -1353,9 +1387,10 @@ def _cards(blocks, vocabulary, registrant):
     taken = []
     for i, block in enumerate(blocks):
         match = _CARD_LABEL.match(clean(block["text"]))
-        if not match or block["linked"]:
+        bare_heading = clean(block["text"]).casefold() == "committees"
+        if (not match and not bare_heading) or block["linked"]:
             continue
-        rest = match.group("rest").strip()
+        rest = match.group("rest").strip() if match else ""
         j, items, negative = i + 1, [], False
         if rest:
             if _NONE_ITEM.match(rest):
@@ -1381,11 +1416,15 @@ def _cards(blocks, vocabulary, registrant):
             if not items:
                 continue
         name = _card_name(blocks, i, j, registrant, passable=lambda block: False)
+        if name is None and bare_heading:
+            name = _name_after_other_directorships(blocks, j, registrant)
         if name is None:
             continue
         if negative and any(_NOT_YET_DIRECTOR.match(field) for field in _card_fields(blocks, i, name[0])):
             continue
-        taken.append((i, "DIRECTOR_NO_COMMITTEE" if negative else "DIRECTOR_COMMITTEE_LABEL"))
+        # An unpunctuated heading is navigation, not a composition fact.
+        if match:
+            taken.append((i, "DIRECTOR_NO_COMMITTEE" if negative else "DIRECTOR_COMMITTEE_LABEL"))
         taken.extend((k, "DIRECTOR_NO_COMMITTEE" if negative else "DIRECTOR_COMMITTEE_ITEM") for k in items)
         taken.extend((k, "DIRECTOR_NAME") for k in name)
     return taken

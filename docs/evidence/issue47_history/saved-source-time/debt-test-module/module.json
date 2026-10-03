@@ -1,0 +1,65 @@
+{
+ "derivations": [],
+ "mode": "module",
+ "replays": [],
+ "resolved_count": 8,
+ "resolved_sha256": "3dc43553a4f8d11c1a375e82cf2e6d6db6ea04d823077e671a6c71613dae19d8",
+ "seconds": 196.4972187200001,
+ "source_test_sha256": "36b53164816c346bf62680f00c084567af7d4ca0c920d606ebc69aaf3d100892",
+ "success": true,
+ "tests": [
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_an_installed_authority_change_is_not_a_source_gap"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_an_unwired_metric_is_refused_by_name"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_five_companies_reach_five_different_stages"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_one_company_two_periods_two_answers"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_copy_answers_what_the_ordinary_chain_answers"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_last_stage_alone_would_have_answered_differently"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_run_factory_routes_b06_here"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_source_walk_reads_the_original_input_not_the_relabelled_one"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_two_reconciled_grammars_are_still_one_algorithm"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_a_subject_policy_this_cascade_has_no_answer_for_stops_here"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_the_grammar_is_told_the_real_subject_policy"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_the_stage_it_reaches_was_the_one_recorded_as_unreached"
+  },
+  {
+   "outcome": "PASS",
+   "test": "tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_the_successor_gets_what_the_ordinary_chain_gives_it"
+  }
+ ],
+ "tests_run": 13
+}
