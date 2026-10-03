@@ -1,0 +1,125 @@
+{
+  "reviewed_unit_ids": [
+    "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+    "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9"
+  ],
+  "findings": [
+    {
+      "kind": "OTHER_MEANING",
+      "subject": "Marriott internal cybersecurity risk assessment, incident response, and audit oversight",
+      "event_dates": [],
+      "reported_context_times": [
+        "FY2025 reporting context (2025-01-01 through 2025-12-31); not action dates"
+      ],
+      "status": "Internal processes and oversight are described; no governmental investigation or enforcement relationship is established by these processes.",
+      "evidence": [
+        {
+          "unit_id": "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+          "kind": "NATIVE_FACT",
+          "source_index": 46
+        },
+        {
+          "unit_id": "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+          "kind": "NATIVE_FACT",
+          "source_index": 49
+        },
+        {
+          "unit_id": "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+          "kind": "NATIVE_FACT",
+          "source_index": 54
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 435
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 436
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 443
+        }
+      ],
+      "description": "The incident response plan describes investigating, containing, and mitigating information-security incidents and reporting internally. Assessments, internal/external audits, penetration tests, and the Board Audit Committee concern information security and internal oversight. NIST and ISO are identified as framework sources, not authorities investigating Marriott. These uses of investigating and audit do not establish a D03 governmental investigation fact."
+    },
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Current governmental-investigation status of the Starwood Data Security Incident referenced by the cybersecurity materiality statement",
+      "event_dates": [],
+      "reported_context_times": [
+        "FY2025 reporting context; the materiality statement is not an action date"
+      ],
+      "status": "The assigned native fact states a materiality assessment, not present governmental involvement or universal closure. The supplied cross-reference leaves the remaining current investigative status unresolved.",
+      "evidence": [
+        {
+          "unit_id": "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+          "kind": "NATIVE_FACT",
+          "source_index": 51
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 441
+        },
+        {
+          "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1317
+        },
+        {
+          "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1318
+        }
+      ],
+      "description": "Fact 51 says previous cybersecurity incidents have not materially affected and are not reasonably likely to materially affect the specified long-term business outcomes. The complete visible paragraph links that discussion to the Starwood matter in Note 7. That note says most governmental inquiries and investigations have been resolved or no longer appear active and separately retains uncertainty about regulatory inquiries or investigations. Most and apparently inactive do not prove all are closed, while uncertainty about losses does not assert a current action. Retain this linked status uncertainty without turning the materiality flag into NO_ACTION_DECLARATION, treating private lawsuits as government investigations, or creating a second company matter from context-only repetitions."
+    },
+    {
+      "kind": "UNRESOLVED",
+      "subject": "D03 investigation/enforcement linkage of tax examinations referenced by the income-tax accounting policy",
+      "event_dates": [],
+      "reported_context_times": [
+        "2023 and 2024 are tax years under audit, not event dates",
+        "Year-end 2025 is the snapshot for issues settled through tax year 2022, not an action date"
+      ],
+      "status": "Tax examinations are expressly ongoing in the referenced source context; their relationship to a governmental investigation or enforcement matter under D03 is not established.",
+      "evidence": [
+        {
+          "unit_id": "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+          "kind": "NATIVE_FACT",
+          "source_index": 418
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1063
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1064
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1065
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1201
+        }
+      ],
+      "description": "Fact 418 is an income-tax accounting policy with continuedat=f-408-1. The complete supplied continuation states the assumed taxing-authority examination used for the recognition threshold and explicitly refers to Note 6; that assumption alone is not an actual investigation. Note 6 says the IRS examines Marriott federal returns, issues through tax year 2022 are settled as of year-end 2025, 2023/2024 audits are ongoing, and foreign/state/local returns are under examination by applicable authorities. The source establishes these actual examinations, but does not establish their linked investigation/enforcement character. Keep that linkage unresolved rather than automatically include or exclude tax audits. Do not infer closure of all tax matters from settled earlier tax years or add a separate matter solely from the repeated context."
+    }
+  ],
+  "scope_current_involvement": "UNRESOLVED",
+  "unresolved": [
+    "The supplied Starwood cross-reference does not identify the remaining governmental actors/actions or confirm current investigative involvement or complete closure. The native materiality assessment cannot fill that gap.",
+    "The IRS and other tax examinations are real and some are expressly ongoing, but the supplied tax-accounting policy and its cross-reference do not establish the D03 investigation/enforcement linkage. Scope current involvement is unresolved within these two responsibility units and does not declare whole-company absence."
+  ]
+}
