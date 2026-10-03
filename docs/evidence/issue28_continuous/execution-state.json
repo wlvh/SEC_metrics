@@ -3682,6 +3682,111 @@
       "ordinary_messages": 2,
       "dedup_note": "No live agent; register and independent summaries have no same patch/scope. Prior D01 punctuation/index and scope views reused, not re-reviewed; underscore task name required by tool schema.",
       "review_started_at": "2026-10-03T04:24:24.688166+00:00"
+    },
+    {
+      "task_name": "diagnose_c02input_76da71e",
+      "purpose": "diagnose",
+      "module": "c02input",
+      "scope_paths": [
+        "/private/tmp/issue28-c02-blind-source-pilot1-20261003/"
+      ],
+      "patch_sha": "76da71e258f71fb42461513710cfbb540de9b28c",
+      "spawned_at": "2026-10-03T05:15:06.404509+00:00",
+      "ended_at": "2026-10-03T05:33:42.673859+00:00",
+      "tool_calls": 54,
+      "result_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/independent-input-76da71e/conclusion.md",
+      "verdict": "COMPLETE_BLIND_DEVELOPMENT_INPUT_DIAGNOSIS_WITH_LIMITS",
+      "status": "DONE",
+      "ordinary_messages": 3,
+      "dedup_note": "No live agent, same SHA or c02input purpose/module result. Older 48-item content audit reused as regression; this isolated context receives only complete source input and no answers; authorized method5.8 and one-time large-original input diagnosis.",
+      "first_recorded_time": "2026-10-03T05:15:55.893751+00:00",
+      "exact_turn_start_not_recorded": true,
+      "initial_diagnosis_ended_at": "2026-10-03T05:24:28.713451+00:00",
+      "incremental_scope": {
+        "patch_sha": "97c3016fcfd2e5efc989ddc56c3e9dcdf99e8a1f",
+        "started_at": "2026-10-03T05:28:30.832333+00:00",
+        "scope_paths": [
+          "/private/tmp/issue28-c02-blind-source-pilot2-20261003/"
+        ],
+        "cumulative_prior_tools": 46,
+        "cumulative_prior_messages": 2,
+        "source_unchanged_reuse_full_read": true
+      },
+      "incremental_tools": 8,
+      "incremental_messages": 1,
+      "no_further_followup_due_message_cap": true
+    },
+    {
+      "task_name": "diagnose_c02input_7733176",
+      "purpose": "diagnose",
+      "module": "c02input",
+      "scope_paths": [
+        "/private/tmp/issue28-c02-paramount-blind-fixed-task-20261003/"
+      ],
+      "patch_sha": "7733176e2318681a63dfb852dadee134763b6cfd",
+      "spawned_at": "2026-10-03T05:48:23.163100+00:00",
+      "ended_at": "2026-10-03T05:57:34.432717+00:00",
+      "tool_calls": 24,
+      "result_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/independent-paramount-input-7733176/conclusion.md",
+      "verdict": "COMPLETE_FIXED_TASK_BLIND_INPUT_DIAGNOSIS_LIMITED",
+      "status": "DONE",
+      "ordinary_messages": 2,
+      "dedup_note": "No live agent, same patch SHA or same source input result. Reuse Enphase full reading/diagnosis; previous agent ended at 3-message cap. New source only uses fixed revised task, not another task iteration; allowed new genuinely uncovered increment under current delegation.",
+      "actual_started_at": "2026-10-03T05:49:07.092092+00:00"
+    },
+    {
+      "task_name": "review_c02native_cd8f587",
+      "purpose": "review",
+      "module": "c02native",
+      "patch_sha": "cd8f5872c2fbbd78400f73f9dce56c9aa0716cfb",
+      "scope_paths": [
+        "scripts/vnext/c02_model_processing.py",
+        "catalog/r6/C02_model_source_development_v1.md",
+        "tests/vnext/test_c02_model_processing.py",
+        "docs/evidence/issue28_continuous/c02-model-native-mapping-20261003/"
+      ],
+      "spawned_at": "2026-10-03T06:45:03.960333+00:00",
+      "ended_at": "2026-10-03T06:55:50Z",
+      "tool_calls": 35,
+      "result_path": "docs/evidence/issue28_continuous/c02-model-native-mapping-20261003/independent-review-cd8f587/conclusion.md",
+      "verdict": "PASS_SCOPED_DEVELOPMENT_NATIVE_MAPPING",
+      "status": "DONE",
+      "ordinary_messages": 3,
+      "dedup_note": "No live agent, same patch SHA/scope or c02native review. Both fixed-task input diagnoses and past C02 selector reviews reused, no semantic re-extraction.",
+      "actual_started_at": "2026-10-03T06:45:52Z"
+    },
+    {
+      "task_name": "diagnose_d03input_fc4f6fc",
+      "purpose": "diagnose",
+      "module": "d03input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint/"
+      ],
+      "patch_sha": "fc4f6fce2961b28599413d8b0877b325476650a5",
+      "spawned_at": "2026-10-03T07:16:12.244547+00:00",
+      "ended_at": "2026-10-03T07:33:36.147049+00:00",
+      "tool_calls": 42,
+      "result_path": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/independent-input-fc4f6fc/conclusion.md",
+      "verdict": "COMPLETE_SCOPED_INPUT_DIAGNOSIS_AFTER_ONE_CONTRACT_CORRECTION",
+      "status": "DONE",
+      "ordinary_messages": 3,
+      "dedup_note": "No live agent or same SHA/d03input diagnostic. Prior recorded module tests and D03 regex reviews reused, no code review or semantic re-extraction of prior answers. Scope is first actual model read of joint original visible text across old boundary; NOT full17unit or live validation.",
+      "actual_started_at": "2026-10-03T07:16:49.900457+00:00",
+      "initial_diagnosis_ended_at": "2026-10-03T07:22:38.218090+00:00",
+      "incremental_scope": {
+        "patch_sha": "1e6f45b0ee3713eabbfd2d8210208f627b9d4ee6",
+        "scope_paths": [
+          "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint-contract-aligned/"
+        ],
+        "started_at": "2026-10-03T07:29:40.455475+00:00",
+        "prior_tools": 36,
+        "prior_messages": 2,
+        "source_unchanged_reuse_read": true,
+        "one_task_correction_only": true
+      },
+      "incremental_tools": 6,
+      "incremental_messages": 1,
+      "no_more_followup_due_message_cap": true
     }
   ],
   "ci_capacity_20260922": {
@@ -11747,5 +11852,131 @@
     "review_path": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md",
     "review_verdict": "PASS_LIMITED_D01_HEADER_RECEIVER",
     "installed_execution_and_rule_files_match_patch_sha": 404
+  },
+  "ai_development_method_20261003": {
+    "authority": "https://github.com/wlvh/SEC_metrics/issues/28#ai-development-20261003",
+    "actual_server_body_read_at": "2026-10-03T05:02:20Z",
+    "input_scope": "Enphase 2026 DEF14A complete 2784 visible blocks; development/regression material",
+    "evidence": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/",
+    "state": "TWO_SAMPLE_LIMITED_DEVELOPMENT_BATCH_AND_QUOTATION_READOUT_COMPLETE",
+    "input_root": "/private/tmp/issue28-c02-blind-source-pilot1-20261003",
+    "input_tokens": 88815,
+    "output_limit": 4096,
+    "no_new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "no_native_or_production_credit": true,
+    "AGENTS_bound_in_current_V13_V14": false,
+    "first_response_tokens": 2098,
+    "first_response_facts": 33,
+    "first_response_unresolved": 5,
+    "full_source_read_by_blind_agent": true,
+    "not_target_provider_test": true,
+    "second_input_root": "/private/tmp/issue28-c02-blind-source-pilot2-20261003",
+    "second_input_tokens": 88916,
+    "source_bytes_unchanged": true,
+    "second_response_facts": 41,
+    "second_response_unresolved": 4,
+    "second_response_tokens": 2489,
+    "quote_groups": 27,
+    "unique_cited_source_blocks": 65,
+    "quote_characters": 14353,
+    "parent_semantics": "Core source reference plus seven source-attributed member assessments matches; no whole-source human omission audit claimed",
+    "native_result_created": false,
+    "whole_company_acceptance": false,
+    "DeepSeek_verified": false,
+    "collaboration_rule": "COLLAB-28-47-v1.2",
+    "batch_manifest": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/batch.json",
+    "substantive_revisions_used": 1,
+    "remaining_substantive_revisions": 0,
+    "sample_count": 2,
+    "task_revisions_used": 1,
+    "task_revisions_remaining": 0,
+    "paramount": {
+      "facts": 42,
+      "unresolved": 2,
+      "input_tokens": 39886,
+      "output_reference_tokens": 2393,
+      "quote_groups": 12,
+      "quote_characters": 22355,
+      "full_input_read": true,
+      "independent_input_context": true,
+      "native_or_390_credit": false
+    },
+    "comparison_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/batch-result.md",
+    "readout_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/readout.md",
+    "minimum_request_plan_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/minimum-target-request-plan.json",
+    "normal_reader_did_not_inject_development_answers": true,
+    "DeepSeek_permission": false
+  },
+  "shared_increment_read_20261003_0505": {
+    "own_sha": "0387187501ddfb5c31df774ddc5540257f4f3ad8",
+    "peer47_sha": "20497f4dd3b8e745a01d8892606bcf5cff769729",
+    "peer54_sha": "191d148775995827f957e2a0d22ed70268bfcba2",
+    "fetch_first_combined_failure": "unknown assumed #54 branch task/company-separated-compute; no current claim made; retried actual PR55 head task/sec-company-compute successfully",
+    "peer47_disposition": "B06 older fallback forms and FY2021 JPM proxy are pending patches, not live core. Current Ford equity/accrual and current C02 identity gaps unchanged; do not apply to match repair numbers. D01 received separately at31beeab.",
+    "peer54_disposition": "Historical batch replay/caching and company view/export scope revisions; own earlier frozen C04/D04/D01 consumers remain pinned to their tested versions. No broad PASS upgrade or package implementation copied; assess actual delta before new consumer trust.",
+    "technical_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5965823404",
+    "issue28_section3_readback": "2026-10-03T05:05:35Z",
+    "current_main_ci": {
+      "sha": "0387187501ddfb5c31df774ddc5540257f4f3ad8",
+      "id": 37098614915,
+      "status": "queued",
+      "conclusion": null
+    }
+  },
+  "c02_model_native_pending_mapping_20261003": {
+    "state": "NATIVE_PENDING_MAPPING_PERSISTENCE_COLD_AND_EXACT_DIFF_REVIEW_PASS_LIMITED",
+    "evidence": "docs/evidence/issue28_continuous/c02-model-native-mapping-20261003/README.md",
+    "source_method_batch_reused": "10d725b0542667247b6648d4984dd796b9a06e9b",
+    "task_revisions_added": 0,
+    "current_ordinary_default_changed": false,
+    "current_execution_binding_changed": false,
+    "real_controller_permission_added": false,
+    "native_result_or_run_created": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "peer47_read": "a651c48c34e95660b3f470b5f22398b718f800ed",
+    "peer47_disposition": "Applied D01 bytes equal received fix; C02 repair49/residuals do not reopen paused v4 or change full raw source model input. Historical B06/FY2021 proxy changes do not apply to these current sources.",
+    "owner_interface_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5966312527",
+    "actual_source_case_admission": true,
+    "system_approval_eligible": false,
+    "fast_passed_selectors": 152,
+    "fast_seconds": 102.603,
+    "short_tests_passed": 7,
+    "real_saved_negative_controls": 5,
+    "patch_sha": "cd8f5872c2fbbd78400f73f9dce56c9aa0716cfb",
+    "review_path": "docs/evidence/issue28_continuous/c02-model-native-mapping-20261003/independent-review-cd8f587/conclusion.md",
+    "review_verdict": "PASS_SCOPED_DEVELOPMENT_NATIVE_MAPPING",
+    "next_required": "Explicit semantic acceptance and full model Run/update integration; no new real-purpose permission granted"
+  },
+  "d03_model_cross_group_20261003": {
+    "state": "ALIGNED_MODEL_AND_ORIGINAL_SOURCE_CROSS_GROUP_DIAGNOSIS_COMPLETE_LIMITED",
+    "evidence": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/README.md",
+    "initial_overall": "EXPLICIT_PRESENT_based_on_tax_examinations; not current D03 acceptance",
+    "reference_omission_found": true,
+    "initial_date_field_errors_retained": true,
+    "scope": "all visible text, not full17units",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "target_provider_authorized": false,
+    "substantive_task_revisions_used": 1,
+    "aligned_overall": "UNRESOLVED",
+    "aligned_findings": 7,
+    "aligned_output_reference_tokens": 1793,
+    "aligned_input_reference_tokens": 65705,
+    "all17unit_or_native_acceptance": false,
+    "source_contract_and_original_response_kept": true,
+    "remaining_source_size_path": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/remaining-source-size.json",
+    "actual_full_source_call_plan_unchanged": true,
+    "task_revisions_remaining": 0
   }
 }

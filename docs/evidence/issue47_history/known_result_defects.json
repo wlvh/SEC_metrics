@@ -7537,6 +7537,33 @@
      "integration": "MERGED; no change"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "6219efe6",
+   "own_commit_at_read": "290ddd34",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; only latest_peer_read_commit moves (af29ab2f to a651c48c, #28's read of #47's 191d1487 check); no defect entry added or changed",
+   "baseline": "Read since 03871875: ten commits, their file lists, the C02 and D03 READMEs and the register delta; merged into task/sec-history-five-year with the AGENTS entry taken as #28 wrote it (v1.2 short entry). None of the changed files is recorded in the issue_47_v1 snapshot (mint --check passes unchanged), so the closure and the model-egress receipt do not move.",
+   "increments": [
+    {
+     "commit": "76da71e2, 97c3016f, a6a131c0, 7733176e, 10d725b0, cd8f5872, 2b7b7b59",
+     "marker": "[shared-with-#47]",
+     "subject": "C02 model development batch: source-only input, blind extraction, fixed two-sample batch, mapping of exact development answers into native pending review",
+     "affects_47": "No #47 value moves: scripts/vnext/c02_model_processing.py and catalog/r6/C02_model_source_development_v1.md are new and reached only through #28's explicit development API; #47's C02 still runs the _v3 selector. Relevant to #47's C02/D02 method validation (#47 body section 3.1): #28's input (every visible block of the source in order, prompt.txt asking for composition facts and genuine unresolved items with subject, time and source references, 4096 output tokens), its postprocessing (exact quote groups, mechanical checks only) and its mapping to OBSERVATION_CANDIDATE REVIEW_REQUIRED plus REVIEW_UNIT PENDING are the format #47's historical test should reuse instead of a parallel one. Development material only; no call, Result or acceptance credit in either direction.",
+     "integration": "MERGED; method alignment not yet consumed (next #47 step after the call preparation)"
+    },
+    {
+     "commit": "fc4f6fce, 1e6f45b0, 6219efe6",
+     "marker": "[shared-with-#47]",
+     "subject": "D03 cross-group diagnostic on Marriott FY2025 and its source boundary",
+     "affects_47": "None: #47 has no D03 route and does not maintain the D03 core (#28 does, #47 body section 3 and v1.2 item 1).",
+     "integration": "MERGED; no change"
+    }
+   ]
   }
  ]
 }

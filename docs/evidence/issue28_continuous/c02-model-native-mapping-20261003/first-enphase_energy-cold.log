@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 859, in _read_object
+    return read_requirement_object(path=path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v1.py", line 152, in read_requirement_object
+    _regular_file(path=path, label="Requirement JSON")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v1.py", line 146, in _regular_file
+    raise RequirementProfileError("{} is missing or unsafe".format(label))
+vnext.requirement_profile_v1.RequirementProfileError: Requirement JSON is missing or unsafe
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 12, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2016, in load_requirement_snapshot
+    baseline = _read_object(path=snapshot_dir / "baseline_manifest.json")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 861, in _read_object
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Requirement JSON is missing or unsafe

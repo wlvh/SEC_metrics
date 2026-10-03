@@ -1,0 +1,92 @@
+{
+  "findings": [
+    {
+      "kind": "CURRENT_GOVERNMENT_PROCESS",
+      "subject": "Marriott federal income tax returns for tax years 2023 and 2024; U.S. Internal Revenue Service",
+      "event_dates": [],
+      "status": "The 2023 and 2024 tax-year audits are explicitly currently ongoing.",
+      "evidence_blocks": [1201],
+      "description": "The IRS is the examining governmental authority and Marriott is the taxpayer whose returns are examined. 2023 and 2024 identify the tax periods, not the audit start dates. The filing describes an actual ongoing tax examination; it does not allege a criminal investigation or establish a violation."
+    },
+    {
+      "kind": "CURRENT_GOVERNMENT_PROCESS",
+      "subject": "Marriott and subsidiary foreign, state, and local income tax returns; applicable taxing authorities",
+      "event_dates": [],
+      "status": "Various returns are explicitly under examination.",
+      "evidence_blocks": [1201],
+      "description": "The disclosure states present governmental examinations in aggregate, without identifying the individual authorities, jurisdictions, tax periods, or allegations. The lack of named cases does not negate the explicit present examinations."
+    },
+    {
+      "kind": "RESOLVED_OR_PARTLY_RESOLVED",
+      "subject": "IRS federal income tax issues for tax years through 2022",
+      "event_dates": ["year-end 2025 status"],
+      "status": "All issues for tax years through 2022 were settled as of year-end 2025; later tax-year audits remain ongoing.",
+      "evidence_blocks": [1201],
+      "description": "This resolution is limited to issues for the specified earlier tax years. It is not a company-wide statement that governmental examinations have ended, and the disclosure does not give the dates of individual settlements."
+    },
+    {
+      "kind": "REPORTED_GOVERNMENT_PROCESS",
+      "subject": "EPA-alleged Clean Air Act violations at an unnamed hotel managed by Marriott",
+      "event_dates": ["2025 second quarter"],
+      "status": "Marriott received an EPA letter offering settlement discussions; later progress, final resolution, and current active investigation status are not stated.",
+      "evidence_blocks": [449, 450, 453],
+      "description": "The EPA is the governmental actor, Marriott is the disclosed letter recipient, and the alleged violations occurred at a hotel Marriott manages. The text does not identify the hotel's owner or specify the legal respondent. Marriott says it does not believe the matter will materially adversely affect its business or finances; that assessment is not a resolution or denial of the reported governmental action."
+    },
+    {
+      "kind": "RESOLVED_OR_PARTLY_RESOLVED",
+      "subject": "Starwood Data Security Incident resolutions with the FTC and attorney general offices of 49 U.S. states and the District of Columbia",
+      "event_dates": ["2024 fourth quarter"],
+      "status": "Final resolutions reached, with various long-term requirements for Marriott's data privacy and information security programs.",
+      "evidence_blocks": [416, 438],
+      "description": "The FTC and the specified attorney general offices are governmental counterparties and Marriott is the company subject to the resolutions. Continuing compliance obligations do not by themselves prove that the original investigations remain active. These named resolutions do not establish that every governmental inquiry relating to the incident is resolved."
+    },
+    {
+      "kind": "RESOLVED_OR_PARTLY_RESOLVED",
+      "subject": "U.S. federal, U.S. state, and foreign governmental inquiries and investigations relating to the Starwood Data Security Incident",
+      "event_dates": ["2018-11-30 incident announcement"],
+      "status": "Most have been resolved or no longer appear active; the current status of the unspecified remainder is unproved.",
+      "evidence_blocks": [416, 493, 1311, 1317, 1318],
+      "description": "The incident announcement led to governmental investigations against Marriott. The word most limits the resolution claim, and no longer appear active is qualified rather than confirmed closure. Note 7 still states uncertainty about regulatory inquiries or investigations and possible additional losses. That uncertainty does not establish which, if any, remaining investigation is currently active. The date given is the incident announcement, not an asserted start date for each governmental process."
+    },
+    {
+      "kind": "PRIVATE_OR_INTERNAL",
+      "subject": "Consumer and other private plaintiffs' Starwood Data Security Incident litigation against Marriott",
+      "event_dates": ["2025-06-03 Fourth Circuit reversal of class certification"],
+      "status": "Related private litigation remains defended, with MDL mediation discussions and an estimated loss accrual as of December 31, 2025.",
+      "evidence_blocks": [1313, 1316],
+      "description": "Consumer and other plaintiffs seek damages and related relief; Marriott is the defendant. The federal, state, and Canadian courts adjudicate those private claims and are not thereby governmental investigators. The Fourth Circuit reversed class certification, after which some plaintiffs sued individually in New York; the Canadian cases effectively consolidated in Ontario. These private proceedings must not be merged with the governmental investigations merely because they concern the same incident or appear under the same heading."
+    },
+    {
+      "kind": "CONDITIONAL_RISK",
+      "subject": "Potential enforcement for alleged or actual noncompliance with FTC and attorney general resolutions",
+      "event_dates": [],
+      "status": "Conditional future enforcement or contempt proceedings are described; no such new action is asserted as having occurred.",
+      "evidence_blocks": [416],
+      "description": "Enforcement, contempt proceedings, fines, penalties, and additional required program changes could follow noncompliance. This is distinct from the actual final resolutions and does not prove a current new enforcement action."
+    },
+    {
+      "kind": "CONDITIONAL_RISK",
+      "subject": "General regulatory, labor, technology, privacy, and cybersecurity enforcement exposure",
+      "event_dates": [],
+      "status": "Generic or conditional investigation and enforcement risks, not identified present governmental cases.",
+      "evidence_blocks": [372, 375, 385, 390, 413, 421, 423, 426],
+      "description": "These passages describe how noncompliance, reputational events, labor disputes, emerging technologies, cybersecurity incidents, or changes in privacy regulation can result in inquiries, investigations, proceedings, or penalties. Some passages acknowledge past adverse effects, but do not establish a particular current government investigation. Page-break continuations are read together."
+    },
+    {
+      "kind": "CONTEXT",
+      "subject": "SEC unresolved staff comments",
+      "event_dates": [],
+      "status": "Item 1B reports none within that item's scope.",
+      "evidence_blocks": [430, 431],
+      "description": "This scoped statement does not assert an absence of governmental investigations or enforcement generally, and it does not negate the expressly ongoing tax examinations."
+    }
+  ],
+  "overall_current_involvement": "EXPLICIT_PRESENT",
+  "unresolved": [
+    "The EPA letter establishes a reported governmental action in the 2025 second quarter, but the supplied text does not establish whether settlement discussions or an investigation remain active at filing, or whether the matter has been resolved.",
+    "For the Starwood incident, most governmental inquiries and investigations are resolved or no longer appear active; the identities and current status of any remainder are unspecified. Regulatory uncertainty and inability to estimate further losses do not prove an active remaining investigation.",
+    "The foreign, state, and local tax examinations are explicitly present in aggregate, but individual authorities, return periods, and allegations are unspecified.",
+    "Overall explicit present involvement is supported by the ongoing IRS and other tax examinations, not by treating the EPA event date, residual Starwood uncertainty, private litigation, or conditional risks as proof of an ongoing government investigation.",
+    "This is a joint visible-text development diagnosis only. The 12 omitted native fact/supplement units and missing referenced external documents were not read; no full 17-unit absence or whole-company completeness conclusion is established."
+  ]
+}

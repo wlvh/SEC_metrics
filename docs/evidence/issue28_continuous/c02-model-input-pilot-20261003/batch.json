@@ -1,0 +1,41 @@
+{
+  "rule": "COLLAB-28-47-v1.2 / Issue28 section5.8",
+  "samples": [
+    {
+      "company": "enphase_energy",
+      "source_sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+      "input_root": "/private/tmp/issue28-c02-blind-source-pilot2-20261003",
+      "status": "INITIAL_PLUS_ONE_SUBSTANTIVE_REVISION_DONE",
+      "input_tokens": 88916,
+      "raw_output_tokens": 2489,
+      "core_reference": "reference.md",
+      "development_or_regression": true
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "source_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+      "input_root": "/private/tmp/issue28-c02-paramount-blind-fixed-task-20261003",
+      "status": "FIXED_TASK_FIRST_APPLICATION_COMPLETE_LIMITED",
+      "input_tokens": 39886,
+      "core_reference": "paramount-reference.md",
+      "development_or_regression": true,
+      "metadata_only_prompt_adaptation": true,
+      "raw_output_tokens": 2393,
+      "facts": 42,
+      "unresolved": 2,
+      "quote_groups": 12
+    }
+  ],
+  "maximum_substantive_task_revisions": 1,
+  "substantive_task_revisions_used": 1,
+  "further_revision_or_renamed_same_method_trial_allowed": false,
+  "DeepSeek_authorized": false,
+  "business_calls_new": [
+    0,
+    0,
+    0
+  ],
+  "native_or_production_credit": false,
+  "note": "Second representative source is first application of the same revised task, not another prompt iteration. Previous source selection/reading reused; no old model answers in either input.",
+  "status": "LIMITED_DEVELOPMENT_BATCH_COMPLETE_PENDING_NATIVE_MAPPING_AND_TARGET_MODEL"
+}
