@@ -1,0 +1,55 @@
+{
+  "existing_full_fast": {
+    "duration_seconds": 56.78,
+    "evidence_tier": "FAST_LOCAL_ONLY",
+    "jobs": 4,
+    "per_case_timeout_seconds": 30,
+    "selector_generation": 2,
+    "status": "PASSED",
+    "suite": "fast"
+  },
+  "full_fast_entries": 150,
+  "full_fast_failures": 0,
+  "E01_entries": [
+    {
+      "duration_seconds": 0.103,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.007s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_deterministic_router.DeterministicRouterTest.test_e01_matched_event_key_set_has_exact_legacy_parity"
+    },
+    {
+      "duration_seconds": 0.085,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardFastTest"
+    },
+    {
+      "duration_seconds": 0.103,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 0.013s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_e01_item_source.E01ItemSourceTest"
+    },
+    {
+      "duration_seconds": 0.081,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_e01_layout_successor.E01LayoutSuccessorFastTest"
+    }
+  ],
+  "existing_log_text": {
+    "fast.log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nOK\n",
+    "material.log": ".\n----------------------------------------------------------------------\nRan 1 test in 12.566s\n\nOK\n",
+    "source-audit.log": ".\n----------------------------------------------------------------------\nRan 1 test in 11.199s\n\nOK\n",
+    "rebind.log": "{\"status\": \"PASS_E01_SHARED_LAYOUT_SUCCESSOR_BINDING\", \"parent\": \"sha256:7644b72b80a1a316bc04c3cd9bc486510d779adb844777e63c59d8d39ed424de\", \"child\": \"sha256:367c186100561726d28025fa1fa97a531835912b5e4e1618498f3eb38e0be3ab\", \"receipts\": 3}\n",
+    "rebind-first-rule-list-missing.log": "Traceback (most recent call last):\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py\", line 2028, in load_requirement_snapshot\n    return load_profile_requirement_snapshot(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py\", line 77, in load_profile_requirement_snapshot\n    return engine.load_profile_requirement_snapshot(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v14.py\", line 65, in load_profile_requirement_snapshot\n    need(set(baseline[\"new_rule_files\"]) == set(policy[\"rule_paths\"]),\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v14.py\", line 18, in need\n    raise v1.RequirementProfileError(reason)\nvnext.requirement_profile_v1.RequirementProfileError: Normal successor rule set differs\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-e01-layout-successor-20261003/rebind.py\", line 59, in <module>\n    parent_req=load_requirement_snapshot(snapshot_dir=PARENT)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py\", line 2033, in load_requirement_snapshot\n    raise RequirementError(str(error)) from error\nvnext.requirements.RequirementError: Normal successor rule set differs\n",
+    "install.log": "{\"installed_companies\": 2, \"candidate_items\": 3, \"elapsed_seconds\": 36.828, \"new_real_calls\": [0, 0, 0]}\n",
+    "cold-enphase.log": "{\"company\": \"enphase_energy\", \"candidate_count\": 0, \"same_input_id\": true, \"elapsed_seconds\": 14.606, \"new_real_calls\": [0, 0, 0]}\n",
+    "cold-pfizer.log": "{\"company\": \"pfizer\", \"candidate_count\": 3, \"same_input_id\": true, \"elapsed_seconds\": 16.56, \"new_real_calls\": [0, 0, 0]}\n"
+  },
+  "material_native_cold_or_full_fast_rerun": false,
+  "no_new_run_or_result_claim": true
+}

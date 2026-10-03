@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/tmp/b06-check-compat.py", line 7, in <module>
+    v=PublicationView.open(publication_root=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 6631, in open
+    return cls._open_paths(
+           ~~~~~~~~~~~~~~~^
+        publications_dir=layout["publications_dir"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pointer_path=pointer_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 6658, in _open_paths
+    manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4781, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 398, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 284, in _compose
+    public, projection_manifest, validation = _public_files(projection, adoption, requirement, ledger, meta, runtime_root, predecessor)
+                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 190, in _public_files
+    from tools.check_vnext_semantics import run_audit
+ModuleNotFoundError: No module named 'tools'

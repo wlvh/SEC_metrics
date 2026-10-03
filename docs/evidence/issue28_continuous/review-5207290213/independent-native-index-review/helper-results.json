@@ -1,0 +1,240 @@
+{
+  "scope": "Root-authored native_unit_index and recursive D04/B13 source validators only",
+  "cases": [
+    {
+      "metric": "D04",
+      "case": "correct_indexed",
+      "outcome": "ACCEPTED",
+      "reason": null
+    },
+    {
+      "metric": "D04",
+      "case": "reordered_indexed_array",
+      "outcome": "ACCEPTED",
+      "reason": null
+    },
+    {
+      "metric": "D04",
+      "case": "boolean",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "string",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "float",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "negative",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "out_of_range",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "duplicate",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "omitted_unit",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_CENSUS_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "model_echoed_request_hash",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_CENSUS_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "model_echoed_unit_hash",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "cross_unit_reference",
+      "outcome": "REJECTED",
+      "reason": "D04_NATIVE_REFERENCE_OUTSIDE_SOURCE"
+    },
+    {
+      "metric": "D04",
+      "case": "wrong_original_business_classification",
+      "outcome": "REJECTED",
+      "reason": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+    },
+    {
+      "metric": "D04",
+      "case": "resigned_index_version",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_CONTRACT_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "resigned_base_id",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "resigned_requirements",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "resigned_index_schema",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "resigned_schema_count",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "D04",
+      "case": "resigned_unit_order",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "correct_indexed",
+      "outcome": "ACCEPTED",
+      "reason": null
+    },
+    {
+      "metric": "B13",
+      "case": "reordered_indexed_array",
+      "outcome": "ACCEPTED",
+      "reason": null
+    },
+    {
+      "metric": "B13",
+      "case": "boolean",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "string",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "float",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "negative",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "out_of_range",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "duplicate",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "omitted_unit",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_CENSUS_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "model_echoed_request_hash",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_CENSUS_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "model_echoed_unit_hash",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "cross_unit_reference",
+      "outcome": "REJECTED",
+      "reason": "B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE"
+    },
+    {
+      "metric": "B13",
+      "case": "wrong_original_business_classification",
+      "outcome": "REJECTED",
+      "reason": "B13_TAX_CREDIT_IS_NOT_PRODUCTION_OR_BORROWING_CAPACITY"
+    },
+    {
+      "metric": "B13",
+      "case": "resigned_index_version",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_CONTRACT_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "resigned_base_id",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "resigned_requirements",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "resigned_index_schema",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "resigned_schema_count",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "case": "resigned_unit_order",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_INDEX_BASE_OR_MAPPING_CHANGED"
+    }
+  ],
+  "synthetic_source_units": true,
+  "actual_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "base_requests_unchanged": true
+}

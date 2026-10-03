@@ -1,0 +1,4 @@
+exact_allowed captured= ['https://www.sec.gov/Archives/edgar/data/1048286/000104828627000001/new-annual.htm'] last_error= {'stage': 'SOURCE_SCOPE', 'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}
+unrelated_inner_error captured= [] last_error= {'stage': 'CAPTURE', 'error_type': 'ValueError', 'reason': 'ORDINARY_REFRESH_RESUME_NEXT_SOURCE_NOT_C04_BOUND'}
+not_in_prior_allowed_set captured= [] last_error= {'stage': 'CAPTURE', 'error_type': 'ValueError', 'reason': 'ORDINARY_REFRESH_RESUME_NEXT_SOURCE_NOT_C04_BOUND'}
+unverified_inventory captured= [] last_error= {'stage': 'DISCOVERY', 'error_type': 'ValueError', 'reason': 'ORDINARY_REFRESH_C04_DECLARED_SOURCE_NOT_READY'}

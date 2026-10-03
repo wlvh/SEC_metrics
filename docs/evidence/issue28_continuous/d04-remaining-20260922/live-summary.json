@@ -1,0 +1,100 @@
+{
+  "status": "BOUNDED_ATTEMPT_COMPLETED_WITH_COORDINATE_GAPS",
+  "requirement_closure_hash": "sha256:4cc2d5ee63b181942e41da6411d52e6cbe4763ed841c6638ec1553bba113c4ee",
+  "before": [
+    63,
+    63,
+    49
+  ],
+  "companies": [
+    {
+      "company_id": "marriott_international",
+      "planned_request_count": 4,
+      "calls": [],
+      "status": "STOPPED_COORDINATE_EXCEPTION_NO_RETRY",
+      "error_type": "AnnualCandidateError",
+      "error": "CANDIDATE_OWNER_PROVENANCE_UNAVAILABLE"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "planned_request_count": 6,
+      "calls": [],
+      "status": "STOPPED_COORDINATE_EXCEPTION_NO_RETRY",
+      "error_type": "AnnualCandidateError",
+      "error": "CANDIDATE_OWNER_PROVENANCE_UNAVAILABLE"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "planned_request_count": 27,
+      "calls": [],
+      "status": "STOPPED_COORDINATE_EXCEPTION_NO_RETRY",
+      "error_type": "AnnualCandidateError",
+      "error": "CANDIDATE_OWNER_PROVENANCE_UNAVAILABLE"
+    },
+    {
+      "company_id": "salesforce",
+      "planned_request_count": 5,
+      "calls": [],
+      "status": "STOPPED_COORDINATE_EXCEPTION_NO_RETRY",
+      "error_type": "AnnualCandidateError",
+      "error": "CANDIDATE_OWNER_PROVENANCE_UNAVAILABLE"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "planned_request_count": 8,
+      "calls": [],
+      "status": "STOPPED_COORDINATE_EXCEPTION_NO_RETRY",
+      "error_type": "AnnualCandidateError",
+      "error": "CANDIDATE_OWNER_PROVENANCE_UNAVAILABLE"
+    },
+    {
+      "company_id": "macys",
+      "planned_request_count": 5,
+      "calls": [],
+      "status": "STOPPED_COORDINATE_EXCEPTION_NO_RETRY",
+      "error_type": "AnnualCandidateError",
+      "error": "CANDIDATE_OWNER_PROVENANCE_UNAVAILABLE"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "planned_request_count": 10,
+      "calls": [
+        {
+          "ordinal": 113,
+          "status": "FAILED_TERMINAL",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0113",
+          "stop_reason": ""
+        }
+      ],
+      "status": "CONTENT_FAILURE_NO_RETRY"
+    },
+    {
+      "company_id": "enphase_energy",
+      "planned_request_count": 6,
+      "calls": [
+        {
+          "ordinal": 114,
+          "status": "FAILED_TERMINAL",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0114",
+          "stop_reason": ""
+        }
+      ],
+      "status": "CONTENT_FAILURE_NO_RETRY"
+    }
+  ],
+  "allowed_provider_requests": 71,
+  "production_authorized": false,
+  "after": [
+    65,
+    65,
+    49
+  ],
+  "last_ordinal": 114,
+  "seconds": 708.997,
+  "stopped_channels": [],
+  "new_calls": [
+    2,
+    2,
+    0
+  ]
+}

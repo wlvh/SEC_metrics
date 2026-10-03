@@ -1,0 +1,27 @@
+test_real_saved_salesforce_run_cannot_enter_unified_release (tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest.test_real_saved_salesforce_run_cannot_enter_unified_release) ... ERROR
+
+======================================================================
+ERROR: test_real_saved_salesforce_run_cannot_enter_unified_release (tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest.test_real_saved_salesforce_run_cannot_enter_unified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b03_depreciation_scope.py", line 83, in test_real_saved_salesforce_run_cannot_enter_unified_release
+    install_normal_inputs(data_root=data, company_id='salesforce',
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        metric_id='B03', source_root=ROOT)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 229, in install_normal_inputs
+    source_root = ROOT if source_root is None else _external(source_root)
+                                                   ~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 35, in _external
+    return check(Path(path))
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_new_source.py", line 31, in _external
+    need(path!=root and root not in path.parents and not (path/'outputs/active_publication.json').exists(),'B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)

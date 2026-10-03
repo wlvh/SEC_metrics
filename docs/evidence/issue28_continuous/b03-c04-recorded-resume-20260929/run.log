@@ -1,0 +1,9 @@
+{"actual_http_requests": 0, "missing_saved_urls": ["https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000168/crm-20251015.htm", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000168/0001108524-25-000168.hdr.sgml", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000207/crm-20251118.htm", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000207/0001108524-25-000207.hdr.sgml", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000234/crm-20251203.htm", "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000234/0001108524-25-000234.hdr.sgml"], "raw_bodies_authenticated": true, "stage": "source_setup"}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b03-c04-recorded-resume-20260929/probe.py", line 175, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b03-c04-recorded-resume-20260929/probe.py", line 91, in main
+    ordinal=result['terminal']['ordinal'],
+            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'ordinal'

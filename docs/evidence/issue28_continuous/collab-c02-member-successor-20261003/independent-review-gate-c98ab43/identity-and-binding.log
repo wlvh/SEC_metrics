@@ -1,0 +1,188 @@
+{
+  "status": "PASS_EXACT_GATE_BINDING_INCREMENT",
+  "utc": "2026-10-02T17:54:30.956082+00:00",
+  "patch_sha": "c98ab43cfb7c4c568827daa9223a6fcdda96cf76",
+  "parent_sha": "ee289953812c197734b543bf5282fe1e44142931",
+  "old_parent_closure": "sha256:1b2fe50b46574602c4a4422f80ab3306bd4a0ce40024c955b64654e58aa0104f",
+  "old_child_closure": "sha256:3117ac9bf6311c70f0648c2501e47a7438e625aaa2771c5ca92507a92caeec2f",
+  "old_child_execution": "sha256:23418c162b900e10c056aedbaaccb24cbee6d96f1b1d7c96839e2451a7a42517",
+  "new_parent_closure": "sha256:c6a27c7d42656a5939253d49398f0fa269505f62a92fb3a9bf15f981b4fbe2e2",
+  "new_child_closure": "sha256:2af6547b8cced3739a6dd654a8ff2b426d4dd473213d67db938727fb39f0ef02",
+  "new_child_execution": "sha256:056641dedf84a814d330ed2d02c37ec90894f59f18d701addddd3e7057d06ca3",
+  "bound_checks": [
+    {
+      "requirement": "issue_28_v13",
+      "closure": "sha256:c6a27c7d42656a5939253d49398f0fa269505f62a92fb3a9bf15f981b4fbe2e2",
+      "execution_file_count": 397,
+      "execution_authority_validated": true
+    },
+    {
+      "requirement": "issue_28_v14",
+      "closure": "sha256:2af6547b8cced3739a6dd654a8ff2b426d4dd473213d67db938727fb39f0ef02",
+      "execution_file_count": 501,
+      "execution_authority_validated": true
+    }
+  ],
+  "receipt_checks": [
+    {
+      "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+      "changed_fields": [
+        "execution_authority_hash",
+        "requirement_closure_hash"
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+      "changed_fields": [
+        "execution_authority_hash"
+      ],
+      "calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+      "changed_fields": [
+        "execution_authority_hash"
+      ],
+      "calls": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "scoped_file_identity_checks": [
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "sha256": "ffb07907645fe8181725077b593f7ed8900013f6fadf1a2ae49d5dbce7fbb5ae",
+      "size": 37564,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "sha256": "b1dbb1d18408324742c236017f3883245c5b40a680992e0826c978611eb19f9b",
+      "size": 27448,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "tests/vnext/test_c02_member_successor.py",
+      "sha256": "e304447c00c8183616171cd1c397402b3cb95521342b4510d64dfa417f6ae6db",
+      "size": 6045,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "sha256": "b37c7df1c36df7acab349eaf5c26b8360b6b3e81038d80c681d8c7449b7c0f0f",
+      "size": 82786,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "c25dcc054626bd6256cfb2de42ff2af35afa066b870ad2114de1820ed81a56e0",
+      "size": 95076,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "sha256": "ba2393b5f3dcce29c78bdecec6d12f6900f2e0ab503e4b34f6b071f6190ea96b",
+      "size": 520,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+      "sha256": "266a809fc6012d49a1543176329378e6de43ff515c23e60d0b57824f4db870f7",
+      "size": 17957,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+      "sha256": "35538a71a07f4c93029876c0366dce7fb385ca8499f0edae9cdd16160663cc49",
+      "size": 10643,
+      "equals_patch_sha": true
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+      "sha256": "b0a664ac721872ca07c3b2e89643a46505b1ef7498304ea108133feea3ecc5b8",
+      "size": 9479,
+      "equals_patch_sha": true
+    }
+  ],
+  "installed_package_raw_identity_checks": [
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "sha256": "adabf8f61b923f7c615899e2bd243fa55a3dbe875a3d7b048382e23a89578921",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "sha256": "11cc149975457d5e8d4ac34787c037749ef2d4484cb6249a49c022016110ee80",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "sha256": "447bf61d6a9663b8ae222e22b152af477979db7cc128e3ead71f287248170434",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v13/CONTRACT.md",
+      "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v13/decision_register.json",
+      "sha256": "8851e2d41ac5d4642847e4c80c78d5add516bb55aa04825f9f9dbc770e985938",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v13/invariant_profile.json",
+      "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v13/transfer_manifest.json",
+      "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "c1c1ca54004d565c7144fcf7f914a6ea887077d0b51f3cb8405adac00c4bd088",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v14/CONTRACT.md",
+      "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v14/decision_register.json",
+      "sha256": "c83648909944ce5ede842d7ae1e6d31ac8320f368eef3b7c2876c13bffb22109",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v14/invariant_profile.json",
+      "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+      "equals_pre_gate_parent": true
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "sha256": "2e84f095d8a73deabc747f4aba9241b2fb78be9bc372a817682f84a9bc3c3dae",
+      "equals_pre_gate_parent": true
+    }
+  ],
+  "installed_package_executed": false,
+  "new_run_created": false,
+  "current_core_review": "NEEDS_FIX_INHERITED",
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

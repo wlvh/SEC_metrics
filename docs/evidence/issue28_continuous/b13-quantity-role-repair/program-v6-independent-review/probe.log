@@ -1,0 +1,89 @@
+{
+  "patch_sha256": "edbc9385404aad8048bd3f0a2b4e87c336efc4c1b078c44d7d342fa7b37dc52f",
+  "rows": [
+    {
+      "case": "program_pair_candidate_evidence",
+      "outcome": "PASS",
+      "value": "PASS"
+    },
+    {
+      "case": "original_source_calculator_pair",
+      "outcome": "PASS",
+      "value": "0.8"
+    },
+    {
+      "case": "omit_unit",
+      "outcome": "REJECTED",
+      "reason": "D04_RESPONSE_UNIT_SET_INCOMPLETE"
+    },
+    {
+      "case": "duplicate_unit",
+      "outcome": "REJECTED",
+      "reason": "D04_RESPONSE_UNIT_SET_INCOMPLETE"
+    },
+    {
+      "case": "false_review",
+      "outcome": "REJECTED",
+      "reason": "D04_UNIT_REVIEW_MISSING_OR_DUPLICATE"
+    },
+    {
+      "case": "redundant_model_OTHER_CONTEXT",
+      "outcome": "PROGRAM_ROLE_RETAINED",
+      "calculator_value": "0.8"
+    },
+    {
+      "case": "model_kind_HISTORICAL_STATEMENT",
+      "outcome": "REJECTED",
+      "reason": "D04_CATEGORY_SCOPE_CONFLICT"
+    },
+    {
+      "case": "model_kind_ACTUAL_PRODUCTION",
+      "outcome": "REJECTED",
+      "reason": "D04_FINDING_ENUM"
+    },
+    {
+      "case": "model_kind_AVAILABLE_CAPACITY",
+      "outcome": "REJECTED",
+      "reason": "D04_FINDING_ENUM"
+    },
+    {
+      "case": "original_raw_vs_resigned_source",
+      "outcome": "REJECTED",
+      "reason": "B13_QUANTITY_SOURCE_BLOCK_CHANGED"
+    },
+    {
+      "case": "resigned_request_remove_program_quantity_contract",
+      "outcome": "REJECTED",
+      "reason": "B13_PROGRAM_SOURCE_PROOFS_CHANGED"
+    },
+    {
+      "case": "resigned_request_remove_program_quantity_role_contract_version",
+      "outcome": "REJECTED",
+      "reason": "B13_REVIEW_POLICY_CHANGED"
+    },
+    {
+      "case": "finite_native_preparation_vs_current_run_contract",
+      "outcome": "CONFIRMED_MISMATCH",
+      "prepare_options": {
+        "assessment_mode": "RECORDED_TEST_ONLY",
+        "request_context_format": "deepseek-v41-two-message-json-chat-1",
+        "complete_response_contract": false
+      },
+      "ordinary_run_options": {
+        "assessment_mode": "RECORDED_TEST_ONLY",
+        "request_context_format": "deepseek-v41-two-message-json-chat-1",
+        "complete_response_contract": false,
+        "program_quantity_roles": true
+      },
+      "ensure_return": "REGISTERED_INPUT_REUSED",
+      "boundary_double": "Only prepare_registered_update; real ensure_native_update and _config. No actual source execution or model call."
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "evidence_type": "SYNTHETIC_SOURCE_NATIVE_ACCEPTOR_AND_CALCULATOR_PLUS_COORDINATOR_BOUNDARY_PROBE",
+  "real_company_credit": false
+}

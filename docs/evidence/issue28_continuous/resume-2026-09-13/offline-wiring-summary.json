@@ -1,0 +1,26 @@
+{
+  "status": "OFFLINE_WIRING_PASS",
+  "requirement_id": "issue_28_v14",
+  "closure": "sha256:4027029543e6c921e46c4377298aeb40dc8fafd75ed8d1e19bc0c92734d461fb",
+  "request_bytes": 33995,
+  "estimated_context_tokens": 33995,
+  "source_request_count": 29,
+  "selected_request_count": 1,
+  "source_unit_coverage_preserved": true,
+  "model": "deepseek-flash",
+  "maximum_context_tokens": 200000,
+  "retry_count": 0,
+  "real_request_factory_to_controller_verified": true,
+  "mocked_official_opener_invocations": 1,
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "semantic_correctness_verified": false,
+  "native_result_created": false,
+  "production_authorized": false,
+  "native_mock_path": "/private/tmp/sec_metrics_issue28_continuous/resume-native-wiring-fifth/recorded-ledger/calls/0001"
+}

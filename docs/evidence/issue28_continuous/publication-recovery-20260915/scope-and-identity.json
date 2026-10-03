@@ -1,0 +1,58 @@
+{
+  "record_type": "ISOLATED_PUBLICATION_RECOVERY_DEVELOPMENT_CHECK",
+  "head_at_investigation": "989c564137c0e7569555694b4ab473c4864b8e7d",
+  "source_files": {
+    "tests/vnext/projection_fixture_support.py": "1f2587f738b5245d0182a04968be29e27be8c00f8416e9473b551e60c3755713",
+    "scripts/vnext/publication.py": "2e0616dc66d8c9611de2065a21a8731f94871f9062b66fe31a4cec2452fddea7",
+    "scripts/vnext/annual_adoption.py": "a3bc484ad895dd3742487c6aafc4dee5594ebbbbc6b1a574e8ca6a69f371637a",
+    "scripts/vnext/annual_projection.py": "6ec66938371098545b7af460e86a323e0f7ec83ebc7117ca7cbb05cd271d4871",
+    "scripts/vnext/ordinary_update_cycle.py": "21ac3bc62271ac8e4310f2856758e872c1e606514d417e11baa5ba9e1ffae3f1"
+  },
+  "active_pointer_matches_head_bytes": true,
+  "active_pointer_sha256": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d",
+  "active_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "current_production_metric_count": 24,
+  "remaining_to_migrate_metric_ids": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13",
+    "B06",
+    "B13",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04"
+  ],
+  "inventory_scopes_mapped": 68,
+  "new_real_company_metric_results": 0,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "full390": false,
+  "production_authorized": false,
+  "verification": {
+    "before": {
+      "tests": 7,
+      "passed": 4,
+      "errors": 3,
+      "seconds": 16.088,
+      "log": "before.log"
+    },
+    "after": {
+      "tests": 9,
+      "passed": 9,
+      "errors": 0,
+      "seconds": 75.152,
+      "log": "after.log"
+    },
+    "independent_review": "REQUESTED_FROM_PARENT_NOT_SELF_APPROVED"
+  }
+}

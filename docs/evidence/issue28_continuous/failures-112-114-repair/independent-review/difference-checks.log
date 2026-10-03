@@ -1,0 +1,23 @@
+EXACT_PATCH_FILE scripts/vnext/continuous_semantic_calls.py 46751 82a246c75e9385f74b85a73c6b6c1891a97f80dfa936886511445164034dc1ed
+EXACT_PATCH_FILE scripts/vnext/capacity_assessment_input.py 12476 94ecd32de7872725e06c587e7c0523f01b6e88dc4da179e7ea878e9b63c73536
+EXACT_PATCH_FILE scripts/vnext/capacity_run.py 21890 27b45a3c90fa1222c58ab6f31805a7b3ebe865088bea05c64ec1e23036f631c0
+EXACT_PATCH_FILE scripts/vnext/capacity_update_input.py 15169 9700be243291d6537e6c42174fd555d8337a95f0a987b0f66a41c72cfcbf952f
+EXACT_PATCH_FILE scripts/vnext/native_unit_index.py 8753 b3420041bd9019c83f6af6476f6dca5d8a97d1ea8cc2ca47908293e9411105fa
+EXACT_PATCH_FILE scripts/vnext/d04_native_assessment.py 30219 b68abad3667645ae75551c6e6ecbafcc0b4731d787acc4bbd6926c122becd0b9
+EXACT_PATCH_FILE scripts/vnext/capacity_reference_contract.py 13159 7441305fd0750eeb95dc745a8d30d8a66123e34f4d15ca9899e63aad70027aab
+EXACT_PATCH_FILE tests/vnext/test_continuous_source_unit_bytes.py 3051 1aa380a28a3049444f59f53a2b3fe49ec7ac0e7248a9aa58aafbbcfb5f3a569e
+EXACT_PATCH_FILE tests/vnext/test_capacity_reference_contract.py 13846 d0647a09b37ecdcccd2aaaec6347e847b38851177ea90017d61c0824086761cd
+EXACT_PATCH_FILE tests/vnext/test_d04_native_assessment.py 34485 0014d6bfc6c09aa0f50d5743261386f39224ef9272639ea98ea5fe3322e510ae
+EXACT_PATCH_FILE requirements/issue_28_v14/baseline_manifest.json 82682 a5107f8530d1aa145c28628e76e83ae727801baac1c74e161f200512ec0dfcaf
+SCOPED_BASELINE_BINDINGS_PASS 12 [('/new_rule_files', 'scripts/vnext/continuous_semantic_calls.py'), ('/new_rule_files', 'scripts/vnext/capacity_assessment_input.py'), ('/new_rule_files', 'scripts/vnext/capacity_run.py'), ('/new_rule_files', 'scripts/vnext/d04_native_assessment.py'), ('/new_rule_files', 'scripts/vnext/capacity_reference_contract.py'), ('/execution_authority/files', 'scripts/vnext/capacity_assessment_input.py'), ('/execution_authority/files', 'scripts/vnext/capacity_reference_contract.py'), ('/execution_authority/files', 'scripts/vnext/capacity_run.py'), ('/execution_authority/files', 'scripts/vnext/capacity_update_input.py'), ('/execution_authority/files', 'scripts/vnext/continuous_semantic_calls.py'), ('/execution_authority/files', 'scripts/vnext/d04_native_assessment.py'), ('/execution_authority/files', 'scripts/vnext/native_unit_index.py')]
+ACTUAL_REQUEST_COMPACT_SOURCE_CHECKLIST_UNCHANGED 111 5 5 ['VISIBLE_TEXT', 'VISIBLE_TEXT', 'VISIBLE_TEXT', 'VISIBLE_TEXT', 'VISIBLE_TEXT']
+ACTUAL_REQUEST_DIGEST_CHANGES_FOR_COMPACT 111 True
+111_FULL_CONTENT_RESPONSE_CHECK 5 0
+ACTUAL_REQUEST_COMPACT_SOURCE_CHECKLIST_UNCHANGED 112 4 0 ['VISIBLE_TEXT', 'VISIBLE_TEXT', 'NATIVE_FACTS', 'NATIVE_FACTS']
+ACTUAL_REQUEST_DIGEST_CHANGES_FOR_COMPACT 112 True
+112_TRUNCATED_CONTENT_CHARACTERS 16954 TAIL 'quantity."},{"kind":"OTHER_CONTEXT","subject":"TARGET_REGISTRANT","timing":"CURRENT_REPORT","evidence":[{"kind":"VISIBLE_BLOCK","source_index":2708}],"reason":"'
+112_REFERENCE_INVENTORY [{'unit_index': 0, 'prefix': 'B', 'inclusive_index_ranges': [[1884, 2381]]}, {'unit_index': 1, 'prefix': 'B', 'inclusive_index_ranges': [[2382, 2708]]}, {'unit_index': 2, 'prefix': 'F', 'inclusive_index_ranges': [[1, 236]]}, {'unit_index': 3, 'prefix': 'F', 'inclusive_index_ranges': [[237, 451]]}]
+114_BASE_REJECTION D04_SOURCE_FACT_CLASSIFICATION_CONFLICT
+114_PATCH_ACCEPTANCE 1 0
+114_ACTUAL_FINDING CONDITIONAL_OR_BOILERPLATE OTHER_ENTITY CONDITIONAL ['•business and financial difficulties faced by our suppliers, distributors or other partners, including impacts to material costs, sales, liquidity levels, ability to continue investing in their businesses, ability to import or export goods, ability to meet development commitments and manufacturing capability; and']
+D04_MIXED_CONTINUATION_PRESERVES_UNRESOLVED '; '

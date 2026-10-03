@@ -1,0 +1,62 @@
+[
+  {
+    "phase": "repeat",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+    "status_code": 200,
+    "roles": [
+      "sec_submissions_inventory"
+    ],
+    "saved_status_before": "VERIFIED_SAVED_SOURCE"
+  },
+  {
+    "phase": "repeat",
+    "company_id": "pfizer",
+    "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+    "status_code": 200,
+    "roles": [
+      "sec_submissions_inventory"
+    ],
+    "saved_status_before": "VERIFIED_SAVED_SOURCE"
+  },
+  {
+    "phase": "remote-failure",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+    "status_code": 200,
+    "roles": [
+      "sec_submissions_inventory"
+    ],
+    "saved_status_before": "VERIFIED_SAVED_SOURCE"
+  },
+  {
+    "phase": "remote-failure",
+    "company_id": "pfizer",
+    "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+    "status_code": 503,
+    "roles": [
+      "sec_submissions_inventory"
+    ],
+    "saved_status_before": "VERIFIED_SAVED_SOURCE"
+  },
+  {
+    "phase": "after-remote-failure",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+    "status_code": 200,
+    "roles": [
+      "sec_submissions_inventory"
+    ],
+    "saved_status_before": "VERIFIED_SAVED_SOURCE"
+  },
+  {
+    "phase": "after-remote-failure",
+    "company_id": "pfizer",
+    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+    "status_code": 200,
+    "roles": [
+      "companyfacts"
+    ],
+    "saved_status_before": "VERIFIED_SAVED_SOURCE"
+  }
+]

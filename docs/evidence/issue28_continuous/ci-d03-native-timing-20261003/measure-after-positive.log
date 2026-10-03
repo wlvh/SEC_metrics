@@ -1,0 +1,14 @@
+.F.
+======================================================================
+FAIL: test_saved_source_recorded_candidate_replays_but_is_not_company_result (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_assessment.py", line 75, in test_saved_source_recorded_candidate_replays_but_is_not_company_result
+    self.assertGreater(construction.hits, 0)
+AssertionError: 0 not greater than 0
+
+----------------------------------------------------------------------
+Ran 3 tests in 53.609s
+
+FAILED (failures=1)
+{"status": "FAILED", "wall_seconds": 53.609, "by_label": {"source_rebuild": {"count": 3, "inclusive_seconds": 8.971}, "request_grouping": {"count": 8, "inclusive_seconds": 21.661}, "prepare_factory": {"count": 3, "inclusive_seconds": 29.909}, "recorded_execute": {"count": 5, "inclusive_seconds": 13.369}, "collection": {"count": 2, "inclusive_seconds": 14.879}, "independent_native_replay": {"count": 3, "inclusive_seconds": 7.542}}}

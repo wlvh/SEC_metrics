@@ -1,0 +1,666 @@
+{
+  "test": "C04 mixed old root resume existing material test",
+  "status": "PASS",
+  "duration_seconds": 326.99,
+  "tests_run": 1,
+  "errors": 0,
+  "failures": 0,
+  "events": [
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_historical_c04_processing_copies",
+      "depth": 1,
+      "seconds": 0.0
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_check_session",
+      "depth": 1,
+      "seconds": 0.023
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_failed_urls",
+      "depth": 1,
+      "seconds": 0.011
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 1,
+      "seconds": 3.522
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 1,
+      "seconds": 5.162
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_ordinary_pre_capture_state",
+      "depth": 1,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "current_processing_source",
+      "depth": 1,
+      "seconds": 1.637
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 1,
+      "seconds": 5.999
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.206
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.0
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_recover",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 1.64
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.63
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.476
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "install_normal_inputs",
+      "depth": 2,
+      "seconds": 6.161
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.473
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.42
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "create_normal_run",
+      "depth": 2,
+      "seconds": 9.232
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 1.476
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 1.562
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.436
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.499
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.496
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.633
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_verify_candidate",
+      "depth": 2,
+      "seconds": 19.134
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.309
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "run_once",
+      "depth": 1,
+      "seconds": 50.508
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.0
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_recover",
+      "depth": 2,
+      "seconds": 0.0
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.346
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 5.223
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 5.445
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "install_normal_inputs",
+      "depth": 2,
+      "seconds": 14.482
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 5.419
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 5.382
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "create_normal_run",
+      "depth": 2,
+      "seconds": 17.193
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.347
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.371
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.423
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.326
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.197
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 4.889
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_verify_candidate",
+      "depth": 3,
+      "seconds": 34.774
+    },
+    {
+      "module": "vnext.c04_update_cycle",
+      "function": "_verify_candidate",
+      "depth": 2,
+      "seconds": 34.775
+    },
+    {
+      "module": "vnext.c04_update_cycle",
+      "function": "run_once",
+      "depth": 1,
+      "seconds": 91.704
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "refresh_and_process",
+      "depth": 0,
+      "seconds": 162.662
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_historical_c04_processing_copies",
+      "depth": 1,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_check_session",
+      "depth": 1,
+      "seconds": 0.1
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 2,
+      "seconds": 4.811
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.426
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.242
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_resume_one_c04_source",
+      "depth": 1,
+      "seconds": 14.483
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "refresh_and_process",
+      "depth": 0,
+      "seconds": 14.62
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_historical_c04_processing_copies",
+      "depth": 1,
+      "seconds": 0.0
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_check_session",
+      "depth": 1,
+      "seconds": 0.03
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 2,
+      "seconds": 4.9
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.517
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.207
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_ordinary_pre_capture_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_resume_one_c04_source",
+      "depth": 1,
+      "seconds": 14.282
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "refresh_and_process",
+      "depth": 0,
+      "seconds": 14.338
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_historical_c04_processing_copies",
+      "depth": 1,
+      "seconds": 0.0
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_check_session",
+      "depth": 1,
+      "seconds": 0.032
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 2,
+      "seconds": 5.103
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.32
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.002
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.329
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_failed_urls",
+      "depth": 2,
+      "seconds": 0.015
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_resume_one_c04_source",
+      "depth": 1,
+      "seconds": 15.2
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_failed_urls",
+      "depth": 1,
+      "seconds": 0.015
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 1,
+      "seconds": 5.082
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 1,
+      "seconds": 5.718
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 1,
+      "seconds": 5.33
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 2,
+      "seconds": 4.819
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.26
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.002
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.277
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_failed_urls",
+      "depth": 2,
+      "seconds": 0.015
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_resume_one_c04_source",
+      "depth": 1,
+      "seconds": 14.369
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "_ordinary_pre_capture_state",
+      "depth": 1,
+      "seconds": 0.002
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "current_processing_source",
+      "depth": 1,
+      "seconds": 1.901
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "discover_saved_source_requirements",
+      "depth": 1,
+      "seconds": 7.51
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.309
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_recover",
+      "depth": 2,
+      "seconds": 0.002
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.468
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.565
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.485
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 3,
+      "seconds": 1.468
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_verify_candidate",
+      "depth": 2,
+      "seconds": 19.023
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 1.637
+    },
+    {
+      "module": "vnext.ordinary_processing_source",
+      "function": "verify_processing_source",
+      "depth": 2,
+      "seconds": 0.378
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "run_once",
+      "depth": 1,
+      "seconds": 25.31
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_state",
+      "depth": 2,
+      "seconds": 0.002
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_recover",
+      "depth": 2,
+      "seconds": 0.001
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.318
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.443
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.36
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 4,
+      "seconds": 5.493
+    },
+    {
+      "module": "vnext.ordinary_update_cycle",
+      "function": "_verify_candidate",
+      "depth": 3,
+      "seconds": 34.328
+    },
+    {
+      "module": "vnext.c04_update_cycle",
+      "function": "_verify_candidate",
+      "depth": 2,
+      "seconds": 34.328
+    },
+    {
+      "module": "vnext.normal_run_v3",
+      "function": "prepare_case",
+      "depth": 2,
+      "seconds": 5.517
+    },
+    {
+      "module": "vnext.c04_update_cycle",
+      "function": "run_once",
+      "depth": 1,
+      "seconds": 42.089
+    },
+    {
+      "module": "vnext.ordinary_refresh_cycle",
+      "function": "refresh_and_process",
+      "depth": 0,
+      "seconds": 128.998
+    }
+  ],
+  "real_provider_or_sec_calls": 0,
+  "profile_only_no_source_or_business_code_change": true
+}

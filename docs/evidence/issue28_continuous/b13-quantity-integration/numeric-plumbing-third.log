@@ -1,0 +1,38 @@
+test_numeric_run_replays_sources_and_rejects_resigned_false_ratio (tests.vnext.test_capacity_numeric_run.CapacityNumericRunTest.test_numeric_run_replays_sources_and_rejects_resigned_false_ratio) ... ERROR
+
+======================================================================
+ERROR: test_numeric_run_replays_sources_and_rejects_resigned_false_ratio (tests.vnext.test_capacity_numeric_run.CapacityNumericRunTest.test_numeric_run_replays_sources_and_rejects_resigned_false_ratio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_numeric_run.py", line 74, in test_numeric_run_replays_sources_and_rejects_resigned_false_ratio
+    _mechanically_replay_open_run(run_dir=run, repo_root=data, require_complete_results=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3482, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2148, in _validate_record_graph
+    capacity_case = validate_run_authority(repo_root=repo_root, manifest=manifest,
+        records=records, compiled_specs=compiled_specs)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 192, in validate_run_authority
+    need(sorted(records, key=content_hash_key) == sorted(case['expected_records'], key=content_hash_key),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'B13_STRUCTURAL_RECORD_SET_CHANGED' if case['selection']['category'] == 'APPROVED_B13_COMPANY_SCOPE'
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         else 'B13_NUMERIC_RECORD_SET_CHANGED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 28, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_NUMERIC_RECORD_SET_CHANGED
+
+----------------------------------------------------------------------
+Ran 1 test in 23.071s
+
+FAILED (errors=1)

@@ -1,0 +1,267 @@
+{
+  "recovery_identity": "/root/diagnose_d03group5_d9f0afc",
+  "supplied_fixed_commit": "d9f0afc23df6de3f072277601dcdb093cafce5a6",
+  "verified_checkout_head": "d9f0afc23df6de3f072277601dcdb093cafce5a6",
+  "helper_sha256": "74f0056417f6dd0285e5ea5afe79384f4c8d849c1d810e119caaa786d364df11",
+  "source_id": "sha256:f49af1b29cbc3c0a86e7ee6c51b4f8ea6f39c6b3abfa82b09b86f96531e7a8e8",
+  "native_document_id": "sha256:3049902433699b3e3464003cd18ad336428717f46e7efdabbdb0bdb423153d45",
+  "responsibility_unit_id": "sha256:b9c8510355033183a1c2881d9b2c5eaf71fb1d5b78af737e1ccfbbc744369da6",
+  "input_file": "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/5/input.json",
+  "input_sha256": "10d5a0df62ccef788f0791895b87db1bee254246354079d47f2d44754c7d20b2",
+  "request_file": "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/5/request-body.json",
+  "request_sha256": "3a817ea46a1d45d0f2a978d27facca865cad52b98bf1c16fe1ce74be25602311",
+  "system_message_sha256": "b6094f993e40d48e16ce85791a7f9abce7e94ccce9147cf44aa17b5135dc9680",
+  "request_user_equals_input": true,
+  "source_reading": {
+    "visible_rows_read": 1965,
+    "visible_row_range": [
+      0,
+      1965
+    ],
+    "visible_columns": [
+      "source_index",
+      "html_quotation_context",
+      "text"
+    ],
+    "native_outer_objects_read": 4,
+    "native_outer_positions_read": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "nested_objects_counts": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_raw_xml_read": true,
+    "all_outer_attributes_and_metadata_read": true,
+    "shared_dictionary_counts": {
+      "contexts": 0,
+      "units": 0,
+      "namespace_environments": 1,
+      "xml_style_attributes": 50
+    },
+    "all_shared_dictionary_values_read": true,
+    "initial_oversize_dumps_truncated": true,
+    "truncation_repaired": true,
+    "repaired_native_packed_xml_character_ranges": {
+      "0": [
+        [
+          0,
+          18000
+        ],
+        [
+          18000,
+          36000
+        ],
+        [
+          36000,
+          50531
+        ]
+      ],
+      "1": [
+        [
+          0,
+          15172
+        ]
+      ],
+      "2": [
+        [
+          0,
+          8439
+        ]
+      ],
+      "3": [
+        [
+          0,
+          461
+        ]
+      ]
+    },
+    "completed_visible_reading_ranges": [
+      [
+        0,
+        300
+      ],
+      [
+        300,
+        408
+      ],
+      [
+        356,
+        386
+      ],
+      [
+        398,
+        428
+      ],
+      [
+        428,
+        522
+      ],
+      [
+        522,
+        682
+      ],
+      [
+        682,
+        914
+      ],
+      [
+        914,
+        1049
+      ],
+      [
+        1049,
+        1111
+      ],
+      [
+        1111,
+        1317
+      ],
+      [
+        1317,
+        1562
+      ],
+      [
+        1562,
+        1705
+      ],
+      [
+        1705,
+        1930
+      ],
+      [
+        1930,
+        1965
+      ]
+    ],
+    "context_only_visible_units": [
+      {
+        "unit_id": "sha256:c602ecc69500ffb50c421970157577cb6e31c757c5bbb45f15ae8dc5e7fc7fc1",
+        "start_row": 0,
+        "end_row_exclusive": 408
+      },
+      {
+        "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+        "start_row": 408,
+        "end_row_exclusive": 802
+      },
+      {
+        "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+        "start_row": 802,
+        "end_row_exclusive": 1255
+      },
+      {
+        "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+        "start_row": 1255,
+        "end_row_exclusive": 1753
+      },
+      {
+        "unit_id": "sha256:26eb8d47590552f5545a76e257dd0a54f4ed161142810120aa07bdd528675c7e",
+        "start_row": 1753,
+        "end_row_exclusive": 1965
+      }
+    ]
+  },
+  "local_reference_check": {
+    "objects": [
+      {
+        "source_index": 0,
+        "original_object_id": "f-1029-2",
+        "continuedat": "f-1029-3",
+        "xml_element_count": 897,
+        "inline_xbrl_element_count": 146,
+        "outer_attribute_check": true,
+        "restored_sha256_matches": true
+      },
+      {
+        "source_index": 1,
+        "original_object_id": "f-1029-3",
+        "continuedat": null,
+        "xml_element_count": 245,
+        "inline_xbrl_element_count": 35,
+        "outer_attribute_check": true,
+        "restored_sha256_matches": true
+      },
+      {
+        "source_index": 2,
+        "original_object_id": "f-1210-1",
+        "continuedat": "f-1210-2",
+        "xml_element_count": 166,
+        "inline_xbrl_element_count": 15,
+        "outer_attribute_check": true,
+        "restored_sha256_matches": true
+      },
+      {
+        "source_index": 3,
+        "original_object_id": "f-1210-2",
+        "continuedat": null,
+        "xml_element_count": 5,
+        "inline_xbrl_element_count": 1,
+        "outer_attribute_check": true,
+        "restored_sha256_matches": true
+      }
+    ],
+    "continuation_links": [
+      {
+        "from_source_index": 0,
+        "to_source_index": 1,
+        "target_id": "f-1029-3"
+      },
+      {
+        "from_source_index": 2,
+        "to_source_index": 3,
+        "target_id": "f-1210-2"
+      }
+    ]
+  },
+  "output_response_sha256": "4c24f03776778e9b47a588e0f5b445062152f763ae1cea9e0abc587d7e9b9cab",
+  "started_utc": "2026-10-03T15:49:58.746331+00:00",
+  "response_written_utc": "2026-10-03T15:57:41.573306+00:00",
+  "wall_seconds_through_write": 462.826975,
+  "tool_calls_through_write": {
+    "functions_exec": 22,
+    "nested_exec_command": 22,
+    "conservative_total": 44
+  },
+  "planned_final_local_verification": {
+    "functions_exec": 1,
+    "nested_exec_command": 1,
+    "planned_conservative_total": 46
+  },
+  "ordinary_messages": {
+    "commentary": 1,
+    "final_planned": 1,
+    "questions": 0
+  },
+  "external_execution": {
+    "target_provider_calls": 0,
+    "sec_calls": 0,
+    "account_calls": 0,
+    "production_calls": 0,
+    "subagents_spawned": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "token_usage": "Not exposed for this local agent by available tools; no target-provider token usage exists.",
+  "finished_utc": "2026-10-03T15:58:25.419278+00:00",
+  "actual_wall_seconds": 506.672947,
+  "actual_tool_calls": {
+    "functions_exec": 23,
+    "nested_exec_command": 23,
+    "conservative_total": 46
+  },
+  "post_save_verification": {
+    "response_schema": "PASS",
+    "response_write_count": 1,
+    "unchanged_response_sha256": "PASS",
+    "visible_reading_log_roundtrip": "PASS",
+    "visible_rows": 1965,
+    "findings": 0,
+    "scope_current_involvement": "UNRESOLVED"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "tested_base_sha": "6219efe68b10fe50e4829d19b89f9a787019b57f",
+  "uncommitted_evidence_prototype": true,
+  "production_code_modified": false,
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "source_json_path": "/private/tmp/issue28-d03-registered-full-review-20260929-retry/ledger/calls/0001/source.json",
+  "request_output_root": "/private/tmp/issue28-d03-complete-context-plan-20261003-checked",
+  "requirement_profile_loaded": false,
+  "installed_runtime_or_native_run_created": false,
+  "reused_files": {
+    "scripts/vnext/capacity_semantic_review.py": "74f0056417f6dd0285e5ea5afe79384f4c8d849c1d810e119caaa786d364df11",
+    "scripts/vnext/r6_semantic_source.py": "59edf6adf37327d445ddefc8ef4d9706b4451317bda580d1a476664e579fb216",
+    "scripts/vnext/continuous_request_context.py": "e252d1e0fc51b16f4456d9493814e09d48fabfabcbaad9e240f1a10464756fe0",
+    "catalog/r6/regulatory_semantic_review_v5.json": "1d0e9c2300d05224fef2d013cd81c65ca7349b950e3f814f418669b6f2dcec7a",
+    "config/tokenizers/deepseek_v41/tokenizer.json.gz": "d0a53c1a5e7f998a5f42b4f428888da70ed47ad33eb2a8afe32294f39f17ef5a"
+  },
+  "prototype_files": {
+    "build.py": "d32750e4feda6e267a8fd2b3c55a8d95859fd6769f570c8a72b19751174d36f0",
+    "check.py": "8c7b97a168f5d9bf75bc5db5e52c58ba70a4fd0d8652a1c90de4645f07efe985",
+    "input-prompt.txt": "b6094f993e40d48e16ce85791a7f9abce7e94ccce9147cf44aa17b5135dc9680"
+  },
+  "commands": [
+    "/private/tmp/issue28-tokenizers-venv/bin/python -B docs/evidence/issue28_continuous/d03-complete-context-plan-20261003/build.py",
+    "/private/tmp/issue28-tokenizers-venv/bin/python -B docs/evidence/issue28_continuous/d03-complete-context-plan-20261003/check.py"
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "source representation and measured development wire only; no parser/semantic/target-provider/native acceptance"
+}

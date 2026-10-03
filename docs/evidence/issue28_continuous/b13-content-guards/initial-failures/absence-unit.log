@@ -1,0 +1,22 @@
+test_defined_absence_needs_complete_source_set_and_effective_review (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_defined_absence_needs_complete_source_set_and_effective_review) ... FAIL
+test_forged_complete_flags_and_numeric_opportunity_do_not_become_text (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_forged_complete_flags_and_numeric_opportunity_do_not_become_text) ... ok
+test_raw_source_and_effective_review_are_required (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_raw_source_and_effective_review_are_required) ... ok
+test_reviewed_capacity_prose_is_text_without_annualization_or_ratio (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_reviewed_capacity_prose_is_text_without_annualization_or_ratio) ... ok
+
+======================================================================
+FAIL: test_defined_absence_needs_complete_source_set_and_effective_review (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_defined_absence_needs_complete_source_set_and_effective_review)
+----------------------------------------------------------------------
+vnext.review.ReviewError: Review unit has no decision
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 85, in test_defined_absence_needs_complete_source_set_and_effective_review
+    with self.assertRaisesRegex(ValueError, 'EFFECTIVE_REVIEW_REQUIRED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "EFFECTIVE_REVIEW_REQUIRED" does not match "Review unit has no decision"
+
+----------------------------------------------------------------------
+Ran 4 tests in 10.663s
+
+FAILED (failures=1)

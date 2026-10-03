@@ -1,0 +1,84 @@
+{
+  "patch_path": "/tmp/sec_metrics_issue28_continuous/native-update-integration.patch",
+  "patch_sha256": "e6dc1881b834185cd28106617fff93fda30532f39a2ac42e93c2e4a062bed499",
+  "applied_to_main_runtime": true,
+  "file_identities": {
+    "scripts/vnext/capacity_assessment_input.py": {
+      "before_sha256": "f591ea8632d1fa36f33d6c13153e8719cd9fffde54124701fed8ad9407c2bce8",
+      "after_sha256": "e0200ea49cd1fb9aa402e7adc2b716801410a38f8e080700611e4c7ee4b5ff88"
+    },
+    "scripts/vnext/capacity_run.py": {
+      "before_sha256": "a0a0086517985b2e289f170deb1bcbe66fa173bdf73cd707cadd8dc91e445e14",
+      "after_sha256": "a9da68ea6087c1a7f37d9ec61d5bdda9c4c4ce3d4d01ed5f807210be27ebdc56"
+    },
+    "scripts/vnext/capacity_semantic_source.py": {
+      "before_sha256": "b607c776fbc9b9729bbcfc959387a199db804e04ae1a9835484f63dd2603d8a9",
+      "after_sha256": "1b1f37ce40671a0e6a5a0b22884bfffd8f96fd9ce8611d756d48145989b7b731"
+    },
+    "scripts/vnext/capacity_update_input.py": {
+      "before_sha256": null,
+      "after_sha256": "c681ea2caf9d963d116a160aa70e6ad577c7ac525d3a53792afef3e86a2d9e4d"
+    },
+    "scripts/vnext/continuous_semantic_calls.py": {
+      "before_sha256": "494de2487facf9819700a3cd4d28ea5802ef31233114b69cc92581c2017d0882",
+      "after_sha256": "d32109f2ec076bf7e148db33c256c5876a8f57f172dd3afee1886ea2f14d495b"
+    },
+    "scripts/vnext/going_concern_source.py": {
+      "before_sha256": "6ffa23724395e1e781abbe9aa75f25f04a7149103cf426c88392e6c82a904276",
+      "after_sha256": "3b2aa92d7b67e8f328a8f241cc5c3d04825f80462998f164783902615717c95f"
+    },
+    "scripts/vnext/normal_run_v3.py": {
+      "before_sha256": "9cd7d5cc60b459d7430cb9fec044c88f650c7a6d6f20e8ef9fd2f320d13a4677",
+      "after_sha256": "013130078f78de8dc07c9d97f2026daf6d5c15a422908311f282220772472149"
+    },
+    "scripts/vnext/ordinary_refresh_cycle.py": {
+      "before_sha256": "af494223a37a825c515b51a8b2dbaf84c834bfc7a03b1fa3c95f16049da46ed6",
+      "after_sha256": "47d5df9edb65a52c2cdd84c1525d654a41a89724611b07232d5fca6c93f39556"
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "before_sha256": "21ac3bc62271ac8e4310f2856758e872c1e606514d417e11baa5ba9e1ffae3f1",
+      "after_sha256": "acec3d39f29e1ef48ee2aeb499317fe585b93a10fbf1c09f14836c71d2476fdd"
+    },
+    "scripts/vnext/r6_semantic_source.py": {
+      "before_sha256": "1596e3d93c71b95a96265c5a94eef2c13c6e077cad9c250edb07b8d1277ae55a",
+      "after_sha256": "be15a54498a17b86ad499edc625042fcd39273b9841c1afe16706586a3e449bd"
+    }
+  },
+  "short_tests": {
+    "methods": 8,
+    "seconds": 0.061,
+    "status": "PASS"
+  },
+  "bridge_material_seconds": 388.07308441691566,
+  "full_native_update_history_executed": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "structural_source_root_probe": {
+    "company_id": "pfizer",
+    "fiscal_year": 2025,
+    "status": "N_A_STRUCTURAL",
+    "assessment_used": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "application_owner": "root",
+  "applied_after_recorded_probe": true,
+  "subsequent_main_file_hashes": {
+    "scripts/vnext/capacity_assessment_input.py": "e0200ea49cd1fb9aa402e7adc2b716801410a38f8e080700611e4c7ee4b5ff88",
+    "scripts/vnext/capacity_run.py": "54940133b84fae7678512809988c26d65961682b0b9f91cac3cfa8e9c4d974b2",
+    "scripts/vnext/capacity_semantic_source.py": "282b84253c261460993f5cfbe71f2539f0a1b7dbe8ee683a1cbfc4da54918b1a",
+    "scripts/vnext/capacity_update_input.py": "bd6d8fc3649c20e3b3ed4de7484c7bd420a0625fd449a265b67294814684f23e",
+    "scripts/vnext/continuous_semantic_calls.py": "d801ded3df06f102f9c6eb6e338ceb9357fc6516eb14b23d04712ffbc5677276",
+    "scripts/vnext/going_concern_source.py": "3b2aa92d7b67e8f328a8f241cc5c3d04825f80462998f164783902615717c95f",
+    "scripts/vnext/normal_run_v3.py": "013130078f78de8dc07c9d97f2026daf6d5c15a422908311f282220772472149",
+    "scripts/vnext/ordinary_refresh_cycle.py": "812a9ec9bba665508bd8b96e6602b2fea488abdfcd6aed73fd7979c3012b7f97",
+    "scripts/vnext/ordinary_update_cycle.py": "acec3d39f29e1ef48ee2aeb499317fe585b93a10fbf1c09f14836c71d2476fdd",
+    "scripts/vnext/r6_semantic_source.py": "59edf6adf37327d445ddefc8ef4d9706b4451317bda580d1a476664e579fb216"
+  }
+}

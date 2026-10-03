@@ -1,0 +1,54 @@
+{
+  "scope": "8-K12B and 8-K12B/A additive source discovery only",
+  "runtime_patch_applied": false,
+  "patch_path": "/tmp/sec_metrics_issue28_continuous/registration-event-discovery.patch",
+  "patch_sha256": "7c2878d6e636ebb0773d851353e8db60861f408458594d34801cd51872d84109",
+  "file_identities": {
+    "scripts/vnext/normal_governance_input.py": {
+      "before_sha256": "9fbc6b0339d7223d3b31304f2625a800e706241f0a254fe49f553c3a3d6d1db1",
+      "after_sha256": "e82118d96d8653be8a0f84b00d4977647e7f38f1d081c53868c2560e81bc3861"
+    },
+    "scripts/vnext/normal_source_requirements.py": {
+      "before_sha256": "420edadfb1831de51282fe07f2e2d2f3026049af6e6fb27e2cbb0791b47a3af0",
+      "after_sha256": "2017f7e2ab6459609fbb6a73fac8ee4c85fd808350cfee8479e4158abdbeb343"
+    }
+  },
+  "actual_metadata_source_sha256": "322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+  "actual_new_URL_count": 4,
+  "all_four_saved_status": "MISSING_SAVED_SOURCE",
+  "new_real_provider_paid_SEC_calls": [
+    0,
+    0,
+    0
+  ],
+  "real_coordinate_completion_credit": 0,
+  "existing_C04_event_forms": [
+    "8-K",
+    "8-K/A"
+  ],
+  "existing_C04_and_six_event_semantics_changed": false,
+  "full_discovery_test": {
+    "seconds": 98.86604762496427,
+    "old_current_registrant_event_count": 4,
+    "registration_variant_filing_count": 2,
+    "unique_known_get_count": 83,
+    "status": "SOURCE_DEPENDENCIES_UNRESOLVED",
+    "source_snapshot_unchanged": {
+      "evidence/requests_log.csv": "0cf897132b3dd12f0901c2075a762ced5c2bbe315516b749823c7e20447b9277",
+      "evidence/requests_log_manifest.json": "c516244b702ad46b2ec597d52356c72455030e1df332709616599db811e48c32"
+    },
+    "runtime_identity_file": "full-discovery-implementation-identities.json",
+    "subsequent_difference": "Only duplicate-accession validation moved before any requirement mutation; final 7-test real-metadata/negative suite covers that difference."
+  },
+  "semantic_follow_up": {
+    "C04_successor_required": [
+      "explicit extended form set in Spec/resolver and source-set manifest",
+      "header/declaration acceptance of exact variant form, preserving its original name",
+      "native evidence/Run and current source scope coverage verification"
+    ],
+    "six_event_successor_required": [
+      "versioned extended form-set discovery and acquisition/source-set acceptance; do not reinterpret old results"
+    ],
+    "business_decision_if_no_item_401_and_no_same_registrant_prior_auditor": "Current v2 cannot use Item9 None or audit continuity as a substitute for the approved same-registrant current/prior name comparison; alternative negative acceptance requires an explicit successor decision."
+  }
+}

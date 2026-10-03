@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "tests": 1,
+  "elapsed_seconds": 2482.985,
+  "company": "enphase_energy",
+  "metric": "D04",
+  "mode": "RECORDED_TEST_ONLY",
+  "source_type": "complete saved actual source with recorded provider responses",
+  "current_runtime_closure_at_execution": "sha256:bf71e7f598fab82043003924f85c717995956e6c07fc6e34a83854df771995f7",
+  "steps": [
+    "initial CANDIDATE_READY",
+    "repeat NO_SOURCE_CONTENT_CHANGE with new Run forbidden",
+    "source log corruption INPUT_FAILED retaining successful attempt",
+    "restoration NO_SOURCE_CONTENT_CHANGE retaining same success"
+  ],
+  "log": "applied-lifecycle-first.log",
+  "original_test_source_preserved": "/tmp/sec_metrics_issue28_continuous/registered-update-applied-observation/test-source-running-original.py",
+  "snapshot_scope": "Source/history snapshot taken during first candidate creation before terminal; not final history artifact",
+  "real_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "later_runtime_delta_covered": false
+}

@@ -1,0 +1,173 @@
+{
+  "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
+  "status": "IN_PROGRESS",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+  "superseded_scope_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5635555555",
+  "branch": "task/b06-new-source",
+  "starting_head": "cbede80d6c75bae7a6022adce74416a4d281399a",
+  "scope": {
+    "companies": 10,
+    "metrics": 39,
+    "coordinates": 390
+  },
+  "authority": {
+    "development": "USER_DELEGATED",
+    "new_business_budget": "NOT_APPROVED",
+    "merge": false,
+    "formal_adoption": false,
+    "deployment": false,
+    "active_switch": false
+  },
+  "actual_new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0,
+    "unknown": 0
+  },
+  "current_work": [
+    "Preserve frozen V13 b171, publish reviewed ordinary candidate increment to Draft PR43",
+    "Repair D03 source-fact context errors in new successor-only components",
+    "Finish D04 source review and financial-year-label conflict handling",
+    "Integrate all ordinary metric routes, new sources, 390 coordinates, publication and retirement"
+  ],
+  "open_decisions": [
+    "Consolidated provider/paid/SEC budget (previous question still unanswered)",
+    "B13 economic meaning (previous question still unanswered)"
+  ],
+  "next": [
+    "Commit/push reviewed native increment to existing Draft PR43 and verify CI",
+    "Finish frozen/cold/portable native results and full publication schema",
+    "Complete remaining normal routes and 390-coordinate acceptance",
+    "Request final production confirmation only after all preparation"
+  ],
+  "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "evidence_limits": [
+    "Input inspection is not a completed metric",
+    "Successor validators initially component-only",
+    "New source acquisition and provider calls have not run",
+    "No production or full acceptance credit"
+  ],
+  "verified_increments": [
+    {
+      "component": "normal_annual_input",
+      "evidence": "normal-input/",
+      "first_tests": 7,
+      "independent_review_findings_fixed": [
+        "DEI fiscal label bounds",
+        "malformed source CIK category"
+      ],
+      "targeted_added_test": 1,
+      "prior_fast_entries": 67,
+      "prior_fast_actual_tests": 189,
+      "native_metric_execution": "NOT_RUN"
+    },
+    {
+      "component": "normal_native_source_and_text",
+      "evidence": "native-integration/summary.json",
+      "tier": "OPEN_COMPLETE_GRAPH_AND_COMPONENT_REGRESSION",
+      "full_acceptance": false
+    },
+    {
+      "component": "D01_ten_company_and_governance",
+      "evidence": "frozen-candidates/",
+      "d01_frozen_cold_results": 10,
+      "d01_headings": 410,
+      "governance_frozen_coordinates": 20,
+      "governance_value_results": 17,
+      "governance_withheld": 3,
+      "full_acceptance": false
+    },
+    {
+      "component": "B06_guard_json_boundary",
+      "evidence": "/tmp/sec_metrics_issue28_continuous/b06-guard-three-cold-json.log",
+      "actual_companies": 3,
+      "result": "JSON disk plus fresh process original reconstruction PASS",
+      "native_run_frozen": false
+    },
+    {
+      "component": "V13_run_common_admission",
+      "evidence": "/tmp/sec_metrics_issue28_continuous/pr43-review/v13-run-boundary-review/REVIEW.md",
+      "positive_open_graphs": 2,
+      "negative_actual_file_cases": 14,
+      "all_expected": true,
+      "scope": "exact fb76 draft, not later selector/D02 changes"
+    },
+    {
+      "component": "C02_D02_minimal_input",
+      "evidence": "/tmp/sec_metrics_issue28_continuous/r5-r6-route/normal_text_minimal_portable_first.json",
+      "coordinate_inputs": 20,
+      "new_git_free_root_files": 83,
+      "source_proof_union": 40,
+      "source_classes": {
+        "IMMUTABLE_ATTEMPT": 31,
+        "LEGACY": 9
+      },
+      "old_candidate_content_preserved": true
+    },
+    {
+      "component": "V13_frozen_and_public_rows",
+      "evidence": "v13-frozen-candidates/",
+      "native_freeze_and_fresh_process_tests": 2,
+      "copied_runtime_cold_reads": 2,
+      "text_frozen_projection_tests": 5,
+      "real_cli_frozen_coordinates": 12,
+      "cli_public_rows": 12,
+      "python39_tests": 51,
+      "full_acceptance": false
+    },
+    {
+      "component": "V13_fast_test_organization",
+      "evidence": "/tmp/sec_metrics_issue28_continuous/fast-b171-final.log",
+      "entries": 119,
+      "passed_entries": 118,
+      "passed_tests": 368,
+      "remaining_first_failure": "A13 aggregated fixture initialization timeout",
+      "repair": "Lazy test-only fixture setup; same selector and assertions, direct recheck PASS 14.146s; full module and GitHub CI pending"
+    }
+  ],
+  "latest_pushed_implementation": "887c97d09937aff801e21a4e2430315f3364da33",
+  "github_ci": {
+    "run_id": 34642111183,
+    "head": "5376a06596eb753a879929363b6130bee18a42da",
+    "status": "PASS",
+    "entries": 96,
+    "tests": 307
+  },
+  "v12_rule_state": "FROZEN_BY_REAL_RUNS_NO_SAME_VERSION_REWRITE",
+  "latest_ci": {
+    "run_id": 34646123002,
+    "status": "FAILED_ONE_AGGREGATE_TIMEOUT",
+    "failing_test": "test_first_five_company_inputs_with_same_source_checks",
+    "repair": "ten per-company cases with identical assertions; uncommitted"
+  },
+  "successor_draft": {
+    "requirement_id": "issue_28_v12",
+    "engine": "V13",
+    "frozen": true,
+    "last_generated_closure": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c",
+    "generator": "/tmp/sec_metrics_issue28_continuous/build_v13_draft.py",
+    "known_issue": "V13 b171 is frozen. No rule or snapshot rewrite. Salesforce fiscal-label conflict is a known successor-input issue; no new Salesforce frozen candidate is claimed here.",
+    "first_open_successes": [
+      "Marriott C02",
+      "Paramount C02"
+    ],
+    "current_smoke_log": "/tmp/sec_metrics_issue28_continuous/v13-open-acceptance-fb76.log",
+    "open_complete_graph_passes": 11,
+    "late_install_hash_drift_failures": 3,
+    "first_frozen_cold_material": "/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/marriott_d01/outcome.json"
+  },
+  "remaining_current_steps": [
+    "Finish test-fixture regression and exact commit alignment/gates; commit/push V13 reviewed scope to Draft PR43",
+    "Keep V13 b171 and V12 immutable; preserve all first failures and historical candidates",
+    "Repair D03 newly found quote/agency/temporal false source facts; finish D04 independent review",
+    "Resolve fiscal-label source conflict and ordinary zero-AI/update/source-admission integration in successor rules",
+    "Complete 390-coordinate and publication/rollback/retirement acceptance; only then seek final production confirmation"
+  ],
+  "continuation_note": "docs/evidence/issue28_continuous/continuation.md",
+  "v13_rule_state": "FROZEN_BY_REAL_RUNS_NO_SAME_VERSION_REWRITE",
+  "agent_execution_limit": {
+    "observed": "All three subagents returned account usage-limit errors",
+    "effect": "Unfinished independent reviews and D03 repairs not counted as complete; root continues local work",
+    "reset_credit_used": false
+  }
+}

@@ -1,0 +1,19 @@
+{'case': 'complete_positive', 'outcome': 'ACCEPTED', 'unresolved': []}
+{'case': 'reversed_complete_units', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED'}
+{'case': 'missing_unit', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED'}
+{'case': 'duplicate_unit', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED'}
+{'case': 'shrink_schema_count', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_NATIVE_REQUEST_POLICY_CHANGED'}
+{'case': 'shrink_schema_enum', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_NATIVE_REQUEST_POLICY_CHANGED'}
+{'case': 'shrink_required_ids', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_NATIVE_REQUEST_POLICY_CHANGED'}
+{'case': 'shrink_checklist', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_NATIVE_REQUEST_POLICY_CHANGED'}
+{'case': 'wrong_version', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_RESPONSE_CONTRACT_VERSION_UNSUPPORTED'}
+{'case': 'downgrade_version_only', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_NATIVE_REQUEST_POLICY_CHANGED'}
+{'case': 'remove_required_candidates_and_update_checklist', 'outcome': 'REJECTED', 'error_type': 'ValueError', 'reason': 'D04_SOURCE_FACT_CLASSIFICATION_CONFLICT'}
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/d04-complete-contract-review/factory-boundary.py", line 25, in <module>
+    assert prepared(r).validate(policy)==r
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 182, in validate
+    verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
+                                                     ~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'source_proofs'

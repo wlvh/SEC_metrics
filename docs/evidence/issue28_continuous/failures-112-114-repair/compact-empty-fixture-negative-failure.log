@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/failures-112-114-repair/measure_compact.py", line 41, in <module>
+    bad=json.loads(raw);bad['findings'][0][3]=['B449']
+                        ~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range

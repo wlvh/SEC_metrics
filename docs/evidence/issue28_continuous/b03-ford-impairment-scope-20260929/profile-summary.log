@@ -1,0 +1,43 @@
+Tue Sep 29 01:43:09 2026    /private/tmp/issue28-b03-southwest-20260929.prof
+
+         1698901339 function calls (1569869199 primitive calls) in 263.376 seconds
+
+   Ordered by: cumulative time
+   List reduced from 2941 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    293/1    0.008    0.000  263.564  263.564 {built-in method builtins.exec}
+        1    0.000    0.000  263.564  263.564 <frozen runpy>:206(run_module)
+        1    0.000    0.000  263.555  263.555 <frozen runpy>:65(_run_code)
+        1    0.000    0.000  263.555  263.555 __main__.py:1(<module>)
+        1    0.000    0.000  263.555  263.555 main.py:66(__init__)
+        1    0.000    0.000  263.446  263.446 main.py:244(runTests)
+        1    0.000    0.000  263.446  263.446 runner.py:241(run)
+      2/1    0.000    0.000  263.446  263.446 suite.py:83(__call__)
+      2/1    0.000    0.000  263.446  263.446 suite.py:102(run)
+        1    0.000    0.000  263.446  263.446 case.py:724(__call__)
+        1    0.000    0.000  263.446  263.446 case.py:634(run)
+        1    0.000    0.000  263.446  263.446 case.py:614(_callTestMethod)
+        1    0.001    0.001  263.446  263.446 test_b03_depreciation_scope_update.py:107(test_positive_b03_still_repeats_without_a_new_result)
+        2    0.002    0.001  213.329  106.664 ordinary_b03_scope_update.py:212(run_company)
+        2    0.010    0.005  213.324  106.662 ordinary_b03_scope_update.py:54(_run_once_b03)
+       13    0.016    0.001  165.449   12.727 normal_run_v3.py:366(replay_case)
+       18    0.009    0.000  151.352    8.408 normal_run_v3.py:94(prepare_case)
+       18    0.009    0.000  151.134    8.396 normal_run_inputs.py:22(prepare_ordinary_zero_ai_run_input)
+       18    0.034    0.002  145.807    8.100 normal_zero_ai_results.py:169(resolve_ordinary_zero_ai_metric)
+        3    0.008    0.003  137.193   45.731 ordinary_b03_scope_update.py:29(_verify_candidate)
+        4    0.012    0.003  124.215   31.054 ordinary_projection.py:54(render_ordinary_run)
+   292999    0.234    0.000  102.768    0.000 canonical.py:402(canonical_json_bytes)
+      471    0.001    0.000  102.072    0.217 parser.py:165(feed)
+      942   12.421    0.013  102.071    0.108 parser.py:242(goahead)
+   291191    0.272    0.000   97.262    0.000 canonical.py:453(content_hash)
+       18    0.000    0.000   93.888    5.216 annual_amendment_scope.py:280(prepare_saved_amendment_input)
+63474438/292999   41.808    0.000   93.873    0.000 canonical.py:326(_canonicalize)
+        3    0.000    0.000   93.569   31.190 ordinary_update_cycle.py:143(_verify_candidate)
+   299/23    0.004    0.000   92.709    4.031 requirements.py:2002(load_requirement_snapshot)
+   299/23    0.002    0.000   92.655    4.028 requirement_profile.py:59(load_profile_requirement_snapshot)
+       23    0.005    0.000   92.604    4.026 requirement_profile_v14.py:15(load_profile_requirement_snapshot)
+       23    0.003    0.000   92.018    4.001 requirement_profile_v13.py:15(load_profile_requirement_snapshot)
+       23    0.005    0.000   91.723    3.988 requirement_profile_v12.py:16(load_profile_requirement_snapshot)
+       23    0.001    0.000   91.141    3.963 requirement_profile_v11.py:10(load_profile_requirement_snapshot)
+       23    0.001    0.000   91.021    3.957 requirement_profile_v10.py:11(load_profile_requirement_snapshot)

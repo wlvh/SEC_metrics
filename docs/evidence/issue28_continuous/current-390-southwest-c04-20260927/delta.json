@@ -1,0 +1,37 @@
+{
+  "record_type": "ISSUE28_CURRENT_390_ONE_COORDINATE_DELTA",
+  "parent_index": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+  "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",
+  "coordinate_count": 390,
+  "company_id": "southwest_airlines",
+  "metric_id": "C04",
+  "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "prior_category": "NUMERIC_RESULT",
+  "current_category": "NUMERIC_RESULT",
+  "prior_result_id": "sha256:2171ae2f78349dafc0eca33c372693916c7b43de7c1e1c1908c1685ea071bdb6",
+  "current_result_id": "sha256:2f06895d80507148edfd7602427abffb8f6918323a48689c26345345c8170fe6",
+  "current_run_id": "run:ordinary-integrated:5380223a8a2f23271dce778cf1766958e297f12da66d200771acce571e328069",
+  "value": "0",
+  "real_sec_ordinal_for_prior_annual": 195,
+  "private_successful_attempt": "43ae2e481d324ac9a1db2fc15fc76e9b",
+  "prior_failed_attempt_preserved": "e9270741734746bca33d9bb37d0059d9",
+  "cold_read_network_and_subprocess_forbidden": true,
+  "new_complete_coordinate_count": 0,
+  "new_fiscal_year_transition_proven": false,
+  "all390_acceptance": false,
+  "formal_adoption": false,
+  "calls_for_source_acquisition_and_mapping": [
+    0,
+    0,
+    1
+  ],
+  "evidence_sha256": {
+    "docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/capture.log": "94d362d686e0b830d9e54f5e89079a66eff94f687e45d1816e27cbd601c21a0d",
+    "docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/cold_read_corrected.log": "5c894685e4bc31a4a52112f777c1b884936e0dc8ad49eb4c0d8e898de29a1326",
+    "docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/README.md": "f31dd40123d53f9dc2d429293898989fa6077dc2eaa68de4864e20967ff8cbfe"
+  }
+}

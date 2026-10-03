@@ -1,0 +1,26 @@
+COMMAND: PYTHONPATH=.:scripts /private/tmp/issue28_py314_venv/bin/python -m unittest tests.vnext.test_capacity_reference_contract.CapacityReferenceContractTest.test_v4_currency_native_fact_cannot_be_physical_context
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.020s
+
+OK
+EXIT: 0
+INDEPENDENT PROBE (synthetic legal XML, no live call):
+{"case": "currency_namespace_declared_on_measure", "detected_currency_refs": [], "parser_measures": [["http://www.xbrl.org/2003/iso4217", "USD"]], "verdict": {"finding_kind": "CAPACITY_QUALITATIVE", "status": "ACCEPTED", "unresolved": []}}
+INDEPENDENT BINDING AND COMPATIBILITY CHECK, first attempt: V14 and exemption assertions passed; 190 replay stopped because raw-response.bin is an API envelope (B13_COMPACT_RESPONSE_FIELDS_CHANGED). No acceptance inferred.
+INDEPENDENT BINDING AND COMPATIBILITY CHECK:
+{"calls": {"190": {"finding_count": 5, "regenerated_equal": true, "request_sha256": "6f4d5f3bf0212430761717955f787ebed8f319a04407f983b778fc1df8cea3a2", "response_sha256": "8e80df0db4c0a947ff1518bdbfa613824bdef2e7f96a622015470ffd5db51a64", "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c", "unresolved_count": 0, "version": "B13_REQUIRED_FIRST_RELEVANCE_V4"}, "191": {"regenerated_equal": true, "request_sha256": "45e4c32e3fe588145d145cac5e2c03981082e60c47fb70744d3569d8d051e5dd", "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c", "version": "B13_MEANINGFUL_ROLE_REFERENCES_V3"}, "192": {"regenerated_equal": true, "request_sha256": "835d62594e5b25ba5e9038089d2d06e8c3c0f195dd71d8c1b84fe92d8dea4eb1", "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c", "version": "B13_REQUIRED_FIRST_RELEVANCE_V4"}}, "execution_authority_hash": "sha256:98e1972cf7e27cd5faa1e86f54c97fce97ab1a877337e72832cb8b8036089e17", "f_literal_exemptions": [181, 301], "status": "PASS_INDEPENDENT_BINDING_AND_COMPATIBILITY", "v13_manifest_byte_identical": true, "v14_closure_hash": "sha256:2aa3d70596676e6795546bd500c9cf4e200f19a7429187b6d2e6919775ad2052", "v14_manifest_exact_expected_delta": true, "wiring_receipts_validated": 3}
+INDEPENDENT V4/V5 ORIGINAL-SOURCE PROBE:
+{"case": "original_192_source_offline_counterexamples", "new_calls": [0, 0, 0], "results": [{"refs": ["F450"], "status": "B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE", "version": "V4"}, {"refs": ["F449", "F450"], "status": "B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE", "version": "V4"}, {"refs": ["F450"], "status": "B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE", "version": "V5"}, {"refs": ["F449", "F450"], "status": "B13_NATIVE_CURRENCY_FACT_IS_NOT_PHYSICAL_CAPACITY_EVIDENCE", "version": "V5"}]}
+NATIVE SOURCE PARSER REPRODUCTION:
+{"captured_unit_namespaces": {"xbrli": "http://www.xbrl.org/2003/instance"}, "case": "native_source_parser_inline_measure_namespace", "parsed_measures": [["http://www.xbrl.org/2003/iso4217", "USD"]], "raw_has_inline_currency_namespace": true}
+INDEPENDENT V1-V3 TARGETED TESTS:
+COMMAND: PYTHONPATH=.:scripts /private/tmp/issue28_py314_venv/bin/python -m unittest tests.vnext.test_capacity_reference_contract.CapacityReferenceContractTest.test_flat_identity_roundtrip_preserves_prompt_source_and_semantics tests.vnext.test_capacity_reference_contract.CapacityReferenceContractTest.test_compact_typed_codes_preserve_findings_and_reject_wrong_kind tests.vnext.test_capacity_reference_contract.CapacityReferenceContractTest.test_meaningful_role_variant_preserves_source_and_rejects_wrong_role
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.045s
+
+OK
+EXIT: 0
+INDEPENDENT V4/V5 BYPASS REPRODUCTION:
+{"case": "inline_measure_currency_namespace_full_response", "results": [{"status": "ACCEPTED", "unresolved": [], "version": "V4"}, {"status": "ACCEPTED", "unresolved": [], "version": "V5"}]}

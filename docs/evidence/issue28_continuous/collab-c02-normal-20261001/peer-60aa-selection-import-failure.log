@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer-60aa-selection-impact.py", line 22, in <module>
+    peer=importlib.util.module_from_spec(spec);sys.modules[spec.name]=peer;spec.loader.exec_module(peer)
+                                                                           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 759, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/private/tmp/issue28-peer60aa-historical_board_composition.py", line 75, in <module>
+    _LEAD_ROLE = _lead_role()
+  File "/private/tmp/issue28-peer60aa-historical_board_composition.py", line 66, in _lead_role
+    terms = strict_json_file(path=_TERMS_PATH)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /catalog/r6/C02_board_composition_terms_v1.json

@@ -1,0 +1,37 @@
+{
+  "parent_execution_authority_hash": "sha256:75e17321c2acc9b07089f885f95c15db6f9348ee7c0c74465505823fdf571ea5",
+  "child_execution_authority_hash": "sha256:d124c14e5dbcf9b17481c1260b23af9955735f05a18d030faef873d846c4a2ba",
+  "parent_requirement_closure_hash": "sha256:95aab27d7dbf1b0c862e495b06828ad8119ddbc87025687f50503a2a3ff353f3",
+  "changed_paths": [
+    "catalog/r6/C02_board_composition_terms_v1.json",
+    "catalog/r6/C02_board_disclosures_v2.md",
+    "config/issue28_normal_results_v2.json",
+    "scripts/vnext/c02_composition_text_results.py",
+    "scripts/vnext/historical_board_composition.py",
+    "scripts/vnext/normal_run_v3.py",
+    "scripts/vnext/ordinary_remaining_cases.py",
+    "scripts/vnext/ordinary_update_cycle.py"
+  ],
+  "old_bindings": {
+    "catalog/r6/C02_board_composition_terms_v1.json": null,
+    "catalog/r6/C02_board_disclosures_v2.md": null,
+    "config/issue28_normal_results_v2.json": {
+      "sha256": "33d0a8801220d51aacbeb1f73200ee0d9d19121ee60175d1c0b4ce0f2a7c21e2",
+      "size": 7547
+    },
+    "scripts/vnext/c02_composition_text_results.py": null,
+    "scripts/vnext/historical_board_composition.py": null,
+    "scripts/vnext/normal_run_v3.py": {
+      "sha256": "8bd99427e0029e9a56fbccb9756cab7dcb46581c07c2673c6ec37d73b573619f",
+      "size": 27402
+    },
+    "scripts/vnext/ordinary_remaining_cases.py": {
+      "sha256": "bb9aedaae02d7fb6849194ee9bf14fbad53b7829565793900eeb92e768d15a2b",
+      "size": 8541
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "sha256": "9e4be9402863ddbcbb86b586c0c55ca730d9f4b42b014f0a4e0b06128a193d00",
+      "size": 22631
+    }
+  }
+}

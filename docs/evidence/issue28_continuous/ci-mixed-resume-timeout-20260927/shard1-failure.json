@@ -1,0 +1,47 @@
+{
+  "record_type": "ISSUE28_CI_MIXED_RESUME_SHARD1_PER_CASE_TIMEOUTS",
+  "head": "5e2a5ca9da25419e155f4325140a57236461a0ab",
+  "run_id": 36326213320,
+  "job_id": 108639357083,
+  "job": "vNext saved-source material (shard 1)",
+  "suite_status": "FAILED",
+  "suite_duration_seconds": 1625.324,
+  "selector_count": 39,
+  "passed_selector_count": 37,
+  "failed": [
+    {
+      "duration_seconds": 240.106,
+      "return_code": 124,
+      "stderr_tail": "\nSOURCE_MATERIAL_TIMEOUT_SECONDS=240",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+      "timeout_seconds": 240
+    },
+    {
+      "duration_seconds": 240.107,
+      "return_code": 124,
+      "stderr_tail": "\nSOURCE_MATERIAL_TIMEOUT_SECONDS=240",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+      "timeout_seconds": 240
+    }
+  ],
+  "prior_green_head": "b686814f586bc4ba7471e00218a54773645cc48e",
+  "prior_green_run_id": 36318290207,
+  "prior_green_job_id": 108617062803,
+  "prior_d03_full_set": {
+    "duration_seconds": 216.596,
+    "return_code": 0,
+    "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 215.410s\n\nOK\n",
+    "stdout_tail": "",
+    "test": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+    "timeout_seconds": 240
+  },
+  "source": "COMPLETED_GITHUB_JOB_RAW_LOGS",
+  "business_assertion_failure_observed": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

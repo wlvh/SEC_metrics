@@ -1,0 +1,16 @@
+RECORDED_GROUP_PASS 0
+RECORDED_GROUP_PASS 1
+RECORDED_GROUP_PASS 2
+RECORDED_GROUP_PASS 3
+RECORDED_GROUP_PASS 4
+RECORDED_GROUP_PASS 5
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/batch33-authorization/recorded_complete_enphase.py", line 103, in <module>
+    registered=register_assessment_input(prepared_requests=selected,ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_assessment_input.py", line 89, in register_assessment_input
+    need(first_symlink_in_path(path=path) is None, 'ORDINARY_SOURCE_JOURNAL_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ORDINARY_SOURCE_JOURNAL_ALIAS

@@ -1,0 +1,49 @@
+{
+  "company_id": "enphase_energy",
+  "status": "UPDATES_INCOMPLETE",
+  "metrics": [
+    {
+      "metric_id": "D04",
+      "status": "INPUT_FAILED",
+      "attempt_id": "d9185c31fb5c492e9ebac5f4f04adb13",
+      "latest_attempt": "d9185c31fb5c492e9ebac5f4f04adb13",
+      "successful_attempt": null,
+      "previous_successful_attempt": null,
+      "last_verified_candidate": null,
+      "new_candidate_created": false,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "d9185c31fb5c492e9ebac5f4f04adb13",
+        "configuration_id": "sha256:7fce932140e94155e8ed8450ef14e754bea9c98affd2dad3bcc399d9e1d78373",
+        "intent_id": "sha256:3963b6cd2f2b7c8cf80ac2f93b907123bf63abd7959531d8a8892bab60129b8b",
+        "status": "INPUT_FAILED",
+        "completed_at": "2026-09-15T15:49:27.326332+00:00",
+        "input": null,
+        "metrics": {},
+        "error": {
+          "error_type": "ValueError",
+          "reason": "UPDATE_NATIVE_COMPLETE_ORIGINAL_SET_MISSING_OR_AMBIGUOUS"
+        },
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:27e739d96c5e3d360bc513af6875f5d6390e36f0114f2016f2d0ee0dd9286a10"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

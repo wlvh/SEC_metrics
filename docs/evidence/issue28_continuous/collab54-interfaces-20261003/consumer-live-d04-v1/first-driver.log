@@ -1,0 +1,10 @@
+{"name": "runtime-install", "exit": 0, "seconds": 2.142, "root": "/private/tmp/issue28-company-consumer-20261003/provider-code", "guarded": false}
+{"name": "original-source-export", "exit": 1, "seconds": 2.458, "root": "/private/tmp/issue28-company-consumer-20261003/provider-code", "guarded": false}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-live-d04.py", line 59, in <module>
+    summary['original_baseline'] = run('original-source-export', CODE, ['export', '--source-root', str(OLD_INSTALLED),
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-live-d04.py", line 52, in run
+    assert result.returncode == 0, 'READ_STAGE_LOG:' + name
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: READ_STAGE_LOG:original-source-export

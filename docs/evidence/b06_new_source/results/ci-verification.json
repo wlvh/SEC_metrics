@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "ci_url": "https://github.com/wlvh/SEC_metrics/actions/runs/34590753895",
+  "head": "5d350f59f575a3c215c364c394635a97bc9d3108",
+  "entries": 60,
+  "actual_tests": 182,
+  "new_actual_tests": 13,
+  "first_ci": "FAILED_MODULE_TIMEOUT_30_SECONDS",
+  "timeout_unchanged_seconds": 30,
+  "new_tests": [
+    {
+      "duration_seconds": 10.29,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.445s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_added_balance_sheet_financing_row_cannot_inherit_coverage"
+    },
+    {
+      "duration_seconds": 6.798,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.963s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_approval_fields_and_duplicate_formula_not_part_of_proposal"
+    },
+    {
+      "duration_seconds": 17.767,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.931s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_asset_payment_wrong_year_and_entity_do_not_become_liability"
+    },
+    {
+      "duration_seconds": 11.667,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.586s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear"
+    },
+    {
+      "duration_seconds": 16.778,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 14.896s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_tax_loan_and_credit_facility_remain_unresolved"
+    },
+    {
+      "duration_seconds": 28.529,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 25.441s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations"
+    },
+    {
+      "duration_seconds": 17.824,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.987s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_dynamic_amounts_are_reread_with_new_test_identity"
+    },
+    {
+      "duration_seconds": 3.854,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.046s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_forged_matching_ledger_has_no_admission"
+    },
+    {
+      "duration_seconds": 9.871,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.049s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_missing_primary_or_note_is_not_zero"
+    },
+    {
+      "duration_seconds": 10.353,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.500s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_primary_only_sign_conflict_is_not_whitespace"
+    },
+    {
+      "duration_seconds": 19.282,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 17.395s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_reverse_subject_exclusion_and_inclusion_are_conflicts"
+    },
+    {
+      "duration_seconds": 12.317,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.234s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation"
+    },
+    {
+      "duration_seconds": 18.097,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.012s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap"
+    }
+  ]
+}

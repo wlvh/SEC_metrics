@@ -1,0 +1,91 @@
+{
+  "record_type": "ISSUE28_CURRENT_390_THREE_COORDINATE_DELTA",
+  "parent_index": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+  "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",
+  "parent_as_of": "2026-09-22_THROUGH_CALL169_SIX_NEW_D04_NATIVE_CANDIDATES",
+  "coordinate_count": 390,
+  "changed_coordinates": [
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "D04",
+      "prior_category": "VALIDATION_OR_IMPLEMENTATION_PENDING",
+      "current_category": "DEFINED_SCOPE_TEXT_STATEMENT",
+      "period_from_parent_index": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+      "run_id": "run:ordinary-integrated:128f6ccad812a47063e47640c3c997ff50d812bb8763135ac822a292b7e9743c",
+      "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+      "value_kind": "TEXT_V1",
+      "value": null,
+      "public_candidate_only": true,
+      "source_summary_sha256": {
+        "docs/evidence/issue28_continuous/batch33-authorization/d04-enphase-real/finish-summary.json": "87a1b75fd68411e6bcd43898f8146022e2b7e7b18315cd663daefed34a33c71d",
+        "docs/evidence/issue28_continuous/batch33-authorization/d04-enphase-real/cold-summary.json": "edc8b0408c40d74a2e54e444aac14718b9ff410642bc741a124b17cd612c5f7e"
+      }
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "D04",
+      "prior_category": "VALIDATION_OR_IMPLEMENTATION_PENDING",
+      "current_category": "DEFINED_SCOPE_TEXT_STATEMENT",
+      "period_from_parent_index": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "result_id": "sha256:a185d849dd9fd9d04fee0ac593b4028fd60715d51b7a67b7b1067ab7c544ee58",
+      "run_id": "run:ordinary-integrated:097c5c92546b4e438a5d4dc3d161db92c0ef361413dc41fde22a9b9b6e152663",
+      "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+      "value_kind": "TEXT_V1",
+      "value": null,
+      "public_candidate_only": true,
+      "source_summary_sha256": {
+        "docs/evidence/issue28_continuous/batch33-authorization/d04-paramount-real/finish-summary.json": "690215a81613f410c5e2bc6bf4202d9b1cf9dfb386f88311a98a15ae761e1512",
+        "docs/evidence/issue28_continuous/batch33-authorization/d04-paramount-real/cold-summary.json": "d52af6b5bf0730c5a7f2111c387f3ba93a7136e8c9c07397faab7c6e6c0c8bdb"
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "C04",
+      "prior_category": "NUMERIC_RESULT",
+      "current_category": "NUMERIC_RESULT",
+      "period_from_parent_index": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "prior_result_id": "sha256:77dc141eaf548783ca940471db8e3ce15cbab1a2431ebf06722df6d35d3d01c8",
+      "current_result_id": "sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e",
+      "current_value": "0",
+      "current_successful_attempt": "aab4e843487049afa4ace32bc833fb35",
+      "underlying_real_sec_ordinals": [
+        193,
+        194
+      ],
+      "old_and_new_readback": "PASS_NETWORK_AND_SUBPROCESS_FORBIDDEN",
+      "new_fiscal_year_proven": false,
+      "formal_publication_authorized": false,
+      "source_summary_sha256": {
+        "docs/evidence/issue28_continuous/c04-real-refresh-second-20260927/real-second-summary.json": "e7c51ef431915e4d1135bef8b6c6311e938671b75679baad09b720c2860c9039"
+      }
+    }
+  ],
+  "new_complete_coordinates_in_this_delta": 2,
+  "category_changes_for_these_coordinates_only": {
+    "VALIDATION_OR_IMPLEMENTATION_PENDING": -2,
+    "DEFINED_SCOPE_TEXT_STATEMENT": 2,
+    "NUMERIC_RESULT": 0
+  },
+  "full_current_head_reexecution": false,
+  "all390_acceptance": false,
+  "other_post_parent_changes_reconciled": false,
+  "new_calls_for_this_read_only_delta": [
+    0,
+    0,
+    0
+  ],
+  "formal_adoption_or_active_credit": false
+}

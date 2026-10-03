@@ -1,0 +1,136 @@
+{
+  "status": "FAILED",
+  "wall_seconds": 53.609,
+  "tests": 3,
+  "events": [
+    {
+      "label": "source_rebuild",
+      "seconds": 3.463
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.702
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 10.362
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.687
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.427
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.757
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.709
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.76
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 0.004
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 0.004
+    },
+    {
+      "label": "collection",
+      "seconds": 0.0
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.688
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.501
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.711
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.764
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.751
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.727
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.787
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.719
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.703
+    },
+    {
+      "label": "collection",
+      "seconds": 14.879
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.718
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.433
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 0.075
+    }
+  ],
+  "by_label": {
+    "source_rebuild": {
+      "count": 3,
+      "inclusive_seconds": 8.971
+    },
+    "request_grouping": {
+      "count": 8,
+      "inclusive_seconds": 21.661
+    },
+    "prepare_factory": {
+      "count": 3,
+      "inclusive_seconds": 29.909
+    },
+    "recorded_execute": {
+      "count": 5,
+      "inclusive_seconds": 13.369
+    },
+    "collection": {
+      "count": 2,
+      "inclusive_seconds": 14.879
+    },
+    "independent_native_replay": {
+      "count": 3,
+      "inclusive_seconds": 7.542
+    }
+  },
+  "inclusive_times_overlap": true,
+  "source": "EXACT_CURRENT_SAVED_MARRIOTT_ORIGINAL",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

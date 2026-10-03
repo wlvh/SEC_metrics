@@ -1,0 +1,27 @@
+{
+  "base": "070f1c4e",
+  "manifest_sha256": {
+    "sha256": "8258cf4eb0e5befaf86082d637423f9ed1d67a9aca3eff42f7f00eda1bd34a01",
+    "size": 88447
+  },
+  "execution_authority_hash": "sha256:c72fa0e3589b27c53284478d855a06e17cf2f11b2d16f866f5cc0da16a20cfe3",
+  "changed_files": {
+    "scripts/vnext/ordinary_isolated_publication.py": {
+      "before": {
+        "sha256": "1c931f766c1fae9523641ed8c4d7fd023ac3ffa0ad207a6f43d50667fe72e033",
+        "size": 26414
+      },
+      "after": {
+        "sha256": "e187e1ce0e431c72d5dbede34b0bf630b039ff94c52f491b58e578fe35e4fd72",
+        "size": 26505
+      }
+    },
+    "scripts/vnext/ordinary_scalability_audit.py": {
+      "before": null,
+      "after": {
+        "sha256": "78a6641c660df53a3e309484135c170ec0e3937aea7fa4d2040c9efe7b81622c",
+        "size": 5600
+      }
+    }
+  }
+}

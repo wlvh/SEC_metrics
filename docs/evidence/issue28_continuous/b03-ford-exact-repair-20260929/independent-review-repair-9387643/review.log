@@ -1,0 +1,12 @@
+Scope: 2cffa8e99a724e1f4015c6c0c17b1d7e24846aa2 -> 9387643a8722c5f49ba056a47bfcd19cf6e3d8f0
+Original P2 read: independent-review/conclusion.md; not including depreciation of $8,140 was previously accepted.
+Reviewed diff: scripts/vnext/b03_exact_impairment_relation.py; tests/vnext/test_b03_exact_impairment_relation.py; V13/V14 baseline and transfer bindings; B03 repair evidence and current wiring receipts.
+Test: PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_b03_exact_impairment_relation -q
+Result: exit 0; Ran 1 test in 12.374s; OK.
+Test assertions: real saved Ford positive 15974000000 = 7834000000 + 8140000000; excluding and not including labels reject with B03_EXACT_CASH_FLOW_LABELS_NOT_PROVEN; 8140 -> 8141 native amount rejects with B03_EXACT_COMPONENT_ARITHMETIC_FAILED.
+Current code: sha256 1f9e0ea642ccbd27f175400e7a0557d87915dfe28b55575ddfa4f38b94e4689b; 6912 bytes; matches V13 new_rule_files/execution_authority and V14 execution_authority entries.
+V14 parent snapshot checks: V13 baseline_manifest.json sha256 21418b4e96af7cc771738c3433ef74ba2db4b1f0911c40253960772807b8ae4a size 73485; transfer_manifest.json sha256 e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06 size 311; both match V14 parent entries.
+Saved binding.log: PASS_B03_EXACT_CURRENT_BINDING; V13 33ee286c21be8262e550939e2a94512775996635c569bcd12531efca2014ed83; V14 44b77302eba4ece211c6c803d4a790ebf593d3d2d813c9da68fe8e8d3b282402; receipts 3. Provider, SEC and ordinary refresh receipts carry execution authority 778bfca40589e8e46b37daee2462d872bb70449da6d127bb80007f144af75abb.
+Saved repair logs: prepare.exit=0, private.exit=0, cold.exit=0, fast.exit=0. prepare.log reports new source snapshot a1aea4b1 and reused=false; private.log reports UPDATES_READY; cold.log reports PASS. Long chains were not rerun in this review.
+Pre-review vs current: source snapshot bd560d70 -> a1aea4b1; attempt 1be9d3a3 -> faf28631; terminal da927500 -> 0c0d4798; Result ID 06d93be4 and value unchanged. run-private.py/cold.py now use state-repair; creation asserts the new state path does not exist.
+No network/provider/paid/SEC calls, production switch, commit or push made by reviewer. No #47 or PR52 work.

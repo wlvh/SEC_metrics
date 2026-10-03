@@ -1,0 +1,46 @@
+{
+  "coordinates": [
+    {
+      "company": "jpmorgan_chase",
+      "metric": "B06",
+      "quality": "NONE",
+      "value": null,
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "run_id": "run:ordinary-integrated:7035e132a0b0bbe2b61e778071aa6a19a40e30b99abc26dd162516818aef3ec6",
+      "evidence_folder": "special-debt-native-final",
+      "limitations": {
+        "classification": "SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION",
+        "reasons": [
+          "BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED"
+        ]
+      }
+    },
+    {
+      "company": "ford_motor_company",
+      "metric": "B06",
+      "quality": "NONE",
+      "value": null,
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "run_id": "run:ordinary-integrated:5f005421ba9aa7ed7d2e4a7e38175265910fc29f087741ccf7428eb4a69fd904",
+      "evidence_folder": "special-debt-native-final",
+      "limitations": {
+        "classification": "SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION",
+        "reasons": [
+          "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED"
+        ]
+      }
+    }
+  ],
+  "full390_acceptance": false,
+  "production_authorized": false
+}

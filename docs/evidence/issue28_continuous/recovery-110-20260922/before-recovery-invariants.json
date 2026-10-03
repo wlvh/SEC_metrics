@@ -1,0 +1,473 @@
+{
+  "request_digest_implementation_unchanged": true,
+  "request_digest_code_sha256": "0c3406ffa673a9e96bd1dc26dd78e704652764db849c093a5224a9f3299eaa60",
+  "unchanged_shared_and_B13_reference_paths": [
+    "scripts/vnext/normal_run_v3.py",
+    "scripts/vnext/normal_annual_input_v2.py",
+    "scripts/vnext/normal_source_requirements.py",
+    "scripts/vnext/normal_governance_input.py",
+    "scripts/vnext/normal_companyfacts_results.py",
+    "scripts/vnext/records.py",
+    "scripts/vnext/publication.py",
+    "scripts/vnext/run_store.py",
+    "scripts/vnext/calculator.py",
+    "scripts/vnext/ordinary_projection.py",
+    "scripts/vnext/capacity_reference_contract.py"
+  ],
+  "original_ledger_files": {
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/binding.json": {
+      "sha256": "bc7a7f252e1152f6eb4ce20f60845968285018bbe7b2bd225f6bc9f8a132e2af",
+      "size": 552
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/.issue28-2026-09-13.initialized.json": {
+      "sha256": "bc7a7f252e1152f6eb4ce20f60845968285018bbe7b2bd225f6bc9f8a132e2af",
+      "size": 552
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/claims.jsonl": {
+      "sha256": "4a775112af55a5355c23564995428f63a3a899a3728da94fd9aab068ae19e6c0",
+      "size": 78571
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0001/terminal.json": {
+      "sha256": "3c7dccb3a602519368fb6707e4fef33a9f75485d7d22668d284fc6f989cfe041",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0002/terminal.json": {
+      "sha256": "b4c0ff760fb625489f566de6d8215acd0b53429ca2feb52a8a31e6712dd13c25",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0003/terminal.json": {
+      "sha256": "95e2224c4610b8da286e9db9cef2b9d2489505bb80298fd523bf0dab36029513",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0004/terminal.json": {
+      "sha256": "4aa893a25b8f6a62048aa2232439927b2057722c86054cf685a2fcdb3a81b5c2",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0005/terminal.json": {
+      "sha256": "c5eb544c753724da62463bcef186a6347d6bebcca5cda04ab1b9cd82c42d9f64",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0006/terminal.json": {
+      "sha256": "41682dfbace04f3d9f5100bb6af861fd9c3ab406392dbaf43fee447440ec9fac",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0007/terminal.json": {
+      "sha256": "d1afa145d46f290bef4ef8106b1c7a83721fe8e7c9f9dfed5ffba5e9fca4b7f1",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0008/terminal.json": {
+      "sha256": "9157e3dfd0241e6244378fed0e1972c55bfc8a607e934bc92d2f9432d18ce980",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0009/terminal.json": {
+      "sha256": "0ae6a12c9cdb4a998cf9cb355ca54580baebde58c1012264a39368adbe898928",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0010/terminal.json": {
+      "sha256": "2e5d14840011418d491232d5e8c5c4fef4372ddff1b5ca575dd8e27063673b1c",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0011/terminal.json": {
+      "sha256": "840cc3d4231764f532edf39840e551a41e32ee310fdee82ffa06b403672b4a3e",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0012/terminal.json": {
+      "sha256": "c14d5df28483123c32e8321dcd45f46656a6c4ba88f88b543ec6ae4475dbf20e",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0013/terminal.json": {
+      "sha256": "d5213866f95acb3e68e94ccecb04530e4b83c3ffe8d962b7042cda68e4800329",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0014/terminal.json": {
+      "sha256": "ce076f3cb5195d3c6933c52bb613c1fa1f03e82974884ee1ecb56b1760463b8d",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0015/terminal.json": {
+      "sha256": "994f66251434a0cb3ac28a1b3a0d70f2786a4a3694b6029498c4c5fae572e0f9",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0016/terminal.json": {
+      "sha256": "06379f08f5cb0c6300c799a2f29abead65287bbe7d9a0f550dbb95f418436b7c",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0017/terminal.json": {
+      "sha256": "755a4e7f9348aefb7b152081c312b1fd147a8b3754cf4b04c92c3898ecab42c7",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0018/terminal.json": {
+      "sha256": "960e266d591d7f5680ecb675afb8ec96153c9d69cf2e7dfddb1f063399fc7376",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0019/terminal.json": {
+      "sha256": "7950d9ee0becdd05f56b0ab12fd148137cf2c0f4dd5ea3a12a4bc38afd24a039",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0020/terminal.json": {
+      "sha256": "27fbec71de17b533c5811172662f76d07246784f3584dd494d4a1c77716915e3",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0021/terminal.json": {
+      "sha256": "2f46d127411a629d322c90c1a66043a2150c9a08810c901e8b9ab5b604c9766e",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0022/terminal.json": {
+      "sha256": "231923bada04ec02b6518dc3c1b6727d5931963a947c6708506436e5bb83d596",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0023/terminal.json": {
+      "sha256": "7cdf40c3a717d21aad6f22f05b6305317043f19fcc3e0dc540199c18e63be426",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0024/terminal.json": {
+      "sha256": "ff2d477a5180b7829029746d959f766faa5262990836109f7555b680bd283dde",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0025/terminal.json": {
+      "sha256": "11d0d6ad380d5c6ea99e95348b5f61c17a9061d4b4616e5ebf5bfcf47906538a",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0026/terminal.json": {
+      "sha256": "f88649038b8b738a36cf9b269ce801bd598373c85f39a785f7119a5930f3cf2c",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0027/terminal.json": {
+      "sha256": "17126c1fedf40d1aa0d83d414b0327d78b5ce6c3bcf879eca2f8ab9b1e34e587",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0028/terminal.json": {
+      "sha256": "a4a861cf57ea72238de5448d09060488c892e58e637a36d5d34637f1c57060b3",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0029/terminal.json": {
+      "sha256": "f8ae0f186d306e197d9438eaa1127216799e8ca13b8037421a2a1bddac85ae00",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0030/terminal.json": {
+      "sha256": "7171a17e9ce01adbc21783594998b3ce4856d31ac2a734742fdc1ac71f13d473",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0031/terminal.json": {
+      "sha256": "ff6e9dd0e457865b970e1b630e2a74d7f4cd1a0796e503a0d5d4cfe829b34c12",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0032/terminal.json": {
+      "sha256": "602c2ee98e17a1241943fd84c442a0af73b19bb3f971b77a3de0bf124c3d8651",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0033/terminal.json": {
+      "sha256": "f24e66aa73eba7b541ab3a43f6a4c5eef2c87f0edb1011c14a1ebeb00c154afe",
+      "size": 2188
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0034/terminal.json": {
+      "sha256": "6e22e656805736809341ccdea0da910e9a6a0d91e2231f739e382f7ae19681bd",
+      "size": 2188
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0035/terminal.json": {
+      "sha256": "49383bfb43b2cf370c545c927153ff2676d63d198c62acf31b5d71ccc5bbd77b",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0036/terminal.json": {
+      "sha256": "4070fb02cdecc25a469f4db4b930ec2c3c20c5c061c620fe5963351bbb7f3bfb",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0037/terminal.json": {
+      "sha256": "b097b7a31eec2ceae55f9711ff925c471b7390b6bff79c1ca83b73bd8128a3ad",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0038/terminal.json": {
+      "sha256": "7816f5452c28a5331a7975ed16e861ee215e3c9a4bef2efe6a35b63f1555a230",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0039/terminal.json": {
+      "sha256": "2ded72d8916781bfff90093ff22780c9ff2e6767a562d9ca299b4dcc5f2def2c",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0040/terminal.json": {
+      "sha256": "338e9a27b11e5f7875fea69567b0ed6301ba79c086f9efbd347d0f5ca407106c",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0041/terminal.json": {
+      "sha256": "13f4675bac21abae1ee217bae636552880f6f4c8dd9b536fb38bc6704823a35c",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0042/terminal.json": {
+      "sha256": "cdaf6c88a72278c7311406c5f8de309ff347760e5d27ec101fee18e52b8eedff",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0043/terminal.json": {
+      "sha256": "c18afa2191b4a236397976f1ae1ecaa251a3cd3d6e8d29cd742ce3e7a5b35648",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0044/terminal.json": {
+      "sha256": "a414f3fc48848e64b57151bc7de865f62a31a0f585c4b015721920d6ec204d30",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0045/terminal.json": {
+      "sha256": "5dc01e006646d9614109d99f3586d133b53ca9257dfa2a1f15c1e5057609ec66",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0046/terminal.json": {
+      "sha256": "6a427b59799a2f969f1e2510f82c386e28960b06704dca58297c33e4ffb23503",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0047/terminal.json": {
+      "sha256": "146f75c1721b1632eea53d8c7647c45549ad636d66c6906f75575c36da35dcbc",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0048/terminal.json": {
+      "sha256": "ebd79dc7e5d4ed68963bdb8c16fdaa13d09fd19eb26a077e55f3449bad6729e8",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0049/terminal.json": {
+      "sha256": "2f450b86ccbcf255982ade6c6df5febe4d922d0104ff6c6128b494ca98650078",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0050/terminal.json": {
+      "sha256": "0f0a3542462b5d08a8c1ca0cce5867057ae41f0a3b6923da702b990a9c6f6234",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0051/terminal.json": {
+      "sha256": "84eebc1532a5209aa39ee1cf3a8c4561800a921a66b6ae0481923ea3ccbd8dcc",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0052/terminal.json": {
+      "sha256": "0853023d4ff8eac817a5c971b166b4e6996b8f56b99d26f9b58ea4cac5f979c0",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0053/terminal.json": {
+      "sha256": "cb6b4150f637dbdcc11bf8d12394683612247322a8250d624be94adc7532978c",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0054/terminal.json": {
+      "sha256": "c710702d97941403225b08c45facde7b57738b73919dbfe7885315998cfecd75",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0055/terminal.json": {
+      "sha256": "d1301d2859291471aae80ec88651602b68c803620181880a702de4da9a409800",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0056/terminal.json": {
+      "sha256": "d519619abe347de8d4c5f198cfed9ccbd83d9c241eb25dda83185d753dfde364",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0057/terminal.json": {
+      "sha256": "dabc10fe515f2ab14ec102fa90f18c0ae6a762b2e4f56f6cf5472d3880a9b59d",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0058/terminal.json": {
+      "sha256": "11734bd34c5c0d49857abd8d54c794a9781f96dc31c413d4e8fe459aeaefd50f",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0059/terminal.json": {
+      "sha256": "58dc4284cf9075228911607a7c52059a5864da5f0bc1e91dc2651de9ba244435",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0060/terminal.json": {
+      "sha256": "f9b1cc6344926b63730dcd1614bdb32a5be107fa70500ee95e326bf2730533de",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0061/terminal.json": {
+      "sha256": "946efcc1d6ea19cef18b5040ddf03d3258ab7ce55163c48d7a4b0a6273eeba22",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0062/terminal.json": {
+      "sha256": "67357a7e04adad798b184eeb56a4178a933069151fd878521396789855887227",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0063/terminal.json": {
+      "sha256": "e0f32e9a140c8c98d521df502e241d7bf9ab2ab39001f249df444f071afc5f6b",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0064/terminal.json": {
+      "sha256": "759cdb50daf110564dd2dea01748e07f9c9ac7a660bf407e7f7e8aafcd039e89",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0065/terminal.json": {
+      "sha256": "cb458530e75df199dbc484974ad2ee16773018ff3d283e17af961bc90c16672f",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0066/terminal.json": {
+      "sha256": "4a2d8e6f80bc9655176aed356aa7697c24b77577517934a30175e2da581c99a4",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0067/terminal.json": {
+      "sha256": "f7fddb96dc3a24736c80dfd8c49dd2abdbdc89ea91caf46152497c6f7ba1292d",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0068/terminal.json": {
+      "sha256": "e4554d8e07155f45d5159d613f9877311a452750a548c57bb3c7ba69c79a1e7c",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0069/terminal.json": {
+      "sha256": "03accb00f4f50d35c43b47c6bd7fe58ee0d015a9c9303c5b0ec7df400bfd66e3",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0070/terminal.json": {
+      "sha256": "92c428cbecb09d8d3714c6c0119c97cfaeb99c305bff8aa25b9fd37191789008",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0071/terminal.json": {
+      "sha256": "5395eba59ff6f16868bcd888ca695abbf271737070a0ffa59695b92d40bbc4f4",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0072/terminal.json": {
+      "sha256": "6ed0fc5703cde972b75ee6b54c7703c4ace202780e5b6ffefa7ec5e6c6c74314",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0073/terminal.json": {
+      "sha256": "b3a4a4492ba63cf69d6b21b6dfeae4d81b48fbf5664096821b8f0d011c1f5260",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0074/terminal.json": {
+      "sha256": "6bd27fc6d4549342d253709705b8afc857b5c702ca0a79a60cded8ac51bbee63",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0075/terminal.json": {
+      "sha256": "51c25796e6eade9165b375b4ef1dd3e98137deaf39337d1351863646bbeb402a",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0076/terminal.json": {
+      "sha256": "6e705dbb6d5ac0b83bf830e4189c00446dcda0cf5592b512c63aa884e0b9f882",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0077/terminal.json": {
+      "sha256": "4c546b81aba343c68878bf65f766900da4eba1904942023dbc4db17516a25e8d",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0078/terminal.json": {
+      "sha256": "f7e293db4d503489b6e387e43868a4976c7ca597c9b1a003e0f3309d26a21472",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0079/terminal.json": {
+      "sha256": "85e5910c90817f3a30d63cc6a34873eed60ea4f3428b6e705ae90c542d7a8df4",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0080/terminal.json": {
+      "sha256": "65824aedad11a21fe92eeb0223036ef04aa8264a4b775a6dc1823f4b89e77340",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0081/terminal.json": {
+      "sha256": "22959b8320b97208ea5d7effa656d17d5851bce6cf717bc0b40a166f3dd222fa",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0082/terminal.json": {
+      "sha256": "0f826707e8d0eeff08178c54fcc00bf5a57ab396352f74790a39a4e4ede161f2",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0083/terminal.json": {
+      "sha256": "ee8a2ca4a469301b9dcbe37a5ab55ef416f07a2d10d8d9186c8a6d8ce9a731bd",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0084/terminal.json": {
+      "sha256": "d9a2bcdc35fbff5ff812ad19609dddf6af37e560bf829dd08f8dc1598eb11cf2",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0085/terminal.json": {
+      "sha256": "7d53ebff78e2d7ffdbf50998991c7ce2d1936665956172552dfccdc2e55e1d25",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0086/terminal.json": {
+      "sha256": "0b64b1aabcd452ed7f7064e00bb5384cdafb74fb190de5d6b08a9cf0cd6c4e7f",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0087/terminal.json": {
+      "sha256": "1a60d766406d796a9f669d5c13388dfc3a121a14f7fcb942b67a42ac97aac2f9",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0088/terminal.json": {
+      "sha256": "7e495f07dabd49d14cd2422710787d68769517850387b64023be7098563e2ceb",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0089/terminal.json": {
+      "sha256": "5bc8d1305dd1110683f164a12d63874ed950ae98fda897e600effd84d78ab897",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0090/terminal.json": {
+      "sha256": "778722822a1fe7ada96faaba95f03b7073d6d6632dcb36b70efea5711a13bf66",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0091/terminal.json": {
+      "sha256": "8343dc15edc54601058bb2896596e2ec7db1eac3555ca32af225a24b9fd940fe",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0092/terminal.json": {
+      "sha256": "b2e32a42bbe9c88faed8824509b327f009ccecd715a462055892ef53ed76bbbb",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0093/terminal.json": {
+      "sha256": "4e733eb6e116efc0ac9f42ff3e3b5e0e820baa90e32bb5c9106d84ba051b3e9e",
+      "size": 2807
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0094/terminal.json": {
+      "sha256": "ab0539faa5033fa0f89f0382635509cc87dc6066adc0dd9286f5c866a20d0d00",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0095/terminal.json": {
+      "sha256": "f2c8aa9d513853fbf6d4cb3f161178175c37ecdddcdc3ea3f9aa1ff3d45ded8b",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0096/terminal.json": {
+      "sha256": "03029ddff77ed1f073cd5c459f70f536db4423f62de43955fe9df2d4beac76e8",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0097/terminal.json": {
+      "sha256": "70b8f52d76ba88b26e6e352361ed49a0903e8ee38f1e6ceb4d1f1c5cf767c4ad",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0098/terminal.json": {
+      "sha256": "e0f5e75b224d1c1802a4352313696ed7b277af485a6f290381fd27512ff2d5ca",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0099/terminal.json": {
+      "sha256": "92aececf5c528eb6c335217d9138a8e3d2745cebd6b2dc391e7c2e2e2790000b",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0100/terminal.json": {
+      "sha256": "7de0260a829a32cbc37f92346c773870baefe97859d4040c70af1a06fc6038ff",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0101/terminal.json": {
+      "sha256": "0814663b56540d741e80e6bc34ed5166ba0e9112393b1cf5a1e7094b3c7ef269",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0102/terminal.json": {
+      "sha256": "b806ee6b13c5b5ad95c34ce5622f78b0677a9f73e39440e6de5f1de87c7b04da",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0103/terminal.json": {
+      "sha256": "d8ad1904affbce8e22707fbe64a077516df475bc97db85a3854b0dd9eee565a5",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0104/terminal.json": {
+      "sha256": "cfddbd8b72323ad1c64a75d0290450c6212cfa95bbcf8d5de134cc7c26f12d74",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0105/terminal.json": {
+      "sha256": "5a9077038dfabb0382991c55fd70db169f2c59a14645dbcc5d68458aaa1c0b2f",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0106/terminal.json": {
+      "sha256": "f5124026e2dbb15b974e599d945581a5eecafc2db8fc81dc4099021a21593854",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0107/terminal.json": {
+      "sha256": "cbef6b323fbb3aab5f6140e2cc06b4f8da22293cb861bd2605b95189755bbe8d",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0108/terminal.json": {
+      "sha256": "0bf3d747b6ae92555beac1e33822132c7f5187c7f66a302452c75e6216dedf9a",
+      "size": 1027
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0109/terminal.json": {
+      "sha256": "64ec0ee4f66ccc4fa5c7ec53a5c96c31b6162eb6cf61e1fca3895ca4729f0631",
+      "size": 2283
+    },
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0110/terminal.json": {
+      "sha256": "ce08b7d048961e4bf438a123fb85d80bd5e3205f6c126456cd5f42a9ee72fbf9",
+      "size": 2196
+    }
+  },
+  "claim_prefix_size": 78571,
+  "original_slots": 110
+}

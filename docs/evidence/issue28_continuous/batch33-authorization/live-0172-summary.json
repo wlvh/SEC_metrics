@@ -1,0 +1,43 @@
+{
+  "record_type": "ISSUE28_BATCH33_REAL_172_STOP_SUMMARY",
+  "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "ordinal": 172,
+  "metric_id": "D04",
+  "company_id": "enphase_energy",
+  "group_index": 0,
+  "batch_group_id": "D04:enphase_energy:0",
+  "batch_attempt_index": 0,
+  "batch_resume_171": true,
+  "request_digest": "ee745e6451a39ff894296419201a5dba115f431e79625cab6b87b04f20bf2aac",
+  "intent_id": "sha256:f87cd57d926bfd84707386c9ee1a12ce97577022a4077c60068596cc264e75aa",
+  "terminal_id": "sha256:9d4e4f1048db43c8f51147b32c3b186257f7368770cbf688200eb72e8763fb57",
+  "terminal_status": "FAILED_TERMINAL",
+  "stop_reason": "HTTP_402",
+  "counts": [
+    1,
+    1,
+    0
+  ],
+  "error_message": "Insufficient Balance",
+  "error_type": "unknown_error",
+  "error_code": "invalid_request_error",
+  "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": null,
+    "cache_miss_input_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null
+  },
+  "assistant_output_exists": false,
+  "files_sha256": {
+    "intent.json": "8a2d20e105e674bb6d7206e2b8e5da0213eea2b7125b25ee94a0b3e46c4edd97",
+    "terminal.json": "9cec7e325a924f2bef29af8136ba2cf7f2ff09c169190100612fea36f595fda1",
+    "wire/journal.json": "6d633228a63b273d9beadadf857c792102653c89a89c72ca42857a77c39ad4a3",
+    "wire/raw-response.bin": "a00c4a12749ac4093ce2cc2bd5914a413415fb76107f9d4c4644b19bf63a123a"
+  },
+  "provider_channel_resumed_for_claim_then_stopped_by_new_402": true,
+  "old_171_unchanged": true,
+  "same_digest_recovery_for_172_authorized": false,
+  "additional_live_calls_after_172": 0,
+  "new_complete_company_results": 0
+}

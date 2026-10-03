@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+ImportError: cannot import name 'validate_execution_authority' from 'vnext.continuous_call_policy' (/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py)
+Corrected import from vnext.requirement_profile; initial harness failure retained above.
+new_rule_files added= ['scripts/vnext/capacity_reference_contract.py'] removed= [] changed= ['config/issue28_continuous_calls_v1.json', 'scripts/vnext/capacity_native_assessment.py', 'scripts/vnext/capacity_semantic_review.py', 'scripts/vnext/continuous_semantic_calls.py']
+execution_authority added= ['scripts/vnext/capacity_reference_contract.py'] removed= [] changed= ['config/issue28_continuous_calls_v1.json', 'scripts/vnext/capacity_native_assessment.py', 'scripts/vnext/capacity_semantic_review.py', 'scripts/vnext/continuous_semantic_calls.py', 'scripts/vnext/native_unit_index.py']
+Current V14 requirement load/execution authority/semantic bindings: PASS
+Requirement closure: sha256:8c0afdaf0d147532700bfa029c0c7a2ee8ec39ff565b7981cff7d2d0ae4794bf
+Configured offline receipt exists: False /Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b13-strict-references-20260922/offline-wiring.json

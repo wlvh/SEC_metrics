@@ -1,0 +1,218 @@
+{
+  "company_id": "enphase_energy",
+  "synthetic_fiscal_year": 2026,
+  "filing": {
+    "accessionNumber": "0001463101-27-900001",
+    "filingDate": "2027-02-17",
+    "reportDate": "2026-12-31",
+    "acceptanceDateTime": "2027-02-17T18:00:00.000Z",
+    "act": "34",
+    "form": "10-K",
+    "fileNumber": "001-35480",
+    "filmNumber": "26635774",
+    "items": "",
+    "core_type": "XBRL",
+    "size": 16190838,
+    "isXBRL": 1,
+    "isInlineXBRL": 1,
+    "isXBRLNumeric": null,
+    "primaryDocument": "synthetic-enph-20261231.htm",
+    "primaryDocDescription": "10-K"
+  },
+  "synthetic_primary_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310127900001/synthetic-enph-20261231.htm",
+  "provider_paid_sec_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_source_packet_sha256": "5f495774cb47cfcc3af7c4915a97362f6584b1ec372a4375adea8f0c3094e7aa",
+  "source_scope": "Explicit complete tiny synthetic annual document; original full FY2025 filing and saved metadata retained in baseline, not shortened or replaced as real evidence",
+  "metadata_capture": {
+    "status": "SUCCEEDED",
+    "receipt": {
+      "record_type": "CONTINUOUS_SEC_RECEIPT",
+      "intent_id": "sha256:34575a79d0b5e15f33c8be4a2d467d0d60c5dd4a1c2ef2564328fa88d98cb436",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "ledger_before_sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+      "ledger_after_sha256": "fc098aee5c987711ebfaba72012ab37b8f1f95c9422ce4373ad6b59f813aa743",
+      "ledger_row_index": 984,
+      "ledger_row": {
+        "timestamp_utc": "2026-09-15T15:49:14.070196+00:00",
+        "method": "GET",
+        "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+        "status_code": "200",
+        "purpose": "ISSUE28_RECORDED_SOURCE_TEST",
+        "repo_relative_path": "evidence/request_attempts/a8/a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10/CIK0001463101.json",
+        "headers_repo_relative_path": "evidence/request_attempts/a8/a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10/CIK0001463101.json.cff84d37f67e4f864d75b5d6bfc2927a33a1354aa330c60d3f872c6cf2acb834.headers.json",
+        "content_length": "168349",
+        "content_sha256": "a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10",
+        "accession": "",
+        "document_name": "CIK0001463101.json",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "proof": {
+        "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+        "accession": "",
+        "document_name": "CIK0001463101.json",
+        "content_sha256": "a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10",
+        "request_body_sha256": "a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10",
+        "request_body_size": 168349,
+        "request_headers_repo_relative_path": "evidence/request_attempts/a8/a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10/CIK0001463101.json.cff84d37f67e4f864d75b5d6bfc2927a33a1354aa330c60d3f872c6cf2acb834.headers.json",
+        "request_headers_sha256": "cff84d37f67e4f864d75b5d6bfc2927a33a1354aa330c60d3f872c6cf2acb834",
+        "request_headers_size": 309,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/a8/a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10/CIK0001463101.json",
+        "request_attempt_id": "request:attempt:5e410268441fd2f7e89c3d0aa182a9ffafcd796120c3e322998fb01a4850be12"
+      },
+      "wire": {
+        "body": {
+          "source_path": "evidence/request_attempts/a8/a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10/CIK0001463101.json",
+          "sha256": "a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10",
+          "size": 168349
+        },
+        "headers": {
+          "source_path": "evidence/request_attempts/a8/a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10/CIK0001463101.json.cff84d37f67e4f864d75b5d6bfc2927a33a1354aa330c60d3f872c6cf2acb834.headers.json",
+          "sha256": "cff84d37f67e4f864d75b5d6bfc2927a33a1354aa330c60d3f872c6cf2acb834",
+          "size": 309
+        }
+      },
+      "company_id": "enphase_energy",
+      "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+      "production_authorized": false,
+      "receipt_id": "sha256:c1d0c8943a6a87459e506bf9cc8114ca5e454e27112bfcd11da5080d6d5609b9"
+    },
+    "terminal": {
+      "record_type": "CONTINUOUS_CALL_TERMINAL",
+      "intent_id": "sha256:34575a79d0b5e15f33c8be4a2d467d0d60c5dd4a1c2ef2564328fa88d98cb436",
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "counts_kind": "RECORDED_TEST_SIMULATION",
+      "sec_receipt_id": "sha256:c1d0c8943a6a87459e506bf9cc8114ca5e454e27112bfcd11da5080d6d5609b9",
+      "evidence": {
+        "intent.json": "afd3782f51c443407977944d94c24dd78f179342bedf364134e64d96a77fd7ee",
+        "execution-rules.tar.gz": "6b84755327729823b64763c112eb0239f9562a13c04120d7e294e6d9977e7a7f",
+        "execution-rules.json": "0d5f37bf21de7f58d243f5958aa821306f7d6d9006d942ffe90bd0717f8dc743",
+        "sec-receipt.json": "c7831e9d809f91f3d7ab6fba67b66052acf0f4be6d5e58e087b45e30464cb3c5",
+        "sec-plan.json": "1a4b61dfc5f53802d7057e901837cd677c0f788dead216d8431a27f632e57490",
+        "sec-wire/body.bin": "a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10",
+        "sec-wire/headers.bin": "cff84d37f67e4f864d75b5d6bfc2927a33a1354aa330c60d3f872c6cf2acb834"
+      },
+      "terminal_id": "sha256:1b5ad5d93f0973105f02e9e9ef9478c27513ea67ab1cc6b37a76af8110006f2c"
+    },
+    "checkpoint_id": "sha256:ab14005a7430f03d613ccd3fb1480279c03039b147338683d6f4abc46091d938",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false
+  },
+  "annual_capture": {
+    "status": "SUCCEEDED",
+    "receipt": {
+      "record_type": "CONTINUOUS_SEC_RECEIPT",
+      "intent_id": "sha256:6c844ad206c3673ae6bbec8344692f1226570806e7e3474c7bf40af75a154b50",
+      "execution_mode": "RECORDED_TEST_ONLY",
+      "actual_sec_egress_count": 0,
+      "automatic_retry_count": 0,
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "ledger_before_sha256": "fc098aee5c987711ebfaba72012ab37b8f1f95c9422ce4373ad6b59f813aa743",
+      "ledger_after_sha256": "ed1adefc5d4c69a7dda01ec0c300237bc9b0e36d410bb04f235a9a66b355b13f",
+      "ledger_row_index": 985,
+      "ledger_row": {
+        "timestamp_utc": "2026-09-15T15:49:15.175417+00:00",
+        "method": "GET",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310127900001/synthetic-enph-20261231.htm",
+        "status_code": "200",
+        "purpose": "ISSUE28_RECORDED_SOURCE_TEST",
+        "repo_relative_path": "evidence/request_attempts/a7/a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8/synthetic-enph-20261231.htm",
+        "headers_repo_relative_path": "evidence/request_attempts/a7/a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8/synthetic-enph-20261231.htm.fca5ebccea0013a26877063eef33ae565522d36ba749f86215189895b0363bf0.headers.json",
+        "content_length": "1471",
+        "content_sha256": "a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8",
+        "accession": "0001463101-27-900001",
+        "document_name": "synthetic-enph-20261231.htm",
+        "user_agent": "axaxl 12@qq.com",
+        "retry_attempt": "0",
+        "error": ""
+      },
+      "proof": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310127900001/synthetic-enph-20261231.htm",
+        "accession": "0001463101-27-900001",
+        "document_name": "synthetic-enph-20261231.htm",
+        "content_sha256": "a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8",
+        "request_body_sha256": "a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8",
+        "request_body_size": 1471,
+        "request_headers_repo_relative_path": "evidence/request_attempts/a7/a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8/synthetic-enph-20261231.htm.fca5ebccea0013a26877063eef33ae565522d36ba749f86215189895b0363bf0.headers.json",
+        "request_headers_sha256": "fca5ebccea0013a26877063eef33ae565522d36ba749f86215189895b0363bf0",
+        "request_headers_size": 343,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/a7/a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8/synthetic-enph-20261231.htm",
+        "request_attempt_id": "request:attempt:e0e6cf929dce956f5d2a6a17c12d59cc3c877334e621bfb3c09013e6c53157b1"
+      },
+      "wire": {
+        "body": {
+          "source_path": "evidence/request_attempts/a7/a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8/synthetic-enph-20261231.htm",
+          "sha256": "a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8",
+          "size": 1471
+        },
+        "headers": {
+          "source_path": "evidence/request_attempts/a7/a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8/synthetic-enph-20261231.htm.fca5ebccea0013a26877063eef33ae565522d36ba749f86215189895b0363bf0.headers.json",
+          "sha256": "fca5ebccea0013a26877063eef33ae565522d36ba749f86215189895b0363bf0",
+          "size": 343
+        }
+      },
+      "company_id": "enphase_energy",
+      "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+      "production_authorized": false,
+      "receipt_id": "sha256:099117f3a7d957081c0b3159d97c1e58bdfcaa3931946f87f4d52a8a7b16ad99"
+    },
+    "terminal": {
+      "record_type": "CONTINUOUS_CALL_TERMINAL",
+      "intent_id": "sha256:6c844ad206c3673ae6bbec8344692f1226570806e7e3474c7bf40af75a154b50",
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "counts_kind": "RECORDED_TEST_SIMULATION",
+      "sec_receipt_id": "sha256:099117f3a7d957081c0b3159d97c1e58bdfcaa3931946f87f4d52a8a7b16ad99",
+      "evidence": {
+        "intent.json": "a08c0bdd4b67da1cdff1fb01b501e159351d45d442a9a9f48bf47296cc5c18ab",
+        "execution-rules.tar.gz": "1e7353f4d25c7e5a2f3b9f0d96ac1510a091e60d5d102b439b9ffe3a15ccf9b9",
+        "execution-rules.json": "0d5f37bf21de7f58d243f5958aa821306f7d6d9006d942ffe90bd0717f8dc743",
+        "sec-receipt.json": "a87ca16adc8e48df87a5026e53728a989fecdfcb3073c59686965e171e6ee669",
+        "sec-plan.json": "1a8f40ae5bbd648e0b7f67e81bc2d6a59ff20edd989a119e2c183360f64d03e1",
+        "sec-wire/body.bin": "a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8",
+        "sec-wire/headers.bin": "fca5ebccea0013a26877063eef33ae565522d36ba749f86215189895b0363bf0"
+      },
+      "terminal_id": "sha256:4502af346555e9219f05db764533a9291d335d8eedcec403db07bddba527470a"
+    },
+    "checkpoint_id": "sha256:0edebb639c159aaec9adea4b53778eef159995dac0cc478a5a3948bd10bf0a29",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false
+  },
+  "recorded_ledger_counts": [
+    0,
+    0,
+    2
+  ],
+  "seconds": 8.771509291953407
+}

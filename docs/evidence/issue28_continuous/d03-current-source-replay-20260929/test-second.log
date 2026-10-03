@@ -1,0 +1,33 @@
+test_registered_source_replays_one_group_without_live_credit (tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest.test_registered_source_replays_one_group_without_live_credit) ... ERROR
+
+======================================================================
+ERROR: test_registered_source_replays_one_group_without_live_credit (tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest.test_registered_source_replays_one_group_without_live_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_current_source_replay.py", line 57, in test_registered_source_replays_one_group_without_live_credit
+    path, outcome = execute_d03_recorded_assessment(
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        prepared=selected, ledger=ledger, recorded_wire=wire)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 857, in execute_d03_recorded_assessment
+    return _execute_semantic(prepared=prepared, ledger=ledger,
+        recorded_wire=recorded_wire, native_assessment=True,
+        d03_recorded_native=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 1017, in _execute_semantic
+    with ledger.locked():
+         ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_ledger.py", line 60, in locked
+    need(not anchor.exists() and not list(self.root.iterdir()),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'CONTINUOUS_LEDGER_BINDING_MISSING_OR_RESET')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_LEDGER_BINDING_MISSING_OR_RESET
+
+----------------------------------------------------------------------
+Ran 1 test in 15.306s
+
+FAILED (errors=1)

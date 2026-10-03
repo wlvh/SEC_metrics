@@ -1,0 +1,102 @@
+test_complete_equivalence_is_only_provenance_not_changed_semantic_input (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_complete_equivalence_is_only_provenance_not_changed_semantic_input) ... ERROR
+test_native_current_contract_is_passed_to_existing_trusted_preparer (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_native_current_contract_is_passed_to_existing_trusted_preparer) ... ERROR
+test_old_configuration_bytes_stay_old_and_native_uses_its_requirement (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_old_configuration_bytes_stay_old_and_native_uses_its_requirement) ... ok
+test_only_specialized_complete_absence_can_join_successful_history (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_only_specialized_complete_absence_can_join_successful_history) ... ERROR
+test_reason_string_does_not_override_current_source_relation (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_reason_string_does_not_override_current_source_relation) ... ERROR
+test_registered_assessment_identity_changes_descriptor_without_source_changes (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_registered_assessment_identity_changes_descriptor_without_source_changes) ... ok
+test_scope_adds_only_registered_b13_d04_without_changing_old_policy (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_scope_adds_only_registered_b13_d04_without_changing_old_policy) ... ok
+
+======================================================================
+ERROR: test_complete_equivalence_is_only_provenance_not_changed_semantic_input (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_complete_equivalence_is_only_provenance_not_changed_semantic_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_registered_native_update.py", line 87, in test_complete_equivalence_is_only_provenance_not_changed_semantic_input
+    original,_=quantity_source('<p>For fiscal year 2025, we produced 80 widgets worldwide.</p>')
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_utilization_source.py", line 17, in quantity_source
+    from tests.vnext.test_capacity_semantic_review import source_packet
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_semantic_review.py", line 9, in <module>
+    from vnext.capacity_semantic_review import _shared_units, _restore_units, requests_from_source, validate_response
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 14, in <module>
+    from .r6_semantic_source import _bytes
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/r6_semantic_source.py", line 14, in <module>
+    from .going_concern_source import prepare_ordinary_going_concern_source
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/going_concern_source.py", line 31, in <module>
+    _RULES = strict_json_file(path=Path(__file__).resolve().parents[2] / "catalog/r6/going_concern_source_rules_v1.json")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/tmp/sec_metrics_issue28_continuous/native-update-patch/after/catalog/r6/going_concern_source_rules_v1.json
+
+======================================================================
+ERROR: test_native_current_contract_is_passed_to_existing_trusted_preparer (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_native_current_contract_is_passed_to_existing_trusted_preparer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_registered_native_update.py", line 62, in test_native_current_contract_is_passed_to_existing_trusted_preparer
+    from vnext import capacity_run,capacity_update_input
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/capacity_run.py", line 6, in <module>
+    from .capacity_semantic_source import prepare_capacity_semantic_source
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/capacity_semantic_source.py", line 14, in <module>
+    from .r6_semantic_source import prepare_d04_semantic_source
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/r6_semantic_source.py", line 14, in <module>
+    from .going_concern_source import prepare_ordinary_going_concern_source
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/going_concern_source.py", line 31, in <module>
+    _RULES = strict_json_file(path=Path(__file__).resolve().parents[2] / "catalog/r6/going_concern_source_rules_v1.json")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/tmp/sec_metrics_issue28_continuous/native-update-patch/after/catalog/r6/going_concern_source_rules_v1.json
+
+======================================================================
+ERROR: test_only_specialized_complete_absence_can_join_successful_history (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_only_specialized_complete_absence_can_join_successful_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_registered_native_update.py", line 129, in test_only_specialized_complete_absence_can_join_successful_history
+    case,result,rendered=self.absence(metric)
+                         ~~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_registered_native_update.py", line 106, in absence
+    from tests.vnext.test_d04_native_assessment import text_arguments,D04NativeTextRecordsTest
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 5, in <module>
+    from tests.vnext.test_capacity_semantic_review import source_packet
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_semantic_review.py", line 9, in <module>
+    from vnext.capacity_semantic_review import _shared_units, _restore_units, requests_from_source, validate_response
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 14, in <module>
+    from .r6_semantic_source import _bytes
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/r6_semantic_source.py", line 14, in <module>
+    from .going_concern_source import prepare_ordinary_going_concern_source
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/going_concern_source.py", line 31, in <module>
+    _RULES = strict_json_file(path=Path(__file__).resolve().parents[2] / "catalog/r6/going_concern_source_rules_v1.json")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/tmp/sec_metrics_issue28_continuous/native-update-patch/after/catalog/r6/going_concern_source_rules_v1.json
+
+======================================================================
+ERROR: test_reason_string_does_not_override_current_source_relation (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_reason_string_does_not_override_current_source_relation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_registered_native_update.py", line 144, in test_reason_string_does_not_override_current_source_relation
+    from tests.vnext.test_d04_native_assessment import text_arguments
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 5, in <module>
+    from tests.vnext.test_capacity_semantic_review import source_packet
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_semantic_review.py", line 9, in <module>
+    from vnext.capacity_semantic_review import _shared_units, _restore_units, requests_from_source, validate_response
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 14, in <module>
+    from .r6_semantic_source import _bytes
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/r6_semantic_source.py", line 14, in <module>
+    from .going_concern_source import prepare_ordinary_going_concern_source
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/going_concern_source.py", line 31, in <module>
+    _RULES = strict_json_file(path=Path(__file__).resolve().parents[2] / "catalog/r6/going_concern_source_rules_v1.json")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/tmp/sec_metrics_issue28_continuous/native-update-patch/after/catalog/r6/going_concern_source_rules_v1.json
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.022s
+
+FAILED (errors=4)

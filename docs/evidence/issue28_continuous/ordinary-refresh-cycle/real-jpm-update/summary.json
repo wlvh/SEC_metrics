@@ -1,0 +1,317 @@
+{
+  "record_type": "REAL_JPM_ORDINARY_UPDATE_ARCHIVE",
+  "company_id": "jpmorgan_chase",
+  "metric_id": "A08",
+  "source_period": "FY2025",
+  "status": "UPDATES_READY",
+  "result": {
+    "applicability": "APPLICABLE",
+    "company_id": "jpmorgan_chase",
+    "metric_id": "A08",
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:ec18c3291d84095ae0b72dda804584b833d3541d09ed3bdbdaa640c0f87021cb",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+    "trace_id": "sha256:72f6781bede6a7b4722deacd10e9fa887ea549194dbb4e774ae37ba94d17844e",
+    "unit": "ratio",
+    "value": "0.9115807340506899405928145595"
+  },
+  "run_id": "run:ordinary-integrated:500407914c08167703de1c2eab68ae3807c6e31fac3d1aa1405e011a6cd351f6",
+  "successful_attempt": "1c790b639d3741579d8016c55e5a9866",
+  "repeat_attempt": "f2cda474084e4190a9c0b93104bcf1ec",
+  "repeat_status": "NO_SOURCE_CONTENT_CHANGE",
+  "repeat_same_runtime_requirement_closure": "sha256:3bc83d8a60995bb38ed2843eb2e2d51476ab57f1740ee0b6b6eea8c936f23dbc",
+  "repeat_reuses_original_successful_attempt": true,
+  "repeat_new_source_or_model_calls": [
+    0,
+    0,
+    0
+  ],
+  "later_runtime_changes_not_covered_by_this_repeat": true,
+  "coordinate_already_existed": true,
+  "new_company_metric_count": 0,
+  "new_calls": [
+    0,
+    0,
+    10
+  ],
+  "calls": [
+    {
+      "ordinal": 95,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:5accaf29fbeb71b3a236438f9cf9892645c806de9867222583d44899eea9e549",
+      "receipt_id": "sha256:d38b70b5e5de11d8406402f6ca05417f5208d6bae793ba0dd6af66b2eec00d62",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "source_content_sha256": "912d48b2d241e16c93d5e656857576cc0efe9e370cd65a078a35cf89032af7bb",
+      "wire_body": {
+        "sha256": "912d48b2d241e16c93d5e656857576cc0efe9e370cd65a078a35cf89032af7bb",
+        "size": 4626857
+      },
+      "wire_headers": {
+        "sha256": "d5a23181b3df673864473d2f75214d6b18bd57fe996c722cbb1113d39a16ad7f",
+        "size": 737
+      },
+      "execution_rules_archive": {
+        "sha256": "6efe01d443e7b6a45a0a6f19786ad058199d7fbe76206dd799670e027e4359be",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 96,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:77814e78ee00c86f4872ef628cc4bc0a5205112b4116015c3eb233c75498ab74",
+      "receipt_id": "sha256:3c6c8faf1b28c693891d9067e9da7e19b70602c6ff568b4f7b5bd3283c418e28",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+      "source_content_sha256": "73de8c2d3cec0677bf36609d5d3b94459e28aa4602d89dcf0732a323bbb786c4",
+      "wire_body": {
+        "sha256": "73de8c2d3cec0677bf36609d5d3b94459e28aa4602d89dcf0732a323bbb786c4",
+        "size": 7939060
+      },
+      "wire_headers": {
+        "sha256": "2babeb47c0c21fe983f10fbe87bc530d5cd42a49805eb24a66b4569faf6cf950",
+        "size": 707
+      },
+      "execution_rules_archive": {
+        "sha256": "7dde81f6aeeef385e10f98943d389037a64a1fb9c284e34d8296c5f002dc4e93",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 97,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:f76c868953f429e69fcd3c0cea89950521dec1af56108da28ce4bb7c03e7ce22",
+      "receipt_id": "sha256:594e6002ef571a1361aafade50f8e1df55a8250a6b646a2dbdecf47cafcd2d66",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+      "source_content_sha256": "6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774",
+      "wire_body": {
+        "sha256": "6852f3f4eff84c43fb61dcee9f7ab479d70a43111e6794652688af875ffd9774",
+        "size": 374687
+      },
+      "wire_headers": {
+        "sha256": "216181fe130360479c35355ca8affec20fc2ac897d8979991548c8f6708fb784",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "f4f43bd864964b9bc110affb8e550e2be787a91880d6c9db621a240ea2ec6d40",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 98,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:25727636633736ef3d442aa80299cee50714b2d3bbc633225381df9d7aea25e8",
+      "receipt_id": "sha256:caddcc8c6dd4f0aee7064479a5ff0e0dc9b4ed92be4aeee3e12c075153d42441",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-002.json",
+      "source_content_sha256": "5396d6a929d0640c43962a3a15e0b668b1f50193089b94265cbad6b9f64b80dc",
+      "wire_body": {
+        "sha256": "5396d6a929d0640c43962a3a15e0b668b1f50193089b94265cbad6b9f64b80dc",
+        "size": 369983
+      },
+      "wire_headers": {
+        "sha256": "0726138dd75bca9e741bb762881b3210b389f7d39d637c1963939d20a22b4cd0",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "4736c8b4da52cd05e222e9bbe48ad202d858df93b76560bee4f587cdb80be0e8",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 99,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:1d881cb16174384e73c77e32d003f4b7ce224c6604ae9beabffc2567380a0365",
+      "receipt_id": "sha256:0d1de8d0328214b5452edf6727b10ecb95ad87242840a302f0bf78ea2db999a2",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-003.json",
+      "source_content_sha256": "b8eb484bec7202accab256588b8a358c1b58e5e1a214c4530482746e8e947851",
+      "wire_body": {
+        "sha256": "b8eb484bec7202accab256588b8a358c1b58e5e1a214c4530482746e8e947851",
+        "size": 373836
+      },
+      "wire_headers": {
+        "sha256": "8999126575ddea3c19fed4779008a1285b4e6664425c5c25e6cc6c18a2644474",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "1717926f06eb817262290ae22117c1b43e87abb50cfaa0ec67a72dc12e9e1992",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 100,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:28601125b2f6d9c0a47217c8a2cb0c792825294dc8fc65c43ffeeec013b22504",
+      "receipt_id": "sha256:ba3b0ec05a442f050a2d7534eadb0925e5497435364528f725673c1f788f26b2",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-004.json",
+      "source_content_sha256": "d320065f64a0acde84c63cd43c44dbcfba01288dd0723c6efecad4de2d1c328e",
+      "wire_body": {
+        "sha256": "d320065f64a0acde84c63cd43c44dbcfba01288dd0723c6efecad4de2d1c328e",
+        "size": 361647
+      },
+      "wire_headers": {
+        "sha256": "59dc9ca85c4e78ab0c0727fdb0a6585c3513b01d075dbef85fbbf5b2a1003c9d",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "fe24d960b2eab5177c9a50baf55c60d48e06338a2bbe4243028841f2b2741746",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 101,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:73f3742c31183bebfdd7c1b18d056fb5301d549bd73a7ecdd6a0a9dcae4f8a5c",
+      "receipt_id": "sha256:f782a0a38554c752296cac95625d73a342aaa9d9f23bf6a7dbee18b406073a70",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-005.json",
+      "source_content_sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a",
+      "wire_body": {
+        "sha256": "677b1c2fcdd4d72f30ce7f63703f04868f2c0fd846c98b432b4118b61528952a",
+        "size": 366665
+      },
+      "wire_headers": {
+        "sha256": "78e5e9898c85beaf35b9f6d959a9de05215f92d1deac237d06cd40f0ebf71638",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "670b5101f6e8e1a734bd7947762088efe16c5faa41a9de9a1818780815aaa2d3",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 102,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:ae128d753c54b904b4963fd69314b65a5136cb89f7c7e8258557467f3a621927",
+      "receipt_id": "sha256:a79f5ed9d15a5546101d645e0de94af503956403835e21768a6e9d1edda280e3",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-006.json",
+      "source_content_sha256": "2b06df9c4bc05dad826878b53dcbe69ed555eb89ab7cd47cab2ca7bd06727e08",
+      "wire_body": {
+        "sha256": "2b06df9c4bc05dad826878b53dcbe69ed555eb89ab7cd47cab2ca7bd06727e08",
+        "size": 366260
+      },
+      "wire_headers": {
+        "sha256": "713f67832fdaf4f81e8eca3dfad237cddb5e975797f74b0fc7a1908ffbc4dc58",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "17cf5d3d2c20ddbd2f1bdfe23cfebad00b1c86f4161a7cc84d30fe76025918ef",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 103,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:98646708a59a3dfd55be7d2693ce8fe9fb8dd1c0c57bceaf38ce9f56e013943a",
+      "receipt_id": "sha256:52d09c2b49aced7c2b823b9ff9a716982890a24ac0c8fb8e89b7f7ba5ed53dfa",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+      "source_content_sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9",
+      "wire_body": {
+        "sha256": "ba6a3af2919d18ee33816cd76955d758e9ac8e0604438a528e59fcd5407d59d9",
+        "size": 368184
+      },
+      "wire_headers": {
+        "sha256": "cb12f76d8c34ac7988e07b55287aadc86354455a4324b10f2630bd9863546ba5",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "12839970b7c08af2157fd211702ecf8692098a3c0076b7a08d4a4089292ad176",
+        "size": 4413937
+      }
+    },
+    {
+      "ordinal": 104,
+      "status": "SUCCEEDED",
+      "counts": [
+        0,
+        0,
+        1
+      ],
+      "terminal_id": "sha256:bc140bdc2d0bd5bc8057e6edda1ea3f344e8aa3800d3baf5c8f3dd82e12af5fb",
+      "receipt_id": "sha256:58fdf1f2092dfab96b8fa0286dfe907c21753e2a537086a42023122c1ed6311e",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-008.json",
+      "source_content_sha256": "6f309bae0b4f97541b22f336947018f5dc4318e5dc3ba796adbc3f964db7b1d6",
+      "wire_body": {
+        "sha256": "6f309bae0b4f97541b22f336947018f5dc4318e5dc3ba796adbc3f964db7b1d6",
+        "size": 365592
+      },
+      "wire_headers": {
+        "sha256": "c667cf406699ecb5f829f96095abeb0cef22a325467c257fcb3cef23703758c9",
+        "size": 752
+      },
+      "execution_rules_archive": {
+        "sha256": "bca09708cc57daab0db4d6370115c2ca79858dc7457b05b8ffa820e6cd9badbe",
+        "size": 4413937
+      }
+    }
+  ],
+  "cumulative_through_slot104": [
+    59,
+    59,
+    45
+  ],
+  "remaining_through_slot104": [
+    181,
+    181,
+    35
+  ],
+  "later_ledger_activity_not_in_this_snapshot": true,
+  "initialization_failure_preserved": "Immutable presentation file conflict before first request",
+  "source_inputs_root_not_archived": true,
+  "private_credentials_excluded": true,
+  "original_ledger_modified": false,
+  "production_authorized": false,
+  "formal_publication_credit": false,
+  "archive_operations_new_calls": [
+    0,
+    0,
+    0
+  ]
+}

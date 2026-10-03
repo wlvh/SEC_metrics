@@ -1,0 +1,29 @@
+marriott_international records 58 proofs 29 limits []
+  c03_ecd 22970926 2025-01-01 2025-12-31 PASS
+  c04 0 2025-01-01 2025-12-31 PASS
+southwest_airlines records 90 proofs 45 limits []
+  c03_ecd 16587882 2025-01-01 2025-12-31 PASS
+  c04 0 2025-01-01 2025-12-31 PASS
+ford_motor_company records 84 proofs 42 limits []
+  c03_ecd 27519558 2025-01-01 2025-12-31 PASS
+  c04 0 2025-01-01 2025-12-31 PASS
+pfizer records 52 proofs 26 limits []
+  c03_ecd 27585301 2025-01-01 2025-12-31 PASS
+  c04 0 2025-01-01 2025-12-31 PASS
+jpmorgan_chase records 22 proofs 11 limits [{'metric_id': 'C04', 'category': 'SOURCE_COVERAGE_CONFLICT', 'reason': 'GOVERNANCE_HISTORY_SNAPSHOT_COVERAGE_CONFLICT'}]
+  c03_ecd 40632724 2025-01-01 2025-12-31 PASS
+salesforce records 46 proofs 23 limits [{'metric_id': 'C04', 'category': 'SOURCE_ACCESS_FAILED', 'reason': 'LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml'}]
+  c03_ecd 49379252 2025-02-01 2026-01-31 PASS
+lumen_technologies records 92 proofs 46 limits []
+  c03_ecd 24936641 2025-01-01 2025-12-31 PASS
+  c04 0 2025-01-01 2025-12-31 PASS
+macys records 68 proofs 34 limits []
+  c03_ecd 14104067 2025-02-02 2026-01-31 PASS
+  c04 0 2025-02-02 2026-01-31 PASS
+paramount_skydance_paramount_global records 32 proofs 16 limits [{'metric_id': 'C03', 'category': 'SOURCE_ROUTE_UNAVAILABLE', 'reason': 'NO_SAME_CIK_DEF14A_IN_COMPLETE_RELEVANT_SUBMISSIONS'}]
+  c04 None 2025-01-01 2025-12-31 C04_COMPARABLE_AUDITOR_FACTS_MISSING
+  c03_sct 63211569 2025-08-07 2025-12-31 PASS
+  c03_sct None 2025-01-01 2025-12-31 SCT_SUPPORTED_TABLE_NOT_FOUND
+enphase_energy records 40 proofs 20 limits []
+  c03_ecd 9601958 2025-01-01 2025-12-31 PASS
+  c04 0 2025-01-01 2025-12-31 PASS

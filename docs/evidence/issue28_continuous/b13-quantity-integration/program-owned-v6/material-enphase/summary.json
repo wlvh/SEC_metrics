@@ -1,0 +1,72 @@
+{
+  "new_contract": "B13_PROGRAM_QUANTITY_ROLES_V1",
+  "source_requests": 6,
+  "result": {
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:a3e2c4829ec4392c02c9b2aebbe9c4082af65bb92144d29fbaa8b6cd9d5596d0",
+    "company_id": "enphase_energy",
+    "metric_id": "B13",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+    "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in\u2011house manufacturing facility and our partnership with Flex. These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter. Beginning in the second half of 2024, we began shipping residential and commercial microinverters and batteries with higher domestic content from U.S. manufacturing facilities, which are expected to help certain solar and battery projects qualify for the domestic content bonus tax credit. The domestic content bonus tax credit is only available to commercial asset owners, which includes commercial businesses adding solar and power purchase agreements/lease providers who own residential solar projects.",
+    "unit": "text",
+    "value_kind": "TEXT_V1",
+    "text_payload": {
+      "version": "TEXT_V1",
+      "content_kind": "SOURCE_EXCERPTS",
+      "renderer": "ORDERED_NEWLINE_V1",
+      "items": [
+        {
+          "order": 0,
+          "role": "excerpt_0",
+          "text": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in\u2011house manufacturing facility and our partnership with Flex. These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter. Beginning in the second half of 2024, we began shipping residential and commercial microinverters and batteries with higher domestic content from U.S. manufacturing facilities, which are expected to help certain solar and battery projects qualify for the domestic content bonus tax credit. The domestic content bonus tax credit is only available to commercial asset owners, which includes commercial businesses adding solar and power purchase agreements/lease providers who own residential solar projects.",
+          "observation_id": "sha256:582494943ed61a49dbf5cd14a3a74a10e8d733ff62666ba8825a7656cd143051"
+        }
+      ],
+      "coverage_hashes": [
+        "sha256:67a73c23ff74f359f7773caf1efbd453e14e8bb7c9da027b23363eb480153525"
+      ],
+      "candidate_hash": "sha256:d41292f9bb4847932ddaf24cccf52609b3b1f664908d1b1be13cb91ea192c560",
+      "review_unit_hash": "sha256:4724c31b85da1fa8a521f8080fa1dbc2e359749e23fca6a4eaec460bcd528e8d",
+      "approval_effect_hash": "sha256:0f2bdd6c5f16bae881f51e3ea7dff2667ce8d09a6a5c19800bc2401168bf9db2"
+    },
+    "trace_id": "sha256:018d1a93cae8b7293cbff3c72f7499eed7136c2c1cb4e91428ce1c122ea70681"
+  },
+  "rendered_row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "B13",
+    "metric_name": "Production capacity qualitative disclosures",
+    "value": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in\u2011house manufacturing facility and our partnership with Flex. These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter. Beginning in the second half of 2024, we began shipping residential and commercial microinverters and batteries with higher domestic content from U.S. manufacturing facilities, which are expected to help certain solar and battery projects qualify for the domestic content bonus tax credit. The domestic content bonus tax credit is only available to commercial asset owners, which includes commercial businesses adding solar and power purchase agreements/lease providers who own residential solar projects.",
+    "unit": "text",
+    "status": "TEXT_QUAL",
+    "source_class": "10-K",
+    "formula": "verbatim production capacity disclosures",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "FY",
+    "accession": "0001463101-26-000013",
+    "form": "10-K",
+    "filed_date": "2026-02-17",
+    "concept_or_section": "Production capacity disclosures",
+    "context_or_dimension": "source-reported production/capacity scope",
+    "confidence": "",
+    "notes": "Original capacity disclosures retain their own product, facility and period scope. No numeric utilization or annualized capacity is inferred. Source classifications use recorded test responses; no real model execution credit."
+  },
+  "seconds": 575.8106487090699,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "evidence_type": "COMPLETE_REAL_SOURCE_RECORDED_RESPONSE_NATIVE_RUN",
+  "real_company_result_credit": false,
+  "production_authorized": false
+}

@@ -1,0 +1,46 @@
+INSTALL_START
+RUN_START
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2354, in _validate_record_graph
+    text_contexts = prepare_text_run_contexts(
+        repo_root=repo_root, manifest=manifest, records=records,
+        compiled_specs=compiled_specs, raw_bytes_by_id=raw_bytes_by_id,
+        requirement=requirement)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 301, in prepare_text_contexts
+    case = validate_run_authority(repo_root=repo_root, manifest=manifest, records=records, compiled_specs=compiled_specs)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 225, in validate_run_authority
+    need(manifest['requirement_id'] == REQUIREMENT_ID and manifest['run_id'].startswith(PREFIX)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and (compiled_specs is None or len(compiled_specs) == 1), 'B13_NATIVE_RUN_ROUTE_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_NATIVE_RUN_ROUTE_REQUIRED
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/native-v14.py", line 37, in <module>
+    created = create_run(data_root=WORK/'data', run_dir=WORK/'run',
+                         company_id='ford_motor_company')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b03_impairment_adjusted_run.py", line 138, in create_run
+    created = normal._create_case_run(data_root=data, run_dir=run_dir,
+        company_id=company_id, metric_id='B03', case=case,
+        requirement=requirement)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 360, in _create_case_run
+    manifest,stored,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3485, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2359, in _validate_record_graph
+    raise RunStoreError("Native text input replay failed: " + str(error)) from error
+vnext.run_store.RunStoreError: Native text input replay failed: B13_NATIVE_RUN_ROUTE_REQUIRED

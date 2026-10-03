@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-c02-normal-20261001/recorded-enphase.py", line 32, in <module>
+    created = create_normal_run(data_root=DATA, run_dir=RUN,
+        company_id='enphase_energy', metric_id='C02',
+        c02_composition=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 323, in create_normal_run
+    return _create_case_run(data_root=data_root,run_dir=run_dir,company_id=company_id,metric_id=metric_id,
+                            case=case,requirement=requirement,freeze=freeze)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 377, in _create_case_run
+    manifest,stored,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3485, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2649, in _validate_record_graph
+    _, _, expected_observations, _ = text_review_replay(review_unit)
+                                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2389, in text_review_replay
+    if evidence != api.build_text_evidence(candidate=candidate, **arguments):
+                   ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results_v2.py", line 395, in build_text_evidence
+    prepared = prepare_business_text_sources(metric_id=compiled_spec["compiled"]["metric_id"], **source_arguments)
+TypeError: prepare_business_text_sources() got an unexpected keyword argument 'c02_selection_policy'

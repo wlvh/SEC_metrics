@@ -1,0 +1,149 @@
+{
+  "tested_base_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+  "uncommitted_evidence_processor": true,
+  "processing_sha256": "ad67ce514a05e6c0a32a72bb68e15b6e782099439271ad49e5f038b1c71eecbb",
+  "processing_root": "/private/tmp/issue28-d03-native-checked-response-20261003",
+  "report": {
+    "origin": "DEVELOPMENT_MODEL",
+    "request_sha256": "6d1fbe971d46a3c5fac136e5547362a17e056efd238c6c579f04e27cf43dc26e",
+    "response_sha256": "59ccfeb447d76555c14537816940be01aac3e804b7afb6c1d38245e721894097",
+    "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+    "processor_sha256": "b54705a76c0bb5fc61974f271980e70355881512fc7ac7925b60afb5f1cd2578",
+    "checks": {
+      "findings": 5,
+      "unresolved": 2,
+      "reference_tokens": 1939,
+      "references": [
+        {
+          "unit_id": "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 2
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 454
+        },
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 3
+        },
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 4
+        },
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        },
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 416
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 438
+        },
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        }
+      ],
+      "scope_current_involvement": "UNRESOLVED",
+      "semantic_approval": false,
+      "native_credit": false
+    },
+    "responsibility_unit_ids": [
+      "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+      "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+      "sha256:63366ffe097dbfd068a8b491df8d159a8e3113b8a80f49898c317d596a5ca963",
+      "sha256:4f09dc3894af46541d905226c85e0c8dd6fb00e99aae2a0862a928a7b907929d"
+    ],
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "native_result_created": false
+  },
+  "controls": [
+    {
+      "case": "actual_raw_response_exact_save_read",
+      "passed": true
+    },
+    {
+      "case": "missing_owner",
+      "rejected": "MISSING_EXTRA_OWNER"
+    },
+    {
+      "case": "foreign_source_unit",
+      "rejected": "REFERENCE_UNIT_OUTSIDE_INPUT"
+    },
+    {
+      "case": "wrong_kind",
+      "rejected": "REFERENCE_KIND_OR_INDEX"
+    },
+    {
+      "case": "bool_index",
+      "rejected": "REFERENCE_KIND_OR_INDEX"
+    },
+    {
+      "case": "outside_original_object",
+      "rejected": "REFERENCE_KIND_OR_INDEX"
+    },
+    {
+      "case": "context_only_has_no_owner",
+      "rejected": "CONTEXT_ONLY_FINDING_NOT_OWNED"
+    },
+    {
+      "case": "exact_duplicate",
+      "rejected": "EXACT_DUPLICATE_NO_CLEANUP"
+    },
+    {
+      "case": "resource_overflow",
+      "rejected": "OUTPUT_LIMIT"
+    },
+    {
+      "case": "shared_context_with_different_assertion",
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "case": "response_changed",
+      "rejected": "EXTERNAL_RESPONSE_CHANGED",
+      "actual_saved_copy": true
+    },
+    {
+      "case": "credit_changed",
+      "rejected": "EXTERNAL_PROCESSING_CHANGED",
+      "actual_saved_copy": true
+    },
+    {
+      "case": "credit_changed_self_resealed",
+      "rejected": "CREDIT_CHANGED",
+      "actual_saved_copy": true
+    },
+    {
+      "case": "owner_metadata_self_resealed",
+      "rejected": "SAVED_PROCESSING_CHANGED",
+      "actual_saved_copy": true
+    }
+  ],
+  "seconds": 0.249,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

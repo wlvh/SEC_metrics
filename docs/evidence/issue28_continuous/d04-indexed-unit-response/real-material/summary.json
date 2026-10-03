@@ -1,0 +1,1156 @@
+{
+  "record_type": "D04_REAL_NATIVE_ARCHIVE_SUMMARY",
+  "complete_native_coordinates": [
+    [
+      "ford_motor_company",
+      "D04"
+    ],
+    [
+      "pfizer",
+      "D04"
+    ]
+  ],
+  "source_period": "FY2025",
+  "new_call_slots": [
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
+  ],
+  "new_calls": [
+    23,
+    23,
+    0
+  ],
+  "new_successful_d04_requests": 21,
+  "new_failed_b13_requests": 2,
+  "failed_b13_slots": [
+    82,
+    94
+  ],
+  "reused_original_successful_slot": 70,
+  "cumulative_through_slot94": [
+    59,
+    59,
+    35
+  ],
+  "remaining_through_slot94": [
+    181,
+    181,
+    45
+  ],
+  "later_ledger_activity_not_in_this_snapshot": true,
+  "evidence_type": "LIVE_MODEL_RESPONSES_PLUS_NATIVE_RUN_PUBLIC_PREVIEW_AND_COPIED_RUN_COLD_REPLAY",
+  "native_result_publication": "WITHHELD",
+  "public_statement_status": "TEXT_QUAL",
+  "reason": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+  "production_authorized": false,
+  "formal_publication_credit": false,
+  "archive_operations_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "repository_references": 0,
+  "calls": [
+    {
+      "ordinal": 70,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:77a7d67057a27769f42a148ffb103fc4eff5abe423cf4edc3e571e686ce98775",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:fb5f7de9b9c1c511220fe27d014a350442b75347b5df36035fd98f017e2eeea3",
+      "execution_receipt_id": "sha256:e896aa340850b47a23ef0b6513995982297dd97cc7b4eb0128fd133256e863bd",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "89191bc5dbdeae19b8b042821745213e9490713d2ef813f976f2d8faa7316662",
+        "size": 607261
+      },
+      "raw_response_file": {
+        "sha256": "3d26713416088239ef52e3acb9d8ee87eae3c0f6db292299a40452f7bf0853c9",
+        "size": 2188
+      },
+      "assistant_output_file": {
+        "sha256": "6772d154c7ce0f4196e9ae2b25b33cda40d34d9bfbeeade612f077c5e22c0970",
+        "size": 1614
+      },
+      "execution_rules_archive": {
+        "sha256": "2fe2e0449f3f0a5db7917afe815da97c95673755d7f2f1e3a1936c52e192d7c8",
+        "size": 4401695
+      },
+      "execution_rules_manifest": {
+        "sha256": "f8ed80b2fb2c5823fde171803a4d19fec7cc9ab94549d52e22c925eda9f737d0",
+        "size": 66381
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 512,
+        "cache_miss_input_tokens": 184975,
+        "input_tokens": 185487,
+        "output_tokens": 557
+      }
+    },
+    {
+      "ordinal": 72,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:aec87ddfcac5d8916b9fab1740495da3bdfc6ab0429803e4814d833a3a8eb485",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:5cc3919109ef5a9638f83102dd06bf1b8c7a1e857244580ff34e9e4dc9089b89",
+      "execution_receipt_id": "sha256:21f2d16010aa7eac5ff8edd3493413cc0dfd932b026a3ce9f01dda4db8db370f",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "7e428aacbfd4333933933dc982efcf0fdacc840982da393bdd09f9d00ac1e92f",
+        "size": 444268
+      },
+      "raw_response_file": {
+        "sha256": "080043752eb67734c1118dcb86bf81a9721514f38538aaa3e33c25f537207671",
+        "size": 766
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "10cf080a65096ca06b77a7335679332f908aea6dd77269c0e9ee79d67187880b",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 640,
+        "cache_miss_input_tokens": 171083,
+        "input_tokens": 171723,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 73,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:d01ad534f7dd987cf40f7fe6586ebed1a75a7afc70c9a591520e972fa08fc869",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:b906bddf08993a7641ac227e18c0826f4e05eea5001efd5f1c988feac104b997",
+      "execution_receipt_id": "sha256:b037ade20ca2a207573f4249e1dc13d4019ed9fb592505ab2530884f563b27d7",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "0dceed528039d53f600763bc23b0844f0eddad821d416237d27d9c5cde365de0",
+        "size": 561708
+      },
+      "raw_response_file": {
+        "sha256": "8b8a6048d43064ebbee267540ceade595d62fba74f706c642cbef49d61dbc8eb",
+        "size": 1053
+      },
+      "assistant_output_file": {
+        "sha256": "fc49d81fcd431a500e5fe57cd40fe24967677f229470b64c5848b216d8550dab",
+        "size": 515
+      },
+      "execution_rules_archive": {
+        "sha256": "0949a36e8b6eb010eeef73a42050619690f2c7759b524756e7e2ea040b7dca62",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 182899,
+        "input_tokens": 185075,
+        "output_tokens": 173
+      }
+    },
+    {
+      "ordinal": 74,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:5f521f2615ea1d423ffba4117b2efa054b9e286f3c00e3e1f4fef6cee709bde0",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:c02b78923fe7caaecf00de5ae80dff8f6980ee94c615dfa232547d7f6303785b",
+      "execution_receipt_id": "sha256:82022531508e6f3fa9a897b348d0daae2788844acf18bd26c5c015c7635715b3",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "22f33c64d93d58d861d075697cf35fe43e71c1e47e19f12e3db063e041feaed8",
+        "size": 557205
+      },
+      "raw_response_file": {
+        "sha256": "be665f86156fa7e1db1653ce39b9036819d6dbf2a3a05be7a1af56fc2a25d7c3",
+        "size": 982
+      },
+      "assistant_output_file": {
+        "sha256": "5f9b1f968519f0efab4be223faed4e6dcbda5cab178af4983bc2a620c4ae74ea",
+        "size": 452
+      },
+      "execution_rules_archive": {
+        "sha256": "cb192ef375ef4464c4f6c43b39fd9db4f82a6177c5dc11012dd584b5089858b7",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 183071,
+        "input_tokens": 185247,
+        "output_tokens": 152
+      }
+    },
+    {
+      "ordinal": 75,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:97468c38751b28d34f5910ae05b0b4e89938294c1a682b1831898ec34c5740e8",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:b16548db4fc6ed226d63619c6362ebc0c85aeea9e52d74d90d8faa9b0dac1e54",
+      "execution_receipt_id": "sha256:df7fec4516130e083f619f0028ccdfacf2d45c6e0a5e659eb754bc62fc63f579",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "e4bb4f7e1509b263aefb45e5941a4408ae43580b2f44861cb0f4e8765b67b153",
+        "size": 530402
+      },
+      "raw_response_file": {
+        "sha256": "3e33bdf85790b408b579a2e0a4f903d4ec54c39d30371ae1c61e6573c4b19eba",
+        "size": 982
+      },
+      "assistant_output_file": {
+        "sha256": "5f9b1f968519f0efab4be223faed4e6dcbda5cab178af4983bc2a620c4ae74ea",
+        "size": 452
+      },
+      "execution_rules_archive": {
+        "sha256": "a065a47e28d1db74d7cad50cee0fcea4d09d7e919fa82647d856dc15dd5beafe",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 178641,
+        "input_tokens": 180817,
+        "output_tokens": 152
+      }
+    },
+    {
+      "ordinal": 76,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:eb4c615e2e5396bc4b03cc950e2d6e69b0926136ceebb64adbf08daf1e79d60f",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:bd78d8658643521befef658cae81e91ad97ddae093c71666c1c6ed009636eaa7",
+      "execution_receipt_id": "sha256:f523eac2bfd4f7a65cf46cbc17e091209ef019e1e7e53133bd95914e18b25e23",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "63e5310b0376c1ce26145794e7cdedd9996478ce78857e87b77561ad1b336040",
+        "size": 510827
+      },
+      "raw_response_file": {
+        "sha256": "45b8325d26690e1f0b3d9decaadf08f4bb231a199b9a0fe582e731fc25a43d96",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "cef0a43d72ba62d7a53ac3ce3e1f6de95c722251992b89edee73fb7dd6ac4e7b",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 189267,
+        "input_tokens": 191443,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 77,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:0f0d430e03d49f5b88291beee3ebbbf5eab0632e2f4a2a609f444783e8147879",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:4f32426a9ddb134fadd78c27ce7549b064e87f0c2d4ff47f37c0462f7137a6d4",
+      "execution_receipt_id": "sha256:07cdbd70f9bb04a2d6b994ec8a97e8bb4f489d4de439cb731baf63feab86a8c0",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "17369b533559f3c4dab3c574724b8c32ccc3227d4a0b1709800b28dfbd32cb12",
+        "size": 502922
+      },
+      "raw_response_file": {
+        "sha256": "589bbd362b093b961d1a8c9af89039aa56d9d3cfb533b01c6725a14e629ef8b0",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "2b2cb7d9132d858ef1b94e255a07b4b09d7cbdd79b7d9f6446386a8609492efd",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 183503,
+        "input_tokens": 185679,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 78,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:1c4d2efbd24e967f412bbf1a875f13906ad8ab03307356b8cc13f86b116a691b",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:7b2f2e628e9f8c7045f31bb95d270103b9865583075e107019df9376f2e7331c",
+      "execution_receipt_id": "sha256:334f75bc1a30cf0365990bad8b47d00a2abeeb3805529aa98eb307b76f0398f9",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "2821af5799ecb3c357a4ad8a0f324f1a69b980cc5e5c749fcac963a8fa5ef634",
+        "size": 493780
+      },
+      "raw_response_file": {
+        "sha256": "f0fb274197327279c42354f161e52ef7a32ff56635e5edbbdcf39ce56133b26e",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "8e9c6f17c66dd32bddaab442b7e875632e3be11206363deca7b777ce365fc88c",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 182711,
+        "input_tokens": 184887,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 79,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:8837d0ec051244fdd1f4b9a5869b25a6b55efa2e5609e60f6c35b8b576dcde07",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:24291b80a2e9382358e5ced3f6ca6b7464c95b471a97fb29043ce74194cd38ca",
+      "execution_receipt_id": "sha256:1776bf8411b1b6e1b4bb748d429dd7387650e3166b29ab348ab5bf431d58f4d6",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "08131bd0a840d2b090aa607a1b2afd9f8ecd5094c8c43339a28857bfdcf675dc",
+        "size": 445207
+      },
+      "raw_response_file": {
+        "sha256": "1a7f839d9223edb3e63a2c2de4ee3ae73e633655308a5b87ccac0e5aee81a802",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "3f7d5736e0dd4ea2989471b2ed4c99da71aed4d8a6d78707a519393a0fcb0b5b",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 158707,
+        "input_tokens": 160883,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 80,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:81d9683b43d1e8ce5862cf1d9ea40384a1948fc9d26d26b5d083a86560dee67b",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:befae76c2708a241ad3fa396071e14702e36ea588f91d3b2d261cec8eec893a4",
+      "execution_receipt_id": "sha256:4f04879978489586afa841514b925f444e0864eaa7e5d56ccd032652947d1623",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "029be8d1f96446365f6da1ef4f9285bae5498de2c28cf317738aae53ce14c14e",
+        "size": 407455
+      },
+      "raw_response_file": {
+        "sha256": "b73d8c00ce4512a32bbac9e6777a5224a15547fdef735ec30fcceff30a00d267",
+        "size": 697
+      },
+      "assistant_output_file": {
+        "sha256": "d61488ff998ed08b4a16871e0ba7bb061a576188998a047eddabc8ee9e449c4c",
+        "size": 200
+      },
+      "execution_rules_archive": {
+        "sha256": "7500a66214bc1f4992cf63340715cc0ede63c5b36cb2384ad9330f40c57c4599",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 151466,
+        "input_tokens": 153642,
+        "output_tokens": 68
+      }
+    },
+    {
+      "ordinal": 81,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:55e8b91f6d21d3a107ac5fd9c27f8e3f023005919c0c0ed68b802cdcb8203028",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:e76d3aa1c8706e57e9a3a0ed7d856761cebe512445803c2a7f64d4e605e0d6a4",
+      "execution_receipt_id": "sha256:67b7cd9ee9019d78c40d3706649f58ffc6176b306e7bc4f0ee1df038be043ecb",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+        "size": 7142869
+      },
+      "semantic_request_file": {
+        "sha256": "54dc4fe44a47c0c50d0ed66002d13986aebc10053ecad04988f4ab3c4670cd66",
+        "size": 172094
+      },
+      "raw_response_file": {
+        "sha256": "aab3cdf0a17ad743e44811bd042656c68097a98191ef12e8a5c62e6f88dc448a",
+        "size": 623
+      },
+      "assistant_output_file": {
+        "sha256": "847ae10d4b51b47ed071fd762ae27c0a3dba04936410614568590f0810b561a4",
+        "size": 137
+      },
+      "execution_rules_archive": {
+        "sha256": "16231e44a292e6d798eab0b1a15665ea46fc42570dac9c74ed981f08029cd85c",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 53632,
+        "input_tokens": 55808,
+        "output_tokens": 47
+      }
+    },
+    {
+      "ordinal": 82,
+      "company_id": "enphase_energy",
+      "metric_id": "B13",
+      "request_id": "sha256:0a07bcb209c9dd40c9e2bcab04325cf94f12f7af0da57f0ec663d1d5afd36d3e",
+      "status": "FAILED_TERMINAL",
+      "terminal_id": "sha256:0bf8e0336b840b1d763c53deadfc915f1ffc13256b2a079e539328c94a14112e",
+      "execution_receipt_id": "sha256:bf7f3e41000a2fb10110d19e2835085969de52c6ff4199c3b41543017a631816",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "5f495774cb47cfcc3af7c4915a97362f6584b1ec372a4375adea8f0c3094e7aa",
+        "size": 4047844
+      },
+      "semantic_request_file": {
+        "sha256": "7c55d69b996ef705d0279737be70a8f411ced562528fa5e8d2fa4232ff1ec65d",
+        "size": 605411
+      },
+      "raw_response_file": {
+        "sha256": "e16aabceb372861500cf9751768d811181402b18034395ef8d6c44b3fac020bd",
+        "size": 4231
+      },
+      "assistant_output_file": {
+        "sha256": "f43cae37508d00d011a813f32addbaa74462fbbe3903d0ca9ecda4b9ffe6f72f",
+        "size": 3563
+      },
+      "execution_rules_archive": {
+        "sha256": "8a05e09f07132e054581c30d31bf838f36b80ceaa987d04a30d9381f3d00ce7a",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 640,
+        "cache_miss_input_tokens": 184448,
+        "input_tokens": 185088,
+        "output_tokens": 856
+      }
+    },
+    {
+      "ordinal": 83,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:e633b123ca169f07d546ae88c0611769f1c027365efa9ba69f29db6960a72162",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:37be23a412438c8c643242e784e3ad318f818e14dbdf9b4f5446f335860bdc2f",
+      "execution_receipt_id": "sha256:5859e75da95bc3bfa1d9524ba021a13c84f7e2c9ca425276102189663e87ff8b",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "71376ade120ed9d468433c3a5ed141be2b98fc7f5b298d64dc20ec3b027c398d",
+        "size": 452288
+      },
+      "raw_response_file": {
+        "sha256": "d9e3ce7ee4e1d1033bbacd768007be53ed8cd69b349842f3d2615e85ee6c3c29",
+        "size": 1238
+      },
+      "assistant_output_file": {
+        "sha256": "ee7a7456085a651be775e79a66291fabd521d31bcdd5170d186e7befbda671f9",
+        "size": 708
+      },
+      "execution_rules_archive": {
+        "sha256": "5cd05dfe1839aa304fd19cb57d923e3b120cf8cb8aac8e403772c409f43c57e0",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 1152,
+        "cache_miss_input_tokens": 164876,
+        "input_tokens": 166028,
+        "output_tokens": 197
+      }
+    },
+    {
+      "ordinal": 84,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:3c0cbf34d4892aa2a3941ac6c90f22b460c77db040affe7250c15daa665f68b0",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:55947716e389655b862562ed72ec4d096f10c8fed40df20fcdf95aa1e5aa7b35",
+      "execution_receipt_id": "sha256:33ef17a0bdce15078d1f5910c91ab486fe03352dbe635f6d9393deff8632dc0a",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "0e21c42073c04d833f6e8b7ec0ecf69f9403408af6c469a59331599fb89abc99",
+        "size": 537240
+      },
+      "raw_response_file": {
+        "sha256": "7353ba779de603219873721b10d92de8cd230274ac431695282fc33e3ea5cb3e",
+        "size": 1337
+      },
+      "assistant_output_file": {
+        "sha256": "2f898b4fe87392079a678cd6d1904b6c36db91e3daa684e5db22c90e6c8490fb",
+        "size": 783
+      },
+      "execution_rules_archive": {
+        "sha256": "b5fe9994e6ea208b954066f1e8b438944e1b371586ec6d9f2109547291b3b4f2",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 176547,
+        "input_tokens": 178723,
+        "output_tokens": 238
+      }
+    },
+    {
+      "ordinal": 85,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:3e2f5571f8f38f0b78776bb947c7618259b2bda1ef332a120b685918af1a96e3",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:695eedf39020a84df41f26d539c0eb055ef8b237fbe01e7b69234354fe138595",
+      "execution_receipt_id": "sha256:21c8c52ad98efa0937f79b28da64feef78446065e1ff8c5c906de6694ffa9f14",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "3f227284dd4c6f7aa12d326427f7914404886d10fb25f155d30093d47c108b65",
+        "size": 554682
+      },
+      "raw_response_file": {
+        "sha256": "51c2e859b12919f2d561d9276f76101914092b610dedc1a3c420705c2f6546c5",
+        "size": 911
+      },
+      "assistant_output_file": {
+        "sha256": "9cc968748e7930a67c9973bbed6be8f770384d9bb116d2421c77339c1dd5c5d6",
+        "size": 389
+      },
+      "execution_rules_archive": {
+        "sha256": "fe7cb4f642041e797c8109f691a2bf1d49605db07544b025d52d2ddfaf72be49",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 181602,
+        "input_tokens": 183778,
+        "output_tokens": 131
+      }
+    },
+    {
+      "ordinal": 86,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:4c122461a04b604eaf178f3546b807d5703684edb211569656ac4f80aa3ef4c4",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:07707f9b7d502459bd6e1b076d5cfc77ef92a1f4a2b5912e1bb8737255ea9fcd",
+      "execution_receipt_id": "sha256:764574140a009dcf92e3f08c86e5f8d030a8188c69e6fd91fb518eb63ec78cff",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "92fe21ad6afa238162a0e3cb2a76172e07f4227005d1a033a0f20dcc96a15775",
+        "size": 513567
+      },
+      "raw_response_file": {
+        "sha256": "59f53aad74bc83855bf09eb0a8a9060053b736cf1e1330b7a4f56692900a1029",
+        "size": 911
+      },
+      "assistant_output_file": {
+        "sha256": "9cc968748e7930a67c9973bbed6be8f770384d9bb116d2421c77339c1dd5c5d6",
+        "size": 389
+      },
+      "execution_rules_archive": {
+        "sha256": "51d1909cd780ea7eadcaa31e002362de69e3be1edb8639bc74bc6f76d1c3f3b1",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 168954,
+        "input_tokens": 171130,
+        "output_tokens": 131
+      }
+    },
+    {
+      "ordinal": 87,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:3bd2dd9eeaa83ff4f5624201c6d515a04f73608bf693bcfcf82887597cd11e93",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:ece0001e7dd4a9c2f7e67e6f3c9f4edc88a34765c7a3d5f805baf3e32935b92c",
+      "execution_receipt_id": "sha256:16bc48f762e5ed4bc9f6925002a4c3ee5681773583e1ab2742ab50d285d29cc1",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "b08f904108fb829ae64ae1f72aa484418072ce4c504f812be853bf79dfb0b23c",
+        "size": 592324
+      },
+      "raw_response_file": {
+        "sha256": "b0da7c6d03e9124936cb177b9117cda27236b803439dced5f7ec8438b7aec702",
+        "size": 840
+      },
+      "assistant_output_file": {
+        "sha256": "549c6dfbf5ecf273e34787e29283bf49377872e1b2ecaa3d84f7b83368f8c3c0",
+        "size": 326
+      },
+      "execution_rules_archive": {
+        "sha256": "0061a1505982742d38c4df0f097314268a3ca00167a127963e84f38b074d71b1",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2048,
+        "cache_miss_input_tokens": 187259,
+        "input_tokens": 189307,
+        "output_tokens": 110
+      }
+    },
+    {
+      "ordinal": 88,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:50c04a2dfea1b9ce59aa629c63d1cbcca71d780dba6fc3437be249cc7cec9932",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:ec7a648d8607b29ea3c31978e79589ecd0032ada70d123e3e22686d67f34aa43",
+      "execution_receipt_id": "sha256:6ab6b819a5dc23cba6390874fd0311472d7c2865920e712a66d1445551ce2a71",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "9a0e4d4344c05cf2ede87c46b096d3ee48b89e590b5e8937aa9ddf176d96c03c",
+        "size": 488169
+      },
+      "raw_response_file": {
+        "sha256": "45e08db726d91ed5b6dec6a99359bc1bc4e85a55ad323666089e0c41cdfb8e48",
+        "size": 840
+      },
+      "assistant_output_file": {
+        "sha256": "549c6dfbf5ecf273e34787e29283bf49377872e1b2ecaa3d84f7b83368f8c3c0",
+        "size": 326
+      },
+      "execution_rules_archive": {
+        "sha256": "88726e729b6f51a999ba4704d52886eeb50e50de42d111274772198cb1333f67",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 181631,
+        "input_tokens": 183807,
+        "output_tokens": 110
+      }
+    },
+    {
+      "ordinal": 89,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:cf33df2223388577910fab56f6591b851f3fb389b4dd282f29b84e529fd9109b",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:2df4630bf9c961e37ee43ecc62988115fce6859b2198e4125d9d1a1f67ab2bfa",
+      "execution_receipt_id": "sha256:f6924ca2c34775fbc2618d3f7de7e9c34f1bf124ca7aed60956c283ce4dfeb32",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "ec052e61d76f8679c69d85d9d5cf159278d4bb528645ad8ecf27f4e8574f802c",
+        "size": 375316
+      },
+      "raw_response_file": {
+        "sha256": "6eba8dd1f38f1519996adb39d2a0258233bdcdbca519cd913b2c9ae85bea7e90",
+        "size": 840
+      },
+      "assistant_output_file": {
+        "sha256": "549c6dfbf5ecf273e34787e29283bf49377872e1b2ecaa3d84f7b83368f8c3c0",
+        "size": 326
+      },
+      "execution_rules_archive": {
+        "sha256": "6fc78ee5f8b53983f307342c0b8e5ec5d9cc6a80b565efc30b1644c41a40dd49",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 116799,
+        "input_tokens": 118975,
+        "output_tokens": 110
+      }
+    },
+    {
+      "ordinal": 90,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:408e1054529ec4efd784fa8193a30a4ed27efa9730718812c53f581ddbc7d255",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:cf6c9f666c153758b011ceb354f7a3ac2d8134cb382c82d58698fc0899fbf218",
+      "execution_receipt_id": "sha256:84b6568e66603dc49d149675c075e5b776c128db2fd28e6dc149dd1f54057138",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "11300bced9f911c130fa8d72e5abe9adf2e2f8b2e282826650225eb92da8c044",
+        "size": 524557
+      },
+      "raw_response_file": {
+        "sha256": "05fc7fd6a08d1e0da2c603e77c529cf670934e6d1d53269107812bbc59d81da3",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "e8f206b1d09735237de9b13d93f62d42c909711975d74198794290ceb952c218",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2048,
+        "cache_miss_input_tokens": 192662,
+        "input_tokens": 194710,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 91,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:a3496795955641c3a86e8592211d94464b7b580a256cc378b33fa7edd65a7222",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:b2a35b91384098ee193de3ad89bd340f1de984481a2fc2fbfc5a21a2ef9e6a55",
+      "execution_receipt_id": "sha256:351fc591523ea25495b7d637c9fdecf54bc443c81c70fb3635572655bcb44521",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "4b5c69d64d6d6784d64a3d8cb693f60982245ba2cfca4bd0fb8ee45981e402ff",
+        "size": 497374
+      },
+      "raw_response_file": {
+        "sha256": "ff3f1c7bf36a4815e07efea8f23997913665b282135e11f939c42fd1d3b411f7",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "c2c9c70ee65961d0844f0ad87ea2bfd8292bc611d20847da3f41cf97679905dc",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 188420,
+        "input_tokens": 190596,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 92,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:9d63a8200e4bcbee4cce4f23c345d93663d5fe2721f4301cf1323a7e168d6cc9",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:6002b371d8f3493c34799b1dc3c31d3a1e200fef8ab76c832b5d87977d07310b",
+      "execution_receipt_id": "sha256:a8d430a0769fb4774a8a144a5f244c382ceedea1fd4ab3b7544b878cd241a03b",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "28ae28f041391f4ed2b19f0ff9eca9dc3dd2ebd31eec324d19adad7ff3856d51",
+        "size": 503832
+      },
+      "raw_response_file": {
+        "sha256": "43450b556ff18371419f37c0b86e68567a513f67c081a250fad049ee29befba1",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "f463a55932689a4f3e13b90ee6537b502d3208a07936e1cf4d93df26785b8a7c",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 186330,
+        "input_tokens": 188506,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 93,
+      "company_id": "pfizer",
+      "metric_id": "D04",
+      "request_id": "sha256:4742315264c8dcccd1f6fc09fbd8fc5834d484f85175674a22fa72c1841adfe1",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:e4f9050ed626402e24c0887ac5d8306e9b6c432bd7ad760ea43ed7eec3ae443a",
+      "execution_receipt_id": "sha256:12bb55dd991721b3170479894b7dd2b44e45f8c3f1e31ef4efb878778edf3af1",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "fcea0b05d3dca54dd3a43f012f4d2e1fab0a1a70926b5ecba68975c017abf33d",
+        "size": 7628968
+      },
+      "semantic_request_file": {
+        "sha256": "42db7b553da725bc706210ebc99ab99f438399027f8ca3f26707520a70607f8e",
+        "size": 476489
+      },
+      "raw_response_file": {
+        "sha256": "7f121e1b8d8ada54d84f93ca167d64819b548aa50735fd50e10f3286b58691bf",
+        "size": 768
+      },
+      "assistant_output_file": {
+        "sha256": "b24b1d2dc48d2b2775879f20db32926f8752931c1a36a1937099602538e77e20",
+        "size": 263
+      },
+      "execution_rules_archive": {
+        "sha256": "8d942aa47a74e05472598fe6b0832970bf2894e16440f4de62deb4497ac21c6a",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 2176,
+        "cache_miss_input_tokens": 177826,
+        "input_tokens": 180002,
+        "output_tokens": 89
+      }
+    },
+    {
+      "ordinal": 94,
+      "company_id": "ford_motor_company",
+      "metric_id": "B13",
+      "request_id": "sha256:76bd7681d1088b117f17d25a66a193be1b03972e9e4677e9a73d133088d8bd2d",
+      "status": "FAILED_TERMINAL",
+      "terminal_id": "sha256:7e563821fc19e6bd22d8fcd94d6a6db856d22d3a6f6cbcf8ab1dfaf2a5d0d636",
+      "execution_receipt_id": "sha256:a4674abfa52f8cac38703c81b6cbf0034b6bdd8e3ea5167bc70a61c596bce4f5",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "source_file": {
+        "sha256": "9d9695a4a36c4c3a0c7d620f18f517d6c41e10fbe712b2d46daaa1cca31d21f1",
+        "size": 7158862
+      },
+      "semantic_request_file": {
+        "sha256": "3d07ef0152a3f9b063e9d56446e68e754bcc203ea5b2bae8dc203c396c276942",
+        "size": 611786
+      },
+      "raw_response_file": {
+        "sha256": "04c18b3227a0815a16268280701bf85fb80f742c505edfc073a44b9feb900b55",
+        "size": 7957
+      },
+      "assistant_output_file": {
+        "sha256": "b8482cb85092233f16a51270c10e7d280f0ca4d29f2e1e4a240a31cabb493d8c",
+        "size": 7028
+      },
+      "execution_rules_archive": {
+        "sha256": "071e466dad89ff094dc3a49beb3fbfdcdb466dcab5ed2770c7117713aa9beb5f",
+        "size": 4405451
+      },
+      "execution_rules_manifest": {
+        "sha256": "f86b3e42703ed306776ba70fff2f81a026254a2c6f3772c910b00bb974e199a2",
+        "size": 66508
+      },
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 1152,
+        "cache_miss_input_tokens": 185500,
+        "input_tokens": 186652,
+        "output_tokens": 1595
+      }
+    }
+  ]
+}

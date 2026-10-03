@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/b13-v6-current/finalize_wiring.py", line 10, in <module>
+    assert len(rows)==2 and log.count('Binary float is forbidden; use Decimal')==1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

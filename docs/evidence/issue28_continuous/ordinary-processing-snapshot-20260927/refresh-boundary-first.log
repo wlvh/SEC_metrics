@@ -1,0 +1,23 @@
+.......E...
+======================================================================
+ERROR: test_resume_requires_only_c04_and_one_finite_sec_request (tests.vnext.test_ordinary_refresh_cycle.OrdinaryRefreshBoundaryTest.test_resume_requires_only_c04_and_one_finite_sec_request) (metrics=['B01', 'C04'], maximum=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_refresh_cycle.py", line 169, in test_resume_requires_only_c04_and_one_finite_sec_request
+    refresh_and_process(session=session, state_root=Path('/unexecuted-state'),
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_ids=['marriott_international'], metric_ids=metrics,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        max_sec_requests=maximum, c04_successor=successor,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        resume_from=Path('/unexecuted-report'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 290, in refresh_and_process
+    _historical_c04_processing_copies(session.data_root, session.requirement))
+                                      ^^^^^^^^^^^^^^^^^
+AttributeError: 'SecAcquisitionSession' object has no attribute 'data_root'
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.602s
+
+FAILED (errors=1)

@@ -1,0 +1,195 @@
+{
+  "record_type": "ISSUE28_CURRENT_TEN_A05_PEER_RECAST_IMPACT",
+  "peer_fixed_commit": "94cbc3e7e6af372d0ad8349585241fdbd2d0ed4e",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "rows": [
+    {
+      "company_id": "marriott_international",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:b603a640f4d5bd519a3738f2f99fb6c170cfa9952cfa16899679eba87b1e65b3",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0001048286-26-000007",
+        "prior": "0001628280-25-004818"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "southwest_airlines",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:047f70aee1ef58b6ebe90886872c59c48d370e074fd3a14b5dff253b1f49ab83",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0000092380-26-000004",
+        "prior": "0000092380-25-000024"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "ford_motor_company",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:b754fc09bf12b3fee6c150ca15304ce0082f0004ba2975fd839fd93add6f669b",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0000037996-26-000015",
+        "prior": "0000037996-25-000013"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "pfizer",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:a0939a9aef6bf525b67939a39f50c46d860136e91392701e151298a40bdca66b",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0000078003-26-000026",
+        "prior": "0000078003-25-000054"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+      "value": "0.01353819078340816975991354239",
+      "reason_code": "PASS",
+      "selected_claim_count": 3,
+      "selected_claims": [
+        {
+          "concept": "NetIncomeLoss",
+          "period_end": "2025-12-31",
+          "accession": "0001628280-26-008131",
+          "value": "57048000000"
+        },
+        {
+          "concept": "Assets",
+          "period_end": "2025-12-31",
+          "accession": "0001628280-26-008131",
+          "value": "4424900000000"
+        },
+        {
+          "concept": "Assets",
+          "period_end": "2024-12-31",
+          "accession": "0000019617-25-000270",
+          "value": "4002814000000"
+        }
+      ],
+      "accessions": {
+        "current": "0001628280-26-008131",
+        "prior": "0000019617-25-000270"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "salesforce",
+      "period_end": "2026-01-31",
+      "result_id": "sha256:4993f4fb31d68056251d8e59cfc0b7ff236a9264806ba9733a41f1a0f4f7aa17",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0001108524-26-000060",
+        "prior": "0001108524-25-000006"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "lumen_technologies",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:e6d20622c64aa2a824fa7772c85bc9373f83ca17cffb7573c1b0910927aada4e",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0000018926-26-000014",
+        "prior": "0000018926-25-000010"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "macys",
+      "period_end": "2026-01-31",
+      "result_id": "sha256:19bb4a06f43bea6b825b483fa3075e5f72b27d5a344a6dd5349573e23685b08e",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0001628280-26-021721",
+        "prior": "0001628280-25-014315"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:d0aa47f90d3b7d9b3a0b82d10e15194222e0f4d3787acd6700ed51c751c0a349",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0002041610-26-000011",
+        "prior": null
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    },
+    {
+      "company_id": "enphase_energy",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:8ddf81917c98767b2dcefc6175aa19e9a292b2f0ed72f13ccf3d81b54da7ff28",
+      "value": null,
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "selected_claim_count": 0,
+      "selected_claims": [],
+      "accessions": {
+        "current": "0001463101-26-000013",
+        "prior": "0001463101-25-000024"
+      },
+      "peer_guard_problem": null,
+      "peer_bridge_count": 0,
+      "prior_error": null
+    }
+  ],
+  "numeric_a05_count": 1,
+  "peer_guard_new_problem_company_ids": [],
+  "source_log_and_claim_ledger_unchanged": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_limit": "Ten current #28 A05 source candidates under current cumulative source root; no new native Run or independent full content acceptance."
+}

@@ -1,0 +1,87 @@
+{
+  "record_type": "ISSUE28_B03_C04_RECORDED_TWO_SOURCE_RESUME",
+  "base_saved_source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "old_b03_pointer_unchanged": true,
+  "b03_current_candidate_credit": false,
+  "c04_current_candidate_created": true,
+  "recorded_sec_claims": 4,
+  "real_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "actual_online_new_filing_proven": false,
+  "all_390_coordinates_proven": false,
+  "first": {
+    "status": "UPDATES_INCOMPLETE",
+    "source_status": "REFRESH_INCOMPLETE",
+    "processing_status": "READY",
+    "captures": [
+      "https://data.sec.gov/submissions/CIK0001108524.json"
+    ],
+    "metrics": {
+      "B03": {
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "successful_attempt": "56a829b6e5004178a758e9745b0b4814",
+        "current_candidate": false,
+        "error": null
+      },
+      "C04": {
+        "status": "CANDIDATE_READY",
+        "successful_attempt": "6bca8b869f704f3a9bc45c216ee855d6",
+        "current_candidate": true,
+        "error": null
+      }
+    },
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "second": {
+    "status": "UPDATES_INCOMPLETE",
+    "source_status": "REFRESH_CHECK_COMPLETED",
+    "processing_status": "READY",
+    "captures": [
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+    ],
+    "metrics": {
+      "B03": {
+        "status": "PREVIOUS_INPUT_WITHHELD",
+        "successful_attempt": "56a829b6e5004178a758e9745b0b4814",
+        "current_candidate": false,
+        "error": null
+      },
+      "C04": {
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "successful_attempt": "6bca8b869f704f3a9bc45c216ee855d6",
+        "current_candidate": true,
+        "error": null
+      }
+    },
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "false_current_credit_report_rejected": true,
+  "cold_read": {
+    "c04_pointer": "6bca8b869f704f3a9bc45c216ee855d6",
+    "c04_publication": "PUBLISHED",
+    "c04_result_id": "sha256:12a57f1c51c7dfc9c1ab4fb489b10f34be44801484ea053d90c654fa07bfb38e",
+    "c04_value": "0",
+    "network_enabled": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "old_b03_current_credit": false,
+    "old_b03_pointer": "56a829b6e5004178a758e9745b0b4814",
+    "old_b03_result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+    "status": "PASS_INDEPENDENT_INSTALLED_READ"
+  },
+  "cold_read_selected_state_bytes_unchanged": true
+}

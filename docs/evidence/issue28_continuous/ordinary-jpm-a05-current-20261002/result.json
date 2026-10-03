@@ -1,0 +1,32 @@
+{
+  "record_type": "ISSUE28_JPMORGAN_A05_CURRENT_PRIVATE_NORMAL_UPDATE",
+  "tested_commit": "6e2c78b57df05d33c596ea7ecaaff2b0e51b429d",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "acquisition_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "processing_root": "/private/tmp/issue28-jpm-a05-current-20261002/sources/a5dcc4af3d1eae0cd4af880a794a5deab6731772bf767c53b3d959a2cf519baa",
+  "requirement_closure_hash": "sha256:3112b4766e47e2f59a36c8fae63e631fc7c6a3631b4e360ccbca11bafd920657",
+  "source_snapshot_id": "sha256:a5dcc4af3d1eae0cd4af880a794a5deab6731772bf767c53b3d959a2cf519baa",
+  "elapsed_seconds": 109.839,
+  "company_id": "jpmorgan_chase",
+  "metric_id": "A05",
+  "cli_return_code": 0,
+  "status": "CANDIDATE_READY",
+  "attempt_id": "9a7baf028e5a4662bcec8e5bd8a44090",
+  "result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+  "legacy_exports_disabled": 116,
+  "protected_source_ledger_and_active_unchanged": true,
+  "reported_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "old_archived_run_not_modified": true,
+  "new_fiscal_year_update_proven": false,
+  "current_390_credit": false,
+  "production_authorized": false
+}

@@ -1,0 +1,4 @@
+first ['https://data.sec.gov/submissions/CIK0001048286.json', 'https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json']
+after_one_within_call ['https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json']
+next_call ['https://data.sec.gov/submissions/CIK0001048286.json', 'https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json']
+PASS: one-request mixed invocation resets attempt set and selects first metadata URL again

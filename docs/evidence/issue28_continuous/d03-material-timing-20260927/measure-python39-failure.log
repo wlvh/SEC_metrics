@@ -1,0 +1,15 @@
+WARN `--no-project` was provided, but no project was found
+E
+======================================================================
+ERROR: test_original_response_bytes_and_unresolved_survive_cold_replay (tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_recorded_response_store.py", line 28, in test_original_response_bytes_and_unresolved_survive_cold_replay
+    self.enterContext(original_sources_only())
+AttributeError: 'D03RecordedResponseStoreTest' object has no attribute 'enterContext'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+{"by_call": {}, "events": [], "provider_paid_sec_calls": [0, 0, 0], "record_type": "D03_EXISTING_MATERIAL_TEST_PHASE_TIMING", "source_material": "CURRENT_SAVED_JPM_ORIGINAL", "successful": false, "tests_run": 1, "wall_seconds": 0.001}

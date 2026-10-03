@@ -1,0 +1,92 @@
+test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) ... 
+  test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='Our success depends on our ability to continue to attract, develop, grow, support, and reward talented and diverse employees with domain expertise in engineering, software, technology, integrated services, supply chain, marketing, and finance, among other areas.') ... FAIL
+  test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='While we have been successful in attracting talent in recent years, as with any company, the ability to continue to attract talent is important, particularly in growth areas vital to our success such as software, electrification and adjacent technologies, and integrated services.') ... FAIL
+  test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='•Ford Credit’s ability to continue funding through asset-backed financing structures') ... FAIL
+  test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='Our ability to continue to attract, engage and retain streaming subscribers and active users (together, “users”), as well as generate corresponding subscription and advertising revenues, depends on a number of factors, including our ability to consistently provide appealing and differentiated content that resonates globally, offer a quality experience for selecting and viewing that content, execute a windowing strategy that maximizes service appeal and the value of our content, successfully market our content and services, and make effective choices globally regarding whether we distribute our content and services directly through our owned-and-operated services or through third parties, including through hard bundles, MVPD bundles and channel distributors.') ... FAIL
+
+======================================================================
+FAIL: test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='Our success depends on our ability to continue to attract, develop, grow, support, and reward talented and diverse employees with domain expertise in engineering, software, technology, integrated services, supply chain, marketing, and finance, among other areas.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 44, in test_actual_specific_activity_continuation_is_not_entity_viability
+    self.assertEqual(checked['unresolved'], [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'unit_id': 'sha256:78291654b33cd779504db[392 chars]s.'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'unit_id': 'sha256:78291654b33cd779504db1e97363d3b97e0fb850903393f43cad185a3537afd2', 'source_index': 7, 'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED', 'statement_text': 'Our success depends on our ability to continue to attract, develop, grow, support, and reward talented and diverse employees with domain expertise in engineering, software, technology, integrated services, supply chain, marketing, and finance, among other areas.'}
+
++ []
+- [{'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED',
+-   'source_index': 7,
+-   'statement_text': 'Our success depends on our ability to continue to '
+-                     'attract, develop, grow, support, and reward talented and '
+-                     'diverse employees with domain expertise in engineering, '
+-                     'software, technology, integrated services, supply chain, '
+-                     'marketing, and finance, among other areas.',
+-   'unit_id': 'sha256:78291654b33cd779504db1e97363d3b97e0fb850903393f43cad185a3537afd2'}]
+
+======================================================================
+FAIL: test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='While we have been successful in attracting talent in recent years, as with any company, the ability to continue to attract talent is important, particularly in growth areas vital to our success such as software, electrification and adjacent technologies, and integrated services.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 44, in test_actual_specific_activity_continuation_is_not_entity_viability
+    self.assertEqual(checked['unresolved'], [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'unit_id': 'sha256:dee408c4de9a4f127d1cb[410 chars]s.'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'unit_id': 'sha256:dee408c4de9a4f127d1cbbd6cd508d9b186b5c8f4d7e5912b7837e192b037c79', 'source_index': 7, 'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED', 'statement_text': 'While we have been successful in attracting talent in recent years, as with any company, the ability to continue to attract talent is important, particularly in growth areas vital to our success such as software, electrification and adjacent technologies, and integrated services.'}
+
++ []
+- [{'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED',
+-   'source_index': 7,
+-   'statement_text': 'While we have been successful in attracting talent in '
+-                     'recent years, as with any company, the ability to '
+-                     'continue to attract talent is important, particularly in '
+-                     'growth areas vital to our success such as software, '
+-                     'electrification and adjacent technologies, and integrated '
+-                     'services.',
+-   'unit_id': 'sha256:dee408c4de9a4f127d1cbbd6cd508d9b186b5c8f4d7e5912b7837e192b037c79'}]
+
+======================================================================
+FAIL: test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='•Ford Credit’s ability to continue funding through asset-backed financing structures')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 44, in test_actual_specific_activity_continuation_is_not_entity_viability
+    self.assertEqual(checked['unresolved'], [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'unit_id': 'sha256:818ef87d7bc8e1320bb53[214 chars]es'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'unit_id': 'sha256:818ef87d7bc8e1320bb53a6a80448ca898ffaf3b4ca5bf2dd7fc38ba9a4aeeaa', 'source_index': 7, 'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED', 'statement_text': '•Ford Credit’s ability to continue funding through asset-backed financing structures'}
+
++ []
+- [{'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED',
+-   'source_index': 7,
+-   'statement_text': '•Ford Credit’s ability to continue funding through '
+-                     'asset-backed financing structures',
+-   'unit_id': 'sha256:818ef87d7bc8e1320bb53a6a80448ca898ffaf3b4ca5bf2dd7fc38ba9a4aeeaa'}]
+
+======================================================================
+FAIL: test_actual_specific_activity_continuation_is_not_entity_viability (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_actual_specific_activity_continuation_is_not_entity_viability) (text='Our ability to continue to attract, engage and retain streaming subscribers and active users (together, “users”), as well as generate corresponding subscription and advertising revenues, depends on a number of factors, including our ability to consistently provide appealing and differentiated content that resonates globally, offer a quality experience for selecting and viewing that content, execute a windowing strategy that maximizes service appeal and the value of our content, successfully market our content and services, and make effective choices globally regarding whether we distribute our content and services directly through our owned-and-operated services or through third parties, including through hard bundles, MVPD bundles and channel distributors.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 44, in test_actual_specific_activity_continuation_is_not_entity_viability
+    self.assertEqual(checked['unresolved'], [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'unit_id': 'sha256:8c48a7f9d061b0374978a[897 chars]s.'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'unit_id': 'sha256:8c48a7f9d061b0374978a36bad4c177806a6da58a715542434ffbc36b2f7a2e8', 'source_index': 7, 'reason': 'D04_SOURCE_RELATION_NOT_DETERMINED', 'statement_text': 'Our ability to continue to attract, engage and retain streaming subscribers and active users (together, “users”), as well as generate corresponding subscription and advertising revenues, depends on a number of factors, including our ability to consistently provide appealing and differentiated content that resonates globally, offer a quality experience for selecting and viewing that content, execute a windowing strategy that maximizes service appeal and the value of our content, successfully market our content and services, and make effective choices globally regarding whether we distribute our content and services directly through our owned-and-operated services or through third parties, including through hard bundles, MVPD bundles and channel distributors.'}
+
+Diff is 1314 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=4)

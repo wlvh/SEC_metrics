@@ -1,0 +1,16 @@
+start_utc=2026-10-03T06:47:31.006999+00:00
+command=PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python -B -m unittest discover -s tests/vnext -p test_c02_model_processing.py -v
+test_duplicate_json_key_and_unknown_kind_refused (test_c02_model_processing.C02ModelProcessingTest.test_duplicate_json_key_and_unknown_kind_refused) ... ok
+test_duplicate_not_automatically_removed (test_c02_model_processing.C02ModelProcessingTest.test_duplicate_not_automatically_removed) ... ok
+test_evidence_unicode_is_lossless (test_c02_model_processing.C02ModelProcessingTest.test_evidence_unicode_is_lossless) ... ok
+test_invalid_reference_types_and_ranges (test_c02_model_processing.C02ModelProcessingTest.test_invalid_reference_types_and_ranges) ... ok
+test_no_truncation_of_excess_facts (test_c02_model_processing.C02ModelProcessingTest.test_no_truncation_of_excess_facts) ... ok
+test_real_origin_refused_before_source_read (test_c02_model_processing.C02ModelProcessingTest.test_real_origin_refused_before_source_read) ... ok
+test_shared_context_and_unresolved_preserved (test_c02_model_processing.C02ModelProcessingTest.test_shared_context_and_unresolved_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK
+exit_code=0
+end_utc=2026-10-03T06:47:31.102465+00:00

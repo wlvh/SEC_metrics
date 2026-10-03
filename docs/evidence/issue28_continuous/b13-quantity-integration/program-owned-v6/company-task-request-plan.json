@@ -1,0 +1,415 @@
+{
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "execution_authorized_by_this_artifact": false,
+  "requires_current_binding_and_wiring": true,
+  "companies": [
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B13",
+      "groups": [
+        {
+          "group": 1,
+          "request_id": "sha256:c36e807f897c44831f829affa039e26226c52f53755e59ec847cf1008727469c",
+          "provider_body_sha256": "8271e8e2119ae37cffa4b3ed41d75506855db593cd8706a106757cd5b579df81",
+          "input_tokens": 186406,
+          "context_tokens": 190502,
+          "unit_ids": [
+            "sha256:a812d302d7534b37ca66c15abf1c23de5756336853b2dba30585721e7760d53e",
+            "sha256:0d720a5afbb6becc6ec98c5e5bee3b4d95484adfe444d42283b02e0106908169",
+            "sha256:57248e0b7c39b48d6d05244eda04d198a40215446f831d2dd583d98ce1abde89",
+            "sha256:4be5c9027c73c6c8672ea47ce03eab1c130c8de09af3267a2830d8b5acb4de67",
+            "sha256:0d5cd7a5f968c771354a7f7585312ef439d7e817b6f152db7031a1de4015a014"
+          ],
+          "required_candidate_count": 16,
+          "candidate_kind_counts": {
+            "VISIBLE_BLOCK": 16
+          },
+          "program_quantity_roles": [],
+          "source_constraints": [
+            {
+              "forbidden_target_capacity_timings": [
+                "CURRENT_REPORT",
+                "HISTORICAL",
+                "CONDITIONAL"
+              ],
+              "kind": "VISIBLE_BLOCK",
+              "reason": "Original industry assertion has no same-period target-capacity assertion; no other kind or timing inferred.",
+              "source_index": 235,
+              "unit_id": "sha256:a812d302d7534b37ca66c15abf1c23de5756336853b2dba30585721e7760d53e"
+            },
+            {
+              "forbidden_target_capacity_timings": [
+                "CURRENT_REPORT",
+                "HISTORICAL",
+                "CONDITIONAL"
+              ],
+              "kind": "VISIBLE_BLOCK",
+              "reason": "Original industry assertion has no same-period target-capacity assertion; no other kind or timing inferred.",
+              "source_index": 476,
+              "unit_id": "sha256:0d720a5afbb6becc6ec98c5e5bee3b4d95484adfe444d42283b02e0106908169"
+            },
+            {
+              "forbidden_target_capacity_timings": [
+                "CURRENT_REPORT",
+                "HISTORICAL",
+                "CONDITIONAL"
+              ],
+              "kind": "VISIBLE_BLOCK",
+              "reason": "Original industry assertion has no same-period target-capacity assertion; no other kind or timing inferred.",
+              "source_index": 669,
+              "unit_id": "sha256:57248e0b7c39b48d6d05244eda04d198a40215446f831d2dd583d98ce1abde89"
+            }
+          ],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 2,
+          "request_id": "sha256:709517354f1f5c2f036640353e358de1fbdf31c656cd207e3e4230a08dd618f0",
+          "provider_body_sha256": "9166e9a0c706700373a1d846328416c48f78cef947c4228170b74dc74106cbdd",
+          "input_tokens": 171189,
+          "context_tokens": 175285,
+          "unit_ids": [
+            "sha256:b27d6d307ee950d7f2e0e7f01e30693fad427f02d0cdd20a7a93c880fe93789c",
+            "sha256:80314603ac65f9097ed2aab43c8e5f137d1da7eb78e0b9ad50fac7cfa5868161",
+            "sha256:6b47a699ebbd86faf52c3f4087a99205851f8ce89ae33eefed9ae56242611761",
+            "sha256:26d1041dbf150cf4abdeaace0d978ba05ffc663c10e9cc12579a76d9426aaea4"
+          ],
+          "required_candidate_count": 1,
+          "candidate_kind_counts": {
+            "VISIBLE_BLOCK": 1
+          },
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 3,
+          "request_id": "sha256:5a5a4aca137efdd0d01cc7e01444ecda813d75107d1da9f867e3682d1e3a22d5",
+          "provider_body_sha256": "74739887ede9a241f6b718f2ae11c776ab70896815bd093d959451a464fea3bf",
+          "input_tokens": 160422,
+          "context_tokens": 164518,
+          "unit_ids": [
+            "sha256:3ffb391a8f2d9f3265ffc8f3811e2d3a562dae63af508ecf8b612a5ff440a3af",
+            "sha256:873a80beffc27f00abf7889d9fd5cd44be771a3b66d31b1b216f9e68d0039db2",
+            "sha256:3f7e370a234e85b8a65a0fb8679653f35e4d3f968393ae63c859426ddd3ffd5b",
+            "sha256:ad740a7cbb339a7be96ce4e00e0d95553c3fc65e22bf6c5aa6b4eb5adedc80c3"
+          ],
+          "required_candidate_count": 2,
+          "candidate_kind_counts": {
+            "VISIBLE_BLOCK": 2
+          },
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 4,
+          "request_id": "sha256:2186680efc4e949fb57cabdf8d279083c03d8711808dc63f21d9c2a7ff58048d",
+          "provider_body_sha256": "3585c43f6ef28f38b2116dd3e3ded2d1f3d885dcfaf68b2289dbed164de8bf76",
+          "input_tokens": 185078,
+          "context_tokens": 189174,
+          "unit_ids": [
+            "sha256:9d52a8b602952c1ce006c8feee66716ff513e0df16ffb88130b331e4af3103c2",
+            "sha256:271d538f2c0de0f38b0b7db07313eb2d421721a4765c8be2436089b92d51ac78",
+            "sha256:72751e701f908fcc37250dba204e1c1c285bd9b1c67ff99955dbe158971d0781",
+            "sha256:decc15e2fd5539050ba4fbf29c9a32161d0c2bc52cd6774b0f94b158d40d0500"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 5,
+          "request_id": "sha256:5d4e43de92261342838211e669e4641cb3dfe5d539f943c2465e214599a93b62",
+          "provider_body_sha256": "d58263560dfff58e231256b22ae85e395bbbbebe0a639fded879da79f6e6147b",
+          "input_tokens": 184294,
+          "context_tokens": 188390,
+          "unit_ids": [
+            "sha256:acbc587ad076e0510356ef95823d1251df509dac4e34eca61edc8bd40ee79b3e",
+            "sha256:fcec585732350ddc15ceec1c9dd7cf6ab6e9ef1688984510b3b5bde4e43d6907",
+            "sha256:42e7393c16af21b903048b1cb33120e6f64cf99764507ec8b352c861e0c44042",
+            "sha256:a28afdecd9e606241cb27bcf39f19687bbbb4bc99338f10ab30fd4ead53eb835"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 6,
+          "request_id": "sha256:614b2736f85c61e2632d319cdae755d578052ecda02f01c5a6f24a7755d2bc3a",
+          "provider_body_sha256": "cf04730044dccab4e44405240d98624c1b968d96d9d0142b175ea75e8216e25f",
+          "input_tokens": 153095,
+          "context_tokens": 157191,
+          "unit_ids": [
+            "sha256:58cf1fb47cc524a861e06c736dd02d2042dd07644eb23aa782b0328aa872d882",
+            "sha256:0822bd92c88fb5986c0b5858fb0e99f9a980df7bc4fcc04905aa0ed3f73e7afe",
+            "sha256:d3f5402b651fa6541b591891d5d1d0ebe48c6a52b77976c454b20e3c5b5da6b8"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 7,
+          "request_id": "sha256:924f5921219c902fa7f61a6ef99d48cd15de8e25136e00b9ef8d16c63fee67c0",
+          "provider_body_sha256": "2caf0be91d7199cbcf269c2b1ebe2b18a9929726662ad0decd740352a5f8d3dc",
+          "input_tokens": 151817,
+          "context_tokens": 155913,
+          "unit_ids": [
+            "sha256:f1bfd043a35a70fb592b2ccf068ab192909f2b2333148d8b292d82ffc87140a0",
+            "sha256:28e42d64ab1d9e46a65b1790eb81654597042a42a1adaca0e1749fe04ecb6127",
+            "sha256:c3d95418697dae554f1339e68f7c7f3afb341fb00022e448b273e74cc082884b"
+          ],
+          "required_candidate_count": 13,
+          "candidate_kind_counts": {
+            "NATIVE_FACT": 13
+          },
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 8,
+          "request_id": "sha256:349341162e01be4b5e2aa6201e96f0bb7352fb169ddb5ce6812a8d4c9dbd40d2",
+          "provider_body_sha256": "8b461676a9f129c4929f89c537e41fe5f35d04d5272db1b8a405b07db9e5ee78",
+          "input_tokens": 181442,
+          "context_tokens": 185538,
+          "unit_ids": [
+            "sha256:7f8ee3e4b403a7cb681778c76b9139e97e1aac7d4a43a5db33de37469d20ac1a",
+            "sha256:4a0cd2a9954017854a92cec3bdc90aee7c974333165321da21733fd5b01ef0a0",
+            "sha256:d34e5b49ffe840c5b4e2066648edb02d71419ba39aaa08e66b6e682ebe985c44",
+            "sha256:80ffdd26b878149f34007bf8fef055ac752e67955da7756d62e1adbf1d8ea35b",
+            "sha256:8f9d78b25b7b1211e2b44894b5682239e1a4c118369e1263f26883903018dc61",
+            "sha256:a8683d68984a3f579694894e894abd0d507dc2e72a0a08cbb1519fd7adf57fea"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 9,
+          "request_id": "sha256:494e147f64849630f3c87fb4b5bba5d607df2197b888882801c6e9eb62bde494",
+          "provider_body_sha256": "7ad873e1217ef18b8f1accc93c3ec1fcb1ff7ee5029929e65c3ae2a5edde0aa2",
+          "input_tokens": 190090,
+          "context_tokens": 194186,
+          "unit_ids": [
+            "sha256:ecd34d6a6bf9fb59c9e10b9db21e0d8603989940483aab0aba562b447154188a",
+            "sha256:d3cede88ed618367d38d276238172a1fe76c4ea9c221faec23812127e0f1e16b",
+            "sha256:b3dacf70351d92a2188ff0513af78fc194677b877f19480234ec3908696d0968",
+            "sha256:8b36ccf4098871e9944c4b99eb9f1a85ff1e4140921fd40b92ee66a6e6134e86",
+            "sha256:b8bcd216d3c6e6cc0c259c7771a6bcdc7798e34cac8aff5242fb81ec17948e09",
+            "sha256:16ac883dc549ae918130fb3f740a763bb63d5c1a7084f99f6bb12d45d7595744",
+            "sha256:9e5034d9af0444443be8d139d59e1bc1552408ab1cff91f55dc6d67d4524f57d",
+            "sha256:ce06c4a6089ee936d2501d54ffbb4c346b2abe6433e5e833f48c2c64ab339450"
+          ],
+          "required_candidate_count": 1,
+          "candidate_kind_counts": {
+            "NATIVE_SUPPLEMENT": 1
+          },
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 10,
+          "request_id": "sha256:3cb40c5cd1a7d139b27e4c9a40b9047526eb048bcc9d42bcc03466f49103e308",
+          "provider_body_sha256": "7c47cca79a6613012363d9040f1e2b7cbb6d30758af36bef67b017929d32cc8f",
+          "input_tokens": 193527,
+          "context_tokens": 197623,
+          "unit_ids": [
+            "sha256:91e864f8ab31ae72a41bfd0ebe07a366512b94a272423d4ad99bcdf64f06beea",
+            "sha256:4cec99ee83cfbdebe0eb5f7d8b19520453911c8f0c860c3453b08164416150c1",
+            "sha256:1be068f9ae17c19e96437121a75d3d6dcb6fea98012945c4f2982b0ea8e987c1",
+            "sha256:3de94e906d6077b2aa270105fa3176ebba15c4e355e7c88737616eae292e457d",
+            "sha256:a4bc5d15e783aaf4b742a28eb0253b6129e5c1e5d1722dab785bf6fa7d6023b9",
+            "sha256:fd2d2932006a33e180150f2f6d32b9095b2bb2c6fde0cc911ff10f03fcebb84e",
+            "sha256:7b318b501a7f4a49a42b47c815d3b2ed9b8d0d05f31cafab3b1f5981a664e477",
+            "sha256:7ee7f8e254a2571ecc86ad4e11856cc91a5ad63841c7f078f4d62bc8e12dad60"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 11,
+          "request_id": "sha256:3ddb9361dae453962baeb047cb8eb00d0315e2c3f1758f58af7e187386bbc4c8",
+          "provider_body_sha256": "0c14e42dc8a1ffb07cc39baa72c49b346cbf2506b7b30f019c54259e6072252d",
+          "input_tokens": 84968,
+          "context_tokens": 89064,
+          "unit_ids": [
+            "sha256:49786a93d8dde201eee64cc3db4092329c8607c97e41566548cd4ac524c3cdf5",
+            "sha256:37836d78cf6dea767edeb4801251596907522c25b6957e6ee162d79c288990cc",
+            "sha256:3bcbfeb76673c57b5c52aff6d679e0edb94913ebc0f14973f99333dd5b505a52"
+          ],
+          "required_candidate_count": 2,
+          "candidate_kind_counts": {
+            "NATIVE_SUPPLEMENT": 2
+          },
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        }
+      ]
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B13",
+      "groups": [
+        {
+          "group": 1,
+          "request_id": "sha256:c9c057bdfd028c69bbbe8ea13efee8ad74c5c7a346997cf6478e000f683732f5",
+          "provider_body_sha256": "c0a3521ca5ade59719561126ebe00ca8a6e2378b407cdeebfdac9a2a4d3754b9",
+          "input_tokens": 184968,
+          "context_tokens": 189064,
+          "unit_ids": [
+            "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+            "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+            "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+            "sha256:885e215a010679cf5a16dd0d94e1a6bc49f846b7ac4702b9af3f735136afaf57",
+            "sha256:270e5d5d6f8307066f62ef93e9e542c612e8b09e4ca1ba393cbea6aadbd6e2ad"
+          ],
+          "required_candidate_count": 5,
+          "candidate_kind_counts": {
+            "VISIBLE_BLOCK": 5
+          },
+          "program_quantity_roles": [
+            {
+              "annual_ratio_comparability_proven": false,
+              "assertion_subject": "TARGET_REGISTRANT",
+              "assertion_timing": "CURRENT_REPORT",
+              "original_quantity": {
+                "annual_comparability_proven": false,
+                "antecedent_statement": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in\u2011house manufacturing facility and our partnership with Flex.",
+                "basis": "AVAILABLE_CAPACITY",
+                "end_character": 358,
+                "reported_number": "five-million",
+                "reported_period": "quarter",
+                "reported_product": "microinverters",
+                "start_character": 237,
+                "statement_text": "These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT"
+              },
+              "program_proof_id": "sha256:7a75ef0c91393952a4be33b4a2ea524b04d4955b92d445b316d6bd47d5dd9f59",
+              "quantity_role": "AVAILABLE_CAPACITY",
+              "source_index": 809,
+              "source_kind": "VISIBLE_BLOCK",
+              "unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c"
+            }
+          ],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 2,
+          "request_id": "sha256:d01afaf213fbaad56bda856989162546aba399dcf8a64ca524363c4c6f28184b",
+          "provider_body_sha256": "ade20fc53d00e7c46680559c3129cf32090d0ac5a4aee0964788f07ad3ddfd3b",
+          "input_tokens": 156122,
+          "context_tokens": 160218,
+          "unit_ids": [
+            "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+            "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+            "sha256:2bf0475d01d7cc29295a1d9b6ee635aad231a38d46f85ea407c182c18e098bb6",
+            "sha256:23c828273501990f075abe76dc8bae989c11d13673b0832f43e4cdf364b106af"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 3,
+          "request_id": "sha256:33f6ccc0c462a5f59556c3d0b536ca5003e58189232750f8522736c1bbaca03d",
+          "provider_body_sha256": "daaf3e39a557dd71d4245b07bf693f8d0cf495a7042760039a95b1d785f4c6b2",
+          "input_tokens": 186848,
+          "context_tokens": 190944,
+          "unit_ids": [
+            "sha256:518c3a07134a9c1a5ca2f395297418bcc7373d8e8996897b154595080f4bb420",
+            "sha256:aa4f70f207d4a8c940969a93a08fa8bc31a4c36012af6e7de5217a8119a6a9ae",
+            "sha256:7fbd11f421ffc289853f5916bc8ba904e943a046221b8c9c53526872ff84cd35",
+            "sha256:46c52e1d32772af966517728b834108e4017603c0c17d6fa84ab5a8971fd2f1a"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 4,
+          "request_id": "sha256:9659e957942478f822e2e68e492b84a5a1b208a6e140e9848928639da7da8935",
+          "provider_body_sha256": "b3ba621c7f55dbf688064362fec40f315c5a2cdb214741fbffbb9392023f7b87",
+          "input_tokens": 171477,
+          "context_tokens": 175573,
+          "unit_ids": [
+            "sha256:b4987a1795564d102e98275fd9ba4b7e580690f99d4a839e1f3847dd6bce4716",
+            "sha256:4af6ba0684c5d311f1df86d5d408b8e2693407c3d456903f4da6214c7b79eff1",
+            "sha256:f6170727e1ec58a8699fd4efc81ecbcba531a6dfcad1ccf9260fce858dbee79a",
+            "sha256:82772eb76cf127e5fe8cd9e3d1147a6a739b8cd1eb2dd1b5128c94f841cdee19"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 5,
+          "request_id": "sha256:266ceb9ae8a31e65b5dbf61da5143edfa0ac5d1084487a0dd26706ed56742832",
+          "provider_body_sha256": "bd67c35355493494faa9caa54ad062a9b028d35f5973df31b1463617128bf5c2",
+          "input_tokens": 185799,
+          "context_tokens": 189895,
+          "unit_ids": [
+            "sha256:e4aa1818f18ce38d35f9cea7198a918a497e84110466a3934929ddf92e0d1b92",
+            "sha256:8b10edb7c09fb1f93de152446b015341e473a34a0e67febfddf9de904758649a",
+            "sha256:a396c8b3e1b590c277ee7e20e81b75443e07376d8979a099a9e84929019a0590",
+            "sha256:754e4524d872a4ff6a1ac3dcf7b7a138504076c2354a515077648c339d791e6b",
+            "sha256:0dfadab8fd3249602fe90cce23aa749263a7a181f9593c458408d1b04438d55c",
+            "sha256:2fd8c698d00245e6713693d74402dfaf876f5d5d8d8a214cb72b8c5444899435",
+            "sha256:2d8946f658c6280d6848546d436a619dcbbb7bae8c1c8fcb8a4367302b90b975"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        },
+        {
+          "group": 6,
+          "request_id": "sha256:de4c2f9761e653a932be50a2415de010369a25f3e9e3be1f974f5560672ad25c",
+          "provider_body_sha256": "6dfd01d5171c889ea6b0940a6a4a10a724b1056bb73605b783ded74384dca530",
+          "input_tokens": 123305,
+          "context_tokens": 127401,
+          "unit_ids": [
+            "sha256:692e927c787906d48438b7088adc1c559088ea8b971a76888c0fa8f67fedcbdc",
+            "sha256:b388d95f98350dda0e800af5ce1bb7bf1bffc84f334aa80dce1022e188084d4d",
+            "sha256:172642f5c2d61d5a52f214dc924f59fdaff6adaaa681594b86b3516764fe8c69",
+            "sha256:8dfd3ef2d88a0b838725a615f1f0bd97a0ba72c8fef42e4b7e1eaf5471d954c2",
+            "sha256:83edb6f7074ce1aa656716040a7b79cecfc0a059ac7c76a214f9f46b531c2e82"
+          ],
+          "required_candidate_count": 0,
+          "candidate_kind_counts": {},
+          "program_quantity_roles": [],
+          "source_constraints": [],
+          "implementation_unresolved": []
+        }
+      ]
+    }
+  ],
+  "request_count": 17
+}

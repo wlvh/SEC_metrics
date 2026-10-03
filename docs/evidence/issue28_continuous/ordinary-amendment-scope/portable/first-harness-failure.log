@@ -1,0 +1,32 @@
+COLD_NO_GIT_SAVED_SOURCE_REPLAY PASS
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 82, in _verified_request_locator
+    declared_body = resolve_repository_file(
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/sources.py", line 141, in resolve_repository_file
+    raise SourceError(
+vnext.sources.SourceError: Source path is not a regular file: /tmp/sec_metrics_issue28_continuous/amendment-portable-material/data/evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/amendment-portable-material/cold.py", line 14, in <module>
+    with original_sources_only(): prepare_saved_amendment_input(repo_root=data,company_id='southwest_airlines',input_class='ORIGINAL_STATEMENT_VALUES')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 287, in prepare_saved_amendment_input
+    packet = prepare_saved_amendment_scopes(repo_root=repo_root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 263, in prepare_saved_amendment_scopes
+    saved=saved_source(repo_root=repo_root,url=url,accession=filing['accessionNumber'])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_update.py", line 76, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 227, in request_attempt_binding
+    proof = _verified_request_locator(
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 113, in _verified_request_locator
+    raise BatchWorkflowError(
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid
+
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/amendment-portable-material.py", line 47, in <module>
+    assert result.returncode==0,result.returncode
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1

@@ -1,0 +1,443 @@
+{
+  "record_type": "ACTUAL_V14_OPEN_REPAIR_RESULTS",
+  "requirement_closure": "sha256:2c7f64c2b35fc477988ba0779d173d43e900db4aca53ba08a11af03a7db1acbd",
+  "files": [
+    {
+      "path": "actual-row-outcomes.log",
+      "sha256": "e27fcdd956d3bdea25865e201039a770fb1d82b434aff848c41a7af1c9969179",
+      "size": 777
+    },
+    {
+      "path": "actual-row-replay.log",
+      "sha256": "49c59e6b60f0fe802024a4213c8777f5d67914b7907ca21e94f8923208fbab8e",
+      "size": 100
+    },
+    {
+      "path": "amendment-binding-index.json",
+      "sha256": "9bac21aa1f7d6f55864db099ef268f902f8f0317e2d30e07c8bce47cfc140eb9",
+      "size": 382
+    },
+    {
+      "path": "amendment-binding-probe.log",
+      "sha256": "e1956eef61e238be60c3055758236aef84dddb41e8f79b49b6daa41f176cebbb",
+      "size": 215
+    },
+    {
+      "path": "amendment-binding-probe.py",
+      "sha256": "43dda39820f452c9704d1723f97acee8c73834b9368b0c67b8b86f04c439d39a",
+      "size": 1927
+    },
+    {
+      "path": "amendment-source-removal-rejected.log",
+      "sha256": "9fa5f0791d7eb896b4f35742bf8b386f58597d96d969ee317c6c1d537ff253be",
+      "size": 2276
+    },
+    {
+      "path": "denominator/execution.log",
+      "sha256": "f339329226122977fe6dd7445aa477f899dbb0b1de6ee2e46b074e5b1099bdc6",
+      "size": 522
+    },
+    {
+      "path": "denominator/rows/ford_motor_company/B06/metric_evidence.csv",
+      "sha256": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8",
+      "size": 235
+    },
+    {
+      "path": "denominator/rows/ford_motor_company/B06/metrics_matrix.csv",
+      "sha256": "cfea617858b92a205785c8a2026ebff5222e06fb62a1a922c8b83470a6ae2ee6",
+      "size": 1358
+    },
+    {
+      "path": "denominator/rows/ford_motor_company/B06/receipt.json",
+      "sha256": "e83b657d4494f55d94d668389c01cbb044043f1eb75bc9bf7b729f52f75e8e25",
+      "size": 958
+    },
+    {
+      "path": "denominator/rows/ford_motor_company/B07/metric_evidence.csv",
+      "sha256": "66b596ad95a74d0c4d33737ada4e1b446cf850b25e6a1939d28b8485c7d5a0f1",
+      "size": 2767
+    },
+    {
+      "path": "denominator/rows/ford_motor_company/B07/metrics_matrix.csv",
+      "sha256": "8e711c9f3b52861bf20444c856d31a261453ebf88d41784a0102c73ec88fa9c7",
+      "size": 1291
+    },
+    {
+      "path": "denominator/rows/ford_motor_company/B07/receipt.json",
+      "sha256": "c03baf959b16ec5c1de9309c783c925c0fdb606af687ae944bcc4cae6e7ef05a",
+      "size": 958
+    },
+    {
+      "path": "denominator/rows/lumen_technologies/B06/metric_evidence.csv",
+      "sha256": "bcefea49b6bb2c039a8e77c8c9a8cd577f869169735cb8416152cbbf39591f9c",
+      "size": 1500
+    },
+    {
+      "path": "denominator/rows/lumen_technologies/B06/metrics_matrix.csv",
+      "sha256": "afb56c164986acc76169b62a919da35a4c90f42e0112c4a85055cbddf1097b99",
+      "size": 48247
+    },
+    {
+      "path": "denominator/rows/lumen_technologies/B06/receipt.json",
+      "sha256": "db3725a8bac7c27f9ca7bd5a6902ca0a958e492e25b0426ca7cfcc3960769135",
+      "size": 958
+    },
+    {
+      "path": "denominator/rows/lumen_technologies/B07/metric_evidence.csv",
+      "sha256": "82ef6fa6640bd3a8787b3d671a2f8aab7fe46d3630ae9dd63e775cbb0f76e6ca",
+      "size": 2729
+    },
+    {
+      "path": "denominator/rows/lumen_technologies/B07/metrics_matrix.csv",
+      "sha256": "1679d1bec87931885c14786c9e5867454d60f68c5608647806c80c194aee0cc6",
+      "size": 1291
+    },
+    {
+      "path": "denominator/rows/lumen_technologies/B07/receipt.json",
+      "sha256": "5e6df27756448e04525913178a07271d1f0f50755f14915fca1070e54fcc3870",
+      "size": 958
+    },
+    {
+      "path": "denominator/rows/marriott_international/B06/metric_evidence.csv",
+      "sha256": "e08737eedb330c3dafc1e065e151c2fa0caf01f5588cb318bc8872f83d7f9e9e",
+      "size": 1507
+    },
+    {
+      "path": "denominator/rows/marriott_international/B06/metrics_matrix.csv",
+      "sha256": "52d3d3aa1129e88241f19ebf9d193b6c3f29ff1526b0332ced778c4599d3ffa8",
+      "size": 31458
+    },
+    {
+      "path": "denominator/rows/marriott_international/B06/receipt.json",
+      "sha256": "a132f5084014d29d0a7570c32409924315af1c0c7f1fe747bf782797acca8095",
+      "size": 958
+    },
+    {
+      "path": "denominator/rows/marriott_international/B07/metric_evidence.csv",
+      "sha256": "271a9c72899fd64c10c5e323e556b185b4da1664735408f7b8ad4c5473ac8263",
+      "size": 2779
+    },
+    {
+      "path": "denominator/rows/marriott_international/B07/metrics_matrix.csv",
+      "sha256": "e1783d8326d4a82d0710d8028e3f1ea8ebeb60c858809dd5db7415cd5b49d9a5",
+      "size": 1236
+    },
+    {
+      "path": "denominator/rows/marriott_international/B07/receipt.json",
+      "sha256": "68dc8bdcaedc132327114c671fd970637acfb4eae4ee6bc69cafded4dae88f59",
+      "size": 958
+    },
+    {
+      "path": "denominator/summary.json",
+      "sha256": "b12176b0784d74433dca5adcf5317e76050d4c4ecbe58445ab3e27347ce32183",
+      "size": 9745
+    },
+    {
+      "path": "draft-rebuild.log",
+      "sha256": "1591b368440f2ee177b1b8c4e6d1d2a7a3c92353152a68e001d33a7aa17e35c4",
+      "size": 89
+    },
+    {
+      "path": "native-material-index.json",
+      "sha256": "43ad17e9bc7e64ca7a9d073f2425f11e14c1dee97a8debb36ca03a5eeb7310f7",
+      "size": 6407
+    },
+    {
+      "path": "native-material.log",
+      "sha256": "2a3853a56efdcecdf2018f40892319689bf645d3bc9702f3d6ce8ad6386a9182",
+      "size": 100
+    },
+    {
+      "path": "selection/execution.log",
+      "sha256": "6875cb351ebfddbeaf42dd19e0ee09e658e87a021a7b1538f5a08b93f088c07e",
+      "size": 166
+    },
+    {
+      "path": "selection/rows/jpmorgan_chase/A01/metric_evidence.csv",
+      "sha256": "1966823eabcb8e67f1783cd9c5e60fd6956935b702edbd68320566c448182f29",
+      "size": 2912
+    },
+    {
+      "path": "selection/rows/jpmorgan_chase/A01/metrics_matrix.csv",
+      "sha256": "b2fd3b0681a5bff01bbfcd630e38ec846678ee14b038433c9094de6d48db4808",
+      "size": 8944
+    },
+    {
+      "path": "selection/rows/jpmorgan_chase/A01/receipt.json",
+      "sha256": "822b24d58a4d8ee8ff6c0567d9e36947b8fe1cc28b867e54e326a415a98fcd9c",
+      "size": 958
+    },
+    {
+      "path": "selection/rows/jpmorgan_chase/A05/metric_evidence.csv",
+      "sha256": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8",
+      "size": 235
+    },
+    {
+      "path": "selection/rows/jpmorgan_chase/A05/metrics_matrix.csv",
+      "sha256": "cd0b58ad0a4ae452a4c0b92ef3b57968a28a6a6b43b8231605b15e54efd8737c",
+      "size": 1275
+    },
+    {
+      "path": "selection/rows/jpmorgan_chase/A05/receipt.json",
+      "sha256": "67af08bd06944809308cfa72b42ce32237cbf62d07e2065bb94b812bfc8e0186",
+      "size": 958
+    },
+    {
+      "path": "selection/summary.json",
+      "sha256": "43f07ea5a7bfd5af98851836e13bc13b7eecddd4ce12d44aa5ead27d2039ab52",
+      "size": 3813
+    },
+    {
+      "path": "source-suite.json",
+      "sha256": "e4511423f5b431e2aff54c1a71c3fb51a40d2c69e43090bb29ecaa8c4b010a03",
+      "size": 10544
+    },
+    {
+      "path": "source-tests-count-repaired.log",
+      "sha256": "92f9cdf1e68ec897c394799e15ab51d8a2291ca67e3e98bc3f901c9d6eb463fc",
+      "size": 99
+    },
+    {
+      "path": "source-tests-old-count-failure.log",
+      "sha256": "a6fe2dcc8a90a63ee398885b93ac06d8067c62868dbeee2569c6c0e44c3dc1e2",
+      "size": 1181
+    },
+    {
+      "path": "southwest/execution.log",
+      "sha256": "c422225bd53d878f6a54af47f211e21af3bd9a55f4c3836c098b6e02f94b4610",
+      "size": 1190
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B01/metric_evidence.csv",
+      "sha256": "4ebc6df99008c492e232f4924723dd168ac0755cc06e2dd629b9068cda8bb794",
+      "size": 1527
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B01/metrics_matrix.csv",
+      "sha256": "0f3de947a8994db881e1a81b2ba85f3d6f14010496d93339439d0c2bee831a83",
+      "size": 1536
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B01/receipt.json",
+      "sha256": "16a906c1ed30b73aa925a66d0749d1bfa91b020161690d5238b93082eef02578",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B02/metric_evidence.csv",
+      "sha256": "bb647d5c1f38ccc77666c9dbdbf0b61337318c034b8cd86227f287ed036ac7b6",
+      "size": 2931
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B02/metrics_matrix.csv",
+      "sha256": "1c48d44d6194e6807e9679d3fad5761712ec45d1af00c9da82f07cc736cb35ab",
+      "size": 1485
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B02/receipt.json",
+      "sha256": "1b2ad2b393420271922ca7e676464b5a27e8fc308765af3b181b357422e68926",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B03/metric_evidence.csv",
+      "sha256": "2276c80ea7f8adaa37383fcecbdb5ca235482823e8f45d5fb23b9a1d77b21b8e",
+      "size": 3937
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B03/metrics_matrix.csv",
+      "sha256": "1719c029bb61a854b5351920bda8a8668c5ac5ea82e25f9e7bdc9789cb1278a5",
+      "size": 1804
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B03/receipt.json",
+      "sha256": "596d654a01bdae6a99c9f7e3e7f080a3e438e416de018a5e47851eeb39f47102",
+      "size": 969
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B04/metric_evidence.csv",
+      "sha256": "6a3235f04bb8c1843854eb967a64328f0ebd28eba28deb473c8c23136b9621cc",
+      "size": 1468
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B04/metrics_matrix.csv",
+      "sha256": "0661a5bbe17194daf1c2970229007d4fd07d5587609edf3ed5cd78b307c8f55f",
+      "size": 1414
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B04/receipt.json",
+      "sha256": "562ee8504192f6084359db2a105022e50b3b1cffbf307804f159def842d884ab",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B05/metric_evidence.csv",
+      "sha256": "cb850caf97c177c54e80cdd7fc823a763fc1351d053983c75fe37e47fcb270e2",
+      "size": 2852
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B05/metrics_matrix.csv",
+      "sha256": "a4d35493dcdd619caa9de7cea5e27a329d4a3db64f09f03bfc72d49e93f35ffd",
+      "size": 1422
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B05/receipt.json",
+      "sha256": "ad4d99b2181cdd375034caaef7d3d4338a7777a8d762fe98761ee1647a503078",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B07/metric_evidence.csv",
+      "sha256": "052d60b156403560486195d9b24a601ded620ade04535fc725e44913c40626c0",
+      "size": 2761
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B07/metrics_matrix.csv",
+      "sha256": "8f8631c2c834f8f34305e705cd7461d31a601a2e40ab08851225a45588599842",
+      "size": 1461
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B07/receipt.json",
+      "sha256": "cb895b07825f3fce41f3f2fd9a5edb545fb6a28cefc47911c44ea9ae005fd7cc",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B08/metric_evidence.csv",
+      "sha256": "37e87fc9f4e27071e58f74e69f11306262387b259b850bc25bb5ab1f530e20b7",
+      "size": 2710
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B08/metrics_matrix.csv",
+      "sha256": "bc20309dc1cd6f58931c8bf7f4c6978018700891b85d4d006c2084690433c155",
+      "size": 1425
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B08/receipt.json",
+      "sha256": "7b7eae60acb94275921815e1f256c0bbb6e900c70b41970b168610cada427a04",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B09/metric_evidence.csv",
+      "sha256": "5d052b6c88bb27f04dc64a9dc04eacf7d48b18090e776c14aad4d6d5c32f1741",
+      "size": 1536
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B09/metrics_matrix.csv",
+      "sha256": "40c60d7a8cfde76c4ef8acf4be4889a12e03218e504b42330dfc65e6b28e85b5",
+      "size": 1404
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/B09/receipt.json",
+      "sha256": "f8ffd2ffffd498c655dea4f42cbd4d9d0f51891832d927318aa087f414fbf272",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/C01/metric_evidence.csv",
+      "sha256": "50a57dfd5e38fb38036117cb81cc2869f7a71c9573e73a6e9b4460f5a70767ab",
+      "size": 8242
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/C01/metrics_matrix.csv",
+      "sha256": "f55d9684e7d83b2e6d574fe05fb71c71f87ef606eddb236b2765547e980e2a9d",
+      "size": 4844
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/C01/receipt.json",
+      "sha256": "3fc3c2989be155aa8715655c583527f4e0c2530f8c32619b285b455a5214a5da",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E01/metric_evidence.csv",
+      "sha256": "dccf283423341e39c93cb11f0ae06ad4d76566f7655110e5978c505fd06629d3",
+      "size": 4247
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E01/metrics_matrix.csv",
+      "sha256": "63e029ad5fb5f0f4305c7ac918092445a6addd0a878735f8f8f588d33ea25e2b",
+      "size": 4630
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E01/receipt.json",
+      "sha256": "bd59c4c0fc8568099e452740aca2eb48c3bdaa2da861ce0d084e8f68f46e09cd",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E02/metric_evidence.csv",
+      "sha256": "f3a1d415e4439f0bd92cea943aa5690d0545b7ff89be4d343e2a73ea17a1cdb9",
+      "size": 3954
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E02/metrics_matrix.csv",
+      "sha256": "e8b5d708d3649523e15df3752acb3b57eaa3b2136167877347eb2dc3cff5a151",
+      "size": 4442
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E02/receipt.json",
+      "sha256": "5ed69d6a2d2464f55b5cc22b2a0e75a9733fd4bc02d72a2716a94d624608eebb",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E03/metric_evidence.csv",
+      "sha256": "7adb43d43032b3a0a3170b97aed7a3af22096f7c49db1568d209c705653a91c2",
+      "size": 8242
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E03/metrics_matrix.csv",
+      "sha256": "112c6864f9533e482f36494e8fd9d306d4e94d15b321b8f06f61f9530daaa70e",
+      "size": 4852
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E03/receipt.json",
+      "sha256": "fe57aa4fe6a4ed2e511420dc6d280d09cceb5c7f23e8d70d6440f9735c27ca60",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E04/metric_evidence.csv",
+      "sha256": "314b5da9f04a2cf3a24fd5b0cc92074acd0bc41f2752e957c371d83033af1873",
+      "size": 3962
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E04/metrics_matrix.csv",
+      "sha256": "b7576a27c34c73eecf217ed00d7993cd7009e321235fd0b160ec9b9b7a2d3fda",
+      "size": 4451
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E04/receipt.json",
+      "sha256": "f3f985914961ddc32fb634df42faed9407ea595c6f8b5195b68d6f06eafba2f2",
+      "size": 958
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E05/metric_evidence.csv",
+      "sha256": "31b14fdfc72ef54833ef1f423f77e63ae4e610c8a5616773380401664086d932",
+      "size": 4247
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E05/metrics_matrix.csv",
+      "sha256": "927161339b4cb498bc4add78d177b79f4c4539ea99df40b984dd86e9e280a0b3",
+      "size": 4629
+    },
+    {
+      "path": "southwest/rows/southwest_airlines/E05/receipt.json",
+      "sha256": "587b8cfc116e5c548b6883b0611b8c0b04c5524767a6351c5985bbf33f4d3c00",
+      "size": 958
+    },
+    {
+      "path": "southwest/summary.json",
+      "sha256": "73fcd7c9bd7c69a65027f350f0e50ba9ce961fab0dcd0e26c2f12d510bc154f9",
+      "size": 21571
+    },
+    {
+      "path": "README.md",
+      "sha256": "24da006787b3dcb56f849fc88aa8fc1b37ca92e5e420fd194455b0697bfcd040",
+      "size": 1725
+    },
+    {
+      "path": "fast-suite.json",
+      "sha256": "c328c27d17922e701a365a022cf5597e6974413c1b98e3974470a8d29904c183",
+      "size": 27699
+    }
+  ],
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "frozen": false,
+  "production_authorized": false
+}

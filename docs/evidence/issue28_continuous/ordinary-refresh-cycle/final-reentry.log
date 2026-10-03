@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "current_reentry_results": [
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B01",
+      "successful_attempt": "3f7dd8ec08eb419587218a56fedc7ad9",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "result": {
+        "applicability": "N_A_STRUCTURAL",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B01",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "NONE",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:acda5475f270d4888d1c9d38b8e5b869adafc3317e2da05f6c9048c9fcfa5de1",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "trace_id": "sha256:a0a128d34591e190d9cef42b9085dc05b365254b49d1e3e01d1c3f739873c9bd",
+        "unit": null,
+        "value": null
+      }
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A08",
+      "successful_attempt": "e5ec8a6314a641b8a08fc84aee5e1dcd",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "A08",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5ded24cead96dbf12af798bdfe9ee2346fb4ad8a9118b31e395a772ff8a1b1c2",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+        "trace_id": "sha256:126bb2ac2aadc67d5ee32f041aebd22d1ca831f0285a85a06db5164ed4db0b72",
+        "unit": "ratio",
+        "value": "0.9115807340506899405928145595"
+      }
+    }
+  ],
+  "metadata_content_change_creates_new_candidate": true,
+  "recorded_sec_slots_total": 14,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "source_ledger_unchanged": true,
+  "seconds": 84.053,
+  "production_authorized": false,
+  "full390_acceptance": false
+}

@@ -1,0 +1,30 @@
+{
+  "record_type": "ISSUE28_A05_FORMULA_NA_REPAIR_FINAL_TREE",
+  "numeric_jpmorgan": {
+    "result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+    "value": "0.01353819078340816975991354239",
+    "formula": "Selected net income / ((current period-end total assets + prior period-end total assets) / 2)",
+    "run_status": "OPEN",
+    "validation_status": "NOT_RUN"
+  },
+  "nonfinancial_marriott": {
+    "result_id": "sha256:b603a640f4d5bd519a3738f2f99fb6c170cfa9952cfa16899679eba87b1e65b3",
+    "applicability": "N_A_STRUCTURAL",
+    "value": null,
+    "formula": "",
+    "first_status": "CANDIDATE_READY",
+    "repeat_status": "NO_SOURCE_CONTENT_CHANGE"
+  },
+  "source_selector_seconds": 23.318,
+  "source_selector_timeout_seconds": 240,
+  "product_file_hashes_same_as_numeric_and_na_runs": true,
+  "child_requirement_closure_hash": "sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4",
+  "prior_first_review_needs_fix_retained": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "current_390_credit": false,
+  "production_authorized": false
+}

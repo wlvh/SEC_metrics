@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_normal_candidate.py", line 93, in main
+    rendered = render_ordinary_run(data_root=data, run_dir=run, frozen=args.freeze)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_projection.py", line 90, in render_ordinary_run
+    row,evidence,_ = projector._project_result(result=result,trace=trace,company=company,spec=view,baseline_row=baseline,
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        indexes=indexes,fiscal_year=str(period["fiscal_year"]),metric_fields=publication.METRIC_FIELDS)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/projector.py", line 2243, in _project_result
+    raise ProjectionError(
+        "NOT_MEANINGFUL Result differs from frozen compatibility row"
+    )
+vnext.projector.ProjectionError: NOT_MEANINGFUL Result differs from frozen compatibility row

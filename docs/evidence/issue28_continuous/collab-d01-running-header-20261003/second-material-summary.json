@@ -1,0 +1,155 @@
+{
+  "base_head_with_uncommitted_patch": "9e37beb951903559782784b457f4d2a3e67342b8",
+  "companies": [
+    {
+      "company_id": "marriott_international",
+      "old_count": 38,
+      "new_count": 38,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:5e41cbfad234ed939d4c4792a7f35a427728ad406259a1dae05517acc4922662",
+      "new_candidate_hash": "sha256:5e41cbfad234ed939d4c4792a7f35a427728ad406259a1dae05517acc4922662",
+      "seconds": 5.649
+    },
+    {
+      "company_id": "southwest_airlines",
+      "old_count": 34,
+      "new_count": 34,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:ceddc7b10f3fe659164528d4a65253b745748af2a4103492d34fa0adb83fad17",
+      "new_candidate_hash": "sha256:ceddc7b10f3fe659164528d4a65253b745748af2a4103492d34fa0adb83fad17",
+      "seconds": 6.312
+    },
+    {
+      "company_id": "ford_motor_company",
+      "old_count": 30,
+      "new_count": 30,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:122deef13eb2bcfdd576bac76ced35b1c77934787fd1ddb900e8c2120307a9e2",
+      "new_candidate_hash": "sha256:122deef13eb2bcfdd576bac76ced35b1c77934787fd1ddb900e8c2120307a9e2",
+      "seconds": 8.322
+    },
+    {
+      "company_id": "pfizer",
+      "old_count": 28,
+      "new_count": 28,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:e5cc53c8b19851ed4497ee2258f54810f052253b1c9bba024d31cb5f284f8e78",
+      "new_candidate_hash": "sha256:e5cc53c8b19851ed4497ee2258f54810f052253b1c9bba024d31cb5f284f8e78",
+      "seconds": 8.458
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "old_count": 57,
+      "new_count": 56,
+      "candidate_unchanged": false,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:6d8259bfd9eda1ef1fed3ff6507f4b860667a2c28da5566cc5a5f42954e0173c",
+      "new_candidate_hash": "sha256:ab739cf54345e658f62ea4b23d910542ebc6e292f9270835efd11c182e8bc04c",
+      "seconds": 15.444
+    },
+    {
+      "company_id": "salesforce",
+      "old_count": 43,
+      "new_count": 43,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:8c8c6879b4d6b270ed55e1f3d6d7ec4f2c94f7b3d8b0a97622bc81b2dc4ebc55",
+      "new_candidate_hash": "sha256:8c8c6879b4d6b270ed55e1f3d6d7ec4f2c94f7b3d8b0a97622bc81b2dc4ebc55",
+      "seconds": 6.25
+    },
+    {
+      "company_id": "lumen_technologies",
+      "old_count": 50,
+      "new_count": 50,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:6a06744ba75e6b764bb219194202c5bd342054013a642b3f8d49674bfa9610cb",
+      "new_candidate_hash": "sha256:6a06744ba75e6b764bb219194202c5bd342054013a642b3f8d49674bfa9610cb",
+      "seconds": 7.274
+    },
+    {
+      "company_id": "macys",
+      "old_count": 36,
+      "new_count": 36,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:35f913e68154d3a56073e761fc36477564a2898581c6c687a8c1d83d028b0aa8",
+      "new_candidate_hash": "sha256:35f913e68154d3a56073e761fc36477564a2898581c6c687a8c1d83d028b0aa8",
+      "seconds": 5.945
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "old_count": 38,
+      "new_count": 38,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:817401f7905528f2f403baaa065d81b4b360af37b508c2a84a7a20823f492c46",
+      "new_candidate_hash": "sha256:817401f7905528f2f403baaa065d81b4b360af37b508c2a84a7a20823f492c46",
+      "seconds": 8.261
+    },
+    {
+      "company_id": "enphase_energy",
+      "old_count": 60,
+      "new_count": 60,
+      "candidate_unchanged": true,
+      "source_docs_unchanged": true,
+      "old_candidate_hash": "sha256:b5e98d19b34f876802f291ee7418c31d6cd2b599e0e193eea724058838307656",
+      "new_candidate_hash": "sha256:b5e98d19b34f876802f291ee7418c31d6cd2b599e0e193eea724058838307656",
+      "seconds": 7.7
+    }
+  ],
+  "steps": [
+    {
+      "name": "normal-cli",
+      "seconds": 76.438,
+      "return_code": 2
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "current_processing_snapshot": {
+    "data_root": "/private/tmp/issue28-d01-running-header-processing-20261003/ef5a327811359fbd091f657078049f9b6c84b85a2cca7d4a6b780cdd62969028",
+    "snapshot_id": "sha256:ef5a327811359fbd091f657078049f9b6c84b85a2cca7d4a6b780cdd62969028",
+    "reused": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "status": "FAILED_D01_RUNNING_HEADER_MATERIAL",
+  "error": "READ_STAGE_LOG:normal-cli",
+  "protected_before": {
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/claims.jsonl": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/batch33-b13-v4-enphase.json": "c8248094cd7d55be74cb19348b0e431c9e0631f9c33df54ef70b62287077ee67",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/.DS_Store": "a74e735b232e9d9256e42656243fc54e45e12a1595a4192132f537ca43f834fb",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/binding.json": "bc7a7f252e1152f6eb4ce20f60845968285018bbe7b2bd225f6bc9f8a132e2af",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/recovery-172.json": "94135447b28761b01471e8491faa2339bd5508dd50d362eba26e502659fa3509",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/batch33-authorization.json": "a8d0337daa9221afdd9c40f54636065be7a4e8df935590b337180d3ff2199cb0",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/batch33-repair-189.json": "d07201aa64501c821ce2e2589aab0ca014dcf1df1fc48b89c61618109499b587",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/recovery-110.json": "725076b32b3ad47e7c231466081990b7144f4444a15374f5e88a7423bf1642de",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log.csv": "1c9f81687e591f07f745ca5bf4543af70ef26af146cc7746859d515a1d4e18e6",
+    "/Users/lyuhongwang/Developer/SEC_metrics/outputs/active_publication.json": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d"
+  },
+  "protected_after": {
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/claims.jsonl": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/batch33-b13-v4-enphase.json": "c8248094cd7d55be74cb19348b0e431c9e0631f9c33df54ef70b62287077ee67",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/.DS_Store": "a74e735b232e9d9256e42656243fc54e45e12a1595a4192132f537ca43f834fb",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/binding.json": "bc7a7f252e1152f6eb4ce20f60845968285018bbe7b2bd225f6bc9f8a132e2af",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/recovery-172.json": "94135447b28761b01471e8491faa2339bd5508dd50d362eba26e502659fa3509",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/batch33-authorization.json": "a8d0337daa9221afdd9c40f54636065be7a4e8df935590b337180d3ff2199cb0",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/batch33-repair-189.json": "d07201aa64501c821ce2e2589aab0ca014dcf1df1fc48b89c61618109499b587",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/recovery-110.json": "725076b32b3ad47e7c231466081990b7144f4444a15374f5e88a7423bf1642de",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/evidence/requests_log.csv": "1c9f81687e591f07f745ca5bf4543af70ef26af146cc7746859d515a1d4e18e6",
+    "/Users/lyuhongwang/Developer/SEC_metrics/outputs/active_publication.json": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d"
+  },
+  "protected_unchanged": true
+}

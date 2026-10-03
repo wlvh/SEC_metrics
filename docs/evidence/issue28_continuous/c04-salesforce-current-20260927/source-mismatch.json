@@ -1,0 +1,81 @@
+{
+  "company_id": "salesforce",
+  "expected_cik": "1108524",
+  "target_period_end": "2026-01-31",
+  "prior_period_end": "2025-01-31",
+  "current_filings": [
+    [
+      {
+        "accession": "0001108524-26-000060",
+        "document_name": "crm-20260131.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+        "expected_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+        "same_cik_url": true,
+        "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+        "matching_saved_proof_count": 1,
+        "matching_saved_proof": {
+          "document_name": "crm-20260131.htm",
+          "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7",
+          "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+          "request_locator_kind": "IMMUTABLE_ATTEMPT"
+        }
+      },
+      {
+        "accession": "0001108524-26-000060",
+        "document_name": "crm-20260131_htm.xml",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+        "expected_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+        "same_cik_url": true,
+        "source_reference_id": "sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3",
+        "matching_saved_proof_count": 1,
+        "matching_saved_proof": {
+          "document_name": "crm-20260131_htm.xml",
+          "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3",
+          "content_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+          "request_locator_kind": "IMMUTABLE_ATTEMPT"
+        }
+      }
+    ]
+  ],
+  "prior_filings": [
+    [
+      {
+        "accession": "0001108524-25-000006",
+        "document_name": "0002.body",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+        "expected_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/0002.body",
+        "same_cik_url": false,
+        "source_reference_id": "sha256:5dba75f58e0215431818b4822462606124c54301fd82c5a6be8f5feb1e9b5c43",
+        "matching_saved_proof_count": 1,
+        "matching_saved_proof": {
+          "document_name": "0002.body",
+          "request_attempt_id": "request:attempt:a5c3a8521de90f8ffdd35ad689154022cc4996a995c2b8c25b7720187a2973e1",
+          "content_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+          "request_locator_kind": "IMMUTABLE_ATTEMPT"
+        }
+      },
+      {
+        "accession": "0001108524-25-000006",
+        "document_name": "crm-20250131_htm.xml",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+        "expected_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+        "same_cik_url": true,
+        "source_reference_id": "sha256:be5a29164ab796f07bd137087c4b86d54ea48a6bd594776c28a5c23c1c6cd4e0",
+        "matching_saved_proof_count": 1,
+        "matching_saved_proof": {
+          "document_name": "crm-20250131_htm.xml",
+          "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61",
+          "content_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+          "request_locator_kind": "LEGACY_WORKING_LOCATOR"
+        }
+      }
+    ]
+  ],
+  "read_only": true,
+  "native_run_created": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

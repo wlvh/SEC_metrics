@@ -1,0 +1,44 @@
+{
+  "status": "PASS_V14_EXECUTION_AND_OFFLINE_WIRING",
+  "base": "29b401d73937c0b9014098274568dfae3748d5bd",
+  "changed_or_added_file_identities": {
+    "scripts/vnext/continuous_semantic_calls.py": {
+      "sha256": "35a774fc5e2bb3f9656e8c2beb12d62f61761fd78f320f07091798033061a3fd",
+      "size": 63993
+    },
+    "scripts/vnext/capacity_native_assessment.py": {
+      "sha256": "f019194948f725849d9325739728357992b4f4176707d2f921f8dfe6f0420be0",
+      "size": 18652
+    },
+    "scripts/vnext/native_assessment_replay.py": {
+      "sha256": "acf4ba0c69333b8f97247082ab61ed705f184599746209bac70e2ee7cc240686",
+      "size": 11740
+    },
+    "scripts/vnext/native_request_construction.py": {
+      "sha256": "41467a5ac11a311f7d90ec0870b7139455e1285654d9852f71f8dad68e7358b4",
+      "size": 6421
+    },
+    "scripts/vnext/regulatory_fact_review.py": {
+      "sha256": "b61689b7c7430cc81814291c4c7345d2021360ae6b29de9a0d9191cf411f87bf",
+      "size": 12802
+    },
+    "scripts/vnext/d03_native_assessment.py": {
+      "sha256": "98a1beacdc61ca1dc5476d37f9dc5f05d03acbe3cd0f7a44aeff3726d71cf737",
+      "size": 4358
+    },
+    "catalog/r6/D03_regulatory_investigations_assessment_v1.md": {
+      "sha256": "50c2a2603b4424b7a8e981c04b29cafb7b86115fc8c2e6e8b723420a5f85c0de",
+      "size": 2582
+    }
+  },
+  "requirement_closure_hash": "sha256:5553beca91ced749f70f8365d597e88489c84dd96688655a5f69459cd2ccee32",
+  "execution_authority_hash": "sha256:25c1abcbd5a745c3169e1496fccd083515d15a225d55bb6d18665c877dff079a",
+  "receipt_count": 3,
+  "approved_rule_paths_changed": false,
+  "v13_or_canonical_changed": false,
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}

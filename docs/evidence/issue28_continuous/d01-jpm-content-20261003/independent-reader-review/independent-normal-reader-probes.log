@@ -1,0 +1,32 @@
+{"probe": "omit-proof:docs/evidence/issue28_continuous/collab-d01-running-header-20261003/cold.log", "result": "REJECTED", "reason": "D01_JPM_REQUIRED_PROOF_SET_CHANGED", "normal_load_entry": true}
+{"probe": "omit-proof:docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md", "result": "REJECTED", "reason": "D01_JPM_REQUIRED_PROOF_SET_CHANGED", "normal_load_entry": true}
+{"probe": "omit-proof:docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md", "result": "REJECTED", "reason": "D01_JPM_REQUIRED_PROOF_SET_CHANGED", "normal_load_entry": true}
+{"probe": "omit-proof:docs/evidence/issue28_continuous/d01-jpm-content-20261003/mechanical-summary.json", "result": "REJECTED", "reason": "D01_JPM_REQUIRED_PROOF_SET_CHANGED", "normal_load_entry": true}
+{"probe": "add-unapproved-proof", "result": "REJECTED", "reason": "D01_JPM_REQUIRED_PROOF_SET_CHANGED", "normal_load_entry": true}
+{"probe": "wrong-proof-hash:docs/evidence/issue28_continuous/collab-d01-running-header-20261003/cold.log", "result": "REJECTED", "reason": "D01_JPM_PROOF_BYTES_CHANGED:docs/evidence/issue28_continuous/collab-d01-running-header-20261003/cold.log", "normal_load_entry": true}
+{"probe": "wrong-proof-hash:docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md", "result": "REJECTED", "reason": "D01_JPM_PROOF_BYTES_CHANGED:docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md", "normal_load_entry": true}
+{"probe": "wrong-proof-hash:docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md", "result": "REJECTED", "reason": "D01_JPM_PROOF_BYTES_CHANGED:docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md", "normal_load_entry": true}
+{"probe": "wrong-proof-hash:docs/evidence/issue28_continuous/d01-jpm-content-20261003/mechanical-summary.json", "result": "REJECTED", "reason": "D01_JPM_PROOF_BYTES_CHANGED:docs/evidence/issue28_continuous/d01-jpm-content-20261003/mechanical-summary.json", "normal_load_entry": true}
+{"probe": "wrong-parent-hash", "result": "REJECTED", "reason": "D01_JPM_REQUIRED_PROOF_SET_CHANGED", "normal_load_entry": true}
+{"probe": "new-result-old-run", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "wrong-requirement-closure", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "wrong-installed-root", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "wrong-display-spec", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "wrong-fiscal-year", "result": "REJECTED", "reason": "D01_DELTA_PREDECESSOR_OR_PERIOD_CHANGED", "normal_load_entry": true}
+{"probe": "wrong-predecessor-id", "result": "REJECTED", "reason": "D01_DELTA_PREDECESSOR_OR_PERIOD_CHANGED", "normal_load_entry": true}
+{"probe": "unread-content-result", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "false-display-text", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"constructed_valid_resigned_result": "company", "result_id": "sha256:1042cefbc0d4214d97ef0000895b67f331b233219c90b3a57340d9939325c493", "validate_record": "PASS"}
+{"probe": "valid-resigned-result:company", "result": "REJECTED", "reason": "D01_JPM_CONTENT_REVIEW_IDENTITY_CHANGED", "normal_load_entry": true}
+{"constructed_valid_resigned_result": "period", "result_id": "sha256:37b4b0581ba436ebc5dbf318a81762c395d81d11ab7d36e6bbd4b5d2810ccd33", "validate_record": "PASS"}
+{"probe": "valid-resigned-result:period", "result": "REJECTED", "reason": "D01_JPM_CONTENT_REVIEW_IDENTITY_CHANGED", "normal_load_entry": true}
+{"constructed_valid_resigned_result": "text", "result_id": "sha256:6003f2891879fe26053ae0f72829b3edb8c0f932a010f7a4dae1cc5ea6f6809e", "validate_record": "PASS"}
+{"probe": "valid-resigned-result:text", "result": "REJECTED", "reason": "D01_JPM_CONTENT_REVIEW_IDENTITY_CHANGED", "normal_load_entry": true}
+{"constructed_valid_resigned_receipt": "view", "receipt_id": "sha256:6539f2649428fd19d144ba95e19523e8f33f8292fb669eb3bc4647c8a857d759", "validate_record": "PASS"}
+{"probe": "valid-resigned-wrong-receipt:view", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"constructed_valid_resigned_receipt": "artifact", "receipt_id": "sha256:6af2527ed8fd5ce0b4edaea1b0932ca8fea5f20521c6551c9d33e8720def4a53", "validate_record": "PASS"}
+{"probe": "valid-resigned-wrong-receipt:artifact", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "genuine-other-company-passed-receipt", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"probe": "duplicate-coordinate", "result": "REJECTED", "reason": "D01_DELTA_SCOPE_INVALID", "normal_load_entry": true}
+{"probe": "false-formal-adoption", "result": "REJECTED", "reason": "D01_DELTA_VALIDATION_IDENTITY_INVALID", "normal_load_entry": true}
+{"control": "PASS", "default_equals_exact_predecessor": true, "coordinate_count": 390, "changed_coordinates": [["jpmorgan_chase", "D01"]], "changed_text_lines": 56, "selected_defects_old_new": [18, 17], "D01_saved_scope_restorations_old_new": [2, 3], "product_scope_pending": 20, "original_run_display_status": "OPEN", "credit_flags": {"all390_acceptance": false, "production_authorized": false, "full_current_head_reexecution": false, "other_coordinates_newly_validated_by_this_delta": false}, "new_business_calls": [0, 0, 0], "negative_probe_count": 26}

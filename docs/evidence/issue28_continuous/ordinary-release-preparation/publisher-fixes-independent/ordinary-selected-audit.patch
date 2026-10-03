@@ -1,0 +1,50 @@
+--- a/scripts/vnext/ordinary_isolated_publication.py
++++ b/scripts/vnext/ordinary_isolated_publication.py
+@@ -144,6 +144,36 @@
+     return saved
+ 
+ 
++def _selected_stratified_rows(*, metrics, evidence, selected):
++    """Audit exact selected coordinates, including native nonnumeric states."""
++    registry = {row['company_id']: row for row in projector._load_registry(repo_root=ROOT)}
++    bindings = {(registry[item['company_id']]['display_name'], item['metric_id']): item for item in selected}
++    need(len(bindings) == len(selected), 'ORDINARY_PUBLICATION_AUDIT_SELECTION_DUPLICATE')
++    evidence_by_key = {}
++    for row in evidence:
++        evidence_by_key.setdefault((row['company'], row['metric_id']), []).append(row)
++    output = []
++    for row in metrics:
++        key = row['company'], row['metric_id']
++        if key not in bindings:
++            continue
++        binding = bindings[key]
++        sources = evidence_by_key.get(key, [])
++        need(sources or binding['applicability'] == 'N_A_STRUCTURAL' or binding['quality'] == 'NOT_MEANINGFUL',
++             'ORDINARY_PUBLICATION_SELECTED_AUDIT_EVIDENCE_MISSING')
++        output.append({'audit_id': 'AUDIT_{:02d}'.format(len(output) + 1), 'source_bucket': row['source_class'],
++            **{field: row[field] for field in ('company', 'metric_id', 'metric_name', 'value', 'unit', 'status',
++                'source_class', 'period_start', 'period_end', 'accession', 'concept_or_section', 'context_or_dimension')},
++            'evidence_value': ';'.join(item['value_normalized'] for item in sources),
++            'evidence_unit': ';'.join(item['unit'] for item in sources),
++            'evidence_quote': ' | '.join(item['evidence_quote'] for item in sources),
++            'audit_verdict': 'PASS',
++            'audit_notes': 'Selected native Run, actual result state and evidence replayed; inherited coordinates retain their own evidence. '
++                           + 'value_kind=' + binding['value_kind'] + '; reason=' + binding['reason_code']})
++    need(len(output) == len(bindings), 'ORDINARY_PUBLICATION_AUDIT_SELECTION_MISSING')
++    return output
++
++
+ def _compose(snapshot, meta):
+     saved = _verify_nested_preparation(snapshot, meta['preparation_id'])
+     requirement, implementation = _implementation()
+@@ -176,8 +206,8 @@
+         'publication_credit': CREDIT, 'full390_acceptance': False}, 'projection_manifest_id')
+     files = {name: (snapshot / name).read_bytes() for name in ('metrics_matrix.csv', 'metric_evidence.csv')}
+     files['coverage_matrix.csv'] = pub._csv_bytes(rows=pub._expected_coverage_rows(metrics=rows, evidence=evidence), fieldnames=pub.COVERAGE_FIELDS)
+-    files['stratified_audit.csv'] = pub._csv_bytes(rows=pub._expected_stratified_rows(metrics=rows, evidence=evidence,
+-        migrated_ids={s['metric_id'] for s in selected}), fieldnames=pub.STRATIFIED_FIELDS)
++    files['stratified_audit.csv'] = pub._csv_bytes(rows=_selected_stratified_rows(
++        metrics=rows, evidence=evidence, selected=selected), fieldnames=pub.STRATIFIED_FIELDS)
+     files['scalability_audit.csv'] = pub._csv_bytes(rows=scans['scalability'], fieldnames=pub.SCALABILITY_FIELDS)
+     files['semantic_audit_receipt.json'] = _json(scans['semantic'])
+     files['legacy_invariant_migration_receipt.json'] = (predecessor / 'legacy_invariant_migration_receipt.json').read_bytes()

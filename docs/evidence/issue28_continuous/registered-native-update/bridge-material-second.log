@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/capacity_update_input.py", line 120, in prepare_registered_update
+    need(registered['source_snapshot']==original,'UPDATE_NATIVE_ORIGINAL_SOURCE_SNAPSHOT_CHANGED')
+         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'source_snapshot'

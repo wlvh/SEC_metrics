@@ -1,0 +1,35 @@
+..F.............................
+======================================================================
+FAIL: test_claim_context_parallel_assertions_and_specific_ambiguity (tests.vnext.test_capacity_two_stage.CapacityTwoStageTest.test_claim_context_parallel_assertions_and_specific_ambiguity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_two_stage.py", line 283, in test_claim_context_parallel_assertions_and_specific_ambiguity
+    self.assertEqual(['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'], unresolved)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'] != [{'unit_id': 'sha256:d3d33fdbf2783cfde040c[292 chars]DED']
+
+First differing element 0:
+'B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'
+{'unit_id': 'sha256:d3d33fdbf2783cfde040c[249 chars]ion'}
+
+Second list contains 1 additional elements.
+First extra element 1:
+'B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'
+
++ [{'claimed_kind': 'PLANNED_CAPACITY',
++   'reason': 'B13_VISIBLE_SOURCE_ROLE_NOT_ESTABLISHED',
++   'scope': 'Necessary source relation missing; not a relabeling or '
++            'disclosure-absence conclusion',
++   'source_indices': [0],
++   'unit_id': 'sha256:d3d33fdbf2783cfde040c685fa66d48af938e00229752615b7f30cab96dd2147'},
+- ['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED']
+? ^
+
++  'B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED']
+? ^
+
+
+----------------------------------------------------------------------
+Ran 32 tests in 2.408s
+
+FAILED (failures=1)

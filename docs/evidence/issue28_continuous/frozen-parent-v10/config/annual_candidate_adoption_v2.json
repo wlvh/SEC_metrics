@@ -1,0 +1,59 @@
+{
+  "company_id": "marriott_international",
+  "metric_ids": [
+    "B01",
+    "B10"
+  ],
+  "candidate_requirement_ids": [
+    "issue_28_v6"
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_runs_mutable": false,
+  "baseline_publication": {
+    "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a"
+  },
+  "schema_version": 2,
+  "policy_id": "annual_candidate_adoption_v2",
+  "execution_mode": "CANDIDATE_SPECIFIC_ADOPTION",
+  "adoption_requirement_id": "issue_28_v7",
+  "adoption_scope": "SAVED_NATIVE_CANDIDATE_ONLY_NOT_READER_QUALIFICATION",
+  "publication_credit": "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY",
+  "source_rule": "Exact immutable SEC attempts and native source/period/subject/scope replay",
+  "inheritance_rule": "Replace only selected company/metric keys; retain the complete pinned predecessor and every unchanged public row, period and evidence row",
+  "adoption_rule": "Original lawful successful execution, immutable source and complete native graph replay, independently source-audited selected results; activation and publication authority are separate external decisions.",
+  "qualification_rule": "No historical qualification credit or future unseen-source publication qualification",
+  "exact_candidate": {
+    "file_set_id": "sha256:4af14ac84329cb4227c204fa9cd8204d87af3a337e7ca53500f2ebff7e94d797",
+    "original_plan_id": "sha256:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+    "native_run_ids": {
+      "b01": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+      "b10": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030"
+    },
+    "execution_id": "sha256:e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c",
+    "selected_results_id": "sha256:602c70831a372dbd976795fd8a0fc0d744d8439795d25b2471205dd587ffcd86",
+    "source_proofs_id": "sha256:27ae41f79ae900b00a1cd944bf387a7a9f51daa823b149a156336212741d5b8f"
+  },
+  "content_review": {
+    "path": "docs/evidence/annual_runtime/repair/source-audit-independent.json",
+    "sha256": "69317fddd5a8d4d2c7efc1f0adfa5c77384246b34b462cd07ec2781f43835ca3",
+    "size": 30006,
+    "role": "INDEPENDENT_MODEL_SOURCE_REVIEW_NOT_OWNER_AUTHORIZATION"
+  },
+  "activation_rule": "Unedited real repository-owner GitHub Requirement transition approval and distinct publication decision bound to a fixed complete plan; merged reviewed implementation and exact target/predecessor required before production writes.",
+  "operations": {
+    "publish": 1,
+    "rollback": 1,
+    "restore": 1,
+    "recover": "ONLY_THE_SAME_RESERVED_NATIVE_SWITCH"
+  },
+  "formal_remaining_conditions": [
+    "Owner activates the exact pending Requirement and its adoption rule",
+    "Owner authorizes this exact complete publication plan and finite switch directions",
+    "Reviewed implementation is merged unchanged; target and predecessor still match"
+  ]
+}

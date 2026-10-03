@@ -1,0 +1,34 @@
+{
+  "record_type": "ISSUE28_C02_GROUPED_V3_SPEC_POLICY_POSTCOMMIT_TEST_TREE_VERIFICATION",
+  "commit": "ad83fcbcd12d1ebf26e3cf3741591e4c91c9568c",
+  "tested_file_count": 8,
+  "all_tested_product_bytes_in_commit": true,
+  "files": {
+    "scripts/vnext/c02_composition_text_results.py": {
+      "tested_git_blob_equals_committed": true
+    },
+    "tests/vnext/test_normal_c02_composition.py": {
+      "tested_git_blob_equals_committed": true
+    },
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "tested_git_blob_equals_committed": true
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "tested_git_blob_equals_committed": true
+    },
+    "requirements/issue_28_v14/transfer_manifest.json": {
+      "tested_git_blob_equals_committed": true
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": {
+      "tested_git_blob_equals_committed": true
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": {
+      "tested_git_blob_equals_committed": true
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": {
+      "tested_git_blob_equals_committed": true
+    }
+  },
+  "test_tree_receipt": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/grouped-v3-spec-policy-test-tree-binding.json",
+  "business_content_acceptance": false
+}

@@ -1,0 +1,15 @@
+REVIEW_OBJECT parent=e1a668f116bb1fef087d4ba992462fcf57fb8443 target=81b927c22ec675196ec881b91303aef34f2f1726
+SCOPE ordinary_b03_scope_update.py ordinary_refresh_cycle.py two B03 test files run_fast_tests_v2.py issue_28_v14/baseline_manifest.json b03-invalid-prior-recovery-20260929 evidence
+PRIOR_P2 1 late processing-source failure exposed old no-credit B03; 2 C04 mixed resume rejected historical nonempty pointer with empty current candidate
+INDEPENDENT_SHORT_COMMAND PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeTest
+INDEPENDENT_SHORT_RESULT 3 tests OK 0.003s; no external request
+STATIC_P2_1 ordinary_b03_scope_update.py:98,155-166,180-197 defers candidate results and scope-conflict clearing until final processing-source check and ready terminal
+STATIC_P2_2 ordinary_refresh_cycle.py:196-212,387-409 validates B03 old pointer mechanically and semantically, catches only B03CurrentScopeConflict, rejects no-credit success terminal; non-B03 pointer behavior retained
+READ_ONLY_BINDING_PASS requirement_closure_hash=sha256:821448eaabdcf80951f6468dc87f09fc86d423b3576a73af98f9896cda014646 execution_authority_hash=sha256:2499c179f41f4b6e9d7a7a5912a105b16898a0a7de4e32d5a6753c73314e2821 V13/default unchanged target source bytes matched
+SELECTOR_AUDIT two B03 test files: 8 original methods retained, 2 added; 5 current B03 selectors load 10 unique methods without load error or overlap
+READ_ONLY_SAVED_LOGS split-salesforce=1/1 103.011s; split-southwest=1/1 87.474s; split-source=5/5 32.078s; split-fast=141/141 selectors 95.739s exit=0
+CI_PRIOR a984001f run 36447346962 concluded failure; saved-source shard 0 B03CurrentUpdateMaterialTest hit 240s and fast B03 selector hit 30s, source summary failed downstream; target 81b927c had no listed run when queried
+DIFF_CHECK_PASS exact scoped git diff --check; worktree had separate pre-existing execution-state.json modification, untouched
+BOUNDARY no same-report B03+C04 two-source resume with corrected filing; no actual corrected Salesforce B03 value; long material and fast logs inspected but not rerun; no real calls or release
+VERDICT PASS_WITH_BOUNDS; prior independent-review conclusion preserved
+BOTTOM_LEVEL_TOOL_CALLS 32 including this write and final verification; no subagents, commits, pushes, or external operations

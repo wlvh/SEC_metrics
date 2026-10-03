@@ -1,0 +1,25 @@
+{
+  "status": "REJECTED_CURRENT_HOST_REPLAY",
+  "causes": [
+    {
+      "type": "RunStoreError",
+      "error": "Run Requirement Snapshot is invalid"
+    },
+    {
+      "type": "RequirementError",
+      "error": "Continuous successor installed snapshot differs: transfer_manifest.json"
+    },
+    {
+      "type": "RequirementProfileError",
+      "error": "Continuous successor installed snapshot differs: transfer_manifest.json"
+    }
+  ],
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py\", line 2028, in load_requirement_snapshot\n    return load_profile_requirement_snapshot(\n        snapshot_dir=snapshot_dir,\n        parent_loader=load_requirement_snapshot,\n    )\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py\", line 77, in load_profile_requirement_snapshot\n    return engine.load_profile_requirement_snapshot(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        snapshot_dir=snapshot_dir, parent_loader=parent_loader,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py\", line 24, in load_profile_requirement_snapshot\n    need(resolve_repository_file(repo_root=root,repo_relative_path=relative).read_bytes()\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n         == resolve_repository_file(repo_root=installed,repo_relative_path=relative).read_bytes(),\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n         'Continuous successor installed snapshot differs: ' + name)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py\", line 15, in need\n    if not condition:raise v1.RequirementProfileError(reason)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvnext.requirement_profile_v1.RequirementProfileError: Continuous successor installed snapshot differs: transfer_manifest.json\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py\", line 1353, in _verify_repository_bindings\n    requirement = load_run_requirement_snapshot(\n        repo_root=repo_root,\n    ...<5 lines>...\n        record_type=str(manifest[\"record_type\"]),\n    )\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py\", line 811, in load_run_requirement_snapshot\n    requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py\", line 2033, in load_requirement_snapshot\n    raise RequirementError(str(error)) from error\nvnext.requirements.RequirementError: Continuous successor installed snapshot differs: transfer_manifest.json\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/tmp/sec_metrics_issue28_continuous/private-publication-rehearsal/check_observation_current_host.py\", line 9, in <module>\n    m,r,d=run_store._mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True);value={'status':'PASS','run_id':m['run_id']}\n          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py\", line 3477, in _mechanically_replay_open_run\n    _verify_repository_bindings(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        repo_root=repo_root,\n        ^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n        r4_replay_context=r4_replay_context,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py\", line 1363, in _verify_repository_bindings\n    raise RunStoreError(\"Run Requirement Snapshot is invalid\") from error\nvnext.run_store.RunStoreError: Run Requirement Snapshot is invalid\n",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_run_not_rewritten": true,
+  "scope": "Direct current-host full native replay invocation; not an inference that old Runs must be rebuilt"
+}

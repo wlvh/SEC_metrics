@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "receipt_paths": [
+    "outputs/acceptance_receipts/2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json",
+    "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/r4_fast_test_policy_dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb.json",
+    "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/scalability_audit.csv",
+    "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/semantic_audit_receipt.json",
+    "outputs/scalability_audit.csv"
+  ],
+  "allowed_readonly_commands": [
+    [
+      "git",
+      "show",
+      "HEAD:requirements/issue_15_v1/foundation_verification_receipt.json"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/acceptance_receipts/2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/r4_fast_test_policy_dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb.json"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/semantic_audit_receipt.json"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/scalability_audit.csv"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/scalability_audit.csv"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/active_publication.json"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59/publication_manifest.json"
+    ],
+    [
+      "git",
+      "show",
+      "HEAD:outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59/internal/annual_runtime/outputs/scalability_audit.csv"
+    ]
+  ],
+  "network_allowed": false,
+  "root_code_or_production_changed": false
+}

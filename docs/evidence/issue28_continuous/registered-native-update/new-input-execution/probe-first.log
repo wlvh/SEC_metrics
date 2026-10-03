@@ -1,0 +1,43 @@
+test_changed_source_matching_old_group_blocks_before_any_new_call (__main__.NewNativeUpdateTest.test_changed_source_matching_old_group_blocks_before_any_new_call) ... ok
+test_default_zero_and_whole_source_reuse_never_execute (__main__.NewNativeUpdateTest.test_default_zero_and_whole_source_reuse_never_execute) ... ok
+test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format (__main__.NewNativeUpdateTest.test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format) ... ERROR
+test_finite_partial_success_then_exact_reuse_completes_without_redraw (__main__.NewNativeUpdateTest.test_finite_partial_success_then_exact_reuse_completes_without_redraw) ... ERROR
+test_invalid_limits_and_d03_cannot_enter (__main__.NewNativeUpdateTest.test_invalid_limits_and_d03_cannot_enter) ... ok
+test_live_b13_pause_and_recorded_wire_rejection (__main__.NewNativeUpdateTest.test_live_b13_pause_and_recorded_wire_rejection) ... ok
+test_unknown_claim_keeps_count_and_stops_provider (__main__.NewNativeUpdateTest.test_unknown_claim_keeps_count_and_stops_provider) ... ok
+test_failure_continues_other_metrics_and_uses_one_shared_limit (__main__.RefreshCoordinatorNewNativeTest.test_failure_continues_other_metrics_and_uses_one_shared_limit) ... ok
+
+======================================================================
+ERROR: test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format (__main__.NewNativeUpdateTest.test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/probe.py", line 64, in test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format
+    self.fail=True;r=self.run_update(3);self.assertEqual(r['status'],'NATIVE_REQUEST_FAILED');self.assertEqual(r['attempted_executions'],1)
+                                        ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 925, in assertEqual
+    assertion_func(first, second, msg=msg)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 1291, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'bool' object is not callable
+
+======================================================================
+ERROR: test_finite_partial_success_then_exact_reuse_completes_without_redraw (__main__.NewNativeUpdateTest.test_finite_partial_success_then_exact_reuse_completes_without_redraw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/probe.py", line 60, in test_finite_partial_success_then_exact_reuse_completes_without_redraw
+    first=self.run_update(2);self.assertEqual(first['status'],'PROVIDER_LIMIT_DEFERRED');self.assertEqual(first['counts'],[2,2,0]);self.assertEqual(first['attempted_executions'],2)
+                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 925, in assertEqual
+    assertion_func(first, second, msg=msg)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 1291, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'bool' object is not callable
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.086s
+
+FAILED (errors=2)

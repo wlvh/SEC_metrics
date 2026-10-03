@@ -1,0 +1,33 @@
+{
+  "steps": [
+    {
+      "name": "export-enphase-b13",
+      "exit": 0,
+      "seconds": 31.336
+    },
+    {
+      "name": "install-enphase-b13",
+      "exit": 0,
+      "seconds": 1.069
+    },
+    {
+      "name": "compute-enphase-b13",
+      "exit": 2,
+      "seconds": 0.925
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "B13",
+      "status": "AI_PROCESSING_INPUT_REQUIRED",
+      "reason": "SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "D04",
+      "status": "AI_PROCESSING_INPUT_REQUIRED",
+      "reason": "SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.",
+      "business_metric_completed": false
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "record_type": "ISSUE28_C02_MACYS_CONTENT_PARENT_TARGETED_SOURCE_CHECK",
+  "scope": "DIRECT_SAVED_SOURCE_AND_RESULT_SPOT_CHECK_NOT_FULL_INDEPENDENT_AUDIT",
+  "source_sha256": "3b501eec7b59a3dabbe9da4a206a6b3e61469c426650f9c16432c03e66703d06",
+  "run_id": "run:ordinary-integrated:cc04eaa4ab870e86c2f9c4338f2c23b2104ce6f8ee4b7ca7cce11c9ca4fd4164",
+  "result_id": "sha256:d7eaa03ec66abaf95cb885642145ad9f1687e90f7aa26ab1ffe28ff0f50a38ae",
+  "selected_count": 29,
+  "evidence_status": "PASS",
+  "selected": {
+    "excerpt_11": {
+      "original_selected_blocks": [
+        821
+      ],
+      "original_context_blocks": [],
+      "text_prefix": "Chairman and Chief Executive Officer, Macy’s, Inc.",
+      "raw_span_sha256": "b2941716bfa0eeb86e2414747e33ed9bd666685660dc2eacef10cb5ea81142c1",
+      "result_contains_exact_excerpt": true
+    },
+    "excerpt_16": {
+      "original_selected_blocks": [
+        920,
+        923
+      ],
+      "original_context_blocks": [
+        921,
+        922
+      ],
+      "text_prefix": "respect to each non-employee director (Non-Employee Director), the NCG Committee determined that neither the director nor any immediate fami",
+      "raw_span_sha256": "ad08fd88819e18a349b24a6987805a42cede2f6abf8f2be97f443a094b4a912e",
+      "result_contains_exact_excerpt": true
+    },
+    "excerpt_28": {
+      "original_selected_blocks": [
+        1929
+      ],
+      "original_context_blocks": [],
+      "text_prefix": "Eligibility. Any person who is selected by the Committee to receive benefits under the Amended and Restated 2024 Plan and who is at that tim",
+      "raw_span_sha256": "d29e311c3273f39d01f386ab3b3acbf2d2ef92d121add2cd66efd0b4283897a4",
+      "result_contains_exact_excerpt": true
+    }
+  },
+  "name_near_title_source_bytes": {
+    "name": "Tony Spring",
+    "name_offset": 478437,
+    "title_start_byte": 478613,
+    "distance_bytes": 176
+  },
+  "v3_excludes_equity_plan_terms": true,
+  "result_contains_mixed_equity_plan_paragraph": true,
+  "prior_result_business_content_acceptance": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_session.py", line 179, in recorded_source_session
+    return RecordedSourceSession(data_root=data_root,journal_root=journal_root,company_id=company_id,
+                                 max_responses=max_responses,_factory=_FACTORY)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_session.py", line 63, in __init__
+    self.data_root=_external(data_root);self.journal_root=_external(journal_root)
+                   ~~~~~~~~~^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_session.py", line 35, in _external
+    _need(first_symlink_in_path(path=path) is None,'SOURCE_SESSION_PATH_ALIAS')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_session.py", line 30, in _need
+    if not condition:raise OrdinarySourceSessionError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.ordinary_source_session.OrdinarySourceSessionError: SOURCE_SESSION_PATH_ALIAS

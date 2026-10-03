@@ -1,0 +1,202 @@
+{
+  "original_terminal_status": "FAILED_TERMINAL",
+  "original_request_id": "sha256:76bd7681d1088b117f17d25a66a193be1b03972e9e4677e9a73d133088d8bd2d",
+  "original_target_finding": [
+    {
+      "kind": "ACTUAL_PRODUCTION",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 423
+        }
+      ],
+      "reason": "Ford's 2025 production was disrupted by fires at a major aluminum supplier; this is a qualitative statement about production disruption, not a production quantity."
+    },
+    {
+      "kind": "CAPACITY_QUALITATIVE",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 476
+        }
+      ],
+      "reason": "Statement that the global automotive industry has installed manufacturing capacity generally exceeding current demand; qualitative industry capacity statement without a comparable actual-output/capacity pair."
+    },
+    {
+      "kind": "CAPACITY_QUALITATIVE",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 669
+        }
+      ],
+      "reason": "Statement that developments may extend the period of underutilization of EV production capacity across the industry; qualitative capacity utilization statement without a comparable actual-output/capacity pair."
+    },
+    {
+      "kind": "ACTUAL_PRODUCTION",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 697
+        }
+      ],
+      "reason": "Discussion of how production volume varies quarter to quarter and year to year and is impacted by external economic factors; qualitative production discussion, not a production quantity."
+    },
+    {
+      "kind": "ACTUAL_PRODUCTION",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 699
+        }
+      ],
+      "reason": "Definition of Contribution Costs as costs that typically vary with production volume; qualitative production cost discussion, not a production quantity."
+    },
+    {
+      "kind": "ACTUAL_PRODUCTION",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 700
+        }
+      ],
+      "reason": "Definition of Structural Costs as costs that typically do not have a directly proportionate relationship to production volume; qualitative production cost discussion, not a production quantity."
+    },
+    {
+      "kind": "ACTUAL_PRODUCTION",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 701
+        }
+      ],
+      "reason": "Discussion of how structural costs are impacted to differing degrees by changes in production volume; qualitative production cost discussion, not a production quantity."
+    },
+    {
+      "kind": "ACTUAL_PRODUCTION",
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CURRENT_REPORT",
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 849
+        }
+      ],
+      "reason": "Definition of Structural Costs as costs that typically do not have a directly proportionate relationship to production volume; qualitative production cost discussion, not a production quantity."
+    }
+  ],
+  "variants": [
+    {
+      "variant": "ORIGINAL",
+      "accepted": false,
+      "error_type": "ValueError",
+      "reason": "B13_CALCULATION_LIMIT_CONTRADICTS_FINDING"
+    },
+    {
+      "variant": "SYNTHETIC_REMOVE_CONTRADICTING_LIMITS_KEEP_WRONG_LABELS",
+      "accepted": true,
+      "unresolved": [],
+      "finding_kinds": [
+        "ACTUAL_PRODUCTION",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "ACTUAL_PRODUCTION",
+        "ACTUAL_PRODUCTION",
+        "ACTUAL_PRODUCTION",
+        "ACTUAL_PRODUCTION",
+        "ACTUAL_PRODUCTION",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE"
+      ]
+    },
+    {
+      "variant": "SYNTHETIC_QUALITATIVE_PRODUCTION_AS_OTHER_CONTEXT_KEEP_INDUSTRY_TARGET_LABEL",
+      "accepted": true,
+      "unresolved": [],
+      "finding_kinds": [
+        "OTHER_CONTEXT",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE"
+      ]
+    },
+    {
+      "variant": "SYNTHETIC_INDUSTRY_AS_OTHER_ENTITY_WITH_ORIGINAL_REFERENCES",
+      "accepted": true,
+      "unresolved": [],
+      "finding_kinds": [
+        "OTHER_CONTEXT",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "OTHER_CONTEXT",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE",
+        "CAPACITY_QUALITATIVE"
+      ]
+    }
+  ],
+  "original_files_sha256": {
+    "semantic-request.json": "3d07ef0152a3f9b063e9d56446e68e754bcc203ea5b2bae8dc203c396c276942",
+    "source.json": "9d9695a4a36c4c3a0c7d620f18f517d6c41e10fbe712b2d46daaa1cca31d21f1",
+    "wire/assistant-output.bin": "b8482cb85092233f16a51270c10e7d280f0ca4d29f2e1e4a240a31cabb493d8c",
+    "wire/journal.json": "7940b622942b0fbb9ca20120d43b7c4d72aa268ddd893eacae6c4bd37ef09917",
+    "intent.json": "fdacf0184504885a8339bbfcf3b0ddf5dcc95c1eee07d956c0adabc34ae7086d",
+    "terminal.json": "ab0539faa5033fa0f89f0382635509cc87dc6066adc0dd9286f5c866a20d0d00"
+  },
+  "original_files_unchanged": true,
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "changed_response_variants_are_synthetic": true,
+  "native_Run_or_result_created": false,
+  "usable_result_credit": false,
+  "actual_head": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
+  "validator_file_sha256": {
+    "scripts/vnext/capacity_semantic_review.py": "44db30b70c6b82cf40d6652768ac6ae8280ca008254e0790b086b1134618debf",
+    "scripts/vnext/capacity_utilization_source.py": "128c1736e84090417f8f24b7a7aa67ad6208687ee58eb781ea80d870a366d474",
+    "scripts/vnext/capacity_quantity_scope.py": "ef3efde85473bc6250cfcc4540239d67771f2f149f8a97b28616a9a7f7375657"
+  }
+}

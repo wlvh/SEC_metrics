@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 142, in build_development_company_assessment
+    _need(sha256_bytes(content=_bytes(source)) == expected_source_sha256
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: D03_MODEL_AUTHENTICATED_SOURCE_CHANGED

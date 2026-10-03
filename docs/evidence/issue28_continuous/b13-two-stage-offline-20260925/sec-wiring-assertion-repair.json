@@ -1,0 +1,31 @@
+{
+  "record_type": "SEC_ACQUISITION_OFFLINE_WIRING",
+  "execution_authority_hash": "sha256:a96131315e295cd3d8d9c97ce6e349f491687d90a5f8e2beb68fbad7d78251c2",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "actual_http_path_verified": true,
+  "checkpoint_import_and_failure_isolation_verified": true,
+  "native_selected_source_and_cold_preview_verified": true,
+  "evidence": {
+    "docs/evidence/issue28_continuous/paramount-c04-source-inspection/registration-form-discovery/current-sec-wiring.log": "53fa60d8dbf33f170ba34ac39c7e0ec2bc8168ae107c051c62a30f45ffe1f8c7",
+    "docs/evidence/issue28_continuous/paramount-c04-source-inspection/registration-form-discovery/unfrozen-root-rerun.log": "0945294409839bc17ea66581c5e6f7d87bb93697da1d91584d807ebc5a7a8599",
+    "docs/evidence/issue28_continuous/paramount-c04-source-inspection/registration-form-discovery/ci-tests-root.log": "4fb351c55125b496cfcd545c758d540b57091b6ee9c3bb8c8267e384e3726311",
+    "docs/evidence/issue28_continuous/registered-native-update/current-fast-before-construction-session.json": "b3b760ab50d7393eabd99588e8c0edfdf50cadc6564142fb1bcc43fe87528d82",
+    "docs/evidence/issue28_continuous/paramount-c04-source-inspection/registration-form-discovery/sec-current-bridge-summary.json": "e8fafdc478a1d813091377cd2a180463efe6d6ebe71f6483be7e87a23673ba3b",
+    "docs/evidence/issue28_continuous/paramount-c04-source-inspection/registration-form-discovery/sec-current-bridge.log": "78cee9590c56d14c2fc901952f5ad9f119c3a07265371856ec776d5d0e497d4c",
+    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/sec-current-material.log": "6c92db909cd1c1ef3e278703d3c7aabaae6117fe8dda112c2d5aadf226686c59",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-sec-wiring-after-two-stage.log": "be56f01f4007027c2422f516eaf162b8acdf6432bc2786e041925ad16b940d76",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-sec-wiring-after-review-repair.log": "3b67aaa8858e5018fd2b93eb28ab1d89596dfa664f462912af8df092ef2567de",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-sec-wiring-after-local-repair.log": "dd0fc694a9e0aa1548707826724cffda68d62acbca99705be1422c0c5a177386",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-sec-wiring-after-clause-repair.log": "95659a5b25051d39faa29cd5499c915a0107746fb57e1caeb4059aeaee4832c4",
+    "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/sec-wiring-test-shard-repair.log": "f23c993014c3b593bb3663bfcc818dde0ce56dc4800c4a73a9c961a3d2f7b8c4",
+    "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/native-shard-repair.log": "9a1f4c8e3baa54094c890442dbcc628e9c7d5fe74371697420df99720c5b5a4a",
+    "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/cold-shard-repair.log": "e8592ceff76cca4cbf2d7f160160a9f7fab729e1f0e3db3fccaf1c34ca88166d",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-test-assertion-v6.log": "fcd68a019dc7b488af86451eca9bea52d99d8f342c98a609fef1dff45aa01f48"
+  },
+  "production_authorized": false,
+  "validation_scope": "Current V15 execution file identity rebound. SEC code and acquisition policy bytes were unchanged by the B13-only scope repair; prior recorded SEC HTTP, checkpoint and failure-isolation test and original source/cold-read evidence revalidated by exact hashes. No new SEC request."
+}

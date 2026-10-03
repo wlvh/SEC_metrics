@@ -1,0 +1,15 @@
+======================================================================
+FAIL: test_original_response_bytes_and_unresolved_survive_cold_replay (tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest.test_original_response_bytes_and_unresolved_survive_cold_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_recorded_response_store.py", line 94, in test_original_response_bytes_and_unresolved_survive_cold_replay
+    with self.assertRaisesRegex(ValueError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+            'D03_RECORDED_PACKET_IDENTITY_OR_CREDIT_CHANGED'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 96.997s
+
+FAILED (failures=1)

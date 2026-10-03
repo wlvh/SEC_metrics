@@ -1,0 +1,27 @@
+{
+  "record_type": "ISSUE28_D04_PRIVATE_RELEASE_INSTALLED_BINDING_MISMATCH",
+  "tested_head": "a863f722324d89f4ee23bc9dd284787b6e18789d",
+  "old_run_baseline_sha256": "345712f3253c15c9aada7da6096f856da8007e25d1a26f4249ab68ebba3d442e",
+  "second_old_run_baseline_sha256": "345712f3253c15c9aada7da6096f856da8007e25d1a26f4249ab68ebba3d442e",
+  "current_baseline_sha256": "8258cf4eb0e5befaf86082d637423f9ed1d67a9aca3eff42f7f00eda1bd34a01",
+  "parent_declaration_unchanged": true,
+  "execution_file_bindings_changed": [
+    "catalog/r6/D03_regulatory_investigations_assessment_v1.md",
+    "scripts/vnext/capacity_native_assessment.py",
+    "scripts/vnext/continuous_semantic_calls.py",
+    "scripts/vnext/d03_native_assessment.py",
+    "scripts/vnext/native_assessment_replay.py",
+    "scripts/vnext/native_request_construction.py",
+    "scripts/vnext/regulatory_fact_review.py"
+  ],
+  "rule_file_bindings_changed": [
+    "scripts/vnext/capacity_native_assessment.py",
+    "scripts/vnext/continuous_semantic_calls.py",
+    "scripts/vnext/native_assessment_replay.py"
+  ],
+  "failure_class": "Run Requirement Snapshot is invalid",
+  "failure_detail": "Continuous successor installed snapshot differs: baseline_manifest.json",
+  "old_run_before_after_tree_comparison_performed": false,
+  "source_or_business_credit_granted": false,
+  "production_authorized": false
+}

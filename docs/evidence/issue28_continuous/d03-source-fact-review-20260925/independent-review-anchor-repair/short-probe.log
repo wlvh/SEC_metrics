@@ -1,0 +1,7 @@
+probe_kind=isolated_outer_validator; authentication_and_base_validator=stubbed
+same_statement_same_block_two_candidates=true
+cross_candidate_conflict=positive_for_A_other_entity_for_B
+unresolved_candidate_ids= ['candidate-B']
+A_missing_from_unresolved= True
+provider_response_has_candidate_reviews= False
+top_level_has_candidate_reviews= True

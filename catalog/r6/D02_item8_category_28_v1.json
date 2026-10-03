@@ -1,0 +1,36 @@
+{
+  "record_type": "D02_ITEM_8_CATEGORY_MENTION_TERMS",
+  "schema_version": 1,
+  "metric_id": "D02",
+  "reader": "scripts/vnext/d02_item8_category_28_v1.py",
+  "category_mention": {
+    "separator_before": "(?:,|;|\\band|\\bor|\\bincluding|\\bsuch\\s+as)\\s+(?:(?:the|other|certain|general)\\s+)?$",
+    "separator_after": "^\\s*(?:,|;|and\\b|or\\b)",
+    "parenthetical_example": "^\\(\\s*(?:including|such\\s+as|e\\.g\\.)",
+    "prose": "[a-z][.;:][\"\\u201d\\u2019)]*(?:\\s|$)"
+  },
+  "exposure": [
+    {"name": "REGISTRANT_SUBJECT_TO_A_LEGAL_MATTER",
+     "pattern": "\\b(?:is|are|was|were|be|been|being|become|becomes|remain|remains)\\s+(?:\\w+\\s+){0,4}?(?:subject\\s+to|involved\\s+in|a\\s+party\\s+to|party\\s+to|named\\s+(?:as\\s+)?(?:a\\s+)?(?:defendants?|parties)\\s+in|a\\s+defendant\\s+in)\\s+(?:[\\w,-]+\\s+){0,4}?(?:legal\\s+(?:proceedings?|matters?|actions?|claims?)|litigation|lawsuits?|suits?|claims?|loss\\s+contingenc(?:y|ies)|contingencies|investigations?|disputes?|class\\s+actions?|actions?|proceedings|fines|penalties|complaints?)",
+     "why": "The registrant (or a party it names) is subject to, involved in, party to or a defendant in a legal matter."},
+    {"name": "REGISTRANT_IS_A_PARTY",
+     "pattern": "\\b(?:is|are|was|were)\\s+(?:a\\s+|the\\s+|also\\s+)?(?:defendants?|plaintiffs?)\\b",
+     "why": "A matter 'in which it was a plaintiff'; 'matters in which we are a defendant'."},
+    {"name": "ACCRUAL",
+     "pattern": "\\baccru(?:al|als|e|es|ed|ing)\\b",
+     "why": "An accrual the registrant makes; the adjudicated rule CLAIMS_ACCRUAL_IS_DISCLOSURE (self-insured claims, a litigation accrual review)."},
+    {"name": "RECORDED_LIABILITY_CHARGE_OR_BENEFIT",
+     "pattern": "\\brecord(?:s|ed|ing)?\\s+(?:a|an)?\\s*(?:liability|liabilities|charge|charges|benefit|loss|losses|reserve)\\b",
+     "why": "An amount the registrant records: a benefit from stockholder litigation, a liability for claims."},
+    {"name": "SELF_INSURED",
+     "pattern": "\\bself-insured\\b",
+     "why": "Self-insurance for the registrant's own claims."},
+    {"name": "A_MATTER_IN_A_COURT",
+     "pattern": "\\bfiled\\b|\\bpending\\b|\\balleg(?:e|es|ed|ing|ation|ations)\\b|\\bcourt\\b|\\bsummary\\s+judgment\\b|\\bjudgments?\\s+(?:against|in\\s+favor|was|were|entered)\\b|\\bverdicts?\\b|\\bappeal(?:s|ed)?\\b|\\bdismiss(?:ed|al)?\\b|\\bsubpoena|\\binjunction|\\bplaintiffs?\\b|\\bdefendants?\\b|\\bclass\\s+action|\\bcomplaints?\\b",
+     "why": "The vocabulary of a specific proceeding: a filing, a court, an allegation, a ruling, a party. 'judgments' alone is not here: an accounting estimate is 'based on complex judgments'."},
+    {"name": "SETTLEMENT_OF_A_LEGAL_MATTER",
+     "pattern": "\\bsettl(?:e|ed|es|ement|ements)\\b\\s+(?:\\w+\\s+){0,4}?(?:of\\s+|with\\s+)?(?:\\w+\\s+){0,3}?(?:litigation|lawsuits?|claims?|actions?|cases?|disputes?|matters?|suits?)\\b|\\b(?:litigation|lawsuits?|claims?|disputes?)\\s+settlements?\\b",
+     "why": "A settlement of a legal matter. Settlements with taxing authorities are not one (a tax-position paragraph)."}
+  ],
+  "why_this_file": "D02's Item 8 keyword (catalog/r6/text_business_candidates_v1.json, pattern 'legal') admits a paragraph wherever the word occurs. Readers judged 20 of the 85 admissions they read NOT_DISCLOSURE, and every one of them names litigation only as one item of a list or as an example in a parenthetical, in a paragraph that says nothing about a legal matter of the registrant: a list of cost categories, of matters counsel advises on, of risks that move estimates, of covenant add-backs, of what a tax audit can include, a collection policy '(including litigation, where appropriate)'. A paragraph leaves the set only when both hold. Business phrases live here rather than in executable code (tools/check_vnext_semantics.py); the file's bytes are recorded by the issue_47_v1 snapshot as a rule file, so a change here moves the Requirement closure."
+}

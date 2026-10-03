@@ -1,0 +1,845 @@
+{
+  "record_type": "ISSUE28_E01_TEN_COMPANY_CURRENT_801_SOURCE_CENSUS",
+  "scope": "CURRENT_REGISTERED_SOURCE_WINDOW_ONLY_NOT_MA_SEMANTIC_VALIDATION",
+  "source_snapshot_id": "sha256:a1aea4b15f7b741708c172ac11e08e54e846322bfbad551fc2680d191d0b4eff",
+  "requirement_closure_hash": "sha256:44b77302eba4ece211c6c803d4a790ebf593d3d2d813c9da68fe8e8d3b282402",
+  "event_route_catalog_sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+  "approved_aliases_inspected_only": [
+    "merger",
+    "acquisition",
+    "combine",
+    "transaction"
+  ],
+  "companies": [
+    {
+      "company_id": "marriott_international",
+      "current_e01_result_id": "sha256:ec9158300ef962f26fd9ae74d7eef70cde535c707eb8ef492ff8fc30ba8db8b6",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "0",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [],
+        "source_event_accessions": [
+          "0001048286-25-000011",
+          "0001193125-25-009110",
+          "0001193125-25-036732",
+          "0001193125-25-118853",
+          "0001193125-25-118861",
+          "0001193125-25-158742",
+          "0001193125-25-184082",
+          "0001628280-25-004772",
+          "0001628280-25-022390",
+          "0001628280-25-037592"
+        ]
+      },
+      "verified_claim_count": 20,
+      "item_801_claims": [
+        {
+          "accession": "0001193125-25-036732",
+          "verified_claim_id": "sha256:c82e29517fa348b8504cda04cb78e7344cb686af3fefcbbccef6f4180303b249",
+          "primary_source_reference_id": "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+          "primary_raw_asset_id": "sha256:7db2b5693b4986de1da579c85126ff60d02500ff7466d2a2c482d289bfbadb5e",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-184082",
+          "verified_claim_id": "sha256:7877ea22898bd8b829229d5171a14a951ce280d16c19d5f443dd84edbabdcdf2",
+          "primary_source_reference_id": "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+          "primary_raw_asset_id": "sha256:3695c0469ad4abe8fd9243dbd6c4df63d5976c5fb1313f22bdbdd6bd7cca3cb4",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "southwest_airlines",
+      "current_e01_result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "2",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [
+          "sha256:0b3cdd6019a731327caaa31b0bbbebbd4c3d3c6152d9d4b1bd4f184a9d82f2ad",
+          "sha256:8e53b0d3e57d5f015e1c87e8484a09ec24131ec2198063192e7469eb12049845"
+        ],
+        "source_event_accessions": [
+          "0000092380-25-000003",
+          "0000092380-25-000007",
+          "0000092380-25-000025",
+          "0000092380-25-000059",
+          "0000092380-25-000075",
+          "0000092380-25-000079",
+          "0000092380-25-000117",
+          "0000092380-25-000119",
+          "0000092380-25-000131",
+          "0000092380-25-000138",
+          "0000092380-25-000144",
+          "0001193125-25-004026",
+          "0001193125-25-013376",
+          "0001193125-25-023650",
+          "0001193125-25-028035",
+          "0001193125-25-029062",
+          "0001193125-25-262544"
+        ]
+      },
+      "verified_claim_count": 40,
+      "item_801_claims": [
+        {
+          "accession": "0001193125-25-262544",
+          "verified_claim_id": "sha256:f8a8e39c5788047ef3fcdb7258b785c521dec5f6fe826cd99040b782fd340b76",
+          "primary_source_reference_id": "sha256:5c3b61ee6824072a7b0b98083f9d305671a78ae0a8b1a954ca3d91241dd03251",
+          "primary_raw_asset_id": "sha256:37240895db1e2f9e69e4001f213a0db27a77fb693b1e346b1e9d701491ea6e54",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "BOUND_VISIBLE_SECTION",
+          "section_id": "sha256:62495bc5783ed9fc554b3baf67161a092135d3d2f470cfb7a2d15829ce9977d1",
+          "section_text_sha256": "b7db5de9b65fee609353e4704103debd6059fd4a8ac00429e9ac49964e46e29e",
+          "section_chars": 174,
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "ford_motor_company",
+      "current_e01_result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "2",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [
+          "sha256:58727704a5d010eb360c72a7a235619fd756081d2f625da3477c8949508826be",
+          "sha256:b8c4d5f11fa6f1f243d42da3ed6693b110eb974b341deb711e49f58bd47ad4a4"
+        ],
+        "source_event_accessions": [
+          "0000037996-25-000002",
+          "0000037996-25-000006",
+          "0000037996-25-000009",
+          "0000037996-25-000011",
+          "0000037996-25-000065",
+          "0000037996-25-000067",
+          "0000037996-25-000071",
+          "0000037996-25-000074",
+          "0000037996-25-000139",
+          "0000037996-25-000141",
+          "0000037996-25-000143",
+          "0000037996-25-000146",
+          "0000037996-25-000175",
+          "0000037996-25-000185",
+          "0000037996-25-000210",
+          "0000037996-25-000236",
+          "0000037996-25-000238"
+        ]
+      },
+      "verified_claim_count": 39,
+      "item_801_claims": [
+        {
+          "accession": "0000037996-25-000002",
+          "verified_claim_id": "sha256:a980b16fc1732b2954fe1430367b4fe190e653f7217e799711d48186dd6e08c0",
+          "primary_source_reference_id": "sha256:befcd304cfb39310051f76611075f6d00d62b9786b07eba6fc05a24783e81712",
+          "primary_raw_asset_id": "sha256:b23daac608266f4e427b037682636d1c5b54e8e832a4f6a9f8ce544c0b99ef1a",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000037996-25-000065",
+          "verified_claim_id": "sha256:d4a281b82837e226e655c5027a7b76052e58a1c519c32ee958fd7c22caff5404",
+          "primary_source_reference_id": "sha256:c32de12705867282935843de1d491ca5a2d21a0d5a48069e2973d4756a87f831",
+          "primary_raw_asset_id": "sha256:b2c6396764dbfaa7fc7328d751238c4f843628f1fc9a93e0435196110b70a931",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000037996-25-000139",
+          "verified_claim_id": "sha256:b77ab318c6d78251c2881afe26ad191dc01df264fd84b9b80d8a443c9bf68f5d",
+          "primary_source_reference_id": "sha256:de502c623a7d63943a3dadbb95c652947d66183d353bebb2c55a3e5e575e35a9",
+          "primary_raw_asset_id": "sha256:48fc3f9b067b5c8367777bcaba73600a7ae7bd0277ce16b0ebf436224818a18a",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000037996-25-000146",
+          "verified_claim_id": "sha256:cf4259728952ab27400bcb25d8e2097153bbe357979306402827ffdac22071a3",
+          "primary_source_reference_id": "sha256:b296cdd79443180f5029f71344d2f3d26e67e0896d94f8aa169d9f6dcb114bf6",
+          "primary_raw_asset_id": "sha256:f88d34b7cf154f0beed5580e8e1f82daa683259a93400e582cbfcc0f9bfcfb98",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000037996-25-000175",
+          "verified_claim_id": "sha256:237540d190fb1268d948cfdb6f821470ac6387f13f0ecfaafec26cfa6cb10fd5",
+          "primary_source_reference_id": "sha256:cc489a979170eb3706f73683df5f2a5e01084a8491e5ce53b60a03ae31c15e48",
+          "primary_raw_asset_id": "sha256:79b566ef9fe1b8163fe14c4e088d2422fe11b603b44a1407d36123a82e0b9ac1",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "pfizer",
+      "current_e01_result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "0",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [],
+        "source_event_accessions": [
+          "0000078003-25-000017",
+          "0000078003-25-000109",
+          "0000078003-25-000111",
+          "0000078003-25-000136",
+          "0000078003-25-000149",
+          "0000078003-25-000159",
+          "0000078003-25-000167",
+          "0001193125-25-122480",
+          "0001193125-25-291406"
+        ]
+      },
+      "verified_claim_count": 17,
+      "item_801_claims": [
+        {
+          "accession": "0000078003-25-000159",
+          "verified_claim_id": "sha256:db6dadfb745a7d8da5cc129c59b72715b5bd9ef80860cebc3c42d9f5848fefad",
+          "primary_source_reference_id": "sha256:1a47848c3657589557d8c1e8ffa667f839f38670ec0f80459e7dc4fdb424ab40",
+          "primary_raw_asset_id": "sha256:7c006c40f40cafebc70a0b397d2da2603a1cb3fb5fe2a31a27fb0eca96296f2e",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-122480",
+          "verified_claim_id": "sha256:b578a628aa162b4382a90225c37b41125661de1b9d3378c3143b23e89ad0aa4a",
+          "primary_source_reference_id": "sha256:064fbe5d9e1a974257355ea35261d67e8533ccc962ca547f34df0ac20ecc4314",
+          "primary_raw_asset_id": "sha256:45dbea60e433c9a65fd49935d4dfc6c38b6e8d215d43a57f0ec3274064fd8662",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-291406",
+          "verified_claim_id": "sha256:6b674455a5de93b47939d3d1eaeef627d22182326cd4e66341cadf59598d849f",
+          "primary_source_reference_id": "sha256:cdc98d1a22878614bb02a7d1e92e63acb070d26c859d1b121a65e67ca817441a",
+          "primary_raw_asset_id": "sha256:151aa2c2554b273747eeae59f9eb0bb9a7a49f7274310b29ff5a8ce6dc588f74",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "current_e01_result_id": "sha256:da0df5b5cee3319dc79db72df0d896faf59813e46d1592241878ce2d97ac7a37",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "0",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [],
+        "source_event_accessions": [
+          "0000019617-25-000040",
+          "0000019617-25-000042",
+          "0000019617-25-000056",
+          "0000019617-25-000332",
+          "0000019617-25-000334",
+          "0000019617-25-000483",
+          "0000019617-25-000485",
+          "0000019617-25-000509",
+          "0000019617-25-000510",
+          "0000019617-25-000518",
+          "0000019617-25-000520",
+          "0000019617-25-000907",
+          "0000019617-25-001100",
+          "0001193125-25-006009",
+          "0001193125-25-012230",
+          "0001193125-25-013396",
+          "0001193125-25-020070",
+          "0001193125-25-078015",
+          "0001193125-25-089203",
+          "0001193125-25-163423",
+          "0001193125-25-246803",
+          "0001628280-25-044845",
+          "0001628280-25-044887"
+        ]
+      },
+      "verified_claim_count": 46,
+      "item_801_claims": [
+        {
+          "accession": "0001193125-25-246803",
+          "verified_claim_id": "sha256:7024c57123890f1fea9a769c5c455e1766ff3e3bfe4e8d8a21e6e004a122166b",
+          "primary_source_reference_id": "sha256:d1e8290294b54f2482ba47ae8fa89460de088c7e61365fd3b54f1e29121f7c82",
+          "primary_raw_asset_id": "sha256:02f8caa2d3c887ad99c67b5cc423e914c84b50994311c14ef8a946de8762f917",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-163423",
+          "verified_claim_id": "sha256:d78cee6abe2c22b589326e678ebe0604fffaf4ff8f5912f3eee2fd90953877c3",
+          "primary_source_reference_id": "sha256:b4cc6f5d23cd28d0f4efda3b36e930ef05ea637290363185a58902c4524fe406",
+          "primary_raw_asset_id": "sha256:30ad0307f6d495d05e91db2ab9d18bd32adfb7bfa8219181584ea3e6347492fa",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000019617-25-000509",
+          "verified_claim_id": "sha256:d52a886a8376939fd678ac867ca06b736daed810624a4b70b55631deef52fbaa",
+          "primary_source_reference_id": "sha256:ce4515a844529b14fb9805e69854c1049808c47fe45fe629fb7cd6ad210b3191",
+          "primary_raw_asset_id": "sha256:58ee27340038a3868e7d07de4cf3160b67849e46423fadcebc8e33236eb93560",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-078015",
+          "verified_claim_id": "sha256:72752bb08b20446963200d90e57298a8e2748610b86c6b04fa366ad2a0fe4649",
+          "primary_source_reference_id": "sha256:3f699657bcff19b57021add23e441a4912cf0eb2b68444ee16d4b2efa8649c2e",
+          "primary_raw_asset_id": "sha256:e189023b829e15037cdff86184c1b74c8e30681c2ce6af393fb9aab5090005df",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-089203",
+          "verified_claim_id": "sha256:89b1330fe9783e2c83a3342d832ac3811643e67804d1ff684302ad8b73fac4ab",
+          "primary_source_reference_id": "sha256:53abb9ed607cf9a471bda5782a848f24ca99a995785878487a1681f1b4742814",
+          "primary_raw_asset_id": "sha256:4e2ec4c3a21aca1277e00cd8fe01eacb00e00e8841f2620501b4cf06cf00895c",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-012230",
+          "verified_claim_id": "sha256:03ac55819be71bff1f3e424af34f27b64dc323df24bba9aecfafa9cefda33146",
+          "primary_source_reference_id": "sha256:1474b5b675dfb0e175875cf50985d925ebab77ab480374782f5e0636f8a7310c",
+          "primary_raw_asset_id": "sha256:8f28e091bf2e4523ed9b36e082d8cd512ab92a9138b336681f3dfee1041619c7",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-013396",
+          "verified_claim_id": "sha256:7426fbc8afe212b522f1766d18187bc89548167ba93ced55e26fe8e508ad7738",
+          "primary_source_reference_id": "sha256:bba79e429a17f86f95108998004688c7fa84cb6e7541b2fab8c6d5f92ccc9a6a",
+          "primary_raw_asset_id": "sha256:c10aee169032963e27e3f2c3e3c154a463a730f06fcf09876f1654e52086db45",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_SECTION_END_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-020070",
+          "verified_claim_id": "sha256:f670a75ce3dcfe123512e04fc3c9e937cc901b3b841f67a039245fead8e759bb",
+          "primary_source_reference_id": "sha256:9641385c064b196afbb99e9c37c324f85d036c9c6c403db121a5a26c63b4809b",
+          "primary_raw_asset_id": "sha256:da9afa401d1ea344eeb1c414982f164c50dfdc78dd790cc44c7b9f165c90fa77",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "salesforce",
+      "current_e01_result_id": "sha256:996f71fb0b405f11673b4d451fd209d241a7b5a47a56556b573bf4f71dfdc6f6",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "1",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [
+          "sha256:757fc56a1a565805ca45683273e9f42f7b140196ebc17af3d97e3c2ebb4539d8"
+        ],
+        "source_event_accessions": [
+          "0001108524-25-000002",
+          "0001108524-25-000027",
+          "0001108524-25-000033",
+          "0001108524-25-000040",
+          "0001108524-25-000083",
+          "0001108524-25-000168",
+          "0001108524-25-000207",
+          "0001108524-25-000234",
+          "0001193125-25-020881",
+          "0001193125-25-126271",
+          "0001193125-25-145772"
+        ]
+      },
+      "verified_claim_count": 27,
+      "item_801_claims": [
+        {
+          "accession": "0001108524-25-000083",
+          "verified_claim_id": "sha256:1dc880fca92a0e57194bb8b1444788e67f6259a09300289e0ffd7e2bc9253c74",
+          "primary_source_reference_id": "sha256:4d14fd3f5f60e6947894d2b068744b943d7428c3e6f89afc4aeaefde720f89e1",
+          "primary_raw_asset_id": "sha256:443f98254e2aad0e12c5ae9dd3c4ed33c3b19f206d5144027368bc745512ae2b",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "lumen_technologies",
+      "current_e01_result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "7",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [
+          "sha256:ef278a53b32abb8c08970d03fc1a07c04ddec50fc00ba000602963c8b1c66d53",
+          "sha256:1e38e38605098712d581f643e258b60f5367289084b197db2d1b0758309aed39",
+          "sha256:2d12dd2ab4bb8ecc7bdcce9ac48f62a4a771d5426aa9268d32254af19f3acd32",
+          "sha256:5880e98797faba5d7edbd72a371ff79c4e2c28aa41b19415bd3a5146b0414966",
+          "sha256:e3d25e7fdc269a46cef1cf6ad2601dab9a1b220667071c0d78891b8873b5f21c",
+          "sha256:33f278fb23fe7ae95530b413cd0a51617c18bf5038bd2affe06dd3aeef2ef570",
+          "sha256:151f4424a46c6b116bcd31fad2b9f583d80c7285ca364074790a900a3bd06a64"
+        ],
+        "source_event_accessions": [
+          "0000018926-25-000004",
+          "0000018926-25-000039",
+          "0000018926-25-000047",
+          "0000018926-25-000059",
+          "0000018926-25-000092",
+          "0000018926-25-000110",
+          "0001193125-25-124002",
+          "0001193125-25-141702",
+          "0001193125-25-152683",
+          "0001193125-25-172843",
+          "0001193125-25-182730",
+          "0001193125-25-196061",
+          "0001193125-25-198334",
+          "0001193125-25-203545",
+          "0001193125-25-223206",
+          "0001193125-25-308717",
+          "0001193125-25-311581",
+          "0001193125-25-327637",
+          "0001193125-25-330850"
+        ]
+      },
+      "verified_claim_count": 52,
+      "item_801_claims": [
+        {
+          "accession": "0001193125-25-141702",
+          "verified_claim_id": "sha256:45db139b7de0ffea7cb86985cc931ff3cc19e3e27d4784155239f65b60916ebf",
+          "primary_source_reference_id": "sha256:ad96eeb5b2188113dec796a4a752660ac961f6f0514577829f01f63208b9ed3a",
+          "primary_raw_asset_id": "sha256:a6127eae2f951edc2516517b7617ad1e640ee0676b133bd66eb148de9b14f629",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-152683",
+          "verified_claim_id": "sha256:dbc1c98682505b3b8b9780604298a87a54d46f2d42d6a34064b9f573466cd4d7",
+          "primary_source_reference_id": "sha256:4bb434a97e4cca821287aa2ed21fcca7cb4a251b11bf4beb75394f7d7bcc7cf3",
+          "primary_raw_asset_id": "sha256:708d3b9f8cc66a638043b3931d09463df9f541ab269d2a8dc6d550f2dfe83d04",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-172843",
+          "verified_claim_id": "sha256:a99bcfc72b4066864f6e1d268fe7bfc8b0e710a9e33f1117d9be90514e06cd40",
+          "primary_source_reference_id": "sha256:760302f190b725d7fe1d3722dbe18e80355410df183208983abb1ae3bbdd9faf",
+          "primary_raw_asset_id": "sha256:d346d63308824ed98c78ec0cdc167f582032c0f7ee734ccaaa70a65d159e0515",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-182730",
+          "verified_claim_id": "sha256:49531ad67eef4da3fea95f5da8589eab43fa6c189abca2c9d03b6cfa2fe409db",
+          "primary_source_reference_id": "sha256:e811fae49baf57c01fe83c584549c13a611f902a31cbe68a4eccd488edb1410d",
+          "primary_raw_asset_id": "sha256:a34c698168942bc6a92baa5fa3ff97758069055ecf74e9d6c8d5c1c34c66ab6e",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-196061",
+          "verified_claim_id": "sha256:1711985f7d71ad071c1f64315b0e59cd075c7e70011e5f6bb6f9cde0cffcfd87",
+          "primary_source_reference_id": "sha256:070eaa15ba54833ad4e9f80ef0aa6b2d07f3a464d80e608492526f4353f7cdbc",
+          "primary_raw_asset_id": "sha256:963bd96423b14ee5d0cf369b67b963bc1f2db6f746f277b25b149b3bf08ab32d",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-311581",
+          "verified_claim_id": "sha256:d2fcf5ae364ec3792e3b1bdf698b97ef7dcf957f121c2a7c9460fcffcdcc842d",
+          "primary_source_reference_id": "sha256:28b3bd2ab1005741ce13b6b69082b6d1975544be4529e5abd7e18aac9de99eb3",
+          "primary_raw_asset_id": "sha256:3f8a784fe4fc6c8434485effaf1844051eb57644a9d280194c7093fae3fae58f",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-327637",
+          "verified_claim_id": "sha256:506a5473a473fc3b20a532658874b81914b1e700a29bd92a23d1bae8a81d7f07",
+          "primary_source_reference_id": "sha256:7e5c72ebc17a4fff6d91b3e456d5eceec6591478dec1f268c8329a2114c40ec6",
+          "primary_raw_asset_id": "sha256:466b59b0b81e039be1f9d130fb7b116172d9251e308d76a0fc8ca9d13c4e2963",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-330850",
+          "verified_claim_id": "sha256:7e82eca8c8fb4c332798cad66a405bd1aa990efdaee6d39bed5ff490984e7d99",
+          "primary_source_reference_id": "sha256:593f90d92b848a97922c7b8d5ae28bc8b5ffabf795aff975681086f2f4e5a0eb",
+          "primary_raw_asset_id": "sha256:8b9a25ca0aafb520460044ae385ac41d947dcf92f29af13d3d10a1772f558515",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "macys",
+      "current_e01_result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "2",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [
+          "sha256:83d4059228f1043652e9fe457f95c92b6cc6be1555d2a97e41c96428b4d899d4",
+          "sha256:f4195dde259e3d75f4a6991f4d7a59da22ec408c81d9a1ec0a8e2a907442f7ee"
+        ],
+        "source_event_accessions": [
+          "0000794367-25-000010",
+          "0000794367-25-000054",
+          "0000794367-25-000087",
+          "0000794367-25-000092",
+          "0000794367-25-000128",
+          "0000794367-25-000132",
+          "0000794367-25-000137",
+          "0000794367-25-000139",
+          "0000794367-25-000165",
+          "0000794367-25-000169",
+          "0001628280-25-010767",
+          "0001628280-25-028040",
+          "0001628280-25-054900"
+        ]
+      },
+      "verified_claim_count": 27,
+      "item_801_claims": [
+        {
+          "accession": "0000794367-25-000010",
+          "verified_claim_id": "sha256:32077aad7f1d81126cac121ba3be19617fd84c2d15dbbe6f5ad2ca616fa50da8",
+          "primary_source_reference_id": "sha256:259c4663be61d2741738c3cd2317e5807e62f27f7557189ffcfb3396183afe84",
+          "primary_raw_asset_id": "sha256:228fd479eb48d6117b92a2e14361a1f740488a7dc9530b8affc913191b8356c1",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000794367-25-000128",
+          "verified_claim_id": "sha256:242c41d0660648c91e92af790e51c6e20ff12959e74a11f0fa145addfff35e94",
+          "primary_source_reference_id": "sha256:58d39f532ec66e20f9c6d5ec116e0fe41c9f1554196d14020c0d0ff803e8c78e",
+          "primary_raw_asset_id": "sha256:4f8886bf722b9cedbbf32a960272a74c3698daafb21d9b8cff62da119c61d555",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000794367-25-000132",
+          "verified_claim_id": "sha256:6a86243859d7b2d8d349dbabd288f8df9622fab7c4cb06586cfd1e32925e0fab",
+          "primary_source_reference_id": "sha256:b372af26c0f9678042c0e0b9fe2fb7509cec9053af46f5c0bd2c0c906b24803d",
+          "primary_raw_asset_id": "sha256:86c88c3f1c1ba92558e49cb4c7ada1f87904915e9463493e520f81a55da078fe",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000794367-25-000137",
+          "verified_claim_id": "sha256:c748e01e886859e032c7bf5921ee710e42ff31994d95f64bcdd03d00e279aaae",
+          "primary_source_reference_id": "sha256:bb3ce3c8c92dab6d14f6f151c26465f21816c09899add59c6b6954dfdd78e389",
+          "primary_raw_asset_id": "sha256:2974a7f42338f68bbea9256662c6a6bc4bf2591067dcd849e0e6a4788ec39ac5",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        }
+      ]
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "current_e01_result_id": "sha256:4b6893b85bfa206f399e049bb6aca1419ff07208693ffb631536050c3ed4ca46",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "5",
+      "source_credit": "VERIFIED_SEC_ACQUISITION",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [
+          "sha256:2131bd27460e225ab0df2574b04cb57f36ad8b21b41f505c869df76236d7f966",
+          "sha256:949d1b738f3ed1aeeeb53d58af7338a7f1b391c0549a9cfb5dcd4cc8c162bac5",
+          "sha256:a7bddb9bdaabb52c304ac1976df8a6992424d3a4dc8794440d8ed5e561b031d6",
+          "sha256:7c37ceb40e50ed4cb11044e80b2196b63fe5e4fd761a81152041d970cd2ed298",
+          "sha256:d8d5d7e8ff0390b277e9c882c3f13f748aa396a55bc1d64f14b306c30397161b"
+        ],
+        "source_event_accessions": [
+          "0000813828-24-000009",
+          "0000813828-24-000018",
+          "0000813828-24-000023",
+          "0000813828-24-000028",
+          "0000813828-24-000033",
+          "0000813828-24-000034",
+          "0000813828-24-000038",
+          "0000813828-24-000042",
+          "0000813828-24-000063",
+          "0000813828-24-000069",
+          "0000813828-24-000073",
+          "0000813828-24-000075",
+          "0000813828-24-000081",
+          "0000813828-24-000083",
+          "0000813828-24-000085",
+          "0000813828-24-000087",
+          "0000813828-25-000015",
+          "0000813828-25-000019",
+          "0001104659-25-123496",
+          "0001193125-24-050664",
+          "0001193125-24-122356",
+          "0001193125-24-177535",
+          "0001193125-24-196053",
+          "0001193125-24-196972",
+          "0001193125-24-253719",
+          "0001193125-25-036747",
+          "0001193125-25-052917",
+          "0001193125-25-115947",
+          "0001193125-25-120877",
+          "0001193125-25-165497",
+          "0001193125-25-170521",
+          "0001193125-25-175027",
+          "0001193125-25-310710",
+          "0002041610-25-000021",
+          "0002041610-25-000042"
+        ]
+      },
+      "verified_claim_count": 70,
+      "item_801_claims": [
+        {
+          "accession": "0001104659-25-123496",
+          "verified_claim_id": "sha256:eaa6e150fe85da2baee5c57141e49aa4fa091de119bfbc3a1ba0e7b76164faec",
+          "primary_source_reference_id": "sha256:1102eefef16721aa1b4b45d0fdf940b793aedad466809e7b7616b325abcc60ba",
+          "primary_raw_asset_id": "sha256:b76290a99d55dd84f08eb2d4fc4c280b90203f9d4a5c6afa581a19bc33dc5e6b",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-310710",
+          "verified_claim_id": "sha256:6983a3750dfba056dda5a4718a770f4ee8b0e10d95a0bdf3d85af2638f2b832e",
+          "primary_source_reference_id": "sha256:fb4d0a962a11d0314b7f9dee96e5997c7af53b93590ad47af213aa5d4a63519e",
+          "primary_raw_asset_id": "sha256:a7df4c3c79aaf56529ec948dfe8b82da9d9a5daf56a73a8c3b54d12e089992b8",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000813828-24-000009",
+          "verified_claim_id": "sha256:01a771f76ddf10ea9e0edce79dbcb9d92d957121030d2779decc3d38699a8958",
+          "primary_source_reference_id": "sha256:7c60b144e746530cd9eea4c8454ec3fd746f7ae8d110d866807d8c1c45d0296f",
+          "primary_raw_asset_id": "sha256:fd1d634805099f66364cdeb0545e61194b90cc58afd6fec7db17fb1eed09fbac",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000813828-24-000018",
+          "verified_claim_id": "sha256:cede7eb470b7ceb05960d62df5e62ae57e9a762c34dc65a76fe49732b80303b3",
+          "primary_source_reference_id": "sha256:2907743a405076d34802da9378f8f6dad7f624a10909f90c7de858b8c21fc7e2",
+          "primary_raw_asset_id": "sha256:04c3af26f90298c45c7430014fe6b8b4e19e4e7690b3485e52d34f9e1889fbf0",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000813828-24-000033",
+          "verified_claim_id": "sha256:f612bc2817c1742740b24f897ceab78cad517d4cb5c3f99f3e0a75602f548660",
+          "primary_source_reference_id": "sha256:baf51cf4965585cbc807e38aa18c4ee62456ac4ecb3fea54ec8c5fdc1f3d5fed",
+          "primary_raw_asset_id": "sha256:738a45b9ce39ea78bb39b2cedade218c24f011cf6b0ada5bea81146a5c270066",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000813828-24-000073",
+          "verified_claim_id": "sha256:8856e7c8d734f8d22d56c486013d074a6ce7852b8fa1924dec3bca0d07d11767",
+          "primary_source_reference_id": "sha256:eb089b5dfa0c8aa69c4f2543de59029abab5941d90b35b752532ff5374ef9e5c",
+          "primary_raw_asset_id": "sha256:52f628a1a01b679a33e2a807d869db9d976d3a8195c1579f86c362d48a016ab4",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000813828-24-000081",
+          "verified_claim_id": "sha256:81d43ae38698578ad79185818d862b8c4e8251b5c4e6e0e3d1f10ca0d27efe02",
+          "primary_source_reference_id": "sha256:2ea64671516cb84167d90eb0f5dd0941b285d9f267856ebff90e59da188677fe",
+          "primary_raw_asset_id": "sha256:15eb7513c20c65d7898a11ad9e251a8a2645df4300a00cf0b677407ffdd0807c",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0000813828-24-000087",
+          "verified_claim_id": "sha256:ef336cf09f6d9a92d7377d47d215ec1f02bf09119157ed41265b41eb584a5fb9",
+          "primary_source_reference_id": "sha256:176c4fc402c0559f253f36cc6bc960216b9fe8c6fa5e717e62077409afad1e97",
+          "primary_raw_asset_id": "sha256:4f50b9a35eb8e58088ee2eec2cf22d494f7c9631f2923c49140b0dc5e0363336",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "REJECTED",
+          "reason": "E01_ITEM_SOURCE_VISIBILITY_UNPROVEN",
+          "keyword_hits_unverified": []
+        },
+        {
+          "accession": "0001193125-25-052917",
+          "verified_claim_id": "sha256:a778cb1e16a0703642b07b4a7dc46cf9997ecc4c36a84a4ea0041390f2c9ec7c",
+          "primary_source_reference_id": "sha256:06107aea2fab4ee4d31efcf021799dbd5e66b583efe758a1f02950b23616d745",
+          "primary_raw_asset_id": "sha256:4df34a03dee33a9bfc0652b98609395590fa2fa91876f8f8dd0e8c23f7a4e1ab",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "counted_under_current_rule": false,
+          "section_status": "BOUND_VISIBLE_SECTION",
+          "section_id": "sha256:090614537d9e9b4fadb61762899d62069fb7693991932cbe38a2cc18688f3d03",
+          "section_text_sha256": "8f5f89f465bd1e29e99ec866c8f7e198b29816d25b7bc36028669196256b0930",
+          "section_chars": 10922,
+          "keyword_hits_unverified": [
+            {
+              "alias": "merger",
+              "context": "paramount common stock”) who are entitled to make an election as to the form of merger consideration they wish to receive for the paramount common stock they own (the “election process”)"
+            },
+            {
+              "alias": "combine",
+              "context": "iness and management strategies for the management, expansion and growth of the combined business after the consummation of the transactions, (v) potential litigation relating to the tran"
+            },
+            {
+              "alias": "transaction",
+              "context": "item 8.01 other events. mailing of election forms pursuant to the transaction agreement, dated as of july 7, 2024, by and among paramount global (the “company” or “paramount”), "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company_id": "enphase_energy",
+      "current_e01_result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
+      "current_e01_publication": "PUBLISHED",
+      "current_e01_reason": "PASS",
+      "current_e01_value": "0",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "source_selection": {
+        "reason_code": "PASS",
+        "matched_verified_claim_ids": [],
+        "source_event_accessions": [
+          "0001463101-25-000014",
+          "0001463101-25-000054",
+          "0001463101-25-000075",
+          "0001463101-25-000090",
+          "0001463101-25-000099",
+          "0001463101-25-000111"
+        ]
+      },
+      "verified_claim_count": 13,
+      "item_801_claims": []
+    }
+  ],
+  "source_log_claims_and_active_unchanged": true,
+  "all_801_layouts_proven": false,
+  "new_result_or_run_created": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

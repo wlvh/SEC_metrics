@@ -1,0 +1,39 @@
+{
+  "record_type": "ISSUE28_B13_191_OFFLINE_FAILURE_DIAGNOSIS",
+  "original_ordinal": 191,
+  "request_digest": "d8851c12ca1ac33fc2745bf1cc67a31b1c70fd06f83e695cfb617b9529979660",
+  "intent_id": "sha256:4bf843806b90fa9ea244e3dd2150cf12180b62c74d9c877ee7d29e09e25e056b",
+  "terminal_id": "sha256:c80f40bf9177008ea86aba17160a39e2dbc914501e81c3332d25a346b37bb136",
+  "raw_response_sha256": "4283913469a91dc3c547e94818fbf72341fbfeb041080fc74ff398bb2ef3716e",
+  "request_sha256": "45e4c32e3fe588145d145cac5e2c03981082e60c47fb70744d3569d8d051e5dd",
+  "source_sha256": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+  "terminal_status": "FAILED_TERMINAL",
+  "stop_reason": "",
+  "wire_error_class": "DEEPSEEK_RESPONSE_INVALID",
+  "provider_finish_reason": "length",
+  "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2304,
+    "cache_miss_input_tokens": 154478,
+    "input_tokens": 156782,
+    "output_tokens": 4096
+  },
+  "source_unit_count": 4,
+  "required_candidate_count": 0,
+  "program_owned_required_refs": [],
+  "complete_prefix_finding_count": 162,
+  "complete_prefix_unique_finding_count": 162,
+  "complete_prefix_role_counts": {
+    "other_context": 162
+  },
+  "nonrequired_exclusion_findings": 162,
+  "required_refs_not_in_complete_prefix_or_program": [],
+  "reasons_over_96_count": 0,
+  "response_complete_json": false,
+  "original_failure_upgraded": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

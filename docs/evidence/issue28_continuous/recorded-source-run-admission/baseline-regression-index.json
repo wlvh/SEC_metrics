@@ -1,0 +1,204 @@
+{
+  "cases": [
+    {
+      "case": "positive-B03",
+      "expected": "PASS",
+      "details": {
+        "run_id": "run:ordinary-integrated:bfadfcace9695d116c107f6c440220ca8c7f721c811d027a8a7b45ab495cadb0",
+        "metric_ids": [
+          "B01",
+          "B03"
+        ],
+        "status": "OPEN",
+        "review_count": 0
+      },
+      "passed": true,
+      "outcome": "ACCEPTED",
+      "seconds": 12.265
+    },
+    {
+      "case": "positive-B12",
+      "expected": "PASS",
+      "details": {
+        "run_id": "run:ordinary-integrated:0d4354ae5e8a924e636fd98e0b2b14049e1fffdc539150a41ae5fcb71596c5d4",
+        "metric_ids": [
+          "B12"
+        ],
+        "status": "OPEN",
+        "review_count": 0
+      },
+      "passed": true,
+      "outcome": "ACCEPTED",
+      "seconds": 13.366
+    },
+    {
+      "case": "positive-D01",
+      "expected": "PASS",
+      "details": {
+        "run_id": "run:ordinary-integrated:8468490682f6d298d1c4f6fb0f44e4fd8c463422c9c5ae5b0483e522465c94d5",
+        "metric_ids": [
+          "D01"
+        ],
+        "status": "OPEN",
+        "review_count": 1
+      },
+      "passed": true,
+      "outcome": "ACCEPTED",
+      "seconds": 21.303
+    },
+    {
+      "case": "positive-B08",
+      "expected": "PASS",
+      "details": {
+        "run_id": "run:ordinary-integrated:c60d47e6071af52751206dbb53fbbccbd56ff5b1941c729f38ebb15904d7f143",
+        "metric_ids": [
+          "B08"
+        ],
+        "status": "OPEN",
+        "review_count": 0
+      },
+      "passed": true,
+      "outcome": "ACCEPTED",
+      "seconds": 14.52
+    },
+    {
+      "case": "positive-E03",
+      "expected": "PASS",
+      "details": {
+        "run_id": "run:ordinary-integrated:c37396fb2eed0cfbabb6f44f0653efb59cb577d742a7aa132e3e06e77f9d5108",
+        "metric_ids": [
+          "E03"
+        ],
+        "status": "OPEN",
+        "review_count": 0
+      },
+      "passed": true,
+      "outcome": "ACCEPTED",
+      "seconds": 15.727
+    },
+    {
+      "case": "missing-dependency-spec",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "RunStoreError",
+      "reason": "Run Spec closure cannot be compiled",
+      "stage": "REPLAY",
+      "seconds": 0.012
+    },
+    {
+      "case": "extra-unrequested-spec",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 3.245
+    },
+    {
+      "case": "missing-source-reference",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 3.237
+    },
+    {
+      "case": "changed-fiscal-label",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 3.483
+    },
+    {
+      "case": "missing-dependency-result",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_COMPLETE_COMPUTATION_GRAPH_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 3.248
+    },
+    {
+      "case": "missing-event-claim",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_COMPLETE_COMPUTATION_GRAPH_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 3.955
+    },
+    {
+      "case": "self-consistent-false-revenue",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_COMPLETE_COMPUTATION_GRAPH_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 5.324
+    },
+    {
+      "case": "missing-text-review",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "RunStoreError",
+      "reason": "Review unit has no effective decision",
+      "stage": "REPLAY",
+      "seconds": 0.015
+    },
+    {
+      "case": "rehashed-input-primary-change",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_INPUT_BINDING_CHANGED",
+      "stage": "REPLAY",
+      "seconds": 3.327
+    },
+    {
+      "case": "draft-freeze-rejection",
+      "expected": "REJECT",
+      "passed": true,
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED",
+      "stage": "SETUP",
+      "seconds": 0.008
+    }
+  ],
+  "protected_before": {
+    "outputs/active_publication.json": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d",
+    "outputs/validation_run_manifest.json": "de45439a405cd6ae8e14b51d13e5d03bb518af65f38a9efff878542adc72ede4",
+    "outputs/metrics_matrix.csv": "c0aa1c7dcf1e7fc3f9b14703af915a07b9a1d940b0d8b9130b2ee2cef37efa62",
+    "outputs/metric_evidence.csv": "eb6527b97203fa69fb3809be06360e18e73373eae97d4bf9faeb65f69f961e59",
+    "REPORT_十公司财务指标.md": "ff5190bb72072cb01121d9fa9f5e768fdfb3bee51b41dd58c3edc4ebcedd8f16",
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "protected_after": {
+    "outputs/active_publication.json": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d",
+    "outputs/validation_run_manifest.json": "de45439a405cd6ae8e14b51d13e5d03bb518af65f38a9efff878542adc72ede4",
+    "outputs/metrics_matrix.csv": "c0aa1c7dcf1e7fc3f9b14703af915a07b9a1d940b0d8b9130b2ee2cef37efa62",
+    "outputs/metric_evidence.csv": "eb6527b97203fa69fb3809be06360e18e73373eae97d4bf9faeb65f69f961e59",
+    "REPORT_十公司财务指标.md": "ff5190bb72072cb01121d9fa9f5e768fdfb3bee51b41dd58c3edc4ebcedd8f16",
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "freeze_calls": 0
+}

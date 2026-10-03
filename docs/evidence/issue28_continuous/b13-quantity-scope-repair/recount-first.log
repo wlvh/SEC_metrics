@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b13-quantity-scope-repair/recount.py", line 18, in <module>
+    requests=requests_from_source(source)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 222, in requests_from_source
+    measured_groups(source['units'], request_for_group))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 133, in measured_groups
+    _need(fits([unit]), 'CONTINUOUS_CONTEXT_SINGLE_SOURCE_UNIT_EXCEEDS_BOUND:' + unit['unit_id'])
+          ~~~~^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 126, in fits
+    return measure_request(body, require_reference=True)['fits']
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 90, in measure_request
+    _need(not require_reference or tokenizer is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE

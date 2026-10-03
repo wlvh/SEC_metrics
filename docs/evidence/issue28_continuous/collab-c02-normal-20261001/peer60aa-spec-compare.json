@@ -1,0 +1,16 @@
+{
+  "record_type": "ISSUE28_C02_PEER60AA_SPEC_CLARIFICATION_COMPARISON",
+  "old_head": "2cc97e3a462afe2815ccb5c522e2da7655549b02",
+  "old_file_sha256": "db00ae4a448a254c8d80044e956ac9783102a64744abcb896a4dac5ac17e1915",
+  "new_file_sha256": "ab5f4f9cf9bf1a238c0bd87abd4decf229a29708df946a8880339c46626d8302",
+  "changed_compiled_spec_fields": [
+    "body"
+  ],
+  "equal_fields": {
+    "compiled": true,
+    "spec_semantic_hash": true,
+    "prompt_bundle_hash": true,
+    "spec_closure_hash": true
+  },
+  "limit": "The owner-target explanatory body changed while the compiled/prompt graph stayed byte-equal; the raw Spec and containing Requirement identities still changed."
+}

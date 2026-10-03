@@ -1,0 +1,118 @@
+{
+  "record_type": "ISSUE28_SALESFORCE_B03_EXACT_DA_COMPONENT_CENSUS",
+  "scope": "FY2026_SAME_ACCESSION_PRIMARY_INLINE_AND_COMPANYFACTS_ONLY",
+  "source_admission": {
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+    "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY"
+  },
+  "source_proof_count": 3,
+  "period": {
+    "fiscal_year": 2026,
+    "period_start": "2025-02-01",
+    "period_end": "2026-01-31"
+  },
+  "primary_source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+  "primary_raw_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+  "companyfacts_source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+  "companyfacts_raw_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+  "primary_facts": [
+    {
+      "ordinal": 337,
+      "concept": "us-gaap:DepreciationAndAmortization",
+      "context_ref": "c-1",
+      "reported_text": "3,631",
+      "scale": "6",
+      "decimals": "-6"
+    },
+    {
+      "ordinal": 809,
+      "concept": "us-gaap:DepreciationDepletionAndAmortization",
+      "context_ref": "c-1",
+      "reported_text": "1.2",
+      "scale": "9",
+      "decimals": "-8"
+    },
+    {
+      "ordinal": 823,
+      "concept": "us-gaap:FinanceLeaseRightOfUseAssetAmortization",
+      "context_ref": "c-1",
+      "reported_text": "375",
+      "scale": "6",
+      "decimals": "-6"
+    },
+    {
+      "ordinal": 1019,
+      "concept": "us-gaap:AmortizationOfAboveAndBelowMarketLeases",
+      "context_ref": "c-1",
+      "reported_text": "1.7",
+      "scale": "9",
+      "decimals": "-8"
+    }
+  ],
+  "companyfacts_values": [
+    {
+      "concept": "us-gaap:AmortizationOfAboveAndBelowMarketLeases",
+      "unit": "USD",
+      "value": 1700000000,
+      "start": "2025-02-01",
+      "end": "2026-01-31",
+      "accession": "0001108524-26-000060"
+    },
+    {
+      "concept": "us-gaap:DepreciationAndAmortization",
+      "unit": "USD",
+      "value": 3631000000,
+      "start": "2025-02-01",
+      "end": "2026-01-31",
+      "accession": "0001108524-26-000060"
+    },
+    {
+      "concept": "us-gaap:DepreciationDepletionAndAmortization",
+      "unit": "USD",
+      "value": 1200000000,
+      "start": "2025-02-01",
+      "end": "2026-01-31",
+      "accession": "0001108524-26-000060"
+    },
+    {
+      "concept": "us-gaap:FinanceLeaseRightOfUseAssetAmortization",
+      "unit": "USD",
+      "value": 375000000,
+      "start": "2025-02-01",
+      "end": "2026-01-31",
+      "accession": "0001108524-26-000060"
+    }
+  ],
+  "cash_flow_note_raw_span": {
+    "start_byte": 1366340,
+    "end_byte": 1366506,
+    "sha256": "fa74bf245bd9f0784e10882a3094006c8b948a5d0cbe6aa46e2b554dc3b73687",
+    "visible_text": "Includes amortization of intangible assets acquired through business combinations, depreciation of fixed assets and amortization and impairment of right-of-use assets"
+  },
+  "fixed_asset_note_raw_span": {
+    "start_byte": 1744014,
+    "end_byte": 1744630,
+    "sha256": "e981803d4b3e8e74275966e93a2112a943a017c43137e7087b35230f64b6d49f",
+    "visible_text": "Depreciation and amortization of fixed assets totaled $ 1.2 billion, $ 1.0  billion and $ 1.1  billion during fiscal 2026, 2025 and 2024, respectively."
+  },
+  "acquired_intangible_note_raw_span": {
+    "start_byte": 1931411,
+    "end_byte": 1932058,
+    "sha256": "8ff51615afb0394b03f49ec836f7e2ec0af813ac7c0b72e2ef22db5da014153c",
+    "visible_text": "Amortization of intangible assets resulting from business combinations for fiscal 2026, 2025 and 2024 was $ 1.7  billion, $ 1.6  billion, and $ 1.9  billion, respectively."
+  },
+  "separately_tagged_rou_impairment_in_scanned_period": {
+    "primary": [],
+    "companyfacts": []
+  },
+  "exact_impairment_free_total_proven": false,
+  "rounded_component_residual_is_not_impairment_amount": true,
+  "old_b03_result_id_retained": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+  "new_result_or_run_created": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

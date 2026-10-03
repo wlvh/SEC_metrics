@@ -1,0 +1,42 @@
+{
+  "record_type": "ISSUE28_JPM_A03_FIRM_QUARTER_AVERAGE_SOURCE_AUDIT",
+  "saved_run_id": "run:ordinary-integrated:9a28dbc15345da40be741cc0bd1621b89b882a003788214a9fdfb9d0c256b071",
+  "saved_run_records_sha256": "9ffb6a01986870b2188dba1578600b133648fe965a0303c49440e6a618831180",
+  "saved_result_id": "sha256:a585c22fd762fba696fe935fdd9bd989bbbab8828f8dd9971ad10e0245d7efe4",
+  "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+  "source_raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+  "source_fact_hash": "sha256:0bcfdd89caa639301a96cc29f50e74b86fc64a45398357973a4ab1e60c05c97b",
+  "actual_measurement_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-10-01"
+  },
+  "filing_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  },
+  "scope": {
+    "aggregation": "average",
+    "entity_scope": "firm"
+  },
+  "value": "1.11",
+  "public_fiscal_period": "QUARTER",
+  "original_table_span": {
+    "start_byte": 3644419,
+    "end_byte": 3660900,
+    "sha256": "4eeeb6355551d50177d42e9e34b61ef1608a7e229097c5dbd6d00cd145b98a58",
+    "firm_lcr_percent": 111,
+    "bank_subsidiary_lcr_percent": 115,
+    "first_350_visible_characters": "average LCR for the three months ended December 31, 2025, September 30, 2025 and December 31, 2024 based on the Firm’s interpretation of the LCR framework. Three months ended Average amount (in millions) December 31, 2025 September 30, 2025 December 31, 2024 JPMorgan Chase & Co.: HQLA Eligible cash (a) $ 281,117   $ 308,298  $ 396,123  Eligible sec"
+  },
+  "independent_prior_cold_read_result_id_matches": true,
+  "current_head_native_run_replayed_here": false,
+  "historical_pr34_result_upgraded": false,
+  "new_result_or_run_created": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

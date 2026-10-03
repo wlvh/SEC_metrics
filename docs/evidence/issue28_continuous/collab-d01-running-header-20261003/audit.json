@@ -1,0 +1,51 @@
+{
+  "record_type": "ISSUE28_JPMORGAN_D01_EXACT_RUNNING_HEADER_AUDIT",
+  "peer_sha": "af29ab2f41f40a442c13a3453c97d2c476f3536b",
+  "peer_defect_id": "D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING",
+  "company_id": "jpmorgan_chase",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "result_id": "sha256:994427388d20f9ee0aef09c080a0e1f5b8420fcb5f4fd276a6489734193c1242",
+  "run_id": "run:ordinary-integrated:6df7da3c7253e3e7ec2a22827fb73996690541c83615d6429e9214a69e74eb96",
+  "archived_390_same_result_id_and_value": true,
+  "source_reference": {
+    "accession": "0001628280-26-008131",
+    "company_id": "jpmorgan_chase",
+    "document_name": "jpm-20251231.htm",
+    "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "record_type": "SOURCE_REFERENCE",
+    "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+    "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+    "source_role": "target_primary",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+  },
+  "raw_asset": {
+    "byte_length": 12927325,
+    "media_type": "text/html",
+    "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "record_type": "RAW_BLOB",
+    "storage_uri": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm"
+  },
+  "wrong_heading_claim": {
+    "block_index": 937,
+    "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+    "extent": "LEADING_EMPHASIS",
+    "order": 56,
+    "raw_end_byte": 1691126,
+    "raw_span_sha256": "b4709e1905da39a94d1e427cc8c03f0f80ffdd94432aedcc9b5fb902a1eacf18",
+    "raw_start_byte": 1691112,
+    "section_id": "ITEM_1A",
+    "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+    "text": "Parts I and II",
+    "value_kind": "TEXT_V1"
+  },
+  "raw_heading_context": "b_37\"></div><hr style=\"page-break-after:always\"/><div style=\"min-height:45pt;width:100%\"><div><span style=\"color:#000000;font-family:'Sons',sans-serif;font-size:12pt;font-weight:700;line-height:120%\">Parts I and II</span></div></div><div style=\"width:100.000%\"><div style=\"display:inline-block;vertical-align:top;width:47.368%\"><div style=\"margin-bottom:4pt\"><span style=\"color:#000000;font-family:'Sons',sans-seri",
+  "following_text_excerpt": "ans-serif;font-size:8pt;font-weight:400;line-height:100%\">31 Parts I and II Item 1B. Unresolved Staff Comments. None. Item 1C. Cybersecurity. Refer to the Operational Risk Management section of Management’s discussion and analysis on pages 146–149 for a discussion of cybersecurity risk. Item 2. Properties. JPMorganChase’s headquarters is located in New York City at 270 Park Avenue, a 60-story office building owned by the Firm. As of December 31, 2025, the building was fully occupied, including by senior management. The Firm owned or leased facilities in the following locations at December 31, 2025. December 31, 2025 (in millions) Approximate square footage United States (a) New York City, New York 270 Park Avenue, New York, New York 2.0 All other New York City locations (b) 7.1 Total New York City, New York 9.1 Other U.S. locations Columbus/Westerville, Ohio 3.3 Chicago, Illinois 2.8 Dallas/Plano/Fort Worth, Texas 2.5 Wilmington/Newark, Delaware 2.1 Houston, Texas 1.5 Jersey City, New Jersey 1.5 Phoenix/Tempe, Arizona 1.3 All other U.S. locations 33.4 Total United States 57.5 Europe, the Middle East and Africa (“EMEA”) <div style=\"margin-bottom:",
+  "disposition": "WITHHOLD_EXACT_RESULT_CURRENT_CREDIT; RETAIN_ORIGINAL_RUN_AND_SOURCE",
+  "no_other_D01_withdrawal_from_metric_name": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

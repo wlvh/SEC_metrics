@@ -1,0 +1,328 @@
+{
+  "review_scope": "READ_ONLY_FINAL_MATERIAL_REVIEW_NO_PROVIDER_OR_SEC_CALLS_NO_PRODUCTION_WRITES",
+  "reviewed_baseline": "92fdd0e30c5f05db9d3d0136424934037dcff66e",
+  "cases": [
+    {
+      "company_id": "southwest_airlines",
+      "status": "INDEPENDENT_MATERIAL_AND_ARITHMETIC_PASS",
+      "implementation_head": "3e4ceff32fc09a245a078e867ac9a129a89f4d2f",
+      "accession": "0000092380-25-000024",
+      "form": "10-K",
+      "filing_date": "2025-02-07",
+      "actual_start": "2024-01-01",
+      "actual_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "amendments_in_pinned_list": [],
+      "current_latest_verified": false,
+      "manual_relationship_matches": 0,
+      "sources": [
+        {
+          "url": "https://data.sec.gov/submissions/CIK0000092380.json",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/southwest_airlines/accepted-data/evidence/request_attempts/bf/bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600/CIK0000092380.json",
+          "sha256": "bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600",
+          "kind": "TRUSTED_SAVED_IMPORT",
+          "request_attempt_id": "request:attempt:705c80a391f7b18422317a4d785c80c125369031f4690d63e5d687b02f3bfe31",
+          "admission_id": "sha256:41a02ad4f70da21bf3599ad136ae2854063e658dd8186c61fa6affce161105c6",
+          "existed_in_reviewed_baseline_history": true
+        },
+        {
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/southwest_airlines/accepted-data/evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json",
+          "sha256": "7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+          "kind": "TRUSTED_SAVED_IMPORT",
+          "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
+          "admission_id": "sha256:6e22a53a9a74d91dc4f57462f60bcb9065c6f70ff855c821bc25d029de938cea",
+          "existed_in_reviewed_baseline_history": true
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/southwest_airlines/accepted-data/evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml",
+          "sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+          "kind": "TRUSTED_SAVED_IMPORT",
+          "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07",
+          "admission_id": "sha256:983b6465d4e14f498ca344e24c304f5ca506f27d844579af69cb23db67fee354",
+          "existed_in_reviewed_baseline_history": true
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/southwest_airlines/accepted-data/evidence/request_attempts/30/30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b/luv-20241231.htm",
+          "sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+          "kind": "SEC_FETCH",
+          "request_attempt_id": "request:attempt:803dd1dd4b6a24c3ea4c2b61c5e93b3b0d760c13cc3b183337c07a2509d6c204",
+          "admission_id": "sha256:a2b62e39b60f58f3de1aa329960b66edb68fc3c020dcb590c7823cb3e95d6513",
+          "existed_in_reviewed_baseline_history": false
+        }
+      ],
+      "xml_numeric_facts_usd": {
+        "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities": "6704000000",
+        "DeferredFinanceCostsGross": "5000000",
+        "LongTermDebtAndCapitalLeaseObligationsCurrent": "1630000000",
+        "LongTermDebtAndCapitalLeaseObligations": "5069000000",
+        "StockholdersEquity": "10350000000",
+        "FinanceLeaseLiability": "91000000",
+        "FinanceLeaseLiabilityCurrent": "22000000",
+        "FinanceLeaseLiabilityNoncurrent": "69000000",
+        "FinanceLeaseLiabilityPaymentsDue": "99000000",
+        "FinanceLeaseLiabilityUndiscountedExcessAmount": "8000000"
+      },
+      "original_table_equations": [
+        "sum(0,1611,300,107,300,1727,500,976,566,526,91)=6704 million",
+        "6704-1630-5=5069 million noncurrent debt",
+        "6704-5=6699 million total carrying debt",
+        "99-8=91 million finance lease PV",
+        "22+69=91 million finance lease liabilities"
+      ],
+      "native_result_value": "0.6472463768115942028985507246",
+      "independently_calculated_value": "0.6472463768115942028985507246",
+      "debt_usd": "6699000000",
+      "equity_usd": "10350000000",
+      "native_run_status": "FROZEN",
+      "native_validation_status": "PASSED",
+      "native_run_id": "run:b06-new-source:5144a060bf00aee260f0a9c2efd704e5b5be29d8c6b33c1acebc279b7665c446",
+      "native_result_id": "sha256:6ddea612aa850277bf1a9a97a144910357321979a950c2e15ddd38ddc2c851c9",
+      "relationship_evidence": [
+        {
+          "evidence": "Finance leases are included in Property and equipment, Current maturities of long-term debt, and Long-term debt less current maturities in the Consolidated Balance Sheet.",
+          "premise": "lease_balance_sheet_classification",
+          "status": "VERIFIED"
+        },
+        {
+          "members": [
+            [
+              "5.25% Notes",
+              "0"
+            ],
+            [
+              "1.25% Convertible Notes",
+              "1611000000"
+            ],
+            [
+              "3.00% Notes",
+              "300000000"
+            ],
+            [
+              "7.375% Debentures",
+              "107000000"
+            ],
+            [
+              "3.45% Notes",
+              "300000000"
+            ],
+            [
+              "5.125% Notes",
+              "1727000000"
+            ],
+            [
+              "2.625% Notes",
+              "500000000"
+            ],
+            [
+              "1.000% Payroll Support Program Loan (a)",
+              "976000000"
+            ],
+            [
+              "1.000% Payroll Support Program Loan (a)",
+              "566000000"
+            ],
+            [
+              "1.000% Payroll Support Program Loan (a)",
+              "526000000"
+            ],
+            [
+              "Finance leases",
+              "91000000"
+            ]
+          ],
+          "premise": "debt_composition_membership",
+          "status": "VERIFIED"
+        },
+        {
+          "deductions": [
+            [
+              "less current maturities",
+              "1630000000"
+            ],
+            [
+              "less debt discount and issuance costs",
+              "5000000"
+            ]
+          ],
+          "premise": "current_and_adjustments_target",
+          "status": "VERIFIED"
+        },
+        {
+          "current": "22000000",
+          "noncurrent": "69000000",
+          "premise": "finance_lease_current_noncurrent",
+          "status": "VERIFIED",
+          "total": "91000000"
+        }
+      ],
+      "unresolved_items": [],
+      "independent_dei_fields": {
+        "DocumentType": "10-K",
+        "DocumentPeriodEndDate": "2024-12-31",
+        "DocumentFiscalYearFocus": "2024",
+        "DocumentFiscalPeriodFocus": "FY",
+        "AmendmentFlag": "false",
+        "EntityCentralIndexKey": "0000092380"
+      },
+      "independent_dei_context": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "status": "INDEPENDENT_MATERIAL_AND_ARITHMETIC_PASS",
+      "implementation_head": "3e4ceff32fc09a245a078e867ac9a129a89f4d2f",
+      "accession": "0001108524-25-000006",
+      "form": "10-K",
+      "filing_date": "2025-03-05",
+      "actual_start": "2024-02-01",
+      "actual_end": "2025-01-31",
+      "fiscal_year": 2025,
+      "amendments_in_pinned_list": [],
+      "current_latest_verified": false,
+      "manual_relationship_matches": 0,
+      "sources": [
+        {
+          "url": "https://data.sec.gov/submissions/CIK0001108524.json",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/salesforce/accepted-data/evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json",
+          "sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+          "kind": "TRUSTED_SAVED_IMPORT",
+          "request_attempt_id": "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745",
+          "admission_id": "sha256:09e25f272c11b248e2f0c68499b3b2683119ce25e79af204ad8d9a31e2a0d0b6",
+          "existed_in_reviewed_baseline_history": true
+        },
+        {
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/salesforce/accepted-data/evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+          "sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+          "kind": "TRUSTED_SAVED_IMPORT",
+          "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+          "admission_id": "sha256:70a6a56a8dadd06f287a20552ab13612ef4f5926a10d8e530c19afc5297d6465",
+          "existed_in_reviewed_baseline_history": true
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/salesforce/accepted-data/evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml",
+          "sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+          "kind": "TRUSTED_SAVED_IMPORT",
+          "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61",
+          "admission_id": "sha256:c235a128e00ae8ff86ccaa0f04b5e5db872daa21bde9d564a255db50c6461b4c",
+          "existed_in_reviewed_baseline_history": true
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/b06-new-source/salesforce/accepted-data/evidence/request_attempts/4b/4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf/crm-20250131.htm",
+          "sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+          "kind": "SEC_FETCH",
+          "request_attempt_id": "request:attempt:843be74d90c13f5aa513ca53b1391dd39d0e1b40f134ff01b64f8279b43dba10",
+          "admission_id": "sha256:1056b3691d586631b3f0adb24636a0cfde5f2dd11b47814f53754938c9ea3454",
+          "existed_in_reviewed_baseline_history": false
+        }
+      ],
+      "xml_numeric_facts_usd": {
+        "LongTermDebt": "8433000000",
+        "LongTermDebtCurrent": "0",
+        "LongTermDebtNoncurrent": "8433000000",
+        "StockholdersEquity": "61173000000",
+        "FinanceLeaseLiability": "678000000",
+        "FinanceLeaseLiabilityCurrent": "337000000",
+        "FinanceLeaseLiabilityNoncurrent": "341000000",
+        "FinanceLeaseLiabilityPaymentsDue": "708000000",
+        "FinanceLeaseLiabilityUndiscountedExcessAmount": "30000000"
+      },
+      "original_table_equations": [
+        "sum(0,1496,995,1491,1236,1979,1236)=8433 million borrowing carrying amount",
+        "8433-0=8433 million noncurrent borrowing",
+        "708-30=678 million finance lease PV",
+        "337+341=678 million finance lease liabilities",
+        "8433+678=9111 million total carrying debt"
+      ],
+      "native_result_value": "0.1489382570741994016968270315",
+      "independently_calculated_value": "0.1489382570741994016968270315",
+      "debt_usd": "9111000000",
+      "equity_usd": "61173000000",
+      "native_run_status": "FROZEN",
+      "native_validation_status": "PASSED",
+      "native_run_id": "run:b06-new-source:5d32e46f2bc250c508f5648a80a03fb5f2f2bd71896b9b860c97bb6edc8bf194",
+      "native_result_id": "sha256:a906a4a1dd8d77f919aa6a42b4f1d87319602ed2d08bf119cb8b3c8948eedc79",
+      "relationship_evidence": [
+        {
+          "evidence": "Assets (also referred to as ROU assets) and liabilities recognized from finance leases are included in property and equipment, accrued expenses and other liabilities and other noncurrent liabilities, respectively, on the Company’s consolidated balance sheets.",
+          "premise": "lease_balance_sheet_classification",
+          "status": "VERIFIED"
+        },
+        {
+          "members": [
+            [
+              "2024 Senior Notes (1)",
+              "0"
+            ],
+            [
+              "2028 Senior Notes",
+              "1496000000"
+            ],
+            [
+              "2028 Senior Sustainability Notes",
+              "995000000"
+            ],
+            [
+              "2031 Senior Notes",
+              "1491000000"
+            ],
+            [
+              "2041 Senior Notes",
+              "1236000000"
+            ],
+            [
+              "2051 Senior Notes",
+              "1979000000"
+            ],
+            [
+              "2061 Senior Notes",
+              "1236000000"
+            ]
+          ],
+          "premise": "debt_composition_membership",
+          "status": "VERIFIED"
+        },
+        {
+          "deductions": [
+            [
+              "less current portion of debt",
+              "0"
+            ]
+          ],
+          "premise": "current_and_adjustments_target",
+          "status": "VERIFIED"
+        },
+        {
+          "current": "337000000",
+          "noncurrent": "341000000",
+          "premise": "finance_lease_current_noncurrent",
+          "status": "VERIFIED",
+          "total": "678000000"
+        }
+      ],
+      "unresolved_items": [],
+      "independent_dei_fields": {
+        "DocumentType": "10-K",
+        "DocumentPeriodEndDate": "2025-01-31",
+        "DocumentFiscalYearFocus": "2025",
+        "DocumentFiscalPeriodFocus": "FY",
+        "AmendmentFlag": "false",
+        "EntityCentralIndexKey": "0001108524"
+      },
+      "independent_dei_context": {
+        "start": "2024-02-01",
+        "end": "2025-01-31"
+      }
+    }
+  ],
+  "observed_acquisition_intents": 2,
+  "observed_acquisition_terminals": 2,
+  "limits": "Raw source fields and formulas independently inspected; native cold replay, CI, production pointer invariance and package extraction are owned by the parent task. Native publication=PUBLISHED is a per-Run result status, not a formal active publication grant."
+}

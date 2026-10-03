@@ -1,0 +1,11 @@
+# Inclusive carrying debt development evidence
+
+Read validation-summary.json first. The current 344-file UNFROZEN runtime creates an actual OPEN Paramount B06 Run, source-replayed public row and five rejected altered graphs/input/spec cases. The ratio uses 13,658 million debt, including the 3 million finance lease once, and 11,693 million current parent equity. The amendment remains part of the Run. No prior entity balance is combined.
+
+native-material.tar.gz contains the complete baseline data/runtime/Run and all changed Run and input-binding controls. Every archived member was read back against its SHA256 and size. The full file index also records the duplicated attack data directories; those copies are reproducible through the material test. Cold replay loaded the copied runtime without Git and with socket/DNS blocked, recovering 17 records and the same result.
+
+Original source probes, errors and test versions remain separate. The first measurement probe had a local variable overwrite; the second source suite found that inline note coverage must follow the complete continuation chain, not only the first fragment. Earlier outside-table and typed-revenue-context failures are retained. The full source suite had 44 passing selectors and one stale old-WITHHELD expectation. Only that selector changed: it now checks the independently proven result and still requires WITHHELD when debt proof fails despite valid input. Its six tests passed on default Python and Python 3.9. The failed aggregate is not relabelled a full-suite rerun. Same-source note/bond regressions now catch extra SeniorNotes independently of Debt-named concepts.
+
+Prior commit 59fd27b CI had three successful jobs and a 20-minute cancelled current-instant job. The debt job is now separate; source and ordinary native aggregate limits are 30 minutes, without reducing case assertions or increasing the individual source-case limit. New-head CI is a separate result after push.
+
+No independent review approval, live source/model call, freeze, adoption, merge, deployment or active switch occurred. Full 390-coordinate, normal new-source update, final publication/retirement and production confirmation remain required.

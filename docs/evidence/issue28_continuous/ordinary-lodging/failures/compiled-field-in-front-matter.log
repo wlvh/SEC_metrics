@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 111, in parse_spec_document
+    parsed = strict_json_loads(text=front_text, allowed_fields=SPEC_FIELDS)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 190, in strict_json_loads
+    raise CanonicalError(
+        "Unknown JSON fields: {}".format(",".join(unknown))
+    )
+vnext.canonical.CanonicalError: Unknown JSON fields: numeric_policy
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 877, in compile_spec_file
+    return compile_spec(text=text, dependency_specs=dependency_specs)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 663, in compile_spec
+    front, body = parse_spec_document(text=text)
+                  ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 113, in parse_spec_document
+    raise SpecError(
+        "MetricSpec front matter is not strict JSON"
+    ) from error
+vnext.specs.SpecError: MetricSpec front matter is not strict JSON

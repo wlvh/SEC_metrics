@@ -1,0 +1,24 @@
+.F.
+======================================================================
+FAIL: test_mixed_old_root_refreshes_only_c04_and_blocks_other_metrics (tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 106, in test_mixed_old_root_refreshes_only_c04_and_blocks_other_metrics
+    self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
+AssertionError: Lists differ: [0, 0, 0] != [0, 0, 1]
+
+First differing element 2:
+0
+1
+
+- [0, 0, 0]
+?        ^
+
++ [0, 0, 1]
+?        ^
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 286.662s
+
+FAILED (failures=1)

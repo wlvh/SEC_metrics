@@ -1,0 +1,16 @@
+wrong_exclusion
+source: Our contract manufacturers operate plants; they have sufficient production capacity for current demand.
+selected_range: (43, 103) 'they have sufficient production capacity for current demand.'
+V6_unresolved: []
+V6_normalized_evidence: Our contract manufacturers operate plants; they have sufficient production capacity for current demand.
+V5_exception: B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+full_block_guard: True
+selected_range_guard: False
+
+legitimate_source_blocked
+source: Our contract manufacturers have manufacturing capacity, including production capacity, for current demand.
+selected_range: (0, 106) 'Our contract manufacturers have manufacturing capacity, including production capacity, for current demand.'
+V6_unresolved: ['B13_ASSERTION_MULTIPLE_PHYSICAL_CLAIMS:B0']
+V6_normalized_evidence: Our contract manufacturers have manufacturing capacity, including production capacity, for current demand.
+V5_unresolved: []
+

@@ -1,0 +1,14 @@
+E.
+======================================================================
+ERROR: test_current_false_mentions_leave_but_actual_litigation_stays (tests.vnext.test_d02_item8_current_material.D02CurrentItem8MaterialTest.test_current_false_mentions_leave_but_actual_litigation_stays) (company='lumen_technologies')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d02_item8_current_material.py", line 43, in test_current_false_mentions_leave_but_actual_litigation_stays
+    before = successor.prepare_business_text_sources(
+        metric_id='D02', **old['text_arguments'])
+TypeError: prepare_business_text_sources() got an unexpected keyword argument 'compiled_spec'
+
+----------------------------------------------------------------------
+Ran 2 tests in 53.429s
+
+FAILED (errors=1)

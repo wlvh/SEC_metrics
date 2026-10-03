@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-c02-normal-20261001/recorded-run.py", line 32, in <module>
+    created = create_normal_run(data_root=DATA, run_dir=RUN,
+        company_id='marriott_international', metric_id='C02',
+        c02_composition=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 323, in create_normal_run
+    return _create_case_run(data_root=data_root,run_dir=run_dir,company_id=company_id,metric_id=metric_id,
+                            case=case,requirement=requirement,freeze=freeze)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 350, in _create_case_run
+    result,trace,observations = api.replay_text_result(company_traits=traits,candidate=candidate,evidence_check=evidence,
+                                ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        review_unit=unit,review_decisions=[decision],**case["text_arguments"])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/c02_composition_text_results.py", line 139, in replay_text_result
+    result, trace = calculate_text_metric(
+                    ~~~~~~~~~~~~~~~~~~~~~^
+        compiled_spec=compiled_spec, target=target,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_traits=company_traits, observations=observations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/calculator.py", line 1291, in calculate_text_metric
+    payload = payload_from_observations(compiled_spec=compiled_spec, target=target, observations=observations)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results.py", line 385, in payload_from_observations
+    _need(len(render_text_payload(payload=payload)) <= policy["max_text_chars"], "TEXT_RESULT_SIZE_LIMIT")
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results.py", line 86, in render_text_payload
+    _need(type(items) is list and 1 <= len(items) <= 64, "TEXT_PAYLOAD_ITEMS_INVALID")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results.py", line 36, in _need
+    raise TextResultError(reason)
+vnext.text_results.TextResultError: TEXT_PAYLOAD_ITEMS_INVALID

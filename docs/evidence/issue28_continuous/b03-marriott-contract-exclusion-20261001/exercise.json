@@ -1,0 +1,201 @@
+{
+  "all390_acceptance": false,
+  "attempt_id": "00c674cf4b924c948a6245bf9590f78d",
+  "b03_status": "CANDIDATE_READY",
+  "base_git_head_with_uncommitted_difference": "430097dd212bfe097caaa5d1d4b5b3f5dcc7a14e",
+  "company_id": "marriott_international",
+  "company_status": "UPDATES_READY",
+  "excluded_revenue_deduction_facts": [
+    {
+      "context_ref": "c-13",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "ordinal": 77,
+      "value_usd": "135000000"
+    },
+    {
+      "context_ref": "c-219",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+      },
+      "ordinal": 1036,
+      "value_usd": "83000000"
+    },
+    {
+      "context_ref": "c-220",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+      },
+      "ordinal": 1037,
+      "value_usd": "19000000"
+    },
+    {
+      "context_ref": "c-221",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+      },
+      "ordinal": 1038,
+      "value_usd": "1000000"
+    },
+    {
+      "context_ref": "c-222",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+      },
+      "ordinal": 1039,
+      "value_usd": "6000000"
+    }
+  ],
+  "fiscal_year": 2025,
+  "formal_adoption": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "normal_cli_return_code": 0,
+  "original_protected_hashes_unchanged": true,
+  "processing_snapshot_id": "sha256:1283385811e49b1cb64b6d3bb1d26f5733ec2752475d838a6a03bb85fff1e489",
+  "quality": "EXACT",
+  "record_type": "ISSUE28_MARRIOTT_B03_CONTRACT_REVENUE_EXCLUSION_PRIVATE_UPDATE",
+  "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+  "revenue_deduction_proofs": [
+    {
+      "deduction_row": 7,
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+      },
+      "displayed_amounts": [
+        "5438",
+        "-135",
+        "5303"
+      ],
+      "fact_ordinal": 77,
+      "gross_row": 6,
+      "net_row": 8,
+      "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "table_grid_sha256": "sha256:c8fbf64a71dae94dae2972a5ba1e6f30eb3f7a99a66d7ed2fa635833affcb9cb",
+      "table_id": "table_000026"
+    },
+    {
+      "deduction_row": 4,
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+      },
+      "displayed_amounts": [
+        "3004",
+        "-83",
+        "2921"
+      ],
+      "fact_ordinal": 1036,
+      "gross_row": 3,
+      "net_row": 5,
+      "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+      "table_id": "table_000053"
+    },
+    {
+      "deduction_row": 4,
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+      },
+      "displayed_amounts": [
+        "640",
+        "-19",
+        "621"
+      ],
+      "fact_ordinal": 1037,
+      "gross_row": 3,
+      "net_row": 5,
+      "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+      "table_id": "table_000053"
+    },
+    {
+      "deduction_row": 4,
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+      },
+      "displayed_amounts": [
+        "261",
+        "-1",
+        "260"
+      ],
+      "fact_ordinal": 1038,
+      "gross_row": 3,
+      "net_row": 5,
+      "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+      "table_id": "table_000053"
+    },
+    {
+      "deduction_row": 4,
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+      },
+      "displayed_amounts": [
+        "376",
+        "-6",
+        "370"
+      ],
+      "fact_ordinal": 1039,
+      "gross_row": 3,
+      "net_row": 5,
+      "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+      "reported_labels": [
+        "Gross fee revenues",
+        "Contract investment amortization",
+        "Net fee revenues"
+      ],
+      "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+      "table_id": "table_000053"
+    }
+  ],
+  "run_id": null,
+  "selected_components": {
+    "amortization": "313000000",
+    "depreciation": "145000000"
+  },
+  "source_relation_status": "COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED",
+  "successful_attempt": "00c674cf4b924c948a6245bf9590f78d",
+  "tested_module_sha256": "fd90cd918ddbe8db9fe095c1532a88156874ca64ac4354dbadc0eb410bdb0c4d",
+  "tested_v14_manifest_sha256": "89f790fc215fee2b6bb937dad5a835751295fb1efb2505fdc6047752c3f9f9d7",
+  "value": "0.1756281982738868097456656229"
+}

@@ -1,0 +1,40 @@
+{
+  "base_head": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
+  "files": {
+    "scripts/vnext/native_unit_index.py": {
+      "sha256": "ea1d7d712565314b7532e625634d4de03bd56c2de66d9747dec21d8a68d9032b",
+      "size": 7618
+    },
+    "scripts/vnext/d04_native_assessment.py": {
+      "sha256": "e557f1c253498b121dc928534a5d4bd0d67e3b8fe1848ed48f065ae89ee37a57",
+      "size": 29712
+    },
+    "scripts/vnext/capacity_semantic_review.py": {
+      "sha256": "44db30b70c6b82cf40d6652768ac6ae8280ca008254e0790b086b1134618debf",
+      "size": 19928
+    },
+    "scripts/vnext/continuous_semantic_calls.py": {
+      "sha256": "494de2487facf9819700a3cd4d28ea5802ef31233114b69cc92581c2017d0882",
+      "size": 38451
+    },
+    "tools/vnext_continuous_semantic.py": {
+      "sha256": "3f4b05639de70df716761abbac1f4a26805b535ffd8954fe9cd6211221dfd8c8",
+      "size": 4952
+    },
+    "tests/vnext/test_native_unit_index.py": {
+      "sha256": "4f40358311e4fc278bf5e324f73b97f427478896c04a9bf5fc93c8dcebe94df3",
+      "size": 3401
+    }
+  },
+  "scope_excludes": [
+    "reviewer-authored mixed consumer integration",
+    "original D03 6e5 review dependency",
+    "whole PR approval",
+    "real model qualification"
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "OPEN_CANDIDATES_READY",
+  "started_at_utc": "2026-09-12T20:34:42.594908+00:00",
+  "completed_at_utc": "2026-09-12T20:36:53.374134+00:00",
+  "requested_coordinate_count": 3,
+  "coordinates": [
+    {
+      "company_id": "macys",
+      "metric_id": "B06",
+      "run_path": "runs/macys/B06",
+      "data_path": "data/macys",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:1f10f3e167bef1deafefad384dd055a7db254fe87fe0f361466a9e48acd6e63a",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "macys",
+        "metric_id": "B06",
+        "period_start": "2026-01-31",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:79ca5c03e6b51ccf3e4adbccf422a171e3fdfab2a0cadcea8750d5ac1799140d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.5030864197530864197530864198",
+        "unit": "ratio",
+        "trace_id": "sha256:0dcfbb77f8cc8e4ffbfca1c7289038d03e033051209cafa0dc0f1de8380f6405",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:990fb4fc163a01a5e8d2b78484671a96cf2d1b2380630d8d40d3920fd6a1b5bc"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2026-01-31",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/macys-B06.json",
+      "selection_hash": "sha256:29a79a669455e7c20af39cce2449fa3f26419451c09767c4f9886e27da6c847c",
+      "selection_summary": {
+        "classification": "SOURCE_RECONCILED_BONDS_AND_SEPARATE_FINANCE_LEASES"
+      }
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B06",
+      "run_path": "runs/enphase_energy/B06",
+      "data_path": "data/enphase_energy",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:8930e974c97d269d4c34ea189598d78cc5dc76028a9421e24e83c40288901bc3",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "enphase_energy",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:8e568947e7f6165e525e24f67f2fb5f892efa7ca054378dd98e8ff54648abdbf",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "1.107959077222837051285943352",
+        "unit": "ratio",
+        "trace_id": "sha256:3d7a481a7879343e76d3c5d52915d5a8a9d5d7fb5d9902871a30293b0ccf97b8",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b5e3dda8141eccbe21f34abcf04b61c251e6aaebd5667938e1537659d86a10c6"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/enphase_energy-B06.json",
+      "selection_hash": "sha256:1aa9c101bcb829752f93ef51a4dc5cbc49b1dfee7d4bf8455db98a9fd5fd2327",
+      "selection_summary": {
+        "classification": "SOURCE_RECONCILED_NOTE_CARRYING"
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B06",
+      "run_path": "runs/marriott_international/B06",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:8191d1bbc39c5d31d460830f2b57822ec6aa0b200fc2f06b67dd02af08bb1fe5",
+      "run_status": "OPEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B06",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "DENOMINATOR_NONPOSITIVE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a847e60210e698fc5b86fa65234f58c12dbf2be4d8d31a05a17ddd6cd87fa842",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:53f9e16980b3401f1ad2fa90e44ea16ff908f9e6a9f73fa6a443ef73b28cb1e0",
+        "trace_id": "sha256:1746a6ed4041d8769146490a16da7261d3cc193323e528e2e95442aa34d4c7c9",
+        "unit": null,
+        "value": null
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B06.json",
+      "selection_hash": "sha256:63f6959216155b9ee565c01e3db96139a65e9c6e75ddc0ec627ff7494778d1df",
+      "selection_summary": {
+        "reason_code": "DENOMINATOR_NONPOSITIVE"
+      }
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

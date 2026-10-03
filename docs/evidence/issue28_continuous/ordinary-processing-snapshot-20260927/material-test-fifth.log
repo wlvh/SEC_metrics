@@ -1,0 +1,19 @@
+F
+======================================================================
+FAIL: test_stale_acquisition_rules_do_not_block_current_saved_source_cases (tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest.test_stale_acquisition_rules_do_not_block_current_saved_source_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_processing_source.py", line 66, in test_stale_acquisition_rules_do_not_block_current_saved_source_cases
+    self.assertEqual('CANDIDATE_READY', outcomes['B01']['status'],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     outcomes['B01'])
+                     ^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'EXECUTION_FAILED'
+- CANDIDATE_READY
++ EXECUTION_FAILED
+ : {'metric_id': 'B01', 'status': 'EXECUTION_FAILED', 'attempt_id': '7e0aedfa2d464e80890d7b070bb2d2a6', 'latest_attempt': '7e0aedfa2d464e80890d7b070bb2d2a6', 'successful_attempt': None, 'previous_successful_attempt': None, 'last_verified_candidate': None, 'new_candidate_created': False, 'terminal': {'record_type': 'ORDINARY_UPDATE_TERMINAL', 'attempt_id': '7e0aedfa2d464e80890d7b070bb2d2a6', 'configuration_id': 'sha256:9356d9912f60d47a5e31be2b4fac74fa5153a59fae98f792c3ec711e1c4ee9bd', 'intent_id': 'sha256:8735cec7a4b754ca36595aecde5a39bbbb0228d57b8c35b44d7ce0b967e141b6', 'status': 'EXECUTION_FAILED', 'completed_at': '2026-09-27T13:05:47.055437+00:00', 'input': {'company_id': 'salesforce', 'metric_ids': ['B01'], 'requirement_closure_hash': 'sha256:bcdbd50d5a5aa0c23edc5ee5cd61d7f39a2d846570b23fccba565b2e3d5abfe0', 'targets': {'B01': {'fiscal_year': 2026, 'period_start': '2025-02-01', 'period_end': '2026-01-31'}}, 'specs': {'B01': {'B01': 'sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8'}}, 'source_contents': [{'source_url': 'https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json', 'accession': '0001108524-26-000060', 'document_name': 'CIK0001108524.json', 'sha256': '07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82'}, {'source_url': 'https://data.sec.gov/submissions/CIK0001108524.json', 'accession': '', 'document_name': 'CIK0001108524.json', 'sha256': 'fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911'}, {'source_url': 'https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm', 'accession': '0001108524-26-000060', 'document_name': 'crm-20260131.htm', 'sha256': 'd606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25'}], 'content_id': 'sha256:1cef9fe94b67917882334308a4543134565cbd90d609ddaaca75a11c0f31a1d5'}, 'metrics': {}, 'error': {'error_type': 'AssertionError', 'reason': 'Legacy answer or derived input read: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpue4r_tw_/update-state/salesforce/metrics/B01/attempts/7e0aedfa2d464e80890d7b070bb2d2a6/data/outputs/acceptance_receipts/.2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json.105a34a9fea341e6be4d2745f3b2f27c.tmp'}, 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'record_id': 'sha256:e7424027de73457b5fb21c9c464edc14cbb73ab84bb93f820647d088f10d14ca'}, 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+
+----------------------------------------------------------------------
+Ran 1 test in 22.105s
+
+FAILED (failures=1)

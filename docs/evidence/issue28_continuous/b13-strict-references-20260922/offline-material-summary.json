@@ -1,0 +1,107 @@
+{
+  "status": "PASS_REFERENCE_CONTRACT_FACTORY_NATIVE_RUN_AND_WIRING",
+  "requirement_closure_hash": "sha256:2685e0daa0313f842a52331de31219871377fb4e85978f2bcbf601cc8e4b118c",
+  "execution_authority_hash": "sha256:08bb485ace7f396eb955b456628a4eda9ff6012abd861423d91e1805e5c20393",
+  "companies": [
+    {
+      "company_id": "enphase_energy",
+      "request_count": 6,
+      "plans": [
+        {
+          "request_id": "sha256:d1923f7606daa195d084f2e71497822e843af648a56e9a9bc7bcb562b7eb9195",
+          "estimated_context_tokens": 189329
+        },
+        {
+          "request_id": "sha256:082390f9570a9f0405df45cf8512952b72c8803c3702ce111cdb273dfd2ed114",
+          "estimated_context_tokens": 160481
+        },
+        {
+          "request_id": "sha256:5a753382e017834a1037e46910bc97ad8c18feb136d9e4bdb7fe3a36bb7f4dac",
+          "estimated_context_tokens": 191212
+        },
+        {
+          "request_id": "sha256:34ad1e3fb2d41c13062c30ade2deb6b7bd9d8c81837d862f3eac6956d483c87f",
+          "estimated_context_tokens": 175842
+        },
+        {
+          "request_id": "sha256:70655089b427c5fed0cd6bd36046799fb1b6a62840809ce9a6fb2b00080e7359",
+          "estimated_context_tokens": 190159
+        },
+        {
+          "request_id": "sha256:2ec77f950e42e38b27717a1dc3bb4359ff66d4c43a8fd17c429c01444fcad488",
+          "estimated_context_tokens": 127667
+        }
+      ],
+      "opener_and_controller": "PASS",
+      "missing_unit": "REJECTED",
+      "run_id": "run:ordinary-integrated:b83d483917705125141d44daec774bb9bb17d0d38d9bcdaa3f99d8574ef7248c",
+      "result_id": "sha256:9220a0d3815fb6f19786f32960448ac28570974ff1a45c97828ce9fc59bcb92b",
+      "full_native_run": "PASS",
+      "default_exact_success_reuse": "PASS"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "request_count": 11,
+      "plans": [
+        {
+          "request_id": "sha256:5514a5df7b01c133fbaadd96273b27fade52588d3d82a3bcafd611e62b3c2fcb",
+          "estimated_context_tokens": 190770
+        },
+        {
+          "request_id": "sha256:d4b9eae88d4182a0d9707343e7dbc08edc6641e855f09e2574d6f662215825e2",
+          "estimated_context_tokens": 175552
+        },
+        {
+          "request_id": "sha256:2c474460675681cefd2ac74ba85e0147cac33a2c1189b171680d9987adef31b4",
+          "estimated_context_tokens": 164782
+        },
+        {
+          "request_id": "sha256:ba3c1c79bac300f46b332094797e10077b5e0199a93be140173cca8ba9147742",
+          "estimated_context_tokens": 189436
+        },
+        {
+          "request_id": "sha256:1d01756c4b255e43aa7a045436eb4d645942921df4accce14173b46666b61ebb",
+          "estimated_context_tokens": 188652
+        },
+        {
+          "request_id": "sha256:abab9afcb62d52d5ccd9b267c8336f2b6217cbf278cf07ce6e3449d9b31aa23e",
+          "estimated_context_tokens": 157460
+        },
+        {
+          "request_id": "sha256:4bee8305c004b73316bb0f764613c506140a835e95f8ce026cc2011ba4cb2af6",
+          "estimated_context_tokens": 156176
+        },
+        {
+          "request_id": "sha256:fc3723a82bb630b1169c194690cd409c9a5179d80b597be9160d33d48bae0587",
+          "estimated_context_tokens": 185802
+        },
+        {
+          "request_id": "sha256:b774db34e32e2185f641af7e82abaa61f088b4ca111568b923277be744d8b36e",
+          "estimated_context_tokens": 194449
+        },
+        {
+          "request_id": "sha256:5d102a617ef1512c223a920331e6d7961e8b6bcdbde308835ae3a76db062da4e",
+          "estimated_context_tokens": 197889
+        },
+        {
+          "request_id": "sha256:10b2c3f8d7c66fd7bf4e7911d46e9c9f75f2d3fdf6cfd23533d4cfe61827e1f7",
+          "estimated_context_tokens": 89340
+        }
+      ],
+      "opener_and_controller": "PASS",
+      "missing_unit": "REJECTED"
+    }
+  ],
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "seconds": 336.098,
+  "production_authorized": false,
+  "real_semantic_credit": false,
+  "external_material_root": "/tmp/sec_metrics_reference_20260922_scoped"
+}

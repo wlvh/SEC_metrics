@@ -1,0 +1,43 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "COMPLETED_WITH_GAPS",
+  "started_at_utc": "2026-09-12T13:07:07.388692+00:00",
+  "completed_at_utc": "2026-09-12T13:07:43.922963+00:00",
+  "requested_coordinate_count": 2,
+  "coordinates": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "run_path": "runs/marriott_international/B10",
+      "data_path": "data/marriott_international",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "error_type": "RunStoreError",
+      "error": "Reviewed observation lacks an approval effect",
+      "category": "UNCLASSIFIED_EXECUTION_FAILURE",
+      "production_authorized": false
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B11",
+      "run_path": "runs/marriott_international/B11",
+      "data_path": "data/marriott_international",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "error_type": "RunStoreError",
+      "error": "Reviewed observation lacks an approval effect",
+      "category": "UNCLASSIFIED_EXECUTION_FAILURE",
+      "production_authorized": false
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

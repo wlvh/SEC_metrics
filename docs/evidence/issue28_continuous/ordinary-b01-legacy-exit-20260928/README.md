@@ -1,0 +1,7 @@
+# Salesforce B01：旧语义导出关闭时的原生创建与独立冷读
+
+`probe.py`只读原#28累计账本的已认证来源，在原账本目录锁内建立当前未冻结V14规则的私有处理副本，不改原来源文件或历史安装身份。随后用两个新Python进程分别创建Salesforce B01原生OPEN Run、再从安装数据和Run文件冷读结果。两个进程都在导入`normal_run_v3`前，将覆盖39指标的116个冻结旧`sec_pipeline`语义导出替换为已退休入口；旧导出的对照调用实际被拒。禁用期间网络、DNS、HTTP和非本地Git子进程被阻断，不运行旧生产者来准备输入。本次保存摘要没有单列财年标签，故此处不从公司年结日推定财年。
+
+`run.log`记录创建和冷读两次均得到`PUBLISHED`、`41525000000`，Result ID均为`sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d`，公开格式行SHA-256均为`e82f95c6550dce0393c5ecdffe9f9754792d3427e12eaab501833a498d50e2d3`。`result.json`记录当前处理副本身份`sha256:e2c606053cd84fbb703799fac4dadc495dec41fd934782fa2abd036ea89ec35e`和V14闭包`sha256:b1deaa8d7eff75728473fefb63cacfc7e93e81d1b146e09545d9c9db94b8684c`。原账本`claims.jsonl`、来源请求日志及active指针的前后字节SHA一致；真实provider/paid/SEC调用0/0/0。所有生成的测试数据位于隔离临时根，完成后清除，Git证据不包含私有Run副本。
+
+这比此前[仅回读Salesforce C04旧禁用路径](../c04-legacy-independent-replay-20260927/README.md)多证明了**B01的输入准备、创建和另进程回读**在该受限禁用条件下能完成；并未正式关闭任何旧入口，也不证明其它公司、其它指标、整个390调用图或生产发布。当前`normal_annual_input`仍经`annual_update`加载旧`annual_input`及`sec_pipeline`的申报元数据工具；本测试禁用的是116个旧**语义生产**导出，不是证明旧模块完全不被导入。旧模块可能经预先缓存的别名被其它路径使用，本测试通过在导入当前B01运行模块前禁用导出降低了本路径的这种风险，但不扩大为全仓库依赖审计。此路径属于私人验收准备，不改变正式结果或生产指针。

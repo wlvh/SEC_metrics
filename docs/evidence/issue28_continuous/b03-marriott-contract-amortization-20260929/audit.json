@@ -1,0 +1,345 @@
+{
+  "all390_acceptance": false,
+  "base_git_head_before_uncommitted_patch": "186a0c3a66b3ff7fd68ff12c223d1d1f79d447a6",
+  "current_390_index_unchanged": true,
+  "current_result_id_retained_without_current_credit": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+  "current_result_value_retained_without_current_credit": "0.1756281982738868097456656229",
+  "current_scope_guard": {
+    "additional_fact_concept": "us-gaap:CapitalizedContractCostAmortization",
+    "additional_facts": [
+      {
+        "context_ref": "c-13",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+        },
+        "ordinal": 77,
+        "value_usd": "135000000"
+      },
+      {
+        "context_ref": "c-219",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+        },
+        "ordinal": 1036,
+        "value_usd": "83000000"
+      },
+      {
+        "context_ref": "c-220",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+        },
+        "ordinal": 1037,
+        "value_usd": "19000000"
+      },
+      {
+        "context_ref": "c-221",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+        },
+        "ordinal": 1038,
+        "value_usd": "1000000"
+      },
+      {
+        "context_ref": "c-222",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+        },
+        "ordinal": 1039,
+        "value_usd": "6000000"
+      }
+    ],
+    "amount_added_or_result_recomputed": false,
+    "blocked": true,
+    "primary_source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "selected_components": {
+      "amortization": "313000000",
+      "depreciation": "145000000"
+    },
+    "status": "COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED"
+  },
+  "formal_adoption": false,
+  "native_facts_by_year": {
+    "2023": {
+      "amortization_reimbursed": [
+        {
+          "context_ref": "c-171",
+          "dimensions": {
+            "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedExpensesMember"
+          },
+          "ordinal": 930,
+          "value_usd": "122000000"
+        }
+      ],
+      "cash_flow_da_and_other": [
+        {
+          "context_ref": "c-23",
+          "dimensions": {},
+          "ordinal": 228,
+          "value_usd": "436000000"
+        }
+      ],
+      "contract_amortization": [
+        {
+          "context_ref": "c-15",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "ordinal": 79,
+          "value_usd": "88000000"
+        }
+      ],
+      "depreciation": [
+        {
+          "context_ref": "c-23",
+          "dimensions": {},
+          "ordinal": 975,
+          "value_usd": "122000000"
+        }
+      ],
+      "depreciation_reimbursed": [
+        {
+          "context_ref": "c-198",
+          "dimensions": {
+            "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedCostsMember"
+          },
+          "ordinal": 978,
+          "value_usd": "37000000"
+        }
+      ],
+      "intangible_amortization": [
+        {
+          "context_ref": "c-23",
+          "dimensions": {},
+          "ordinal": 927,
+          "value_usd": "226000000"
+        }
+      ],
+      "operating_da": [
+        {
+          "context_ref": "c-23",
+          "dimensions": {},
+          "ordinal": 97,
+          "value_usd": "189000000"
+        }
+      ]
+    },
+    "2024": {
+      "amortization_reimbursed": [
+        {
+          "context_ref": "c-170",
+          "dimensions": {
+            "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedExpensesMember"
+          },
+          "ordinal": 929,
+          "value_usd": "158000000"
+        }
+      ],
+      "cash_flow_da_and_other": [
+        {
+          "context_ref": "c-22",
+          "dimensions": {},
+          "ordinal": 227,
+          "value_usd": "492000000"
+        }
+      ],
+      "contract_amortization": [
+        {
+          "context_ref": "c-14",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "ordinal": 78,
+          "value_usd": "103000000"
+        }
+      ],
+      "depreciation": [
+        {
+          "context_ref": "c-22",
+          "dimensions": {},
+          "ordinal": 974,
+          "value_usd": "128000000"
+        }
+      ],
+      "depreciation_reimbursed": [
+        {
+          "context_ref": "c-197",
+          "dimensions": {
+            "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedCostsMember"
+          },
+          "ordinal": 977,
+          "value_usd": "42000000"
+        }
+      ],
+      "intangible_amortization": [
+        {
+          "context_ref": "c-22",
+          "dimensions": {},
+          "ordinal": 926,
+          "value_usd": "255000000"
+        }
+      ],
+      "operating_da": [
+        {
+          "context_ref": "c-22",
+          "dimensions": {},
+          "ordinal": 96,
+          "value_usd": "183000000"
+        }
+      ]
+    },
+    "2025": {
+      "amortization_reimbursed": [
+        {
+          "context_ref": "c-169",
+          "dimensions": {
+            "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedExpensesMember"
+          },
+          "ordinal": 928,
+          "value_usd": "206000000"
+        }
+      ],
+      "cash_flow_da_and_other": [
+        {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "ordinal": 226,
+          "value_usd": "599000000"
+        }
+      ],
+      "contract_amortization": [
+        {
+          "context_ref": "c-13",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "ordinal": 77,
+          "value_usd": "135000000"
+        }
+      ],
+      "depreciation": [
+        {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "ordinal": 973,
+          "value_usd": "145000000"
+        }
+      ],
+      "depreciation_reimbursed": [
+        {
+          "context_ref": "c-196",
+          "dimensions": {
+            "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedCostsMember"
+          },
+          "ordinal": 976,
+          "value_usd": "39000000"
+        }
+      ],
+      "intangible_amortization": [
+        {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "ordinal": 925,
+          "value_usd": "313000000"
+        }
+      ],
+      "operating_da": [
+        {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "ordinal": 95,
+          "value_usd": "213000000"
+        }
+      ]
+    }
+  },
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_result_or_run": false,
+  "processing_snapshot_id": "sha256:517bd322204016d11ec0694654852148538b3e9c3b10138ada4041eacf97b382",
+  "reconciliations": {
+    "2023": {
+      "cash_flow_other_residual_million_usd": 0,
+      "reported_million_usd": {
+        "amortization_reimbursed": 122,
+        "cash_flow_da_and_other": 436,
+        "contract_amortization": 88,
+        "depreciation": 122,
+        "depreciation_reimbursed": 37,
+        "intangible_amortization": 226,
+        "operating_da": 189
+      }
+    },
+    "2024": {
+      "cash_flow_other_residual_million_usd": 6,
+      "reported_million_usd": {
+        "amortization_reimbursed": 158,
+        "cash_flow_da_and_other": 492,
+        "contract_amortization": 103,
+        "depreciation": 128,
+        "depreciation_reimbursed": 42,
+        "intangible_amortization": 255,
+        "operating_da": 183
+      }
+    },
+    "2025": {
+      "cash_flow_other_residual_million_usd": 6,
+      "reported_million_usd": {
+        "amortization_reimbursed": 206,
+        "cash_flow_da_and_other": 599,
+        "contract_amortization": 135,
+        "depreciation": 145,
+        "depreciation_reimbursed": 39,
+        "intangible_amortization": 313,
+        "operating_da": 213
+      }
+    }
+  },
+  "record_type": "ISSUE28_MARRIOTT_B03_CONTRACT_AMORTIZATION_SCOPE_AUDIT",
+  "source_log_claims_and_active_unchanged": true,
+  "source_references": [
+    {
+      "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "status_code": "200"
+    },
+    {
+      "content_sha256": "39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "repo_relative_path": "evidence/request_attempts/39/39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150/mar-20251231_htm.xml",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+      "status_code": "200"
+    }
+  ],
+  "tested_runtime_sha256": {
+    "requirements/issue_28_v14/baseline_manifest.json": "2662e0925673cea4bb6d2f9714d0770d270418ed585e122e0b2281007d0cb374",
+    "scripts/vnext/b03_contract_amortization_scope.py": "698913e78daa66312710726a03169a8116d57ee57d31b9c40809b22b992e425a",
+    "scripts/vnext/ordinary_b03_scope_update.py": "8bd2707762935967fc03c6ae7e488bfcdca8a3607c9d4ef498e2d270e9b92be6",
+    "scripts/vnext/ordinary_isolated_publication.py": "1e69ad2a7ed2a3f873acc6e3d411b4e598ffa1dbf8960c30de89dff20c630e4d",
+    "scripts/vnext/ordinary_release_preparation.py": "d7bcc1171e6ef886df166c8b330eec629b4068c37a95d0d88590a98d9cafd730"
+  },
+  "tested_worktree_included_uncommitted_product_diff": true,
+  "visible_relationship": {
+    "normalized_visible_sha256": "f94756f88f195262b46ee6fdf5a12b8a2c17968015aacf91f4cb4fb906d6c8e7",
+    "reported_phrase_start_chars": {
+      "cash_flow": 172013,
+      "contract_location": 192838,
+      "depreciation_reimbursed": 247943,
+      "depreciation_total": 247835,
+      "income_statement": 168477,
+      "intangible_reimbursed": 246089,
+      "intangible_total": 245983,
+      "operating_statement": 168776
+    }
+  }
+}

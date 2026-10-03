@@ -1,0 +1,188 @@
+{
+  "task": "One-shot independent joint visible-text D03 input diagnosis",
+  "provided_checkout_label": "fc4f6fce2961b28599413d8b0877b325476650a5",
+  "checkout_label_verified": false,
+  "utc_observed_start": "2026-10-03T07:16:49.900457+00:00",
+  "utc_complete_source_reading": "2026-10-03T07:19:51.414485+00:00",
+  "utc_finish": "2026-10-03T07:22:38.218090+00:00",
+  "elapsed_seconds": 348.317633,
+  "only_input_directory": "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint",
+  "prompt_read_first": true,
+  "complete_read_ranges": [
+    [
+      0,
+      149
+    ],
+    [
+      150,
+      349
+    ],
+    [
+      350,
+      399
+    ],
+    [
+      400,
+      459
+    ],
+    [
+      460,
+      599
+    ],
+    [
+      600,
+      799
+    ],
+    [
+      800,
+      999
+    ],
+    [
+      1000,
+      1079
+    ],
+    [
+      1080,
+      1199
+    ],
+    [
+      1200,
+      1299
+    ],
+    [
+      1300,
+      1449
+    ],
+    [
+      1450,
+      1599
+    ],
+    [
+      1600,
+      1739
+    ],
+    [
+      1740,
+      1964
+    ]
+  ],
+  "visible_blocks_completely_read": 1965,
+  "coverage_gaps": [],
+  "source_output_truncation_seen": false,
+  "keyword_substitution_for_full_reading": false,
+  "source_sha256": "37678af6f93e1ebf5863190f1c18444c753cb4c2f3e4b2060ec4ce73b82d4bdb",
+  "source_hash_matches_metadata": true,
+  "request_sha256": "b97114b3117d7fc80ad5cd516ed7350cc3a34c40576f7a8cef62943df961e810",
+  "request_hash_matches_context_measurement": true,
+  "other_input_file_sha256": {
+    "prompt.txt": "6a9509b11de429c07a3470ad06a2c9deea2d9bec0fc6861f0c50ced241420c8c",
+    "metadata.json": "341a2bb960efe8ad1ab6499033bef6a013f20b6e9a0dad2bcaa746c84d8033bd",
+    "context-measurement.json": "e40b147437c2e27199122f5ca663c3190f30c7f29ed4189099e5d3f9484ea619"
+  },
+  "scope": "Joint visible blocks B0-B1964 only; 12 native fact/supplement units omitted by supplied metadata.",
+  "context_measurement_status": "Prepared-input estimate only; not current model token usage or actual provider execution.",
+  "tools_outer_functions_exec": 18,
+  "tools_inner_exec_command": 18,
+  "tools_total": 36,
+  "tool_call_outline": [
+    "1: list exact input directory, UTC start, read prompt",
+    "2: read metadata/context-measurement and B0-B149",
+    "3-15: sequential fixed ranges B150-B1964, as listed above",
+    "16: input hashes, contiguous block IDs, request JSON structure and exact source inclusion; UTC reading complete",
+    "17: write model raw JSON response.log exactly once using exclusive creation",
+    "18: JSON parse, actual-source reference membership and input hashes; write diagnostic.log and conclusion.md"
+  ],
+  "ordinary_messages": {
+    "opening": 1,
+    "questions": 0,
+    "final": 1,
+    "total_including_final": 2
+  },
+  "semantic_extraction": "Performed by this independent development model after full visible-text reading; no semantic rule code or expected answer read.",
+  "mechanical_checks": {
+    "raw_json_parsed": true,
+    "all_evidence_references_in_actual_source": true,
+    "source_input_hash_checked": true,
+    "request_hash_checked": true
+  },
+  "raw_response_written_once": true,
+  "raw_response_rewritten": false,
+  "response_postprocessing": "None: no deduplication, relabeling, clipping, repair, or regenerated success.",
+  "actual_provider_business_calls": 0,
+  "actual_paid_business_calls": 0,
+  "actual_sec_business_calls": 0,
+  "network_or_api_calls": 0,
+  "native_result_or_run_generated": false,
+  "production_credit": false,
+  "limitations": [
+    "No actual DeepSeek/provider execution was performed.",
+    "Provider identity/tokenizer metadata belongs to prepared input, not this model execution.",
+    "Actual model input/output token usage is not exposed; no independent measured-token claim is made.",
+    "Referenced documents outside the supplied visible text were not accessed.",
+    "Underlying raw filing origin/hash was declared by metadata, not independently reacquired or verified."
+  ]
+}
+
+{
+  "task_revision": "ONE_SUBSTANTIVE_CORRECTION_TO_EXISTING_CATEGORY_AND_DATE_CONTRACT",
+  "provided_checkout_label": "1e6f45b0ee3713eabbfd2d8210208f627b9d4ee6",
+  "checkout_label_verified": false,
+  "utc_incremental_start": "2026-10-03T07:30:15.103107+00:00",
+  "utc_incremental_finish": "2026-10-03T07:33:36.147049+00:00",
+  "incremental_elapsed_seconds": 201.043942,
+  "cumulative_elapsed_seconds_from_first_observed_start": 1006.246592,
+  "only_input_directory": "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint-contract-aligned",
+  "new_prompt_and_request_read": true,
+  "source_identical_to_previous_complete_reading": true,
+  "reused_complete_reading": "B0-B1964 from the preceding turn; exact source-file SHA-256 equality established before reuse.",
+  "source_sha256": "37678af6f93e1ebf5863190f1c18444c753cb4c2f3e4b2060ec4ce73b82d4bdb",
+  "source_hash_matches_metadata": true,
+  "request_sha256": "c9a127b12dac7fa899c7c64bb837916e1094999855f81e498e26ab51b9e84df7",
+  "request_hash_matches_measurement": true,
+  "other_input_file_sha256": {
+    "prompt.txt": "6e54308e8e977a5820eebdfeaabdb5cc66793d7100be786b861825050367cb41",
+    "metadata.json": "3a1f74312b42de596c4c8aebda8d3fcfc1c9a044437ff49d9599b67721d6d01b",
+    "context-measurement.json": "76ad6c3843e5075d68d7a604e7130124913e3e065b5750d8e07a33b54a5b9d50"
+  },
+  "new_raw_response": "response-contract-aligned.log",
+  "new_raw_response_written_once": true,
+  "new_raw_response_rewritten": false,
+  "old_response_log_modified": false,
+  "postprocessing": "None; no deduplication, relabeling, clipping, expected-answer repair or regenerated success.",
+  "mechanical_checks": {
+    "raw_json_parsed": true,
+    "exact_required_top_and_finding_keys": true,
+    "all_evidence_references_in_actual_source": true,
+    "source_input_hash_checked": true,
+    "request_hash_checked": true
+  },
+  "tools_incremental_outer_functions_exec": 3,
+  "tools_incremental_inner_exec_command": 3,
+  "tools_incremental_total": 6,
+  "tools_cumulative_outer_functions_exec": 21,
+  "tools_cumulative_inner_exec_command": 21,
+  "tools_cumulative_total": 42,
+  "incremental_tool_outline": [
+    "1: new prompt/request/metadata and same-source hash verification",
+    "2: write new raw JSON exactly once",
+    "3: JSON keys/references/source hash checks and append logs/conclusion"
+  ],
+  "ordinary_messages_incremental": {
+    "opening": 0,
+    "questions": 0,
+    "final": 1,
+    "total_including_final": 1
+  },
+  "ordinary_messages_cumulative_including_final": 3,
+  "evaluation_type": "Same-context same-source targeted task-contract correction and re-extraction, not a new independent holdout.",
+  "semantic_judgment": "New categories and separated event/context dates applied by this development model; no parent label, reference answer or repository code read.",
+  "actual_provider_business_calls_incremental": 0,
+  "actual_paid_business_calls_incremental": 0,
+  "actual_sec_business_calls_incremental": 0,
+  "actual_business_calls_cumulative": 0,
+  "network_api_account_operations": 0,
+  "native_d03_company_result_or_run_generated": false,
+  "full_17_unit_coverage": false,
+  "production_or_390_credit": false,
+  "actual_model_token_usage": "Not exposed; prepared context estimate is not measured execution usage."
+}

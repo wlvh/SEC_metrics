@@ -1,0 +1,37 @@
+{
+  "record_type": "ISSUE28_MARRIOTT_B01_RECORDED_CROSS_YEAR_RECONCILIATION",
+  "status": "PASS_RECORDED_AUTO_TWO_SOURCE_REFRESH_TWO_FISCAL_RUNS",
+  "company_id": "marriott_international",
+  "metric_id": "B01",
+  "old_fiscal_year": "2024",
+  "new_fiscal_year": "2025",
+  "old_result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+  "new_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+  "old_run_id": "run:ordinary-integrated:d0ff5340f02bc8aba1b420a73f625c9a045aeab9160d22a3faa4d84ee85640e8",
+  "new_run_id": "run:ordinary-integrated:2d564ed7305ea7a3a338757c753fc0e7f15cdccec33460e14b3aa17e1607687d",
+  "old_primary_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+  "new_primary_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+  "original_current_submissions_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+  "original_current_submissions_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+  "original_current_companyfacts_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+  "derived_prior_submissions_sha256": "5b542458aa0fa1c759eb2ff6d40b9f03520521103253ebbfaab7c5c132a2b8aa",
+  "old_metadata_is_derived_not_historical_SEC_response": true,
+  "new_step_automatically_selected_urls": [
+    "https://data.sec.gov/submissions/CIK0001048286.json",
+    "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+  ],
+  "old_success_package_unchanged": true,
+  "both_installed_cold_reads_pass": true,
+  "repeat_status": "NO_SOURCE_CONTENT_CHANGE",
+  "repeat_retained_new_successful_attempt": true,
+  "recorded_sec_attempt_count": 3,
+  "real_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_step_overall_source_refresh_complete": true,
+  "authentic_online_new_filing_transition_proven": false,
+  "all_390_acceptance": false,
+  "production_authorized": false
+}

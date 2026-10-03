@@ -1,0 +1,93 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "OPEN_CANDIDATES_READY",
+  "started_at_utc": "2026-09-12T14:55:15.413629+00:00",
+  "completed_at_utc": "2026-09-12T14:57:48.784421+00:00",
+  "requested_coordinate_count": 2,
+  "coordinates": [
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B08",
+      "run_path": "runs/paramount_skydance_paramount_global/B08",
+      "data_path": "data/paramount_skydance_paramount_global",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:0ec5dd3243eb68c09fc326de508dcbf8b2885124e82f25a3a2f352d13b2e8447",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B08",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "1.256722332295499575431644495",
+        "unit": "ratio",
+        "trace_id": "sha256:5d9cd867c429bdf96bc9cc7785f23a6779f7067712796e0bb6e905a6c53b5462",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/paramount_skydance_paramount_global-B08.json",
+      "selection_hash": "sha256:9f80eeb1f40a0c55a461a62119c762af43c771790dbcd1ec48c3d144ae8e7e6c",
+      "selection_summary": {}
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B09",
+      "run_path": "runs/paramount_skydance_paramount_global/B09",
+      "data_path": "data/paramount_skydance_paramount_global",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:328720183a2b7a532a0d50f8cd1fc77d4bc7b03c6ab2a9f0fcc377aec2ffa231",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B09",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "3274000000",
+        "unit": "USD",
+        "trace_id": "sha256:2ff936069fb13d41ff07b6880235cd0e423a53ea2ea0fd7597f8cc26b6fc7baa",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:9c25e591c2e5e9c7798c58e0444141e7a29be75ad202c368978efd54ffa3e1cc"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/paramount_skydance_paramount_global-B09.json",
+      "selection_hash": "sha256:9f80eeb1f40a0c55a461a62119c762af43c771790dbcd1ec48c3d144ae8e7e6c",
+      "selection_summary": {}
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

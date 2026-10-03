@@ -1,0 +1,235 @@
+{
+  "result": {
+    "company_id": "ford_motor_company",
+    "status": "UPDATES_READY",
+    "metrics": [
+      {
+        "metric_id": "D04",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "2f7f1821cfe244cb91a2525f0a8f61af",
+        "latest_attempt": "2f7f1821cfe244cb91a2525f0a8f61af",
+        "successful_attempt": "2f7f1821cfe244cb91a2525f0a8f61af",
+        "previous_successful_attempt": null,
+        "last_verified_candidate": {
+          "attempt_id": "2f7f1821cfe244cb91a2525f0a8f61af",
+          "targets": {
+            "D04": {
+              "fiscal_year": 2025,
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01"
+            }
+          },
+          "current_input_matches": true,
+          "results": {
+            "D04": {
+              "applicability": "APPLICABLE",
+              "company_id": "ford_motor_company",
+              "metric_id": "D04",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "publication": "WITHHELD",
+              "quality": "NONE",
+              "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+              "record_type": "METRIC_RESULT",
+              "result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+              "scope_key": "sha256:67535b8a9820504920a8438781c188f880158f05a55cc222a801becf9b588d93",
+              "spec_closure_hash": "sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba",
+              "text_payload": null,
+              "trace_id": "sha256:273b7a141d19452f37c4aa3e35b0300b15bff90d6a6a7c8d5d0b545021068a2e",
+              "unit": null,
+              "value": null,
+              "value_kind": "TEXT_V1"
+            }
+          },
+          "rows_root": "/private/tmp/sec_metrics_issue28_continuous/current-bound-real-native-update-construction-session/ford_motor_company/metrics/D04/attempts/2f7f1821cfe244cb91a2525f0a8f61af/rows"
+        },
+        "new_candidate_created": true,
+        "terminal": {
+          "record_type": "ORDINARY_UPDATE_TERMINAL",
+          "attempt_id": "2f7f1821cfe244cb91a2525f0a8f61af",
+          "configuration_id": "sha256:b0184bad99914eadafbc5c4c1c841b22b4596576fc9c40f7268437dead72140b",
+          "intent_id": "sha256:d4adbe49a62f8766523a2696b82bb19df01ef48fae0ff96781ae69baed0e3029",
+          "status": "CANDIDATE_READY",
+          "completed_at": "2026-09-15T17:54:34.326418+00:00",
+          "input": {
+            "company_id": "ford_motor_company",
+            "metric_ids": [
+              "D04"
+            ],
+            "requirement_closure_hash": "sha256:6ccf4a6e7c54c0d499945e0e9dae8cb61f8348312c24f1c78dac2311d108bfc4",
+            "targets": {
+              "D04": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01"
+              }
+            },
+            "specs": {
+              "D04": {
+                "D04": "sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba"
+              }
+            },
+            "source_contents": [
+              {
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+                "accession": "0000037996-26-000015",
+                "document_name": "CIK0000037996.json",
+                "sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e"
+              },
+              {
+                "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+                "accession": "",
+                "document_name": "CIK0000037996.json",
+                "sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53"
+              },
+              {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+                "accession": "0000037996-26-000015",
+                "document_name": "f-20251231.htm",
+                "sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9"
+              }
+            ],
+            "registered_assessment_inputs": {
+              "D04": {
+                "source_id": "sha256:8cbeabac0801d5025f6120af3a3ebad10ffaac24a338656630a4853ea8e3d161",
+                "input_record_id": "sha256:9f94b98438bcd0ca0146a98f1952e37833e27a29cbeb19ccda4d49c9c371a06f",
+                "assessment_set_id": "sha256:96b7bdd02c4d7e54cf9140837153c2065a6e18740112df80d81375e639a3ed42",
+                "mode": "LIVE",
+                "request_context_format": "deepseek-v41-two-message-json-chat-1",
+                "response_contract_version": "D04_COMPLETE_UNITS_V1"
+              }
+            },
+            "content_id": "sha256:7304ca645c95b3f39160b19a54a7aacc84814e5ccac7f46e03b758431fd46135"
+          },
+          "metrics": {
+            "D04": {
+              "result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+              "publication": "WITHHELD",
+              "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+              "files": {
+                "metrics_matrix.csv": "95cf6c4c4d6ad13ae370bb1dd49c73d7766f959de3f561dcc654de37352ef00d",
+                "metric_evidence.csv": "d61f6347f5ac4a704c9637b772b988d5001c2ab957571fa5b252c9d8cac3f016"
+              },
+              "native_assessment_completed": true
+            }
+          },
+          "error": null,
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "record_id": "sha256:4ff05b3bfb4ac338eb184a031669d02d6a68541cfe81b6d62fe25610ea6547b0"
+        },
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "counts_before": [
+    59,
+    59,
+    49
+  ],
+  "counts_after": [
+    59,
+    59,
+    49
+  ],
+  "network_or_process_events": [],
+  "local_processes": [
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "ls-files",
+        "catalog",
+        "config"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:requirements/issue_15_v1/foundation_verification_receipt.json"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/acceptance_receipts/2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/r4_fast_test_policy_dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb.json"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/semantic_audit_receipt.json"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/scalability_audit.csv"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/scalability_audit.csv"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/active_publication.json"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59/publication_manifest.json"
+      ]
+    },
+    {
+      "executable": "git",
+      "arguments": [
+        "git",
+        "show",
+        "HEAD:outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59/internal/annual_runtime/outputs/scalability_audit.csv"
+      ]
+    }
+  ],
+  "elapsed_seconds": 1293.8919086670503
+}

@@ -1,0 +1,27 @@
+test_old_presentation_is_preserved_without_blocking_current_rule_inputs (tests.vnext.test_source_input_rule_roles.SourceInputRuleRolesTest.test_old_presentation_is_preserved_without_blocking_current_rule_inputs) ... ERROR
+
+======================================================================
+ERROR: test_old_presentation_is_preserved_without_blocking_current_rule_inputs (tests.vnext.test_source_input_rule_roles.SourceInputRuleRolesTest.test_old_presentation_is_preserved_without_blocking_current_rule_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 1109, in _exclusive_write_bytes
+    descriptor = os.open(path, flags, 0o600)
+FileExistsError: [Errno 17] File exists: '/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpci01d34p/config/ordinary_public_projection_v1.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_source_input_rule_roles.py", line 25, in test_old_presentation_is_preserved_without_blocking_current_rule_inputs
+    initialize_source_inputs(root=root,requirement=requirement)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 70, in initialize_source_inputs
+    _exclusive_write_bytes(path=root/relative,content=raw)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 1112, in _exclusive_write_bytes
+    raise InvocationControlError("Immutable receipt bytes differ")
+vnext.invocation_control.InvocationControlError: Immutable receipt bytes differ
+
+----------------------------------------------------------------------
+Ran 1 test in 0.020s
+
+FAILED (errors=1)

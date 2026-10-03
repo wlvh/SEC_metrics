@@ -1,0 +1,31 @@
+# c92c7698 限定差异独立审阅
+
+审阅对象为 `15aed51f3d645374273757a1cdf09a757da46a97..c92c7698a48369e86aded6f0a2c857028f25cbf0`，限定于 `continuous_batch33.py`、`continuous_call_ledger.py`、`continuous_semantic_calls.py`、`capacity_native_assessment.py`、`capacity_assessment_input.py`、`tools/vnext_batch33.py`、批次配置、对应单测及 V14 必要执行绑定。Issue #28 的服务器评论5791560371及本地原文、33组清单只用于核对授权真实性与边界。未审全 PR、未给模型回答的业务正确性或生产采纳背书。
+
+**结论：首轮33组的受限申领路径未发现阻断，可从已批准的 Enphase D04 第0组开始。** 这仅是差异审阅结论；实际新调用、每家公司完整 Result/Run 和跨进程冷读仍需按执行结果逐项验收。审阅期间未安装真实批次授权，也未发真实请求。
+
+核对要点：
+
+- 原账本只读快照为171槽、累计 `122/122/49`、`PROVIDER` 停止，且尚无 `batch33-authorization.json`。代码要求首次申领恰为第172槽和 Enphase D04 第0组，且只移除旧171停止；新402、未知结果、真实性或用量停止不会被这次恢复清除。文件锁、追加式申领和重启重放共同限制重复消费；批次最多66次，原总上限 `240/240/80` 另行生效，批次安装后新 SEC 申领被拒绝。
+- 用当前源码重建33个请求，逐个核对指标、公司、组号、来源ID和摘要，均与固定清单一致。对原账本171个摘要的只读比对仅发现两处有意相同：D04 Enphase 第0组对应114、Paramount第0组对应113；111、170、171的B13 V3请求均为新摘要。代码把同摘要例外限于113/114对应的首次申领；111成功旧信用保留，但只对其获批原业务组跳过当前复用。旧170/171没有被原样重发。
+- B13 Enphase 6组、Ford 11组的 V3 请求均完成本地构造和 `build_plan` 资源检查。D04原113/114失败在新成功之前仍保留；当前录制的 Enphase D04 六组经原生 Candidate/Evidence、完整来源收集、输入登记、Run、公开行和同进程磁盘机械重读通过。录制检验不代表真实模型结果或独立跨进程冷读。
+- V14 对本批配置、规则、工具及服务器转录材料的执行字节绑定逐项匹配，当前离线接线收据通过验证。服务器评论原文与本地保存的执行者转录一致；没有把本地配置本身当作用户批准。
+
+**条件性未完成项：** `scripts/vnext/continuous_batch33.py:297-303` 对有本批新失败且带修复凭据的第二次申领仍固定拒绝，错误码为 `BATCH33_REPAIR_PROOF_NOT_YET_IMPLEMENTED`。这是刻意保留的关闭入口，不影响33个首次机会；若真实执行出现可修复开发错误，必须先实现与该失败绑定的根因、实质补丁、回归和必要限定独审核验，才能使用用户已授权的每组最多一次补验。不得把这条未接通的分支称为已具备自动补验能力。
+
+验证：
+
+- `PYTHONPATH=scripts:. /tmp/sec_metrics_ci_20260922_venv/bin/python -m unittest -q tests.vnext.test_continuous_batch33 tests.vnext.test_continuous_call_ledger tests.vnext.test_continuous_recovery_110`：29项通过，0失败。
+- 当前源码的33组请求身份逐项重建：33/33一致；原账本摘要碰撞仅113、114两项获批例外。
+- 当前源码的17组 B13 V3 `build_plan`：17/17通过。
+- 当前源码重跑禁网录制 Enphase D04 六组到 Run、公开行与同进程机械重读：通过，真实调用 `0/0/0`。为遵守审阅目录边界，仅在内存中略去测试脚本末尾写回原证据摘要的一行，业务执行和检查代码未改。
+
+测试范围外：未验证真实 provider 响应内容；未执行新批次的真实计费请求；未完成两家公司 D04 或 Enphase/Ford B13 的真实公司结果；未验证真实结果的跨进程冷读；条件性修后补验尚未实现。仓库原有 `execution-state.json` 工作区改动未触碰。
+
+## 1c6bb186 的 SEC 范围收窄增量复核
+
+本节只比较 `71c4958a3fa7c550b1ea94d97eae36fa5ac9b336..1c6bb186514284e07ebccfdfe237d5d2233e0930` 中的 `continuous_batch33.py`、`continuous_call_ledger.py`、对应单测及 V14 字节绑定；上面的 c92c7698 结论仍保持其当时范围与含义。
+
+**发现一项冷读阻断（P2）：** `scripts/vnext/continuous_batch33.py:495-510` 的 SEC 分支在已有 SEC 停止记录后，仍允许另一条 SEC 申领进入保存的批次前缀。它会把无终态的 SEC 申领加入 `stops`，但下一条 SEC 只检查首次 D04 已恢复、标记和摘要重复，没有检查 SEC 通道是否已停止。独立复现中，原账本 `CallLedger.claim` 对第一条未完成 SEC 之后的第二条 SEC 正确报 `CONTINUOUS_CHANNEL_STOPPED:SEC`；在相同前缀后追加一个自洽哈希的第二条 SEC 记录，`validate_history` 却返回 `True`。因此不能把包含交织 SEC 的已保存批次历史称为完整独立冷读通过。这个缺口不会放宽真实账本的申领门，但应在使用这条新的 SEC 交织结果路径前修复，并加入“SEC 已停止后再申领”的反例测试。
+
+真实账本层面的范围隔离本次核对通过：批次安装后、第一个 D04 申领前拒绝 SEC；首次 D04 后的独立 SEC 申领不消耗批次 provider 机会，SEC 未完成时仍可处理无依赖 provider 组；新 provider HTTP402 只停 provider，不误停 SEC。原171停止只能由首个获批 D04 申领移除，SEC 无法先行解除它。指定命令运行31项测试，全部通过；上述冷读反例说明现有正向测试尚未覆盖停止后的第二条 SEC。未发真实 SEC 或 provider 请求，未修改账本、代码或 `execution-state.json`。

@@ -1,0 +1,16 @@
+target=2bbd76945b20c1739c4878715f3de03973cd4b21
+base=7bb17621c45545449f9dce390a41f39ec4bd0208
+verdict=PASS_WITH_BOUNDS_URI_REPAIR_ONLY
+git rev-parse HEAD -> 2bbd76945b20c1739c4878715f3de03973cd4b21
+git diff --check base target -> exit 0
+git diff --quiet base target -- requirements/issue_28_v13/baseline_manifest.json scripts/vnext/normal_run_v3.py scripts/vnext/ordinary_b03_scope_update.py -> exit 0
+PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest -> Ran 3 tests in 23.259s; OK; exit 0
+validate_execution_authority(issue_28_v14) -> PASS
+validate_semantic_rule_bindings(issue_28_v14) -> PASS
+validate_wiring_receipt(issue_28_v14) -> PASS
+V14 closure=sha256:e3f0eabc5ed50b7b5ecd79b7c407927ef888383d6983dc16619c38a863288b1d
+module SHA256=acc01df28a45c56c89d0c9c280487434b25efd0ac0ee60d8f659ce25a2b8429f
+exercise-repair tested module SHA and manifest SHA match current 2bbd769 files; repair log status=CANDIDATE_READY calls=[0,0,0] result=sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a value=0.1756281982738868097456656229.
+cold-repair result/value match exercise; run=run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa; old index run differs; private files unchanged; formal_adoption=false; both .exit files=0. These long chains were not independently rerun.
+Prior conclusion remains NEEDS_FIX for 7bb17621; this log does not revise it.
+Estimated cumulative tool calls through writing this log: 47 outer plus nested; within 80 cap.

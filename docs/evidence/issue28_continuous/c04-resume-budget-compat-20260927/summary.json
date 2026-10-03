@@ -1,0 +1,28 @@
+{
+  "record_type": "C04_ONLY_RESUME_POSITIVE_PROVIDER_LIMIT_COMPAT_REPAIR",
+  "reviewed_base_sha": "d99fe4896d46eaa6e3c38f54d151ee2d1b9ecb84",
+  "tested_tree": "UNCOMMITTED_INCREMENT",
+  "module_sha256": "c4bd63e5f8a8733ebb5744a2c549a716b08f2f4ce42950050c6a04b9a5d2018f",
+  "v13_parent_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+  "v14_closure_hash": "sha256:58d0b289393d5adbef8301d228295bcb71e5b1ffd5cd9aa79968efa9b6d92ec6",
+  "v14_execution_authority_hash": "sha256:be3f162dc166f25477e835128cc088723e547b9e456f52f9094e334d9b49b6bc",
+  "c04_only_positive_provider_limit": "PASS_PRE_AUTHENTICATED_RESUME_BOUNDARY",
+  "mixed_positive_provider_limit": "REJECT_BEFORE_CLAIM",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "real_ledger_ordinal": 194,
+  "real_ledger_counts": [
+    143,
+    143,
+    51
+  ],
+  "scope_limit": "short preflight plus unchanged prior full C04-only max0 and mixed max0 recorded chains; no full max1 run",
+  "review": "PENDING_EXACT_PATCH_SHA",
+  "logs_sha256": {
+    "short-boundary.log": "46df85bcf7701fd5e3b385a18931e7709186b9a75dc68de5748c380c7ee74ef2",
+    "binding-current.log": "6fe83b2dae61e8c0d8c888cce9ac04eef49244cea4a97eff3cb3631c89b8395e"
+  }
+}

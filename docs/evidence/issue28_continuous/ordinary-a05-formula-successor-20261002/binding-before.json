@@ -1,0 +1,28 @@
+{
+  "parent_execution_authority_hash": "sha256:b28523d34c0e1ad2be403e12f2f6e22ea2fcb990f5c618bb0aa647d66deb1e4b",
+  "child_execution_authority_hash": "sha256:1886cc58e9c3521c8117085ba1a4207a13dbf71f63dc95b88a9887966837c2f3",
+  "parent_requirement_closure_hash": "sha256:306300d46105793e9c492088e9fd63a2a16094e7b170c7ceaacd81174c0c02a7",
+  "shared_changed_paths": [
+    "scripts/vnext/normal_run_v3.py",
+    "scripts/vnext/ordinary_projection.py",
+    "scripts/vnext/ordinary_update_cycle.py"
+  ],
+  "child_only_paths": [
+    "scripts/vnext/ordinary_a05_formula_update.py",
+    "tools/vnext_normal_update.py"
+  ],
+  "old_shared_bindings": {
+    "scripts/vnext/normal_run_v3.py": {
+      "sha256": "62545cc3ddc33b75b29f0293c468ba9fa36f1455ace40fd9d9455fbd72a67fbd",
+      "size": 31235
+    },
+    "scripts/vnext/ordinary_projection.py": {
+      "sha256": "93b284eedbb6ba0d23425191320543a8624050642f9bbd1d2bb205c168f5b6f1",
+      "size": 14196
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "sha256": "0fc26b1e890ea652d624f30b2ad2b72a8f8532d5dfec6d10ab5343abedf025d8",
+      "size": 23282
+    }
+  }
+}

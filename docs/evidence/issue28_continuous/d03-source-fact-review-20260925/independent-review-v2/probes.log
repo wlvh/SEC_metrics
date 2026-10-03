@@ -1,0 +1,18 @@
+Independent bounded probes against HEAD 452c828793a89fd84ca84860b770480b768ae99e; PYTHONPATH=scripts; no network/model/SEC calls.
+base = "We are involved in various legal matters, including investigations by governmental authorities."
+same_block_linked: SEMANTIC_REVIEW_REQUIRED / UNRESOLVED / LINKED_RESOLUTION_REQUIRES_INTERPRETATION
+adjacent_block_linked: SEMANTIC_REVIEW_REQUIRED / UNRESOLVED / LINKED_RESOLUTION_REQUIRES_INTERPRETATION
+same_block_unrelated_private_dispute: SOURCE_REPORTED_FACT / CURRENT_AS_REPORTED / []
+adjacent_block_unrelated_private_dispute: SOURCE_REPORTED_FACT / CURRENT_AS_REPORTED / []
+same_block_future_risk: SOURCE_REPORTED_FACT / CURRENT_AS_REPORTED / []
+adjacent_block_future_risk: SOURCE_REPORTED_FACT / CURRENT_AS_REPORTED / []
+same_block_other_company_closure: SEMANTIC_REVIEW_REQUIRED / LINKED_RESOLUTION_REQUIRES_INTERPRETATION; historical_guard=[]
+same_block_future_vendor_risk_then_resolution: SEMANTIC_REVIEW_REQUIRED / LINKED_RESOLUTION_REQUIRES_INTERPRETATION; historical_guard=[]
+same_block_separate_Acme_matter_then_closure: SEMANTIC_REVIEW_REQUIRED / LINKED_RESOLUTION_REQUIRES_INTERPRETATION; historical_guard=[]
+adjacent_blocks_separate_Acme_matter_then_closure: SEMANTIC_REVIEW_REQUIRED / LINKED_RESOLUTION_REQUIRES_INTERPRETATION; historical_guard=[]
+
+Required short test: PYTHONPATH=scripts python3 -m unittest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest -q
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+OK

@@ -1,0 +1,348 @@
+{
+  "observed_at_utc": "2026-09-16T03:16:08.930072+00:00",
+  "shared_checkout_head": "8346c326f04be5a863dc8bf2f010087a6f2025a3",
+  "shared_checkout_branch": "task/b06-new-source",
+  "publisher_files": [
+    {
+      "path": "scripts/vnext/ordinary_isolated_publication.py",
+      "rehearsal_binding": {
+        "sha256": "1c931f766c1fae9523641ed8c4d7fd023ac3ffa0ad207a6f43d50667fe72e033",
+        "size": 26414
+      },
+      "shared_checkout_binding": {
+        "sha256": "1c931f766c1fae9523641ed8c4d7fd023ac3ffa0ad207a6f43d50667fe72e033",
+        "size": 26414
+      },
+      "commit_binding": {
+        "sha256": "1c931f766c1fae9523641ed8c4d7fd023ac3ffa0ad207a6f43d50667fe72e033",
+        "size": 26414
+      },
+      "exact_match": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_release_preparation.py",
+      "rehearsal_binding": {
+        "sha256": "bcae9c956f5bfedebd1754c153ab2e5618cec88f98972bbfb858ff880e6cac82",
+        "size": 13611
+      },
+      "shared_checkout_binding": {
+        "sha256": "bcae9c956f5bfedebd1754c153ab2e5618cec88f98972bbfb858ff880e6cac82",
+        "size": 13611
+      },
+      "commit_binding": {
+        "sha256": "bcae9c956f5bfedebd1754c153ab2e5618cec88f98972bbfb858ff880e6cac82",
+        "size": 13611
+      },
+      "exact_match": true
+    },
+    {
+      "path": "scripts/vnext/publication.py",
+      "rehearsal_binding": {
+        "sha256": "c700a10e4620ff9127404877cc38565ef3b5a2db3abdbd886f0304c6a431b545",
+        "size": 275789
+      },
+      "shared_checkout_binding": {
+        "sha256": "c700a10e4620ff9127404877cc38565ef3b5a2db3abdbd886f0304c6a431b545",
+        "size": 275789
+      },
+      "commit_binding": {
+        "sha256": "c700a10e4620ff9127404877cc38565ef3b5a2db3abdbd886f0304c6a431b545",
+        "size": 275789
+      },
+      "exact_match": true
+    },
+    {
+      "path": "scripts/vnext/records.py",
+      "rehearsal_binding": {
+        "sha256": "e3ca654eaf837ccdc1ef0d2d542daff4f3a005dbfa4e693122b41bae6ee5a187",
+        "size": 72089
+      },
+      "shared_checkout_binding": {
+        "sha256": "e3ca654eaf837ccdc1ef0d2d542daff4f3a005dbfa4e693122b41bae6ee5a187",
+        "size": 72089
+      },
+      "commit_binding": {
+        "sha256": "e3ca654eaf837ccdc1ef0d2d542daff4f3a005dbfa4e693122b41bae6ee5a187",
+        "size": 72089
+      },
+      "exact_match": true
+    },
+    {
+      "path": "scripts/vnext/publication_results.py",
+      "rehearsal_binding": {
+        "sha256": "99739e8993f4c3683c72fb696d4183b254f31406195c0d899e6fc4dc80d5e1ad",
+        "size": 8443
+      },
+      "shared_checkout_binding": {
+        "sha256": "99739e8993f4c3683c72fb696d4183b254f31406195c0d899e6fc4dc80d5e1ad",
+        "size": 8443
+      },
+      "commit_binding": {
+        "sha256": "99739e8993f4c3683c72fb696d4183b254f31406195c0d899e6fc4dc80d5e1ad",
+        "size": 8443
+      },
+      "exact_match": true
+    }
+  ],
+  "all_five_match_shared_checkout_and_commit": true,
+  "other_bound_execution_differences": [
+    {
+      "path": "scripts/vnext/capacity_assessment_input.py",
+      "rehearsal_binding": {
+        "sha256": "e0200ea49cd1fb9aa402e7adc2b716801410a38f8e080700611e4c7ee4b5ff88",
+        "size": 11267
+      },
+      "shared_checkout_binding": {
+        "sha256": "0622ca69e90572eeaa903655c3c69ed4bea4789506d11260714222a3f5a8f311",
+        "size": 11476
+      }
+    },
+    {
+      "path": "scripts/vnext/capacity_native_assessment.py",
+      "rehearsal_binding": {
+        "sha256": "78e46168951158715662e3d8c5017eda2ba252bc2a289d4371e4ddeca895dd02",
+        "size": 9449
+      },
+      "shared_checkout_binding": {
+        "sha256": "eedd303d525fc697eaefdbe9269ecc6c7a0fd5500d2eb13cde8fbfe4e9571bcb",
+        "size": 9905
+      }
+    },
+    {
+      "path": "scripts/vnext/capacity_run.py",
+      "rehearsal_binding": {
+        "sha256": "54940133b84fae7678512809988c26d65961682b0b9f91cac3cfa8e9c4d974b2",
+        "size": 20787
+      },
+      "shared_checkout_binding": {
+        "sha256": "6dcb933812761c9d3011a6be8d0f1c3d743ac3ea2bb39fdce51a5d27525145cc",
+        "size": 21842
+      }
+    },
+    {
+      "path": "scripts/vnext/capacity_semantic_review.py",
+      "rehearsal_binding": {
+        "sha256": "1433a6d671eba6b63b975e37c7bcab80258b440d10cd649189b83972a40e1a37",
+        "size": 20203
+      },
+      "shared_checkout_binding": {
+        "sha256": "a94493bfbd9fa28ed1c174816fc810aaacce4f19896e63dc4fa98d8898fd42bd",
+        "size": 22552
+      }
+    },
+    {
+      "path": "scripts/vnext/capacity_text_results.py",
+      "rehearsal_binding": {
+        "sha256": "6e21fb8310ec96d3082c9b29ef7b2fcbf17f9571dacd82abba8967a5ce418124",
+        "size": 14849
+      },
+      "shared_checkout_binding": {
+        "sha256": "a22f93f9e54486f33fddb58265ee39d41bbb008a839f45b67c60c9f149015789",
+        "size": 15101
+      }
+    },
+    {
+      "path": "scripts/vnext/continuous_semantic_calls.py",
+      "rehearsal_binding": {
+        "sha256": "d801ded3df06f102f9c6eb6e338ceb9357fc6516eb14b23d04712ffbc5677276",
+        "size": 41493
+      },
+      "shared_checkout_binding": {
+        "sha256": "4cdb42642c6c8b0c329f1401cb2623997821f55683462958a8552e0bccb247aa",
+        "size": 42827
+      }
+    },
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "rehearsal_binding": {
+        "sha256": "013130078f78de8dc07c9d97f2026daf6d5c15a422908311f282220772472149",
+        "size": 24671
+      },
+      "shared_checkout_binding": {
+        "sha256": "51009c96b1c0c3ebd55359574c29b0760ad0cfbb032b0201346d2940408195c4",
+        "size": 25481
+      }
+    },
+    {
+      "path": "scripts/vnext/normal_source_requirements.py",
+      "rehearsal_binding": {
+        "sha256": "420edadfb1831de51282fe07f2e2d2f3026049af6e6fb27e2cbb0791b47a3af0",
+        "size": 23233
+      },
+      "shared_checkout_binding": {
+        "sha256": "01ca6ccbfdb5dfbaa1bc1d4410fd00271aece87189c80bbd1351edca96f7528a",
+        "size": 25644
+      }
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "rehearsal_binding": {
+        "sha256": "acec3d39f29e1ef48ee2aeb499317fe585b93a10fbf1c09f14836c71d2476fdd",
+        "size": 21576
+      },
+      "shared_checkout_binding": {
+        "sha256": "8e18c8d9a85af40b3bb32ff0e285dc036e9599b740f886329a90b2fce564161e",
+        "size": 21584
+      }
+    },
+    {
+      "path": "scripts/vnext/capacity_update_input.py",
+      "rehearsal_binding": {
+        "sha256": "bd6d8fc3649c20e3b3ed4de7484c7bd420a0625fd449a265b67294814684f23e",
+        "size": 14566
+      },
+      "shared_checkout_binding": {
+        "sha256": "221a7c297d7dd49235ec0e6f91098f113237a3c3bcc4212fd73381382986a3b0",
+        "size": 15099
+      }
+    },
+    {
+      "path": "scripts/vnext/capacity_quantity_roles.py",
+      "rehearsal_binding": {
+        "sha256": "82a3aba23fb1514fd1d413cd5250771118f3ed965f49de1b89fdf295c819306a",
+        "size": 12760
+      },
+      "shared_checkout_binding": {
+        "sha256": "f14d7c443b2cd4880d68953743c6711b2c3aa6a07b14d208c6189eec347c92b1",
+        "size": 15636
+      }
+    }
+  ],
+  "additional_current_execution_paths": [
+    "catalog/r5/capacity_semantic_review_v6.json",
+    "scripts/vnext/capacity_program_roles.py",
+    "scripts/vnext/native_request_construction.py"
+  ],
+  "rehearsal_continuous_closure": "sha256:ea9fe7877fc08636cb4105fbcd11a18bb409ae764ac8e47a144c34f66964993f",
+  "shared_checkout_requirement_bindings_not_substituted_into_old_run": true,
+  "unrelated_B13_changes_not_covered_by_publication_rehearsal": true,
+  "whole_new_runtime_replay_claim": false,
+  "production_authorized": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "unfrozen_snapshot_file_comparison": [
+    {
+      "path": "requirements/issue_28_v13/CONTRACT.md",
+      "rehearsal_binding": {
+        "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+        "size": 1211
+      },
+      "shared_checkout_binding": {
+        "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+        "size": 1211
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v13/baseline_manifest.json",
+      "rehearsal_binding": {
+        "sha256": "e4fb01aa8ba474b518d0875d1138645853fbedb74566eae873f5a97e291485d5",
+        "size": 71473
+      },
+      "shared_checkout_binding": {
+        "sha256": "87ca4632cb5d98ba8f44f1b8129db8ac5ac9796d998897abd73c25e6b7597051",
+        "size": 71473
+      },
+      "same": false
+    },
+    {
+      "path": "requirements/issue_28_v13/decision_register.json",
+      "rehearsal_binding": {
+        "sha256": "15b7023fd433c5bef7633e067b361ca1f26b5b94bf9642df752a47cd32fa77c5",
+        "size": 7829
+      },
+      "shared_checkout_binding": {
+        "sha256": "15b7023fd433c5bef7633e067b361ca1f26b5b94bf9642df752a47cd32fa77c5",
+        "size": 7829
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v13/invariant_profile.json",
+      "rehearsal_binding": {
+        "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+        "size": 416
+      },
+      "shared_checkout_binding": {
+        "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+        "size": 416
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v13/transfer_manifest.json",
+      "rehearsal_binding": {
+        "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+        "size": 311
+      },
+      "shared_checkout_binding": {
+        "sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+        "size": 311
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v14/CONTRACT.md",
+      "rehearsal_binding": {
+        "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+        "size": 1605
+      },
+      "shared_checkout_binding": {
+        "sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+        "size": 1605
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "rehearsal_binding": {
+        "sha256": "8ea225862c6ce3a349f8cb6bf2725acdbc516333ef8f1d365acd9623bb762cbc",
+        "size": 80785
+      },
+      "shared_checkout_binding": {
+        "sha256": "2563a3a0a23a880d7a2dd563069f93986f882b1a842ebcadcfb77dec9bc2ba75",
+        "size": 81296
+      },
+      "same": false
+    },
+    {
+      "path": "requirements/issue_28_v14/decision_register.json",
+      "rehearsal_binding": {
+        "sha256": "25c287e2fbf6f6e703a90f460e766816690bce586a2c4c8d4eb63220bb534a5f",
+        "size": 10702
+      },
+      "shared_checkout_binding": {
+        "sha256": "25c287e2fbf6f6e703a90f460e766816690bce586a2c4c8d4eb63220bb534a5f",
+        "size": 10702
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v14/invariant_profile.json",
+      "rehearsal_binding": {
+        "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+        "size": 418
+      },
+      "shared_checkout_binding": {
+        "sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+        "size": 418
+      },
+      "same": true
+    },
+    {
+      "path": "requirements/issue_28_v14/transfer_manifest.json",
+      "rehearsal_binding": {
+        "sha256": "126fe93b4abbc95d960a6b44e7b2084e278615aa22599ea0a0daed047c04d8b0",
+        "size": 520
+      },
+      "shared_checkout_binding": {
+        "sha256": "970630546c6bb95f3ced795aaac2c81533fb10c1467fbd5386049bf85278c5cd",
+        "size": 520
+      },
+      "same": false
+    }
+  ]
+}

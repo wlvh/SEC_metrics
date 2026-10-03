@@ -1,0 +1,86 @@
+test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) ... 
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='NO_DOUBT_DECLARATION', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='VALUATION_OR_OTHER_MEANING', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='DOUBT_DISCLOSED', subject='TARGET_REGISTRANT', timing='HISTORICAL') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='OTHER_ENTITY', subject='OTHER_ENTITY', timing='CURRENT_REPORT') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='DOUBT_DISCLOSED', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='VALUATION_OR_OTHER_MEANING', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='NO_DOUBT_DECLARATION', subject='TARGET_REGISTRANT', timing='HISTORICAL') ... FAIL
+  test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='OTHER_ENTITY', subject='OTHER_ENTITY', timing='CURRENT_REPORT') ... FAIL
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='NO_DOUBT_DECLARATION', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='VALUATION_OR_OTHER_MEANING', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='DOUBT_DISCLOSED', subject='TARGET_REGISTRANT', timing='HISTORICAL')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='These conditions raise substantial doubt about our ability to continue as a going concern.', kind='OTHER_ENTITY', subject='OTHER_ENTITY', timing='CURRENT_REPORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='DOUBT_DISCLOSED', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='VALUATION_OR_OTHER_MEANING', subject='TARGET_REGISTRANT', timing='CURRENT_REPORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='NO_DOUBT_DECLARATION', subject='TARGET_REGISTRANT', timing='HISTORICAL')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_polarity_and_exclusion_cannot_be_changed_by_labels (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_source_polarity_and_exclusion_cannot_be_changed_by_labels) (text='Management concluded there is no substantial doubt about our ability to continue as a going concern.', kind='OTHER_ENTITY', subject='OTHER_ENTITY', timing='CURRENT_REPORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 46, in test_source_polarity_and_exclusion_cannot_be_changed_by_labels
+    with self.subTest(text=text, kind=kind, subject=subject, timing=timing), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=8)

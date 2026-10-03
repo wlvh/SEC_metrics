@@ -1,0 +1,77 @@
+{
+  "record_type": "ISSUE28_MARRIOTT_PRIVATE_ORDINARY_COLD_READ",
+  "selected_metrics": [
+    "A01",
+    "B01",
+    "B03",
+    "B06",
+    "C04",
+    "D02",
+    "E01"
+  ],
+  "rows": [
+    {
+      "metric_id": "A01",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:a772de77c5a082dfd48a80bc557fea72143014f5a815bf759ea76429be4ec435",
+      "publication": "PUBLISHED",
+      "reason_code": "TRAIT_NOT_APPLICABLE"
+    },
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS"
+    },
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS"
+    },
+    {
+      "metric_id": "B06",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:a847e60210e698fc5b86fa65234f58c12dbf2be4d8d31a05a17ddd6cd87fa842",
+      "publication": "PUBLISHED",
+      "reason_code": "DENOMINATOR_NONPOSITIVE"
+    },
+    {
+      "metric_id": "C04",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:bd6cac4ade05485319807fdc8b925b56001424eb05e2e013a8c810fc1cd94a16",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS"
+    },
+    {
+      "metric_id": "D02",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:00c0a01a9bc96f6902fd836f7c6532e32bd31c8af257e679acf41f5a1f05e263",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS"
+    },
+    {
+      "metric_id": "E01",
+      "status": "CANDIDATE_READY",
+      "cold_result": "PASS_INSTALLED_RUN_AND_ROW_REPLAY",
+      "result_id": "sha256:ec9158300ef962f26fd9ae74d7eef70cde535c707eb8ef492ff8fc30ba8db8b6",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS"
+    }
+  ],
+  "original_source_and_claims_unchanged": true,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false
+}

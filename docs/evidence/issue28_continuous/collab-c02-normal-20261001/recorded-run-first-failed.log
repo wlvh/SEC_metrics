@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/collab-c02-normal-20261001/recorded-run.py", line 29, in <module>
+    case = install_normal_inputs(data_root=DATA, source_root=ROOT,
+        company_id='marriott_international', metric_id='C02',
+        c02_composition=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 235, in install_normal_inputs
+    source_root = ROOT if source_root is None else _external(source_root)
+                                                   ~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 35, in _external
+    return check(Path(path))
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_new_source.py", line 31, in _external
+    need(path!=root and root not in path.parents and not (path/'outputs/active_publication.json').exists(),'B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED

@@ -1,0 +1,21 @@
+{
+  "record_type": "ISSUE28_ORDINARY_BINDING_P2_FOLLOWUP_COMMITTED_EQUIVALENT",
+  "now_committed_patch_sha": "e0158f89bb5831161dabf961c1de5c8f81eac098",
+  "original_tested_parent": "5c307e55932a8c65dbd05ba8ce44d93b66b7c980",
+  "matched_followup_input_files": [
+    "requirements/issue_28_v14/baseline_manifest.json",
+    "scripts/vnext/continuous_call_wiring.py",
+    "tests/vnext/test_continuous_call_policy.py",
+    "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json"
+  ],
+  "v14_closure": "sha256:b482d46b2ba4a4e34e394974df5b62d3f8a5419fced4aae17630a9172840de8e",
+  "working_tree_clean_at_comparison": true,
+  "long_material_inputs_v13_and_normal_run_code_unchanged_since_first_patch": true,
+  "long_material_tests_not_repeated": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "cases": [
+    {
+      "case": "actual_plain",
+      "source_html": "<p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "source_id": "sha256:afef0e29c09caa619fb09b19f474fdd3ad1c97e9cdf1a5aabc57a853b48dca76",
+      "quantity_result": {
+        "value": "0.8",
+        "source_assignments_independently_verified": true,
+        "native_result_created": false
+      },
+      "labels": [
+        {
+          "label": "CURRENT_QUANTITIES",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        },
+        {
+          "label": "OTHER_CONTEXT",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        },
+        {
+          "label": "CONDITIONAL_OR_BOILERPLATE",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        }
+      ]
+    },
+    {
+      "case": "hypothetical_heading_after_two_blocks",
+      "source_html": "<h2>Hypothetical example:</h2><p>The following example shows the calculation.</p><p>All figures in this example are assumed.</p><p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "source_id": "sha256:46e3375eac2b9644524535c1a0bff1b5c7851b6493a16cb7a9fdb2765ba6a9a7",
+      "quantity_result": {
+        "error": "B13_QUANTITY_RELATION_NOT_UNIQUE_OR_UNSUPPORTED:ACTUAL_PRODUCTION"
+      },
+      "labels": [
+        {
+          "label": "CURRENT_QUANTITIES",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_QUALIFIED_QUANTITY_CANNOT_ESTABLISH_CURRENT_SOURCE"
+          },
+          "native_acceptance_error": "B13_QUALIFIED_QUANTITY_CANNOT_ESTABLISH_CURRENT_SOURCE"
+        },
+        {
+          "label": "OTHER_CONTEXT",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        },
+        {
+          "label": "CONDITIONAL_OR_BOILERPLATE",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        }
+      ]
+    },
+    {
+      "case": "same_block_post_qualifier",
+      "source_html": "<p>For fiscal year 2025, we produced 80 widgets worldwide. For fiscal year 2025, our available annual production capacity was 100 widgets worldwide. These quantities are hypothetical examples, not actual production or available capacity.</p>",
+      "source_id": "sha256:66795cb1ed63c8300a06dca828b733850a4db6ff03468496e12d330a936fe895",
+      "quantity_result": {
+        "error": "B13_QUANTITY_RELATION_NOT_UNIQUE_OR_UNSUPPORTED:ACTUAL_PRODUCTION"
+      },
+      "labels": [
+        {
+          "label": "CURRENT_QUANTITIES",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_QUALIFIED_QUANTITY_CANNOT_ESTABLISH_CURRENT_SOURCE"
+          },
+          "native_acceptance_error": "B13_QUALIFIED_QUANTITY_CANNOT_ESTABLISH_CURRENT_SOURCE"
+        },
+        {
+          "label": "OTHER_CONTEXT",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        },
+        {
+          "label": "CONDITIONAL_OR_BOILERPLATE",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        }
+      ]
+    }
+  ],
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_Run_executed": false,
+  "source_and_admission": "SYNTHETIC_FACTORY_NO_REAL_CREDIT"
+}

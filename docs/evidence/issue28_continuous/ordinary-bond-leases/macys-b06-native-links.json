@@ -1,0 +1,410 @@
+{
+  "xml": {
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:06dc3b7326f26264191872ae86a9d30550c7253c11fd17e9a1683f1a24cf5a08",
+      "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+      "company_id": "macys",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131_htm.xml",
+      "accession": "0001628280-26-021721",
+      "document_name": "m-20260131_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:60713c8c3dd60d9cf9e10670179eb7091f5f88a411ab1646fa6fa3653f46bd30"
+    },
+    "facts": [
+      {
+        "fact": {
+          "tag": "us-gaap:debtinstrumentinterestratestatedpercentage",
+          "qualified_name": "us-gaap:debtinstrumentinterestratestatedpercentage",
+          "context_ref": "c-125",
+          "unit_ref": "number",
+          "scale": "0",
+          "sign": "",
+          "ordinal": 750,
+          "text": "0.07875"
+        },
+        "context": {
+          "context_ref": "c-125",
+          "dimensions": {
+            "us-gaap:DebtInstrumentAxis": "m:SevenPointThreeSevenFivePercentSeniorNotesDueTwoThousandThirtyThreeMember"
+          },
+          "entity_identifier": "0000794367",
+          "period_end": "2026-01-31",
+          "period_start": "2026-01-31",
+          "typed_dimension_count": 0
+        }
+      },
+      {
+        "fact": {
+          "tag": "us-gaap:debtinstrumentcarryingamount",
+          "qualified_name": "us-gaap:debtinstrumentcarryingamount",
+          "context_ref": "c-125",
+          "unit_ref": "usd",
+          "scale": "0",
+          "sign": "",
+          "ordinal": 752,
+          "text": "500000000"
+        },
+        "context": {
+          "context_ref": "c-125",
+          "dimensions": {
+            "us-gaap:DebtInstrumentAxis": "m:SevenPointThreeSevenFivePercentSeniorNotesDueTwoThousandThirtyThreeMember"
+          },
+          "entity_identifier": "0000794367",
+          "period_end": "2026-01-31",
+          "period_start": "2026-01-31",
+          "typed_dimension_count": 0
+        }
+      }
+    ]
+  },
+  "paragraphs": [
+    {
+      "text": "◦Issuance of $500 million aggregate principal amount of 7.375% senior unsecured notes due August 1, 2033. The Company used the net proceeds from the notes offering, together with cash on hand, to fund the tender offer and redemption described below,",
+      "start": 617159,
+      "end": 617553,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    {
+      "text": "7.875% Senior notes due 2033",
+      "start": 1306150,
+      "end": 1306212,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    {
+      "text": "On July 29, 2025, Macy’s Retail Holdings, LLC (“MRH”), a wholly owned subsidiary of Macy’s, Inc., completed an offering of $500 million in aggregate principal amount of 7.375% senior notes due 2033 (the “2033 Notes”) in a private offering (the “Notes Offering”). The 2033 Notes mature on August 1, 2033. The 2033 Notes are senior unsecured obligations of MRH and are unconditionally guaranteed on a senior unsecured basis by Macy’s, Inc. MRH used the net proceeds from the Notes Offering, together with cash on hand, to (i) fund a tender offer for certain outstanding senior notes and debentures, (ii) redeem approximately $587 million of certain other outstanding senior notes and debentures and (iii) pay fees, premiums and expenses in connection with the Notes Offering, tender offer and redemption.",
+      "start": 1352329,
+      "end": 1353644,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    {
+      "text": "4.11Indenture, dated as of July 29, 2025, by and among Macy’s Retail Holdings, LLC, as issuer, Macy’s, Inc., as guarantor, and U.S. Bank Trust Company, National Association, as trustee, relating to Macy’s Retail Holdings, LLC’s 7.375% Senior Notes due 2033",
+      "start": 2090630,
+      "end": 2091142,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    }
+  ],
+  "primary": {
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+      "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+      "company_id": "macys",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+      "accession": "0001628280-26-021721",
+      "document_name": "m-20260131.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf"
+    },
+    "facts": [
+      {
+        "fact": {
+          "tag": "ix:nonfraction",
+          "qualified_name": "us-gaap:DebtInstrumentInterestRateStatedPercentage",
+          "context_ref": "c-125",
+          "unit_ref": "number",
+          "scale": "-2",
+          "sign": "",
+          "ordinal": 750,
+          "text": "7.875"
+        },
+        "context": {
+          "context_ref": "c-125",
+          "dimensions": {
+            "us-gaap:DebtInstrumentAxis": "m:SevenPointThreeSevenFivePercentSeniorNotesDueTwoThousandThirtyThreeMember"
+          },
+          "entity_identifier": "0000794367",
+          "period_end": "2026-01-31",
+          "period_start": "2026-01-31",
+          "typed_dimension_count": 0
+        },
+        "raw_start_byte": 1305856,
+        "table_cell": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:7f3b676e7ad26a3c631d4fcb4a09c45431cae66d37959c1db0c225b6dd71c245",
+          "row_label": "7.875% Senior notes due 2033",
+          "cell": {
+            "origin_row_index": 20,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "header": false,
+            "raw_text": "\n7.875% Senior notes due 2033",
+            "text": "7.875% Senior notes due 2033",
+            "row_index": 20,
+            "column_index": 0,
+            "is_origin": true
+          }
+        }
+      },
+      {
+        "fact": {
+          "tag": "ix:nonfraction",
+          "qualified_name": "us-gaap:DebtInstrumentCarryingAmount",
+          "context_ref": "c-125",
+          "unit_ref": "usd",
+          "scale": "6",
+          "sign": "",
+          "ordinal": 752,
+          "text": "500"
+        },
+        "context": {
+          "context_ref": "c-125",
+          "dimensions": {
+            "us-gaap:DebtInstrumentAxis": "m:SevenPointThreeSevenFivePercentSeniorNotesDueTwoThousandThirtyThreeMember"
+          },
+          "entity_identifier": "0000794367",
+          "period_end": "2026-01-31",
+          "period_start": "2026-01-31",
+          "typed_dimension_count": 0
+        },
+        "raw_start_byte": 1306446,
+        "table_cell": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:7f3b676e7ad26a3c631d4fcb4a09c45431cae66d37959c1db0c225b6dd71c245",
+          "row_label": "7.875% Senior notes due 2033",
+          "cell": {
+            "origin_row_index": 20,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "header": false,
+            "raw_text": "500&#160;",
+            "text": "500",
+            "row_index": 20,
+            "column_index": 3,
+            "is_origin": true
+          }
+        }
+      }
+    ]
+  },
+  "input_binding": {
+    "record_type": "NORMAL_B06_INPUT_BINDING",
+    "prepared_annual_input": {
+      "company_id": "macys",
+      "entity": "794367",
+      "filing": {
+        "accessionNumber": "0001628280-26-021721",
+        "filingDate": "2026-03-27",
+        "reportDate": "2026-01-31",
+        "acceptanceDateTime": "2026-03-27T20:06:03.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-13536",
+        "filmNumber": "26807292",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 12958386,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "m-20260131.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "amendments": [],
+      "prior_period_amendments": [],
+      "subject_policy": {
+        "mode": "CONTINUOUS_PRIMARY",
+        "selected_cik": "794367",
+        "cross_entity_combination_authorized": false
+      },
+      "companyfacts_input": {
+        "company_id": "macys",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31"
+        },
+        "source_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+        "accession": "0001628280-26-021721",
+        "document_name": "CIK0000794367.json",
+        "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+      },
+      "table_input": {
+        "company_id": "macys",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31"
+        },
+        "source_repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+        "accession": "0001628280-26-021721",
+        "document_name": "m-20260131.htm",
+        "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf",
+        "source_media_type": "text/html",
+        "source_role": "target_primary"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+          "accession": "",
+          "document_name": "CIK0000794367.json",
+          "content_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+          "request_body_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+          "request_body_size": 164040,
+          "request_headers_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json",
+          "request_headers_sha256": "727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+          "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+          "accession": "0001628280-26-021721",
+          "document_name": "m-20260131.htm",
+          "content_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+          "request_body_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+          "request_body_size": 2207687,
+          "request_headers_repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm.a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131.headers.json",
+          "request_headers_sha256": "a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131",
+          "request_headers_size": 1064,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+          "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+          "accession": "0001628280-26-021721",
+          "document_name": "CIK0000794367.json",
+          "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "request_body_size": 3756173,
+          "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+          "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+          "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+        }
+      ],
+      "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+      "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+      "update_status": "ORIGINAL_INPUT_READY",
+      "current_latest_verified": false,
+      "execution": "NOT_EXECUTED",
+      "production_authorized": false,
+      "input_id": "sha256:9f23752247b06e6bb019e960d8d2e301d019cf508a188901ec1c8d75c0c19813"
+    },
+    "source_proofs": [
+      {
+        "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+        "accession": "",
+        "document_name": "CIK0000794367.json",
+        "content_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+        "request_body_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+        "request_body_size": 164040,
+        "request_headers_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json",
+        "request_headers_sha256": "727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+        "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+        "accession": "0001628280-26-021721",
+        "document_name": "CIK0000794367.json",
+        "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_size": 3756173,
+        "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+        "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+        "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/index.json",
+        "accession": "0001628280-26-021721",
+        "document_name": "index.json",
+        "content_sha256": "41afefef4c909e39afbb6e26c3b055b7b049dd7f8fdd1b459a34e1341ef352a7",
+        "request_body_sha256": "41afefef4c909e39afbb6e26c3b055b7b049dd7f8fdd1b459a34e1341ef352a7",
+        "request_body_size": 11629,
+        "request_headers_repo_relative_path": "evidence/request_attempts/41/41afefef4c909e39afbb6e26c3b055b7b049dd7f8fdd1b459a34e1341ef352a7/index.json.cde9a11ac40f367d18dfcf9cc645780fd09f497e4918ec6aed4cd498e4aef613.headers.json",
+        "request_headers_sha256": "cde9a11ac40f367d18dfcf9cc645780fd09f497e4918ec6aed4cd498e4aef613",
+        "request_headers_size": 662,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/41/41afefef4c909e39afbb6e26c3b055b7b049dd7f8fdd1b459a34e1341ef352a7/index.json",
+        "request_attempt_id": "request:attempt:2a1cb041bee3479a9b53965ebe8e9e8477ffce81eb2747cd4873d0cefe99aee6"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+        "accession": "0001628280-26-021721",
+        "document_name": "m-20260131.htm",
+        "content_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "request_body_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "request_body_size": 2207687,
+        "request_headers_repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm.a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131.headers.json",
+        "request_headers_sha256": "a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131",
+        "request_headers_size": 1064,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+        "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131_htm.xml",
+        "accession": "0001628280-26-021721",
+        "document_name": "m-20260131_htm.xml",
+        "content_sha256": "86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+        "request_body_sha256": "86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+        "request_body_size": 2096213,
+        "request_headers_repo_relative_path": "evidence/request_attempts/86/86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e/m-20260131_htm.xml.9e91640613712aa31f9aa18819cfca6e7f692b386ddd37ee10e5fbcc423d7b25.headers.json",
+        "request_headers_sha256": "9e91640613712aa31f9aa18819cfca6e7f692b386ddd37ee10e5fbcc423d7b25",
+        "request_headers_size": 1144,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/86/86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e/m-20260131_htm.xml",
+        "request_attempt_id": "request:attempt:60713c8c3dd60d9cf9e10670179eb7091f5f88a411ab1646fa6fa3653f46bd30"
+      }
+    ],
+    "source_sets": [
+      {
+        "filing": {
+          "accessionNumber": "0001628280-26-021721",
+          "filingDate": "2026-03-27",
+          "reportDate": "2026-01-31",
+          "acceptanceDateTime": "2026-03-27T20:06:03.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-13536",
+          "filmNumber": "26807292",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 12958386,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "m-20260131.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "index_source_reference_id": "sha256:88edde2a5dd3d0c83ecf208113e4fed28f43c3b249976e9805438c773daefb37",
+        "expected_xml_documents": [
+          "m-20260131_htm.xml"
+        ],
+        "primary_saved": true,
+        "missing_primary_treatment": null,
+        "source_reference_ids": [
+          "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+          "sha256:06dc3b7326f26264191872ae86a9d30550c7253c11fd17e9a1683f1a24cf5a08"
+        ]
+      }
+    ],
+    "input_binding_id": "sha256:de262ab96f91c00005d47d83b66b037866da6da762f745ae631613ff352b108d"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "record_type": "ORDINARY_SAVED_UPDATE_CHECK",
+  "companies": [
+    {
+      "company_id": "ford_motor_company",
+      "status": "UPDATES_READY",
+      "metrics": [
+        {
+          "metric_id": "B03",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "1be9d3a3dff84470a787ef2c614dd366",
+          "latest_attempt": "1be9d3a3dff84470a787ef2c614dd366",
+          "successful_attempt": "1be9d3a3dff84470a787ef2c614dd366",
+          "previous_successful_attempt": null,
+          "last_verified_candidate": {
+            "attempt_id": "1be9d3a3dff84470a787ef2c614dd366",
+            "targets": {
+              "B03": {
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31"
+              }
+            },
+            "current_input_matches": true,
+            "results": {
+              "B03": {
+                "applicability": "APPLICABLE",
+                "company_id": "ford_motor_company",
+                "metric_id": "B03",
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "publication": "PUBLISHED",
+                "quality": "EXACT",
+                "reason_code": "PASS",
+                "record_type": "METRIC_RESULT",
+                "result_id": "sha256:06d93be4d329b7705642879ea50c677250b35c646214070e92f8e009396d9289",
+                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                "spec_closure_hash": "sha256:5f03d47d39d17abaf16c612e77aafb8df6196761b2ae4682f696f0038b2fa3bb",
+                "trace_id": "sha256:00b4e85e07e09693e59c7c0a93517fd0511dfca8b2286e76b756033048a0a39c",
+                "unit": "ratio",
+                "value": "-0.007128858795196163766173431518"
+              }
+            },
+            "rows_root": "/private/tmp/issue28-b03-ford-exact-20260929/state/ford_motor_company/metrics/B03/attempts/1be9d3a3dff84470a787ef2c614dd366/rows"
+          },
+          "new_candidate_created": true,
+          "terminal": {
+            "record_type": "ORDINARY_UPDATE_TERMINAL",
+            "attempt_id": "1be9d3a3dff84470a787ef2c614dd366",
+            "configuration_id": "sha256:0235674b5efd23e9f1ecafda9d8b5c7f2774e02725e943defa1f4d60bec1ac0b",
+            "intent_id": "sha256:dd76c4045ee1553c329cb6586cd5829f6bcb5ec761d231d77666b00f848db965",
+            "status": "CANDIDATE_READY",
+            "completed_at": "2026-09-29T09:15:31.472848+00:00",
+            "input": {
+              "company_id": "ford_motor_company",
+              "metric_ids": [
+                "B03"
+              ],
+              "requirement_closure_hash": "sha256:eb4ffdd488321a13733be3e05ba2f3a039e7f4b7b16d8149118e46ee7468593f",
+              "targets": {
+                "B03": {
+                  "fiscal_year": 2025,
+                  "period_start": "2025-01-01",
+                  "period_end": "2025-12-31"
+                }
+              },
+              "specs": {
+                "B03": {
+                  "B03": "sha256:5f03d47d39d17abaf16c612e77aafb8df6196761b2ae4682f696f0038b2fa3bb",
+                  "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+                }
+              },
+              "source_contents": [
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+                  "accession": "0000037996-26-000015",
+                  "document_name": "CIK0000037996.json",
+                  "sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e"
+                },
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+                  "accession": "",
+                  "document_name": "CIK0000037996.json",
+                  "sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+                  "accession": "0000037996-26-000015",
+                  "document_name": "f-20251231.htm",
+                  "sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9"
+                }
+              ],
+              "content_id": "sha256:0ca927f114b0d61ddf9ab88bbf9313cdb4dd82df66ffaa7224bacdc1719f2213"
+            },
+            "metrics": {
+              "B03": {
+                "result_id": "sha256:06d93be4d329b7705642879ea50c677250b35c646214070e92f8e009396d9289",
+                "publication": "PUBLISHED",
+                "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+                "files": {
+                  "metrics_matrix.csv": "3fc493a7377f1ade3fe4c504242151ef77ca239933fb5f18daf0179bc0876b6f",
+                  "metric_evidence.csv": "f8cb64dee9159f72d39511c33695376eba6a4773da6d28788e84d588b5a145b5"
+                }
+              }
+            },
+            "error": null,
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "record_id": "sha256:da927500ec26eb37600d16db4189e2910e5f9192a0c2e937860a42bff6ce8c64"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

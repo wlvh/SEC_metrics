@@ -1,0 +1,13 @@
+{
+  "status": "SCOPED_REVIEW_NO_REMAINING_IDENTIFIED_BLOCKER",
+  "patch_sha256": "42dcfe007cebfd6203580356dc04eec063ce08171462d7841cc9e5e71b4e6fd4",
+  "reviewer": "ROOT_NOT_PATCH_AUTHOR",
+  "original_finding": "JSON encoder coerced integer dictionary keys to strings, so invalid input could hit cached valid input",
+  "resolution": "Only recursively plain JSON types and string keys cached; original constructor fallback preserves other input/output types; original counterexample independently rejected",
+  "scope": [
+    "One prepare_registered_update scope, complete source bytes includingUnicode/field order/source_id",
+    "Pinned current rule files plus tokenizer bytes/format/version/object-state checked; bounded2 entries64MiB; scope exit discards cache",
+    "Only deterministic request construction reused; source authenticity, original receipts and current semantic acceptance still run"
+  ],
+  "not_proven": "End-to-end speedup and current real Ford native update still require applied validation; no source/provider/production credit from this cache"
+}

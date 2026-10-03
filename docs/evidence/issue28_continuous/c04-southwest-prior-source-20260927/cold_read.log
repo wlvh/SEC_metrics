@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/cold_read.py", line 23, in <module>
+    failed = [c04.cycle._terminal(STATE, path.name) for path in all_attempts
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 197, in _terminal
+    value=_read(_attempt(root,identity)/'terminal.json')
+                ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 119, in _attempt
+    _need(type(identity) is str and len(identity)==32 and all(c in '0123456789abcdef' for c in identity),'UPDATE_ATTEMPT_ID_INVALID')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 27, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_ATTEMPT_ID_INVALID

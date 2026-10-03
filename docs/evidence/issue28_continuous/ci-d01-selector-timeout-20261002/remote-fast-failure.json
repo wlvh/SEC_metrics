@@ -1,0 +1,21 @@
+{
+  "record_type": "ISSUE28_D01_REMOTE_FAST_SELECTOR_TIMEOUT",
+  "head": "eea7821cc794e87276c06ab583a8623e06a1ccf6",
+  "run_id": 36966491013,
+  "job_id": 110711265166,
+  "status": "FAILED",
+  "selector_count": 145,
+  "failed": [
+    {
+      "duration_seconds": 30.014,
+      "return_code": 124,
+      "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d01_emphasis_successor"
+    }
+  ],
+  "other_selectors_passed": 144,
+  "job_step_duration_seconds": 328.304,
+  "business_assertion_failure_reported": false,
+  "old_head_terminal_not_inferred_from_job": true
+}

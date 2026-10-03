@@ -1,0 +1,40 @@
+{
+  "scenario": "failed terminal counted once then snapshot read fails once, attribution retry succeeds",
+  "outcome": {
+    "company_id": "sample_entity",
+    "metric_id": "D04",
+    "executions": [
+      {
+        "call_path": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpm14wjqk2/ledger/calls/0001",
+        "terminal": {
+          "status": "FAILED",
+          "stop_reason": "CONTENT_FAILED",
+          "counts": [
+            1,
+            1,
+            0
+          ]
+        }
+      }
+    ],
+    "attempted_executions": 1,
+    "counts": [
+      2,
+      2,
+      0
+    ],
+    "call_accounting": "KNOWN",
+    "stop_provider": false,
+    "new_complete_metric_credit": false,
+    "production_authorized": false,
+    "status": "NATIVE_EXECUTION_ERROR",
+    "error_type": "ValueError",
+    "reason": "ONE_READ_FAILURE_AFTER_FAILED_TERMINAL"
+  },
+  "actual_synthetic_ledger_counts": [
+    1,
+    1,
+    0
+  ],
+  "executed_request_count": 1
+}

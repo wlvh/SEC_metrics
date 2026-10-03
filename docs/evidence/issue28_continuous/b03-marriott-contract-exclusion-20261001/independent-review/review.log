@@ -1,0 +1,30 @@
+review_target=7bb17621c45545449f9dce390a41f39ec4bd0208
+verdict=NEEDS_FIX_P2_SELECTED_ORIGINAL_NAMESPACE
+scope=scripts/vnext/b03_contract_amortization_scope.py tests/vnext/test_b03_contract_amortization_scope.py requirements/issue_28_v14/baseline_manifest.json docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/
+
+git rev-parse HEAD -> 7bb17621c45545449f9dce390a41f39ec4bd0208
+git diff --check 7bb17621^ 7bb17621 -> exit 0
+git diff --quiet 7bb17621^ 7bb17621 -- requirements/issue_28_v13/baseline_manifest.json scripts/vnext/normal_run_v3.py -> exit 0
+PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest -> Ran 3 tests in 23.050s; OK; exit 0
+load_requirement_snapshot(issue_28_v13) -> accepted
+load_requirement_snapshot(issue_28_v14) -> accepted
+validate_execution_authority(issue_28_v14) -> PASS
+validate_semantic_rule_bindings(issue_28_v14) -> PASS
+validate_wiring_receipt(issue_28_v14) -> PASS
+V14 requirement_closure_hash=sha256:f0c25fbfcb8558ec4f0667906b6148f66b9a9421e771a85fccb857e590a6fa51
+module_sha256=fd90cd918ddbe8db9fe095c1532a88156874ca64ac4354dbadc0eb410bdb0c4d
+v14_manifest_sha256=89f790fc215fee2b6bb937dad5a835751295fb1efb2505fdc6047752c3f9f9d7
+
+Marriott original primary SHA256=c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547; matched source_proof.
+Original ordinal 925 concept=('http://fasb.org/us-gaap/2025', 'AmortizationOfIntangibleAssets') value=313000000.
+Original ordinal 973 concept=('http://fasb.org/us-gaap/2025', 'Depreciation') value=145000000.
+Original relation rows: 5438-135=5303; 3004-83=2921; 640-19=621; 261-1=260; 376-6=370 (millions).
+source-limit.json raw-span SHA256=d05a3f9170602419f54a3f1f9d4d341ac1ee652827563f0c446acd2076f19706; rechecked true.
+
+Isolated negative, not a modified #28 original: insert local xmlns:us-gaap='https://example.invalid/not-us-gaap' on ordinal 973 fact, keep name/value, update isolated source_proof hash.
+_ReportedFactMetadata.facts[973]['concept'] -> ('https://example.invalid/not-us-gaap', 'Depreciation').
+assess_current_b03_scope -> status=COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED; blocked=False; selected_original_facts.depreciation.primary_fact_ordinals=[973].
+Cause: _selected_original_facts compares parsed qualified_name only, while contract amortization path compares metadata URI.
+
+Execution evidence checked without long rerun: exercise.json tested_module_sha256 and tested_v14_manifest_sha256 match current files; exercise/cold share Result ID sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a and value 0.1756281982738868097456656229; cold Run differs old index Run; calls=[0,0,0]; cold watched files unchanged. Scripts/logs read, not independently rerun.
+Review tool calls under 80; no child spawn, commit, push, provider, SEC or #47 work.

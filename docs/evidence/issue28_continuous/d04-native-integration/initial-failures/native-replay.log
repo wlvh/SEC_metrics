@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 24, in load_profile_requirement_snapshot
+    need(resolve_repository_file(repo_root=root,repo_relative_path=relative).read_bytes()
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         == resolve_repository_file(repo_root=installed,repo_relative_path=relative).read_bytes(),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'Continuous successor installed snapshot differs: ' + name)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 15, in need
+    if not condition:raise v1.RequirementProfileError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.requirement_profile_v1.RequirementProfileError: Continuous successor installed snapshot differs: decision_register.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/resume-20260915/check_native_replay.py", line 12, in <module>
+    result=replay_native_response(prepared=by_id[old['request_id']],path=path)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_assessment_replay.py", line 98, in replay_native_response
+    old = load_requirement_snapshot(snapshot_dir=root / 'requirements' / REQUIREMENT_ID)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Continuous successor installed snapshot differs: decision_register.json

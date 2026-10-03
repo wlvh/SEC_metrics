@@ -1,0 +1,65 @@
+test_claim_consumes_before_terminal_and_restart_cannot_repeat (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_claim_consumes_before_terminal_and_restart_cannot_repeat) ... ok
+test_concurrent_processes_cannot_consume_twice (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_concurrent_processes_cannot_consume_twice) ... ok
+test_duplicate_recovery_marker_or_unmarked_duplicate_rejected_on_read (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_duplicate_recovery_marker_or_unmarked_duplicate_rejected_on_read) ... ok
+test_interrupted_claim_append_stays_consumed_and_blocks_restart (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_interrupted_claim_append_stays_consumed_and_blocks_restart) ... ok
+test_live_authorization_requires_original_root_and_real_pinned_comment (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_live_authorization_requires_original_root_and_real_pinned_comment) ... ok
+test_live_owner_comment_is_pinned_and_not_caller_approved_boolean (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_live_owner_comment_is_pinned_and_not_caller_approved_boolean) ... ok
+test_new_stops_are_not_removed_by_old_authorization (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_new_stops_are_not_removed_by_old_authorization) ... ok
+test_only_original_request_can_claim_once_and_old_history_stays (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_only_original_request_can_claim_once_and_old_history_stays) ... ok
+test_other_original_failures_and_existing_output_cannot_get_recovery (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_other_original_failures_and_existing_output_cannot_get_recovery) ... ok
+test_recovered_history_is_separate_and_cold_reader_rejects_rebinding (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_recovered_history_is_separate_and_cold_reader_rejects_rebinding) ... ok
+test_resealed_wrong_binding_terminal_digest_and_mode_are_rejected (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_resealed_wrong_binding_terminal_digest_and_mode_are_rejected) ... ok
+test_second_marked_recovery_and_removed_authorization_rejected (tests.vnext.test_continuous_recovery_110.Recovery110Test.test_second_marked_recovery_and_removed_authorization_rejected) ... ok
+test_402_unknown_usage_and_unknown_outcome_are_permanent_stops (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_402_unknown_usage_and_unknown_outcome_are_permanent_stops) ... ok
+test_changed_bound_native_receipt_is_rejected (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_changed_bound_native_receipt_is_rejected) ... ok
+test_competing_process_cannot_enter_held_directory_lock (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_competing_process_cannot_enter_held_directory_lock) ... ok
+test_crashed_intent_charged_and_only_affected_channel_stopped (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_crashed_intent_charged_and_only_affected_channel_stopped) ... ok
+test_deleted_last_slot_or_deleted_root_cannot_restart_total (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_deleted_last_slot_or_deleted_root_cannot_restart_total) ... ok
+test_raw_request_identity_blocks_redraw_despite_new_plan (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_raw_request_identity_blocks_redraw_despite_new_plan) ... ok
+test_reopen_and_changed_phase_do_not_reset_exhausted_total (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_reopen_and_changed_phase_do_not_reset_exhausted_total) ... ok
+test_test_mode_cannot_be_relabelled_live (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_test_mode_cannot_be_relabelled_live) ... ok
+test_all_base_preserves_legacy_no_variant_field (tests.vnext.test_native_request_variants.NativeRequestVariantsTest.test_all_base_preserves_legacy_no_variant_field) ... ERROR
+test_missing_duplicate_reordered_and_cross_source_requests_are_rejected (tests.vnext.test_native_request_variants.NativeRequestVariantsTest.test_missing_duplicate_reordered_and_cross_source_requests_are_rejected) ... ok
+test_mixed_collection_registration_and_text_coverage_keep_original_success (tests.vnext.test_native_request_variants.NativeRequestVariantsTest.test_mixed_collection_registration_and_text_coverage_keep_original_success) ... ERROR
+test_actual_source_prompt_and_output_contract_changes_remain_distinct (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_actual_source_prompt_and_output_contract_changes_remain_distinct) ... ok
+test_base_and_indexed_output_contracts_have_distinct_execution_semantics (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_base_and_indexed_output_contracts_have_distinct_execution_semantics) ... ok
+test_mechanical_source_identity_cannot_authorize_indexed_redraw (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_mechanical_source_identity_cannot_authorize_indexed_redraw) ... ok
+
+======================================================================
+ERROR: test_all_base_preserves_legacy_no_variant_field (tests.vnext.test_native_request_variants.NativeRequestVariantsTest.test_all_base_preserves_legacy_no_variant_field)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_native_request_variants.py", line 184, in test_all_base_preserves_legacy_no_variant_field
+    assessment, _ = self.collect(self.base)
+                    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_native_request_variants.py", line 127, in collect
+    assessment = collect_native_assessments(prepared_requests=prepared, ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_native_assessment.py", line 121, in collect_native_assessments
+    intent = strict_json_file(path=path / 'intent.json')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmp4nymr_us/ledger/calls/0001/intent.json
+
+======================================================================
+ERROR: test_mixed_collection_registration_and_text_coverage_keep_original_success (tests.vnext.test_native_request_variants.NativeRequestVariantsTest.test_mixed_collection_registration_and_text_coverage_keep_original_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_native_request_variants.py", line 134, in test_mixed_collection_registration_and_text_coverage_keep_original_success
+    assessment, native_rows = self.collect(self.mixed, failed_original=True)
+                              ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_native_request_variants.py", line 127, in collect
+    assessment = collect_native_assessments(prepared_requests=prepared, ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_native_assessment.py", line 121, in collect_native_assessments
+    intent = strict_json_file(path=path / 'intent.json')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpcosed3dq/ledger/calls/0001/intent.json
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.793s
+
+FAILED (errors=2)

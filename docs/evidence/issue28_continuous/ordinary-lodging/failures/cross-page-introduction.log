@@ -1,0 +1,11 @@
+{"end": "2023-12-31", "source_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17", "table_count": 66, "values": {"B10": "0.692", "B11": "124.7"}, "table_id": "table_000011"}
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/lodging-three-originals.py", line 20, in <module>
+    result=inspect_lodging_table_source(raw=source['raw'],blob=blob,reference=ref,filing=filing,company_id=p['company_id'],cik=p['entity'],period=period)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 176, in inspect_lodging_table_source
+    _need(len(candidates)==1,'LODGING_MATCHING_TABLE_NOT_UNIQUE:'+str(unresolved))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 36, in _need
+    if not condition:raise LodgingSourceError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.lodging_table_source.LodgingSourceError: LODGING_MATCHING_TABLE_NOT_UNIQUE:[{'table_id': 'table_000011', 'reason': 'LODGING_STATISTICS_SECTION_NOT_BOUND'}]

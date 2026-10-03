@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 82, in check
+    row['details']=action();row['passed']=not reject;row['outcome']='ACCEPTED'
+                   ~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 56, in <lambda>
+    self.check('positive-'+metric,lambda c=company,m=metric:self.baseline(c,m))
+                                                            ~~~~~~~~~~~~~^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 112, in baseline
+    result=normal.create_normal_run(data_root=data,run_dir=run,company_id=company,metric_id=metric,freeze=False)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 197, in create_normal_run
+    manifest,stored,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3421, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2544, in _validate_record_graph
+    raise RunStoreError(
+    ...<3 lines>...
+    )
+vnext.run_store.RunStoreError: Observation SourceReference field differs: source_role

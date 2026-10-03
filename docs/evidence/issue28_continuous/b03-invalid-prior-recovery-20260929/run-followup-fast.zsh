@@ -1,0 +1,7 @@
+#!/bin/zsh
+cd /Users/lyuhongwang/Developer/SEC_metrics || exit 2
+export PYTHONPATH=scripts
+/private/tmp/issue28_py314_venv/bin/python tools/run_fast_tests_v2.py --jobs 2 > docs/evidence/issue28_continuous/b03-invalid-prior-recovery-20260929/followup-fast.log 2>&1
+code=$?
+print -r -- "$code" > docs/evidence/issue28_continuous/b03-invalid-prior-recovery-20260929/followup-fast.exit
+exit "$code"

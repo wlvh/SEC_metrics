@@ -1,0 +1,15 @@
+{
+  "scope": "TEST_ONLY_NO_SOURCE_CREDIT",
+  "disclosure_sha256": "c46d67277063e1040be4ff0d14b7269f62ab96350c6c999698ab66994b2035d8",
+  "cases": [
+    {
+      "case": "baseline",
+      "status": "ACCEPTED"
+    },
+    {
+      "case": "primary_only_parentheses",
+      "status": "REJECTED",
+      "reason": "PRIMARY_NOTE_SOURCE_CONFLICT_OR_MISSING"
+    }
+  ]
+}

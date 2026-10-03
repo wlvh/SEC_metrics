@@ -1,0 +1,5 @@
+# B13当期来源检查，尚非完整验收
+
+两份快照由现行prepare_capacity_sources读取真实保存原件生成，包含来源证明、完整相关原文和native线索。Ford11条相关文字、8条可能产量文字、13个native容量标签；13个标签实际均为LineOfCreditFacilityMaximumBorrowingCapacity且单位USD，不能当生产产能。Enphase5条相关文字，其中季度约五百万microinverter产能，没有在此候选集中证明同范围实际产量。
+
+候选集合/关键词未命中不证明不存在数值对。不能用销量、出货或融资额度填分子/分母，也不能声称B13原生结果已经完成。下一步仍是完整来源赋义与原生接线；本检查零新增provider/paid/SEC调用，无独立审阅或发布信用。

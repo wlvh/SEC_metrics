@@ -1,0 +1,24 @@
+test_stage_switch_rollback_restore_and_interrupted_recovery (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationMaterialTest.test_stage_switch_rollback_restore_and_interrupted_recovery) ... ERROR
+
+======================================================================
+ERROR: test_stage_switch_rollback_restore_and_interrupted_recovery (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationMaterialTest.test_stage_switch_rollback_restore_and_interrupted_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_isolated_publication.py", line 111, in test_stage_switch_rollback_restore_and_interrupted_recovery
+    staged = release.stage(preparation_root=source, publication_root=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_isolated_publication.py", line 270, in stage
+    files, manifest = _compose(snapshot, meta)
+                      ~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_isolated_publication.py", line 199, in _compose
+    need(not any(row['allowed'] not in {'1', 'true', 'True'} for row in scans['scalability']),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'ORDINARY_PUBLICATION_SCALABILITY_FAILED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_isolated_publication.py", line 41, in need
+    raise pub.PublicationError(reason)
+vnext.publication.PublicationError: ORDINARY_PUBLICATION_SCALABILITY_FAILED
+
+----------------------------------------------------------------------
+Ran 1 test in 960.034s
+
+FAILED (errors=1)

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/optional-prior-html/verify_actual.py", line 26, in <module>
+    assert item['saved_status']=='MISSING_SAVED_SOURCE' and source_dependency_satisfied(item),item
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'source_url': 'https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm', 'method': 'GET', 'roles': ['prior_annual_primary'], 'accession': '0000092380-25-000024', 'media_type': 'text/html', 'refresh_for_new_discovery': False, 'saved_status': 'MISSING_SAVED_SOURCE', 'source_acquisition_credit': False, 'alternative_dependency': {'status': 'NOT_ESTABLISHED', 'reason': 'SOURCE_REQUIREMENT_ALTERNATIVE_INDEX_NOT_VERIFIED', 'error_type': 'SourceRequirementsError'}}

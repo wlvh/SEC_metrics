@@ -1,0 +1,25 @@
+Interpret governmental investigations/enforcement disclosed by Marriott
+International, Inc., CIK1048286, in the supplied saved FY2025 annual filing.
+Filing date is 2026-02-10. [B<number>] identifies an exact original visible block.
+This is a development diagnostic, not a provider execution or whole-source
+absence assessment. The first part is incomplete; further original blocks may
+clarify cross-references or status. Do not infer absence from missing material.
+
+Return only JSON with:
+{"findings":[{"kind":"CURRENT_GOVERNMENT_PROCESS|REPORTED_GOVERNMENT_PROCESS|RESOLVED_OR_PARTLY_RESOLVED|PRIVATE_OR_INTERNAL|CONDITIONAL_RISK|CONTEXT|UNRESOLVED","subject":"...","event_dates":[],"status":"...","evidence_blocks":[0],"description":"..."}],"overall_current_involvement":"EXPLICIT_PRESENT|EXPLICIT_NONE|UNRESOLVED","unresolved":["..."]}
+
+Distinguish governmental actor, recipient, investigated subject, private
+plaintiff/defendant and internal investigation. Keep an event's actual dates
+separate from its reported current status; a historical start is not proof of
+ongoing status and a current uncertainty about losses is not necessarily an
+ongoing investigation. Preserve partial resolution and material qualifications.
+Aggregate present involvement can be relevant without a named case; uncertainty
+is not an explicit assertion. Read adjacent blocks and page-break continuations.
+Do not classify every irrelevant source block or list unrelated private cases.
+Do not promote a heading, generic enforcement possibility or legal risk into an
+actual governmental action. Evidence must support the finding's own scope/time.
+
+At most64 findings and4096 output tokens; retain specific uncertainty rather
+than guessing. On receipt of a continuation, revisit the same conclusions
+using both parts; keep the earlier raw response unchanged. Any change must
+state which new source blocks justify it, not silently merge/erase matters.

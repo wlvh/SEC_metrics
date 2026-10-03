@@ -1,0 +1,54 @@
+{
+  "record_type": "ISSUE28_FAST_JOB_CHECKOUT_TIMEOUT_COMPARISON",
+  "previous_success": {
+    "run_id": 36471768000,
+    "job_id": 109095515598,
+    "conclusion": "success",
+    "steps": [
+      {
+        "name": "Check out repository",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-09-28T19:22:26Z",
+        "completed_at": "2026-09-28T19:22:50Z",
+        "duration_seconds": 24.0
+      },
+      {
+        "name": "Run fast suite",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-09-28T19:22:56Z",
+        "completed_at": "2026-09-28T19:25:50Z",
+        "duration_seconds": 174.0
+      }
+    ]
+  },
+  "current_cancelled": {
+    "run_id": 36478405174,
+    "job_id": 109117765903,
+    "conclusion": "cancelled",
+    "steps": [
+      {
+        "name": "Check out repository",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "started_at": "2026-09-28T20:19:50Z",
+        "completed_at": "2026-09-28T20:29:49Z",
+        "duration_seconds": 599.0
+      },
+      {
+        "name": "Run fast suite",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-09-28T20:29:49Z",
+        "completed_at": "2026-09-28T20:29:49Z",
+        "duration_seconds": 0.0
+      }
+    ]
+  },
+  "changed_workflow_field": ".github/workflows/vnext-fast.yml jobs.fast.timeout-minutes",
+  "old_minutes": 10,
+  "proposed_minutes": 20,
+  "test_selector_and_per_case_limits_unchanged": true,
+  "business_assertion_from_cancelled_job": null
+}

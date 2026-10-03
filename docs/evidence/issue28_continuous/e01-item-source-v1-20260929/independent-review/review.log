@@ -1,0 +1,28 @@
+Review target: 237c7cf4c949a9c58bf857cd406e41ad6ec237d0..7d0f7a69c202c0caf58d54e4a2785e1fa1c36ad9
+HEAD at review: 7d0f7a69c202c0caf58d54e4a2785e1fa1c36ad9
+Source/test/runner working-tree git blobs matched the target commit.
+
+Command: PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest -v tests.vnext.test_e01_item_source
+test_ambiguous_and_missing_heading_fail_closed ... ok
+test_header_identity_kept_while_original_801_body_is_available ... ok
+Ran 2 tests in 0.005s; OK; exit 0.
+
+Command: PYTHONPATH=.:scripts /private/tmp/issue28_py314_venv/bin/python docs/evidence/issue28_continuous/e01-item-source-v1-20260929/check-binding.py
+{"new_module_runtime_authorized": false, "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c", "status": "PASS_EXISTING_V14_AUTHORITY"}
+Exit 0.
+
+Read-only parse of parent fast.log: status=PASSED; suite=fast; evidence_tier=FAST_LOCAL_ONLY; 142 selectors; 0 failed; new selector return_code=0 and 2 tests/OK. Full fast suite was not rerun by this reviewer.
+
+Independent synthetic full-binding probes used the existing test_deterministic_router fixture helpers to construct a valid hdr claim, source-set manifest, fy_8k_primary SourceReference, and exact primary bytes. Both calls to bound_801_primary_section() returned E01_VERIFIED_PRIMARY_ITEM_801_SECTION_V1:
+
+1. inline_901_cross_reference
+   Primary 8.01 body: <h2>Item 8.01 Other Events</h2><p>For related documents see Item 9.01 Financial Statements and Exhibits below.</p><p>We signed an acquisition agreement.</p><h2>Item 9.01 Financial Statements and Exhibits</h2>
+   Accepted section_text: 'Item 8.01 Other Events For related documents see'
+   The later acquisition paragraph is omitted.
+
+2. hidden_div_heading
+   Primary body: <div style="display:none">Item 8.01 Other Events. Hidden words. Item 9.01 Financial Statements and Exhibits.</div><p>Visible document lacks this section.</p>
+   Accepted section_text: 'Item 8.01 Other Events. Hidden words.'
+   Isolated parser probes also accepted the same heading and end phrase in <script> and <style>.
+
+No SEC/provider request, account operation, branch change, commit, push, publication, or full-suite run was made in this review.

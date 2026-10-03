@@ -1,0 +1,24 @@
+{
+  "all390_acceptance": false,
+  "b01_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+  "b01_status": "CANDIDATE_READY",
+  "b03_attempt_id": "c897c9eb33454398b29accabc6aac1ed",
+  "b03_status": "EXECUTION_FAILED",
+  "b03_successful_attempt": null,
+  "b03_terminal_error": {
+    "error_type": "ValueError",
+    "reason": "B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED"
+  },
+  "company_status": "UPDATES_PARTIAL",
+  "formal_adoption": false,
+  "new_b03_result_credit": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "normal_cli_return_code": 2,
+  "original_protected_hashes_unchanged": true,
+  "processing_snapshot_id": "sha256:517bd322204016d11ec0694654852148538b3e9c3b10138ada4041eacf97b382",
+  "record_type": "ISSUE28_MARRIOTT_B01_POSITIVE_B03_SCOPE_FAILURE"
+}

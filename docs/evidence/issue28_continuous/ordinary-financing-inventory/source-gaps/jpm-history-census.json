@@ -1,0 +1,931 @@
+{
+  "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "current_inventory": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:9e46bb4de20151e71386b90e308052e85535a6a371927f0db24aecc8fe64c3ae",
+    "raw_asset_id": "sha256:9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+    "accession": "SUBMISSIONS-19617",
+    "document_name": "CIK0000019617.json",
+    "source_role": "sec_submissions_inventory",
+    "request_attempt_id": "request:attempt:64a91151c5d535eaf20bfd1f6c182a65fb8851d5f77691cf9204f13d9c54dfb0"
+  },
+  "items": [
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-001.json",
+        "filingCount": 2035,
+        "filingFrom": "2025-07-15",
+        "filingTo": "2025-08-13"
+      },
+      "actual_all_forms_count": 2079,
+      "actual_from": "2025-05-30",
+      "actual_to": "2025-07-02",
+      "form_counts": {
+        "424B2": 1774,
+        "4": 7,
+        "424B3": 140,
+        "FWP": 141,
+        "8-K": 2,
+        "11-K": 1,
+        "424B8": 4,
+        "144": 2,
+        "SCHEDULE 13G/A": 8
+      },
+      "alignment": {
+        "history_name": "CIK0000019617-submissions-001.json",
+        "declared_filing_from": "2025-07-15",
+        "declared_filing_to": "2025-08-13",
+        "out_of_range_filings": [
+          {
+            "form": "8-K",
+            "reportDate": "2025-07-01",
+            "filingDate": "2025-07-01",
+            "accessionNumber": "0000019617-25-000510",
+            "primaryDocument": "jpm-20250701.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-07-01",
+            "filingDate": "2025-07-01",
+            "accessionNumber": "0000019617-25-000509",
+            "primaryDocument": "jpm-20250701.htm"
+          }
+        ],
+        "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"
+      },
+      "target_events": [
+        {
+          "accessionNumber": "0000019617-25-000510",
+          "filingDate": "2025-07-01",
+          "reportDate": "2025-07-01",
+          "acceptanceDateTime": "2025-07-01T20:31:18.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "251096859",
+          "items": "7.01,9.01",
+          "core_type": "XBRL",
+          "size": 3504623,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250701.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-001.json",
+            "row_index": 205
+          }
+        },
+        {
+          "accessionNumber": "0000019617-25-000509",
+          "filingDate": "2025-07-01",
+          "reportDate": "2025-07-01",
+          "acceptanceDateTime": "2025-07-01T20:30:37.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "251096834",
+          "items": "8.01,9.01",
+          "core_type": "XBRL",
+          "size": 302148,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250701.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-001.json",
+            "row_index": 206
+          }
+        }
+      ],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:e961993ad2080491f2d21ce601565b2926f21bfb17e5da768e00381e22999563",
+        "raw_asset_id": "sha256:bbd1683ff8a8f6a536766f18a0741f7dbfaf66d967e98ff4344cc5430e4340d7",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-001.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:926824fa7d2d29e77f085b2456f802883c728b44ca17be79bec9cbaba4fed865"
+      }
+    },
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-002.json",
+        "filingCount": 2042,
+        "filingFrom": "2025-06-05",
+        "filingTo": "2025-07-13"
+      },
+      "actual_all_forms_count": 2002,
+      "actual_from": "2025-04-21",
+      "actual_to": "2025-05-29",
+      "form_counts": {
+        "424B2": 1738,
+        "FWP": 108,
+        "424B3": 92,
+        "8-K": 3,
+        "4": 11,
+        "144": 10,
+        "424B8": 2,
+        "DEFA14A": 2,
+        "13F-HR": 1,
+        "SCHEDULE 13G/A": 16,
+        "SCHEDULE 13G": 16,
+        "10-Q": 1,
+        "PX14A6G": 2
+      },
+      "alignment": {
+        "history_name": "CIK0000019617-submissions-002.json",
+        "declared_filing_from": "2025-06-05",
+        "declared_filing_to": "2025-07-13",
+        "out_of_range_filings": [
+          {
+            "form": "8-K",
+            "reportDate": "2025-05-20",
+            "filingDate": "2025-05-22",
+            "accessionNumber": "0000019617-25-000485",
+            "primaryDocument": "jpm-20250520.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-05-19",
+            "filingDate": "2025-05-19",
+            "accessionNumber": "0000019617-25-000483",
+            "primaryDocument": "jpm-20250519.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-04-22",
+            "filingDate": "2025-04-22",
+            "accessionNumber": "0001193125-25-089203",
+            "primaryDocument": "d913996d8k.htm"
+          }
+        ],
+        "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"
+      },
+      "target_events": [
+        {
+          "accessionNumber": "0000019617-25-000485",
+          "filingDate": "2025-05-22",
+          "reportDate": "2025-05-20",
+          "acceptanceDateTime": "2025-05-22T20:16:04.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25977356",
+          "items": "5.07,9.01",
+          "core_type": "XBRL",
+          "size": 305196,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250520.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-002.json",
+            "row_index": 277
+          }
+        },
+        {
+          "accessionNumber": "0000019617-25-000483",
+          "filingDate": "2025-05-19",
+          "reportDate": "2025-05-19",
+          "acceptanceDateTime": "2025-05-19T20:23:52.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25964303",
+          "items": "7.01,9.01",
+          "core_type": "XBRL",
+          "size": 22229079,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250519.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-002.json",
+            "row_index": 475
+          }
+        },
+        {
+          "accessionNumber": "0001193125-25-089203",
+          "filingDate": "2025-04-22",
+          "reportDate": "2025-04-22",
+          "acceptanceDateTime": "2025-04-22T20:15:41.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25857912",
+          "items": "8.01,9.01",
+          "core_type": "XBRL",
+          "size": 286690,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "d913996d8k.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-002.json",
+            "row_index": 1881
+          }
+        }
+      ],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:6648451c9c8713f45fdcf578ec891b9e35ab5a5a0efedfbf8b5a5075fad816d5",
+        "raw_asset_id": "sha256:303ed7d9a67e0c3be6f0e1a5dda3a4d6422e19727fd87d4ac47289b33305e5c7",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-002.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-002.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:ad5bab90c1c1598dc9633a77a74241843dfdd840838f5105c9c5dbcbfe453c1d"
+      }
+    },
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-003.json",
+        "filingCount": 2075,
+        "filingFrom": "2025-04-30",
+        "filingTo": "2025-06-03"
+      },
+      "actual_all_forms_count": 2021,
+      "actual_from": "2025-03-18",
+      "actual_to": "2025-04-18",
+      "form_counts": {
+        "424B2": 1746,
+        "FWP": 122,
+        "SCHEDULE 13G/A": 5,
+        "DEFA14A": 2,
+        "424B3": 88,
+        "4": 34,
+        "144": 5,
+        "424B8": 6,
+        "8-K": 3,
+        "EFFECT": 1,
+        "424B5": 1,
+        "ARS/A": 1,
+        "CORRESP": 1,
+        "S-3/A": 1,
+        "ARS": 1,
+        "DEF 14A": 1,
+        "3/A": 1,
+        "CERT": 1,
+        "8-A12B": 1
+      },
+      "alignment": {
+        "history_name": "CIK0000019617-submissions-003.json",
+        "declared_filing_from": "2025-04-30",
+        "declared_filing_to": "2025-06-03",
+        "out_of_range_filings": [
+          {
+            "form": "8-K",
+            "reportDate": "2025-04-11",
+            "filingDate": "2025-04-11",
+            "accessionNumber": "0000019617-25-000334",
+            "primaryDocument": "jpm-20250411.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-04-11",
+            "filingDate": "2025-04-11",
+            "accessionNumber": "0000019617-25-000332",
+            "primaryDocument": "jpm-20250411.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-04-10",
+            "filingDate": "2025-04-10",
+            "accessionNumber": "0001193125-25-078015",
+            "primaryDocument": "d885258d8k.htm"
+          },
+          {
+            "form": "DEF 14A",
+            "reportDate": "2025-04-07",
+            "filingDate": "2025-04-07",
+            "accessionNumber": "0000019617-25-000321",
+            "primaryDocument": "jpm-20250405.htm"
+          }
+        ],
+        "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"
+      },
+      "target_events": [
+        {
+          "accessionNumber": "0000019617-25-000334",
+          "filingDate": "2025-04-11",
+          "reportDate": "2025-04-11",
+          "acceptanceDateTime": "2025-04-11T14:29:28.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25830391",
+          "items": "7.01,9.01",
+          "core_type": "XBRL",
+          "size": 2895467,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250411.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-003.json",
+            "row_index": 439
+          }
+        },
+        {
+          "accessionNumber": "0000019617-25-000332",
+          "filingDate": "2025-04-11",
+          "reportDate": "2025-04-11",
+          "acceptanceDateTime": "2025-04-11T10:45:50.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25829815",
+          "items": "2.02,9.01",
+          "core_type": "XBRL",
+          "size": 3501206,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250411.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-003.json",
+            "row_index": 444
+          }
+        },
+        {
+          "accessionNumber": "0001193125-25-078015",
+          "filingDate": "2025-04-10",
+          "reportDate": "2025-04-10",
+          "acceptanceDateTime": "2025-04-10T20:40:54.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25828930",
+          "items": "8.01,9.01",
+          "core_type": "XBRL",
+          "size": 281407,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "d885258d8k.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-003.json",
+            "row_index": 466
+          }
+        }
+      ],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:1493ca3c3354c1d979f0fbc076d0ad2b6eda240337e0783f98a38463ef1fea4d",
+        "raw_asset_id": "sha256:55d7f95c0f56cc1543f45c03e211ca6e15e6f1c8fd9ee44311a6b61d610f8511",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-003.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-003.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:392e9b0bf72ad99c1c0a9a0bcdf908af2fb31a534afbf895d5af1440a62ec6ac"
+      }
+    },
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-004.json",
+        "filingCount": 2011,
+        "filingFrom": "2025-03-26",
+        "filingTo": "2025-04-28"
+      },
+      "actual_all_forms_count": 2046,
+      "actual_from": "2025-02-13",
+      "actual_to": "2025-03-17",
+      "form_counts": {
+        "424B2": 1809,
+        "3": 1,
+        "FWP": 115,
+        "424B3": 88,
+        "424B8": 8,
+        "UPLOAD": 1,
+        "SCHEDULE 13G/A": 4,
+        "S-3": 1,
+        "4": 9,
+        "144": 9,
+        "10-K": 1
+      },
+      "alignment": {
+        "history_name": "CIK0000019617-submissions-004.json",
+        "declared_filing_from": "2025-03-26",
+        "declared_filing_to": "2025-04-28",
+        "out_of_range_filings": [
+          {
+            "form": "10-K",
+            "reportDate": "2024-12-31",
+            "filingDate": "2025-02-14",
+            "accessionNumber": "0000019617-25-000270",
+            "primaryDocument": "jpm-20241231.htm"
+          }
+        ],
+        "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"
+      },
+      "target_events": [],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:d64f2ec857c9f62d52c90c67483d3fd5ca1e010adc9fe5335bdd0eb2f43592e4",
+        "raw_asset_id": "sha256:372a7b27597f61c3ecd92896e1b6509a7d9215944add675e957180e32fd1bf76",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-004.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-004.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:c2c726ffa78169c30ca39b27d85e06c5efffb59e3b3bbc61a72c8c9ee8736367"
+      }
+    },
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-005.json",
+        "filingCount": 2006,
+        "filingFrom": "2025-02-25",
+        "filingTo": "2025-03-24"
+      },
+      "actual_all_forms_count": 2062,
+      "actual_from": "2025-01-07",
+      "actual_to": "2025-02-12",
+      "form_counts": {
+        "424B2": 1724,
+        "SCHEDULE 13G/A": 17,
+        "SCHEDULE 13G": 23,
+        "13F-HR": 1,
+        "FWP": 111,
+        "4": 39,
+        "424B3": 129,
+        "424B8": 4,
+        "8-K": 7,
+        "3": 2,
+        "144": 5
+      },
+      "alignment": {
+        "history_name": "CIK0000019617-submissions-005.json",
+        "declared_filing_from": "2025-02-25",
+        "declared_filing_to": "2025-03-24",
+        "out_of_range_filings": [
+          {
+            "form": "8-K",
+            "reportDate": "2025-02-03",
+            "filingDate": "2025-02-04",
+            "accessionNumber": "0001193125-25-020070",
+            "primaryDocument": "d876756d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-01-27",
+            "filingDate": "2025-01-27",
+            "accessionNumber": "0001193125-25-013396",
+            "primaryDocument": "d924480d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-01-24",
+            "filingDate": "2025-01-24",
+            "accessionNumber": "0001193125-25-012230",
+            "primaryDocument": "d878108d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-01-21",
+            "filingDate": "2025-01-23",
+            "accessionNumber": "0000019617-25-000056",
+            "primaryDocument": "jpm-20250121.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-01-15",
+            "filingDate": "2025-01-15",
+            "accessionNumber": "0000019617-25-000042",
+            "primaryDocument": "jpm-20250115.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-01-15",
+            "filingDate": "2025-01-15",
+            "accessionNumber": "0000019617-25-000040",
+            "primaryDocument": "jpm-20250115.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2025-01-14",
+            "filingDate": "2025-01-14",
+            "accessionNumber": "0001193125-25-006009",
+            "primaryDocument": "d919473d8k.htm"
+          }
+        ],
+        "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"
+      },
+      "target_events": [
+        {
+          "accessionNumber": "0001193125-25-020070",
+          "filingDate": "2025-02-04",
+          "reportDate": "2025-02-03",
+          "acceptanceDateTime": "2025-02-04T21:30:10.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25588722",
+          "items": "3.03,5.03,8.01,9.01",
+          "core_type": "XBRL",
+          "size": 623542,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "d876756d8k.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 454
+          }
+        },
+        {
+          "accessionNumber": "0001193125-25-013396",
+          "filingDate": "2025-01-27",
+          "reportDate": "2025-01-27",
+          "acceptanceDateTime": "2025-01-27T21:36:36.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25559588",
+          "items": "8.01,9.01",
+          "core_type": "XBRL",
+          "size": 276682,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "d924480d8k.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 1151
+          }
+        },
+        {
+          "accessionNumber": "0001193125-25-012230",
+          "filingDate": "2025-01-24",
+          "reportDate": "2025-01-24",
+          "acceptanceDateTime": "2025-01-24T21:28:50.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25554555",
+          "items": "8.01,9.01",
+          "core_type": "XBRL",
+          "size": 279296,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "d878108d8k.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 1194
+          }
+        },
+        {
+          "accessionNumber": "0000019617-25-000056",
+          "filingDate": "2025-01-23",
+          "reportDate": "2025-01-21",
+          "acceptanceDateTime": "2025-01-23T21:15:44.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25550325",
+          "items": "5.02",
+          "core_type": "XBRL",
+          "size": 290423,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250121.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 1293
+          }
+        },
+        {
+          "accessionNumber": "0000019617-25-000042",
+          "filingDate": "2025-01-15",
+          "reportDate": "2025-01-15",
+          "acceptanceDateTime": "2025-01-15T14:34:55.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25531355",
+          "items": "7.01,9.01",
+          "core_type": "XBRL",
+          "size": 3498301,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250115.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 1717
+          }
+        },
+        {
+          "accessionNumber": "0000019617-25-000040",
+          "filingDate": "2025-01-15",
+          "reportDate": "2025-01-15",
+          "acceptanceDateTime": "2025-01-15T11:46:01.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25531136",
+          "items": "2.02,9.01",
+          "core_type": "XBRL",
+          "size": 4011487,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "jpm-20250115.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 1718
+          }
+        },
+        {
+          "accessionNumber": "0001193125-25-006009",
+          "filingDate": "2025-01-14",
+          "reportDate": "2025-01-14",
+          "acceptanceDateTime": "2025-01-14T17:35:49.000Z",
+          "act": "34",
+          "form": "8-K",
+          "fileNumber": "001-05805",
+          "filmNumber": "25528542",
+          "items": "5.02,9.01",
+          "core_type": "XBRL",
+          "size": 283523,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "d919473d8k.htm",
+          "primaryDocDescription": "8-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000019617-submissions-005.json",
+            "row_index": 1783
+          }
+        }
+      ],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:3f532315dd569d902c2a5c63bcf08d0510d749d2cf0131ff2770f99c2a20dcad",
+        "raw_asset_id": "sha256:b1c888f05cdb667d365cb7550dd28e702d26933a3f91d2e64e4ee05e555381d6",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-005.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-005.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:35aef4e15b4cb356675d66b2056df525ba2b1452c92a5d338d1e9cd90b3ae018"
+      }
+    },
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-006.json",
+        "filingCount": 2085,
+        "filingFrom": "2025-01-17",
+        "filingTo": "2025-02-23"
+      },
+      "actual_all_forms_count": 2082,
+      "actual_from": "2024-11-29",
+      "actual_to": "2025-01-06",
+      "form_counts": {
+        "424B3": 124,
+        "424B2": 1804,
+        "FWP": 136,
+        "4": 5,
+        "13F-HR/A": 4,
+        "8-K": 2,
+        "424B8": 4,
+        "SC 13G/A": 3
+      },
+      "alignment": {
+        "history_name": "CIK0000019617-submissions-006.json",
+        "declared_filing_from": "2025-01-17",
+        "declared_filing_to": "2025-02-23",
+        "out_of_range_filings": [
+          {
+            "form": "8-K",
+            "reportDate": "2024-12-09",
+            "filingDate": "2024-12-12",
+            "accessionNumber": "0000019617-24-000660",
+            "primaryDocument": "jpm-20241209.htm"
+          },
+          {
+            "form": "8-K",
+            "reportDate": "2024-11-29",
+            "filingDate": "2024-11-29",
+            "accessionNumber": "0001193125-24-268103",
+            "primaryDocument": "d846552d8k.htm"
+          }
+        ],
+        "reason": "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT"
+      },
+      "target_events": [],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:c0185b09d365c010c6149a7b6236e192ed9992dd635b98c21cfa82927f15e3ce",
+        "raw_asset_id": "sha256:6685a978cdd1cb3dd23e1111eb4d7495345e07f0468bb2d7bc5d9663d90ef1d8",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-006.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-006.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:cb8a083d53006ff389d665c5b6693f0d16ac4a98ab41067d3258eb8cc105feb8"
+      }
+    },
+    {
+      "declared": {
+        "name": "CIK0000019617-submissions-007.json",
+        "filingCount": 2054,
+        "filingFrom": "2024-12-05",
+        "filingTo": "2025-01-15"
+      },
+      "actual_all_forms_count": 2084,
+      "actual_from": "2024-10-29",
+      "actual_to": "2024-11-27",
+      "form_counts": {
+        "424B2": 1869,
+        "424B3": 62,
+        "FWP": 139,
+        "424B8": 6,
+        "4": 3,
+        "13F-HR": 1,
+        "SC 13G/A": 2,
+        "10-Q": 1,
+        "SC 13G": 1
+      },
+      "alignment": null,
+      "target_events": [],
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:533efc1e6eac306d3c9e59f56b2f0f69e2cd3e317bbe975557ce3a58c340eb78",
+        "raw_asset_id": "sha256:7391d2b8f02b30ce3a5148dede97c9ddcd451a82cf16bacdac149b76145dc95e",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+        "accession": "SUBMISSIONS-19617",
+        "document_name": "CIK0000019617-submissions-007.json",
+        "source_role": "sec_submissions_history",
+        "request_attempt_id": "request:attempt:a620897a9d72161e4d46af2a15f0234b6df581fe266ff061323cfb31324f014f"
+      }
+    }
+  ],
+  "source_proofs": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "accession": "",
+      "document_name": "CIK0000019617.json",
+      "content_sha256": "9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71",
+      "request_body_sha256": "9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71",
+      "request_body_size": 4570834,
+      "request_headers_repo_relative_path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json.1123ff4e12fcfdc9958d540e8dbe7679681edcb92c0552d3b2cd60d8924d72ad.headers.json",
+      "request_headers_sha256": "1123ff4e12fcfdc9958d540e8dbe7679681edcb92c0552d3b2cd60d8924d72ad",
+      "request_headers_size": 737,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json",
+      "request_attempt_id": "request:attempt:64a91151c5d535eaf20bfd1f6c182a65fb8851d5f77691cf9204f13d9c54dfb0"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-001.json",
+      "content_sha256": "bbd1683ff8a8f6a536766f18a0741f7dbfaf66d967e98ff4344cc5430e4340d7",
+      "request_body_sha256": "bbd1683ff8a8f6a536766f18a0741f7dbfaf66d967e98ff4344cc5430e4340d7",
+      "request_body_size": 376189,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-001.json.headers.json",
+      "request_headers_sha256": "4ce366004f299c8fd29a7cb946c6ee4e9ac2266ad29278f7bef7730bcdbebc5b",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-001.json",
+      "request_attempt_id": "request:attempt:926824fa7d2d29e77f085b2456f802883c728b44ca17be79bec9cbaba4fed865"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-002.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-002.json",
+      "content_sha256": "303ed7d9a67e0c3be6f0e1a5dda3a4d6422e19727fd87d4ac47289b33305e5c7",
+      "request_body_sha256": "303ed7d9a67e0c3be6f0e1a5dda3a4d6422e19727fd87d4ac47289b33305e5c7",
+      "request_body_size": 360976,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-002.json.headers.json",
+      "request_headers_sha256": "0363fcd198da516fde3bf8ab3cbc0696412acf3a247b5f7eb4191f65bec0e481",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-002.json",
+      "request_attempt_id": "request:attempt:ad5bab90c1c1598dc9633a77a74241843dfdd840838f5105c9c5dbcbfe453c1d"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-003.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-003.json",
+      "content_sha256": "55d7f95c0f56cc1543f45c03e211ca6e15e6f1c8fd9ee44311a6b61d610f8511",
+      "request_body_sha256": "55d7f95c0f56cc1543f45c03e211ca6e15e6f1c8fd9ee44311a6b61d610f8511",
+      "request_body_size": 363384,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-003.json.headers.json",
+      "request_headers_sha256": "19abacc0cf9da541fd06be3e3c1a1441bf067764b5ba19f4938d076b019375db",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-003.json",
+      "request_attempt_id": "request:attempt:392e9b0bf72ad99c1c0a9a0bcdf908af2fb31a534afbf895d5af1440a62ec6ac"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-004.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-004.json",
+      "content_sha256": "372a7b27597f61c3ecd92896e1b6509a7d9215944add675e957180e32fd1bf76",
+      "request_body_sha256": "372a7b27597f61c3ecd92896e1b6509a7d9215944add675e957180e32fd1bf76",
+      "request_body_size": 369213,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-004.json.headers.json",
+      "request_headers_sha256": "af752e2e9941468b3f35aa2e34397dca9c43cb881eb586c4e0d5494a161454f8",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-004.json",
+      "request_attempt_id": "request:attempt:c2c726ffa78169c30ca39b27d85e06c5efffb59e3b3bbc61a72c8c9ee8736367"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-005.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-005.json",
+      "content_sha256": "b1c888f05cdb667d365cb7550dd28e702d26933a3f91d2e64e4ee05e555381d6",
+      "request_body_sha256": "b1c888f05cdb667d365cb7550dd28e702d26933a3f91d2e64e4ee05e555381d6",
+      "request_body_size": 370161,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-005.json.headers.json",
+      "request_headers_sha256": "df49ed2d5d2d704fa577f2c5714aa3ac6e6d5ff44e5972d0f1719fef00f70524",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-005.json",
+      "request_attempt_id": "request:attempt:35aef4e15b4cb356675d66b2056df525ba2b1452c92a5d338d1e9cd90b3ae018"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-006.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-006.json",
+      "content_sha256": "6685a978cdd1cb3dd23e1111eb4d7495345e07f0468bb2d7bc5d9663d90ef1d8",
+      "request_body_sha256": "6685a978cdd1cb3dd23e1111eb4d7495345e07f0468bb2d7bc5d9663d90ef1d8",
+      "request_body_size": 377550,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-006.json.headers.json",
+      "request_headers_sha256": "c98af80c1866edf6b2e08a80cf0ed209c2a59fae5da01d5fdb64a6e884c42553",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-006.json",
+      "request_attempt_id": "request:attempt:cb8a083d53006ff389d665c5b6693f0d16ac4a98ab41067d3258eb8cc105feb8"
+    },
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+      "accession": "",
+      "document_name": "CIK0000019617-submissions-007.json",
+      "content_sha256": "7391d2b8f02b30ce3a5148dede97c9ddcd451a82cf16bacdac149b76145dc95e",
+      "request_body_sha256": "7391d2b8f02b30ce3a5148dede97c9ddcd451a82cf16bacdac149b76145dc95e",
+      "request_body_size": 377743,
+      "request_headers_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-007.json.headers.json",
+      "request_headers_sha256": "35e08b8c6854c72c5b48cb09e16ea5a6cb583496c4bc59581aae3df63466b9f2",
+      "request_headers_size": 833,
+      "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+      "request_repo_relative_path": "evidence/submissions/CIK0000019617-submissions-007.json",
+      "request_attempt_id": "request:attempt:a620897a9d72161e4d46af2a15f0234b6df581fe266ff061323cfb31324f014f"
+    }
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+    "request_attempt_ids": [
+      "request:attempt:64a91151c5d535eaf20bfd1f6c182a65fb8851d5f77691cf9204f13d9c54dfb0",
+      "request:attempt:926824fa7d2d29e77f085b2456f802883c728b44ca17be79bec9cbaba4fed865",
+      "request:attempt:ad5bab90c1c1598dc9633a77a74241843dfdd840838f5105c9c5dbcbfe453c1d",
+      "request:attempt:392e9b0bf72ad99c1c0a9a0bcdf908af2fb31a534afbf895d5af1440a62ec6ac",
+      "request:attempt:c2c726ffa78169c30ca39b27d85e06c5efffb59e3b3bbc61a72c8c9ee8736367",
+      "request:attempt:35aef4e15b4cb356675d66b2056df525ba2b1452c92a5d338d1e9cd90b3ae018",
+      "request:attempt:cb8a083d53006ff389d665c5b6693f0d16ac4a98ab41067d3258eb8cc105feb8",
+      "request:attempt:a620897a9d72161e4d46af2a15f0234b6df581fe266ff061323cfb31324f014f"
+    ],
+    "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

@@ -1,0 +1,11 @@
+command: PYTHONPATH=scripts PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_c02_member_successor.C02MemberScopeFastTest tests.vnext.test_normal_c02_composition.C02CompositionFastTest
+start_utc: 2026-10-02T17:10:14.814984+00:00
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.042s
+
+OK
+
+exit: 0
+end_utc: 2026-10-02T17:10:14.990120+00:00
+wall_seconds: 0.174986

@@ -1,0 +1,77 @@
+{
+  "record_type": "ISSUE28_54_SAVED_NATIVE_INPUT_SCHEMA_AND_DOC_BINDING_READ",
+  "code_commit": "f6a4e4425a6229d0583a4752a1a58b604a21a33e",
+  "data_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260924/enphase_energy/data",
+  "packet_sha256": "56ce7c45d8f82c663f575c684a3f33642b6c467a2fe64e650200dd5edfeffc26",
+  "packet_bytes": 3118724,
+  "schema_version": 1,
+  "source_id": "sha256:6fbbc9244e78b185ff176d9431aefc173cfc8c02d3058fcd41b1ee7fc6761c05",
+  "input_record_id": "sha256:44801106654d1a1fa57ed9120f8238e832c7cfe8ce5072976ff628cb6871f314",
+  "native_requests": [
+    {
+      "ordinal": 173,
+      "request_id": "sha256:277ee01c8c84b2aa54ca0695a08ac1e3e8cc5885e93a278ed42b52ef6b15295a",
+      "has_saved_assistant_output": true,
+      "has_plan_acceptance_wire": true,
+      "assistant_output_bytes": 876
+    },
+    {
+      "ordinal": 174,
+      "request_id": "sha256:595df0c4a1654528117d4353e493e2ff60ad13d5904a75c77be29f61d3dd9634",
+      "has_saved_assistant_output": true,
+      "has_plan_acceptance_wire": true,
+      "assistant_output_bytes": 263
+    },
+    {
+      "ordinal": 175,
+      "request_id": "sha256:a03dbaa6924c124cef74b3d2375a17889a18842b3f460bb555ae27e8b069d14a",
+      "has_saved_assistant_output": true,
+      "has_plan_acceptance_wire": true,
+      "assistant_output_bytes": 263
+    },
+    {
+      "ordinal": 176,
+      "request_id": "sha256:e55a2a78f4a74c040e76aa293aec45572042cb9c7f1e34cc0f266fe188c86055",
+      "has_saved_assistant_output": true,
+      "has_plan_acceptance_wire": true,
+      "assistant_output_bytes": 263
+    },
+    {
+      "ordinal": 177,
+      "request_id": "sha256:0afd398952aeae6bddca335fd2779863797078570826ceb148d2049c410dfe7e",
+      "has_saved_assistant_output": true,
+      "has_plan_acceptance_wire": true,
+      "assistant_output_bytes": 452
+    },
+    {
+      "ordinal": 178,
+      "request_id": "sha256:ba47c1117d18877e690e6148239e779733589151c1286a2c30b0f23daa967eec",
+      "has_saved_assistant_output": true,
+      "has_plan_acceptance_wire": true,
+      "assistant_output_bytes": 326
+    }
+  ],
+  "new_call_authority": false,
+  "production_authorized": false,
+  "data_root_has_git": false,
+  "binding_doc_checks": [
+    {
+      "version": "issue_28_v13",
+      "AGENTS_in_execution_files": false,
+      "AGENTS_in_rule_files": false
+    },
+    {
+      "version": "issue_28_v14",
+      "AGENTS_in_execution_files": false,
+      "AGENTS_in_rule_files": false
+    }
+  ],
+  "protected_hashes_unchanged": true,
+  "execution_scope": "ACTUAL_JSON_READ_AND_INPUT_HASH_CHECK_ONLY; NOT_ENGINE_REPLAY_OR_COMPANY_PACKAGE_TEST",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_result_or_content_credit": false
+}

@@ -1,0 +1,3 @@
+First script stopped at removed_block_reference_does_not_end_prior_item, exit 1.
+EVENT_ITEM_TEXT_A_READER_CANNOT_SEE:1.01:style:display:none
+The independent harness initially expected a returned body despite nonempty hidden text inside the item. The inherited reader deliberately refuses such a body. No source/test patch made. Second controls preserve that refusal, and separately use empty hidden blocks to test only block/end-boundary behavior.

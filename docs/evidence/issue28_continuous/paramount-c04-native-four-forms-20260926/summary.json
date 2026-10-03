@@ -1,0 +1,39 @@
+{
+  "status": "PASS_RECORDED_SOURCE_NATIVE_RUN_WITHHELD_NO_FALSE_ZERO",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "output_root": "/private/tmp/issue28-c04-four-form-20260926-02",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "run_id": "run:ordinary-integrated:88e7b237fc25b6df89294ae969045162c931c52fc4d5281235df51be5aababc7",
+  "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+  "result_value": null,
+  "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+  "event_count": 6,
+  "registration_event_count": 2,
+  "item_claim_count": 22,
+  "item_4_01_count": 0,
+  "public_row_sha256": {
+    "metrics_matrix.csv": "9ffac1d2c445e3f5d9cbc3d04655f961dd25fb457c423fa6f6c140c6da7eec00",
+    "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+  },
+  "ledger_before": [
+    143,
+    143,
+    49
+  ],
+  "ledger_after": [
+    143,
+    143,
+    49
+  ],
+  "ledger_rows_before_after": [
+    192,
+    192
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "cold_read": "PASS_INSTALLED_C04_FOUR_FORM_COLD_READ"
+}

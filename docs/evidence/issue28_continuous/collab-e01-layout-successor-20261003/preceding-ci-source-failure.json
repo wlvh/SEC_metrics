@@ -1,0 +1,21 @@
+{
+  "head": "9a6dea271722b21f1f0145b502d14203332276bd",
+  "run_id": 37050817540,
+  "job_id": 110983470216,
+  "job_scope": "source-material shard1",
+  "failed_selectors": [
+    {
+      "duration_seconds": 240.096,
+      "return_code": 124,
+      "stderr_tail": "\nSOURCE_MATERIAL_TIMEOUT_SECONDS=240",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest",
+      "timeout_seconds": 240
+    }
+  ],
+  "passed_selectors": 32,
+  "whole_run_terminal_not_yet_read": false,
+  "not_e01_implementation_failure": true,
+  "whole_run_conclusion": "FAILURE",
+  "whole_run_updated_at": "2026-10-02T19:47:01Z"
+}

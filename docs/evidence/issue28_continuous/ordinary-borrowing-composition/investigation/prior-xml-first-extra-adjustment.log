@@ -1,0 +1,9 @@
+SOURCE_PROOF {'record_type': 'VERIFIED_NORMAL_SAVED_INPUTS', 'trusted_baseline_commit': '10854a976a021005bdbb54a32afb9900bdb53270', 'source_manifest_sha256': '6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716', 'request_attempt_ids': ['request:attempt:882918e19e768baee7e588ae2e54ba6385f65d59d7d4f1d65c29d64a4b24788b'], 'source_credit': 'PREEXISTING_SAVED_ACQUISITIONS_ONLY', 'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0}}
+Traceback (most recent call last):
+  File "<stdin>", line 14, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 153, in _table
+    _need(len(roles) == 1 or not roles and member, 'COMBINED_BORROWING_UNRECONCILED_TABLE_ROW:'+label)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 38, in _need
+    raise CombinedBorrowingError(reason)
+vnext.b06_combined_borrowings.CombinedBorrowingError: COMBINED_BORROWING_UNRECONCILED_TABLE_ROW:Net fair value adjustments related to hedging and purchase accounting

@@ -1,0 +1,7 @@
+# 私有故障恢复的锁修复与独立复验
+
+完整私有链已通过发布、读取、回退和恢复；在指针写完但切换收据尚未写完时注入故障，recover_publication_mirrors持LOCK_EX，ordinary guard再次通过PublicationView.open取LOCK_SH，实际自锁。原失败进程、sample和私有状态继续保留于完整演练档案。
+
+修复5dc1d764仅在既有锁内使用PublicationView._open_paths；原bundle/receipt/active身份校验不删除，选中或前一版本集合守卫保持。根代理独立读取实际调用顺序、两种读取实现，并复跑真实fcntl旧嵌套锁4秒超时、新correct通过、foreign active拒绝。新CI短测试覆盖selected/previous/foreign并设子进程5秒上限。
+
+该探针替身隔离已核验view和私有edge，并非完整发布材料。新固定运行时的全链故障恢复仍在进行，不以此记录宣称恢复完成。主应用后25项B13/真实锁边界测试通过0.678秒，122 fast通过94.825秒。实际生产active未变，全部新增外发0/0/0。

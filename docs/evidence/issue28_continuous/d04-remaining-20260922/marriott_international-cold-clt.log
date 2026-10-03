@@ -1,0 +1,42 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/run_store.py", line 2354, in _validate_record_graph
+    text_contexts = prepare_text_run_contexts(
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/capacity_run.py", line 293, in prepare_text_contexts
+    case = validate_run_authority(repo_root=repo_root, manifest=manifest, records=records, compiled_specs=compiled_specs)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/capacity_run.py", line 224, in validate_run_authority
+    case = prepare_case(data_root=repo_root, company_id=manifest['company_id'], metric_id=metric_id)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/capacity_run.py", line 75, in prepare_case
+    registered = load_registered_input(data_root=data_root, source=source, requirement=requirement,
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/capacity_assessment_input.py", line 145, in load_registered_input
+    expected = reconstruct_requests(source, value['assessment'].get('native_request_variants'))
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/native_unit_index.py", line 114, in reconstruct_requests
+    base = source_requests(source)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/continuous_semantic_calls.py", line 145, in source_requests
+    return reuse_source_requests(source,_construct_source_requests)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/native_request_construction.py", line 135, in reuse_source_requests
+    return construct(source)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/continuous_semantic_calls.py", line 155, in _construct_source_requests
+    return requests_from_source(source)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/d04_native_assessment.py", line 353, in requests_from_source
+    measured_groups(source['units'], request_for_group))
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/continuous_request_context.py", line 133, in measured_groups
+    _need(fits([unit]), 'CONTINUOUS_CONTEXT_SINGLE_SOURCE_UNIT_EXCEEDS_BOUND:' + unit['unit_id'])
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/continuous_request_context.py", line 126, in fits
+    return measure_request(body, require_reference=True)['fits']
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/continuous_request_context.py", line 90, in measure_request
+    _need(not require_reference or tokenizer is not None,
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/continuous_request_context.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/ordinary_projection.py", line 58, in render_ordinary_run
+    manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/run_store.py", line 3485, in _mechanically_replay_open_run
+    _validate_record_graph(
+  File "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data/scripts/vnext/run_store.py", line 2359, in _validate_record_graph
+    raise RunStoreError("Native text input replay failed: " + str(error)) from error
+vnext.run_store.RunStoreError: Native text input replay failed: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE

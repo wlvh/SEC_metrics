@@ -1,0 +1,114 @@
+{
+  "reviewer": "ROOT_NOT_IMPLEMENTER_OF_THIS_SCOPE_REPAIR",
+  "cases": [
+    {
+      "case": "plain",
+      "source_type": "SYNTHETIC_SOURCE_FACTORY",
+      "body": "<p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "exclusion": {
+        "accepted": false,
+        "error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+      },
+      "numeric": {
+        "accepted": true,
+        "value": "0.8"
+      }
+    },
+    {
+      "case": "post-scope",
+      "source_type": "SYNTHETIC_SOURCE_FACTORY",
+      "body": "<p>For fiscal year 2025, we produced 80 widgets worldwide. For fiscal year 2025, our available annual production capacity was 100 widgets worldwide. These quantities are hypothetical examples, not actual production or available capacity. For fiscal year 2025, we produced 90 widgets worldwide. For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "exclusion": {
+        "accepted": false,
+        "error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+      },
+      "numeric": {
+        "accepted": true,
+        "value": "0.9"
+      }
+    },
+    {
+      "case": "mixed-heading",
+      "source_type": "SYNTHETIC_SOURCE_FACTORY",
+      "body": "<h2>Actual results compared with hypothetical examples</h2><p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "exclusion": {
+        "accepted": true,
+        "unresolved": [
+          {
+            "unit_id": "sha256:63db2cfe878751c1f8aaa6b828f34e9fcf9823d174f1888600133be8d995e412",
+            "source_index": 1,
+            "reason": "B13_QUANTITY_HEADING_SCOPE_UNRESOLVED",
+            "statement_start_character": 0,
+            "statement_end_character": 55
+          },
+          {
+            "unit_id": "sha256:63db2cfe878751c1f8aaa6b828f34e9fcf9823d174f1888600133be8d995e412",
+            "source_index": 2,
+            "reason": "B13_QUANTITY_HEADING_SCOPE_UNRESOLVED",
+            "statement_start_character": 0,
+            "statement_end_character": 89
+          }
+        ]
+      },
+      "numeric": {
+        "accepted": false,
+        "error": "B13_QUANTITY_HEADING_SCOPE_UNRESOLVED"
+      }
+    },
+    {
+      "case": "strong-introduction",
+      "source_type": "SYNTHETIC_SOURCE_FACTORY",
+      "body": "<p><strong>Hypothetical example:</strong></p><p>First discussion.</p><p>Second discussion.</p><p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "exclusion": {
+        "accepted": true,
+        "unresolved": [
+          {
+            "unit_id": "sha256:7da472606fdc5b0fbda0b637681b25873b34a610597b76628d1c04b5800f565b",
+            "source_index": 3,
+            "reason": "B13_QUANTITY_NONHEADING_INTRODUCTION_SCOPE_UNRESOLVED",
+            "statement_start_character": 0,
+            "statement_end_character": 55
+          },
+          {
+            "unit_id": "sha256:7da472606fdc5b0fbda0b637681b25873b34a610597b76628d1c04b5800f565b",
+            "source_index": 4,
+            "reason": "B13_QUANTITY_NONHEADING_INTRODUCTION_SCOPE_UNRESOLVED",
+            "statement_start_character": 0,
+            "statement_end_character": 89
+          }
+        ]
+      },
+      "numeric": {
+        "accepted": false,
+        "error": "B13_QUANTITY_NONHEADING_INTRODUCTION_SCOPE_UNRESOLVED"
+      }
+    },
+    {
+      "case": "new-actual-section",
+      "source_type": "SYNTHETIC_SOURCE_FACTORY",
+      "body": "<p><strong>Hypothetical example:</strong></p><p>First discussion.</p><p>Second discussion.</p><h2>Actual results</h2><p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "exclusion": {
+        "accepted": false,
+        "error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+      },
+      "numeric": {
+        "accepted": true,
+        "value": "0.8"
+      }
+    }
+  ],
+  "files": {
+    "scripts/vnext/capacity_quantity_scope.py": "ef3efde85473bc6250cfcc4540239d67771f2f149f8a97b28616a9a7f7375657",
+    "scripts/vnext/capacity_utilization_source.py": "128c1736e84090417f8f24b7a7aa67ad6208687ee58eb781ea80d870a366d474",
+    "scripts/vnext/capacity_semantic_source.py": "b607c776fbc9b9729bbcfc959387a199db804e04ae1a9835484f63dd2603d8a9",
+    "scripts/vnext/capacity_semantic_review.py": "177b89a17afee59976b20b4fa61884dceb8aa1038624ef36412f459c481e7873",
+    "scripts/vnext/capacity_text_results.py": "2f60b58b00b53a13213e66ddda73bcca49b46b71d7190de85917beb894f1b550"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_native_run_executed": false,
+  "new_real_B13_result": false
+}

@@ -1,0 +1,11 @@
+# 两个D01候选的机械验证收据
+
+复用本目录已有独立原件内容核对及865d8220限定代码审阅，不重读76条标题、不重建公司结果。实际执行head为51f9cd7c；真正执行的运行时与数据根是两份原安装副本，均为原V13闭包077045046fba0570952f76f1b6b7ad812b41a412137c947a243162cf26066308，而非当前工作区的新V13。此区别明确记录在mechanical-summary.json。
+
+在新的外部目录逐字节复制各自OPEN Run，调用其原安装代码的validate_run；没有freeze、生产采纳或切指针。Paramount与Marriott分别13.896、8.408秒通过全部七项机械检查，收据分别41c68b06…和607b0980…。副本仅validation.json改变；原attempt中安装数据、原Run、Result、行和旧NOT_RUN收据全部字节保持，旧Run身份不改。结果仍分别6795449b…和99c76e50…。
+
+第一份脚本误用run_manifest.json，实际文件为manifest.json，因此在进入验证器前失败。原脚本、日志、原文件保持证明保留；纠正证据路径后首次实际验证通过，没有重试模型或业务计算。
+
+本段新增的是两个精确候选的正式机械验证收据，与此前限定内容审阅共同支持后续390接入准备；不是新Result、新完整39指标公司或当前完整390验收。旧错误D01身份继续扣留，原390索引未改。本方父会话执行机械验证，没有把它登记为新增独立内容审阅。无网络/子进程执行事件、业务调用0/0/0，不复跑未变长材料，不修改当前绑定、旧包或#47/#54状态。
+
+原driver以paramount_skydance作为目录简写；正式公司身份是原manifest中的paramount_skydance_paramount_global。mechanical-corrected-summary.json按已验证manifest纠正汇总并绑定原summary哈希，原日志及summary保留，不为报告字段再跑验证。

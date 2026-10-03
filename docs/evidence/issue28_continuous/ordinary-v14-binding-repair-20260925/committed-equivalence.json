@@ -1,0 +1,25 @@
+{
+  "record_type": "ISSUE28_ORDINARY_BINDING_TEST_INPUTS_COMMITTED_EQUIVALENT",
+  "tested_working_tree_parent": "2c2aa8de5d070c598141237f45de82ee92b998a3",
+  "now_committed_patch_sha": "5c307e55932a8c65dbd05ba8ce44d93b66b7c980",
+  "matched_test_input_file_count": 7,
+  "matched_test_input_files": [
+    "requirements/issue_28_v13/baseline_manifest.json",
+    "requirements/issue_28_v14/baseline_manifest.json",
+    "requirements/issue_28_v14/transfer_manifest.json",
+    "scripts/vnext/requirement_profile_v15.py",
+    "tests/vnext/test_continuous_call_policy.py",
+    "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json"
+  ],
+  "v13_closure": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
+  "v14_closure": "sha256:1f110dbc1f68506673772a991e18a5d3c5bcbe996360d8c5fb36687ce48bc504",
+  "uncommitted_changes_after_commit": false,
+  "long_material_tests_not_rerun_after_commit": true,
+  "prior_test_evidence_applies_to_identical_input_bytes": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

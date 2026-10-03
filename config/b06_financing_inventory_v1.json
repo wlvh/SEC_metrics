@@ -1,0 +1,14 @@
+{
+  "record_type": "B06_FINANCING_DISCLOSURE_INVENTORY_POLICY",
+  "schema_version": 1,
+  "finance_lease_concept_pattern": "(?:financelease|capitallease|financinglease)",
+  "finance_lease_text_pattern": "\\b(?:finance|financing|capital)[\\s‐‑–-]+leases?\\b",
+  "supplier_concept_pattern": "supplierfinanceprogramobligation",
+  "supplier_balance_concept": "SupplierFinanceProgramObligationCurrent",
+  "supplier_statement_class_concept": "SupplierFinanceProgramObligationCurrentStatementOfFinancialPositionExtensibleEnumeration",
+  "scope": "CURRENT_CONSOLIDATED_ORIGINAL_SOURCE",
+  "missing_amount_policy": "NEVER_INFER_ZERO",
+  "debt_set_disposition": "NOT_GRANTED_BY_INVENTORY",
+  "creates_metric_result": false,
+  "production_authorized": false
+}

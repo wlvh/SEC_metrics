@@ -1,0 +1,119 @@
+{
+  "cases": [
+    {
+      "case": "actual_plain",
+      "source_html": "<p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "source_id": "sha256:b4fa6e76240ea52f9077a1cec438f2206e9cfb9b2e0baf2b3b899201f6dd7621",
+      "quantity_result": {
+        "value": "0.8",
+        "source_assignments_independently_verified": true,
+        "native_result_created": false
+      },
+      "labels": [
+        {
+          "label": "CURRENT_QUANTITIES",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        },
+        {
+          "label": "OTHER_CONTEXT",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        },
+        {
+          "label": "CONDITIONAL_OR_BOILERPLATE",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        }
+      ]
+    },
+    {
+      "case": "hypothetical_heading_after_two_blocks",
+      "source_html": "<h2>Hypothetical example:</h2><p>The following example shows the calculation.</p><p>All figures in this example are assumed.</p><p>For fiscal year 2025, we produced 80 widgets worldwide.</p><p>For fiscal year 2025, our available annual production capacity was 100 widgets worldwide.</p>",
+      "source_id": "sha256:b3018080c4941a807d1fb1a7438d01dac810fda954351df152aff9b71065d86e",
+      "quantity_result": {
+        "value": "0.8",
+        "source_assignments_independently_verified": true,
+        "native_result_created": false
+      },
+      "labels": [
+        {
+          "label": "CURRENT_QUANTITIES",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        },
+        {
+          "label": "OTHER_CONTEXT",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        },
+        {
+          "label": "CONDITIONAL_OR_BOILERPLATE",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        }
+      ]
+    },
+    {
+      "case": "same_block_post_qualifier",
+      "source_html": "<p>For fiscal year 2025, we produced 80 widgets worldwide. For fiscal year 2025, our available annual production capacity was 100 widgets worldwide. These quantities are hypothetical examples, not actual production or available capacity.</p>",
+      "source_id": "sha256:c32ff35c37f294fd2dd42f6b145ac55cd81052afbdb9e7b325340c57ac8adbe2",
+      "quantity_result": {
+        "value": "0.8",
+        "source_assignments_independently_verified": true,
+        "native_result_created": false
+      },
+      "labels": [
+        {
+          "label": "CURRENT_QUANTITIES",
+          "validation": {
+            "accepted": true,
+            "unresolved": []
+          },
+          "native_acceptance": "PASS"
+        },
+        {
+          "label": "OTHER_CONTEXT",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        },
+        {
+          "label": "CONDITIONAL_OR_BOILERPLATE",
+          "validation": {
+            "accepted": false,
+            "reason": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+          },
+          "native_acceptance_error": "B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT"
+        }
+      ]
+    }
+  ],
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_Run_executed": false,
+  "source_and_admission": "SYNTHETIC_FACTORY_NO_REAL_CREDIT"
+}

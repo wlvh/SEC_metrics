@@ -1,0 +1,65 @@
+test_callers_cannot_supply_spec_period_fact_or_answer (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_callers_cannot_supply_spec_period_fact_or_answer) ... ok
+test_events_need_complete_additional_sources_and_preserve_a_real_zero (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_events_need_complete_additional_sources_and_preserve_a_real_zero) ... ok
+test_native_json_replay_rejects_self_consistent_changed_answer_and_source_omission (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_native_json_replay_rejects_self_consistent_changed_answer_and_source_omission) ... ok
+test_noncalendar_periods_structural_and_source_failures_are_not_relabelled (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_noncalendar_periods_structural_and_source_failures_are_not_relabelled) ... ok
+test_portable_source_copy_needs_no_git_or_old_results_and_tampered_source_fails (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_portable_source_copy_needs_no_git_or_old_results_and_tampered_source_fails) ... ERROR
+test_revenue_is_recovered_from_real_same_accession_companyfacts (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_revenue_is_recovered_from_real_same_accession_companyfacts) ... ok
+test_twenty_actual_coordinates_use_native_records_and_never_create_a_run (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_twenty_actual_coordinates_use_native_records_and_never_create_a_run) ... ok
+
+======================================================================
+ERROR: test_portable_source_copy_needs_no_git_or_old_results_and_tampered_source_fails (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_portable_source_copy_needs_no_git_or_old_results_and_tampered_source_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 91, in _verified_request_locator
+    expected_body, expected_headers = legacy_response_snapshot_paths(
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        workdir=repo_root,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        timestamp_utc=str(row["timestamp_utc"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 813, in legacy_response_snapshot_paths
+    raise ValueError(
+        f"Legacy immutable response body identity mismatch: {body_path}"
+    )
+ValueError: Legacy immutable response body identity mismatch: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/normal-zero-ai-source-ba244lzv/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_zero_ai_results.py", line 164, in test_portable_source_copy_needs_no_git_or_old_results_and_tampered_source_fails
+    resolve_ordinary_zero_ai_metric(repo_root=target,company_id='marriott_international',metric_id=metric)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_zero_ai_results.py", line 136, in resolve_ordinary_zero_ai_metric
+    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input.py", line 213, in prepare_saved_annual_input
+    facts = read(companyfacts_url(cik=cik), accession)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input.py", line 199, in read
+    item = saved_source(repo_root=repo_root, url=url, accession=accession)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_update.py", line 76, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+        repo_root=repo_root, source_url=url,
+        content_sha256=row["content_sha256"], accession=accession,
+        document_name=row["document_name"],
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 227, in request_attempt_binding
+    proof = _verified_request_locator(
+        repo_root=repo_root,
+    ...<3 lines>...
+        document_name=document_name,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 113, in _verified_request_locator
+    raise BatchWorkflowError(
+        "Request-ledger locator evidence is invalid"
+    ) from error
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid
+
+----------------------------------------------------------------------
+Ran 7 tests in 33.725s
+
+FAILED (errors=1)

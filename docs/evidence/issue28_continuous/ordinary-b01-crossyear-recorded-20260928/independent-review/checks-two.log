@@ -1,0 +1,9 @@
+PASS archived result/cold/repeat outputs and scripts equal private run copies
+PASS slot 0001: discovered https://data.sec.gov/submissions/CIK0001048286.json, recorded original_capture plan/receipt/terminal, egress=0, body=5b542458aa0f
+PASS slot 0002: discovered https://data.sec.gov/submissions/CIK0001048286.json, recorded original_capture plan/receipt/terminal, egress=0, body=e3eeefe33c9c
+PASS slot 0003: discovered https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json, recorded original_capture plan/receipt/terminal, egress=0, body=af2fea717f69
+BOUNDARY third Company Facts response equals already-known source bytes; this is freshness completion, not new content discovery
+PASS FY2024: source hashes/period/USD fact/Result/Run and saved installed cold PASS
+PASS FY2025: source hashes/period/USD fact/Result/Run and saved installed cold PASS
+PASS FY2025 predecessor and same-source repeat: no new candidate, success pointer fixed, 0/0/3, repeat overall incomplete at max_sec_requests=0
+BOUNDARY old metadata is constructed; old Company Facts uses later saved source; no historical online sequence, real-call credit, production, or 390 acceptance

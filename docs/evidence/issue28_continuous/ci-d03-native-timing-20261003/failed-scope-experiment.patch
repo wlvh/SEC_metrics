@@ -1,0 +1,37 @@
+diff --git a/tests/vnext/test_d03_native_assessment.py b/tests/vnext/test_d03_native_assessment.py
+index 409a9ae5..48f81a38 100644
+--- a/tests/vnext/test_d03_native_assessment.py
++++ b/tests/vnext/test_d03_native_assessment.py
+@@ -56,17 +56,23 @@ class D03NativeAssessmentTest(unittest.TestCase):
+                           side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+              patch.object(socket, 'getaddrinfo',
+                           side_effect=AssertionError('DNS_FORBIDDEN')):
+-            prepared = prepare_d03_replay_only_requests(
+-                company_id='marriott_international')
+-            selected = next(row for row in prepared if
+-                strict_json_loads(text=row.request_bytes.decode())[
+-                    'required_candidate_assessments'])
+-            request = strict_json_loads(text=selected.request_bytes.decode())
+             with tempfile.TemporaryDirectory(prefix='d03-native-recorded-') as temporary:
+                 ledger = recorded_ledger(root=Path(temporary) / 'ledger')
+-                path, outcome = execute_d03_recorded_assessment(
+-                    prepared=selected, ledger=ledger,
+-                    recorded_wire=_wire(_response(request)))
++                requirement = load_requirement_snapshot(
++                    snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
++                # Preparation and this execution are one operation; disk replay
++                # below starts outside this scope and reauthenticates independently.
++                with request_construction_session(requirement) as construction:
++                    prepared = prepare_d03_replay_only_requests(
++                        company_id='marriott_international')
++                    selected = next(row for row in prepared if
++                        strict_json_loads(text=row.request_bytes.decode())[
++                            'required_candidate_assessments'])
++                    request = strict_json_loads(text=selected.request_bytes.decode())
++                    path, outcome = execute_d03_recorded_assessment(
++                        prepared=selected, ledger=ledger,
++                        recorded_wire=_wire(_response(request)))
++                    self.assertGreater(construction.hits, 0)
+                 self.assertEqual('SUCCEEDED', outcome['terminal']['status'])
+                 self.assertTrue(outcome['native_candidate_evidence_created'])
+                 self.assertFalse(outcome['native_result_created'])
