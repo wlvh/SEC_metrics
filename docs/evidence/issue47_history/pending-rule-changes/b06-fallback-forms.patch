@@ -1,0 +1,809 @@
+diff --git a/docs/evidence/issue47_history/b06-older-years/fallback-forms/README.md b/docs/evidence/issue47_history/b06-older-years/fallback-forms/README.md
+new file mode 100644
+index 00000000..2863aa50
+--- /dev/null
++++ b/docs/evidence/issue47_history/b06-older-years/fallback-forms/README.md
+@@ -0,0 +1,42 @@
++# B06 回退解析器认两种往年写法（Southwest FY2022 出数）
++
++## 问题
++
++`../README.md` 的诊断里，Southwest FY2021–FY2023 的 B06 都停在最后一级——回退解析器的完备性检查（冻结的 `b06_disclosure.verify`）。FY2022 停下的原因是两行它不认识的内容：
++
++- 债务表里一行 “Pass Through Certificates due 2022 - 6.24%”（转递证书，一种有担保的债务工具；这一年已到期，期末为 0）。冻结的债务工具识别词只有 notes、debentures、loan、credit agreement。
++- 一项养老金义务 `us-gaap:DefinedBenefitPlanBenefitObligation`（2.41 亿美元）。冻结的扫描只因概念名以 obligation 结尾就把它列为“可能的融资项”，又没有把养老金归入“性质不同”的那一类。
++
++两者都是程序不认识年报里已有的写法，不是年报没有披露。
++
++## 修法
++
++历史 B06 级联（`scripts/vnext/historical_debt_results.py`，规则文件）的最后一级改用冻结函数的后继（`historical_financial_wording.successor`：冻结函数自己的源码加列出的替换，替换必须恰好命中一次）：
++
++- `fallback_verify_v1`：`b06_disclosure.verify` 加两处替换（`OLDER_FALLBACK_FORMS`）——债务工具识别词多一个 certificates；“标准概念、性质不同”的排除式多一个 definedbenefitplan。
++- `fallback_verify`：`b06_disclosure_v2.verify`，只把调用冻结清单的那一行改为调用 `fallback_verify_v1`；v2 自己的内容检查照常跑。
++- `fallback_resolution`：`normal_candidates._b06_resolution`，只把调用 v2 的那一行改为调用 `fallback_verify`。`_fallback_case` 调它。
++
++冻结模块不改，#28 的普通路线不受影响。冻结解析器能答的申报，后继的答案逐字段相同：两种写法只会改变冻结清单标为 UNRESOLVED 的行，而只要有 UNRESOLVED 行，冻结解析器就不会给出答案。
++
++## 量测（零调用）
++
++- 内存探针（`../probe.py` 的同一套调用，在恢复根上）：Southwest FY2022 由扣留变为 0.7568073360157200336857864695。分子是 `LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities` 减 `DeferredFinanceCostsGross`，即 8,088 百万美元（含融资租赁，年报的租赁政策写明融资租赁计入长期债务各行）；分母 `StockholdersEquity` 10,687 百万美元。转递证书一行计入债务成员（值 0），养老金义务归入“性质不同”。
++- 全帧对比（`frame-measured.json`）：50 期间计划上，冻结与后继各跑一遍级联。（待填）
++- 往下一级（内存里再加两种写法量过，没有采用）：FY2021 还卡在资产负债表一行值为 0 的 “Construction obligation” 和一个每股转换价（单位美元/股）；这两处也认之后，又停在一句回购会计处理的叙述上。FY2023 停在 “The net carrying amount and principal amount of the Convertible Notes was $1.6 billion …” 这句四舍五入的叙述上。这些要新的叙述规则，不在这次范围内，两年照旧扣留。
++- 同一轮也量了 Enphase FY2024（备注账面语法）：它卡在可转债的实际利率（无量纲单位）上，冻结语法对“保修计量利率”有同形分支却没有它；补上后又停在一句“截至 2023 年 12 月 31 日”的往期余额叙述上，所以这次也不采用。
++
++## 用例与注错
++
++`tests/vnext/test_historical_debt_fallback_forms.py`（saved-source 层，7 例）用 `source-records.json`（级联在恢复根上交给回退解析器的输入，由 `collect_inputs.py` 采集）和已存字节（检出或已提交的取数导出）重建输入：
++
++- FY2022：冻结的解析在两行处扣留；后继给出上面的值，两行的处置如上，清单里没有 UNRESOLVED，v2 的内容检查完整跑过。
++- Southwest FY2024、Salesforce FY2026（冻结能答）：后继的答案与冻结的逐字段相同。
++- FY2021、FY2023：后继照旧扣留，停在上面说的下一级。
++- 三个后继各自只带列出的替换；`_fallback_case` 调的是后继。
++
++`injections.py` → `injections.json`：5 个注错（去掉 certificates、去掉养老金排除、v2 仍调冻结清单、解析仍调冻结 v2、级联仍调冻结解析）。
++
++## 未做
++
++这是规则文件改动，先作为待提交补丁保存（`../../pending-rule-changes/`），等模型出口收据提交之后再提交；之后在新闭包下定向重跑 Southwest FY2022 的 B06，用 `tools/read_debt_to_equity.py` 从原件读过再接受。
+diff --git a/docs/evidence/issue47_history/b06-older-years/fallback-forms/frame_compare.py b/docs/evidence/issue47_history/b06-older-years/fallback-forms/frame_compare.py
+new file mode 100644
+index 00000000..e7eeebb8
+--- /dev/null
++++ b/docs/evidence/issue47_history/b06-older-years/fallback-forms/frame_compare.py
+@@ -0,0 +1,47 @@
++"""Compare two runs of the B06 cascade probe over a plan: frozen fallback against the successor.
++
++Usage: python3 frame_compare.py <frozen probe.json> <successor probe.json> <out.json>
++
++Both inputs are ../probe.py outputs over the same plan and restored root; the
++successor run had OLDER_FALLBACK_FORMS applied to the fallback resolver (in
++memory, the same text historical_debt_results compiles). Every position must be
++present in both and neither may carry an error. Positions whose stage, reason,
++value or selection differ are listed with both answers. Zero calls.
++"""
++import json
++import sys
++from pathlib import Path
++
++
++def _answer(row):
++    return {key: row.get(key) for key in ("stage", "reason_code", "publication", "quality", "value")}
++
++
++def main(frozen_path, successor_path, out):
++    frozen = json.loads(Path(frozen_path).read_text(encoding="utf-8"))
++    successor = json.loads(Path(successor_path).read_text(encoding="utf-8"))
++    assert set(frozen) == set(successor), sorted(set(frozen) ^ set(successor))
++    errors = sorted(key for key in frozen if "error" in frozen[key] or "error" in successor[key])
++    assert not errors, errors
++    moved = {key: {"frozen": _answer(frozen[key]), "successor": _answer(successor[key]),
++                   "frozen_reason": (frozen[key].get("selection") or {}).get("reason"),
++                   "successor_reason": (successor[key].get("selection") or {}).get("reason")}
++             for key in sorted(frozen)
++             if (_answer(frozen[key]), frozen[key].get("selection"))
++             != (_answer(successor[key]), successor[key].get("selection"))}
++    Path(out).write_text(json.dumps(
++        {"record_type": "ISSUE_47_B06_FALLBACK_FORMS_FRAME_EFFECT", "positions": len(frozen),
++         "moved": moved,
++         "new_values": sorted(key for key, row in moved.items()
++                              if row["successor"]["value"] is not None
++                              and row["frozen"]["value"] is None),
++         "values_changed": sorted(key for key, row in moved.items()
++                                  if row["frozen"]["value"] is not None),
++         "calls": {"provider": 0, "paid": 0, "sec": 0}},
++        indent=1, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
++    print(len(frozen), "positions;", len(moved), "moved:", sorted(moved))
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main(*sys.argv[1:4]))
+diff --git a/docs/evidence/issue47_history/b06-older-years/fallback-forms/injections.json b/docs/evidence/issue47_history/b06-older-years/fallback-forms/injections.json
+new file mode 100644
+index 00000000..82f71d40
+--- /dev/null
++++ b/docs/evidence/issue47_history/b06-older-years/fallback-forms/injections.json
+@@ -0,0 +1,93 @@
++{
++ "A_PENSION_OBLIGATION_IS_LEFT_UNRESOLVED": {
++  "caught_by_the_case_written_for_it": true,
++  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
++  "failed_cases": [
++   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
++   "test_the_successor_answers_with_both_rows_resolved",
++   "test_the_v2_content_checks_ran_on_the_successor_inventory"
++  ],
++  "file": "scripts/vnext/historical_debt_results.py",
++  "modules": [
++   "tests.vnext.test_historical_debt_fallback_forms"
++  ],
++  "returncodes": [
++   1
++  ],
++  "seconds": 44
++ },
++ "CONTROL": {
++  "returncodes": [
++   0,
++   0
++  ],
++  "seconds": 322
++ },
++ "PASS_THROUGH_CERTIFICATES_ARE_NOT_AN_INSTRUMENT": {
++  "caught_by_the_case_written_for_it": true,
++  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
++  "failed_cases": [
++   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
++   "test_the_successor_answers_with_both_rows_resolved",
++   "test_the_v2_content_checks_ran_on_the_successor_inventory"
++  ],
++  "file": "scripts/vnext/historical_debt_results.py",
++  "modules": [
++   "tests.vnext.test_historical_debt_fallback_forms"
++  ],
++  "returncodes": [
++   1
++  ],
++  "seconds": 47
++ },
++ "THE_FALLBACK_CASE_CALLS_THE_FROZEN_RESOLUTION": {
++  "caught_by_the_case_written_for_it": true,
++  "expected_case": "test_the_fallback_case_calls_the_successor_resolution",
++  "failed_cases": [
++   "test_the_fallback_case_calls_the_successor_resolution"
++  ],
++  "file": "scripts/vnext/historical_debt_results.py",
++  "modules": [
++   "tests.vnext.test_historical_debt_fallback_forms"
++  ],
++  "returncodes": [
++   1
++  ],
++  "seconds": 49
++ },
++ "THE_RESOLUTION_CALLS_THE_FROZEN_V2": {
++  "caught_by_the_case_written_for_it": true,
++  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
++  "failed_cases": [
++   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
++   "test_the_successor_answers_with_both_rows_resolved",
++   "test_the_v2_content_checks_ran_on_the_successor_inventory"
++  ],
++  "file": "scripts/vnext/historical_debt_results.py",
++  "modules": [
++   "tests.vnext.test_historical_debt_fallback_forms"
++  ],
++  "returncodes": [
++   1
++  ],
++  "seconds": 43
++ },
++ "THE_V2_RESOLVER_CALLS_THE_FROZEN_INVENTORY": {
++  "caught_by_the_case_written_for_it": true,
++  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
++  "failed_cases": [
++   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
++   "test_the_successor_answers_with_both_rows_resolved",
++   "test_the_v2_content_checks_ran_on_the_successor_inventory"
++  ],
++  "file": "scripts/vnext/historical_debt_results.py",
++  "modules": [
++   "tests.vnext.test_historical_debt_fallback_forms"
++  ],
++  "returncodes": [
++   1
++  ],
++  "seconds": 44
++ },
++ "all_caught": true
++}
+diff --git a/docs/evidence/issue47_history/b06-older-years/fallback-forms/injections.py b/docs/evidence/issue47_history/b06-older-years/fallback-forms/injections.py
+new file mode 100644
+index 00000000..a97d6544
+--- /dev/null
++++ b/docs/evidence/issue47_history/b06-older-years/fallback-forms/injections.py
+@@ -0,0 +1,58 @@
++"""Undo each part of the B06 fallback successors and require the case written for it to fail.
++
++Usage: python3 injections.py <out.json> [NAME ...]
++
++Same harness as ../../c03-first-ecd-release/injections.py: each injection edits
++the route in place (exactly one match, must compile), runs the module holding
++its case with a fresh bytecode prefix, and restores the bytes. The control run
++- the new module and the cascade's existing one - must pass first. It edits
++the tree it lives in, so run it from a clone or worktree nothing else reads.
++Zero calls.
++"""
++import importlib.util
++import sys
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++spec = importlib.util.spec_from_file_location(
++    "ecd_injections", HERE.parents[1] / "c03-first-ecd-release/injections.py")
++harness = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(harness)
++
++ROUTE = "scripts/vnext/historical_debt_results.py"
++CASES = "tests.vnext.test_historical_debt_fallback_forms"
++ANSWERS = "test_the_successor_answers_with_both_rows_resolved"
++harness.SOURCE, harness.NOTE = ROUTE, ROUTE
++harness.MODULES, harness.CASES = (CASES, "tests.vnext.test_historical_debt_results"), CASES
++harness.INJECTIONS = {
++    "PASS_THROUGH_CERTIFICATES_ARE_NOT_AN_INSTRUMENT": (
++        ROUTE,
++        "     r\"elif re.search(r'\\b(?:notes|debentures|loan|credit agreement|certificates)\\b',lab,re.I):\"),",
++        "     r\"elif re.search(r'\\b(?:notes|debentures|loan|credit agreement)\\b',lab,re.I):\"),",
++        ANSWERS),
++    "A_PENSION_OBLIGATION_IS_LEFT_UNRESOLVED": (
++        ROUTE,
++        "     \"revenueremainingperformanceobligation|definedbenefitplan',short):\"",
++        "     \"revenueremainingperformanceobligation',short):\"",
++        ANSWERS),
++    "THE_V2_RESOLVER_CALLS_THE_FROZEN_INVENTORY": (
++        ROUTE,
++        "     \"    from .historical_debt_results import fallback_verify_v1\\n\"\n"
++        "     \"    proof = fallback_verify_v1(raw=raw, primary=primary, source=source, spec=spec,\"),)",
++        "     \"    proof = prior.verify(raw=raw, primary=primary, source=source, spec=spec,\"),)",
++        ANSWERS),
++    "THE_RESOLUTION_CALLS_THE_FROZEN_V2": (
++        ROUTE,
++        "     '        from .historical_debt_results import fallback_verify\\n'\n"
++        "     '        measurement = fallback_verify(raw=preparation[\"xml\"][\"raw_bytes\"],'),)",
++        "     '        measurement = disclosure.verify(raw=preparation[\"xml\"][\"raw_bytes\"],'),)",
++        ANSWERS),
++    "THE_FALLBACK_CASE_CALLS_THE_FROZEN_RESOLUTION": (
++        ROUTE,
++        "    path, resolution = fallback_resolution(data_root=repo_root, preparation=preparation)\n",
++        "    from .normal_candidates import _b06_resolution\n"
++        "    path, resolution = _b06_resolution(data_root=repo_root, preparation=preparation)\n",
++        "test_the_fallback_case_calls_the_successor_resolution"),
++}
++if __name__ == "__main__":
++    sys.exit(harness.main(sys.argv[1], sys.argv[2:]))
+diff --git a/docs/evidence/issue47_history/b06-older-years/fallback-forms/source-records.json b/docs/evidence/issue47_history/b06-older-years/fallback-forms/source-records.json
+new file mode 100644
+index 00000000..7dac8ca1
+--- /dev/null
++++ b/docs/evidence/issue47_history/b06-older-years/fallback-forms/source-records.json
+@@ -0,0 +1,271 @@
++{
++ "filings": {
++  "salesforce:2026-01-31": {
++   "accession": "0001108524-26-000060",
++   "company_id": "salesforce",
++   "entity": "1108524",
++   "facts": {
++    "source_reference": {
++     "accession": "0001108524-26-000060",
++     "company_id": "salesforce",
++     "document_name": "CIK0001108524.json",
++     "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
++     "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++     "source_role": "companyfacts",
++     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
++    },
++    "storage_uri": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json"
++   },
++   "filing_date": "2026-03-02",
++   "primary": {
++    "source_reference": {
++     "accession": "0001108524-26-000060",
++     "company_id": "salesforce",
++     "document_name": "crm-20260131.htm",
++     "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7",
++     "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
++     "source_role": "target_primary",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
++    },
++    "storage_uri": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
++   },
++   "target_period": {
++    "fiscal_year": 2025,
++    "period_end": "2026-01-31",
++    "period_start": "2025-02-01"
++   },
++   "xml": {
++    "source_reference": {
++     "accession": "0001108524-26-000060",
++     "company_id": "salesforce",
++     "document_name": "crm-20260131_htm.xml",
++     "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3",
++     "source_reference_id": "sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3",
++     "source_role": "auditor_facts",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml"
++    },
++    "storage_uri": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml"
++   }
++  },
++  "southwest_airlines:2021-12-31": {
++   "accession": "0000092380-22-000007",
++   "company_id": "southwest_airlines",
++   "entity": "92380",
++   "facts": {
++    "source_reference": {
++     "accession": "0000092380-22-000007",
++     "company_id": "southwest_airlines",
++     "document_name": "CIK0000092380.json",
++     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
++     "source_reference_id": "sha256:2d204b441fde789da5894f1d3cbf0966d6a50ede3c6c915535e0546cb354fb07",
++     "source_role": "companyfacts",
++     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
++    },
++    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
++   },
++   "filing_date": "2022-02-07",
++   "primary": {
++    "source_reference": {
++     "accession": "0000092380-22-000007",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20211231.htm",
++     "raw_asset_id": "sha256:64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:36a813ec3fca55929b84e37a253cb0fdfe5768f2e818118a75726ce6a5f1a668",
++     "source_reference_id": "sha256:0d793193d1898121493eb7fc92c863e9a1af6bff6205f4df9341687acfa917a7",
++     "source_role": "target_primary",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231.htm"
++    },
++    "storage_uri": "evidence/request_attempts/64/64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d/luv-20211231.htm"
++   },
++   "target_period": {
++    "fiscal_year": 2021,
++    "period_end": "2021-12-31",
++    "period_start": "2021-01-01"
++   },
++   "xml": {
++    "source_reference": {
++     "accession": "0000092380-22-000007",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20211231_htm.xml",
++     "raw_asset_id": "sha256:1208df543f956d502fbfdceb5fc97179822f023669d20300be200b9831bd7d7f",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:5b1edec4b00486c136320e2e8d898f5b89e49485784a31716f844cbab357b32d",
++     "source_reference_id": "sha256:5c608fcb41dda93347a20e3d8efb5f050a86f8dd66b09e875fa9c1b00b58ee10",
++     "source_role": "auditor_facts",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231_htm.xml"
++    },
++    "storage_uri": "evidence/request_attempts/12/1208df543f956d502fbfdceb5fc97179822f023669d20300be200b9831bd7d7f/luv-20211231_htm.xml"
++   }
++  },
++  "southwest_airlines:2022-12-31": {
++   "accession": "0000092380-23-000010",
++   "company_id": "southwest_airlines",
++   "entity": "92380",
++   "facts": {
++    "source_reference": {
++     "accession": "0000092380-23-000010",
++     "company_id": "southwest_airlines",
++     "document_name": "CIK0000092380.json",
++     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
++     "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
++     "source_role": "companyfacts",
++     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
++    },
++    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
++   },
++   "filing_date": "2023-02-07",
++   "primary": {
++    "source_reference": {
++     "accession": "0000092380-23-000010",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20221231.htm",
++     "raw_asset_id": "sha256:a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:177763edbcbc7b590f3d0af2c5aede04eada6da47eb97f491bde18cef5f327ad",
++     "source_reference_id": "sha256:6af4d4f248f490c0515a0ac6352f1f513dccdb1a94d8b9343e0a4ef6e971c0c6",
++     "source_role": "target_primary",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231.htm"
++    },
++    "storage_uri": "evidence/request_attempts/a6/a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2/luv-20221231.htm"
++   },
++   "target_period": {
++    "fiscal_year": 2022,
++    "period_end": "2022-12-31",
++    "period_start": "2022-01-01"
++   },
++   "xml": {
++    "source_reference": {
++     "accession": "0000092380-23-000010",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20221231_htm.xml",
++     "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:404f36c4dff8409fc1ece46b2eff23ca8896e19fcfa9afe8b00042cbc44844ae",
++     "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
++     "source_role": "auditor_facts",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231_htm.xml"
++    },
++    "storage_uri": "evidence/request_attempts/72/729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929/luv-20221231_htm.xml"
++   }
++  },
++  "southwest_airlines:2023-12-31": {
++   "accession": "0000092380-24-000027",
++   "company_id": "southwest_airlines",
++   "entity": "92380",
++   "facts": {
++    "source_reference": {
++     "accession": "0000092380-24-000027",
++     "company_id": "southwest_airlines",
++     "document_name": "CIK0000092380.json",
++     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
++     "source_reference_id": "sha256:aba2ec77d035c340fd8d3e4dbf68a45b461fda613cbcf73bf384571b2cb0a355",
++     "source_role": "companyfacts",
++     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
++    },
++    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
++   },
++   "filing_date": "2024-02-06",
++   "primary": {
++    "source_reference": {
++     "accession": "0000092380-24-000027",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20231231.htm",
++     "raw_asset_id": "sha256:5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:e577d9356110cb9661c14b9de066827522d33afcdb7a70e6bbdb5157a2d6e804",
++     "source_reference_id": "sha256:62e71b69ce63196517ca180426071b28d3dfc0e5fed2a896608af12e27a7641c",
++     "source_role": "target_primary",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238024000027/luv-20231231.htm"
++    },
++    "storage_uri": "evidence/request_attempts/54/5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3/luv-20231231.htm"
++   },
++   "target_period": {
++    "fiscal_year": 2023,
++    "period_end": "2023-12-31",
++    "period_start": "2023-01-01"
++   },
++   "xml": {
++    "source_reference": {
++     "accession": "0000092380-24-000027",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20231231_htm.xml",
++     "raw_asset_id": "sha256:22a6268d145ad82e4b0fc818276705f5d2cb0a6272e16bb728889706aa36241c",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:1b21bcde9b71c76414ee4b21b702f781290d4726f864f5e999bec3c14cc36f16",
++     "source_reference_id": "sha256:97f2af917cecc551d2cf56ac515c304293d7862e0b7f70c990f7a6ff130e43f3",
++     "source_role": "auditor_facts",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238024000027/luv-20231231_htm.xml"
++    },
++    "storage_uri": "evidence/request_attempts/22/22a6268d145ad82e4b0fc818276705f5d2cb0a6272e16bb728889706aa36241c/luv-20231231_htm.xml"
++   }
++  },
++  "southwest_airlines:2024-12-31": {
++   "accession": "0000092380-25-000024",
++   "company_id": "southwest_airlines",
++   "entity": "92380",
++   "facts": {
++    "source_reference": {
++     "accession": "0000092380-25-000024",
++     "company_id": "southwest_airlines",
++     "document_name": "CIK0000092380.json",
++     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
++     "source_reference_id": "sha256:bffd2b822bf4ff46dbd5af2b0def2c582e4c43be3bfab4f76fa5ebd22ffc7bc8",
++     "source_role": "companyfacts",
++     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
++    },
++    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
++   },
++   "filing_date": "2025-02-07",
++   "primary": {
++    "source_reference": {
++     "accession": "0000092380-25-000024",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20241231.htm",
++     "raw_asset_id": "sha256:cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:c5d656583e0aa30d385b94d43c241c66c04a6e3101bc450d88c7a96db7da8680",
++     "source_reference_id": "sha256:77d547af7390f11f3df943e3d9d926f247a83baa36fab94c1f2cf8b79eb4ce56",
++     "source_role": "target_primary",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm"
++    },
++    "storage_uri": "evidence/request_attempts/cb/cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0/luv-20241231.htm"
++   },
++   "target_period": {
++    "fiscal_year": 2024,
++    "period_end": "2024-12-31",
++    "period_start": "2024-01-01"
++   },
++   "xml": {
++    "source_reference": {
++     "accession": "0000092380-25-000024",
++     "company_id": "southwest_airlines",
++     "document_name": "luv-20241231_htm.xml",
++     "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
++     "record_type": "SOURCE_REFERENCE",
++     "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07",
++     "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
++     "source_role": "auditor_facts",
++     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml"
++    },
++    "storage_uri": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml"
++   }
++  }
++ },
++ "record_type": "ISSUE_47_B06_FALLBACK_SOURCE_RECORDS",
++ "why": "The fallback resolver's inputs for each position, captured from the historical cascade on the restored root, so a case can call the resolver on the saved bytes (checkout or export) without that root."
++}
+diff --git a/scripts/vnext/historical_debt_results.py b/scripts/vnext/historical_debt_results.py
+index 475470b1..1801f96f 100644
+--- a/scripts/vnext/historical_debt_results.py
++++ b/scripts/vnext/historical_debt_results.py
+@@ -20,6 +20,16 @@ The result reason codes are the ordinary ones.  They describe the business
+ outcome, and renaming them would make a historical result incomparable to the
+ current one it must agree with.  Only failures that are about this route
+ itself carry a HISTORICAL_ prefix.
++
++The last stage, the disclosure resolver, runs as successors of the frozen
++functions (``historical_financial_wording.successor``: each is the frozen
++function's own source with the listed substitutions and nothing else).  The
++resolver's inventory learns two forms the older annual reports print and the
++frozen inventory leaves unresolved (``OLDER_FALLBACK_FORMS``); the two calls
++above it are changed only to reach that inventory.  A filing the frozen
++resolver answers is answered identically: both forms resolve only rows the
++frozen inventory marks UNRESOLVED, and an UNRESOLVED row stops the frozen
++resolver.  Measured in docs/evidence/issue47_history/b06-older-years/fallback-forms/.
+ """
+ from decimal import Decimal
+ from pathlib import Path
+@@ -55,7 +65,11 @@ from .sources import (companyfacts_structured_facts, raw_blob_record,
+ from .specs import compile_spec_file
+ from .traits import repository_company_traits
+ 
++from . import b06_disclosure as _frozen_disclosure
++from . import b06_disclosure_v2 as _frozen_disclosure_v2
+ from . import normal_bond_debt_results as bond
++from . import normal_candidates as _frozen_candidates
++from .historical_financial_wording import successor
+ from . import normal_inclusive_debt_results as inclusive
+ from . import normal_note_debt_results as note
+ from . import ordinary_special_debt_scope as special
+@@ -64,6 +78,35 @@ import sys
+ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+ from sec_urls import accession_document_url, companyfacts_url, submissions_url  # noqa: E402
+ 
++# Two forms the older annual reports print and the frozen disclosure inventory
++# leaves UNRESOLVED (docs/evidence/issue47_history/b06-older-years/):
++#  - a debt-table row naming pass-through certificates is a debt instrument, as
++#    the notes, debentures and loans beside it are (a matured one shows 0);
++#  - a defined-benefit plan's obligation is an employee-benefit measure, a
++#    different nature from a financing claim; the frozen scan catches it only
++#    because the concept's name ends in "obligation".
++OLDER_FALLBACK_FORMS = (
++    (r"elif re.search(r'\b(?:notes|debentures|loan|credit agreement)\b',lab,re.I):",
++     r"elif re.search(r'\b(?:notes|debentures|loan|credit agreement|certificates)\b',lab,re.I):"),
++    ("revenueremainingperformanceobligation',short):disposition='EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE'",
++     "revenueremainingperformanceobligation|definedbenefitplan',short):"
++     "disposition='EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE'"),
++)
++fallback_verify_v1 = successor(_frozen_disclosure.verify, OLDER_FALLBACK_FORMS)
++
++# The v2 resolver and the ordinary resolution call the frozen inventory by
++# name; their successors call this module's instead and are otherwise frozen.
++FALLBACK_V1_CALL = (
++    ("    proof = prior.verify(raw=raw, primary=primary, source=source, spec=spec,",
++     "    from .historical_debt_results import fallback_verify_v1\n"
++     "    proof = fallback_verify_v1(raw=raw, primary=primary, source=source, spec=spec,"),)
++fallback_verify = successor(_frozen_disclosure_v2.verify, FALLBACK_V1_CALL)
++FALLBACK_CALL = (
++    ('        measurement = disclosure.verify(raw=preparation["xml"]["raw_bytes"],',
++     '        from .historical_debt_results import fallback_verify\n'
++     '        measurement = fallback_verify(raw=preparation["xml"]["raw_bytes"],'),)
++fallback_resolution = successor(_frozen_candidates._b06_resolution, FALLBACK_CALL)
++
+ # The frozen readers this module calls, answering the DEI namespace question
+ # for every taxonomy release (historical_dei).
+ inspect_annual_amendment_scope = release_aware(inspect_annual_amendment_scope)
+@@ -693,15 +736,14 @@ def _guarded_case(*, repo_root: Path, prepared, guarded):
+ 
+ 
+ def _fallback_case(*, repo_root: Path, company_id: str, preparation, guarded):
+-    """`normal_candidates._b06_resolution` behind the ordinary remaining-cases shape.
++    """`normal_candidates._b06_resolution` (as ``fallback_resolution``) behind the ordinary remaining-cases shape.
+ 
+     This is the last stage, not the only one.  Reaching it means the pinned
+     filing matched no debt grammar and its denominator is positive, so the v2
+     disclosure resolver answers - with a value when it can read the relationship
+     and a withheld Result naming what it could not when it cannot.
+     """
+-    from .normal_candidates import _b06_resolution
+-    path, resolution = _b06_resolution(data_root=repo_root, preparation=preparation)
++    path, resolution = fallback_resolution(data_root=repo_root, preparation=preparation)
+     result = resolution["result"]
+     annual = preparation["input_binding"]["prepared_annual_input"]["table_input"]["target_period"]
+     observations = resolution.get("observations",
+diff --git a/tests/vnext/test_historical_debt_fallback_forms.py b/tests/vnext/test_historical_debt_fallback_forms.py
+new file mode 100644
+index 00000000..1c3e78f3
+--- /dev/null
++++ b/tests/vnext/test_historical_debt_fallback_forms.py
+@@ -0,0 +1,151 @@
++"""B06's disclosure resolver on older layouts: two forms the frozen inventory leaves unresolved.
++
++The historical cascade's last stage runs successors of the frozen resolver
++(``historical_debt_results.fallback_resolution`` over ``fallback_verify`` over
++``fallback_verify_v1``). The inventory learns two forms, both from Southwest's
++older annual reports: a debt-table row naming pass-through certificates is a
++debt instrument, as the notes beside it are, and a defined-benefit plan's
++obligation is an employee-benefit measure, not a financing claim.
++
++The cases call the resolution on the saved bytes (checkout or the
++acquisition's export) with the inputs the historical cascade gave it on the
++restored root (``b06-older-years/fallback-forms/source-records.json``):
++
++- Southwest FY2022: the frozen resolution withholds at the matured
++  certificates row and the pension obligation; the successor answers, with the
++  carrying amount and ratio the measurement recorded.
++- Southwest FY2024 and Salesforce FY2026, which the frozen resolution answers:
++  the successor's answer is the frozen one, record for record.
++- Southwest FY2021 and FY2023: the successor still withholds, at the next form
++  the program does not handle (recorded in the measurement, not repaired).
++
++Zero calls.
++"""
++import json
++import sys
++import unittest
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[2]
++sys.path.insert(0, str(ROOT / "scripts"))
++sys.path.insert(0, str(ROOT))
++
++from tools.acceptance_readings import saved_bytes  # noqa: E402
++from vnext import b06_disclosure as frozen_v1  # noqa: E402
++from vnext import b06_disclosure_v2 as frozen_v2  # noqa: E402
++from vnext import historical_debt_results as route  # noqa: E402
++from vnext import normal_candidates as frozen_candidates  # noqa: E402
++
++RECORDS = "docs/evidence/issue47_history/b06-older-years/fallback-forms/source-records.json"
++FY2022 = "southwest_airlines:2022-12-31"
++ANSWERED_BY_THE_FROZEN = ("southwest_airlines:2024-12-31", "salesforce:2026-01-31")
++_CACHE = {}
++
++
++def _preparation(label):
++    """The fallback's preparation, rebuilt from the recorded inputs and the saved bytes."""
++    if label not in _CACHE:
++        filing = json.loads((ROOT / RECORDS).read_text(encoding="utf-8"))["filings"][label]
++
++        def part(name):
++            return {"raw_bytes": saved_bytes(repo_root=ROOT, relative=filing[name]["storage_uri"]),
++                    "source_reference": filing[name]["source_reference"]}
++
++        _CACHE[label] = {
++            "input_binding": {"prepared_annual_input": {
++                "company_id": filing["company_id"], "entity": filing["entity"],
++                "filing": {"accessionNumber": filing["accession"],
++                           "filingDate": filing["filing_date"]},
++                "table_input": {"target_period": filing["target_period"]}}},
++            "xml": part("xml"), "primary": part("primary"), "facts": part("facts")}
++    return _CACHE[label]
++
++
++def _inventory(resolution):
++    return {(item.get("label") or item.get("concept")): item["disposition"]
++            for item in resolution["selection"]["measurement"]["disclosure_inventory"]}
++
++
++class TheOlderReportIsAnsweredWhereTheFrozenInventoryStopped(unittest.TestCase):
++
++    @classmethod
++    def setUpClass(cls):
++        cls.preparation = _preparation(FY2022)
++        _, cls.frozen = frozen_candidates._b06_resolution(data_root=ROOT,
++                                                          preparation=cls.preparation)
++        _, cls.successor = route.fallback_resolution(data_root=ROOT, preparation=cls.preparation)
++
++    def test_the_frozen_resolution_withholds_at_both_forms(self):
++        reason = self.frozen["selection"]["reason"]
++        self.assertEqual("WITHHELD", self.frozen["result"]["publication"])
++        self.assertTrue(reason.startswith("UNRESOLVED_FINANCING_ITEM:"), reason)
++        self.assertIn("Pass Through Certificates due 2022", reason)
++        self.assertIn("us-gaap:definedbenefitplanbenefitobligation", reason)
++
++    def test_the_successor_answers_with_both_rows_resolved(self):
++        result, measurement = self.successor["result"], self.successor["selection"]["measurement"]
++        self.assertEqual(("PUBLISHED", "PASS"), (result["publication"], result["reason_code"]))
++        self.assertEqual("0.7568073360157200336857864695", result["value"])
++        self.assertEqual("8088000000", str(measurement["carrying_amount"]))
++        inventory = _inventory(self.successor)
++        self.assertEqual("INCLUDED_IN_SELECTED_SET",
++                         inventory["Pass Through Certificates due 2022 - 6.24%"])
++        self.assertEqual("EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE",
++                         inventory["us-gaap:definedbenefitplanbenefitobligation"])
++        self.assertNotIn("UNRESOLVED", inventory.values())
++
++    def test_the_v2_content_checks_ran_on_the_successor_inventory(self):
++        """The v2 checks are not skipped: the successor answer carries them in full."""
++        checks = self.successor["selection"]["measurement"]["successor_content_checks"]
++        self.assertEqual(frozen_v2.RESOLVER, checks["version"])
++        self.assertEqual(65, len(checks["narrative_inventory"]))
++        self.assertEqual({"NO_MONETARY_BALANCE_ASSERTION", "EXPLICIT_OTHER_PERIOD",
++                          "EXPLICIT_NO_BORROWING_BALANCE"},
++                         {row["disposition"] for row in checks["narrative_inventory"]})
++        self.assertTrue(checks["primary_xml_numeric_agreement"])
++
++
++class AReportTheFrozenResolverAnswersIsAnsweredIdentically(unittest.TestCase):
++
++    def test_record_for_record(self):
++        for label in ANSWERED_BY_THE_FROZEN:
++            with self.subTest(label):
++                preparation = _preparation(label)
++                frozen = frozen_candidates._b06_resolution(data_root=ROOT, preparation=preparation)
++                successor = route.fallback_resolution(data_root=ROOT, preparation=preparation)
++                self.assertEqual("PUBLISHED", frozen[1]["result"]["publication"])
++                self.assertEqual(frozen, successor)
++
++
++class TheNextFormIsStillWithheld(unittest.TestCase):
++    """Measured, not repaired: each removed form shows the next one."""
++
++    def test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle(self):
++        expected = {"southwest_airlines:2021-12-31": "UNRESOLVED_FINANCING_ITEM:",
++                    "southwest_airlines:2023-12-31": "B06_V2_NARRATIVE_BALANCE_UNSUPPORTED:"}
++        for label, prefix in expected.items():
++            with self.subTest(label):
++                _, resolution = route.fallback_resolution(data_root=ROOT,
++                                                          preparation=_preparation(label))
++                self.assertEqual("WITHHELD", resolution["result"]["publication"])
++                self.assertTrue(resolution["selection"]["reason"].startswith(prefix),
++                                resolution["selection"]["reason"][:200])
++
++
++class TheCascadeReachesTheSuccessors(unittest.TestCase):
++
++    def test_each_successor_carries_exactly_its_substitutions(self):
++        self.assertEqual(route.OLDER_FALLBACK_FORMS,
++                         route.fallback_verify_v1.historical_substitutions)
++        self.assertEqual(route.FALLBACK_V1_CALL, route.fallback_verify.historical_substitutions)
++        self.assertEqual(route.FALLBACK_CALL, route.fallback_resolution.historical_substitutions)
++        self.assertIs(frozen_v1.verify.__globals__, route.fallback_verify_v1.__globals__)
++
++    def test_the_fallback_case_calls_the_successor_resolution(self):
++        names = route._fallback_case.__code__.co_names
++        self.assertIn("fallback_resolution", names)
++        self.assertNotIn("_b06_resolution", names)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tools/run_fast_tests_v2.py b/tools/run_fast_tests_v2.py
+index 4de04bc5..4daddc2c 100644
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -197,6 +197,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_governance_results",)
+ # field for field; a copy checked against itself could not find a
+ # transcription error, so this is the only place one shows up.
+ SOURCE_TESTS += ("tests.vnext.test_historical_debt_results",)
++# B06's disclosure resolver on older layouts: the two forms the frozen inventory
++# leaves unresolved, on Southwest's FY2022 report (answered) and on reports the
++# frozen resolver answers (identical), read from the checkout and the export.
++# 48 seconds measured beside a batch.
++SOURCE_TESTS += ("tests.vnext.test_historical_debt_fallback_forms",)
+ # B10 and B11 through the pinned route. Two cases carry it: one answers the
+ # current period and requires seventeen observation-binding fields to match the
+ # ordinary route's, and one answers Marriott for three years and requires three
+@@ -680,6 +685,7 @@ SOURCE_CI_SECONDS = {
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 376,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 370,
+     "tests.vnext.test_historical_debt_results": 289,
++    "tests.vnext.test_historical_debt_fallback_forms": 48,
+     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 270,
+     "tests.vnext.test_historical_semantic_routes": 249,
+     "tests.vnext.test_continuous_sec_acquisition": 227,
