@@ -5,5 +5,6 @@
 | 补丁 | 内容 | 状态 |
 |---|---|---|
 | `c02-repair-49.patch` | C02 共用修复 49：职责从句里的状态词不算成员资格认定（`historical_board_composition_v3.py`、测试、注错与 `c02-selector-repairs/` 第 49 节、两份量测）。37 份判读与 12 个未判读位置一块不动，Southwest 两个块的标签改对；注错 161/161。 | 待应用 |
+| `d01-running-header.patch` | D01 跳过跨两部分的运行页眉（JPMorgan “Parts I and II”）：`historical_risk_results.py` 改用冻结选择器与冻结推导的后继，各一处替换；新用例模块 `test_historical_running_header.py` 登记进 saved-source 层；`d01-risk-headings/running-header/` 的量测、来源记录、注错。50 份 D01 申报只移动 JPMorgan FY2021/23/24/25 四份、各少这一行；注错 6/6。 | 待应用 |
 
-应用：`git apply docs/evidence/issue47_history/pending-rule-changes/c02-repair-49.patch`，然后 `python3 tools/vnext_mint_historical_requirement.py` 与 `--check`。
+应用：逐个 `git apply docs/evidence/issue47_history/pending-rule-changes/<补丁>`（两份不碰同一个文件，顺序不限），然后 `python3 tools/vnext_mint_historical_requirement.py` 与 `--check`。
