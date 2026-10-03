@@ -12450,16 +12450,15 @@
     "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
-    "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
+    "head_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
     "draft_pr": 43,
     "branch": "task/b06-new-source",
-    "issue_queue_server_exact_updated_at": "2026-10-03T13:41:42Z",
-    "native_goal_status": "active",
     "new_calls": [
       0,
       0,
       0
-    ]
+    ],
+    "native_goal_status": "active"
   },
   "shared_increment_read_f07d089c": {
     "peer_read_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
@@ -12676,5 +12675,86 @@
       0,
       0
     ]
+  },
+  "ci_be21d9f6": {
+    "run_id": 37139355511,
+    "head_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL_EXACT_HEAD",
+    "updated_at": "2026-10-03T18:06:40Z"
+  },
+  "d03_model_native_mapping_20261004": {
+    "state": "IMPLEMENTED_NATIVE_PENDING_REVIEW_CODE_INDEPENDENT_REVIEW_REQUIRED",
+    "evidence": "docs/evidence/issue28_continuous/d03-model-native-mapping-20261004/README.md",
+    "tested_base_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+    "test_tree": "BASE_PLUS_RECORDED_UNCOMMITTED_PRODUCT_DIFF",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+    "request_count": 6,
+    "source_unit_count": 17,
+    "findings": 25,
+    "unresolved": 18,
+    "build": {
+      "tested_base_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+      "uncommitted_product_module": true,
+      "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "output": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004/native-pending-final-display",
+      "seconds": 4.197,
+      "candidate_hash": "sha256:92dcda707632a0fbf661cd0704661e70ec5b8391bd6519fcb5cb55a3040b0cec",
+      "unit_hash": "sha256:7d4d085ed67f317e6f2e78a11be1751fd1b60f1cfe4d5096942ebc4154e2e705",
+      "review_bytes": 161145,
+      "context_bytes": 2633166,
+      "native_credit": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cold": {
+      "candidate_hash": "sha256:92dcda707632a0fbf661cd0704661e70ec5b8391bd6519fcb5cb55a3040b0cec",
+      "unit_hash": "sha256:7d4d085ed67f317e6f2e78a11be1751fd1b60f1cfe4d5096942ebc4154e2e705",
+      "request_count": 6,
+      "findings": 25,
+      "unresolved": 18,
+      "seconds": 4.201,
+      "native_credit": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "short_tests": 7,
+    "fast": {
+      "selectors": 154,
+      "seconds": 191.57628000015393,
+      "state": "PASS_BEFORE_FINAL_DISPLAY_DELTA",
+      "final_affected_verification": "7 short tests and actual source build/cold/4 negative controls passed after display delta"
+    },
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "native_company_result_created": false,
+    "real_call_permission": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "shared_impact": {
+      "files": [
+        "scripts/vnext/d03_model_processing.py",
+        "catalog/r6/D03_model_source_development_v1.md"
+      ],
+      "functions": [
+        "build_development_company_assessment",
+        "read_development_company_assessment"
+      ],
+      "old_defaults_changed": false,
+      "old_execution_authority_changed": false,
+      "old_source_and_raw_responses_changed": false
+    },
+    "next": "Exact new mapper/source-to-pending delta review; real D03 purpose and positive/negative original business validation still required."
   }
 }
