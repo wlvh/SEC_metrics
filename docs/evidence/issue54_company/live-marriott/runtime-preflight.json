@@ -1,0 +1,42 @@
+{
+  "source_commit": "b4f97bba3539b89fa045dd221329a2f76cb5fd67",
+  "program_root": "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182",
+  "program_git_commit": "140bd8e96f9980ed18cd825bcc11402c9e48c4e2",
+  "requirement_id": "issue_54_v4",
+  "requirement_closure_hash": "sha256:7e577402fa98974628bf613a3a82e66d79f55385ccce117ea5d1f0cd11d49fa2",
+  "preflight_raw_existed": false,
+  "preflight_raw_check": "Actual configure_task preflight output before the run; the source-inputs directory did not exist",
+  "program_read_only": true,
+  "uid": 1000,
+  "user_agent": "axaxl 12@qq.com",
+  "tls_cert_required": true,
+  "tls_check_hostname": true,
+  "rate_limit_per_sec": 1,
+  "max_retries": 0,
+  "environment": "Codex managed Linux workspace; not the user computer",
+  "authorization_file": "docs/evidence/issue54_company/live-marriott/authorization.json",
+  "task_configuration": {
+    "company_id": "marriott_international",
+    "program_root": "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182",
+    "sec_allowance": 120
+  },
+  "actual_acquisition_ledger_binding": {
+    "binding_id": "sha256:8ab15536f39b0023a581339048e9731d7df85f574594d7cd40771fea96af4361",
+    "company_id": "marriott_international",
+    "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/54",
+    "empty_baseline_sha256": "5290e28d826643da27eb40757af3ea90b919732da4418429a2b0dc009bcb3ccc",
+    "execution_mode": "LIVE",
+    "limits": [
+      0,
+      0,
+      120
+    ],
+    "production_authorized": false,
+    "purposes": [
+      "remaining_development_feasibility"
+    ],
+    "record_type": "CONTINUOUS_CALL_ALLOWANCE",
+    "root": "/workspace/work/live-marriott-20261004/acquisition",
+    "runtime_requirement_closure_hash": "sha256:7e577402fa98974628bf613a3a82e66d79f55385ccce117ea5d1f0cd11d49fa2"
+  }
+}

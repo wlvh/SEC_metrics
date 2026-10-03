@@ -58,6 +58,6 @@ python /path/to/SEC_metrics/tools/vnext_company.py acquire \
 
 合法已保存的D04用单独`work-dir/processing.json`接入：`package_root`、原`runtime_root`、处理`trust_root`、原SEC `source_version`及其`source_runtime`、`source_trust_root`。这些是在准备端认证一次后管理的独立输入，不放入SEC包、不改签旧请求/响应。空历史版本由新的固定树验证，原SEC版本由它自己的旧树独立认证，再用原判断程序检查完整内容等价；期间/原文/输入责任变化则拒绝复用。未配置、记录不完整或需要新判断时明确待处理；当前没有本任务已获准的新本地模型入口，不调用#28的私人provider预算。旧已接通D04和新空来源接线的覆盖分列。
 
-运行位置：程序/规则在`work-dir/programs/<version>`固定保存，计算期间只读；来源在`work-dir/acquisition/source-inputs`、其独立调用账本在`acquisition`，来源登记在`trust/acquisition`，公司准入在`trust/company`；公司持久状态/旧Run在`company-state`，结果冷出口在`result-exports`，业务用户文件在`output-dir`。无需个人HOME、root、特权或unshare。当前执行用户UID1000、无capabilities，录制捕获和只读程序实际通过；不据此声称OpenShift或系统级网络隔离验收。
+运行位置：程序/规则在`work-dir/programs/<version>`固定保存，计算期间只读；来源在`work-dir/acquisition/source-inputs`、其独立调用账本在`acquisition`，来源登记在`trust/acquisition`，公司准入在`trust/company`；公司持久状态/旧Run在`company-state`，结果冷出口在`result-exports`，业务用户文件在`output-dir`。无需个人HOME、root、特权或unshare。当前执行用户UID1000、无capabilities，Marriott真实首跑/同目录复跑和只读程序实际通过；不据此声称OpenShift或系统级网络隔离验收。
 
-当前证据及明确缺口见[本地接线材料](evidence/issue54_company/local-run/README.md)。真实首次运行＋同目录复跑尚未完成，不能把保存材料录制称为真实验收。main依赖、阶段集成顺序及原负责人的接收情况也在该处固定。
+Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC GET、27份来源复用，复跑36个原生候选独立冷读通过；39项中D02/D03/D04仍明确限制，不是39项业务验收或正式发布。实际CSV、摘要、来源/运行版本、修复与合并依赖见[真实运行材料](evidence/issue54_company/live-marriott/README.md)；[此前本地接线材料](evidence/issue54_company/local-run/README.md)仍按录制范围保留。
