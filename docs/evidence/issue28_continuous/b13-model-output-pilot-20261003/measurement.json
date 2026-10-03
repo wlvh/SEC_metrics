@@ -1,0 +1,63 @@
+{
+  "source_json_sha256": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+  "original_source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+  "original_all_unit_count": 29,
+  "subset_unit_ids": [
+    "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+    "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+    "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+    "sha256:885e215a010679cf5a16dd0d94e1a6bc49f846b7ac4702b9af3f735136afaf57",
+    "sha256:270e5d5d6f8307066f62ef93e9e542c612e8b09e4ca1ba393cbea6aadbd6e2ad",
+    "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+    "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+    "sha256:2bf0475d01d7cc29295a1d9b6ee635aad231a38d46f85ea407c182c18e098bb6",
+    "sha256:23c828273501990f075abe76dc8bae989c11d13673b0832f43e4cdf364b106af"
+  ],
+  "covered_old_failure192_unit_ids": [
+    "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+    "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+    "sha256:2bf0475d01d7cc29295a1d9b6ee635aad231a38d46f85ea407c182c18e098bb6",
+    "sha256:23c828273501990f075abe76dc8bae989c11d13673b0832f43e4cdf364b106af"
+  ],
+  "all_visible_blocks": 2709,
+  "raw_native_payloads_exact_restored": true,
+  "old_response_read": false,
+  "source_subset_not_company_absence": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "live_authorized": false,
+  "output_root": "/private/tmp/issue28-b13-source-only-input-20261003",
+  "measurement": {
+    "request_sha256": "b126b60f89d7be3a68afb0e2a23914fdf22bcad85c8a428a72eb1dac7e35f844",
+    "request_bytes": 766124,
+    "rendered_prompt_sha256": "098e6a49e601cc72123a061c16c782202704b5ca311ef88c0be8ab62a27fa531",
+    "rendered_prompt_bytes": 737527,
+    "input_tokens": 195392,
+    "output_reserve_tokens": 4096,
+    "context_tokens": 199488,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 4096
+    }
+  }
+}

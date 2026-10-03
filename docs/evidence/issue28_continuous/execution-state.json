@@ -12070,7 +12070,8 @@
     "tested_uncommitted_tree_matches_commit_files": true,
     "credit_scope": "This exact saved-source heading result in explicit development view only, not complete Run/current automatic-update/production acceptance.",
     "receiver_review_path": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-reader-review/conclusion.md",
-    "receiver_review_verdict": "PASS_LIMITED_DELTA"
+    "receiver_review_verdict": "PASS_LIMITED_DELTA",
+    "technical_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5967591464"
   },
   "last_confirmed_main_ci": {
     "head_sha": "6219efe68b10fe50e4829d19b89f9a787019b57f",
@@ -12078,5 +12079,62 @@
     "status": "completed",
     "conclusion": "success",
     "updated_at": "2026-10-03T08:26:10Z"
+  },
+  "current_head_ci_observation": {
+    "sha": "06d109f626f1388eeda5b0fc8bf7ad24c20ac072",
+    "run_id": 37112012826,
+    "status": "in_progress",
+    "conclusion": null,
+    "observed_once_after_push": true,
+    "preceding_main_success": "37107361465@6219efe6",
+    "reference_workflow_success_not_main_credit": true
+  },
+  "current_head_delivery_checkpoint": {
+    "sha": "06d109f626f1388eeda5b0fc8bf7ad24c20ac072",
+    "remote_pr43_head_verified": true,
+    "issue28_section3_readback": "2026-10-03T09:10:27Z",
+    "source_ledger_claims": 195,
+    "channels": [
+      143,
+      143,
+      52
+    ],
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "B13 actual-source minimal-output developer diagnostic; D03 all-unit response/native relation work. C02 target-provider purpose remains unapproved. Goal remains active."
+  },
+  "shared_increment_read_20261003_b13": {
+    "own_sha": "06d109f626f1388eeda5b0fc8bf7ad24c20ac072",
+    "peer47_sha": "d4e2db2d64e958b30b1a8fac9ff83f87f7940105",
+    "prior_peer47_sha": "d84f41f2ea2c1730482221b53eb97aaac54392d5",
+    "disposition": "Peer merged own6219 then adapted its D04 indexed requests. No ownB13/C02 selector delta; own ten D04 original results stay on their tested identities, not rerun or resigned. Known-register increment read, no peer acceptance credit copied.",
+    "first_diff_failure": "Unquoted absent known_result* glob in zsh; subsequent literal-path diff succeeds. Fetch itself succeeded."
+  },
+  "b13_model_output_pilot_20261003": {
+    "state": "SOURCE_REFERENCE_AND_MEASURED_DEVELOPMENT_INPUT_READY_FOR_BLIND_DIAGNOSIS",
+    "evidence": "docs/evidence/issue28_continuous/b13-model-output-pilot-20261003/",
+    "failure_source": "calls/0192",
+    "source_subset_units": 9,
+    "complete_original_units": 29,
+    "visible_blocks": 2709,
+    "request_sha256": "b126b60f89d7be3a68afb0e2a23914fdf22bcad85c8a428a72eb1dac7e35f844",
+    "input_tokens": 195392,
+    "context_tokens": 199488,
+    "output_limit": 4096,
+    "historical190_credit_inherited": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "real_authorized": false,
+    "developer_model_executed": false,
+    "task_revisions_used": 0,
+    "task_revisions_remaining": 1,
+    "old_group1_original_check_reused": "docs/evidence/issue28_continuous/b13-enphase-group1-source-check-20260930/conclusion.md",
+    "input_scope_note": "All oldfailure192 units plus complete visible context from same annual source; not all29unit or company acceptance. Parent reference excluded from model input."
   }
 }
