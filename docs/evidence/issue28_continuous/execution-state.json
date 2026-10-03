@@ -3614,6 +3614,27 @@
       "result_path": "docs/evidence/issue28_continuous/b03-salesforce-full-scope-audit-20261003/conclusion.md",
       "verdict": "FULL_FINANCIAL_SCOPE_READ_COMPONENT_ONLY_TOTAL_UNPROVEN",
       "ordinary_messages": 1
+    },
+    {
+      "task_name": "audit_b06ford_1f62725",
+      "purpose": "ONE_TIME_LARGE_ORIGINAL_SCOPE_AUDIT",
+      "module": "b06_ford_full_financial_original",
+      "scope_paths": [
+        "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+        "catalog/r5/B06_new_source_v2.md",
+        "config/b06_special_scope_v1.json",
+        "scripts/vnext/ordinary_special_debt_scope.py",
+        "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/"
+      ],
+      "patch_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
+      "spawned_at": "2026-10-03T01:06:40.818273+00:00",
+      "ended_at": "2026-10-03T01:19:45.784798+00:00",
+      "tool_calls": 52,
+      "result_path": "docs/evidence/issue28_continuous/b06-ford-full-scope-audit-20261003/conclusion.md",
+      "verdict": "LIMITED_SOURCE_AUDIT_NO_DIRECT_INDUSTRIAL_EQUITY_NO_B06_CREDIT",
+      "status": "DONE",
+      "ordinary_messages": 1,
+      "dedup_note": "list_agents no live/same-purpose agent; subagent_register no B06 full-original audit; existing independent B03 Ford reviews different module/scope. This is once-only complete financial statements/notes read beyond prior XBRL/table probes; underscore task naming required by spawn tool."
     }
   ],
   "ci_capacity_20260922": {
@@ -11472,5 +11493,28 @@
     "peer_read_commit": "562128fc",
     "baseline": "52d94470",
     "scope": "Peer merged own base899 plus CLI/CI evidence; no relevant shared source core change or defect-release credit copied"
+  },
+  "b06_ford_full_financial_audit_20261003": {
+    "status": "FULL_FINANCIAL_STATEMENTS_AND_25_NOTES_READ_WITH_LIMITED_MDA_NO_B06_RESULT",
+    "patch_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
+    "evidence": "docs/evidence/issue28_continuous/b06-ford-full-scope-audit-20261003/conclusion.md",
+    "source_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "printed_financial_pages": [
+      108,
+      176
+    ],
+    "same_scope_equity": "NOT_ESTABLISHED_IN_READ_SCOPE",
+    "reported_debt": 21919000000,
+    "finance_leases_already_in_reported_debt": 890000000,
+    "consolidated_accrued_interest_unallocated": 1453000000,
+    "future_interest_misleading_concept_not_accrued": 12749000000,
+    "reported_inclusion_relation_consumed_by_runtime": false,
+    "current_result": "WITHHELD_NULL_B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "scope_limit": "Child one-time original reading, not independent human acceptance; parent checked96 raw page SHAs and six key pages, not full financial reread. Original v1 default and current withheld selection unchanged."
   }
 }
