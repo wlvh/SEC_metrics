@@ -192,6 +192,21 @@
       ],
       "current_product_goal_credit": false,
       "old_spec_run_result_and_denominator_preserved": true
+    },
+    "jpmorgan_d01_running_header_20261003": {
+      "status": "EXACT_OLD_AND_CURRENT_IDENTITY_CONFIRMED_WITHHELD",
+      "result_id": "sha256:994427388d20f9ee0aef09c080a0e1f5b8420fcb5f4fd276a6489734193c1242",
+      "source_claim_index": 937,
+      "source_byte_span": [
+        1691112,
+        1691126
+      ],
+      "other_D01_results_not_affected_by_metric_name": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
     }
   },
   "defects": [
@@ -1211,9 +1226,23 @@
         "received_core_sha": "4fcb1ebad662f915c87a5de9ac9c5bb2814f85b6",
         "status": "3436_SPECIFICALLY_REMOVED_IN_PRIVATE_SUCCESSOR; CORE_REVIEW_NEEDS_FIX_AND_WRITES_SUSPENDED; OLD_RESULT_NOT_RELEASED"
       }
+    },
+    {
+      "defect_id": "D01_JPMORGAN_2025_RUNNING_HEADER_ORDINARY_390",
+      "company_id": "jpmorgan_chase",
+      "metric_id": "D01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:994427388d20f9ee0aef09c080a0e1f5b8420fcb5f4fd276a6489734193c1242",
+      "summary": "Current ordinary and archived390 same Result ends with page running header Parts I and II, not a risk-factor heading.",
+      "fixed_peer_sha": "af29ab2f41f40a442c13a3453c97d2c476f3536b",
+      "peer_defect_id": "D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "own_evidence": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/audit.json",
+      "repair_state": "CONFIRMED_OWN_CURRENT_RESULT_WITHHELD; FIXED_PEER_PENDING_PATCH_NOT_YET_CONSUMED",
+      "released": []
     }
   ],
-  "latest_peer_read_commit": "594da5aeb345a1e3bc287c783bfb3fd172a11527",
+  "latest_peer_read_commit": "af29ab2f41f40a442c13a3453c97d2c476f3536b",
   "product_scope_acceptance_limits": {
     "record_type": "ISSUE28_FINITE_LEGACY_PRODUCT_SCOPE_ACCEPTANCE_LIMITS",
     "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",

@@ -45,7 +45,7 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           (c02_auditor_revision and c02_composition and c02_grouped and metric_id == 'C02')),
           'NORMAL_C02_MEMBER_REVISION_SCOPE_INVALID')
-    _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == "D01"),
+    _need((type(d01_emphasis) is bool or d01_emphasis == "RUNNING_HEADER_V3") and (not d01_emphasis or metric_id == "D01"),
           "NORMAL_D01_EMPHASIS_SCOPE_INVALID")
     _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
           and (not d02_category or metric_id == "D02"),
@@ -107,7 +107,10 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
                 "references": references, "source_proofs": prepared["source_proofs"], "admission": admission,
                 "target_period": period, "target": target, "text_arguments": args, "spec_path": TEXT_PATHS[metric_id]}
         if d01_emphasis:
-            from .d01_emphasis_results import POLICY
+            if d01_emphasis == "RUNNING_HEADER_V3":
+                from .d01_emphasis_results_v3 import POLICY
+            else:
+                from .d01_emphasis_results import POLICY
             case["input_binding"] = {"d01_emphasis_policy": POLICY,
                                      "source_input_binding": prepared}
             case["text_arguments"] = {**args, "d01_emphasis_policy": POLICY}

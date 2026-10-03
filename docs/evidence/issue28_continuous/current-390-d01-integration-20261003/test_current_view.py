@@ -29,7 +29,7 @@ class CurrentViewTest(unittest.TestCase):
     def test_two_fixed_results_selected_without_releasing_original_bad_ids(self):
         result = self.view()
         self.assertEqual(390, result['coordinate_count'])
-        self.assertEqual(17, result['selected_known_defect_coordinate_count'])
+        self.assertEqual(18, result['selected_known_defect_coordinate_count'])
         self.assertFalse(result['all390_acceptance'])
         for replacement in self.delta['changed_coordinates']:
             row = next(r for r in result['rows'] if r['company_id'] == replacement['company_id'] and r['metric_id'] == 'D01')
@@ -134,7 +134,7 @@ class CurrentViewTest(unittest.TestCase):
 
     def test_product_scope_gap_does_not_inflate_confirmed_defect_count(self):
         view = self.view()
-        self.assertEqual(17, view['selected_known_defect_coordinate_count'])
+        self.assertEqual(18, view['selected_known_defect_coordinate_count'])
         self.assertEqual(20, view['selected_product_scope_pending_count'])
         rows = [r for r in view['rows'] if 'current_product_scope_limit' in r
                 and 'current_defect_ids' not in r]

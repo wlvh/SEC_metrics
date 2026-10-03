@@ -1,4 +1,9 @@
-"""Explicit D01 successor over the frozen text-record and Review machinery.
+"""Versioned D01 receiver: source V2 plus pinned two-part header exclusion.
+
+Copied from d01_emphasis_results.py at 9e37beb9, with only the policy marker
+and two derivation calls adapted. Old V2 and shared defaults stay unchanged.
+
+Explicit D01 successor over the frozen text-record and Review machinery.
 
 Adapted from #47 historical_risk_results.py at fixed commit 2b4f571e. The
 frozen candidate derivation, heading selector, record shapes and Calculator
@@ -18,7 +23,8 @@ from .text_results import (DETERMINISTIC_CANDIDATE_TYPE, DETERMINISTIC_METHOD,
                            VALUE_KIND, _CLAIM_FIELDS, _extent_value, _need, _record,
                            _text, text_policy)
 
-POLICY = "D01_EMPHASIS_SOURCE_V2"
+POLICY = "D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER"
+from .d01_running_header_28_v1 import derive_candidate as _derive_candidate
 
 
 def _successor(*, compiled_spec, d01_emphasis_policy):
@@ -92,7 +98,7 @@ def create_deterministic_text_candidate(*, compiled_spec, target, source_referen
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
         d01_emphasis_policy=d01_emphasis_policy)
-    return frozen._derive_deterministic_candidate(
+    return _derive_candidate(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         documents=documents, coverages=coverages)
 
@@ -106,11 +112,6 @@ def verify_deterministic_text_candidate(*, candidate, **source_arguments):
 def build_text_evidence(*, compiled_spec, target, candidate, source_references,
                         raw_blobs, raw_bytes_by_id, d01_emphasis_policy=None):
     """Check every selected exact excerpt and required section using raw bytes."""
-    if d01_emphasis_policy == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER':
-        from .d01_emphasis_results_v3 import build_text_evidence as successor
-        return successor(compiled_spec=compiled_spec, target=target, candidate=candidate,
-            source_references=source_references, raw_blobs=raw_blobs,
-            raw_bytes_by_id=raw_bytes_by_id, d01_emphasis_policy=d01_emphasis_policy)
     if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
         return frozen.build_text_evidence(
             compiled_spec=compiled_spec, target=target, candidate=candidate,
@@ -133,7 +134,7 @@ def build_text_evidence(*, compiled_spec, target, candidate, source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
         d01_emphasis_policy=d01_emphasis_policy)
     if candidate["record_type"] == DETERMINISTIC_CANDIDATE_TYPE:
-        expected = frozen._derive_deterministic_candidate(
+        expected = _derive_candidate(
             compiled_spec=compiled_spec, target=target, source_references=source_references,
             documents=documents, coverages=coverages)
         _need(candidate == expected, "DETERMINISTIC_TEXT_CANDIDATE_REPLAY_CHANGED")
@@ -253,13 +254,6 @@ def reviewed_text_observations(*, compiled_spec, target, candidate, evidence_che
 def replay_text_result(*, compiled_spec, target, company_traits, candidate, evidence_check,
                        review_unit, review_decisions, source_references, raw_blobs,
                        raw_bytes_by_id, d01_emphasis_policy=None):
-    if d01_emphasis_policy == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER':
-        from .d01_emphasis_results_v3 import replay_text_result as successor
-        return successor(compiled_spec=compiled_spec, target=target, company_traits=company_traits,
-            candidate=candidate, evidence_check=evidence_check, review_unit=review_unit,
-            review_decisions=review_decisions, source_references=source_references,
-            raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
-            d01_emphasis_policy=d01_emphasis_policy)
     """Single raw-source-to-result replay hook for OPEN and FROZEN Run graphs."""
     if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
         return frozen.replay_text_result(
