@@ -11747,5 +11747,38 @@
     "review_path": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md",
     "review_verdict": "PASS_LIMITED_D01_HEADER_RECEIVER",
     "installed_execution_and_rule_files_match_patch_sha": 404
+  },
+  "ai_development_method_20261003": {
+    "authority": "https://github.com/wlvh/SEC_metrics/issues/28#ai-development-20261003",
+    "actual_server_body_read_at": "2026-10-03T05:02:20Z",
+    "input_scope": "Enphase 2026 DEF14A complete 2784 visible blocks; development/regression material",
+    "evidence": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/",
+    "state": "REFERENCE_AND_SOURCE_ONLY_INPUT_PREPARED_PENDING_BLIND_INPUT_DIAGNOSIS",
+    "input_root": "/private/tmp/issue28-c02-blind-source-pilot1-20261003",
+    "input_tokens": 88815,
+    "output_limit": 4096,
+    "no_new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "no_native_or_production_credit": true,
+    "AGENTS_bound_in_current_V13_V14": false
+  },
+  "shared_increment_read_20261003_0505": {
+    "own_sha": "0387187501ddfb5c31df774ddc5540257f4f3ad8",
+    "peer47_sha": "20497f4dd3b8e745a01d8892606bcf5cff769729",
+    "peer54_sha": "191d148775995827f957e2a0d22ed70268bfcba2",
+    "fetch_first_combined_failure": "unknown assumed #54 branch task/company-separated-compute; no current claim made; retried actual PR55 head task/sec-company-compute successfully",
+    "peer47_disposition": "B06 older fallback forms and FY2021 JPM proxy are pending patches, not live core. Current Ford equity/accrual and current C02 identity gaps unchanged; do not apply to match repair numbers. D01 received separately at31beeab.",
+    "peer54_disposition": "Historical batch replay/caching and company view/export scope revisions; own earlier frozen C04/D04/D01 consumers remain pinned to their tested versions. No broad PASS upgrade or package implementation copied; assess actual delta before new consumer trust.",
+    "technical_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5965823404",
+    "issue28_section3_readback": "2026-10-03T05:05:35Z",
+    "current_main_ci": {
+      "sha": "0387187501ddfb5c31df774ddc5540257f4f3ad8",
+      "id": 37098614915,
+      "status": "queued",
+      "conclusion": null
+    }
   }
 }
