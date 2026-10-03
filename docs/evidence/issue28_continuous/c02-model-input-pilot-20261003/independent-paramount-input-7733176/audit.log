@@ -1,0 +1,204 @@
+{
+  "task": "One-time fixed-task complete-source input diagnosis",
+  "patch": "7733176e2318681a63dfb852dadee134763b6cfd",
+  "input_directory": "/private/tmp/issue28-c02-paramount-blind-fixed-task-20261003",
+  "start_utc": "2026-10-03T05:49:07.092092+00:00",
+  "complete_read_observed_utc": "2026-10-03T05:53:41.862543+00:00",
+  "end_utc": "2026-10-03T05:57:34.432717+00:00",
+  "elapsed_seconds": 507.340625,
+  "source_read_coverage": "All blocks B0-B1595, in document order; B1481-B1492 filled after the sole observed output truncation.",
+  "source_block_count_read": 1596,
+  "unread_source_blocks": [],
+  "read_events": [
+    {
+      "outer_call": 1,
+      "chunk_id": "1f7d52",
+      "operation": "complete prompt and input-directory inventory"
+    },
+    {
+      "outer_call": 2,
+      "chunk_id": "bb9917",
+      "source_blocks": [
+        0,
+        199
+      ],
+      "truncated": false,
+      "other_reads": [
+        "metadata.json",
+        "context-measurement.json"
+      ]
+    },
+    {
+      "outer_call": 3,
+      "chunk_id": "bbfdcb",
+      "source_blocks": [
+        200,
+        399
+      ],
+      "truncated": false
+    },
+    {
+      "outer_call": 4,
+      "chunk_id": "b49fc9",
+      "source_blocks": [
+        400,
+        599
+      ],
+      "truncated": false
+    },
+    {
+      "outer_call": 5,
+      "chunk_id": "776654",
+      "source_blocks": [
+        600,
+        799
+      ],
+      "truncated": false
+    },
+    {
+      "outer_call": 6,
+      "chunk_id": "a410c4",
+      "source_blocks": [
+        800,
+        999
+      ],
+      "truncated": false
+    },
+    {
+      "outer_call": 7,
+      "chunk_id": "c1cf0a",
+      "source_blocks": [
+        1000,
+        1199
+      ],
+      "truncated": false
+    },
+    {
+      "outer_call": 8,
+      "chunk_id": "dd3176",
+      "source_blocks": [
+        1200,
+        1399
+      ],
+      "truncated": false
+    },
+    {
+      "outer_call": 9,
+      "chunk_id": "9fecac",
+      "source_blocks_requested": [
+        1400,
+        1595
+      ],
+      "truncated": true,
+      "visible_truncation_gap_bounded_by_blocks": [
+        1481,
+        1492
+      ]
+    },
+    {
+      "outer_call": 10,
+      "chunk_id": "4afe95",
+      "source_blocks": [
+        1481,
+        1492
+      ],
+      "truncated": false,
+      "purpose": "read only the bounded truncation gap including boundary blocks"
+    },
+    {
+      "outer_call": 11,
+      "chunk_id": "7f06b0",
+      "operation": "input hashes; parse allowed locator/request JSON; complete-source and prompt inclusion"
+    },
+    {
+      "outer_call": 12,
+      "operation": "write original response once; mechanical JSON/reference/hash checks; write conclusion and audit log"
+    }
+  ],
+  "tool_accounting": {
+    "functions_exec_outer": 12,
+    "exec_command_inner": 12,
+    "other_tool_calls": 0,
+    "total_outer_plus_inner": 24,
+    "hard_limit": 80
+  },
+  "ordinary_messages": {
+    "opening_commentary": 1,
+    "questions": 0,
+    "final": 1,
+    "total_at_completion": 2,
+    "hard_limit": 3
+  },
+  "source_semantic_inputs": [
+    "prompt.txt",
+    "source.txt"
+  ],
+  "mechanical_inputs": [
+    "metadata.json",
+    "context-measurement.json",
+    "locators.json",
+    "request-body.json"
+  ],
+  "input_files": {
+    "context-measurement.json": {
+      "bytes": 1307,
+      "sha256": "5c2d3534b8277ab53750f8d4342325f5ef1fcd3249b3bb374854ca449e490901"
+    },
+    "locators.json": {
+      "bytes": 288957,
+      "sha256": "bef3785eb4b6a0f263c63eb81dac4006d8aa2a114000d97daed617ff1249f66b"
+    },
+    "metadata.json": {
+      "bytes": 3069,
+      "sha256": "68e454dfa53fdee2c437999b690a1e39565b3206a1621c3bea548f72cc7b26dc"
+    },
+    "prompt.txt": {
+      "bytes": 2612,
+      "sha256": "de643487005dafe3a92bf7f1a4a41d679c00eaacb3d42f7da378e5ae9259e174"
+    },
+    "request-body.json": {
+      "bytes": 181491,
+      "sha256": "0a33f968fa0b98ace346cd3ffd55cc162f633cdb441a1ead76a763ae152d9c3b"
+    },
+    "source.txt": {
+      "bytes": 173809,
+      "sha256": "6aefce937c315e6df0f485e7394df6502f6ea87fc3a2f3732657726bd00e6f8a"
+    }
+  },
+  "response_sha256": "69daa51d81f8988491139b12496b673d42918dbc2f9e51fa1797ddcc8252c003",
+  "response_write_count": 1,
+  "response_posthoc_revision": false,
+  "checks": {
+    "response_json_parse": true,
+    "top_level_keys_exact": true,
+    "fact_count": 42,
+    "fact_limit_64": true,
+    "unresolved_count": 2,
+    "fact_keys_exact": true,
+    "unresolved_keys_exact": true,
+    "source_block_ids_exact_0_to_1595": true,
+    "all_response_refs_present": true,
+    "all_ref_arrays_nonempty": true,
+    "locators_count": 1596,
+    "locators_first_item_keys": [
+      "block_index",
+      "raw_start_byte",
+      "raw_end_byte",
+      "raw_span_sha256"
+    ],
+    "input_hash_matches_metadata": true,
+    "request_hash_matches_metadata": true,
+    "request_contains_complete_source": true,
+    "request_contains_complete_prompt": true,
+    "request_max_tokens": 4096,
+    "context_measurement_equals_metadata": true,
+    "response_utf8_bytes": 9858,
+    "response_words": 729,
+    "output_token_count_remeasured": false,
+    "semantic_expected_answer_comparison": false
+  },
+  "network_api_account_business_calls": 0,
+  "spawn_commit_push_long_tests": 0,
+  "repo_code_parent_reference_old_result_or_other_company_reads": 0,
+  "live_native_390_production_credit": false
+}

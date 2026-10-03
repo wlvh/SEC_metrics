@@ -15,11 +15,15 @@
       "company": "paramount_skydance_paramount_global",
       "source_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
       "input_root": "/private/tmp/issue28-c02-paramount-blind-fixed-task-20261003",
-      "status": "FIXED_REVISED_TASK_FIRST_APPLICATION_PENDING",
+      "status": "FIXED_TASK_FIRST_APPLICATION_COMPLETE_LIMITED",
       "input_tokens": 39886,
       "core_reference": "paramount-reference.md",
       "development_or_regression": true,
-      "metadata_only_prompt_adaptation": true
+      "metadata_only_prompt_adaptation": true,
+      "raw_output_tokens": 2393,
+      "facts": 42,
+      "unresolved": 2,
+      "quote_groups": 12
     }
   ],
   "maximum_substantive_task_revisions": 1,
@@ -32,5 +36,6 @@
     0
   ],
   "native_or_production_credit": false,
-  "note": "Second representative source is first application of the same revised task, not another prompt iteration. Previous source selection/reading reused; no old model answers in either input."
+  "note": "Second representative source is first application of the same revised task, not another prompt iteration. Previous source selection/reading reused; no old model answers in either input.",
+  "status": "LIMITED_DEVELOPMENT_BATCH_COMPLETE_PENDING_NATIVE_MAPPING_AND_TARGET_MODEL"
 }

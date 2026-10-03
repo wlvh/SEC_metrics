@@ -3715,6 +3715,24 @@
       "incremental_tools": 8,
       "incremental_messages": 1,
       "no_further_followup_due_message_cap": true
+    },
+    {
+      "task_name": "diagnose_c02input_7733176",
+      "purpose": "diagnose",
+      "module": "c02input",
+      "scope_paths": [
+        "/private/tmp/issue28-c02-paramount-blind-fixed-task-20261003/"
+      ],
+      "patch_sha": "7733176e2318681a63dfb852dadee134763b6cfd",
+      "spawned_at": "2026-10-03T05:48:23.163100+00:00",
+      "ended_at": "2026-10-03T05:57:34.432717+00:00",
+      "tool_calls": 24,
+      "result_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/independent-paramount-input-7733176/conclusion.md",
+      "verdict": "COMPLETE_FIXED_TASK_BLIND_INPUT_DIAGNOSIS_LIMITED",
+      "status": "DONE",
+      "ordinary_messages": 2,
+      "dedup_note": "No live agent, same patch SHA or same source input result. Reuse Enphase full reading/diagnosis; previous agent ended at 3-message cap. New source only uses fixed revised task, not another task iteration; allowed new genuinely uncovered increment under current delegation.",
+      "actual_started_at": "2026-10-03T05:49:07.092092+00:00"
     }
   ],
   "ci_capacity_20260922": {
@@ -11786,7 +11804,7 @@
     "actual_server_body_read_at": "2026-10-03T05:02:20Z",
     "input_scope": "Enphase 2026 DEF14A complete 2784 visible blocks; development/regression material",
     "evidence": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/",
-    "state": "BLIND_SOURCE_TASK_AND_QUOTATION_PREVIEW_COMPLETE_PENDING_INTEGRATION_AND_TARGET_MODEL_TEST",
+    "state": "TWO_SAMPLE_LIMITED_DEVELOPMENT_BATCH_AND_QUOTATION_READOUT_COMPLETE",
     "input_root": "/private/tmp/issue28-c02-blind-source-pilot1-20261003",
     "input_tokens": 88815,
     "output_limit": 4096,
@@ -11818,7 +11836,26 @@
     "collaboration_rule": "COLLAB-28-47-v1.2",
     "batch_manifest": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/batch.json",
     "substantive_revisions_used": 1,
-    "remaining_substantive_revisions": 0
+    "remaining_substantive_revisions": 0,
+    "sample_count": 2,
+    "task_revisions_used": 1,
+    "task_revisions_remaining": 0,
+    "paramount": {
+      "facts": 42,
+      "unresolved": 2,
+      "input_tokens": 39886,
+      "output_reference_tokens": 2393,
+      "quote_groups": 12,
+      "quote_characters": 22355,
+      "full_input_read": true,
+      "independent_input_context": true,
+      "native_or_390_credit": false
+    },
+    "comparison_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/batch-result.md",
+    "readout_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/readout.md",
+    "minimum_request_plan_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/minimum-target-request-plan.json",
+    "normal_reader_did_not_inject_development_answers": true,
+    "DeepSeek_permission": false
   },
   "shared_increment_read_20261003_0505": {
     "own_sha": "0387187501ddfb5c31df774ddc5540257f4f3ad8",
