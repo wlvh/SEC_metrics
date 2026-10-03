@@ -1,0 +1,42 @@
+START_UTC=2026-10-03T13:08:05.464630+00:00
+RESPONSE_WRITTEN_UTC=2026-10-03T13:19:41.936213+00:00
+Fixed checkout SHA verified at session start: 94b3c904825a65be75ef66c0bbc2843855d548f3
+Input SHA256=d9e585a49123883569144ebed9a375e472c329df7b8f3772be41952f3766f982
+Request-body SHA256=6d1fbe971d46a3c5fac136e5547362a17e056efd238c6c579f04e27cf43dc26e
+Initial restore import error: ModuleNotFoundError: No module named sec_http. No network/model action.
+Initial nested inventory error: KeyError raw_xml. Nested objects are metadata plus exact parent-relative spans; corrected scanner does not alter original input.
+Native initial tool output was truncated by output budgets; full persisted log then read with text and nonnumeric/concept metadata views.
+TOOLS_THROUGH_RESPONSE_WRITE_CONSERVATIVE=41 (14 earlier functions.exec + 25 earlier nested exec_command + current functions.exec + current exec_command)
+ORDINARY_MESSAGES_BEFORE_FINAL=1; QUESTIONS=0; FINAL_REPORTS_PLANNED=1
+
+FINAL_MECHANICAL_CHECK=PASS
+FINAL_UTC=2026-10-03T13:21:58.727062+00:00
+ELAPSED_SECONDS_FROM_FIRST_TOOL_READ=833.262
+ACTUAL_TOOL_CALLS_CONSERVATIVE=43
+FUNCTIONS_EXEC_CALLS=16
+NESTED_EXEC_COMMAND_CALLS=27
+OTHER_TOOL_CALLS=0
+ORDINARY_MESSAGES_TOTAL_INCLUDING_FINAL_REPORT=2
+COMMENTARY_MESSAGES=1
+QUESTIONS=0
+FINAL_REPORTS=1
+NATIVE_UNITS=4
+OUTER_OBJECTS=20
+NESTED_OBJECTS_INCLUDED_IN_PARENTS=6
+SHARED_CONTEXT_ROWS=1965
+SHARED_CONTEXT_READ_SEGMENTS=13
+RESPONSIBILITY_UNITS_DECLARED_ONCE=4
+FINDINGS=5
+EVIDENCE_REFERENCES=9
+ALL_FINDINGS_HAVE_ASSIGNED_NATIVE_REFERENCE=TRUE
+RESPONSE_BYTES=7464
+RESPONSE_SHA256=59ccfeb447d76555c14537816940be01aac3e804b7afb6c1d38245e721894097
+RESPONSE_WRITES=1
+RESPONSE_REVISIONS=0
+INPUT_HASHES_UNCHANGED=TRUE
+INPUT_OBJECT_EQUALS_REQUEST_USER_OBJECT=TRUE
+MEASURE_JSON_EXISTS=False
+SOURCE_RESTORE_PAYLOAD_TOTAL_BYTES=500937
+CHECKOUT_SHA_UNCHANGED=94b3c904825a65be75ef66c0bbc2843855d548f3
+Token length was not measured with the target-provider tokenizer; no target-provider request was made. JSON was kept concise under the stated response budget.
+No Candidate/Run, account/SEC/provider/production actions, source/prompt/category modifications, commit/push, other worktree/state/ledger actions, tar archive, subagent or long tests.

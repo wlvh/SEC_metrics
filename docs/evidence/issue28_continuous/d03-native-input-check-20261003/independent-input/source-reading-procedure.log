@@ -1,0 +1,49 @@
+import ast, copy, hashlib, json, pathlib, re, sys
+from html.parser import HTMLParser
+BASE=pathlib.Path('/Users/lyuhongwang/Developer/SEC_metrics')
+INPUT=pathlib.Path('/private/tmp/issue28-d03-complete-context-plan-20261003-checked/4/input.json')
+OUT=BASE/'docs/evidence/issue28_continuous/d03-native-input-check-20261003/independent-input'
+a=json.loads(INPUT.read_text())
+mod=ast.parse((BASE/'scripts/vnext/capacity_semantic_review.py').read_text())
+selected=[n for n in mod.body if isinstance(n,ast.FunctionDef) and n.name in ['_xml_values','_restore_rows','_restore_units'] or isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id in ['_MAPS','_STYLE_REF'] for t in n.targets)]
+ns={'deepcopy':copy.deepcopy,'re':re,'need':lambda ok,msg: None if ok else (_ for _ in ()).throw(ValueError(msg))}
+exec(compile(ast.Module(body=selected,type_ignores=[]),'<fixed-SHA restoration functions>','exec'),ns)
+units=ns['_restore_units'](a['native_units'],a['shared_source_dictionaries'])
+class Text(HTMLParser):
+ def __init__(self):super().__init__(convert_charrefs=True);self.parts=[];self.structural=[]
+ def handle_starttag(self,tag,attrs):
+  useful={k:v for k,v in attrs if k not in ['style','class']}
+  if useful:self.structural.append((tag,useful))
+ def handle_data(self,data):self.parts.append(data)
+def render(xml):
+ t=Text();t.feed(xml);t.close();return ' '.join(' '.join(t.parts).split()),t.structural
+mode=sys.argv[1]
+lines=[]
+if mode=='native':
+ for u in units:
+  raw=json.dumps(u['payload'],ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+  assert len(raw)==u['payload_bytes'] and hashlib.sha256(raw).hexdigest()==u['payload_sha256']
+  lines.append('UNIT '+u['unit_id']+' kind '+u['kind']+' ordinal '+str(u['ordinal'])+' restored payload bytes/hash MATCH')
+  for i,obj in enumerate(u['payload']['objects']):
+   xml=obj['raw_xml'];assert hashlib.sha256(xml.encode()).hexdigest()==obj['raw_xml_sha256']
+   plain,structural=render(xml)
+   lines.append('OBJECT '+str(i)+' attrs '+json.dumps(obj['attributes'],sort_keys=True)+' source spans '+str(obj['start_character'])+':'+str(obj['end_character'])+' raw XML SHA256 MATCH')
+   lines.append(plain)
+   lines.append('STRUCTURAL ATTRIBUTES '+json.dumps(structural,ensure_ascii=False))
+   for j,n in enumerate(obj['nested_objects']):
+    nested=xml[n['relative_start_character']:n['relative_end_character']]
+    assert hashlib.sha256(nested.encode()).hexdigest()==n['raw_xml_sha256']
+    lines.append('NESTED '+str(j)+' attrs '+json.dumps(n['attributes'],sort_keys=True)+' exact parent XML slice SHA256 MATCH; included in parent text, no separate evidence index')
+ log=OUT/'native-complete-reading.log'
+elif mode=='visible':
+ start,end=int(sys.argv[2]),int(sys.argv[3]);rows=a['complete_visible_rows'];assert 0<=start<end<=len(rows)
+ for bounds in a['visible_unit_bounds']:
+  lo,hi=max(start,bounds['start_row']),min(end,bounds['end_row_exclusive'])
+  if lo<hi:lines.append('CONTEXT UNIT '+bounds['unit_id']+' rows '+str(lo)+':'+str(hi))
+ for row in rows[start:end]:lines.append('['+str(row[0])+'] '+row[2])
+ log=OUT/('visible-complete-reading-'+str(start)+'-'+str(end)+'.log')
+else:raise ValueError(mode)
+content='\n'.join(lines)+'\n'
+assert not log.exists(),'Do not overwrite scan log'
+log.write_text(content)
+print(content,end='')

@@ -1,0 +1,123 @@
+{
+  "reviewed_unit_ids": [
+    "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+    "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+    "sha256:63366ffe097dbfd068a8b491df8d159a8e3113b8a80f49898c317d596a5ca963",
+    "sha256:4f09dc3894af46541d905226c85e0c8dd6fb00e99aae2a0862a928a7b907929d"
+  ],
+  "findings": [
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Marriott and subsidiaries: income-tax examinations",
+      "event_dates": [],
+      "reported_context_times": [
+        "tax years through 2022",
+        "tax years 2023 and 2024",
+        "year-end 2025"
+      ],
+      "status": "Federal 2023 and 2024 tax-year audits are explicitly ongoing; other tax examinations are also underway. Their D03 investigation/enforcement linkage is not established.",
+      "evidence": [
+        {
+          "unit_id": "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 2
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 454
+        }
+      ],
+      "description": "The IRS examined Marriott federal income-tax returns; all issues for tax years through 2022 were settled as of year-end 2025. Audits for tax years 2023 and 2024 are ongoing, and applicable foreign, state and local taxing authorities are examining other income-tax returns. These are actual governmental examinations of the Company and subsidiary returns, not hypothetical audits. The source does not establish a linked investigation/enforcement matter, so neither D03 inclusion nor definitive exclusion is inferred. Tax years are not action dates."
+    },
+    {
+      "kind": "OTHER_MEANING",
+      "subject": "Marriott self-insurance surety bonds",
+      "event_dates": [],
+      "reported_context_times": [
+        "year-end 2025"
+      ],
+      "status": "Administrative security connected with self-insurance; no investigation/enforcement relationship is stated.",
+      "evidence": [
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 3
+        }
+      ],
+      "description": "Surety bonds issued as of year-end 2025 totaled $187 million; state governments requested most of them in connection with Marriott self-insurance programs. A government request for this security does not itself establish a governmental investigation, an investigated subject or an enforcement proceeding."
+    },
+    {
+      "kind": "PRIVATE_OR_INTERNAL_ACTION",
+      "subject": "Marriott: Starwood Data Security Incident consumer litigation",
+      "event_dates": [
+        "2025-06-03"
+      ],
+      "reported_context_times": [
+        "2018-11-30 incident announcement",
+        "2025-12-31 loss-accrual snapshot"
+      ],
+      "status": "Private consumer claims continue; mediation, individual state suits and vigorous defense are disclosed.",
+      "evidence": [
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 4
+        },
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        }
+      ],
+      "description": "Consumers and others filed approximately 100 lawsuits against Marriott after the incident announcement. U.S. cases were consolidated in the District of Maryland. On June 3, 2025 the Fourth Circuit reversed class certification based on an enforceable class-action waiver; some plaintiffs subsequently filed individual New York state suits. Marriott has engaged in MDL mediation, and the Canadian cases were effectively consolidated in Ontario. These private claims and the court ruling do not establish government investigations. The December 31, 2025 accrual concerns the MDL and state court cases, not a dated regulatory settlement."
+    },
+    {
+      "kind": "RESOLVED_OR_PARTLY_RESOLVED",
+      "subject": "Marriott: Starwood Data Security Incident governmental inquiries and investigations",
+      "event_dates": [
+        "2024 fourth quarter"
+      ],
+      "reported_context_times": [],
+      "status": "Most governmental inquiries/investigations were resolved or appear inactive; specific FTC/AG resolutions are final. Universal closure and present status of any remainder are not established.",
+      "evidence": [
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 416
+        },
+        {
+          "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 438
+        }
+      ],
+      "description": "The assigned native continuation reports that most inquiries and investigations by U.S. federal, state and foreign governmental authorities concerning the Data Security Incident were resolved or no longer appear active. Shared context identifies final resolutions with the FTC and Attorney General offices of 49 states and the District of Columbia in the 2024 fourth quarter, with long-term data-privacy and information-security requirements. These are linked aspects of the same incident, not additional matters created from repeated context. Apparent inactivity is not confirmed closure, and loss-estimation uncertainty does not establish an ongoing investigation. The 2018 incident announcement is not the resolution date; future noncompliance enforcement is conditional."
+    },
+    {
+      "kind": "PRIVATE_OR_INTERNAL_ACTION",
+      "subject": "Marriott: other intellectual-property litigation",
+      "event_dates": [],
+      "reported_context_times": [],
+      "status": "Expressly current participation in litigation over alleged infringement; no governmental investigation is established.",
+      "evidence": [
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        }
+      ],
+      "description": "Marriott states that it has been and is currently party to other legal proceedings involving claims that it infringes intellectual-property rights of others. Those proceedings are distinct from the Starwood governmental matters. The source describes third-party infringement claims and does not identify a governmental investigating actor or a linked enforcement process."
+    }
+  ],
+  "scope_current_involvement": "UNRESOLVED",
+  "unresolved": [
+    "The ongoing income-tax examinations are established, but their linkage to a D03 governmental investigation/enforcement matter is not established by the supplied source.",
+    "For Starwood, the aggregate most-resolved-or-apparently-inactive statement neither confirms universal closure nor identifies the authority, subject and current status of any remainder. Loss uncertainty and long-term resolution requirements do not establish explicit present involvement."
+  ]
+}

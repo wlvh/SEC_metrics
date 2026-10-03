@@ -3858,6 +3858,41 @@
       "dedup_note": "No live agent or sameSHA/view module review. Oldcd8f587 native mapper review reused; this source-linked rendered view is genuinely new, no old source-model reread or long-chain repeat.",
       "ordinary_messages": 3,
       "elapsed_minutes": 8.316666666666666
+    },
+    {
+      "task_name": "audit_c02model_ff9667e",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "current_c02_model_enphase_source_content",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/c02-model-content-20261003",
+        "catalog/r6/C02_model_source_development_v1.md"
+      ],
+      "patch_sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
+      "spawned_at": "2026-10-03T12:32:04.653695+00:00",
+      "ended_at": "2026-10-03T12:51:49.723090+00:00",
+      "tool_calls": 41,
+      "result_path": "docs/evidence/issue28_continuous/c02-model-content-20261003/independent-original/conclusion.md",
+      "verdict": "NEEDS_FIX_CONTENT_SCOPE_CLASSIFICATION_AND_COVERAGE_NOT_FULL_ACCEPTANCE",
+      "message_count": 2,
+      "elapsed_seconds": 1147.23
+    },
+    {
+      "task_name": "diagnose_d03native_94b3c90",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_responsibility4",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/4",
+        "docs/evidence/issue28_continuous/d03-complete-context-plan-20261003/input-prompt.txt",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003"
+      ],
+      "patch_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+      "spawned_at": "2026-10-03T13:06:57.589839+00:00",
+      "ended_at": "2026-10-03T13:21:58.727062+00:00",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_NATIVE_INPUT_DIAGNOSIS_UNRESOLVED_NO_COMPANY_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 833.262
     }
   ],
   "ci_capacity_20260922": {
@@ -12116,18 +12151,16 @@
     "updated_at": "2026-10-03T11:17:50Z"
   },
   "current_head_ci_observation": {
-    "sha": "dee04f5fe118eef823f1079caa3bc213742ed991",
-    "run_id": 37117666339,
-    "status": "in_progress",
+    "sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
+    "run_id": 37121403254,
+    "status": "queued",
     "conclusion": null,
     "observed_once_after_push": true,
-    "preceding_main_success": "37112012826@06d109f6"
+    "preceding_main_success": "37117666339@dee04f5f"
   },
   "current_head_delivery_checkpoint": {
-    "sha": "dee04f5fe118eef823f1079caa3bc213742ed991",
-    "remote_pr43_head_verified": true,
-    "issue28_section3_readback": "2026-10-03T10:51:44Z",
-    "source_ledger_claims": 195,
+    "sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
+    "issue28_section3_readback": "2026-10-03T12:16:33Z",
     "channels": [
       143,
       143,
@@ -12138,7 +12171,8 @@
       0,
       0
     ],
-    "next": "B13 current model-output batch stopped after one correction; exact output-responsibility method choice recorded. Continue D03 persistence or C02 model Run engineering under existing permissions; no target-provider call authorized by this trial."
+    "scope": "Source-linked C02 pending review only, no semantic or company credit",
+    "next": "Continue D03 output/persistence or fixed ordinary update work; C02 semantic scope alignment sent directly to peer, no general engineering pause."
   },
   "shared_increment_read_20261003_b13": {
     "own_sha": "06d109f626f1388eeda5b0fc8bf7ad24c20ac072",
@@ -12214,6 +12248,108 @@
     "new_review_identity_only": true,
     "current_execution_binding_changed": false,
     "review_patch_sha": "7ca036df9fcc85501ae70231f89366d98205c476",
-    "independent_review": "docs/evidence/issue28_continuous/c02-source-linked-review-20261003/independent-review/conclusion.md"
+    "independent_review": "docs/evidence/issue28_continuous/c02-source-linked-review-20261003/independent-review/conclusion.md",
+    "peer47_reply": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5968966522"
+  },
+  "c02_model_content_check_20261003": {
+    "state": "DEVELOPMENT_FULL_SEMANTIC_ACCEPTANCE_NOT_ESTABLISHED_BATCH_CORRECTION_EXHAUSTED",
+    "tested_head": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
+    "scope": "enphase_energy_C02_saved_proxy_20260401_and_exact_development_response",
+    "candidate_hash": "sha256:0fcd6612e61410573c4c13291aaa66f0a2680f05f21e90200542b46c036a6055",
+    "response_sha256": "dd9a774b1466d1e2c765a52a87fd992dd2c8e8aeca6f24bce1f85ff79f2dcb6f",
+    "source_sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+    "facts_checked": 41,
+    "unresolved_checked": 4,
+    "text_blocks_scan": 2784,
+    "source_supported_limited": 32,
+    "confirmed_task_type_error": "F27 reelection/continuation is not a change in who sits",
+    "scope_problem": "F3 must retain including our affiliates; not proof of registrant-only board measurement",
+    "qualification_boundary_unresolved": [
+      "F35",
+      "F36",
+      "F37",
+      "F38",
+      "F39",
+      "F40",
+      "F41"
+    ],
+    "coverage_gaps": [
+      "Class I/III continuing class and term relations B429/B452 not stated",
+      "Referenced board snapshot/skill images not in text input; unknown extra relevant facts, not confirmed omission"
+    ],
+    "independent_original": "docs/evidence/issue28_continuous/c02-model-content-20261003/independent-original/conclusion.md",
+    "semantic_approval": false,
+    "native_result_or_run_created": false,
+    "original_objects_modified": false,
+    "task_revisions_remaining": 0,
+    "target_request_plan_ready": false,
+    "target_model_real_calls_authorized": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Align exact qualification scope and choose a bounded next method decision; do not alter raw output or launch a third same-method correction. Independent D03/native and other queue engineering continues.",
+    "peer_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5969416517"
+  },
+  "shared_increment_read_c02_content_20261003": {
+    "own_sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
+    "peer47_sha": "5a2ebebf5c60d208e6e1131da2c5d0246808974a",
+    "prior_peer47_sha": "469909db5ba5cfcd3672606f63ae8d1dcc0b5ab9",
+    "peer_comments": [
+      5969072140,
+      5969096649
+    ],
+    "disposition": "Peer supplied full Pfizer FY2022 qualification contexts and corrected adjudication interpretation. Three concrete role/skill statements remain for contract alignment; peer adjudication not owner authority or own acceptance. JPM FY2021 held-out/source layout defect does not automatically withdraw current FY2025. Own current C02 model content not accepted; no peer core copied."
+  },
+  "ci_94b3c904": {
+    "run_id": 37124740852,
+    "head_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA"
+  },
+  "d03_native_input_development_20261003": {
+    "state": "ONE_NEW_NATIVE_RESPONSIBILITY_RESPONSE_SHAPE_RAW_PERSISTENCE_AND_COLD_READ_PASS_LIMITED",
+    "tested_base_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+    "uncommitted_evidence_processor": true,
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/README.md",
+    "source_id": "sha256:f49af1b29cbc3c0a86e7ee6c51b4f8ea6f39c6b3abfa82b09b86f96531e7a8e8",
+    "request_sha256": "6d1fbe971d46a3c5fac136e5547362a17e056efd238c6c579f04e27cf43dc26e",
+    "response_sha256": "59ccfeb447d76555c14537816940be01aac3e804b7afb6c1d38245e721894097",
+    "new_native_units_read": 4,
+    "outer_objects": 20,
+    "nested_objects": 6,
+    "shared_visible_context_rows": 1965,
+    "findings": 5,
+    "unresolved": 2,
+    "scope_current_involvement": "UNRESOLVED",
+    "response_reference_tokens": 1939,
+    "processing_sha256": "ad67ce514a05e6c0a32a72bb68e15b6e782099439271ad49e5f038b1c71eecbb",
+    "mechanical_controls": 14,
+    "checks_seconds": 0.249,
+    "cold_seconds": 0.125,
+    "native_credit": false,
+    "target_model_real_calls_authorized": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "prompt_or_source_modified": false,
+    "old_visible_answer_rebound": false,
+    "current_production_contract_changed": false,
+    "future_code_independent_review": "NOT_RUNTIME_INTEGRATION_REVIEW; agent only audited input/output source semantics",
+    "remaining_native_units_not_model_read": 8,
+    "new_six_request_plan_responses_complete": false,
+    "next": "Five other exact new-format responses and cross-request relationship/coverage remain; old visible answer cannot be relabeled new request. Narrow mechanical prototype only; native approval/Run and new real-purpose permission not provided."
+  },
+  "ci_ff9667ea": {
+    "run_id": 37121403254,
+    "head_sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
+    "state": "completed",
+    "terminal": "success",
+    "updated_at": "2026-10-03T13:10:52Z",
+    "scope": "Exact prior head; not following commits"
   }
 }
