@@ -8093,6 +8093,33 @@
      "integration": "MERGED; no historical acceptance credit copied"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "dc9850ca7c854c7bc1b6f05cb4224886c1829dd7",
+   "own_commit_at_read": "4522de0a",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; two exact current JPMorgan C02 Result omissions confirmed and recorded by #28; not copied as #47 identities or acceptance.",
+   "baseline": "Read since 2a711128. The current-source and saved-Result evidence, register changes, D03 development mapping/review entry and binding-impact records were read. Merge conflict in the fast test registry resolved by preserving all five new registrations. issue_47_v1 mint --check unchanged and 41 relevant D03/paid E01/acceptance-identity tests pass. Original model runtime remains the sealed 5640c367 plus the original patches.",
+   "increments": [
+    {
+     "commit": "2ab895d4",
+     "marker": "[shared-with-#47]",
+     "subject": "Own actual current JPMorgan C02 source and two saved Results confirm adjacent James Dimon name and Stock/Executive committee omissions; Issue #47 comment5972262290.",
+     "affects_47": "Consistent with the four limited historical counterexamples already registered here. #28 current Results53f2aa84 and bc85895a and their withheld disposition are its own; no historical Result, selector repair, acceptance or release follows from this receiving confirmation.",
+     "integration": "MERGED; no peer credit imported"
+    },
+    {
+     "commit": "dc9850ca and preceding D03 increments",
+     "marker": "[shared-with-#47]",
+     "subject": "D03 development source mapping, pending native review entry, CLI and limited cold-read evidence.",
+     "affects_47": "D03 has no historical route and is outside all 35 approved requests. New mapper/CLI/test files are outside inherited issue_47_v1 execution authority. No historical source input, model request digest or acceptance changes.",
+     "integration": "MERGED; D03 development credit is not historical or full semantic credit"
+    }
+   ]
   }
  ]
 }

@@ -1,0 +1,56 @@
+{
+  "scripts/vnext/d03_model_processing.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "72fa2fb42c145f2a0a2c85106ebc8f7d9db5a23350183afd21d57c0240187ee1"
+  },
+  "catalog/r6/D03_model_source_development_v1.md": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "9e5fca9d0b0814cfba44b2ff5ed252e47303bfb4a4070f4006207072bdc8f231"
+  },
+  "scripts/vnext/d03_recorded_response_store.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "76c4a229092f6212b507bdb2545eaf3211c879d2e2589809d54441be77643281"
+  },
+  "scripts/vnext/normal_run_v3.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "57d634aa4c65d8542c5c18d13fa387544d4b62284e7062bebfe7da26aea7743f"
+  },
+  "scripts/vnext/normal_candidates.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "680b822b9d93648e3b243fca3c187f0204058157c190b1b8f635396c9039bc4c"
+  },
+  "scripts/vnext/r6_regulatory_semantics.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "abbbc30768e180a81c4d4fbd8d686f8ad269ecf0b775a6b37be3eced81350287"
+  },
+  "scripts/vnext/regulatory_fact_review.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "b61689b7c7430cc81814291c4c7345d2021360ae6b29de9a0d9191cf411f87bf"
+  },
+  "scripts/vnext/review.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "c15b0a253c919b59682afbbd8ee41a2973cd0992f1b67d9def26197a5259349d"
+  },
+  "scripts/sec_http.py": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "4a18bea988045280b9cf4745e65edb3b738d97c779cf750ac9f495ead2e0bb01"
+  },
+  "config/issue28_continuous_calls_v1.json": {
+    "unchanged_base_head_worktree": true,
+    "sha256": "6f458af922855561a2d69a582745dba21a4a834f9dee4f8dad4bf72db40145b4"
+  },
+  "requirements/issue_28_v13": {
+    "unchanged": true
+  },
+  "requirements/issue_28_v14": {
+    "unchanged": true
+  },
+  "runner": {
+    "appended_selector_only": true
+  },
+  "product_callers": [
+    "tools/vnext_d03_model_review.py:15:    read_development_company_assessment)",
+    "tools/vnext_d03_model_review.py:90:        out = read_development_company_assessment(directory=root, data_root=args.data_root,",
+    "scripts/vnext/d03_model_processing.py:223:def read_development_company_assessment(*, directory, data_root, company_id,"
+  ]
+}

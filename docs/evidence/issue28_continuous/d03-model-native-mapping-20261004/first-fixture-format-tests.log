@@ -1,0 +1,104 @@
+EEFF.FF
+======================================================================
+ERROR: test_clear_nonempty_current_proposal_remains_pending_not_verified (tests.vnext.test_d03_model_processing.D03ModelProcessingTest.test_clear_nonempty_current_proposal_remains_pending_not_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_model_processing.py", line 58, in test_clear_nonempty_current_proposal_remains_pending_not_verified
+    out = model.build_development_company_assessment(data_root='/fixture', company_id='fixture_company',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 150, in build_development_company_assessment
+    rows, wires = _complete(source, packets)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 128, in _complete
+    payload, units, measured = _input(source, request)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 40, in _input
+    measured = measure_request(raw, require_reference=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 88, in measure_request
+    prompt = render_prompt(request_body, provider=provider, model=model, api=api)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 39, in render_prompt
+    _need(type(body) is dict and set(body) == {
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+======================================================================
+ERROR: test_empty_findings_preserve_unresolved_no_absence_credit (tests.vnext.test_d03_model_processing.D03ModelProcessingTest.test_empty_findings_preserve_unresolved_no_absence_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_model_processing.py", line 72, in test_empty_findings_preserve_unresolved_no_absence_credit
+    rows, _ = model._complete(self.source, [self.packet(response=answer)])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 128, in _complete
+    payload, units, measured = _input(source, request)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_model_processing.py", line 40, in _input
+    measured = measure_request(raw, require_reference=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 88, in measure_request
+    prompt = render_prompt(request_body, provider=provider, model=model, api=api)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 39, in render_prompt
+    _need(type(body) is dict and set(body) == {
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+======================================================================
+FAIL: test_exact_duplicate_is_not_cleaned_and_unicode_is_preserved (tests.vnext.test_d03_model_processing.D03ModelProcessingTest.test_exact_duplicate_is_not_cleaned_and_unicode_is_preserved)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_model_processing.py", line 98, in test_exact_duplicate_is_not_cleaned_and_unicode_is_preserved
+    with self.assertRaisesRegex(ValueError, 'DUPLICATE_FINDING'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "DUPLICATE_FINDING" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+======================================================================
+FAIL: test_external_wire_sha_and_source_context_refused (tests.vnext.test_d03_model_processing.D03ModelProcessingTest.test_external_wire_sha_and_source_context_refused)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_model_processing.py", line 93, in test_external_wire_sha_and_source_context_refused
+    with self.assertRaisesRegex(ValueError, 'VISIBLE_CONTEXT_CHANGED'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "VISIBLE_CONTEXT_CHANGED" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+======================================================================
+FAIL: test_missing_or_duplicate_complete_owner_refused (tests.vnext.test_d03_model_processing.D03ModelProcessingTest.test_missing_or_duplicate_complete_owner_refused)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_model_processing.py", line 77, in test_missing_or_duplicate_complete_owner_refused
+    with self.assertRaisesRegex(ValueError, 'COMPLETE_'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "COMPLETE_" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+======================================================================
+FAIL: test_reference_kind_boolean_and_foreign_unit_refused (tests.vnext.test_d03_model_processing.D03ModelProcessingTest.test_reference_kind_boolean_and_foreign_unit_refused)
+----------------------------------------------------------------------
+ValueError: CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_model_processing.py", line 85, in test_reference_kind_boolean_and_foreign_unit_refused
+    with self.assertRaisesRegex(ValueError, 'REFERENCE_'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "REFERENCE_" does not match "CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED"
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+FAILED (failures=4, errors=2)

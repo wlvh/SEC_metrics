@@ -3928,6 +3928,97 @@
       "message_count": 2,
       "elapsed_seconds": 869.894,
       "elapsed_scope": "From first recorded clock; earlier first command conservatively about16.58min total"
+    },
+    {
+      "task_name": "diagnose_d03group3_2a71112",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_facts45_supp0_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/3",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group3"
+      ],
+      "patch_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
+      "spawned_at": "2026-10-03T15:19:25.930293+00:00",
+      "ended_at": "2026-10-03T15:37:13.225131+00:00",
+      "tool_calls": 67,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group3/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_GROUP3_INPUT_DIAGNOSIS_UNRESOLVED_NO_NATIVE_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 826.137,
+      "elapsed_scope": "From first recorded clock; earlier initial reads not timed, lower bound only"
+    },
+    {
+      "task_name": "diagnose_d03group5_d9f0afc",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_supp5_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/5",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5"
+      ],
+      "patch_sha": "d9f0afc23df6de3f072277601dcdb093cafce5a6",
+      "spawned_at": "2026-10-03T15:48:34.789922+00:00",
+      "ended_at": "2026-10-03T15:58:25.419278+00:00",
+      "tool_calls": 46,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_SUPPLEMENT5_INPUT_EMPTY_NOT_ABSENCE_NO_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 506.7
+    },
+    {
+      "task_name": "diagnose_d03visible_02f4fbc",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_exact_new_visible_request0",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/0",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/visible0"
+      ],
+      "patch_sha": "02f4fbc0d2687bec7dc427cefa2a4187784e973f",
+      "spawned_at": "2026-10-03T16:29:13.825547+00:00",
+      "ended_at": "2026-10-03T16:40:46.036780+00:00",
+      "tool_calls": 36,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/visible0/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_EXACT_NEW_VISIBLE_RESPONSE_UNRESOLVED_NO_COMPANY_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 707.563825
+    },
+    {
+      "task_name": "review_d03mapper_ccb0c5e",
+      "purpose": "LIMITED_PATCH_INDEPENDENT_REVIEW",
+      "module": "d03_complete_native_mapper",
+      "scope_paths": [
+        "scripts/vnext/d03_model_processing.py",
+        "catalog/r6/D03_model_source_development_v1.md",
+        "tests/vnext/test_d03_model_processing.py",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "ccb0c5e65cda6150b66bc07081ba0b7329bb152d",
+      "spawned_at": "2026-10-03T18:11:11.552497+00:00",
+      "ended_at": "2026-10-03T18:23:42.214346+00:00",
+      "tool_calls": 50,
+      "result_path": "docs/evidence/issue28_continuous/d03-model-native-mapping-20261004/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "dedup_note": "No live/same module agent; no same SHA or module register result; no existing same SHA independent summary. Earlier D03 readers cover inputs only, not this new producer/read delta. Underscore task name required by tool.",
+      "message_count": 2,
+      "elapsed_minutes": 11.52
+    },
+    {
+      "task_name": "review_d03save_f5db891",
+      "purpose": "LIMITED_PATCH_INDEPENDENT_REVIEW",
+      "module": "d03_development_persistence_cli",
+      "scope_paths": [
+        "tools/vnext_d03_model_review.py",
+        "tests/vnext/test_d03_model_review_cli.py",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "f5db8911a47ef1b6e08551f7a2946ec5734e68ee",
+      "spawned_at": "2026-10-03T18:47:42.937989+00:00",
+      "ended_at": "2026-10-03T18:55:08.068737+00:00",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/d03-development-review-entry-20261004/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_DELTA",
+      "dedup_note": "No live matching agent/register/independent conclusion. Prior mapper review covers unchanged source mapping only, reused. Genuine uncovered CLI save/read/resume delta; old completed reviewer2 messages cannot followup within3 cap when new commentary+final required.",
+      "message_count": 2,
+      "elapsed_minutes": 6.65
     }
   ],
   "ci_capacity_20260922": {
@@ -12390,22 +12481,23 @@
   "ci_edda3b29": {
     "run_id": 37126897053,
     "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
-    "state": "in_progress",
-    "terminal": null,
+    "state": "completed",
+    "terminal": "success",
     "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
-    "observed_updated_at": "2026-10-03T14:18:10Z"
+    "observed_updated_at": "2026-10-03T14:18:10Z",
+    "updated_at": "2026-10-03T14:44:56Z",
+    "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
-    "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
+    "head_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
     "draft_pr": 43,
     "branch": "task/b06-new-source",
-    "issue_queue_server_exact_updated_at": "2026-10-03T13:41:42Z",
-    "native_goal_status": "active",
     "new_calls": [
       0,
       0,
       0
-    ]
+    ],
+    "native_goal_status": "active"
   },
   "shared_increment_read_f07d089c": {
     "peer_read_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
@@ -12485,5 +12577,346 @@
       0,
       0
     ]
+  },
+  "ci_2a711128": {
+    "run_id": 37132088260,
+    "head_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
+    "state": "completed",
+    "terminal": "success",
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
+    "updated_at": "2026-10-03T16:10:00Z",
+    "scope": "Exact predecessor only"
+  },
+  "shared_increment_read_68025386": {
+    "peer_read_sha": "68025386",
+    "prior_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
+    "scope": "Peer own C02 Marriott FY2022/FY2023 repair47 recompute releases; no shared source core change. Current FY2025/model proposals not automatically released. Peer read summaries of own C02/D03 evidence and own SEC driver export receipts not applied as credit."
+  },
+  "d03_group3_development_20261003": {
+    "state": "FOURTH_NEW_FORMAT_RESPONSE_CHECKED_SAVED_COLD_LIMITED",
+    "tested_base_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group3/README.md",
+    "uncommitted_evidence_callsite": true,
+    "request_sha256": "a6573132e7f5902d40ebd593da5612d9c28cc9d47fe81edded3f249c14aa2385",
+    "response_sha256": "77731e3adbf3abdd72d8d3d98526f3e89ed0c7504b4c3694ad10789c203d782f",
+    "native_facts": 370,
+    "outer_supplement_objects": 41,
+    "nested_objects": 11,
+    "visible_context_rows": 1965,
+    "findings": 2,
+    "unresolved": 3,
+    "output_reference_tokens": 1090,
+    "input_reference_tokens": 194064,
+    "context_reference_tokens": 198160,
+    "processing_sha256": "9ce6f6659769faac20b79d531cbb28183fe45fd35957d31475fc261afe8a116a",
+    "checks_seconds": 0.161,
+    "cold_seconds": 0.124,
+    "new_request_response_indices_available": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "new_request_response_indices_missing": [
+      0,
+      5
+    ],
+    "native_units_not_model_read": 1,
+    "native_or_real_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "c02_qualification_owner_decision_pending": {
+    "state": "EXACT_NARROW_OWNER_QUESTION_SENT_NOT_GENERAL_C02_REOPENED",
+    "peer_comment": 5969862604,
+    "peer_read_sha": "68025386",
+    "scope": "Issuer evaluation of named member suitability/experience contribution without named standard; 7Enphase/10Paramount model statements and parallel historical class, not external credential or role facts",
+    "real_call_permission_added": false,
+    "old_response_rewritten": false
+  },
+  "d03_group5_development_20261003": {
+    "state": "FIFTH_NEW_FORMAT_RESPONSE_SAVED_COLD_SOURCE_RECOVERED_EXACT",
+    "tested_base_sha": "d9f0afc23df6de3f072277601dcdb093cafce5a6",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/README.md",
+    "request_sha256": "3a817ea46a1d45d0f2a978d27facca865cad52b98bf1c16fe1ce74be25602311",
+    "response_sha256": "4c24f03776778e9b47a588e0f5b445062152f763ae1cea9e0abc587d7e9b9cab",
+    "findings": 0,
+    "unresolved": 2,
+    "output_reference_tokens": 182,
+    "checks_seconds": 0.154,
+    "cold_seconds": 0.123,
+    "processing_sha256": "59b7ffdc8bc1f3567541e7a793901cbe8a624e39ade5706ab900bba6ebb3d310",
+    "new_request_response_indices_available": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "missing_new_request_response_indices": [
+      0
+    ],
+    "remaining_native_units_not_model_read": 0,
+    "all_source_company_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "source_recovery": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/source-recovery.json"
+  },
+  "d03_visible0_development_20261004": {
+    "state": "SIXTH_NEW_FORMAT_RESPONSE_SAVED_COLD_COMPLETE_INPUT_SET_READ_ONLY",
+    "tested_base_sha": "02f4fbc0d2687bec7dc427cefa2a4187784e973f",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/visible0/README.md",
+    "request_sha256": "c74e22c1dbe6f7e25249b7048c4d53b8490dd22fd1c51417f4f9f8308c848acc",
+    "response_sha256": "4e5aef5388f6ad64f1e41224015a6a3f083c10c31cccdaea17c4d7ea1fb01c55",
+    "findings": 12,
+    "unresolved": 4,
+    "output_reference_tokens": 3172,
+    "processing_sha256": "9bf075d792889b3ecc5d46370c551dd320cfea5d35441e118f1eed203527bc0b",
+    "checks_seconds": 0.161,
+    "cold_seconds": 0.132,
+    "complete_response_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complete_unit_ownership": 17,
+    "original_finding_records_not_matter_count": 25,
+    "original_unresolved_preserved": 18,
+    "company_reference_overall": "UNRESOLVED",
+    "complete_set_read_seconds": 0.439,
+    "all_source_semantic_or_native_company_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Minimal native pending/company evidence integration plus a clear positive source example; necessary code review. Exact real D03 purpose/resource authorization still not granted."
+  },
+  "d03_complete_development_material_retention": {
+    "state": "EXACT_BYTES_COPIED_AFTER_OBSERVED_TEMP_SOURCE_LOSS",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/retention-record.json",
+    "persistent_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004",
+    "files": 38,
+    "bytes": 13213623,
+    "new_ledger_created": false,
+    "source_or_response_identity_changed": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "ci_be21d9f6": {
+    "run_id": 37139355511,
+    "head_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL_EXACT_HEAD",
+    "updated_at": "2026-10-03T18:06:40Z"
+  },
+  "d03_model_native_mapping_20261004": {
+    "state": "NATIVE_PENDING_READ_MAPPING_LIMITED_REVIEW_PASS_NO_BUSINESS_RESULT",
+    "evidence": "docs/evidence/issue28_continuous/d03-model-native-mapping-20261004/README.md",
+    "tested_base_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+    "test_tree": "BASE_PLUS_RECORDED_UNCOMMITTED_PRODUCT_DIFF",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+    "request_count": 6,
+    "source_unit_count": 17,
+    "findings": 25,
+    "unresolved": 18,
+    "build": {
+      "tested_base_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+      "uncommitted_product_module": true,
+      "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "output": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004/native-pending-final-display",
+      "seconds": 4.197,
+      "candidate_hash": "sha256:92dcda707632a0fbf661cd0704661e70ec5b8391bd6519fcb5cb55a3040b0cec",
+      "unit_hash": "sha256:7d4d085ed67f317e6f2e78a11be1751fd1b60f1cfe4d5096942ebc4154e2e705",
+      "review_bytes": 161145,
+      "context_bytes": 2633166,
+      "native_credit": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cold": {
+      "candidate_hash": "sha256:92dcda707632a0fbf661cd0704661e70ec5b8391bd6519fcb5cb55a3040b0cec",
+      "unit_hash": "sha256:7d4d085ed67f317e6f2e78a11be1751fd1b60f1cfe4d5096942ebc4154e2e705",
+      "request_count": 6,
+      "findings": 25,
+      "unresolved": 18,
+      "seconds": 4.201,
+      "native_credit": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "short_tests": 7,
+    "fast": {
+      "selectors": 154,
+      "seconds": 191.57628000015393,
+      "state": "PASS_BEFORE_FINAL_DISPLAY_DELTA",
+      "final_affected_verification": "7 short tests and actual source build/cold/4 negative controls passed after display delta"
+    },
+    "independent_review": "docs/evidence/issue28_continuous/d03-model-native-mapping-20261004/independent-review/conclusion.md",
+    "native_company_result_created": false,
+    "real_call_permission": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "shared_impact": {
+      "files": [
+        "scripts/vnext/d03_model_processing.py",
+        "catalog/r6/D03_model_source_development_v1.md"
+      ],
+      "functions": [
+        "build_development_company_assessment",
+        "read_development_company_assessment"
+      ],
+      "old_defaults_changed": false,
+      "old_execution_authority_changed": false,
+      "old_source_and_raw_responses_changed": false
+    },
+    "next": "Exact new mapper/source-to-pending delta review; real D03 purpose and positive/negative original business validation still required.",
+    "patch_sha": "ccb0c5e65cda6150b66bc07081ba0b7329bb152d"
+  },
+  "ci_0eec48cb": {
+    "head_sha": "0eec48cbb6b71a1bf5be47ce32e2702636bbe76a",
+    "run_id": 37144143813,
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE"
+  },
+  "shared_increment_read_32f9696e": {
+    "peer_read_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
+    "prior_read_sha": "68025386",
+    "own_read_sha": "0eec48cbb6b71a1bf5be47ce32e2702636bbe76a",
+    "evidence": "docs/evidence/issue28_continuous/shared-increment-consumption-20261004/README.md",
+    "c02": {
+      "repair50": "NOT_RECEIVED_HISTORY_ONLY_MOVEMENT_REPORTED_BY_PEER; CURRENT_POOL_NOT_FULLY_REPLAYED; no trust gap cleared",
+      "current_jpm_two_private_results": "Actual original source and actual Result confirmed named omissions; exact IDs registered, old records preserved; repair belongs to peer core owner",
+      "affected_result_ids": [
+        "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+        "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7"
+      ],
+      "new_current390_credit": false
+    },
+    "b06": "Historical note inspector changes only Enphase FY2024 per peer measured frame; current Enphase FY2025 existing correct path not changed; Ford industrial denominator/debt completeness remains unrelated. No historical inspector copied/no new result credit.",
+    "peer_register_credit_copied": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "peer_notice_comment": 5972262290
+  },
+  "ci_2ab895d4": {
+    "head_sha": "2ab895d45b5051f415e07c62f87e74179afd086d",
+    "run_id": 37144787520,
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE"
+  },
+  "d03_development_review_entry_20261004": {
+    "state": "EXPLICIT_OFFLINE_SAVE_READ_REPEAT_RESUME_LIMITED_REVIEW_PASS",
+    "evidence": "docs/evidence/issue28_continuous/d03-development-review-entry-20261004/README.md",
+    "tested_base_sha": "2ab895d45b5051f415e07c62f87e74179afd086d",
+    "test_tree": "BASE_PLUS_UNCOMMITTED_CLI_DELTA",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "actual": {
+      "tested_base_sha": "2ab895d45b5051f415e07c62f87e74179afd086d",
+      "uncommitted_cli_delta": true,
+      "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004/native-pending-cli",
+      "partial_resume_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004/native-pending-cli-interrupted",
+      "candidate_hash": "sha256:92dcda707632a0fbf661cd0704661e70ec5b8391bd6519fcb5cb55a3040b0cec",
+      "review_unit_hash": "sha256:7d4d085ed67f317e6f2e78a11be1751fd1b60f1cfe4d5096942ebc4154e2e705",
+      "status": "PENDING",
+      "request_count": 6,
+      "source_units": 17,
+      "findings": 25,
+      "unresolved": 18,
+      "save_seconds": 4.127,
+      "repeat_seconds": 3.372,
+      "resume_seconds": 3.398,
+      "all_saved_bytes_identical": true,
+      "old_native_pending_identity_preserved": true,
+      "no_result_or_run": true,
+      "business_calls": [
+        0,
+        0,
+        0
+      ],
+      "file_sha256": {
+        "review-context.json": "40d8c366f5d010fe79fb7f7a758ac106f8217e5786f237e84ffc63f89151d9e4",
+        "records.jsonl": "621883be38ceb8683431bb49137f0e3fc2b7f7793a97f049d410bf9aaa089f3c",
+        "development-input.json": "4bfae4b75bf51ac860f9cfaae9c5efc6417cbc2a55f13ee973c7daff8624d87c",
+        "review.md": "709fb398df44d3032e7dd771d1b2c42772f9bcbda54cac0036b77a67d6d1125f",
+        "wires/0/response.bin": "4e5aef5388f6ad64f1e41224015a6a3f083c10c31cccdaea17c4d7ea1fb01c55",
+        "wires/0/request-body.bin": "c74e22c1dbe6f7e25249b7048c4d53b8490dd22fd1c51417f4f9f8308c848acc",
+        "wires/1/response.bin": "e20c682f259eb7e30d8f7c0f62c11a14c5d624c1d041aea81a7f4b88fb67de83",
+        "wires/1/request-body.bin": "7d47c99294d05d67ac3ce5b6c5f741357a84e5062302d9e14d025d66b401c32b",
+        "wires/4/response.bin": "59ccfeb447d76555c14537816940be01aac3e804b7afb6c1d38245e721894097",
+        "wires/4/request-body.bin": "6d1fbe971d46a3c5fac136e5547362a17e056efd238c6c579f04e27cf43dc26e",
+        "wires/3/response.bin": "77731e3adbf3abdd72d8d3d98526f3e89ed0c7504b4c3694ad10789c203d782f",
+        "wires/3/request-body.bin": "a6573132e7f5902d40ebd593da5612d9c28cc9d47fe81edded3f249c14aa2385",
+        "wires/2/response.bin": "70fe1a24627ff171efadbfbc24eca50841a73418d92a65343467d7df69722e12",
+        "wires/2/request-body.bin": "596ef5aa691c7c65c0c10e9ef24656a8fc3bc350b3db81ead74c05773975a7c7",
+        "wires/5/response.bin": "4c24f03776778e9b47a588e0f5b445062152f763ae1cea9e0abc587d7e9b9cab",
+        "wires/5/request-body.bin": "3a817ea46a1d45d0f2a978d27facca865cad52b98bf1c16fe1ce74be25602311",
+        "processing/d03/metadata.json": "4fcb3ae51b4559b52f6cfc60bc5db0a38105e890e46456add11c7c7495785706"
+      }
+    },
+    "cold": {
+      "company_id": "marriott_international",
+      "status": "PENDING",
+      "candidate_hash": "sha256:92dcda707632a0fbf661cd0704661e70ec5b8391bd6519fcb5cb55a3040b0cec",
+      "review_unit_hash": "sha256:7d4d085ed67f317e6f2e78a11be1751fd1b60f1cfe4d5096942ebc4154e2e705",
+      "request_count": 6,
+      "native_result_created": false,
+      "native_run_created": false,
+      "provider_attempt_created": false,
+      "calls": [
+        0,
+        0,
+        0
+      ],
+      "production_authorized": false,
+      "seconds": 4.135,
+      "network_subprocess_forbidden": true
+    },
+    "short_tests": 11,
+    "scope": "Four new CLI persistence tests plus seven existing mapper tests. Old154 fast selectors reused unchanged; no full155 local rerun.",
+    "old_mapper_and_pending_hashes_unchanged": true,
+    "old_defaults_and_binding_unchanged": true,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "independent_review": "docs/evidence/issue28_continuous/d03-development-review-entry-20261004/independent-review/conclusion.md",
+    "company_result_created": false,
+    "normal_update_ready": false,
+    "patch_sha": "f5db8911a47ef1b6e08551f7a2946ec5734e68ee",
+    "read_scope_limit": "development-input.json attachment not authenticated by native reader; source/actual wires/native records/context/display and external identities verified; no locator-history authority from attachment alone."
   }
 }

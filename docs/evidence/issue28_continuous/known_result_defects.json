@@ -7,7 +7,7 @@
   "peer_read_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
   "current_trusted_summary": {
     "newly_excluded_coordinate_count": 19,
-    "newly_excluded_result_id_count": 27,
+    "newly_excluded_result_id_count": 30,
     "excluded_coordinate_keys": [
       "enphase_energy|C02|2025-12-31",
       "enphase_energy|D02|2025-12-31",
@@ -209,7 +209,8 @@
       ]
     },
     "current_reader_selection": "--include-jpm-reviewed (older two-result default retained)",
-    "current_reader_credit_scope": "Three exact saved-source D01 only, not complete390; original historical defect counts and IDs retained"
+    "current_reader_credit_scope": "Three exact saved-source D01 only, not complete390; original historical defect counts and IDs retained",
+    "result_identity_count_scope": "Distinct retained exact defect Result IDs; not the count of selected current390 rows."
   },
   "defects": [
     {
@@ -1257,9 +1258,59 @@
         }
       ],
       "current_credit": "ORIGINAL_ERRONEOUS_RESULT_STILL_WITHDRAWN; VERIFIED_SUCCESSOR_SELECTED_EXPLICITLY"
+    },
+    {
+      "defect_id": "C02_JPMORGAN_2025_OWNER_AND_STANDING_COMMITTEE_OMISSION_ORDINARY_V3",
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:53f2aa84b39a047212214660d9e17fd97b5de0c03077973fdd10a40b8de7f14a",
+      "run_id": "run:ordinary-integrated:50ff1db850f9f8d261001198dd18a0e0a67cf3d60fdda9993aa843925ecf9f58",
+      "requirement_closure_hash": "sha256:51890efc877ffc6124184a064ff17671652301ba1ecf1106e02b5a31e19a5483",
+      "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+      "source_accession": "0000019617-26-000096",
+      "summary": "Current source explicitly names James Dimon adjacent to the selected Chairman/CEO title, and Stock/Executive standing committees. Actual saved Result contains the title but neither the name nor either committee. Confirmed only for these two private result identities, not all JPM/current C02 results.",
+      "source_blocks": [
+        766,
+        767,
+        1244,
+        1245
+      ],
+      "fixed_peer_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
+      "peer_defect_id": "C02_JPMORGAN_2025_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING",
+      "peer_evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+      "own_evidence": "docs/evidence/issue28_continuous/shared-increment-consumption-20261004/actual-result-boundaries.json",
+      "repair_state": "SHARED_CORE_OWNER_47_REPAIR_PENDING; SUSPENDED_V4_NOT_REOPENED",
+      "current_credit": "WITHDRAWN_EXACT_PRIVATE_RESULT_NO_NEW_390_WITHDRAWAL",
+      "no_new_current_credit_previously_granted": true
+    },
+    {
+      "defect_id": "C02_JPMORGAN_2025_OWNER_AND_STANDING_COMMITTEE_OMISSION_SUSPENDED_V4",
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7",
+      "run_id": "run:ordinary-integrated:20793cc8dafb5888688f187d27d60fcb4f5ed56799711635b0fca4a302e4c9bf",
+      "requirement_closure_hash": "sha256:1b2fe50b46574602c4a4422f80ab3306bd4a0ce40024c955b64654e58aa0104f",
+      "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+      "source_accession": "0000019617-26-000096",
+      "summary": "Current source explicitly names James Dimon adjacent to the selected Chairman/CEO title, and Stock/Executive standing committees. Actual saved Result contains the title but neither the name nor either committee. Confirmed only for these two private result identities, not all JPM/current C02 results.",
+      "source_blocks": [
+        766,
+        767,
+        1244,
+        1245
+      ],
+      "fixed_peer_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
+      "peer_defect_id": "C02_JPMORGAN_2025_FIRST_CONTENT_READ_FINDS_OWNER_AND_COMMITTEE_NAMES_MISSING",
+      "peer_evidence": "docs/evidence/issue47_history/targeted-round-ed67e401-codex/c02-limited-first-read.json",
+      "own_evidence": "docs/evidence/issue28_continuous/shared-increment-consumption-20261004/actual-result-boundaries.json",
+      "repair_state": "SHARED_CORE_OWNER_47_REPAIR_PENDING; SUSPENDED_V4_NOT_REOPENED",
+      "current_credit": "WITHDRAWN_EXACT_PRIVATE_RESULT_NO_NEW_390_WITHDRAWAL",
+      "no_new_current_credit_previously_granted": true
     }
   ],
-  "latest_peer_read_commit": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
+  "latest_peer_read_commit": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
   "product_scope_acceptance_limits": {
     "record_type": "ISSUE28_FINITE_LEGACY_PRODUCT_SCOPE_ACCEPTANCE_LIMITS",
     "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",

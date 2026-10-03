@@ -1,0 +1,18 @@
+{
+  "protected_paths_unchanged": {
+    "scripts/vnext/normal_run_v3.py": "57d634aa4c65d8542c5c18d13fa387544d4b62284e7062bebfe7da26aea7743f",
+    "tools/vnext_normal_candidate.py": "08a34751d243906032df73cbcc48b7ef93e07c7893e9f4adc355c10d381cdf5a",
+    "scripts/vnext/continuous_semantic_calls.py": "07763ef87cafcbdeb032b3491660adefa6a2103a14612a5e7bbec2a1b2124ce9",
+    "scripts/vnext/continuous_call_policy.py": "6f612b01c702e9581dbd672a308e10812104668f3a0e5d044095620e48614e73",
+    "scripts/vnext/r6_regulatory_semantics.py": "abbbc30768e180a81c4d4fbd8d686f8ad269ecf0b775a6b37be3eced81350287",
+    "scripts/vnext/r6_semantic_review.py": "d21e286ed39fcc2fbd9359de8548d590d929fc724e597d3247ce3718b6b7c079",
+    "scripts/vnext/review.py": "c15b0a253c919b59682afbbd8ee41a2973cd0992f1b67d9def26197a5259349d",
+    "catalog/r6/regulatory_semantic_review_v5.json": "1d0e9c2300d05224fef2d013cd81c65ca7349b950e3f814f418669b6f2dcec7a",
+    "catalog/r6/regulatory_semantic_review_v6.json": "2f0bb7a49aa68a3bcb15fdc1b8d1e228a573575bfe88d16583d98e33f20589c6"
+  },
+  "old_authority_mentions": {
+    "issue_28_v13": [],
+    "issue_28_v14": []
+  },
+  "selector_delta": "diff --git a/tools/run_fast_tests_v2.py b/tools/run_fast_tests_v2.py\nindex 1e9e1212..0a1fe696 100644\n--- a/tools/run_fast_tests_v2.py\n+++ b/tools/run_fast_tests_v2.py\n@@ -180,6 +180,7 @@ SOURCE_TESTS += (\"tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMateri\n FAST_TESTS += (\"tests.vnext.test_d01_running_header\",)\n FAST_TESTS += (\"tests.vnext.test_c02_model_processing\",)\n FAST_TESTS += (\"tests.vnext.test_c02_model_review_view\",)\n+FAST_TESTS += (\"tests.vnext.test_d03_model_processing\",)\n SOURCE_TIMEOUT_SECONDS = 240\n SOURCE_TIMEOUT_OVERRIDES = {\n     # The unchanged full original-source module passed on head 698b9a45 in\n"
+}

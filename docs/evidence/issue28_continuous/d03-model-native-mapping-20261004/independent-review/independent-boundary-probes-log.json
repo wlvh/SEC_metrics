@@ -1,0 +1,158 @@
+{
+  "checked_sha": "ccb0c5e65cda6150b66bc07081ba0b7329bb152d",
+  "base_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
+  "network_and_subprocess_disabled": true,
+  "seconds": 23.993,
+  "results": [
+    {
+      "case": "owned_native_plus_visible_context_reference",
+      "result": "VALID_PENDING_INPUT_ONLY"
+    },
+    {
+      "case": "changed_model",
+      "result": "REJECTED",
+      "reason": "CONTINUOUS_CONTEXT_PARAMETERS_UNSUPPORTED"
+    },
+    {
+      "case": "changed_output_reserve",
+      "result": "REJECTED",
+      "reason": "CONTINUOUS_CONTEXT_PARAMETERS_UNSUPPORTED"
+    },
+    {
+      "case": "changed_system_prompt",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REQUEST_CONTRACT_OR_RESOURCE_CHANGED"
+    },
+    {
+      "case": "native_packet_truncated_visible_context",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_VISIBLE_CONTEXT_CHANGED"
+    },
+    {
+      "case": "native_payload_identity_changed",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_NATIVE_PAYLOAD_CHANGED"
+    },
+    {
+      "case": "response_owner_scope_changed",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_RESPONSIBILITY_CHANGED"
+    },
+    {
+      "case": "reviewed_owner_missing",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_RESPONSE_OWNER_CHANGED"
+    },
+    {
+      "case": "context_only_finding",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_CONTEXT_ONLY_FINDING"
+    },
+    {
+      "case": "native_boolean_index",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REFERENCE_KIND_OR_INDEX"
+    },
+    {
+      "case": "native_wrong_kind",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REFERENCE_KIND_OR_INDEX"
+    },
+    {
+      "case": "visible_missing_index",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REFERENCE_KIND_OR_INDEX"
+    },
+    {
+      "case": "reference_to_other_packet_native_unit",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REFERENCE_UNIT"
+    },
+    {
+      "case": "identical_finding_not_silently_deduplicated",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_DUPLICATE_FINDING_NO_CLEANUP"
+    },
+    {
+      "case": "synthetic_contradictory_semantics_retained_pending_unicode_exact",
+      "result": "PENDING_WITHOUT_SEMANTIC_CREDIT",
+      "synthetic": true
+    },
+    {
+      "case": "forbidden_origin_LIVE",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REAL_EXECUTION_NOT_AUTHORIZED"
+    },
+    {
+      "case": "forbidden_origin_RECORDED_TEST_ONLY",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REAL_EXECUTION_NOT_AUTHORIZED"
+    },
+    {
+      "case": "forbidden_origin_DEEPSEEK",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_REAL_EXECUTION_NOT_AUTHORIZED"
+    },
+    {
+      "case": "source_digest_external_anchor",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_AUTHENTICATED_SOURCE_CHANGED"
+    },
+    {
+      "case": "persistent_raw_request",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_EXTERNAL_WIRE_CHANGED"
+    },
+    {
+      "case": "persistent_raw_response",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_EXTERNAL_WIRE_CHANGED"
+    },
+    {
+      "case": "persistent_review_display",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_SAVED_NATIVE_REPLAY_CHANGED"
+    },
+    {
+      "case": "persistent_review_context",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_SAVED_NATIVE_REPLAY_CHANGED"
+    },
+    {
+      "case": "persistent_metadata_origin",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_SAVED_PROCESSING_CHANGED"
+    },
+    {
+      "case": "persistent_pending_status",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_SAVED_NATIVE_REPLAY_CHANGED"
+    },
+    {
+      "case": "persistent_response_plus_local_resigning",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_SAVED_NATIVE_REPLAY_CHANGED"
+    },
+    {
+      "case": "persistent_wrong_candidate_pin",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED"
+    },
+    {
+      "case": "persistent_wrong_review_pin",
+      "result": "REJECTED",
+      "reason": "D03_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED"
+    },
+    {
+      "case": "real_system_review_entry_for_actual_pending",
+      "result": "REJECTED",
+      "reason": "SYSTEM review requires exact enum scope evidence"
+    }
+  ],
+  "original_private_package_unchanged": true,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}
