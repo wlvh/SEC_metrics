@@ -7510,6 +7510,33 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "03871875",
+   "own_commit_at_read": "e14d3ca9",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; adds defect D01_JPMORGAN_2025_RUNNING_HEADER_ORDINARY_390 (its current ordinary D01 Result 99442738 withheld, peer_defect_id naming #47's D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING, fixed_peer_sha af29ab2f) and the matching product_scope_acceptance_limits entry; latest_peer_read_commit af29ab2f",
+   "baseline": "Read since 9e37beb9: two commits, their file lists, the code diffs of the inherited files, the limited-review conclusion and the register delta; merged as ad247cb6. 31beeab5 changes files issue_28_v13's execution authority records (normal_run_v3.py, ordinary_remaining_cases.py, ordinary_update_cycle.py, d01_emphasis_results.py, tools/vnext_normal_update.py, config/issue28_normal_results_v2.json) and adds three, so the parent closure moved to d31a37a4 and issue_47_v1 was re-minted (490 to 494 authority files). That also moves the snapshot the model-egress receipt binds; the reseal was restarting anyway (see pending-rule-changes/README.md).",
+   "increments": [
+    {
+     "commit": "31beeab5",
+     "marker": "[shared-with-#47]",
+     "subject": "Pin D01 running-header successor and select it in ordinary updates",
+     "affects_47": "No #47 value moves, checked against the code rather than assumed. The change adds an explicit D01 V3 option to #28's ordinary route (text_api(..., d01_running_header=False), d01_emphasis='RUNNING_HEADER_V3', policy D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER); every default is unchanged. #47's historical text_api routes D01 to historical_risk_results before it reaches the parent, and calls the parent text_api with the metric id only, so the V3 option is never selected on a #47 route. The rule #28 pinned in its own path (d01_running_header_28_v1.py) is the one from #47's pending patch at af29ab2f, whose bytes equal what e14d3ca9 landed.",
+     "integration": "MERGED; snapshot re-minted"
+    },
+    {
+     "commit": "03871875",
+     "marker": "[shared-with-#47]",
+     "subject": "Record limited D01 successor review and retained acceptance gates",
+     "affects_47": "None to #47's counts. #28's limited review of 31beeab5 (a same-family subagent, not an independent human acceptance) passed with no new P1/P2; its independent counterexamples confirm that real headings containing 'Parts' and unsupported comma, ampersand and period forms are kept. This is #28's receiving record for the shared D01 finding (#47 comment 5965162939); it does not accept any #47 result.",
+     "integration": "MERGED; no change"
+    }
+   ]
   }
  ]
 }

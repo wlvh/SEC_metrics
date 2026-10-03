@@ -448,8 +448,8 @@
     "size": 3093
    },
    "config/issue28_normal_results_v2.json": {
-    "sha256": "563da0ab3004bb6256b1af30c8167599a076f48968de8720052806cac0ae5c30",
-    "size": 9235
+    "sha256": "bad2abbf377edd5fd881ddbd72084db60410bbcaa5026b44fde86e54f7339a4c",
+    "size": 9386
    },
    "config/issue47_part_iii_statement_admission_v1.json": {
     "sha256": "e76e824d9ff349ee256da204db3239b266fc95818be4bf45572f7d7d3ad5aca5",
@@ -944,12 +944,20 @@
     "size": 165306
    },
    "scripts/vnext/d01_emphasis_results.py": {
-    "sha256": "0c210d18a533979212c42cd778efe2e85ae9e868f0a063770a35be40226340f1",
-    "size": 17519
+    "sha256": "e0d18e8584967185bebae0383365b4a94a775c0e9b8d6f7ef27020d001010f0a",
+    "size": 18454
+   },
+   "scripts/vnext/d01_emphasis_results_v3.py": {
+    "sha256": "137b8b84661c5ba54152725124829ffb7b003928f94cf49ea74fcdf80df1ae7c",
+    "size": 17797
    },
    "scripts/vnext/d01_emphasis_source.py": {
     "sha256": "4916849e4449c0fc4e6720972e63e1d88194eeebc94b1fda1d9fa43a9dc9c233",
     "size": 11383
+   },
+   "scripts/vnext/d01_running_header_28_v1.py": {
+    "sha256": "535245b5c7e802a040a02fafb898652aea0a2c0cf696f1a4a868fa660aacd978",
+    "size": 3132
    },
    "scripts/vnext/d02_item8_category_28_v1.py": {
     "sha256": "8f1867a24cd5efe3ac72b3016cf128f383799f21919fc5804c7c26d206f574a3",
@@ -1296,8 +1304,8 @@
     "size": 17882
    },
    "scripts/vnext/normal_run_v3.py": {
-    "sha256": "ffb07907645fe8181725077b593f7ed8900013f6fadf1a2ae49d5dbce7fbb5ae",
-    "size": 37564
+    "sha256": "57d634aa4c65d8542c5c18d13fa387544d4b62284e7062bebfe7da26aea7743f",
+    "size": 38444
    },
    "scripts/vnext/normal_source_authority.py": {
     "sha256": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e",
@@ -1334,6 +1342,10 @@
    "scripts/vnext/ordinary_c02_member_update_v4.py": {
     "sha256": "23a30b4ea8fec393f62f8943446b6bf419c8869fde06d58382203aadf9b294a6",
     "size": 3143
+   },
+   "scripts/vnext/ordinary_d01_header_update_v3.py": {
+    "sha256": "004dacbbe5061b52099aeadd2934cc369d10a773e868293f402cad5284c5be95",
+    "size": 2720
    },
    "scripts/vnext/ordinary_d02_category_update.py": {
     "sha256": "768e35cefe886369427212d68bbcfc655993a829d5b5467e1ef6a8a77f30b09d",
@@ -1384,8 +1396,8 @@
     "size": 16101
    },
    "scripts/vnext/ordinary_remaining_cases.py": {
-    "sha256": "3e910fccb7a2fc8561e1aafb0bb01dbc5e17dddc3b5e107811b87d728289618a",
-    "size": 11751
+    "sha256": "ed083ddb13886e678cea8b003ce6674339d9d403383a1d021311c33124b2c97b",
+    "size": 11926
    },
    "scripts/vnext/ordinary_source_authority.py": {
     "sha256": "153b8eeea1233d3ce33209ba352ef1265eca13ae82326125f9adf1acd793c795",
@@ -1408,8 +1420,8 @@
     "size": 6752
    },
    "scripts/vnext/ordinary_update_cycle.py": {
-    "sha256": "b1dbb1d18408324742c236017f3883245c5b40a680992e0826c978611eb19f9b",
-    "size": 27448
+    "sha256": "dd42a273afea38a61a9abb38be2becc6fed1ce836d0e9a7d0365e46d63e1dccc",
+    "size": 28218
    },
    "scripts/vnext/paired_measure_v1.py": {
     "sha256": "226781e3e9f4b5e82f7c27f629fd50e2e8e647f499954b6051da20fe685304bb",
@@ -1927,6 +1939,10 @@
     "sha256": "a212c9dc29f6402f052541ffc9346ab47e57272e1102a9101d4ac24b14646f4b",
     "size": 4593
    },
+   "tools/vnext_normal_update.py": {
+    "sha256": "38115f405298206825a854cd032005d2808602ea3b03a536645ee107b25f3b89",
+    "size": 6100
+   },
    "tools/vnext_operator.py": {
     "sha256": "9040ea69c066b6d5e64729ca03ce353b8b4ff3c8d71ee0327b7427444da1f0cc",
     "size": 37107
@@ -2193,7 +2209,7 @@
   }
  },
  "parent": {
-  "requirement_closure_hash": "sha256:7644b72b80a1a316bc04c3cd9bc486510d779adb844777e63c59d8d39ed424de",
+  "requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
   "requirement_id": "issue_28_v13",
   "snapshot_files": {
    "CONTRACT.md": {
@@ -2201,12 +2217,12 @@
     "size": 1211
    },
    "baseline_manifest.json": {
-    "sha256": "28ff632705390c1a6002dd7795e16f5debcbbc0a1b11bc4163e521e5075549d5",
-    "size": 83796
+    "sha256": "ac857a07f3bf9789b7ff5a1f1ad69506208cd77cdb349dbf3cb60de379552b5d",
+    "size": 84952
    },
    "decision_register.json": {
-    "sha256": "a33308498180d6cac1c564af756c80014804d79363f5a1199d06f0fdf010b3d1",
-    "size": 9894
+    "sha256": "0a058adc169b9059e3002a018de1340046da68c8c259f0a62b134b0b25aa8967",
+    "size": 10051
    },
    "invariant_profile.json": {
     "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
