@@ -1,0 +1,47 @@
+{
+ "record_type": "ISSUE_47_PAID_ANSWER_READER_CHECKS",
+ "results": [
+  {
+   "case": "the target's going concern in doubt",
+   "expected_agreement": false,
+   "got": false,
+   "as_expected": true
+  },
+  {
+   "case": "the required candidate left unresolved",
+   "expected_agreement": false,
+   "got": false,
+   "as_expected": true
+  },
+  {
+   "case": "the required candidate not answered",
+   "expected_agreement": false,
+   "got": false,
+   "as_expected": true
+  },
+  {
+   "case": "the candidate as another meaning",
+   "expected_agreement": true,
+   "got": true,
+   "as_expected": true
+  },
+  {
+   "case": "the candidate as conditional boilerplate",
+   "expected_agreement": true,
+   "got": true,
+   "as_expected": true
+  },
+  {
+   "case": "an answer other than the one its terminal vouches for",
+   "expected": "PAID_ANSWER_DIFFERS_FROM_ITS_TERMINAL",
+   "got": "PAID_ANSWER_DIFFERS_FROM_ITS_TERMINAL",
+   "as_expected": true
+  }
+ ],
+ "all_as_expected": true,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
