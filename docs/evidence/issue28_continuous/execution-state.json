@@ -3614,6 +3614,27 @@
       "result_path": "docs/evidence/issue28_continuous/b03-salesforce-full-scope-audit-20261003/conclusion.md",
       "verdict": "FULL_FINANCIAL_SCOPE_READ_COMPONENT_ONLY_TOTAL_UNPROVEN",
       "ordinary_messages": 1
+    },
+    {
+      "task_name": "audit_b06ford_1f62725",
+      "purpose": "ONE_TIME_LARGE_ORIGINAL_SCOPE_AUDIT",
+      "module": "b06_ford_full_financial_original",
+      "scope_paths": [
+        "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+        "catalog/r5/B06_new_source_v2.md",
+        "config/b06_special_scope_v1.json",
+        "scripts/vnext/ordinary_special_debt_scope.py",
+        "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/"
+      ],
+      "patch_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
+      "spawned_at": "2026-10-03T01:06:40.818273+00:00",
+      "ended_at": "2026-10-03T01:19:45.784798+00:00",
+      "tool_calls": 52,
+      "result_path": "docs/evidence/issue28_continuous/b06-ford-full-scope-audit-20261003/conclusion.md",
+      "verdict": "LIMITED_SOURCE_AUDIT_NO_DIRECT_INDUSTRIAL_EQUITY_NO_B06_CREDIT",
+      "status": "DONE",
+      "ordinary_messages": 1,
+      "dedup_note": "list_agents no live/same-purpose agent; subagent_register no B06 full-original audit; existing independent B03 Ford reviews different module/scope. This is once-only complete financial statements/notes read beyond prior XBRL/table probes; underscore task naming required by spawn tool."
     }
   ],
   "ci_capacity_20260922": {
@@ -11472,5 +11493,69 @@
     "peer_read_commit": "562128fc",
     "baseline": "52d94470",
     "scope": "Peer merged own base899 plus CLI/CI evidence; no relevant shared source core change or defect-release credit copied"
+  },
+  "b06_ford_full_financial_audit_20261003": {
+    "status": "FULL_FINANCIAL_STATEMENTS_AND_25_NOTES_READ_WITH_LIMITED_MDA_NO_B06_RESULT",
+    "patch_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
+    "evidence": "docs/evidence/issue28_continuous/b06-ford-full-scope-audit-20261003/conclusion.md",
+    "source_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "printed_financial_pages": [
+      108,
+      176
+    ],
+    "same_scope_equity": "NOT_ESTABLISHED_IN_READ_SCOPE",
+    "reported_debt": 21919000000,
+    "finance_leases_already_in_reported_debt": 890000000,
+    "consolidated_accrued_interest_unallocated": 1453000000,
+    "future_interest_misleading_concept_not_accrued": 12749000000,
+    "reported_inclusion_relation_consumed_by_runtime": false,
+    "current_result": "WITHHELD_NULL_B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "scope_limit": "Child one-time original reading, not independent human acceptance; parent checked96 raw page SHAs and six key pages, not full financial reread. Original v1 default and current withheld selection unchanged.",
+    "shared_notification": {
+      "issue": 47,
+      "comment_id": 5964098149,
+      "server_readback_exact": true,
+      "code_and_evidence_commit": "decd85a245534ed05b3536ba9b92100d74311c48"
+    }
+  },
+  "collab54_c04_stable_source_version_switch_20261003": {
+    "status": "PASS_C04_STABLE_SOURCE_ROOT_TWO_REAL_SAVED_VERSIONS",
+    "evidence": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-c04-source-switch-v1/README.md",
+    "tested_head_with_uncommitted_harness": "decd85a245534ed05b3536ba9b92100d74311c48",
+    "provider_consumed_sha": "2a642e56a8e2f88c884c92cd350cf742f5dd8cfa",
+    "provider_latest_read_sha": "303d751f29e57dc68ab7848b6b184dc4ab8c4b83",
+    "runtime_identity_reused": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-c04-source-switch-v1/runtime-identity-reuse.json",
+    "stable_source_root": "/private/tmp/issue28-company-consumer-20261003/state-marriott-c04-source-switch/source",
+    "baseline_attempt": "/private/tmp/issue28-company-consumer-20261003/state-marriott-c04-source-switch/updates/metrics/C04-registration-v3/attempts/517316943292493085a4e1270387ead8",
+    "current_attempt": "/private/tmp/issue28-company-consumer-20261003/state-marriott-c04-source-switch/updates/metrics/C04-registration-v3/attempts/f1dbaa24851b4f1e80dab89201c26295",
+    "baseline_result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+    "current_result_id": "sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e",
+    "two_native_runs": true,
+    "old_attempt_bytes_unchanged": true,
+    "separate_process_both_runs_replayed": true,
+    "new_financial_year": false,
+    "new_complete_company_results": 0,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "scope_limit": "Two legitimate saved same-fiscal-year source versions; program replay and bytes only, no new full content/390/OpenShift/production credit. Reused first-C04/idempotence/wrong-company recovery evidence; no product source/default/binding changes."
+  },
+  "latest_ci_natural_observation_20261003": {
+    "head_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
+    "run_id": 37082879179,
+    "status": "in_progress",
+    "conclusion": null,
+    "updated_at": "2026-10-03T01:21:27Z",
+    "audit_evidence_head": "decd85a245534ed05b3536ba9b92100d74311c48",
+    "audit_evidence_run_id": 37086113754,
+    "audit_evidence_run_status": "queued",
+    "not_a_terminal_success": true
   }
 }
