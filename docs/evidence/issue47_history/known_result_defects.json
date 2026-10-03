@@ -7732,6 +7732,26 @@
      "integration": "MERGED; no change"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "ff9667ea",
+   "own_commit_at_read": "e4d7d5e7",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; unchanged by these two commits (no defect entry, release or acceptance limit added)",
+   "baseline": "Read since dee04f5f: two commits. Outside docs/evidence/issue28_continuous/ they add scripts/vnext/c02_model_review_view.py, tests/vnext/test_c02_model_review_view.py and one fast-tier line in tools/run_fast_tests_v2.py (a different region from #47's SOURCE_CI_SECONDS; auto-merged). None of these is recorded in the issue_47_v1 snapshot: mint --check passes unchanged on the merged tree, and #28's new 7-case test passes there. The sealed run package 5640c367 does not move.",
+   "increments": [
+    {
+     "commit": "7ca036df, ff9667ea",
+     "marker": "[shared-with-#47]",
+     "subject": "C02 model proposals: a per-fact source review view (each model fact or unresolved item mapped to its original B coordinates, span hashes and the existing candidate excerpt roles; unresolved-only source text shown as uncertainty evidence; whole original group context kept); new ReviewUnit PENDING, not SYSTEM-approvable; no Review, Result, Run or 390 credit; old mapper bytes and old pending objects unchanged; scoped independent review recorded",
+     "affects_47": "None to #47's values: the view consumes #28's ordinary pending objects and is not in any execution authority #47 inherits. It matches #28's reply on Issue #47 (comment 5968966522): source_blocks are citations supporting a fact, not one fact per block, so #47's C02 method validation scores the model at fact level and counts a cited heading or label beside the stating block as support, not as a wrong selection.",
+     "integration": "MERGED; no change"
+    }
+   ]
   }
  ]
 }

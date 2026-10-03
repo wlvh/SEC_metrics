@@ -1,0 +1,52 @@
+{
+  "fixed_sha": "7ca036df9fcc85501ae70231f89366d98205c476",
+  "predecessor": "dee04f5fe118eef823f1079caa3bc213742ed991",
+  "head": "7ca036df9fcc85501ae70231f89366d98205c476",
+  "initial_status": [
+    " M docs/evidence/issue28_continuous/execution-state.json"
+  ],
+  "files": {
+    "scripts/vnext/c02_model_review_view.py": {
+      "sha256": "a3a5411e414b85528acd92c28e6ae1d2e3b3833687a7405aa7cddb231dbd4e9f",
+      "matches_fixed_git_blob": true
+    },
+    "tests/vnext/test_c02_model_review_view.py": {
+      "sha256": "ea67f86cb5d92c48ad601d3eba9257f3d49993bb23a39ddbfda81c63a7e32d83",
+      "matches_fixed_git_blob": true
+    },
+    "scripts/vnext/c02_model_processing.py": {
+      "sha256": "734256bab876bbf2fcbabdfa0acdc21a3776f4e86870cf68b048b576f04a4e39",
+      "matches_fixed_git_blob": true,
+      "matches_predecessor": true,
+      "matches_reviewed_mapper": true
+    }
+  },
+  "saved_artifacts": {
+    "/private/tmp/issue28-c02-native-pending-20261003/enphase_energy": {
+      "response.bin": "dd9a774b1466d1e2c765a52a87fd992dd2c8e8aeca6f24bce1f85ff79f2dcb6f",
+      "review-context.json": "56b9310a2c49b4fc4f092fdc4d1cc1e7d43cc8ee089918a8ce3fbf6a3b3fa98e",
+      "request-body.bin": "4ec3827cab6b905dc2c34ca60c5871d3f62abeefbdb813d305382160484386eb",
+      "records.jsonl": "3ae8787fabe8bc9a3c6801b98ab46dad69c5d87023418d2f8eb7ab9bbee5e66a",
+      "review.md": "7338b6cdb132ab2c448323fa28e7db4993c6e5762527eb1f665c8602c55c2fdb",
+      "processing/c02/metadata.json": "13424b77c74642e998d7f1a4d10cdd0ca450fa509c8501a09826d74a07f9f246"
+    },
+    "/private/tmp/issue28-c02-source-linked-review-20261003-full/enphase_energy": {
+      "view.json": "769a8f6411998970c548e0653b3e88b529035dd0ae0622e136f7f118206b1daf",
+      "context.json": "4536b41354015d24225ef9af76edfe7ca6fcdbe0007306c6a30486de3092fbde",
+      "review.md": "650843e90f0e2392ad7aecdd76dfa2045bf9344543f98f2798f7db22f2ec9cc8"
+    },
+    "/private/tmp/issue28-c02-native-pending-20261003/paramount_skydance_paramount_global": {
+      "response.bin": "69daa51d81f8988491139b12496b673d42918dbc2f9e51fa1797ddcc8252c003",
+      "review-context.json": "4ae5229b3a685ea1552dd80b9fbc7f79ca344818249486902e34d77c2176f835",
+      "request-body.bin": "0a33f968fa0b98ace346cd3ffd55cc162f633cdb441a1ead76a763ae152d9c3b",
+      "records.jsonl": "e11621073beaed7098c6c3aaa4f5e8ed870937f2814be90d0ac1c30c3334566e",
+      "review.md": "8cef0d18d2d5612bc1294eca8555f326066ec8bee8ae3eeab507a4f55bdd54cc",
+      "processing/c02/metadata.json": "4575d7ef761d6315d8f794bcf7876b0f97f3e3ce0c303e187522125223d31372"
+    },
+    "/private/tmp/issue28-c02-source-linked-review-20261003-full/paramount_skydance_paramount_global": {
+      "view.json": "92e4cb6d41a85df81bad704e9a2c755aa551ebdd0dbfde8e182b4ac9ca8e6a03",
+      "context.json": "e93a6bf05e02edf1bb4751fbb3323b1f9278b238b13f61dd65ee829bdb97918f",
+      "review.md": "28f8c6ce094200e9292badc77f413112e08e8bb5c47c39a0d9a31bd38ea60654"
+    }
+  }
+}

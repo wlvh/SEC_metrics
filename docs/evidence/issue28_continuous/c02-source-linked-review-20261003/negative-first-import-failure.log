@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/c02-source-linked-review-20261003/negative.py", line 7, in <module>
+    from vnext.requirement_profile import load_requirement_snapshot
+ImportError: cannot import name 'load_requirement_snapshot' from 'vnext.requirement_profile' (/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py). Did you mean: 'load_profile_requirement_snapshot'?
