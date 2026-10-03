@@ -7803,6 +7803,26 @@
      "integration": "MERGED; no change"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "2a711128",
+   "own_commit_at_read": "68025386",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; latest_peer_read_commit advanced to 68025386; no defect entry, release or acceptance limit changed",
+   "baseline": "Read since edda3b29: two D03 source-only input evidence commits. All 32 changed paths are inside docs/evidence/issue28_continuous/. issue_47_v1 mint --check is unchanged after merge 40db3f8c. The sealed model run package remains 5640c367 plus its two patches.",
+   "increments": [
+    {
+     "commit": "07634fe8, 2a711128",
+     "marker": "[shared-with-#47]",
+     "subject": "D03 development fact input through actual continuation context; third source-only case retains private-claim and tax boundaries. Partial development evidence only.",
+     "affects_47": "No historical runtime or rule binding changed. D03 has no #47 route and is outside the 35-call approval.",
+     "integration": "MERGED; no historical acceptance credit copied"
+    }
+   ]
   }
  ]
 }
