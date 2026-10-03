@@ -63,7 +63,7 @@ def rule_bindings(requirement_id='issue_28_v13'):
     return {relative: binding(ROOT/relative) for relative in sorted(paths)}
 
 
-def event_saved_paths(requirements, rows, company_id, ciks):
+def event_saved_paths(requirements, rows, company_id, ciks, source_root=None):
     """Project declared event captures into the existing saved-path reader.
 
     Originals and HTTP headers still come from their unchanged ledger rows.
@@ -86,6 +86,15 @@ def event_saved_paths(requirements, rows, company_id, ciks):
              'COMPANY_EVENT_SAVED_PATH_IDENTITY_INVALID')
         directory = 'evidence/accession_materials/{}_{}_{}'.format(
             company_id, int(parts[4]), parts[5])
+        # Existing baselines may use a different company display prefix.
+        # Preserve that directory instead of introducing a second accession.
+        material_root = Path(source_root)/'evidence/accession_materials' if source_root else None
+        if material_root is not None and material_root.is_dir():
+            matches = [p for p in material_root.iterdir() if p.is_dir()
+                       and p.name.rsplit('_', 2)[-2:] == [str(int(parts[4])), parts[5]]]
+            need(len(matches) <= 1, 'COMPANY_EVENT_SAVED_ACCESSION_AMBIGUOUS')
+            if matches:
+                directory = matches[0].relative_to(source_root).as_posix()
         target = directory+'/'+parts[6]
         for destination, field in ((target, 'repo_relative_path'),
                                    (target+'.headers.json', 'headers_repo_relative_path')):
@@ -160,7 +169,7 @@ def export_company(*, source_root, output_root, trust_root, company_id,
         if row['source_url'] in urls:
             paths.update(row[field] for field in ('repo_relative_path', 'headers_repo_relative_path')
                          if row[field] and (source/row[field]).is_file())
-    aliases = event_saved_paths(requirements, rows, company_id, ciks) if declared_frame is None else {}
+    aliases = event_saved_paths(requirements, rows, company_id, ciks, source_root=source) if declared_frame is None else {}
     files = {}
     for relative in sorted(paths):
         path = resolve_repository_file(repo_root=source, repo_relative_path=relative)

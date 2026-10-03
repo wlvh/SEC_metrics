@@ -83,6 +83,10 @@ class CompanyImportTest(unittest.TestCase):
         self.assertEqual(len(aliases), 4)
         self.assertEqual(aliases['evidence/accession_materials/marriott_international_1048286_000119312525009110/d890503d8k.htm'], rows[0]['repo_relative_path'])
         self.assertEqual(rows, saved)
+        existing = self.root/'evidence/accession_materials/old_display_1048286_000119312525009110'
+        existing.mkdir(parents=True)
+        retained = handoff.event_saved_paths(requirements, rows, 'marriott_international', {1048286}, source_root=self.root)
+        self.assertTrue(all('old_display_1048286_' in p for p in retained))
         with self.assertRaisesRegex(ValueError, 'SAVED_PATH_IDENTITY_INVALID'):
             handoff.event_saved_paths(requirements, rows, 'different_company', {1})
         failed = {**rows[0], 'status_code': '403', 'error': 'HTTP 403'}
