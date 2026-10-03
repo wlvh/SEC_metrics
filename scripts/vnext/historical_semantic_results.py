@@ -69,7 +69,8 @@ from .d04_native_assessment import (CURRENT_KINDS, SPEC_PATH as D04_SPEC_PATH,
 from .historical_dei import release_aware
 from .historical_semantic_source import prepare_historical_d04_semantic_source
 from .historical_spec_revision import compile_historical_spec_file
-from .native_unit_index import evidence_json_bytes, reconstruct_requests
+from .native_unit_index import (VERSION as INDEXED_UNITS, evidence_json_bytes,
+                                reconstruct_requests, upgrade_request)
 from .normal_source_authority import ROOT
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import raw_blob_record, resolve_repository_file, source_reference_record
@@ -122,8 +123,24 @@ _RECONSTRUCT_REQUESTS = release_aware(reconstruct_requests)
 
 
 def pinned_requests(source):
-    """Every request the source partitions into, in order - the base contract only."""
-    return _RECONSTRUCT_REQUESTS(source)
+    """Every request the source partitions into, in order, in the indexed-unit form.
+
+    The partition is the base contract's (``reconstruct_requests``); what is
+    sent is each group's frozen ``native_unit_index.upgrade_request`` variant,
+    which asks the model to name units by their position instead of echoing
+    their 71-character ids. The base form is what #28's real call 71 failed
+    on: the model returned a unit id with one character dropped and the
+    response was refused (``D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED``). #28 has
+    sent the indexed form for every new D04 group since, and its 21 real D04
+    requests in that form all succeeded. A #47 position needs every one of its
+    requests answered (four to eight), so a per-call transcription failure
+    would cost the whole position. The variant changes only the response
+    identity format: the units, their grouping and the source are the base
+    request's, and ``restore_base_request`` inverts it exactly. This is what
+    the frozen ``reconstruct_requests(source, variants)`` returns with every
+    variant indexed, built from one reconstruction instead of two.
+    """
+    return [upgrade_request(request) for request in _RECONSTRUCT_REQUESTS(source)]
 
 
 def request_binding(request):
@@ -193,6 +210,16 @@ def assemble_assessment(*, source, requests, rows, mode):
             "all_source_requests_accepted": not missing, "proposed_branch": branch,
             "source_findings": findings, "mode": mode, "metric_result_created": False,
             "review_complete": False, "production_authorized": False}
+    # Recorded as ``collect_native_assessments`` records them. The label is read
+    # off each request, not proven here: the frozen text builder
+    # (``capacity_text_results``) rebuilds the requests from these variants and
+    # refuses an assessment whose request ids are not the rebuilt ones. Asking
+    # the frozen partition check instead would load, through the release-aware
+    # view, modules that function names and the call path is not bound to.
+    variants = [INDEXED_UNITS if "indexed_unit_contract" in request else "BASE"
+                for request in requests]
+    if any(version != "BASE" for version in variants):
+        body["native_request_variants"] = variants
     return {**body, "assessment_set_id": content_hash(value=body)}
 
 

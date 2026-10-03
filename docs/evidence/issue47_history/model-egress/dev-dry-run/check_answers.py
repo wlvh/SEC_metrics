@@ -3,13 +3,14 @@
 Each answer file is the raw text a fresh-context development model wrote for one
 request, having seen only that request's messages. It is held to exactly what a
 DeepSeek answer would be held to: ``validate_answer`` and the counting of the
-request's contract (E01 ``confirmed_count``; D02 ``reviewed_blocks``), and the
+request's contract (E01 ``confirmed_count``; D02 ``reviewed_blocks``; D04 the
+frozen ``d04_native_assessment.validate_response``), and the
 output ceiling measured with the pinned reference tokenizer. Then the decisions
 are compared with the development reference made from the filings. These are
 development results - not DeepSeek, not LIVE, no call credit.
 
 Usage (from a #47 tree at the sealed commit):
-    python3 <this file> <requests dir> <answers dir> <e01 reference> [<d02 reference>] > out.json
+    python3 <this file> <requests dir> <answers dir> <e01 reference | -> [<d02 reference>] > out.json
 """
 import json
 import sys
@@ -24,8 +25,9 @@ def main(requests_dir, answers_dir, e01_reference, d02_reference=None):
     from vnext import historical_ma_confirmation as e01
     from vnext.continuous_request_context import OUTPUT_RESERVE, _load_tokenizer
     tokenizer, _ = _load_tokenizer()
-    references = {(row["request"], row["item_id"]): row["reference"]
-                  for row in json.loads(Path(e01_reference).read_text())["items"]}
+    references = ({(row["request"], row["item_id"]): row["reference"]
+                   for row in json.loads(Path(e01_reference).read_text())["items"]}
+                  if e01_reference != "-" else {})
     d02_refs = (json.loads(Path(d02_reference).read_text()) if d02_reference else {})
     rows = []
     for answer_path in sorted(Path(answers_dir).glob("*.json")):
@@ -36,6 +38,23 @@ def main(requests_dir, answers_dir, e01_reference, d02_reference=None):
                "answer_tokens": len(tokenizer.encode(raw.decode("utf-8"), add_special_tokens=False).ids),
                "max_output_tokens": OUTPUT_RESERVE}
         row["fits_the_output_ceiling"] = row["answer_tokens"] <= OUTPUT_RESERVE
+        if name.startswith("D04-"):
+            # D04 answers go through the frozen native contract (#28's
+            # d04_native_assessment.validate_response), as the call path does.
+            from vnext.d04_native_assessment import validate_response
+            try:
+                checked = validate_response(request=request, raw_response=raw)
+            except Exception as error:  # the contract raises its own named errors
+                row["contract_check"] = "REFUSED: %s: %s" % (type(error).__name__, str(error)[:300])
+                rows.append(row)
+                continue
+            row["contract_check"] = "PASSED"
+            row["units"] = len(request["required_response_unit_ids"])
+            row["required_candidate_assessments"] = len(request["required_candidate_assessments"])
+            row["findings"] = [{"kind": f["kind"], "subject": f["subject"], "timing": f["timing"]}
+                               for f in checked["findings"]]
+            rows.append(row)
+            continue
         contract = e01 if name.startswith("E01-") else d02
         error_type = getattr(contract, "ConfirmationContractError", None) or contract.LegalReviewContractError
         try:

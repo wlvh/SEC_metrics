@@ -19,7 +19,8 @@ def synthetic_output(request):
     Every relation the checker proves is reported as that relation; every
     required candidate it cannot relate is reported as another meaning. This is
     the checker's expected answer, which is exactly what a plumbing fixture
-    should be and exactly why it proves nothing about a filing.
+    should be and exactly why it proves nothing about a filing. An indexed-unit
+    request gets the indexed form of the same answer.
     """
     units = _restore_units(request["units"], request["shared_source_dictionaries"])
     blocks = [b for u in units if u["kind"] == "VISIBLE_TEXT" for b in u["payload"]["blocks"]]
@@ -53,4 +54,10 @@ def synthetic_output(request):
                                  "reason": "synthetic fixture: an unrelated required candidate"})
         rows.append({"unit_id": unit["unit_id"], "reviewed": True, "findings": findings,
                      "unresolved": []})
+    if "indexed_unit_contract" in request:
+        # The indexed form names each unit by its position and echoes no id
+        # (native_unit_index.SUFFIX); the program restores the ids itself.
+        rows = [{"unit_index": index, **{k: v for k, v in row.items() if k != "unit_id"}}
+                for index, row in enumerate(rows)]
+        return json.dumps({"units": rows}).encode("utf-8")
     return json.dumps({"request_id": request["request_id"], "units": rows}).encode("utf-8")

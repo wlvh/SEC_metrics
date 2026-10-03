@@ -259,13 +259,51 @@ class ARegisteredAssessmentTravelsToATextResultTest(unittest.TestCase):
                                       metric_id="D04", period_selection=self.selection,
                                       outputs=partial)
 
-    def test_a_response_out_of_unit_order_is_refused_by_the_frozen_acceptance(self):
+    def test_what_is_sent_is_the_frozen_indexed_variant_of_the_base_partition(self):
+        """Only the response identity format changes; the partition is the base one.
+
+        #28's real call 71 under the base form was refused because the model
+        returned a 71-character unit id with one character dropped; #28 has sent
+        this variant for new D04 groups since (pinned_requests).
+        """
+        from vnext.native_unit_index import (VERSION, reconstruct_requests,
+                                             restore_base_request, upgrade_request)
+        base = reconstruct_requests(self.source)
+        self.assertEqual([upgrade_request(request) for request in base], self.requests)
+        self.assertEqual(base, [restore_base_request(request) for request in self.requests])
+        self.assertEqual([VERSION] * len(base),
+                         self.record["assessment"]["native_request_variants"])
+
+    def test_a_response_names_units_by_position_and_order_does_not_matter(self):
         request = self.requests[0]
-        body = json.loads(self.outputs[request["request_id"]])
-        body["units"] = list(reversed(body["units"]))
-        with self.assertRaisesRegex(ValueError, "D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED"):
-            semantic.accept_output(source=self.source, request=request,
-                                   output=json.dumps(body).encode("utf-8"))
+        self.assertGreater(len(request["units"]), 1)
+        output = self.outputs[request["request_id"]]
+        body = json.loads(output)
+        self.assertEqual({"units"}, set(body))
+        self.assertTrue(all("unit_id" not in row for row in body["units"]))
+        reordered = json.dumps({"units": list(reversed(body["units"]))}).encode("utf-8")
+        first = semantic.accept_output(source=self.source, request=request, output=output)
+        second = semantic.accept_output(source=self.source, request=request, output=reordered)
+        self.assertEqual(first["candidate_record"]["selected"]["source_assessment"]["findings"],
+                         second["candidate_record"]["selected"]["source_assessment"]["findings"])
+
+    def test_a_repeated_or_missing_unit_position_is_refused(self):
+        request = self.requests[0]
+        units = json.loads(self.outputs[request["request_id"]])["units"]
+        repeated = json.dumps({"units": units[:-1] + [dict(units[0])]}).encode("utf-8")
+        with self.assertRaisesRegex(ValueError, "NATIVE_INDEX_RESPONSE_UNIT_CHANGED"):
+            semantic.accept_output(source=self.source, request=request, output=repeated)
+        missing = json.dumps({"units": units[:-1]}).encode("utf-8")
+        with self.assertRaisesRegex(ValueError, "NATIVE_INDEX_RESPONSE_CENSUS_CHANGED"):
+            semantic.accept_output(source=self.source, request=request, output=missing)
+
+    def test_an_answer_in_the_base_form_is_refused(self):
+        """No fallback to the surface call 71 failed on: an echoed id is not an index."""
+        request = self.requests[0]
+        units = json.loads(self.outputs[request["request_id"]])["units"]
+        echoed = json.dumps({"request_id": request["request_id"], "units": units}).encode("utf-8")
+        with self.assertRaisesRegex(ValueError, "NATIVE_INDEX_RESPONSE_CENSUS_CHANGED"):
+            semantic.accept_output(source=self.source, request=request, output=echoed)
 
 
 class TheLiveSessionRefusesByNameTest(unittest.TestCase):

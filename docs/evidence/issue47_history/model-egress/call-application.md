@@ -21,17 +21,19 @@
 
 | 项 | D04 | E01 | D02 |
 |---|---|---|---|
-| 请求合同 | #28 的 D04 原生解释请求（`d04_native_assessment` / `semantic_review_v4`），由钉定来源分组 | #47 自己的 `E01_CONTENT_CONFIRMATION_V1`（`scripts/vnext/historical_ma_confirmation.py`）：一个窗口一个请求，逐条带候选条目原文与哈希 | #47 自己的 `D02_ITEM_8_LEGAL_REVIEW_V1`（`scripts/vnext/historical_legal_review.py`）：一份申报一个请求，带 Item 8 里 D02 可能取入的每一个块（并入附注、页面装饰、审计报告之外） |
+| 请求合同 | #28 的 D04 原生解释请求（`d04_native_assessment`，完整单元合同 `semantic_review_v5`），由钉定来源分组；按 #28 冻结的编号变体发送（`native_unit_index.upgrade_request`，2026-10-03 起，见表后说明） | #47 自己的 `E01_CONTENT_CONFIRMATION_V1`（`scripts/vnext/historical_ma_confirmation.py`）：一个窗口一个请求，逐条带候选条目原文与哈希 | #47 自己的 `D02_ITEM_8_LEGAL_REVIEW_V1`（`scripts/vnext/historical_legal_review.py`）：一份申报一个请求，带 Item 8 里 D02 可能取入的每一个块（并入附注、页面装饰、审计报告之外） |
 | 位置 | Marriott FY2023、FY2024；Paramount 前身 FY2024 | Ford 2025、Lumen 2025、Macy's FY2025（截至 2026-01-31）、Marriott 2025、Paramount 前身 2024、Pfizer 2025、Southwest 2025 | 12 个已存 D02 位置：Enphase、Ford、Lumen、Pfizer、Southwest 2025；Marriott FY2023–FY2025；Paramount 前身 FY2024 与 FY2025；Macy's、Salesforce（截至 2026-01-31） |
 | 请求数 | 4 + 4 + 8 = 16 | 7（每窗口 1 个；共 44 个候选条目） | 12（每份申报 1 个；9,753 个块，其中 318 个必须明确回答） |
-| 参考输入 token | 2,571,532（单个 24,840–193,758） | 43,109（单个 1,862–17,601） | 417,576（单个 963–56,802） |
-| 计量文件 | `d04-request-measurement.json`（`measure_d04_requests.py`；2026-10-02 在 `51250475` 上重新计量，16 个摘要都变了，原因见表后说明） | `../e01-content-confirmed/request-measurement.json`（`measure_e01_requests.py`） | `../d02-item-8-review/request-measurement.json`（`measure_d02_requests.py`） |
+| 参考输入 token | 2,576,377（单个 25,095–194,074；加输出预留后最大 198,170，上限 200,000） | 43,109（单个 1,862–17,601） | 417,576（单个 963–56,802） |
+| 计量文件 | `d04-request-measurement.json`（`measure_d04_requests.py`；2026-10-03 改发编号变体后重新计量，16 个摘要都变了，原因见表后说明） | `../e01-content-confirmed/request-measurement.json`（`measure_e01_requests.py`） | `../d02-item-8-review/request-measurement.json`（`measure_d02_requests.py`） |
 | 上限 | `[16, 16, 0]` | `[7, 7, 0]` | `[12, 12, 0]` |
 | 回答怎么核 | 冻结的 D04 检查器逐条核验来源角色与关系 | 形式核验：每个条目恰答一次、三种决定之一、引文是该条目原文的精确子串 | 形式核验：每个必答块恰答一次、三种决定之一、计入与无法判定必须带该块原文的精确子串、排除不带；额外计入的块必须在请求里、不重复、带引文 |
 | 成功后登记 | `register_from_slots`：全部请求成功才登记，按钉定来源作键 | 同一入口：该窗口唯一请求成功即登记，按窗口的确认来源作键 | 同一入口：该申报唯一请求成功即登记，按位置（公司、钉定期间、申报字节）作键 |
 | 批准点名的请求 | 16 个请求摘要（分属两个授予） | 7 个请求摘要 | 12 个请求摘要（分属四个授予） |
 
 **请求类型绑定指标**：每组授予只能放行本指标的请求，别的类型按名拒绝（`ISSUE_47_MODEL_REQUEST_TYPE_IS_NOT_THE_METRIC_S`）；只批其中一组时，另外的指标一次也调不出去。
+
+**2026-10-03 D04 改发编号变体**：#28 的真实调用 71 用的正是 #47 原来要发的基础形式（回答回显 request_id 和每个 71 字符的 unit_id），返回的首个 unit_id 少抄了一个字符，被冻结检查以 `D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED` 拒绝，记为 FAILED_TERMINAL（`../../issue28_continuous/d04-complete-response-contract/README.md`）。#28 之后对新的 D04 分组改发编号变体：回答不再抄编号，每个单元用它在 units 数组里的位置作答，程序按位置还原编号；21 个这样的真实 D04 请求全部成功（槽 72–94 中的 21 个，Ford 与 Pfizer FY2025 完整，`../../issue28_continuous/d04-indexed-unit-response/real-material/summary.json`）。#47 的一个位置要 4 到 8 个请求全部成功才能登记，抄错一个字符就要整组作废，所以本方也改发同一个冻结变体（`historical_semantic_results.pinned_requests`）。分组、单元、来源与 #28 的检查都不变：回答先由 `native_unit_index.restore_response` 按位置还原成基础形式，再走同一个 `d04_native_assessment.validate_response`；登记记下每个请求的变体（`native_request_variants`），冻结的文本结果构建按它重建请求并核对编号。代价是请求内容变了，16 个摘要全变，每个请求多约 300 参考 token。E01、D02 不受影响。
 
 **2026-10-02 重新计量**：E01 的 7 个、D02 的 12 个摘要不变，D04 的 16 个全变。按 09-28 计量所在的提交 `9f3f4d95` 重建，摘要与当时逐个相同；与当前逐字段比对，4 个请求体长度逐个相同，只差 `request_id`、`source_id` 两个身份字段，发给模型的原文、分组、提示与合同都没变。再用扰动二分量了哪些文件的字节会进入请求摘要：E01、D02 没有（只随请求内容变），D04 有 7 个——`normal_history_catalog.py`、#28 的 `r6_semantic_source.py`，以及 4 个 `config`/`catalog` 政策文件和审阅合同 `semantic_review_v5.json`（`request-identity-bindings/`）。这决定了调用之后哪些文件一改，已付费的 D04 回答就再也对不上后来的请求。
 
