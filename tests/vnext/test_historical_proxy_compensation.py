@@ -19,7 +19,12 @@ Load-bearing:
     is not the registrant's;
   * a Total that is not the sum, a table without a dollar sign, a title for
     another year, a foreign currency in the context, and a table without a
-    title are each refused by name (constructed proxies, one change each).
+    title are each refused by name (constructed proxies, one change each);
+  * JPMorgan's 2022 proxy (acquired later) prints footnote marks in cells of
+    their own, numbers its title and lists business-unit chief executives by
+    the unit's initials: its chief executive's Total is read, equal to the
+    later tag, and the marks are read as marks only because the row fails its
+    sum with them and passes without.
 """
 from __future__ import annotations
 
@@ -27,11 +32,13 @@ import re
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
-from tests.vnext.test_historical_proxy_identity import PROXIES, _cover, _filing, _inventory, _records
+from tests.vnext.test_historical_proxy_identity import (IMAGE_NAME, PROXIES, _cover, _filing, _inventory,
+                                                       _records)
 from tools.acceptance_readings import saved_bytes
-from vnext.historical_proxy_compensation import (SPEC_PATH, HistoricalProxyCompensationError,
+from vnext.historical_proxy_compensation import (SPEC_PATH, HistoricalProxyCompensationError, _title_year,
                                                  names_the_chief_executive,
-                                                 resolve_proxy_compensation_table, row_amounts)
+                                                 resolve_proxy_compensation_table, row_amounts,
+                                                 row_amounts_by_arithmetic)
 from vnext.observations import scope_key
 from vnext.specs import compile_spec_file
 
@@ -58,6 +65,8 @@ PERIODS = {
 EXPECTED = {"d184198ddef14a.htm": "20035212", "defproxy2022doc.htm": "19019162",
             "lumenproxy2022.htm": "22654781", "proxywc22.htm": "24353219",
             "tm2130881-4_def14a.htm": "22813174", "tmb-20220520xdef14a.htm": "12290931"}
+# JPMorgan's 2023 proxy, which tags the fiscal 2021 chief executive's total.
+IMAGE_NAME_LATER = "evidence/request_attempts/2a/2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f/jpm-20230403.htm"
 TWO_CHIEF_EXECUTIVES = {"d235712ddef14a.htm": {"18391882", "12278151"},
                         "d301179ddef14a.htm": {"28602112", "22794415"}}
 
@@ -261,3 +270,55 @@ class AConstructedTableThatDoesNotSayItIsRefusedByName(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheNinthProxyReadsItsMarkCellsAndUnitTitles(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.spec = compile_spec_file(path=ROOT / SPEC_PATH, dependency_specs={})
+        raw = saved_bytes(repo_root=ROOT, relative=IMAGE_NAME[4])
+        blob, reference = _records(IMAGE_NAME, raw)
+        cls.resolved = resolve_proxy_compensation_table(
+            raw_bytes=raw, raw_blob=blob, source_reference=reference, filing=_filing(IMAGE_NAME),
+            inventory=_inventory(IMAGE_NAME[0]), company_id="company", cik=IMAGE_NAME[0],
+            target=_target("2021-01-01", "2021-12-31"), fiscal_year=2021, compiled_spec=cls.spec)
+
+    def test_the_chief_executive_s_total_is_read(self):
+        selection = self.resolved["selection"]
+        self.assertEqual("PASS", selection["reason_code"])
+        self.assertEqual("84428145", self.resolved["result"]["value"])
+        (candidate,) = selection["candidates"]
+        self.assertTrue(candidate["person_and_position"].startswith("James Dimon"))
+        self.assertEqual(["7"], candidate["cells_read_as_footnote_marks"])
+        self.assertEqual(int(candidate["value"]), sum(candidate["components"]))
+
+    def test_it_agrees_with_the_later_proxy_s_tag(self):
+        tagged = later_tagged_totals(saved_bytes(repo_root=ROOT, relative=IMAGE_NAME_LATER), "2021-12-31")
+        self.assertEqual({"84428145"}, tagged)
+
+    def test_a_unit_s_chief_executive_is_not_the_registrant_s(self):
+        for text in ("Daniel Pinto8 Co-President and Co-COO; CEO CIB", "Mary Callahan Erdoes CEO AWM",
+                     "Gordon Smith Co-President and Co-COO; CEO CCB"):
+            with self.subTest(text):
+                self.assertFalse(names_the_chief_executive(text))
+        for text in ("James Dimon Chairman and CEO", "PRESIDENT AND CEO", "CEO AND PRESIDENT",
+                     "Chief Executive Officer (PEO)"):
+            with self.subTest(text):
+                self.assertTrue(names_the_chief_executive(text))
+
+    def test_mark_cells_are_read_only_when_the_row_fails_its_sum(self):
+        self.assertEqual(([(10, "10"), (5, "5"), (15, "15")], []), row_amounts_by_arithmetic(["10", "5", "15"]))
+        # A printed zero keeps its place when the row sums as printed, though
+        # the row would sum without it too.
+        self.assertEqual(([(1000, "1,000"), (2000, "2,000"), (0, "0"), (3000, "3,000")], []),
+                         row_amounts_by_arithmetic(["1,000", "2,000", "0", "3,000"]))
+        self.assertEqual(([(1500000, "1,500,000"), (5000000, "5,000,000"), (6500000, "6,500,000")], ["7"]),
+                         row_amounts_by_arithmetic(["1,500,000", "5,000,000", "7", "6,500,000"]))
+        self.assertEqual((row_amounts(["100", "7", "200"]), []), row_amounts_by_arithmetic(["100", "7", "200"]))
+
+    def test_a_numbered_title_and_its_abbreviation_are_the_title(self):
+        self.assertEqual("", _title_year("I. SUMMARY COMPENSATION TABLE (SCT)"))
+        self.assertEqual("2021", _title_year("2. 2021 Summary Compensation Table"))
+        self.assertIsNone(_title_year("II. GRANTS OF PLAN-BASED AWARDS"))
+        self.assertIsNone(_title_year("SCT: Summary compensation table"))

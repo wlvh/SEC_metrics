@@ -20,6 +20,16 @@ The result reason codes are the ordinary ones.  They describe the business
 outcome, and renaming them would make a historical result incomparable to the
 current one it must agree with.  Only failures that are about this route
 itself carry a HISTORICAL_ prefix.
+
+The last stage, the disclosure resolver, runs as successors of the frozen
+functions (``historical_financial_wording.successor``: each is the frozen
+function's own source with the listed substitutions and nothing else).  The
+resolver's inventory learns two forms the older annual reports print and the
+frozen inventory leaves unresolved (``OLDER_FALLBACK_FORMS``); the two calls
+above it are changed only to reach that inventory.  A filing the frozen
+resolver answers is answered identically: both forms resolve only rows the
+frozen inventory marks UNRESOLVED, and an UNRESOLVED row stops the frozen
+resolver.  Measured in docs/evidence/issue47_history/b06-older-years/fallback-forms/.
 """
 from decimal import Decimal
 from pathlib import Path
@@ -55,7 +65,11 @@ from .sources import (companyfacts_structured_facts, raw_blob_record,
 from .specs import compile_spec_file
 from .traits import repository_company_traits
 
+from . import b06_disclosure as _frozen_disclosure
+from . import b06_disclosure_v2 as _frozen_disclosure_v2
 from . import normal_bond_debt_results as bond
+from . import normal_candidates as _frozen_candidates
+from .historical_financial_wording import successor
 from . import normal_inclusive_debt_results as inclusive
 from . import normal_note_debt_results as note
 from . import ordinary_special_debt_scope as special
@@ -63,6 +77,35 @@ from . import ordinary_special_debt_scope as special
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from sec_urls import accession_document_url, companyfacts_url, submissions_url  # noqa: E402
+
+# Two forms the older annual reports print and the frozen disclosure inventory
+# leaves UNRESOLVED (docs/evidence/issue47_history/b06-older-years/):
+#  - a debt-table row naming pass-through certificates is a debt instrument, as
+#    the notes, debentures and loans beside it are (a matured one shows 0);
+#  - a defined-benefit plan's obligation is an employee-benefit measure, a
+#    different nature from a financing claim; the frozen scan catches it only
+#    because the concept's name ends in "obligation".
+OLDER_FALLBACK_FORMS = (
+    (r"elif re.search(r'\b(?:notes|debentures|loan|credit agreement)\b',lab,re.I):",
+     r"elif re.search(r'\b(?:notes|debentures|loan|credit agreement|certificates)\b',lab,re.I):"),
+    ("revenueremainingperformanceobligation',short):disposition='EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE'",
+     "revenueremainingperformanceobligation|definedbenefitplan',short):"
+     "disposition='EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE'"),
+)
+fallback_verify_v1 = successor(_frozen_disclosure.verify, OLDER_FALLBACK_FORMS)
+
+# The v2 resolver and the ordinary resolution call the frozen inventory by
+# name; their successors call this module's instead and are otherwise frozen.
+FALLBACK_V1_CALL = (
+    ("    proof = prior.verify(raw=raw, primary=primary, source=source, spec=spec,",
+     "    from .historical_debt_results import fallback_verify_v1\n"
+     "    proof = fallback_verify_v1(raw=raw, primary=primary, source=source, spec=spec,"),)
+fallback_verify = successor(_frozen_disclosure_v2.verify, FALLBACK_V1_CALL)
+FALLBACK_CALL = (
+    ('        measurement = disclosure.verify(raw=preparation["xml"]["raw_bytes"],',
+     '        from .historical_debt_results import fallback_verify\n'
+     '        measurement = fallback_verify(raw=preparation["xml"]["raw_bytes"],'),)
+fallback_resolution = successor(_frozen_candidates._b06_resolution, FALLBACK_CALL)
 
 # The frozen readers this module calls, answering the DEI namespace question
 # for every taxonomy release (historical_dei).
@@ -693,15 +736,14 @@ def _guarded_case(*, repo_root: Path, prepared, guarded):
 
 
 def _fallback_case(*, repo_root: Path, company_id: str, preparation, guarded):
-    """`normal_candidates._b06_resolution` behind the ordinary remaining-cases shape.
+    """`normal_candidates._b06_resolution` (as ``fallback_resolution``) behind the ordinary remaining-cases shape.
 
     This is the last stage, not the only one.  Reaching it means the pinned
     filing matched no debt grammar and its denominator is positive, so the v2
     disclosure resolver answers - with a value when it can read the relationship
     and a withheld Result naming what it could not when it cannot.
     """
-    from .normal_candidates import _b06_resolution
-    path, resolution = _b06_resolution(data_root=repo_root, preparation=preparation)
+    path, resolution = fallback_resolution(data_root=repo_root, preparation=preparation)
     result = resolution["result"]
     annual = preparation["input_binding"]["prepared_annual_input"]["table_input"]["target_period"]
     observations = resolution.get("observations",

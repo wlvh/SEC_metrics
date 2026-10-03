@@ -15,7 +15,11 @@ Load-bearing cases:
     same CIKs had before their renames;
   * a proxy with inline XBRL gets exactly the frozen governance document;
   * a cover whose definitive box is not the one checked, or whose glyph is
-    unknown, or whose name is not above the caption, is refused by name.
+    unknown, or whose name is not above the caption, is refused by name;
+  * a cover whose name is a logo image (JPMorgan's, acquired later) gives the
+    first block after the cover, and that block is accepted only as a name
+    the SEC record gives the CIK on the filing date; the eight covers that
+    print their name keep their records exactly.
 """
 from __future__ import annotations
 
@@ -25,7 +29,7 @@ import unittest
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools.acceptance_readings import saved_bytes
 from vnext.canonical import content_hash, sha256_bytes
-from vnext.historical_proxy_identity import (CHECKED, HistoricalProxyIdentityError,
+from vnext.historical_proxy_identity import (CHECKED, NAME_AS_IMAGE, HistoricalProxyIdentityError,
                                              carries_inline_xbrl, cover_name_in_effect,
                                              governance_source_document, proxy_bound_source,
                                              proxy_cover, sec_names_in_effect)
@@ -60,6 +64,10 @@ PROXIES = (
      "evidence/request_attempts/d4/d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007/tmb-20220520xdef14a.htm",
      "Macy’s, Inc."),
 )
+# Acquired later than the eight: its name stands above the caption as a logo image.
+IMAGE_NAME = ("19617", "0000019617-22-000303", "a2022proxystatement.htm", "2022-04-04",
+              "evidence/request_attempts/5a/5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc/a2022proxystatement.htm",
+              "JPMorgan Chase & Co.")
 INLINE = ("78003", "0000078003-26-000033", "pfe-20260312.htm", "2026-03-12",
           "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm", None)
 
@@ -354,3 +362,79 @@ class C03ReadsTheProxyTableWhenTheProxyHasNoEcdFacts(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ANameShownAsAnImageIsTheFirstBlockAfterTheCover(unittest.TestCase):
+    """JPMorgan's 2022 proxy: a logo above the caption, its name above its address."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = saved_bytes(repo_root=ROOT, relative=IMAGE_NAME[4])
+        cls.filing = _filing(IMAGE_NAME)
+        cls.inventory = _inventory(IMAGE_NAME[0])
+
+    def _changed(self, old, new, after=b"Date Filed"):
+        at = self.raw.index(old, self.raw.index(after))
+        changed = self.raw[:at] + new + self.raw[at + len(old):]
+        self.assertNotEqual(self.raw, changed)
+        return changed
+
+    def test_the_cover_gives_the_first_block_after_it_and_the_definitive_box(self):
+        cover = proxy_cover(raw_bytes=self.raw, filing=self.filing)
+        self.assertEqual(IMAGE_NAME[5], cover["registrant_name"])
+        self.assertEqual(NAME_AS_IMAGE, cover["name_basis"])
+        self.assertEqual({"PRELIMINARY": "o", "CONFIDENTIAL": "o", "DEFINITIVE": "\u00fe",
+                          "ADDITIONAL": "o", "SOLICITING": "o"}, cover["marks"])
+
+    def test_the_block_is_checked_against_the_sec_record_as_before(self):
+        identity = cover_name_in_effect(cover=proxy_cover(raw_bytes=self.raw, filing=self.filing),
+                                        inventory=self.inventory, filing=self.filing)
+        self.assertEqual(["JPMORGAN CHASE & CO"], identity["sec_names_on_filing_date"])
+        self.assertEqual(NAME_AS_IMAGE, identity["cover_name_basis"])
+
+    def test_a_block_that_is_not_the_name_is_refused_not_taken(self):
+        raw = self._changed(b"JPMorgan Chase &#38; Co.", b"Another Holding Corporation")
+        cover = proxy_cover(raw_bytes=raw, filing=self.filing)
+        self.assertEqual("Another Holding Corporation", cover["registrant_name"])
+        with self.assertRaises(HistoricalProxyIdentityError) as caught:
+            cover_name_in_effect(cover=cover, inventory=self.inventory, filing=self.filing)
+        self.assertEqual("HISTORICAL_PROXY_COVER_REGISTRANT_NOT_THE_SEC_NAME_ON_FILING_DATE",
+                         str(caught.exception))
+        self.assertEqual("SOURCE_INTEGRITY_ERROR", caught.exception.category)
+
+    def test_a_link_after_the_cover_is_not_the_name(self):
+        # The two "Table of Contents" blocks between the cover and the name are links.
+        cover = proxy_cover(raw_bytes=self.raw, filing=self.filing)
+        self.assertNotEqual("Table of Contents", cover["registrant_name"])
+
+    def test_an_empty_slot_is_refused(self):
+        start = self.raw.index(b'<img alt="logo2008_jpmcxaxblack.jpg"')
+        raw = self.raw[:start] + self.raw[self.raw.index(b">", start) + 1:]
+        with self.assertRaises(HistoricalProxyIdentityError) as caught:
+            proxy_cover(raw_bytes=raw, filing=self.filing)
+        self.assertEqual("HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED", str(caught.exception))
+
+    def test_text_in_the_slot_is_the_name_above_the_caption(self):
+        start = self.raw.index(b'<img alt="logo2008_jpmcxaxblack.jpg"')
+        end = self.raw.index(b">", start) + 1
+        raw = self.raw[:end] + b"<div>JPMorgan Chase &amp; Co.</div>" + self.raw[end:]
+        cover = proxy_cover(raw_bytes=raw, filing=self.filing)
+        self.assertEqual(IMAGE_NAME[5], cover["registrant_name"])
+        self.assertNotIn("name_basis", cover)
+
+    def test_without_the_filer_caption_the_layout_is_refused(self):
+        raw = self._changed(b"(Name of Person(s) Filing Proxy Statement, if Other Than the Registrant)",
+                            b"", after=b"Soliciting Material")
+        with self.assertRaises(HistoricalProxyIdentityError) as caught:
+            proxy_cover(raw_bytes=raw, filing=self.filing)
+        self.assertEqual("HISTORICAL_PROXY_COVER_FILER_CAPTION_NOT_FOUND", str(caught.exception))
+
+    def test_the_eight_covers_that_print_their_name_keep_their_records(self):
+        for row in PROXIES:
+            raw = saved_bytes(repo_root=ROOT, relative=row[4])
+            cover = proxy_cover(raw_bytes=raw, filing=_filing(row))
+            identity = cover_name_in_effect(cover=cover, inventory=_inventory(row[0]), filing=_filing(row))
+            with self.subTest(row[2]):
+                self.assertEqual({"registrant_name", "marks"}, set(cover))
+                self.assertEqual({"basis", "cover_registrant_name", "sec_names_on_filing_date", "filing_date"},
+                                 set(identity))

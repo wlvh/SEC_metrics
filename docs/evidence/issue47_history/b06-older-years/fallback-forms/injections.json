@@ -1,0 +1,93 @@
+{
+ "A_PENSION_OBLIGATION_IS_LEFT_UNRESOLVED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
+  "failed_cases": [
+   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
+   "test_the_successor_answers_with_both_rows_resolved",
+   "test_the_v2_content_checks_ran_on_the_successor_inventory"
+  ],
+  "file": "scripts/vnext/historical_debt_results.py",
+  "modules": [
+   "tests.vnext.test_historical_debt_fallback_forms"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 44
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0
+  ],
+  "seconds": 322
+ },
+ "PASS_THROUGH_CERTIFICATES_ARE_NOT_AN_INSTRUMENT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
+  "failed_cases": [
+   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
+   "test_the_successor_answers_with_both_rows_resolved",
+   "test_the_v2_content_checks_ran_on_the_successor_inventory"
+  ],
+  "file": "scripts/vnext/historical_debt_results.py",
+  "modules": [
+   "tests.vnext.test_historical_debt_fallback_forms"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 47
+ },
+ "THE_FALLBACK_CASE_CALLS_THE_FROZEN_RESOLUTION": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_fallback_case_calls_the_successor_resolution",
+  "failed_cases": [
+   "test_the_fallback_case_calls_the_successor_resolution"
+  ],
+  "file": "scripts/vnext/historical_debt_results.py",
+  "modules": [
+   "tests.vnext.test_historical_debt_fallback_forms"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 49
+ },
+ "THE_RESOLUTION_CALLS_THE_FROZEN_V2": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
+  "failed_cases": [
+   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
+   "test_the_successor_answers_with_both_rows_resolved",
+   "test_the_v2_content_checks_ran_on_the_successor_inventory"
+  ],
+  "file": "scripts/vnext/historical_debt_results.py",
+  "modules": [
+   "tests.vnext.test_historical_debt_fallback_forms"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 43
+ },
+ "THE_V2_RESOLVER_CALLS_THE_FROZEN_INVENTORY": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_successor_answers_with_both_rows_resolved",
+  "failed_cases": [
+   "test_fy2021_and_fy2023_withhold_at_what_the_program_still_does_not_handle",
+   "test_the_successor_answers_with_both_rows_resolved",
+   "test_the_v2_content_checks_ran_on_the_successor_inventory"
+  ],
+  "file": "scripts/vnext/historical_debt_results.py",
+  "modules": [
+   "tests.vnext.test_historical_debt_fallback_forms"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 44
+ },
+ "all_caught": true
+}

@@ -468,6 +468,14 @@ INJECTIONS = [
      '_COMPLEMENT_LEAD = re.compile(r"^\\s*", re.I)', "test_a_members_clause_opens_with_the_members_or_their_status"),
     ('THE_EXPERT_TERM_IS_NO_STATUS', '_QUALIFICATION.match(_EXPERT_TERM.sub("", complement))',
      '_QUALIFICATION.match(complement)', "test_a_members_clause_opens_with_the_members_or_their_status"),
+    # Repair 49: a status inside a duty is not the members' qualification
+    # (#28's counterexample, Issue #47 comment 5962519090).
+    ('A_STATUS_INSIDE_A_DUTY_IS_A_QUALIFICATION', '_QUALIFICATION.search(_DUTY_CLAUSE.sub(" ", independence))',
+     '_QUALIFICATION.search(independence)', "test_a_status_inside_a_duty_is_not_the_members_qualification"),
+    ('A_DUTY_RUNS_PAST_THE_NEXT_VERB', r'(?:(?!\b(?:and|but)\s+(?:is|are|was|were)\b)[^.;])*', '[^.;]*',
+     "test_a_status_inside_a_duty_is_not_the_members_qualification"),
+    ('A_DUTY_RUNS_PAST_A_SEMICOLON', r'(?:is|are|was|were)\b)[^.;])*', r'(?:is|are|was|were)\b)[^.])*',
+     "test_a_status_inside_a_duty_is_not_the_members_qualification"),
     ('AN_HONORIFIC_OPENS_NO_NAME', '        if _HONORIFIC_OPEN.match(first) or person_name(first):',
      '        if person_name(first):', "test_a_members_clause_opens_with_the_members_or_their_status"),
     ('THE_SENTENCE_S_PERIOD_STAYS_ON_THE_NAME', '_LIST_SEPARATOR.split(_LIST_END.sub("", complement), 1)',

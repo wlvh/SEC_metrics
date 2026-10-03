@@ -631,6 +631,21 @@ _MEMBER_REFERENCE = re.compile(
     r"|each of (?:mr|ms|mrs|dr|messrs|mses)\b|only independent directors serve on|committees? (?:is|are) composed)", re.I)
 _STATE = re.compile(r"\b(?:is|are|was|were|qualif(?:y|ies)|meets?|satisf(?:y|ies)|determined|has been|have been"
                     r"|serve)\b", re.I)
+# A status named inside a duty is something the members deal with, not what
+# they are - the rule the members clause follows (repair 48). The qualification
+# label looked for a status, a member reference and a verb anywhere in the
+# sentence, so "The members of the Audit Committee are responsible for
+# recommending independent directors" (#28's counterexample, Issue #47 comment
+# 5962519090) was read as the members' independence. Southwest's FY2024 and
+# FY2025 proxies print the real case: the committee "is responsible for
+# evaluating the qualifications of Board nominees, including independence, and
+# ... taking into account ... independence requirements". So the duty is set
+# aside before the status is looked for, up to the end of its clause: a
+# semicolon, or the same subject's next verb ("... are responsible for
+# oversight and are independent" keeps the status, constructed). In the 49
+# saved proxies the rule moves no block; it takes the label off those two
+# Southwest sentences, whose blocks stay for a board independence statement.
+_DUTY_CLAUSE = re.compile(r"\bresponsible\s+for\b(?:(?!\b(?:and|but)\s+(?:is|are|was|were)\b)[^.;])*", re.I)
 _STANDING = (
     re.compile(r"\b(?:has|had|maintains|established|following)\b[^.;]{0,40}\b(?:standing|permanent)\s+"
                r"(?:board\s+)?committees?\b", re.I),
@@ -1179,7 +1194,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
         if _ROSTER_STATEMENT.search(sentence) or _SITTING_SLATE.search(sentence):
             labels.add("BOARD_ROSTER_STATEMENT")
-        if (_QUALIFICATION.search(independence) and _MEMBER_REFERENCE.search(sentence)
+        if (_QUALIFICATION.search(_DUTY_CLAUSE.sub(" ", independence)) and _MEMBER_REFERENCE.search(sentence)
                 and _STATE.search(sentence)):
             labels.add("COMMITTEE_MEMBER_QUALIFICATION")
     return sorted(labels)

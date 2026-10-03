@@ -38,9 +38,22 @@ Purpose:
 
     The checkbox glyphs are the ones these filings use (a ballot box with an
     X or a check for checked; an empty ballot box or Wingdings' ``¨`` for
-    unchecked, with Wingdings' ``x`` for checked beside it). Another glyph is
+    unchecked, with Wingdings' ``x`` for checked beside it; Wingdings' ``þ``
+    and ``o``, a checked and an empty box, on JPMorgan's). Another glyph is
     refused by name rather than guessed, and the cover layout is refused by
     name when the name does not stand in its own block above the caption.
+
+    One later-acquired proxy prints its name above the caption as a logo
+    image with a file name for alt text, so no text stands there. For that
+    layout only - the slot holds an image and nothing else, and the filer
+    caption follows the name caption - the name read is the first block the
+    filing prints after its cover, skipping the form's fee lines and links;
+    JPMorgan's 2022 proxy prints its own name there, above its address. The
+    check is unchanged: ``cover_name_in_effect`` accepts that block only when
+    it is a name the SEC record gives the CIK on the filing date, so a block
+    that is not the name is refused, never taken. The identity records
+    ``cover_name_basis`` for this layout and only for it, so the eight covers
+    that print their name keep their records byte for byte.
 
 Call relationships:
     ``historical_text_input`` reads the cover of a C02 proxy without inline
@@ -64,8 +77,8 @@ from .text_coverage import _Blocks
 
 NO_CONTEXTS = "XBRL source contains no contexts"
 IDENTITY_BASIS = "PROXY_SCHEDULE_14A_COVER"
-CHECKED = frozenset({"☒", "☑", "x"})
-UNCHECKED = frozenset({"☐", "¨"})
+CHECKED = frozenset({"☒", "☑", "x", "þ"})
+UNCHECKED = frozenset({"☐", "¨", "o"})
 OPTIONS = {
     "PRELIMINARY": r"Preliminary Proxy Statement",
     "CONFIDENTIAL": r"Confidential,\s*for Use of the Commission Only",
@@ -75,6 +88,10 @@ OPTIONS = {
 }
 _ZERO_WIDTH = dict.fromkeys(map(ord, "​‌‍⁠﻿"))
 _NAME_CAPTION = "(name of registrant as specified in its charter)"
+_FILER_CAPTION = "(name of person(s) filing proxy statement, if other than the registrant)"
+NAME_AS_IMAGE = "NAME_PRINTED_AS_AN_IMAGE_FIRST_BLOCK_AFTER_THE_COVER"
+_FEE_LINE = re.compile(r"payment of filing fee|\(?\d\)\s|\S\s*(?:no fee required|fee computed"
+                       r"|fee paid previously|check box if any part of the fee)", re.I)
 _frozen_bound_source = release_aware(_frozen._bound_source)
 
 
@@ -112,7 +129,9 @@ def proxy_cover(*, raw_bytes, filing):
     parser.feed(text)
     parser.close()
     parser._flush()
-    blocks = [clean for clean in (_clean(block["text"]) for block in parser.blocks) if clean]
+    parsed = [(block, clean) for block, clean in ((block, _clean(block["text"])) for block in parser.blocks)
+              if clean]
+    blocks = [clean for _, clean in parsed]
     folded = [block.casefold() for block in blocks]
     _need("schedule 14a" in folded, "HISTORICAL_PROXY_COVER_SCHEDULE_14A_NOT_FOUND")
     start = folded.index("schedule 14a")
@@ -120,11 +139,16 @@ def proxy_cover(*, raw_bytes, filing):
     _need(bool(captions) and captions[0] > start + 1, "HISTORICAL_PROXY_COVER_NAME_CAPTION_NOT_FOUND")
     caption = captions[0]
     _need(folded[caption] == _NAME_CAPTION, "HISTORICAL_PROXY_COVER_NAME_LAYOUT_UNSUPPORTED")
-    name = blocks[caption - 1]
+    name, basis, boxes_end = blocks[caption - 1], None, caption - 1
+    if any(re.search(pattern, name, re.I) for pattern in OPTIONS.values()):
+        # No text stands above the caption. When the slot holds an image, the
+        # name is the first block the filing prints after its cover.
+        name, basis, boxes_end = _name_after_an_image_cover(text=text, parsed=parsed, caption=caption), \
+            NAME_AS_IMAGE, caption
     _need(re.search(r"[A-Za-z]", name) is not None and len(name) <= 200
           and not any(re.search(pattern, name, re.I) for pattern in OPTIONS.values()),
           "HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED")
-    boxes = " ".join(blocks[start + 1:caption - 1])
+    boxes = " ".join(blocks[start + 1:boxes_end])
     marks = {}
     for option, pattern in OPTIONS.items():
         found = [match.group("mark") for match in
@@ -137,7 +161,34 @@ def proxy_cover(*, raw_bytes, filing):
           and all(mark in UNCHECKED for option, mark in marks.items() if option != "DEFINITIVE"),
           "HISTORICAL_PROXY_COVER_DEFINITIVE_BOX_NOT_THE_ONLY_CHECKED:"
           + ",".join(option for option, mark in sorted(marks.items()) if mark in CHECKED))
-    return {"registrant_name": name, "marks": marks}
+    cover = {"registrant_name": name, "marks": marks}
+    if basis is not None:
+        cover["name_basis"] = basis
+    return cover
+
+
+def _name_after_an_image_cover(*, text, parsed, caption):
+    """The first block a cover whose name slot is an image is followed by.
+
+    The slot must hold an image and no text, and the filer caption must follow
+    the name caption, as the form prints them. The fee lines the form prints
+    after that caption, and links (a table of contents), are skipped; the next
+    block is returned as printed. It is not taken as the registrant's name here:
+    ``cover_name_in_effect`` accepts it only when it is a name the SEC record
+    gives the CIK on the filing date, so a block that is not the name is
+    refused by name rather than taken.
+    """
+    slot = text[parsed[caption - 1][0]["end"]:parsed[caption][0]["start"]]
+    _need(re.search(r"<img\b", slot, re.I) is not None
+          and not re.sub(r"<[^>]*>|&nbsp;|&#160;|\s", "", slot),
+          "HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED")
+    _need(caption + 1 < len(parsed) and parsed[caption + 1][1].casefold() == _FILER_CAPTION,
+          "HISTORICAL_PROXY_COVER_FILER_CAPTION_NOT_FOUND")
+    for block, clean in parsed[caption + 2:]:
+        if block["linked"] or _FEE_LINE.match(clean):
+            continue
+        return clean
+    _need(False, "HISTORICAL_PROXY_COVER_NAME_NOT_ESTABLISHED")
 
 
 def proxy_bound_source(*, raw_bytes, raw_blob, source_reference, company_id, cik, filing):
@@ -189,8 +240,11 @@ def cover_name_in_effect(*, cover, inventory, filing):
     _need(_name_core(cover["registrant_name"]) in {_name_core(name) for name in names},
           "HISTORICAL_PROXY_COVER_REGISTRANT_NOT_THE_SEC_NAME_ON_FILING_DATE",
           category="SOURCE_INTEGRITY_ERROR")
-    return {"basis": IDENTITY_BASIS, "cover_registrant_name": cover["registrant_name"],
-            "sec_names_on_filing_date": names, "filing_date": filing["filingDate"]}
+    identity = {"basis": IDENTITY_BASIS, "cover_registrant_name": cover["registrant_name"],
+                "sec_names_on_filing_date": names, "filing_date": filing["filingDate"]}
+    if "name_basis" in cover:
+        identity["cover_name_basis"] = cover["name_basis"]
+    return identity
 
 
 def record_cover_identity(*, prepared, raw_bytes_by_id):

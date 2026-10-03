@@ -987,3 +987,31 @@
 **不读的写法**（都没有真实例子）：动词和名单之间插入的成分（"are, in the Board's judgment, independent"）；名单前的头衔（"are Chairman Jane Smith and …"）；没有称谓、只写两个字母的单个姓（"are Ma, Wu and Li"，`person_name` 把单个短词当缩写）。
 
 **同类问题在另一条规则里还在。** `COMMITTEE_MEMBER_QUALIFICATION` 按"同一句里有资格词、成员指称和状态动词"判断，构造句 "The members of the Compensation Committee are responsible for determining whether executives are independent." 仍被它取。37 份判读里它没有造成误选（剩下唯一的误选是 Lumen FY2021 第 856 块，是另一家机构的名称），没有真实例子，本次不改，作为已知局限告诉 #28。
+
+## 49. 写在职责里的身份不是成员的资格（`COMMITTEE_MEMBER_QUALIFICATION`）
+
+**问题。** #28 用修复 48 的固定提交核对后（[Issue #47 评论 5962519090](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5962519090)，探针 `a31342de` 的 `repair48-statement-probe.json`），把第 48 节末尾记下的同类问题交回本方：构造句 "The members of the Audit Committee are responsible for recommending independent directors." 仍被打上成员资格认定标签。共用选择器由本方维护。
+
+**成因。** 这个标签只看同一句里是否同时有资格词（independent、financially literate、financial expert 等）、成员指称和一个状态动词，三者之间有没有语法关系不管。所以职责里提到的身份也会被当成成员的身份。
+
+**更正第 48 节的一句话。** 第 48 节写“没有真实例子”。按块是否入选，这句话成立：37 份判读里这个标签没有造成误选。但按标签看不成立：Southwest FY2024 第 1178 块、FY2025 第 1402 块里，提名与治理委员会的职责句（"…which is responsible for evaluating the qualifications of Board nominees, including independence, and … taking into account … independence requirements …"）就带着这个标签。两块因同一块里另一句（董事会点名九位独立董事的认定）入选，所以选择没错，标签是错的。
+
+**改动。** 找资格词之前，先去掉 "responsible for" 引出的职责从句（`_DUTY_CLAUSE`）。依据与第 48 节相同：写在职责里的身份是成员要处理的对象。从句的结束位置有两种：分号；或同一主语的下一个谓语（"and/but is/are/was/were"）。所以 "are responsible for oversight and are independent" 仍保留身份（构造句）。只改这一个标签；董事会独立性、成员从句等其他判断不动。
+
+**先查过的。** 49 份缓存代理里带这个标签的 235 块逐句看了触发句。真实文件里只有上面两句是职责句，含 "responsible for" 的也只有这两句。Southwest FY2021–FY2023 有三块，按块文本截断看像职责清单，但触发句是认定（"each of the members of the Compensation Committee is (i) independent …"）。只看块文本会把它们误报成同一问题。
+
+**用例。** `test_a_status_inside_a_duty_is_not_the_members_qualification` 包含：
+
+- #28 的句子和一个变体；
+- Southwest 的原句；
+- 三条保留身份的对照：职责后并列的身份、身份在职责之前、分号之后的身份。
+
+**注错**（`../c02-composition-facts/fault-injections.json`，161/161，对照 102 个用例）：新增三个，都只由新用例抓到：
+
+- 不去掉职责从句；
+- 职责从句越过同一主语的下一个谓语；
+- 职责从句越过分号。
+
+**量测。** 37 份判读（`measured-49-duty-clause.json`，对 `562128fc`）和 12 个未判读位置（`measured-49-jpmorgan-and-unread.json`）：一块不动。Southwest FY2024、FY2025 两块的标签变了。选择策略的哈希包含规则本身，所以和以前每次修复一样，所有 C02 位置下一次运行时候选身份都会变（实测 Southwest 两年与 Ford FY2025 的提案编号都变了），已接受的位置那时按结果身份重新核对接受。
+
+**仍不读的写法。** 其他引出职责的说法（"charged with"、"tasked with"、"duties include"）没有真实例子，没有加。

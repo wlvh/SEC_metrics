@@ -197,6 +197,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_governance_results",)
 # field for field; a copy checked against itself could not find a
 # transcription error, so this is the only place one shows up.
 SOURCE_TESTS += ("tests.vnext.test_historical_debt_results",)
+# B06's disclosure resolver on older layouts: the two forms the frozen inventory
+# leaves unresolved, on Southwest's FY2022 report (answered) and on reports the
+# frozen resolver answers (identical), read from the checkout and the export.
+# 48 seconds measured beside a batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_debt_fallback_forms",)
 # B10 and B11 through the pinned route. Two cases carry it: one answers the
 # current period and requires seventeen observation-binding fields to match the
 # ordinary route's, and one answers Marriott for three years and requires three
@@ -219,6 +224,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
 # measured.
 SOURCE_TESTS += ("tests.vnext.test_d01_byte_reading",)
 SOURCE_TESTS += ("tests.vnext.test_historical_page_split_headings",)
+# D01's running header naming two parts (JPMorgan's "Parts I and II"): both
+# selectors on the same rebuilt document of three saved reports - one line
+# apart where the page closes Item 1A, none where it does not - and the
+# constructed edges of the added form. 67 seconds measured beside a batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_running_header",)
 # Three D02 marks the frozen parse cannot see - Enphase's page-numbered footer,
 # Lumen's underlined case label and Paramount's italic matter labels - each on
 # its filing against a control with the rule off, with D03 required not to
@@ -680,6 +690,7 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 376,
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 370,
     "tests.vnext.test_historical_debt_results": 289,
+    "tests.vnext.test_historical_debt_fallback_forms": 48,
     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 270,
     "tests.vnext.test_historical_semantic_routes": 249,
     "tests.vnext.test_continuous_sec_acquisition": 227,
@@ -781,6 +792,7 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_historical_note_navigation": 32,
     "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest": 32,
     "tests.vnext.test_historical_page_split_headings": 30,
+    "tests.vnext.test_historical_running_header": 67,
     "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest": 29,
     "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients": 28,
     "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients": 28,

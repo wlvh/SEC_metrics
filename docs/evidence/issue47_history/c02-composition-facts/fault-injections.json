@@ -2,9 +2,9 @@
  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
  "suite": "tests.vnext.test_historical_board_composition",
  "control_failures": [],
- "control_tests_run": 101,
- "caught": 158,
- "total": 158,
+ "control_tests_run": 102,
+ "caught": 161,
+ "total": 161,
  "results": [
   {
    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
@@ -1190,7 +1190,6 @@
    "expected": "test_the_external_auditor_s_independence_is_not_the_members",
    "result": "CAUGHT",
    "failed": [
-    "test_a_members_clause_names_members_or_a_status",
     "test_the_external_auditor_s_independence_is_not_the_members"
    ]
   },
@@ -1209,6 +1208,7 @@
    "failed": [
     "test_a_determination_qualified_by_a_rule_is_still_a_determination",
     "test_a_statement_carrying_a_cross_reference_is_read",
+    "test_a_status_inside_a_duty_is_not_the_members_qualification",
     "test_committee_board_and_leadership_facts",
     "test_the_external_auditor_s_independence_is_not_the_members"
    ]
@@ -1219,7 +1219,8 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_members_clause_names_members_or_a_status",
-    "test_a_members_clause_opens_with_the_members_or_their_status"
+    "test_a_members_clause_opens_with_the_members_or_their_status",
+    "test_a_status_inside_a_duty_is_not_the_members_qualification"
    ]
   },
   {
@@ -1265,7 +1266,8 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_members_clause_names_members_or_a_status",
-    "test_a_members_clause_opens_with_the_members_or_their_status"
+    "test_a_members_clause_opens_with_the_members_or_their_status",
+    "test_a_status_inside_a_duty_is_not_the_members_qualification"
    ]
   },
   {
@@ -1300,6 +1302,30 @@
    "result": "CAUGHT",
    "failed": [
     "test_a_members_clause_opens_with_the_members_or_their_status"
+   ]
+  },
+  {
+   "injection": "A_STATUS_INSIDE_A_DUTY_IS_A_QUALIFICATION",
+   "expected": "test_a_status_inside_a_duty_is_not_the_members_qualification",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_status_inside_a_duty_is_not_the_members_qualification"
+   ]
+  },
+  {
+   "injection": "A_DUTY_RUNS_PAST_THE_NEXT_VERB",
+   "expected": "test_a_status_inside_a_duty_is_not_the_members_qualification",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_status_inside_a_duty_is_not_the_members_qualification"
+   ]
+  },
+  {
+   "injection": "A_DUTY_RUNS_PAST_A_SEMICOLON",
+   "expected": "test_a_status_inside_a_duty_is_not_the_members_qualification",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_status_inside_a_duty_is_not_the_members_qualification"
    ]
   },
   {

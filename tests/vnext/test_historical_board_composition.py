@@ -762,6 +762,31 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
         self.assertEqual([], statement_labels(
             "The members of the Audit Committee are elected annually by the Board.", own, period_start=START))
 
+    def test_a_status_inside_a_duty_is_not_the_members_qualification(self):
+        # #28's counterexample (Issue #47 comment 5962519090) and its variant
+        # are constructed; the qualification label read status, member and verb
+        # anywhere in the sentence.
+        own = frozenset({"audit", "compensation", "nominating", "example"})
+        for duty in ("are responsible for recommending independent directors.",
+                     "are responsible for determining whether executives are independent."):
+            self.assertEqual([], statement_labels("The members of the Audit Committee " + duty, own,
+                                                  period_start=START), duty)
+        # Southwest FY2024 block 1178 and FY2025 block 1402 print it.
+        self.assertNotIn("COMMITTEE_MEMBER_QUALIFICATION", statement_labels(
+            "Relevant information regarding Directors is then provided to the Nominating and Corporate Governance "
+            "Committee, which is responsible for evaluating the qualifications of Board nominees, including "
+            "independence, and for making recommendations to the Board regarding (i) nominations for Board "
+            "membership and (ii) individual qualifications for committee membership, taking into account various "
+            "additional regulatory requirements, including independence requirements, that specifically apply to "
+            "the different Board committees.", own, period_start=START))
+        # The duty ends where its clause does: the same subject's next verb, a
+        # semicolon (constructed). A status said of the members stays.
+        for sentence in ("The members of the Audit Committee are responsible for oversight and are independent.",
+                         "Each member of the Audit Committee is independent and is responsible for oversight.",
+                         "The Audit Committee is responsible for overseeing audits; all members are independent."):
+            self.assertIn("COMMITTEE_MEMBER_QUALIFICATION", statement_labels(sentence, own, period_start=START),
+                          sentence)
+
     def test_the_named_members_are_taken_beside_a_board_count(self):
         # #28's two-block case: with the members missed, a board count alone
         # remained and the mechanical Evidence still passed.

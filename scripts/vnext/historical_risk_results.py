@@ -6,12 +6,26 @@ call ``prepare_text_sources`` and each other as module globals, so a successor
 cannot reach them without rebinding names inside a frozen module - the same
 reason ``historical_text_results`` duplicates its three.
 
-What is NOT duplicated is the part that decides anything about a heading:
+What is NOT duplicated is the part that decides anything about a heading.
 ``_derive_deterministic_candidate`` takes ``documents`` and ``coverages`` as
-arguments, so the frozen one is called unchanged, and with it the frozen
-``risk_factor_headings``, ``text_claim_from_block``, both bound checks and the
-whole record shape. The selection rule is the frozen route's; only the bytes it
-is handed differ.
+arguments, and ``risk_factor_headings`` takes the document; both run as
+successors that are the frozen functions' own source with the substitutions
+listed below and nothing else (``historical_financial_wording.successor``
+compiles them and refuses a substitution that does not occur exactly once).
+``text_claim_from_block``, both bound checks and the whole record shape are the
+frozen route's.
+
+The one rule the successors change: the frozen selector skips a
+heading-marked block whose text is a single part label (``Part I``), and the
+successor also skips one naming two parts (``Parts I and II``). JPMorgan prints
+a running header at the top of every page - ``Part I`` on Item 1A's pages and
+``Parts I and II`` on the page where Part I ends - and in four of its five
+annual reports that page closes Item 1A, so the header fell inside Item 1A,
+bold and standing alone, and the frozen selector took it as the last heading
+(docs/evidence/issue47_history/d01-risk-headings/running-header/). The
+pattern is the one form the saved filings print; a form they do not print
+(a comma list, an ampersand, three parts) is not admitted, so it would be
+taken as a heading again, and a reading would see it.
 
 The duplication is held to the original by
 ``tests/vnext/test_historical_risk_headings.py``, differentially against the
@@ -31,13 +45,26 @@ from __future__ import annotations
 import unicodedata
 
 from .canonical import content_hash, sha256_bytes
+from .historical_financial_wording import successor
 from .historical_text_emphasis import build_text_document_admitting_underline
+from . import risk_signals as _frozen_signals
 from . import text_results as frozen
 from .text_results import (DETERMINISTIC_CANDIDATE_TYPE, DETERMINISTIC_METHOD,
                            VALUE_KIND, _CLAIM_FIELDS, _extent_value, _need, _record,
                            _text, text_policy)
 
 SUPPORTED_METRICS = ("D01",)
+
+# The frozen skip's part-label branch, and the same branch also admitting the
+# label of the page where one part ends and the next begins.
+SEVERAL_PARTS = ((r"part\s+[ivx]+$)", r"part\s+[ivx]+$|parts\s+[ivx]+\s+and\s+[ivx]+$)"),)
+risk_factor_headings = successor(_frozen_signals.risk_factor_headings, SEVERAL_PARTS)
+
+# The frozen derivation imports the selector inside its body; the successor
+# imports this module's instead, and is otherwise the frozen function.
+SELECTOR_IMPORT = (("from .risk_signals import risk_factor_headings",
+                    "from .historical_risk_results import risk_factor_headings"),)
+_derive_candidate = successor(frozen._derive_deterministic_candidate, SELECTOR_IMPORT)
 
 
 def prepare_text_sources(*, compiled_spec, target, source_references, raw_blobs, raw_bytes_by_id):
@@ -90,7 +117,7 @@ def create_deterministic_text_candidate(*, compiled_spec, target, source_referen
     documents, coverages = prepare_text_sources(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id)
-    return frozen._derive_deterministic_candidate(
+    return _derive_candidate(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         documents=documents, coverages=coverages)
 
@@ -120,7 +147,7 @@ def build_text_evidence(*, compiled_spec, target, candidate, source_references,
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id)
     if candidate["record_type"] == DETERMINISTIC_CANDIDATE_TYPE:
-        expected = frozen._derive_deterministic_candidate(
+        expected = _derive_candidate(
             compiled_spec=compiled_spec, target=target, source_references=source_references,
             documents=documents, coverages=coverages)
         _need(candidate == expected, "DETERMINISTIC_TEXT_CANDIDATE_REPLAY_CHANGED")

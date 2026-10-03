@@ -1,0 +1,238 @@
+{
+ "AND_IS_A_UNIT_S_INITIALS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_unit_s_chief_executive_is_not_the_registrant_s",
+  "failed_cases": [
+   "test_a_unit_s_chief_executive_is_not_the_registrant_s"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 60
+ },
+ "AN_EMPTY_SLOT_IS_READ_LIKE_AN_IMAGE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_empty_slot_is_refused",
+  "failed_cases": [
+   "test_a_cover_without_a_name_above_the_caption_is_refused",
+   "test_an_empty_slot_is_refused"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 37
+ },
+ "AN_IMAGE_SLOT_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box",
+  "failed_cases": [
+   "test_a_block_that_is_not_the_name_is_refused_not_taken",
+   "test_a_link_after_the_cover_is_not_the_name",
+   "test_the_block_is_checked_against_the_sec_record_as_before",
+   "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box",
+   "test_without_the_filer_caption_the_layout_is_refused"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 37
+ },
+ "A_FEE_LINE_IS_TAKEN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box",
+  "failed_cases": [
+   "test_a_block_that_is_not_the_name_is_refused_not_taken",
+   "test_the_block_is_checked_against_the_sec_record_as_before",
+   "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 37
+ },
+ "A_LINK_AFTER_THE_COVER_IS_TAKEN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_link_after_the_cover_is_not_the_name",
+  "failed_cases": [
+   "test_a_block_that_is_not_the_name_is_refused_not_taken",
+   "test_a_link_after_the_cover_is_not_the_name",
+   "test_the_block_is_checked_against_the_sec_record_as_before",
+   "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 37
+ },
+ "A_UNIT_S_CHIEF_EXECUTIVE_IS_THE_REGISTRANT_S": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_chief_executive_s_total_is_read",
+  "failed_cases": [
+   "test_a_unit_s_chief_executive_is_not_the_registrant_s",
+   "test_the_chief_executive_s_total_is_read"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 69
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0
+  ],
+  "seconds": 98
+ },
+ "EVERY_COVER_RECORDS_A_BASIS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_eight_covers_that_print_their_name_keep_their_records",
+  "failed_cases": [
+   "test_text_in_the_slot_is_the_name_above_the_caption",
+   "test_the_eight_covers_that_print_their_name_keep_their_records"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 38
+ },
+ "MARKS_ARE_KEPT_WITHOUT_THE_SUM": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_mark_cells_are_read_only_when_the_row_fails_its_sum",
+  "failed_cases": [
+   "test_mark_cells_are_read_only_when_the_row_fails_its_sum"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 61
+ },
+ "MARKS_ARE_TRIED_ON_A_ROW_THAT_SUMS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_mark_cells_are_read_only_when_the_row_fails_its_sum",
+  "failed_cases": [
+   "test_mark_cells_are_read_only_when_the_row_fails_its_sum"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 60
+ },
+ "THE_ABBREVIATION_IS_NOT_PART_OF_THE_TITLE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_numbered_title_and_its_abbreviation_are_the_title",
+  "failed_cases": [
+   "test_a_numbered_title_and_its_abbreviation_are_the_title",
+   "test_the_chief_executive_s_total_is_read"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 60
+ },
+ "THE_FILER_CAPTION_IS_NOT_REQUIRED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_without_the_filer_caption_the_layout_is_refused",
+  "failed_cases": [
+   "test_without_the_filer_caption_the_layout_is_refused"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 37
+ },
+ "THE_MARKS_ARE_NOT_RECORDED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_chief_executive_s_total_is_read",
+  "failed_cases": [
+   "test_the_chief_executive_s_total_is_read"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 60
+ },
+ "THE_NUMBERED_TITLE_IS_NOT_A_TITLE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_chief_executive_s_total_is_read",
+  "failed_cases": [
+   "test_a_numbered_title_and_its_abbreviation_are_the_title",
+   "test_the_chief_executive_s_total_is_read"
+  ],
+  "file": "scripts/vnext/historical_proxy_compensation.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_compensation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 59
+ },
+ "THE_WINGDINGS_CHECK_IS_NOT_A_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box",
+  "failed_cases": [
+   "test_a_block_that_is_not_the_name_is_refused_not_taken",
+   "test_a_link_after_the_cover_is_not_the_name",
+   "test_text_in_the_slot_is_the_name_above_the_caption",
+   "test_the_block_is_checked_against_the_sec_record_as_before",
+   "test_the_cover_gives_the_first_block_after_it_and_the_definitive_box"
+  ],
+  "file": "scripts/vnext/historical_proxy_identity.py",
+  "modules": [
+   "tests.vnext.test_historical_proxy_identity"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 37
+ },
+ "all_caught": true
+}

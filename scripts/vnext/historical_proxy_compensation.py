@@ -22,7 +22,15 @@ Purpose:
     last is taken as the Total only when it equals the sum of the others. A
     column that slipped, a "$" cell or a zero-width cell cannot pass that; a
     reading that does pass it has found the Total the filer reported. Measured
-    on the eight proxies: every chief executive's row passes it.
+    on the eight proxies: every chief executive's row passes it. A ninth,
+    acquired later (JPMorgan's), prints its footnote marks in cells of their
+    own, superscripted by style alone, so they read as amounts of a few
+    dollars and every row fails the sum. Such one- or two-digit cells are read
+    as marks only when the row as printed fails the sum and the row without
+    them passes it (``row_amounts_by_arithmetic``); a row that sums as printed
+    keeps every amount, so the eight proxies read exactly as before. The same
+    filing titles the table "I. SUMMARY COMPENSATION TABLE (SCT)": a section
+    number before the title and the abbreviation after it are accepted.
 
     The rest is the definition's: one chief executive (a year with two - a
     successor and a predecessor, or co-chief executives - is withheld with every
@@ -40,7 +48,9 @@ How an executive is read:
     Executive Officer", "CEO" or "PEO", not directly after "Deputy",
     "Assistant to", "Vice", "Office of" or "Staff to", and not followed by a
     comma, "of" or a dash naming another body: Macy's lists "Chairman & CEO,
-    Bloomingdale's", a subsidiary's chief executive.
+    Bloomingdale's", a subsidiary's chief executive. Nor when a business unit's
+    initials follow the title directly: JPMorgan lists "CEO CIB", "CEO CCB"
+    and "CEO AWM" beside its chief executive.
 
 Call relationships:
     ``historical_governance_results._compensation_resolution`` calls
@@ -65,8 +75,8 @@ from .text_coverage import _byte_offsets
 RESOLVER = "proxy_compensation_table_v1"
 SPEC_PATH = "catalog/r6/C03_proxy_compensation_table_v1.md"
 RECORD_TYPE = "C03_PROXY_TABLE_RESOLUTION"
-_TITLE = re.compile(r"^(?:(?P<before>\d{4})\s+)?summary compensation table"
-                    r"(?:\s+for(?:\s+fiscal)?(?:\s+year)?\s+(?P<after>\d{4}))?$", re.I)
+_TITLE = re.compile(r"^(?:(?:[IVX]+|\d+)\.\s*)?(?:(?P<before>\d{4})\s+)?summary compensation table"
+                    r"(?:\s+for(?:\s+fiscal)?(?:\s+year)?\s+(?P<after>\d{4}))?(?:\s*\(SCT\))?$", re.I)
 _YEAR = re.compile(r"(?:19|20)\d{2}")
 _FOOTNOTES = r"(?:\(\d{1,2}\))*"
 _AMOUNT = re.compile(r"\$?\s*(?P<number>\d{1,3}(?:,\d{3})+|\d+)" + _FOOTNOTES)
@@ -79,6 +89,9 @@ _SCALED = r"in (?:thousands|millions|billions)"
 _NOT_THE_CHIEF = re.compile(r"(?:assistant to(?: the)?|deputy|vice|office of(?: the)?|staff to(?: the)?)\s*$",
                             re.I)
 _ANOTHER_BODY = re.compile(r"\s*(?:,|\bof\b|—|–|-)\s*\S", re.I)
+# A business unit's initials right after the title: "CEO CIB", "CEO AWM".
+_UNIT_INITIALS = re.compile(r"\s+(?!(?:AND|OR)\b)[A-Z]{2,5}\b")
+_MARK_CELL = re.compile(r"\d{1,2}")
 _ZERO_WIDTH = dict.fromkeys(map(ord, "​‌‍⁠﻿"))
 _CONTEXT_BLOCKS, _CONTEXT_CHARS = 12, 6000
 
@@ -101,7 +114,7 @@ def names_the_chief_executive(text):
     for match in _CEO.finditer(text):
         if _NOT_THE_CHIEF.search(text[:match.start()]):
             continue
-        if _ANOTHER_BODY.match(text[match.end():]):
+        if _ANOTHER_BODY.match(text[match.end():]) or _UNIT_INITIALS.match(text[match.end():]):
             continue
         return True
     return False
@@ -121,6 +134,29 @@ def row_amounts(tokens):
         else:
             return None
     return amounts
+
+
+def _sums(amounts):
+    return amounts is not None and len(amounts) >= 3 and sum(value for value, _ in amounts[:-1]) == amounts[-1][0]
+
+
+def row_amounts_by_arithmetic(tokens):
+    """The row's amounts, and the one- or two-digit cells read as footnote marks.
+
+    A filer may print a footnote mark in a cell of its own, where it reads as
+    an amount of a few dollars. The row is first read as printed; only when
+    that reading fails Item 402(c)'s sum are those cells read as marks, and
+    the reading is kept only if the sum then holds. A row that sums as
+    printed keeps every amount it prints.
+    """
+    amounts = row_amounts(tokens)
+    if amounts is None or len(amounts) < 3 or _sums(amounts):
+        return amounts, []
+    marks = [token for token in tokens if _MARK_CELL.fullmatch(token)]
+    alternative = row_amounts([token for token in tokens if not _MARK_CELL.fullmatch(token)])
+    if marks and _sums(alternative):
+        return alternative, marks
+    return amounts, []
 
 
 def _cells(row):
@@ -232,11 +268,13 @@ def resolve_proxy_compensation_table(*, raw_bytes, raw_blob, source_reference, f
         for person in people:
             if not names_the_chief_executive(person["text"]):
                 continue
-            amounts = row_amounts([text for _, text in person["amount_cells"]])
+            amounts, marks = row_amounts_by_arithmetic([text for _, text in person["amount_cells"]])
             candidate = {"table_id": table["table_id"], "table_grid_sha256": table["grid_sha256"],
                          "person_and_position": person["text"], "fiscal_year": fiscal_year,
                          "person": [_cell_evidence(asset, table, cell) for cell, _ in person["name_cells"]],
                          "year": _cell_evidence(asset, table, person["year_cell"][0])}
+            if marks:
+                candidate["cells_read_as_footnote_marks"] = marks
             if amounts is None or len(amounts) < 3:
                 candidate["reason"] = "C03_PROXY_SCT_ROW_UNREADABLE"
             elif sum(value for value, _ in amounts[:-1]) != amounts[-1][0]:
