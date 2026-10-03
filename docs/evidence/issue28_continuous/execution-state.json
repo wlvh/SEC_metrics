@@ -11637,5 +11637,83 @@
       0,
       0
     ]
+  },
+  "d01_running_header_current_receiver_20261003": {
+    "status": "NEW_V3_PRIVATE_NORMAL_CLI_AND_INSTALLED_COLD_PASS_PENDING_EXACT_DIFF_REVIEW",
+    "evidence": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/README.md",
+    "peer_sha": "af29ab2f41f40a442c13a3453c97d2c476f3536b",
+    "peer_patch_state": "PENDING_PROVIDER_APPLICATION; PURE_SUBSTITUTIONS_PINNED_IN_RECEIVER",
+    "old_defective_result_id": "sha256:994427388d20f9ee0aef09c080a0e1f5b8420fcb5f4fd276a6489734193c1242",
+    "new_private_result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+    "new_private_attempt": "/private/tmp/issue28-d01-running-header-v3-20261003-final/jpmorgan_chase/metrics/D01-header-v3/attempts/bb9e9ce65d9f4fdfa3547b885fcae875",
+    "current_selected_known_defects": 18,
+    "only_JPM_current_source_moves": true,
+    "other_nine_candidates_byte_identical": true,
+    "normal_cli_seconds": 180.243,
+    "independent_repeat_seconds": 60.705,
+    "installed_cold_seconds": 53.467,
+    "source_census_reused_after_dispatch_repair": true,
+    "fast_passed": 151,
+    "original_ledger_source_active_unchanged": true,
+    "bindings": {
+      "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "ordinary_requirement_closure": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+      "continuous_requirement_closure": "sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911",
+      "bindings": {
+        "scripts/vnext/d01_emphasis_results.py": {
+          "sha256": "e0d18e8584967185bebae0383365b4a94a775c0e9b8d6f7ef27020d001010f0a",
+          "size": 18454
+        },
+        "scripts/vnext/normal_run_v3.py": {
+          "sha256": "57d634aa4c65d8542c5c18d13fa387544d4b62284e7062bebfe7da26aea7743f",
+          "size": 38444
+        },
+        "scripts/vnext/ordinary_remaining_cases.py": {
+          "sha256": "ed083ddb13886e678cea8b003ce6674339d9d403383a1d021311c33124b2c97b",
+          "size": 11926
+        },
+        "scripts/vnext/ordinary_update_cycle.py": {
+          "sha256": "dd42a273afea38a61a9abb38be2becc6fed1ce836d0e9a7d0365e46d63e1dccc",
+          "size": 28218
+        },
+        "tools/vnext_normal_update.py": {
+          "sha256": "38115f405298206825a854cd032005d2808602ea3b03a536645ee107b25f3b89",
+          "size": 6100
+        },
+        "config/issue28_normal_results_v2.json": {
+          "sha256": "bad2abbf377edd5fd881ddbd72084db60410bbcaa5026b44fde86e54f7339a4c",
+          "size": 9386
+        },
+        "scripts/vnext/d01_running_header_28_v1.py": {
+          "sha256": "535245b5c7e802a040a02fafb898652aea0a2c0cf696f1a4a868fa660aacd978",
+          "size": 3132
+        },
+        "scripts/vnext/d01_emphasis_results_v3.py": {
+          "sha256": "137b8b84661c5ba54152725124829ffb7b003928f94cf49ea74fcdf80df1ae7c",
+          "size": 17797
+        },
+        "scripts/vnext/ordinary_d01_header_update_v3.py": {
+          "sha256": "004dacbbe5061b52099aeadd2934cc369d10a773e868293f402cad5284c5be95",
+          "size": 2720
+        }
+      },
+      "historical_frozen_snapshots_changed": false
+    },
+    "wiring_state": "STALE_REFUSED_BEFORE_REAL_CALL; RECEIPT_HASHES_NOT_REWRITTEN",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "current_390_credit": false,
+    "production_authorized": false,
+    "shared_files_and_functions": [
+      "normal_run_v3:prepare_case/install_normal_inputs/create_normal_run/replay_case/text_api",
+      "ordinary_remaining_cases:prepare_current_source_case",
+      "ordinary_update_cycle:_config/_inspect/run_once",
+      "d01_emphasis_results:explicit_v3_build_text_evidence/replay_text_result",
+      "tools/vnext_normal_update:explicit_wrapper_selection"
+    ],
+    "default_binding_function_and_frozen_root_bytes_unchanged": true
   }
 }

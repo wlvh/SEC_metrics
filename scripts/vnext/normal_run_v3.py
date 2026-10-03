@@ -108,7 +108,7 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           (c02_auditor_revision and c02_composition and c02_grouped and metric_id == 'C02')),
           'ORDINARY_C02_MEMBER_REVISION_SCOPE_WRONG_METRIC')
-    _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
+    _need((type(d01_emphasis) is bool or d01_emphasis == 'RUNNING_HEADER_V3') and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
@@ -265,7 +265,7 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           (c02_auditor_revision and c02_composition and c02_grouped and metric_id == 'C02')),
           'ORDINARY_C02_MEMBER_REVISION_SCOPE_WRONG_METRIC')
-    _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
+    _need((type(d01_emphasis) is bool or d01_emphasis == 'RUNNING_HEADER_V3') and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
@@ -347,13 +347,19 @@ def _install_case_inputs(*, data_root, source_root, company_id, case, requiremen
         _write(data_root/relative,raw)
 
 
-def text_api(metric_id, c02_composition=False):
+def text_api(metric_id, c02_composition=False, d01_running_header=False):
+    _need(type(d01_running_header) is bool and (not d01_running_header or metric_id == 'D01'),
+          'ORDINARY_D01_HEADER_TEXT_API_WRONG_METRIC')
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
           'ORDINARY_C02_COMPOSITION_TEXT_API_WRONG_METRIC')
     if metric_id == 'C02':
         from . import c02_composition_text_results
         return c02_composition_text_results, c02_composition_text_results.build_text_review_unit
     if metric_id == 'D01':
+        if d01_running_header:
+            from . import d01_emphasis_results_v3
+            from .text_review import build_text_review_unit
+            return d01_emphasis_results_v3, build_text_review_unit
         from . import d01_emphasis_results
         from .text_review import build_text_review_unit
         return d01_emphasis_results, build_text_review_unit
@@ -383,7 +389,7 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           (c02_auditor_revision and c02_composition and c02_grouped and metric_id == 'C02')),
           'ORDINARY_C02_MEMBER_REVISION_SCOPE_WRONG_METRIC')
-    _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
+    _need((type(d01_emphasis) is bool or d01_emphasis == 'RUNNING_HEADER_V3') and (not d01_emphasis or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
@@ -436,7 +442,8 @@ def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, require
     terminal_records = []
     if case["kind"] == "TEXT":
         api,review_builder = text_api(metric_id,
-            c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1')
+            c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1',
+            d01_running_header=case['input_binding'].get('d01_emphasis_policy') == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER')
         spec = case["compiled_specs"][metric_id]
         candidate = api.create_deterministic_text_candidate(**case["text_arguments"])
         evidence = api.build_text_evidence(candidate=candidate,**case["text_arguments"])
@@ -505,7 +512,7 @@ def replay_case(*, data_root, manifest, spec=None):
           'ORDINARY_C02_COMPOSITION_REPLAY_METRIC_CHANGED')
     from .d01_emphasis_results import POLICY as d01_policy_value
     d01_policy = saved.get('input_binding', {}).get('d01_emphasis_policy')
-    _need(d01_policy in {None, d01_policy_value} and
+    _need(d01_policy in {None, d01_policy_value, 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER'} and
           (d01_policy is None or metric_id == 'D01'),
           'ORDINARY_D01_EMPHASIS_REPLAY_POLICY_CHANGED')
     a05_policy = saved.get('presentation_policy')
@@ -532,7 +539,7 @@ def replay_case(*, data_root, manifest, spec=None):
             c02_composition=c02_composition,c02_grouped=c02_grouped,
             c02_auditor_revision=c02_policy in {'COMPOSITION_GROUPED_V3', 'COMPOSITION_GROUPED_V4'},
             c02_member_revision=c02_policy == 'COMPOSITION_GROUPED_V4',
-            d01_emphasis=d01_policy is not None,
+            d01_emphasis=('RUNNING_HEADER_V3' if d01_policy == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER' else d01_policy is not None),
             a05_formula=a05_policy is not None,
             d02_category=('ITEM8_V2' if d02_policy is not None and d02_policy == d02_policy_v2
                           else d02_policy is not None))
@@ -574,7 +581,8 @@ def prepare_text_contexts(*, repo_root, manifest, records, compiled_specs, **unu
     case = replay_case(data_root=repo_root,manifest=manifest,spec=spec)
     _need(case["kind"] == "TEXT","ORDINARY_INTEGRATED_TEXT_ROUTE_REQUIRED")
     api,_ = text_api(spec["compiled"]["metric_id"],
-        c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1')
+        c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1',
+            d01_running_header=case['input_binding'].get('d01_emphasis_policy') == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER')
     expected = api.create_deterministic_text_candidate(**case["text_arguments"])
     _need(candidates[0] == expected,"ORDINARY_INTEGRATED_TEXT_CANDIDATE_CHANGED")
     return {expected["candidate_hash"]:case["text_arguments"]}

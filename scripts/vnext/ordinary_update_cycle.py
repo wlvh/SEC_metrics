@@ -60,7 +60,7 @@ def _d02_v2_policy():
 
 
 def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
-            a05_formula=False,d02_category=False,c02_auditor_revision=False, c02_member_revision=False):
+            a05_formula=False,d02_category=False,c02_auditor_revision=False, c02_member_revision=False, d01_header_revision=False):
     policy=normal._policy(normal.ROOT)
     _need(policy['provider_enabled'] is False and policy['sec_fetch_enabled'] is False
           and policy['freeze_enabled'] is False,'UPDATE_ZERO_EGRESS_RUNTIME_REQUIRED')
@@ -78,6 +78,8 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
           metrics == ['C02']), 'UPDATE_C02_AUDITOR_REVISION_SCOPE_INVALID')
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           c02_auditor_revision), 'UPDATE_C02_MEMBER_REVISION_SCOPE_INVALID')
+    _need(type(d01_header_revision) is bool and (not d01_header_revision or metrics == ['D01']),
+          'UPDATE_D01_HEADER_REVISION_SCOPE_INVALID')
     requirement_id = normal.REQUIREMENT_ID
     if native:
         from .continuous_call_policy import REQUIREMENT_ID as requirement_id
@@ -96,6 +98,8 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
         else:
             from .ordinary_d02_item8_v2 import POLICY
         body['d02_category_policy'] = POLICY
+    if d01_header_revision:
+        body['d01_emphasis_policy'] = 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER'
     if c02_auditor_revision:
         body['c02_selection_policy'] = ('COMPOSITION_GROUPED_V4' if c02_member_revision
                                         else 'COMPOSITION_GROUPED_V3')
@@ -149,7 +153,8 @@ def _inspect(source_root,configuration,native_assessment_ledger=None):
                         {'COMPOSITION_GROUPED_V3','COMPOSITION_GROUPED_V4'},
                     'c02_member_revision':configuration.get('c02_selection_policy') ==
                         'COMPOSITION_GROUPED_V4'} if m == 'C02' else {}),
-                **({'d01_emphasis':True} if m == 'D01' else {}),
+                **({'d01_emphasis':('RUNNING_HEADER_V3' if configuration.get('d01_emphasis_policy') ==
+                    'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER' else True)} if m == 'D01' else {}),
                 **({'a05_formula':True} if m == 'A05' and
                     configuration.get('a05_formula_policy') == normal.A05_FORMULA_POLICY else {}),
                 **({'d02_category':('ITEM8_V2' if
@@ -308,7 +313,7 @@ def _recover(root,state,configuration,verify_candidate=None):
 
 def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
              source_identity_root=None,a05_formula=False,d02_category=False,
-             c02_auditor_revision=False, c02_member_revision=False):
+             c02_auditor_revision=False, c02_member_revision=False, d01_header_revision=False):
     """Check one company's current input and keep a durable candidate history."""
     _need(type(d02_category) is bool or d02_category == 'ITEM8_V2',
           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
@@ -319,6 +324,8 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
     _need(type(c02_member_revision) is bool and (not c02_member_revision or
           c02_auditor_revision), 'UPDATE_C02_MEMBER_REVISION_SCOPE_INVALID')
     _need(not c02_member_revision, 'UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
+    _need(type(d01_header_revision) is bool and (not d01_header_revision or metric_ids == ['D01']),
+          'UPDATE_D01_HEADER_REVISION_SCOPE_INVALID')
     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
         if source_identity_root is not None else Path(source_root).resolve())
     identity_source=(source if source_identity_root is None else
@@ -335,7 +342,8 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
         configuration=_config(root,identity_source,company_id,metric_ids,
                               native_assessment_mode,a05_formula,d02_category,
                               c02_auditor_revision=c02_auditor_revision,
-                              c02_member_revision=c02_member_revision)
+                              c02_member_revision=c02_member_revision,
+                              d01_header_revision=d01_header_revision)
         state=_recover(root,_state(root,configuration),configuration)
         previous=None;successful_results={}
         if state['successful_attempt'] is not None:
@@ -362,7 +370,7 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                         **({'c02_composition':True,'c02_grouped':True,
                             'c02_auditor_revision':c02_auditor_revision,
                             'c02_member_revision':c02_member_revision} if metric == 'C02' else {}),
-                        **({'d01_emphasis':True} if metric == 'D01' else {}),
+                        **({'d01_emphasis':('RUNNING_HEADER_V3' if d01_header_revision else True)} if metric == 'D01' else {}),
                         **({'a05_formula':True} if a05_formula else {}),
                         **({'d02_category':d02_category} if d02_category else {}))
                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,
@@ -370,7 +378,7 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                         **({'c02_composition':True,'c02_grouped':True,
                             'c02_auditor_revision':c02_auditor_revision,
                             'c02_member_revision':c02_member_revision} if metric == 'C02' else {}),
-                        **({'d01_emphasis':True} if metric == 'D01' else {}),
+                        **({'d01_emphasis':('RUNNING_HEADER_V3' if d01_header_revision else True)} if metric == 'D01' else {}),
                         **({'a05_formula':True} if a05_formula else {}),
                         **({'d02_category':d02_category} if d02_category else {}))
                     rendered=render_ordinary_run(data_root=work/'data',run_dir=work/'runs'/metric)
