@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "ford_motor_company",
+ "label": "ford_motor_company-e01-2025-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "E01"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 21,
+    "COMPUTED": 6
+   },
+   "seconds": 30.0
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 18.0
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "E01"
+   ],
+   "seconds": 42.9
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 3,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 15.0
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "E01": {
+   "binding_id": "sha256:faa4d9f86f3d78ca14845096d9b5f1f43a443bf61cc61174115ca11dd6e93abb",
+   "data_root": "/workspace/work/issue47-model-native-e01-default/ford_motor_company-e01-2025-12-31/data-ford_motor_company-e01-2025-12-31",
+   "evidence_count": 1,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:02f8e39dd1b14ef5a7bfa682bf84f0ee183157961edda385edafee3ddbd60838",
+    "run_id": "run:historical-period:faa4d9f86f3d78ca14845096d9b5f1f43a443bf61cc61174115ca11dd6e93abb",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:02f8e39dd1b14ef5a7bfa682bf84f0ee183157961edda385edafee3ddbd60838",
+   "row_hash": "sha256:76e522906fd0a30f55bf23e959247d39f2ddc7295c0c86ae43a4be139a82a3b1",
+   "run_dir": "/workspace/work/issue47-model-native-e01-default/ford_motor_company-e01-2025-12-31/run-ford_motor_company-e01-2025-12-31-E01",
+   "run_id": "run:historical-period:faa4d9f86f3d78ca14845096d9b5f1f43a443bf61cc61174115ca11dd6e93abb",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:02f8e39dd1b14ef5a7bfa682bf84f0ee183157961edda385edafee3ddbd60838",
+    "run_id": "run:historical-period:faa4d9f86f3d78ca14845096d9b5f1f43a443bf61cc61174115ca11dd6e93abb",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "0"
+  }
+ },
+ "report_end": "2025-12-31",
+ "seconds": 106.6,
+ "selection_id": "sha256:7a35cf38a887125238a1baebdaad3c87d55b541e1a10d7a71882b047b57bfcd5",
+ "xbrl_parses": 1
+}

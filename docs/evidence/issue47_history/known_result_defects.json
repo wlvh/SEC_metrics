@@ -1160,6 +1160,13 @@
      "what_this_releases": "this entry, for this result: the Run read Metsera's 8.01 from its own text, found 'acquisition' and 'merger' there, and withheld the window by name (HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING) instead of publishing the 0 the brief produced. The defect stays in force for every other result at this coordinate, including the published 0.",
      "what_it_does_not_assert": "that the position is delivered - it carries no value until the meaning of an alias in an 8.01's text is decided; the count is 1 under both readings the decision packet sets out, but the route does not make that judgement.",
      "read_by": "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json"
+    },
+    {
+     "read_by": "docs/evidence/issue47_history/content-acceptance/e01-paid-content-confirmed-read.json",
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "result_id": "sha256:17710f4d827f1719e0aa3014bbbcfa3d2a1ff1a951b8d546dcbee5f32af257e6",
+     "run_id": "run:historical-period:066f9a5dae70a4ac69187a62bf061ad21996eb44efde78754424e33ff6046b1a",
+     "what_this_releases": "Only this LIVE, frozen result under this closure: all three candidate-item decisions agree with the pre-call readings, both independent filing/header censuses cover them exactly, and the new content-confirmed value is 1. Other historical results stay withdrawn."
     }
    ]
   },
@@ -6831,6 +6838,48 @@
     ]
    },
    "scope_limit": "The named selected and omitted blocks, read with their adjacent original blocks. These are sufficient counterexamples to accepting the set. The rest of the 2,123-2,409 pool blocks per filing has not been fully judged; this is not a completed whole-packet reading and claims no complete error count."
+  },
+  {
+   "defect_id": "D02_PAID_MARRIOTT_INTERNATIONAL_20231231_SELF_INSURANCE_DISCLOSURE_MISSED",
+   "company_id": "marriott_international",
+   "metric_id": "D02",
+   "period_end": "2023-12-31",
+   "result_id": "sha256:7ad6a91e047e730a9c6b1673239b5f817687d6f0a6a7c3087a14fd8f8b4d0d59",
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "summary": "Paid response passes the unchanged contract but excludes the self-insurance heading and accrual policy judged in scope before the call. This exact new result is withdrawn; previous correctly read results are unaffected.",
+   "evidence": "docs/evidence/issue47_history/model-live-round-9a368413/paid-read-d02/check.json",
+   "confirmed_in": {
+    "run_id": "run:historical-period:2c4032fc012fc72e78a432a5fe8cb4cdab6a1ea0d479a22c4837f5594abc2518",
+    "result_id": "sha256:7ad6a91e047e730a9c6b1673239b5f817687d6f0a6a7c3087a14fd8f8b4d0d59",
+    "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388"
+   },
+   "missed_blocks": {
+    "b1081": "Self-Insurance Programs",
+    "b1082": "We self-insure for certain levels of liability, workers’ compensation, property insurance, and employee medical coverage. We accrue estimated costs of these self-insurance programs at the present value of projected settlements for known and incurred but not reported claims. We use a discount rate of 4.00 percent, based upon market rates, to determine the present value of the projected settlements, which we consider to be reasonable given our history of settled claims, including payment patterns and the fixed nature of the individual settlements. We classify the current portion of our self-insurance reserve in the “Accrued expenses and other” caption and the noncurrent portion in the “Other noncurrent liabilities” caption of our Balance Sheets. The current portion of our self-insurance reserve was $172 million at December 31, 2023 and $130 million at December 31, 2022. The noncurrent portion of our self-insurance reserve was $387 million at December 31, 2023 and $287 million at December 31, 2022."
+   },
+   "reference": "docs/evidence/issue47_history/model-egress/dev-dry-run/d02-reference.json",
+   "adjudication": "docs/evidence/issue47_history/d02-older-years/adjudication.json"
+  },
+  {
+   "defect_id": "D02_PAID_MARRIOTT_INTERNATIONAL_20241231_SELF_INSURANCE_DISCLOSURE_MISSED",
+   "company_id": "marriott_international",
+   "metric_id": "D02",
+   "period_end": "2024-12-31",
+   "result_id": "sha256:8edb8b1c7a088fd38f075dec2ef219fd73ce57f7c0d194ed08baea589a4132c7",
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "summary": "Paid response passes the unchanged contract but excludes the self-insurance heading and accrual policy judged in scope before the call. This exact new result is withdrawn; previous correctly read results are unaffected.",
+   "evidence": "docs/evidence/issue47_history/model-live-round-9a368413/paid-read-d02/check.json",
+   "confirmed_in": {
+    "run_id": "run:historical-period:982b332e60fa0aa4e49718748d1a1242fcd7fba2413ad622f4279bd891fa9070",
+    "result_id": "sha256:8edb8b1c7a088fd38f075dec2ef219fd73ce57f7c0d194ed08baea589a4132c7",
+    "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388"
+   },
+   "missed_blocks": {
+    "b1110": "Self-Insurance Programs",
+    "b1111": "We self-insure for certain levels of liability, workers’ compensation, property insurance, and employee medical coverage. We accrue estimated costs of these self-insurance programs at the present value of projected settlements for known and incurred but not reported claims. We use a discount rate of 4.25 percent, based upon market rates, to determine the present value of the projected settlements, which we consider to be reasonable given our history of settled claims, including payment patterns and the fixed nature of the individual settlements. We classify the current portion of our self-insurance reserve in the “Accrued expenses and other” caption and the noncurrent portion in the “Other noncurrent liabilities” caption of our Balance Sheets. The current portion of our self-insurance reserve was $198 million at December 31, 2024 and $172 million at December 31, 2023. The noncurrent portion of our self-insurance reserve was $422 million at December 31, 2024 and $387 million at December 31, 2023."
+   },
+   "reference": "docs/evidence/issue47_history/model-egress/dev-dry-run/d02-reference.json",
+   "adjudication": "docs/evidence/issue47_history/d02-older-years/adjudication.json"
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

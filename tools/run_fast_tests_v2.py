@@ -518,6 +518,7 @@ FAST_TESTS += ("tests.vnext.test_d01_running_header",)
 FAST_TESTS += ("tests.vnext.test_c02_model_processing",)
 FAST_TESTS += ("tests.vnext.test_c02_model_review_view",)
 FAST_TESTS += ("tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest",)
+FAST_TESTS += ("tests.vnext.test_paid_e01_reading.PaidE01ReadingTest",)
 SOURCE_TESTS += ("tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {

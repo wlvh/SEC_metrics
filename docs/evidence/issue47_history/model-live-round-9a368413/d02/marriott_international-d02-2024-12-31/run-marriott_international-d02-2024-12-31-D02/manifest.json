@@ -1,0 +1,73 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "a290bbe57b0b360b973be0f4c948c4535079263433dd5cf0f333799de08c3d51",
+  "review_decisions_file_hash": "4a6f4642e627aa636bf188aa56294176d922ee8ffc4d165e13a40dbdb2232ce5",
+  "validation_file_hash": "5b0d0fec5316103b30a85541b18500b3daf409efd689d8cda8c02a4584b78893",
+  "content_manifest_hash": "sha256:f31769a468e7aaf3433f946e18a494b10937f4aa600e6310848f29be3cc3319d",
+  "audit_manifest_hash": "sha256:bdbd9c19fee194bcd8ef9700852cf26777820ed161f5cc4d851da185e26307c9",
+  "run_id": "run:historical-period:982b332e60fa0aa4e49718748d1a1242fcd7fba2413ad622f4279bd891fa9070",
+  "company_id": "marriott_international",
+  "company_traits": [
+    "lodging",
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+      "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "SUBMISSIONS-1048286",
+      "document_name": "CIK0001048286.json",
+      "source_role": "sec_submissions_inventory",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+      "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "accession": "0001628280-25-004818",
+      "document_name": "mar-20241231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630",
+      "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001628280-25-004818",
+      "document_name": "CIK0001048286.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D02_legal_disclosures_v2.md": "e38edb44d2f4887a97d849f5b532b796a09df03c75d85f743c883346c5738c3a"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "896f8d29791f72de62f236fcf923f5704b5b16b04aed8043329225c53e897705",
+    "contract_sha256": "b15b59f3f74bbc3e889019024a1c1d6ba6c8c46512a43411269b2ec46cee7e62",
+    "decision_register_sha256": "37fc323583f198ee02a895b7b553181cfb0c0d64673da7972a126c8b2f755ac0",
+    "invariant_profile_sha256": "36e1e7d6d601e4017963d354cc17e61abcefd49ee3be7eb529db444f3cc37186",
+    "transfer_manifest_sha256": "61dcd9731b356c3f127f0ddaf738359664987fa9e69633849b30bb801e02b546",
+    "parent_requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+    "validator_sha256": "87bda5af7c67fee58edea64fe5982d03181e257ae3f0ab397f527d453615c2c0"
+  },
+  "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+  "requirement_id": "issue_47_v1",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

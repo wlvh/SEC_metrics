@@ -42,8 +42,10 @@ def main(requests_dir, answers_dir, e01_reference, d02_reference=None):
             # D04 answers go through the frozen native contract (#28's
             # d04_native_assessment.validate_response), as the call path does.
             from vnext.d04_native_assessment import validate_response
+            from vnext.native_unit_index import restore_response
             try:
-                checked = validate_response(request=request, raw_response=raw)
+                base, normalized, _ = restore_response(request=request, raw_response=raw)
+                checked = validate_response(request=base, raw_response=normalized)
             except Exception as error:  # the contract raises its own named errors
                 row["contract_check"] = "REFUSED: %s: %s" % (type(error).__name__, str(error)[:300])
                 rows.append(row)

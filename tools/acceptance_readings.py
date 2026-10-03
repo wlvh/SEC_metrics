@@ -82,6 +82,9 @@ E01_CANDIDATES_BATCH = EVIDENCE + "e01-content-confirmed-read-batch.json"
 # block: the reading reads it, refused unless it is the block its index declares.
 E01_CANDIDATES_FULL_FRAME = EVIDENCE + "e01-content-confirmed-read-full-frame.json"
 E01_CANDIDATE_READINGS = (E01_CANDIDATES, E01_CANDIDATES_BATCH, E01_CANDIDATES_FULL_FRAME)
+# Paid confirmations compared with the pre-call item readings, and every
+# candidate in an independent submissions/header census in both directions.
+E01_PAID_READINGS = (EVIDENCE + "e01-paid-content-confirmed-read.json",)
 # C02 under the owner's composition-fact meaning: the two-direction reading of
 # c02-composition-facts/, compared with the published results by
 # tools/read_c02_composition.py.
@@ -221,7 +224,7 @@ READINGS = (*CROSS_READINGS, *LODGING_READINGS, *EVENT_READINGS, E01_EIGHT_O_ONE
             TEXT, *D02_EXCERPT_READINGS, *D01_READINGS, *RPO_READINGS, COMPENSATION,
             *DEBT_TO_EQUITY_READINGS,
             *C02_COMPOSITION_READINGS,
-            *E01_CANDIDATE_READINGS, *C03_ACROSS_PROXIES, *BANK_MEASURES_READINGS,
+            *E01_CANDIDATE_READINGS, *E01_PAID_READINGS, *C03_ACROSS_PROXIES, *BANK_MEASURES_READINGS,
             *BANK_STATEMENT_READINGS)
 # The company periods the readings cover are data, not code: tools/ is scanned
 # as production Python for identity literals and fixed dates.
@@ -454,7 +457,7 @@ def positions(*, repo_root: Path, path: str, body):
                     published=row["published"], verdict=row["verdict"],
                     filings=listed, window=case["window"],
                     filings_are_the_whole_set=True, case=case))
-    elif path in (E01_EIGHT_O_ONES, *E01_CANDIDATE_READINGS):
+    elif path in (E01_EIGHT_O_ONES, *E01_CANDIDATE_READINGS, *E01_PAID_READINGS):
         for label, case in sorted(body["per_position"].items()):
             found.append(_position(
                 reading=path, label=label, slot=case, company_id=case["company_id"],

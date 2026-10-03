@@ -35,7 +35,7 @@ from acceptance_readings import (BANK_MEASURES_READINGS, BANK_STATEMENT_READINGS
                                  C02_OLDER_YEARS_READINGS, C03_ACROSS_PROXIES, COMPENSATION, CROSS,
                                  CROSS_READINGS,
                                  D01_READINGS, D02_EXCERPT_READINGS, DEBT_TO_EQUITY_READINGS,
-                                 E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES,
+                                 E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES, E01_PAID_READINGS,
                                  EVENT_READINGS, GOVERNANCE, GOVERNANCE_READINGS, LODGING, LODGING_READINGS, READINGS, RPO_READINGS, TEXT, load,
                                  positions)
 
@@ -273,6 +273,12 @@ def _read_from(position):
         return {"window": case["window"], "eight_k_filings_in_window": len(case["filings_in_window"]),
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
                 "candidate_items_by_basis": case["candidate_items_by_basis"]}
+    if path in E01_PAID_READINGS:
+        return {"window": case["window"], "filings": case["filings"],
+                "candidate_items": case["candidate_items"],
+                "pre_call_item_judgements": case["judged_items"],
+                "ledger_digest": case["ledger_digest"],
+                "request_file_sha256": case["request_file_sha256"]}
     if path in C02_COMPOSITION_READINGS:
         return {"governance_document": case["governance_document"],
                 "reading": case["reading"], "reading_sha256": case["reading_sha256"],
@@ -332,6 +338,18 @@ def _method_and_limit(position):
         return E01_METHOD, E01_LIMIT
     if path in E01_CANDIDATE_READINGS:
         return E01_CANDIDATES_METHOD, E01_CANDIDATES_LIMIT
+    if path in E01_PAID_READINGS:
+        return (
+            "tools/read_e01_confirmed.py counts pre-call development judgements of each "
+            "candidate item's own text, compares every paid decision with them, and "
+            "independently enumerates every 8-K/8-K/A from saved submissions and SEC "
+            "headers under both filing-date and report-date windows. Both censuses must "
+            "name exactly the items in the request and reference; undecided items, "
+            "missing headers or a disagreement grant nothing. The frozen result's "
+            "value, complete filing set, window and identity are bound at reading time.",
+            "Pre-call development judgements by the executor; no independent human "
+            "business review. Only the approved candidate item codes are covered; "
+            "exhibits whose own item text does not settle the meaning remain undecided.")
     if path in C02_LATEST_READINGS:
         return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
     if path in C02_OLDER_YEARS_READINGS:

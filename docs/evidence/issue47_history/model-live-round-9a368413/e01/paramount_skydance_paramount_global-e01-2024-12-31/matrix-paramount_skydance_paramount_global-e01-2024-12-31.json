@@ -1,0 +1,40 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "duration_seconds": 270.5,
+ "positions": [
+  {
+   "case": "paramount_skydance_paramount_global-e01-2024-12-31",
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence_count": 0,
+   "metric_id": "E01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT",
+   "report_end": "2024-12-31",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:9b418473b8b617ec179d61e168953bb105fef7f0bd986c52b798e3cae71e3230",
+   "row_hash": "sha256:df799c8516e6970c83b945c6075be513dd0ab09be94e0f9dd2bd7674e7f47079",
+   "run_id": "run:historical-period:1c8a112327a8eec750c9627a8664a02a6986ebe698f0c05500c7ad91b8301ac2",
+   "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+   "separate_process_replay": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:9b418473b8b617ec179d61e168953bb105fef7f0bd986c52b798e3cae71e3230",
+    "run_id": "run:historical-period:1c8a112327a8eec750c9627a8664a02a6986ebe698f0c05500c7ad91b8301ac2",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": null
+  }
+ ]
+}

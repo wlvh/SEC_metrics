@@ -1,0 +1,75 @@
+{
+ "evidence": [
+  {
+   "accession": "0001193125-25-124002",
+   "cik": "18926",
+   "company": "Lumen Technologies",
+   "concept_or_section": "Item 1.01",
+   "content_sha256": "d7efa0205dc40a220f0a5394ecb151abe5768151b2292ffaf28c9841f285df04",
+   "context_or_dimension": "{\"attributes\": {\"accession\": \"0001193125-25-124002\", \"brief\": \"8-K item 1.01 parsed from hdr.sgml\", \"brief_source\": \"HDR_SGML_ITEM_CODE\", \"deterministic_router_semantic_version\": \"2\", \"event_key\": {\"accession\": \"0001193125-25-124002\", \"item_code\": \"1.01\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/18926/000119312525124002/0001193125-25-124002.hdr.sgml\"}, \"event_key_hash\": \"sha256:e7edd73e8f1a3addcbb8635a104c1adddc35e5c58810a1b481ee56e233a578c1\", \"hdr_source_reference_id\": \"sha256:1b01da1c958eb5851e51e53ce23dbc5811858aa8019b8f325f092ec8bad42788\", \"item_code\": \"1.01\", \"primary_heading_brief\": \"l accounting standards provided pursuant to Section 13(a) of the Exchange Act ☐ Item 1.01 Entry into a Material Definitive Agreement. On May 21, 2025, Lumen Technologies, Inc. (“Lumen” or the “Company”) and certain of Lumen’s indirect wholly owned subsidiaries (collectively, the “Sellers”), entered into a de\", \"primary_source_reference_id\": \"sha256:2415ba44d3ca0848f85098c9ba82a9196b2824d075f20a5b06d31cac2bebdfd1\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/18926/000119312525124002/0001193125-25-124002.hdr.sgml\"}, \"locator\": {\"brief_source\": \"HDR_SGML_ITEM_CODE\", \"item_code\": \"1.01\"}, \"verified_claim_id\": \"sha256:1e38e38605098712d581f643e258b60f5367289084b197db2d1b0758309aed39\"}",
+   "document_name": "0001193125-25-124002.hdr.sgml",
+   "evidence_quote": "Parsed source fact: {\"locator\": {\"brief_source\": \"HDR_SGML_ITEM_CODE\", \"item_code\": \"1.01\"}, \"unit\": \"text\", \"value\": \"8-K item 1.01 parsed from hdr.sgml\"}",
+   "extraction_method": "ordinary_native_source_projection",
+   "metric_id": "E01",
+   "parser_version": "ordinary_projection_v1",
+   "period_end": "2025-12-31",
+   "period_start": "2025-01-01",
+   "repo_relative_path": "evidence/accession_materials/lumen_technologies_18926_000119312525124002/0001193125-25-124002.hdr.sgml",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000119312525124002/0001193125-25-124002.hdr.sgml",
+   "unit": "count",
+   "value_normalized": "1",
+   "value_raw": ""
+  }
+ ],
+ "receipt": {
+  "calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "evidence_count": 1,
+  "evidence_hash": "sha256:beb0eb0dc86d38cea41880d2df990f1878ef075a2bed6b5beeb921bab2e67bab",
+  "period_selection_id": "sha256:4e797f286321290c4004649ab72a5f75057ce22cc71a65d0827a289518c0c20f",
+  "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+  "primary_metric_id": "E01",
+  "production_authorized": false,
+  "receipt_id": "sha256:69b31d4d6380f090e243ebe81fad54f922ed87eaacaaa6ca62901eefff5db557",
+  "record_type": "HISTORICAL_PERIOD_ROW_RECEIPT",
+  "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d",
+  "row_hash": "sha256:ee17d41d3898f7ad4691dfa2f65b6be54e35162e78eda2c0915c68ca57b1b2c8",
+  "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+  "run_status": "FROZEN",
+  "semantic_assessment_mode": "LIVE",
+  "source_required_metric_ids": [
+   "E01"
+  ],
+  "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+  "status": "FROZEN_CANDIDATE"
+ },
+ "record_type": "HISTORICAL_PERIOD_ROW_BUNDLE",
+ "row": {
+  "accession": "0001193125-25-124002",
+  "cik": "18926",
+  "company": "Lumen Technologies",
+  "concept_or_section": "M&A announcements",
+  "confidence": "",
+  "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"period_selection_id\": \"sha256:4e797f286321290c4004649ab72a5f75057ce22cc71a65d0827a289518c0c20f\", \"requested_fiscal_year\": null, \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2025, \"shared_claim_group_id\": \"merger_acquisition_items\"}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892\", \"sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21\", \"sha256:369e78a9a1f80997c7ec530b9a613a50c9db0762515a2d303e8c0c9a5538f0a7\", \"sha256:245cfd210ab21d07fe7b17e43e8a392e04350ad4f7473002e5c94b4980b43dec\", \"sha256:2686b715657ba459c8915a68eb85fb496310bbfebe4d70f66b880aab83121545\", \"sha256:1cbc0f01de9e5a372003d08d27dc9f24dd62c1411cdda416010dde808b98057c\", \"sha256:5296696cef02aef06f2797bd5f0d17555cd833a0560840d58d974394f0c3b48b\", \"sha256:696854b0392d8f14189c5608bc7b21c3232aaa63e8f51866070a210450f556c5\", \"sha256:27774d4635130ae62d1ca7b57431ca7d20fa78c8285fa7ffd303faab8a7aa9ee\", \"sha256:723a303c61b672e6e849a25c5885a65c53d4f8abea8934cc0aba5e996d0b66c8\", \"sha256:2415ba44d3ca0848f85098c9ba82a9196b2824d075f20a5b06d31cac2bebdfd1\", \"sha256:1b01da1c958eb5851e51e53ce23dbc5811858aa8019b8f325f092ec8bad42788\", \"sha256:ad96eeb5b2188113dec796a4a752660ac961f6f0514577829f01f63208b9ed3a\", \"sha256:fd501378e44b6d232606e33af8de4d23fbb2923a2bc9befd22a00c8c8b67b052\", \"sha256:4bb434a97e4cca821287aa2ed21fcca7cb4a251b11bf4beb75394f7d7bcc7cf3\", \"sha256:1bbeb74a6c53437fceb38b119619ea9e733080efda516191cf41e6de24053bf3\", \"sha256:9e50e6667a976bb814ac19272509de69dd1eda8bf9d35e7d76390d228e15c9b2\", \"sha256:43324b6e575b2c61d008a4af5e498b2f755b47c0816117c6251d6b2e87286fe9\", \"sha256:760302f190b725d7fe1d3722dbe18e80355410df183208983abb1ae3bbdd9faf\", \"sha256:99f499d41339e114d6ebb20908cff01c4dd05db3d1c82ed394810f63ffdf48d0\", \"sha256:e811fae49baf57c01fe83c584549c13a611f902a31cbe68a4eccd488edb1410d\", \"sha256:9a47c7992711ee29a9a48205865ac9667b81090c062c9e348dfbdaa3b2a6581b\", \"sha256:070eaa15ba54833ad4e9f80ef0aa6b2d07f3a464d80e608492526f4353f7cdbc\", \"sha256:1f8c3bb9cf5daa2aa3d79a1d58b2acb53e06dc31d6b640522f6ee8d7ee2ead77\", \"sha256:a0938447ee9245c9ac42f8572fffc2364cc05f71264b2dec5cf4b4081a67e4a8\", \"sha256:83d15e95e440b063cba906b663d8385c1b6cccfd8f105b001cf11113ff2cbf5f\", \"sha256:7e75bb0d175bd3d55b925de03b438facd31eda9c51b253e6f1ca770b7c7acebf\", \"sha256:2bcf7f78fb4daf3e5163749ff77aa1a868cdc107db18c55ac703af3af8e644f4\", \"sha256:186c645636a1ced83580040f725e699e4fcf598e5430d089179377504f7e0ec4\", \"sha256:a3b966bf345e6e5e839c452a02d2f0be51425b92dbfe440e18e8424c0bf0af9b\", \"sha256:593116aa84c135a467a8281f1060308dd141e5ab383188587fd1f147e866bf1b\", \"sha256:a2c9677427cd538b8f31c35558ca8168d27dc1c64f1930d5e668af3b095f2daa\", \"sha256:58a3e5f553bff3e5cb88565750b8c2142d641873328bd1308a7a2265752f6a3e\", \"sha256:817a8f7f050d3d1a9ad3754c214d42588d53338b8eac8a7060ee1ec15456c885\", \"sha256:28b3bd2ab1005741ce13b6b69082b6d1975544be4529e5abd7e18aac9de99eb3\", \"sha256:d359f85970a057cabd1d097c4940571189dcda74b4973b096a92ed4e7343f977\", \"sha256:7e5c72ebc17a4fff6d91b3e456d5eceec6591478dec1f268c8329a2114c40ec6\", \"sha256:b8732f596457313677bf0504c485830adbdbac36d7f2e20fb42c973e31c1de48\", \"sha256:593f90d92b848a97922c7b8d5ae28bc8b5ffabf795aff975681086f2f4e5a0eb\", \"sha256:48ab614be2b05e408b004ed3b67d9645b330d84e016518a02a72c66c0396fde2\"], \"target_report_end\": \"2025-12-31\"}",
+  "filed_date": "2025-05-21",
+  "fiscal_period": "ANNUAL",
+  "fiscal_year": "2025",
+  "form": "8-K",
+  "formula": "",
+  "metric_id": "E01",
+  "metric_name": "M&A announcements (content-confirmed)",
+  "notes": "Count of 8-K items filed under 1.01, 2.01 or 8.01 in the fiscal-year event window whose own text was confirmed to report a merger, acquisition, disposition or business combination to which the registrant or a subsidiary is party; financing agreements, tender offers for the registrant's own securities, repurchases, compensation and shareholder agreements are not counted. A window with an item whose confirmation is not registered, or whose own text does not settle it, is withheld by name. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Pinned historical period; values come only from the sources named in the evidence, as selected for this period. No latest-restated view is applied.",
+  "period_end": "2025-12-31",
+  "period_start": "2025-01-01",
+  "source_class": "8K_ITEM",
+  "status": "8K_ITEM_OK",
+  "unit": "count",
+  "value": "1"
+ },
+ "schema_version": 1
+}
