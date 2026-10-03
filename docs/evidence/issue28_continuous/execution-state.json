@@ -3963,6 +3963,23 @@
       "verdict": "COMPLETE_LIMITED_SUPPLEMENT5_INPUT_EMPTY_NOT_ABSENCE_NO_CREDIT",
       "message_count": 2,
       "elapsed_seconds": 506.7
+    },
+    {
+      "task_name": "diagnose_d03visible_02f4fbc",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_exact_new_visible_request0",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/0",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/visible0"
+      ],
+      "patch_sha": "02f4fbc0d2687bec7dc427cefa2a4187784e973f",
+      "spawned_at": "2026-10-03T16:29:13.825547+00:00",
+      "ended_at": "2026-10-03T16:40:46.036780+00:00",
+      "tool_calls": 36,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/visible0/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_EXACT_NEW_VISIBLE_RESPONSE_UNRESOLVED_NO_COMPANY_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 707.563825
     }
   ],
   "ci_capacity_20260922": {
@@ -12610,5 +12627,38 @@
       0
     ],
     "source_recovery": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/source-recovery.json"
+  },
+  "d03_visible0_development_20261004": {
+    "state": "SIXTH_NEW_FORMAT_RESPONSE_SAVED_COLD_COMPLETE_INPUT_SET_READ_ONLY",
+    "tested_base_sha": "02f4fbc0d2687bec7dc427cefa2a4187784e973f",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/visible0/README.md",
+    "request_sha256": "c74e22c1dbe6f7e25249b7048c4d53b8490dd22fd1c51417f4f9f8308c848acc",
+    "response_sha256": "4e5aef5388f6ad64f1e41224015a6a3f083c10c31cccdaea17c4d7ea1fb01c55",
+    "findings": 12,
+    "unresolved": 4,
+    "output_reference_tokens": 3172,
+    "processing_sha256": "9bf075d792889b3ecc5d46370c551dd320cfea5d35441e118f1eed203527bc0b",
+    "checks_seconds": 0.161,
+    "cold_seconds": 0.132,
+    "complete_response_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complete_unit_ownership": 17,
+    "original_finding_records_not_matter_count": 25,
+    "original_unresolved_preserved": 18,
+    "company_reference_overall": "UNRESOLVED",
+    "complete_set_read_seconds": 0.439,
+    "all_source_semantic_or_native_company_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Minimal native pending/company evidence integration plus a clear positive source example; necessary code review. Exact real D03 purpose/resource authorization still not granted."
   }
 }
