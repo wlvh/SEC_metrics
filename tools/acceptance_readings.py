@@ -159,9 +159,13 @@ HEADINGS_LATEST_YEARS_BATCH = EVIDENCE + "d01-latest-years-read-batch.json"
 # The 50-period batch's positions no reading had covered: JPMorgan's five
 # years, Pfizer FY2021 and Salesforce FY2022-FY2024, over the restored root.
 HEADINGS_FULL_FRAME = EVIDENCE + "d01-full-frame-read.json"
+# JPMorgan's four years after the running-header repair (targeted-round-3fba0e84),
+# read with the 50-period batch's recorded judgements against the new results.
+HEADINGS_JPMORGAN_ROUND = EVIDENCE + "d01-jpmorgan-read-round-3fba0e84.json"
 D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
                 HEADINGS_PARAMOUNT_PREDECESSOR, HEADINGS_OLDER_YEARS, HEADINGS_OLDER_YEARS_BATCH,
-                HEADINGS_SOUTHWEST_PAGE_SPLIT, HEADINGS_LATEST_YEARS_BATCH, HEADINGS_FULL_FRAME)
+                HEADINGS_SOUTHWEST_PAGE_SPLIT, HEADINGS_LATEST_YEARS_BATCH, HEADINGS_FULL_FRAME,
+                HEADINGS_JPMORGAN_ROUND)
 RPO = EVIDENCE + "rpo-read.json"
 # Another year's B12, read the same way from that year's own filing.
 RPO_BATCH = EVIDENCE + "rpo-read-batch.json"
@@ -180,7 +184,11 @@ DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 DEBT_TO_EQUITY_BATCH = EVIDENCE + "debt-to-equity-read-batch.json"
 # The 50-period batch's Salesforce FY2024, over the restored root.
 DEBT_TO_EQUITY_FULL_FRAME = EVIDENCE + "debt-to-equity-read-full-frame.json"
-DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH, DEBT_TO_EQUITY_FULL_FRAME)
+# Southwest FY2022, published after the older-wording successor landed
+# (targeted-round-3fba0e84).
+DEBT_TO_EQUITY_ROUND = EVIDENCE + "debt-to-equity-read-round-3fba0e84.json"
+DEBT_TO_EQUITY_READINGS = (DEBT_TO_EQUITY, DEBT_TO_EQUITY_BATCH, DEBT_TO_EQUITY_FULL_FRAME,
+                           DEBT_TO_EQUITY_ROUND)
 # The bank's A03, A04, A09, A11, A12 and A13 read off its annual report's own
 # tables by tools/read_bank_measures.py, which imports none of the financial
 # inspectors: one file per closure its positions compare - the 50-period batch,

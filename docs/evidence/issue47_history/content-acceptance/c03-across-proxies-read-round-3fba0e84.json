@@ -1,0 +1,93 @@
+{
+ "calls": {
+  "provider": 0,
+  "sec": 0
+ },
+ "first_reported_decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+ "per_position": {
+  "jpmorgan-2021": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "result_id": "sha256:5e4f9429b44bea0fc31ee0920b7e5a2d614116dadbbd03996583f1f4a2905725",
+     "run_id": "run:historical-period:bd0dfdc0a0066071adc9581216f44c563fd467ae362a1c6871dbf78d9e62894d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000303"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "19617"
+   ],
+   "company_id": "jpmorgan_chase",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-01",
+    "2021-12-31"
+   ],
+   "period_end": "2021-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000019617-23-000281",
+     "document": "evidence/request_attempts/2a/2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f/jpm-20230403.htm",
+     "named_by_the_result": false,
+     "sha256": "2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f",
+     "values": [
+      84428145
+     ]
+    },
+    {
+     "accession": "0000019617-24-000273",
+     "document": "evidence/request_attempts/a7/a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741/jpm-20240406.htm",
+     "named_by_the_result": false,
+     "sha256": "a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741",
+     "values": [
+      84428145
+     ]
+    },
+    {
+     "accession": "0000019617-25-000321",
+     "document": "evidence/request_attempts/08/085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c/jpm-20250405.htm",
+     "named_by_the_result": false,
+     "sha256": "085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
+     "values": [
+      85159860
+     ]
+    },
+    {
+     "accession": "0000019617-26-000096",
+     "document": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+     "named_by_the_result": false,
+     "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+     "values": [
+      85159860
+     ]
+    }
+   ],
+   "published": "84428145",
+   "read": null,
+   "verdict": "NOT_READ",
+   "why_not_read": "FIRST_REPORT_NOT_ONE_TOTAL_IN_THE_FILING_THE_RESULT_NAMES"
+  }
+ },
+ "proxies_read": 39,
+ "reader": "tools/read_c03_across_proxies.py",
+ "reading": "c03_across_proxies_round_3fba0e84",
+ "record_type": "ISSUE47_C03_ACROSS_PROXIES_READING",
+ "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d"
+}

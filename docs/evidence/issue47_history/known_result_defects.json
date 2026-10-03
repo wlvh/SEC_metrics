@@ -6405,13 +6405,24 @@
    "root_cause": "The frozen heading selector (risk_signals.risk_factor_headings) skips a heading-marked block that is a single part label (^part\\s+[ivx]+$) but not one naming two parts. JPMorgan prints a running header at the top of each page: 'Part I' on the right-hand pages of Item 1A, and 'Parts I and II' on the page where Part I ends. That page holds the end of the last risk factor's page run and the 'Item 1B.' heading that closes Item 1A, so its header falls inside Item 1A's range, bold and standing alone, and the selector takes it as the last heading. The historical route calls the frozen selector unchanged, as #28's ordinary route does.",
    "scope_measured": "All 50 published D01 values of the 50-period batch (closure 500ddf5f) scanned for a line that is a part label or an item label: only these four (JPMorgan FY2021, FY2023, FY2024, FY2025). JPMorgan FY2022's last risk-factor page is not the page where Part I ends, so its value has no such line, and the independent reading of it matches. #28's current 390 view carries JPMorgan FY2025's ordinary D01 with the same last line (docs/evidence/issue28_continuous/review-5207290213/current-390.json); #28's D01 integration gives that coordinate no content credit.",
    "found_by": "the D01 reading of the 50-period batch's unread positions (tools/read_d01_headings.py, docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json): the reading treats a part label as page furniture and reads one line fewer than the route published; the published line not read is 'Parts I and II'. Batch result sha256:549e6537a8a287e90c0490b0bd3b51e053f64877b8315173f63e666d9233e3eb, run run:historical-period:38a3e908b22f5fa07c48e0b789769fb075813ec5ea048168dff39173b35b8696, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e.",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "repair": "Not made yet. The repair is a successor of the frozen selector in #47's D01 chain that also skips a label naming several parts, measured on every saved D01 filing before it is kept; it moves a rule file, so it waits for the model-egress receipt commit. Shared with #28, whose ordinary route calls the same frozen selector.",
    "evidence": [
     "docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json",
     "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-50-period-batch.json"
    ],
-   "same_cause_as": []
+   "same_cause_as": [],
+   "released": [
+    {
+     "result_id": "sha256:f6cd3fef92222f3200084562d29579a0d39581cc2f6d2d8b12bac28624265323",
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "run_id": "run:historical-period:dafaf5bd87139155794f92bae1dd648d193d02f9b638d9c638a79fa5fc6391e8",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d01-jpmorgan-read-round-3fba0e84.json (jpmorgan-2025: READING_AGREES, MATCH)",
+     "reading_sha256": "sha256:5a340ada6c7d1c67560a2f5253f560ef3900ca9185651d4ab6275b14669e58e6",
+     "judgements_file": "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-50-period-batch.json",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result after the running-header successor (e14d3ca9), whose lines the reading read as the filing's headings in order. The batch result that carries the running header stays withdrawn by it."
+    }
+   ]
   },
   {
    "company_id": "jpmorgan_chase",
@@ -6423,7 +6434,7 @@
    "root_cause": "The frozen heading selector (risk_signals.risk_factor_headings) skips a heading-marked block that is a single part label (^part\\s+[ivx]+$) but not one naming two parts. JPMorgan prints a running header at the top of each page: 'Part I' on the right-hand pages of Item 1A, and 'Parts I and II' on the page where Part I ends. That page holds the end of the last risk factor's page run and the 'Item 1B.' heading that closes Item 1A, so its header falls inside Item 1A's range, bold and standing alone, and the selector takes it as the last heading. The historical route calls the frozen selector unchanged, as #28's ordinary route does.",
    "scope_measured": "All 50 published D01 values of the 50-period batch (closure 500ddf5f) scanned for a line that is a part label or an item label: only these four (JPMorgan FY2021, FY2023, FY2024, FY2025). JPMorgan FY2022's last risk-factor page is not the page where Part I ends, so its value has no such line, and the independent reading of it matches. #28's current 390 view carries JPMorgan FY2025's ordinary D01 with the same last line (docs/evidence/issue28_continuous/review-5207290213/current-390.json); #28's D01 integration gives that coordinate no content credit.",
    "found_by": "the D01 reading of the 50-period batch's unread positions (tools/read_d01_headings.py, docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json): the reading treats a part label as page furniture and reads one line fewer than the route published; the published line not read is 'Parts I and II'. Batch result sha256:603b1e7e180b1843f767654610eee5e647864f936f122b92263e9b67e028862a, run run:historical-period:9bdb5f65be26ce73a59ea078d794a6d582774e4d5eb98edd12d3ea61906eae81, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e.",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "repair": "Not made yet. The repair is a successor of the frozen selector in #47's D01 chain that also skips a label naming several parts, measured on every saved D01 filing before it is kept; it moves a rule file, so it waits for the model-egress receipt commit. Shared with #28, whose ordinary route calls the same frozen selector.",
    "evidence": [
     "docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json",
@@ -6431,6 +6442,17 @@
    ],
    "same_cause_as": [
     "D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:6f0e3f3901c70397742fbfdd9ef799cc7d83b4f7bc78f0f7e83510db9837a916",
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "run_id": "run:historical-period:0bcef57c394fe88b4873cb37ad369c0bb5b2b145ce9848a5ee57eef0a6354e2e",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d01-jpmorgan-read-round-3fba0e84.json (jpmorgan-2024: READING_AGREES, MATCH)",
+     "reading_sha256": "sha256:5a340ada6c7d1c67560a2f5253f560ef3900ca9185651d4ab6275b14669e58e6",
+     "judgements_file": "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-50-period-batch.json",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result after the running-header successor (e14d3ca9), whose lines the reading read as the filing's headings in order. The batch result that carries the running header stays withdrawn by it."
+    }
    ]
   },
   {
@@ -6443,7 +6465,7 @@
    "root_cause": "The frozen heading selector (risk_signals.risk_factor_headings) skips a heading-marked block that is a single part label (^part\\s+[ivx]+$) but not one naming two parts. JPMorgan prints a running header at the top of each page: 'Part I' on the right-hand pages of Item 1A, and 'Parts I and II' on the page where Part I ends. That page holds the end of the last risk factor's page run and the 'Item 1B.' heading that closes Item 1A, so its header falls inside Item 1A's range, bold and standing alone, and the selector takes it as the last heading. The historical route calls the frozen selector unchanged, as #28's ordinary route does.",
    "scope_measured": "All 50 published D01 values of the 50-period batch (closure 500ddf5f) scanned for a line that is a part label or an item label: only these four (JPMorgan FY2021, FY2023, FY2024, FY2025). JPMorgan FY2022's last risk-factor page is not the page where Part I ends, so its value has no such line, and the independent reading of it matches. #28's current 390 view carries JPMorgan FY2025's ordinary D01 with the same last line (docs/evidence/issue28_continuous/review-5207290213/current-390.json); #28's D01 integration gives that coordinate no content credit.",
    "found_by": "the D01 reading of the 50-period batch's unread positions (tools/read_d01_headings.py, docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json): the reading treats a part label as page furniture and reads one line fewer than the route published; the published line not read is 'Parts I and II'. Batch result sha256:1a42803b3df562ee16ad1804930e3d63870d40b9426cb6196da44f80b1451f21, run run:historical-period:005e0ec0f2a7c451ed308ee337fd3c6f62dc9b79148b37c5e39dff6e7aaef44c, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e.",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "repair": "Not made yet. The repair is a successor of the frozen selector in #47's D01 chain that also skips a label naming several parts, measured on every saved D01 filing before it is kept; it moves a rule file, so it waits for the model-egress receipt commit. Shared with #28, whose ordinary route calls the same frozen selector.",
    "evidence": [
     "docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json",
@@ -6451,6 +6473,17 @@
    ],
    "same_cause_as": [
     "D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:5002650aaa997292a40132fd5d6016b9d98e19ac6a425dc7976f75a4b2e0911a",
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "run_id": "run:historical-period:43080915a1fe13d8300d15e917da94f26bdb3bc7aae403ad57b33a4db101e66b",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d01-jpmorgan-read-round-3fba0e84.json (jpmorgan-2023: READING_AGREES, MATCH)",
+     "reading_sha256": "sha256:5a340ada6c7d1c67560a2f5253f560ef3900ca9185651d4ab6275b14669e58e6",
+     "judgements_file": "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-50-period-batch.json",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result after the running-header successor (e14d3ca9), whose lines the reading read as the filing's headings in order. The batch result that carries the running header stays withdrawn by it."
+    }
    ]
   },
   {
@@ -6463,7 +6496,7 @@
    "root_cause": "The frozen heading selector (risk_signals.risk_factor_headings) skips a heading-marked block that is a single part label (^part\\s+[ivx]+$) but not one naming two parts. JPMorgan prints a running header at the top of each page: 'Part I' on the right-hand pages of Item 1A, and 'Parts I and II' on the page where Part I ends. That page holds the end of the last risk factor's page run and the 'Item 1B.' heading that closes Item 1A, so its header falls inside Item 1A's range, bold and standing alone, and the selector takes it as the last heading. The historical route calls the frozen selector unchanged, as #28's ordinary route does.",
    "scope_measured": "All 50 published D01 values of the 50-period batch (closure 500ddf5f) scanned for a line that is a part label or an item label: only these four (JPMorgan FY2021, FY2023, FY2024, FY2025). JPMorgan FY2022's last risk-factor page is not the page where Part I ends, so its value has no such line, and the independent reading of it matches. #28's current 390 view carries JPMorgan FY2025's ordinary D01 with the same last line (docs/evidence/issue28_continuous/review-5207290213/current-390.json); #28's D01 integration gives that coordinate no content credit.",
    "found_by": "the D01 reading of the 50-period batch's unread positions (tools/read_d01_headings.py, docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json): the reading treats a part label as page furniture and reads one line fewer than the route published; the published line not read is 'Parts I and II'. Batch result sha256:7df8ba54138499081cab4be1da5cce4445a3b4606a5d111bbf03c50328e569e2, run run:historical-period:8f0911140f8f72c7244f1ea3dbcaf86b67a2dc4f259d3b5aed59359dc81b39ad, closure sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e.",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "repair": "Not made yet. The repair is a successor of the frozen selector in #47's D01 chain that also skips a label naming several parts, measured on every saved D01 filing before it is kept; it moves a rule file, so it waits for the model-egress receipt commit. Shared with #28, whose ordinary route calls the same frozen selector.",
    "evidence": [
     "docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json",
@@ -6471,6 +6504,17 @@
    ],
    "same_cause_as": [
     "D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:1427fc46486ff10a26fef93d1f12eac1bd67d8abb432762c66001457ca28d88a",
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "run_id": "run:historical-period:a578e1a237036b7e7660c5756f74e17f528031f2f899be525a08a279a879cdff",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/d01-jpmorgan-read-round-3fba0e84.json (jpmorgan-2021: READING_AGREES, MATCH)",
+     "reading_sha256": "sha256:5a340ada6c7d1c67560a2f5253f560ef3900ca9185651d4ab6275b14669e58e6",
+     "judgements_file": "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-50-period-batch.json",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result after the running-header successor (e14d3ca9), whose lines the reading read as the filing's headings in order. The batch result that carries the running header stays withdrawn by it."
+    }
    ]
   }
  ],
