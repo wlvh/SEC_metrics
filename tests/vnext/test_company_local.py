@@ -87,11 +87,49 @@ class CompanyLocalTest(unittest.TestCase):
         self.assertEqual(report['simulated_sec_claims'], 1)
         self.assertFalse(report['metric_executed'])
 
+    def test_forbidden_or_rate_limited_capture_stops_and_remains_stopped(self):
+        for code in ('403', '429'):
+            with self.subTest(code=code):
+                source = self.root/code
+                client = SecHttpClient(workdir=source, config_path=local.ROOT/'config/sec_config.json',
+                    log_path=source/'evidence/requests_log.csv')
+                session = type('Session', (), {})()
+                session.data_root, session.requirement, session.ledger = source, {}, Ledger()
+                urls = []
+
+                def blocked_capture(**kw):
+                    urls.append(kw['url'])
+                    session.ledger.count += 1
+                    response = client._persist_result(url=kw['url'], status_code=int(code),
+                        body=b'blocked', headers={'Content-Type': 'text/plain'},
+                        local_path=source/'blocked-response.txt', error='HTTP '+code)
+                    client._append_log_row(result=response, purpose='RECORDED_BLOCKED_TEST', attempt=0)
+                    return {'status': 'FAILED_TERMINAL', 'calls': [0, 0, 0],
+                        'receipt': {'stop_reason': '', 'ledger_row': {'status_code': code}}}
+
+                session.capture = blocked_capture
+                discovery_report = {'requirements': [
+                    {'source_url': u, 'roles': [], 'refresh_for_new_discovery': True,
+                     'saved_status': 'MISSING_SAVED_SOURCE'} for u in (
+                         'https://data.sec.gov/submissions/CIK0001048286.json',
+                         'https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json')],
+                    'limitations': []}
+                with patch.object(capture, 'initialize_source_inputs'), \
+                        patch.object(discovery, 'discover_saved_source_requirements', return_value=discovery_report):
+                    first = acquisition.acquire_only(session=session, company_id='company', max_requests=120)
+                    self.assertEqual(first['stop_reason'], 'HTTP_'+code)
+                    self.assertEqual(urls, ['https://data.sec.gov/submissions/CIK0001048286.json'])
+                    repeat = acquisition.acquire_only(session=session, company_id='company', max_requests=120)
+                    self.assertEqual(repeat['stop_reason'], 'HTTP_'+code)
+                    self.assertEqual(urls, ['https://data.sec.gov/submissions/CIK0001048286.json'])
+                    self.assertEqual(repeat['charged_sec_claims'], 0)
+
     def test_run_has_one_compute_and_complete_status_scope(self):
         program = self.root/'program'
         program.mkdir()
         work, output = self.root/'work', self.root/'output'
         calls = []
+        checkpoint = 'sha256:installed-source-version'
 
         def invoke(program, args, **kw):
             calls.append(args[0])
@@ -108,8 +146,13 @@ class CompanyLocalTest(unittest.TestCase):
                 matrix = [{**dict.fromkeys(METRIC_FIELDS, ''), 'metric_id': 'B01', 'value': '10', 'status': 'EXACT'}]
                 (destination/'metrics_matrix.csv').write_bytes(_csv_bytes(rows=matrix, fieldnames=METRIC_FIELDS))
                 (destination/'metric_evidence.csv').write_text('metric_id\nB01\n')
-                (destination/'company-results.json').write_text('{}')
+                (destination/'company-results.json').write_text(json.dumps({'source_checkpoint_id': checkpoint}))
                 result = {'status': 'EXPORTED'}
+            elif args[0] == 'install':
+                source_state = work/'company-state'
+                source_state.mkdir()
+                (source_state/'current_source.json').write_text(json.dumps({'checkpoint_id': checkpoint}))
+                result = {'status': 'OK'}
             else:
                 result = {'status': 'OK'}
             return {'returncode': 2 if args[0] == 'compute' else 0, 'result': result}
@@ -121,6 +164,11 @@ class CompanyLocalTest(unittest.TestCase):
             result = local.run_local(company_id='marriott_international', work_dir=work,
                 output_dir=output, metric_ids=['B01', 'D01', 'D03'])
         self.assertEqual(calls, ['acquire', 'export', 'install', 'compute', 'export-results'])
+        saved_summary = json.loads(Path(result['outputs']['run_summary.json']).read_text())
+        view = json.loads((Path(result['output_root'])/'company-results.json').read_text())
+        installed = json.loads((work/'company-state/current_source.json').read_text())
+        self.assertEqual(saved_summary['source_checkpoint_id'], view['source_checkpoint_id'])
+        self.assertEqual(saved_summary['source_checkpoint_id'], installed['checkpoint_id'])
         self.assertEqual(len(result['metrics']), 39)
         self.assertEqual(next(r for r in result['metrics'] if r['metric_id'] == 'D03')['status'], 'IMPLEMENTATION_GAP')
         self.assertFalse(result['all_configured_business_metrics_completed'])

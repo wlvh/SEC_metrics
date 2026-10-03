@@ -226,12 +226,16 @@ def acquire_only(*, session, company_id, max_requests):
     attempted, captures = set(), []
     log = session.data_root/'evidence/requests_log.csv'
     validate_request_log_manifest(log_path=log)
-    latest = {r['source_url']: r for r in parse_request_log_rows(text=log.read_text())}
+    saved_rows = parse_request_log_rows(text=log.read_text())
+    latest = {r['source_url']: r for r in saved_rows}
     failed = {u for u, r in latest.items() if r['status_code'] != '200' or r['error']}
-    stop = None
+    stop = next(('HTTP_'+r['status_code'] for r in saved_rows
+                 if r['status_code'] in {'403', '429'}), None)
     capture_error = False
     for _ in range(max_requests + 1):
         discovery = discover_saved_source_requirements(repo_root=session.data_root, company_id=company_id)
+        if stop:
+            break
         pending = [r for r in discovery['requirements'] if r['source_url'] not in attempted | failed
             and r['saved_status'] != 'SAVED_SOURCE_BLOCKED'
             and (r['refresh_for_new_discovery'] or not source_dependency_satisfied(r))]
@@ -250,6 +254,10 @@ def acquire_only(*, session, company_id, max_requests):
             capture_error = True
             break
         captures.append({'source_url': item['source_url'], 'roles': item['roles'], 'result': result})
+        status_code = result['receipt'].get('ledger_row', {}).get('status_code')
+        if status_code in {'403', '429'}:
+            stop = 'HTTP_'+status_code
+            break
         if result['status'] != 'SUCCEEDED':
             failed.add(item['source_url'])
         if result['receipt']['stop_reason']:

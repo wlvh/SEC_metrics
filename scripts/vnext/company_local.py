@@ -259,7 +259,7 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
             summary['stages']['export-results'] = exported
             if destination.is_dir():
                 summary['native_result_export'] = str(destination)
-                summary['source_checkpoint_id'] = strict_json_file(path=destination/'company-results.json').get('current_source_checkpoint_id')
+                summary['source_checkpoint_id'] = strict_json_file(path=destination/'company-results.json').get('source_checkpoint_id')
                 summary['result_view'] = [{k: entry.get(k) for k in (
                     'metric_id', 'result_id', 'run_id', 'period', 'period_role', 'measurement_period',
                     'requirement_id', 'requirement_closure_hash', 'source_checkpoint_id',
