@@ -1,0 +1,146 @@
+{
+  "started_utc": "2026-10-03T19:50:49Z",
+  "exact_head": "010e56cd6f669253c8b7c46125d236a3573f53e3",
+  "mode": "one bounded input-only development extraction; no live execution",
+  "input_files": [
+    {
+      "name": "input.json",
+      "bytes": 390999,
+      "sha256": "678a9614e4251ddad5a58ebf40c22c3443b41941ed8363dbf09ab5947b34d8fc"
+    },
+    {
+      "name": "prompt.txt",
+      "bytes": 7211,
+      "sha256": "ced92cf0a1c615a1a29b30a8390f0ea78a4e778b0a562932633600c7bfeb3b35"
+    },
+    {
+      "name": "request-body.json",
+      "bytes": 322536,
+      "sha256": "75d7daeb4e1a769832fd86815026a154eeb18ccecc2fddd645f841155e083a35"
+    }
+  ],
+  "coverage": {
+    "prompt": "full exact text exposed to assistant",
+    "request_body": "entire JSON parsed; system prompt exact and user payload structurally equal to input.json verified",
+    "source_units": [
+      {
+        "unit_id": "sha256:622b0eebd9155bdacb77f07779b6e5046a566330559e2ae97a527c65b1d1a8fa",
+        "role": "RESPONSIBILITY",
+        "row_start": 0,
+        "row_end_exclusive": 100,
+        "block_index_start": 10021,
+        "block_index_end": 10120,
+        "mode": "all original row fields emitted without textual modification",
+        "note": "Initial all-fields output truncated in tool delivery; exact texts re-emitted below."
+      },
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "role": "CONTEXT_ONLY",
+        "row_start": 0,
+        "row_end_exclusive": 100,
+        "block_index_start": 0,
+        "block_index_end": 99,
+        "mode": "all original row fields emitted without textual modification",
+        "note": "Initial all-fields output truncated in tool delivery; exact texts re-emitted below."
+      },
+      {
+        "unit_id": "sha256:622b0eebd9155bdacb77f07779b6e5046a566330559e2ae97a527c65b1d1a8fa",
+        "role": "RESPONSIBILITY",
+        "row_start": 0,
+        "row_end_exclusive": 100,
+        "block_index_start": 10021,
+        "block_index_end": 10120,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "role": "CONTEXT_ONLY",
+        "row_start": 0,
+        "row_end_exclusive": 100,
+        "block_index_start": 0,
+        "block_index_end": 99,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:622b0eebd9155bdacb77f07779b6e5046a566330559e2ae97a527c65b1d1a8fa",
+        "role": "RESPONSIBILITY",
+        "row_start": 100,
+        "row_end_exclusive": 200,
+        "block_index_start": 10121,
+        "block_index_end": 10220,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:622b0eebd9155bdacb77f07779b6e5046a566330559e2ae97a527c65b1d1a8fa",
+        "role": "RESPONSIBILITY",
+        "row_start": 200,
+        "row_end_exclusive": 300,
+        "block_index_start": 10221,
+        "block_index_end": 10320,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:622b0eebd9155bdacb77f07779b6e5046a566330559e2ae97a527c65b1d1a8fa",
+        "role": "RESPONSIBILITY",
+        "row_start": 300,
+        "row_end_exclusive": 441,
+        "block_index_start": 10321,
+        "block_index_end": 10461,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "role": "CONTEXT_ONLY",
+        "row_start": 100,
+        "row_end_exclusive": 200,
+        "block_index_start": 100,
+        "block_index_end": 199,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "role": "CONTEXT_ONLY",
+        "row_start": 200,
+        "row_end_exclusive": 300,
+        "block_index_start": 200,
+        "block_index_end": 299,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      },
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "role": "CONTEXT_ONLY",
+        "row_start": 300,
+        "row_end_exclusive": 401,
+        "block_index_start": 300,
+        "block_index_end": 400,
+        "mode": "all original text and original index and quotation flag exposed; metadata parsed in input"
+      }
+    ],
+    "completed_original_text_rows": {
+      "responsibility": 441,
+      "context_only": 401,
+      "total": 842
+    },
+    "completed_original_unit_count": 2,
+    "payload_checks": [
+      {
+        "unit_id": "sha256:622b0eebd9155bdacb77f07779b6e5046a566330559e2ae97a527c65b1d1a8fa",
+        "canonical_payload_bytes": 149941,
+        "canonical_payload_sha256": "0f451bb6d9acb2259b5db34cb8a6bae39b04d116f80c1fe186cd8846e2f886f7",
+        "local_recomputation_matches": true
+      },
+      {
+        "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40",
+        "canonical_payload_bytes": 149858,
+        "canonical_payload_sha256": "c54d55e906dc83e5420aa5f26ffde46b51ce01cce5e6350a114d41fd36ffd247",
+        "local_recomputation_matches": true
+      }
+    ],
+    "scope": "one responsibility unit (ordinal20) plus one context-only unit (ordinal0); source outside supplied units unexamined"
+  },
+  "tool_count_convention": "outer functions.exec plus each nested tool counted conservatively; no shell process command counted as another tool",
+  "tool_calls_through_this_step": 29,
+  "forbidden_inputs_read": false,
+  "workflow_read": "AGENTS.md keyword scan for workflow restrictions; descriptive historical module matches ignored as source evidence",
+  "input_files_unchanged_at_response_write": true
+}
