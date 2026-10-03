@@ -1,0 +1,634 @@
+diff --git a/docs/evidence/issue47_history/c02-composition-facts/fault-injections.json b/docs/evidence/issue47_history/c02-composition-facts/fault-injections.json
+index 24154ecd..5cfbeecd 100644
+--- a/docs/evidence/issue47_history/c02-composition-facts/fault-injections.json
++++ b/docs/evidence/issue47_history/c02-composition-facts/fault-injections.json
+@@ -2,9 +2,9 @@
+  "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
+  "suite": "tests.vnext.test_historical_board_composition",
+  "control_failures": [],
+- "control_tests_run": 101,
+- "caught": 158,
+- "total": 158,
++ "control_tests_run": 102,
++ "caught": 161,
++ "total": 161,
+  "results": [
+   {
+    "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
+@@ -1190,7 +1190,6 @@
+    "expected": "test_the_external_auditor_s_independence_is_not_the_members",
+    "result": "CAUGHT",
+    "failed": [
+-    "test_a_members_clause_names_members_or_a_status",
+     "test_the_external_auditor_s_independence_is_not_the_members"
+    ]
+   },
+@@ -1209,6 +1208,7 @@
+    "failed": [
+     "test_a_determination_qualified_by_a_rule_is_still_a_determination",
+     "test_a_statement_carrying_a_cross_reference_is_read",
++    "test_a_status_inside_a_duty_is_not_the_members_qualification",
+     "test_committee_board_and_leadership_facts",
+     "test_the_external_auditor_s_independence_is_not_the_members"
+    ]
+@@ -1219,7 +1219,8 @@
+    "result": "CAUGHT",
+    "failed": [
+     "test_a_members_clause_names_members_or_a_status",
+-    "test_a_members_clause_opens_with_the_members_or_their_status"
++    "test_a_members_clause_opens_with_the_members_or_their_status",
++    "test_a_status_inside_a_duty_is_not_the_members_qualification"
+    ]
+   },
+   {
+@@ -1265,7 +1266,8 @@
+    "result": "CAUGHT",
+    "failed": [
+     "test_a_members_clause_names_members_or_a_status",
+-    "test_a_members_clause_opens_with_the_members_or_their_status"
++    "test_a_members_clause_opens_with_the_members_or_their_status",
++    "test_a_status_inside_a_duty_is_not_the_members_qualification"
+    ]
+   },
+   {
+@@ -1302,6 +1304,30 @@
+     "test_a_members_clause_opens_with_the_members_or_their_status"
+    ]
+   },
++  {
++   "injection": "A_STATUS_INSIDE_A_DUTY_IS_A_QUALIFICATION",
++   "expected": "test_a_status_inside_a_duty_is_not_the_members_qualification",
++   "result": "CAUGHT",
++   "failed": [
++    "test_a_status_inside_a_duty_is_not_the_members_qualification"
++   ]
++  },
++  {
++   "injection": "A_DUTY_RUNS_PAST_THE_NEXT_VERB",
++   "expected": "test_a_status_inside_a_duty_is_not_the_members_qualification",
++   "result": "CAUGHT",
++   "failed": [
++    "test_a_status_inside_a_duty_is_not_the_members_qualification"
++   ]
++  },
++  {
++   "injection": "A_DUTY_RUNS_PAST_A_SEMICOLON",
++   "expected": "test_a_status_inside_a_duty_is_not_the_members_qualification",
++   "result": "CAUGHT",
++   "failed": [
++    "test_a_status_inside_a_duty_is_not_the_members_qualification"
++   ]
++  },
+   {
+    "injection": "AN_HONORIFIC_OPENS_NO_NAME",
+    "expected": "test_a_members_clause_opens_with_the_members_or_their_status",
+diff --git a/docs/evidence/issue47_history/c02-composition-facts/fault_injections.py b/docs/evidence/issue47_history/c02-composition-facts/fault_injections.py
+index 7de8c626..e9232c9e 100644
+--- a/docs/evidence/issue47_history/c02-composition-facts/fault_injections.py
++++ b/docs/evidence/issue47_history/c02-composition-facts/fault_injections.py
+@@ -468,6 +468,14 @@ INJECTIONS = [
+      '_COMPLEMENT_LEAD = re.compile(r"^\\s*", re.I)', "test_a_members_clause_opens_with_the_members_or_their_status"),
+     ('THE_EXPERT_TERM_IS_NO_STATUS', '_QUALIFICATION.match(_EXPERT_TERM.sub("", complement))',
+      '_QUALIFICATION.match(complement)', "test_a_members_clause_opens_with_the_members_or_their_status"),
++    # Repair 49: a status inside a duty is not the members' qualification
++    # (#28's counterexample, Issue #47 comment 5962519090).
++    ('A_STATUS_INSIDE_A_DUTY_IS_A_QUALIFICATION', '_QUALIFICATION.search(_DUTY_CLAUSE.sub(" ", independence))',
++     '_QUALIFICATION.search(independence)', "test_a_status_inside_a_duty_is_not_the_members_qualification"),
++    ('A_DUTY_RUNS_PAST_THE_NEXT_VERB', r'(?:(?!\b(?:and|but)\s+(?:is|are|was|were)\b)[^.;])*', '[^.;]*',
++     "test_a_status_inside_a_duty_is_not_the_members_qualification"),
++    ('A_DUTY_RUNS_PAST_A_SEMICOLON', r'(?:is|are|was|were)\b)[^.;])*', r'(?:is|are|was|were)\b)[^.])*',
++     "test_a_status_inside_a_duty_is_not_the_members_qualification"),
+     ('AN_HONORIFIC_OPENS_NO_NAME', '        if _HONORIFIC_OPEN.match(first) or person_name(first):',
+      '        if person_name(first):', "test_a_members_clause_opens_with_the_members_or_their_status"),
+     ('THE_SENTENCE_S_PERIOD_STAYS_ON_THE_NAME', '_LIST_SEPARATOR.split(_LIST_END.sub("", complement), 1)',
+diff --git a/docs/evidence/issue47_history/c02-selector-repairs/README.md b/docs/evidence/issue47_history/c02-selector-repairs/README.md
+index 8641ee48..d9bca384 100644
+--- a/docs/evidence/issue47_history/c02-selector-repairs/README.md
++++ b/docs/evidence/issue47_history/c02-selector-repairs/README.md
+@@ -987,3 +987,31 @@
+ **不读的写法**（都没有真实例子）：动词和名单之间插入的成分（"are, in the Board's judgment, independent"）；名单前的头衔（"are Chairman Jane Smith and …"）；没有称谓、只写两个字母的单个姓（"are Ma, Wu and Li"，`person_name` 把单个短词当缩写）。
+ 
+ **同类问题在另一条规则里还在。** `COMMITTEE_MEMBER_QUALIFICATION` 按"同一句里有资格词、成员指称和状态动词"判断，构造句 "The members of the Compensation Committee are responsible for determining whether executives are independent." 仍被它取。37 份判读里它没有造成误选（剩下唯一的误选是 Lumen FY2021 第 856 块，是另一家机构的名称），没有真实例子，本次不改，作为已知局限告诉 #28。
++
++## 49. 写在职责里的身份不是成员的资格（`COMMITTEE_MEMBER_QUALIFICATION`）
++
++**问题。** #28 用修复 48 的固定提交核对后（[Issue #47 评论 5962519090](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5962519090)，探针 `a31342de` 的 `repair48-statement-probe.json`），把第 48 节末尾记下的同类问题交回本方：构造句 "The members of the Audit Committee are responsible for recommending independent directors." 仍被打上成员资格认定标签。共用选择器由本方维护。
++
++**成因。** 这个标签只看同一句里是否同时有资格词（independent、financially literate、financial expert 等）、成员指称和一个状态动词，三者之间有没有语法关系不管。所以职责里提到的身份也会被当成成员的身份。
++
++**更正第 48 节的一句话。** 第 48 节写“没有真实例子”。按块是否入选，这句话成立：37 份判读里这个标签没有造成误选。但按标签看不成立：Southwest FY2024 第 1178 块、FY2025 第 1402 块里，提名与治理委员会的职责句（"…which is responsible for evaluating the qualifications of Board nominees, including independence, and … taking into account … independence requirements …"）就带着这个标签。两块因同一块里另一句（董事会点名九位独立董事的认定）入选，所以选择没错，标签是错的。
++
++**改动。** 找资格词之前，先去掉 "responsible for" 引出的职责从句（`_DUTY_CLAUSE`）。依据与第 48 节相同：写在职责里的身份是成员要处理的对象。从句的结束位置有两种：分号；或同一主语的下一个谓语（"and/but is/are/was/were"）。所以 "are responsible for oversight and are independent" 仍保留身份（构造句）。只改这一个标签；董事会独立性、成员从句等其他判断不动。
++
++**先查过的。** 49 份缓存代理里带这个标签的 235 块逐句看了触发句。真实文件里只有上面两句是职责句，含 "responsible for" 的也只有这两句。Southwest FY2021–FY2023 有三块，按块文本截断看像职责清单，但触发句是认定（"each of the members of the Compensation Committee is (i) independent …"）。只看块文本会把它们误报成同一问题。
++
++**用例。** `test_a_status_inside_a_duty_is_not_the_members_qualification` 包含：
++
++- #28 的句子和一个变体；
++- Southwest 的原句；
++- 三条保留身份的对照：职责后并列的身份、身份在职责之前、分号之后的身份。
++
++**注错**（`../c02-composition-facts/fault-injections.json`，161/161，对照 102 个用例）：新增三个，都只由新用例抓到：
++
++- 不去掉职责从句；
++- 职责从句越过同一主语的下一个谓语；
++- 职责从句越过分号。
++
++**量测。** 37 份判读（`measured-49-duty-clause.json`，对 `562128fc`）和 12 个未判读位置（`measured-49-jpmorgan-and-unread.json`）：一块不动。Southwest FY2024、FY2025 两块的标签变了。选择策略的哈希包含规则本身，所以和以前每次修复一样，所有 C02 位置下一次运行时候选身份都会变（实测 Southwest 两年与 Ford FY2025 的提案编号都变了），已接受的位置那时按结果身份重新核对接受。
++
++**仍不读的写法。** 其他引出职责的说法（"charged with"、"tasked with"、"duties include"）没有真实例子，没有加。
+diff --git a/scripts/vnext/historical_board_composition_v3.py b/scripts/vnext/historical_board_composition_v3.py
+index 731f72e2..0b7c360f 100644
+--- a/scripts/vnext/historical_board_composition_v3.py
++++ b/scripts/vnext/historical_board_composition_v3.py
+@@ -631,6 +631,21 @@ _MEMBER_REFERENCE = re.compile(
+     r"|each of (?:mr|ms|mrs|dr|messrs|mses)\b|only independent directors serve on|committees? (?:is|are) composed)", re.I)
+ _STATE = re.compile(r"\b(?:is|are|was|were|qualif(?:y|ies)|meets?|satisf(?:y|ies)|determined|has been|have been"
+                     r"|serve)\b", re.I)
++# A status named inside a duty is something the members deal with, not what
++# they are - the rule the members clause follows (repair 48). The qualification
++# label looked for a status, a member reference and a verb anywhere in the
++# sentence, so "The members of the Audit Committee are responsible for
++# recommending independent directors" (#28's counterexample, Issue #47 comment
++# 5962519090) was read as the members' independence. Southwest's FY2024 and
++# FY2025 proxies print the real case: the committee "is responsible for
++# evaluating the qualifications of Board nominees, including independence, and
++# ... taking into account ... independence requirements". So the duty is set
++# aside before the status is looked for, up to the end of its clause: a
++# semicolon, or the same subject's next verb ("... are responsible for
++# oversight and are independent" keeps the status, constructed). In the 49
++# saved proxies the rule moves no block; it takes the label off those two
++# Southwest sentences, whose blocks stay for a board independence statement.
++_DUTY_CLAUSE = re.compile(r"\bresponsible\s+for\b(?:(?!\b(?:and|but)\s+(?:is|are|was|were)\b)[^.;])*", re.I)
+ _STANDING = (
+     re.compile(r"\b(?:has|had|maintains|established|following)\b[^.;]{0,40}\b(?:standing|permanent)\s+"
+                r"(?:board\s+)?committees?\b", re.I),
+@@ -1179,7 +1194,7 @@ def statement_labels(text, own_words=frozenset(), *, period_start, acronyms=froz
+             labels.add("COMMITTEE_COMPOSITION_STATEMENT")
+         if _ROSTER_STATEMENT.search(sentence) or _SITTING_SLATE.search(sentence):
+             labels.add("BOARD_ROSTER_STATEMENT")
+-        if (_QUALIFICATION.search(independence) and _MEMBER_REFERENCE.search(sentence)
++        if (_QUALIFICATION.search(_DUTY_CLAUSE.sub(" ", independence)) and _MEMBER_REFERENCE.search(sentence)
+                 and _STATE.search(sentence)):
+             labels.add("COMMITTEE_MEMBER_QUALIFICATION")
+     return sorted(labels)
+diff --git a/tests/vnext/test_historical_board_composition.py b/tests/vnext/test_historical_board_composition.py
+index 8b592c51..55381f05 100644
+--- a/tests/vnext/test_historical_board_composition.py
++++ b/tests/vnext/test_historical_board_composition.py
+@@ -762,6 +762,31 @@ class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
+         self.assertEqual([], statement_labels(
+             "The members of the Audit Committee are elected annually by the Board.", own, period_start=START))
+ 
++    def test_a_status_inside_a_duty_is_not_the_members_qualification(self):
++        # #28's counterexample (Issue #47 comment 5962519090) and its variant
++        # are constructed; the qualification label read status, member and verb
++        # anywhere in the sentence.
++        own = frozenset({"audit", "compensation", "nominating", "example"})
++        for duty in ("are responsible for recommending independent directors.",
++                     "are responsible for determining whether executives are independent."):
++            self.assertEqual([], statement_labels("The members of the Audit Committee " + duty, own,
++                                                  period_start=START), duty)
++        # Southwest FY2024 block 1178 and FY2025 block 1402 print it.
++        self.assertNotIn("COMMITTEE_MEMBER_QUALIFICATION", statement_labels(
++            "Relevant information regarding Directors is then provided to the Nominating and Corporate Governance "
++            "Committee, which is responsible for evaluating the qualifications of Board nominees, including "
++            "independence, and for making recommendations to the Board regarding (i) nominations for Board "
++            "membership and (ii) individual qualifications for committee membership, taking into account various "
++            "additional regulatory requirements, including independence requirements, that specifically apply to "
++            "the different Board committees.", own, period_start=START))
++        # The duty ends where its clause does: the same subject's next verb, a
++        # semicolon (constructed). A status said of the members stays.
++        for sentence in ("The members of the Audit Committee are responsible for oversight and are independent.",
++                         "Each member of the Audit Committee is independent and is responsible for oversight.",
++                         "The Audit Committee is responsible for overseeing audits; all members are independent."):
++            self.assertIn("COMMITTEE_MEMBER_QUALIFICATION", statement_labels(sentence, own, period_start=START),
++                          sentence)
++
+     def test_the_named_members_are_taken_beside_a_board_count(self):
+         # #28's two-block case: with the members missed, a board count alone
+         # remained and the mechanical Evidence still passed.
+diff --git a/docs/evidence/issue47_history/c02-selector-repairs/measured-49-duty-clause.json b/docs/evidence/issue47_history/c02-selector-repairs/measured-49-duty-clause.json
+new file mode 100644
+index 00000000..da15b2f0
+--- /dev/null
++++ b/docs/evidence/issue47_history/c02-selector-repairs/measured-49-duty-clause.json
+@@ -0,0 +1,328 @@
++{
++ "base_ref": "562128fcd6848686991d3ed5f7914714318e0d4a",
++ "base_selector_sha256": "sha256:8f5ec707967cf111d05a672065dcfe8f6f74afe1eaf3266b64ef2a568d44df85",
++ "positions": {
++  "enphase_energy:2021-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2021-12-31.json"
++  },
++  "enphase_energy:2022-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2022-12-31.json"
++  },
++  "enphase_energy:2023-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2023-12-31.json"
++  },
++  "enphase_energy:2024-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/enphase_energy-2024-12-31.json"
++  },
++  "enphase_energy:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/enphase_energy-2025-12-31.json"
++  },
++  "ford_motor_company:2021-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2021-12-31.json"
++  },
++  "ford_motor_company:2022-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {
++    "missed": [
++     1255,
++     4535
++    ]
++   },
++   "problems_working": {
++    "missed": [
++     1255,
++     4535
++    ]
++   },
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2022-12-31.json"
++  },
++  "ford_motor_company:2023-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2023-12-31.json"
++  },
++  "ford_motor_company:2024-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/ford_motor_company-2024-12-31.json"
++  },
++  "ford_motor_company:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/ford_motor_company-2025-12-31.json"
++  },
++  "lumen_technologies:2021-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {
++    "missed": [
++     455,
++     457
++    ],
++    "wrongly_taken": [
++     856
++    ]
++   },
++   "problems_working": {
++    "missed": [
++     455,
++     457
++    ],
++    "wrongly_taken": [
++     856
++    ]
++   },
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2021-12-31.json"
++  },
++  "lumen_technologies:2022-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {
++    "missed": [
++     865,
++     866,
++     867
++    ]
++   },
++   "problems_working": {
++    "missed": [
++     865,
++     866,
++     867
++    ]
++   },
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2022-12-31.json"
++  },
++  "lumen_technologies:2023-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2023-12-31.json"
++  },
++  "lumen_technologies:2024-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/lumen_technologies-2024-12-31.json"
++  },
++  "lumen_technologies:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/lumen_technologies-2025-12-31.json"
++  },
++  "macys:2022-01-29": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {
++    "missed": [
++     810
++    ]
++   },
++   "problems_working": {
++    "missed": [
++     810
++    ]
++   },
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json"
++  },
++  "macys:2023-01-28": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2023-01-28.json"
++  },
++  "macys:2024-02-03": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2024-02-03.json"
++  },
++  "macys:2025-02-01": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2025-02-01.json"
++  },
++  "macys:2026-01-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/macys-2026-01-31.json"
++  },
++  "marriott_international:2021-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2021-12-31.json"
++  },
++  "marriott_international:2022-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json"
++  },
++  "marriott_international:2023-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2023-12-31.json"
++  },
++  "marriott_international:2024-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2024-12-31.json"
++  },
++  "marriott_international:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/marriott_international-2025-12-31.json"
++  },
++  "paramount_skydance_paramount_global:2021-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2021-12-31.json"
++  },
++  "paramount_skydance_paramount_global:2022-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2022-12-31.json"
++  },
++  "paramount_skydance_paramount_global:2023-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/paramount_skydance_paramount_global-2023-12-31.json"
++  },
++  "paramount_skydance_paramount_global:2024-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2024-12-31.json"
++  },
++  "paramount_skydance_paramount_global:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json"
++  },
++  "pfizer:2022-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json"
++  },
++  "pfizer:2023-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2023-12-31.json"
++  },
++  "pfizer:2024-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2024-12-31.json"
++  },
++  "pfizer:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/pfizer-2025-12-31.json"
++  },
++  "salesforce:2025-01-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/salesforce-2025-01-31.json"
++  },
++  "salesforce:2026-01-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json"
++  },
++  "southwest_airlines:2025-12-31": {
++   "base_matches_route": null,
++   "moved": {},
++   "problems_base": {},
++   "problems_working": {},
++   "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/southwest_airlines-2025-12-31.json"
++  }
++ },
++ "positions_judged": 37,
++ "positions_where_something_moved": [],
++ "record_type": "ISSUE_47_C02_SELECTOR_CHANGE_MEASURED",
++ "selector": "scripts/vnext/historical_board_composition_v3.py",
++ "totals": {
++  "base": {
++   "missed": 8,
++   "positions_disagreeing": 4,
++   "wrongly_taken": 1
++  },
++  "working": {
++   "missed": 8,
++   "positions_disagreeing": 4,
++   "wrongly_taken": 1
++  }
++ },
++ "working_selector_sha256": "sha256:3e88837c8d50b5c2738c369e1b03cc219904e4bfe4edcf811a31789f06508271"
++}
+diff --git a/docs/evidence/issue47_history/c02-selector-repairs/measured-49-jpmorgan-and-unread.json b/docs/evidence/issue47_history/c02-selector-repairs/measured-49-jpmorgan-and-unread.json
+new file mode 100644
+index 00000000..fec0665a
+--- /dev/null
++++ b/docs/evidence/issue47_history/c02-selector-repairs/measured-49-jpmorgan-and-unread.json
+@@ -0,0 +1,84 @@
++{
++ "base_ref": "562128fcd6848686991d3ed5f7914714318e0d4a",
++ "base_selector_sha256": "sha256:8f5ec707967cf111d05a672065dcfe8f6f74afe1eaf3266b64ef2a568d44df85",
++ "positions": {
++  "jpmorgan_chase:2022-12-31": {
++   "base_selected": 57,
++   "document_raw_asset_id": "sha256:2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f",
++   "moved": [],
++   "working_selected": 57
++  },
++  "jpmorgan_chase:2023-12-31": {
++   "base_selected": 62,
++   "document_raw_asset_id": "sha256:a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741",
++   "moved": [],
++   "working_selected": 62
++  },
++  "jpmorgan_chase:2024-12-31": {
++   "base_selected": 62,
++   "document_raw_asset_id": "sha256:085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
++   "moved": [],
++   "working_selected": 62
++  },
++  "jpmorgan_chase:2025-12-31": {
++   "base_selected": 58,
++   "document_raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
++   "moved": [],
++   "working_selected": 58
++  },
++  "pfizer:2021-12-31": {
++   "base_selected": 76,
++   "document_raw_asset_id": "sha256:b0a01d92c7c652ff5c81c9e0b78a57f3d6616b57944ef655ada33f532dc844db",
++   "moved": [],
++   "working_selected": 76
++  },
++  "salesforce:2022-01-31": {
++   "base_selected": 89,
++   "document_raw_asset_id": "sha256:689f8d8e37d4744c675aa64edc38fd3a87f5dbd77e5aac8aab8f0b9c0419daf6",
++   "moved": [],
++   "working_selected": 89
++  },
++  "salesforce:2023-01-31": {
++   "base_selected": 105,
++   "document_raw_asset_id": "sha256:3332d4d4136c624e07773cf17f26d9453d61969cff9a4601d41ffc8776bcfd31",
++   "moved": [],
++   "working_selected": 105
++  },
++  "salesforce:2024-01-31": {
++   "base_selected": 94,
++   "document_raw_asset_id": "sha256:047e13d846f268dc27d19809b595f1d6e3e674a5d869ec93320935a212271562",
++   "moved": [],
++   "working_selected": 94
++  },
++  "southwest_airlines:2021-12-31": {
++   "base_selected": 35,
++   "document_raw_asset_id": "sha256:e001c579ac2b54207d8ee4c97a9ba70facae228194ae41c461e8e6025559f609",
++   "moved": [],
++   "working_selected": 35
++  },
++  "southwest_airlines:2022-12-31": {
++   "base_selected": 39,
++   "document_raw_asset_id": "sha256:49c29e15a370d78ddf677c344515ba25d59d53092ee25128ef38033909b5ebc9",
++   "moved": [],
++   "working_selected": 39
++  },
++  "southwest_airlines:2023-12-31": {
++   "base_selected": 70,
++   "document_raw_asset_id": "sha256:023dd833d79add713ac03e376bfbd81da406d6b54f6458b399175826bf212d0f",
++   "moved": [],
++   "working_selected": 70
++  },
++  "southwest_airlines:2024-12-31": {
++   "base_selected": 78,
++   "document_raw_asset_id": "sha256:df4c342af02483a1b4481a3ace7f8fc6a2e8cb2a5972b4a0b49956f059a687ac",
++   "moved": [],
++   "working_selected": 78
++  }
++ },
++ "positions_measured": 12,
++ "positions_where_something_moved": [],
++ "record_type": "ISSUE_47_C02_SELECTOR_CHANGE_MEASURED_ON_UNREAD_POSITIONS",
++ "selector": "scripts/vnext/historical_board_composition_v3.py",
++ "what_this_is": "``measure.py`` holds both selections to the 37 two-direction readings. The batch also published C02 values at positions nobody has read; a change can move blocks there that no reading would see. This runs the selector as committed at ``--base`` and as it is in the working tree on each named position's governance document and lists every block that moves, with its text. It says nothing about whether the rest of each selection is right.",
++ "working_selector_sha256": "sha256:3e88837c8d50b5c2738c369e1b03cc219904e4bfe4edcf811a31789f06508271"
++}
