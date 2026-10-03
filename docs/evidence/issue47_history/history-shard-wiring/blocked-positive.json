@@ -1,0 +1,62 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "record_type": "ISSUE_47_SHARD_RESIDENT_POSITIVE_IS_BLOCKED",
+ "result": {
+  "by_period": {
+   "enphase_energy": [
+    "2025-12-31 recent"
+   ],
+   "ford_motor_company": [
+    "2025-12-31 recent"
+   ],
+   "lumen_technologies": [
+    "2025-12-31 recent"
+   ],
+   "macys": [
+    "2026-01-31 recent"
+   ],
+   "marriott_international": [
+    "2023-12-31 recent",
+    "2024-12-31 recent",
+    "2025-12-31 recent"
+   ],
+   "paramount_skydance_paramount_global": [
+    "2025-12-31 recent"
+   ],
+   "pfizer": [
+    "2025-12-31 recent"
+   ],
+   "salesforce": [
+    "2026-01-31 recent"
+   ],
+   "southwest_airlines": [
+    "2025-12-31 recent"
+   ]
+  },
+  "in_filings_recent": 11,
+  "periods_checked": 11,
+  "shard_resident": 0
+ },
+ "so": "the positive cannot be run today at all. It is blocked on acquisition, not on implementation and not on a choice to defer it - there is no period in this repository that both has its original and is shard-resident.",
+ "the_open_item": "A complete end-to-end positive for a target year whose 10-K row lives in a submissions history shard rather than in filings.recent. It has been on the list since historical_metadata_context was written, with Marriott 2023 recorded as a non-latest-year positive that does not replace it.",
+ "what_is_covered_and_what_is_not": {
+  "covered": "historical_metadata_context's shard-reading path has unit coverage over three shard-resident company periods, which parse and name their source shard.",
+  "not_covered": "no Run has ever been created for a shard-resident period, so the path from that metadata view through installation, native Run, freeze, cold read and public row is untested end to end.",
+  "why_that_distinction_matters": "the unit coverage says the view resolves. It says nothing about whether everything downstream of it handles a period selected from a shard, and this repository's own history is a series of things that only failed once they were wired together."
+ },
+ "what_was_measured": "for each of the eleven target periods whose original is saved, which inventory block its 10-K row came from - read from the row's own metadata_origin rather than inferred from 'the latest filing is always in recent'.",
+ "what_would_unblock_it": {
+  "already_in_the_plan": true,
+  "cheapest": "Salesforce 2023-01-31 and 2022-01-31, whose 10-K rows are shard-resident and whose originals are class A of the acquisition plan.",
+  "others_measured_as_shard_resident": [
+   "salesforce 2019-01-31 through 2023-01-31",
+   "jpmorgan_chase 2024-12-31",
+   "pfizer 2018-12-31 through 2020-12-31"
+  ]
+ }
+}

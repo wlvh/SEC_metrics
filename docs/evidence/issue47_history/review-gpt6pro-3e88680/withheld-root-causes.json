@@ -1,0 +1,609 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "counts_by_cause": {
+  "MATERIAL_NOT_SAVED": 22,
+  "MATERIAL_REQUEST_RECORDED_AS_FAILED": 7,
+  "METRIC_SAYS_THE_RATIO_IS_NOT_MEANINGFUL": 5,
+  "ROUTE_ORDERING_CONDITION_NOT_MET": 2,
+  "SOURCE_RELATIONSHIP_NOT_PROVEN": 3,
+  "UNCLASSIFIED": 1
+ },
+ "counts_by_reason_code": {
+  "ALL_BRANCHES_REJECTED": 1,
+  "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 3,
+  "DENOMINATOR_NONPOSITIVE": 3,
+  "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED": 1,
+  "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED": 1,
+  "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED": 5,
+  "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED": 24,
+  "RATIO_NUMERATOR_NOT_POSITIVE": 2
+ },
+ "how": "each position was asked again and the route's own limitation recorded, rather than classified from its reason code. A code names the branch that refused; it does not name what is missing.",
+ "material_sub_forms": {
+  "MATERIAL_NOT_SAVED": {
+   "note": "no request for the URL is recorded; the acquisition plan's own classes",
+   "positions": 22
+  },
+  "MATERIAL_REQUEST_RECORDED_AS_FAILED": {
+   "no_live_request_was_made_reading_this": "the error text comes from the ledger row, not from a call in this process: evidence/requests_log.csv is unchanged and its last row is dated 2026-09-08.",
+   "note": "Salesforce's six event positions plus its C04. The ledger holds exactly two failed GETs, both .hdr.sgml headers from 2026-07-09 with '<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING]>', one for Salesforce CIK 1108524 and one for JPMorgan CIK 19617. annual_update.saved_source refuses to call a URL saved when its latest recorded attempt failed, so an earlier success cannot stand in for it.",
+   "positions": 7,
+   "why_it_is_a_different_sub_form": "the attempt is already spent and counted. A retry is a new attempt against the cap, not a first fetch, and the plan should carry it as such."
+  }
+ },
+ "not_material": {
+  "DERIVED_FROM_A_MISSING_INPUT": {
+   "note": "ALL_BRANCHES_REJECTED with MISSING_CANDIDATE: B03 consumes B01, whose source is missing at that period. Material-derived rather than a separate need, and it resolves when B01's does.",
+   "positions": 1,
+   "which": [
+    "marriott-2023 B03"
+   ]
+  },
+  "ROUTE_ORDERING_CONDITION_NOT_MET": {
+   "note": "C04_FILED_TARGET_MUST_BE_FIRST. The governance route requires the target filing to be first in the chain it reads, and at these coordinates it is not. An implementation condition, not a missing file.",
+   "positions": 2,
+   "which": [
+    "paramount-2025 C04",
+    "southwest-2025 C04"
+   ]
+  },
+  "SOURCE_RELATIONSHIP_NOT_PROVEN": {
+   "note": "the filing is present and the debt relationship is not proven from it: Ford stops at the special-scope limitation, Pfizer at DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS on the debt note concept, Southwest at UNRESOLVED_FINANCING_ITEM naming supplierfinanceprogramobligation. No download resolves any of the three.",
+   "positions": 3,
+   "which": [
+    "ford-2025 B06",
+    "pfizer-2025 B06",
+    "southwest-2025 B06"
+   ]
+  }
+ },
+ "positions": [
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "NormalCompanyfactsError | NormalGovernanceInputError | SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/index.json | SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "B02",
+   "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "NormalGovernanceInputError | SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/index.json | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "B06",
+   "reason_code": "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "C01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "NormalGovernanceInputError | SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/index.json | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "C04",
+   "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "E01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "E02",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "E03",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "E04",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312523032570/d427456d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "E05",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2023-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm"
+   ],
+   "metric_id": "C01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "NormalGovernanceInputError | SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/index.json | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml"
+   ],
+   "metric_id": "C04",
+   "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm"
+   ],
+   "metric_id": "E01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm"
+   ],
+   "metric_id": "E02",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm"
+   ],
+   "metric_id": "E03",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm"
+   ],
+   "metric_id": "E04",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "marriott_international",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004335/mar-20240213.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm"
+   ],
+   "metric_id": "E05",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000119312525310710/0001193125-25-310710.hdr.sgml"
+   ],
+   "metric_id": "C01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000119312525310710/0001193125-25-310710.hdr.sgml"
+   ],
+   "metric_id": "E01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000119312525310710/0001193125-25-310710.hdr.sgml"
+   ],
+   "metric_id": "E02",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000119312525310710/0001193125-25-310710.hdr.sgml"
+   ],
+   "metric_id": "E03",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000119312525310710/0001193125-25-310710.hdr.sgml"
+   ],
+   "metric_id": "E04",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "MATERIAL_NOT_SAVED",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm | SOURCE_UNAVAILABLE",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000119312525310710/0001193125-25-310710.hdr.sgml"
+   ],
+   "metric_id": "E05",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_INTEGRITY_ERROR",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/0001108524-25-000027.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/crm-20250528.htm"
+   ],
+   "metric_id": "C01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "AnnualUpdateError | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json"
+   ],
+   "metric_id": "C04",
+   "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_INTEGRITY_ERROR",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/0001108524-25-000027.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/crm-20250528.htm"
+   ],
+   "metric_id": "E01",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_INTEGRITY_ERROR",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/0001108524-25-000027.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/crm-20250528.htm"
+   ],
+   "metric_id": "E02",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_INTEGRITY_ERROR",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/0001108524-25-000027.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/crm-20250528.htm"
+   ],
+   "metric_id": "E03",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_INTEGRITY_ERROR",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/0001108524-25-000027.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/crm-20250528.htm"
+   ],
+   "metric_id": "E04",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "salesforce-2026",
+   "cause": "MATERIAL_REQUEST_RECORDED_AS_FAILED",
+   "company_id": "salesforce",
+   "detail": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> | LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml | SOURCE_INTEGRITY_ERROR",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/0001108524-25-000002.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000002/crm-20250226.htm",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/0001108524-25-000027.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000027/crm-20250528.htm"
+   ],
+   "metric_id": "E05",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2026-01-31"
+  },
+  {
+   "case": "ford-2025",
+   "cause": "METRIC_SAYS_THE_RATIO_IS_NOT_MEANINGFUL",
+   "company_id": "ford_motor_company",
+   "detail": "a result about this company, not a gap",
+   "files_named": [],
+   "metric_id": "B07",
+   "reason_code": "RATIO_NUMERATOR_NOT_POSITIVE",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "lumen-2025",
+   "cause": "METRIC_SAYS_THE_RATIO_IS_NOT_MEANINGFUL",
+   "company_id": "lumen_technologies",
+   "detail": "a result about this company, not a gap",
+   "files_named": [],
+   "metric_id": "B06",
+   "reason_code": "DENOMINATOR_NONPOSITIVE",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "lumen-2025",
+   "cause": "METRIC_SAYS_THE_RATIO_IS_NOT_MEANINGFUL",
+   "company_id": "lumen_technologies",
+   "detail": "a result about this company, not a gap",
+   "files_named": [],
+   "metric_id": "B07",
+   "reason_code": "RATIO_NUMERATOR_NOT_POSITIVE",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "marriott-2024",
+   "cause": "METRIC_SAYS_THE_RATIO_IS_NOT_MEANINGFUL",
+   "company_id": "marriott_international",
+   "detail": "a result about this company, not a gap",
+   "files_named": [],
+   "metric_id": "B06",
+   "reason_code": "DENOMINATOR_NONPOSITIVE",
+   "report_end": "2024-12-31"
+  },
+  {
+   "case": "marriott-2025",
+   "cause": "METRIC_SAYS_THE_RATIO_IS_NOT_MEANINGFUL",
+   "company_id": "marriott_international",
+   "detail": "a result about this company, not a gap",
+   "files_named": [],
+   "metric_id": "B06",
+   "reason_code": "DENOMINATOR_NONPOSITIVE",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "paramount-2025",
+   "cause": "ROUTE_ORDERING_CONDITION_NOT_MET",
+   "company_id": "paramount_skydance_paramount_global",
+   "detail": "C04_FILED_TARGET_MUST_BE_FIRST | GovernanceSignalError | SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/0001104659-25-123496.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000110465925123496/tm2533570d15_8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka_htm.xml"
+   ],
+   "metric_id": "C04",
+   "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "southwest-2025",
+   "cause": "ROUTE_ORDERING_CONDITION_NOT_MET",
+   "company_id": "southwest_airlines",
+   "detail": "C04_FILED_TARGET_MUST_BE_FIRST | GovernanceSignalError | SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238025000003/0000092380-25-000003.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238025000003/luv-20250107.htm",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238025000007/0000092380-25-000007.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238025000007/luv-20250130.htm"
+   ],
+   "metric_id": "C04",
+   "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "ford-2025",
+   "cause": "SOURCE_RELATIONSHIP_NOT_PROVEN",
+   "company_id": "ford_motor_company",
+   "detail": "B06_SOURCE_RELATIONSHIP_UNRESOLVED | SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+    "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231_htm.xml",
+    "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/index.json"
+   ],
+   "metric_id": "B06",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "pfizer-2025",
+   "cause": "SOURCE_RELATIONSHIP_NOT_PROVEN",
+   "company_id": "pfizer",
+   "detail": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/index.json",
+    "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+    "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml"
+   ],
+   "metric_id": "B06",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "southwest-2025",
+   "cause": "SOURCE_RELATIONSHIP_NOT_PROVEN",
+   "company_id": "southwest_airlines",
+   "detail": "UNRESOLVED_FINANCING_ITEM:[{'origin': 'all_instant_xbrl', 'concept': 'us-gaap:supplierfinanceprogramobligationcurrent', 'ordinal': 1560, 'value': '24000000', 'disposition': 'UNRESOLVED'}]",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+   ],
+   "metric_id": "B06",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "report_end": "2025-12-31"
+  },
+  {
+   "case": "marriott-2023",
+   "cause": "UNCLASSIFIED",
+   "company_id": "marriott_international",
+   "detail": "ALL_BRANCHES_REJECTED | MISSING_CANDIDATE | PASS",
+   "files_named": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm"
+   ],
+   "metric_id": "B03",
+   "reason_code": "ALL_BRANCHES_REJECTED",
+   "report_end": "2023-12-31"
+  }
+ ],
+ "production_authorized": false,
+ "record_type": "ISSUE_47_WITHHELD_ROOT_CAUSES",
+ "withdrawn_claim": "'35 of the 40 name the material they are missing'. Measured, six of them do not."
+}

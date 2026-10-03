@@ -1,0 +1,616 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "southwest_airlines:2023-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (carried by tools/read_d02_excerpts.py --carry)",
+ "reader_note": "The value is all of Item 3 (DOJ capacity CID and the settled capacity class actions, USERRA class action, dismissed 2020 securities suit and stayed derivative action, MAX contract-of-carriage class action, 2023 technology/disruption securities class action, derivative demands and suits, DOT disruption investigation with the $107 million settlement accrual, ordinary-course and materiality statements) plus three Item 8 blocks restating the DOT settlement, the legal-claim accrual policy and USERRA. Notable: taken block 770 'Not applicable.' follows the 'Item 4. Mine Safety Disclosures' heading, so it is Item 4's answer, not Item 3 text. Note 5's commitments, airport projects and bond guarantee are correctly outside the value; MD&A non-GAAP 'Litigation settlement' rows are outside D02's sources.",
+ "packet_document_id": "sha256:7e88eff61e94b706caf9e0ac37220bd51b09e4966abadd11cadb1bc0138892a7",
+ "packet_candidate_hash": "sha256:f0374f83b826aee957039494f9d89ad32026dbb09dcba0dc440a7be2f521435e",
+ "carried_from": {
+  "reading": "docs/evidence/issue47_history/d02-older-years/judgements/southwest_airlines-2023-12-31.json",
+  "reading_sha256": "sha256:d8249eb4f770632d575dbd140cf66d74235cb6760da28c06ab4c1f98f79287c0",
+  "packet_document_id": "sha256:74c24efef400511f635ea835e229944a6a55515a5bd952f29d34e417b8c980db",
+  "packet_candidate_hash": "sha256:a4910660efb397e45183224f6a0742dcc0b2d6fe1dee644ef44e8920ef3b5521"
+ },
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 747,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ civil investigative demand on capacity and state inquiry",
+   "text": "On June 30, 2015, the U.S. Department of Justice (\"DOJ\") issued a Civil Investigative Demand (\"CID\") to the Company. The CID sought information and documents about the Company’s capacity from January 2010 to the date of the CID, including public statements and communications with third parties about capacity. In June 2015, the Company also received a letter from the Connecticut Attorney General requesting information about capacity. The Company is cooperating fully with the DOJ CID and the state inquiry.",
+   "text_sha256": "sha256:586751df82fff962a0232169b3f1b43d45f3424b8958a378aa64a02422ca55a2",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 748,
+   "verdict": "DISCLOSURE",
+   "why": "capacity-collusion class actions and settlement agreement",
+   "text": "Further, on July 1, 2015, a complaint was filed in the United States District Court for the Southern District of New York on behalf of putative classes of consumers alleging collusion among the Company, American Airlines, Delta Air Lines, and United Airlines to limit capacity and maintain higher fares in violation of Section 1 of the Sherman Act. Since then, a number of similar class action complaints were filed in the United States District Courts for the Central District of California, the Northern District of California, the District of Columbia, the Middle District of Florida, the Southern District of Florida, the Northern District of Georgia, the Northern District of Illinois, the Southern District of Indiana, the Eastern District of Louisiana, the District of Minnesota, the District of New Jersey, the Eastern District of New York, the Southern District of New York, the Middle District of North Carolina, the District of Oklahoma, the Eastern District of Pennsylvania, the Northern District of Texas, the District of Vermont, and the Eastern District of Wisconsin. On October 13, 2015, the Judicial Panel on Multi-District Litigation centralized the cases to the United States District Court in the District of Columbia. On March 25, 2016, the plaintiffs filed a Consolidated Amended Complaint in the consolidated cases alleging that the defendants conspired to restrict capacity from 2009 to present. The plaintiffs seek to bring their claims on behalf of a class of persons who purchased tickets for domestic airline travel on the defendants' airlines from July 1, 2011 to present. They seek treble damages, injunctive relief, and attorneys' fees and expenses. On May 11, 2016, the defendants moved to dismiss the Consolidated Amended Complaint, which the Court denied on October 28, 2016. On December 20, 2017, the Company reached an agreement to settle these cases with a proposed class of all persons who purchased domestic airline transportation services from July 1, 2011, to the date of the settlement. The Company agreed to pay",
+   "text_sha256": "sha256:5a93bb839c253345696a03dbea5867ddfb435119a5ada392b3602e0d3706dfcd",
+   "order": 1,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 751,
+   "verdict": "DISCLOSURE",
+   "why": "continuation: $15 million settlement approval and objector appeal",
+   "text": "$15 million and to provide certain cooperation with the plaintiffs as set forth in the settlement agreement. After notice was provided to the proposed settlement class and the Court held a fairness hearing the Court issued an order granting final approval of the settlement on May 9, 2019. On June 10, 2019, certain objectors filed notices of appeal to the United States Court of Appeals for the District of Columbia Circuit, which the Court dismissed on July 9, 2021, for lack of jurisdiction because the district court's order approving the settlements was not a final appealable order. The case is continuing as to the remaining defendants. The Company denies all allegations of wrongdoing.",
+   "text_sha256": "sha256:52f6f43862d75cf22df6145fb5c5939f929d2e2e2463f1c031b1992a72ba8c34",
+   "order": 2,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 752,
+   "verdict": "DISCLOSURE",
+   "why": "USERRA short-term military leave class action",
+   "text": "On January 7, 2019, a complaint alleging a violation of the federal Uniformed Services Employment and Reemployment Rights Act (“USERRA”) and seeking a certification as a class action was filed against the Company in the United States District Court for the Northern District of California. The complaint alleges that the Company violates section 4316(b) of USERRA because it does not provide paid “short-term” military leave (i.e., a military leave of 14 days or fewer) but does provide paid jury duty leave, bereavement leave, and sick leave, which the plaintiff alleges are “comparable” forms of leave under USERRA and its implementing regulations. The complaint seeks declaratory and injunctive relief, damages, liquidated damages, interest, and attorneys’ fees, expert fees, and litigation costs. On February 3, 2021, the court granted the plaintiff’s motion for class certification and issued an order certifying a class comprised of current or former Employees who, during their employment with the Company at any time from October 10, 2004, through the date of judgment in this action, have taken short-term military leave and were subject to a collective bargaining agreement, except for Employees subject to the Transport Workers Union Local 550 agreement covering meteorologists. On January 11, 2022, the court granted the parties’ stipulated request to vacate the trial date as the Department of Defense had not yet produced the class members’ military pay and service records pursuant to the Company’s third-party subpoena. On August 18, 2022, the court entered an order that effectively stayed the action, except for attention to the third-party subpoena, until after the Ninth Circuit issued its opinion in the matter of Clarkson v. Alaska Airlines, Inc. and Horizon Industries, Inc., an appeal from an order by the United States District Court for the Eastern District of Washington granting summary judgment in defendants’ favor on substantially the same claims at issue in this action. The Ninth Circuit issued its order in Clarkson on February 1, 2023, reversing the district court’s grant of summary judgment and remanding the Clarkson case to the District Court with instructions to consider the “pay during leave” issue in the first instance. The Company denies all allegations of wrongdoing, believes the plaintiff’s positions are without merit, and intends to vigorously defend itself in all respects.",
+   "text_sha256": "sha256:e9dcee93681287f5dcbb7a2e9fb9b392df61835ac5ac0715f92492e34fa96b1b",
+   "order": 3,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 753,
+   "verdict": "DISCLOSURE",
+   "why": "2020 securities class action, dismissed with prejudice",
+   "text": "On February 19, 2020, a complaint alleging violations of federal securities laws and seeking certification as a class action was filed against the Company and certain of its officers in the United States District Court for the Northern District of Texas in Dallas (the “2020 Securities Litigation”). A lead plaintiff has been appointed in the case, and an amended complaint was filed on July 2, 2020. The amended complaint seeks damages on behalf of a putative class of persons who purchased the Company’s common stock between February 7, 2017, and January 29, 2020. The amended complaint asserts claims under Sections 10(b) and 20 of the Securities Exchange Act and alleges that the Company made material misstatements to investors regarding the Company’s safety and maintenance practices and its compliance with federal regulations and requirements. The amended complaint generally seeks money damages, pre-judgment and post-judgment interest, and attorneys’ fees and other costs. On August 17, 2020, the Company and the individual defendants filed a motion to dismiss. On October 1, 2020, the lead plaintiff filed a response in opposition to the motion to dismiss. The Company filed a reply on or about October 21, 2020. On September 20, 2023, the District Court issued an opinion granting the Company’s motion to dismiss as to all claims. On October 5, 2023, the District Court entered a final judgment dismissing the suit in its entirety with prejudice. The lead plaintiff has filed no timely notice of appeal. The Company denies all allegations of wrongdoing, including those in the amended complaint.",
+   "text_sha256": "sha256:fb302c1177a5d7cf37ecdaf6cce5c85acd4a53a6423fb35cd93cd373e15f6589",
+   "order": 4,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 754,
+   "verdict": "DISCLOSURE",
+   "why": "2020 derivative action against the Board",
+   "text": "On June 22, 2020, a derivative action for breach of fiduciary duty was filed in the United States District Court for the Northern District of Texas naming the members of the Company's Board of Directors as defendants and the Company as a nominal defendant (the \"Derivative Action\"). The plaintiff alleges unspecified damage to Company’s reputation, goodwill, and standing in the community, as well as damage from exposure to civil and regulatory liability and defense costs. According to the lawsuit, these damages arise from the Company’s alleged failure to comply with safety and record maintenance regulations and false statements in public filings regarding the Company’s safety practices. The plaintiff alleges the Board, in the absence of good faith, exhibited reckless",
+   "text_sha256": "sha256:ece1f372b44450a23a2377ef92d6f90f7081aeafd533d665b10fea80cb8db9ec",
+   "order": 5,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 757,
+   "verdict": "DISCLOSURE",
+   "why": "continuation: derivative action remains stayed",
+   "text": "disregard for its duties of oversight. On October 7, 2020, the Court entered an order staying and administratively closing the Derivative Action, pending the District Court’s final resolution of the Company’s motion to dismiss in the ongoing 2020 Securities Litigation brought under the federal securities laws or upon the occurrence of certain other conditions. On October 5, 2023, the District Court entered a final judgment dismissing the 2020 Securities Litigation in its entirety with prejudice, and the lead plaintiff has filed no timely notice of appeal from that dismissal. The plaintiff in the Derivative Action has taken no steps to lift the stay in the case, which remains stayed. The Board and Company deny all allegations of wrongdoing made in the Derivative Action.",
+   "text_sha256": "sha256:390fe344ed4530fa5486926296184a4d90edeb1d913dc7fd85dff7e132879561",
+   "order": 6,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 758,
+   "verdict": "DISCLOSURE",
+   "why": "MAX contract-of-carriage class action, stayed",
+   "text": "On August 26, 2021, a complaint alleging breach of contract and seeking certification as a class action was filed against the Company in the United States District Court for the Western District of Texas in Waco. The complaint alleges that the Company breached its Contract of Carriage and other alleged agreements in connection with its use of the allegedly defective MAX aircraft manufactured by The Boeing Company. The complaint seeks damages on behalf of putative classes of customers who provided valuable consideration, whether in money or other form (e.g., voucher, miles/points, etc.), in exchange for a ticket for air transportation with the Company, which transportation took place between August 29, 2017, and March 13, 2019. The complaint generally seeks money damages, declaratory relief, and attorneys’ fees and other costs. On October 27, 2021, the Company filed a multi-faceted motion challenging the complaint based upon lack of subject matter jurisdiction, the existence of a prior-filed complaint on appeal in the Fifth Circuit (the “Sherman Complaint”), improper venue, and failure to state a claim, and seeking to have the complaint's class contentions stricken. That motion was fully briefed by both parties and was argued to a United States Magistrate Judge on June 27, 2022. On July 5, 2022, the Magistrate Judge granted the motion in part and ordered the case stayed until the issuance of the Fifth Circuit's opinion in the Sherman Complaint. On November 28, 2022, the parties jointly notified the Court of the Fifth Circuit's decision regarding the Sherman Complaint. On March 23, 2023, the parties jointly notified the Court of the dismissal of the Sherman Complaint for lack of jurisdiction. The case remains stayed. The Company denies all allegations of wrongdoing, believes the plaintiffs' positions are without merit, and intends to vigorously defend itself in all respects.",
+   "text_sha256": "sha256:d4269246b561bd80d574117d57b16d77e80a5b0e6a4eb951a90374620d7597fb",
+   "order": 7,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 759,
+   "verdict": "DISCLOSURE",
+   "why": "2023 securities class actions on technology and flight disruptions",
+   "text": "Two complaints alleging violations of federal securities laws and seeking certification as a class action have been filed (on January 10, 2023, and March 13, 2023, respectively) against the Company and certain of its officers in the United States District Court for the Southern District of Texas in Houston. The complaints seek damages on behalf of a putative class of persons who purchased or otherwise acquired the Company's common stock between June 13, 2020, and December 31, 2022. The complaints assert claims under Sections 10(b) and 20 of the Exchange Act and allege that the Company made material misstatements to investors regarding the Company's internal technology and alleged vulnerability to large-scale flight disruptions. The complaints generally seek money damages, pre-judgment and post-judgment interest, and attorneys' fees and other costs. The deadline in the first of these two cases to file a motion seeking appointment of lead plaintiff was March 13, 2023; four separate motions were filed, and three of the parties seeking appointment have continued to contest the issue. On July 17, 2023, the Court signed an order consolidating the two federal securities cases into the first-filed suit and also appointed plaintiff Michael Berry as lead plaintiff in the consolidated case, with his counsel of record to serve as lead counsel and liaison counsel. On September 15, 2023, the lead plaintiff filed an amended complaint that expanded the class period to include persons who purchased or otherwise acquired the Company's common stock between February 4, 2020, and March 14, 2023, while continuing to assert claims under Sections 10(b) and 20 of the Exchange Act based on alleged misstatements regarding the Company's internal technology and alleged vulnerability to large-scale flight disruptions. On November 20, 2023, the Company and the individual defendants filed a motion to dismiss the amended complaint for failure to state a claim. The parties’ respective briefing on the Company’s motion to dismiss is expected to be completed on or around February 21, 2024. The Company denies all allegations of wrongdoing in the complaint, believes the plaintiffs' positions are without merit, and intends to vigorously defend itself in all respects.",
+   "text_sha256": "sha256:96aa778994a6e8169b87d3fbaa1cb360afb48e9daed123f6a8c825ef394c4c46",
+   "order": 8,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 760,
+   "verdict": "DISCLOSURE",
+   "why": "derivative demand letters after the December 2022 disruption",
+   "text": "Since about January 24, 2023, the Company’s senior officers and Board of Directors have received multiple derivative demand letters from legal counsel for purported Southwest shareholders demanding that the Board investigate claims, initiate legal action, and take remedial measures in connection with the service disruptions occurring in December 2022. Generally, the demand letters broadly assert that the Company’s directors and senior officers did not make sufficient investments in internal technology systems to prevent large-scale flight disruptions,",
+   "text_sha256": "sha256:344fea8fbdc9cf59c53863e99fde8165befcf3cea1c10d31f5b949ab6abb909c",
+   "order": 9,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 763,
+   "verdict": "DISCLOSURE",
+   "why": "continuation: books-and-records demands, three derivative suits, Special Litigation Committee",
+   "text": "did not exercise sufficient oversight over the Company’s operations, approved or received unwarranted compensation, caused the Company to make materially misleading public statements, and breached their fiduciary duties to the Company. Additionally, since January 27, 2023, the Company has received multiple letters from counsel for purported Southwest shareholders making statutory demands for the production of various books and records of the Company, purportedly in an effort to investigate possible derivative claims similar to those made the subject of the derivative demands discussed above. On June 13, 2023, a shareholder derivative suit was filed against certain of the Company’s current and former officers and directors in the 14th Judicial District Court of Dallas County, Texas, asserting claims for damages from alleged breach of fiduciary duty, waste of corporate assets, and unjust enrichment derivatively on the Company’s behalf against the individual defendants based on similar factual allegations as contained in the demand letters and in the federal class action complaints. On June 15, 2023, a second shareholder derivative suit was filed against certain of the Company’s current and former officers and directors in the United States District Court for the Northern District of Texas, asserting claims under Section 14(a) of the Exchange Act and for damages from alleged breach of fiduciary duty, indemnification, and unjust enrichment derivatively on the Company’s behalf against the individual defendants based on similar factual allegations as contained in the demand letters and in the federal class action complaints. On November 14, 2023, a third shareholder derivative suit was filed in the 134th Judicial District of Dallas County, Texas, by some of the same counsel involved in the June 13, 2023, suit against the same defendants in that suit and making allegations of the same operative facts and claims. The Company and its Board of Directors intend to address the derivative and books and records demands and the shareholder derivative suits in accordance with the applicable Texas statutes governing such demands and litigation. Pursuant to those statutes, a committee of independent and disinterested directors (“Special Litigation Committee”) has been appointed to conduct an inquiry regarding the allegations in the derivative suits and derivative demand letters. In that regard, on December 15, 2023, the plaintiffs in the two state court derivative cases filed an unopposed motion to consolidate the two state derivative cases, to appoint lead counsel, and to stay the consolidated state court derivative case pending the outcome of the ongoing inquiry of the Special Litigation Committee. Further, in light of the ongoing inquiry of the Special Litigation Committee, on December 19, 2023, the Company filed an unopposed motion to extend a stay of the federal derivative case until at least February 26, 2024.",
+   "text_sha256": "sha256:cd31c87e330de9753e7c6cdade59d6b9ac94decc5a2b7c078389286a14cb01d7",
+   "order": 10,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 764,
+   "verdict": "DISCLOSURE",
+   "why": "government inquiries into the disruption; DOT civil penalty and $107 million settlement accrual",
+   "text": "Based on the Company's wide-scale operational disruption, which led to the cancelation of a significant number of flights between December 21 and December 29, 2022, the Company has been subject to inquiries and investigations by governmental agencies and could be subject to fines and/or penalties resulting from those inquiries and investigations, as well as litigation from Customers and Shareholders. On October 27, 2023, the DOT notified the Company that it had determined the Company failed to provide adequate customer service assistance, prompt flight status notifications, and proper and prompt refunds and that the assessment of a civil penalty was warranted. During fourth quarter 2023, the Company accrued an expense of $107 million associated with a settlement reached with the DOT based on their investigation into the disruption, which includes a cash penalty and incorporates a future commitment for Southwest Customer care with a new Customer compensation policy. An additional $33 million penalty was also assessed by the DOT, but was able to be credited against the substantial value the Company had already provided to its Customers impacted by the disruption, and therefore did not result in further impact to the Company's financial results for 2023.",
+   "text_sha256": "sha256:d509c734ed8d8e65677388616c28782bc167de726b4cab93ec8afd71f6d3b8f7",
+   "order": 11,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 765,
+   "verdict": "DISCLOSURE",
+   "why": "ordinary-course legal proceedings and tax examinations",
+   "text": "The Company is from time to time subject to various legal proceedings and claims arising in the ordinary course of business, including, but not limited to, examinations by the Internal Revenue Service and state and local income tax authorities.",
+   "text_sha256": "sha256:775c464e9911e4d464de4fa9fe8bf00396edef567d97349b1a5a11ca1dc04028",
+   "order": 12,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 766,
+   "verdict": "DISCLOSURE",
+   "why": "management's materiality assessment of pending proceedings",
+   "text": "The Company’s management does not expect that the outcome in any of its currently ongoing legal proceedings or the outcome of any proposed adjustments presented to date by the Internal Revenue Service and state and local income tax authorities, individually or collectively, will have a material adverse effect on the Company’s financial condition, results of operations, or cash flow. Nevertheless, an adverse outcome for any of these matters could be material.",
+   "text_sha256": "sha256:a7b3f687090cdb695010061f27f71de98347d4d29a091ebaa0ec554cba9f3d0a",
+   "order": 13,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1488,
+   "verdict": "DISCLOSURE",
+   "why": "DOT investigation of the disruption and $107 million settlement accrual",
+   "text": "Based on the Company's wide-scale operational disruption, the Company could be subject to fines and/or penalties resulting from investigations by government agencies as well as litigation from Customers and Shareholders. On October 27, 2023, the Department of Transportation (the \"DOT\") notified the Company that it had determined the Company failed to provide adequate customer service assistance, prompt flight status notifications, and proper and prompt refunds and that the assessment of a civil penalty was warranted. During fourth quarter 2023, the Company accrued an expense of $107 million associated with a settlement reached with the DOT in December 2023 based on their investigation into the disruption.",
+   "text_sha256": "sha256:57331ba6550a070469566498bb0c41ba3701984cfc056305bedc545211c59e25",
+   "order": 14,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1657,
+   "verdict": "DISCLOSURE",
+   "why": "ordinary-course legal claims and loss-accrual policy",
+   "text": "The Company is from time to time subject to various legal proceedings and claims arising in the ordinary course of business and records a liability for such claims when it is probable that a loss will be incurred and the amount is reasonably estimable.",
+   "text_sha256": "sha256:7b68d1b4389fdda8f0e14beea6ebd47a34ecffbb5b6d08acf42f5a02796de0b3",
+   "order": 15,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1658,
+   "verdict": "DISCLOSURE",
+   "why": "USERRA class action; possible loss not estimable",
+   "text": "The Company is a defendant in class action litigation asserting it has not provided paid short-term military leave to certain employees, in violation of the federal Uniformed Services Employment and Reemployment Rights Act (“USERRA”). The United States District Court for the Northern District of California previously issued an order to effectively stay the action, pending an appeal from an order by the United States District Court for the Eastern District of Washington granting summary judgment in favor of an airline in a separate case involving substantially the same claims at issue in this action. On February 1, 2023, the Ninth Circuit reversed the district court’s grant of summary judgment and remanded the separate airline case to the District Court. The Ninth Circuit’s decision may adversely affect the Company’s defenses in the USERRA proceeding and may give rise to additional litigation in this or other areas. The Company is currently not able to estimate a range of possible loss with regards to the litigation to which it is a defendant.",
+   "text_sha256": "sha256:8dc491777ec28a03f9c69dda2fc2ffb0e57d006c83f0db1ae32c48b619ec6b9a",
+   "order": 16,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 749,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "53",
+   "text_sha256": "sha256:2858dcd1057d3eae7f7d5f782167e24b61153c01551450a628cee722509f6529",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 750,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 755,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "54",
+   "text_sha256": "sha256:2fca346db656187102ce806ac732e06a62df0dbb2829e511a770556d398e1a6e",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 756,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 761,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "55",
+   "text_sha256": "sha256:02d20bbd7e394ad5999a4cebabac9619732c343a4cac99470c03e23ba2bdc2bc",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 762,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1620,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Commitments subheading",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1621,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "aircraft purchase commitments with Boeing",
+   "text": "The Company has contractual obligations and commitments primarily with regard to future purchases of aircraft, repayment of debt (see Note 7), and lease arrangements (see Note 8). During the year ended December 31, 2023, the Company entered into supplemental agreements with The Boeing Company (\"Boeing\") relating to its contractual order book for -7 and -8 aircraft. The revised agreement, which extends the order book to 2031, supports the Company's growth and fleet modernization plans, while also providing significant flexibility to manage its fleet size, including opportunities to accelerate fleet modernization efforts if growth opportunities do not materialize. The Company received 86 -8 aircraft deliveries from Boeing in 2023 and retired 39 -700 aircraft. The Company retains significant flexibility to manage its fleet size, including opportunities to accelerate fleet modernization efforts if growth opportunities do not materialize.",
+   "text_sha256": "sha256:d06b03891417225d654d66b96880dad33f5f9509199db5d7380cfb9b042a57c4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1622,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Boeing delivery delays, not a legal matter",
+   "text": "Boeing continues to experience delays in fulfilling its commitments with regards to delivery of certain MAX aircraft to the Company, as a result of both supply chain constraints as well as achieving FAA certification of one of its new aircraft types, the -7, for which Southwest expects to be the launch customer.",
+   "text_sha256": "sha256:05241f176e41cdc35880bea4040842aa3593e51347c128976eda299a98063f2b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1623,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "aircraft order changes",
+   "text": "During fourth quarter 2023, the Company exercised eight -7 options for delivery in 2025, accelerated one 2024 -8 firm order into 2023, converted and shifted three 2025 -7 firm orders to three 2024 -8 firm orders, and shifted an additional three 2025 -8 firm orders into 2024. Therefore, as of December 31, 2023, the Company had the following firm orders and options for future periods:",
+   "text_sha256": "sha256:56db6f3036051778f8841a1e274cc540002e8152acf3decfd9704aacd38f1ef7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1624,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "104",
+   "text_sha256": "sha256:5ef6fdf32513aa7cd11f72beccf132b9224d33f271471fff402742887a171edf"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1625,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1626,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "caption of aircraft order table",
+   "text": "The Boeing Company",
+   "text_sha256": "sha256:75fa96596c29a9990603af1c600eaf92e985707aa42e40cc5cb84a7e75fc34b1"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1627,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table header",
+   "text": "-7 Firm Orders-8 Firm Orders-7 or -8 OptionsTotal",
+   "text_sha256": "sha256:4437b3d6b957d2b11e7918e5cd8366f3a947af84cdc67b879c982bbac61b73d1"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1628,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "202427 58 — 85 (c)",
+   "text_sha256": "sha256:883c92c361d9de084768a980db2440b75e1a812a67885bbcf5307000daae32a6"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1629,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "202559 — 15 74",
+   "text_sha256": "sha256:ea939d9f05923489442a7971e5b0481435eff1d10fbd6393fb3e33e9138c6373"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1630,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "202659 — 26 85",
+   "text_sha256": "sha256:7fa37c2b04d5b76602b3d26a02bff27e34642d46d642cf58acf0942d63ee1e49"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1631,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "202719 46 25 90",
+   "text_sha256": "sha256:a44fe4a5ba25173bd5a7567a02392b55853d7a785606d0b32fb1a7eb87c8bf96"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1632,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "202815 50 25 90",
+   "text_sha256": "sha256:882809937dcce3111d77674f505e2dee7129a19a47c8ba8833763cb8d4cbc431"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1633,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "202938 34 18 90",
+   "text_sha256": "sha256:9bb7f54364f9626d6078822e61b1a20ec0a88826e830c6db1a298cfe30cb6c5b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1634,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "203045 — 45 90",
+   "text_sha256": "sha256:fc0be2e611b9c4b672d1e98e3d2aae929520e6357d3ceae54a25e5cc294d90e0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1635,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table row",
+   "text": "203145 — 45 90",
+   "text_sha256": "sha256:0683fbcd2c8c1a9d6321cd38f229baa0c76498fdfe5ca57b73dac8b00f1f8048"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1636,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "order table total row",
+   "text": "307 (a)188 (b)199 694",
+   "text_sha256": "sha256:c33937d42e21047d529a2085be0b4f9f9847bb5c63d3ef104b2a31e35df74649"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1637,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table footnote on -7 certification timing",
+   "text": "(a) The delivery timing for the -7 is dependent on the FAA issuing required certifications and approvals to Boeing and the Company. The FAA will ultimately determine the timing of the -7 certification and entry into service, and the Company therefore offers no assurances that current estimations and timelines are correct.",
+   "text_sha256": "sha256:19215f511e0772d3119a88b1ee43289dfb6024620a65eeef774244e8faf28f9a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1638,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table footnote on order flexibility",
+   "text": "(b) The Company has flexibility to designate firm orders or options as -7s or -8s, upon written advance notification as stated in the contract.",
+   "text_sha256": "sha256:4b283d8dd0b9eca2c0e3534ff3f0b427e68ec9cc91b3b9a2cff51ebd662d6d44"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1639,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table footnote on planned deliveries",
+   "text": "(c) The Company currently plans for approximately 79 MAX aircraft deliveries in 2024.",
+   "text_sha256": "sha256:23df2e0df8fa830f1e7bee954aaaa9cb77840276c3cc953cd38ed55a666704d9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1640,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "capital commitments by year",
+   "text": "Based on the Company's current agreement with Boeing, capital commitments associated with its firm orders as of December 31, 2023, were: $2.2 billion in 2024, $1.7 billion in 2025, $1.9 billion in 2026, $2.6 billion in 2027, $2.9 billion in 2028, and $5.3 billion thereafter.",
+   "text_sha256": "sha256:633f7eb7c97578955d6c1acaade4b5c292a72367f118f8bd4da8d2d8571bf9b9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1641,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "airport project subheading",
+   "text": "Los Angeles International Airport",
+   "text_sha256": "sha256:9c70a90dc744a36b812261d364af796eed2b0626cf8d7446283dbb2113e6109d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1642,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "LAX ground lease and concourse construction",
+   "text": "In April 2023, the Company executed a lease agreement with Los Angeles World Airports (\"LAWA\"), which owns and operates Los Angeles International Airport (\"LAX\"), for the ground lease and construction of a new concourse. In this agreement, the Company will manage the development, design, financing, and construction of nine new gates, along with additional features, at LAX. Construction of the concourse is estimated to be complete in late 2028 or early 2029 at a cost not to exceed $2.3 billion.",
+   "text_sha256": "sha256:8f5015aec7da79633c2999f097cd1665cb466962c1add69e7d80d70792c8a4b5"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1643,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "LAX project funding",
+   "text": "Funding for this project will flow through a credit facility and the outstanding loans are expected to be paid off directly by LAWA to the credit facility at project completion, thus reimbursing the Company on all costs drawn on the credit facility. As of December 31, 2023, the credit facility has yet to be put into place and is expected to be established closer to the beginning of construction, which is anticipated to occur in 2025. The Company is expected to be reimbursed by the credit facility on prior payments made once in place.",
+   "text_sha256": "sha256:81de0362c6174ef7ce77bb3be0ff02a26431441e75e4a1d7e3292211c8937111"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1644,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "LAX project asset accounting",
+   "text": "Based on this agreement, the Company has determined that it does have control over the assets during this project for accounting purposes. As a result, the costs incurred to fund this project thus far, which totaled $62 million as of December 31, 2023, are included within Assets constructed for others on the accompanying Consolidated Balance Sheet.",
+   "text_sha256": "sha256:85894085adfb9e5109de8871eaabaf61df9a4830dbb5a80084f77b94c02b9f13"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1645,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "airport project subheading",
+   "text": "William P. Hobby Airport",
+   "text_sha256": "sha256:d4cd39bd3d39eccaa3fcb72e050141477f8160b77953573e5dde87915f14d87d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1646,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Hobby gates agreement",
+   "text": "In March 2022, the Company executed a Memorandum of Agreement (\"MOA\") with the City of Houston, Texas (the \"City\") which owns William P. Hobby Airport (\"Hobby\") that is managed and operated by the City's Houston Airport System. Under the MOA, the Company will manage the development, design, and construction of seven new gates in Hobby's West Concourse.",
+   "text_sha256": "sha256:eb8c16bcb84a84b511ac6f9bcbcc056046067329977abd66f848fdd331552df3"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1647,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Hobby project cost and funding",
+   "text": "The project is currently estimated to be completed in 2026 at a cost of at least $470 million. The Company will provide initial funding for the majority of the project, but is expected to be reimbursed for such funding from the City on a monthly basis and therefore the project should not significantly impact the Company’s liquidity. The City",
+   "text_sha256": "sha256:01f452b890186e612917ff29b518a0dd646d2ffc9fed6bff8130b9d1659ffb1d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1648,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "105",
+   "text_sha256": "sha256:1253e9373e781b7500266caa55150e08e210bc8cd8cc70d89985e3600155e860"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1649,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1650,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "continuation of Hobby reimbursement funding",
+   "text": "plans to fund these reimbursements utilizing rates and charges collected from current and future Hobby occupants, including the Company.",
+   "text_sha256": "sha256:676e04b701c15da4180ab65aa4b9079fafc019e200a4dd5235a5bcbc5dd9f0c3"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1651,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Hobby project accounting",
+   "text": "Based on the MOA, as well as a terminal lease amendment expected to be finalized prior to the beginning of significant construction, the Company has determined that it does not control the assets during the construction period for accounting purposes, and thus will record the amounts funded for the project as a receivable until reimbursed by the City, and the balance is derecognized. There were no material amounts recorded in the accompanying Consolidated Balance Sheet as of December 31, 2023.",
+   "text_sha256": "sha256:68aca93b56342b7845e85a77fb98de6007e3716aaa6d5e7a5c57d46832cbcfef"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1652,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "airport project subheading",
+   "text": "Dallas Love Field",
+   "text_sha256": "sha256:5d12885a7070483ab824192fdb070a83732caf817f01d2af8e1ae247bb1d6d2d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1653,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Love Field modernization project",
+   "text": "During 2008, the City of Dallas approved the Love Field Modernization Project (\"LFMP\"), a project to reconstruct Dallas Love Field with modern, convenient air travel facilities. Pursuant to a Program Development Agreement with the City of Dallas and the Love Field Airport Modernization Corporation (or the \"LFAMC,\" a Texas non-profit \"local government corporation\" established by the City of Dallas to act on the City of Dallas' behalf to facilitate the development of the LFMP), the Company managed this project. Major construction was effectively completed in 2014. During second quarter 2017, the City of Dallas approved using the remaining bond funds for additional terminal construction projects, which were effectively completed in 2018.",
+   "text_sha256": "sha256:6311a512a7646471ac12587b2b8c836f2c62b7d851e30b58fc2d140f2a78be9c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1654,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bond guarantee treated as a lease, not a legal matter",
+   "text": "Although the City of Dallas received commitments from various sources that helped to fund portions of the LFMP project, including the FAA, the Transportation Security Administration, and the City of Dallas' Aviation Fund, the majority of the funds used were from the issuance of bonds. The Company guaranteed principal and interest payments on bonds issued by the LFAMC, of which only the \"Series 2012\" bonds remain outstanding. Given the Company’s guarantee associated with the Series 2012 bonds, the remaining debt service amount is considered a minimum lease payment under ASC Topic 842, Leases, and therefore remains a lease liability with a corresponding right-of-use asset within the Company’s Consolidated Balance Sheet.",
+   "text_sha256": "sha256:9744abb7e5e7c58c07fbad2233a07b9353dcacb3b9b08db88d0a1049852dda6e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1655,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "outstanding guaranteed bonds",
+   "text": "As of December 31, 2023, $59 million of principal remained outstanding associated with the Series 2012 bonds. The net present values of the future principal and interest payments associated with the bonds were $65 million and $77 million as of December 31, 2023 and 2022, respectively, and were reflected as part of the Company's operating lease right–of–use assets and lease obligations in the Consolidated Balance Sheet.",
+   "text_sha256": "sha256:aa69f86caed8aff2564ca58cb7895926a322c717b2bd42798fd13cad85ef8665"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1656,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "generic Contingencies subheading; the paragraphs it introduces (1657-1658) are taken",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 746,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; its content is the value",
+   "text": "Item 3. Legal Proceedings",
+   "text_sha256": "sha256:36bdb2ee8904eadab1a76f83ac84b8d6a06a0cff66ea55e67548e1ef97bfde22"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1060,
+   "verdict": "NOT_D02",
+   "why": "MD&A non-GAAP reconciliation row",
+   "text": "Deduct: Litigation settlement(12)—",
+   "text_sha256": "sha256:c276b0ddba5a1ef00579c7fb0229c6ffe0b25a854f45558ea399286e2dd97cd8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1073,
+   "verdict": "NOT_D02",
+   "why": "MD&A non-GAAP reconciliation row",
+   "text": "Add: Litigation settlement12 —",
+   "text_sha256": "sha256:25a65774dd63c6bc8d065d105bcf1c29efb3672dd22976306cec5d9521aefcfe"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1089,
+   "verdict": "NOT_D02",
+   "why": "MD&A non-GAAP reconciliation row",
+   "text": "Add: Litigation settlement12 —",
+   "text_sha256": "sha256:25a65774dd63c6bc8d065d105bcf1c29efb3672dd22976306cec5d9521aefcfe"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1103,
+   "verdict": "NOT_D02",
+   "why": "MD&A non-GAAP reconciliation row",
+   "text": "Add: Litigation settlement12 —",
+   "text_sha256": "sha256:25a65774dd63c6bc8d065d105bcf1c29efb3672dd22976306cec5d9521aefcfe"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1129,
+   "verdict": "NOT_D02",
+   "why": "MD&A non-GAAP reconciliation row",
+   "text": "Litigation settlement12",
+   "text_sha256": "sha256:f304f6e8d006f2103892f4bd08caf5f8c9e750872a856eef9625d8fa92060de2"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1189,
+   "verdict": "NOT_D02",
+   "why": "MD&A aircraft purchase commitments",
+   "text": "Aircraft purchase commitments",
+   "text_sha256": "sha256:5c972f48bc5a6611bc675281a5227f3e1ae5ce1cc4d08ae12dc4b15bf7f43fa6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1619,
+   "verdict": "REACHED",
+   "why": "commitments and contingencies note; its contingencies paragraphs are taken",
+   "text": "5. COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:31a1067ab75a791cbc6b67a17690b799d7ed9bbcf63193bb2160b7c280de90c3"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1620,
+   "verdict": "NOT_D02",
+   "why": "purchase and contractual commitments subsection",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1656,
+   "verdict": "REACHED",
+   "why": "contingencies subsection; 1657-1658 are taken",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8"
+  }
+ ]
+}

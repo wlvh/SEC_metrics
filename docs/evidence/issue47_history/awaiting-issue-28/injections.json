@@ -1,0 +1,52 @@
+{
+ "ANY_TARGET_FILING_MATCHES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_target_filing_is_not_covered",
+  "failed_cases": [
+   "test_another_target_filing_is_not_covered"
+  ],
+  "returncode": 1,
+  "seconds": 5
+ },
+ "A_DUPLICATE_ENTRY_OVERWRITES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_register_must_cite_a_recorded_decision",
+  "failed_cases": [
+   "test_a_register_must_cite_a_recorded_decision"
+  ],
+  "returncode": 1,
+  "seconds": 5
+ },
+ "CONTROL": {
+  "returncode": 0,
+  "seconds": 5
+ },
+ "NO_RECORDED_DECISION_IS_NEEDED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_register_must_cite_a_recorded_decision",
+  "failed_cases": [
+   "test_a_register_must_cite_a_recorded_decision"
+  ],
+  "returncode": 1,
+  "seconds": 5
+ },
+ "THE_DECISION_COVERS_EVERY_METRIC_OF_THE_PERIOD": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_other_metrics_at_the_newest_period_keep_their_status",
+  "failed_cases": [
+   "test_other_metrics_at_the_newest_period_keep_their_status"
+  ],
+  "returncode": 1,
+  "seconds": 5
+ },
+ "THE_RECORDED_ATTEMPT_IS_DROPPED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_recorded_attempt_stays_attached",
+  "failed_cases": [
+   "test_a_recorded_attempt_stays_attached"
+  ],
+  "returncode": 1,
+  "seconds": 5
+ },
+ "all_caught": true
+}

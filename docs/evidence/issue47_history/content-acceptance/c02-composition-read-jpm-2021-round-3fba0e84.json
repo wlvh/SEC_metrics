@@ -1,0 +1,64 @@
+{
+ "adjudication": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+ "adjudication_sha256": "sha256:e8a1a4f198b62bfb9e2e2f3a7d5700aa47147e1192203bacb6dd9577ebc1e4d0",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "per_position": {
+  "jpmorgan-2021": {
+   "adjudicated_blocks": [],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "result_id": "sha256:9d42878a4b7a7bb8c80103b748216b6e1368f7f1aaf027484ee9b42ebc522d00",
+     "run_id": "run:historical-period:9860a2aa33b6678acbfafa213274abc97208344827e0d91c921d18fb65f1c853"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "19617"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000272",
+     "0000019617-22-000303"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "jpmorgan_chase",
+   "counts": {
+    "found_outside_the_selection": 85,
+    "resting_on_adjudication": 0,
+    "selected": 51,
+    "selected_fact": 44,
+    "selected_mixed": 3
+   },
+   "governance_accession": "0000019617-22-000303",
+   "governance_document": "evidence/request_attempts/5a/5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc/a2022proxystatement.htm",
+   "period_end": "2021-12-31",
+   "published_excerpts": 51,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/jpmorgan_chase-2021-12-31.json",
+   "reading_sha256": "sha256:a0c2f92349d9b8c2adf375a958f1d5afc59d1a47642c2e162f4bb9206541e9be",
+   "reading_verdict": "READING_DISAGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:4f5920df8314e379aed4d4c2c509ca8b52be036cf51e1add3958b5d21a2cb060",
+   "verdict": "DIFFERS"
+  }
+ },
+ "reader": "tools/read_c02_composition.py",
+ "record_type": "ISSUE_47_C02_COMPOSITION_READ",
+ "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d"
+}

@@ -1,0 +1,28 @@
+{
+ "record_type": "ISSUE_47_DEV_DRY_RUN_CHECK",
+ "what_this_is": "development-model answers to the exact request messages, checked by the contracts' own validate_answer and counting and compared with a development reference; not DeepSeek, not LIVE, no call credit",
+ "rows": [
+  {
+   "request": "D04-marriott_international-2023-12-31-r4",
+   "answer_bytes": 74,
+   "answer_tokens": 26,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "units": 1,
+   "required_candidate_assessments": 0,
+   "findings": []
+  },
+  {
+   "request": "D04-marriott_international-2024-12-31-r4",
+   "answer_bytes": 200,
+   "answer_tokens": 68,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "units": 3,
+   "required_candidate_assessments": 0,
+   "findings": []
+  }
+ ]
+}

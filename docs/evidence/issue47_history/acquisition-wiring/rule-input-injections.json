@@ -1,0 +1,66 @@
+{
+ "record_type": "ISSUE_47_RULE_INPUT_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "EVERY_DIFFERENCE_IS_REFUSED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_install_rule_inputs() re-checks against the root whatever the generation",
+   "why_it_matters": "the refusal that stopped the second round: a re-mint could never reach a ledger root",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_new_generation_replaces_the_input_and_records_it",
+   "failed_cases": [
+    "test_a_baseline_file_is_never_replaced_as_a_rule_input",
+    "test_a_new_generation_replaces_the_input_and_records_it",
+    "test_a_root_from_before_the_stamp_takes_the_current_inputs",
+    "test_the_installation_records_the_generation_it_installed",
+    "test_within_one_generation_a_changed_input_is_refused"
+   ],
+   "suite_result": "Ran 5 tests in 3.871s FAILED (errors=5)"
+  },
+  {
+   "id": "A_CHANGED_INPUT_IS_REPLACED_WITHIN_A_GENERATION",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_install_rule_inputs() replaces differing inputs even when the stamp matches",
+   "why_it_matters": "a rule input changed under a root of the same generation would be overwritten without a word instead of refused",
+   "outcome": "CAUGHT",
+   "expected_case": "test_within_one_generation_a_changed_input_is_refused",
+   "failed_cases": [
+    "test_a_new_generation_replaces_the_input_and_records_it",
+    "test_within_one_generation_a_changed_input_is_refused"
+   ],
+   "suite_result": "Ran 5 tests in 4.412s FAILED (failures=2)"
+  },
+  {
+   "id": "A_BASELINE_FILE_IS_REPLACED_AS_A_RULE_INPUT",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_install_rule_inputs() replaces a rule input that is also a baseline file",
+   "why_it_matters": "the baseline corpus is governed by its own stamp, which refuses any change; a transition must not rewrite part of it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_baseline_file_is_never_replaced_as_a_rule_input",
+   "failed_cases": [
+    "test_a_baseline_file_is_never_replaced_as_a_rule_input"
+   ],
+   "suite_result": "Ran 5 tests in 4.577s FAILED (failures=1)"
+  },
+  {
+   "id": "A_TRANSITION_IS_NOT_RECORDED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_install_rule_inputs() replaces inputs without recording the transition",
+   "why_it_matters": "a root whose configuration changed without a record reads as if it had always held these bytes",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_new_generation_replaces_the_input_and_records_it",
+   "failed_cases": [
+    "test_a_new_generation_replaces_the_input_and_records_it",
+    "test_a_root_from_before_the_stamp_takes_the_current_inputs",
+    "test_the_installation_records_the_generation_it_installed",
+    "test_within_one_generation_a_changed_input_is_refused"
+   ],
+   "suite_result": "Ran 5 tests in 4.647s FAILED (errors=4)"
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

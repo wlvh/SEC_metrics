@@ -1,0 +1,134 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "how_to_read_it": {
+  "eleven_is_the_ceiling": "each unwired metric shows 11 because 11 is the number of target periods whose original is saved. The other 39 periods report SOURCE_MISSING_TARGET_ORIGINAL first, so the same metric is unwired there too and does not show in this count. Wiring all eight would move 88 positions today and 8 x 50 = 400 once the originals exist.",
+  "first_blocking_reason_is_not_the_only_one": "1170 positions report a missing original, and some of them also lack a route. The two are counted separately for that reason.",
+  "what_this_does_not_say": "nothing here is a statement that a wired route produces a correct value. Route, Run, public row and content acceptance are four separate states and only the first is counted here."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "record_type": "ISSUE_47_REMAINING_IMPLEMENTATION",
+ "so_the_next_implementation_is": {
+  "chosen": "C04",
+  "feasibility_checked_not_asserted": {
+   "a_first_reading_that_was_wrong": "grepping for 'event_input=' found no caller and suggested the path was test-only. It is built in normal_governance_input under a different spelling. The narrower conclusion that followed from the bad grep - that a historical C04 would mostly produce WITHHELD - does not follow.",
+   "the_auditor_comparison": "needs the pinned period's 10-K and the prior period's, both of which prepare_historical_annual_input already supplies - the planner carries prior_annual_primary as a role of the target rather than as a sixth year.",
+   "the_event_input": "needs the complete submissions index plus every history shard overlapping the target period, and resolve_c04 checks that the provided shards cover the needed ones. normal_governance_input already builds exactly that shape, including history_inputs, so the ordinary route handles shards; and historical_metadata_context reads a pinned period's shards through the existing catalog and proves the read set equals the admitted set.",
+   "what_remains_a_material_question": "whether the shards a given period needs are saved. They are for Marriott, whose three periods ran in this batch; JPMorgan has 57 of 69 unsaved, which is already class A of the acquisition plan. So C04 wired today would produce results where the shards exist and a named source gap where they do not, which is the correct behaviour rather than a reason to wait.",
+   "what_was_checked": "that C04's two inputs really do have historical routes, by reading resolve_c04's contract rather than by assuming it from the source_mode."
+  },
+  "not_started_yet_and_why": "routing a metric edits historical_results.py, which is a rule file, so it moves the Requirement closure. A batch is running against the current one and is the evidence for it; changing the closure underneath the report it will produce would make that report describe a version nothing ran. The order is: finish the batch, report it against its own closure, then wire C04.",
+  "why": "it is the only one of the eight whose inputs both already have historical routes, so it composes rather than builds."
+ },
+ "status_distribution_over_the_frame": {
+  "HISTORICAL_ROUTE_NOT_WIRED": 94,
+  "ROUTE_IMPLEMENTED_NOT_RUN": 335,
+  "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+  "TARGET_PERIOD_METADATA_BLOCKED": 78,
+  "TARGET_PERIOD_NOT_DISCOVERED": 273,
+  "total": 1950
+ },
+ "the_39_metrics": {
+  "no_route_at_all": {
+   "count": 8,
+   "ids": [
+    "B06",
+    "B13",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D03",
+    "D04"
+   ],
+   "note": "these are exactly the amendment policy's nine not_covered_metric_ids minus D02. Not a coincidence - they are the debt composition, capacity, proxy-dependent governance and semantic routes, which is the same reason the amendment policy will not clear them automatically."
+  },
+  "structural_applicability_only": {
+   "count": 8,
+   "ids": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13",
+    "B10",
+    "B11"
+   ],
+   "what_that_means": "the Spec's own applicability and the registry's traits answer the question where the metric does not apply, and that is a real answer - N_A_STRUCTURAL, not a missing route. Where it does apply there is still no route: B10 and B11 for the one lodging company account for 6 of the 94."
+  },
+  "wired_historical_route": {
+   "count": 23,
+   "ids": [
+    "A01",
+    "A02",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A10",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "B12",
+    "C01",
+    "D02",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ]
+  }
+ },
+ "the_8_unwired_are_not_one_kind_of_work": {
+  "blocked_on_a_model_allowance": {
+   "ids": [
+    "B13",
+    "D01",
+    "D03",
+    "D04"
+   ],
+   "note": "this is a second allowance, not the SEC one. The acquisition plan's cap covers requests to SEC and says nothing about provider calls.",
+   "why": "D01 is source_mode ai_text; B13, D03 and D04 resolve through the semantic review path. None of them can produce a historical value without provider calls, and Issue #47 has no allowance of its own - the same missing record the SEC gate names."
+  },
+  "blocked_on_material": {
+   "ids": [
+    "C02",
+    "C03"
+   ],
+   "not_in_the_cap": "the acquisition plan does not include these proxies, because an unwired route has no dependency to declare. They enter the plan when a route does.",
+   "why": "both read the annual meeting DEF 14A. The saved submissions indexes list 85 proxies across the ten companies and ten are saved, all filed in 2026, so a historical C02 or C03 would resolve the most recent period and name a source gap for every earlier one. The missing proxies are the ask rather than the route - which is what historical_text_input already says about C02."
+  },
+  "unblocked_deterministic": {
+   "B06": "source_mode structured_first_ai_fallback, so the structured path comes first and several variants of it exist (v3 through v6). More guards than any other metric, so cheapest is not the same as easiest.",
+   "C04": "source_mode structured, disclosure_group auditor_report. Its resolver auditor_change_dual_source_v1 reads the AuditorName concept and the fiscal 8-K item 4.01 set - and both already have historical routes, the Company Facts one and the registered-event one whose window separation landed this round. This is the cleanest one to wire.",
+   "ids": [
+    "C04",
+    "B06"
+   ]
+  },
+  "why_this_cut_matters": "'eight routes to write' reads as eight units of the same work. Read from each metric's own Spec, they are three different blockers and only one of them is implementation."
+ },
+ "the_94_by_metric": {
+  "B06": 11,
+  "B10": 3,
+  "B11": 3,
+  "B13": 11,
+  "C02": 11,
+  "C03": 11,
+  "C04": 11,
+  "D01": 11,
+  "D03": 11,
+  "D04": 11
+ },
+ "what_this_is": "The part of the frame that is not waiting for a document. Measured over the whole 10 x 39 x 5 frame with no runs root, so the numbers are about routes rather than about any batch."
+}

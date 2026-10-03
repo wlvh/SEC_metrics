@@ -1,0 +1,182 @@
+{
+ "ANY_UNEMPHASISED_BLOCK_IS_PAGE_FURNITURE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_body_text_between_them_is_not_page_furniture",
+  "failed_cases": [
+   "test_body_text_between_them_is_not_page_furniture"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "AN_UNJUDGED_PAIR_IS_READ_AS_ONE_HEADING": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_decision_gives_its_own_lines_and_no_decision_fails",
+  "failed_cases": [
+   "test_each_decision_gives_its_own_lines_and_no_decision_fails"
+  ],
+  "file": "tools/read_d01_headings.py",
+  "modules": [
+   "tests.vnext.test_d01_byte_reading"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 38
+ },
+ "AN_UNLINKED_CONTENTS_LINE_IS_PAGE_FURNITURE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_unlinked_contents_line_is_not_page_furniture",
+  "failed_cases": [
+   "test_an_unlinked_contents_line_is_not_page_furniture"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "A_CAPITALISED_NEXT_LINE_IS_JOINED_TOO": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_two_filings_that_have_one_are_unchanged_to_the_byte",
+  "failed_cases": [
+   "test_a_second_block_that_begins_a_sentence_is_a_heading_of_its_own",
+   "test_the_two_filings_that_have_one_are_unchanged_to_the_byte"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "A_DECISION_ABOUT_AN_UNFLAGGED_PAIR_PASSES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_decision_about_a_pair_the_filing_does_not_flag_fails",
+  "failed_cases": [
+   "test_a_decision_about_a_pair_the_filing_does_not_flag_fails"
+  ],
+  "file": "tools/read_d01_headings.py",
+  "modules": [
+   "tests.vnext.test_d01_byte_reading"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 39
+ },
+ "A_FIRST_HALF_THAT_ENDS_ITS_SENTENCE_IS_JOINED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_first_half_that_ends_a_sentence_is_a_heading_of_its_own",
+  "failed_cases": [
+   "test_a_first_half_that_ends_a_sentence_is_a_heading_of_its_own"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "A_PARTLY_EMPHASISED_HALF_IS_A_HEADING_HALF": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_half_that_is_not_emphasised_whole_is_not_a_heading_half",
+  "failed_cases": [
+   "test_a_half_that_is_not_emphasised_whole_is_not_a_heading_half"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 25
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0
+  ],
+  "seconds": 69
+ },
+ "NO_PAGE_IS_NEEDED_BETWEEN_THE_HALVES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_without_a_page_between_them_nothing_is_joined",
+  "failed_cases": [
+   "test_an_unlinked_contents_line_is_not_page_furniture",
+   "test_without_a_page_between_them_nothing_is_joined"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 25
+ },
+ "OUTSIDE_ITEM_1A_THE_WHOLE_DOCUMENT_IS_SCANNED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_outside_item_1a_nothing_is_joined",
+  "failed_cases": [
+   "test_outside_item_1a_nothing_is_joined"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 25
+ },
+ "THE_READING_FLAGS_ONLY_A_LOWER_CASE_REST": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_label_at_the_foot_of_a_page_is_flagged_though_the_next_line_is_capitalised",
+  "failed_cases": [
+   "test_a_label_at_the_foot_of_a_page_is_flagged_though_the_next_line_is_capitalised",
+   "test_every_accepted_position"
+  ],
+  "file": "tools/read_d01_headings.py",
+  "modules": [
+   "tests.vnext.test_d01_byte_reading"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 39
+ },
+ "THE_SECOND_HALF_STAYS_A_LINE_OF_ITS_OWN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_fy2022_delivers_two_whole_headings_where_it_delivered_four_halves",
+  "failed_cases": [
+   "test_a_split_heading_is_joined",
+   "test_fy2022_delivers_two_whole_headings_where_it_delivered_four_halves",
+   "test_fy2023_delivers_one_whole_heading",
+   "test_the_joined_span_is_the_bytes_it_names",
+   "test_the_route_s_candidate_and_evidence_carry_the_joined_heading"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 25
+ },
+ "all_caught": true
+}

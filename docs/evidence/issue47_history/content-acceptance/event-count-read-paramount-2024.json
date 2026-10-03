@@ -1,0 +1,684 @@
+{
+ "both_window_bases": "every accepted count is the same under the filing date and the report date, so it does not depend on which reading of the window is taken.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "e01_is_the_one_route_this_cannot_read": {
+  "measured": {
+   "enphase-2025": {
+    "eight_o_one_filings": 0,
+    "published": "0",
+    "read": 0
+   },
+   "ford-2025": {
+    "eight_o_one_filings": 5,
+    "published": "2",
+    "read": 2
+   },
+   "lumen-2025": {
+    "eight_o_one_filings": 8,
+    "published": "7",
+    "read": 8
+   },
+   "macys-2026": {
+    "eight_o_one_filings": 4,
+    "published": "2",
+    "read": 3
+   },
+   "marriott-2025": {
+    "eight_o_one_filings": 2,
+    "published": "0",
+    "read": 2
+   },
+   "pfizer-2025": {
+    "eight_o_one_filings": 3,
+    "published": "0",
+    "read": 1
+   },
+   "southwest-2025": {
+    "eight_o_one_filings": 1,
+    "published": "2",
+    "read": 2
+   }
+  },
+  "why": "it is the only route with a keyword branch, and reading it means reproducing the route's text scoping. brief_source_priority puts the item code first and a primary-document heading second; a scan over every document in the accession matches 'transaction' in almost any exhibit, which over-counts. Six of the seven windows hold an 8.01 filing, so E01 is accepted only for the one that does not."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "paramount-2024": {
+   "company_id": "paramount_skydance_paramount_global",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 22,
+    "report_date": 22
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000813828-24-000087",
+      "filingDate": "2024-12-27",
+      "items": [
+       "5.02",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000085",
+      "filingDate": "2024-12-11",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000083",
+      "filingDate": "2024-11-21",
+      "items": [
+       "5.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000081",
+      "filingDate": "2024-11-14",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-253719",
+      "filingDate": "2024-11-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000075",
+      "filingDate": "2024-10-18",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000073",
+      "filingDate": "2024-10-15",
+      "items": [
+       "5.02",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000069",
+      "filingDate": "2024-08-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000063",
+      "filingDate": "2024-08-22",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-196972",
+      "filingDate": "2024-08-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-196053",
+      "filingDate": "2024-08-07",
+      "items": [
+       "1.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-177535",
+      "filingDate": "2024-07-11",
+      "items": [
+       "1.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000042",
+      "filingDate": "2024-07-08",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000038",
+      "filingDate": "2024-06-21",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000034",
+      "filingDate": "2024-06-10",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000033",
+      "filingDate": "2024-06-10",
+      "items": [
+       "5.02",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000028",
+      "filingDate": "2024-06-07",
+      "items": [
+       "5.03",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000023",
+      "filingDate": "2024-05-03",
+      "items": [
+       "5.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000018",
+      "filingDate": "2024-04-29",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-122356",
+      "filingDate": "2024-04-29",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000009",
+      "filingDate": "2024-03-13",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-050664",
+      "filingDate": "2024-02-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000813828-24-000087",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "reportDate": "2024-12-20"
+     },
+     {
+      "accession": "0000813828-24-000085",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-12-05"
+     },
+     {
+      "accession": "0000813828-24-000083",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "reportDate": "2024-11-15"
+     },
+     {
+      "accession": "0000813828-24-000081",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2024-11-14"
+     },
+     {
+      "accession": "0001193125-24-253719",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-11-08"
+     },
+     {
+      "accession": "0000813828-24-000075",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-10-14"
+     },
+     {
+      "accession": "0000813828-24-000073",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "reportDate": "2024-10-08"
+     },
+     {
+      "accession": "0000813828-24-000069",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2024-08-26"
+     },
+     {
+      "accession": "0000813828-24-000063",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2024-08-21"
+     },
+     {
+      "accession": "0001193125-24-196972",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-08-08"
+     },
+     {
+      "accession": "0001193125-24-196053",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "reportDate": "2024-08-01"
+     },
+     {
+      "accession": "0001193125-24-177535",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "reportDate": "2024-07-07"
+     },
+     {
+      "accession": "0000813828-24-000042",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2024-07-07"
+     },
+     {
+      "accession": "0000813828-24-000038",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-06-16"
+     },
+     {
+      "accession": "0000813828-24-000034",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-06-07"
+     },
+     {
+      "accession": "0000813828-24-000033",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0000813828-24-000028",
+      "items": [
+       "5.03",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2024-06-04"
+     },
+     {
+      "accession": "0000813828-24-000023",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0000813828-24-000018",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0001193125-24-122356",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0000813828-24-000009",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2024-03-13"
+     },
+     {
+      "accession": "0001193125-24-050664",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-02-28"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 9,
+     "by_report_date": 9,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+       "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+       "run_id": "run:historical-period:f784c09d2c16c8d7a8ff825418cad813b7fecc459fc72e6c2ea88b3d3bc21978"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:75613bafa50d9681b0b3d3adf10dfd519cc6caa24f4079f0a802488ca3dd54ac",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "9",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 4,
+     "by_report_date": 4,
+     "published": null,
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+       "result_id": "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f",
+       "run_id": "run:historical-period:8b27477f7fa5e695f218c3067fad3797126f0ae8b6dd7c9ade272119035415bc"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:9250c4fdd6eb8d2b28b845651b0b26965b346a27cd817d67f0da6502dfc0b4ab",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 9,
+     "by_report_date": 9,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+       "result_id": "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923",
+       "run_id": "run:historical-period:4339bc1b9cb771a5c5921d2351b5e5153aff5d776d5ccfaf4502eecd1f34aec2"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:75613bafa50d9681b0b3d3adf10dfd519cc6caa24f4079f0a802488ca3dd54ac",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "9",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+       "result_id": "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c",
+       "run_id": "run:historical-period:ac41d2428badfff71fd1f7e8c56cfbfe29a02b9ea64e4ba67d14c8b54c28b44f"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:d595cb600c9260b74e5dad6ae2d789199ba94af3c7aef6fdd6248ca7f679494f",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+       "result_id": "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7",
+       "run_id": "run:historical-period:f2bcd1766b586b1fbcf83c51235adcb99e90ead209d897bcd432feef73641fba"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:31d69318b459f7f3d7a56d0313d48bb9b677ba18673366e29dfaa63f63092e41",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/bd/bdb17feef9c7303a0ad11d4ce6a74caf168b4ff7c65249202331ba06e7524130/CIK0000813828.json",
+   "window": [
+    "2024-01-01",
+    "2024-12-31"
+   ]
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_event_counts.py",
+ "record_type": "ISSUE_47_EVENT_COUNT_READ",
+ "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+ "result": {
+  "MATCH_BOTH_BASES": 5,
+  "positions_compared_excluding_e01": 5
+ },
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/event-count-read.json",
+ "what_this_is": "the six 8-K event metrics counted from the filings' own SEC headers, for the seven company-periods that deliver them."
+}

@@ -1,0 +1,241 @@
+{
+ "record_type": "ISSUE_47_E01_REFERENCE_CONTROLS",
+ "before_commit": "f25d3373",
+ "cases": [
+  {
+   "case": "a lowercase reference",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>see Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": true,
+   "after_right": true
+  },
+  {
+   "case": "a capitalised reference",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>See Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "an uppercase reference",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>SEE Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "an uncaptioned reference",
+   "origin": "how 'does not reproduce' was measured",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>See Item 2.01.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": true,
+   "after_right": true
+  },
+  {
+   "case": "the previous paragraph ends in a state code",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>Location: Portland, OR</p><p>Item 2.01 Completion of Acquisition or Disposition of Assets</p><p>The sale closed.</p></body></html>",
+   "reader_sees": [
+    "8.01",
+    "2.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01",
+    "2.01"
+   ],
+   "before_right": true,
+   "after_right": true
+  },
+  {
+   "case": "the previous paragraph ends in 'see'",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>The details are set out below; see</p><p>Item 2.01 Completion of Acquisition or Disposition of Assets</p><p>The sale closed.</p></body></html>",
+   "reader_sees": [
+    "8.01",
+    "2.01"
+   ],
+   "before": [
+    "8.01"
+   ],
+   "after": [
+    "8.01",
+    "2.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "the previous paragraph ends in 'and'",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>Text continues and</p><p>Item 2.01 Completion of Acquisition or Disposition of Assets</p><p>The sale closed.</p></body></html>",
+   "reader_sees": [
+    "8.01",
+    "2.01"
+   ],
+   "before": [
+    "8.01"
+   ],
+   "after": [
+    "8.01",
+    "2.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "hidden 'see' before a heading",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p><span hidden>see</span>Item 2.01 Completion of Acquisition or Disposition of Assets</p></body></html>",
+   "reader_sees": [
+    "8.01",
+    "2.01"
+   ],
+   "before": [
+    "8.01"
+   ],
+   "after": [
+    "8.01",
+    "2.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "hidden 'SEE' before a heading",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p><span hidden>SEE</span>Item 2.01 Completion of Acquisition or Disposition of Assets</p></body></html>",
+   "reader_sees": [
+    "8.01",
+    "2.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01",
+    "2.01"
+   ],
+   "before_right": true,
+   "after_right": true
+  },
+  {
+   "case": "long hidden text after 'SEE'",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>SEE <span style=\"display:none\">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "a hidden line break after 'SEE'",
+   "origin": "control",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>SEE <br hidden>Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "a block out of the layout after 'SEE'",
+   "origin": "this reader's block rule",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>SEE <div style=\"display:none\">x</div>Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01"
+   ],
+   "before_right": false,
+   "after_right": true
+  },
+  {
+   "case": "an unseen block after 'SEE'",
+   "origin": "this reader's block rule",
+   "body": "<html><body><p>Item 8.01 Other Events.</p><p>SEE <div style=\"visibility:hidden\">x</div>Item 2.01 Completion of Acquisition or Disposition of Assets.</p></body></html>",
+   "reader_sees": [
+    "8.01",
+    "2.01"
+   ],
+   "before": [
+    "8.01",
+    "2.01"
+   ],
+   "after": [
+    "8.01",
+    "2.01"
+   ],
+   "before_right": true,
+   "after_right": true
+  }
+ ],
+ "before_wrong": 8,
+ "after_wrong": 0,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

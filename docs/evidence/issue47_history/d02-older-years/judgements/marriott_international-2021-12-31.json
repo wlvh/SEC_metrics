@@ -1,0 +1,456 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "marriott_international:2021-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (its prompt carried the executor's header-row decision; see reader-prompts.md)",
+ "reader_note": "The value is all of Item 3 (incorporation of the Note 7 litigation caption, the California DA hazardous-waste notice, ordinary-course proceedings), the Item 8 legal-contingencies accrual policy, and the whole incorporated caption on the Data Security Incident lawsuits, MDL, securities and derivative cases, U.K. action, demand letters and government investigations. Only page numbers and contents links inside the caption are skipped; the rest of Note 7 (guarantees, the hotel put option, purchase commitments, letters of credit, the breach description and the incident's expenses and insurance recoveries) is not litigation content, and no heading was missed.",
+ "packet_document_id": "sha256:3a3d3bf66f907eccd7fa8499ca13190c7696117f339256e7afe34bd8d0d76834",
+ "packet_candidate_hash": "sha256:7e2ec9b937d538782e8f44b25fc9c04e2702cbc1771f23d6bd6f7bd771158e88",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 467,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3: incorporates the Note 7 litigation caption; environmental threshold",
+   "text": "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority.",
+   "text_sha256": "sha256:5713847ad7b619cd39aa0d9d0f9bb9f899906d605a70508514c04c578c4a4d53",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 468,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3: California DA notice on hazardous-waste handling at nine properties",
+   "text": "In May 2020, we received a notice from the District Attorneys of the Counties of Placer, Riverside, San Francisco and San Mateo in California asserting that nine properties in California have failed to comply with certain state statutes regulating hazardous and other waste handling and disposal. We are cooperating with the District Attorneys’ requests for information and have entered into a tolling agreement with the District Attorneys. Management does not believe that the ultimate outcome of this matter will have a material adverse effect on the Company.",
+   "text_sha256": "sha256:9596485bfe524f02a298220623f8cc088f4c5d7ebf6db0856f266c72de6b9ce3",
+   "order": 1,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 469,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3: other ordinary-course proceedings and claims",
+   "text": "From time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.",
+   "text_sha256": "sha256:c96ede88455ed18a2267fcd4dd92069976e56ff7bfa4cde99bcde04f6ba5c527",
+   "order": 2,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1149,
+   "verdict": "DISCLOSURE",
+   "why": "registrant's legal proceedings and its legal-contingency accrual policy",
+   "text": "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.",
+   "text_sha256": "sha256:3a94a548b65bb64b3e25ee9ea1b2f4047a681be16e4beb39020f9034431815b8",
+   "order": 3,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1325,
+   "verdict": "DISCLOSURE",
+   "why": "title of the incorporated litigation caption",
+   "text": "Litigation, Claims, and Government Investigations",
+   "text_sha256": "sha256:d51d45e0af99687724a5a916721ce2ff864d23c0fc4cdc5d3f005c89c895442a",
+   "order": 4,
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1326,
+   "verdict": "DISCLOSURE",
+   "why": "consumer lawsuits after the Data Security Incident",
+   "text": "Following our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. All but one of the U.S. cases were consolidated and transferred to the U.S. District Court for the District of Maryland, pursuant to orders of the U.S. Judicial Panel",
+   "text_sha256": "sha256:f37cee4f35fabc758c4b18a4b25df5f7c493c9b33e223eab1cea9609623a282c",
+   "order": 5,
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1329,
+   "verdict": "DISCLOSURE",
+   "why": "MDL, securities, derivative and U.K. cases, demand letters",
+   "text": "on Multidistrict Litigation (the “MDL”). The plaintiffs in the U.S. and Canadian cases, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. Among the U.S. cases consolidated in the MDL proceeding is a putative class action lawsuit that was filed on December 1, 2018 against the Company and certain of our current and former officers and directors, alleging violations of the federal securities laws in connection with statements regarding our cybersecurity systems and controls, and seeking certification of a class of affected persons, unspecified monetary damages, costs and attorneys’ fees, and other related relief (the “Securities Case”). The MDL proceeding also included two shareholder derivative complaints that were filed on February 26, 2019 and March 15, 2019, respectively, against the Company and certain of our current and former officers and directors, alleging, among other claims, breach of fiduciary duty, corporate waste, unjust enrichment, mismanagement and violations of the federal securities laws, and seeking unspecified monetary damages and restitution, changes to the Company’s corporate governance and internal procedures, costs and attorneys’ fees, and other related relief (the “MDL Derivative Cases”). A separate shareholder derivative complaint was filed in the Delaware Court of Chancery on December 3, 2019 against the Company and certain of our current and former officers and directors, alleging claims and seeking relief generally similar to the claims made and relief sought in the other two derivative cases. This case was not consolidated with the MDL proceeding. We filed motions to dismiss in connection with all of the U.S. cases. Our motions to dismiss the Securities Case and the MDL Derivative Cases were granted in June 2021. The plaintiff in the Securities Case has appealed the dismissal and that appeal is still pending. The plaintiffs in the MDL Derivative Cases have not appealed. Motions to dismiss in the other MDL cases have been denied in part or in whole and these cases remain at varying stages. Our motion to dismiss the Delaware derivative case was granted in October 2021 and no appeal was filed. A putative class action lawsuit brought on behalf of financial institutions has been voluntarily dismissed. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in the lawsuits described above and are vigorously defending against such claims. In April 2019, we received a letter purportedly on behalf of a stockholder of the Company (also one of the named plaintiffs in the Securities Case described above) demanding that our Board of Directors take action against certain of the Company’s current and former officers and directors to recover damages for alleged breaches of fiduciary duties and related claims arising from the Data Security Incident. In October 2021, we received a letter purportedly on behalf of another stockholder of the Company (also one of the named plaintiffs in one of the dismissed MDL Derivative Cases described above) demanding that our Board of Directors take action against certain of the Company’s current and former officers and directors to recover damages for alleged breaches of fiduciary duties and other claims related to the Data Security Incident or associated disclosures. The Board of Directors has constituted a demand review committee to investigate the claims made in these demand letters, and the committee has retained independent counsel to assist with the investigations. The committee has completed its investigation and reported its findings and recommendations to our Board of Directors, which thereafter resolved, in February 2022, to reject the demands in their entirety. In addition, on August 18, 2020, a purported representative action was brought against us in the High Court of Justice for England and Wales on behalf of an alleged claimant class of English and Welsh residents alleging breaches of the General Data Protection Regulation and/or the U.K. Data Protection Act 2018 (the “U.K. DPA”) in connection with the Data Security Incident. We dispute all of the allegations in this purported action and will vigorously defend against any such claims. On November 5, 2020, the court issued an order with the consent of all parties staying this action pending resolution of another case raising similar issues, but not involving the Company. That other case was decided by the U.K. Supreme Court on November 10, 2021 and we are assessing next steps in light of the decision.",
+   "text_sha256": "sha256:3382c12a71b32ca5159b37369483ce59f6a415ad99f576f1109c852afd109829",
+   "order": 6,
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1330,
+   "verdict": "DISCLOSURE",
+   "why": "government inquiries and investigations of the incident",
+   "text": "In addition, numerous U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters, including Attorneys General offices from all 50 states and the District of Columbia, the Federal Trade Commission, the Securities and Exchange Commission, certain committees of the U.S. Senate and House of Representatives, the Information Commissioner’s Office in the United Kingdom (the “ICO”) as lead supervisory authority in the European Economic Area, and regulatory authorities in various other jurisdictions. With the exception of the ICO proceeding, which was resolved in October 2020, these matters generally remain open. We are in discussions with the U.S. state Attorneys General, the U.S. Federal Trade Commission, and certain regulatory authorities in other jurisdictions to resolve their investigations and requests.",
+   "text_sha256": "sha256:9b1d08919f8347f5479810195e1f509b0de64029153de88bed6950947871bccd",
+   "order": 7,
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1331,
+   "verdict": "DISCLOSURE",
+   "why": "reasonably possible losses not estimable",
+   "text": "While we believe it is reasonably possible that we may incur additional losses associated with the above described proceedings and investigations related to the Data Security Incident, it is not possible to estimate the amount of loss or range of loss, if any, in excess of the amounts already incurred that might result from adverse judgments, settlements, fines, penalties or other resolution of these proceedings and investigations based on the current stage of these proceedings and investigations, the absence of specific allegations as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, if applicable, and/or the lack of resolution of significant factual and legal issues.",
+   "text_sha256": "sha256:444689301cebb87adbf3d4cd6bcf100dbc2ea42b4101bfa8d84391592e1d7fe7",
+   "order": 8,
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 1327,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "58",
+   "text_sha256": "sha256:6208ef0f7750c111548cf90b6ea1d0d0a66f6bff40dbef07cb45ec436263c7d6",
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 1328,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 1332,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "59",
+   "text_sha256": "sha256:3e1e967e9b793e908f8eae83c74dba9bcccce6a5535b4b462bd9994537bfe15c",
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 1333,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "NOTE_7_CAPTION_1325"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1150,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "52",
+   "text_sha256": "sha256:41cfc0d1f2d127b04555b7246d84019b4d27710a3f3aff6e7764375b1e06e05d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1151,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1152,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading of the next accounting policy",
+   "text": "Business Combinations",
+   "text_sha256": "sha256:e172601c5fbba784c59a3b1e35b6afb378843cb97b8a5c9f976534aad574c890"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1153,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "business combination accounting policy",
+   "text": "We allocate the purchase price of an acquisition to the tangible and intangible assets acquired and liabilities assumed based on their estimated fair values at the acquisition date. We recognize as goodwill the amount by which the purchase price of an acquired entity exceeds the net of the fair values assigned to the assets acquired and liabilities assumed. In determining the fair values of assets acquired and liabilities assumed, we use various recognized valuation methods including the income and market approaches. Further, we make assumptions within certain valuation techniques, including discount rates, royalty rates, and the amount and timing of future cash flows. We record the net assets and results of operations of an acquired entity in our Financial Statements from the acquisition date. We initially perform these valuations based upon preliminary estimates and assumptions by management or independent valuation specialists under our supervision, where appropriate, and make revisions as estimates and assumptions are finalized. We expense acquisition-related costs as we incur them.",
+   "text_sha256": "sha256:d0f8ecbb2ec63c6447f28e8c6364322e01bb9da826bc5f4c375fa8c605726cdf"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1154,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "accounting policy heading",
+   "text": "Asset Acquisitions",
+   "text_sha256": "sha256:9bd6cd18784e9f4061a87852de5d83b4182fdb47bb88bc305196daeb1ba4c11e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1155,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "asset acquisition accounting policy",
+   "text": "Acquisitions that do not meet the definition of a business are accounted for as asset acquisitions. We allocate the cost of the acquisition, including direct and incremental transaction costs, to the individual assets acquired and liabilities assumed on a relative fair value basis. Goodwill is not recognized in an asset acquisition.",
+   "text_sha256": "sha256:438ab254fa334f6b530a7e7b62f6d2116aa83a377178898972b46d2ee6d58804"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1295,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantees subsection heading",
+   "text": "Guarantees",
+   "text_sha256": "sha256:5ca778bb76e1199247652bf00429d8570ac620ccc8677eef47bed9c990383963"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1296,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantees to lenders and hotel owners",
+   "text": "We issue guarantees to certain lenders and hotel owners, chiefly to obtain long-term management and franchise contracts. The guarantees generally have a stated maximum funding amount and a term of three to ten years. The terms of guarantees to lenders generally require us to fund if cash flows from hotel operations are inadequate to cover annual debt service or to repay the loan at maturity. The terms of the guarantees to hotel owners generally require us to fund if the hotels do not attain specified levels of operating profit. Guarantee fundings to lenders and hotel owners are generally recoverable out of future hotel cash flows and/or proceeds from the sale or refinancing of hotels.",
+   "text_sha256": "sha256:0d5e519f8d3d58e1024bbfe07156c050da88c22f761253870c5a5a63546b31ad"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1297,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "introduces the guarantee table",
+   "text": "We present the maximum potential amount of our future guarantee fundings and the carrying amount of our liability for our debt service, operating profit, and other guarantees (excluding contingent purchase obligations) for which we are the primary obligor at year-end 2021 in the following table:",
+   "text_sha256": "sha256:a2f7447bd42cba2da511b53c5c2533189b70668c86138a603bd5f4fd545c5703"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1298,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table unit label",
+   "text": "($ in millions)",
+   "text_sha256": "sha256:bad25177a1ad471a2207bd63537dac24a47d7a5fb11247b0468ab421d19b7206"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1299,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "Guarantee Type",
+   "text_sha256": "sha256:cc2c2af8c63733993eabdc319ebe5211a47c5f9f5909eedf0818ea37bb39a333"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1300,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "Maximum Potential",
+   "text_sha256": "sha256:366dc1fbfecec4d8a2e9096383c7a168ad7777f82975f2d87a516bd9c203d21a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1301,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "Amount",
+   "text_sha256": "sha256:49e96d7cdf58069cc793555324e2226642f2f7f8bfff4cebe0c11a61eecef60a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1302,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "of Future FundingsRecorded Liability for",
+   "text_sha256": "sha256:a4ae2ca869b981d495793b3f4ecf16b127510ddd379c6cf0798556723cf7933a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1303,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "Guarantees",
+   "text_sha256": "sha256:5ca778bb76e1199247652bf00429d8570ac620ccc8677eef47bed9c990383963"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1304,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantee table row",
+   "text": "Debt service$20 $5",
+   "text_sha256": "sha256:1645d400498bc47ad1403c1f7290cfd2095b0403c833d7437a187f613632eaa0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1305,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantee table row",
+   "text": "Operating profit189 118",
+   "text_sha256": "sha256:d5899108ea0e6cce5b80a90054278e7d928243623d4822e3a8ef682efe7435b5"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1306,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantee table row",
+   "text": "Other18 4",
+   "text_sha256": "sha256:01c0b273a5ad9d13c1cf116ed52b301046b3284d13281ebc25bb976967e3db6e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1307,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantee table total",
+   "text": "$227 $127",
+   "text_sha256": "sha256:529aded5808f93253d4f08bcd89963145810f683fdb4e3950724c6ea9dbdb552"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1308,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet location of the guarantee liability",
+   "text": "Our liability at year-end 2021 for guarantees for which we are the primary obligor is reflected in our Balance Sheets as $17 million of “Accrued expenses and other” and $110 million of “Other noncurrent liabilities.”",
+   "text_sha256": "sha256:ae2109714b3af78193caad75997bae7500c466d8f4c87331cdbbed6253e60ffc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1309,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "57",
+   "text_sha256": "sha256:c837649cce43f2729138e72cc315207057ac82599a59be72765a477f22d14a54"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1310,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1311,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantees not yet in effect",
+   "text": "Our maximum potential guarantees listed in the preceding table include $42 million of operating profit guarantees and $3 million of other guarantees that will not be in effect until the underlying properties open and we begin to operate the properties or certain other events occur.",
+   "text_sha256": "sha256:ff39a894f31623769863e76b65d245260b13097bf1393880ea0e9cb14a46924b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1312,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lender indemnifications; not a claim or proceeding",
+   "text": "In conjunction with financing obtained for specific projects or properties owned by us or entities in which we have an investment, we may provide industry standard indemnifications to the lender for loss, liability, or damage occurring as a result of the actions of the entity or our own actions.",
+   "text_sha256": "sha256:bca9c285310410b8da2697cfa4ef3ef73d5b15cf15fbbed8cd0ff2094027bb8b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1313,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "purchase obligation subsection heading",
+   "text": "Contingent Purchase Obligation",
+   "text_sha256": "sha256:2c0756712b7b288394c01421f9d2217fb9dfd3d2bc3c1bce0cbe3b154ceac82d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1314,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "hotel put option accounted for as a guarantee",
+   "text": "Sheraton Grand Chicago. In 2017, we granted the owner a one-time right to require us to purchase the leasehold interest in the land and the hotel for $300 million in cash (the “put option”). In the 2021 third quarter, we entered into an amendment with the owner to move the exercise period of the put option from the 2022 first half to the 2024 first half. If the owner exercises the put option, the closing is expected to occur in the 2024 fourth quarter, and we have the option to purchase, at the same time the put transaction closes, the fee simple interest in the underlying land for an additional $200 million in cash. We account for the put option as a guarantee, and our recorded liability was $300 million at year-end 2021 and 2020.",
+   "text_sha256": "sha256:ccf1f5dd14063cdcdd0843555fffd550636120e2678295ffc86817a13587620d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1315,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "variable interest entity exposure",
+   "text": "We concluded that the entity that owns the Sheraton Grand Chicago hotel is a variable interest entity. We did not consolidate the entity because we do not have the power to direct the activities that most significantly impact the entity’s economic performance. Our maximum exposure to loss related to the entity is equal to the difference between the purchase price and the fair value of the hotel at the time that the put option is exercised, plus the maximum funding amount of an operating profit guarantee that we provided for the hotel.",
+   "text_sha256": "sha256:fede74543042cfc5034d4a3c3b4c3057d4a370be5c32cf70b1f97cfb12f67d41"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1316,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "commitments subsection heading",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1317,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "purchase commitments",
+   "text": "At year-end 2021, we had various purchase commitments for goods and services in the normal course of business, primarily for programs and services for which we are reimbursed by third-party owners, totaling $409 million. We expect to purchase goods and services subject to these commitments as follows: $227 million in 2022, $71 million in 2023, $88 million in 2024, and $23 million thereafter.",
+   "text_sha256": "sha256:b5da03876c08b68e8037f79cf1bd475377678b575649045e603abc1a74cf7bf8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1318,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "letters of credit subsection heading",
+   "text": "Letters of Credit",
+   "text_sha256": "sha256:5acde52cfacfed1e2e5d3e6796d34c34632a55c16cf51678dab0bc2f82fa8fad"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1319,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "letters of credit and surety bonds",
+   "text": "At year-end 2021, we had $148 million of letters of credit outstanding (all outside the Credit Facility, as defined in Note 9), most of which were for our self-insurance programs. Surety bonds issued as of year-end 2021 totaled $162 million, most of which state governments requested in connection with our self-insurance programs.",
+   "text_sha256": "sha256:3ed32587ea3e3aef23f8db5ffe9ef018abba10e22dd0ecfd1734c4f831fa35b6"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1320,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading of the breach-event subsection, not a legal-matter label; its litigation caption is taken",
+   "text": "Starwood Data Security Incident",
+   "text_sha256": "sha256:57bdb437500ce4f0474b4dd32ff2312266de8acd65e82a2c989d47b5a565be7a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1321,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading for the event description",
+   "text": "Description of Event",
+   "text_sha256": "sha256:2590af72a7a9b1264382619f6e74ac2443678e3e8df4bdfbaa56e04888bea124"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1322,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "describes the breach itself, not a lawsuit, claim or investigation",
+   "text": "On November 30, 2018, we announced a data security incident involving unauthorized access to the Starwood reservations database (the “Data Security Incident”). Working with leading security experts, we determined that there was unauthorized access to the Starwood network since 2014 and that an unauthorized party had copied information from the Starwood reservations database and taken steps towards removing it. The Starwood reservations database is no longer used for business operations.",
+   "text_sha256": "sha256:fb877248c5e7b91839c5347e06310e0a23eca9f326e106be9256945eb3f094b0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1323,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading for incident costs",
+   "text": "Expenses and Insurance Recoveries",
+   "text_sha256": "sha256:2381f5a62638d5365157e3a9853183bd099560619adeca6e1c779cbd1a278085"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1324,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "incident expenses and insurance recoveries; not a lawsuit, claim or investigation",
+   "text": "In 2021, we recorded $24 million of expenses and $19 million of accrued insurance recoveries related to the Data Security Incident; in 2020, we recorded an $11 million net reversal of expenses and $29 million of accrued insurance recoveries related to the Data Security Incident; and in 2019, we recorded $148 million of expenses and $84 million of accrued insurance recoveries related to the Data Security Incident. We received insurance recoveries of $23 million in 2021 and $47 million in 2020. We recognize insurance recoveries when they are probable of receipt and present them in our Income Statements in the same caption as the related expense, up to the amount of total expense incurred in prior and current periods. We present expenses and insurance recoveries related to the Data Security Incident in either the “Reimbursed expenses” or “Restructuring and merger-related charges” captions of our Income Statements.",
+   "text_sha256": "sha256:bf1a718eef5bca5c60a1d3478cad0075d45f82329b7a2b9275d023f5967e4840"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1148,
+   "verdict": "REACHED",
+   "why": "legal contingencies policy; its paragraph is taken",
+   "text": "Legal Contingencies",
+   "text_sha256": "sha256:778ee5e6ea5b858d8642ab1fc5a408e33d36dda9e5a4224847a732d24dcfeb32"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1294,
+   "verdict": "REACHED",
+   "why": "contingencies note; its litigation caption is taken",
+   "text": "NOTE 7. COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:6b6199b4f7fa92cfb2b9f6f2db8164a414f7003e6cf085a01e95a581028fb5cf"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1316,
+   "verdict": "NOT_D02",
+   "why": "purchase commitments subsection",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1325,
+   "verdict": "REACHED",
+   "why": "incorporated litigation caption; heading and paragraphs taken",
+   "text": "Litigation, Claims, and Government Investigations",
+   "text_sha256": "sha256:d51d45e0af99687724a5a916721ce2ff864d23c0fc4cdc5d3f005c89c895442a"
+  }
+ ]
+}

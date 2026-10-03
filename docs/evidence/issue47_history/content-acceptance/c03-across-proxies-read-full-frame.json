@@ -1,0 +1,570 @@
+{
+ "calls": {
+  "provider": 0,
+  "sec": 0
+ },
+ "first_reported_decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+ "per_position": {
+  "jpmorgan-2022": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:5c81b0946b805f872e1762ff672ad037253dd2e416cc095623e5bb1309347d5d",
+     "run_id": "run:historical-period:88927ecd3392e431faded123c1e656e2a62f712aee16f12fc6e50865f94edcec"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-23-000281"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "19617"
+   ],
+   "company_id": "jpmorgan_chase",
+   "confirmed_only_by_the_filing_the_route_read": true,
+   "decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+   "first_report": "0000019617-23-000281",
+   "later_amounts": [
+    34848606,
+    35610013
+   ],
+   "opened_filings_the_result_names": [
+    "0000019617-23-000281"
+   ],
+   "period": [
+    "2022-01-01",
+    "2022-12-31"
+   ],
+   "period_end": "2022-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000019617-23-000281",
+     "document": "evidence/request_attempts/2a/2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f/jpm-20230403.htm",
+     "named_by_the_result": true,
+     "sha256": "2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f",
+     "values": [
+      34848606
+     ]
+    },
+    {
+     "accession": "0000019617-24-000273",
+     "document": "evidence/request_attempts/a7/a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741/jpm-20240406.htm",
+     "named_by_the_result": false,
+     "sha256": "a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741",
+     "values": [
+      34848606
+     ]
+    },
+    {
+     "accession": "0000019617-25-000321",
+     "document": "evidence/request_attempts/08/085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c/jpm-20250405.htm",
+     "named_by_the_result": false,
+     "sha256": "085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
+     "values": [
+      35610013
+     ]
+    },
+    {
+     "accession": "0000019617-26-000096",
+     "document": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+     "named_by_the_result": false,
+     "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+     "values": [
+      35610013
+     ]
+    }
+   ],
+   "published": "34848606",
+   "read": "34848606",
+   "read_as": "FIRST_REPORTED",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "jpmorgan-2023": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:a67fd1e89e9dd4e70735bd23b7fa1c9b34df6a33d19f3c0d953d58f893002271",
+     "run_id": "run:historical-period:5dc8963955f24a5637cc1bb3cd8eccd9229e2b114607d64e4b96963e75dd7e64"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-24-000273"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "19617"
+   ],
+   "company_id": "jpmorgan_chase",
+   "confirmed_only_by_the_filing_the_route_read": true,
+   "decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+   "first_report": "0000019617-24-000273",
+   "later_amounts": [
+    35960259
+   ],
+   "opened_filings_the_result_names": [
+    "0000019617-24-000273"
+   ],
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "period_end": "2023-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000019617-24-000273",
+     "document": "evidence/request_attempts/a7/a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741/jpm-20240406.htm",
+     "named_by_the_result": true,
+     "sha256": "a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741",
+     "values": [
+      35093780
+     ]
+    },
+    {
+     "accession": "0000019617-25-000321",
+     "document": "evidence/request_attempts/08/085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c/jpm-20250405.htm",
+     "named_by_the_result": false,
+     "sha256": "085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
+     "values": [
+      35960259
+     ]
+    },
+    {
+     "accession": "0000019617-26-000096",
+     "document": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+     "named_by_the_result": false,
+     "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+     "values": [
+      35960259
+     ]
+    }
+   ],
+   "published": "35093780",
+   "read": "35093780",
+   "read_as": "FIRST_REPORTED",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "jpmorgan-2024": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:221800767dc7ccee36667384ebdbdf63ee7e7afd64caf51512f9b19ddaa48d75",
+     "run_id": "run:historical-period:d349220f51d1486de5642c2cff868780b7bbf6b9f1863cedb12d6fca5f0e8e51"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-25-000321"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "19617"
+   ],
+   "company_id": "jpmorgan_chase",
+   "opened_filings_the_result_names": [
+    "0000019617-25-000321"
+   ],
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "period_end": "2024-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000019617-25-000321",
+     "document": "evidence/request_attempts/08/085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c/jpm-20250405.htm",
+     "named_by_the_result": true,
+     "sha256": "085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
+     "values": [
+      37683462
+     ]
+    },
+    {
+     "accession": "0000019617-26-000096",
+     "document": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+     "named_by_the_result": false,
+     "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+     "values": [
+      37683462
+     ]
+    }
+   ],
+   "published": "37683462",
+   "read": "37683462",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "jpmorgan-2025": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:0b02a59dd20ee970f9f4fc667ebe4821254f402dfbdcb71cecd307fa6820fc63",
+     "run_id": "run:historical-period:0fa560efd2f918b9cf361e7071cf0778ad4742b2600062ce396f9d531aa943dd"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-26-000096"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "19617"
+   ],
+   "company_id": "jpmorgan_chase",
+   "opened_filings_the_result_names": [
+    "0000019617-26-000096"
+   ],
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "period_end": "2025-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000019617-26-000096",
+     "document": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+     "named_by_the_result": true,
+     "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+     "values": [
+      40632724
+     ]
+    }
+   ],
+   "published": "40632724",
+   "read": null,
+   "verdict": "NOT_READ",
+   "why_not_read": "ONLY_THE_FILING_THE_RESULT_NAMES_REPORTS_IT"
+  },
+  "pfizer-2021": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:6d9c6fe253b73475253aa69aa35ef60782e2fe2d21fd6124230d3eba0128a9e1",
+     "run_id": "run:historical-period:0b8e1cdb987e9dc479da49294b026bc45dd43b586b34e68ba8441dca0d7a5dba"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-22-000038"
+    ],
+    "not_named_by_the_reading": [
+     "filings"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "78003"
+   ],
+   "company_id": "pfizer",
+   "opened_filings_the_result_names": [],
+   "period": [
+    "2021-01-01",
+    "2021-12-31"
+   ],
+   "period_end": "2021-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0000078003-23-000040",
+     "document": "evidence/request_attempts/cf/cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626/pfe-20230315.htm",
+     "named_by_the_result": false,
+     "sha256": "cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626",
+     "values": [
+      24353219
+     ]
+    },
+    {
+     "accession": "0000078003-24-000068",
+     "document": "evidence/request_attempts/1d/1d4cd29495b7f6a1de80ebecd0f48991988bf2daf9f502651e4e7707dc1bc823/pfe-20240313.htm",
+     "named_by_the_result": false,
+     "sha256": "1d4cd29495b7f6a1de80ebecd0f48991988bf2daf9f502651e4e7707dc1bc823",
+     "values": [
+      24353219
+     ]
+    },
+    {
+     "accession": "0000078003-25-000062",
+     "document": "evidence/request_attempts/c0/c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db/pfe-20250313.htm",
+     "named_by_the_result": false,
+     "sha256": "c0f25fc2b3a93829e7c59cacd3960c43a1e05ebadd3807fad76eeee81776e0db",
+     "values": [
+      24353219
+     ]
+    },
+    {
+     "accession": "0000078003-26-000033",
+     "document": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+     "named_by_the_result": false,
+     "sha256": "f53e7ec13d217b5f0d5868af1d55fa9465b22daa40a2a34ff6dc653d8bad0e6e",
+     "values": [
+      24353219
+     ]
+    }
+   ],
+   "published": "24353219",
+   "read": "24353219",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "southwest-2023": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:7915f8898bb2fc95e570f250c805dd2c698bc8691fd1be07fd99e5cfd9b5bdd1",
+     "run_id": "run:historical-period:48f8d1b1bfe540075a05e7d444e2c4e0c85b71f15d43de181251a7d47de76306"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001193125-24-087857"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "92380"
+   ],
+   "company_id": "southwest_airlines",
+   "opened_filings_the_result_names": [
+    "0001193125-24-087857"
+   ],
+   "period": [
+    "2023-01-01",
+    "2023-12-31"
+   ],
+   "period_end": "2023-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001193125-24-087857",
+     "document": "evidence/request_attempts/02/023dd833d79add713ac03e376bfbd81da406d6b54f6458b399175826bf212d0f/d503384ddef14a.htm",
+     "named_by_the_result": true,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "luv:GaryC.KellyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2020",
+        "2021",
+        "2022"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "023dd833d79add713ac03e376bfbd81da406d6b54f6458b399175826bf212d0f",
+     "values": [
+      9307298
+     ]
+    },
+    {
+     "accession": "0001193125-25-072750",
+     "document": "evidence/request_attempts/df/df4c342af02483a1b4481a3ace7f8fc6a2e8cb2a5972b4a0b49956f059a687ac/d876066ddef14a.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "luv:GaryC.KellyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2020",
+        "2021",
+        "2022"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "df4c342af02483a1b4481a3ace7f8fc6a2e8cb2a5972b4a0b49956f059a687ac",
+     "values": [
+      9307298
+     ]
+    },
+    {
+     "accession": "0001193125-26-127237",
+     "document": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "luv:GaryC.KellyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2021",
+        "2022"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "f9fe5ceb34c9f1620007de3eecbf97a58c808241c1c4c769af3b2060a72723c9",
+     "values": [
+      9307298
+     ]
+    }
+   ],
+   "published": "9307298",
+   "read": "9307298",
+   "verdict": "MATCH",
+   "why_not_read": null
+  },
+  "southwest-2024": {
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:1956b8dad269c113f698353adbda8f813db41c99fcd631c538230ef87800cf7d",
+     "run_id": "run:historical-period:6d5468d594a3b553275560a9812c1b9792a9fcbcd926a24d3577126c512a3be7"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001193125-25-072750"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "ciks": [
+    "92380"
+   ],
+   "company_id": "southwest_airlines",
+   "opened_filings_the_result_names": [
+    "0001193125-25-072750"
+   ],
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "period_end": "2024-12-31",
+   "proxies_reporting_the_target_period": [
+    {
+     "accession": "0001193125-25-072750",
+     "document": "evidence/request_attempts/df/df4c342af02483a1b4481a3ace7f8fc6a2e8cb2a5972b4a0b49956f059a687ac/d876066ddef14a.htm",
+     "named_by_the_result": true,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "luv:GaryC.KellyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2020",
+        "2021",
+        "2022"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "df4c342af02483a1b4481a3ace7f8fc6a2e8cb2a5972b4a0b49956f059a687ac",
+     "values": [
+      10562384
+     ]
+    },
+    {
+     "accession": "0001193125-26-127237",
+     "document": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
+     "named_by_the_result": false,
+     "placeholders_set_aside": [
+      {
+       "members": [
+        "luv:GaryC.KellyMember"
+       ],
+       "same_person_paid_as_peo_in": [
+        "2021",
+        "2022"
+       ],
+       "shown": "—"
+      }
+     ],
+     "sha256": "f9fe5ceb34c9f1620007de3eecbf97a58c808241c1c4c769af3b2060a72723c9",
+     "values": [
+      10562384
+     ]
+    }
+   ],
+   "published": "10562384",
+   "read": "10562384",
+   "verdict": "MATCH",
+   "why_not_read": null
+  }
+ },
+ "proxies_read": 39,
+ "reader": "tools/read_c03_across_proxies.py",
+ "reading": "c03_across_proxies_full_frame",
+ "record_type": "ISSUE47_C03_ACROSS_PROXIES_READING",
+ "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e"
+}

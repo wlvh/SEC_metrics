@@ -1,0 +1,850 @@
+{
+ "record_type": "ISSUE_47_EGRESS_PARALLEL_VERSUS_SEQUENTIAL",
+ "receipt_id": "sha256:7dd330d2f3cacf8e2c1facd5faa104ca8036bc31c263657ab63a453ac8cd3cec",
+ "sealing_commit": "8c1fcf1880f8def494ecff408a14f862725d01d2",
+ "sealed_on_the_commit": {
+  "docs/evidence/issue47_history/model-egress/egress-registration.patch": true,
+  "docs/evidence/issue47_history/model-egress/verify.py": true,
+  "scripts/vnext/historical_counted_calls.py": true,
+  "scripts/vnext/historical_model_calls.py": true,
+  "scripts/vnext/historical_source_acquisition.py": true,
+  "tests/vnext/d04_synthetic_output.py": true,
+  "tests/vnext/test_historical_model_calls.py": true,
+  "tests/vnext/test_historical_source_acquisition.py": true
+ },
+ "baseline": {
+  "sequential_interrupted_rows": 66,
+  "sequential_completion_rows": 12,
+  "completion_checks": {
+   "the_completion_stopped_nowhere": true,
+   "its_copy_was_the_tree_when_made": true,
+   "its_copy_was_the_tree_after_its_last_injection": true
+  },
+  "completion_tree_unchanged_as_recorded": false,
+  "why_that_is_not_required": "the completion only read the verification tree (one manifest, one copy); the first parallel seal ran its suite in that tree in the same minute, and its fixtures were there when the completion looked last"
+ },
+ "trees": {
+  "sequential_interrupted": {
+   "commit": "33ee27d1",
+   "note": "tree deleted after the restart; built from this commit's content (the journal fix was committed after the run started)",
+   "bound_files_that_differ": [
+    "docs/evidence/issue47_history/model-egress/verify.py",
+    "requirements/issue_47_v1/baseline_manifest.json"
+   ],
+   "recorded_files_that_differ_inside_the_snapshot": [
+    "scripts/vnext/capacity_native_assessment.py",
+    "scripts/vnext/continuous_semantic_calls.py"
+   ],
+   "anything_else_in_the_snapshot_that_differs": []
+  },
+  "sequential_completion": {
+   "commit": "1a3071e5",
+   "note": "its copy matched the tree it was made from when made and after its last injection",
+   "bound_files_that_differ": [
+    "docs/evidence/issue47_history/model-egress/verify.py",
+    "requirements/issue_47_v1/baseline_manifest.json"
+   ],
+   "recorded_files_that_differ_inside_the_snapshot": [
+    "scripts/vnext/capacity_native_assessment.py"
+   ],
+   "anything_else_in_the_snapshot_that_differs": []
+  }
+ },
+ "compared_fields": [
+  "outcome",
+  "expected_class",
+  "expected_class_outcome",
+  "whole_suite_run",
+  "first_caught_by"
+ ],
+ "rows": [
+  {
+   "id": "A_REQUEST_MAY_BE_REDRAWN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 312,
+   "first_caught_by": [
+    "test_one_call_counts_one_provider_and_one_paid"
+   ]
+  },
+  {
+   "id": "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 208,
+   "first_caught_by": [
+    "test_a_slot_without_a_terminal_counts_and_stops"
+   ]
+  },
+  {
+   "id": "HTTP_402_DOES_NOT_STOP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 1022,
+   "first_caught_by": [
+    "test_http_402_stops_the_channel"
+   ]
+  },
+  {
+   "id": "UNKNOWN_USAGE_DOES_NOT_STOP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 342,
+   "first_caught_by": [
+    "test_unknown_usage_stops_the_channel"
+   ]
+  },
+  {
+   "id": "SLOTS_ARE_COUNTED_WITHOUT_THE_CLAIM_LOG",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 104,
+   "first_caught_by": [
+    "test_deleting_a_stopped_slot_refuses_rather_than_releasing_it"
+   ]
+  },
+  {
+   "id": "THE_ANCHOR_IS_INSIDE_THE_ROOT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 136,
+   "first_caught_by": [
+    "test_deleting_the_root_and_its_copy_is_still_refused_by_the_anchor"
+   ]
+  },
+  {
+   "id": "THE_STOP_IS_READ_FROM_THE_TERMINAL",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 70,
+   "first_caught_by": [
+    "test_a_resealed_terminal_that_drops_its_stop_is_refused"
+   ]
+  },
+  {
+   "id": "A_LEDGER_ROOT_MAY_BE_AN_ALIAS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 38,
+   "first_caught_by": [
+    "test_a_ledger_root_reached_through_a_symlink_is_refused"
+   ]
+  },
+  {
+   "id": "THE_SEC_ROOT_IS_COMPARED_AS_TEXT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 36,
+   "first_caught_by": [
+    "test_the_sec_ledger_root_respelt_is_still_the_sec_ledger_root"
+   ]
+  },
+  {
+   "id": "THE_POLICY_IS_READ_LAST_KEY_WINS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 38,
+   "first_caught_by": [
+    "test_a_duplicate_key_in_the_policy_is_refused"
+   ]
+  },
+  {
+   "id": "THE_APPROVAL_IS_READ_LAST_KEY_WINS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 38,
+   "first_caught_by": [
+    "test_a_duplicate_key_in_the_approval_body_is_refused"
+   ]
+  },
+  {
+   "id": "AN_EDITED_APPROVAL_IS_ACCEPTED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 36,
+   "first_caught_by": [
+    "test_an_edited_approval_comment_is_refused"
+   ]
+  },
+  {
+   "id": "THE_APPROVED_RECEIPT_IS_NOT_CHECKED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 36,
+   "first_caught_by": [
+    "test_a_verification_the_approval_does_not_name_is_refused"
+   ]
+  },
+  {
+   "id": "THE_SCOPE_IGNORES_THE_REQUEST_DIGEST",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 198,
+   "first_caught_by": [
+    "test_a_request_the_approval_does_not_name_claims_nothing"
+   ]
+  },
+  {
+   "id": "THE_LEDGER_TRUSTS_THE_CALLER_S_GRANTS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 266,
+   "first_caught_by": [
+    "test_the_ledger_refuses_an_unnamed_request_whatever_grants_a_caller_passes"
+   ]
+  },
+  {
+   "id": "THE_RECEIPT_NEED_NOT_BIND_THE_SNAPSHOT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 36,
+   "first_caught_by": [
+    "test_a_receipt_that_does_not_bind_the_snapshot_is_refused"
+   ]
+  },
+  {
+   "id": "A_SEND_NEED_NOT_BE_COUNTED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 98,
+   "first_caught_by": [
+    "test_the_transport_refuses_outside_wb3"
+   ]
+  },
+  {
+   "id": "THE_SOURCE_IS_NOT_REBUILT_FROM_THE_FILING",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 74,
+   "first_caught_by": [
+    "test_a_request_changed_after_preparation_is_refused"
+   ]
+  },
+  {
+   "id": "A_CONTEXT_OVERRUN_DOES_NOT_STOP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 120,
+   "first_caught_by": [
+    "test_a_context_overrun_stops_the_channel"
+   ]
+  },
+  {
+   "id": "A_LIVE_CALL_MAY_BE_PLANNED_WITHOUT_THE_REFERENCE_TOKENIZER",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 262,
+   "first_caught_by": [
+    "test_a_live_call_is_not_planned_without_the_reference_tokenizer"
+   ]
+  },
+  {
+   "id": "THE_LIMIT_IS_ANSWERED_BEFORE_THE_REFERENCE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 232,
+   "first_caught_by": [
+    "test_a_count_disagreement_is_the_stop_named_even_past_the_limit"
+   ]
+  },
+  {
+   "id": "THE_FIXTURES_OVERWRITE_A_REAL_ALLOWANCE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_the_suite_refuses_to_run_beside_an_existing_allowance"
+   ]
+  },
+  {
+   "id": "THE_FIXTURES_REMOVE_WHAT_THEY_DID_NOT_WRITE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_a_fixture_replaced_by_other_bytes_is_not_removed"
+   ]
+  },
+  {
+   "id": "GH_GETS_THE_WHOLE_ENVIRONMENT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_the_environment_is_narrowed"
+   ]
+  },
+  {
+   "id": "THE_RUNNER_GOES_ON_PAST_A_STOP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 1938,
+   "first_caught_by": [
+    "test_the_runner_stops_at_a_stop_and_registers_nothing"
+   ]
+  },
+  {
+   "id": "A_REQUEST_NEED_NOT_BE_ITS_METRIC_S_TYPE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 60,
+   "first_caught_by": [
+    "test_a_request_is_held_to_its_own_metric_s_contract"
+   ]
+  },
+  {
+   "id": "AN_E01_ANSWER_IS_HELD_TO_D04_S_CONTRACT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 22,
+   "first_caught_by": [
+    "test_a_checked_answer_registers_and_the_route_counts_it"
+   ]
+  },
+  {
+   "id": "AN_E01_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 32,
+   "first_caught_by": [
+    "test_a_checked_answer_registers_and_the_route_counts_it"
+   ]
+  },
+  {
+   "id": "THE_RUNNER_REGISTERS_AN_INCOMPLETE_POSITION",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 624,
+   "first_caught_by": [
+    "test_a_request_that_failed_without_a_stop_leaves_its_position_unregistered"
+   ]
+  },
+  {
+   "id": "A_D02_ANSWER_IS_HELD_TO_E01_S_CONTRACT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 160,
+   "first_caught_by": [
+    "test_a_checked_answer_registers_and_the_route_reads_it"
+   ]
+  },
+  {
+   "id": "A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 240,
+   "first_caught_by": [
+    "test_a_checked_answer_registers_and_the_route_reads_it"
+   ]
+  },
+  {
+   "id": "THE_SEND_DOES_NOT_ASK_WHICH_PROCESS_RESERVED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 222,
+   "first_caught_by": [
+    "test_the_send_holds_each_part_of_the_reservation_on_its_own"
+   ]
+  },
+  {
+   "id": "THE_SEND_DOES_NOT_ASK_WHICH_OWNER_RESERVED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 218,
+   "first_caught_by": [
+    "test_the_send_holds_each_part_of_the_reservation_on_its_own"
+   ]
+  },
+  {
+   "id": "THE_SEND_DOES_NOT_ASK_WHICH_EXECUTION_RESERVED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 212,
+   "first_caught_by": [
+    "test_the_send_holds_each_part_of_the_reservation_on_its_own"
+   ]
+  },
+  {
+   "id": "THE_SEND_ACCEPTS_MORE_THAN_ONE_MARKER",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 226,
+   "first_caught_by": [
+    "test_the_send_holds_each_part_of_the_reservation_on_its_own"
+   ]
+  },
+  {
+   "id": "THE_SEND_DOES_NOT_ASK_WHICH_PLAN_WAS_MARKED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 220,
+   "first_caught_by": [
+    "test_the_send_holds_each_part_of_the_reservation_on_its_own"
+   ]
+  },
+  {
+   "id": "THE_SEND_DOES_NOT_ASK_WHICH_TRANSPORT_WAS_MARKED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 214,
+   "first_caught_by": [
+    "test_the_send_holds_each_part_of_the_reservation_on_its_own"
+   ]
+  },
+  {
+   "id": "A_LIVE_LEDGER_MAY_BE_ANYWHERE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 276,
+   "first_caught_by": [
+    "test_a_live_ledger_outside_the_granted_root_is_refused"
+   ]
+  },
+  {
+   "id": "A_LEDGER_FOR_ANOTHER_ALLOWANCE_IS_USED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 70,
+   "first_caught_by": [
+    "test_a_ledger_for_another_allowance_is_refused_before_a_slot"
+   ]
+  },
+  {
+   "id": "NO_CUMULATIVE_LIMIT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 136,
+   "first_caught_by": [
+    "test_the_third_call_is_refused_before_a_slot"
+   ]
+  },
+  {
+   "id": "A_CALLERS_ALLOWANCE_IS_TRUSTED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 54,
+   "first_caught_by": [
+    "test_a_wider_mapping_than_the_authority_bound_is_refused"
+   ]
+  },
+  {
+   "id": "THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 106,
+   "first_caught_by": [
+    "test_the_adapter_hands_bytes_only_to_the_named_type"
+   ]
+  },
+  {
+   "id": "NO_SOURCE_CHECK_AT_THE_SOCKET",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 430,
+   "first_caught_by": [
+    "test_a_request_that_stops_rebuilding_never_reaches_the_opener"
+   ]
+  },
+  {
+   "id": "NO_GITHUB_RECHECK_BEFORE_THE_SOCKET",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 1200,
+   "first_caught_by": [
+    "test_the_approval_is_rechecked_on_github_before_the_socket"
+   ]
+  },
+  {
+   "id": "RECORDED_BYTES_ARE_ONLY_REFUSED_AFTER_THE_CLAIM",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 1154,
+   "first_caught_by": [
+    "test_recorded_bytes_cannot_run_live"
+   ]
+  },
+  {
+   "id": "A_SECOND_TRANSPORT_CALLER",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 6,
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ]
+  },
+  {
+   "id": "REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 568,
+   "first_caught_by": [
+    "test_every_request_answered_registers_and_a_run_can_read_it"
+   ]
+  },
+  {
+   "id": "A_FAILED_SLOT_MAY_BE_REGISTERED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 266,
+   "first_caught_by": [
+    "test_a_failed_slot_cannot_complete_an_assessment"
+   ]
+  },
+  {
+   "id": "THE_CONTROLLER_BRANCH_IS_ABSENT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 26,
+   "first_caught_by": [
+    "setUpClass"
+   ]
+  },
+  {
+   "id": "PLANS_MAY_NOT_KEEP_AN_UNAVAILABLE_PRICE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 58,
+   "first_caught_by": [
+    "test_the_third_call_is_refused_before_a_slot"
+   ]
+  },
+  {
+   "id": "A_MAPPING_IS_NOT_HELD_TO_THE_FILE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 54,
+   "first_caught_by": [
+    "test_a_mapping_that_differs_anywhere_is_refused"
+   ]
+  },
+  {
+   "id": "A_LEDGER_A_MAPPING_DESCRIBED_MAY_CLAIM",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 38,
+   "first_caught_by": [
+    "test_a_live_ledger_a_mapping_described_claims_nothing"
+   ]
+  },
+  {
+   "id": "THE_DIGEST_IS_ISSUE_28_S_SEMANTIC_ONE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 38,
+   "first_caught_by": [
+    "test_a_digest_covers_every_byte_a_call_sends"
+   ]
+  },
+  {
+   "id": "THE_HOOK_RELEASES_BYTES_WITHOUT_A_COUNTED_SEND",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 152,
+   "first_caught_by": [
+    "test_the_adapter_releases_no_bytes_outside_a_counted_send"
+   ]
+  },
+  {
+   "id": "THE_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 202,
+   "first_caught_by": [
+    "test_emptying_the_root_but_its_binding_refuses_rather_than_resetting"
+   ]
+  },
+  {
+   "id": "A_LIVE_CONFIRMATION_NEEDS_NO_CALLS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 50,
+   "first_caught_by": [
+    "test_a_live_confirmation_needs_the_counted_call_that_answered_it"
+   ]
+  },
+  {
+   "id": "A_LIVE_REVIEW_NEEDS_NO_CALLS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 288,
+   "first_caught_by": [
+    "test_a_live_review_needs_the_counted_call_that_answered_it"
+   ]
+  },
+  {
+   "id": "A_LIVE_ASSESSMENT_NEEDS_NO_CALLS",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 234,
+   "first_caught_by": [
+    "test_a_live_assessment_needs_the_counted_calls_that_answered_it"
+   ]
+  },
+  {
+   "id": "A_COUNTED_CALL_NEED_NOT_BE_LIVE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 58,
+   "first_caught_by": [
+    "test_a_live_confirmation_needs_the_counted_call_that_answered_it"
+   ]
+  },
+  {
+   "id": "A_COUNTED_CALL_NEED_NOT_HAVE_ANSWERED_WITH_THIS_OUTPUT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 1817,
+   "first_caught_by": [
+    "test_the_runner_calls_each_request_once_and_registers_the_position"
+   ]
+  },
+  {
+   "id": "A_LIVE_REGISTRATION_NEEDS_NO_REGISTERED_APPROVAL",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 1817,
+   "first_caught_by": [
+    "test_the_runner_calls_each_request_once_and_registers_the_position"
+   ]
+  },
+  {
+   "id": "A_NESTED_ANSWER_ESCAPES_THE_CALL_PATH",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 74,
+   "first_caught_by": [
+    "test_an_answer_nested_past_the_parser_is_a_failed_call_with_a_terminal"
+   ]
+  },
+  {
+   "id": "A_NESTED_RESPONSE_ESCAPES_THE_CALL_PATH",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 64,
+   "first_caught_by": [
+    "test_a_response_nested_past_the_parser_is_counted_and_stops_with_a_terminal"
+   ]
+  },
+  {
+   "id": "AN_OBSERVATION_MISMATCH_IS_RAISED_PAST_THE_RESPONSE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 118,
+   "first_caught_by": [
+    "test_a_transport_account_that_disagrees_stops_with_the_response_kept"
+   ]
+  },
+  {
+   "id": "AN_OBSERVATION_MISMATCH_DOES_NOT_STOP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 118,
+   "first_caught_by": [
+    "test_a_transport_account_that_disagrees_stops_with_the_response_kept"
+   ]
+  },
+  {
+   "id": "AN_E01_OR_D02_SOURCE_IS_NOT_REBUILT",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 98,
+   "first_caught_by": [
+    "test_an_edited_request_or_source_is_refused_before_a_slot"
+   ]
+  },
+  {
+   "id": "AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 96,
+   "first_caught_by": [
+    "test_an_edited_request_or_source_is_refused_before_a_slot"
+   ]
+  },
+  {
+   "id": "THE_CLAIMS_NEED_NOT_CHAIN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_the_claims_must_name_each_other_in_order"
+   ]
+  },
+  {
+   "id": "AN_EDITED_BINDING_IS_ACCEPTED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_an_edited_binding_or_anchor_is_refused"
+   ]
+  },
+  {
+   "id": "AN_EDITED_ANCHOR_IS_ACCEPTED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_an_edited_binding_or_anchor_is_refused"
+   ]
+  },
+  {
+   "id": "THE_APPROVER_IS_A_LOGIN_ONLY",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_the_approval_is_the_approver_s_own_post"
+   ]
+  },
+  {
+   "id": "A_MODEL_APPROVAL_MAY_BE_POSTED_THROUGH_AN_APP",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 2,
+   "first_caught_by": [
+    "test_the_approval_is_the_approver_s_own_post"
+   ]
+  },
+  {
+   "id": "UNBOUND_CHECKOUT_CODE_MAY_RUN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 200,
+   "first_caught_by": [
+    "test_an_unbound_checkout_module_is_refused_before_a_claim"
+   ]
+  },
+  {
+   "id": "CHECKOUT_BYTECODE_MAY_RUN",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 134,
+   "first_caught_by": [
+    "test_code_read_from_the_checkout_s_bytecode_is_refused"
+   ]
+  },
+  {
+   "id": "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 1,
+   "parallel_seconds": 134,
+   "first_caught_by": [
+    "test_code_read_from_the_checkout_s_bytecode_is_refused"
+   ]
+  },
+  {
+   "id": "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 0,
+   "parallel_seconds": 54,
+   "first_caught_by": [
+    "test_a_transport_account_that_disagrees_stops_with_the_response_kept"
+   ]
+  },
+  {
+   "id": "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 12,
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ]
+  },
+  {
+   "id": "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE",
+   "same": true,
+   "differs_in": [],
+   "parallel_copy": 2,
+   "parallel_seconds": 12,
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ]
+  }
+ ],
+ "same": 78,
+ "problems": [],
+ "accepted": true,
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

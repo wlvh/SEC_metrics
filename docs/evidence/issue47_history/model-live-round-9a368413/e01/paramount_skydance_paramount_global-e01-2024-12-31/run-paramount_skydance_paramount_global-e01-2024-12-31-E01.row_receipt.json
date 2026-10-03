@@ -1,0 +1,54 @@
+{
+ "evidence": [],
+ "receipt": {
+  "calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "evidence_count": 0,
+  "evidence_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+  "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+  "primary_metric_id": "E01",
+  "production_authorized": false,
+  "receipt_id": "sha256:ee51ad5654d852fbc5bd44cf3f81b6f8ad70ea848bb26f6fd065ad5c2c898f66",
+  "record_type": "HISTORICAL_PERIOD_ROW_RECEIPT",
+  "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:9b418473b8b617ec179d61e168953bb105fef7f0bd986c52b798e3cae71e3230",
+  "row_hash": "sha256:df799c8516e6970c83b945c6075be513dd0ab09be94e0f9dd2bd7674e7f47079",
+  "run_id": "run:historical-period:1c8a112327a8eec750c9627a8664a02a6986ebe698f0c05500c7ad91b8301ac2",
+  "run_status": "FROZEN",
+  "semantic_assessment_mode": "LIVE",
+  "source_required_metric_ids": [
+   "E01"
+  ],
+  "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+  "status": "FROZEN_CANDIDATE"
+ },
+ "record_type": "HISTORICAL_PERIOD_ROW_BUNDLE",
+ "row": {
+  "accession": "",
+  "cik": "813828",
+  "company": "Paramount Skydance / Paramount Global",
+  "concept_or_section": "",
+  "confidence": "",
+  "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"period_selection_id\": \"sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31\", \"requested_fiscal_year\": null, \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2024, \"shared_claim_group_id\": \"merger_acquisition_items\"}, \"source_reference_ids\": [\"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5\", \"sha256:bd844e503713bd57c9fa596fdd49f9d874d6a245ce9474e3db0e0b56c866afcb\", \"sha256:50a73435b6af7951327bc709fe26701203be7bfa188f301b054fa5a1fd4c7172\", \"sha256:47bee06712d8a4b3c58a863591fd7a512da5865d5be8f9300135dc24082e1874\", \"sha256:7c60b144e746530cd9eea4c8454ec3fd746f7ae8d110d866807d8c1c45d0296f\", \"sha256:acd7de24c267ff053a382b6be77843612e72fff1f3c201e089c9dc01d2f7ee5b\", \"sha256:2907743a405076d34802da9378f8f6dad7f624a10909f90c7de858b8c21fc7e2\", \"sha256:7ca2f12ad25ad8c0ca6eaac086376342ccef0d891a07ae073692db6ca6adffd2\", \"sha256:84726a89731fb7258e401161da6035d98eccfebd47534a506bef19821bf99e82\", \"sha256:30bf4dafa9249114ed14b5d6a5725ac4c560da0e8938a56915a585284d4f8469\", \"sha256:04f7c26aac93a3486c134107989447b6f54c1b46bcb9163890d79e6fa098df5a\", \"sha256:a8a650bf1fa1706754ef576c88cea35241153e8644d36ea6275d9fb72a5507b0\", \"sha256:9c72986ca5cf0c5b1052350631994a048b471dd7332c1f9226bed839c2aed09e\", \"sha256:b11a670db32772bb1ae4baa67b21ad5904335a28f6d8b4bb8d5a46d0989e51e9\", \"sha256:baf51cf4965585cbc807e38aa18c4ee62456ac4ecb3fea54ec8c5fdc1f3d5fed\", \"sha256:d0eb2774b111e9b889981959463935793a5c69985a8d75c4dd72bb3549d62c77\", \"sha256:da00e470ca0e7d9a9c96734022ab099637e3ea082be8cc8275055af3341b3d1c\", \"sha256:e4aafaf7496af957b7d18e53de4f121279177ca21182027c97be579ef4502d4a\", \"sha256:13093750802fc9cfcc25923c5ed13d6b28b995bd505fe6a92e2c137e1746b472\", \"sha256:189936e563d0c17a5a107f68668982889e449253d212bb3a3ded0fc0032fde69\", \"sha256:459afde231b066b5bce4fcc9a28746895ab2bfbfacbf189ff5abc3bed5123575\", \"sha256:8187018be2c83e51fbad1297728207115dcebb157bea7bfa0d78daf4dacd827d\", \"sha256:1a6c22965ad19ccbf9c7b45087a01838c44dc67675469deedd1044dd1b5b0b70\", \"sha256:206be43bed1e23fc15c04a48861f7b0c5e20dabe07974975ae15e15d2c22a29f\", \"sha256:105cc75034abf0abde6b491ad9115a664872f3ac3509431b140cff0cccdd2ea1\", \"sha256:9f0062ce858bd3502f337db1b0bedda4ee639ee2244cd2a460d5342664836c32\", \"sha256:c90c466936ba3972f3b7e8f32c90803b84d79a3811f484c9fb6af6a3dd1359d0\", \"sha256:3d00399d7e9a4493fead3928a3fc2e527dab8375a75358b31bf5d14020244414\", \"sha256:9b0d87240be7eca3ad51dbd11f600ab6d5fca0425cc4d0ba6621d13c6e601da5\", \"sha256:c5cdaecf99be93cf4b3156085de2b68d84363447969bcdd7d969b5260bca1241\", \"sha256:25f65cacece1a9ced430202178f58573b96d5cdad7bfd8cab974131c2d0910bc\", \"sha256:5f2e4eb68dae172392e2078256b4c9d783189434bd582f311fadfb23f4df2a43\", \"sha256:eb089b5dfa0c8aa69c4f2543de59029abab5941d90b35b752532ff5374ef9e5c\", \"sha256:2838d00c004fc44f2c4ab79bc0d5179105a834fce2585d1ef0ba56f0f660a9eb\", \"sha256:ff54b48fc6becc96ca6fad6243966249eba519e30f6c42955a8ff65229f5f3e5\", \"sha256:3b819ff9122210d0aaad5e7de329d84f9476a57a121c805c70dffc885102caae\", \"sha256:9ea650b3fbf858b15897800ce7c7c7077aebcf43f94bffba16c84b392e74bc73\", \"sha256:e556a35d26beb390f74ccf70a4a9440ff85d5957873794068462e54de2c04f49\", \"sha256:2ea64671516cb84167d90eb0f5dd0941b285d9f267856ebff90e59da188677fe\", \"sha256:bbc860f0e29220717acc565b9f49532d193e96e1856c1d90cf93428697c4d49c\", \"sha256:64424ae53f8fddb99eb8cb26fbda62c2fd5b90f9fb602f8d60fb992efd032e24\", \"sha256:0e7abb23c8b2e67727f941c243e5d17c86bcfc9d9db77cf05f0fecc3b301a859\", \"sha256:f9bec7cd502e5e95ca8601024f6a87d50cf2008b0d847690a61e0827dcc44ebc\", \"sha256:9c8fde24a7d3ce4fd288f17ddcac9f5cc33e8e5cca0d16e68123ec8418359449\", \"sha256:176c4fc402c0559f253f36cc6bc960216b9fe8c6fa5e717e62077409afad1e97\", \"sha256:98bdadb31c5bdacbcba891e3af693f519867cfe9ff43bd46ede652a1317df75b\"], \"target_report_end\": \"2024-12-31\"}",
+  "filed_date": "2025-02-26",
+  "fiscal_period": "TARGET_PERIOD",
+  "fiscal_year": "2024",
+  "form": "10-K",
+  "formula": "",
+  "metric_id": "E01",
+  "metric_name": "M&A announcements (content-confirmed)",
+  "notes": "Count of 8-K items filed under 1.01, 2.01 or 8.01 in the fiscal-year event window whose own text was confirmed to report a merger, acquisition, disposition or business combination to which the registrant or a subsidiary is party; financing agreements, tender offers for the registrant's own securities, repurchases, compensation and shareholder agreements are not counted. A window with an item whose confirmation is not registered, or whose own text does not settle it, is withheld by name. No accepted value is asserted for this target period. Native state: WITHHELD; reason: HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT. Pinned historical period; values come only from the sources named in the evidence, as selected for this period. No latest-restated view is applied.",
+  "period_end": "2024-12-31",
+  "period_start": "2024-01-01",
+  "source_class": "8K_ITEM",
+  "status": "WITHHELD",
+  "unit": "count",
+  "value": ""
+ },
+ "schema_version": 1
+}

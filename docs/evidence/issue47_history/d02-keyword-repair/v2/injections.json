@@ -1,0 +1,302 @@
+{
+ "AGAINST_THE_REGISTRANT_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "ANY_SEPARATOR_IS_A_SERIES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_separator_without_a_coordinated_series",
+  "failed_cases": [
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+   "test_a_separator_without_a_coordinated_series",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "AN_OXFORD_COMMA_IS_TWO_SEPARATORS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_oxford_comma_is_one_separator",
+  "failed_cases": [
+   "test_a_list_member_in_a_paragraph_without_a_matter_is_left_out",
+   "test_an_oxford_comma_is_one_separator",
+   "test_each_relation_keeps_the_paragraph",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held",
+   "test_the_keyword_s_phrase_names_no_party",
+   "test_the_record_says_why"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_CLAUSE_BEFORE_THE_KEYWORD_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_clause_before_the_keyword_in_its_item",
+  "failed_cases": [
+   "test_a_clause_before_the_keyword_in_its_item"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_CLAUSE_IN_THE_KEYWORD_S_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_keyword_s_phrase_is_no_clause",
+  "failed_cases": [
+   "test_the_keyword_s_phrase_is_no_clause"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_COORDINATOR_INTO_THE_GOVERNING_WORDS_COUNTS_WITH_WORDS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+  "failed_cases": [
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_FULL_STOP_IS_READ_AS_WORDS_AFTER_THE_KEYWORD": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+  "failed_cases": [
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+   "test_a_settlement_with_a_taxing_authority_is_not_a_matter"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_LIST_ITEM_MAY_BE_THE_REGISTRANT_ACTING": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_series_governed_by_the_registrant_as_subject",
+  "failed_cases": [
+   "test_a_series_governed_by_the_registrant_as_subject"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_PARTY_IN_THE_KEYWORD_S_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_keyword_s_phrase_names_no_party",
+  "failed_cases": [
+   "test_the_keyword_s_phrase_names_no_party"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "A_PREDICATE_AFTER_THE_SERIES_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_series_that_is_the_subject_of_a_predicate",
+  "failed_cases": [
+   "test_a_series_that_is_the_subject_of_a_predicate",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 1
+ },
+ "BROUGHT_BY_OR_AGAINST_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 0
+ },
+ "EXPOSED_TO_OR_NAMED_IN_IS_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "SUITS_AND_ARBITRATION_ARE_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_relation_keeps_the_paragraph",
+  "failed_cases": [
+   "test_each_relation_keeps_the_paragraph",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_FIRST_ITEM_IS_A_LIST_MEMBER": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_first_item_of_a_sentence_is_governed_by_it",
+  "failed_cases": [
+   "test_the_first_item_of_a_sentence_is_governed_by_it"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_GOVERNING_THE_SERIES_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_series_governed_by_the_registrant_as_subject",
+  "failed_cases": [
+   "test_a_series_governed_by_the_registrant_as_subject",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_HEADING_THE_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_series_governed_by_the_registrant_as_subject",
+  "failed_cases": [
+   "test_a_series_governed_by_the_registrant_as_subject"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "THE_REGISTRANT_IN_THE_KEYWORD_S_PHRASE_IS_ALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_keyword_s_phrase_names_not_the_registrant",
+  "failed_cases": [
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held",
+   "test_the_keyword_s_phrase_names_not_the_registrant"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "VERSION_ONE_S_EVIDENCE_ALONE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_two_reported_sentences_stay_by_structure_alone",
+  "failed_cases": [
+   "test_a_clause_before_the_keyword_in_its_item",
+   "test_a_coordinator_into_the_governing_words_counts_for_the_keyword_alone",
+   "test_a_separator_without_a_coordinated_series",
+   "test_a_series_governed_by_the_registrant_as_subject",
+   "test_a_series_that_is_the_subject_of_a_predicate",
+   "test_no_stated_matter_is_left_out_and_the_leave_count_is_held",
+   "test_the_first_item_of_a_sentence_is_governed_by_it",
+   "test_the_keyword_s_phrase_is_no_clause",
+   "test_the_keyword_s_phrase_names_no_party",
+   "test_the_keyword_s_phrase_names_not_the_registrant",
+   "test_the_two_reported_sentences_stay_by_structure_alone"
+  ],
+  "file": "scripts/vnext/d02_item_8_category_mentions.py",
+  "modules": [
+   "tests.vnext.test_d02_item_8_category_mentions"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 0
+ },
+ "all_caught": true
+}

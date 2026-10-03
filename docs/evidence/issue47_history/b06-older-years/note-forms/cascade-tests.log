@@ -1,0 +1,31 @@
+test_an_installed_authority_change_is_not_a_source_gap (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_an_installed_authority_change_is_not_a_source_gap)
+The refusal that becomes a Result is separated from the one that must not. ... ok
+test_an_unwired_metric_is_refused_by_name (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_an_unwired_metric_is_refused_by_name)
+The route says which metric it is for rather than answering for any. ... ok
+test_five_companies_reach_five_different_stages (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_five_companies_reach_five_different_stages)
+The cascade is a cascade, not one reader with a period argument. ... ok
+test_one_company_two_periods_two_answers (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_one_company_two_periods_two_answers)
+A pinned period whose material is missing says so, and keeps going. ... ok
+test_the_copy_answers_what_the_ordinary_chain_answers (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_copy_answers_what_the_ordinary_chain_answers)
+The only check that can find a transcription error in this module. ... ok
+test_the_last_stage_alone_would_have_answered_differently (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_last_stage_alone_would_have_answered_differently)
+Why seven stages were wired rather than the one that always answers. ... ok
+test_the_run_factory_routes_b06_here (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_run_factory_routes_b06_here)
+Wiring the component without routing it delivers nothing. ... ok
+test_the_source_walk_reads_the_original_input_not_the_relabelled_one (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_source_walk_reads_the_original_input_not_the_relabelled_one)
+One pinned input substituted for two ordinary anchors is a bug. ... ok
+test_the_two_reconciled_grammars_are_still_one_algorithm (tests.vnext.test_historical_debt_results.HistoricalDebtCascadeTest.test_the_two_reconciled_grammars_are_still_one_algorithm)
+The licence for one implementation serving both, re-derived each run. ... ok
+test_a_subject_policy_this_cascade_has_no_answer_for_stops_here (tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_a_subject_policy_this_cascade_has_no_answer_for_stops_here)
+A third mode must stop, not flow through unexamined. ... ok
+test_the_grammar_is_told_the_real_subject_policy (tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_the_grammar_is_told_the_real_subject_policy)
+Passing the policy through is what lets a stage do its own checking. ... ok
+test_the_stage_it_reaches_was_the_one_recorded_as_unreached (tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_the_stage_it_reaches_was_the_one_recorded_as_unreached)
+The inclusive grammar is exercised by real material after all. ... ok
+test_the_successor_gets_what_the_ordinary_chain_gives_it (tests.vnext.test_historical_debt_results.SuccessorSubjectTest.test_the_successor_gets_what_the_ordinary_chain_gives_it)
+The load-bearing case, and the same one the continuous companies get. ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 216.939s
+
+OK

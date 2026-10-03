@@ -1,0 +1,230 @@
+{
+ "a_threshold_that_was_the_finding": "the first version asked whether anything was taken within forty blocks of a heading, and reported Enphase's '13. COMMITMENTS AND CONTINGENCIES' as unreached. The selector had taken a block fifty-seven blocks into that note. The window was the finding, not the filing, so the distance is now recorded and judged rather than compared to a number.",
+ "and_it_accepts_nothing": "D02 stays out of the acceptance register. The other direction - whether the excerpts that were taken are the right ones - is done for one filing, Pfizer, and it found two wrong blocks there. Knowing no note was missed does not make the set that was taken correct.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "method": "heading-shaped means short, emphasised and not a link - the same shape the route's own note-heading rule uses - and the words come from the approved source definition rather than from the _LEGAL keyword set the proxy uses. For each heading the distance to the next taken block is measured.",
+ "per_filing": {
+  "enphase_energy@2025-12-31": {
+   "blocks_in_declared_ranges": 1715,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 531,
+     "blocks_to_next_taken": 216,
+     "next_taken_block": 747,
+     "section_id": "ITEM_1A",
+     "text": "Risks related to Legal Proceedings and Regulations"
+    },
+    {
+     "block_index": 1445,
+     "blocks_to_next_taken": 1,
+     "next_taken_block": 1446,
+     "section_id": "ITEM_8",
+     "text": "Commitments and Contingencies"
+    },
+    {
+     "block_index": 1958,
+     "blocks_to_next_taken": 57,
+     "next_taken_block": 2015,
+     "section_id": "ITEM_8",
+     "text": "13. COMMITMENTS AND CONTINGENCIES"
+    },
+    {
+     "block_index": 2014,
+     "blocks_to_next_taken": 1,
+     "next_taken_block": 2015,
+     "section_id": "ITEM_8",
+     "text": "Litigation"
+    }
+   ],
+   "excerpts": 18
+  },
+  "ford_motor_company@2025-12-31": {
+   "blocks_in_declared_ranges": 168,
+   "contingency_shaped_headings": [],
+   "excerpts": 53
+  },
+  "lumen_technologies@2025-12-31": {
+   "blocks_in_declared_ranges": 2485,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 571,
+     "blocks_to_next_taken": 164,
+     "next_taken_block": 735,
+     "section_id": "ITEM_1A",
+     "text": "Our pending legal proceedings could have a material adverse impact on us."
+    },
+    {
+     "block_index": 3381,
+     "blocks_to_next_taken": 1,
+     "next_taken_block": 3382,
+     "section_id": "ITEM_8",
+     "text": "Note 17 — Commitments, Contingencies and Other Items"
+    },
+    {
+     "block_index": 3433,
+     "blocks_to_next_taken": null,
+     "next_taken_block": null,
+     "section_id": "ITEM_8",
+     "text": "Contractual Commitments"
+    },
+    {
+     "block_index": 3444,
+     "blocks_to_next_taken": null,
+     "next_taken_block": null,
+     "section_id": "ITEM_8",
+     "text": "Purchase Commitments"
+    }
+   ],
+   "excerpts": 41
+  },
+  "macys@2026-01-31": {
+   "blocks_in_declared_ranges": 1208,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 1790,
+     "blocks_to_next_taken": null,
+     "next_taken_block": null,
+     "section_id": "ITEM_8",
+     "text": "14. Commitments"
+    }
+   ],
+   "excerpts": 3
+  },
+  "marriott_international@2023-12-31": {
+   "blocks_in_declared_ranges": 919,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 1217,
+     "blocks_to_next_taken": 30,
+     "next_taken_block": 1247,
+     "section_id": "ITEM_8",
+     "text": "NOTE 7. COMMITMENTS AND CONTINGENCIES"
+    }
+   ],
+   "excerpts": 8
+  },
+  "marriott_international@2024-12-31": {
+   "blocks_in_declared_ranges": 988,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 1249,
+     "blocks_to_next_taken": 24,
+     "next_taken_block": 1273,
+     "section_id": "ITEM_8",
+     "text": "NOTE 7. COMMITMENTS AND CONTINGENCIES"
+    }
+   ],
+   "excerpts": 10
+  },
+  "marriott_international@2025-12-31": {
+   "blocks_in_declared_ranges": 1012,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 1290,
+     "blocks_to_next_taken": 22,
+     "next_taken_block": 1312,
+     "section_id": "ITEM_8",
+     "text": "NOTE 7. COMMITMENTS AND CONTINGENCIES"
+    }
+   ],
+   "excerpts": 11
+  },
+  "paramount_skydance_paramount_global@2025-12-31": {
+   "blocks_in_declared_ranges": 2178,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 3199,
+     "blocks_to_next_taken": 27,
+     "next_taken_block": 3226,
+     "section_id": "ITEM_8",
+     "text": "18) COMMITMENTS AND CONTINGENCIES"
+    },
+    {
+     "block_index": 3200,
+     "blocks_to_next_taken": 26,
+     "next_taken_block": 3226,
+     "section_id": "ITEM_8",
+     "text": "Commitments"
+    }
+   ],
+   "excerpts": 28
+  },
+  "pfizer@2025-12-31": {
+   "blocks_in_declared_ranges": 2580,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 815,
+     "blocks_to_next_taken": 122,
+     "next_taken_block": 937,
+     "section_id": "ITEM_1A",
+     "text": "RISKS RELATED TO GOVERNMENT REGULATION AND LEGAL PROCEEDINGS:"
+    },
+    {
+     "block_index": 3819,
+     "blocks_to_next_taken": 2,
+     "next_taken_block": 3821,
+     "section_id": "ITEM_8",
+     "text": "Note 16. Contingencies and Certain Commitments"
+    }
+   ],
+   "excerpts": 96
+  },
+  "salesforce@2026-01-31": {
+   "blocks_in_declared_ranges": 1431,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 517,
+     "blocks_to_next_taken": 59,
+     "next_taken_block": 576,
+     "section_id": "ITEM_1A",
+     "text": "Our stock price is likely to be volatile and could subject us to litigation."
+    },
+    {
+     "block_index": 1595,
+     "blocks_to_next_taken": 496,
+     "next_taken_block": 2091,
+     "section_id": "ITEM_8",
+     "text": "6. Leases and Other Commitments"
+    }
+   ],
+   "excerpts": 15
+  },
+  "southwest_airlines@2025-12-31": {
+   "blocks_in_declared_ranges": 1327,
+   "contingency_shaped_headings": [
+    {
+     "block_index": 1560,
+     "blocks_to_next_taken": 20,
+     "next_taken_block": 1580,
+     "section_id": "ITEM_8",
+     "text": "4. COMMITMENTS AND CONTINGENCIES"
+    },
+    {
+     "block_index": 1561,
+     "blocks_to_next_taken": 19,
+     "next_taken_block": 1580,
+     "section_id": "ITEM_8",
+     "text": "Commitments"
+    },
+    {
+     "block_index": 1579,
+     "blocks_to_next_taken": 1,
+     "next_taken_block": 1580,
+     "section_id": "ITEM_8",
+     "text": "Contingencies"
+    }
+   ],
+   "excerpts": 25
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_D02_UNREACHED_NOTE_SCAN",
+ "result": "twenty-one headings across eleven filings. Every Commitments and Contingencies note in every filing is reached, at gaps of one to fifty-seven blocks. Three headings are never reached and all three are correct: Macy's '14. Commitments' is purchase obligations for merchandise, outsourcing, software licences and energy supply; Lumen's 'Contractual Commitments' and 'Purchase Commitments' are subsections after Note 17's legal part, which is taken. The four Item 1A headings are risk-factor headings, which belong to D03's scope and not to D02's.",
+ "the_direction_nobody_had_measured": "every D02 reading so far judged the excerpts that were taken. A dropped disclosure is invisible to that. Reading all of a declared range by hand is not feasible for eleven filings - Macy's alone is 1,208 blocks - so this asks a narrower question that can be answered mechanically and does not reuse the selector's own signal: does any filing carry a note heading naming contingencies, legal proceedings, litigation or commitments that the excerpt set never reaches?",
+ "what_this_does_not_establish": "that nothing was dropped. This scan is itself a proxy: it finds heading-shaped blocks containing four words. A contingency disclosure under differently worded heading, or under none, would not be found. What it establishes is narrower and was previously unknown - no contingencies note in any of the eleven filings goes unreached."
+}

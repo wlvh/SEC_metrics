@@ -1,0 +1,277 @@
+{
+ "record_type": "ISSUE_47_COMPANY_HISTORICAL_CONSUMER_CHECK",
+ "company_id": "salesforce",
+ "report_end": "2023-01-31",
+ "positions": [
+  {
+   "metric_id": "B01",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:6009aef7ed06dbed02814bf65c3c6873abf6c36b5648bdffdcf4f00044d64989",
+    "result_id": "sha256:732efcb21ecdce0e28d343dfc19d42017aa924817b2f98c4db24bc0edaf77f1d",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "31352000000",
+    "entities": [
+     "1108524"
+    ],
+    "filings": [
+     "0001108524-23-000011"
+    ],
+    "period": [
+     "2022-02-01",
+     "2023-01-31"
+    ],
+    "period_selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "row_hash": "sha256:46d79f7c6ff646108d9cd6c0e24d7c19a6a964e7d2b52e437f9037151ff0c89c"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:6009aef7ed06dbed02814bf65c3c6873abf6c36b5648bdffdcf4f00044d64989",
+     "result_ids": [
+      "sha256:732efcb21ecdce0e28d343dfc19d42017aa924817b2f98c4db24bc0edaf77f1d"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:6009aef7ed06dbed02814bf65c3c6873abf6c36b5648bdffdcf4f00044d64989",
+     "result_ids": [
+      "sha256:732efcb21ecdce0e28d343dfc19d42017aa924817b2f98c4db24bc0edaf77f1d"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:732efcb21ecdce0e28d343dfc19d42017aa924817b2f98c4db24bc0edaf77f1d",
+    "row_hash": "sha256:46d79f7c6ff646108d9cd6c0e24d7c19a6a964e7d2b52e437f9037151ff0c89c",
+    "selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "B02",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:7fce934a6ba0b51fd7f255a06f8351029b5a61e9b91aee1b3b16ce5ea2d0d7d8",
+    "result_id": "sha256:68227e804e4b730e9fed605e48380e6ec087d3df2073d10e005ab29fa7d19d6d",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0.1834516080326136192057979767",
+    "entities": [],
+    "filings": [
+     "0001108524-22-000013",
+     "0001108524-23-000011"
+    ],
+    "period": [
+     "2022-02-01",
+     "2023-01-31"
+    ],
+    "period_selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "row_hash": "sha256:ad6a00a7715ec6988c068561d0baaf4a43cdc87a7070fb0329d092b6cc5f4f85"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:7fce934a6ba0b51fd7f255a06f8351029b5a61e9b91aee1b3b16ce5ea2d0d7d8",
+     "result_ids": [
+      "sha256:68227e804e4b730e9fed605e48380e6ec087d3df2073d10e005ab29fa7d19d6d"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:7fce934a6ba0b51fd7f255a06f8351029b5a61e9b91aee1b3b16ce5ea2d0d7d8",
+     "result_ids": [
+      "sha256:68227e804e4b730e9fed605e48380e6ec087d3df2073d10e005ab29fa7d19d6d"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:68227e804e4b730e9fed605e48380e6ec087d3df2073d10e005ab29fa7d19d6d",
+    "row_hash": "sha256:ad6a00a7715ec6988c068561d0baaf4a43cdc87a7070fb0329d092b6cc5f4f85",
+    "selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "B12",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:19b1f00c2126ac424aa855e823390b887d9c2c68a9b0e2945d1cce011de806ae",
+    "result_id": "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "48600000000",
+    "entities": [],
+    "filings": [
+     "0001108524-23-000011"
+    ],
+    "period": [
+     "2023-01-31",
+     "2023-01-31"
+    ],
+    "period_selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "row_hash": "sha256:c1c0cf03d0346b6f423505cdcf131791aabd4a756586246e3c6527b5d38c0fb3"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:19b1f00c2126ac424aa855e823390b887d9c2c68a9b0e2945d1cce011de806ae",
+     "result_ids": [
+      "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:19b1f00c2126ac424aa855e823390b887d9c2c68a9b0e2945d1cce011de806ae",
+     "result_ids": [
+      "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d",
+    "row_hash": "sha256:c1c0cf03d0346b6f423505cdcf131791aabd4a756586246e3c6527b5d38c0fb3",
+    "selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "C04",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:4471f0ce5b8957747d8cb723782e69951b563de5a3933fdf5f234766d5d15794",
+    "result_id": "sha256:abe7f05cd79b53bbe80c768cb0f98c49f36aa1fda63b7a9c26656e2a9f2558f7",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0",
+    "entities": [],
+    "filings": [
+     "0001108524-22-000010",
+     "0001108524-22-000013",
+     "0001108524-22-000019",
+     "0001108524-22-000030",
+     "0001108524-22-000038",
+     "0001108524-22-000047",
+     "0001108524-22-000049",
+     "0001108524-22-000054",
+     "0001108524-22-000058",
+     "0001108524-22-000059",
+     "0001108524-22-000063",
+     "0001108524-23-000003",
+     "0001108524-23-000011",
+     "0001193125-22-094496",
+     "0001193125-22-214922",
+     "0001193125-23-017661"
+    ],
+    "period": [
+     "2022-02-01",
+     "2023-01-31"
+    ],
+    "period_selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "row_hash": "sha256:83a5309a67b58c7fe506ce57d6ba80e40ab095215183a12637a95af09cafebaa"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:4471f0ce5b8957747d8cb723782e69951b563de5a3933fdf5f234766d5d15794",
+     "result_ids": [
+      "sha256:abe7f05cd79b53bbe80c768cb0f98c49f36aa1fda63b7a9c26656e2a9f2558f7"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:4471f0ce5b8957747d8cb723782e69951b563de5a3933fdf5f234766d5d15794",
+     "result_ids": [
+      "sha256:abe7f05cd79b53bbe80c768cb0f98c49f36aa1fda63b7a9c26656e2a9f2558f7"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:abe7f05cd79b53bbe80c768cb0f98c49f36aa1fda63b7a9c26656e2a9f2558f7",
+    "row_hash": "sha256:83a5309a67b58c7fe506ce57d6ba80e40ab095215183a12637a95af09cafebaa",
+    "selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "D01",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:e0648cfdfaad2bd5768659372bc3d6031a79021c4cd0591e8de88de5e87a5f97",
+    "result_id": "sha256:1c10b0ee056da092f8812bdd42f98d44950b10ecebb08f3ef0526c2453228037",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "Risk Factor Summary\nOperational and Execution Risks\nStrategic and Industry Risks\nLegal and Regulatory Risks\nFinancial Risks\nRisks Related to Owning Our Common Stock\nGeneral Risks\nIf our security measures or those of our third-party data center hosting facilities, cloud computing platform providers or third-party service partners, or the underlying infrastructure of the Internet are breached, and unauthorized access is obtained to a customer’s data, our data or our IT systems, or authorized access is blocked or disabled, our services may be perceived as not being secure, customers may curtail or stop using our services, and we may incur significant reputational harm, legal exposure and liabilities, or a negative financial impact.\nDefects or disruptions in our services could diminish demand for our services and subject us to substantial liability.\nAny interruptions or delays in services from third parties, including data center hosting facilities, cloud computing platform providers and other hardware and software vendors, or from our inability to adequately plan for and manage service interruptions or infrastructure capacity requirements, could impair the delivery of our services and harm our business.\nAs we acquire and invest in companies or technologies, we may not realize the expected business or financial benefits and the acquisitions could prove difficult to integrate, disrupt our business, dilute stockholder value and adversely affect our operating results and the market value of our common stock.\nSupporting our existing and growing customer base could strain our personnel resources and infrastructure, and if we are unable to scale our operations and increase productivity, we may not be able to successfully implement our business plan.\nIf our customers do not renew their subscriptions for our services or if they reduce the number of paying subscriptions at the time of renewal, our revenue and current remaining performance obligation could decline and our business may suffer. If we cannot accurately predict subscription renewals or upgrade rates, we may not meet our revenue targets, which may adversely affect the market price of our common stock.\nPeriodic changes to our sales organization can be disruptive and may reduce our rate of growth.\nOur ability to deliver our services is dependent on the development and maintenance of the infrastructure of the Internet by third parties.\nSales to customers outside the United States expose us to risks inherent in international operations.\nAs more of our sales efforts are targeted at larger enterprise customers, our sales cycle may become more time-consuming and expensive, we may encounter pricing pressure and implementation and configuration challenges, and we may have to delay revenue recognition for some complex transactions, all of which could harm our business and operating results.\nWe may lose key members of our management team or development and operations personnel, and may be unable to attract and retain employees we need to support our operations and growth.\nAny failure in our delivery of high-quality professional and technical support services may adversely affect our relationships with our customers and our financial results.\nThe markets in which we participate are intensely competitive, and if we do not compete effectively, our operating results could be harmed.\nOur efforts to expand our service offerings and to develop and integrate our existing services in order to keep pace with technological developments may not succeed and may reduce our revenue growth rate and harm our business.\nOur continued success depends on our ability to maintain and enhance our brands.\nWe are subject to risks associated with our strategic investments, including partial or complete loss of invested capital. Significant changes in the fair value of this portfolio, including changes in the valuation of our investments in publicly traded and privately held companies, could negatively impact our financial results.\nIf third-party developers and providers do not continue to embrace our technology delivery model and enterprise cloud computing services, or if our customers seek warranties from us for third-party applications, integrations, data and content, our business could be harmed.\nSocial and ethical issues, including the use or capabilities of AI in our offerings, may result in reputational harm and liability.\nOur aspirations and disclosures related to environmental, social and governance (“ESG”) matters expose us to risks that could adversely affect our reputation and performance.\nPrivacy concerns and laws as well as evolving regulation of cloud computing, cross-border data transfer restrictions and other domestic or foreign regulations may limit the use and adoption of our services and adversely affect our business.\nIndustry-specific regulations and other requirements and standards are evolving and unfavorable industry-specific laws, regulations, interpretive positions or standards could harm our business.\nWe have been and may in the future be sued by third parties for various claims, including alleged infringement of proprietary rights.\nAny failure to obtain registration or protection of our intellectual property rights could impair our ability to protect our proprietary technology and our brand, causing us to incur significant expenses and harm our business.\nWe may be subject to risks related to government contracts and related procurement regulations.\nWe are subject to governmental sanctions and export and import controls that could impair our ability to compete in international markets and may subject us to liability if we are not in full compliance with applicable laws.\nBecause we generally recognize revenue from subscriptions for our services over the term of the subscription, downturns or upturns in new business may not be immediately reflected in our operating results.\nIf we experience significant fluctuations in our rate of anticipated growth and fail to balance our expenses with our revenue forecasts, our business could be harmed and the market price of our common stock could decline.\nUnanticipated changes in our effective tax rate and additional tax liabilities and global tax developments may impact our financial results.\nWe are exposed to fluctuations in currency exchange rates that have in the past and could in the future negatively impact our financial results and cash flows from changes in the value of the U.S. Dollar versus local currencies.\nOur debt service obligations, lease commitments and other contractual obligations may adversely affect our financial condition, results of operations and cash flows.\nCurrent and future accounting pronouncements and other financial and nonfinancial reporting standards may negatively impact our financial results.\nOur quarterly results are likely to fluctuate, which may cause the value of our common stock to decline substantially.\nThe market price of our common stock is likely to be volatile and could subject us to litigation.\nProvisions in our amended and restated certificate of incorporation and bylaws and Delaware law might discourage, delay or prevent a change of control of the Company or changes in our management and, therefore, depress the market price of our common stock.\nThe effects of the COVID-19 pandemic and related public health measures have materially affected how we and our customers are operating our businesses, and have in the past materially affected our operating results and cash flows; the duration and extent to which this will impact our future results of operations and cash flows remain uncertain.\nVolatile and significantly weakened global economic conditions have in the past and may in the future adversely affect our industry, business and results of operations.\nNatural disasters and other events beyond our control have in the past and may in the future materially adversely affect us.\nClimate change may have an impact on our business.",
+    "entities": [
+     "1108524"
+    ],
+    "filings": [
+     "0001108524-23-000011"
+    ],
+    "period": [
+     "2022-02-01",
+     "2023-01-31"
+    ],
+    "period_selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "row_hash": "sha256:15c195dc7e3f7f80ff04ec91c4fa25e993156549d0c8f999bc32426527eacc1c"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:e0648cfdfaad2bd5768659372bc3d6031a79021c4cd0591e8de88de5e87a5f97",
+     "result_ids": [
+      "sha256:1c10b0ee056da092f8812bdd42f98d44950b10ecebb08f3ef0526c2453228037"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:e0648cfdfaad2bd5768659372bc3d6031a79021c4cd0591e8de88de5e87a5f97",
+     "result_ids": [
+      "sha256:1c10b0ee056da092f8812bdd42f98d44950b10ecebb08f3ef0526c2453228037"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:1c10b0ee056da092f8812bdd42f98d44950b10ecebb08f3ef0526c2453228037",
+    "row_hash": "sha256:15c195dc7e3f7f80ff04ec91c4fa25e993156549d0c8f999bc32426527eacc1c",
+    "selection_id": "sha256:6bf03dce439b6064d11fb2cbec5ef6cc77616d8714d1901241d3c94ecae14ced",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

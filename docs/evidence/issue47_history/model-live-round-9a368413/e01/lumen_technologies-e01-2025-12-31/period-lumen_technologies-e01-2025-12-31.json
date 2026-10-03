@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "lumen_technologies",
+ "label": "lumen_technologies-e01-2025-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "E01"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 22,
+    "COMPUTED": 4
+   },
+   "seconds": 36.2
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 21.8
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "E01"
+   ],
+   "seconds": 25.0
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 3,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 14.2
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "E01": {
+   "binding_id": "sha256:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+   "data_root": "/workspace/work/issue47-model-native-e01-default/lumen_technologies-e01-2025-12-31/data-lumen_technologies-e01-2025-12-31",
+   "evidence_count": 1,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d",
+    "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+    "status": "FROZEN",
+    "value_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d",
+   "row_hash": "sha256:ee17d41d3898f7ad4691dfa2f65b6be54e35162e78eda2c0915c68ca57b1b2c8",
+   "run_dir": "/workspace/work/issue47-model-native-e01-default/lumen_technologies-e01-2025-12-31/run-lumen_technologies-e01-2025-12-31-E01",
+   "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d",
+    "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+    "status": "FROZEN",
+    "value_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "1"
+  }
+ },
+ "report_end": "2025-12-31",
+ "seconds": 97.9,
+ "selection_id": "sha256:4e797f286321290c4004649ab72a5f75057ce22cc71a65d0827a289518c0c20f",
+ "xbrl_parses": 1
+}

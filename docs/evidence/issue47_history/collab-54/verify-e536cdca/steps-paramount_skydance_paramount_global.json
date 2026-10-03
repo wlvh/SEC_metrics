@@ -1,0 +1,42 @@
+{
+ "export": {
+  "elapsed_seconds": 706.1216617279861,
+  "checkpoint_id": "sha256:a1e80ec1eed177f22ca015944bd48291607be02b72a48f47e23ea91c4712d5af",
+  "sizes_bytes": {
+   "originals": 81109007,
+   "ledger_and_registry": 1478951,
+   "rules": 4238636,
+   "admission": 7062387
+  }
+ },
+ "install": {
+  "elapsed_seconds": 34.383302614995046,
+  "checkpoint_id": "sha256:a1e80ec1eed177f22ca015944bd48291607be02b72a48f47e23ea91c4712d5af",
+  "status": "INSTALLED"
+ },
+ "compute": {
+  "compute_seconds": "1209.541751",
+  "period_request": {
+   "report_end": "2024-12-31",
+   "fiscal_year": null
+  },
+  "metrics": [
+   {
+    "metric_id": "B01",
+    "status": "CANDIDATE_READY"
+   },
+   {
+    "metric_id": "C01",
+    "status": "UPDATE_BLOCKED"
+   },
+   {
+    "metric_id": "C02",
+    "status": "CANDIDATE_READY"
+   },
+   {
+    "metric_id": "D02",
+    "status": "CANDIDATE_READY"
+   }
+  ]
+ }
+}

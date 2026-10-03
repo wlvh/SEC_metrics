@@ -1,0 +1,69 @@
+{
+ "A_MISSING_INDEX_DECLARES_NOTHING_SILENTLY": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_index_not_saved_is_a_limitation_not_an_empty_set",
+  "failed_cases": [
+   "test_an_index_not_saved_is_a_limitation_not_an_empty_set"
+  ],
+  "file": "scripts/vnext/historical_instance_sources.py",
+  "modules": [
+   "tests.vnext.test_historical_instance_sources"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 53
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 53
+ },
+ "THE_CLASS_IS_NOT_TERMINAL": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_capturing_an_instance_declares_nothing_new",
+  "failed_cases": [
+   "test_capturing_an_instance_declares_nothing_new"
+  ],
+  "file": "scripts/vnext/historical_sec_resume.py",
+  "modules": [
+   "tests.vnext.test_historical_instance_sources"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 52
+ },
+ "THE_FRAME_DOES_NOT_TAKE_THE_INSTANCES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_every_saved_index_names_exactly_what_the_reader_reads",
+  "failed_cases": [
+   "test_a_sibling_the_reader_does_not_read_is_not_declared",
+   "test_every_saved_index_names_exactly_what_the_reader_reads",
+   "test_the_saved_instances_are_classified_as_saved"
+  ],
+  "file": "scripts/vnext/historical_source_acquisition.py",
+  "modules": [
+   "tests.vnext.test_historical_instance_sources"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 18
+ },
+ "THE_PRIMARY_IS_DECLARED_AS_AN_INSTANCE": {
+  "caught_by_the_case_written_for_it": false,
+  "expected_case": "test_every_saved_index_names_exactly_what_the_reader_reads",
+  "failed_cases": [],
+  "file": "scripts/vnext/historical_instance_sources.py",
+  "modules": [
+   "tests.vnext.test_historical_instance_sources"
+  ],
+  "returncodes": [
+   0
+  ],
+  "seconds": 54
+ },
+ "all_caught": false
+}

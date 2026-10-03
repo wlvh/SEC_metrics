@@ -1,0 +1,187 @@
+{
+ "record_type": "ISSUE_47_EGRESS_LIVE_CLASS_PROFILE",
+ "run_on": "a runtime tree equal to commit 296ebf30 with both patches applied and minted (rt-new), 2026-09-28 UTC, while the sequential sealing run used another core",
+ "what_ran": "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener: its class fixture and one case, test_the_planned_bytes_go_out_once_and_count_as_charged (one counted send of the smallest D04 request)",
+ "unprofiled_seconds": {
+  "class_fixture": 38.27,
+  "one_send_case": 89.98
+ },
+ "profiled_seconds": {
+  "class_fixture": 90.25,
+  "one_send_case": 203.48,
+  "whole_run": 295.48
+ },
+ "profiler_overhead": 2.28,
+ "calls_per_send": {
+  "validate": 5,
+  "pinned_native_source (source rebuilt from the saved filing)": 5,
+  "pinned_requests (request grouping, reference tokenizer)": 5
+ },
+ "where_a_validate_goes_profiled": {
+  "source_rebuild_from_the_saved_filing": "prepare_historical_d04_semantic_source 188.5 s over 7 calls (26.9 s each): annual input with 7 XBRL parses (8.9 s), fiscal-year label inspection (5.8 s), going-concern inspection (5.4 s), text document (2.9 s), native units (6.4 s); html.parser alone 106.7 s of the run",
+  "request_grouping": "pinned_requests 77.1 s over 7 calls (11.0 s each): measured_groups tokenizes the whole group's prompt once per unit it adds - 135 encodes, 49.9 s",
+  "other": "authority re-hash (_check) 2.0 s over 12 calls; saved-source proofs 5.6 s over 26 calls"
+ },
+ "functions": [
+  {
+   "function": "execute_historical_semantic",
+   "file": "scripts/vnext/historical_model_egress.py",
+   "calls": 1,
+   "cumulative_seconds_profiled": 203.3
+  },
+  {
+   "function": "validate",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 5,
+   "cumulative_seconds_profiled": 201.8
+  },
+  {
+   "function": "pinned_native_source",
+   "file": "scripts/vnext/historical_semantic_results.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 191.7
+  },
+  {
+   "function": "prepare_historical_d04_semantic_source",
+   "file": "scripts/vnext/historical_semantic_source.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 188.5
+  },
+  {
+   "function": "source_check",
+   "file": "scripts/vnext/historical_model_egress.py",
+   "calls": 2,
+   "cumulative_seconds_profiled": 83.1
+  },
+  {
+   "function": "pinned_requests",
+   "file": "scripts/vnext/historical_semantic_results.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 77.1
+  },
+  {
+   "function": "measured_groups",
+   "file": "scripts/vnext/continuous_request_context.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 71.9
+  },
+  {
+   "function": "prepare_historical_annual_input",
+   "file": "scripts/vnext/historical_annual_input.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 62.4
+  },
+  {
+   "function": "parse_accession_xbrl_source",
+   "file": "scripts/vnext/deterministic_router.py",
+   "calls": 49,
+   "cumulative_seconds_profiled": 56.0
+  },
+  {
+   "function": "measure_request",
+   "file": "scripts/vnext/continuous_request_context.py",
+   "calls": 135,
+   "cumulative_seconds_profiled": 53.2
+  },
+  {
+   "function": "_native_units",
+   "file": "scripts/vnext/r6_semantic_source.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 44.5
+  },
+  {
+   "function": "transport_payload",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 1,
+   "cumulative_seconds_profiled": 39.3
+  },
+  {
+   "function": "inspect_fiscal_year_labels",
+   "file": "scripts/vnext/fiscal_year_labels.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 39.3
+  },
+  {
+   "function": "build_plan",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 1,
+   "cumulative_seconds_profiled": 39.0
+  },
+  {
+   "function": "prepare_historical_requests",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 1,
+   "cumulative_seconds_profiled": 39.0
+  },
+  {
+   "function": "planned_request_digests",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 1,
+   "cumulative_seconds_profiled": 38.8
+  },
+  {
+   "function": "inspect_going_concern_source",
+   "file": "scripts/vnext/going_concern_source.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 37.6
+  },
+  {
+   "function": "build_text_document",
+   "file": "scripts/vnext/text_coverage.py",
+   "calls": 7,
+   "cumulative_seconds_profiled": 20.6
+  },
+  {
+   "function": "prepare_successor_invocation_authority",
+   "file": "scripts/vnext/invocation_control.py",
+   "calls": 1,
+   "cumulative_seconds_profiled": 12.1
+  },
+  {
+   "function": "verify_ordinary_source_proofs",
+   "file": "scripts/vnext/ordinary_source_authority.py",
+   "calls": 26,
+   "cumulative_seconds_profiled": 5.6
+  },
+  {
+   "function": "_check",
+   "file": "scripts/vnext/invocation_control.py",
+   "calls": 12,
+   "cumulative_seconds_profiled": 2.0
+  },
+  {
+   "function": "loaded_code_holds",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 2,
+   "cumulative_seconds_profiled": 0.1
+  },
+  {
+   "function": "model_allowance",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "calls": 12,
+   "cumulative_seconds_profiled": 0.0
+  }
+ ],
+ "html_parser_feed_cumulative_seconds_profiled": 106.7,
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "html_parser_feeds_per_rebuild": {
+  "_parse_xbrl_parts (7 XBRL parses, two passes each)": 14,
+  "annual_period": 3,
+  "build_text_document": 2,
+  "fiscal_year_labels (_definitions, inspect)": 2,
+  "_native_units": 1,
+  "text_business_candidates._bound_source": 1,
+  "regulatory_investigation_candidates._quotation_ranges": 1,
+  "total": 24,
+  "measured_as": "callers of html.parser.HTMLParser.feed in the profile, 168 feeds over 7 rebuilds"
+ },
+ "decision": {
+  "cache_in_the_business_path": false,
+  "why": "the rebuild's heavy parts are frozen #28 functions reached through frozen call chains or reading files inside; a cache keyed by all input bytes needs either wrappers at #47's call sites in three rule files with a declared-and-measured read set and an injection each, or runtime replacement of frozen module attributes; parallel copies give the requested speed-up without touching the reviewed call path",
+  "option_left_to_the_owner": "call-site caches with declared-and-measured read sets: about 17 s to about 5 s per rebuild, the LIVE class about 2x faster; moves the Requirement closure; all 78 injections to be re-proved caught by the same named cases"
+ }
+}

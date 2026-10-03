@@ -1,0 +1,45 @@
+    installed = install_historical_run_inputs(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/historical_run.py", line 99, in install_historical_run_inputs
+    rebuilt = prepare_historical_run_input(repo_root=data_root, company_id=company_id,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/historical_results.py", line 543, in prepare_historical_run_input
+    return _historical_component_run_input(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/historical_results.py", line 440, in _historical_component_run_input
+    component = resolve(repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/historical_financial_results.py", line 263, in resolve_historical_financial_metric
+    prepared = prepare_historical_annual_input(repo_root=root, company_id=company_id,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/historical_annual_input.py", line 151, in prepare_historical_annual_input
+    original = prepare_original_historical_input(repo_root=repo_root, company_id=company_id,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/historical_annual_input.py", line 71, in prepare_original_historical_input
+    selection = selected_historical_filing(repo_root=repo_root, company=company,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/normal_period_selection.py", line 342, in selected_historical_filing
+    rebuilt = _derive(repo_root=repo_root, company_id=company["company_id"],
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/normal_period_selection.py", line 71, in _derive
+    history = load_history_for_period(repo_root=repo_root, company_id=company_id,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/normal_history_catalog.py", line 205, in load_history_for_period
+    source = reader.read(url, role="sec_submissions_history",
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/normal_governance_input.py", line 184, in read
+    item = saved_source(repo_root=self.root, url=url, accession=accession)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/annual_update.py", line 76, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/batch_workflow.py", line 244, in request_attempt_binding
+    proof = _verified_request_locator(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/native/rt-fin/scripts/vnext/batch_workflow.py", line 114, in _verified_request_locator
+    raise BatchWorkflowError(
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid
+EXIT 1

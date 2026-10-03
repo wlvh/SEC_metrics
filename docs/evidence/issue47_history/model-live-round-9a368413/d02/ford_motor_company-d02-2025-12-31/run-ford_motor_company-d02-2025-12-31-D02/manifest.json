@@ -1,0 +1,72 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "af15a2477fa3ca3352f113b4d00821a9b55949ba8eb4e2791f772e408c490e5e",
+  "review_decisions_file_hash": "92e6e525b9389b662282443a35dc3ae8a149e5dcc3bacf3cca6b40f727828986",
+  "validation_file_hash": "c09ef611b5a192a5ae0e7498d06518ac9c3e1bf03096e6349045643edd756b1a",
+  "content_manifest_hash": "sha256:f58426127733eab721ed446b69397c961242da4abf7224be4e10448cb2506d57",
+  "audit_manifest_hash": "sha256:83a83b953c47e8b19f71e01806e793424f237c9546905618644bb25d246d89f8",
+  "run_id": "run:historical-period:cc185fcd1fad722508b4e5725b49efdd190d713e6025160bcdfd21a4268e6015",
+  "company_id": "ford_motor_company",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6",
+      "raw_asset_id": "sha256:2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+      "company_id": "ford_motor_company",
+      "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+      "accession": "SUBMISSIONS-37996",
+      "document_name": "CIK0000037996.json",
+      "source_role": "sec_submissions_inventory",
+      "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+      "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "company_id": "ford_motor_company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+      "accession": "0000037996-26-000015",
+      "document_name": "f-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4",
+      "raw_asset_id": "sha256:db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+      "company_id": "ford_motor_company",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+      "accession": "0000037996-26-000015",
+      "document_name": "CIK0000037996.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D02_legal_disclosures_v2.md": "e38edb44d2f4887a97d849f5b532b796a09df03c75d85f743c883346c5738c3a"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "896f8d29791f72de62f236fcf923f5704b5b16b04aed8043329225c53e897705",
+    "contract_sha256": "b15b59f3f74bbc3e889019024a1c1d6ba6c8c46512a43411269b2ec46cee7e62",
+    "decision_register_sha256": "37fc323583f198ee02a895b7b553181cfb0c0d64673da7972a126c8b2f755ac0",
+    "invariant_profile_sha256": "36e1e7d6d601e4017963d354cc17e61abcefd49ee3be7eb529db444f3cc37186",
+    "transfer_manifest_sha256": "61dcd9731b356c3f127f0ddaf738359664987fa9e69633849b30bb801e02b546",
+    "parent_requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+    "validator_sha256": "87bda5af7c67fee58edea64fe5982d03181e257ae3f0ab397f527d453615c2c0"
+  },
+  "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+  "requirement_id": "issue_47_v1",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

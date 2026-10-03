@@ -1,0 +1,81 @@
+[
+ {
+  "id": "COMPANY_FACTS_PROVES_THE_TARGET_AGAINST_THE_MAIN_INDEX",
+  "file": "scripts/vnext/historical_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_company_facts"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "ACCESSION_PROVES_THE_TARGET_AGAINST_THE_MAIN_INDEX",
+  "file": "scripts/vnext/historical_accession_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_the_accession_instance"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "REVENUE_PROVES_THE_TARGET_AGAINST_THE_MAIN_INDEX",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_revenue"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "FINANCIAL_ASKS_ONLY_THE_MAIN_INDEX",
+  "file": "scripts/vnext/historical_financial_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_the_financial_route_with_the_gate_forced_open"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "LOOKUP_SEARCHES_EVERY_DECLARED_BLOCK",
+  "file": "scripts/vnext/historical_filing_inventory.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_block_the_index_does_not_declare_is_refused",
+   "test_a_block_the_selection_did_not_load_is_not_searched",
+   "test_a_row_in_a_loaded_block_answers_with_that_block",
+   "test_company_facts",
+   "test_revenue",
+   "test_the_accession_instance",
+   "test_the_financial_route_with_the_gate_forced_open"
+  ],
+  "suite_result": "FAILED (failures=2, errors=5)"
+ },
+ {
+  "id": "LOOKUP_SKIPS_THE_RANGE_CHECK",
+  "file": "scripts/vnext/historical_filing_inventory.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_block_outside_its_declared_range_is_refused"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "LOOKUP_ACCEPTS_A_ROW_TWO_BLOCKS_LIST",
+  "file": "scripts/vnext/historical_filing_inventory.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_row_two_blocks_list_is_refused"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "LOOKUP_RETURNS_AN_EQUAL_COPY_OF_THE_MAIN_INDEX",
+  "file": "scripts/vnext/historical_filing_inventory.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_row_in_recent_answers_with_the_main_document_itself",
+   "test_the_repository_root_still_answers_with_the_main_document"
+  ],
+  "suite_result": "FAILED (failures=2)"
+ }
+]

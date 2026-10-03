@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "jpmorgan_chase",
+ "label": "jpm-c02-2022",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "C02"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 32,
+    "COMPUTED": 4
+   },
+   "seconds": 82.4
+  },
+  "install": {
+   "frozen_replays": 2,
+   "memo": {
+    "COMPUTED": 7
+   },
+   "seconds": 200.3
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 1,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "C02"
+   ],
+   "seconds": 363.3
+  },
+  "read_back": {
+   "frozen_replays": 1,
+   "memo": {
+    "ANSWERED": 3,
+    "COMPUTED": 8
+   },
+   "memo_not_remembered": [],
+   "seconds": 128.8
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 1.1
+  }
+ },
+ "positions": {
+  "C02": {
+   "binding_id": "sha256:4d1303c0648311cc35b1ff4286d4a3f1a0484289b739240b9995e4f04921fbe7",
+   "data_root": "/workspace/work/issue47-targeted-round/jpm-c02-2022/data-jpm-c02-2022",
+   "evidence_count": 57,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+    "run_id": "run:historical-period:4d1303c0648311cc35b1ff4286d4a3f1a0484289b739240b9995e4f04921fbe7",
+    "status": "FROZEN",
+    "value_sha256": "48a916601b1a34e076b3869951109f29dad2fbb386fb43dadc5cca50f2e1f129"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+   "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+   "row_hash": "sha256:99a395e15a5c6675b89a02705e3fbc45fa15dce2892425ae021fa8e80e63e2ed",
+   "run_dir": "/workspace/work/issue47-targeted-round/jpm-c02-2022/run-jpm-c02-2022-C02",
+   "run_id": "run:historical-period:4d1303c0648311cc35b1ff4286d4a3f1a0484289b739240b9995e4f04921fbe7",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:6b4d5ae0313bb9c6c3c660e3c66f5a721cf8447ea6f528bbc8eceaa1e0916e16",
+    "run_id": "run:historical-period:4d1303c0648311cc35b1ff4286d4a3f1a0484289b739240b9995e4f04921fbe7",
+    "status": "FROZEN",
+    "value_sha256": "48a916601b1a34e076b3869951109f29dad2fbb386fb43dadc5cca50f2e1f129"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "The Board of Directors has nominated the 12 individuals listed below. All are independent other than our CEO. If elected at our annual meeting, all nominees are expected to serve until next year\u2019s annual meeting.\nAll of our nominees possess: independent perspective, integrity, judgment, strong work ethic, strength of conviction, collaborative approach to engagement, inquisitiveness and willingness to appropriately challenge management\nCommittees:\n\u2022Compensation & Management Development Committee (Chair)\n\u2022Corporate Governance & Nominating Committee\nStephen B. Burke\nMr. Burke has served as the Lead Independent Director since 2021. More information regarding the duties and responsibilities of the Lead Independent Director can be found on page 23.\nCommittees:\n\u2022Risk Committee (Chair)\n\u2022Compensation & Management Development Committee\nLinda B. Bammann\nCommittees:\n\u2022Corporate Governance & Nominating Committee (Chair)\n\u2022Compensation & Management Development Committee\nTodd A. Combs\nCommittees:\n\u2022Public Responsibility Committee (Chair)\n\u2022Risk Committee\nJames S. Crown\nChairman and Chief Executive Officer of JPMorgan Chase & Co.\nCommittees:\n\u2022Audit Committee (Chair)\nTimothy P. Flynn\nCommittees:\n\u2022Risk Committee\nAlex Gorsky\nCommittees:\n\u2022Public Responsibility Committee\n\u2022Risk Committee\nMellody Hobson\nCommittees:\n\u2022Audit Committee\n\u2022Public Responsibility Committee\nMichael A. Neal\nCommittees:\n\u2022Audit Committee\nPhebe N. Novakovic\nCommittees:\n\u2022Corporate Governance & Nominating Committee\n\u2022Compensation & Management Development Committee\nVirginia M. Rometty\nAll directors who served on the Audit and Compensation & Management Development Committees of the Board were also determined to meet the additional independence and qualitative criteria of the NYSE listing standards applicable to directors serving on those committees. For more information about the committees of the Board, see pages 24-26.\nSince our last annual shareholder meeting, the Board elected Alex Gorsky and Alicia Boler Davis to the Board effective July 2022 and March 2023, respectively. The Board used the process described above and took into account the considerations outlined on pages 11-12 and shareholder interest in board refreshment. Mr. Gorsky and Ms. Davis have been among a select group of individuals considered as part of the Governance Committee\u2019s evaluation of prospective Board members in recent years.\nBased on consideration of the factors described on page 23, our Board has determined that combining the roles of Chair and CEO is the most effective leadership structure for the Board at this time. The Board believes the present structure provides the Firm and the Board with strong leadership, appropriate independent oversight of management, continuity of experience that complements ongoing Board refreshment, and the ability to communicate the Firm's business and strategy to shareholders, clients, employees, regulators and the public in a single voice.\npractices, which include executive sessions of independent directors as part of each regularly scheduled Board meeting and the directors\u2019 frequent and open interactions with senior management, and the effectiveness of the Lead Independent Director role. Following its review, the committee recommended that the Board continue its current leadership structure and that Stephen B. Burke be re-appointed as Lead Independent Director. The independent directors of the Board then conducted their own review, again taking into account the factors on page 23, the committee\u2019s recommendation and Mr. Burke\u2019s strong performance in the Lead Independent Director role over the course of the prior year, and determined to maintain the current leadership structure with Mr. Burke serving as Lead Independent Director.\nLast year, as part of the Board's annual review of its leadership structure the Board considered the potential separation of the Chair and CEO positions in the context of succession planning. The Board has adopted a general policy, upon the next CEO transition, that the Chair and CEO positions shall be separate, subject to the Board's determination of the leadership structure that best serves the Firm and its shareholders at that time. This policy is reflected in the Firm's Governance Principles and reinforces the Board's longstanding commitment to independent oversight while also maintaining the Board's ability to fulfill its fiduciary duty to determine the leadership structure that best serves shareholders.\nThe Board has two additional standing committees:\nThe Board elected Mr. Gorsky and Ms. Davis to the Board effective July 2022 and March 2023, respectively. All other directors of the Firm were elected by shareholders in 2022. All of the directors of the Firm comprise the full Boards of JPMorgan Chase Bank, National Association (the \u201cBank\u201d) and an intermediate holding company, JPMorgan Chase Holdings LLC (the \u201cIHC\u201d). Mr. Burke is the independent Chair of the Board of the Bank; IHC does not have a Chair of the Board.\nThe Audit Committee of the Board of Directors of JPMorgan Chase is comprised of three non-management directors. The Board has determined that each member of our committee has no material relationship with the Firm under the Board\u2019s director independence standards and that each member is independent under the listing standards of the NYSE, where the Firm\u2019s securities are listed, and under the SEC\u2019s standards relating to the independence of audit committees. The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC.\nAudit Committee\nTimothy P. Flynn (Chair)\nMichael A. Neal\nPhebe N. Novakovic\n\u2022Contrary to the proponent\u2019s assertion, the Board determined that the current Lead Independent Director, Stephen B. Burke, is independent. Moreover, his tenure has allowed him to gain invaluable institutional knowledge making him extremely effective as Lead Independent Director.\nThe Board's retention of discretion in reviewing its leadership structure evidences the Board\u2019s intent to give due consideration to the merits of separating the Chair and CEO positions. A proper exercise of the Board\u2019s discretion demands careful consideration of all available information. A restrictive policy such as that proposed by the proponent is not prudent, as it could prevent the Board from adopting the governance structure that it believes is best able to advance the interests of the Firm and its shareholders.\nFor 2023, the Board has determined that its current structure, with a combined Chair and CEO counterbalanced by a fully empowered Lead Independent Director, will best serve the interests of the Firm and its shareholders. The Firm\u2019s continued strong financial performance and meaningful progress on key initiatives, as described throughout this Proxy Statement, is evidence that the current structure allows for effective execution on strategic priorities.\nThe Board is also focused on a successful transition of the current CEO role. Last year, as part of the Board\u2019s annual review of its leadership structure and in response to shareholder feedback, it considered how shareholders may best be served upon the next management transition. As part of this process, the Board considered feedback through extensive shareholder outreach that identified both a preference among some shareholders for separate Chair and CEO positions and strong support for the current CEO. As a result, the Board enhanced our Corporate Governance Principles to provide, upon the next CEO transition, that the Chair and CEO positions will be separate, subject to the Board\u2019s determination at the time of transition of the Board leadership structure that best serves the Firm and its shareholders. If the Board in exercising its discretion, determines that retaining the current Chair best serves the interest of the Firm, it will also retain a strong Lead Independent director to facilitate independent oversight of management. The Board will continue to evaluate the structure on an annual basis even after the transition, and when the position of Chair is not filled by an independent director, the independent directors will appoint a Lead Independent Director."
+  }
+ },
+ "report_end": "2022-12-31",
+ "seconds": 776.6,
+ "selection_id": "sha256:ae50b7e2c44abbd9afe9fcffdc9ffc52feaa8ed3371345972e2acc3e9c60e098",
+ "xbrl_parses": 2
+}

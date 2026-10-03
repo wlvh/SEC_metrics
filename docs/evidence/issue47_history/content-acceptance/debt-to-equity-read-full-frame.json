@@ -1,0 +1,80 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "definition": "period-end carrying debt, finance leases included, over the parent's stockholders' equity (02_指标定义 B06; catalog/r5/B06_*_v4..v6 keep it)",
+ "per_position": {
+  "salesforce-2024": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:ConvertibleDebtCurrent",
+      "value": "999000000"
+     },
+     {
+      "caption": "Noncurrent debt",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "8427000000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "59646000000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:90bcc9d059bb3ded5bf2510efff0a2972309a5e9b1e121d41f95ef43630c2e7d",
+     "run_id": "run:historical-period:9a202f72634210d11ae31283555f74a3d8415ae69487738c0efcab0b96d1f013"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-24-000005"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-01-31",
+    "period_start": "2024-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "document": "evidence/request_attempts/59/5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be/crm-20240131.htm",
+   "document_sha256": "5977fa50575667b72c4d6df85493f0ecb0c126ec7f3b7a70b7559a46d7be19be",
+   "equity": "59646000000",
+   "finance_leases": {
+    "add": "974000000",
+    "concept": "us-gaap:FinanceLeaseLiability",
+    "evidence": [
+     "Accrued expenses and other liabilities",
+     "Other noncurrent liabilities"
+    ],
+    "treatment": "OUTSIDE_THE_DEBT_ROWS"
+   },
+   "period_end": "2024-01-31",
+   "published": "0.1743620695436408141367400999",
+   "read": "0.1743620695436408141367400999",
+   "total_debt": "10400000000",
+   "verdict": "MATCH",
+   "why": null
+  }
+ },
+ "reader": "tools/read_debt_to_equity.py",
+ "record_type": "ISSUE_47_B06_BALANCE_SHEET_READING",
+ "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e"
+}

@@ -1,0 +1,149 @@
+{
+ "record_type": "HISTORICAL_NATIVE_RUN_MATRIX_MERGED",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "what_this_is": "Every wired historical metric on every company-period whose target original this repository holds, run under the completed D02 capacity route. One process per company; they share only the read-only runtime code tree.",
+ "requirement_id": "issue_47_v1",
+ "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
+ "companies": [
+  "enphase-2025",
+  "ford-2025",
+  "lumen-2025",
+  "paramount-2025",
+  "pfizer-2025",
+  "southwest-2025"
+ ],
+ "wired_metric_count": 23,
+ "attempted": 138,
+ "frozen_runs": 100,
+ "public_rows": 100,
+ "failed": 38,
+ "per_company": {
+  "enphase-2025": {
+   "attempted": 23,
+   "frozen_runs": 23,
+   "public_rows": 23,
+   "failed": 0,
+   "duration_seconds": 2314.7
+  },
+  "ford-2025": {
+   "attempted": 23,
+   "frozen_runs": 23,
+   "public_rows": 23,
+   "failed": 0,
+   "duration_seconds": 3129.5
+  },
+  "lumen-2025": {
+   "attempted": 23,
+   "frozen_runs": 23,
+   "public_rows": 23,
+   "failed": 0,
+   "duration_seconds": 2786.0
+  },
+  "paramount-2025": {
+   "attempted": 23,
+   "frozen_runs": 4,
+   "public_rows": 4,
+   "failed": 19,
+   "duration_seconds": 811.7
+  },
+  "pfizer-2025": {
+   "attempted": 23,
+   "frozen_runs": 23,
+   "public_rows": 23,
+   "failed": 0,
+   "duration_seconds": 3143.8
+  },
+  "southwest-2025": {
+   "attempted": 23,
+   "frozen_runs": 4,
+   "public_rows": 4,
+   "failed": 19,
+   "duration_seconds": 640.0
+  }
+ },
+ "failure_reasons": {
+  "HISTORICAL_COMPANYFACTS_AMENDED_TARGET_NOT_IMPLEMENTED": 22,
+  "HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED": 16
+ },
+ "every_failure_is_one_named_gap": "All 38 are the amended-target gap in its Company Facts and zero-AI forms. No position failed for an unexplained reason. See docs/evidence/issue47_history/amended-target-gap/finding.json.",
+ "d02_capacity": {
+  "what_it_shows": "The capacity change moved exactly the coordinate it was meant to and left the others where they were.",
+  "by_company": {
+   "enphase-2025": {
+    "items": 18,
+    "characters": 9927,
+    "quality": "EXACT",
+    "row_status": "TEXT_QUAL"
+   },
+   "ford-2025": {
+    "items": 53,
+    "characters": 18077,
+    "quality": "EXACT",
+    "row_status": "TEXT_QUAL"
+   },
+   "lumen-2025": {
+    "items": 41,
+    "characters": 19329,
+    "quality": "EXACT",
+    "row_status": "TEXT_QUAL"
+   },
+   "paramount-2025": {
+    "items": 27,
+    "characters": 21399,
+    "quality": "EXACT",
+    "row_status": "TEXT_QUAL"
+   },
+   "pfizer-2025": {
+    "items": 92,
+    "characters": 41860,
+    "quality": "EXACT",
+    "row_status": "TEXT_QUAL"
+   },
+   "southwest-2025": {
+    "items": 25,
+    "characters": 35545,
+    "quality": "EXACT",
+    "row_status": "TEXT_QUAL"
+   }
+  },
+  "pfizer_reproduced": "the same run_id as the isolated end-to-end run in raised-capacity-end-to-end.json, produced independently by the batch"
+ },
+ "what_this_does_not_show": [
+  "That any result's content is right. Evidence PASS and a frozen Run are not business content acceptance; that state stays False for every position.",
+  "Anything about the 1,812 positions outside this frame - these are six company-periods, not ten companies over five years."
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "coverage_over_the_six_companies_five_year_frame": {
+  "method": "tools/vnext_history_coverage.py per company against that company's run directories, with --requirement-closure-hash set to the batch's closure",
+  "positions": 1170,
+  "frame": "6 companies x 39 declared metrics x 5 years",
+  "statuses": {
+   "N_A_STRUCTURAL": 38,
+   "HISTORICAL_ROUTE_NOT_WIRED": 96,
+   "VALUE_EXACT": 58,
+   "NO_VALUE_PUBLISHED": 2,
+   "SOURCE_MISSING_TARGET_ORIGINAL": 780,
+   "VALUE_APPROX": 2,
+   "ROUTE_IMPLEMENTED_NOT_RUN": 38,
+   "TARGET_PERIOD_NOT_DISCOVERED": 156
+  },
+  "verified_outcomes": 98,
+  "reading": "58 VALUE_EXACT plus 2 VALUE_APPROX plus 38 N_A_STRUCTURAL is what the batch resolved; 780 positions lack the target original and 156 have no discoverable target period, which is the source gap, and 96 have no historical route. 38 ROUTE_IMPLEMENTED_NOT_RUN are the amended-target refusals."
+ },
+ "two_defects_this_run_surfaced": [
+  {
+   "defect": "four correct B01 outcomes reported as RUN_RECEIPT_AMBIGUOUS",
+   "cause": "B03 consumes B01, so the B03 Run records B01's result as well as its own and the coordinate has two receipts under one closure. The ambiguity check counted receipts instead of comparing them; measured, both carry the same result_id.",
+   "fix": "identical result_id is one outcome seen twice; ambiguity is when they differ"
+  },
+  {
+   "defect": "Pfizer's repaired D02 was still withdrawn by the defect entry that asked for it",
+   "cause": "the item-bound entry names a coordinate rather than a result_id, so it went on matching after the repair it had requested was delivered",
+   "fix": "a coordinate-level entry stops withdrawing once its own repair_state records the result as recomputed; an entry naming a result_id is unaffected, because it names one bad result rather than a coordinate"
+  }
+ ]
+}

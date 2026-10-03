@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "enphase_energy",
+ "label": "enphase-b06-2024",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "B06"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 23,
+    "COMPUTED": 3
+   },
+   "seconds": 24.6
+  },
+  "install": {
+   "frozen_replays": 2,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 154.5
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 1,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "B06"
+   ],
+   "seconds": 110.9
+  },
+  "read_back": {
+   "frozen_replays": 1,
+   "memo": {
+    "ANSWERED": 3,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 79.2
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.1
+  }
+ },
+ "positions": {
+  "B06": {
+   "binding_id": "sha256:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+   "data_root": "/workspace/work/issue47-note-forms-round/enphase-b06-2024/data-enphase-b06-2024",
+   "evidence_count": 3,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+    "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+    "status": "FROZEN",
+    "value_sha256": "0a21f356d69a1a1ea2b0625e189944d2254a0076eed06e11cbad645aeb2870a8"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac",
+   "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+   "row_hash": "sha256:a76b1332ad5ee0e290b8d97d2cad52b9484ae76fc040442200f94f2a47e93c3e",
+   "run_dir": "/workspace/work/issue47-note-forms-round/enphase-b06-2024/run-enphase-b06-2024-B06",
+   "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+    "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+    "status": "FROZEN",
+    "value_sha256": "0a21f356d69a1a1ea2b0625e189944d2254a0076eed06e11cbad645aeb2870a8"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "1.563451362278755750189672227"
+  }
+ },
+ "report_end": "2024-12-31",
+ "seconds": 370.0,
+ "selection_id": "sha256:4082a8b473a307a84515550ead8bf783d09da20d18dc2cb380fbdbfe5527aebc",
+ "xbrl_parses": 2
+}

@@ -1,0 +1,929 @@
+{
+ "record_type": "ISSUE_47_TARGETED_ROUND_COVERAGE_SUMMARY",
+ "made_by": "tools/vnext_history_coverage.py --runs-root <this round's runs, one directory> --requirement-closure-hash <closure> --source-root <root restored from the acquisition export>",
+ "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+ "periods_planned_on": "SUPPLIED_SOURCE_ROOT",
+ "run_receipts_read": 87,
+ "delivery_layer_counts_over_these_receipts": {
+  "native_run": 87,
+  "public_row": 87,
+  "content_acceptance": 56
+ },
+ "content_acceptance_by_metric": {
+  "A03": {
+   "ACCEPTED": 4
+  },
+  "A04": {
+   "ACCEPTED": 4
+  },
+  "A05": {
+   "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE": 1
+  },
+  "A06": {
+   "ACCEPTED": 1
+  },
+  "A09": {
+   "ACCEPTED": 4
+  },
+  "A11": {
+   "ACCEPTED": 4
+  },
+  "A12": {
+   "ACCEPTED": 4
+  },
+  "A13": {
+   "ACCEPTED": 4
+  },
+  "B02": {
+   "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE": 1
+  },
+  "C02": {
+   "ACCEPTED": 31,
+   "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT": 10,
+   "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE": 8
+  },
+  "D02": {
+   "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT": 10
+  },
+  "E01": {
+   "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE": 1
+  }
+ },
+ "positions": [
+  {
+   "metric_id": "A03",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:cd76379dc7c465cb2517fc7163aa9e1a42c2c660467f46a3fbd39d12190cc878",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A03_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A03",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:08e67741151908ad68862ff034da7e11f59138b9b32ae056b85726380b451c3f",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A03_JPMORGAN_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A03",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:4d9ce1615fe5db956b31696746b57f1001784dfc0b6f05be182b337bed41adf9",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A03_JPMORGAN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A03",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:b34ebfa88819cbd627163951bfdd00cbd55122d2844e0f6d3cb83b52b70e326f",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A03_JPMORGAN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A04",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:7ddc7e869aa3d1134b87990f77dd1e6f47293f0154852435e71df9c6bbaf2bfa",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A04_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A04",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:a29bf3a446adca6593b4d5bcc6e18607e0eb0f389ca6169dc0f1169ad2633247",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A04_JPMORGAN_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A04",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:46568fa41902ae80959f3bf6fcc56e1319d70c354446b96d9ca17e2265728309",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A04_JPMORGAN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A04",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:8a2e08cc3edd3fbfda08846f9935b9c89a0a108f21e5c028b61327f4403f070e",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A04_JPMORGAN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A05",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:2f1f21c9289ddf08f03b5ba2784ed55b30cc50c66ecca6b09a128516c8a89f73",
+   "status": "WITHHELD_SOURCE_OR_ROUTE",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A06",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:4f79a7775627e7e5fbc278fa4c4332b4dd90b91af3bec15bd78290b1eca74ba4",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A06_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A09",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:2c550c1f3dc1a2063a8a84a678dcbae3b619759c10944fb1da80f67649cd15ac",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A09_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A09",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:1f937eb72b422849afd5af43705f138a08a033a37adbced8e1a57ef16ed3ed52",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A09_JPMORGAN_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A09",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:ba9abedb73dd27f7ca80936757603a3956160459f4947af5989949d012a29a21",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A09_JPMORGAN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A09",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:a9c8f9ea25ead7febc2b47089e0de1610ac9288fc7dfd6ffb1b028c8e01c368b",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A09_JPMORGAN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A11",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:d39c0a20ac1abf0966d27c4f33c00c4a8431f1e4326ba0c37cee2f9dfa9805f2",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A11_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A11",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:88d39f3d9c73d6b879b704a533f21097834f6bc70e26ca2a3cadc4b56749679d",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A11_JPMORGAN_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A11",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:6626c7346ec17f13717e741c46d9933924384c752b924afe45d167ab6a4d1348",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A11_JPMORGAN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A11",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:823cf7659972167e912c057249da6b186fd02e58b65d1e76d76a4a996d97ab7d",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A11_JPMORGAN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A12",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:5ba6630342ed34686176393c66fb2a2177c756155bb616347e0072fbb1a23926",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A12_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A12",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:e2487f354aa4826571ef3a5509b9e17afbd84ff9337fe0ca22fb1e941e0008c5",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A12_JPMORGAN_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A12",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:23af9319de766968573764489e7b03cd0fdc9ae99c1c92b913d92f05d5316385",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A12_JPMORGAN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A12",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:0119f79e87425aa7b543fb28fbe343f714ef4eba634058a6838ce5adf2bb5dde",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A12_JPMORGAN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A13",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:41b8b0dd5bf7c719f87e5e865a95a3b90a1ba6b5416887333c56701e4f3c7e44",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A13_JPMORGAN_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A13",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:ddec737169bb2d5e2487063a0e09d07974494f3a17c1fd637c2c43c1a43d3cdb",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A13_JPMORGAN_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A13",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:0c55c08053507182782e47a86efebb39bbaab3764e20cbe0ba1e14aff1b49dd0",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A13_JPMORGAN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "A13",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:490f347f0ef0f3b5835e61770d950ae04fa57479eccb3796f38caa824a0350dc",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_A13_JPMORGAN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "B02",
+   "company_id": "pfizer",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:38bffb79be809cfe450e5c8945a7ab80b75534f3d653a4e601dbb997b5224702",
+   "status": "WITHHELD_SOURCE_OR_ROUTE",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "enphase_energy",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:0fd2aced6fa40c89ec0ecde2bd73eb5bbaee0bc76fdc214e23a9a07d52ee5592",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_ENPHASE_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "enphase_energy",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:80a51e1a3f3782c4bed77408d0e664952f01a7b8daefb19fae6611c19594a3c0",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_ENPHASE_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "enphase_energy",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:c49a6530944c551383d6729d22347a0895af6c45399bb98c945453573eedb66f",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_ENPHASE_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "enphase_energy",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:48df58deddf4c3a16c77e11ddcafdc01a9097ca2c504c0499cc9b2bea6dbb349",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_ENPHASE_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "enphase_energy",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:6bc15360fcd843f60081a70717f400ef06fe5f34aac2a9ce95f1bc167fc86219",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_ENPHASE_2025_VALUE_C94B35A9",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "ford_motor_company",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:62612f7974d187d3021e5e365fb4fdec12ca758c61846b99a709fd73357b5604",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_FORD_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "ford_motor_company",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:3a489f474a5f156751bd6d3ebb031807be3760d948c09a0594a94bf1d6044b79",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_FORD_2022_OLDER_YEAR_READING_DISAGREES"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "ford_motor_company",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:0b4bd8e52b6030c56d6b952a8c28d72deb1c20e977ad893ca741041a2e2148bc",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_FORD_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "ford_motor_company",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:9e9fa6c1e3311085ed6daad9fac0e36b1107b7db1959d13a8b8fb7b2fd07ffb0",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_FORD_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "ford_motor_company",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:72dd04611ed6e7a44d7169801329fecdeaf6c1f4e6b897ad1f040d95ea0c88d3",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_FORD_2025_VALUE_03AC5E3F",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:a2fde3b7c1b326fa700d1a76bd966a4fb6c79b053cfc07c0bc5f798000c4292d",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_JPMORGAN_2022_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:2e4128740371b2432a18254b09bffc066c4e7170a29c09de4e99d24135f84e61",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_JPMORGAN_2023_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:ee734da2e80dcd105d3c07dbede381b24b0db9e26ba30ce92d1d4b36ef26db0a",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_JPMORGAN_2024_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "jpmorgan_chase",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:096520e2d0befe6a52f2a2a51a587f207b63c368c7a838198bd6f58efe8448de",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_JPMORGAN_2025_AUDITOR_RETENTION_TAKEN_AS_MEMBER_QUALIFICATION"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "lumen_technologies",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:f80f1fb337dbc1076aca692b252e2444ca59ddacb34e4cf264afb614a784b2c2",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_LUMEN_2021_OLDER_YEAR_READING_DISAGREES"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "lumen_technologies",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:10c56d44600851f00532b5f366b25369957460e141be684ee07ff8edac876c7b",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_LUMEN_2022_OLDER_YEAR_READING_DISAGREES"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "lumen_technologies",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:729f8f193c8d753795323974fc18402237b0941d8dadce3f78da1961ae1c20e6",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_LUMEN_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "lumen_technologies",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:3f0c22fdd9d28beabd1ebb1d35ae8b3cac1f8b8d7c296721f1b5218b726ed17c",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_LUMEN_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "lumen_technologies",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:306effb5f72c10221ad7f205550ed676d051317c2b46612d87b3b36552b8cac9",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_LUMEN_2025_VALUE_24EAE7A2",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "macys",
+   "report_end": "2022-01-29",
+   "result_id": "sha256:e6137d2a41228523aef647ee5c8136d8ad7c492636314fe1fb5e3eee53645331",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_MACYS_2022_OLDER_YEAR_READING_DISAGREES"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "macys",
+   "report_end": "2023-01-28",
+   "result_id": "sha256:c0deba4207615ca112c7081cf4df4d3751f51125cd24426977e723dd68e7d74a",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MACYS_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "macys",
+   "report_end": "2024-02-03",
+   "result_id": "sha256:1786ebf772420242053fcecbc1077f788d1004de8172ec92a4b7d10b907006f9",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MACYS_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "macys",
+   "report_end": "2025-02-01",
+   "result_id": "sha256:5136ac4a42289716e479a9531e2e09b0c79fe072f4f65adc55882a060ebe097a",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MACYS_2025",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "macys",
+   "report_end": "2026-01-31",
+   "result_id": "sha256:1ad56e8141bfdefa9c3287eceebbe19d2b5733fb39a0f7597a47401da3395c4a",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MACYS_2026_VALUE_956C37A2",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "marriott_international",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:ad7f096e80e6018e137c5d9a1760fbe09b4206367fba3ac28503d8932c3cd067",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MARRIOTT_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "marriott_international",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:bd2c1a8f2d60f98d082692c0c1a8fc6e314722bba38cfde2db61880b2159ab76",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_MARRIOTT_2022_OLDER_YEAR_READING_DISAGREES"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:cf63ce4d59182f55ef673f3df5bf2d64a12850c92ce4b7050dc2de435c409117",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "C02_MARRIOTT_2023_OLDER_YEAR_READING_DISAGREES"
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:826e15d2f348ef862831758d19799fb4efe05193cede08909f881e3af5fbfcd5",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MARRIOTT_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "marriott_international",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:17f591c46da5506a85616e889cc4dfe87ebcfe7d2d6fa9d05f1cf97b7e3fa1d8",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_MARRIOTT_2025_VALUE_EC76C37D",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:10d2a286c1d33179e8a72a7c4e00dd70ec76367d78d1c0e35b3c213fdd0d4f37",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PARAMOUNT_2021",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:d32495067b95e133b03977c188dc48be85e3d6881367490f5378b6ecf79f99f8",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PARAMOUNT_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:465f13e96687779352157765d8b1aab7a76e8976e9ccfec421d9b851805ac15b",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PARAMOUNT_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:5affe34d4c97e2b24dcaf5eee59fad3fae76f425674fccce39b7d15a1daf35ab",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PARAMOUNT_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:92d7ba976824bf5edbef2bf489df050623d8b9fed2aab908c7ef1243f94f1084",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PARAMOUNT_2025_VALUE_D6DB1E20",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "pfizer",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:59262472385c54a7502b3e933101ea77004e956fe8c15222a83795540a4c7a52",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "pfizer",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:a1837ab836250f91c12a0d8ca74b3a6ac070df16e481597383e5ab31b21bc0da",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PFIZER_2022",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "pfizer",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:2b061759cef458fc6c671b4af031cd3c79dd5cd7d4f49b1cab33e557f46929e0",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PFIZER_2023",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "pfizer",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:88defc87ef82f43ac047b1008224e134098b670e7b3f65cab1053a84d7dbd018",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PFIZER_2024",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "pfizer",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:4c2f45ccd5a00d651ad6b3912ec4ef448ee0f0a60ff83e6ae2dcde9d583cd24e",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_PFIZER_2025_VALUE_4DEF97D9",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "salesforce",
+   "report_end": "2022-01-31",
+   "result_id": "sha256:8d9ff0741229ef2c4531fd25f081bd667585be8338e89c7685c7d5ff343ff0e3",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "salesforce",
+   "report_end": "2023-01-31",
+   "result_id": "sha256:19ae6a55042728304340e7641e50137a7e8f69df6d9f8b4ce1b36b49c3515d39",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "salesforce",
+   "report_end": "2024-01-31",
+   "result_id": "sha256:cff4583b8ef67e2ce1992601e45c584168395993dd1ecb1c272a775e1badf6a7",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "salesforce",
+   "report_end": "2025-01-31",
+   "result_id": "sha256:6e6274d0263ae0923fb8dd91952b4d47b4aa2af7b5dd02df462166e0538f6f49",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_SALESFORCE_2025",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "salesforce",
+   "report_end": "2026-01-31",
+   "result_id": "sha256:5e4b29d1c70404571e8a514fee14dac421ddf493302d294665880bc4f5ea4095",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_SALESFORCE_2026_VALUE_7356CAD1",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "southwest_airlines",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:d3695d5b8ca363517dcf21a2262f0202eb335c4fb61b8d4cbfd6ad4ac5cb9b97",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "southwest_airlines",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:70e1a5cd8ef59aa38a55f37467a2d52d325d50e3617905a02ae878b147ed83bb",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "southwest_airlines",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:e653e6d31004f9595c633533969e65fd2bc0a070b7867a88a966244b3cbf9494",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "southwest_airlines",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:cf6ae0e3e532ef5e633ccb8478fcbddf1a561c0fc8f677eb37be5bb737a4a3fc",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "C02",
+   "company_id": "southwest_airlines",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:98b7aa0db0e221630ebca198390f2a6c829d9e7c1195ddb14fe105b95efdef01",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "ACCEPTED",
+   "accepted_by": "CONTENT_C02_SOUTHWEST_2025",
+   "withdrawn_by": null
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "lumen_technologies",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:5ab3f703f91679aa98825205ac2d5a08d9521f9b88157a4c2a1501d26393a87f",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_LUMEN_2022_KEYWORD_PROXY"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "lumen_technologies",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:0fa82959ec6968fc7369f24470221b0a52eee301f27d15f69db02b91047b53e8",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_LUMEN_2023_KEYWORD_PROXY"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "lumen_technologies",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:d69d29c59a34a65506e531041f44330dff2da26d1fdb2edf90a7d01154fcc4fc",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_LUMEN_2024_KEYWORD_PROXY"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "lumen_technologies",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:eacc51b22533334c9820af96cab6c827a45635412df6bfe96d4ffa8fa0339481",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:0dfeaf73d5ffbaccee28e9c17b23c0fc4ba2f03675d03cf66eba02b7c333db3f",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "pfizer",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:d19f9bfeff3cc5f26bcbc0de54fb8a991b44a125501cb9122b5955f8ba3f6942",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_PFIZER_2021_ITEM_8_CATEGORY_MENTION_AND_SPLIT_EMPHASIS_NOTE_HEADING"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "pfizer",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:43bad26e7fc7b716885d4772c972c06631f9f5d6dda8811adfb8328142d48245",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_PFIZER_2022_KEYWORD_PROXY_AND_PAGE_FOOTER_AS_EXCERPT"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "pfizer",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:fbec37db944768e749fe9b50717f08321a5c40780528f8a8e7e819604d0785f9",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_PFIZER_2023_KEYWORD_PROXY_AND_PAGE_FOOTER_AS_EXCERPT"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "pfizer",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:d75fdd9d503afb3fa7c987cee830cc2e2ae92f355340ed70123ded1ff8aeb0c3",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_PFIZER_2024_KEYWORD_PROXY_AND_PAGE_FOOTER_AS_EXCERPT"
+  },
+  {
+   "metric_id": "D02",
+   "company_id": "pfizer",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:cb33e97e873d69948f6ef0b3b1490ab9699d0755e03bf90c9b27d9745a917990",
+   "status": "VALUE_EXACT",
+   "content_acceptance": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "accepted_by": null,
+   "withdrawn_by": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND"
+  },
+  {
+   "metric_id": "E01",
+   "company_id": "pfizer",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:407c86dc35ba3c0292ac2e92e48d989123e943c367a11e24cf1382949a59768f",
+   "status": "WITHHELD_SOURCE_OR_ROUTE",
+   "content_acceptance": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "accepted_by": null,
+   "withdrawn_by": null
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

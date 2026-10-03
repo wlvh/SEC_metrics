@@ -1,0 +1,20 @@
+{
+ "record_type": "ISSUE_47_OWNER_DECISION",
+ "schema_version": 1,
+ "recorded_by": "the executor, transcribing the owner's answer to a question asked in the Claude Code session; not a GitHub comment by the owner",
+ "received_at": "2026-09-29T16:18:13Z",
+ "received_how": "the owner selected one of three options the executor offered (AskUserQuestion); the session records the answer's time",
+ "question_verbatim": "SEC 账本丢失后要不要恢复取数？背景：12:30 左右容器被回退到旧快照，本机账本丢失；分支上最后一次推送的导出记到 288 次请求。丢失那段只可能在取 Ford，最多发出 224 次（按导出时 Ford 待取清单实测，独立审阅也算出 224），实际发了多少无法知道。另外更正：我之前的摘要把你 08:37 那条“允许运行 SEC 取数”当成了对丢失后恢复的同意，实际丢失后你没有发过消息，所以到现在什么都没恢复、没有发任何 SEC 请求。",
+ "options_offered": [
+  {"label": "按上限224记账后继续 (Recommended)",
+   "description": "丢失那段按最多 224 次计入：累计从 288+224=512 起算，Ford 重取最多再花 224（累计≤736），剩约 618 次给其余公司（摩根大通在授予范围内已无可取）。可能不够全部取完，到上限就停并按类别报告剩余。好处：1354 仍是真实发出请求数的可靠上界；代价：最多 224 次额度可能记在从未发出的请求上。"},
+  {"label": "停在 288 次",
+   "description": "不再取数；已导出的 288 次数据照常使用，其余公司往年缺的原件保持缺失，对应位置报来源缺口。"},
+  {"label": "先暂停，我看材料再定",
+   "description": "取数保持暂停；我继续做不需要 SEC 请求的离线工作（B03、D01、Macy's 财年标签）。材料在 docs/evidence/issue47_history/acquisition-wiring/ledger-lost-2026-09-29/。"}
+ ],
+ "answer_verbatim": "按上限224记账后继续 (Recommended)",
+ "what_it_decides": "the SEC acquisition resumes from the branch's export at 288 with the lost segment charged at its upper bound, 224 (Ford's due set at the export state), under the same approval (issue 47 comment 5886314727) and cap [0, 0, 1354]; tools/vnext_historical_sec.py resume is run with --in-flight-company ford_motor_company and this answer and time as --decision-text and --decision-received-at",
+ "what_it_does_not_decide": "no new approval, no change to the cap or the grants, no model calls",
+ "correction_it_answers": "the executor's earlier session summary had treated the owner's 08:37:18Z message \"允许运行 SEC 取数\", sent before the acquisition started, as consent to resume after the loss; the transcript shows no owner message after the loss, so nothing was resumed on it"
+}

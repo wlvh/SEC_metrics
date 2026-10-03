@@ -1,0 +1,567 @@
+{
+ "record_type": "C02_ADJUDICATION_EFFECT",
+ "selection": "today's scripts/vnext/historical_board_composition_v3.py on each judged position's document",
+ "before": "HEAD:docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+ "after": "the adjudication this tool wrote",
+ "totals": {
+  "before": {
+   "wrongly_taken": 8,
+   "missed": 24,
+   "agree": 25
+  },
+  "after": {
+   "wrongly_taken": 7,
+   "missed": 24,
+   "agree": 26
+  }
+ },
+ "positions": {
+  "enphase_energy:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "enphase_energy:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "enphase_energy:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "enphase_energy:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "ford_motor_company:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "ford_motor_company:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      406,
+      1255,
+      4535
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      406,
+      1255,
+      4535
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      749
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      749
+     ]
+    }
+   }
+  },
+  "ford_motor_company:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      942
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      942
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      856,
+      1236
+     ],
+     "missed": [
+      455,
+      456,
+      457,
+      1047
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      856,
+      1236
+     ],
+     "missed": [
+      455,
+      456,
+      457,
+      1047
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1324
+     ],
+     "missed": [
+      865,
+      866,
+      867,
+      946,
+      1078,
+      3663
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1324
+     ],
+     "missed": [
+      865,
+      866,
+      867,
+      946,
+      1078,
+      3663
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      1124,
+      1423,
+      1601
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      1124,
+      1423,
+      1601
+     ]
+    }
+   }
+  },
+  "lumen_technologies:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "macys:2022-01-29": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      640,
+      703,
+      810,
+      1877,
+      1945
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      640,
+      703,
+      810,
+      1877,
+      1945
+     ]
+    }
+   }
+  },
+  "macys:2023-01-28": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1107
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "macys:2024-02-03": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "macys:2025-02-01": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "marriott_international:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "marriott_international:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      825,
+      922
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      825,
+      922
+     ]
+    }
+   }
+  },
+  "marriott_international:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1537
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1537
+     ]
+    }
+   }
+  },
+  "marriott_international:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      1264
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "missed": [
+      1264
+     ]
+    }
+   }
+  },
+  "paramount_skydance_paramount_global:2021-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "paramount_skydance_paramount_global:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "paramount_skydance_paramount_global:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "pfizer:2022-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "pfizer:2023-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "pfizer:2024-12-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "salesforce:2025-01-31": {
+   "years": "older",
+   "before": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1147
+     ]
+    }
+   },
+   "after": {
+    "verdict": "READING_DISAGREES",
+    "problems": {
+     "wrongly_taken": [
+      1147
+     ]
+    }
+   }
+  },
+  "enphase_energy:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "ford_motor_company:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "lumen_technologies:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "macys:2026-01-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "marriott_international:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "paramount_skydance_paramount_global:2024-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "paramount_skydance_paramount_global:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "pfizer:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "salesforce:2026-01-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  },
+  "southwest_airlines:2025-12-31": {
+   "years": "latest",
+   "before": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   },
+   "after": {
+    "verdict": "READING_AGREES",
+    "problems": {}
+   }
+  }
+ }
+}

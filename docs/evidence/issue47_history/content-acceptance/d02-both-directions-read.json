@@ -1,0 +1,330 @@
+{
+ "a_text_value_is_accepted_by_digest": "D02's value is its whole payload, up to 34,905 characters here, so the register names it by sha256. The binding is the same: a different payload has a different digest and the acceptance stops applying.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "enphase_2025": {
+  "result": {
+   "earlier_result_id": "sha256:c65f0cb421bc759f0668384361c7352ac012b045296139b223f0c52727e7fca0",
+   "lines_added": [],
+   "lines_removed": [
+    "Enphase Energy, Inc. | 2025 Form 10-K | 46"
+   ],
+   "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+   "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e"
+  },
+  "what_this_reading_changed": "the footer left the set and nothing else moved. Checked line by line against the earlier result: the repaired value is exactly the earlier value with that one line removed, in the same order, so each of its seventeen lines is one the reading judged, and the one block now untaken beside 756 is the footer at 755. The rule that removed it is historical_text_results._numbered_page_footers; measured over all eleven saved periods it removes this block and nothing else, and leaves every D03 set unchanged (targeted-round-c7a49b98/probe-before-the-repair.json).",
+  "what_was_read": "all 18 excerpts of the earlier result, in both directions, in d02-content-read/four-sets-both-directions.json: seventeen are legal-proceedings disclosure - thirteen Item 3 blocks and two headings covering the securities class actions (Hayes, Local 464A) and the shareholder derivative suits (Ibarra, Isaac, Hirani, Hanowski), and two contingency blocks in Item 8 - and block 755 is the page footer 'Enphase Energy, Inc. | 2025 Form 10-K | 46'. The only untaken block in the narrow scopes was the 'Table of Contents' link at 756, the other half of the same page break."
+ },
+ "ford_2025": {
+  "what_this_reading_changed": "eight running-header blocks left the set. They were there because the furniture criterion was attached only to the scopes this successor builds; see d02-content-read/page-furniture-by-scope.json.",
+  "what_was_read": "all 45 excerpts after the page-furniture fix, plus every block skipped inside Item 3 and Note 24.",
+  "why_the_whole_note": "its Item 3 names no caption - it says 'See Note 24 of the Notes to the Financial Statements for a discussion of loss contingencies' - so the reference is to the note's subject, and all three of its parts (guarantees and indemnifications, litigation and claims, warranty and field service actions) are loss contingencies. Marriott's is the contrast and the reason this is a judgement rather than a default: it names a caption inside its note, so its scope stops there and its guarantee table stays out."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "macys_2026": {
+  "the_thin_set_is_the_filing": "this registrant incorporates no note by name and has no Commitments and Contingencies note; its '14. Commitments' note is merchandise purchase obligations. Three excerpts is what the filing carries.",
+  "what_was_read": "all 3 excerpts. Item 3's single paragraph, which says the registrant's proceedings are incidental and not expected to be material, and two Item 8 blocks - the interchange fee litigation settlement it recorded a $328 million gain on, and the self-insurance accrual for workers compensation and general liability claims."
+ },
+ "marriott_2023_2024_and_2025": {
+  "a_block_that_starts_mid_sentence": "2025's excerpt at 1316 begins '31, 2025, we have recorded an accrual' and 2023's at 1253 begins 'penalties or other resolution'. Those are the document's own block boundaries across a page break, not a selection error.",
+  "what_was_read": "all 8, 10 and 11 excerpts, plus every block the selector skipped inside the note range.",
+  "why_the_set_is_right": "the filing's own Item 3 incorporates 'the information under the “Litigation, Claims, and Government Investigations” caption in Note 7', and the excerpt set is exactly that caption's blocks plus Item 3. The blocks skipped inside the note are the ones outside the named caption - 'Description of Event' and its paragraph, 'Insurance Recoveries' and its paragraph - and the page number and Table of Contents lines between them. Taking the whole note instead was measured earlier in this issue and judged wrong for exactly those blocks."
+ },
+ "per_position": {
+  "enphase-2025": {
+   "chars": 9884,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e",
+     "run_id": "run:historical-period:954bc13e3b575c21ccfbd3278bdeadf3425a31205f658feac15bb9d49165fb96"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "excerpts": 17,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:0a9b43dbe3d6d01adc7f6abe277b1e393fac50e0c6a04c858c6247e3ceeb9214"
+  },
+  "ford-2025": {
+   "chars": 17765,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:0d4ba077149339d126579eb87dd97a9c54c9331244dc63ee779cfa1f3a39431c",
+     "run_id": "run:historical-period:ef3d3d8032ab3db42bcc1f132db557c261bc045d01451f02809d40a4bdb400ad"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "37996"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0000037996-26-000015"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "ford_motor_company",
+   "excerpts": 45,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9"
+  },
+  "macys-2026": {
+   "chars": 1183,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:a1cbaddbe6d8b9d72e6eea2d82f6b3aa1a22bcae99e59ac514e40817c0e372b6",
+     "run_id": "run:historical-period:8186a1c5415d79cd96fb194592fb3cfc839ec870ddcd6b99ac9174b3426fc6f4"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0001628280-26-021721"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "excerpts": 3,
+   "period_end": "2026-01-31",
+   "value_sha256": "sha256:40f09f210f6cf31d7fd00090a7855488da287891d5781f55e9e0fde0634e2012"
+  },
+  "marriott-2023": {
+   "chars": 4997,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:7c9aab7a050448251ae9747d05e5b30aede0c556b81dfa8a6e11ae19491a7f92",
+     "run_id": "run:historical-period:bfbd0ff24e5b0b13cbd9db08029c28f50ce4c8b9ed45a73bc14fb882a58ea91a"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0001628280-24-004372"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "excerpts": 8,
+   "period_end": "2023-12-31",
+   "value_sha256": "sha256:456ff18436fac1257c2bfde95ba13f7f25427c6f3d466238c656ba32fa7db15b"
+  },
+  "marriott-2024": {
+   "chars": 5774,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:0ffef8a3f5adfd94241b34e70d99b38b9d24cfabca30175215c717c0abb3de61",
+     "run_id": "run:historical-period:c350b274876f84ce0a78e73eb4b13f92c10050191091b555acff3271719ed718"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0001628280-25-004818"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "excerpts": 10,
+   "period_end": "2024-12-31",
+   "value_sha256": "sha256:1087196ed11e912f2d7c2ca5baa3cb3ed96dda826c9b2334e1128bd2365e70f7"
+  },
+  "marriott-2025": {
+   "chars": 5098,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:4262954e0c41a02edc76cfa08c276eb3d45f8a4716b8daa3fa99183836a114ed",
+     "run_id": "run:historical-period:1e953f80f5daf42cb7d1d686b87c7baf482abd21ef5ea0ce5c60a903a957eefc"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0001048286-26-000007"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "excerpts": 11,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:1effad2d6c6b26c502c2ca2a091e2d7a9eabac547a9bb33b94e7ef02321f6530"
+  },
+  "salesforce-2026": {
+   "chars": 15336,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:1dca4f300c758b84065f0431e3356eb1191b31ef2134d9af1469f1fe03cf8d15",
+     "run_id": "run:historical-period:c1da14a23bc2c7e073041dacbc4e0fe7e7a325dbce5fb32bd8ba983a05ca7852"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0001108524-26-000060"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "salesforce",
+   "excerpts": 15,
+   "period_end": "2026-01-31",
+   "value_sha256": "sha256:cee68e9d6ec21a730d529e7369a7579093080da6d02cb788ae400659d01eeb9c"
+  },
+  "southwest-2025": {
+   "chars": 35545,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:b498f4d35ec29535fa451f0b4e5fc5324bfdc76d8e3885e63b4b95f1a9916845",
+     "run_id": "run:historical-period:a788059cb7eb62910543376433617447450dedede1906023752e059a23a79b2b"
+    },
+    "checked_against_the_reading": [
+     "value"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "BOUND_AFTER_THE_READING",
+    "filings": [
+     "0000092380-26-000004"
+    ],
+    "not_named_by_the_reading": [
+     "filings",
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "southwest_airlines",
+   "excerpts": 25,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:e5110762400912415b37bad369553ae1b816129a3789f30ca580a09a16d0349a"
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_D02_BOTH_DIRECTIONS_READ",
+ "salesforce_2026": {
+  "and_it_is_the_positive_control": "its Item 3 quotes the note's own title, so the note gets a caption scope, and a caption scope already carried the furniture criterion. Its three page breaks were dropped before this round changed anything.",
+  "what_was_read": "all 15 excerpts and the six blocks skipped inside Note 14.",
+  "why_the_set_is_right": "Item 3's two paragraphs and the sentence incorporating Note 14, then Note 14 whole - the ordinary-course paragraph, the provisioning policy, the Slack securities litigation and the Backpage actions. The skipped six are three bare page numbers and three Table of Contents links."
+ },
+ "southwest_2025": {
+  "the_one_worth_naming": "block 1428 is admitted by the keyword proxy inside Item 8 and is correct: it is this registrant's own exposure to DOT fines and penalties after the December 2022 disruption, and it carries the $107 million accrual and the $11 million waiver.",
+  "what_was_read": "all 25 excerpts and the twelve blocks skipped inside Item 3.",
+  "why_the_set_is_right": "twenty Item 3 blocks covering the DOJ civil investigative demand and the capacity antitrust actions, the USERRA military-leave class action and its settlement, the California wage-and-hour class action, the 2020 derivative action, the MAX contract-of-carriage action, the December 2022 disruption securities and derivative matters and the Special Litigation Committee, the 2025 retirement-plan ERISA action and the bag-fee demand letter; and five Item 8 blocks stating the same matters in the notes. The skipped twelve are six page numbers and six Table of Contents links."
+ },
+ "the_other_direction": "docs/evidence/issue47_history/d02-content-read/unreached-notes.json - no contingencies note in any of these filings goes unreached.",
+ "what_this_is": "the D02 positions whose excerpt sets have been read whole in both directions: every excerpt taken, every block the selector skipped inside the narrow scopes, and - through the unreached-note scan - whether any contingencies note was missed.",
+ "which_are_not_here_and_why": {
+  "enphase 2025": "seventeen of eighteen excerpts are disclosure; the eighteenth is the page footer, which repetition cannot see because it carries the page number. Registered defect.",
+  "lumen 2025": "one block, the outside-counsel fee policy, same cause. Registered defect.",
+  "paramount 2025": "two blocks, transaction-cost composition and a leverage covenant, same cause. Registered defect.",
+  "pfizer 2025": "read whole in both directions and found wrong: two of its 96 excerpts are admitted by the _LEGAL keyword proxy and are not legal-proceedings disclosure. Registered defect."
+ }
+}

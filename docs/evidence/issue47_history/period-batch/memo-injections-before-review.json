@@ -1,0 +1,200 @@
+{
+ "ANY_ARGUMENT_IS_KEYED_BY_ITS_REPR": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_arguments_that_are_not_plain_data_go_to_the_frozen_function",
+  "failed_cases": [
+   "test_arguments_that_are_not_plain_data_go_to_the_frozen_function"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_BLOCK_IS_SHARED_ACROSS_THREADS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_is_for_one_thread",
+  "failed_cases": [
+   "test_a_block_is_for_one_thread"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_FOREIGN_ANSWER_IS_NOT_CHECKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_answer_handed_out_for_a_foreign_tree_spoils_the_outer_answer",
+  "failed_cases": [
+   "test_an_answer_handed_out_for_a_foreign_tree_spoils_the_outer_answer"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_LATE_IMPORT_KEEPS_THE_MEMO": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_module_imported_inside_the_block_gets_the_frozen_function_back",
+  "failed_cases": [
+   "test_a_module_imported_inside_the_block_gets_the_frozen_function_back"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_LINK_IS_FINGERPRINTED_LIKE_A_FILE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_tree_holding_a_link_is_not_keyed",
+  "failed_cases": [
+   "test_a_tree_holding_a_link_is_not_keyed"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_NESTED_BLOCK_STARTS_ITS_OWN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_inside_another_keeps_the_outer_memo",
+  "failed_cases": [
+   "test_a_block_inside_another_keeps_the_outer_memo",
+   "test_a_block_is_for_one_thread"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_RECURSIVE_CALL_IS_KEYED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_call_inside_its_own_computation_goes_to_the_frozen_function",
+  "failed_cases": [
+   "test_a_call_inside_its_own_computation_goes_to_the_frozen_function"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_REFUSAL_IS_REMEMBERED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_refusal_is_not_remembered",
+  "failed_cases": [
+   "test_a_refusal_is_not_remembered"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "A_SNAPSHOT_COPY_IS_KEYED_BY_ITS_PARENT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_snapshot_s_tree_is_its_repository_root",
+  "failed_cases": [
+   "test_the_snapshot_s_tree_is_its_repository_root"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "BYTES_ARE_KEYED_BY_THEIR_LENGTH": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_bytes_are_keyed_by_their_content",
+  "failed_cases": [
+   "test_bytes_are_keyed_by_their_content"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "CONTROL": {
+  "returncode": 0,
+  "seconds": 1
+ },
+ "LISTINGS_ARE_NOT_CHECKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_listing_outside_its_key_is_not_remembered",
+  "failed_cases": [
+   "test_a_listing_outside_its_key_is_not_remembered"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "NOTHING_IS_EVER_FORGOTTEN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_forgotten_state_is_derived_again_not_answered_wrong",
+  "failed_cases": [
+   "test_a_forgotten_state_is_derived_again_not_answered_wrong"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "NOTHING_IS_PUT_BACK_AFTER_A_FAILURE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_everything_is_put_back_after_a_failure",
+  "failed_cases": [
+   "test_everything_is_put_back_after_a_failure"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "PROCESSES_ARE_NOT_CHECKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_answer_that_started_a_process_is_not_remembered",
+  "failed_cases": [
+   "test_an_answer_that_started_a_process_is_not_remembered"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "READS_ARE_NOT_CHECKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_answer_that_read_outside_its_key_is_not_remembered",
+  "failed_cases": [
+   "test_a_listing_outside_its_key_is_not_remembered",
+   "test_an_answer_handed_out_for_a_foreign_tree_spoils_the_outer_answer",
+   "test_an_answer_that_read_outside_its_key_is_not_remembered",
+   "test_an_answer_that_started_a_process_is_not_remembered"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "THE_CHANGE_TIME_IS_LEFT_OUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_file_rewritten_in_place_is_derived_again",
+  "failed_cases": [
+   "test_a_file_rewritten_in_place_is_derived_again"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "THE_ENVIRONMENT_IS_LEFT_OUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_environment_is_in_the_key",
+  "failed_cases": [
+   "test_the_environment_is_in_the_key"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "THE_FIRST_ANSWER_IS_KEPT_UNCOPIED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_answer_is_a_copy",
+  "failed_cases": [
+   "test_the_answer_is_a_copy"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "THE_RUNTIME_TREE_IS_LEFT_OUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_runtime_tree_is_in_the_key",
+  "failed_cases": [
+   "test_the_runtime_tree_is_in_the_key"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "THE_SHARED_ANSWER_IS_HANDED_OUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_answer_is_a_copy",
+  "failed_cases": [
+   "test_the_answer_is_a_copy"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "THE_TEXT_PREPARATION_NAMES_NO_TREE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_preparation_handed_its_bytes_is_keyed_on_the_runtime_tree",
+  "failed_cases": [
+   "test_a_preparation_handed_its_bytes_is_keyed_on_the_runtime_tree"
+  ],
+  "returncode": 1,
+  "seconds": 1
+ },
+ "all_caught": true
+}

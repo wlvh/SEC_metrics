@@ -1,0 +1,123 @@
+{
+ "AN_UNLINKED_CONTENTS_LINE_IS_THE_LAYOUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_an_unlinked_contents_line_is_not_the_layout",
+  "failed_cases": [
+   "test_an_unlinked_contents_line_is_not_the_layout"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 18
+ },
+ "A_CAPITALISED_NEXT_HEADING_IS_THE_LAYOUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_second_block_that_begins_a_sentence_is_a_heading_of_its_own",
+  "failed_cases": [
+   "test_a_second_block_that_begins_a_sentence_is_a_heading_of_its_own",
+   "test_the_two_filings_that_have_one_build_the_batch_s_document"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 18
+ },
+ "A_FIRST_HALF_THAT_ENDS_ITS_SENTENCE_IS_THE_LAYOUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_first_half_that_ends_a_sentence_is_a_heading_of_its_own",
+  "failed_cases": [
+   "test_a_first_half_that_ends_a_sentence_is_a_heading_of_its_own"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 18
+ },
+ "A_LONE_PAGE_NUMBER_IS_THE_LAYOUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_lone_page_number_between_two_headings_is_not_the_layout",
+  "failed_cases": [
+   "test_a_lone_digit_leaves_two_headings",
+   "test_a_lone_page_number_between_two_headings_is_not_the_layout",
+   "test_both_reports_are_refused_by_name",
+   "test_the_layout_is_recognised",
+   "test_the_layout_is_where_the_batch_joined",
+   "test_the_layout_stops_the_document",
+   "test_the_route_refuses_rather_than_delivering_halves"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 16
+ },
+ "A_PARTLY_EMPHASISED_HALF_IS_A_HEADING_HALF": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_half_that_is_not_emphasised_whole_is_not_a_heading_half",
+  "failed_cases": [
+   "test_a_half_that_is_not_emphasised_whole_is_not_a_heading_half"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 19
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 18
+ },
+ "OUTSIDE_ITEM_1A_THE_WHOLE_DOCUMENT_IS_SCANNED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_outside_item_1a_it_is_not_the_layout",
+  "failed_cases": [
+   "test_outside_item_1a_it_is_not_the_layout"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 17
+ },
+ "THE_REFUSAL_IS_NEVER_ASKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_both_reports_are_refused_by_name",
+  "failed_cases": [
+   "test_both_reports_are_refused_by_name",
+   "test_the_layout_stops_the_document",
+   "test_the_route_refuses_rather_than_delivering_halves"
+  ],
+  "file": "scripts/vnext/historical_text_emphasis.py",
+  "modules": [
+   "tests.vnext.test_historical_page_split_headings"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 19
+ },
+ "all_caught": true
+}

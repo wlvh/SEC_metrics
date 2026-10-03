@@ -1,0 +1,63 @@
+{
+ "authority_paths": 462,
+ "byte_sizes": {
+  "data": 31461813,
+  "run": 14525,
+  "runtime": 13763963
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "depends_on_no_checkout": true,
+ "duration_seconds": 39.4,
+ "environment_passed": [
+  "PATH",
+  "PYTHONDONTWRITEBYTECODE"
+ ],
+ "extra_beyond_authority": [
+  "docs/evidence/issue_28_r4_label_policy.json",
+  "docs/evidence/issue_28_annual_candidate_policy.json",
+  "docs/evidence/issue_28_annual_runtime_policy.json",
+  "docs/evidence/issue_28_annual_repair_policy.json"
+ ],
+ "interpreter_flags": [
+  "-I"
+ ],
+ "native_run_created": false,
+ "production_authorized": false,
+ "record_type": "HISTORICAL_PORTABLE_DELIVERY_REPLAY",
+ "replay": {
+  "calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "evidence_count": 1,
+  "quality": "EXACT",
+  "requirement_id": "issue_47_v1",
+  "row_accession": "0001628280-25-004818",
+  "row_fiscal_year": "2024",
+  "row_hash": "sha256:c7327259bbae07a38531bcf1ea7a2731681567f03320bf59be7ca5501ac3a0df",
+  "row_value": "2375000000",
+  "run_id": "run:historical-period:e784897320575ef76aad2243a075a2caf091dfcbc2ae9e82e10734d20792cee1",
+  "status": "FROZEN",
+  "sys_path_entries_outside_the_delivery": [],
+  "target_period": {
+   "fiscal_year": 2024,
+   "period_end": "2024-12-31",
+   "period_start": "2024-01-01"
+  },
+  "value": "2375000000",
+  "vnext_modules_loaded": 99,
+  "vnext_modules_outside_the_delivery": [],
+  "working_directory": "/"
+ },
+ "requirement_id": "issue_47_v1",
+ "returncode": 0,
+ "runtime_files": 466,
+ "schema_version": 1,
+ "total_bytes": 45240301,
+ "working_directory": "/"
+}

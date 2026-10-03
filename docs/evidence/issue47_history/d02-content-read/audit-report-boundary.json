@@ -1,0 +1,129 @@
+{
+ "audit_report_spans_measured": {
+  "enphase_energy": [
+   [
+    1085,
+    1111
+   ],
+   [
+    1116,
+    1128
+   ]
+  ],
+  "ford_motor_company": [],
+  "lumen_technologies": [
+   [
+    1323,
+    1349
+   ],
+   [
+    1354,
+    1366
+   ]
+  ],
+  "marriott_international": [
+   [
+    765,
+    778
+   ],
+   [
+    782,
+    809
+   ]
+  ],
+  "pfizer": [],
+  "southwest_airlines": [
+   [
+    2250,
+    2270
+   ],
+   [
+    2275,
+    2290
+   ]
+  ]
+ },
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "filings_read": 6,
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured_effect": {
+  "enphase_energy": {
+   "candidates_after": 18,
+   "candidates_before": 18,
+   "excluded_blocks": [],
+   "proposal_record_identical": true
+  },
+  "ford_motor_company": {
+   "candidates_after": 53,
+   "candidates_before": 53,
+   "excluded_blocks": [],
+   "proposal_record_identical": true
+  },
+  "lumen_technologies": {
+   "candidates_after": 41,
+   "candidates_before": 41,
+   "excluded_blocks": [],
+   "proposal_record_identical": true
+  },
+  "marriott_international": {
+   "candidates_after": 11,
+   "candidates_before": 11,
+   "excluded_blocks": [],
+   "proposal_record_identical": true
+  },
+  "pfizer": {
+   "candidates_after": 95,
+   "candidates_before": 99,
+   "excluded_blocks": [
+    1881,
+    1882,
+    1883,
+    1884
+   ],
+   "proposal_record_identical": false
+  },
+  "southwest_airlines": {
+   "candidates_after": 25,
+   "candidates_before": 25,
+   "excluded_blocks": [],
+   "proposal_record_identical": true
+  }
+ },
+ "question": "The four over-taken Pfizer blocks are the auditor's critical audit matter. What rule takes them out without inventing one from a single filing?",
+ "record_type": "ISSUE_47_D02_AUDIT_REPORT_BOUNDARY",
+ "the_bug_the_counts_hid": "the first version skipped the whole block rather than only D02's branch, which took the same blocks out of D03's regulatory candidate set on four filings the rule was supposed to leave alone. Every candidate count was identical either way; comparing the proposal records found it.",
+ "the_rule_adopted": {
+  "applies_to": "D02's branch only. D03 has its own approved source and was not measured here.",
+  "basis": "the approved source names Item 3, the legal proceedings section and the contingencies notes. The audit report is none of them. Not the speaker: entity_scope answers which entity the disclosure concerns, and a critical audit matter about the registrant's litigation concerns the registrant.",
+  "closing": "the first block of at most 400 characters that either starts with /s/ or says the firm served or could not determine when it began serving as auditor",
+  "opening": "a block carrying leading emphasis whose whole text is the report title",
+  "unclosed": "excludes nothing and is reported"
+ },
+ "the_rule_that_failed": {
+  "candidate": "span runs from an emphasised report title to the firm's /s/ signature",
+  "fails_on": "pfizer",
+  "passes": [
+   "southwest_airlines",
+   "lumen_technologies",
+   "enphase_energy",
+   "marriott_international"
+  ],
+  "the_lesson": "the rule that works on five filings fails on the one that motivated it. Reading only a second and a third would have shipped it.",
+  "why": "Pfizer's report has no /s/ block at all. It closes with the auditor-tenure sentence at block 1885, then the city and the date - and the sentence does not use the usual wording: 'We have not been able to determine the specific year that we or our predecessor firms began serving as the Company's auditor'."
+ },
+ "what_is_not_done": {
+  "content_acceptance": "that the remaining 95 are the right 95 is not asserted. An Evidence PASS and a frozen Run answer whether the machinery worked.",
+  "the_other_four_years": "only the 2025 filings were read. Earlier years are not saved for most of these companies.",
+  "the_two_keyword_items": "blocks 2175 and 2240 are still taken. They are not in any audit report - they are the _LEGAL keyword standing in for 'is this a legal-proceedings disclosure'. A separate defect with a separate cause."
+ },
+ "what_the_six_filings_show": {
+  "count_is_not_one": "every filing carries two reports - the financial statements one and the internal control one. Some also carry unemphasised mentions: Marriott's two contents lines, Southwest's reference at 1421, Enphase's '(PCAOB ID No. 34)'.",
+  "emphasis_separates_heading_from_mention": "in all six, every real heading carries leading emphasis and every mention that is not a heading does not. Measured on six filings, not asserted as universal - a filing whose heading is not emphasised gets the old behaviour, which is a registered over-take rather than a silent drop.",
+  "position_is_not_fixed": "front of Item 8 in Pfizer, Lumen, Enphase and Marriott; back of Item 8 in Southwest (blocks 2250-2290 of [1210, 2294)); absent in Ford, whose whole Item 8 is one cross-reference block."
+ },
+ "why_not_from_one_filing": "the shortcut - narrow the scope to Note 16A - removes all six in one edit and also removes blocks 2302 and 2351, the contingencies note lead-in and the Seagen legal matters bullet, which the same content read confirmed belong. A fix that drops confirmed disclosures to reach a count is worse than the defect."
+}

@@ -1,0 +1,152 @@
+{
+ "record_type": "ISSUE_47_EGRESS_PARALLEL_MECHANICS_CHECK",
+ "what_this_is": "verify.py's copy, manifest and dispatch code run on a few injections in 2 copies of a HEAD+both-patches tree, without the suite and without sealing: evidence that the machinery works, not about any injection",
+ "run_on": "runtime tree equal to the repository working tree at the time plus both patches, minted",
+ "runs": [
+  {
+   "run": "mechanics.json",
+   "note": "first version of the parallel verify.py, before each suite process had a temporary directory of its own",
+   "copies": 2,
+   "injections": [
+    "THE_FIXTURES_OVERWRITE_A_REAL_ALLOWANCE",
+    "GH_GETS_THE_WHOLE_ENVIRONMENT",
+    "A_SECOND_TRANSPORT_CALLER",
+    "THE_APPROVER_IS_A_LOGIN_ONLY",
+    "THE_CONTROLLER_BRANCH_IS_ABSENT",
+    "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER"
+   ],
+   "manifest_entries": 12066,
+   "manifest_digest": "sha256:7a3041434512cc841595ab4704e2b64b6bdbf11ab52974d6c38963e3cf9a5443",
+   "manifest_seconds": 14.4,
+   "at_start": [
+    true,
+    true
+   ],
+   "copies_seconds": 41.6,
+   "dispatch_seconds": 32.0,
+   "stop": null,
+   "rows": {
+    "THE_FIXTURES_OVERWRITE_A_REAL_ALLOWANCE": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_the_suite_refuses_to_run_beside_an_existing_allowance"
+     ],
+     "copy": 0,
+     "seconds": 2.0
+    },
+    "GH_GETS_THE_WHOLE_ENVIRONMENT": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_the_environment_is_narrowed"
+     ],
+     "copy": 1,
+     "seconds": 2.0
+    },
+    "THE_APPROVER_IS_A_LOGIN_ONLY": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_the_approval_is_the_approver_s_own_post"
+     ],
+     "copy": 1,
+     "seconds": 2.0
+    },
+    "A_SECOND_TRANSPORT_CALLER": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_the_gate_passes_and_lists_the_one_new_caller"
+     ],
+     "copy": 0,
+     "seconds": 6.0
+    },
+    "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_the_gate_passes_and_lists_the_one_new_caller"
+     ],
+     "copy": 0,
+     "seconds": 12.0
+    },
+    "THE_CONTROLLER_BRANCH_IS_ABSENT": {
+     "outcome": "CAUGHT_AT_FIXTURE",
+     "expected_class_outcome": "CAUGHT_AT_FIXTURE",
+     "first_caught_by": [
+      "setUpClass"
+     ],
+     "copy": 1,
+     "seconds": 28.0
+    }
+   },
+   "at_end": [
+    true,
+    true
+   ],
+   "sealing_tree_at_end": true,
+   "copies_removed": true
+  },
+  {
+   "run": "mechanics2.json",
+   "note": "after each suite process got a temporary directory of its own (removed with it); includes an injection whose class exercises the runner's private bytecode cache",
+   "copies": 2,
+   "injections": [
+    "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE",
+    "GH_GETS_THE_WHOLE_ENVIRONMENT",
+    "THE_CONTROLLER_BRANCH_IS_ABSENT"
+   ],
+   "manifest_entries": 12145,
+   "manifest_digest": "sha256:97eb3c24d4e3c8ef3fd405ac0431d758b3542904d83791011c70718950165624",
+   "manifest_seconds": 4.2,
+   "at_start": [
+    true,
+    true
+   ],
+   "copies_seconds": 45.5,
+   "dispatch_seconds": 64.0,
+   "stop": null,
+   "rows": {
+    "GH_GETS_THE_WHOLE_ENVIRONMENT": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_the_environment_is_narrowed"
+     ],
+     "copy": 1,
+     "seconds": 2.0
+    },
+    "THE_CONTROLLER_BRANCH_IS_ABSENT": {
+     "outcome": "CAUGHT_AT_FIXTURE",
+     "expected_class_outcome": "CAUGHT_AT_FIXTURE",
+     "first_caught_by": [
+      "setUpClass"
+     ],
+     "copy": 1,
+     "seconds": 30.0
+    },
+    "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE": {
+     "outcome": "CAUGHT",
+     "expected_class_outcome": "CAUGHT",
+     "first_caught_by": [
+      "test_a_transport_account_that_disagrees_stops_with_the_response_kept"
+     ],
+     "copy": 0,
+     "seconds": 64.0
+    }
+   },
+   "at_end": [
+    true,
+    true
+   ],
+   "sealing_tree_at_end": true,
+   "copies_removed": true
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

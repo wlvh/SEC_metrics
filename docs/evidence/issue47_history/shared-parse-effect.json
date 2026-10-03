@@ -1,0 +1,31 @@
+{
+ "record_type": "SHARED_SOURCE_PARSE_MEASUREMENT",
+ "schema_version": 1,
+ "scope": "one D02 Run creation, macys 2026-01-31, same installed inputs",
+ "parse_calls_before": 80,
+ "parse_calls_after": 5,
+ "seconds_before": 105.9,
+ "seconds_after": 63.7,
+ "saving_percent": 40,
+ "result_id_identical": true,
+ "breakdown_after": {
+  "parse_accession_xbrl_source": 2,
+  "build_text_document": 1,
+  "reported_legal_fact_candidates": 1,
+  "_bound_source": 1
+ },
+ "note": "Five is one complete preparation. The derivations are unchanged; only the parse of identical immutable bytes is shared, and only inside one creation.",
+ "cold_read": "a separate process enters no scope, re-parses from the original evidence and returns the same status, quality and item count",
+ "isolated_candidate_and_evidence": {
+  "parse_calls_before": 10,
+  "parse_calls_after": 5,
+  "seconds_before": 7.6,
+  "seconds_after": 3.8
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "production_authorized": false
+}

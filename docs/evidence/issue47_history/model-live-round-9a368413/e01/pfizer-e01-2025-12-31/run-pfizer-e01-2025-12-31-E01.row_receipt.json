@@ -1,0 +1,75 @@
+{
+ "evidence": [
+  {
+   "accession": "0000078003-25-000159",
+   "cik": "78003",
+   "company": "Pfizer",
+   "concept_or_section": "Item 8.01",
+   "content_sha256": "40e6234f226035221d9d7d71a5a66ffd165b882a858d96827b6dd50db0bdcd1b",
+   "context_or_dimension": "{\"attributes\": {\"accession\": \"0000078003-25-000159\", \"brief\": \"8-K item 8.01 parsed from hdr.sgml\", \"brief_source\": \"HDR_SGML_ITEM_CODE\", \"deterministic_router_semantic_version\": \"2\", \"event_key\": {\"accession\": \"0000078003-25-000159\", \"item_code\": \"8.01\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800325000159/0000078003-25-000159.hdr.sgml\"}, \"event_key_hash\": \"sha256:012b5af8167f3cb324aa504ba3a67eef2c048d62f5397357b45fbfead42cd636\", \"hdr_source_reference_id\": \"sha256:e2537f8cba8921ce5a2e1929c37d03481aac6226447ab12b42679dc4f235bd4d\", \"item_code\": \"8.01\", \"primary_heading_brief\": \"accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 8.01 Results of Other Events On November 13, 2025, Pfizer Inc. (“Pfizer” or the “Company”) completed the previously announced acquisition of Metsera, Inc., a Delaware corporation (“Metsera”), pursuant to the Agreement and Pl\", \"primary_source_reference_id\": \"sha256:1a47848c3657589557d8c1e8ffa667f839f38670ec0f80459e7dc4fdb424ab40\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800325000159/0000078003-25-000159.hdr.sgml\"}, \"locator\": {\"brief_source\": \"HDR_SGML_ITEM_CODE\", \"item_code\": \"8.01\"}, \"verified_claim_id\": \"sha256:db6dadfb745a7d8da5cc129c59b72715b5bd9ef80860cebc3c42d9f5848fefad\"}",
+   "document_name": "0000078003-25-000159.hdr.sgml",
+   "evidence_quote": "Parsed source fact: {\"locator\": {\"brief_source\": \"HDR_SGML_ITEM_CODE\", \"item_code\": \"8.01\"}, \"unit\": \"text\", \"value\": \"8-K item 8.01 parsed from hdr.sgml\"}",
+   "extraction_method": "ordinary_native_source_projection",
+   "metric_id": "E01",
+   "parser_version": "ordinary_projection_v1",
+   "period_end": "2025-12-31",
+   "period_start": "2025-01-01",
+   "repo_relative_path": "evidence/accession_materials/pfizer_78003_000007800325000159/0000078003-25-000159.hdr.sgml",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000159/0000078003-25-000159.hdr.sgml",
+   "unit": "count",
+   "value_normalized": "1",
+   "value_raw": ""
+  }
+ ],
+ "receipt": {
+  "calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "evidence_count": 1,
+  "evidence_hash": "sha256:9d8545f594952ff6233ff8c1e35a1d5f6902c7b5eaa09c771e3573cd3b3b88eb",
+  "period_selection_id": "sha256:ae9f8b0fc91d2c0f498697a94476133440480303e153d76126a3c3b884c7599b",
+  "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+  "primary_metric_id": "E01",
+  "production_authorized": false,
+  "receipt_id": "sha256:82e88fdfbabaf20c09044fb11797451fca29a2a7207533ab85e90fb881cc0532",
+  "record_type": "HISTORICAL_PERIOD_ROW_RECEIPT",
+  "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:17710f4d827f1719e0aa3014bbbcfa3d2a1ff1a951b8d546dcbee5f32af257e6",
+  "row_hash": "sha256:fd7b75430c07c01c7ea2e71064d6d81c3bb385f875f8be314bb6f3eac7d1ccf5",
+  "run_id": "run:historical-period:066f9a5dae70a4ac69187a62bf061ad21996eb44efde78754424e33ff6046b1a",
+  "run_status": "FROZEN",
+  "semantic_assessment_mode": "LIVE",
+  "source_required_metric_ids": [
+   "E01"
+  ],
+  "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+  "status": "FROZEN_CANDIDATE"
+ },
+ "record_type": "HISTORICAL_PERIOD_ROW_BUNDLE",
+ "row": {
+  "accession": "0000078003-25-000159",
+  "cik": "78003",
+  "company": "Pfizer",
+  "concept_or_section": "M&A announcements",
+  "confidence": "",
+  "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"period_selection_id\": \"sha256:ae9f8b0fc91d2c0f498697a94476133440480303e153d76126a3c3b884c7599b\", \"requested_fiscal_year\": null, \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2025, \"shared_claim_group_id\": \"merger_acquisition_items\"}, \"source_reference_ids\": [\"sha256:05575919b3d4d3f775350a75fb4af5629de91dc4e6707ba73c5e95fcf1437cc8\", \"sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d\", \"sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea\", \"sha256:5ab8683bb06e5a0f569ff3612dec7de8447deaf5e97c895326af08ec5c46ea4c\", \"sha256:6bd75a35582e006f15b4208c11dcaeb6a17f7a2a4e3bc47a52efc1972b6abda7\", \"sha256:344585d4a18c2e7e867972138a1e5663d8d635045ab8f4cff7436d19fba5bf15\", \"sha256:ef5f0ba2a0d2f41c199d4e401fe46cbdc9c0bfc5f16d169a96e82973a23113ab\", \"sha256:9e8c49a52bc722057dc37498addd929afde32182f9f74906dcd420c30bc1289c\", \"sha256:6829098b8c34e731ee681a96ac303fbf10964fd31c28d061e5afc16969e1fcd7\", \"sha256:064fbe5d9e1a974257355ea35261d67e8533ccc962ca547f34df0ac20ecc4314\", \"sha256:56dd3350f0ba541a274f9d4291263e1461e8e99082025d40bfd7d029d467832c\", \"sha256:0f9ca5e24acc47bc6bb049b77d335a5e7db77236c6ad5229eead04c7c265786d\", \"sha256:6aec446c3b2498b0e453f4764bc90c5096a2d328b76ceb2a7a7b57a9fb0496c2\", \"sha256:202ef7231d7a72a42e12af570f1cdde8ab2fd8a86b6f276202a93fe1f6edd058\", \"sha256:62c152f903c3135515f2d63c276c190d8228611d300891f92b9721f59c2777cb\", \"sha256:1a47848c3657589557d8c1e8ffa667f839f38670ec0f80459e7dc4fdb424ab40\", \"sha256:e2537f8cba8921ce5a2e1929c37d03481aac6226447ab12b42679dc4f235bd4d\", \"sha256:cdc98d1a22878614bb02a7d1e92e63acb070d26c859d1b121a65e67ca817441a\", \"sha256:6005fc7ea37d90b9a36120843080dfbbdd9bd1f3ae5260e0eb0ff2fc2469c3c0\", \"sha256:312721a2693c082d295a702765ca2fe8f8b6276e4e8909c7fa8133d674e3777a\", \"sha256:2387d2ea25be5eb9cf30af7f58b64940ccd26c51bdb584e978a6a5d827e979ab\"], \"target_report_end\": \"2025-12-31\"}",
+  "filed_date": "2025-11-13",
+  "fiscal_period": "ANNUAL",
+  "fiscal_year": "2025",
+  "form": "8-K",
+  "formula": "",
+  "metric_id": "E01",
+  "metric_name": "M&A announcements (content-confirmed)",
+  "notes": "Count of 8-K items filed under 1.01, 2.01 or 8.01 in the fiscal-year event window whose own text was confirmed to report a merger, acquisition, disposition or business combination to which the registrant or a subsidiary is party; financing agreements, tender offers for the registrant's own securities, repurchases, compensation and shareholder agreements are not counted. A window with an item whose confirmation is not registered, or whose own text does not settle it, is withheld by name. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Pinned historical period; values come only from the sources named in the evidence, as selected for this period. No latest-restated view is applied.",
+  "period_end": "2025-12-31",
+  "period_start": "2025-01-01",
+  "source_class": "8K_ITEM",
+  "status": "8K_ITEM_OK",
+  "unit": "count",
+  "value": "1"
+ },
+ "schema_version": 1
+}

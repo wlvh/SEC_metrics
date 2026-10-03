@@ -1,0 +1,539 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "enphase_energy:2022-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading",
+ "reader_note": "Item 3 is a single paragraph saying the company may face litigation but knows of no material legal proceedings; the value takes it, the loss-contingency accrual policy, and Note 13's litigation paragraph (no material legal proceedings). The rest of Note 13 (leases, purchase obligations, page furniture) is correctly outside, and its 'Litigation' label is covered by the taken paragraph.",
+ "packet_document_id": "sha256:d30944b3b42ea835a238da4aa924c9b5197c643219e243a9d08d0d4a39919985",
+ "packet_candidate_hash": "sha256:11f5a2a2ccac2b5035ee71db982b6d2b289bf400f6028b80c68c59610be2cff9",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 744,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 statement: no known material legal proceedings",
+   "text": "From time to time, we may be involved in litigation relating to claims arising out of our operations, the ultimate disposition of which could have a material adverse effect on our operations, financial condition, or cash flows. We are not currently aware of any material legal proceedings, involving the Company.",
+   "text_sha256": "sha256:fa698fe9aa3615a475c69d2f3d8280dc0f860685f9284c17b0bcbb324626a341",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1465,
+   "verdict": "DISCLOSURE",
+   "why": "registrant's accrual policy for loss contingencies from legal proceedings and claims",
+   "text": "In the normal course of business, the Company is subject to loss contingencies and loss recoveries, such as legal proceedings and claims arising out of its business as well as tariff refunds. An accrual for a loss contingency or loss recovery is recognized when it is probable and the amount of loss or recovery can be reasonably estimated.",
+   "text_sha256": "sha256:d57d1e81a24e441fb4391b4fc5de126dd9f8b959091222833edc6e2a444701a7",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2191,
+   "verdict": "DISCLOSURE",
+   "why": "Note 13 litigation paragraph: no material legal proceedings",
+   "text": "From time-to-time, the Company may be involved in litigation relating to claims arising out of its operations, the ultimate disposition of which could have a material adverse effect on its operations, financial condition or cash flows. The Company is not currently involved in any material legal proceedings; however, the Company may be involved in material legal proceedings in the future. Such matters are subject to uncertainty and there can be no assurance that such legal proceedings will not have a material effect on its business, results of operations, financial position or cash flows.",
+   "text_sha256": "sha256:49a90adf915dbfd65d2bc00f25f17b7fc1aa4855a551ed2d6ce6176c7059cf6c",
+   "order": 2,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2137,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Operating Leases subheading",
+   "text": "Operating Leases",
+   "text_sha256": "sha256:93e7544ca0f78c7368c1481b787199240ec2aee9d398863b2ace809cb26b8d93"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2138,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "office lease description",
+   "text": "The Company leases office facilities under noncancellable operating leases that expire on various dates through 2032, some of which may include options to extend the leases for up to 12 years.",
+   "text_sha256": "sha256:60fb4cd76b4b3d6a7aeb5c42aad2761943b091594357ae57980eb00158134339"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2139,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease expense table caption",
+   "text": "The components of lease expense are presented as follows:",
+   "text_sha256": "sha256:96eabe75faf2b86eda46e42228602beff76b56ac89fd1cb68a16e3cf2255cb2e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2140,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "Years Ended December 31,",
+   "text_sha256": "sha256:fc9ceb0124f0c2848c150c17b763eac348b499a7b4297a033da5256cb5e7e344"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2141,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table year header",
+   "text": "20222021",
+   "text_sha256": "sha256:f2f64d4fb0487662303ec67b256f19cd1d2f89324520fd2c48006df5f18f5b4a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2142,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2143,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "operating lease cost row",
+   "text": "Operating lease costs$8,222 $7,049",
+   "text_sha256": "sha256:fb5f2da2d719b35afa6a8be7e1412972d72a122bf8122a1b3c4e1de0824f68a6"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2144,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease liabilities table caption",
+   "text": "The components of lease liabilities are presented as follows:",
+   "text_sha256": "sha256:6acbb8d3337dd1f302988968b9992a825d36acf79d5964ef9d91ca2706235645"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2145,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "December 31,",
+   "text_sha256": "sha256:7fd1d54a3e414b28a6706f0f6a57081a2dfea8b36a61ce9341fae03f80cd8df9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2146,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "2022December 31,",
+   "text_sha256": "sha256:f8bfae3c78069410c530b0cebe9f01686d8bd0ab62f3f29bdf967ea50f418897"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2147,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "2021",
+   "text_sha256": "sha256:1bea20e1df19b12013976de2b5e0e3d1fb4ba088b59fe53642c324298b21ffd9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2148,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands except years and percentage data)",
+   "text_sha256": "sha256:5107ed5b4ccec699bf83d0d27fb20ffa0bb6ae6ac0e6aaf8fd5fa209ebf6e9b2"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2149,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "current lease liability row label",
+   "text": "Operating lease liabilities, current (Accrued liabilities)",
+   "text_sha256": "sha256:aa1429d1d4a107611c447dbfb38661633cf0d47877da00a62273098b1eb80752"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2150,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "current lease liability amounts",
+   "text": "$5,371 $3,830",
+   "text_sha256": "sha256:91e8f1b6c13f39337383f192dbb974d4d733d393ece6bc1ef448d52dd25c3a71"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2151,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "non-current lease liability row",
+   "text": "Operating lease liabilities, non-current (Other liabilities)19,077 11,920",
+   "text_sha256": "sha256:b8c4df55f719250a6c6d7bdb51bf3ff5988c7d5b5150c8ba95ae291430d9f729"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2152,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities label",
+   "text": "Total operating lease liabilities",
+   "text_sha256": "sha256:2f8c07af8f12fbec263abc52c5d629a90df8e945bd25ac44b1ff8038a2ff494b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2153,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities amounts",
+   "text": "$24,448 $15,750",
+   "text_sha256": "sha256:024115073945b7cf3c979f86d4f5693f97ac84cf4c358bcdc25881066920c095"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2154,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "supplemental lease information label",
+   "text": "Supplemental lease information:",
+   "text_sha256": "sha256:d520648969fe23e9e8abb1daef7cb22d0411606c6c801f25a805fd01fc882135"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2155,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease term row label",
+   "text": "Weighted average remaining lease term",
+   "text_sha256": "sha256:604932cfc348eafe9ff9980c255510e47b0df2307d2af610a039dd7e1e7ae25a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2156,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease term values",
+   "text": "5.3 years5.9 years",
+   "text_sha256": "sha256:7ad786b8faf989ba50fc86c788ecb4c26270967cd85517a8d1999584c60bafa2"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2157,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "discount rate row label",
+   "text": "Weighted average discount rate",
+   "text_sha256": "sha256:c90bec2a4a1fc7e127271d4c1bec8a059d9d85bc85556123f34628a8528da9f6"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2158,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "discount rate values",
+   "text": "6.5%7.4%",
+   "text_sha256": "sha256:d704a27ce724597d8bd49e4d0312604f8da95a6964c1e1c4ef780f614cf6a16b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2159,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease cash flow table caption",
+   "text": "Supplemental cash flow and other information related to operating leases, were as follows:",
+   "text_sha256": "sha256:4357e09dd5e28adbc31add1ea1f465dc346c82f72efd8478acc42e984748e7cc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2160,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "Years Ended December 31,",
+   "text_sha256": "sha256:fc9ceb0124f0c2848c150c17b763eac348b499a7b4297a033da5256cb5e7e344"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2161,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table year header",
+   "text": "20222021",
+   "text_sha256": "sha256:f2f64d4fb0487662303ec67b256f19cd1d2f89324520fd2c48006df5f18f5b4a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2162,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2163,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease cash paid row label",
+   "text": "Cash paid for amounts included in the measurement of lease liabilities:",
+   "text_sha256": "sha256:038dfcdbc2691fd26461dd6821ccee86110a413e0c802896ad91e29416455956"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2164,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "operating lease cash flow row",
+   "text": "Operating cash flows from operating leases$5,691 $5,855",
+   "text_sha256": "sha256:cb96948964b3fbfc8c7eeaece4f652c7e9731e6a6697d3dff86ba78d9b7929df"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2165,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "non-cash investing row label",
+   "text": "Non-cash investing activities:",
+   "text_sha256": "sha256:7ef1e29f642f88507e33b434cb928dd6bd6aa704f67ea81e66d2d3c3d4bd7046"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2166,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-use lease liability row label",
+   "text": "Lease liabilities arising from obtaining right-of-use assets",
+   "text_sha256": "sha256:e60d6204ab5da84606e78f83b9521ad89436a69bb4f91c23fd230f843ab16a46"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2167,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-use lease liability amounts",
+   "text": "$13,308 $708",
+   "text_sha256": "sha256:4d778da5e81ba76be41f3c7defa62b98fa355d0ac08db6b86cc5e333a440d39d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2168,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Enphase Energy, Inc. | 2022 Form 10-K | 111",
+   "text_sha256": "sha256:029b7d9c75d3538f491e14a398c3304fa9fb54afb1562304d9e3226c03cb0468"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2169,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2170,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "ENPHASE ENERGY, INC.",
+   "text_sha256": "sha256:06523ce5dfe646198b016d1a0740e6dfbeb4b0c39fb3df4129ba669f1cb9fe58"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2171,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS",
+   "text_sha256": "sha256:489fc99c42b267c3f6d7773f7fa025ed24f666b25bb19bcd2e063c22aea21cdb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2172,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity table caption",
+   "text": "Undiscounted cash flows of operating lease liabilities as of December 31, 2022 were as follows:",
+   "text_sha256": "sha256:19d10b95ec2c3386c932bf3fa32ed8374d121f95a6278df699fd8f7669580aa9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2173,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity column header",
+   "text": "Lease Amounts",
+   "text_sha256": "sha256:8e83cbdb26909f0e3cf5f2c894e72b46ad6eb3836a58426746d6a48fe2dc9022"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2174,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2175,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row label",
+   "text": "Year:",
+   "text_sha256": "sha256:60a379715290654b405d745defb50baa7a1227d16a6a9fd32962c165f9b41c66"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2176,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2023",
+   "text": "2023$6,805",
+   "text_sha256": "sha256:88d36ece1156fb850047e8749108756ce9d764c6bb502b09f1e80374746e731c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2177,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2024",
+   "text": "20246,045",
+   "text_sha256": "sha256:cf763b4f575e845fa730c4afe18ef1f3902bba5abbaf420421a1a9821d592219"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2178,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2025",
+   "text": "20255,218",
+   "text_sha256": "sha256:fa82b1981260da13ac717ebd39c9e50ef494ef292e50108733e7c3b1110858ce"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2179,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2026",
+   "text": "20263,532",
+   "text_sha256": "sha256:86659776ca40ba758ece95ebf04279f94d333774eca2b20bb5dd55ab5fa0a99c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2180,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2027",
+   "text": "20272,250",
+   "text_sha256": "sha256:61f54866cbdd49e479a5556274576cedb41f3abe8296a6b73fd321f50f1bd390"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2181,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row thereafter",
+   "text": "Thereafter5,142",
+   "text_sha256": "sha256:1a8d90b38d25cef4fbbb29e2c9bc340232347446878cdc51a322a3755779d9a8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2182,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease payments label",
+   "text": "Total lease payments",
+   "text_sha256": "sha256:68809f787126c0d5bb016aad72ce7155dbc47f8c12e914053b925a26396098d8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2183,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease payments amount",
+   "text": "28,992",
+   "text_sha256": "sha256:6d0962c581222feb90f308812d28034d049b355edad4bb3b82deaa8282986399"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2184,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "imputed lease interest label",
+   "text": "Less: imputed lease interest",
+   "text_sha256": "sha256:e24f6b17b89ef90bc6fe1ed70bff949a05f209d57902692d8568706a0b0e2bde"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2185,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "imputed lease interest amount",
+   "text": "(4,544)",
+   "text_sha256": "sha256:387ceed0aaa68703f34ce596379d0932191a5b1e4242d13e2c9bfeb1e35ba047"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2186,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities label",
+   "text": "Total lease liabilities",
+   "text_sha256": "sha256:20146ba659bab7f444e627fb304aec278a2a7921bf469ea812bab46729c2b8fb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2187,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities amount",
+   "text": "$24,448",
+   "text_sha256": "sha256:2ce9e8a50cbd73f00ffeed7715c73a30a0e32160ed7e09764a1f25f50e588a86"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2188,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Purchase Obligations subheading",
+   "text": "Purchase Obligations",
+   "text_sha256": "sha256:74ca829f81dfd0ef2b595787c32f53b55dec2ce8b9c422b061348299db73edd7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2189,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "inventory purchase obligations",
+   "text": "The Company has contractual obligations related to component inventory that its contract manufacturers procure on its behalf in accordance with its production forecast as well as other inventory related purchase commitments. As of December 31, 2022, these purchase obligations totaled approximately $589.3 million.",
+   "text_sha256": "sha256:f9a2bfdfe2468069cdc57857d84019a4fb0effa0cc11eb4d570fe8b83dceb74f"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2190,
+   "verdict": "COVERED_ELSEWHERE",
+   "why": "Litigation label of the taken paragraph",
+   "text": "Litigation",
+   "text_sha256": "sha256:f0a2a3136bc5606b667dd368b25419942011190d2239b27a5aa31737042b71b9",
+   "covered_by": [
+    2191
+   ]
+  },
+  {
+   "kind": "HEADING",
+   "i": 177,
+   "verdict": "NOT_D02",
+   "why": "risk-factor summary heading before Item 1A",
+   "text": "Risk Related to Legal Proceedings and Regulations",
+   "text_sha256": "sha256:15a2c0d83d9e01607e8676b269c38340dcc8885bc09f63d6cdc3e961ec7e761e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 514,
+   "verdict": "NOT_D02",
+   "why": "Item 1A risk-factor heading",
+   "text": "Risks related to Legal Proceedings and Regulations",
+   "text_sha256": "sha256:18c23d0a6646e43fb7ae9473633d677393d44ac257badf3946502425ed4feccd"
+  },
+  {
+   "kind": "HEADING",
+   "i": 743,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; Item 3 statement taken",
+   "text": "Item 3. Legal Proceedings",
+   "text_sha256": "sha256:36bdb2ee8904eadab1a76f83ac84b8d6a06a0cff66ea55e67548e1ef97bfde22"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1036,
+   "verdict": "NOT_D02",
+   "why": "heading between Item 3 and Item 8 (MD&A area), outside D02 sources",
+   "text": "Commitments and Contingencies",
+   "text_sha256": "sha256:fe30a896ac835e2a1db2122e04fe75b95598985425d59c93b0a2b214275bf3b8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1171,
+   "verdict": "NOT_D02",
+   "why": "financial-statement caption pointing to the note",
+   "text": "Commitments and contingencies (Note 13)",
+   "text_sha256": "sha256:8625bc0d89b08d2e38802c21e4f608145456bc4138a6fee722c1de46773edcfa"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1464,
+   "verdict": "REACHED",
+   "why": "contingencies subsection; its accrual-policy paragraph taken",
+   "text": "Commitments and Contingencies",
+   "text_sha256": "sha256:fe30a896ac835e2a1db2122e04fe75b95598985425d59c93b0a2b214275bf3b8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2136,
+   "verdict": "REACHED",
+   "why": "contingencies note; its litigation paragraph taken",
+   "text": "13. COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:e2b13ad3953f7632ffa262ba54be9ecec63a658191da4862cd6f12db6481c6fc"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2190,
+   "verdict": "REACHED",
+   "why": "litigation subsection; paragraph taken",
+   "text": "Litigation",
+   "text_sha256": "sha256:f0a2a3136bc5606b667dd368b25419942011190d2239b27a5aa31737042b71b9"
+  }
+ ]
+}

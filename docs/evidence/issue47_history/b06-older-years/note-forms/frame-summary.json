@@ -1,0 +1,1182 @@
+{
+ "record_type": "ISSUE_47_B06_NOTE_FORMS_FRAME_EFFECT",
+ "positions": 50,
+ "moved": [
+  "enphase_energy:2024-12-31"
+ ],
+ "errors": [],
+ "baseline_sha256": "sha256:871c1a5a4da7d8629ba788a4d4f4b9e971f4f81469d2f182172115c7892cab63",
+ "code_sha256": {
+  "scripts/vnext/historical_debt_results.py": "sha256:da1708f426a29eb6e7446de90940d7ff6b077ef744767cdb63cc40f78960fb14",
+  "scripts/vnext/historical_note_carrying.py": "sha256:d4e601d0074d543443d5cc5ffa0eb8d299489b6cc21ad38dff4ea7a1295962cb"
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "native_result_credit": false,
+ "initial_in_memory_comparison_moved": [
+  "macys:2026-01-31",
+  "paramount_skydance_paramount_global:2025-12-31",
+  "enphase_energy:2024-12-31"
+ ],
+ "comparison_normalization": "JSON-normalized comparison: the persisted baseline turns tuples into arrays. Macy FY2025 and Paramount FY2025 differed only by Python tuple/list before persistence; their complete projected JSON is identical. The reusable script now normalizes before comparison.",
+ "baseline_runtime": {
+  "commit": "68025386",
+  "registration_patch": "docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch",
+  "closure": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c"
+ },
+ "rows": {
+  "marriott_international:2025-12-31": {
+   "baseline": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "successor": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:3b32ed768837e555e0dd12c9f77e2aefbdde948ea311c648dec76ec314ffc7ee",
+   "successor_projection_sha256": "sha256:3b32ed768837e555e0dd12c9f77e2aefbdde948ea311c648dec76ec314ffc7ee"
+  },
+  "marriott_international:2024-12-31": {
+   "baseline": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "successor": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:2b1757bff2373429f8871a4951cd8b05f67b5b9cd026fc634e3bba5c708829d1",
+   "successor_projection_sha256": "sha256:2b1757bff2373429f8871a4951cd8b05f67b5b9cd026fc634e3bba5c708829d1"
+  },
+  "marriott_international:2023-12-31": {
+   "baseline": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "successor": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:1afd3e2fb41209e92a1ce3edfdcc865d4fa054b77d0a65f48df338203e931c79",
+   "successor_projection_sha256": "sha256:1afd3e2fb41209e92a1ce3edfdcc865d4fa054b77d0a65f48df338203e931c79"
+  },
+  "marriott_international:2022-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "marriott_international:2021-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "southwest_airlines:2025-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:d2f4eedf11b40cc11c73cbf2ac9a419c4dc979f29a5711b69683b26e62735c48",
+   "successor_projection_sha256": "sha256:d2f4eedf11b40cc11c73cbf2ac9a419c4dc979f29a5711b69683b26e62735c48"
+  },
+  "southwest_airlines:2024-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.6472463768115942028985507246",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.6472463768115942028985507246",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:bed82f531dbb2bf1d8deca91de49df2759f39645abc73de0a002197aa76eaa00",
+   "successor_projection_sha256": "sha256:bed82f531dbb2bf1d8deca91de49df2759f39645abc73de0a002197aa76eaa00"
+  },
+  "southwest_airlines:2023-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:aafcff1728e3130d027a98e7fef9fca0f2aa3c334d22c9f3638cc38202d16342",
+   "successor_projection_sha256": "sha256:aafcff1728e3130d027a98e7fef9fca0f2aa3c334d22c9f3638cc38202d16342"
+  },
+  "southwest_airlines:2022-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.7568073360157200336857864695",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.7568073360157200336857864695",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:21809f68c1d594e945e7e5f1a7f7062c7e50df5b8096615626adf1fc51929f2c",
+   "successor_projection_sha256": "sha256:21809f68c1d594e945e7e5f1a7f7062c7e50df5b8096615626adf1fc51929f2c"
+  },
+  "southwest_airlines:2021-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:365ee98f49d62728a0df31c9937c07f0100e9e3aa6e952d99f1d3ea7c2b4b507",
+   "successor_projection_sha256": "sha256:365ee98f49d62728a0df31c9937c07f0100e9e3aa6e952d99f1d3ea7c2b4b507"
+  },
+  "ford_motor_company:2025-12-31": {
+   "baseline": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:004f2ecebac661bdfd4c9d1285fa694368c0cc240cbb0bcda77b383393f6d2ca",
+   "successor_projection_sha256": "sha256:004f2ecebac661bdfd4c9d1285fa694368c0cc240cbb0bcda77b383393f6d2ca"
+  },
+  "ford_motor_company:2024-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115",
+   "successor_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115"
+  },
+  "ford_motor_company:2023-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115",
+   "successor_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115"
+  },
+  "ford_motor_company:2022-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115",
+   "successor_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115"
+  },
+  "ford_motor_company:2021-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115",
+   "successor_projection_sha256": "sha256:46b6ed97387c33a885717be0004455335eae70327be31b73ff0554f24dfe2115"
+  },
+  "pfizer:2025-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "pfizer:2024-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "pfizer:2023-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "pfizer:2022-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "pfizer:2021-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5",
+   "successor_projection_sha256": "sha256:732a47d16e1f32b8b573b39171cd45818798fa7ac0364141ce3c8b914623ebe5"
+  },
+  "jpmorgan_chase:2025-12-31": {
+   "baseline": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:ec9dd7658874288ab85ab97e4c54948033428ef6fb78747b389f98a27c2ca3ca",
+   "successor_projection_sha256": "sha256:ec9dd7658874288ab85ab97e4c54948033428ef6fb78747b389f98a27c2ca3ca"
+  },
+  "jpmorgan_chase:2024-12-31": {
+   "baseline": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:494bf954068b30dd591692205f2bd6b63af0312ba7d9f45863604adf2e5cd50c",
+   "successor_projection_sha256": "sha256:494bf954068b30dd591692205f2bd6b63af0312ba7d9f45863604adf2e5cd50c"
+  },
+  "jpmorgan_chase:2023-12-31": {
+   "baseline": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:8bbebd72c65592c651dffd9ba65328097522f43ca0947df1a04c0a6222107d99",
+   "successor_projection_sha256": "sha256:8bbebd72c65592c651dffd9ba65328097522f43ca0947df1a04c0a6222107d99"
+  },
+  "jpmorgan_chase:2022-12-31": {
+   "baseline": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:b276f6aa6318767eb83dd09c439ae00b530a4cda1914c880e66c55dc73dbf322",
+   "successor_projection_sha256": "sha256:b276f6aa6318767eb83dd09c439ae00b530a4cda1914c880e66c55dc73dbf322"
+  },
+  "jpmorgan_chase:2021-12-31": {
+   "baseline": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "SPECIAL_SCOPE",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:a3d40228e14bb333458d368dee1841d4c6b2c70961f0997c6a3c693923257427",
+   "successor_projection_sha256": "sha256:a3d40228e14bb333458d368dee1841d4c6b2c70961f0997c6a3c693923257427"
+  },
+  "salesforce:2026-01-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.2531872442595786412363464205",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.2531872442595786412363464205",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:74e7a63ad25ec609a6c786a2f3831afdf49b39e2a6b7cdd07cece2adeefc6efa",
+   "successor_projection_sha256": "sha256:74e7a63ad25ec609a6c786a2f3831afdf49b39e2a6b7cdd07cece2adeefc6efa"
+  },
+  "salesforce:2025-01-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.1489382570741994016968270315",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.1489382570741994016968270315",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:b09dc85e38449723df6290011465c873f5096fa14efadb35ecf916dbd86d6d56",
+   "successor_projection_sha256": "sha256:b09dc85e38449723df6290011465c873f5096fa14efadb35ecf916dbd86d6d56"
+  },
+  "salesforce:2024-01-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.1743620695436408141367400999",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": "0.1743620695436408141367400999",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:4802a35081b2fb0aa216c36e6af18b61dac49b0c93a2a5d22d82b1cc2534776d",
+   "successor_projection_sha256": "sha256:4802a35081b2fb0aa216c36e6af18b61dac49b0c93a2a5d22d82b1cc2534776d"
+  },
+  "salesforce:2023-01-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:f438fb9546dfa56c963a5c47f2ae261979ce122173433bafa72760959238c246",
+   "successor_projection_sha256": "sha256:f438fb9546dfa56c963a5c47f2ae261979ce122173433bafa72760959238c246"
+  },
+  "salesforce:2022-01-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:f438fb9546dfa56c963a5c47f2ae261979ce122173433bafa72760959238c246",
+   "successor_projection_sha256": "sha256:f438fb9546dfa56c963a5c47f2ae261979ce122173433bafa72760959238c246"
+  },
+  "lumen_technologies:2025-12-31": {
+   "baseline": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "successor": {
+    "stage": "DENOMINATOR_GUARD",
+    "result": {
+     "value": null,
+     "quality": "NOT_MEANINGFUL",
+     "publication": "PUBLISHED",
+     "reason_code": "DENOMINATOR_NONPOSITIVE"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:ba67e8201ddef9a8384305d0736eead47cd59649b850659ca675e7582c11de54",
+   "successor_projection_sha256": "sha256:ba67e8201ddef9a8384305d0736eead47cd59649b850659ca675e7582c11de54"
+  },
+  "lumen_technologies:2024-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77",
+   "successor_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77"
+  },
+  "lumen_technologies:2023-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77",
+   "successor_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77"
+  },
+  "lumen_technologies:2022-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77",
+   "successor_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77"
+  },
+  "lumen_technologies:2021-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77",
+   "successor_projection_sha256": "sha256:253259366f39c7bf975564be07c0a6e3f17f440c11c9b399fc19e807923dbc77"
+  },
+  "macys:2026-01-31": {
+   "baseline": {
+    "stage": "BOND",
+    "result": {
+     "value": "0.5030864197530864197530864198",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "BOND",
+    "result": {
+     "value": "0.5030864197530864197530864198",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:7db324e1f8b813571d75fd55131d14de000931777860466538183187bd30a685",
+   "successor_projection_sha256": "sha256:7db324e1f8b813571d75fd55131d14de000931777860466538183187bd30a685"
+  },
+  "macys:2025-02-01": {
+   "baseline": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:72a3c91938b07949b3ebe1fa414235ecd941403b02d65c3a0e5543cc92c5cd79",
+   "successor_projection_sha256": "sha256:72a3c91938b07949b3ebe1fa414235ecd941403b02d65c3a0e5543cc92c5cd79"
+  },
+  "macys:2024-02-03": {
+   "baseline": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:222f8419d4393dbd6bd567c44551c4eff34713253137c386536cfc2212324260",
+   "successor_projection_sha256": "sha256:222f8419d4393dbd6bd567c44551c4eff34713253137c386536cfc2212324260"
+  },
+  "macys:2023-01-28": {
+   "baseline": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:0abc8c96a139867e30952619bb3585e03cbdea99c86695570dcfe33fded9599c",
+   "successor_projection_sha256": "sha256:0abc8c96a139867e30952619bb3585e03cbdea99c86695570dcfe33fded9599c"
+  },
+  "macys:2022-01-29": {
+   "baseline": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "BOND",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:3c570dfafeade8dcc68a153266c2facfbc15c46d6e3b8e0da7b8a3a32bfbf040",
+   "successor_projection_sha256": "sha256:3c570dfafeade8dcc68a153266c2facfbc15c46d6e3b8e0da7b8a3a32bfbf040"
+  },
+  "paramount_skydance_paramount_global:2025-12-31": {
+   "baseline": {
+    "stage": "INCLUSIVE",
+    "result": {
+     "value": "1.168049260241169930727785855",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "INCLUSIVE",
+    "result": {
+     "value": "1.168049260241169930727785855",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:a149a357d698544986377ac874723d27e581b067ccbca472fa293c873dca69d3",
+   "successor_projection_sha256": "sha256:a149a357d698544986377ac874723d27e581b067ccbca472fa293c873dca69d3"
+  },
+  "paramount_skydance_paramount_global:2024-12-31": {
+   "baseline": {
+    "stage": "CURRENT_INPUT_UNRESOLVED",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_CURRENT_INPUT_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "CURRENT_INPUT_UNRESOLVED",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_CURRENT_INPUT_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:9c433384807f9e5e01859eeb7b02f7a49d8ae7745f0c74b0d080b74de418e9f4",
+   "successor_projection_sha256": "sha256:9c433384807f9e5e01859eeb7b02f7a49d8ae7745f0c74b0d080b74de418e9f4"
+  },
+  "paramount_skydance_paramount_global:2023-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:14d1f50cb73a10128828356ce4ec93dbc769e7ab690c9def297620d090c38bc0",
+   "successor_projection_sha256": "sha256:14d1f50cb73a10128828356ce4ec93dbc769e7ab690c9def297620d090c38bc0"
+  },
+  "paramount_skydance_paramount_global:2022-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:14d1f50cb73a10128828356ce4ec93dbc769e7ab690c9def297620d090c38bc0",
+   "successor_projection_sha256": "sha256:14d1f50cb73a10128828356ce4ec93dbc769e7ab690c9def297620d090c38bc0"
+  },
+  "paramount_skydance_paramount_global:2021-12-31": {
+   "baseline": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "FALLBACK_RESOLVER",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:14d1f50cb73a10128828356ce4ec93dbc769e7ab690c9def297620d090c38bc0",
+   "successor_projection_sha256": "sha256:14d1f50cb73a10128828356ce4ec93dbc769e7ab690c9def297620d090c38bc0"
+  },
+  "enphase_energy:2025-12-31": {
+   "baseline": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": "1.107959077222837051285943352",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "successor": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": "1.107959077222837051285943352",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:ec348c4433d6726de47ba9dc0b5f1622ea62dfe0c4f1ef49ba53557ab3e2085c",
+   "successor_projection_sha256": "sha256:ec348c4433d6726de47ba9dc0b5f1622ea62dfe0c4f1ef49ba53557ab3e2085c"
+  },
+  "enphase_energy:2024-12-31": {
+   "baseline": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": "1.563451362278755750189672227",
+     "quality": "EXACT",
+     "publication": "PUBLISHED",
+     "reason_code": "PASS"
+    }
+   },
+   "same_projected_json": false,
+   "baseline_projection_sha256": "sha256:0b6cc06b6a9d9c30d040a753dec32990993f567476a90d0f4558216fb9dab3d6",
+   "successor_projection_sha256": "sha256:111e29161fc5de61dfcb2cbdebdde3b6bd637b8ca4b5b17ae4463b06c9ff6008"
+  },
+  "enphase_energy:2023-12-31": {
+   "baseline": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:c5bd28e67dae738a97d9a221bb7aff02a89f98c8c13529aff8b6417053a2b9db",
+   "successor_projection_sha256": "sha256:c5bd28e67dae738a97d9a221bb7aff02a89f98c8c13529aff8b6417053a2b9db"
+  },
+  "enphase_energy:2022-12-31": {
+   "baseline": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:074c69df5a32afbb902c6204a326900524d99f35ee3b6205d6d5b95680436106",
+   "successor_projection_sha256": "sha256:074c69df5a32afbb902c6204a326900524d99f35ee3b6205d6d5b95680436106"
+  },
+  "enphase_energy:2021-12-31": {
+   "baseline": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "successor": {
+    "stage": "NOTE_CARRYING",
+    "result": {
+     "value": null,
+     "quality": "NONE",
+     "publication": "WITHHELD",
+     "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+    }
+   },
+   "same_projected_json": true,
+   "baseline_projection_sha256": "sha256:8b3ea0d98578cda7e4be90389ee26d6dd89b320f3811b4273d334d52983dde89",
+   "successor_projection_sha256": "sha256:8b3ea0d98578cda7e4be90389ee26d6dd89b320f3811b4273d334d52983dde89"
+  }
+ }
+}

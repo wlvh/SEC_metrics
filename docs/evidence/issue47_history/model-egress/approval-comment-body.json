@@ -1,0 +1,230 @@
+{
+ "budget_root": "/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1",
+ "execution": {
+  "durability": "the ledger root and the start record beside it are lost with the container. The start marker on issue 47 carries only a digest of the local record, so a new container cannot rebuild the start from it, and once the branch carries this approval's export a start refuses and the live path refuses a ledger behind it. Before the first export is pushed nothing guards a lost container whose marker is deleted. A restored ledger is a record; spending more from it is the owner's decision, and a re-approval cannot name a request an earlier approval's export claimed",
+  "host": "the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 (issue 47 comment 5882788074)",
+  "provider_key": "DEEPSEEK_API_KEY from the environment's settings, set by the owner; never in the chat, the repository or a comment; it takes effect in a new session. The container's egress proxy re-terminates TLS, so the key, the prompts and the responses are visible to it",
+  "transport": "HTTPS to the fixed provider host through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not the provider's. 'Verified against GitHub' means as the proxy relayed it; the start record names the reader, the proxy and the CA bundle's digest",
+  "what_the_gates_bind": "the executor's code path, not the executor: in the container the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and holds the provider key, so it could fake a read-back or call the provider without this code. The gates guard against accidents and make the owner's decision auditable; the controls that bind the executor are outside it: a dedicated provider key with a provider-side credit limit, revoked after the run, and the committed exports compared with the provider's own usage log"
+ },
+ "maximum_additional_provider_paid_sec_calls": [
+  35,
+  35,
+  0
+ ],
+ "model_wiring_receipt_id": "sha256:316100f62eb71a66fec467b2366a64e0f4d7eb32453db972fcb84b67eb6defe4",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_HISTORICAL_MODEL_DELEGATION",
+ "requirement_id": "issue_47_v1",
+ "retry_policy": {
+  "actual_usage_required": true,
+  "automatic_retry_count": 0,
+  "context_ceiling_tokens": 200000,
+  "http_402_automatic_retry_count": 0,
+  "http_402_stops_batch": true,
+  "http_402_stops_execution": true,
+  "kind": "TRANSPORT_RETRY_POLICY",
+  "unknown_remote_outcome_retry_allowed": false
+ },
+ "scope": {
+  "company_ids": [
+   "enphase_energy",
+   "ford_motor_company",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "earliest_report_end": "2023-12-31",
+  "grants": [
+   {
+    "company_ids": [
+     "marriott_international"
+    ],
+    "earliest_report_end": "2023-12-31",
+    "grant": "D04_MARRIOTT_FY2023_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D04"
+    ],
+    "request_digests": [
+     "sha256:035b339ef0b73eadebc60eca7d9f96325163ad05cd4961192dfdf0c7e0d97c64",
+     "sha256:049d0a5c43268e2a45bbb70d0a3a95b0d3123ab72a0739bb70b64ffed46fd329",
+     "sha256:0f2cadb8118c068808eeb4a0f5e13e7586f1c7a2f863b24d34e15cab8cb65ec9",
+     "sha256:55a916ad4477b19ca732202dd1582a6ad7bbba3d7c16dce1db84c7a66a367594",
+     "sha256:adc49b8026b936a2ecd920cac84dbce86186f142236bd9de206a52542ad4c918",
+     "sha256:d91c36576d9c38a5c89369a5e2e1c130747fd00ce18ff3328015082f3f489249",
+     "sha256:e863215103cc78a95cd5746cd25721b2d9995ec9952e623bc44372f9f1fd8345",
+     "sha256:f762a3f5dc100706d6e04b5193f988eeb04884da9cc2e80ffecb2d2d663551a9"
+    ]
+   },
+   {
+    "company_ids": [
+     "paramount_skydance_paramount_global"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "D04_PARAMOUNT_PREDECESSOR_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D04"
+    ],
+    "request_digests": [
+     "sha256:2f553f5aa318cf0327158b681f0908ef203c50381083b6ce9c7461c581d396f1",
+     "sha256:352746682d884c5d94cb468f463b5d4f0e2358573eacaa40c896d0522c33a349",
+     "sha256:4c6375760e553f73d5468bc4d6e0ce32237b503c6b655ee160436864ff5db36b",
+     "sha256:5eed18a990ab06fb4aad25490c36773af56b8912c2851d279882e0e0c600202d",
+     "sha256:6c7f77dfb0d3861df13c26b4b6a98df4fec9e9ab2cc573b52b2cd13ae92b8f6f",
+     "sha256:a2ade001c7940bd186a0bf56f6a3a4afadce1ccc6c81395931c11047f93b8794",
+     "sha256:a4b09fc4e72c1dadb2f17232080d6a71a53c31e442915463548d4be9bd9b7a0b",
+     "sha256:aafe3604c3f15935d635a9632317972fc8737560d451108260fb8fc730ccfb0a"
+    ]
+   },
+   {
+    "company_ids": [
+     "ford_motor_company",
+     "lumen_technologies",
+     "marriott_international",
+     "pfizer",
+     "southwest_airlines"
+    ],
+    "earliest_report_end": "2025-12-31",
+    "grant": "E01_FY2025_CALENDAR_WINDOWS",
+    "latest_report_end": "2025-12-31",
+    "metric_ids": [
+     "E01"
+    ],
+    "request_digests": [
+     "sha256:01e2446cb97c68f34962b6b24b39136fd2f45ed1cd45d5a0df12a76bf6afbb4b",
+     "sha256:5111af6c7cdf60e9bc6fc94f3370041f78104a2964de83edb624b9ea5be5dfb8",
+     "sha256:7e521f10bf6f474f63fa9937e8fc9e678011dac0ed44988564751cdf5e9a084f",
+     "sha256:87c5f4dc3d20ee8e8d78d9c26943e1ca52048e91188832734626c15add7938eb",
+     "sha256:ba93585478a7d23961b87210ad7864d0b681ac5d55abd875e6f2d69e6db34c49"
+    ]
+   },
+   {
+    "company_ids": [
+     "macys"
+    ],
+    "earliest_report_end": "2026-01-31",
+    "grant": "E01_MACYS_FY2025",
+    "latest_report_end": "2026-01-31",
+    "metric_ids": [
+     "E01"
+    ],
+    "request_digests": [
+     "sha256:15a30b067e8bb799e513deb78552c6011483dae4602b63d9ab99076106c49962"
+    ]
+   },
+   {
+    "company_ids": [
+     "paramount_skydance_paramount_global"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "E01_PARAMOUNT_PREDECESSOR_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "E01"
+    ],
+    "request_digests": [
+     "sha256:11f9f8deeecc0691ed326daa2f2d65817d65bf24c90a32e16b5df07d5cf65554"
+    ]
+   },
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "lumen_technologies",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "southwest_airlines"
+    ],
+    "earliest_report_end": "2025-12-31",
+    "grant": "D02_FY2025_CALENDAR",
+    "latest_report_end": "2025-12-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:17aefe2ce1f1e736ccfde8c88699a1dbe03469c7d3f2bed87e702224778fffab",
+     "sha256:39524c19ec29e4162984e633751742386d211bff3b6afe2ebea02cff500529a1",
+     "sha256:40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad",
+     "sha256:5e6ba3ba06bed5315e9ec73f51fd35e588e2ea07d2c094d88f30318eaad95be4",
+     "sha256:75002feb7f3f2dc04c419e1bcce60866fa115dbef4d12522f1de83e72a2d8233",
+     "sha256:e2a8c212763757425560bcc4ea40bba5d4cf1b81b5619a4cc2a05bc4430b1a66",
+     "sha256:f81847d3472ce45e7d7b8624bd05c82046e6211537adb9e1d5618030280b4e6b"
+    ]
+   },
+   {
+    "company_ids": [
+     "macys",
+     "salesforce"
+    ],
+    "earliest_report_end": "2026-01-31",
+    "grant": "D02_FISCAL_JANUARY_2026",
+    "latest_report_end": "2026-01-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:95432daf4c59c0f39246dd5996b728acfd31acc10c582a943c5507bf862bfd70",
+     "sha256:a5ab17965b54a2f753eba496e9c80926f97d48c23f9d72143e8265fe0e282b25"
+    ]
+   },
+   {
+    "company_ids": [
+     "marriott_international"
+    ],
+    "earliest_report_end": "2023-12-31",
+    "grant": "D02_MARRIOTT_FY2023_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:33ea0f80b92f00a1e8a62d91347105e24cdc59e413da7602bdc12689c109f356",
+     "sha256:df0e5864cc60147194a6deef9439599164ec4faf37b2dfbfa2f9c7c0fa6b8931"
+    ]
+   },
+   {
+    "company_ids": [
+     "paramount_skydance_paramount_global"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "D02_PARAMOUNT_PREDECESSOR_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:6781306ba0ec67cf2bc307500fc8cb9d60c3287042dcb2a00ba30c93c831bfb6"
+    ]
+   }
+  ],
+  "latest_report_end": "2026-01-31",
+  "metric_ids": [
+   "D02",
+   "D04",
+   "E01"
+  ],
+  "purposes": [
+   "ISSUE47_HISTORICAL_SEMANTIC_ASSESSMENT"
+  ]
+ },
+ "transport": {
+  "api": "chat_completions",
+  "data_use": "provider-managed; no training or data-use guarantee",
+  "endpoint_host": "api.deepseek.com",
+  "filing_egress_policy": "PUBLIC_SEC_FILING_CONTENT_ONLY",
+  "maximum_payload_bytes": 8388608,
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "region": "provider-managed-no-residency-guarantee",
+  "retention": "provider-managed; no zero-retention claim",
+  "retry_count": 0,
+  "timeout_seconds": 120
+ }
+}

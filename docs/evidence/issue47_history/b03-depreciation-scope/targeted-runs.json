@@ -1,0 +1,168 @@
+{
+ "record_type": "ISSUE_47_B03_TARGETED_RUNS",
+ "batch_closure": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+ "targeted_closure": "sha256:3e0183f332fcd7c8aa80042ba755593b160947fd2831325606bb11a3fe08f6a4",
+ "rows": [
+  {
+   "position": "salesforce-2026",
+   "metric_id": "B03",
+   "batch": {
+    "results": {
+     "B01": {
+      "publication": "PUBLISHED",
+      "value": "41525000000",
+      "reason_code": "PASS",
+      "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d"
+     },
+     "B03": {
+      "publication": "PUBLISHED",
+      "value": "0.2295243829018663455749548465",
+      "reason_code": "PASS",
+      "result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120"
+     }
+    },
+    "run_id": "run:historical-period:5c517188c2b75be27ed8ccce04514b303684e5fea36a116016f77dad68653da2",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "results": {
+     "B01": {
+      "publication": "PUBLISHED",
+      "value": "41525000000",
+      "reason_code": "PASS",
+      "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d"
+     },
+     "B03": {
+      "publication": "WITHHELD",
+      "value": null,
+      "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+      "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc"
+     }
+    },
+    "run_id": "run:historical-period:e619deee011d7c1f4d141eb04580e4877e6ecd48225c0c15e76a071e499d4cd4",
+    "requirement_closure_hash": "sha256:3e0183f332fcd7c8aa80042ba755593b160947fd2831325606bb11a3fe08f6a4"
+   },
+   "cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+    "run_id": "run:historical-period:e619deee011d7c1f4d141eb04580e4877e6ecd48225c0c15e76a071e499d4cd4",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "result_ids_unchanged": {
+    "B01": true,
+    "B03": false
+   }
+  },
+  {
+   "position": "enphase-2025",
+   "metric_id": "B03",
+   "batch": {
+    "results": {
+     "B01": {
+      "publication": "PUBLISHED",
+      "value": "1472985000",
+      "reason_code": "PASS",
+      "result_id": "sha256:d061ef63cca5bfb1c243374adef3108e114e6aae4f0954883511c64d9867f5ba"
+     },
+     "B03": {
+      "publication": "PUBLISHED",
+      "value": "0.1616927531509146393208349033",
+      "reason_code": "PASS",
+      "result_id": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e"
+     }
+    },
+    "run_id": "run:historical-period:b831204db66c841a07a900bb0533dcba6e11618d7ccc351d3478cfa55f287b90",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "results": {
+     "B01": {
+      "publication": "PUBLISHED",
+      "value": "1472985000",
+      "reason_code": "PASS",
+      "result_id": "sha256:d061ef63cca5bfb1c243374adef3108e114e6aae4f0954883511c64d9867f5ba"
+     },
+     "B03": {
+      "publication": "PUBLISHED",
+      "value": "0.1616927531509146393208349033",
+      "reason_code": "PASS",
+      "result_id": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e"
+     }
+    },
+    "run_id": "run:historical-period:44ee675a7ba5f8071307746f68175f7c6ee8c2a769a2bc4cf0e240c307e0678a",
+    "requirement_closure_hash": "sha256:3e0183f332fcd7c8aa80042ba755593b160947fd2831325606bb11a3fe08f6a4"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e",
+    "run_id": "run:historical-period:44ee675a7ba5f8071307746f68175f7c6ee8c2a769a2bc4cf0e240c307e0678a",
+    "status": "FROZEN",
+    "value_sha256": "89c2c3c8da296bba88b08b9cf2d211cf48ae3312bc93c31431f2ce1242f0f9fd"
+   },
+   "result_ids_unchanged": {
+    "B01": true,
+    "B03": true
+   }
+  },
+  {
+   "position": "marriott-2025",
+   "metric_id": "B03",
+   "batch": {
+    "results": {
+     "B01": {
+      "publication": "PUBLISHED",
+      "value": "26186000000",
+      "reason_code": "PASS",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc"
+     },
+     "B03": {
+      "publication": "PUBLISHED",
+      "value": "0.1756281982738868097456656229",
+      "reason_code": "PASS",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a"
+     }
+    },
+    "run_id": "run:historical-period:2e24e19de19659d3a2cd87e7d5bbe2eaef6c79709a2ebf35eb0799f64f9c3c4c",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "results": {
+     "B01": {
+      "publication": "PUBLISHED",
+      "value": "26186000000",
+      "reason_code": "PASS",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc"
+     },
+     "B03": {
+      "publication": "PUBLISHED",
+      "value": "0.1756281982738868097456656229",
+      "reason_code": "PASS",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a"
+     }
+    },
+    "run_id": "run:historical-period:d2ecbf309ff30fe347cbe67098f79d97814ea5061db9a0fd77f94c4721021460",
+    "requirement_closure_hash": "sha256:3e0183f332fcd7c8aa80042ba755593b160947fd2831325606bb11a3fe08f6a4"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+    "run_id": "run:historical-period:d2ecbf309ff30fe347cbe67098f79d97814ea5061db9a0fd77f94c4721021460",
+    "status": "FROZEN",
+    "value_sha256": "40697b5081d7b8fe05b33d632abb7be0aa854082409c8c308c9c01a3f282c362"
+   },
+   "result_ids_unchanged": {
+    "B01": true,
+    "B03": true
+   }
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

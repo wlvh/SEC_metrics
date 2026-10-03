@@ -1,0 +1,184 @@
+{
+ "a_difference_the_differential_found": {
+  "fixed_as": "ANNUAL_ONLY_TEXT_METRICS = (D01, D02) - the metrics whose only text source is the pinned annual filing. In the frozen module `D02` simply means `the one that is not C02`.",
+  "measured": {
+   "paramount_skydance_paramount_global": {
+    "D01": "PREPARED",
+    "D02": "PREPARED_ORIGINAL_WITH_AMENDMENTS"
+   },
+   "southwest_airlines": {
+    "D01": "PREPARED",
+    "D02": "PREPARED_ORIGINAL_WITH_AMENDMENTS"
+   }
+  },
+  "what": "The frozen route flags a same-period 10-K/A as PREPARED_ORIGINAL_WITH_AMENDMENTS for D02 and not for C02, because C02's amendment can be its source rather than context. Wired naively, D01 inherited the C02 answer: it reported PREPARED for a period that carries an amendment.",
+  "why_it_matters_even_though_no_value_moved": "Only BLOCKED is consumed downstream, so no Run and no row changes. What changes is the record: two metrics reading the same filing described that filing two different ways, and in this Issue the records are read."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "differential_against_the_ordinary_chain": {
+  "headings_by_company": {
+   "enphase_energy": 60,
+   "ford_motor_company": 30,
+   "jpmorgan_chase": 57,
+   "lumen_technologies": 50,
+   "macys": 36,
+   "marriott_international": 34,
+   "paramount_skydance_paramount_global": 38,
+   "pfizer": 28,
+   "salesforce": 43,
+   "southwest_airlines": 34
+  },
+  "identical": [
+   "enphase_energy",
+   "ford_motor_company",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "method": "ordinary_remaining_cases.prepare_current_source_case for D01 against prepare_historical_business_text_input on the same pinned period, both handed to the same frozen create_deterministic_text_candidate. The compared object is the candidate record - each heading's exact text and raw byte span - not a heading count.",
+  "not_compared": {
+   "jpmorgan_chase": "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT. Pre-existing and shared by every historical route: SEC re-partitioned this company's submissions shards and the saved bodies are from before that. In the acquisition plan."
+  }
+ },
+ "end_to_end": {
+  "method": "install_historical_run_inputs -> create_historical_run(freeze=True) -> render_historical_run(persist=True) -> load_frozen_run in a separate process, all under patched socket.connect and getaddrinfo.",
+  "positions": [
+   {
+    "cold_read_in_a_separate_process": {
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "records": 45,
+     "run_id_matches": true,
+     "value_chars": 4774,
+     "value_sha256": "d265c388fe78c2b157013dd5e5ee18126eedd7b2b5eecf8b5a2a56b62a69037e"
+    },
+    "company_id": "marriott_international",
+    "evidence_count": 34,
+    "headings": 34,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "pinned_period_end": "2025-12-31",
+    "public_row_hash": "sha256:c8f88238ed6b085a1cf5f1484446746b267861948e141b766cdd503a869a67bb",
+    "public_row_status": "TEXT_QUAL",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:3488edbae6c314e75a33466bad5e8d744a89f0329ee9c4e471a44ce5e90f0c7d",
+    "run_status": "FROZEN",
+    "value_chars": 4774
+   },
+   {
+    "cold_read_in_a_separate_process": {
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "records": 46,
+     "run_id_matches": true,
+     "value_chars": 4761,
+     "value_sha256": "abc178370883a478c217bfbe0839fd3f43ecbfb9507c1d7a21ab0a3926d357f6"
+    },
+    "company_id": "marriott_international",
+    "evidence_count": 35,
+    "headings": 35,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "pinned_period_end": "2024-12-31",
+    "public_row_hash": "sha256:ebb61426e21c2dc6668db58c1ea05031c001b4347e9af0b845fd1eed9aafa782",
+    "public_row_status": "TEXT_QUAL",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:f04d7feac55a49bcc421fb6efd96da46b746b3beb890fe4356cf13dc37314522",
+    "run_status": "FROZEN",
+    "value_chars": 4761
+   },
+   {
+    "cold_read_in_a_separate_process": {
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "records": 44,
+     "run_id_matches": true,
+     "value_chars": 4576,
+     "value_sha256": "6e137b68256d9adf63ee1e4ac18dc42311ca365f7e5590bd1102c514314ab4c7"
+    },
+    "company_id": "marriott_international",
+    "evidence_count": 33,
+    "headings": 33,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "pinned_period_end": "2023-12-31",
+    "public_row_hash": "sha256:86f45b654e0a078ca2130a38816653e4a2a83d7d6d1b4e907471e8b7c911984e",
+    "public_row_status": "TEXT_QUAL",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:e9e3fc50ff594bec3bb5dff85531940dffaf68164d2bad7818b5b12da04bf177",
+    "run_status": "FROZEN",
+    "value_chars": 4576
+   }
+  ],
+  "what_the_three_years_show": "Three different accessions, three different candidates, three different run ids. A route that reached the pinned selection but not the pinned bytes would return one candidate three times."
+ },
+ "fault_injections": {
+  "each_one_caught_by": {
+   "ADD_SOURCE_FILINGS_FOR_EVERY_TEXT_METRIC": [
+    "test_an_earlier_year_reads_that_year_s_filing",
+    "test_the_current_period_gets_the_ordinary_chain_s_own_candidate",
+    "test_the_v1_api_is_not_handed_an_argument_it_rejects"
+   ],
+   "DROP_THE_REUSED_PLAN_SHAPE_GUARD": [
+    "test_a_second_filing_in_the_reused_plan_stops_d01"
+   ],
+   "GIVE_D01_THE_PROXY_ROLES_TOO": [
+    "test_widening_the_forms_is_keyed_off_the_metric"
+   ],
+   "KEEP_THE_AMENDMENT_FLAG_FOR_D02_ONLY": [
+    "test_a_same_period_amendment_is_context_for_d01_as_it_is_for_d02"
+   ],
+   "ROUTE_D01_TO_THE_D02_IMPLEMENTATION": [
+    "test_an_earlier_year_reads_that_year_s_filing",
+    "test_the_current_period_gets_the_ordinary_chain_s_own_candidate",
+    "test_the_pinned_route_compiles_the_same_spec_the_ordinary_one_does"
+   ],
+   "TAKE_THE_LATEST_FILING": [
+    "test_an_earlier_year_reads_that_year_s_filing"
+   ]
+  },
+  "not_caught": {
+   "GIVE_D01_THE_ROLES_ONLY": [],
+   "WIDEN_THE_FORMS_FOR_D01_ONLY": []
+  },
+  "what_the_uncaught_pair_means": "The governance form set and the governance role assignment protect the same thing, so removing either alone leaves the other answering and the scope record unchanged. Measured here rather than carried over from C02's record, because D01's control asserts the scope record where C02's asserted the plan. The pair - GIVE_D01_THE_PROXY_ROLES_TOO - is what is load-bearing, and it is caught."
+ },
+ "not_done": {
+  "content_acceptance": "Not claimed. A frozen Run and a public row say the route selected something and that the bytes are bound; they do not say these are the headings Item 1A carries. Reading them against the filings is separate work and has not been done for D01.",
+  "earlier_years_for_the_other_nine": "Marriott is the only company with more than one annual primary saved. Everywhere else D01 names a source gap for an earlier year, which is acquisition-plan class A, not a route gap.",
+  "jpmorgan": "Blocked at period selection for every historical route."
+ },
+ "record_type": "ISSUE_47_D01_HISTORICAL_ROUTE",
+ "what_this_is": "D01 (Item 1A risk-factor headings) wired to the pinned historical period, measured against the ordinary chain it is a pinned version of, and then run through the whole factory. Three delivery layers are kept apart: a frozen Run, a public row, and content acceptance - which is not claimed here.",
+ "why_it_was_cheap_and_why_that_is_a_fact_not_a_promise": {
+  "item_bound": "D01's Spec declares max_items 64, the frozen bound. Measured across the ten companies its Item 1A carries 28 to 60 headings, so the capacity work D02 needed is not on this route's path - though Enphase is four headings from it, and a filing that broke more headings out would stop the same way Pfizer's D02 did.",
+  "model_calls": "None. config/source_strategy_registry.json calls D01 `ai_text`, which is the metric family, not the implementation: its Spec's quality_rule names the deterministic method RISK_FACTOR_HEADINGS_V1 and the route runs the frozen v1 selector. Measured, not read off the field - the same field misled this Issue on C02 and B06.",
+  "sources": "One filing, one text role, no prior accession and no second source. That is why it delivers on every period whose own primary is saved, where C04 and B02/B03 additionally need the prior accession's material."
+ }
+}

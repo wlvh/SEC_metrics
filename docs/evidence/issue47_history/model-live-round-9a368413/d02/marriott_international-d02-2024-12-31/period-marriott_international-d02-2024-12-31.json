@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "marriott_international",
+ "label": "marriott_international-d02-2024-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "D02"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 32,
+    "COMPUTED": 5
+   },
+   "seconds": 24.7
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 7
+   },
+   "seconds": 13.2
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "D02"
+   ],
+   "seconds": 50.0
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 5,
+    "COMPUTED": 5
+   },
+   "memo_not_remembered": [],
+   "seconds": 18.8
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "D02": {
+   "binding_id": "sha256:982b332e60fa0aa4e49718748d1a1242fcd7fba2413ad622f4279bd891fa9070",
+   "data_root": "/workspace/work/issue47-model-native-d02/marriott_international-d02-2024-12-31/data-marriott_international-d02-2024-12-31",
+   "evidence_count": 12,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:8edb8b1c7a088fd38f075dec2ef219fd73ce57f7c0d194ed08baea589a4132c7",
+    "run_id": "run:historical-period:982b332e60fa0aa4e49718748d1a1242fcd7fba2413ad622f4279bd891fa9070",
+    "status": "FROZEN",
+    "value_sha256": "7194d2aeb44047b8d1221f5df58e4404619af38f52e0c23254722fb2586cf5ff"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:8edb8b1c7a088fd38f075dec2ef219fd73ce57f7c0d194ed08baea589a4132c7",
+   "row_hash": "sha256:4a82bca180c4ff849db3e213ced22932b1609f162c9ad9ab1c830b5e7d61e2d7",
+   "run_dir": "/workspace/work/issue47-model-native-d02/marriott_international-d02-2024-12-31/run-marriott_international-d02-2024-12-31-D02",
+   "run_id": "run:historical-period:982b332e60fa0aa4e49718748d1a1242fcd7fba2413ad622f4279bd891fa9070",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:8edb8b1c7a088fd38f075dec2ef219fd73ce57f7c0d194ed08baea589a4132c7",
+    "run_id": "run:historical-period:982b332e60fa0aa4e49718748d1a1242fcd7fba2413ad622f4279bd891fa9070",
+    "status": "FROZEN",
+    "value_sha256": "7194d2aeb44047b8d1221f5df58e4404619af38f52e0c23254722fb2586cf5ff"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "See the information under the \u201cLitigation, Claims, and Government Investigations\u201d caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.\nFrom time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently\nbelieves that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.\nLegal Contingencies\nWe are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.\nNOTE 7. COMMITMENTS AND CONTINGENCIES\nLitigation, Claims, and Government Investigations\nFollowing our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys\u2019 fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the \u201cDistrict Court\u201d), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the \u201cMDL\u201d). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the \u201cFourth Circuit\u201d) vacated the District Court\u2019s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. The Fourth Circuit granted that petition on January 18, 2024, oral argument was held on November 1, 2024, and we await a decision. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.\nIn addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Most of these matters have been resolved or no longer appear to be active. In the 2024 fourth quarter, we reached final resolutions with the U.S. Federal Trade Commission and the Attorney General offices from 49 U.S. states and the District of Columbia (the \u201cAG Offices\u201d). Among other terms, the resolution with the AG Offices included a $52 million monetary payment, the majority of which we paid in the 2024 fourth quarter, and which is not material to our Financial Statements. We do not expect the terms of these resolutions to have a material impact on our current or ongoing operations.\nWhile we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and unresolved regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss in excess of the amounts recorded that might result from adverse judgments, settlements, fines, penalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specificity as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues, and (2) uncertainty regarding unresolved inquiries, investigations, or requests for information and/or documents.\nOther Legal Proceedings\nDuring 2024, we recorded certain expenses related to settled and ongoing claims brought against the Company regarding the use of copyrighted music. These amounts are not material to our Financial Statements. While we believe it is reasonably possible that we may incur losses in excess of the amounts already recorded for the unresolved claims, we are currently unable to reasonably estimate the amount of losses or range of loss in excess of the amounts recorded. At this time, we do not expect these claims or resolutions to have a material impact on the Company\u2019s financial position or operations."
+  }
+ },
+ "report_end": "2024-12-31",
+ "seconds": 107.5,
+ "selection_id": "sha256:c135b5a87acdd2e5d3af55dd52003da94e49f816156b6837dc72b6f3f97efee4",
+ "xbrl_parses": 1
+}

@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "enphase_energy",
+ "label": "enphase_energy-d02-2025-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "D02"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 32,
+    "COMPUTED": 5
+   },
+   "seconds": 56.1
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 7
+   },
+   "seconds": 29.1
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "D02"
+   ],
+   "seconds": 87.8
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 5,
+    "COMPUTED": 5
+   },
+   "memo_not_remembered": [],
+   "seconds": 53.4
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "D02": {
+   "binding_id": "sha256:a1fad8f5123c89352e47122ebf2b26824beea37f97c58aac0fd06b55d67a1b0e",
+   "data_root": "/workspace/work/issue47-model-native-d02/enphase_energy-d02-2025-12-31/data-enphase_energy-d02-2025-12-31",
+   "evidence_count": 20,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:24058a344957a7a50b29fdfa3e1c19bfb2d0fd1748158d17de71439f11f43360",
+    "run_id": "run:historical-period:a1fad8f5123c89352e47122ebf2b26824beea37f97c58aac0fd06b55d67a1b0e",
+    "status": "FROZEN",
+    "value_sha256": "729738e1eaad03d11253e6e84a00b6e06e3c55ec9bdfcd5d03d9b64adb0c21a3"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:24058a344957a7a50b29fdfa3e1c19bfb2d0fd1748158d17de71439f11f43360",
+   "row_hash": "sha256:c03ff092135fe9cedcada739a8558285e0fe4fe17626e3729c6ce464bbe0f6a8",
+   "run_dir": "/workspace/work/issue47-model-native-d02/enphase_energy-d02-2025-12-31/run-enphase_energy-d02-2025-12-31-D02",
+   "run_id": "run:historical-period:a1fad8f5123c89352e47122ebf2b26824beea37f97c58aac0fd06b55d67a1b0e",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:24058a344957a7a50b29fdfa3e1c19bfb2d0fd1748158d17de71439f11f43360",
+    "run_id": "run:historical-period:a1fad8f5123c89352e47122ebf2b26824beea37f97c58aac0fd06b55d67a1b0e",
+    "status": "FROZEN",
+    "value_sha256": "729738e1eaad03d11253e6e84a00b6e06e3c55ec9bdfcd5d03d9b64adb0c21a3"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "From time to time, we might be subject to various legal proceedings relating to claims arising out of our operations. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against us in a reporting period for amounts above management\u2019s expectations, our business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. Except as described in this Item 3, we are not currently involved in any material legal proceedings, the ultimate disposition of which could have a material adverse effect on our operations, financial condition or cash flows.\nSecurities Class Action Lawsuits\nOn July 15, 2024, a putative class action complaint was filed against us, our chief executive officer and our chief financial officer (collectively, the \u201cInitial Defendants\u201d) in the United States District Court for the Northern District of California, captioned Hayes v. Enphase Energy, Inc., Case No. 3:24-cv-04249 (the \u201cSecurities Class Action\u201d), purportedly on behalf of a class of individuals who purchased or otherwise acquired our common stock between December 12, 2022 and April 25, 2023. The Securities Class Action alleges that Initial Defendants made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder. The complaint seeks unspecified monetary damages and other relief.\nOn or about July 29, 2024, six additional stockholders filed motions to be appointed lead plaintiff and have their selection of counsel appointed as lead counsel in the Securities Class Action. The Court held a hearing on the lead plaintiff motions on September 5, 2024, and appointed Lon D. Praytor as lead plaintiff on March 31, 2025. On April 17, 2025, movant Andrey Ponomarchuk filed a motion for reconsideration of the Court\u2019s order appointing Praytor as lead plaintiff. Lead plaintiff Praytor filed an amended complaint on May 21, 2025, alleging violations of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder by Enphase and our chief executive officer, purported only on behalf of a class of individuals who purchased or otherwise acquired our common stock between February 7, 2023 and April 25, 2023 and removing our chief financial officer as a defendant (the remaining defendants referred hereto as \u201cDefendants\u201d). Defendants filed a motion to dismiss on July 2, 2025. Lead Plaintiff\u2019s filed his opposition on August 15, 2025, and Defendants\u2019 filed their reply on September 15, 2025. The Court has not yet issued a decision on Defendants\u2019 motion to dismiss.\nOn December 13, 2024, another putative class action complaint was filed naming us, our chief executive officer and our chief products officer (collectively, \u201cDefendants II\u201d) in the United States District Court for the Northern District of California, captioned Trustees of the Welfare and Pension Funds of Local 464A v. Enphase Energy, Inc., Case No. 4:24-cv-09038 (the \u201cPension Fund Action\u201d), purportedly on behalf of a class of individuals who purchased or otherwise acquired our common stock between April 25, 2023 and October 22, 2024. The Pension Fund Action alleges that Defendants II made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder. The complaint seeks unspecified monetary damages and other relief.\nOn or about February 11, 2025, several additional stockholders moved to be appointed lead plaintiff in the Pension Fund Action and have their selection of counsel appointed as lead counsel. On August 20, 2025, the Court appointed HANSAINVEST Hanseatische Investment-GMBH as lead plaintiff. Lead plaintiff filed its amended complaint on October 20, 2025. Defendants\u2019 filed their motion to dismiss on December 12, 2025. Lead plaintiff\u2019s filed its opposition on February 10, 2026, and Defendants\u2019 reply will be due March 27, 2026. A hearing is currently scheduled for May 7, 2026. We dispute the allegations in each of the above-referenced lawsuits and intend to defend the matters vigorously.\nShareholder Derivative Lawsuits\nOn July 16, 2024, a shareholder derivative lawsuit was filed purportedly on our behalf against the Initial Defendants, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Ibarra v. Kothandaraman, et al., Case No. 3:24-cv-04278 (the \u201cIbarra Action\u201d). The Ibarra Action asserts claims for breaches of fiduciary duty, unjust enrichment, abuse of control, gross mismanagement, waste of corporate assets, and violations of Sections 14(a), 10(b) and 20(a) of the Exchange Act, and contribution under Sections 10(b) and 21D of the Exchange Act based on the purported dissemination of substantially the same allegedly false and misleading statements asserted in the Securities Class Action. The Ibarra Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn September 5, 2024, another shareholder derivative lawsuit was filed purportedly on our behalf against the Initial Defendants, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Isaac v. Kothandaraman, et al., Case No. 4:24-cv-06257 (the \u201cIsaac Action\u201d), containing substantially the same allegations as those in the Ibarra Action. On September 20, 2024, the Court consolidated the Isaac and Ibarra Actions for all purposes into one action under the title In re Enphase Energy, Inc. Stockholder Derivative Litigation (the \u201cDerivative Action\u201d).\nOn October 11, 2024, the Court granted the parties\u2019 stipulation to stay the Derivative Action until all motions to dismiss the Securities Class Action are decided.\nOn December 31, 2024, a shareholder derivative lawsuit was filed purportedly on our behalf against Defendants II, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Hirani v. Kothandaraman, et al., Case No. 4:24-cv-09532 (the \u201cHirani Action\u201d). The Hirani Action asserts claims for breaches of fiduciary duty, unjust enrichment, abuse of control, gross mismanagement, waste of corporate assets, and violations of Sections 14(a), 10(b) and 20(a) of the Exchange Act, and contribution under Sections 10(b) and 21D of the Exchange Act based on the purported dissemination of substantially the same allegedly false and misleading statements asserted in the Pension Fund Action. The Hirani Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn January 17, 2025, another shareholder derivative lawsuit was filed purportedly on our behalf against Defendants II, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Hanowski v. Kothandaraman, et al., Case No. 4:25-cv-000652 (the \u201cHanowski Action\u201d). The Hanowski Action asserts claims substantially similar to those asserted in the Hirani Action, also based on the same allegedly false and misleading statements asserted in the Pension Fund Action. The Hanowski Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn January 31, 2025, the plaintiffs in the Hirani and Hanowski Actions filed a motion to relate their actions to the Pension Fund Action, which the Court approved on February 18, 2025. On March 7, 2025, the Court granted the parties\u2019 stipulation to consolidate the Hirani and Hanowski Actions for all purposes into one action under the title In re Enphase Energy, Inc. 2025 Shareholder Derivative Litigation (the \u201cDerivative II Action\u201d). On May 8, 2025, the Court stayed the Derivative II Action pending resolution of all motion(s) to dismiss in the Pension Fund Action. On January 28, 2026, purported shareholder Ahmed Ibrahim filed a motion to intervene in the Derivative II Action.\nWe dispute the allegations in each of the above-referenced lawsuits and intend to defend the matters vigorously.\nThe pending lawsuits and any other related lawsuits are subject to inherent uncertainties, and the actual defense and disposition costs will depend upon many unknown factors. We could be forced to expend significant resources in the defense of the pending lawsuits and any additional lawsuits, and we may not prevail. In addition, we may incur substantial legal fees and costs in connection with such lawsuits.\nCommitments and contingencies (Note 13)\nCommitments and Contingencies\nIn the normal course of business, the Company is subject to loss contingencies, such as legal proceedings and claims arising out of its business. An accrual for a loss contingency is recognized when it is probable and the amount of loss can be reasonably estimated.\n13. COMMITMENTS AND CONTINGENCIES\nThe Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. An accrual for a loss contingency is recognized when it is probable and the amount of loss or recovery can be reasonably estimated. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against the Company in a reporting period for amounts above management\u2019s expectations, the Company\u2019s business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. As of December 31, 2025, in the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims."
+  }
+ },
+ "report_end": "2025-12-31",
+ "seconds": 227.7,
+ "selection_id": "sha256:51e9df61eb9b1da8df7a944491ba9174c941f296babcb7e14af8e23da17833e3",
+ "xbrl_parses": 1
+}

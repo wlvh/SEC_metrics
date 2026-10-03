@@ -1,0 +1,389 @@
+{
+ "record_type": "ISSUE_47_C02_SELECTOR_PATH_SPLIT",
+ "collaboration_rule": "COLLAB-28-47-v1",
+ "peer_commit_merged": "2cc97e3a462afe2815ccb5c522e2da7655549b02",
+ "own_commit_before_merge": "60aa9f7b5b12289c74776f2320bc827d71b7c857",
+ "why": "#28's issue_28_v13 records scripts/vnext/historical_board_composition.py at the bytes of #47's 546d10d1 (repairs 1-6) and created its own catalog/r6/C02_board_disclosures_v2.md (ordinary contract, bound 64) at the path where #47's historical C02 Spec (bound 192) lived. A path both generations bind byte for byte can satisfy only one of them in one tree. The shared paths keep #28's bytes; #47's reader continues in the successor file and its Spec moves to a new path.",
+ "paths": {
+  "scripts/vnext/historical_board_composition.py": {
+   "sha256": "sha256:21616b6825e3e884f7235c5383c20b93dc19fc6ab7c4807c6c03c3afb4f7facd",
+   "holds": "#47's reader at 546d10d1, as issue_28_v13 records it; inherited by issue_47_v1 from the parent authority"
+  },
+  "scripts/vnext/historical_board_composition_v2.py": {
+   "sha256": "sha256:52a4b88e7d177602dd9e15d45514e7da54dcbf3d5d63eec15b30bb42567def25",
+   "holds": "#47's reader at 60aa9f7b plus a docstring paragraph on the split; #47's rule file from this merge on"
+  },
+  "catalog/r6/C02_board_disclosures_v2.md": {
+   "sha256": "sha256:db00ae4a448a254c8d80044e956ac9783102a64744abcb896a4dac5ac17e1915",
+   "holds": "#28's ordinary C02 successor Spec (bound 64)"
+  },
+  "catalog/r6/C02_board_disclosures_historical_v2.md": {
+   "sha256": "sha256:da44dad5db368e78ad673b062955ae3dfaded3d83a94e8d2a9393c3ef5d75419",
+   "holds": "#47's historical C02 Spec (bound 192), bytes unchanged; the Spec closure hash does not depend on the path"
+  }
+ },
+ "integration_protocol": "#47 does not edit a path #28's generations bind. #28 takes a later reader by copying a pinned commit's bytes of the _v2 file into a path it owns (such as the first path) and recording it there; binding the _v2 path directly would bring this conflict back at #47's next repair.",
+ "measured": "Both readers run on the same 37 cached governance documents the C02 readings judged (27 older years, 10 latest; Salesforce FY2025 is an older year). Each row: selected blocks under the bound copy, under the successor, and the blocks added and dropped. The difference is exactly repairs 7-12.",
+ "documents": {
+  "enphase_energy_2021-12-31": {
+   "bound_copy": 15,
+   "successor": 14,
+   "added": [],
+   "dropped": [
+    30
+   ],
+   "latest_year": false
+  },
+  "enphase_energy_2022-12-31": {
+   "bound_copy": 46,
+   "successor": 40,
+   "added": [],
+   "dropped": [
+    31,
+    167,
+    169,
+    182,
+    189,
+    1588
+   ],
+   "latest_year": false
+  },
+  "enphase_energy_2023-12-31": {
+   "bound_copy": 46,
+   "successor": 40,
+   "added": [],
+   "dropped": [
+    31,
+    167,
+    169,
+    176,
+    185,
+    1589
+   ],
+   "latest_year": false
+  },
+  "enphase_energy_2024-12-31": {
+   "bound_copy": 51,
+   "successor": 46,
+   "added": [],
+   "dropped": [
+    55,
+    203,
+    205,
+    214,
+    227
+   ],
+   "latest_year": false
+  },
+  "enphase_energy_2025-12-31": {
+   "bound_copy": 54,
+   "successor": 48,
+   "added": [],
+   "dropped": [
+    57,
+    210,
+    212,
+    232,
+    243,
+    2338
+   ],
+   "latest_year": true
+  },
+  "ford_motor_company_2021-12-31": {
+   "bound_copy": 74,
+   "successor": 78,
+   "added": [
+    376,
+    698,
+    1472,
+    5404
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "ford_motor_company_2022-12-31": {
+   "bound_copy": 76,
+   "successor": 80,
+   "added": [
+    244,
+    379,
+    789,
+    4564
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "ford_motor_company_2023-12-31": {
+   "bound_copy": 75,
+   "successor": 78,
+   "added": [
+    390,
+    679,
+    5724
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "ford_motor_company_2024-12-31": {
+   "bound_copy": 74,
+   "successor": 76,
+   "added": [
+    378,
+    872
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "ford_motor_company_2025-12-31": {
+   "bound_copy": 80,
+   "successor": 82,
+   "added": [
+    384,
+    2340
+   ],
+   "dropped": [],
+   "latest_year": true
+  },
+  "lumen_technologies_2021-12-31": {
+   "bound_copy": 50,
+   "successor": 51,
+   "added": [
+    898
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "lumen_technologies_2022-12-31": {
+   "bound_copy": 78,
+   "successor": 79,
+   "added": [
+    887
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "lumen_technologies_2023-12-31": {
+   "bound_copy": 81,
+   "successor": 82,
+   "added": [
+    1122
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "lumen_technologies_2024-12-31": {
+   "bound_copy": 103,
+   "successor": 103,
+   "added": [
+    996
+   ],
+   "dropped": [
+    1483
+   ],
+   "latest_year": false
+  },
+  "lumen_technologies_2025-12-31": {
+   "bound_copy": 98,
+   "successor": 99,
+   "added": [
+    864
+   ],
+   "dropped": [],
+   "latest_year": true
+  },
+  "macys_2022-01-29": {
+   "bound_copy": 63,
+   "successor": 67,
+   "added": [
+    629,
+    1049,
+    1230,
+    1231
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "macys_2023-01-28": {
+   "bound_copy": 108,
+   "successor": 112,
+   "added": [
+    709,
+    1110,
+    1351,
+    1352
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "macys_2024-02-03": {
+   "bound_copy": 116,
+   "successor": 117,
+   "added": [
+    626
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "macys_2025-02-01": {
+   "bound_copy": 112,
+   "successor": 113,
+   "added": [
+    563
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "macys_2026-01-31": {
+   "bound_copy": 97,
+   "successor": 99,
+   "added": [
+    508,
+    923
+   ],
+   "dropped": [],
+   "latest_year": true
+  },
+  "marriott_international_2021-12-31": {
+   "bound_copy": 47,
+   "successor": 53,
+   "added": [
+    274,
+    349,
+    583,
+    589,
+    592,
+    610
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "marriott_international_2022-12-31": {
+   "bound_copy": 55,
+   "successor": 57,
+   "added": [
+    503,
+    504
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "marriott_international_2023-12-31": {
+   "bound_copy": 97,
+   "successor": 99,
+   "added": [
+    996,
+    997
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "marriott_international_2024-12-31": {
+   "bound_copy": 90,
+   "successor": 92,
+   "added": [
+    527,
+    528
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "marriott_international_2025-12-31": {
+   "bound_copy": 96,
+   "successor": 98,
+   "added": [
+    520,
+    521
+   ],
+   "dropped": [],
+   "latest_year": true
+  },
+  "paramount_skydance_paramount_global_2021-12-31": {
+   "bound_copy": 84,
+   "successor": 84,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "paramount_skydance_paramount_global_2022-12-31": {
+   "bound_copy": 78,
+   "successor": 78,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "paramount_skydance_paramount_global_2023-12-31": {
+   "bound_copy": 62,
+   "successor": 62,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "paramount_skydance_paramount_global_2024-12-31": {
+   "bound_copy": 68,
+   "successor": 68,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "paramount_skydance_paramount_global_2025-12-31": {
+   "bound_copy": 54,
+   "successor": 54,
+   "added": [],
+   "dropped": [],
+   "latest_year": true
+  },
+  "pfizer_2022-12-31": {
+   "bound_copy": 67,
+   "successor": 68,
+   "added": [
+    723
+   ],
+   "dropped": [],
+   "latest_year": false
+  },
+  "pfizer_2023-12-31": {
+   "bound_copy": 72,
+   "successor": 72,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "pfizer_2024-12-31": {
+   "bound_copy": 82,
+   "successor": 82,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "pfizer_2025-12-31": {
+   "bound_copy": 79,
+   "successor": 79,
+   "added": [],
+   "dropped": [],
+   "latest_year": true
+  },
+  "salesforce_2025-01-31": {
+   "bound_copy": 49,
+   "successor": 49,
+   "added": [],
+   "dropped": [],
+   "latest_year": false
+  },
+  "salesforce_2026-01-31": {
+   "bound_copy": 63,
+   "successor": 63,
+   "added": [],
+   "dropped": [],
+   "latest_year": true
+  },
+  "southwest_airlines_2025-12-31": {
+   "bound_copy": 95,
+   "successor": 95,
+   "added": [],
+   "dropped": [],
+   "latest_year": true
+  }
+ },
+ "enphase_2025_note": "The six blocks #28 named in 2cc97e3a when it withdrew its two private Enphase FY2025 Results (57, 210, 212, 232, 243, 2338) are exactly the blocks the successor drops: 57, 210, 2338 by repair 8 (bed088ee) and 212, 232, 243 by repair 9 (bd181df0). The successor adds none there.",
+ "not_claimed": "That #28's ordinary documents are block-identical to these is not measured here; #28's own route builds them through the same frozen preparation. Agreement with a reading is development/regression material, not held-out validation, and same-family subagent readings are not human acceptance."
+}

@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import shutil
 import tempfile
+import time
 
 from tests.vnext.common import REPO_ROOT
 from vnext.annual_continuity_sources import frozen_foundation_receipts
@@ -35,14 +36,51 @@ def copy_foundation_receipts(root):
     (root/relative).write_bytes(raw)
 
 
+PREFIX='historical-authority-test-'
+# docs/evidence is 1.1 GB of archived material; the Requirement authority names
+# five files inside it and the annual policies live in its top level. Copying
+# the directory whole made each of these roots 1.2 GB, and a case killed by the
+# 30 second timeout never runs atexit, so twenty-four leaked roots filled the
+# disk and failed twelve unrelated fast cases with ENOSPC. Copying what is
+# actually read makes a root 54 MB, and the suite went from FAILED in 171.9s
+# with twelve failures to PASSED in 114.4s with none.
+_EVIDENCE=('docs/evidence/issue28_continuous/frozen-parent-v10-index.json',
+           'docs/evidence/r5_b06_followup/amendment_assessments.json',
+           'docs/evidence/r5_b06_followup/measurement_relationships.json',
+           'docs/evidence/r5_b06_scope/composition_assessments.json',
+           'docs/evidence/r5_b06_scope/debt_scope_relationships.json')
+
+
+def _sweep_leaked_roots(*,older_than_seconds=7200):
+    """Remove roots a killed process left behind, never a running sibling's.
+
+    The age bound is far above every registered per-case timeout, so a root
+    this old belongs to no live case even when the suite runs with --jobs.
+    """
+    cutoff=time.time()-older_than_seconds
+    for path in Path(tempfile.gettempdir()).glob(PREFIX+'*'):
+        try:
+            if path.is_dir() and not path.is_symlink() and path.stat().st_mtime < cutoff:
+                shutil.rmtree(path,ignore_errors=True)
+        except OSError:
+            continue
+
+
 @lru_cache(maxsize=1)
 def historical_test_root():
-    temporary=tempfile.TemporaryDirectory(prefix='historical-authority-test-')
+    _sweep_leaked_roots()
+    temporary=tempfile.TemporaryDirectory(prefix=PREFIX)
     atexit.register(temporary.cleanup)
     root=Path(temporary.name).resolve()
-    for name in ('requirements','config','catalog','scripts','tools','docs','tests/fixtures',
+    for name in ('requirements','config','catalog','scripts','tools','tests/fixtures',
                  'artifacts/vnext/table_stage_c_evidence','artifacts/vnext/table_qualification_freeze'):
         shutil.copytree(REPO_ROOT/name,root/name,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+    shutil.copytree(REPO_ROOT/'docs',root/'docs',
+                    ignore=shutil.ignore_patterns('__pycache__','*.pyc','evidence'))
+    for relative in _EVIDENCE+tuple('docs/evidence/'+path.name
+                                    for path in (REPO_ROOT/'docs/evidence').glob('*.json')):
+        target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(REPO_ROOT/relative,target)
     matrix=json.loads((REPO_ROOT/'config/table_qualification_matrix.json').read_text())
     def sources(value):
         if isinstance(value,dict):

@@ -1,0 +1,374 @@
+{
+ "record_type": "ISSUE_47_SEC_EXTENSION_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "ANY_CLAIM_LOG_IS_EXTENDED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "pin_extension() raises the cap whatever the ledger's claim log holds",
+   "why_it_matters": "an extension approved for one ledger would raise the cap of any ledger at the root",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_extension_of_another_ledger_or_state_is_refused",
+   "failed_cases": [
+    "test_an_extension_of_another_ledger_or_state_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.082s FAILED (failures=3)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_CAP_IS_NOT_RAISED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_limits() ignores the pinned extension",
+   "why_it_matters": "the approval would be read and pinned and still grant nothing",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_cap_rises_by_exactly_what_the_extension_adds",
+   "failed_cases": [
+    "test_the_cap_rises_by_exactly_what_the_extension_adds"
+   ],
+   "suite_result": "Ran 1 test in 0.084s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_CAP_IS_RAISED_TWICE",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_limits() adds the extension's limits twice",
+   "why_it_matters": "more requests than the owner approved",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_cap_rises_by_exactly_what_the_extension_adds",
+   "failed_cases": [
+    "test_the_cap_rises_by_exactly_what_the_extension_adds"
+   ],
+   "suite_result": "Ran 1 test in 0.073s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "A_URL_IS_REQUESTED_AGAIN_AND_AGAIN",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "reclaim_ordinal() allows a URL requested under the extension to be requested again",
+   "why_it_matters": "zero automatic retries would become one retry per pass",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_refresh_is_requested_once_more_under_the_extension_and_not_again",
+   "failed_cases": [
+    "test_a_refresh_is_requested_once_more_under_the_extension_and_not_again"
+   ],
+   "suite_result": "Ran 1 test in 0.130s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "ANY_KIND_IS_REQUESTED_AGAIN",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "reclaim_ordinal() ignores why the planner asks again",
+   "why_it_matters": "a failed first request of a named class would be retried without being a replacement",
+   "outcome": "CAUGHT",
+   "expected_case": "test_only_the_kinds_and_classes_the_owner_named",
+   "failed_cases": [
+    "test_only_the_kinds_and_classes_the_owner_named"
+   ],
+   "suite_result": "Ran 1 test in 0.272s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "ANY_CLASS_IS_REQUESTED_AGAIN",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "reclaim_ordinal() ignores which classes the owner named",
+   "why_it_matters": "a refresh of a class the owner did not name would be requested again",
+   "outcome": "CAUGHT",
+   "expected_case": "test_only_the_kinds_and_classes_the_owner_named",
+   "failed_cases": [
+    "test_only_the_kinds_and_classes_the_owner_named"
+   ],
+   "suite_result": "Ran 1 test in 0.295s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "A_MARKER_WITHOUT_AN_EXTENSION",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_capture_one() takes a re-request marker from a caller with no extension",
+   "why_it_matters": "a claimed URL could be requested again by anything that passes the marker",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_re_request_marker_needs_the_extension_that_makes_it",
+   "failed_cases": [
+    "test_a_re_request_marker_needs_the_extension_that_makes_it"
+   ],
+   "suite_result": "Ran 1 test in 0.036s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_REQUEST_IS_NOT_MARKED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_capture_one() requests again with the first request's exact bytes",
+   "why_it_matters": "the same digest twice is the redraw the ledger forbids; the replacement could never be made",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_replacement_is_saved_and_the_plan_stops_asking",
+   "failed_cases": [
+    "test_the_replacement_is_saved_and_the_plan_stops_asking"
+   ],
+   "suite_result": "Ran 1 test in 92.996s FAILED (errors=1)",
+   "seconds": 94
+  },
+  {
+   "id": "THE_FIRST_APPROVAL_S_GRANTS_STAY",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "extended_allowance() keeps the first approval's grants",
+   "why_it_matters": "requests after the extension would be held to grants the owner did not approve for them",
+   "outcome": "CAUGHT",
+   "expected_case": "test_after_the_extension_requests_are_held_to_its_grants",
+   "failed_cases": [
+    "test_after_the_extension_requests_are_held_to_its_grants"
+   ],
+   "suite_result": "Ran 1 test in 0.136s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_COMMENT_NEED_NOT_RESTATE_THE_POLICY",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "_approved_body() does not compare the comment with the policy",
+   "why_it_matters": "a policy file could grant more than the owner's comment says",
+   "outcome": "CAUGHT",
+   "expected_case": "test_each_tie_and_each_field_refuses_by_name",
+   "failed_cases": [
+    "test_each_tie_and_each_field_refuses_by_name"
+   ],
+   "suite_result": "Ran 1 test in 0.143s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "ANY_APPROVAL_MAY_BE_EXTENDED",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "_typed() does not tie the extension to the approval it names",
+   "why_it_matters": "an extension of another approval would raise this one's cap",
+   "outcome": "CAUGHT",
+   "expected_case": "test_each_tie_and_each_field_refuses_by_name",
+   "failed_cases": [
+    "test_each_tie_and_each_field_refuses_by_name"
+   ],
+   "suite_result": "Ran 1 test in 0.102s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "GITHUB_IS_NOT_COMPARED",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "_approved_body() fetches the comment and does not compare it with the saved record",
+   "why_it_matters": "a locally written record would stand for an approval nobody posted",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_saved_record_must_be_what_github_returns",
+   "failed_cases": [
+    "test_the_saved_record_must_be_what_github_returns"
+   ],
+   "suite_result": "Ran 1 test in 0.025s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_LOST_HOST_S_RE_REQUESTS_ARE_FREE",
+   "file": "scripts/vnext/historical_sec_resume.py",
+   "edit": "lost_segment_reserve() counts every claimed URL as done",
+   "why_it_matters": "a lost host may have requested it again under the extension; the charge would miss it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_lost_host_s_reserve_counts_what_the_extension_let_it_request_again",
+   "failed_cases": [
+    "test_a_lost_host_s_reserve_counts_what_the_extension_let_it_request_again"
+   ],
+   "suite_result": "Ran 1 test in 0.001s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_EXPORT_RECORDS_ANY_EXTENSION",
+   "file": "scripts/vnext/historical_source_export.py",
+   "edit": "_extension() records an extension beside an approval it does not extend",
+   "why_it_matters": "the branch would say a ledger was spent under an extension of another approval",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_extension_of_another_approval_or_root_is_refused",
+   "failed_cases": [
+    "test_an_extension_of_another_approval_or_root_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.010s FAILED (failures=3)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_LIVE_PATH_DOES_NOT_PIN",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "live_ledger() reads the extension and does not pin it",
+   "why_it_matters": "production would stop at the first cap while every recorded case passed",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_ledger_is_raised_only_for_the_log_it_continues",
+   "failed_cases": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "suite_result": "Ran 1 test in 0.059s FAILED (failures=3)",
+   "seconds": 2
+  },
+  {
+   "id": "A_REPLACEMENT_FOR_ANY_UNREADABLE_COPY",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "reclaim_ordinal() requests again any copy the planner cannot read",
+   "why_it_matters": "a changed hash or a conflicting attempt is not the failed request the owner named (review L2)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_replacement_is_only_for_a_copy_whose_last_request_failed",
+   "failed_cases": [
+    "test_a_replacement_is_only_for_a_copy_whose_last_request_failed"
+   ],
+   "suite_result": "Ran 1 test in 0.330s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_CALLER_S_MARKER_IS_TRUSTED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_capture_one() takes the marker it is handed without reading the slots",
+   "why_it_matters": "a URL already requested under the extension could be requested a third time (review L3)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_replacement_is_saved_and_the_plan_stops_asking",
+   "failed_cases": [
+    "test_the_replacement_is_saved_and_the_plan_stops_asking"
+   ],
+   "suite_result": "Ran 1 test in 123.620s FAILED (failures=2)",
+   "seconds": 125
+  },
+  {
+   "id": "THE_STATED_SPENDING_IS_NOT_CHECKED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "pin_extension() does not compare the stated spending with the claim log",
+   "why_it_matters": "the owner could approve an increment against a spending that was not the ledger's (review L4)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_ledger_is_raised_only_for_the_log_it_continues",
+   "failed_cases": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "suite_result": "Ran 1 test in 0.218s FAILED (failures=1, errors=1)",
+   "seconds": 3
+  },
+  {
+   "id": "ANY_EXTENSION_MAY_FOLLOW_ANOTHER",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "pin_extension() accepts an extension other than the one first pinned at the root",
+   "why_it_matters": "an unverified dict could raise the cap after the real extension was pinned (review L1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_ledger_is_raised_only_for_the_log_it_continues",
+   "failed_cases": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "suite_result": "Ran 1 test in 0.134s FAILED (failures=1)",
+   "seconds": 4
+  },
+  {
+   "id": "A_LIVE_EXTENSION_NEED_NOT_BE_READ_BACK",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "live_ledger() pins an extension that was not read back from GitHub",
+   "why_it_matters": "a locally written extension would raise the live cap (review L1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_ledger_is_raised_only_for_the_log_it_continues",
+   "failed_cases": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "suite_result": "Ran 1 test in 0.077s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_SESSION_AND_ITS_LEDGER_MAY_DISAGREE",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "_check() lets a session hold other grants than its ledger's extension",
+   "why_it_matters": "requests would be counted against one approval and admitted by another (review L1, the uncaught injection)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_session_holding_other_grants_than_its_ledger_s_extension_is_refused",
+   "failed_cases": [
+    "test_a_session_holding_other_grants_than_its_ledger_s_extension_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.107s FAILED (errors=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_LIVE_PATH_IGNORES_THE_BRANCH",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "live_historical_session() does not compare the extension with the branch tip",
+   "why_it_matters": "an extension never pushed could be spent, and a resume reading the branch could not charge for it (review M1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_path_needs_the_branch_to_say_which_extension",
+   "failed_cases": [
+    "test_the_live_path_needs_the_branch_to_say_which_extension"
+   ],
+   "suite_result": "Ran 1 test in 0.007s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "ANY_BRANCH_CARRIES_THE_EXTENSION",
+   "file": "scripts/vnext/historical_sec_extension.py",
+   "edit": "require_extension_on_branch() accepts files the branch does not carry",
+   "why_it_matters": "the same as above, inside the check itself (review M1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_checkout_and_the_tip_must_carry_the_same_extension",
+   "failed_cases": [
+    "test_the_checkout_and_the_tip_must_carry_the_same_extension"
+   ],
+   "suite_result": "Ran 1 test in 0.027s FAILED (failures=4)",
+   "seconds": 1
+  },
+  {
+   "id": "A_RESUME_UNDER_ANY_EXTENSION",
+   "file": "scripts/vnext/historical_sec_resume.py",
+   "edit": "resume_ledger() charges an export spent under an extension without it",
+   "why_it_matters": "the lost segment's charge would leave out the rows only the extension admits (review M1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_resume_charges_under_the_extension_the_export_was_spent_under",
+   "failed_cases": [
+    "test_a_resume_charges_under_the_extension_the_export_was_spent_under"
+   ],
+   "suite_result": "Ran 1 test in 55.233s FAILED (failures=1)",
+   "seconds": 56
+  },
+  {
+   "id": "A_RESUME_CHARGED_UNDER_ANOTHER_EXTENSION_HOLDS",
+   "file": "scripts/vnext/historical_sec_resume.py",
+   "edit": "require_published_resume() keeps a resume charged under another extension",
+   "why_it_matters": "its reserve was not computed against the grants now spent (review M1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_resume_charged_under_an_extension_holds_only_under_it",
+   "failed_cases": [
+    "test_a_resume_charged_under_an_extension_holds_only_under_it"
+   ],
+   "suite_result": "Ran 1 test in 30.862s FAILED (failures=1)",
+   "seconds": 32
+  },
+  {
+   "id": "A_RESUME_AFTER_THE_STATE_IS_COUNTED",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "resume_reserve_at_state() counts every resume in the chain as spent at the state",
+   "why_it_matters": "a resume after the state, restoring the stated export, would refuse every later pin (the re-review's N1)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_resume_before_the_state_is_in_it_and_one_after_is_not",
+   "failed_cases": [
+    "test_a_resume_before_the_state_is_in_it_and_one_after_is_not"
+   ],
+   "suite_result": "Ran 1 test in 0.107s FAILED (errors=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_STATE_MAY_LEAVE_OUT_AN_EARLIER_RESUME",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "resume_reserve_at_state() lets a resume that restored an earlier log sit outside the stated chain",
+   "why_it_matters": "the stated spending would understate a charge made before the state",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_state_that_leaves_out_an_earlier_resume_is_refused",
+   "failed_cases": [
+    "test_a_state_that_leaves_out_an_earlier_resume_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.115s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_STATED_CHAIN_IS_NOT_BOUND",
+   "file": "scripts/vnext/historical_sec_session.py",
+   "edit": "resume_reserve_at_state() does not compare the chain with the stated bytes",
+   "why_it_matters": "a chain whose charges were changed after the state would be read as the stated one",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_chain_that_does_not_begin_with_the_stated_one_is_refused",
+   "failed_cases": [
+    "test_a_chain_that_does_not_begin_with_the_stated_one_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.102s FAILED (failures=1)",
+   "seconds": 1
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

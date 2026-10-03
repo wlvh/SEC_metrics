@@ -1,0 +1,94 @@
+{
+ "record_type": "ISSUE_47_C02_DEV_INPUTS_INDEX",
+ "how_to_rebuild": "prepare_inputs.py on a root restored from the committed SEC export (tools/vnext_historical_sec.py restore); the files below must come out byte-identical",
+ "files": {
+  "ford_motor_company-2022-12-31": {
+   "input.txt": {
+    "sha256": "761b3eaa80001600fa3fc7a3def34bc1f110680b5b8d69219ad5406caaef43bf",
+    "size": 454592
+   },
+   "source.txt": {
+    "sha256": "09c2db4f5fab4dcc6244d7fd0b3dcc013ce7b895e6325fa3a3e732ad7b29eef3",
+    "size": 451940
+   },
+   "prompt.txt": {
+    "sha256": "c421ec5314e326f378ee3872fe480e67343970dcfe234ca676b9013ed6cf2878",
+    "size": 2596
+   },
+   "request-body.json": {
+    "sha256": "a0d625f66888bcc9cc1162b9c99a6e82ffdeee824594e848346d363d5268d140",
+    "size": 469552
+   },
+   "locators.json": {
+    "sha256": "450933e4726571ec61366c66714c2cee4b9025a4c0dafbf3205aa89a30c7e655",
+    "size": 850722
+   }
+  },
+  "lumen_technologies-2021-12-31": {
+   "input.txt": {
+    "sha256": "b5d684ce57bacf40d68644fca05dccb89739b9e8e6579a2144125e1565f4c354",
+    "size": 655089
+   },
+   "source.txt": {
+    "sha256": "c49ab0b9e989e8080fca3e0c62221ab5578b01b0ee4d82b5072554b585e43ce9",
+    "size": 652426
+   },
+   "prompt.txt": {
+    "sha256": "28e0c2dac1ab03cda72c63de331812246df57c47984777427b953063ab564a60",
+    "size": 2607
+   },
+   "request-body.json": {
+    "sha256": "321463774e3588291271f3e4422b1a48ab5b61194af1079f148e030cb44f4c78",
+    "size": 671243
+   },
+   "locators.json": {
+    "sha256": "f46d04a1174a9028bc65d21529747cd07125e1d335cc8031c7d9e5dbe4779ccd",
+    "size": 903119
+   }
+  },
+  "pfizer-2022-12-31": {
+   "input.txt": {
+    "sha256": "6770d51db7964cc1f9d0c9223e55c2f7d3c772ea7c036338d7bda42a5d06e934",
+    "size": 457249
+   },
+   "source.txt": {
+    "sha256": "e802ac7cdb006ff24f947cb5afb0da53e74f15bff57a061e68374d39d723bd46",
+    "size": 454599
+   },
+   "prompt.txt": {
+    "sha256": "5775cb7b6c96fb06007309ead32b1e7025ddfe19cd971d589d633812e05c2091",
+    "size": 2594
+   },
+   "request-body.json": {
+    "sha256": "ae2bead8adc6419ac5d39845d0ba640222757a39a735e667cf042182b63b1704",
+    "size": 468009
+   },
+   "locators.json": {
+    "sha256": "710cf1eae5ef272140a897604cffea02eb3b8fafca3d8bfc33968a8b2a25e692",
+    "size": 606545
+   }
+  },
+  "jpmorgan_chase-2021-12-31": {
+   "input.txt": {
+    "sha256": "f5c58e737cd17124e32fd73d43ecec9e830bcf98a662322e427af18106c92baf",
+    "size": 454903
+   },
+   "source.txt": {
+    "sha256": "ed127a28144b273ae6979dc60111a7dbefb294ee8a1f3167f2ab627ce0dd50f8",
+    "size": 452244
+   },
+   "prompt.txt": {
+    "sha256": "47a98a041ce98aaa5e3080747e6550f49c25489caef9f2e8d220c73914edb179",
+    "size": 2603
+   },
+   "request-body.json": {
+    "sha256": "19a076c16848fdefaf688024a31d089d054b822e4daa0e38e2adad332e5817a9",
+    "size": 467440
+   },
+   "locators.json": {
+    "sha256": "a7873be6bbef0eee1edf555157c612898fbf2a833d033ab4d1fa1351ad737996",
+    "size": 702463
+   }
+  }
+ }
+}

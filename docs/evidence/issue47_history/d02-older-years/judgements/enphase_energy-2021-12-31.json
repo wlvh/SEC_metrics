@@ -1,0 +1,697 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "enphase_energy:2021-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading",
+ "reader_note": "The value holds all of Item 3: the general statement plus three shareholder suits (securities class action, derivative actions, Section 220 books-and-records suit), each with its label and each dismissed in 2021, followed by the loss-contingency accrual policy and Note 14's litigation paragraph. The two skipped Item 3 blocks are a page footer and a contents link; the rest of Note 14 (leases, purchase obligations, a tariff-refund 'Contingencies' subsection, page furniture) is correctly outside, and its 'Litigation' label is covered by the taken paragraph.",
+ "packet_document_id": "sha256:a6e3e4db4d31df87d32b4c68a077a6eb13ab4ad8e1491da478cad1c71008acce",
+ "packet_candidate_hash": "sha256:79f93920d7877904f3b23fba0ea901aee7102a8dae26c48f3a19952f33d532a5",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 731,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 general statement; no other material proceedings",
+   "text": "From time to time, we might be subject to various legal proceedings relating to claims arising out of our operations. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against us in a reporting period for amounts above management’s expectations, our business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. Except as described in this Item 3, we are not currently involved in any material legal proceedings, the ultimate disposition of which could have a material adverse effect on our operations, financial condition, or cash flows.",
+   "text_sha256": "sha256:e9cf2c559d98a37d4d8538e1529e7ae71676e2b30a9e6e6c4204ff4c13ca5a6c",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 732,
+   "verdict": "DISCLOSURE",
+   "why": "label naming the securities class action",
+   "text": "Class Action Suit",
+   "text_sha256": "sha256:949d7e3c33a59be5133746395f2f39fc45340d6112617cc7eab560da09bef75e",
+   "order": 1,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 733,
+   "verdict": "DISCLOSURE",
+   "why": "securities class action; judgment for defendants",
+   "text": "In June 2020, Gregory A. Hurst (“Plaintiff”) filed a securities class action lawsuit against our company, our chief executive officer and our chief financial officer (collectively, the \"Defendants\") in the United States District Court for the Northern District of California (the “Securities Class Action”). The complaint alleged that the Defendants made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act of 1934 and Rule 10b-5 promulgated thereunder. Plaintiff did not quantify any alleged damages in his complaint but, in addition to attorneys' fees and costs, he sought to recover damages on behalf of himself and other persons who purchased or otherwise acquired our stock during the putative class period at allegedly inflated prices and purportedly suffered financial harm as a result. Defendants filed a motion to dismiss, which was granted with leave to amend. Following the Plaintiff’s Notice of Intent Not to File Amended Complaint, the Court entered a judgment in favor of the Defendants on October 18, 2021.",
+   "text_sha256": "sha256:856d56bb7a26b20f039f951367ebdde64903b23604eac353a0afa6a7f4edd362",
+   "order": 2,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 734,
+   "verdict": "DISCLOSURE",
+   "why": "label naming the derivative actions",
+   "text": "Derivative Action Suit",
+   "text_sha256": "sha256:994e45e691ea73b83e215d55f8bb4b98c42a9ab3aefd0ecd3df11daefac7cbbf",
+   "order": 3,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 735,
+   "verdict": "DISCLOSURE",
+   "why": "shareholder derivative suits; voluntarily dismissed",
+   "text": "From July through October 2020, Yan Shen, Benjamin Weber, Anthony R. Buch, and Frank Caggiano, each separately filed a verified shareholder derivative lawsuit in the United States District Court for the Northern District of California against our company (as nominal defendant) and certain officers and directors alleging breaches of fiduciary duties, unjust enrichment, abuse of control, gross mismanagement, waste, and violations of Section 14(a) under the Exchange Act of 1934 (collectively the “Derivative Actions”). The plaintiffs did not quantify any alleged damages in their complaints, but in addition to attorneys’ fees and costs, sought certain corporate governance changes. Following the entry of judgment in favor of the Defendants in the Securities Class Action lawsuit, the parties in the Derivative Actions stipulated to voluntarily dismiss the Derivative Actions without prejudice, which was so ordered by the Court on December 6, 2021.",
+   "text_sha256": "sha256:71a9fe26da1945f8c6d4fcc5c145cd5163c4db027f688d7b332b4c36a7e71955",
+   "order": 4,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 736,
+   "verdict": "DISCLOSURE",
+   "why": "label naming the books-and-records suit",
+   "text": "Books and Records Suit",
+   "text_sha256": "sha256:a9598bbfaefb192da08b03045676fe101016291f095ce03066055a26693525ac",
+   "order": 5,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 737,
+   "verdict": "DISCLOSURE",
+   "why": "Section 220 books-and-records litigation and demands; dismissed",
+   "text": "In September 2020, Stanley Olochwoszcz filed a lawsuit against our company in the Court of Chancery of the State of Delaware pursuant to Section 220 of the Delaware General Corporation Law, 8 Del. C. § 220, to compel the company to permit Mr. Olochwoszcz to inspect certain of our books and records (the “Section 220 Litigation”). We also received similar demands for inspection of our books and records from four other company stockholders (collectively, the “Demands”). Following the judgment in favor of the Defendants in the Securities Class Action lawsuit, Mr. Olochwoszcz and the other stockholders voluntarily dismissed without prejudice the Section 220 Litigation and Demands, which was so ordered by the Court on December 1, 2021.",
+   "text_sha256": "sha256:832afee9d2f83bd2e282b09c86d53dbd1b325cb0cf2c671092dcad7cfe3753d2",
+   "order": 6,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1481,
+   "verdict": "DISCLOSURE",
+   "why": "registrant's accrual policy for loss contingencies from legal proceedings and claims",
+   "text": "In the normal course of business, the Company is subject to loss contingencies and loss recoveries, such as legal proceedings and claims arising out of its business as well as tariff refunds. An accrual for a loss contingency or loss recovery is recognized when it is probable and the amount of loss or recovery can be reasonably estimated.",
+   "text_sha256": "sha256:d57d1e81a24e441fb4391b4fc5de126dd9f8b959091222833edc6e2a444701a7",
+   "order": 7,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2187,
+   "verdict": "DISCLOSURE",
+   "why": "Note 14 litigation paragraph: no matters expected to be material",
+   "text": "The Company is subject to various legal proceedings relating to claims arising out of its operations that have not been fully resolved. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against the Company in a reporting period for amounts above management’s expectations, the Company’s business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. As of December 31, 2021 and February 11, 2022, the Company is not currently a party to any matters that management expects will have an adverse material effect on the Company’s consolidated financial position, results of operations or cash flows.",
+   "text_sha256": "sha256:954612e4fab38921fd45e370c10f03cdd2f4b6d319d5a65a9a830caf42071232",
+   "order": 8,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 738,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Enphase Energy, Inc. | 2021 Form 10-K | 49",
+   "text_sha256": "sha256:402088a4a5f688cbc4481cf31dc279b302eeb30d0fb167bb2d993061a9d5ffee",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 739,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2127,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Operating Leases subheading",
+   "text": "Operating Leases",
+   "text_sha256": "sha256:93e7544ca0f78c7368c1481b787199240ec2aee9d398863b2ace809cb26b8d93"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2128,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "office lease description",
+   "text": "The Company leases office facilities under noncancelable operating leases that expire on various dates through 2032, some of which may include options to extend the leases for up to 12 years.",
+   "text_sha256": "sha256:fa2f1f7f5ffe3d7ed791c4c51a94df8e6d6160c4c421925ca92e28cc5577cd67"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2129,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Enphase Energy, Inc. | 2021 Form 10-K | 117",
+   "text_sha256": "sha256:9ff7a8a21d76e74c816fd72227a4362880ed82eed672d335769185a8d305a85e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2130,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2131,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "ENPHASE ENERGY, INC.",
+   "text_sha256": "sha256:06523ce5dfe646198b016d1a0740e6dfbeb4b0c39fb3df4129ba669f1cb9fe58"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2132,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS",
+   "text_sha256": "sha256:489fc99c42b267c3f6d7773f7fa025ed24f666b25bb19bcd2e063c22aea21cdb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2133,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease expense table caption",
+   "text": "The components of lease expense are presented as follows:",
+   "text_sha256": "sha256:96eabe75faf2b86eda46e42228602beff76b56ac89fd1cb68a16e3cf2255cb2e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2134,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "Years Ended December 31,",
+   "text_sha256": "sha256:fc9ceb0124f0c2848c150c17b763eac348b499a7b4297a033da5256cb5e7e344"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2135,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table year header",
+   "text": "20212020",
+   "text_sha256": "sha256:e2cbe8d93726539f01a5f1199d03dc4134b1028899aaaa4a1e0b85243c2f1035"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2136,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2137,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "operating lease cost row",
+   "text": "Operating lease costs$7,049 $5,332",
+   "text_sha256": "sha256:b55ccfebac2951c868b031437d8f301d3a997e24bff4746d4c703af7535ae62c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2138,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease liabilities table caption",
+   "text": "The components of lease liabilities are presented as follows:",
+   "text_sha256": "sha256:6acbb8d3337dd1f302988968b9992a825d36acf79d5964ef9d91ca2706235645"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2139,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "December 31,",
+   "text_sha256": "sha256:7fd1d54a3e414b28a6706f0f6a57081a2dfea8b36a61ce9341fae03f80cd8df9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2140,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "2021December 31,",
+   "text_sha256": "sha256:7b29053f6f5cd4d98d55004adfd9d7817cc219da6332bfc21a2e4d21e7264ff2"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2141,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "2020",
+   "text_sha256": "sha256:73a2af8864fc500fa49048bf3003776c19938f360e56bd03663866fb3087884a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2142,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2143,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "current lease liability row label",
+   "text": "Operating lease liabilities, current (Accrued liabilities)",
+   "text_sha256": "sha256:aa1429d1d4a107611c447dbfb38661633cf0d47877da00a62273098b1eb80752"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2144,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "current lease liability amounts",
+   "text": "$3,830 $4,542",
+   "text_sha256": "sha256:7f0325f9818b2db00e84c1ab439ffbbfac272e097cf0abeb1058dd1ff5f9ed25"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2145,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "non-current lease liability row",
+   "text": "Operating lease liabilities, non-current (Other liabilities)11,920 15,209",
+   "text_sha256": "sha256:637889bc242df45b13989fec3be91c7c2eb3a44e1b51b604c95eedbade4e5d6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2146,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities label",
+   "text": "Total operating lease liabilities",
+   "text_sha256": "sha256:2f8c07af8f12fbec263abc52c5d629a90df8e945bd25ac44b1ff8038a2ff494b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2147,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities amounts",
+   "text": "$15,750 $19,751",
+   "text_sha256": "sha256:cab7370c909a33cc92f2370200b342bc123d319e4e736bea1bebae4231846bdc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2148,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "supplemental lease information label",
+   "text": "Supplemental lease information:",
+   "text_sha256": "sha256:d520648969fe23e9e8abb1daef7cb22d0411606c6c801f25a805fd01fc882135"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2149,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease term row label",
+   "text": "Weighted average remaining lease term",
+   "text_sha256": "sha256:604932cfc348eafe9ff9980c255510e47b0df2307d2af610a039dd7e1e7ae25a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2150,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease term values",
+   "text": "5.9 years6.4 years",
+   "text_sha256": "sha256:20a8e8dbad69927887a1f01c06af03e47cd5c55b79d9d21ee245a8a9f97730d2"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2151,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "discount rate row label",
+   "text": "Weighted average discount rate",
+   "text_sha256": "sha256:c90bec2a4a1fc7e127271d4c1bec8a059d9d85bc85556123f34628a8528da9f6"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2152,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "discount rate values",
+   "text": "7.4%7.7%",
+   "text_sha256": "sha256:5ee7818b19a2907bdf308c02462c8a632863cf6a5d1a8eeabc36785e818f70bd"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2153,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease cash flow table caption",
+   "text": "Supplemental cash flow and other information related to operating leases, are as follows:",
+   "text_sha256": "sha256:d8058cb22c26074c4483741b5001de32fd295cf8efcbc30c195abbf244dfd6bd"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2154,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table column header",
+   "text": "Years Ended December 31,",
+   "text_sha256": "sha256:fc9ceb0124f0c2848c150c17b763eac348b499a7b4297a033da5256cb5e7e344"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2155,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table year header",
+   "text": "20212020",
+   "text_sha256": "sha256:e2cbe8d93726539f01a5f1199d03dc4134b1028899aaaa4a1e0b85243c2f1035"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2156,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2157,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease cash paid row label",
+   "text": "Cash paid for amounts included in the measurement of lease liabilities:",
+   "text_sha256": "sha256:038dfcdbc2691fd26461dd6821ccee86110a413e0c802896ad91e29416455956"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2158,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "operating lease cash flow row label",
+   "text": "Operating cash flows from operating leases",
+   "text_sha256": "sha256:b8c7ea11990bfe33279e506ab38ec665758f5ece2edb2bfad40b0173392447ae"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2159,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "operating lease cash flow amounts",
+   "text": "$5,855 $4,762",
+   "text_sha256": "sha256:4e00246998985e4fd886fc97a9bea35ec3b73b827552f2da57488407c56feef6"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2160,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "non-cash investing row label",
+   "text": "Non-cash investing activities:",
+   "text_sha256": "sha256:7ef1e29f642f88507e33b434cb928dd6bd6aa704f67ea81e66d2d3c3d4bd7046"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2161,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-use lease liability row label",
+   "text": "Lease liabilities arising from obtaining right-of-use assets",
+   "text_sha256": "sha256:e60d6204ab5da84606e78f83b9521ad89436a69bb4f91c23fd230f843ab16a46"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2162,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-use lease liability amounts",
+   "text": "$708 $10,625",
+   "text_sha256": "sha256:c792e9feb6f8281dbc081a5132fd9c2149a3f86bd6c5d96190c2719df1c73bd9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2163,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity table caption",
+   "text": "Undiscounted cash flows of operating lease liabilities as of December 31, 2021 are as follows:",
+   "text_sha256": "sha256:4395720c4f3de08fd522e653af597c03263df8bd2fb9696c42c647e5f5871c53"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2164,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity column header",
+   "text": "Lease Amounts",
+   "text_sha256": "sha256:8e83cbdb26909f0e3cf5f2c894e72b46ad6eb3836a58426746d6a48fe2dc9022"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2165,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease table unit label",
+   "text": "(In thousands)",
+   "text_sha256": "sha256:08a0b46e09733ee95148358481e5bb5b38e46d69b3687ed3e9983b69d55dd806"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2166,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row label",
+   "text": "Year:",
+   "text_sha256": "sha256:60a379715290654b405d745defb50baa7a1227d16a6a9fd32962c165f9b41c66"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2167,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2022",
+   "text": "2022$4,771",
+   "text_sha256": "sha256:6ca98460fe1833256eb25df451f720e1ce06047c86cc814c1a92b3d87a5cbd86"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2168,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2023",
+   "text": "20234,160",
+   "text_sha256": "sha256:7a750b9228fd2e15be8eb001562587c84894a68182dd9e5f5425362b0dd80702"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2169,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2024",
+   "text": "20243,198",
+   "text_sha256": "sha256:e87d4d1f625f1f2266c6c2cbcd900bab65221826c0fa17cab212ca566da16892"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2170,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2025",
+   "text": "20252,422",
+   "text_sha256": "sha256:3eca124f34d3e2b494f71d45534771325555ee6ec709025e625694a3b63d69a1"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2171,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row 2026",
+   "text": "20261,395",
+   "text_sha256": "sha256:dc74569508f15b183d58cfea2323f53fefab72aea68b87c45413b9c079854c55"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2172,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease maturity row thereafter",
+   "text": "Thereafter2,680",
+   "text_sha256": "sha256:377d60874044b04284cbd648b1109df9de61bf0f20db8ebeea80360b13ed3bb1"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2173,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease payments label",
+   "text": "Total lease payments",
+   "text_sha256": "sha256:68809f787126c0d5bb016aad72ce7155dbc47f8c12e914053b925a26396098d8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2174,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease payments amount",
+   "text": "18,626",
+   "text_sha256": "sha256:ea49db21439a87bc38b28e9e08cb1dd306abb180b89ac837f1dc9cab0e48ac2c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2175,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "imputed lease interest label",
+   "text": "Less: imputed lease interest",
+   "text_sha256": "sha256:e24f6b17b89ef90bc6fe1ed70bff949a05f209d57902692d8568706a0b0e2bde"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2176,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "imputed lease interest amount",
+   "text": "(2,876)",
+   "text_sha256": "sha256:cd74d1a1874a8918f066a267813a96807f96ee2017314d6226023428ab0afc7e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2177,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities label",
+   "text": "Total lease liabilities",
+   "text_sha256": "sha256:20146ba659bab7f444e627fb304aec278a2a7921bf469ea812bab46729c2b8fb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2178,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total lease liabilities amount",
+   "text": "$15,750",
+   "text_sha256": "sha256:777a4cfb26c3c87b534086591121846bcbca1bc1fa853227d6d284b9fd53ec87"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2179,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "uncommenced office lease commitment",
+   "text": "As of December 31, 2021, we have an additional operating lease commitment of $5.6 million for an office lease that has not yet commenced. The operating lease commitment will commence in the first quarter of 2022 with a lease term of 10.0 years.",
+   "text_sha256": "sha256:ac49a8924eb800c83c63b8760c35b2f06c3620d07f5ad583df82d4c247854c9f"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2180,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Purchase Obligations subheading",
+   "text": "Purchase Obligations",
+   "text_sha256": "sha256:74ca829f81dfd0ef2b595787c32f53b55dec2ce8b9c422b061348299db73edd7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2181,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "inventory purchase obligations",
+   "text": "The Company has contractual obligations related to component inventory that its contract manufacturers procure on its behalf in accordance with its production forecast as well as other inventory related purchase commitments. As of December 31, 2021, these purchase obligations totaled approximately $424.6 million.",
+   "text_sha256": "sha256:f7fb7aff871f0d4d9a7400b29bfe4db5794e3d9972a15aa0dd3274d1200c9d5c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2182,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Enphase Energy, Inc. | 2021 Form 10-K | 118",
+   "text_sha256": "sha256:c97cbef559e1f91406076b574d968f342174fc2c413a59b58d0de25faee40b18"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2183,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2184,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "ENPHASE ENERGY, INC.",
+   "text_sha256": "sha256:06523ce5dfe646198b016d1a0740e6dfbeb4b0c39fb3df4129ba669f1cb9fe58"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2185,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS",
+   "text_sha256": "sha256:489fc99c42b267c3f6d7773f7fa025ed24f666b25bb19bcd2e063c22aea21cdb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2186,
+   "verdict": "COVERED_ELSEWHERE",
+   "why": "Litigation label of the taken paragraph",
+   "text": "Litigation",
+   "text_sha256": "sha256:f0a2a3136bc5606b667dd368b25419942011190d2239b27a5aa31737042b71b9",
+   "covered_by": [
+    2187
+   ]
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2188,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Contingencies label introducing tariff refunds",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2189,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tariff-exclusion refund request via customs, not a legal proceeding or claim",
+   "text": "On March 26, 2020, the Office of the United States Trade Representative (the “USTR”) announced certain exclusion requests related to tariffs on Chinese imported microinverter products that fit the dimensions and weight limits within a Section 301 Tariff exclusion under U.S. note 20(ss)(40) to subchapter III of chapter 99 of the Harmonized Tariff Schedule of the United States (the “Tariff Exclusion”). The Tariff Exclusion applies to covered products under the China Section 301 Tariff Actions (“Section 301 Tariffs”) taken by the USTR exported from China to the United States from September 24, 2018 until August 7, 2020. Accordingly, the Company sought refunds totaling approximately $38.9 million plus approximately $0.6 million accrued interest on tariffs previously paid from September 24, 2018 to March 31, 2020 for certain microinverters that qualify for the Tariff Exclusion. The refund request was subject to review and approval by the U.S. Customs and Border Protection; therefore, the Company assessed the probable loss recovery in the year ended December 31, 2020 was equal to the approved refund requests available to the Company.",
+   "text_sha256": "sha256:837eb2a4552128894c51cd92baaecf747eba90362df26a3a04063fde67742d3d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2190,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tariff refunds received and accrued",
+   "text": "As of December 31, 2020, the Company had received $24.8 million of tariff refunds and accrued for the remaining $14.7 million tariff refunds that were approved, however, not yet received on or before December 31, 2020. As of March 31, 2021, the Company received the remaining $14.7 million tariff refunds. For the year ended December 31, 2020, the Company recorded $38.9 million as a reduction to cost of revenues in the Company’s consolidated statement of operations as the approved refunds relate to paid tariffs previously recorded to cost of revenues, therefore, the Company recorded the corresponding approved tariff refunds as credits to cost of revenues in the fourth quarter of 2020. For the year ended December 31, 2020, the Company recorded the $0.6 million accrued interest as interest income in the consolidated statement of operations. The tariff refund receivable of zero and $14.7 million was recorded as a reduction of accounts payable to Flex Ltd. and affiliates (“Flex”), the Company’s manufacturing partner and the importer of record who will first receive the tariff refunds, on the Company’s consolidated balance sheet as of December 31, 2021 and December 31, 2020, respectively.",
+   "text_sha256": "sha256:d9b88aa0403c23b1ce528986d1695f8f50cc443236d69af7402d756a2a95c927"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2191,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tariff exclusion expiry and continuing tariffs",
+   "text": "The Tariff Exclusion expired on August 7, 2020 and those microinverter products now are subject to tariffs. The Company also continues to pay Section 301 Tariffs on its storage and communication products and other accessories imported from China which are not subject to the Tariff Exclusion.",
+   "text_sha256": "sha256:68ae82fad2d196fde31f6d68df1e22c1a539c8fd44ea04196835f7607c89250e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 483,
+   "verdict": "NOT_D02",
+   "why": "Item 1A risk-factor heading",
+   "text": "Risks related to Legal Proceedings and Regulations",
+   "text_sha256": "sha256:18c23d0a6646e43fb7ae9473633d677393d44ac257badf3946502425ed4feccd"
+  },
+  {
+   "kind": "HEADING",
+   "i": 730,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; Item 3 content taken",
+   "text": "Item 3. Legal Proceedings",
+   "text_sha256": "sha256:36bdb2ee8904eadab1a76f83ac84b8d6a06a0cff66ea55e67548e1ef97bfde22"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1025,
+   "verdict": "NOT_D02",
+   "why": "heading between Item 3 and Item 8 (MD&A area), outside D02 sources",
+   "text": "Commitments and Contingencies",
+   "text_sha256": "sha256:fe30a896ac835e2a1db2122e04fe75b95598985425d59c93b0a2b214275bf3b8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1178,
+   "verdict": "NOT_D02",
+   "why": "financial-statement caption pointing to the note",
+   "text": "Commitments and contingencies (Note 14)",
+   "text_sha256": "sha256:13592f9c63c66003733c03d2fe62765bd960d7944d4fe63c665d2d06b9135d7a"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1480,
+   "verdict": "REACHED",
+   "why": "contingencies subsection; its accrual-policy paragraph taken",
+   "text": "Commitments and Contingencies",
+   "text_sha256": "sha256:fe30a896ac835e2a1db2122e04fe75b95598985425d59c93b0a2b214275bf3b8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2126,
+   "verdict": "REACHED",
+   "why": "contingencies note; its litigation paragraph taken",
+   "text": "14. COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:d19ed7fefcd05809615aeb1ecac572828be6c80db51c2ef6ca5455c739bc1c94"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2186,
+   "verdict": "REACHED",
+   "why": "litigation subsection; paragraph taken",
+   "text": "Litigation",
+   "text_sha256": "sha256:f0a2a3136bc5606b667dd368b25419942011190d2239b27a5aa31737042b71b9"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2188,
+   "verdict": "NOT_D02",
+   "why": "tariff-refund contingency subsection, not legal matters",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8"
+  }
+ ]
+}

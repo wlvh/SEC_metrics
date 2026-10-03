@@ -1,0 +1,52 @@
+{
+ "record_type": "ISSUE_47_D02_DEV_REVIEW_HAND_READING",
+ "comparison": "docs/evidence/issue47_history/d02-model-method/comparison.json",
+ "reviewer": "the executor, reading each block in the request; not an independent reading",
+ "blocks": {
+  "lumen_technologies:2022-12-31": [
+   {
+    "block_id": "b1632",
+    "class": "BOUNDARY_COMPLIANCE_AUDIT",
+    "why": "A liability under ASC 450 for government support payments that may be recaptured; whether a program's compliance audit is the definition's 'government investigation' is left open by the definition (the same class as Lumen FY2025 b2102 in the dev dry run)."
+   },
+   {
+    "block_id": "b1634",
+    "class": "BOUNDARY_COMPLIANCE_AUDIT",
+    "why": "CAF II: the government may audit compliance and the outcome of remaining examinations is unknown; same class as b1632."
+   },
+   {
+    "block_id": "b2646",
+    "class": "CONTINUATION_OF_A_DISCLOSURE",
+    "why": "'In this Note, when we refer to a class action as \"putative\" ...' - a sentence of the legal-matters note that frames the matters it lists; the definition counts a continuation sentence of such a disclosure."
+   }
+  ],
+  "pfizer:2022-12-31": [
+   {
+    "block_id": "b2170",
+    "class": "DISCLOSURE_THE_ROUTE_MISSES",
+    "why": "Footnote (a): 2021 discontinued operations include 'a pre-tax amount to resolve a MDL relating to EpiPen against the Company ... for $345 million' - a settled proceeding against the registrant. The keyword route does not take it and the older reading's packet did not reach it."
+   },
+   {
+    "block_id": "b2373",
+    "class": "DISCLOSURE_THE_ROUTE_MISSES",
+    "why": "Footnote (d): 'certain product liability and other expenses related to products discontinued and/or divested by Pfizer' - charges for product liability claims, a loss accrual the definition counts. Not taken by the route, not in the older reading."
+   },
+   {
+    "block_id": "b2360",
+    "class": "BOUNDARY_TABLE_ROW_LABEL",
+    "why": "'Certain legal matters, net(d)' - the row label of the legal-matters charge in Other (income)/deductions; the amounts are in other cells. Counted only through its footnote (b2373)."
+   },
+   {
+    "block_id": "b3438",
+    "class": "CONTINUATION_OF_A_DISCLOSURE",
+    "why": "The opening of Note 16 ('subject to numerous contingencies ... The following outlines our legal contingencies') introduces the legal contingencies Item 3 incorporates; the same kind of introduction the latest-year dry run listed as a judgement call."
+   }
+  ],
+  "southwest_airlines:2023-12-31": []
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

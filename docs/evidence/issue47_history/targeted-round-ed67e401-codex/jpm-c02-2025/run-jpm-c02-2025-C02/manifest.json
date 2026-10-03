@@ -1,0 +1,171 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "af3b34d2d4f4b85de63f36f054f072b0096626fdb53c8b88f2f9deec27d4f691",
+  "review_decisions_file_hash": "8624bd803d469e85812710e6f53e8f5e530998c60a899aff0e3537fa0e62ae79",
+  "validation_file_hash": "daa77b94e212a34a87024a7012e4b56a7f9971d01acb9fec035cb28e89ef3711",
+  "content_manifest_hash": "sha256:6ef81876d5f6e784e5847ebd814e919a9328234f454cbc692db3a79f1b19d84d",
+  "audit_manifest_hash": "sha256:63ef6e0a709adcca4d31692581eb717665074a2fb714c61ea6dc2a6c370c7feb",
+  "run_id": "run:historical-period:6988fa00b37e83a1141b258147af0f8355707ea45729d80de53bc713240b19e1",
+  "company_id": "jpmorgan_chase",
+  "company_traits": [
+    "financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:8dd6d64cd94bd94f9a5cda19fa0528f91ef05f07eb1702d333f16c66f3eb06bc",
+      "raw_asset_id": "sha256:f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617.json",
+      "source_role": "sec_submissions_inventory",
+      "request_attempt_id": "request:attempt:820e366379fd257e18a8abb89138f7d8a2af2edbc84a85c443a21a0dd76829d6"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:40f3862d382adeb03791f7899dace46fbf5f4828596e28d9b0f92a224456dc95",
+      "raw_asset_id": "sha256:01cbe3e206d5e755816371a28ff5d563c8a5ec0a7150322a7ee769063bf6cbe3",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-001.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:c1bd562df38bf5cd81faa0c697fad2ec5b492ceccc856956ca78cc7e45f9d512"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:183aa0eb6d8ddb160ae86ed109e06c4dd64299bad22ecd7b7b2c5ff12eade905",
+      "raw_asset_id": "sha256:459cc483bd192a389b9c686a15248506c17da27ea4566073b0cec58cdda4d9ab",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-002.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-002.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:d278c8bdfecf6352c7ba4c4cdc82f7805d4d584835feef526d7c7b9dd4ea6795"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:63c368f2e1527f2f2a284d410e32778a200c4d3e85dad993601d071ac3a3b726",
+      "raw_asset_id": "sha256:7e1cf782a2d32d67feafad843744da64bc5f0414087add46349d295ee0f940ec",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-003.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-003.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:47096f7f27f28468ae6687bc33e52f59392aeb0887e9cc10ae844c8060e13fe8"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:791152f8b98656a0f76c36c7fb379a287cb70d823062b10f61e75a114606ebb5",
+      "raw_asset_id": "sha256:b5d7d9d2cb30360d05e0a77368c0057de3f6a2c4ca720ab7e41a85d8cb808d9f",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-004.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-004.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:f3a7d4b0adc31876d1caf762f33f5a04e59f0e30e1dfba60e0b81aa44e95bf94"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ff549cac980d0f15f8a9abe547d03c7e040c5358234b6c2476e51791a3558a0b",
+      "raw_asset_id": "sha256:004d6ef994cabcf8da7672e7b492a8208b80312219a173bfa1fcd6c5a3d67e2f",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-005.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-005.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:389faa52530caed2c3b30b77e1344c895c24c255782f4cdb0161f005940247ce"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:27279368156d5ff2f6a4b4db593226c54e3883489a4fbba98a6aade75f72e289",
+      "raw_asset_id": "sha256:7dbc6f416dc8f285f85fe86b015df2b9463fcdfe9e50b0723e7304eed58e0882",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-006.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-006.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:d041a8eaa2f84db4702569f66920a1c5395a7daad5c4d4606253f924b8482a64"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:aec6ea36a07a5d658380148151a0b3f6b0b14a99ae2a27c5cc39bd2172bf7a42",
+      "raw_asset_id": "sha256:f7a6be7988dd0000a83b6ec6db34251390392b591e404011625807f63eb9f926",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-007.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:7db87887bfdacc150931505ce9514b9c0e77cbdd96a7b0477f435c1e368caeb7"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:2fb1ccc60458a1c02c2d4287b83ab72938c85f3d33e77e05c07478544260e9d7",
+      "raw_asset_id": "sha256:2ee168388a6e750ff388a68296b4edfbc48ffbd10b2c5c8a46aed698a5284c37",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-008.json",
+      "accession": "SUBMISSIONS-19617",
+      "document_name": "CIK0000019617-submissions-008.json",
+      "source_role": "sec_submissions_history",
+      "request_attempt_id": "request:attempt:69a7d46fa58974fe122caaa1f1d23065b251ec6a07c0dd0bcdc7b81259d7a7ee"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+      "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+      "accession": "0001628280-26-008131",
+      "document_name": "jpm-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:c5ccf6cd0074d9e75c227a3c7b8a104aa996d54894d8926ca4eb1869a7c9c03d",
+      "raw_asset_id": "sha256:e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+      "accession": "0001628280-26-008131",
+      "document_name": "CIK0000019617.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:adadf093594e5fea6c7320cb135411b8e24007f5adcc1d7360f87cf93909d003"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+      "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000096/jpm-20260402.htm",
+      "accession": "0000019617-26-000096",
+      "document_name": "jpm-20260402.htm",
+      "source_role": "governance_proxy",
+      "request_attempt_id": "request:attempt:3719764472367abe06b66a5d19e4366931c8d4ebe3fe6296ff268cb0bc5f7d10"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/C02_board_disclosures_historical_v2.md": "da44dad5db368e78ad673b062955ae3dfaded3d83a94e8d2a9393c3ef5d75419"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "2ef41ca590dda2e4357fb20f99ebaa8bb19cefe0eaf2c9b5b69e15ff2d64dc68",
+    "contract_sha256": "b15b59f3f74bbc3e889019024a1c1d6ba6c8c46512a43411269b2ec46cee7e62",
+    "decision_register_sha256": "37fc323583f198ee02a895b7b553181cfb0c0d64673da7972a126c8b2f755ac0",
+    "invariant_profile_sha256": "36e1e7d6d601e4017963d354cc17e61abcefd49ee3be7eb529db444f3cc37186",
+    "transfer_manifest_sha256": "61dcd9731b356c3f127f0ddaf738359664987fa9e69633849b30bb801e02b546",
+    "parent_requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+    "validator_sha256": "87bda5af7c67fee58edea64fe5982d03181e257ae3f0ab397f527d453615c2c0"
+  },
+  "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+  "requirement_id": "issue_47_v1",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

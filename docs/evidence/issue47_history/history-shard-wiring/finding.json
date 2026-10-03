@@ -1,0 +1,225 @@
+{
+ "record_type": "ISSUE_47_HISTORY_SHARD_CONSUMER_WIRING",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "what_was_asked": "Reuse the existing historical catalog, period selection and source proofs to carry a target year that really sits in a history shard through install, native Run, independent-process replay and the public row. Downloading the older primary documents does not remove the consumer limitation, so it is an acceptance item of its own.",
+ "the_limitation_located": {
+  "consumer": "scripts/vnext/normal_text_input_v2.py::_current_metadata_context",
+  "rule": "all(shard['filingTo'] < target_period_end for shard in declared_shards)",
+  "then": "scans filings.recent only",
+  "refusal": "TEXT_INPUT_CURRENT_METADATA_SCOPE_REQUIRES_HISTORY",
+  "second_consumer": "scripts/vnext/normal_text_input_v2.py::_check_selected_metadata_scope",
+  "second_rule": "every selected filing's metadata_origin.inventory_name must be the current block"
+ },
+ "measured_on_this_repository_s_saved_indexes": {
+  "company_periods_the_frozen_view_refuses": {
+   "salesforce": [
+    "2023-01-31",
+    "2022-01-31",
+    "2021-01-31",
+    "2020-01-31",
+    "2019-01-31"
+   ],
+   "jpmorgan_chase": [
+    "2024-12-31"
+   ],
+   "pfizer": [
+    "2020-12-31",
+    "2019-12-31",
+    "2018-12-31"
+   ],
+   "total_company_periods": 9,
+   "inside_the_five_year_frame": [
+    "salesforce 2023-01-31",
+    "salesforce 2022-01-31",
+    "jpmorgan_chase 2024-12-31"
+   ]
+  },
+  "ten_k_rows_that_are_in_a_shard_rather_than_in_recent": {
+   "pfizer": [
+    "2013-12-31",
+    "2014-12-31",
+    "2015-12-31",
+    "2016-12-31",
+    "2017-12-31",
+    "2018-12-31",
+    "2019-12-31"
+   ],
+   "salesforce": [
+    "2019-01-31",
+    "2020-01-31",
+    "2021-01-31",
+    "2022-01-31",
+    "2023-01-31"
+   ],
+   "jpmorgan_chase": [
+    "2024-12-31"
+   ],
+   "note": "no recent-only scan can find these at all, so this is not the same thing as the refusal above - the refusal also reaches periods whose row is in recent"
+  },
+  "the_refusal_is_not_what_blocks_them_today": {
+   "measured": "resolve_period_selection already reads history shards and selected salesforce 2023-01-31's real accession 0001108524-23-000011 from a shard. prepare_historical_annual_input then fails first with SAVED_SOURCE_MISSING for the primary document.",
+   "consequence": "three blockers stack on a shard-resident target and they are independent: the missing primary document, this consumer limitation, and - for JPMorgan - the submissions blocks themselves. Fetching the documents removes only the first.",
+   "jpmorgan_is_earlier_still": "resolve_period_selection refuses with ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+  }
+ },
+ "what_was_implemented": {
+  "file": "scripts/vnext/historical_metadata_context.py",
+  "rule_file_number": 19,
+  "invariant": "unchanged: no unread block may hold a filing dated on or after the pinned period end. It is now met by reading those blocks rather than by refusing.",
+  "reuse": "normal_history_catalog.load_history_for_period does the reading - newest first, stopping when the window is proven, keeping an unsaved, misaligned or unparseable shard as an explicit limitation. The caller's own _Sources reader is passed in, so every block read is admitted through the same request proofs.",
+  "replacement_check": "check_historical_metadata_scope requires the blocks read and the metadata sources admitted to be the same set, and the selected filing to come from one of them.",
+  "unchanged": [
+   "which filing the pinned period selects",
+   "the five identity fields it must match",
+   "_source_plan",
+   "the text_results_v2 scopes",
+   "normal_text_input_v2.py bytes"
+  ],
+  "nothing_was_moved": "no submissions body was edited, no history row was moved into recent, and no shard was re-labelled"
+ },
+ "measured_difference": {
+  "salesforce 2023-01-31": {
+   "frozen": "TEXT_INPUT_CURRENT_METADATA_SCOPE_REQUIRES_HISTORY",
+   "successor": "resolves from CIK0001108524-submissions-001.json"
+  },
+  "salesforce 2022-01-31": {
+   "frozen": "TEXT_INPUT_CURRENT_METADATA_SCOPE_REQUIRES_HISTORY",
+   "successor": "resolves from CIK0001108524-submissions-001.json"
+  },
+  "pfizer 2019-12-31": {
+   "frozen": "TEXT_INPUT_CURRENT_METADATA_SCOPE_REQUIRES_HISTORY",
+   "successor": "resolves from CIK0000078003-submissions-001.json"
+  },
+  "jpmorgan_chase 2024-12-31": {
+   "frozen": "TEXT_INPUT_CURRENT_METADATA_SCOPE_REQUIRES_HISTORY",
+   "successor": "HISTORICAL_TEXT_METADATA_BLOCK_UNUSABLE:HISTORY_SHARD_NOT_SAVED,HISTORY_SHARD_SNAPSHOT_CONFLICT",
+   "reading": "still refused, and now for the reason that is actually true: this repository does not hold the blocks. Reading more blocks does not invent them, and reporting it as 'no filing' would turn a source gap into a disclosure claim."
+  },
+  "marriott 2023-12-31 and macys 2026-01-31": {
+   "frozen": "accepted",
+   "successor": "accepted, same ordinary filing and same amendment set"
+  }
+ },
+ "the_positive_that_was_run": {
+  "what": "Marriott D02 for 2023-12-31 - a target year that is not the latest - through install, native Run creation, freeze, a separate-process cold read and the public row, on the patched runtime tree with the new metadata context in place.",
+  "why_this_one": "the shard-resident positive needs a primary document this repository does not hold. This one proves the successor context did not break the recent-block path and that a non-latest pinned year runs end to end; every earlier end-to-end run in this issue was on a latest year.",
+  "outcome": {
+   "1_period_selection": {
+    "current_accession": "0001628280-24-004372",
+    "prior_accession": "0001628280-23-003485",
+    "requested_fiscal_year": null,
+    "selection_id": "sha256:0f579446182bc48880fa5b2de4550a4e51f5f8b23d4196af7ebd32008ce80710",
+    "target_report_end": "2023-12-31"
+   },
+   "2_input_install": {
+    "authority_files": 380,
+    "binding_id": "sha256:a6d0ecf5c6170ea4c40eccba933964a86002aeba5e57f5ef1a90aea3f6fa382f",
+    "calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "requirement_closure_hash": "sha256:66748525ec518dc6018f0f9a528fd3a26a8f74535f035287dfac9980ed6c04c2",
+    "requirement_id": "issue_47_v1"
+   },
+   "3_native_run": {
+    "metric_id": "D02",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "quality": "EXACT",
+    "record_type": "SUCCESSOR_RUN",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:a6d0ecf5c6170ea4c40eccba933964a86002aeba5e57f5ef1a90aea3f6fa382f",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2023,
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01"
+    },
+    "value": "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.\nFrom time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.\nWe are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.\nLitigation, Claims, and Government Investigations\nFollowing our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. On January 18, 2024, the Fourth Circuit granted that petition, and we are preparing to file such appeal. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.\nIn addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Although some of these matters have been resolved or no longer appear to be active, some remain open. We are in discussions with the Attorney General offices from 49 states and the District of Columbia and the Federal Trade Commission. Based on the ongoing discussions, we believe it is probable that we will incur losses, and as of December 31, 2023, we have an accrual for an estimated loss contingency, which is not material to our Financial Statements.\nWhile we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss that might result from adverse judgments, settlements, fines,\npenalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specific allegations as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues; and (2) in the case of the above described regulatory investigations, the lack of resolution with the Federal Trade Commission and the state Attorneys General."
+   },
+   "4_new_process_frozen_replay": {
+    "quality": "EXACT",
+    "record_count": 19,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:a6d0ecf5c6170ea4c40eccba933964a86002aeba5e57f5ef1a90aea3f6fa382f",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2023,
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01"
+    },
+    "value": "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.\nFrom time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.\nWe are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.\nLitigation, Claims, and Government Investigations\nFollowing our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. On January 18, 2024, the Fourth Circuit granted that petition, and we are preparing to file such appeal. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.\nIn addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Although some of these matters have been resolved or no longer appear to be active, some remain open. We are in discussions with the Attorney General offices from 49 states and the District of Columbia and the Federal Trade Commission. Based on the ongoing discussions, we believe it is probable that we will incur losses, and as of December 31, 2023, we have an accrual for an estimated loss contingency, which is not material to our Financial Statements.\nWhile we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss that might result from adverse judgments, settlements, fines,\npenalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specific allegations as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues; and (2) in the case of the above described regulatory investigations, the lack of resolution with the Federal Trade Commission and the state Attorneys General."
+   },
+   "5_public_row": {
+    "evidence_count": 8,
+    "receipt": {
+     "calls": {
+      "paid": 0,
+      "provider": 0,
+      "sec": 0
+     },
+     "evidence_hash": "sha256:edd5da8d683c3cb9c01e497376862d4b80bf2f243826fe0878ba32c6e49ec367",
+     "period_selection_id": "sha256:0f579446182bc48880fa5b2de4550a4e51f5f8b23d4196af7ebd32008ce80710",
+     "production_authorized": false,
+     "requirement_id": "issue_47_v1",
+     "row_hash": "sha256:a36f8faa02b0165bf60b22573396e21e70593fbb8f69cfd4d4fa500073268066",
+     "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+     "status": "FROZEN_CANDIDATE"
+    },
+    "row": {
+     "accession": "0001628280-24-004372",
+     "cik": "1048286",
+     "company": "Marriott International",
+     "filed_date": "2024-02-13",
+     "fiscal_period": "ANNUAL",
+     "fiscal_year": "2023",
+     "form": "10-K",
+     "metric_id": "D02",
+     "metric_name": "Litigation source disclosures",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "source_class": "MDA",
+     "status": "TEXT_QUAL",
+     "unit": "text",
+     "value": "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.\nFrom time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.\nWe are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.\nLitigation, Claims, and Government Investigations\nFollowing our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. On January 18, 2024, the Fourth Circuit granted that petition, and we are preparing to file such appeal. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.\nIn addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Although some of these matters have been resolved or no longer appear to be active, some remain open. We are in discussions with the Attorney General offices from 49 states and the District of Columbia and the Federal Trade Commission. Based on the ongoing discussions, we believe it is probable that we will incur losses, and as of December 31, 2023, we have an accrual for an estimated loss contingency, which is not material to our Financial Statements.\nWhile we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss that might result from adverse judgments, settlements, fines,\npenalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specific allegations as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues; and (2) in the case of the above described regulatory investigations, the lack of resolution with the Federal Trade Commission and the state Attorneys General."
+    }
+   }
+  }
+ },
+ "still_pending_material": {
+  "item": "at least one target year whose 10-K row is in a history shard, run end to end",
+  "cheapest_candidates": [
+   {
+    "company_id": "salesforce",
+    "report_end": "2023-01-31",
+    "accession": "0001108524-23-000011",
+    "primary_document": "crm-20230131.htm",
+    "shard": "CIK0001108524-submissions-001.json",
+    "shard_saved": true
+   },
+   {
+    "company_id": "salesforce",
+    "report_end": "2022-01-31",
+    "accession": "0001108524-22-000013",
+    "primary_document": "crm-20220131.htm",
+    "shard": "CIK0001108524-submissions-001.json",
+    "shard_saved": true
+   }
+  ],
+  "what_it_costs": "one document fetch each; both are already inside the 30-document manifest, so this adds no fetch to the acquisition plan",
+  "not_done_instead": [
+   "moving a history row into recent",
+   "editing a submissions body",
+   "declaring the shard-resident positive complete on the strength of the metadata half alone"
+  ]
+ },
+ "what_this_does_not_show": [
+  "that any shard-resident coordinate has produced a Result. None has; the primary documents are not saved.",
+  "that JPMorgan is reachable. It is not, and its blocks are a source need rather than a route gap.",
+  "business content acceptance of the Marriott 2023 excerpts. Evidence PASS and a frozen Run are not that."
+ ]
+}

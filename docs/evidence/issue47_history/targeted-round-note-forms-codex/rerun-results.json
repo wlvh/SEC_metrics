@@ -1,0 +1,38 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "driver_seconds": 370,
+ "position_count": 1,
+ "positions": [
+  {
+   "company_id": "enphase_energy",
+   "evidence_count": 3,
+   "metric_id": "B06",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "requirement_closure_hash": "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac",
+   "result_id": "sha256:fd16acda5e3c00d11d5324eb14a3fb81c03ce60cefb91624627606616bd2472a",
+   "row_hash": "sha256:a76b1332ad5ee0e290b8d97d2cad52b9484ae76fc040442200f94f2a47e93c3e",
+   "run_id": "run:historical-period:106f9f4d2a8b81cd3fb5f82b85122e91f2d0e00fe38cbf5acfe378d951223613",
+   "selection_id": "sha256:4082a8b473a307a84515550ead8bf783d09da20d18dc2cb380fbdbfe5527aebc",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value": "1.563451362278755750189672227"
+  }
+ ],
+ "public_rows": 1,
+ "read_back_problems": [],
+ "record_type": "ISSUE_47_TARGETED_ROUND",
+ "requirement_closure_hashes": [
+  "sha256:421eb9213b6d9f2e3bc3f7e31bc227019450673789c28517660437288599e5ac"
+ ],
+ "runtime_tree": {
+  "carries": "docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch",
+  "commit": "32f9696ed146d01bcbbc21916cf6e35b35978f2f"
+ }
+}

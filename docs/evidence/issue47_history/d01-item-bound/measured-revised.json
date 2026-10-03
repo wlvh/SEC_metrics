@@ -1,0 +1,203 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "how": "measure_d01_bound.py with the route after the bound revision and the fiscal-label repair (commit fbded78a's tree), for the two companies those change: Enphase (FY2021 over 64) and Macy's (FY2022 and FY2021 stopped on their label); same data root, restored from the branch's export at 288 SEC calls; network and DNS blocked.",
+ "record_type": "ISSUE_47_D01_HEADING_COUNT_MEASUREMENT",
+ "rows": [
+  {
+   "candidate": {
+    "selected": 36
+   },
+   "company_id": "macys",
+   "documents": [
+    {
+     "headings": 36,
+     "longest_heading_chars": 288,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 4027
+    }
+   ],
+   "input_status": null,
+   "report_end": "2026-01-31",
+   "stage": "MEASURED",
+   "target_ordinal": 1
+  },
+  {
+   "candidate": {
+    "selected": 34
+   },
+   "company_id": "macys",
+   "documents": [
+    {
+     "headings": 34,
+     "longest_heading_chars": 288,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 3946
+    }
+   ],
+   "input_status": null,
+   "report_end": "2025-02-01",
+   "stage": "MEASURED",
+   "target_ordinal": 2
+  },
+  {
+   "candidate": {
+    "selected": 34
+   },
+   "company_id": "macys",
+   "documents": [
+    {
+     "headings": 34,
+     "longest_heading_chars": 288,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 4070
+    }
+   ],
+   "input_status": null,
+   "report_end": "2024-02-03",
+   "stage": "MEASURED",
+   "target_ordinal": 3
+  },
+  {
+   "candidate": {
+    "selected": 35
+   },
+   "company_id": "macys",
+   "documents": [
+    {
+     "headings": 35,
+     "longest_heading_chars": 288,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 4111
+    }
+   ],
+   "input_status": null,
+   "report_end": "2023-01-28",
+   "stage": "MEASURED",
+   "target_ordinal": 4
+  },
+  {
+   "candidate": {
+    "selected": 39
+   },
+   "company_id": "macys",
+   "documents": [
+    {
+     "headings": 39,
+     "longest_heading_chars": 251,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 4033
+    }
+   ],
+   "input_status": null,
+   "report_end": "2022-01-29",
+   "stage": "MEASURED",
+   "target_ordinal": 5
+  },
+  {
+   "candidate": {
+    "selected": 60
+   },
+   "company_id": "enphase_energy",
+   "documents": [
+    {
+     "headings": 60,
+     "longest_heading_chars": 411,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 10620
+    }
+   ],
+   "input_status": null,
+   "report_end": "2025-12-31",
+   "stage": "MEASURED",
+   "target_ordinal": 1
+  },
+  {
+   "candidate": {
+    "selected": 60
+   },
+   "company_id": "enphase_energy",
+   "documents": [
+    {
+     "headings": 60,
+     "longest_heading_chars": 459,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 10671
+    }
+   ],
+   "input_status": null,
+   "report_end": "2024-12-31",
+   "stage": "MEASURED",
+   "target_ordinal": 2
+  },
+  {
+   "candidate": {
+    "selected": 61
+   },
+   "company_id": "enphase_energy",
+   "documents": [
+    {
+     "headings": 61,
+     "longest_heading_chars": 459,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 10966
+    }
+   ],
+   "input_status": null,
+   "report_end": "2023-12-31",
+   "stage": "MEASURED",
+   "target_ordinal": 3
+  },
+  {
+   "candidate": {
+    "selected": 62
+   },
+   "company_id": "enphase_energy",
+   "documents": [
+    {
+     "headings": 62,
+     "longest_heading_chars": 423,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 11277
+    }
+   ],
+   "input_status": null,
+   "report_end": "2022-12-31",
+   "stage": "MEASURED",
+   "target_ordinal": 4
+  },
+  {
+   "candidate": {
+    "selected": 68
+   },
+   "company_id": "enphase_energy",
+   "documents": [
+    {
+     "headings": 68,
+     "longest_heading_chars": 479,
+     "proposal_reasons": [],
+     "proposal_status": "SOURCE_HEADINGS_READY",
+     "rendered_chars": 12530
+    }
+   ],
+   "input_status": null,
+   "report_end": "2021-12-31",
+   "stage": "MEASURED",
+   "target_ordinal": 5
+  }
+ ],
+ "seconds": 1890,
+ "spec_path_measured_under": "catalog/r6/D01_risk_factor_headings_v2.md"
+}

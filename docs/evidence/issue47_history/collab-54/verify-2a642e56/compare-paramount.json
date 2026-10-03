@@ -1,0 +1,176 @@
+{
+ "record_type": "ISSUE_47_COMPANY_HISTORICAL_CONSUMER_CHECK",
+ "company_id": "paramount_skydance_paramount_global",
+ "report_end": "2024-12-31",
+ "positions": [
+  {
+   "metric_id": "B01",
+   "company_path": {
+    "requirement_id": "issue_54_v2",
+    "run_id": "run:historical-period:6dcd4404db384ed4401bdaef99e873fbfd0864d9e113c1b0f6253a0d94a8f3db",
+    "result_id": "sha256:2b50a22badac88f34c1994ad3f602d7e4de1d4f42102df66a89f14cdc27cd037",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "29213000000",
+    "entities": [
+     "813828"
+    ],
+    "filings": [
+     "0000813828-25-000005"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:8b92db0f664f08340389da32845a5bf1da8097db8e5beeb8656181439aedd755"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:6dcd4404db384ed4401bdaef99e873fbfd0864d9e113c1b0f6253a0d94a8f3db",
+     "result_ids": [
+      "sha256:2b50a22badac88f34c1994ad3f602d7e4de1d4f42102df66a89f14cdc27cd037"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:6dcd4404db384ed4401bdaef99e873fbfd0864d9e113c1b0f6253a0d94a8f3db",
+     "result_ids": [
+      "sha256:2b50a22badac88f34c1994ad3f602d7e4de1d4f42102df66a89f14cdc27cd037"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:2b50a22badac88f34c1994ad3f602d7e4de1d4f42102df66a89f14cdc27cd037",
+    "row_hash": "sha256:8b92db0f664f08340389da32845a5bf1da8097db8e5beeb8656181439aedd755",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "C01",
+   "company_path": {
+    "business_metric_completed": false,
+    "error_type": "FileNotFoundError",
+    "metric_id": "C01",
+    "reason": "[Errno 2] No such file or directory: '<scratch>/c54/runtime-probe-v2/evidence/accession_materials'",
+    "status": "UPDATE_BLOCKED"
+   }
+  },
+  {
+   "metric_id": "C02",
+   "company_path": {
+    "requirement_id": "issue_54_v2",
+    "run_id": "run:historical-period:1e7ea20b7842ba957b04682765687d59d604f18c493624bd91e584f0d713b338",
+    "result_id": "sha256:c1b278cfcd21ce0f5ac746a659ab4b1f5dc642428a29c0eab525298795d09409",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "Our seven director nominees (four of whom are current members of our Board of Directors (the “Board of Directors” or “Board”)), as a group, have extensive and diverse leadership and subject matter experience and knowledge that is important to us. Our nominees include six independent directors.\nOur Board of Directors is currently comprised of five members, each serving until the Annual Meeting to be held on July 2, 2025 or until her successor is duly elected and qualified: Barbara M. Byrne, Linda M. Griego, Judith A. McHale, Shari E. Redstone and Susan Schuman.\nIn April and May 2025, the Nominating and Governance Committee reviewed the independence of our current directors and of our director nominees who are not currently members of our Board, respectively, to determine its recommendation regarding which of them meet the independence standards outlined above. The Board, based on its review and the recommendation of the Nominating and Governance Committee, determined that four of our five current directors – Mses. Byrne, Griego, McHale and Schuman – and each of our director nominees who are not currently Board members – Mses. Boies and Sragow Licht and Mr. Ryan – are independent. The current director who was not determined to be independent is Ms. Redstone.\nIn addition to having a majority independent Board, the Audit, Compensation and Nominating and Governance Committees are composed entirely of independent directors. In support of the independent oversight of management, the non-management directors, when applicable, and, separately, the independent directors routinely hold executive sessions without management present, and Board members have regular access to management across the Company between meetings.\nOur Non-Executive Chair of the Board, Shari E. Redstone, presides at all meetings of the Board. Under the Guidelines, her responsibilities also include, together with the Co-CEOs and the independent Chair of the Nominating and Governance Committee, developing and approving agendas for Board meetings. The Board believes that Ms. Redstone’s role appropriately reflects both her breadth of experience in the entertainment industry and her ownership position in and role at National Amusements.\nAudit Committee\nBarbara M. Byrne, Chair\nLinda M. Griego\nJudith A. McHale\nSusan Schuman\nCompensation Committee\nJudith A. McHale, Chair\nBarbara M. Byrne\nLinda M. Griego\nSusan Schuman\nNominating and Governance Committee\nSusan Schuman, Chair\nBarbara M. Byrne\nLinda M. Griego\nJudith A. McHale\nOur Audit Committee is comprised of Mses. Byrne, Griego, McHale and Schuman. Ms. Byrne is the Chair of the Audit Committee. The Audit Committee Charter provides that the Audit Committee will be comprised of at least three members, except that the Audit Committee is deemed to be properly constituted with at least two members in the event of a vacancy until the Board fills the vacancy. The Charter also provides that all of the members on the Committee must be independent directors. The Committee must have at least one “audit committee financial expert” and one member who is “financially sophisticated” (each as described below), and all Committee members must be able to read and understand fundamental financial statements. The Committee holds at least five regular meetings each year, and it meets separately throughout the year with the independent auditor, our Chief Financial Officer, our Chief Accounting Officer, our General Counsel, our Chief Compliance Officer and our Chief Audit Executive.\nAudit Committee Financial Experts. The Board has determined that each of Mses. Byrne, McHale and Schuman is “financially sophisticated” under Nasdaq rules, qualifies as an “audit committee financial expert” as defined in the regulations promulgated under the Securities Act of 1933, as amended (the “Securities Act”), and qualifies as “independent” for Audit Committee purposes pursuant to Nasdaq listing rules.\nOur Compensation Committee is comprised of Mses. Byrne, Griego, McHale and Schuman. Ms. McHale is the Chair of the Compensation Committee.\nThe Nominating and Governance Committee is comprised of Mses. Byrne, Griego, McHale and Schuman. Ms. Schuman is the Chair of the Nominating and Governance Committee.\nNone of the members of the Compensation Committee during fiscal year 2024 was, or has ever been, an officer or employee of the Company, and, during fiscal year 2024, no executive officer of the Company served on the board and/or compensation committee of any company that employed as an executive officer any member of our Board and/or Compensation Committee.\nThe Board of Directors proposes the election of the seven nominees identified in this proxy statement, four of whom are current members of our Board and were elected at our 2024 Annual Meeting of Stockholders. Each director elected at the Annual Meeting will hold office, in accordance with our Amended and Restated Certificate of Incorporation and Amended and Restated Bylaws, until the next annual meeting or until her successor is duly elected and qualified. The Board’s nominees for election are Mary Boies, Barbara M. Byrne, Linda M. Griego, Charles E. Ryan, Shari E. Redstone, Susan Schuman and Roanne Sragow Licht.\nDirector Nominee\nMARY BOIES\nCurrent Director and\nDirector Nominee\nCommittees:\n• Audit Committee (Chair)\n• Compensation Committee\nNominating and Governance Committee\nBARBARA M. BYRNE\nCurrent Director and\nDirector Nominee\nCommittees:\n• Audit Committee\n• Compensation Committee\nNominating and Governance Committee\nLINDA M. GRIEGO\nCurrent Non-Executive Chair\nand Director Nominee\nCommittees:\n• None\nSHARI E. REDSTONE\nDirector Nominee\nCHARLES E. RYAN\nCurrent Director and\nDirector Nominee\nCommittees:\n• Audit Committee\n• Compensation Committee\nNominating and Governance Committee (Chair)\nSUSAN SCHUMAN\nDirector Nominee\nHON. ROANNE SRAGOW LICHT\nAmounts reflect the aggregate grant date fair value determined in accordance with FASB ASC Topic 718 of the annual grant on June 4, 2024 of RSUs to each Outside Director on that date under the 2015 Equity Plan for Outside Directors. For a discussion of the assumptions made in calculating the grant date fair value amounts for 2024, see Note 14 “Stock-Based Compensation” to the audited 2024 consolidated financial statements on pages II-78 to II-80 in the Initial Form 10-K. Messrs. Klieger and Terrell and Mses. Ostroff and Seligman ceased to be Outside Directors on June 4, 2024, prior to the annual grant. Mr. Phillips ceased to be an Outside Director on October 31, 2024, and the grant reflected was unvested at the time of his departure and was forfeited.\nAudit Committee\nBarbara M. Byrne, Chair\nLinda M. Griego\nJudith A. McHale\nSusan Schuman\nThe Compensation Committee is made up entirely of independent directors and is currently composed of Barbara M. Byrne, Linda M. Griego, Judith A. McHale (Chair) and Susan Schuman. During 2024, Nicole Seligman, who was also an independent director, served on the Committee until her departure from the Board effective June 4, 2024.\nMembers of the Compensation Committee\nBarbara M. Byrne\nLinda M. Griego\nJudith A. McHale, Chair\nSusan Schuman\nOnly Outside Directors, i.e., directors who are not employees of the Company or any of its subsidiaries, are eligible to receive awards under the Amended Plan. The Company currently has five Outside Directors.",
+    "entities": [
+     "813828"
+    ],
+    "filings": [
+     "0000813828-25-000005",
+     "0001140361-25-021135"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:86b5605c565b22b03e957383b5fe0c300d621eaa2168296ec290bea9af0f59be"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:1e7ea20b7842ba957b04682765687d59d604f18c493624bd91e584f0d713b338",
+     "result_ids": [
+      "sha256:c1b278cfcd21ce0f5ac746a659ab4b1f5dc642428a29c0eab525298795d09409"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:1e7ea20b7842ba957b04682765687d59d604f18c493624bd91e584f0d713b338",
+     "result_ids": [
+      "sha256:c1b278cfcd21ce0f5ac746a659ab4b1f5dc642428a29c0eab525298795d09409"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:c1b278cfcd21ce0f5ac746a659ab4b1f5dc642428a29c0eab525298795d09409",
+    "row_hash": "sha256:86b5605c565b22b03e957383b5fe0c300d621eaa2168296ec290bea9af0f59be",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "D02",
+   "company_path": {
+    "requirement_id": "issue_54_v2",
+    "run_id": "run:historical-period:f4d8e28418bc1f4d287f37e68e4872443fb02920913400b17811ab863a2a298a",
+    "result_id": "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "The information set forth under the caption “Legal Matters” in Note 19 to the consolidated financial statements in “Item 8. Financial Statements and Supplementary Data — Notes to Consolidated Financial Statements” is incorporated herein by reference.\nIn 2024, we recorded costs for transaction-related items of $62 million associated with legal and advisory services related to the Transactions. In 2023, we recorded a benefit of $156 million, principally associated with stockholder litigation related to the 2019 merger of Viacom Inc. (“Viacom”) and CBS Corporation (“CBS”), consisting of $120 million from a settlement received in the fourth quarter of 2023, as well as insurance recoveries. In 2022, we recorded costs for transaction-related items of $211 million associated with these stockholder legal matters, including $122.5 million for a litigation settlement.\nLegal Matters\nGeneral\nOn an ongoing basis, we vigorously defend ourselves in numerous lawsuits and proceedings and respond to various investigations and inquiries from federal, state, local and international authorities (collectively, “Litigation”). Litigation may be brought against us without merit, is inherently uncertain and always difficult to predict. However, based on our understanding and evaluation of the relevant facts and circumstances, we believe that the following matters are not likely, in the aggregate, to result in a material adverse effect on our business, financial condition and results of operations.\nLitigation Relating to the Transactions\nIn connection with the Transactions, on July 24, 2024, Scott Baker, a purported holder of Class B Common Stock, filed a putative class action lawsuit in the Court of Chancery of the State of Delaware (the “Court”) against NAI, Shari E. Redstone, Barbara M. Byrne, Linda M. Griego, Judith A. McHale, Charles E. Phillips, Jr., Susan Schuman, Skydance and David Ellison (the “Baker Action”). The complaint alleges breaches of fiduciary duties to Class B stockholders in connection with the negotiation and approval of the Transaction Agreement, among other claims, and seeks unspecified damages, costs and expenses, as well as other relief. On November 4, 2024, the Court granted the parties’ stipulation in the Baker Action agreeing to (i) postpone briefing on motions to dismiss until the filing or designation of an operative complaint following the resolution of the plaintiff’s motion to appoint him and the Baerlocher Family Trust, a purported holder of Class B Common Stock, as co-lead plaintiffs and Berger Montague PC as interim class counsel (the “Baker Leadership Motion”), and (ii) stay discovery until the resolution of any motions to dismiss any operative complaint following resolution of the Baker Leadership Motion. Throughout October 2024, various purported stockholders filed motions for intervention to oppose the Baker Leadership Motion. On December 31, 2024, the plaintiff, along with Mark Baerlocher, as trustee for the Baerlocher Family Trust, filed an amended complaint alleging the same breaches of fiduciary duties against the same defendants as in the original complaint.\nFurther, on April 30, 2024, a purported holder of Class B Common Stock filed a verified complaint for the inspection of books and records under Section 220 of the General Corporation Law of the State of Delaware (the “DGCL”) in the Court against us, seeking the inspection of our books and records in order to investigate whether our Board of Directors, NAI, Shari E. Redstone and/or our executive officers may have breached their fiduciary duties to our stockholders for alleged diversion of corporate opportunities (the “220 Action”). The magistrate judge held a trial on July 24, 2024 relating to the 220 Action and denied the request for the inspection of books and records. The plaintiff in the 220 Action noticed an exception to the Court, and on January 29, 2025, the Court ruled that the plaintiff is entitled to obtain books and records that are both necessary and sufficient to fulfill the purpose of its request. On February 25, 2025, the Court granted an implementing order that returned the 220 Action to the magistrate judge for further proceedings on the scope of production. Certain other purported holders of Class B Common Stock and Class A Common Stock have delivered demand letters to investigate similar alleged breaches of fiduciary duties in connection with the Transactions and are requesting the inspection of books and records. We have also received demand letters from purported holders of Class B Common Stock related to alleged omissions in New Paramount’s registration statement on Form S-4.\nAdditionally, on August 20, 2024, LiveVideo.AI Corp. filed a lawsuit in the Southern District of New York against Shari E. Redstone, NAI, Christine Varney and Monica Seligman, alleging that defendants did not fairly consider its offer to purchase Paramount. The complaint asserts claims for unfair competition, tortious interference, unjust enrichment and aiding and abetting breach of fiduciary duty, among others, and seeks unspecified monetary damages, costs and other relief. As of the date of this Annual Report on Form 10-K, the defendants have not been served.\nOn December 30, 2024, a purported holder of Class B Common Stock and Class A Common Stock filed a complaint for the inspection of books and records under Section 220 of the DGCL (the “Section 220 Demand”) in the Court against us to investigate possible breaches of fiduciary duties in connection with the Transactions. The complaint alleges that the documents produced to such purported stockholder thus far pursuant to the Section 220 Demand are insufficient to determine whether our officers, Board of Directors, Special Committee, NAI or Skydance breached their fiduciary duties (or aided and abetted such breaches). The complaint seeks an order requiring us to produce the documents identified in the Section 220 Demand, among other relief. Trial is scheduled for April 2025.\nOn February 4, 2025, New York City Employees’ Retirement System, the New York City Fire Department Pension Fund, the New York City Police Pension Fund, the New York City Board Of Education Retirement System, and the Teachers’ Retirement System of the City of New York, purported holders of Class B Common Stock and Class A Common Stock, filed a putative class action lawsuit in the Court against Barbara M. Byrne, Linda M. Griego, Judith A. McHale and Susan Schuman, which alleges breaches of fiduciary duties for their alleged failure to sufficiently consider an alternate offer that the plaintiffs claim is superior to the Transactions (the “NYCERS Action”). The plaintiffs argue that the no-shop provision in the Transaction Agreement should be declared invalid and unenforceable because it prevents the parties from engaging in further deal discussions and negotiations with companies other than Skydance, including, specifically, Project Rise Partners, after the no-shop period begins. The plaintiffs further assert that the Court has the power to invalidate this provision because Skydance allegedly aided and abetted NAI’s and Shari E. Redstone’s breach of fiduciary duties, including by agreeing to indemnify Shari E. Redstone (through Skydance’s separate agreement with NAI) for any breach of fiduciary duty claims arising out of the Transactions up to a certain amount. Skydance, NAI, Shari E. Redstone and Paramount are not parties to the action. The NYCERS Action seeks, among other forms of relief, an order from the Court enjoining the closing of the Transactions until the Court has reached a final resolution on the plaintiffs’ claims and an order compelling the Special Committee to evaluate Project Rise Partners’ alternative offer to, among other things, acquire Class A Common Stock for $23.00 per share and Class B Common Stock for $19.00 per share. The Project Rise Partners offer was made after the go-shop period in the Transaction Agreement had ended. The complaint does not seek compensatory damages at this time. The plaintiffs filed a motion for expedited proceedings along with their complaint. On February 18, 2025, the plaintiffs moved to join Paramount and Skydance (and various other entities named in the Transaction Agreement) as necessary parties to the litigation and moved for a temporary restraining order preventing the closing of the Transactions until the Court considers the plaintiffs’ anticipated motion for injunctive relief following expedited discovery. The same day, Project Rise Partners moved the Court to grant it leave to file an affidavit under seal. Oral argument on the plaintiffs’ motion to expedite, motion for a temporary restraining order and motion for joinder, as well as Project Rise Partners’ motion for leave to file an affidavit, is scheduled for March 3, 2025.\nClaims Related to Former Businesses\nAsbestos\nWe are a defendant in lawsuits claiming various personal injuries related to asbestos and other materials, which allegedly occurred as a result of exposure caused by various products manufactured by Westinghouse, a predecessor, generally prior to the early 1970s. Westinghouse was neither a producer nor a manufacturer of asbestos. We are typically named as one of a large number of defendants in both state and federal cases. In the majority of asbestos lawsuits, the plaintiffs have not identified which of our products is the basis of a claim. Claims against us in which a product has been identified most commonly relate to allegations of exposure to asbestos-containing insulating material used in conjunction with turbines and electrical equipment.\nClaims are frequently filed and/or settled in groups, which may make the amount and timing of settlements, and the number of pending claims, subject to significant fluctuation from period to period. We do not report as pending those claims on inactive, stayed, deferred or similar dockets that some jurisdictions have established for claimants who allege minimal or no impairment. As of December 31, 2024, we had pending approximately 18,310 asbestos claims, as compared with approximately 19,970 as of December 31, 2023 and 21,580 as of December 31, 2022. During 2024, we received approximately 3,100 new claims and closed or moved to an inactive docket approximately 4,760 claims. We report claims as closed when we become aware that a dismissal order has been entered by a court or when we have reached agreement with the claimants on the material terms of a settlement. Settlement costs depend on the seriousness of the injuries that form the basis of the claims, the quality of evidence supporting the claims and other factors. Our total costs for the years 2024 and 2023 for settlement and defense of asbestos claims after insurance recoveries and net of tax were approximately $34 million and $54 million, respectively. Our costs for settlement and defense of asbestos claims may vary year to year and insurance proceeds are not always recovered in the same period as the insured portion of the expenses.\nFilings include claims for individuals suffering from mesothelioma, a rare cancer, the risk of which is allegedly increased by exposure to asbestos; lung cancer, a cancer which may be caused by various factors, one of which is alleged to be asbestos exposure; other cancers, and conditions that are substantially less serious, including claims brought on behalf of individuals who are asymptomatic as to an allegedly asbestos-related disease. A significant number of pending claims against us are non-cancer claims. It is difficult to predict long-term future asbestos liabilities, as events and circumstances may impact the estimate. We record an accrual for a loss contingency when it is both probable that a liability has been incurred and when the amount of the loss can be reasonably estimated. The reasonably estimable period for our long-term asbestos liability is 10 years, which we determined in consultation with a third-party firm with expertise in estimating asbestos liability and is due to the inherent uncertainties in the tort litigation system. Our estimated asbestos liability is based upon many factors, including the number of outstanding claims, estimated average cost per claim, the breakdown of claims by disease type, historic claim filings, costs per claim of resolution and the filing of new claims, and is assessed in consultation with the third-party firm. Based on an assessment of these factors during the fourth quarters of 2024 and 2023, we increased the accrual for asbestos matters by $57 million and $23 million, respectively, which were recorded as charges in “Restructuring, transaction-related items, and other corporate matters” on the Consolidated Statements of Operations. The increased accrual in each year was primarily the result of a lower-than-expected rate of decline in new claims. Changes in circumstances in future periods could cause our actual liabilities to be higher or lower than our current accrual. We will continue to evaluate our estimates and update our accrual as needed.\nOther\nFrom time to time, we receive claims from federal and state environmental regulatory agencies and other entities asserting that we are or may be liable for environmental cleanup costs and related damages principally relating to our historical and predecessor operations. In addition, from time to time we receive personal injury claims including toxic tort and product liability claims (other than asbestos) arising from our historical operations and predecessors. While we believe that our accruals for these matters are adequate, there can be no assurance that circumstances will not change in future periods and, as a result, our actual liabilities may be higher or lower than our accrual.",
+    "entities": [
+     "813828"
+    ],
+    "filings": [
+     "0000813828-25-000005"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:ccc3acf744b6dc9c11c25112d6b510300b9636363bc082e87aa6fae3442057cc"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:f4d8e28418bc1f4d287f37e68e4872443fb02920913400b17811ab863a2a298a",
+     "result_ids": [
+      "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:f4d8e28418bc1f4d287f37e68e4872443fb02920913400b17811ab863a2a298a",
+     "result_ids": [
+      "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd",
+    "row_hash": "sha256:ccc3acf744b6dc9c11c25112d6b510300b9636363bc082e87aa6fae3442057cc",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

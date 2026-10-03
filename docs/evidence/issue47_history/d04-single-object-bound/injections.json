@@ -1,0 +1,111 @@
+{
+ "ANY_FROZEN_REFUSAL_IS_WIDENED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_frozen_refusal_is_raised_unchanged",
+  "failed_cases": [
+   "test_another_frozen_refusal_is_raised_unchanged"
+  ],
+  "file": "scripts/vnext/historical_semantic_source.py",
+  "modules": [
+   "tests.vnext.test_historical_semantic_bound"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 29
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 27
+ },
+ "EVERY_DOCUMENT_TAKES_THE_WIDER_BOUND": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_it_is_the_frozen_grouping",
+  "failed_cases": [
+   "test_another_frozen_refusal_is_raised_unchanged",
+   "test_it_is_the_frozen_grouping"
+  ],
+  "file": "scripts/vnext/historical_semantic_source.py",
+  "modules": [
+   "tests.vnext.test_historical_semantic_bound"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 23
+ },
+ "NO_UNIT_OVER_THE_FROZEN_BOUND_IS_NAMED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_document_says_which_bound_admitted_it_and_names_the_unit",
+  "failed_cases": [
+   "test_the_document_says_which_bound_admitted_it_and_names_the_unit",
+   "test_the_grouping_rule_is_otherwise_the_frozen_one",
+   "test_the_named_unit_is_one_whole_continuation_copied_from_the_filing",
+   "test_the_request_bound_admits_it_and_refuses_one_twice_its_size"
+  ],
+  "file": "scripts/vnext/historical_semantic_source.py",
+  "modules": [
+   "tests.vnext.test_historical_semantic_bound"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 31
+ },
+ "THE_NATIVE_UNITS_KEEP_THE_FROZEN_GROUPING": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_successor_policy_changes_one_number",
+  "failed_cases": [
+   "setUpClass",
+   "test_the_successor_policy_changes_one_number"
+  ],
+  "file": "scripts/vnext/historical_semantic_source.py",
+  "modules": [
+   "tests.vnext.test_historical_semantic_bound"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 22
+ },
+ "THE_UNIT_LIMIT_IS_WIDENED_TOO": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_successor_policy_changes_one_number",
+  "failed_cases": [
+   "test_the_document_says_which_bound_admitted_it_and_names_the_unit",
+   "test_the_grouping_rule_is_otherwise_the_frozen_one",
+   "test_the_named_unit_is_one_whole_continuation_copied_from_the_filing",
+   "test_the_request_bound_admits_it_and_refuses_one_twice_its_size",
+   "test_the_successor_policy_changes_one_number"
+  ],
+  "file": "scripts/vnext/historical_semantic_source.py",
+  "modules": [
+   "tests.vnext.test_historical_semantic_bound"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 35
+ },
+ "THE_WIDER_BOUND_IS_NOT_RECORDED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_document_says_which_bound_admitted_it_and_names_the_unit",
+  "failed_cases": [
+   "test_the_document_says_which_bound_admitted_it_and_names_the_unit",
+   "test_the_grouping_rule_is_otherwise_the_frozen_one",
+   "test_the_named_unit_is_one_whole_continuation_copied_from_the_filing",
+   "test_the_request_bound_admits_it_and_refuses_one_twice_its_size"
+  ],
+  "file": "scripts/vnext/historical_semantic_source.py",
+  "modules": [
+   "tests.vnext.test_historical_semantic_bound"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 28
+ },
+ "all_caught": true
+}

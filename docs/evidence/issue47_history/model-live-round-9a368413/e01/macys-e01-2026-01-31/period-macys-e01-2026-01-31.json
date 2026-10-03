@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "macys",
+ "label": "macys-e01-2026-01-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "E01"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 23,
+    "COMPUTED": 3
+   },
+   "seconds": 24.3
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 13.1
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "E01"
+   ],
+   "seconds": 24.8
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 3,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 10.0
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "E01": {
+   "binding_id": "sha256:574c4e8820c44a02a78463d83f366717d198ccd2fe51d812d0295e47dfaf04bd",
+   "data_root": "/workspace/work/issue47-model-native-e01-default/macys-e01-2026-01-31/data-macys-e01-2026-01-31",
+   "evidence_count": 1,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:cfd2e66bf86aec1ff556980315b685bbcd05042e1f1c2ff8b94a5aa7af04fd5d",
+    "run_id": "run:historical-period:574c4e8820c44a02a78463d83f366717d198ccd2fe51d812d0295e47dfaf04bd",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:cfd2e66bf86aec1ff556980315b685bbcd05042e1f1c2ff8b94a5aa7af04fd5d",
+   "row_hash": "sha256:2cb9fa09cddcd5d09e0baae2d0ad8e409ea3e20fe1de3f80954ba9c6a2341500",
+   "run_dir": "/workspace/work/issue47-model-native-e01-default/macys-e01-2026-01-31/run-macys-e01-2026-01-31-E01",
+   "run_id": "run:historical-period:574c4e8820c44a02a78463d83f366717d198ccd2fe51d812d0295e47dfaf04bd",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:cfd2e66bf86aec1ff556980315b685bbcd05042e1f1c2ff8b94a5aa7af04fd5d",
+    "run_id": "run:historical-period:574c4e8820c44a02a78463d83f366717d198ccd2fe51d812d0295e47dfaf04bd",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "0"
+  }
+ },
+ "report_end": "2026-01-31",
+ "seconds": 72.9,
+ "selection_id": "sha256:d5d04a38c747a93004edad6985d052bffaec66702f2b896c5a51f601a49fcc32",
+ "xbrl_parses": 1
+}

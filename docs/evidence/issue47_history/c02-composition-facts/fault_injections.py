@@ -1,0 +1,582 @@
+"""Break one C02 rule at a time and require the case written for it to fail.
+
+Each injection edits ``scripts/vnext/historical_board_composition_v3.py`` in
+memory, compiles it, and runs the synthetic suite in a child process whose
+``vnext`` package searches a temporary directory holding only the edited
+module before the checkout's own package, so every other module and data file
+is the checkout's and the checkout is never written. An edit that does not
+apply exactly once, or does not compile, is reported as such and not counted.
+
+The control run - the unedited module through the same path - must pass and
+must run the whole suite. A child that loads nothing reports no failures, and
+without that check every injection would read as "missed" for a reason that
+has nothing to do with the rules (the first version of this runner copied the
+whole package, which then could not find its data files).
+
+Usage:
+    python3 docs/evidence/issue47_history/c02-composition-facts/fault_injections.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import py_compile
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[4]
+MODULE = REPO / "scripts/vnext/historical_board_composition_v3.py"
+HERE = Path(__file__).resolve().parent
+SUITE = "tests.vnext.test_historical_board_composition"
+
+INJECTIONS = [
+    ("NO_OWNER_AFTER_OTHER_DIRECTORSHIPS",
+     '        if name is None and bare_heading:\n            name = _name_after_other_directorships(blocks, j, registrant)',
+     '', 'test_a_bare_committee_heading_can_precede_other_directorships'),
+    ("TAKE_A_BARE_CARD_HEADING_AS_A_FACT",
+     '        if match:\n            taken.append((i,',
+     '        if match or bare_heading:\n            taken.append((i,',
+     'test_a_bare_committee_heading_beside_the_director_is_context'),
+    ("ANY_THREE_LINES_LABEL_OTHER_DIRECTORSHIPS",
+     '        if " ".join(heading).casefold() == "other current public directorships":',
+     '        if " ".join(heading).casefold() == "other current public directorships" or j == start + 3:',
+     'test_a_bare_committee_heading_can_precede_other_directorships'),
+    ("NO_TENURE_FOR_THE_OWNER_AFTER_OTHER_DIRECTORSHIPS",
+     'and re.match(r"^director since\\b", clean(blocks[after]["text"]), re.I)',
+     'and True', 'test_a_bare_committee_heading_can_precede_other_directorships'),
+    ("SKIP_MATRIX_MARKS_AS_LIST_BULLETS", "        if _ONE_BULLET.match(text) or not text:\n            j += 1",
+     "        if _BULLETS_ONLY.match(text):\n            j += 1", "test_a_matrix_column_of_directors_is_not_a_roster"),
+    ("READ_ANOTHER_BODY_AS_THIS_BOARD", "        if _other_organization(sentence, own_words):\n            continue\n",
+     "", "test_another_organisations_board_is_not_this_one"),
+    ("ANY_REQUIREMENT_WORD_VETOES",
+     "        if policy and (determination is None or policy.start() < determination.start()):",
+     "        if policy:", "test_a_determination_qualified_by_a_rule_is_still_a_determination"),
+    ("NO_REQUIREMENT_VETO",
+     "        if policy and (determination is None or policy.start() < determination.start()):",
+     "        if False:", "test_rules_hypotheticals_and_process_are_not_facts"),
+    ("PASS_OVER_A_PARAGRAPH_TO_A_NAME", "        if preceding or not _card_field(blocks[k]):\n            break",
+     "        if preceding:\n            break", "test_a_card_whose_director_is_not_beside_it_is_left_out"),
+    ("GIVE_A_CARD_BETWEEN_TWO_NAMES", "    if following and preceding:\n        return None\n", "",
+     "test_a_card_between_two_names_is_not_given_either"),
+    ("DROP_A_WRAPPED_CHANGE_LINE", "            if _CHANGE_LINE.match(line) or (lines and line[:1].islower()):",
+     "            if _CHANGE_LINE.match(line):", "test_dated_changes_including_a_wrapped_line"),
+    ("READ_ONLY_THE_NAMES_BESIDE_THE_LABEL", "                if count == 0:\n", "                if False:\n",
+     "test_a_member_column_laid_out_after_the_duties"),
+    ("ACCEPT_A_LETTER_IN_THE_FIRST_PERSON", "        if _FIRST_PERSON.search(sentence):\n            continue",
+     "        if False:\n            continue", "test_pay_and_letters_are_not_facts"),
+    ("LET_A_TITLE_S_PERIOD_END_THE_SENTENCE",
+     '    t = _ABBREVIATION.sub(lambda m: m.group(1).replace(".", ""), _GLUED_MARK.sub(r"\\1 ", clean(text)))', '    t = _GLUED_MARK.sub(r"\\1 ", clean(text))',
+     "test_committee_board_and_leadership_facts"),
+    ("CONTINUE_A_LEAD_IN_TO_DUTIES", "        if last and _introduces_people(last) and statement_labels(",
+     "        if last and statement_labels(", "test_a_composition_sentence_that_introduces_duties"),
+    ("IGNORE_THE_MEMBER_TAIL", "    t = _MEMBER_TAIL.sub(\"\", t)\n", "",
+     "test_member_and_chair_tails_on_signatures"),
+    ("STOP_AT_A_BLANK_BLOCK", "        if _ONE_BULLET.match(text) or not text:\n            j += 1",
+     "        if _ONE_BULLET.match(text):\n            j += 1",
+     "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it"),
+    ("INFORMATION_ENDS_A_COMMITTEE_NAME", "refreshment memberships membership functions",
+     "refreshment memberships membership information functions",
+     "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it"),
+    ("NO_SIGNATURE_LEAD_IN", "            lead = _SIGNATURE_LEAD.match(clean(block[\"text\"]))",
+     "            lead = None", "test_a_signature_under_its_lead_in"),
+    ("CARD_ITEMS_MUST_SAY_COMMITTEE", "    return committee_name(bare) or vocabulary.get(bare.casefold())",
+     "    return committee_name(bare)", "test_a_card_uses_the_filing_s_own_short_forms"),
+    ("ANY_CODE_IS_A_COMMITTEE", "    return committee_name(bare) or vocabulary.get(bare.casefold())",
+     "    return committee_name(bare) or bare", "test_a_card_uses_the_filing_s_own_short_forms"),
+    ("NONE_ON_A_NOMINEE_S_CARD",
+     "        if negative and any(_NOT_YET_DIRECTOR.match(field) for field in _card_fields(blocks, i, name[0])):",
+     "        if False:", "test_none_is_a_fact_for_a_director_and_not_for_a_nominee"),
+    ("A_DESIGNATION_NEEDS_NO_CARD",
+     "        if not (_AGE_PREFIX.match(text) or any(_CARD_EVIDENCE.match(field) for field in near)):",
+     "        if False:", "test_a_designation_on_a_card_and_not_a_table_header"),
+    ("A_TITLE_LINE_AT_ANY_BODY", "            if runs and all(_is_registrant(run, cores) for run in runs):",
+     "            if runs:", "test_a_title_line_at_this_registrant_and_not_elsewhere"),
+    ("A_FORMER_TITLE_COUNTS",
+     "            if not _TITLE_LINE_CHAIR.search(clause) or _TITLE_LINE_PAST.search(clause):",
+     "            if not _TITLE_LINE_CHAIR.search(clause):",
+     "test_a_title_line_at_this_registrant_and_not_elsewhere"),
+    ("ONE_NAME_MAKES_A_TABLE", "        if len(names) >= 2:\n            taken.extend((k, \"DIRECTOR_GROUP_MEMBER\")",
+     "        if names:\n            taken.extend((k, \"DIRECTOR_GROUP_MEMBER\")",
+     "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"),
+    # The departure note's own names, not the role note's (repair 33 printed the
+    # same line once more in _footnoted_roles).
+    ("A_FOOTNOTE_WITHOUT_ITS_NAMES", "            taken.extend((k, \"FOOTNOTED_DIRECTOR\") for k in names)\n"
+     "            taken.append((i, \"FOOTNOTED_MEMBERSHIP_CHANGE\"))\n",
+     "            taken.append((i, \"FOOTNOTED_MEMBERSHIP_CHANGE\"))\n",
+     "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark"),
+    ("A_VICE_CHAIR_IS_THE_BOARD_S", "_SOLE_CHAIR = r\"(?<!vice )(?<!vice-)chair(?:man|person|woman)?\"",
+     "_SOLE_CHAIR = _CHAIR_WORD",
+     "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s"),
+    ("ANY_POSSESSIVE_OWNS_THE_CHAIR",
+     "                or (owned and owned.group(\"owner\").casefold() in registrant)):\n            labels.add(\"BOARD_LEADERSHIP_STATEMENT\")",
+     "                or owned):\n            labels.add(\"BOARD_LEADERSHIP_STATEMENT\")",
+     "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s"),
+    ("APPOINT_ANYTHING_TO_THE_BOARD",
+     "    re.compile(r\"\\b(?:appoint|elect|add)(?:ed|ing|s)?\\s+\" + _NAME_LIST + r\"\\s*,?\\s+to (?:the|our) board\\b\", re.I),",
+     "    re.compile(r\"\\b(?:appoint|elect|add)(?:ed|ing|s)?\\s+[^.;]{0,160}?\\bto (?:the|our) board\\b\", re.I),",
+     "test_a_process_or_an_adjective_is_not_a_change"),
+    ("ANY_CAPITALISED_SPAN_IS_A_PERSON",
+     "        if (len(tokens) >= 2 and person_name(span) and not tokens[0].isupper()\n"
+     "                and re.fullmatch(\"[\" + _UPPER + \"][\" + _LOWER + \"]{2,}(?:[-'’][\" + _UPPER + \"]?[\" + _LOWER + \"]+)*\",\n"
+     "                                 tokens[-1])):",
+     "        if person_name(match.group(0)):", "test_a_person_is_named_by_an_honorific_or_a_full_name"),
+    ("AN_UNDATED_SETUP_CHANGE",
+     "r\"|constituted|reorganized)\\b[^.;]{0,60}?\\b(?:19|20)\\d{2}\\b\", re.I),",
+     "r\"|constituted|reorganized)\\b\", re.I),",
+     "test_the_statute_an_audit_committee_cites_is_not_a_setup_change"),
+    ("PAY_HIDES_WHO_CHAIRED", "        if _SERVICE_AS_CHAIR.search(sentence) and _mentions_person(sentence):",
+     "        if False:", "test_who_chaired_is_a_fact_even_where_a_fee_is_explained"),
+    ("NO_COMMITTEE_ACRONYMS", "    if not acronyms:\n        return False", "    if True:\n        return False",
+     "test_size_setup_and_determinations"),
+    # Repairs from the older-year readings (c02-selector-repairs/README.md).
+    ("A_LOWER_CASE_WORD_NAMES_A_COMMITTEE", "as (?:the |our )?(?:(?-i:[A-Z])", "as (?:the |our )?(?:[A-Z]",
+     "test_a_criterion_for_choosing_a_chair_seats_no_one"),
+    ("THE_SQUARE_BULLET_IS_NOT_A_BULLET", "◾·", "·", "test_a_roster_marked_with_each_glyph_filings_print"),
+    ("THE_MIDDLE_DOT_IS_NOT_A_BULLET", "◾·", "◾", "test_a_roster_marked_with_each_glyph_filings_print"),
+    ("A_SERIAL_COMMA_ENDS_A_LIST", 'r",\\s*(?:and\\s+)?|', 'r",\\s*|', "test_a_members_line_written_as_a_sentence"),
+    ("A_FINAL_PERIOD_ENDS_A_LIST", "_LIST_SEPARATOR.split(_LIST_END.sub(\"\", t))", "_LIST_SEPARATOR.split(t)",
+     "test_a_members_line_written_as_a_sentence"),
+    ('AN_EMPHASISED_HEADING_IS_A_CARD_ITEM', '            if blocks[j]["linked"] or blocks[j].get("emphasized") or not _card_item(text, vocabulary):', '            if blocks[j]["linked"] or not _card_item(text, vocabulary):',
+     "test_unlabelled_committees_on_the_lines_after_the_tenure"),
+    ('UNLABELLED_ITEMS_NEED_NO_DIRECTOR', '        if name is None:\n            continue\n        taken.extend((k, "DIRECTOR_COMMITTEE_ITEM") for k in items)', '        taken.extend((k, "DIRECTOR_COMMITTEE_ITEM") for k in items)\n        if name is None:\n            continue',
+     "test_unlabelled_committees_on_the_lines_after_the_tenure"),
+    ('UNLABELLED_CARD_ITEMS_UNREAD', '*_unlabelled_card_items(blocks, vocabulary, registrant), ', '',
+     "test_unlabelled_committees_on_the_lines_after_the_tenure"),
+    ('NICKNAMES_STAY_IN_THE_NAME', '    t = _NICKNAME.sub("", _BULLET.sub("", clean(text)))', '    t = _BULLET.sub("", clean(text))',
+     "test_a_quoted_nickname_between_the_names"),
+    ('ANY_QUOTED_WORD_IS_A_NICKNAME', '\\\\))(?=\\\\s+\\\\S)")', '\\\\))")',
+     "test_a_quoted_nickname_between_the_names"),
+    ('MANAGEMENT_SEATS_A_BOARD_COMMITTEE', '\n                and not _MANAGEMENT_MEMBERS.search(sentence) and not', '\n                and not',
+     "test_a_committee_of_management_is_not_the_board_s"),
+    ('ANY_WORDS_OPEN_THE_MEMBER_LIST', "|(?-i:[A-Z])[\\w&’'\\-]*\\s+){0,6}", '|\\w+\\s+){0,6}',
+     "test_a_committee_of_management_is_not_the_board_s"),
+    # Repair 7: whether the chair and the chief executive are one person.
+    ('THE_CHAIR_CEO_STRUCTURE_STATES_NOTHING',
+     '        if (_CHAIR_CEO_STRUCTURE.search(sentence) and not _BOTH_STRUCTURES.search(sentence)\n'
+     '                and not _STRUCTURE_POLICY.search(sentence)):\n'
+     '            labels.add("BOARD_LEADERSHIP_STATEMENT")\n', '',
+     "test_whether_the_chair_and_the_chief_executive_are_one_person"),
+    ('NAMING_BOTH_CHOICES_STATES_A_STRUCTURE', ' and not _BOTH_STRUCTURES.search(sentence)\n', '\n',
+     "test_a_choice_a_policy_or_a_proposal_states_no_structure"),
+    ('A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE', '\n                and not _STRUCTURE_POLICY.search(sentence)):', '):',
+     "test_a_choice_a_policy_or_a_proposal_states_no_structure"),
+    # Repair 8: a classified board's slate is not its size.
+    ('A_CLASSIFIED_BOARD_STILL_COUNTS_ITS_SLATE', '*(() if classified else _SLATE_SIZE)', '*_SLATE_SIZE',
+     "test_on_a_classified_board_the_slate_is_not_the_board_s_size"),
+    ('NO_FILING_IS_CLASSIFIED',
+     '    classified = any(_CLASSIFIED.search(block["text"]) for block in blocks if not block["linked"])',
+     '    classified = False', "test_the_filing_says_whether_its_board_is_classified"),
+    ('HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE', '(?:(?!\\bnominat|\\belect|\\bpropos)[^.;]){0,30}?', '[^.;]{0,30}?',
+     "test_on_a_classified_board_the_slate_is_not_the_board_s_size"),    # Repair 9: a director-group heading is not taken.
+    ('THE_GROUP_HEADING_IS_TAKEN_AGAIN', '            taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)',
+     '            taken.append((i, "DIRECTOR_GROUP_HEADING"))\n'
+     '            taken.extend((k, "DIRECTOR_GROUP_MEMBER") for k in names)',
+     "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"),
+    # Repair 10: a slate of sitting directors.
+    ('A_SITTING_SLATE_STATES_NOTHING', ' or _SITTING_SLATE.search(sentence)', '',
+     "test_a_slate_of_sitting_directors_says_who_the_members_are"),
+    ('ANOTHER_BOARD_SEATS_THE_SLATE', '(?:\\s+of\\s+directors)?(?!\\s+of\\b)|directors?\\b(?!\\s+of\\b))',
+     '|directors?\\b)', "test_a_slate_of_sitting_directors_says_who_the_members_are"),
+    # Repair 11: a task force of named directors.
+    ('A_TASK_FORCE_STATES_NOTHING', '        if _TASK_FORCE_MEMBERS.search(sentence) and _mentions_person(sentence):\n'
+     '            labels.add("COMMITTEE_COMPOSITION_STATEMENT")\n', '',
+     "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
+    ('A_TASK_FORCE_TITLE_IS_NOT_TAKEN', '*_task_force_titles(blocks), *_signed_reports(',
+     '*_signed_reports(',
+     "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
+    ('ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS', ' and title.casefold() in \\\n'
+     '                    clean(block["text"]).casefold():', ':', "test_a_task_force_of_named_directors_is_a_body_of_the_board"),
+    # Repair 12: the board's size on a past date, printed with attendance.
+    ('A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE', ' or _THEN_CURRENT_MEMBERS.search(sentence)', '',
+     "test_the_board_s_size_on_a_past_date_wherever_it_is_printed"),
+    # Repair 37: the board's size where attendance at its meeting is reported.
+    ('A_THEN_SERVING_COUNT_IS_SET_ASIDE', '\n'
+     '                                   # "All 13 directors then serving attended the Company\'s 2021\n'
+     '                                   # annual meeting" (Marriott\'s proxies).\n'
+     '                                   r"|\\ball\\s+" + _NUM + r"\\s+directors\\s+then\\s+serving\\b", re.I)',
+     ', re.I)', "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    ('A_NOMINATED_COUNT_IS_SET_ASIDE', '        if _ALL_NOMINATED_DIRECTORS.search(sentence) and not classified:\n'
+     '            labels.add("BOARD_SIZE_STATEMENT")\n', '',
+     "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    ('A_CLASS_S_NOMINEES_ARE_THE_BOARD', '_ALL_NOMINATED_DIRECTORS.search(sentence) and not classified:',
+     '_ALL_NOMINATED_DIRECTORS.search(sentence):', "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    ('ANY_COUNT_AFTER_ALL_IS_A_SIZE', 'r"|\\ball\\s+" + _NUM + r"\\s+directors\\s+then\\s+serving\\b"',
+     'r"|\\ball\\b[^.;]{0,20}?\\b" + _NUM + r"\\b[^.;]{0,40}?\\b(?:directors|members)\\b"',
+     "test_the_board_s_size_where_attendance_at_its_meeting_is_reported"),
+    # Repair 38: 'having <person> as our Executive Chair' names the holder.
+    ('HAVING_A_CHAIR_IS_NOT_READ', '        if _HAVING_AS_CHAIR.search(sentence) and _mentions_person(sentence):\n'
+     '            labels.add("BOARD_LEADERSHIP_STATEMENT")\n', '', "test_having_a_named_director_as_our_chair"),
+    ('A_HAVING_HOLDER_NEED_NOT_BE_NAMED', '_HAVING_AS_CHAIR.search(sentence) and _mentions_person(sentence):',
+     '_HAVING_AS_CHAIR.search(sentence):', "test_having_a_named_director_as_our_chair"),
+    ('A_HAVING_COMMITTEE_CHAIR_IS_THE_BOARD_S', '_SOLE_CHAIR\n'
+     '                              + r"\\b(?!\\s+of\\s+(?:the|our|its)\\s+[^.;]{0,60}\\bcommittee)", re.I)',
+     '_SOLE_CHAIR\n                              + r"\\b", re.I)', "test_having_a_named_director_as_our_chair"),
+    # Repair 39: Lumen's legacy deferred-pay paragraph.
+    ('COMMON_SHARES_IS_A_NAME', 'cash stock shares awards', 'cash stock awards',
+     "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained"),
+    ('A_DEPARTURE_AT_A_MEETING_IS_NOT_READ', '        departures += [match.group("date") for pattern in _DEPARTURE_AT_A_MEETING for match in pattern.finditer(sentence)]\n', '',
+     "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained"),
+    ('A_MEETING_DEPARTURE_IS_ALWAYS_THIS_YEAR', 'match.group("date") for pattern in _DEPARTURE_AT_A_MEETING',
+     'str(period_start.year) for pattern in _DEPARTURE_AT_A_MEETING',
+     "test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained"),
+    ('A_DATED_JOIN_COUNTS_IN_ANY_YEAR', 'undated = _DATED_JOIN.sub(" ", sentence) if joins else sentence',
+     'undated = sentence', "test_a_join_dated_before_the_year_is_tenure"),
+    ('AN_IN_YEAR_JOIN_STATES_NOTHING',
+     'if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):',
+     'if False:', "test_a_join_dated_in_the_year_is_a_change"),
+    ('A_JOIN_IN_A_PAY_SENTENCE_IS_SET_ASIDE',
+     'if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence):',
+     'if any(not _joined_before(date, period_start) for date in joins) and _mentions_person(sentence) '
+     'and not _EXCLUDED_TOPIC.search(sentence):', "test_a_join_dated_in_the_year_is_a_change"),
+    ('A_PRINTED_DAY_IS_IGNORED', '    return dt.date(year, number, int(day.group(1))) < start',
+     '    return (year, number) < (start.year, start.month)', "test_a_join_is_dated_as_precisely_as_it_is_printed"),
+    ('A_MONTH_ALONE_IS_PLACED_AT_ITS_START', '        return (year, number) < (start.year, start.month)',
+     '        return (year, number) <= (start.year, start.month)',
+     "test_a_join_is_dated_as_precisely_as_it_is_printed"),
+    ('A_NOUN_FORM_JOIN_IS_NOT_DATED',
+     '    r"|(?:appointment|election) to (?:the|our) board(?: of directors)?\\s+(?:on|in|effective))\\s+(?:the\\s+)?"',
+     '    r")\\s+(?:the\\s+)?"', "test_a_join_written_as_a_noun_is_dated_too"),
+    ('TAKING_OVER_A_COMMITTEE_CHAIR_IS_NOT_READ',
+     '               r"chair(?:man|person|woman)?\\s+of\\s+(?:the|our|its)\\b[^.;]{0,60}\\bcommittee\\b", re.I),\n    # A committee\'s chair changing hands',
+     '               r"chair(?:man|person|woman)?\\s+of\\s+(?:the|our|its)\\b[^.;]{0,60}\\bcommittee\\bNEVER", re.I),\n    # A committee\'s chair changing hands',
+     "test_taking_over_a_chair_or_the_lead_role"),
+    ('TAKING_OVER_THE_LEAD_ROLE_IS_NOT_READ',
+     '               + r"|presiding (?:independent )?director)\\b", re.I),\n)',
+     '               + r"|presiding (?:independent )?director)\\bNEVER", re.I),\n)',
+     "test_taking_over_a_chair_or_the_lead_role"),
+    ('THE_JOIN_REACH_IS_SIXTY', 'r"\\b(?:has served as (?:[^.;]{0,80}?\\b)?', 'r"\\b(?:has served as (?:[^.;]{0,60}?\\b)?',
+     "test_a_long_title_before_the_join"),
+    ('ANY_TARGET_YEAR_IS_ACCEPTED', '        raise ValueError("C02_COMPOSITION_PERIOD_START_INVALID:" + repr(period_start)) from None',
+     '        start = dt.date(1900, 1, 1)', "test_the_target_year_is_a_date_and_the_proposal_names_it"),
+    ('A_TERM_ENDING_IS_NOT_READ', 'r"\\s+(?:will\\s+)?(?:end(?:ed|s)?|expire[sd]?)\\b[^.;]{0,80}?\\b(?:annual(?:\\s+(?:general"', 'r"\\s+(?:will\\s+)?(?:end(?:ed|s)?|expire[sd]?)\\bNEVER[^.;]{0,80}?\\b(?:annual(?:\\s+(?:general"',
+     'test_a_named_director_s_term_ending_at_a_meeting'),
+    ('A_TERM_OF_ANYTHING_IS_A_PERSONS', '\\bterms?(?:\\s+of\\s+office)?\\s+of\\s+(?:mr|ms|mrs|dr|messrs|mses)\\b[^.;]{0,120}?', '\\bterms?(?:\\s+of\\s+office)?\\s+of\\s+[^.;]{0,120}?',
+     'test_a_named_director_s_term_ending_at_a_meeting'),
+    ('A_GLUED_MARK_HIDES_THE_PERSON', '_GLUED_MARK.sub(r"\\1 ", clean(text))', 'clean(text)',
+     'test_a_footnote_number_printed_against_the_honorific'),
+    ('AN_AMOUNT_IS_A_MARK', '(?<![\\w$.,])(\\d{1,2})', '(?<![\\w])(\\d{1,2})',
+     'test_a_footnote_number_printed_against_the_honorific'),
+    ('A_LINKED_STATEMENT_IS_NAVIGATION', '        if not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(', '        if block["linked"] or not re.search(r"[A-Za-z]", text) or re.sub(r"\\W", "", text.casefold()) in registrant:\n            continue\n        labels = statement_labels(',
+     'test_a_statement_carrying_a_cross_reference_is_read'),
+    # Repair 47 made blank blocks free for every reach, and the committee
+    # label's own allowance for lone glyphs (repair 19) moved nothing on the 49
+    # documents (variant measured before removing it), so it was removed.
+    ('SPACER_BLOCKS_COUNT', 'if text and not _LIST_ENTRY.match(text):', 'if not _LIST_ENTRY.match(text):',
+     'test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach'),
+    ('LONE_GLYPHS_ARE_FREE', 'if text and not _LIST_ENTRY.match(text):',
+     'if text and not _LIST_ENTRY.match(text) and not _ONE_BULLET.match(text):',
+     'test_a_designation_s_reach_still_counts_every_block'),
+    ('A_CHARTER_SET_IS_NOT_READ', 'if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)) or _committee_set(sentence):', 'if any(p.search(sentence) for p in (*_STANDING, *_COMMITTEE_SETUP)):',
+     'test_the_committees_named_together_on_their_charters'),
+    ('COMMITTEE_WORDS_COUNT_AS_COMMITTEES', 'len({m.group(1) for m in _LISTED_COMMITTEE.finditer(listed.group("list"))}) >= 3', 'len(re.findall(r"(?i)\\bcommittees?\\b", listed.group("list"))) >= 3',
+     'test_the_committees_named_together_on_their_charters'),
+    ('A_RENAME_COUNTS_AS_A_SET', '    return (bool(listed) and not _RENAME.search(sentence)\n', '    return (bool(listed)\n',
+     'test_the_committees_named_together_on_their_charters'),
+    ('A_RENAME_IS_NOT_READ', '    re.compile(r"\\bcommittee\\s+changed\\s+its\\s+name\\s+to\\s+(?:the\\s+)?[^.;]{0,80}?\\bcommittee\\b", re.I),\n', '    re.compile(r"(?!x)x", re.I),\n',
+     'test_a_committee_that_changed_its_name'),
+    ('A_RENAMED_PLAN_IS_A_COMMITTEE', '    re.compile(r"\\bcommittee\\s+changed\\s+its\\s+name\\s+to\\s+(?:the\\s+)?[^.;]{0,80}?\\bcommittee\\b", re.I),\n', '    re.compile(r"\\bchanged\\s+its\\s+name\\b|\\brenamed\\b", re.I),\n',
+     'test_a_committee_that_changed_its_name'),
+    ('A_NAMED_FAMILY_MEMBER_IS_A_STANDARD', '        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)\n', '        family = _FAMILY.search(unqualified)\n',
+     'test_a_named_family_member_is_not_an_independence_standard'),
+    ('A_FAMILY_MEMBER_IS_NEVER_A_STANDARD', '        family = None if _mentions_person(sentence) else _FAMILY.search(unqualified)\n', '        family = None\n',
+     'test_a_named_family_member_is_not_an_independence_standard'),
+    ('A_NAMED_SETUP_IS_NOT_READ', '    re.compile(r"\\b(?:board(?: of directors)?|committee)\\s+(?:(?:also|has|had|then|recently|subsequently)\\s+)*"\n', '    re.compile(r"(?!x)x"\n',
+     'test_a_committee_the_board_set_up_under_its_own_name'),
+    ('ANY_SUBJECT_SETS_UP_A_NAMED_COMMITTEE', '    re.compile(r"\\b(?:board(?: of directors)?|committee)\\s+(?:(?:also|has|had|then|recently|subsequently)\\s+)*"\n', '    re.compile(r"\\b"\n',
+     'test_a_committee_the_board_set_up_under_its_own_name'),
+    ('A_CLAUSE_IS_A_NAME', '               r"(?:(?!(?:and|or|of|the|to|with|for|by|on|in|at|its|our|their|that|which|who)\\b)[\\w&’\'\\-]+\\s+){1,6}"\n', '               r"(?:[\\w&’\'\\-]+\\s+){1,6}"\n',
+     'test_a_committee_the_board_set_up_under_its_own_name'),
+    ('A_SEARCH_STEP_IS_COMPOSITION', '                and not _MANAGEMENT_MEMBERS.search(sentence) and not _FORMED_EACH_TIME.search(sentence)):\n', '                and not _MANAGEMENT_MEMBERS.search(sentence)):\n',
+     'test_a_committee_formed_for_each_search_is_a_step'),
+    ('A_PAST_FORMATION_IS_A_STEP', '    r"\\b(?:forms|convenes|creates|establishes|appoints|(?:will|may|would)\\s+(?:form|convene|create|establish"\n', '    r"\\b(?:formed|forms|convenes|creates|establishes|appoints|(?:will|may|would)\\s+(?:form|convene|create|establish"\n',
+     'test_a_committee_formed_for_each_search_is_a_step'),
+    ('BECAME_TAKES_NO_ROLE', '    r"\\b(?:" + _LEADERSHIP_VERB + r"\\b[^.;]{0,40}\\bas|became)\\s+(?P<owner>(?-i:[A-Z])[\\w&\\-]*)[\'’]s\\s+"\n', '    r"\\b(?:" + _LEADERSHIP_VERB + r"\\b[^.;]{0,40}\\bas)\\s+(?P<owner>(?-i:[A-Z])[\\w&\\-]*)[\'’]s\\s+"\n',
+     'test_a_role_taken_up_with_became'),
+    ('BECAME_ANY_OWNERS_CHAIR', '                or (owned and owned.group("owner").casefold() in registrant)):\n', '                or owned):\n',
+     'test_a_role_taken_up_with_became'),
+    ('BECAME_A_COMMITTEE_CHAIR_IS_NOT_READ', '               r"|designated(?: as)?|elected(?: as)?|became)\\s+(?:the\\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"\n', '               r"|designated(?: as)?|elected(?: as)?)\\s+(?:the\\s+)?(?:chair(?:man|person|woman)?|vice[- ]chair)"\n',
+     'test_a_role_taken_up_with_became'),
+    ('A_DATED_DEPARTURE_IS_NOT_READ', '        departures = [match.group("date") for match in _DATED_DEPARTURE.finditer(sentence)]\n',
+     '        departures = []\n',
+     'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
+    ('A_DEPARTURE_BEFORE_THE_YEAR_COUNTS', '        if any(not _joined_before(date, period_start) for date in departures) and _mentions_person(sentence):\n', '        if departures and _mentions_person(sentence):\n',
+     'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
+    ('AN_OFFICER_S_DEPARTURE_IS_THE_BOARD_S', '    r"\\bceased (?:serving|to serve) (?:as (?:a )?(?:director|member) )?on (?:the|our) board(?: of directors)?\\b"\n', '    r"\\bceased (?:serving|to serve)\\b"\n',
+     'test_a_departure_dated_in_the_year_is_a_change_wherever_printed'),
+    ('AN_APPOINTMENT_WITH_AN_OFFICE_IS_NOT_READ', '        if _APPOINTED_A_MEMBER.search(sentence) and _mentions_person(sentence):\n            dates = [match.group(0) for match in _PRINTED_DATE.finditer(sentence)]\n            if not dates or any(not _joined_before(date, period_start) for date in dates):\n                labels.add("BOARD_MEMBERSHIP_CHANGE")\n', '',
+     'test_appointed_with_an_office_and_as_a_member_of_the_board'),
+    ('AN_APPOINTMENT_BEFORE_THE_YEAR_COUNTS', '            if not dates or any(not _joined_before(date, period_start) for date in dates):\n', '            if True:\n',
+     'test_appointed_with_an_office_and_as_a_member_of_the_board'),
+    ('ANY_DATED_APPOINTMENT_IS_TENURE', '            if not dates or any(not _joined_before(date, period_start) for date in dates):\n', '            if not dates:\n',
+     'test_appointed_with_an_office_and_as_a_member_of_the_board'),
+    ('ANOTHER_COMPANY_S_MEETING_IS_THIS_BOARD_S', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z][\\\\w&\\\\-]+)(?:\\\\s+[A-Z][\\\\w&\\\\-]+)*[’\']s\\\\s+"\n                             "(?:[Aa]nnual|[Ss]pecial)\\\\s+[Mm]eetings?\\\\b", sentence):\n        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n', '',
+     'test_standing_down_at_another_company_s_meeting'),
+    # Repair 35 put the "where" check after this loop, so the target ends at it.
+    ('THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S', '        if match.group(1).casefold() not in {"company", "board"} | own_words:\n            return True\n    # The body a', '        if match.group(1).casefold() not in {"board"}:\n            return True\n    # The body a',
+     'test_standing_down_at_another_company_s_meeting'),
+    ('THE_ARTICLE_NAMES_THE_COMPANY', '    for match in re.finditer("\\\\b(?:[Tt]he\\\\s+)?([A-Z]', '    for match in re.finditer("\\\\b([A-Z]',
+     'test_standing_down_at_another_company_s_meeting'),
+    # Repair 29: "There were no changes to Committee compositions in 2022."
+    ('NO_CHANGE_TO_THE_COMMITTEES_IS_NOT_READ',
+     '        if stable and not _joined_before(stable.group("date"), period_start):\n'
+     '            labels.add("COMMITTEE_COMPOSITION_STATEMENT")\n',
+     '', 'test_no_change_to_the_committees_in_the_year'),
+    ('AN_EARLIER_YEAR_S_STABILITY_COUNTS',
+     '        if stable and not _joined_before(stable.group("date"), period_start):',
+     '        if stable:', 'test_no_change_to_the_committees_in_the_year'),
+    # Repair 30: "J.W. Marriott, Jr. (Chair), Anthony G. Capuano, ..."
+    ('JOINED_INITIALS_ARE_NOT_A_NAME',
+     '        if _JOINED_INITIALS.match(token) and position == len(tokens) - 2:\n            continue\n', '',
+     'test_two_initials_printed_together_before_the_surname'),
+    ('JOINED_INITIALS_ANYWHERE',
+     '        if _JOINED_INITIALS.match(token) and position == len(tokens) - 2:',
+     '        if _JOINED_INITIALS.match(token):', 'test_two_initials_printed_together_before_the_surname'),
+    ('A_SUFFIX_IS_A_NAME_OF_ITS_OWN',
+     '        if parts and _SUFFIX_ITEM.match(part) and len(parts[-1].split()) >= 2:\n'
+     '            parts[-1] += ", " + part\n        else:\n            parts.append(part)\n',
+     '        parts.append(part)\n', 'test_a_suffix_after_a_comma_ends_the_name_before_it'),
+    ('A_SUFFIX_JOINS_A_SURNAME_ALONE',
+     '        if parts and _SUFFIX_ITEM.match(part) and len(parts[-1].split()) >= 2:',
+     '        if parts and _SUFFIX_ITEM.match(part):', 'test_a_suffix_after_a_comma_ends_the_name_before_it'),
+    # Repair 31: "Chair:" on a line of its own, the chair's name after it.
+    ('A_CHAIR_LABEL_ALONE_IS_NOT_READ',
+     '            if _CHAIR_LABEL.match(text):\n'
+     '                run, count, end = _roster_run(blocks, k + 1, stop, registrant)\n'
+     '                if count:\n'
+     '                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))\n'
+     '                    found.extend((j, "COMMITTEE_CHAIR_NAME" if label == "COMMITTEE_MEMBER_NAME" else label)\n'
+     '                                 for j, label in run)\n'
+     '                    k = end\n'
+     '                    continue\n', '', 'test_a_chair_label_on_a_line_of_its_own'),
+    ('A_CHAIR_LABEL_WITH_NO_NAME_COUNTS',
+     '                if count:\n                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))',
+     '                if True:\n                    found.append((k, "COMMITTEE_CHAIR_DESIGNATION"))',
+     'test_a_chair_label_on_a_line_of_its_own'),
+    ('THE_LABELLED_CHAIR_IS_A_MEMBER',
+     '"COMMITTEE_CHAIR_NAME" if label == "COMMITTEE_MEMBER_NAME" else label)', 'label)',
+     'test_a_chair_label_on_a_line_of_its_own'),
+    # Repair 32: "Our Board has a Lead Independent Director, Mr. Gomo, ..."
+    ('A_LEAD_DIRECTOR_INTRODUCED_WITH_A_IS_NOT_READ',
+     '    re.compile(r"\\b(?:our|the|a)\\s+(?:independent', '    re.compile(r"\\b(?:our|the)\\s+(?:independent',
+     'test_a_board_that_has_a_lead_director_names_the_holder'),
+    ('A_LOWER_CASE_WORD_AFTER_THE_COMMA_IS_A_HOLDER',
+     'r" board|" + _LEAD_ROLE + r")\\s*,\\s*(?:(?:mr|ms|mrs|dr)\\s+)?(?-i:[A-Z][a-z])", re.I),',
+     'r" board|" + _LEAD_ROLE + r")\\s*,\\s*(?:(?:mr|ms|mrs|dr)\\s+)?[A-Z][a-z]", re.I),',
+     'test_a_board_that_has_a_lead_director_names_the_holder'),
+    # Repair 33: "Steven J. Gomo(2)" ... "(2)Chair of the Audit Committee".
+    ('A_ROLE_NOTE_IS_NOT_READ', ' *_footnoted_roles(blocks, registrant),\n', '\n',
+     'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
+    ('A_ROLE_NOTE_WITHOUT_NAMES_IS_TAKEN',
+     '        if names:\n            taken.extend((k, "FOOTNOTED_DIRECTOR") for k in names)\n'
+     '            taken.append((i, "FOOTNOTED_COMMITTEE_ROLE"))',
+     '        if True:\n            taken.extend((k, "FOOTNOTED_DIRECTOR") for k in names)\n'
+     '            taken.append((i, "FOOTNOTED_COMMITTEE_ROLE"))',
+     'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
+    ('A_NAME_CITING_ANOTHER_MARK_IS_THE_NOTE_S',
+     '                 if match.group("mark") in _NAME_MARKS.findall(clean(blocks[k]["text"]))',
+     '                 if _NAME_MARKS.findall(clean(blocks[k]["text"]))',
+     'test_a_table_s_names_and_the_notes_that_give_their_committee_roles'),
+    # Repair 34: "... was eligible for the following cash compensation for Board services."
+    ('PAY_ELIGIBILITY_IS_A_QUALIFICATION',
+     'r"|\\beligible\\s+for\\b[^.;]{0,40}?\\bcompensation\\b"', 'r""',
+     'test_who_is_eligible_for_pay_is_not_a_qualification'),
+    # Repair 35: "... and the Consumer Goods Forum, where he served on the board of directors".
+    # (Repair 36's check now follows this one, so the targets end at its comment.)
+    ('A_WHERE_CLAUSE_BODY_IS_THIS_BOARD',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    # A company named',
+     '    # A company named',
+     'test_a_board_a_where_clause_is_about_is_that_body_s'),
+    ('THE_REGISTRANT_BEFORE_WHERE_IS_ANOTHER_BODY',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    # A company named',
+     '    if match:\n        return True\n    # A company named',
+     'test_a_board_a_where_clause_is_about_is_that_body_s'),
+    # Repair 36: "Cineverse Corporation (Chairman of the Audit Committee, and serves on ...)".
+    ('A_COMPANY_S_ROLES_ARE_THIS_BOARD_S',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     '    match = re.search("\\\\b[Aa]t',
+     'test_a_company_named_with_the_roles_held_there'),
+    ('THE_REGISTRANT_WITH_ROLES_IS_ANOTHER_BODY',
+     '    if match and match.group(1).casefold() not in own_words:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     '    if match:\n        return True\n    match = re.search("\\\\b[Aa]t',
+     'test_a_company_named_with_the_roles_held_there'),
+    # Repair 40: Macy's committee reports signed under "Respectfully submitted,".
+    ('THE_REPORT_SIGNATURES_ARE_NOT_READ', '*_task_force_titles(blocks), *_signed_reports(blocks, registrant)):',
+     '*_task_force_titles(blocks)):', "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('A_SIGN_OFF_NEED_NOT_FOLLOW_A_NAMED_COMMITTEE',
+     '        if not lead or committee_name(lead.group("name")) is None:\n            continue\n', '',
+     "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('THE_COMMITTEE_NAME_IS_NOT_CHECKED', 'if not lead or committee_name(lead.group("name")) is None:',
+     'if not lead:', "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('A_LONE_SIGNATURE_IS_A_ROSTER',
+     'if count >= 2 or (count and any(label == "COMMITTEE_CHAIR_NAME" for _, label in run)):',
+     'if count:', "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    ('THE_SIGN_OFF_IS_TAKEN', '            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))\n',
+     '            taken.append((i - 1, "REPORT_SIGNERS_COMMITTEE"))\n            taken.append((i, "REPORT_SIGNERS_COMMITTEE"))\n',
+     "test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee"),
+    # Repair 41: "Rotated NCG Committee Chair at 2020 annual meeting".
+    ('A_ROTATED_CHAIR_IS_NOT_READ', 'committee\\\\s+chair\\\\s+at\\\\s+"', 'committee\\\\s+chairNEVER\\\\s+at\\\\s+"',
+     "test_a_committee_chair_rotated_at_a_dated_meeting"),
+    ('A_ROTATION_NEED_NOT_BE_AT_A_MEETING',
+     'committee\\\\s+chair\\\\s+at\\\\s+"\n               "(?:the\\\\s+|our\\\\s+)?(?:19|20)\\\\d\\\\d\\\\s+annual\\\\s+meeting\\\\b"',
+     'committee\\\\s+chair\\\\b"', "test_a_committee_chair_rotated_at_a_dated_meeting"),
+    ('A_ROTATED_CHAIR_NEED_NOT_NAME_A_COMMITTEE', '(?:(?-i:[A-Z])[\\\\w&’\'\\\\-]*\\\\s+){1,6}committee\\\\s+chair',
+     '(?:[\\\\w&’\'\\\\-]*\\\\s+){1,6}committee\\\\s+chair', "test_a_committee_chair_rotated_at_a_dated_meeting"),
+    # Repair 42: "the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks".
+    ('AN_OFFICER_RETIREMENT_IS_NOT_READ',
+     '        departures += [match.group("date") for match in _OFFICER_RETIREMENT.finditer(sentence)]\n', '',
+     "test_our_vice_chairman_s_retirement_dated_in_the_year"),
+    ('AN_OFFICER_RETIREMENT_IS_ALWAYS_THIS_YEAR', 'match.group("date") for match in _OFFICER_RETIREMENT',
+     'str(period_start.year) for match in _OFFICER_RETIREMENT', "test_our_vice_chairman_s_retirement_dated_in_the_year"),
+    ('ANY_VICE_CHAIRMAN_IS_OURS', 'of\\s+our\\s+(?:former\\s+)?vice', 'of\\s+(?:our|the)\\s+(?:former\\s+)?vice',
+     "test_our_vice_chairman_s_retirement_dated_in_the_year"),
+    # Repair 43: the board's size a proxy-access limit is based on.
+    ('THE_PROXY_ACCESS_COUNT_IS_VETOED',
+     '        if _CONSTITUTING_THE_BOARD.search(sentence):\n            labels.add("BOARD_SIZE_STATEMENT")\n', '',
+     "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"),
+    ('ANY_BOARD_S_COUNT_IS_OURS', 'constituting\\s+our\\s+board', 'constituting\\s+(?:our|the)\\s+board',
+     "test_the_board_s_size_on_which_a_proxy_access_limit_is_based"),
+    # Repair 44: "having served on our Board and its M&A Committee".
+    ('HAVING_SERVED_IS_A_MEMBERSHIP', 're.compile(r"(?<!\\bhaving\\s)\\b(?:served|serve', 're.compile(r"\\b(?:served|serve',
+     "test_having_served_on_a_committee_is_a_qualification"),
+    # Repair 45: the external auditor's independence (#28's JPMorgan counterexample).
+    ('THE_EXTERNAL_AUDITOR_IS_A_DIRECTOR', '|independent (?:(?:external|outside) )?(?:auditors?"',
+     '|independent (?:auditors?"', "test_the_external_auditor_s_independence_is_not_the_members"),
+    ('ONLY_THE_REGISTERED_FIRM_IS_THE_AUDITOR', 'r"independent (?:registered )?public accounting firm|',
+     'r"independent registered public accounting firm|',
+     "test_the_external_auditor_s_independence_is_not_the_members"),
+    ('ANY_INDEPENDENT_IS_THE_AUDITOR', 'r"independent (?:registered )?public accounting firm|',
+     'r"independent\\b|independent (?:registered )?public accounting firm|',
+     "test_the_external_auditor_s_independence_is_not_the_members"),
+    # Repair 46: a members clause names members or their status (#28's JPMorgan block 3436).
+    # Repair 48 rewrote the clause's reading, so the first, fifth, sixth and
+    # seventh target its new lines; the semicolon and auditor steps the third
+    # and fourth broke are gone (README section 48).
+    ('ANY_MEMBERS_CLAUSE_IS_COMPOSITION', '        rest = sentence[match.end():]\n',
+     '        return True\n        rest = sentence[match.end():]\n', "test_a_members_clause_names_members_or_a_status"),
+    ('THE_MEMBERS_CLAUSE_IS_NOT_READ', ' or _members_are(sentence)\n             or _acronym_service',
+     '\n             or _acronym_service', "test_a_members_clause_names_members_or_a_status"),
+    ('A_NAMED_MEMBER_IS_NOT_ENOUGH',
+     '        if _HONORIFIC_OPEN.match(first) or person_name(first):\n            return True\n', '',
+     "test_a_members_clause_names_members_or_a_status"),
+    ('NOT_BEING_AN_EMPLOYEE_IS_NO_STATUS', ' or _NOT_EMPLOYED.match(complement):', ':',
+     "test_a_members_clause_names_members_or_a_status"),
+    ('ONLY_NAMES_AND_EMPLOYMENT_ARE_STATUSES',
+     '        if _QUALIFICATION.match(_EXPERT_TERM.sub("", complement)) or _NOT_EMPLOYED.match(complement):',
+     '        if _NOT_EMPLOYED.match(complement):', "test_a_members_clause_names_members_or_a_status"),
+    # Repair 48: the members or their status open the complement, and a short
+    # surname is a surname (#28's review ee28995, Issue #47 comment 5958422081).
+    ('A_STATUS_ANYWHERE_IN_THE_CLAUSE',
+     '        if _QUALIFICATION.match(_EXPERT_TERM.sub("", complement)) or _NOT_EMPLOYED.match(complement):',
+     '        if _QUALIFICATION.search(complement) or _NOT_EMPLOYED.search(complement):',
+     "test_a_members_clause_opens_with_the_members_or_their_status"),
+    ('A_PERSON_ANYWHERE_IN_THE_CLAUSE', '        if _HONORIFIC_OPEN.match(first) or person_name(first):',
+     '        if _mentions_person(complement):', "test_a_members_clause_opens_with_the_members_or_their_status"),
+    ('A_SURNAME_NEEDS_THREE_LETTERS', '        if _HONORIFIC_OPEN.match(first) or person_name(first):',
+     '        if _HONORIFIC_OPEN.match(first) or (person_name(first) and _mentions_person(first)):',
+     "test_a_members_clause_opens_with_the_members_or_their_status"),
+    ('NOTHING_MAY_COME_BEFORE_THE_MEMBERS',
+     '_COMPLEMENT_LEAD = re.compile(r"^\\s*(?:(?:all|each|both|currently|now|also)\\s+)*[“\\"‘\']?", re.I)',
+     '_COMPLEMENT_LEAD = re.compile(r"^\\s*", re.I)', "test_a_members_clause_opens_with_the_members_or_their_status"),
+    ('THE_EXPERT_TERM_IS_NO_STATUS', '_QUALIFICATION.match(_EXPERT_TERM.sub("", complement))',
+     '_QUALIFICATION.match(complement)', "test_a_members_clause_opens_with_the_members_or_their_status"),
+    # Repair 49: a status inside a duty is not the members' qualification
+    # (#28's counterexample, Issue #47 comment 5962519090).
+    ('A_STATUS_INSIDE_A_DUTY_IS_A_QUALIFICATION', '_QUALIFICATION.search(_DUTY_CLAUSE.sub(" ", independence))',
+     '_QUALIFICATION.search(independence)', "test_a_status_inside_a_duty_is_not_the_members_qualification"),
+    ('A_DUTY_RUNS_PAST_THE_NEXT_VERB', r'(?:(?!\b(?:and|but)\s+(?:is|are|was|were)\b)[^.;])*', '[^.;]*',
+     "test_a_status_inside_a_duty_is_not_the_members_qualification"),
+    ('A_DUTY_RUNS_PAST_A_SEMICOLON', r'(?:is|are|was|were)\b)[^.;])*', r'(?:is|are|was|were)\b)[^.])*',
+     "test_a_status_inside_a_duty_is_not_the_members_qualification"),
+    ('AN_HONORIFIC_OPENS_NO_NAME', '        if _HONORIFIC_OPEN.match(first) or person_name(first):',
+     '        if person_name(first):', "test_a_members_clause_opens_with_the_members_or_their_status"),
+    ('THE_SENTENCE_S_PERIOD_STAYS_ON_THE_NAME', '_LIST_SEPARATOR.split(_LIST_END.sub("", complement), 1)',
+     '_LIST_SEPARATOR.split(complement, 1)', "test_a_members_clause_opens_with_the_members_or_their_status"),
+    # Repair 47: a card's name is no bulleted list entry, and list entries and
+    # blank blocks do not spend the card's reach.
+    ('A_BULLETED_LINE_NAMES_THE_CARD',
+     '    if _BULLET.match(text):\n        return None\n    if block["linked"]', '    if block["linked"]',
+     "test_a_bulleted_entry_is_not_the_card_s_name"),
+    ('LIST_ENTRIES_SPEND_THE_REACH', 'if text and not _LIST_ENTRY.match(text):', 'if text:',
+     "test_list_entries_and_blank_blocks_do_not_spend_the_reach"),
+    ('BLANK_BLOCKS_SPEND_THE_REACH', 'if text and not _LIST_ENTRY.match(text):', 'if not _LIST_ENTRY.match(text):',
+     "test_list_entries_and_blank_blocks_do_not_spend_the_reach"),
+    ('A_PARENTHESISED_NICKNAME_BREAKS_THE_NAME', '|\\\\([A-Z][a-z]+\\\\))(?=', ')(?=',
+     "test_a_parenthetical_nickname_is_part_of_the_name"),
+]
+
+
+# Files the module reads relative to itself. It reads the lead-director phrase
+# from the catalog (tools/check_vnext_semantics.py keeps it out of code), so
+# the edited copy is laid out as scripts/vnext/ under a temporary root holding
+# that file. Before that layout the control run failed - the module could not
+# import - and the runner stopped there rather than reporting every injection
+# as missed.
+READ_BESIDE = ("catalog/r6/C02_board_composition_terms_v1.json",)
+
+
+def run_one(text):
+    """Run the suite against ``text`` as the module; return (failed tests, tests run)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        package = Path(tmp) / "scripts/vnext"
+        package.mkdir(parents=True)
+        for relative in READ_BESIDE:
+            (Path(tmp) / relative).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(REPO / relative, Path(tmp) / relative)
+        target = package / MODULE.name
+        target.write_text(text, encoding="utf-8")
+        py_compile.compile(str(target), doraise=True)
+        code = ("import sys; sys.path.insert(0, %r); import vnext; vnext.__path__.insert(0, %r); "
+                "sys.argv=['x', %r]; import unittest; unittest.main(module=None)"
+                ) % (str(REPO / "scripts"), str(package), SUITE)
+        # A fresh bytecode directory, as every injection script here uses: the
+        # child neither reads nor writes the checkout's __pycache__.
+        env = {**os.environ, "PYTHONPYCACHEPREFIX": str(Path(tmp) / "pycache")}
+        run = subprocess.run([sys.executable, "-c", code], cwd=REPO, capture_output=True, text=True, timeout=600,
+                             env=env)
+        failed = sorted({line.split(" ")[1] for line in run.stderr.splitlines()
+                         if line.startswith(("FAIL: ", "ERROR: "))})
+        ran = [int(line.split()[1]) for line in run.stderr.splitlines() if line.startswith("Ran ")]
+        return failed, (ran[-1] if ran else 0), run.returncode
+
+
+def main():
+    original = MODULE.read_text(encoding="utf-8")
+    control, control_ran, control_code = run_one(original)
+    if control or control_code != 0 or control_ran == 0:
+        raise SystemExit("C02_INJECTION_CONTROL_DID_NOT_RUN_CLEAN: failed=%s ran=%s rc=%s"
+                         % (control, control_ran, control_code))
+    results = []
+    for name, old, new, expected in INJECTIONS:
+        if original.count(old) != 1:
+            results.append({"injection": name, "result": "EDIT_DOES_NOT_APPLY", "count": original.count(old)})
+            continue
+        try:
+            failed, ran, _code = run_one(original.replace(old, new))
+        except py_compile.PyCompileError as error:
+            results.append({"injection": name, "result": "EDIT_DOES_NOT_COMPILE", "error": str(error)[:200]})
+            continue
+        if ran != control_ran:
+            # The edited module broke the suite's loading: whatever failed, the
+            # named case was not what caught it.
+            results.append({"injection": name, "expected": expected, "result": "SUITE_DID_NOT_RUN", "ran": ran})
+            continue
+        results.append({"injection": name, "expected": expected,
+                        "result": "CAUGHT" if expected in failed else ("CAUGHT_ELSEWHERE" if failed else "MISSED"),
+                        "failed": failed})
+    out = {"record_type": "C02_COMPOSITION_FAULT_INJECTIONS", "suite": SUITE, "control_failures": control,
+           "control_tests_run": control_ran,
+           "caught": sum(r["result"] == "CAUGHT" for r in results), "total": len(results), "results": results}
+    (HERE / "fault-injections.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    print(json.dumps({k: out[k] for k in ("control_failures", "control_tests_run", "caught", "total")}))
+    for row in results:
+        if row["result"] != "CAUGHT":
+            print(json.dumps(row))
+    assert MODULE.read_text(encoding="utf-8") == original
+    return 0 if not control and out["caught"] == out["total"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

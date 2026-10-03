@@ -1,0 +1,41 @@
+{
+ "total_calls": 10,
+ "distinct_keys": 4,
+ "repeated_calls": 6,
+ "calls": [
+  {
+   "parser": "parse_accession_xbrl_source",
+   "bytes": "87569ab70042",
+   "params": {},
+   "count": 4
+  },
+  {
+   "parser": "build_text_document",
+   "bytes": "87569ab70042",
+   "params": {
+    "expected_cik": "18926",
+    "expected_company_id": "lumen_technologies",
+    "expected_period_end": "2025-12-31"
+   },
+   "count": 2
+  },
+  {
+   "parser": "reported_legal_fact_candidates",
+   "bytes": "87569ab70042",
+   "params": {
+    "cik": "18926",
+    "company_id": "lumen_technologies"
+   },
+   "count": 2
+  },
+  {
+   "parser": "_bound_source",
+   "bytes": "87569ab70042",
+   "params": {
+    "cik": "18926",
+    "company_id": "lumen_technologies"
+   },
+   "count": 2
+  }
+ ]
+}

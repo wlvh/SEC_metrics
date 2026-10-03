@@ -1,0 +1,237 @@
+{
+ "record_type": "ISSUE_47_PART_III_TARGETED_RUNS",
+ "position": "paramount-2024",
+ "batch_closure": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+ "targeted_closure": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+ "rows": [
+  {
+   "metric_id": "C01",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:76feea651682e10b06d943620558426f481be4bb633d7fa19753c4cc534f23b5",
+    "run_id": "run:historical-period:9e592fe18013ff1f3ab69800520140a42e553aede5e54494c20f9509e39c0163",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "PUBLISHED",
+    "value": "9",
+    "reason_code": "PASS",
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+    "run_id": "run:historical-period:f784c09d2c16c8d7a8ff825418cad813b7fecc459fc72e6c2ea88b3d3bc21978",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+    "run_id": "run:historical-period:f784c09d2c16c8d7a8ff825418cad813b7fecc459fc72e6c2ea88b3d3bc21978",
+    "status": "FROZEN",
+    "value_sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+   },
+   "moved": true
+  },
+  {
+   "metric_id": "E01",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:6fee6406f696e8265bf070e365289d6f3d5e3397054e3ef22e753ca018151d0d",
+    "run_id": "run:historical-period:487714e1ebe9087244496b1303f02d2ad0f851b8b87de23aa01c3e675f9c3e42",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
+    "result_id": "sha256:f9e1cd3b22f9fbd4e93df3ec61060fedd0804c434e0449233cfd93a74adf57e6",
+    "run_id": "run:historical-period:e41af4e3b281c282f86fb2741ef3c58529aad917bd41aa1c9eeaac59b3770ce6",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:f9e1cd3b22f9fbd4e93df3ec61060fedd0804c434e0449233cfd93a74adf57e6",
+    "run_id": "run:historical-period:e41af4e3b281c282f86fb2741ef3c58529aad917bd41aa1c9eeaac59b3770ce6",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "moved": true
+  },
+  {
+   "metric_id": "E02",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:8c737ea491d58f1024eba0935954fbfc60a604d2d917c9ed794ad0527696ed70",
+    "run_id": "run:historical-period:1a5c4fa05a99a408149b8c2120b764d7c284e73068690beeb2bf7f52c6a317fd",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "PUBLISHED",
+    "value": "0",
+    "reason_code": "PASS",
+    "result_id": "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f",
+    "run_id": "run:historical-period:8b27477f7fa5e695f218c3067fad3797126f0ae8b6dd7c9ade272119035415bc",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f",
+    "run_id": "run:historical-period:8b27477f7fa5e695f218c3067fad3797126f0ae8b6dd7c9ade272119035415bc",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "moved": true
+  },
+  {
+   "metric_id": "E03",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:5d30c5d0cf46d24723cc0adc073add90239db319765597ce4196d5894264fb65",
+    "run_id": "run:historical-period:74f285e4c9062b60bb9e12bfabd821fb2bf848f41632660bcb52b70a4aea2d4d",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "PUBLISHED",
+    "value": "9",
+    "reason_code": "PASS",
+    "result_id": "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923",
+    "run_id": "run:historical-period:4339bc1b9cb771a5c5921d2351b5e5153aff5d776d5ccfaf4502eecd1f34aec2",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923",
+    "run_id": "run:historical-period:4339bc1b9cb771a5c5921d2351b5e5153aff5d776d5ccfaf4502eecd1f34aec2",
+    "status": "FROZEN",
+    "value_sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+   },
+   "moved": true
+  },
+  {
+   "metric_id": "E04",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:fd299f45e05bd49eba162f497b134e0fc7bbd046a3b321f306330ea82ebdfe88",
+    "run_id": "run:historical-period:26083e218b6ff402af41fdbc677bfc99b86bd7d0003eb97ed1c416c296c36c3c",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "PUBLISHED",
+    "value": "0",
+    "reason_code": "PASS",
+    "result_id": "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c",
+    "run_id": "run:historical-period:ac41d2428badfff71fd1f7e8c56cfbfe29a02b9ea64e4ba67d14c8b54c28b44f",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c",
+    "run_id": "run:historical-period:ac41d2428badfff71fd1f7e8c56cfbfe29a02b9ea64e4ba67d14c8b54c28b44f",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "moved": true
+  },
+  {
+   "metric_id": "E05",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:5c5d3c95d62209abe04062e81029cdfe2e9248b33e6fe6a531274db8593a4891",
+    "run_id": "run:historical-period:7899fd8830e24fbfbbceaba018f60cbd8a223d3c7dc4a61c60a0dea433fe3095",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "PUBLISHED",
+    "value": "2",
+    "reason_code": "PASS",
+    "result_id": "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7",
+    "run_id": "run:historical-period:f2bcd1766b586b1fbcf83c51235adcb99e90ead209d897bcd432feef73641fba",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7",
+    "run_id": "run:historical-period:f2bcd1766b586b1fbcf83c51235adcb99e90ead209d897bcd432feef73641fba",
+    "status": "FROZEN",
+    "value_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+   },
+   "moved": true
+  },
+  {
+   "metric_id": "B01",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:eec647552cf121a169bca58efda863ff61f10da90a8da8c0b55cf2185a55bd58",
+    "run_id": "run:historical-period:5872bc8ce5bad903777baac6000a84413972deb2f7072d3a5cea04b82a309590",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:eec647552cf121a169bca58efda863ff61f10da90a8da8c0b55cf2185a55bd58",
+    "run_id": "run:historical-period:e9550d8b69d9512da9b240485024573be8abd7830743e725d6d98cdb7eb0c98f",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:eec647552cf121a169bca58efda863ff61f10da90a8da8c0b55cf2185a55bd58",
+    "run_id": "run:historical-period:e9550d8b69d9512da9b240485024573be8abd7830743e725d6d98cdb7eb0c98f",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "moved": false
+  },
+  {
+   "metric_id": "B02",
+   "batch": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:021e1932f7e3c3e9a0426598330e7795501e7e230c7c23ace30684f559059c8d",
+    "run_id": "run:historical-period:6d18387fb6f12ae99da30df26dcd57abeb6943c87a2b4072230b04237822f416",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+   },
+   "targeted": {
+    "publication": "WITHHELD",
+    "value": null,
+    "reason_code": "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+    "result_id": "sha256:021e1932f7e3c3e9a0426598330e7795501e7e230c7c23ace30684f559059c8d",
+    "run_id": "run:historical-period:a7996d853d2897a0ee1069bb796c1e9e4b611f8523d2e3cbaa5cddd7e9224828",
+    "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9"
+   },
+   "cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:021e1932f7e3c3e9a0426598330e7795501e7e230c7c23ace30684f559059c8d",
+    "run_id": "run:historical-period:a7996d853d2897a0ee1069bb796c1e9e4b611f8523d2e3cbaa5cddd7e9224828",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "moved": false
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

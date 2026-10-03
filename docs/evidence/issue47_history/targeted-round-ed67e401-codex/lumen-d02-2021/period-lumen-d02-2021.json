@@ -1,0 +1,56 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "lumen_technologies",
+ "label": "lumen-d02-2021",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "D02"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 1,
+    "COMPUTED": 5
+   },
+   "seconds": 13.0
+  },
+  "install": {
+   "frozen_replays": 2,
+   "memo": {
+    "COMPUTED": 7
+   },
+   "seconds": 146.7
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "seconds": 1.3
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "D02": {
+   "category": null,
+   "error": "HISTORICAL_TEXT_BOUNDARY_NAVIGATION_INCOMPLETE:['UNRESOLVED_INCORPORATED_CAPTION_NOTE_18']",
+   "error_type": "TextResultV2Error",
+   "stage": "FAILED"
+  }
+ },
+ "report_end": "2021-12-31",
+ "seconds": 161.7,
+ "selection_id": "sha256:a246ced8ea71ad77da5d581a67ccdd198c4264dde9bcb215473a3da99e476137",
+ "xbrl_parses": 1
+}

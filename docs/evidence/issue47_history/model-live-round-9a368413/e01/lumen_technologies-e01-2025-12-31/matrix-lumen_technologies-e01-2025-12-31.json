@@ -1,0 +1,40 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "duration_seconds": 97.9,
+ "positions": [
+  {
+   "case": "lumen_technologies-e01-2025-12-31",
+   "company_id": "lumen_technologies",
+   "evidence_count": 1,
+   "metric_id": "E01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d",
+   "row_hash": "sha256:ee17d41d3898f7ad4691dfa2f65b6be54e35162e78eda2c0915c68ca57b1b2c8",
+   "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+   "selection_id": "sha256:4e797f286321290c4004649ab72a5f75057ce22cc71a65d0827a289518c0c20f",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d",
+    "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+    "status": "FROZEN",
+    "value_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "1"
+  }
+ ]
+}

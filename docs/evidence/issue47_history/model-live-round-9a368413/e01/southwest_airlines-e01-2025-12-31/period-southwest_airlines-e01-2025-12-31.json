@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "southwest_airlines",
+ "label": "southwest_airlines-e01-2025-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "E01"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 23,
+    "COMPUTED": 3
+   },
+   "seconds": 24.4
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 32.2
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "E01"
+   ],
+   "seconds": 46.9
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 3,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 13.7
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.1
+  }
+ },
+ "positions": {
+  "E01": {
+   "binding_id": "sha256:78581c822e8d762fe849e7aebd0220ec1387ef50ed53ca0400f9c9cec48521a0",
+   "data_root": "/workspace/work/issue47-model-native-e01-default/southwest_airlines-e01-2025-12-31/data-southwest_airlines-e01-2025-12-31",
+   "evidence_count": 1,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:1daf682138d4fe5809afad669d6c9d309088c6ece1d826d375fbf69f44e32fa7",
+    "run_id": "run:historical-period:78581c822e8d762fe849e7aebd0220ec1387ef50ed53ca0400f9c9cec48521a0",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:1daf682138d4fe5809afad669d6c9d309088c6ece1d826d375fbf69f44e32fa7",
+   "row_hash": "sha256:092640d15bdbe9a7bfc72beb71d160e393453dcf5f83476510eb2aae10c5f667",
+   "run_dir": "/workspace/work/issue47-model-native-e01-default/southwest_airlines-e01-2025-12-31/run-southwest_airlines-e01-2025-12-31-E01",
+   "run_id": "run:historical-period:78581c822e8d762fe849e7aebd0220ec1387ef50ed53ca0400f9c9cec48521a0",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:1daf682138d4fe5809afad669d6c9d309088c6ece1d826d375fbf69f44e32fa7",
+    "run_id": "run:historical-period:78581c822e8d762fe849e7aebd0220ec1387ef50ed53ca0400f9c9cec48521a0",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "0"
+  }
+ },
+ "report_end": "2025-12-31",
+ "seconds": 119.4,
+ "selection_id": "sha256:875f6f776d0c265d45dd5165a4baef81fa5d3e9536785131f42d06505b8eb6b9",
+ "xbrl_parses": 2
+}

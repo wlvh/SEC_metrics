@@ -1,0 +1,74 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "cold_read_matches": true,
+ "company_id": "marriott_international",
+ "default_installation": "REFUSED:HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE",
+ "earlier_run_before_the_authority_additions": {
+  "note": "the same chain before capacity_run and capacity_assessment_input were named in the authority; this file's run is at the committed closure",
+  "requirement_closure_hash": "sha256:2032fd3a82d8f09768e870d32f53d7595b9a6fb976630976b5fb0a0cbc5f355e",
+  "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5"
+ },
+ "first_attempt": {
+  "cause": "the historical renderer assumed every text result has a payload; D04's defined-scope absence has none, and the ordinary renderer's arm for it (capacity_run.project_defined_absence) had not been ported. The same renderer also lacked the ordinary one's note and receipt field marking a row built on recorded test responses.",
+  "error": "TypeError: 'NoneType' object is not subscriptable at historical_projection.render_historical_run: len(result[\"text_payload\"][\"items\"])",
+  "outcome": "the Run was created and frozen, then rendering its public row failed",
+  "repair": "historical_projection reuses project_defined_absence for the two defined-absence reason codes, and marks rows and receipts whose Run input carries a registered assessment with its mode"
+ },
+ "outputs_are": "synthetic: the frozen checker's own relations, not a model's",
+ "production_authorized": false,
+ "public_row": {
+  "evidence_count": 1,
+  "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。 No accepted value is asserted for this target period. Native state: WITHHELD; reason: D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE. Pinned historical period; the current value comes from the selected filing and the prior value from the prior selected filing. No latest-restated view is applied. Source classifications use recorded test responses; no real model execution credit.",
+  "period_end": "2023-12-31",
+  "row_hash": "sha256:7b3126c56ce61d8ad098ec8a5a93b58fef274d7fa9153a529f908261ed84834c",
+  "semantic_assessment_mode": "RECORDED_TEST_ONLY",
+  "status": "TEXT_QUAL",
+  "value": ""
+ },
+ "recorded_mode_marked": true,
+ "registration": {
+  "input_record_id": "sha256:b56aea60b815de8c6a1e5b1f9c1e590835d0405a9708b74d739cb1e269656e40",
+  "mode": "RECORDED_TEST_ONLY",
+  "proposed_branch": "DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW",
+  "requests": 4
+ },
+ "report_end": "2023-12-31",
+ "run": {
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "WITHHELD",
+  "quality": "NONE",
+  "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+  "requirement_closure_hash": "sha256:576a862e095f97100c97d8a2844ea3bef7ff5a884cad2450f627d734ed7e15d7",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+  "run_id": "run:historical-period:dc5192bac4f7b02a095f9190fbc13cb4c5003bfcfbff699123e630a121461de0",
+  "status": "FROZEN",
+  "target_period": {
+   "fiscal_year": 2023,
+   "period_end": "2023-12-31",
+   "period_start": "2023-01-01"
+  },
+  "value": null
+ },
+ "runtime_tree": "/tmp/claude-0/native/rt-d04",
+ "separate_process_cold_read": {
+  "publication": "WITHHELD",
+  "quality": "NONE",
+  "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+  "records": 11,
+  "requirement_closure_hash": "sha256:576a862e095f97100c97d8a2844ea3bef7ff5a884cad2450f627d734ed7e15d7",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+  "run_id": "run:historical-period:dc5192bac4f7b02a095f9190fbc13cb4c5003bfcfbff699123e630a121461de0",
+  "status": "FROZEN",
+  "value": null
+ }
+}

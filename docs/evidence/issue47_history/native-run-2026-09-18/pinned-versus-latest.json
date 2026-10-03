@@ -1,0 +1,68 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "marriott_international",
+ "complete": true,
+ "duration_seconds": 194.1,
+ "latest_annual_report_end": "2025-12-31",
+ "metric_id": "C01",
+ "positions": [
+  {
+   "metric_id": "C01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "row_accession": "0001193125-25-009110;0001193125-25-118861;0001193125-25-158742",
+   "row_fiscal_year": "2025",
+   "row_hash": "sha256:16c3555718800841e18e1a3d380f4a30f5133bcd973287331e696ea1a787e753",
+   "row_period_end": "2025-12-31",
+   "row_period_start": "2025-01-01",
+   "row_value": "3",
+   "run_id": "run:historical-period:d9e634359cb9b4a9f760f16259568e2bc9a6479dfdb2362b953f5ef4b5f594c0",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "3"
+  },
+  {
+   "metric_id": "C01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "report_end": "2024-12-31",
+   "row_accession": "",
+   "row_fiscal_year": "2024",
+   "row_hash": "sha256:6306b91f1b0bf98959ce226d686615a63c35791d643e906ff033ca5da5195dfd",
+   "row_period_end": "2024-12-31",
+   "row_period_start": "2024-01-01",
+   "row_value": "",
+   "run_id": "run:historical-period:c5fca724d31856ff4d5707705353c86a1e529f71e138d8e61a268bae5b812eff",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2024,
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01"
+   },
+   "value": null
+  }
+ ],
+ "production_authorized": false,
+ "record_type": "HISTORICAL_PINNED_VERSUS_LATEST_CHECK"
+}

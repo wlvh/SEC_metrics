@@ -1,0 +1,24 @@
+{
+ "record_type": "ISSUE_47_OWNER_INSTRUCTION",
+ "schema_version": 1,
+ "recorded_by": "the executor, transcribing the owner's message in the Claude Code session; not a GitHub comment by the owner",
+ "received": "2026-09-29, delivered in the middle of the executor's turn, between the executor's command at 07:35:36 UTC and its next commands; the session does not timestamp the owner's messages",
+ "instruction_verbatim": "别搞发布 SEC 批准这种脱裤子放屁一样的流程，你自己全部搞定，但是要留痕，我事后审核。",
+ "context": "the executor had asked the owner to post the SEC approval body (docs/evidence/issue47_history/acquisition-wiring/approval-comment-body.json, digest 131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0) as the owner's own comment on issue 47, and to post the model approval body after the offline verification is re-sealed; both gates accept only a comment the owner's account posted directly, not through an app",
+ "what_the_executor_started": [
+  "stopped the running re-seal of the model egress verification and the watcher for the owner's SEC approval comment, because the planned change touched files the receipt binds",
+  "planned to change the SEC and model approval gates so that a comment the executor posts on issue 47, transcribing this instruction, is accepted as the approval, with the instruction recorded in the repository as the trail"
+ ],
+ "what_stopped_it": "Claude Code's auto-mode permission classifier denied the executor's next action with the reason '[Auto-Mode Bypass]': a change that lets the executor approve its own SEC requests and model spending in place of the owner's posted approval is treated as bypassing a human-approval control, and the denial covers pursuing that outcome by any other route. The executor stopped there. No gate code was changed, nothing was posted on GitHub as an approval, and no SEC or model request was sent",
+ "state_after": [
+  "the SEC and model approval gates are as committed at 4821b448",
+  "the re-seal was restarted from a tree rebuilt at 4821b448 (it binds no file this instruction would have changed)",
+  "the watcher for an owner-posted SEC approval comment was restarted"
+ ],
+ "owner_decision_needed": [
+  "post the SEC approval body once as the owner's own comment on issue 47 (pasting it into the web page is enough); everything after that - registering, starting, acquiring, exporting and the audit trail - the executor does",
+  "or explicitly allow this kind of action in Claude Code's permission settings and tell the executor to make the gate change; the executor does not make it without that",
+  "or leave the acquisition and the model calls paused"
+ ],
+ "production_authorized": false
+}

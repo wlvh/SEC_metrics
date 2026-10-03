@@ -1,0 +1,100 @@
+{
+ "record_type": "ISSUE_47_E01_REFERENCE_FAULT_INJECTIONS",
+ "class": "tests.vnext.test_historical_event_items.HeadingsAndReferences",
+ "files_under_test": {
+  "scripts/vnext/historical_event_items.py": "sha256:731700cc9113539bed40722bf32bd8cdfb6abceb1971ca274edc1dc8487d41eb",
+  "tests/vnext/test_historical_event_items.py": "sha256:0154a024fb9d0eceb6a67fe52001e6b69c6b3588f2912c791b9a7203a944cb9d"
+ },
+ "control": "passed",
+ "results": [
+  {
+   "id": "A_REFERENCE_WORD_IS_LOWERCASE_ONLY",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "#28's control: 'SEE Item 2.01 Completion of ...' is a reference, not a heading",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_reference_word_is_read_in_any_case",
+   "failed_cases": [
+    "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+    "test_a_reference_word_is_read_in_any_case"
+   ]
+  },
+  {
+   "id": "THE_FLAT_WINDOW_RETURNS",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "a word ending the previous paragraph would erase the next paragraph's heading",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_previous_block_does_not_make_a_heading_a_reference",
+   "failed_cases": [
+    "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+    "test_the_previous_block_does_not_make_a_heading_a_reference"
+   ]
+  },
+  {
+   "id": "THE_WINDOW_CROSSES_BLOCKS",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "the previous block's text is not this heading's sentence",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_previous_block_does_not_make_a_heading_a_reference",
+   "failed_cases": [
+    "test_an_unseen_block_still_breaks_the_line",
+    "test_the_previous_block_does_not_make_a_heading_a_reference"
+   ]
+  },
+  {
+   "id": "THE_WINDOW_READS_HIDDEN_TEXT",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "text a reader cannot see neither makes nor hides a reference",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+   "failed_cases": [
+    "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+    "test_the_previous_block_does_not_make_a_heading_a_reference"
+   ]
+  },
+  {
+   "id": "A_REMOVED_BLOCK_BREAKS_THE_LINE",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "a display:none block has no box; the text on its two sides runs on",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+   "failed_cases": [
+    "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference"
+   ]
+  },
+  {
+   "id": "AN_UNSEEN_BLOCK_IS_REMOVED",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "visibility:hidden or opacity:0 keeps a block's box and its line break",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_unseen_block_still_breaks_the_line",
+   "failed_cases": [
+    "test_an_unseen_block_still_breaks_the_line"
+   ]
+  },
+  {
+   "id": "A_REMOVED_PARENT_DOES_NOT_CARRY",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "a block inside a display:none element has no box either",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+   "failed_cases": [
+    "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference"
+   ]
+  },
+  {
+   "id": "IMPORTANT_HIDES_DISPLAY_NONE",
+   "file": "scripts/vnext/historical_event_items.py",
+   "why_it_matters": "'display: none !important' removes the element as 'display:none' does",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference",
+   "failed_cases": [
+    "test_a_hidden_line_break_or_long_hidden_text_does_not_end_the_reference"
+   ]
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

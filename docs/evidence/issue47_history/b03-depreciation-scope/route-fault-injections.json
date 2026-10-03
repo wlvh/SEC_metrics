@@ -1,0 +1,73 @@
+[
+ {
+  "id": "THE_CHECK_IS_SKIPPED",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_composition_taken_while_the_filing_tags_a_total_is_withheld",
+   "test_a_conflict_the_filing_s_composition_resolves_takes_the_proven_total",
+   "test_a_direct_total_the_filing_does_not_tag_is_withheld",
+   "test_salesforce_is_withheld_by_name_and_still_carries_b01",
+   "test_the_chain_s_value_must_be_the_filing_s_at_its_precision",
+   "test_where_the_filing_proves_the_input_the_result_is_the_chain_s"
+  ],
+  "suite_result": "FAILED (failures=4, errors=3)"
+ },
+ {
+  "id": "A_WITHHOLD_IS_KEPT",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_composition_taken_while_the_filing_tags_a_total_is_withheld",
+   "test_a_direct_total_the_filing_does_not_tag_is_withheld",
+   "test_salesforce_is_withheld_by_name_and_still_carries_b01",
+   "test_the_chain_s_value_must_be_the_filing_s_at_its_precision"
+  ],
+  "suite_result": "FAILED (failures=4)"
+ },
+ {
+  "id": "A_RETAKE_IS_IGNORED",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_conflict_the_filing_s_composition_resolves_takes_the_proven_total"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "A_RETAKE_DOES_NOT_REMOVE_THE_DISPROVED_CANDIDATES",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_conflict_the_filing_s_composition_resolves_takes_the_proven_total"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "A_DIRECT_TOTAL_THE_FILING_DOES_NOT_TAG_IS_KEPT",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_direct_total_the_filing_does_not_tag_is_withheld"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "A_COMPOSITION_TAKEN_WHILE_THE_FILING_TAGS_A_TOTAL_IS_KEPT",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_composition_taken_while_the_filing_tags_a_total_is_withheld"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "THE_CHAIN_S_VALUE_IS_NOT_COMPARED",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_the_chain_s_value_must_be_the_filing_s_at_its_precision"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ }
+]

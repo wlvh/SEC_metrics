@@ -1,0 +1,140 @@
+{
+ "record_type": "ISSUE_47_FISCAL_LABEL_FORM_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "EVERY_PERIOD_IS_READ_AGAIN",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "widen_inspection() reads a period the frozen scan resolved",
+   "why_it_matters": "a resolved period's inspection, and so its input identity, would move",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_resolved_period_is_the_frozen_inspection_itself",
+   "failed_cases": [
+    "test_a_resolved_period_is_the_frozen_inspection_itself"
+   ],
+   "suite_result": "Ran 1 test in 0.013s FAILED (errors=1)",
+   "seconds": 1
+  },
+  {
+   "id": "ANY_CLAUSE_AFTER_RESPECTIVELY",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "the ordered form accepts any clause after 'respectively'",
+   "why_it_matters": "a clause that changes the mapping would be read as if it were the week count",
+   "outcome": "CAUGHT",
+   "expected_case": "test_another_clause_after_respectively_still_stops_the_period",
+   "failed_cases": [
+    "test_another_clause_after_respectively_still_stops_the_period"
+   ],
+   "suite_result": "Ran 1 test in 0.015s FAILED (failures=3)",
+   "seconds": 1
+  },
+  {
+   "id": "ANY_ALIAS_IS_THE_REGISTRANT",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "the reference form's alias proof accepts any name",
+   "why_it_matters": "another entity's fiscal years would label the registrant's",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_alias_naming_another_entity_still_stops_the_period",
+   "failed_cases": [
+    "test_an_alias_naming_another_entity_still_stops_the_period"
+   ],
+   "suite_result": "Ran 1 test in 0.013s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "LEGAL_FORMS_DROPPED_ANYWHERE",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "legal-form words are removed from anywhere in the name",
+   "why_it_matters": "'Company Stores' would become 'stores', a different name",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_legal_form_is_dropped_only_from_the_end_of_the_name",
+   "failed_cases": [
+    "test_a_legal_form_is_dropped_only_from_the_end_of_the_name"
+   ],
+   "suite_result": "Ran 1 test in 0.001s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "AN_OPEN_CURRENT_LEAD_IS_IGNORED",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "the rule ignores a definition-like sentence it could not read",
+   "why_it_matters": "a period whose definition is unread would take a label anyway",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_frozen_rule_is_what_decides",
+   "failed_cases": [
+    "test_the_frozen_rule_is_what_decides"
+   ],
+   "suite_result": "Ran 1 test in 12.259s FAILED (failures=2)",
+   "seconds": 14
+  },
+  {
+   "id": "A_FROZEN_DEFINITION_MAY_CHANGE",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "widen_inspection() accepts a widened scan that lost a frozen definition",
+   "why_it_matters": "the widened reading would replace what the frozen scan read instead of adding to it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_widened_scan_that_changes_a_frozen_definition_is_refused",
+   "failed_cases": [
+    "test_a_widened_scan_that_changes_a_frozen_definition_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.014s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "A_NEW_LEAD_MAY_APPEAR",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "widen_inspection() accepts a widened scan that left a lead the frozen one did not",
+   "why_it_matters": "the widened recognizers would have misread a sentence the frozen scan read",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_widened_scan_that_leaves_a_new_lead_is_refused",
+   "failed_cases": [
+    "test_a_widened_scan_that_leaves_a_new_lead_is_refused"
+   ],
+   "suite_result": "Ran 1 test in 0.011s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "OTHER_BYTES_ARE_READ",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "widen_inspection() reads bytes other than the inspected document",
+   "why_it_matters": "a label could come from a document the inspection never bound",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_bytes_must_be_the_inspected_ones",
+   "failed_cases": [
+    "test_the_bytes_must_be_the_inspected_ones"
+   ],
+   "suite_result": "Ran 1 test in 14.013s FAILED (failures=1)",
+   "seconds": 15
+  },
+  {
+   "id": "THE_FROZEN_FORM_IS_NOT_CHECKED",
+   "file": "scripts/vnext/historical_fiscal_labels.py",
+   "edit": "_ordered_pattern() widens whatever the frozen pattern is",
+   "why_it_matters": "a changed frozen pattern would be cut at the wrong place and still used",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_frozen_ordered_form_must_still_end_where_it_did",
+   "failed_cases": [
+    "test_the_frozen_ordered_form_must_still_end_where_it_did"
+   ],
+   "suite_result": "Ran 1 test in 0.001s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_ROUTE_KEEPS_THE_FROZEN_INSPECTION",
+   "file": "scripts/vnext/historical_annual_input.py",
+   "edit": "the pinned annual input keeps the DEI view's inspection",
+   "why_it_matters": "the repair would exist and no Run would use it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_pinned_input_reads_its_label_here",
+   "failed_cases": [
+    "test_the_pinned_input_reads_its_label_here"
+   ],
+   "suite_result": "Ran 1 test in 0.000s FAILED (failures=1)",
+   "seconds": 2
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

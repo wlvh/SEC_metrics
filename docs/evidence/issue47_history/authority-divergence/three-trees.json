@@ -1,0 +1,81 @@
+{
+ "record_type": "ISSUE_47_AUTHORITY_DIVERGENCE_MEASUREMENT",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "question": "Did restoring specs.py make one data root satisfy both issue_47_v1 and issue_28_v13, as the previous entry claimed?",
+ "answer": "No. It removed specs.py from the divergent set and nothing else. requirement_profile.py, run_store.py and records.py still diverge, because the registration patch changes them and issue_47_v1 records the patched bytes. The earlier claim was read off the UNPATCHED repository tree, which is not the tree that runs historical Runs.",
+ "second_correction": "The divergence is also not a cost this work introduced. Every generation in the installed data root records a different requirement_profile.py, run_store.py and records.py - 13, 11 and 9 distinct hashes across 14 generations. A code tree satisfying one generation at a time is the ratchet's standing shape.",
+ "three_trees": {
+  "unpatched_repository_tree": {
+   "path": "the committed checkout",
+   "mint_output": [
+    "wrote requirements/issue_47_v1: 16 rule files, 377 authority files",
+    "parent closure (unchanged by this): sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+    "no inherited authority entry differs from issue_28_v13"
+   ],
+   "why_it_misleads": "The registration patch is not applied here, so the three files match what issue_28_v13 records and the mint reports no divergence. No historical Run executes in this tree."
+  },
+  "patched_runtime_tree": {
+   "path": "the isolated runtime with 0001-register-issue47-v1.patch applied",
+   "mint_output": [
+    "wrote requirements/issue_47_v1: 16 rule files, 377 authority files",
+    "parent closure (unchanged by this): sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+    "re-recorded from this tree, so they differ from what issue_28_v13 records:",
+    "   scripts/vnext/requirement_profile.py",
+    "   scripts/vnext/run_store.py",
+    "   scripts/vnext/records.py",
+    "a data root therefore satisfies one of the two Requirements, not both"
+   ],
+   "why_it_is_authoritative": "This is the tree the historical Run matrix executes in."
+  },
+  "installed_data_root": {
+   "path": "a data root an installed historical Run carries",
+   "issue_47_v1_installed": true,
+   "per_file": {
+    "scripts/vnext/records.py": {
+     "distinct_hashes_across_generations": 9,
+     "issue_28_v13": "e3ca654eaf837ccdc1ef0d2d542daff4f3a005dbfa4e693122b41bae6ee5a187",
+     "issue_28_v14": "e3ca654eaf837ccdc1ef0d2d542daff4f3a005dbfa4e693122b41bae6ee5a187",
+     "issue_47_v1": "23b75104968c40a10ac4b7d37707877e2f93dc0842179608d02e60025cb9ff76",
+     "issue_47_v1_matches_v13": false
+    },
+    "scripts/vnext/requirement_profile.py": {
+     "distinct_hashes_across_generations": 13,
+     "issue_28_v13": "40d39d2f75d40f4466fa99b6d48c25897c20f428f46a4bf04a1e63e4a2419d01",
+     "issue_28_v14": "40d39d2f75d40f4466fa99b6d48c25897c20f428f46a4bf04a1e63e4a2419d01",
+     "issue_47_v1": "b9631df992f3954503d288e6c462ed4ff834c5db87b1c55f9b611ff6e5951aa0",
+     "issue_47_v1_matches_v13": false
+    },
+    "scripts/vnext/run_store.py": {
+     "distinct_hashes_across_generations": 11,
+     "issue_28_v13": "adbac4bb2c683960597f0d6d4d7c6c84f32dde91574c58d9d91e5275fccf4346",
+     "issue_28_v14": "adbac4bb2c683960597f0d6d4d7c6c84f32dde91574c58d9d91e5275fccf4346",
+     "issue_47_v1": "841db374e14ae4381217d3556d4fb3c691cb7271001de9eb1286ba5d1c16284f",
+     "issue_47_v1_matches_v13": false
+    },
+    "scripts/vnext/specs.py": {
+     "distinct_hashes_across_generations": 5,
+     "issue_28_v13": "4cddc435aa84f5b541a1fd8cb2e81280b1d374bfc5b5c48efb52f129b5dc4be3",
+     "issue_28_v14": "4cddc435aa84f5b541a1fd8cb2e81280b1d374bfc5b5c48efb52f129b5dc4be3",
+     "issue_47_v1": "4cddc435aa84f5b541a1fd8cb2e81280b1d374bfc5b5c48efb52f129b5dc4be3",
+     "issue_47_v1_matches_v13": true
+    }
+   }
+  }
+ },
+ "what_is_now_true": [
+  "specs.py: issue_47_v1 records the same bytes as issue_28_v13 and v14, in all three trees.",
+  "requirement_profile.py, run_store.py, records.py: issue_47_v1 records the patched bytes; issue_28_v13 and v14 record the unpatched ones. A code tree satisfies one or the other.",
+  "That was already true before this work and is true of every generation pair."
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "what_the_patched_tree_already_cannot_do": {
+  "measured": "tests/vnext/test_native_request_construction fails in the patched runtime tree with NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/records.py, 4 failures and 12 errors of 13 cases",
+  "pre_existing": "records.py has been in the registration patch since it was first written, for the point_in_time_fiscal_label hunk. The patched tree has therefore never been able to run the issue_28 continuous semantic-call route.",
+  "what_this_does_and_does_not_license": "It means adding more routes to the patch does not newly break issue_28 in that tree. It does NOT mean version gating is unnecessary: an argument that a tree cannot run another generation anyway is not a substitute for code that says which generation it serves. Where the Requirement is in scope the route is gated on it; where it is not, capacity is resolved from the Spec identity the record declares and every other check is the frozen one, proven by differential comparison.",
+  "correction": "An earlier argument in this session said issue_28_v13 and v14 could not even load in the patched tree. Measured: they load. Requirement snapshots load; it is the request-construction scope's own byte pins that fail."
+ }
+}

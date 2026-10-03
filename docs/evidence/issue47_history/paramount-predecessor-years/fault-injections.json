@@ -1,0 +1,74 @@
+{
+ "injections": {
+  "DROP_THE_PRIMARY_CATALOG_FROM_THE_ADMITTED_SOURCES": {
+   "caught": true,
+   "failed_cases": [
+    "test_a_predecessor_period_admits_the_primary_catalog_it_reads "
+   ],
+   "note": "the defect the first batch over these years hit on every metric; the case was written after it and fails on the unrepaired code"
+  },
+  "FAIL_THE_ATTEMPT_ON_A_POLICY_REFUSAL": {
+   "caught": true,
+   "failed_cases": [
+    "setUpClass (AnApprovedRefusalIsAWithheldResultOnEveryRouteTest)"
+   ],
+   "note": "bluntly: the class cannot even resolve B01 and C01 for FY2024 when the zero-AI route raises instead of withholding"
+  },
+  "FOLD_EVERY_CLASSIFIER_ERROR_INTO_THE_REFUSAL": {
+   "caught": true,
+   "failed_cases": [
+    "test_an_integrity_conflict_is_not_folded_into_the_refusal "
+   ]
+  },
+  "GIVE_THE_YEAR_TODAY_S_SUCCESSOR_ONLY_POLICY": {
+   "caught": true,
+   "failed_cases": [
+    "test_today_s_successor_only_policy_put_back_on_the_year_is_refused ",
+    "test_fy2024_is_read_from_the_predecessor_s_own_10_k ",
+    "test_a_predecessor_year_is_selected_with_that_registrant_s_own_policy "
+   ]
+  },
+  "LOOK_UP_THE_PREDECESSOR_EVEN_IN_THE_SUCCESSOR_S_ERA": {
+   "caught": true,
+   "failed_cases": [
+    "test_nothing_is_looked_up_at_or_after_the_successor_s_oldest_report "
+   ]
+  },
+  "READ_ANY_CIK": {
+   "caught": true,
+   "failed_cases": [
+    "test_a_cik_the_registry_does_not_name_for_the_company_is_not_read "
+   ]
+  },
+  "READ_THE_COMPANY_S_PRIMARY_CIK_FOR_EVERY_YEAR": {
+   "caught": true,
+   "failed_cases": [
+    "setUpClass ",
+    "test_fy2024_is_read_from_the_predecessor_s_own_10_k ",
+    "test_a_fiscal_year_request_reaches_the_predecessor_on_the_same_terms ",
+    "test_today_s_successor_only_policy_put_back_on_the_year_is_refused ",
+    "test_an_earlier_year_without_its_original_is_a_named_source_gap "
+   ]
+  },
+  "TAKE_THE_SUCCESSOR_S_PRIOR_FROM_THE_PREDECESSOR": {
+   "caught": true,
+   "failed_cases": [
+    "test_no_prior_is_taken_across_the_registrant_boundary "
+   ]
+  },
+  "WITHHOLD_B03_WITHOUT_ITS_DEPENDENCY": {
+   "caught": true,
+   "failed_cases": [
+    "test_a_withheld_result_arrives_with_its_dependency_s_result"
+   ],
+   "note": "the defect the rerun found: B03 FY2024 failed on HISTORICAL_RUN_RESULT_DEPENDENCY_SET_INCOMPLETE once its refusal became a withheld result"
+  }
+ },
+ "method": "each injection edits one boundary in the repository tree, runs the suite, and restores the file byte for byte",
+ "not_injectable_in_the_repository_tree": {
+  "what": "the public row naming the period's registrant",
+  "why": "a historical Run cannot be created in the repository tree (the issue_47_v1 engine is registered only in the runtime tree), so the row is checked on the rerun: all 20 published FY2024 rows name 813828, and the twelve control rows are byte-identical to the run before the fix"
+ },
+ "record_type": "ISSUE_47_PREDECESSOR_PERIOD_FAULT_INJECTIONS",
+ "suite": "tests/vnext/test_historical_predecessor_periods.py"
+}

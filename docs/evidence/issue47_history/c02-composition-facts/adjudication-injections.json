@@ -1,0 +1,320 @@
+{
+ "record_type": "C02_ADJUDICATION_FAULT_INJECTIONS",
+ "controls": {
+  "tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact": {
+   "failures": 0,
+   "ran": 1
+  },
+  "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange": {
+   "failures": 0,
+   "ran": 2
+  },
+  "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact": {
+   "failures": 0,
+   "ran": 2
+  },
+  "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin": {
+   "failures": 0,
+   "ran": 2
+  },
+  "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact": {
+   "failures": 0,
+   "ran": 1
+  },
+  "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot": {
+   "failures": 0,
+   "ran": 3
+  },
+  "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture": {
+   "failures": 0,
+   "ran": 2
+  },
+  "tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact": {
+   "failures": 0,
+   "ran": 3
+  },
+  "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here": {
+   "failures": 0,
+   "ran": 1
+  },
+  "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt": {
+   "failures": 0,
+   "ran": 4
+  }
+ },
+ "injections": [
+  {
+   "injection": "AN_ADJUDICATED_FACT_IS_NEVER_MISSED",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt",
+   "caught": true,
+   "failures": 1,
+   "ran": 4
+  },
+  {
+   "injection": "A_COVERING_BLOCK_IS_IGNORED",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt",
+   "caught": true,
+   "failures": 1,
+   "ran": 4
+  },
+  {
+   "injection": "A_FACT_DECISION_SKIPS_ITS_TEXT_BINDING",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnAdjudicatedFactIsMissedUnlessSomethingSelectedStatesIt",
+   "caught": true,
+   "failures": 1,
+   "ran": 4
+  },
+  {
+   "injection": "THE_PRESIDING_DUTY_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_SAME_SENTENCE_IS_NOT_CHECKED_FOR_A_DEPARTURE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.EveryReadPositionAgreesWithTheRoute.test_the_adjudication_is_exactly_what_its_rules_decide_here",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "A_READER_CITATION_STANDS_OVER_THE_ADJUDICATION",
+   "module": "tools/read_c02_composition.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_YEAR_COVERS_A_DAY",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "ANOTHER_PERSONS_CHANGE_COVERS",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_CHANGE_BEFORE_THE_YEAR_IS_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_ROSTER_COVERS_A_JOIN",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_JOINER_IS_ANY_NAME_BEFORE_THE_PRONOUN",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "ANOTHER_PERSONS_JOIN_COVERS",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_HEADING_COVERS_A_DEPARTURE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "ANOTHER_YEARS_DEPARTURE_COVERS",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "A_NOMINEES_TERM_IS_A_DEPARTURE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_PRONOUN_TERM_IS_ANYONES",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "A_POSSESSIVE_NEED_NOT_BE_A_PERSON",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture",
+   "caught": true,
+   "failures": 2,
+   "ran": 2
+  },
+  {
+   "injection": "THE_NOMINEE_FIELD_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_NOMINEE_FIELD_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "A_SITTING_DIRECTORS_FIELD_IS_A_NOMINEES",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ANomineesNoCommitteeFieldIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_RELATIONSHIP_DETERMINATION_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_RELATIONSHIP_DETERMINATION_IS_DECIDED_NOT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ACommitteesRelationshipDeterminationIsAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 1
+  },
+  {
+   "injection": "THE_SIGNERS_COMMITTEE_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 2,
+   "ran": 3
+  },
+  {
+   "injection": "THE_SIGN_OFF_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "A_SIGNATURE_COVERS_ITS_COMMITTEE",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "A_SIGN_OFF_NEED_NOT_HEAD_SIGNATURES",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "THE_COMMITTEE_NEED_NOT_BE_NAMED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AReportsSigningCommitteeIsAFactAndItsSignOffIsNot",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "THE_SUBCOMMITTEE_DUTY_IS_NOT_DECIDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "THE_SUBCOMMITTEE_DUTY_IS_DECIDED_A_FACT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "ANY_SUBCOMMITTEE_IS_A_DUTY",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.ADutyDoneThroughASubcommitteeIsNotAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 2
+  },
+  {
+   "injection": "THE_UNMARKED_DESIGNATION_IS_DECIDED_NOT",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact",
+   "caught": true,
+   "failures": 2,
+   "ran": 3
+  },
+  {
+   "injection": "NO_MARKED_CARD_IS_NEEDED",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "A_DESIGNATION_NEED_NOT_BE_ON_A_CARD",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  },
+  {
+   "injection": "A_BULLETED_ENTRY_NAMES_THE_DESIGNATIONS_CARD",
+   "module": "docs/evidence/issue47_history/c02-composition-facts/adjudicate.py",
+   "case": "tests.vnext.test_historical_board_composition_filings.AnUnmarkedCardDesignationIsAFact",
+   "caught": true,
+   "failures": 1,
+   "ran": 3
+  }
+ ],
+ "all_caught": true
+}

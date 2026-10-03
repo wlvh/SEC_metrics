@@ -1,0 +1,109 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "eight_k_windows_from": [
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json"
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "metrics_read": [
+  "C04"
+ ],
+ "needed_facts_not_read": [],
+ "per_position": {
+  "paramount-2024": {
+   "C03": {
+    "published": null,
+    "read": null,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": "C03_IS_NOT_READ_OVER_A_RESTORED_ROOT_HERE"
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:2dd117a7b9bda3f5b81ac2bb5553b70baaaa25c63355390d0a8b5b91b416f545",
+      "run_id": "run:historical-period:6821bda5c8085c11d12943974f96e99a979577fcea05eeb972edb0f0d1c999ea"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000813828-24-000007",
+      "0000813828-24-000009",
+      "0000813828-24-000018",
+      "0000813828-24-000023",
+      "0000813828-24-000028",
+      "0000813828-24-000033",
+      "0000813828-24-000034",
+      "0000813828-24-000038",
+      "0000813828-24-000042",
+      "0000813828-24-000063",
+      "0000813828-24-000069",
+      "0000813828-24-000073",
+      "0000813828-24-000075",
+      "0000813828-24-000081",
+      "0000813828-24-000083",
+      "0000813828-24-000085",
+      "0000813828-24-000087",
+      "0000813828-25-000005",
+      "0001193125-24-050664",
+      "0001193125-24-122356",
+      "0001193125-24-177535",
+      "0001193125-24-196053",
+      "0001193125-24-196972",
+      "0001193125-24-253719",
+      "0001193125-25-096776"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/request_attempts/6b/6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b/para-20231231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "813828",
+   "company_id": "paramount_skydance_paramount_global",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000813828-24-000007",
+    "primaryDocument": "para-20231231.htm"
+   },
+   "target_document": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_governance_facts.py",
+ "record_type": "ISSUE_47_GOVERNANCE_READ",
+ "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+ "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window."
+}

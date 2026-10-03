@@ -1,0 +1,54 @@
+{
+ "record_type": "CONFIRMED_WRONG_RESULT_DISPOSITION",
+ "schema_version": 1,
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "metric_id": "D02",
+ "company_id": "pfizer",
+ "fiscal_year": 2025,
+ "period_start": "2025-01-01",
+ "period_end": "2025-12-31",
+ "accession": "0000078003-26-000026",
+ "withdrawn": {
+  "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
+  "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+  "candidate_hash": "sha256:6a3b9497544d0f6de463781ae66a08fbce0d9f5565512c423cd5c3da0c953ee1",
+  "row_hash": "sha256:cec754b77d84336032a988d337deec7f49d42d110c6d93ee5348dd6efd3aa988",
+  "requirement_id": "issue_47_v1",
+  "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
+  "run_status": "FROZEN",
+  "reported_quality": "EXACT",
+  "reported_publication": "PUBLISHED",
+  "reported_reason_code": "PASS",
+  "evidence_count": 58,
+  "first_item": "INFORMATION ABOUT OUR EXECUTIVE OFFICERS"
+ },
+ "why_wrong": "26 of the 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5. The row is legal proceedings; the text is not.",
+ "status": "WITHDRAWN_AS_A_VALID_RESULT_REPAIR_STILL_OWED",
+ "counted_in": ["target_frame_denominator", "failure_list", "issue_47_open_work"],
+ "not_counted_in": ["verified_outcome", "exact_value_count"],
+ "not_claimed": {
+  "structurally_not_applicable": false,
+  "source_disclosure_missing": false,
+  "metric_definition_changed": false
+ },
+ "original_bytes_kept": true,
+ "original_bytes_resigned": false,
+ "cold_read_under_the_repaired_generation": {
+  "outcome": "REFUSED",
+  "error": "RunStoreError: Run Requirement Snapshot is invalid",
+  "cause": "RequirementError: Run explicit Requirement identity differs",
+  "refusal_layer": "REQUIREMENT_AUTHORITY",
+  "inner_check_not_covered": ["RECORD_GRAPH", "TEXT_PROTOCOL"],
+  "note": "The outer seal refuses first, so the semantic Evidence replay is never reached. The same refusal applies to every issue_47_v1 Run frozen before this repair, not to D02 alone."
+ },
+ "recomputation": {
+  "required": true,
+  "scope": "every issue_47_v1 Run declaring closure sha256:a82225ad...",
+  "resume_key_before": ["case", "metric_id", "selection_id"],
+  "resume_key_after": ["case", "metric_id", "selection_id", "requirement_closure_hash"],
+  "note": "The old key would have skipped these as finished."
+ },
+ "d02_count_statement": "eleven results produced, one confirmed wrong and recomputed, ten with semantic review not performed",
+ "calls": {"provider": 0, "paid": 0, "sec": 0},
+ "production_authorized": false
+}

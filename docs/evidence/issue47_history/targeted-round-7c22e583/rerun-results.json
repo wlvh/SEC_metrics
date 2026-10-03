@@ -1,0 +1,137 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "driver_seconds": 9324,
+ "drivers": {
+  "collect": "docs/evidence/issue47_history/targeted-round-7c22e583/collect.py",
+  "run": "docs/evidence/issue47_history/targeted-round-30a7934b/targeted_runs.py"
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "not_established": "a full frame under this closure; the content of Enphase FY2021 D01 and Macy's FY2022 B01/B03 (read separately); anything about positions this round did not run",
+ "not_run": {
+  "macys_fy2021": "stopped by the executor during its first position, for the same reason; its partial directories were removed. The full-frame batch after the acquisition runs both years.",
+  "macys_fy2022": "B12, C04, D01 and D02 were not reached: the driver's two-hour limit stopped the case during B12 (exit 124). Each position spent about half an hour creating its Run, because every saved-source check in a Run replays the whole acquisition checkpoint too; see ../planner-replay-once/."
+ },
+ "position_count": 6,
+ "positions": [
+  {
+   "company_id": "enphase_energy",
+   "evidence_count": 68,
+   "metric_id": "D01",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+   "result_id": "sha256:969aa954e189a754bce953fc25a1713179e3a2fd796c2cfb83b89e951d376fef",
+   "run_id": "run:historical-period:92bcfe79c4ac12e05666c94fbca4905a32e7874e921de24b6c3e5678126909a8",
+   "selection_id": "sha256:fa71ddcfbffc9897b39a51b5bd6992960e28702458ea407b473cbe5e89c85986",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value_characters": 12530,
+   "value_lines": 68
+  },
+  {
+   "company_id": "ford_motor_company",
+   "evidence_count": 0,
+   "metric_id": "B03",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2025-12-31",
+   "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+   "result_id": "sha256:1d4d52d5879a530514dd0d661dbc649d0ec812d0e08972c7fb3d9460077ab7b0",
+   "run_id": "run:historical-period:b77c159dbd55aa96d6b4fba8dca215ba0121276a834b60add75c941bb1761613",
+   "selection_id": "sha256:15bd2640e887fdf5f0a066010f8a7c5aa926059f5143f80cb6adb947fc242ac0",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value": null
+  },
+  {
+   "company_id": "macys",
+   "evidence_count": 1,
+   "metric_id": "B01",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-01-28",
+   "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+   "result_id": "sha256:a4237cca3788296cffd90e794cbf00efd6398610b770176331570331957aafd7",
+   "run_id": "run:historical-period:5d5e03ef2ba540d7ec7795e7c8b6a93eb13e320370a67ea4c29ea39f32ee2503",
+   "selection_id": "sha256:e3c67f626dc32c61fc009cdd1b348c8933e593dd95c3c7602b2b3ac2582c2a13",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value": "24442000000"
+  },
+  {
+   "company_id": "macys",
+   "evidence_count": 3,
+   "metric_id": "B03",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-01-28",
+   "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+   "result_id": "sha256:25ec5ac50915af9e5efb95ebe4f42ea8098ae29fd306ad65365e9a6505d1eb9f",
+   "run_id": "run:historical-period:b6b68a6f08083a3f3d0ff41f24014c0b4d55ac7d6c8d3f910fa90feea33316df",
+   "selection_id": "sha256:e3c67f626dc32c61fc009cdd1b348c8933e593dd95c3c7602b2b3ac2582c2a13",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value": "0.1058424024220603878569675149"
+  },
+  {
+   "company_id": "marriott_international",
+   "evidence_count": 0,
+   "metric_id": "B03",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2024-12-31",
+   "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+   "result_id": "sha256:c9856274f142b9dd50137fa3f6a37cce88e8257bea6eccf14ba4c360012d1fc4",
+   "run_id": "run:historical-period:c5335e8b75b9ac2f16de9b9738726aacb8ec8cb3a2f33ab75e999bd8b2ec40f8",
+   "selection_id": "sha256:1779f8c85a8dca36c62cf8366a8bb6a76dba7f073d1b28b730da94d702824fcb",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value": null
+  },
+  {
+   "company_id": "marriott_international",
+   "evidence_count": 0,
+   "metric_id": "B03",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2025-12-31",
+   "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+   "result_id": "sha256:e2c72e6b7dc5c4a3c1d72f7a09df195068b053f7211798f2466633e4a4b77873",
+   "run_id": "run:historical-period:be92373b0689237fd6abc38bda65b97a51b876470417911ec1dd89a37f9a8bd1",
+   "selection_id": "sha256:92594391f74cbb6ad736b173b6c92e16b2aedadb2c224ead4d7c8c497f3b977b",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value": null
+  }
+ ],
+ "public_rows": 6,
+ "read_back_problems": [],
+ "record_type": "ISSUE_47_TARGETED_ROUND",
+ "requirement_closure_hashes": [
+  "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a"
+ ],
+ "runtime_tree": {
+  "commit": "44ee077cd6a5dfa20ffe45adcb4267477ee6efcd",
+  "files_beyond_the_commit": [
+   "requirements/issue_47_v1/baseline_manifest.json",
+   "scripts/vnext/calculator.py",
+   "scripts/vnext/constraints.py",
+   "scripts/vnext/projector.py",
+   "scripts/vnext/records.py",
+   "scripts/vnext/requirement_profile.py",
+   "scripts/vnext/run_store.py"
+  ]
+ },
+ "what_ran": "the positions the three ports of fbded78a move, under the closure those ports produced (7c22e583), in a runtime tree that is the branch at 44ee077c plus the registration patch (44ee077c changed evidence only, so the rule files are those of fbded78a), with the data root restored from the export at 288 captures and registered in that tree's own journal"
+}

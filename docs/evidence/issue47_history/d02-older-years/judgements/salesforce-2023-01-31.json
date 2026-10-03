@@ -1,0 +1,316 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "salesforce:2023-01-31",
+ "reader": "independent subagent reader D (held-out round, 2026-10-02; brief verbatim)",
+ "reader_note": "The value holds all of Item 3 (how claims are evaluated, the uncertainty of litigation, and the sentence incorporating Note 14) and every substantive block of Note 14 Legal Proceedings and Claims: the ordinary-course and accrual statements, management's view, and the Slack securities class actions (Federal Action with certiorari granted, State Court Action stayed). In this filing the note describes only the Slack class actions; that paragraph runs across a page break and both halves are taken (2090, 2093). The skipped blocks are only page numbers and Table of Contents links, no Item 8 keyword blocks were taken, and the context and heading lists show no legal matter the value lacks.",
+ "packet_document_id": "sha256:da06f8cabaf8f07c439fad6dfefe12dd48c9e6d7620b1ae048e29bf2fb65fb11",
+ "packet_candidate_hash": "sha256:a971d08a6eab2eff210b26692359a720be149864a12ce20cc26a8f7ffc09b13a",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 651,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 text: how claims and lawsuits are evaluated; IP injunction and customer indemnification exposure",
+   "text": "We evaluate all claims and lawsuits with respect to their potential merits, our potential defenses and counterclaims, settlement or litigation potential and the expected effect on us. Our technologies may be subject to injunction if they are found to infringe the rights of a third party. In addition, many of our subscription agreements require us to indemnify our customers for third-party intellectual property infringement claims, which could increase the cost to us of an adverse ruling on such a claim.",
+   "text_sha256": "sha256:ffa0a8108e11947493fab7f2c6a63595e0cb6c36f52b69c208e49c523b078e12",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 652,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 text: uncertainty and possible consequences of claims and litigation",
+   "text": "The outcome of any claims or litigation, regardless of the merits, is inherently uncertain. Any claims and other lawsuits, and the disposition of such claims and lawsuits, whether through settlement or litigation, could be time-consuming and expensive to resolve, divert our attention from executing our business plan, result in efforts to enjoin our activities, lead to attempts by third parties to seek similar claims and, in the case of intellectual property claims, require us to change our technology, change our business practices, pay monetary damages or enter into short- or long-term royalty or licensing agreements.",
+   "text_sha256": "sha256:e4099b5ee48936ed54bdfadcfdd5bf826e9709d65a2c05c7c80413c1557822f2",
+   "order": 1,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 653,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 sentence incorporating Note 14 by reference",
+   "text": "For more information regarding legal proceedings see Note 14 “Legal Proceedings and Claims” to the consolidated financial statements in Item 8 of Part II.",
+   "text_sha256": "sha256:02bca36d023b4aeb041ea928e14f0773ba51e901563d8fc885622f6c1efaca29",
+   "order": 2,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2084,
+   "verdict": "DISCLOSURE",
+   "why": "caption of the incorporated legal proceedings note",
+   "text": "14. Legal Proceedings and Claims",
+   "text_sha256": "sha256:3c166125ac270b4b3b5a21a9756a3ce2774743c1e46cf45ded21254e4a27851c",
+   "order": 3,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2085,
+   "verdict": "DISCLOSURE",
+   "why": "ordinary-course legal, regulatory and class-action proceedings and infringement claims",
+   "text": "In the ordinary course of business, the Company is or may be involved in various legal or regulatory proceedings, claims or purported class actions related to alleged infringement of third-party patents and other intellectual property rights, commercial, corporate and securities, labor and employment, wage and hour and other claims. The Company has been, and may in the future be put on notice or sued by third parties for alleged infringement of their proprietary rights, including patent infringement.",
+   "text_sha256": "sha256:84e9bdbd24600ac95766a42f313a89e4b5bec1c6c3c6622f8216dc3a74eef056",
+   "order": 4,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2086,
+   "verdict": "DISCLOSURE",
+   "why": "note text on possible effects of resolving a legal matter",
+   "text": "In general, the resolution of a legal matter could prevent the Company from offering its service to others, could be material to the Company’s financial condition or cash flows, or both, or could otherwise adversely affect the Company’s reputation and future operating results.",
+   "text_sha256": "sha256:94b30e6c075803e72eca1c9a966dec0249ff5f3fa7d3cb1fb727759178c5d790",
+   "order": 5,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2087,
+   "verdict": "DISCLOSURE",
+   "why": "accrual policy for legal matters; excess losses not estimable",
+   "text": "The Company makes a provision for a liability relating to legal matters when it is both probable that a liability has been incurred and the amount of the loss can be reasonably estimated. These provisions are reviewed at least quarterly and adjusted to reflect the impacts of negotiations, estimated settlements, legal rulings, advice of legal counsel and other information and events pertaining to a particular matter. The outcomes of legal proceedings and other contingencies are, however, inherently unpredictable and subject to significant uncertainties. At this time, the Company is not able to reasonably estimate the amount or range of possible losses in excess of any amounts accrued, including losses that could arise as a result of application of non-monetary remedies, with respect to the contingencies it faces, and the Company’s estimates may not prove to be accurate.",
+   "text_sha256": "sha256:25ed3db26c57fd67fd165bfddd24338ec99846177c4096c6811cc79b58ea2d5b",
+   "order": 6,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2088,
+   "verdict": "DISCLOSURE",
+   "why": "management's view of the outcome of current matters",
+   "text": "In management’s opinion, resolution of all current matters, including all those described below, is not expected to have a material adverse impact on the Company’s financial statements. However, depending on the nature and timing of any such dispute, payment or other contingency, the resolution of a matter could materially affect the Company’s current or future results of operations or cash flows, or both, in a particular quarter.",
+   "text_sha256": "sha256:e533815f422d597363ab68be66fa190d21ba051877e1f2c391cd14dfef159c5e",
+   "order": 7,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2089,
+   "verdict": "DISCLOSURE",
+   "why": "case label for the Slack matter",
+   "text": "Slack Litigation",
+   "text_sha256": "sha256:dae7bac6e6a98efd7f4e419e7642b6dfa35ec9aa876c254d8d9adfaafe251a11",
+   "order": 8,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2090,
+   "verdict": "DISCLOSURE",
+   "why": "Slack securities class actions, first part of the paragraph",
+   "text": "Beginning in September 2019, seven purported class action lawsuits were filed against Slack, its directors, certain of its officers and certain investment funds associated with certain of its directors, each alleging violations of securities laws in connection with Slack’s registration statement on Form S-1 (the “Registration Statement”) filed with the SEC. All but one of",
+   "text_sha256": "sha256:72d089e1179cc12261387f41e0b4a0e75cd51132045fb2c469e650aaa5b07bb6",
+   "order": 9,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2093,
+   "verdict": "DISCLOSURE",
+   "why": "Slack class actions continued: Federal Action certiorari granted, State Court Action stayed",
+   "text": "these actions were filed in the Superior Court of California for the County of San Mateo, though one plaintiff originally filed in the County of San Francisco before refiling in the County of San Mateo (and the original San Francisco action was dismissed). The remaining action was filed in the U.S. District Court for the Northern District of California (the “Federal Action”). In the Federal Action, captioned Dennee v. Slack Technologies, Inc., Case No. 3:19-CV-05857-SI, Slack and the other defendants filed a motion to dismiss the complaint in January 2020. In April 2020, the court granted in part and denied in part the motion to dismiss. In May 2020, Slack and the other defendants filed a motion to certify the court’s order for interlocutory appeal, which the court granted. Slack and the other defendants filed a petition for permission to appeal the district court’s order to the Ninth Circuit Court of Appeals, which was granted in July 2020. Oral argument was heard in May 2021. On September 20, 2021, the Ninth Circuit affirmed the district court’s ruling. Slack filed a petition for rehearing with the Ninth Circuit on November 3, 2021, which was denied on May 2, 2022. Slack filed a petition for a writ of certiorari with the U.S. Supreme Court on August 31, 2022, which was granted on December 13, 2022. Oral argument is scheduled for April 17, 2023. The state court actions were consolidated in November 2019, and the consolidated action is captioned In re Slack Technologies, Inc. Shareholder Litigation, Lead Case No. 19CIV05370 (the “State Court Action”). An additional state court action was filed in San Mateo County in June 2020 but was consolidated with the State Court Action in July 2020. Slack and the other defendants filed demurrers to the complaint in the State Court Action in February 2020. In August 2020, the court sustained in part and overruled in part the demurrers, and granted plaintiffs leave to file an amended complaint, which they filed in October 2020. Slack and the other defendants answered the complaint in November 2020. Plaintiffs filed a motion for class certification on October 21, 2021, which remains pending. On October 26, 2022, the court stayed the State Court Action pending of Slack’s petition for a writ of certiorari in the Federal Action. The State Court remains stayed pending the Supreme Court’s decision in the Federal Action. The Federal Action and the State Court Action seek unspecified monetary damages and other relief on behalf of investors who purchased Slack’s Class A common stock issued pursuant and/or traceable to the Registration Statement.",
+   "text_sha256": "sha256:99d143daf6e259d6f3fc5323a760ac1537b12ba473311a06a512e3ae02f2d3d3",
+   "order": 10,
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2091,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number at a page break inside the note",
+   "text": "91",
+   "text_sha256": "sha256:1da51b8d8ff98f6a48f80ae79fe3ca6c26e1abb7b7d125259255d6d2b875ea08",
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2092,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link, page furniture",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2094,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number at the end of the note",
+   "text": "92",
+   "text_sha256": "sha256:8241649609f88ccd2a0a5b233a07a538ec313ff6adf695aa44a969dbca39f67d",
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2095,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link, page furniture",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a",
+   "scope": "NOTE_14"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1138,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance-sheet stockholders' equity caption",
+   "text": "Stockholders’ equity:",
+   "text_sha256": "sha256:73d8139821ed8269a52c8143fc565fb5a81a57e14c335b03e8ca473b033bf050"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1139,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "preferred stock line of the balance sheet",
+   "text": "Preferred stock, $0.001 par value; 5 shares authorized and none issued and outstanding",
+   "text_sha256": "sha256:d8414a5d05945f04d7f3b9ded2d36844ab03c39e86bfdbece98a9fcf45377942"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1140,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table amounts",
+   "text": "0 0",
+   "text_sha256": "sha256:933305f987bcf5fb6c250018e35a6eee1528f06013807a4136ec13622909af97"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1141,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "common stock line of the balance sheet",
+   "text": "Common stock, $0.001 par value; 1,600 shares authorized, 1,009 and 989 issued and outstanding at January 31, 2023 and 2022, respectively",
+   "text_sha256": "sha256:470f959c76e47e4799b3cb206008b071eaf23a0e28f9302260162000dcbf3110"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1142,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table amounts",
+   "text": "1 1",
+   "text_sha256": "sha256:020a7c91e30725bb191818987340dec6040aff93923840de685e1e1d7b3d071a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1143,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "treasury stock line",
+   "text": "Treasury stock, at cost(4,000)0",
+   "text_sha256": "sha256:60d098bc9d909694fd2685dce42614b9f565434ee3e79e1c44066c7af3ad8049"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1144,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "additional paid-in capital line",
+   "text": "Additional paid-in capital55,047 50,919",
+   "text_sha256": "sha256:09758bfbfd62f22d758500d180bc30e2dcecdbb0d1e9183b43afb37dca265fc1"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1145,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "accumulated other comprehensive loss line",
+   "text": "Accumulated other comprehensive loss(274)(166)",
+   "text_sha256": "sha256:2dd504421d7568b0de6491466caa4e39cf9323603e7834ba5210756f599c6c1b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1146,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "retained earnings line",
+   "text": "Retained earnings7,585 7,377",
+   "text_sha256": "sha256:8de6a18200ba5ff19fd023bc83fef51acdb3d85d7bdb22ad41ccfa1a0c691eed"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1147,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total stockholders' equity line",
+   "text": "Total stockholders’ equity58,359 58,131",
+   "text_sha256": "sha256:37ecaf90dba5a30342951734083b2f91a0c22220bd40d3d7b452f89e55ada6c9"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1148,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "total liabilities and equity line",
+   "text": "Total liabilities and stockholders’ equity$98,849 $95,209",
+   "text_sha256": "sha256:f1f71a5f0ff00ae9e4391362b6e71374771a62413e79ddae14bd44bf1d973b25"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1149,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "statement footer pointing to the notes",
+   "text": "See accompanying Notes.",
+   "text_sha256": "sha256:61894ee42bc6c775e1e7c702918ddc3d1834eda527ffb1499628e085e4d84535"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1150,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "59",
+   "text_sha256": "sha256:3e1e967e9b793e908f8eae83c74dba9bcccce6a5535b4b462bd9994537bfe15c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1151,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Table of Contents link",
+   "text": "Table of Contents",
+   "text_sha256": "sha256:a9360e0212a4d173581c91da68494d022ee55871188be00acf863d2ed0cf7a6a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1152,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name page header",
+   "text": "Salesforce, Inc.",
+   "text_sha256": "sha256:bb02bdb41eabaaf40d7837cf9ac0c13ece671641b1f9bbec8e48a8a2b135a1ed"
+  },
+  {
+   "kind": "HEADING",
+   "i": 650,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; its text is taken (651-653)",
+   "text": "ITEM 3. LEGAL PROCEEDINGS",
+   "text_sha256": "sha256:dbb42f43bcffb34a940ab059bead73da216c54a7637a624a1f891edfda4f4d8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1137,
+   "verdict": "NOT_D02",
+   "why": "balance-sheet caption for commitments and contingencies",
+   "text": "Commitments and contingencies (See Notes 6 and 14)",
+   "text_sha256": "sha256:9cf2308c5a0f909b7c18753cc97676f47988485b905c899af6575e9e63eb706c"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1649,
+   "verdict": "NOT_D02",
+   "why": "leases and other commitments note",
+   "text": "6. Leases and Other Commitments",
+   "text_sha256": "sha256:8f91416ed5a0c5cee125789939697f314d2ceb3e086f1404e509f66a61bcd509"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2084,
+   "verdict": "REACHED",
+   "why": "legal proceedings note heading; the note's content is taken",
+   "text": "14. Legal Proceedings and Claims",
+   "text_sha256": "sha256:3c166125ac270b4b3b5a21a9756a3ce2774743c1e46cf45ded21254e4a27851c"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2089,
+   "verdict": "REACHED",
+   "why": "Slack case heading; the matter is taken in 2090 and 2093",
+   "text": "Slack Litigation",
+   "text_sha256": "sha256:dae7bac6e6a98efd7f4e419e7642b6dfa35ec9aa876c254d8d9adfaafe251a11"
+  }
+ ]
+}

@@ -1,0 +1,699 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "paramount_skydance_paramount_global:2025-12-31",
+ "reader": "fresh subagent reader (round 1e1ef948, 2026-10-02; brief verbatim, plus the meaning of the scopes and of left_out_by; a latest-year position, so design and regression material for the category rule, not held out)",
+ "reader_note": "The value is Item 3's incorporation sentence plus the whole Legal Matters caption of Note 18 (general statement, the transaction-related stockholder suits and books-and-records actions, the Sony distribution dispute, asbestos, environmental claims and the contingent-liability accrual), with only page furniture skipped inside the caption. Two Item 8 keyword blocks are added: 1900 gives the $1.4 billion fair value of the asbestos/environmental contingent liabilities, and 2108 is a transaction-related costs paragraph that I judged disclosure only because its last sentence ties a 2023 benefit to stockholder litigation over the 2019 Viacom-CBS merger (a borderline call). The commitments, guarantees and indemnity text before the caption and the left-out covenant block 2257 are not D02 content.",
+ "packet_document_id": "sha256:e7d86644dcd26bbc859e0d081f6b860a30cc707c9214d386d6548db1e7dadc06",
+ "packet_candidate_hash": "sha256:966c71a9663358b3f61f276f238b6fc00a961d925903a7da8d40d562f7cb1c85",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 390,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 sentence incorporating the Note 18 legal matters caption",
+   "text": "The information set forth under the caption “Legal Matters” in Note 18 to the consolidated financial statements in “Item 8. Financial Statements and Supplementary Data—Notes to Consolidated Financial Statements” is incorporated herein by reference.",
+   "text_sha256": "sha256:c8b97b49d1e8874ac89dea0e90575a845972562cfcdc15024162db0235597088",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1900,
+   "verdict": "DISCLOSURE",
+   "why": "amount of contingent liabilities for asbestos suits and environmental claims",
+   "text": "(h) The estimated fair value of Paramount Global’s contingent liabilities as of August 7, 2025 was $1.4 billion, which relate principally to the defense and settlement of lawsuits claiming various personal injuries related to exposure to asbestos as well as claims from federal and state environmental regulatory agencies and other entities asserting liability for environmental cleanup costs and related damages (see Note 18).",
+   "text_sha256": "sha256:c9431c12a0bc727b9016cfc7810071e65a49aab3844c94f3bc3a2c3f47613eb0",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2108,
+   "verdict": "DISCLOSURE",
+   "why": "mostly deal fees, but last sentence ties a 2023 benefit to stockholder suits over the 2019 merger",
+   "text": "During the Successor period from August 7 - December 31, 2025, we recorded $81 million of transaction-related costs, principally for legal and other professional fees associated with the Warner Bros. offer. During the Predecessor period from January 1 - August 6, 2025, we recorded $199 million, principally for banking, legal, advisory, and other professional fees relating to the Transactions, and transaction awards that became payable to eligible employees upon closing. During 2024, we recorded costs for transaction-related items of $62 million associated with legal and advisory services related to the Transactions, and during 2023, we recorded a benefit of $156 million, principally associated with stockholder litigation related to the 2019 merger of Viacom Inc. (“Viacom”) and CBS Corporation (“CBS”).",
+   "text_sha256": "sha256:9d0c10ddf4ede0e48cc7ba8b2249b82393ca39fa608e42a07ba7a70eaad60dbf",
+   "order": 2,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3226,
+   "verdict": "DISCLOSURE",
+   "why": "caption of the incorporated legal matters section",
+   "text": "Legal Matters",
+   "text_sha256": "sha256:52f4a9fffc9e4eafcae8d14dcec9f32de0be5d5700fc71a9f5b68f6f314f1532",
+   "order": 3,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3227,
+   "verdict": "DISCLOSURE",
+   "why": "label for the general litigation statement",
+   "text": "General",
+   "text_sha256": "sha256:c910d474dcd724bff83ddedeb06bf1eceaf9fb3af7c76bb282be057f36e6dffa",
+   "order": 4,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3228,
+   "verdict": "DISCLOSURE",
+   "why": "overall statement on suits, investigations and expected outcome",
+   "text": "On an ongoing basis, we vigorously defend ourselves in numerous lawsuits and proceedings and respond to various investigations and inquiries from federal, state, local and international authorities (collectively, “Litigation”). Litigation may be brought against us without merit, is inherently uncertain and always difficult to predict. However, based on our understanding and evaluation of the relevant facts and circumstances, we believe that the following matters are not likely, in the aggregate, to result in a material adverse effect on our business, financial condition and results of operations.",
+   "text_sha256": "sha256:9b5860002868963ab1300e0158c8d54dfac70a151778fc94550983c2895e9372",
+   "order": 5,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3229,
+   "verdict": "DISCLOSURE",
+   "why": "label for transaction-related litigation",
+   "text": "Litigation Relating to the Transactions",
+   "text_sha256": "sha256:50c2673b6b56fc7d12a74039e8eca6cc0a8a5f573fe4c4ead73f2670206a9517",
+   "order": 6,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3230,
+   "verdict": "DISCLOSURE",
+   "why": "Baker putative class action over the transaction agreement",
+   "text": "In connection with the Transactions, in July 2024, Scott Baker, a purported holder of Paramount Global Class B Common Stock, filed a putative class action lawsuit in the Court of Chancery of the State of Delaware against NAI, Shari E. Redstone, Barbara M. Byrne, Linda M. Griego, Judith A. McHale, Charles E. Phillips, Jr., Susan Schuman, Skydance and David Ellison (the “Baker Action”). The complaint alleges breaches of fiduciary duties to Paramount Global Class B stockholders in connection with the negotiation and approval of the Transaction Agreement, among other claims, and seeks unspecified damages, costs and expenses, as well as other relief. In November 2024, the Court granted the parties’ stipulation in the Baker Action to (i) postpone briefing on the motions to dismiss until the filing or designation of an operative complaint following resolution of the plaintiff’s motion to appoint him and the Baerlocher Family Trust, a purported holder of Paramount Global Class B Common Stock, as co-lead plaintiffs and Berger Montague PC as interim class counsel (the “Baker Leadership Motion”), and (ii) stay discovery until resolution of any motion to dismiss an operative complaint following resolution of the Baker Leadership Motion. In October 2024, various purported stockholders filed motions to intervene to oppose the Baker Leadership Motion. In December 2024, the plaintiff, along with Mark Baerlocher, as trustee for the Baerlocher Family Trust, filed an amended complaint alleging the same breaches of fiduciary duties against the same defendants as in the original complaint. In June 2025, counsel for Mr. Baker informed the Court that the Baker Leadership Motion would be withdrawn without prejudice and that the group of purported stockholders seeking lead plaintiff status would meet and confer to propose a schedule for resolving lead plaintiff applications.",
+   "text_sha256": "sha256:d195327500c968f7ce01af3113995ba9e8cc854659d3c3d251a9a1b5c1e7d187",
+   "order": 7,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3231,
+   "verdict": "DISCLOSURE",
+   "why": "Rhode Island books-and-records action",
+   "text": "In April 2024, the State of Rhode Island Office of the General Treasurer, on behalf of the Employees’ Retirement System of Rhode Island, a purported holder of Paramount Global Class B Common Stock, filed a verified complaint for the inspection of books and records under Section 220 of the General Corporation Law of the State of Delaware (the “DGCL”) in the Court of Chancery of the State of Delaware against us, seeking the inspection of books and records to investigate whether Paramount Global’s Board of Directors, NAI, Shari E. Redstone and/or certain executive officers may have breached their fiduciary duties to stockholders for alleged diversion of corporate opportunities (the “220 Action”). The magistrate judge held a trial in July 2024 and denied the request for inspection. The plaintiff filed an exception to the Court, and in January 2025, the Court ruled that the plaintiff was entitled to obtain books and records that were both necessary and sufficient to fulfill the purpose of its request. In February 2025, the Court granted an implementing order returning the 220 Action to the magistrate judge for further proceedings on the scope of production. In March 2025, the Court granted our application for certification",
+   "text_sha256": "sha256:e03c21748e45f4e0145510b1720e74939983987848bd6c7b77c8a18172353dd3",
+   "order": 8,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3236,
+   "verdict": "DISCLOSURE",
+   "why": "rest of that action's appeal plus stockholder demand letters",
+   "text": "of interlocutory appeal to the Delaware Supreme Court, which was accepted in April 2025. The Court heard oral argument in November 2025, and the Court reserved decision. Certain other purported holders of Paramount Global Class B Common Stock and Class A Common Stock have delivered demand letters to investigate similar alleged breaches of fiduciary duties in connection with the Transactions and requested the inspection of books and records. We have also received demand letters from purported holders of Paramount Global Class B Common Stock related to alleged omissions in our registration statement on Form S-4.",
+   "text_sha256": "sha256:689d4319c5642827505e778e2037d3245d6381c75352dd6e22cf8590cb178358",
+   "order": 9,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3237,
+   "verdict": "DISCLOSURE",
+   "why": "LiveVideo.AI suit, dismissal, sanctions and appeal",
+   "text": "Additionally, in August 2024, LiveVideo.AI Corp. filed a lawsuit in the U.S. District Court for the Southern District of New York against Shari E. Redstone, NAI, Christine Varney and Monica Seligman, alleging that the defendants did not fairly consider its offer to purchase Paramount Global. The complaint asserts claims for unfair competition, tortious interference, unjust enrichment and aiding and abetting breach of fiduciary duty, among others, and seeks unspecified monetary damages, costs and other relief. The defendants were never served. The parties exchanged several filings related to service and default. In August 2025, the magistrate judge issued a Report and Recommendation recommending that the case be dismissed and that the Court impose $10,000 in monetary sanctions against LiveVideo.AI Corp. In September 2025, the district judge adopted the report in full, dismissed the case, imposed the sanctions, and enjoined LiveVideo.AI Corp. from filing any further lawsuits in any federal district court arising out of the Transactions. LiveVideo.AI filed a Notice of Appeal in November 2025.",
+   "text_sha256": "sha256:93556632eb2069bb97c5faad73d88c829f80adc9f8df6a85fd23748d422eb4ee",
+   "order": 10,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3238,
+   "verdict": "DISCLOSURE",
+   "why": "Gabelli class action for former Class A holders",
+   "text": "In August 2025, Gabelli Value 25 Fund Inc. (“Gabelli”) filed a putative class action complaint in the Court of Chancery of the State of Delaware against Barbara M. Byrne, Linda M. Griego, Judith A. McHale, Charles E. Phillips, Jr., Susan Schuman, Harbor Lights (f/k/a National Amusements, Inc.) and Shari E. Redstone (the “NAI Defendants”), and Skydance Media, LLC and RB Tentpole LP (the “Skydance Defendants”), alleging breach of fiduciary duty against all defendants and unjust enrichment against the NAI Defendants. Gabelli seeks a declaratory judgment, damages, including rescissory damages and/or quasi-appraisal damages, disgorgement of NAI’s profits, fees and costs, and pre- and post-judgment interest. In September 2025, the Skydance Defendants filed placeholder motions to dismiss, and Gabelli filed a motion to be appointed as interim lead plaintiff representing former minority holders of Paramount Global Class A Common Stock (the “Gabelli Class A Leadership Motion”). In October 2025, counsel for Gabelli filed a letter with the Court indicating that no competing motions or objections to the Gabelli Class A Leadership Motion were filed and proposed that the Court appoint Gabelli as lead plaintiff. In November 2025, the Court granted the Gabelli Class A Leadership Motion and appointed Gabelli as lead plaintiff to prosecute the claims on behalf of the Class A minority shareholders. Defendants moved to stay discovery pending resolution of any filed and forthcoming motions to dismiss, and this motion to stay is currently pending before the Court.",
+   "text_sha256": "sha256:f823ad80504f2815c3b801378e7caecd16f30b8b6518ec844e086a23fffce3c6",
+   "order": 11,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3239,
+   "verdict": "DISCLOSURE",
+   "why": "NYCERS action attacking the no-shop provision",
+   "text": "In February 2025, New York City Employees’ Retirement System, the New York City Fire Department Pension Fund, the New York City Police Pension Fund, the New York City Board of Education Retirement System, and the Teachers’ Retirement System of the City of New York, purported holders of Paramount Global Class B Common Stock and Class A Common Stock, filed a putative class action lawsuit in the Court of Chancery of the State of Delaware against Barbara M. Byrne, Linda M. Griego, Judith A. McHale and Susan Schuman, alleging breaches of fiduciary duties for their alleged failure to sufficiently consider an alternative offer that the plaintiffs claimed was superior to the Transactions (the “NYCERS Action”). The plaintiffs argue that the no-shop provision in the Transaction Agreement should be declared invalid and unenforceable because it prevented the parties from engaging in further deal discussions and negotiations with companies other than Skydance, including, specifically, Project Rise Partners, after the no-shop period began. The plaintiffs further assert that the Court has the power to invalidate this provision because Skydance allegedly aided and abetted NAI’s and Shari E. Redstone’s breach of fiduciary duties, including by agreeing to indemnify Shari E. Redstone (through Skydance’s separate agreement with NAI) for any breach of fiduciary duty claims arising out of the Transactions up to a certain amount. Skydance, NAI, Shari E. Redstone and Paramount Global were not named as defendants in the original complaint. The",
+   "text_sha256": "sha256:d5051ee6288cd3aab7978c7c666bd2f9dd58529c31eb84271390d01b1fa6b90f",
+   "order": 12,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3244,
+   "verdict": "DISCLOSURE",
+   "why": "rest of NYCERS: relief sought, added defendants, discovery",
+   "text": "NYCERS Action originally sought, among other forms of relief, an order from the Court enjoining the closing of the Transactions until the Court reached a final resolution on the plaintiffs’ claims and an order compelling the special committee of Paramount Global’s Board of Directors to evaluate Project Rise Partners’ alternative offer to, among other things, acquire Paramount Global Class A Common Stock for $23.00 per share and Paramount Global Class B Common Stock for $19.00 per share. The Project Rise Partners’ offer was made after the go-shop period in the Transaction Agreement had ended. The plaintiffs filed a motion for expedited proceedings along with their complaint. In February 2025, the plaintiffs moved to join Paramount Global, Skydance, Shari E. Redstone, NAI and various other entities named in the Transaction Agreement as necessary parties to the litigation and moved for a temporary restraining order preventing the closing of the Transactions until the Court considered the plaintiffs’ anticipated motion for injunctive relief following expedited discovery. In March 2025, the court allowed plaintiffs to amend the complaint to add Paramount Global, Skydance, Shari E. Redstone, NAI and the various other entities as defendants. The amended complaint seeks compensatory damages. The parties reached an agreement to withdraw the plaintiffs’ request for expedition and their application for injunctive relief in exchange for targeted discovery from certain of the defendants and third parties. The matter is in discovery.",
+   "text_sha256": "sha256:89eb18c3ab4204749ed46075b79337dfaf6fc78f83a58f42b7c69603cfbd67a2",
+   "order": 13,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3245,
+   "verdict": "DISCLOSURE",
+   "why": "pension funds' books-and-records complaint and trial schedule",
+   "text": "In April 2025, Metropolitan Water Reclamation District Retirement Fund, Laborers’ and Retirement Board Employees’ Annuity and Benefit Fund of Chicago, Gary Mendelsohn, and Park Employees’ Annuity and Benefit Fund of Chicago, purported holders of Paramount Global Class B Common Stock, filed a complaint for the inspection of books and records under Section 220 of the DGCL in the Court of Chancery of the State of Delaware against us to maintain standing to enforce their statutory inspection rights and seek an order to produce all the books and records identified in their Section 220 demands to investigate possible breaches of fiduciary duties in connection with the Transactions. The complaint alleges that the documents produced to such purported stockholders thus far pursuant to their Section 220 demands are insufficient. The complaint seeks an order requiring us to produce the documents identified in their Section 220 demands, among other relief. In November 2025, the parties contacted the Court with a request to lift the stay and schedule a trial. In December 2025, the Court entered a case schedule. Under the schedule, briefing is set to conclude by February 13, 2026, and trial on the books and records demand is set for March 11, 2026.",
+   "text_sha256": "sha256:3f81cdc386ef38cce941cd3828e332c05e7b52028e547ef8a0e6b2a6d3a04ebd",
+   "order": 14,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3246,
+   "verdict": "DISCLOSURE",
+   "why": "label for the distribution agreement dispute",
+   "text": "Litigation Related to Distribution Agreements",
+   "text_sha256": "sha256:ec3528f08c61f49e218e3a230e650d16f9e6cab9911271cdd1c42f4adcc15c54",
+   "order": 15,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3247,
+   "verdict": "DISCLOSURE",
+   "why": "Sony breach-of-contract dispute over game-show distribution, settled",
+   "text": "In October 2024, Sony Pictures Television Inc., along with Jeopardy Productions, Inc. and Califon Productions, Inc. (collectively, “Sony”), filed a civil complaint for damages against CBS Studios Inc. in the Superior Court of the State of California, for Los Angeles County, asserting a breach of contract claim against us relating to our exclusive right to distribute Wheel of Fortune and Jeopardy! (the “Distribution Agreements”). In December 2024, we filed a cross-complaint against Sony seeking, among other things, a declaration that the Distribution Agreements remain in full force and effect. On February 3, 2025, Sony purported to assume our distribution functions, and on February 4, 2025, we filed an ex parte application, seeking a temporary restraining order preventing Sony from assuming these distribution functions, which the trial court granted on February 5, 2025. On April 10, 2025, the trial court declined to issue a preliminary injunction preventing Sony from assuming these distribution functions for the duration of the litigation. On April 11, 2025, we appealed the trial court’s ruling and requested a stay of the order denying the preliminary injunction, which was granted on April 16, 2025. The parties have reached a settlement of this matter.",
+   "text_sha256": "sha256:1759decc8f07c066862ac24bd769dacd9a3c8fe92e3a29dd28f9bfc214256110",
+   "order": 16,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3248,
+   "verdict": "DISCLOSURE",
+   "why": "label for claims tied to former businesses",
+   "text": "Claims Related to Former Businesses",
+   "text_sha256": "sha256:a549be0c7a101681877568ee41f26ce1c72743b7b9afaea485a5b9f2f6480f67",
+   "order": 17,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3249,
+   "verdict": "DISCLOSURE",
+   "why": "label naming the asbestos matters",
+   "text": "Asbestos",
+   "text_sha256": "sha256:6b210ed7077c2ff578b1dde1a4078123e262932220e508053ea0a91086b2cf4c",
+   "order": 18,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3250,
+   "verdict": "DISCLOSURE",
+   "why": "asbestos injury suits from predecessor products",
+   "text": "We are a defendant in lawsuits claiming various personal injuries related to asbestos and other materials, which allegedly occurred as a result of exposure caused by various products manufactured by Westinghouse, a",
+   "text_sha256": "sha256:0f45065a38f2923b20bf0dde9d7b5c973b68833a49924d85184166629a9808c3",
+   "order": 19,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3255,
+   "verdict": "DISCLOSURE",
+   "why": "continuation on how asbestos suits name the company",
+   "text": "predecessor, generally prior to the early 1970s. Westinghouse was neither a producer nor a manufacturer of asbestos. We are typically named as one of a large number of defendants in both state and federal cases. In the majority of asbestos lawsuits, the plaintiffs have not identified which of our products is the basis of a claim. Claims against us in which a product has been identified most commonly relate to allegations of exposure to asbestos-containing insulating material used in conjunction with turbines and electrical equipment.",
+   "text_sha256": "sha256:dc7307f11a262f62bdc848c28934aa8eb272d62557b1bcc02d4e9a966b45179e",
+   "order": 20,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3256,
+   "verdict": "DISCLOSURE",
+   "why": "pending asbestos claim counts and settlement and defense costs",
+   "text": "Claims are frequently filed and/or settled in groups, which may make the amount and timing of settlements, and the number of pending claims, subject to significant fluctuation from period to period. We do not report as pending those claims on inactive, stayed, deferred or similar dockets that some jurisdictions have established for claimants who allege minimal or no impairment. As of December 31, 2025 (Successor), we had pending approximately 17,490 asbestos claims, as compared with approximately 18,310 as of December 31, 2024 (Predecessor). For the period from August 7 - December 31, 2025 (Successor) and for the period from January 1 - August 6, 2025 (Predecessor) we received approximately 1,300 and 1,890 new claims, respectively, and closed or moved to an inactive docket approximately 1,810 and 2,200 claims, respectively. We report claims as closed when we become aware that a dismissal order has been entered by a court or when we have reached agreement with the claimants on the material terms of a settlement. Settlement costs depend on the seriousness of the injuries that form the basis of the claims, the quality of evidence supporting the claims and other factors. Our total costs for settlement and defense of asbestos claims after insurance recoveries and net of tax, were approximately $23 million for the Successor period from August 7 - December 31, 2025, $11 million and $34 million for the Predecessor periods from January 1 - August 6, 2025, and the year ended December 31, 2024, respectively. Our costs for settlement and defense of asbestos claims may vary year to year and insurance proceeds are not always recovered in the same period as the insured portion of the expenses.",
+   "text_sha256": "sha256:ae3ebc1e800e35491bd7cab3bdefd5a5f4f5c47f63d76c5a69a5228d27367303",
+   "order": 21,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3257,
+   "verdict": "DISCLOSURE",
+   "why": "kinds of asbestos claims and difficulty of estimating them",
+   "text": "Filings include claims for individuals suffering from mesothelioma, a rare cancer, the risk of which is allegedly increased by exposure to asbestos; lung cancer, a cancer which may be caused by various factors, one of which is alleged to be asbestos exposure; other cancers, and conditions that are substantially less serious, including claims brought on behalf of individuals who are asymptomatic as to an allegedly asbestos-related disease. A significant number of pending claims against us are non-cancer claims. It is difficult to predict long-term future asbestos liabilities, as events and circumstances may impact the estimate.",
+   "text_sha256": "sha256:b77e165b84f98813aeca5a8d51bd975425e8b3809e3b5e53f3eab4746004afe9",
+   "order": 22,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3258,
+   "verdict": "DISCLOSURE",
+   "why": "label for environmental and other claims",
+   "text": "Environmental and Other",
+   "text_sha256": "sha256:921778a46c0df8fc28e459f9d102803f63ba1288e2b93b3fc962b40b248b6aa1",
+   "order": 23,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3259,
+   "verdict": "DISCLOSURE",
+   "why": "environmental cleanup and toxic tort claims",
+   "text": "From time to time, we also receive claims from federal and state environmental regulatory agencies and other entities asserting that we are or may be liable for environmental cleanup costs and related damages principally relating to our historical and predecessor operations. In addition, from time to time we receive personal injury claims including toxic tort and product liability claims (other than asbestos) arising from our historical operations and predecessors.",
+   "text_sha256": "sha256:889892da4d3ecf861e9c7869dd0890d89855f58aa5776e5b6a3ad00ab22b43fe",
+   "order": 24,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3260,
+   "verdict": "DISCLOSURE",
+   "why": "label for contingent liabilities of former businesses",
+   "text": "Contingent Liabilities Relating to Former Businesses",
+   "text_sha256": "sha256:6bf78b3abb8b90c622e62fde20c9229a07a24508e7cd9ababcacad2ac1349baa",
+   "order": 25,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3261,
+   "verdict": "DISCLOSURE",
+   "why": "fair-value step-up of asbestos and environmental contingent liabilities",
+   "text": "In connection with recording Paramount Global’s net assets at the Ultimate Parent’s basis, “Other liabilities” was increased to reflect the fair value of Paramount Global’s estimated contingent liabilities for the defense and settlement of asbestos lawsuits as well as claims from federal and state environmental regulatory agencies and other entities asserting liability for environmental cleanup costs and related damages (See Note 2). The estimated fair value of the asbestos-related liability was determined in consultation with a third-party firm with expertise in estimating asbestos liability and represents the estimate of the amount a third party would pay to take on the risk of any asbestos-related future losses.",
+   "text_sha256": "sha256:29cf8d76bc39162bd953bc758737f6dbc112cc0a698ee3638682c70a60b99032",
+   "order": 26,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3266,
+   "verdict": "DISCLOSURE",
+   "why": "loss-contingency accrual and asbestos accrual changes",
+   "text": "We record an accrual for a loss contingency when it is both probable that a liability has been incurred and when the amount of the loss can be reasonably estimated. The reasonably estimable period for our long-term asbestos liability is 10 years, which we determine in consultation with a third-party firm with expertise in estimating asbestos liability and is due to the inherent uncertainties in the tort litigation system. This estimate is based upon many factors, including the number of outstanding claims, estimated average cost per claim, the breakdown of claims by disease type, historic claim filings, costs per claim of resolution and the filing of new claims, and is assessed in consultation with the third-party firm. Based on an assessment of these factors during the fourth quarters of 2024 and 2023 (Predecessor), we increased the accrual for asbestos matters by $57 million and $23 million, respectively, which were recorded as charges in “Restructuring, transaction-related items, and other corporate matters” on the Consolidated Statements of Operations. The increased accrual in each year was primarily the result of a lower-than-expected rate of decline in new claims. No adjustment to the accrual was required as of December 31, 2025. While we believe that our accruals for these matters are adequate, there can be no assurance that circumstances will not change in future periods and, as a result, our actual liabilities may be higher or lower than our accrual.",
+   "text_sha256": "sha256:5972181a7c194e3c802ebf536cc1b99f0ff8bcfd740bf8bf7112ba0aaf5817bd",
+   "order": 27,
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2257,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "credit covenant; litigation reserves only an EBITDA add-back item",
+   "text": "The Credit Facility has one principal financial covenant which sets a maximum Consolidated Total Leverage Ratio (“Leverage Ratio”) at the end of each quarter. The maximum Leverage Ratio was 4.75x for the quarter ended December 31, 2025 and will decrease to 4.5x for the quarter ending March 31, 2026, and will remain at this level until maturity. The Leverage Ratio reflects the ratio of our Consolidated Indebtedness, net of unrestricted cash and cash equivalents at the end of a quarter, to our Consolidated EBITDA (each as defined in the credit agreement) for the trailing twelve-month period. In May 2025, Paramount Global entered into an amendment to the Credit Facility, which increased the maximum amount of unrestricted cash and cash equivalents that can be netted against Consolidated Indebtedness, in the calculation of the Leverage Ratio, from $1.50 billion to $3.0 billion and amended the definition of Consolidated EBITDA to include an additional add-back (which is capped at 15% of Consolidated EBITDA after giving effect to such add-back) for cash items associated with provisions for restructuring or other business optimization programs, litigation and environmental reserves, and losses on the disposition of businesses. We met the covenant as of December 31, 2025.",
+   "text_sha256": "sha256:ee66df1754d654edebc4955301d0ee2908517ab853d1a8ec6388e0ac9b5b83e9",
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3232,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "II-119",
+   "text_sha256": "sha256:eac103253920efbc35178c6663e5c75e4db0c2e588038b7e3eb371548652f77d",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3233,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running head",
+   "text": "PARAMOUNT SKYDANCE CORPORATION AND SUBSIDIARIES",
+   "text_sha256": "sha256:45d74801990fca6872e219eb2a7206eae20ca80c1bba85104f235d42931eb04f",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3234,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3235,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3240,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "II-120",
+   "text_sha256": "sha256:c0d4eb5d5cc005133b75992517daac78029cfb278366548f50973481f4a00f61",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3241,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running head",
+   "text": "PARAMOUNT SKYDANCE CORPORATION AND SUBSIDIARIES",
+   "text_sha256": "sha256:45d74801990fca6872e219eb2a7206eae20ca80c1bba85104f235d42931eb04f",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3242,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3243,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3251,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "II-121",
+   "text_sha256": "sha256:533ae6eff322ba9c145033771481eac05cb006bdd5a80e7dae88497b3b4b503c",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3252,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running head",
+   "text": "PARAMOUNT SKYDANCE CORPORATION AND SUBSIDIARIES",
+   "text_sha256": "sha256:45d74801990fca6872e219eb2a7206eae20ca80c1bba85104f235d42931eb04f",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3253,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3254,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3262,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "II-122",
+   "text_sha256": "sha256:606bf77facb282adcea34346614217ef937f0d4839cc970b1ea451162d29c36c",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3263,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running head",
+   "text": "PARAMOUNT SKYDANCE CORPORATION AND SUBSIDIARIES",
+   "text_sha256": "sha256:45d74801990fca6872e219eb2a7206eae20ca80c1bba85104f235d42931eb04f",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3264,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3265,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c",
+   "scope": "NOTE_18_CAPTION_3226"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3200,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "subheading for commitments",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3201,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "overview of unrecorded long-term commitments",
+   "text": "Our long-term commitments not recorded on the balance sheet primarily consist of programming and talent commitments and purchase obligations for goods and services resulting from our normal course of business.",
+   "text_sha256": "sha256:44dd957fd93a4496a0bc80f6c182515a867c88f5186498dbf2395b0dc6326789"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3202,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "subheading for off-balance-sheet arrangements",
+   "text": "Off-Balance Sheet Arrangements",
+   "text_sha256": "sha256:357f9e38560a72e2c116b047dc623dcea4982f5bfca25163aa537df0fda5abf7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3203,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "programming, talent and purchase commitments",
+   "text": "Our long-term programming and talent commitments not recorded on the balance sheet, estimated to aggregate to $36.08 billion as of December 31, 2025, include $31.96 billion for sports programming rights and $4.12 billion relating to the production and licensing of television and film programming, including talent contracts. We also have long-term committed purchase obligations which include agreements to purchase goods or services in the future that totaled $1.68 billion as of December 31, 2025. These commitments are payable as follows:",
+   "text_sha256": "sha256:e80a9542740412ccf2e6e55aa0eb0589480e33c22812affa74e5b685f37a4315"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3204,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "Payments Due by Period",
+   "text_sha256": "sha256:07f8d6d8af8dcc2e514a12d65c84a34f5c3b4b7f2739cdc5ac5c0f008176cb5b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3205,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header fragment",
+   "text": "2031 and",
+   "text_sha256": "sha256:e1a87894c1d6d022420339307f42b46f4ad26b35972c29fcf72ece543e59e164"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3206,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table year header row",
+   "text": "Total20262027202820292030Thereafter",
+   "text_sha256": "sha256:6f14d93686b04b5a76894547b9546f97c662f6217a3314c74c25017c3dc77747"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3207,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table row group label",
+   "text": "Off-Balance Sheet Arrangements",
+   "text_sha256": "sha256:357f9e38560a72e2c116b047dc623dcea4982f5bfca25163aa537df0fda5abf7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3208,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "programming commitments table row",
+   "text": "Programming and talent commitments $36,083 $4,803 $4,930 $5,236 $5,050 $4,714 $11,350",
+   "text_sha256": "sha256:3093384c20a89df29c963e9ffe79aa4b7553e2c7dc48e1be4fe91475ff38ee68"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3209,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "purchase obligations table row",
+   "text": "Purchase obligations $1,675 $643 $559 $376 $64 $8 $25",
+   "text_sha256": "sha256:97a03dfa193b00590ed6b8f278f8ac8586551e95b3919307e4fec2876c02f288"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3210,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "subheading for on-balance-sheet arrangements",
+   "text": "On-Balance Sheet Arrangements",
+   "text_sha256": "sha256:2589e2f17c360c152acb560532e7a17e5be4632d08f6fac069be095d604b526c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3211,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "programming liability payment obligations",
+   "text": "At December 31, 2025, we also had long-term contractual obligations for programming liabilities, participations, and residuals. These long-term contractual obligations are payable as follows:",
+   "text_sha256": "sha256:a3996376a418832c3b74d26536933e6409ff8f356bb6eb9d210275afa29ba3f0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3212,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header",
+   "text": "Payments Due by Period",
+   "text_sha256": "sha256:07f8d6d8af8dcc2e514a12d65c84a34f5c3b4b7f2739cdc5ac5c0f008176cb5b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3213,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table column header fragment",
+   "text": "2031 and",
+   "text_sha256": "sha256:e1a87894c1d6d022420339307f42b46f4ad26b35972c29fcf72ece543e59e164"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3214,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "table year header row",
+   "text": "Total2027202820292030Thereafter",
+   "text_sha256": "sha256:b3c5260c7c23d072ca246c7ea4459ba4a83261bb54349461aefadb06998858f2"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3215,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "payment schedule amounts row",
+   "text": "$1,761 $1,124 $372 $192 $59 $14",
+   "text_sha256": "sha256:5648491b05e9217b1d6ff251c6d5d2a620d15266ce309049f05b6c80e40188aa"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3216,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "lease commitments pointing to the lease note",
+   "text": "We also have long-term lease commitments for office space, equipment, transponders and studio facilities, which are recorded on the Consolidated Balance Sheet at December 31, 2025. See Note 10 for details of our operating lease commitments.",
+   "text_sha256": "sha256:c8fb9eddb5961183056d007d1302ff1aca3eefc1a3f2140c2677ab5458d4df52"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3217,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantees subheading",
+   "text": "Guarantees",
+   "text_sha256": "sha256:5ca778bb76e1199247652bf00429d8570ac620ccc8677eef47bed9c990383963"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3218,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "letters of credit subheading",
+   "text": "Letters of Credit and Surety Bonds",
+   "text_sha256": "sha256:1319503e3102dd3c0e4742ce223aba06111f5ac7e98076864dbadb99aaae795b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3219,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "letters of credit and surety bonds, no legal matter",
+   "text": "At December 31, 2025, we had outstanding letters of credit and surety bonds of $235 million that were not recorded on the Consolidated Balance Sheet, as well as a $1.9 billion standby letter of credit facility. In accordance with the contractual requirements of one of our commitments, the letter of credit outstanding under this facility increases and decreases consistent with the related contractual commitment. The amount outstanding was zero at December 31, 2025 and $1.82 billion in January 2026. Letters of credit and surety bonds are primarily used as security against non-performance in the normal course of business under contractual requirements of certain of our commitments. The standby letter of credit facility, which matures in May 2027, is subject to provisions similar to the Credit Facility, including the same principal financial covenant (see Note 9).",
+   "text_sha256": "sha256:6cc401dad9a77793d1c27c4c0469a8ec5c8f18ce4f1e26c862a100ec0b1b5e3f"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3220,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "page number",
+   "text": "II-118",
+   "text_sha256": "sha256:7ee5db2a2bad4feca2ee7bee476a852a92f9dbf2b57cb11d3d3d8ce925e67985"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3221,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name running head",
+   "text": "PARAMOUNT SKYDANCE CORPORATION AND SUBSIDIARIES",
+   "text_sha256": "sha256:45d74801990fca6872e219eb2a7206eae20ca80c1bba85104f235d42931eb04f"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3222,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "notes running head",
+   "text": "NOTES TO CONSOLIDATED FINANCIAL STATEMENTS (Continued)",
+   "text_sha256": "sha256:d7ebdc1777514041667ca2892c27fb49cc243ba1168e197e01e7bf5c22be8efc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3223,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tabular-dollars running head",
+   "text": "(Tabular dollars in millions, except per share amounts)",
+   "text_sha256": "sha256:cd21a3f9290d4a95b6f87aa6378f69b0ee8544d6bfe633a1b30ce9f8a0cc818c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3224,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "subheading for other guarantees",
+   "text": "Other",
+   "text_sha256": "sha256:f97e9da0e3b879f0a9df979ae260a5f7e1371edb127c1862d4f861981166cdc1"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3225,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "indemnities and divested-business guarantees, no suit or claim",
+   "text": "In the course of our business, we both provide and receive indemnities that are intended to allocate certain risks associated with business transactions. Similarly, we may remain contingently liable for various obligations of a business that has been divested in the event that a third party does not live up to its obligations under an indemnification obligation. We record a liability for our indemnification obligations and other contingent liabilities when probable and reasonably estimable.",
+   "text_sha256": "sha256:3a0e74565f2ef4de0971066da188e93f4e3896125bbe89ef3bdd5297afd01a94"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1516,
+   "verdict": "NOT_D02",
+   "why": "balance sheet line caption",
+   "text": "Commitments and contingencies (Note 18)",
+   "text_sha256": "sha256:1e19872aefa01544fcbc55816a62efbf56665261b657941de58d35dd86d9d8c6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3199,
+   "verdict": "REACHED",
+   "why": "contingencies note whose legal matters caption is in the value",
+   "text": "18) COMMITMENTS AND CONTINGENCIES",
+   "text_sha256": "sha256:533b1bdd83a51b3e15bb4bbc30323560571f98c6a73bfb537147ac3aa334e4d8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3200,
+   "verdict": "NOT_D02",
+   "why": "contractual commitments subheading",
+   "text": "Commitments",
+   "text_sha256": "sha256:35ebc1056bf0f89b05d549c5cb1b401b6c503bb542e1568184dc6bf3fc720fa4"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3208,
+   "verdict": "NOT_D02",
+   "why": "commitments table row",
+   "text": "Programming and talent commitments $36,083 $4,803 $4,930 $5,236 $5,050 $4,714 $11,350",
+   "text_sha256": "sha256:3093384c20a89df29c963e9ffe79aa4b7553e2c7dc48e1be4fe91475ff38ee68"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3229,
+   "verdict": "REACHED",
+   "why": "transaction litigation subsection, taken with its cases",
+   "text": "Litigation Relating to the Transactions",
+   "text_sha256": "sha256:50c2673b6b56fc7d12a74039e8eca6cc0a8a5f573fe4c4ead73f2670206a9517"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3246,
+   "verdict": "REACHED",
+   "why": "distribution dispute subsection, taken with its case",
+   "text": "Litigation Related to Distribution Agreements",
+   "text_sha256": "sha256:ec3528f08c61f49e218e3a230e650d16f9e6cab9911271cdd1c42f4adcc15c54"
+  }
+ ]
+}

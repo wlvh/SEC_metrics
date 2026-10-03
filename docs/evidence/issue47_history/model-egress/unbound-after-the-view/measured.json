@@ -1,0 +1,124 @@
+{
+ "record_type": "ISSUE_47_EGRESS_SEAL_STOPPED_AT_THE_SUITE_GATE",
+ "seal_tree_commit": "51250475 with the registration and egress patches applied and the snapshot minted",
+ "suite": {
+  "returncode": 1,
+  "failed": [
+   "test_a_transport_account_that_disagrees_stops_with_the_response_kept",
+   "test_the_send_holds_each_part_of_the_reservation_on_its_own",
+   "test_a_context_overrun_stops_the_channel",
+   "test_a_count_disagreement_is_the_stop_named_even_past_the_limit",
+   "test_a_live_call_is_not_planned_without_the_reference_tokenizer",
+   "test_a_request_that_failed_without_a_stop_leaves_its_position_unregistered",
+   "test_a_request_that_stops_rebuilding_never_reaches_the_opener",
+   "test_a_service_count_that_differs_from_the_reference_stops_the_channel",
+   "test_an_unknown_outcome_stops_the_channel",
+   "test_http_402_stops_the_channel",
+   "test_the_approval_is_rechecked_on_github_before_the_socket",
+   "test_the_approval_is_rechecked_on_github_before_the_socket",
+   "test_the_planned_bytes_go_out_once_and_count_as_charged",
+   "test_the_runner_calls_each_request_once_and_registers_the_position",
+   "test_the_runner_stops_at_a_stop_and_registers_nothing",
+   "test_the_send_rechecks_the_reservation_and_its_marker",
+   "test_a_ledger_behind_the_branch_s_export_sends_nothing",
+   "test_an_export_blocks_a_later_start_and_restores_only_as_a_record",
+   "test_code_read_from_the_checkout_s_bytecode_is_refused"
+  ],
+  "summary": "FAILED (failures=1, errors=18)",
+  "ran": "Ran 153 tests in 3 processes, one per test module"
+ },
+ "refusals": [
+  {
+   "case": "test_a_transport_account_that_disagrees_stops_with_the_response_kept",
+   "raised": ""
+  },
+  {
+   "case": "test_the_send_holds_each_part_of_the_reservation_on_its_own",
+   "raised": ""
+  },
+  {
+   "case": "test_a_context_overrun_stops_the_channel",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_a_count_disagreement_is_the_stop_named_even_past_the_limit",
+   "raised": ""
+  },
+  {
+   "case": "test_a_live_call_is_not_planned_without_the_reference_tokenizer",
+   "raised": ""
+  },
+  {
+   "case": "test_a_request_that_failed_without_a_stop_leaves_its_position_unregistered",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_a_request_that_stops_rebuilding_never_reaches_the_opener",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_a_service_count_that_differs_from_the_reference_stops_the_channel",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_an_unknown_outcome_stops_the_channel",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_http_402_stops_the_channel",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_the_approval_is_rechecked_on_github_before_the_socket",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_the_approval_is_rechecked_on_github_before_the_socket",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_the_planned_bytes_go_out_once_and_count_as_charged",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_the_runner_calls_each_request_once_and_registers_the_position",
+   "raised": ""
+  },
+  {
+   "case": "test_the_runner_stops_at_a_stop_and_registers_nothing",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_the_send_rechecks_the_reservation_and_its_marker",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_a_ledger_behind_the_branch_s_export_sends_nothing",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_an_export_blocks_a_later_start_and_restores_only_as_a_record",
+   "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/vnext/capacity_program_roles.py,scripts/vnext/capacity_quantity_roles.py,scripts/vnext/capacity_refere"
+  },
+  {
+   "case": "test_code_read_from_the_checkout_s_bytecode_is_refused",
+   "raised": ""
+  }
+ ],
+ "full_unbound_list_measured": [
+  "scripts/vnext/capacity_program_roles.py",
+  "scripts/vnext/capacity_quantity_roles.py",
+  "scripts/vnext/capacity_reference_contract.py",
+  "scripts/vnext/r6_regulatory_semantics.py",
+  "scripts/vnext/r6_semantic_verification.py",
+  "scripts/vnext/regulatory_statement_facts.py"
+ ],
+ "measured_by": "measure_unbound.py: the six live cases named in the run, in the seal tree, with the bound-code check wrapped to record the full list it would truncate to eight; the check itself unchanged",
+ "loaded_by": "historical_dei.release_aware's reachability walk (_imported) at historical_semantic_results.py's module-level release_aware(reconstruct_requests); who_imports2.py prints each module's first-load stack",
+ "first_seal_without_the_view": "8c1fcf18 (2026-09-28) passed; historical_dei._imported first appears in 9423a3a6 (2026-09-29); continuous_semantic_calls already had the same 14 function-level imports at 8c1fcf18",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

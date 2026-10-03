@@ -1,0 +1,35 @@
+{
+ "record_type": "ISSUE_47_OWNER_DECISION_TRANSCRIPTION",
+ "transcribed_by": "the executor, from this session's own record; not posted by the owner, and not an approval of anything",
+ "asked_at_utc": "2026-09-30T05:33:36.353Z",
+ "answered_at_utc": "2026-09-30T05:33:46.444Z",
+ "question": "已批的 1354 次 SEC 额度已用满。另外，取完数后发现历史分片的一致性检查有两类错：有的新分片被误判为不一致，有的缺行的旧分片被误判为一致（后者会让事件计数悄悄少算），我已修正。修正后实测还缺约 300–420 次请求：(1) 刷新 6 次，即重取 3 家公司的索引和一个过期分片——JPMorgan 007、Pfizer 001、Salesforce 001。这 6 次能解开今天整期跑不了的 9 个期间，共 351 个位置：JPMorgan 5 年、Pfizer FY2021、Salesforce FY2022–24。(2) Southwest 剩下的 110 次，主要是往年的 8-K。(3) 刷新之后才能量准的部分：JPMorgan 往年 8-K 约 240 次，另有 Pfizer/Salesforce 缺行里的少量申报与代理材料。要不要追加 SEC 额度？无论选哪项，追加额度的代码都得先写（要一个新的账本机制，并经独立审阅），做完后你只需发一条评论。",
+ "options": [
+  {
+   "label": "一次批约 420 (Recommended)",
+   "description": "一条评论覆盖 (1)(2)(3)：先刷新，再按刷新后的规划取其余；420 是停止上限，实际只取规划声明要取的那些。"
+  },
+  {
+   "label": "只批刷新 6 次",
+   "description": "只解开 9 个期间的目录阻断，其余事件与代理先不取，以后再议；这些位置照旧按名报来源缺口。"
+  },
+  {
+   "label": "到此为止",
+   "description": "不再取数，按现有材料跑完全帧并报告；上述 351 个位置和 Southwest 往年事件保持具名缺口。"
+  }
+ ],
+ "answer": "一次批约 420 (Recommended)",
+ "what_the_decision_is": "one further SEC approval, as one comment the owner posts, covering (1) the refreshes of the three companies whose saved history disagrees with its index, (2) Southwest's remaining requests, (3) what the refreshed plan then declares for JPMorgan, Pfizer and Salesforce; the number is a stop-cap, and only what the plan declares is requested",
+ "what_it_is_not": [
+  "the approval itself: that is the comment the owner posts, read back from GitHub by register-extension",
+  "a model-call allowance",
+  "production, adoption or an active switch"
+ ],
+ "correction_after_the_answer": {
+  "the_question_said": "刷新 6 次，即重取 3 家公司的索引和一个过期分片",
+  "measured_after": "a refreshed index is a new partition of the company's history: the saved JPMorgan index lists 70 blocks, the committed one of 2026-08-17 listed 69 with different boundaries (its 001 ran 2025-07-15..2025-08-13; the 2026-09-29 index's 002 runs 2025-07-22..2025-08-23), so fetching a new index means fetching every block again. JPMorgan's refresh is the index and up to 71 blocks, not 2. Pfizer (3 blocks) and Salesforce (5 blocks) are bounded the same way.",
+  "effect_on_the_number": "the bound computed from the saved submissions is 472 rather than about 420; the difference is almost entirely JPMorgan's blocks. The proposal says so and the owner decides with the body in front of them: posting it approves 472, and a body capped at 420 can be generated instead",
+  "see": "docs/evidence/issue47_history/acquisition-extension/"
+ },
+ "production_authorized": false
+}

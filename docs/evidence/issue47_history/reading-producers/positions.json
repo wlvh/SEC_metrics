@@ -1,0 +1,307 @@
+{
+ "record_type": "ISSUE_47_READING_POSITIONS",
+ "what": "The company periods each committed reading covers. The reading tools read them here, so no company or period is written in their code: tools/ is scanned as production Python for identity literals and fixed dates, and a list of positions is data. A label names one company period; each reading lists its labels in the order its committed output lists them.",
+ "labels": {
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "report_end": "2025-12-31"
+  },
+  "marriott-2024": {
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31"
+  },
+  "marriott-2023": {
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31"
+  },
+  "ford-2025": {
+   "company_id": "ford_motor_company",
+   "report_end": "2025-12-31"
+  },
+  "pfizer-2025": {
+   "company_id": "pfizer",
+   "report_end": "2025-12-31"
+  },
+  "lumen-2025": {
+   "company_id": "lumen_technologies",
+   "report_end": "2025-12-31"
+  },
+  "enphase-2025": {
+   "company_id": "enphase_energy",
+   "report_end": "2025-12-31"
+  },
+  "southwest-2025": {
+   "company_id": "southwest_airlines",
+   "report_end": "2025-12-31"
+  },
+  "salesforce-2026": {
+   "company_id": "salesforce",
+   "report_end": "2026-01-31"
+  },
+  "macys-2026": {
+   "company_id": "macys",
+   "report_end": "2026-01-31"
+  },
+  "paramount-2025": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2025-12-31"
+  },
+  "paramount-2024": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31"
+  },
+  "jpmorgan-2025": {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2025-12-31"
+  },
+  "marriott-2022": {
+   "company_id": "marriott_international",
+   "report_end": "2022-12-31"
+  },
+  "marriott-2021": {
+   "company_id": "marriott_international",
+   "report_end": "2021-12-31"
+  },
+  "southwest-2024": {
+   "company_id": "southwest_airlines",
+   "report_end": "2024-12-31"
+  },
+  "southwest-2023": {
+   "company_id": "southwest_airlines",
+   "report_end": "2023-12-31"
+  },
+  "southwest-2022": {
+   "company_id": "southwest_airlines",
+   "report_end": "2022-12-31"
+  },
+  "southwest-2021": {
+   "company_id": "southwest_airlines",
+   "report_end": "2021-12-31"
+  },
+  "ford-2024": {
+   "company_id": "ford_motor_company",
+   "report_end": "2024-12-31"
+  },
+  "ford-2023": {
+   "company_id": "ford_motor_company",
+   "report_end": "2023-12-31"
+  },
+  "ford-2022": {
+   "company_id": "ford_motor_company",
+   "report_end": "2022-12-31"
+  },
+  "ford-2021": {
+   "company_id": "ford_motor_company",
+   "report_end": "2021-12-31"
+  },
+  "pfizer-2024": {
+   "company_id": "pfizer",
+   "report_end": "2024-12-31"
+  },
+  "pfizer-2023": {
+   "company_id": "pfizer",
+   "report_end": "2023-12-31"
+  },
+  "pfizer-2022": {
+   "company_id": "pfizer",
+   "report_end": "2022-12-31"
+  },
+  "salesforce-2025": {
+   "company_id": "salesforce",
+   "report_end": "2025-01-31"
+  },
+  "lumen-2024": {
+   "company_id": "lumen_technologies",
+   "report_end": "2024-12-31"
+  },
+  "lumen-2023": {
+   "company_id": "lumen_technologies",
+   "report_end": "2023-12-31"
+  },
+  "lumen-2022": {
+   "company_id": "lumen_technologies",
+   "report_end": "2022-12-31"
+  },
+  "lumen-2021": {
+   "company_id": "lumen_technologies",
+   "report_end": "2021-12-31"
+  },
+  "macys-2025": {
+   "company_id": "macys",
+   "report_end": "2025-02-01"
+  },
+  "macys-2024": {
+   "company_id": "macys",
+   "report_end": "2024-02-03"
+  },
+  "macys-2023": {
+   "company_id": "macys",
+   "report_end": "2023-01-28"
+  },
+  "macys-2022": {
+   "company_id": "macys",
+   "report_end": "2022-01-29"
+  },
+  "paramount-2023": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2023-12-31"
+  },
+  "paramount-2022": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2022-12-31"
+  },
+  "paramount-2021": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2021-12-31"
+  },
+  "enphase-2024": {
+   "company_id": "enphase_energy",
+   "report_end": "2024-12-31"
+  },
+  "enphase-2023": {
+   "company_id": "enphase_energy",
+   "report_end": "2023-12-31"
+  },
+  "enphase-2022": {
+   "company_id": "enphase_energy",
+   "report_end": "2022-12-31"
+  },
+  "enphase-2021": {
+   "company_id": "enphase_energy",
+   "report_end": "2021-12-31"
+  },
+  "pfizer-2021": {
+   "company_id": "pfizer",
+   "report_end": "2021-12-31"
+  },
+  "jpmorgan-2024": {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2024-12-31"
+  },
+  "jpmorgan-2023": {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31"
+  },
+  "jpmorgan-2022": {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31"
+  },
+  "jpmorgan-2021": {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31"
+  },
+  "salesforce-2024": {
+   "company_id": "salesforce",
+   "report_end": "2024-01-31"
+  },
+  "salesforce-2023": {
+   "company_id": "salesforce",
+   "report_end": "2023-01-31"
+  },
+  "salesforce-2022": {
+   "company_id": "salesforce",
+   "report_end": "2022-01-31"
+  }
+ },
+ "readings": {
+  "statement_facts": [
+   "marriott-2025",
+   "marriott-2024",
+   "marriott-2023",
+   "ford-2025",
+   "pfizer-2025",
+   "lumen-2025",
+   "enphase-2025",
+   "southwest-2025",
+   "salesforce-2026",
+   "macys-2026"
+  ],
+  "governance_facts": [
+   "marriott-2025",
+   "ford-2025",
+   "pfizer-2025",
+   "lumen-2025",
+   "enphase-2025",
+   "southwest-2025",
+   "salesforce-2026",
+   "macys-2026"
+  ],
+  "event_counts": [
+   "marriott-2025",
+   "ford-2025",
+   "pfizer-2025",
+   "lumen-2025",
+   "enphase-2025",
+   "southwest-2025",
+   "macys-2026"
+  ],
+  "lodging_table": [
+   "marriott-2025",
+   "marriott-2024",
+   "marriott-2023"
+  ],
+  "debt_to_equity": [
+   "enphase-2025",
+   "macys-2026",
+   "paramount-2025",
+   "salesforce-2026"
+  ],
+  "c03_across_proxies_batch": [
+   "enphase-2023",
+   "enphase-2024",
+   "macys-2024",
+   "macys-2025",
+   "marriott-2023",
+   "marriott-2024",
+   "paramount-2023",
+   "pfizer-2024",
+   "salesforce-2025"
+  ],
+  "c03_across_proxies_round3": [
+   "enphase-2021",
+   "enphase-2022",
+   "ford-2021",
+   "ford-2022",
+   "lumen-2021",
+   "macys-2022",
+   "marriott-2022",
+   "paramount-2021",
+   "paramount-2022",
+   "pfizer-2022",
+   "pfizer-2023"
+  ],
+  "lodging_table_older_years": [
+   "marriott-2021",
+   "marriott-2022"
+  ],
+  "c03_across_proxies_full_frame": [
+   "jpmorgan-2022",
+   "jpmorgan-2023",
+   "jpmorgan-2024",
+   "jpmorgan-2025",
+   "pfizer-2021",
+   "southwest-2023",
+   "southwest-2024"
+  ],
+  "bank_measures_full_frame": [
+   "jpmorgan-2021",
+   "jpmorgan-2022",
+   "jpmorgan-2023",
+   "jpmorgan-2024",
+   "jpmorgan-2025"
+  ],
+  "bank_statement_facts_full_frame": [
+   "jpmorgan-2021",
+   "jpmorgan-2022",
+   "jpmorgan-2023",
+   "jpmorgan-2024",
+   "jpmorgan-2025"
+  ],
+  "bank_statement_facts_round_66569eec": [
+   "jpmorgan-2021"
+  ],
+  "c03_across_proxies_round_3fba0e84": [
+   "jpmorgan-2021"
+  ]
+ }
+}
