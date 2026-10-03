@@ -20,3 +20,5 @@ e536cdc 主工作流37049750196所有16作业终态成功，生成检查37049750
 实际出口部分失败负例：从B01 Run manifest的SourceReference与input binding定位companyfacts不可变正文及对应headers，只改本任务私有state副本内实际消费文件；两种修改分别使B01 REPLAY_FAILED／WITHHELD，D01原生结果仍进入公司表，EXPORTED_PARTIAL/退出2。正常state／原Run未改，拒绝发生于原RawBlob／request-ledger校验，不是未消费working文件或环境错误。具体locator、前后SHA、原因和计时见company-export-bound-negatives.json；实际脚本保留。
 
 最后元数据列另明确source_credit与saved_processing_mode，避免原SEC保存信用和录制AI判断信用混同；追加组件回归验证该列及原V14身份，当时32项边界测试通过。后续事件接缝与处理参数范围回归增至40项，见../event-census/。分项体积见partition-sizes.json，未测真实传输压缩、集群或全36项。新增出口／处理入口的消费者补验仍待#28/#47，本方回归不冒称独审。
+
+后继303d751f的52捕获LIVE D04及历史12事件消费者回执已接收；此页保持当时实验覆盖，当前状态见 [../closeout/README.md](../closeout/README.md)。

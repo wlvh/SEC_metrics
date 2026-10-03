@@ -13,3 +13,5 @@
 40项组件回归通过；事件7项使用真实独立信任读取和原header解析，账本重放为替身，财报编排测试明确模拟引擎，实际材料另列。最后一项确保处理包／原运行树必须成对、请求D04且为受支持普通入口；历史参数返回COMPANY_PROCESSING_HISTORY_ADAPTER_NOT_IMPLEMENTED，不默默忽略。已有完整RECORDED_TEST_ONLY D04与原V14身份的正向接线保留；最终参数检查代码在新只读baseline树实际重入139.325秒、NO_SOURCE_CONTENT_CHANGE、无新增Run，LIVE173–178材料已向#28请求但尚未取得；无新模型调用，也不把当前判断套到历史期间。新增SEC/provider/paid为0/0/0，无部署、Ready、合并、采纳或active切换。
 
 已读取#28固定9a6dea27与#47固定8c798939的known_result_defects。其E01已确认错误涉及Pfizer/Ford/Lumen/Macy's/Southwest的确切旧坐标／Result，不把它们当金标；本批Marriott机械结果与JPM C01不因此得到内容信用。已有缺陷按原登记和精确身份扣留，不按整个指标名升级或撤销信用。分项体积见partition-sizes.json；实际传输压缩、全36项／十公司业务验收、动态UID／集群未测。
+
+后继LIVE173–178材料已实际接入，303d751f的52捕获及历史12事件消费者回执已到达并固定接收；此页保留修复初期证据，当前覆盖与有限耗时收口见 [../closeout/README.md](../closeout/README.md)。

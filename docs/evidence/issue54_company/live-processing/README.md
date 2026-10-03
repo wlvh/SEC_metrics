@@ -35,4 +35,4 @@ Linux UID1000，原V14/ordinary程序、输入与必要trust只读，state独立
 
 ## 范围限制
 
-52捕获历史尚仅有提供方身份/日志，已直接向#28请求其Enphase包/原文件索引[5962545493](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5962545493)；13通过不能算52通过。新原文、期间、主体或请求集合不等价时拒绝；acquired原判断不是baseline、B13部分组与历史处理仍未适配。没有新模型调用，不能拼190或恢复失败判断。新增真实SEC/provider/paid始终0/0/0。旧8a CI主16/16+生成1/1终态SUCCESS，最新交付提交的CI和消费者补验在#54唯一队列另行固定；不借旧终态或本方测试称独审/全36项/五年验收完成。
+本段原实验使用13捕获；其后已收到 #28 对303d751f的真实52捕获LIVE D04消费者验收[5963721452](https://github.com/wlvh/SEC_metrics/issues/54#issuecomment-5963721452)，并核对固定1f627251的摘要、绑定header负例和既有52来源索引，见 [../closeout/README.md](../closeout/README.md)。两份覆盖分别登记，不再将52记为待验证。新原文、期间、主体或请求集合不等价时拒绝；acquired原判断不是baseline、B13部分组与历史处理仍未适配。没有新模型调用，不能拼190或恢复失败判断。新增真实SEC/provider/paid始终0/0/0。旧8a CI主16/16+生成1/1终态SUCCESS，最新交付提交的CI和消费者补验在#54唯一队列另行固定；不借旧终态或本方测试称独审/全36项/五年验收完成。
