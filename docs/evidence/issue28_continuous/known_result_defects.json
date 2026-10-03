@@ -52,7 +52,17 @@
       "new_peer60aa_credit": "LIMITED_SAVED_SOURCE_CONTENT_ONLY_NOT_CURRENT_390_OR_PRODUCTION",
       "independent_content_review": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/independent-enphase48-content/conclusion.md",
       "run_manifest_status": "OPEN",
-      "run_validation_status": "NOT_RUN"
+      "run_validation_status": "NOT_RUN",
+      "mechanical_receipt_for_peer60aa_8fb_only": {
+        "result_id": "sha256:8fb7d6e3ee0a8eeefd58b9187c701b11a3b1bb3aa4954dc339da4b704044f234",
+        "run_id": "run:ordinary-integrated:c3dad8e56028866ca1a7b63f97c9bf0f0be73ad9dff720168ebea32ccb430beb",
+        "receipt_id": "sha256:4179fa9f75a7351d528c6606d063817a39feb9659b314bee52c25144c55e086a",
+        "evidence": "docs/evidence/issue28_continuous/collab-c02-enphase-receipt-20261003/summary.json",
+        "copy_status": "PASSED",
+        "original_status": "NOT_RUN",
+        "content_scope_not_expanded": true,
+        "current_390_credit": false
+      }
     },
     "private_salesforce_successor_failed_content": {
       "company_id": "salesforce",
@@ -172,7 +182,17 @@
     },
     "selected_known_defect_coordinates_after_verified_D01_delta": 17,
     "verified_saved_scope_D01_replacement_count": 2,
-    "existing_current_390_view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py"
+    "existing_current_390_view_reader": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
+    "legacy_product_scope_pending": {
+      "exact_result_id_count": 20,
+      "not_newly_confirmed_content_defects": true,
+      "targets": [
+        "C02_COMPOSITION_FACTS",
+        "E01_CONTENT_CONFIRMED_MA_ANNOUNCEMENTS"
+      ],
+      "current_product_goal_credit": false,
+      "old_spec_run_result_and_denominator_preserved": true
+    }
   },
   "defects": [
     {
@@ -1193,5 +1213,321 @@
       }
     }
   ],
-  "latest_peer_read_commit": "52d94470d2f18b25f50f5fc5c6e69ef88f5e7eda"
+  "latest_peer_read_commit": "594da5aeb345a1e3bc287c783bfb3fd172a11527",
+  "product_scope_acceptance_limits": {
+    "record_type": "ISSUE28_FINITE_LEGACY_PRODUCT_SCOPE_ACCEPTANCE_LIMITS",
+    "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",
+    "scope_count": 20,
+    "authority": {
+      "collaboration_version": "COLLAB-28-47-v1.1",
+      "issue28_section": "https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1",
+      "owner_decision_commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+      "owner_decision_path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+      "owner_decision_file_sha256": "17bb3f1a26c0b96f127c0eb8602034bd76fdfda4342eb1487f781dd568f6995a",
+      "calls_or_production_authorized": false
+    },
+    "limits": [
+      {
+        "company_id": "marriott_international",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:d2b64d11d63776aa2213330104a8878cdc1b30967d1834877d134a4b3b0f28d5",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "marriott_international",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:1870c574ee0054b417f735a1d89c87e8eb18b9dedcc98a0ea9214ba2f76cbc66",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "southwest_airlines",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:523ed88921723af1320ea7b2e438d68f502114417b0fe5c06190d932d95676d0",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "southwest_airlines",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "ford_motor_company",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:b699482cc4246b4ba2a69c6670eb0063763307c418a9d5076069f3e7027974d8",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "ford_motor_company",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "pfizer",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:cd35101fa8013371da3dff7f8f0d9c46d55bf32954417d399cbd90d3dddd9108",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "pfizer",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "jpmorgan_chase",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:5f6ec648144fa842c833b3a46cb390d9d5e46f67854083bb5ace3c0adf708400",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "jpmorgan_chase",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:c2cba910bc6e389a3476ecc964d994ec83834dfb12d7283b4d3f7014394994e9",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "salesforce",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2026,
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31"
+        },
+        "result_id": "sha256:6d2608aed318b6113f7de35984cefaab059bcc38b949b2c6a7c6b9eda3e2ac5a",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "salesforce",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2026,
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31"
+        },
+        "result_id": "sha256:996f71fb0b405f11673b4d451fd209d241a7b5a47a56556b573bf4f71dfdc6f6",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "lumen_technologies",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:293febe4934ac3ff3789aba6b57fb1ca27bfb2d580560fcdffa79b06dd0b5a45",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "lumen_technologies",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "macys",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31"
+        },
+        "result_id": "sha256:ec1db68a0ccb02d9cc4f9753dc3d6b1f8f01175223c7b8cb0b5c0b3cdb3c3c7d",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "macys",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31"
+        },
+        "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:b37865b74f2ae8157b09041026c5ad72c88efb5950d04c1c073d79e6e2f8cfd0",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:4b6893b85bfa206f399e049bb6aca1419ff07208693ffb631536050c3ed4ca46",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "enphase_energy",
+        "metric_id": "C02",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:405e208e4ef48ef4dea3e462ef419aeb60fcfb0c78c8b4ab9310a94d4937764c",
+        "spec_closure_hash": "sha256:fe99c55991a9f0d86cf31bcd8b009347dbe9b41ba7547a0fab1cc14ffb67cc41",
+        "legacy_spec_path": "catalog/r6/C02_board_disclosures_v1.md",
+        "current_product_goal": "adopt 'composition facts' (构成事实)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      },
+      {
+        "company_id": "enphase_energy",
+        "metric_id": "E01",
+        "source_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "legacy_spec_path": "catalog/ordinary_zero_ai/E01.md",
+        "current_product_goal": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+        "status": "LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL",
+        "confirmed_content_defect_inferred": false
+      }
+    ],
+    "release_rule": "Only the exact selected legacy Result identities are withheld from current-product acceptance. Separately verified successors do not modify these historical records; selecting a different identity does not itself prove current-product acceptance."
+  }
 }
