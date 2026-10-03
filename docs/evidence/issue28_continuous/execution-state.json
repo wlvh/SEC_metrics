@@ -3946,6 +3946,23 @@
       "message_count": 2,
       "elapsed_seconds": 826.137,
       "elapsed_scope": "From first recorded clock; earlier initial reads not timed, lower bound only"
+    },
+    {
+      "task_name": "diagnose_d03group5_d9f0afc",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_supp5_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/5",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5"
+      ],
+      "patch_sha": "d9f0afc23df6de3f072277601dcdb093cafce5a6",
+      "spawned_at": "2026-10-03T15:48:34.789922+00:00",
+      "ended_at": "2026-10-03T15:58:25.419278+00:00",
+      "tool_calls": 46,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_SUPPLEMENT5_INPUT_EMPTY_NOT_ABSENCE_NO_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 506.7
     }
   ],
   "ci_capacity_20260922": {
@@ -12562,5 +12579,36 @@
     "scope": "Issuer evaluation of named member suitability/experience contribution without named standard; 7Enphase/10Paramount model statements and parallel historical class, not external credential or role facts",
     "real_call_permission_added": false,
     "old_response_rewritten": false
+  },
+  "d03_group5_development_20261003": {
+    "state": "FIFTH_NEW_FORMAT_RESPONSE_SAVED_COLD_SOURCE_RECOVERED_EXACT",
+    "tested_base_sha": "d9f0afc23df6de3f072277601dcdb093cafce5a6",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/README.md",
+    "request_sha256": "3a817ea46a1d45d0f2a978d27facca865cad52b98bf1c16fe1ce74be25602311",
+    "response_sha256": "4c24f03776778e9b47a588e0f5b445062152f763ae1cea9e0abc587d7e9b9cab",
+    "findings": 0,
+    "unresolved": 2,
+    "output_reference_tokens": 182,
+    "checks_seconds": 0.154,
+    "cold_seconds": 0.123,
+    "processing_sha256": "59b7ffdc8bc1f3567541e7a793901cbe8a624e39ade5706ab900bba6ebb3d310",
+    "new_request_response_indices_available": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "missing_new_request_response_indices": [
+      0
+    ],
+    "remaining_native_units_not_model_read": 0,
+    "all_source_company_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "source_recovery": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group5/source-recovery.json"
   }
 }
