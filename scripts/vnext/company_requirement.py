@@ -6,7 +6,7 @@ from .requirement_profile_v1 import PROFILE_SNAPSHOT_FILES, RequirementProfileEr
 from .sources import resolve_repository_file
 
 PARENTS = {'issue_54_v1': 'issue_28_v13', 'issue_54_v3': 'issue_47_v1',
-           'issue_54_v2': 'issue_28_v14'}
+           'issue_54_v2': 'issue_28_v14', 'issue_54_v4': 'issue_28_v14'}
 PROFILE_REQUIREMENT_GENERATION = 'COMPANY_SEPARATION_V1'
 
 

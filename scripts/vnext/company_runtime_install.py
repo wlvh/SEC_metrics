@@ -19,7 +19,7 @@ SUCCESSOR_MODULES = ('company_source_authority', 'company_handoff',
                      'company_result_export', 'company_historical_compute',
                      'company_result_view', 'company_result_read',
                      'company_processing', 'company_processing_read', 'company_worker_guard',
-                     'company_event_census')
+                     'company_event_census', 'company_local', 'company_local_acquisition')
 
 
 def _replace(path, old, new, count=1):
@@ -32,9 +32,11 @@ def install_runtime(*, output_root, kind='baseline'):
     """Install fixed source/rules and a new identity; do not re-sign old Runs."""
     output = external(output_root)
     need(not output.exists(), 'COMPANY_RUNTIME_OUTPUT_EXISTS')
-    need(kind in {'baseline', 'ordinary', 'native', 'historical'}, 'COMPANY_RUNTIME_KIND_INVALID')
-    parent_id = {'historical': 'issue_47_v1', 'native': 'issue_28_v14'}.get(kind, 'issue_28_v13')
-    requirement_id = {'historical': 'issue_54_v3', 'native': 'issue_54_v2'}.get(kind, 'issue_54_v1')
+    need(kind in {'baseline', 'ordinary', 'native', 'historical', 'local'}, 'COMPANY_RUNTIME_KIND_INVALID')
+    parent_id = {'historical': 'issue_47_v1', 'native': 'issue_28_v14',
+                 'local': 'issue_28_v14'}.get(kind, 'issue_28_v13')
+    requirement_id = {'historical': 'issue_54_v3', 'native': 'issue_54_v2',
+                      'local': 'issue_54_v4'}.get(kind, 'issue_54_v1')
     from .annual_runtime import _authority_files
     from .annual_continuity_sources import frozen_foundation_receipts
     from .requirements import load_requirement_snapshot
@@ -102,18 +104,40 @@ def install_runtime(*, output_root, kind='baseline'):
     # This fixed tree computes new company Runs. Old Runs keep their own
     # installed ordinary runtime and Requirement; no mixed-generation tree.
     old_id = '"'+parent_id+'"'
+    if kind == 'local':
+        # Ordinary and native Runs share a local execution closure, while
+        # retaining their original distinct validators and exact spec checks.
+        store = output/modified[1]
+        text = store.read_text()
+        for ancestor, native in (('issue_28_v14', True), ('issue_28_v13', False)):
+            old = 'manifest.get("requirement_id") == "'+ancestor+'"'
+            need(old in text, 'LOCAL_RUN_READER_SEAM_CHANGED')
+            text = text.replace(old, '(manifest.get("requirement_id") == "'+requirement_id+'" and '+
+                ('' if native else 'not ')+'_company_local_native(manifest))')
+        text += ('\ndef _company_local_native(manifest):\n'
+                 '    from .company_local import native_run\n'
+                 '    return native_run(manifest)\n')
+        store.write_text(text)
     count = (output/modified[1]).read_text().count(old_id)
-    need(count > 0, 'COMPANY_RUNTIME_UPSTREAM_RUN_DISPATCH_MISSING')
-    _replace(output/modified[1], old_id, '"'+requirement_id+'"', count=count)
-    _replace(output/modified[2], 'REQUIREMENT_ID = "'+('issue_28_v13' if kind == 'native' else parent_id)+'"',
+    need(count > 0 or kind == 'local', 'COMPANY_RUNTIME_UPSTREAM_RUN_DISPATCH_MISSING')
+    if count:
+        _replace(output/modified[1], old_id, '"'+requirement_id+'"', count=count)
+    _replace(output/modified[2], 'REQUIREMENT_ID = "'+('issue_28_v13' if kind in {'native', 'local'} else parent_id)+'"',
              'REQUIREMENT_ID = "'+requirement_id+'"')
     # The manifest's coordinate validator independently owns fiscal labels.
     # Register the new runtime there as well, including non-calendar years.
-    record_id = '"issue_28_v13"' if kind == 'native' else old_id
+    record_id = '"issue_28_v13"' if kind in {'native', 'local'} else old_id
     record_count = (output/modified[4]).read_text().count(record_id)
     need(record_count > 0, 'COMPANY_RUNTIME_UPSTREAM_COORDINATE_DISPATCH_MISSING')
     _replace(output/modified[4], record_id, '"'+requirement_id+'"', count=record_count)
-    if kind == 'native':
+    if kind in {'native', 'local'}:
+        if kind == 'local':
+            _replace(output/modified[2], "if manifest.get('requirement_id') == 'issue_28_v14':",
+                "if manifest.get('requirement_id') == 'issue_28_v14' and _company_local_native(manifest):")
+            with (output/modified[2]).open('a') as module:
+                module.write('\ndef _company_local_native(manifest):\n'
+                             '    from .company_local import native_run\n'
+                             '    return native_run(manifest)\n')
         native_literal = "'issue_28_v14'"
         native_count = (output/modified[2]).read_text().count(native_literal)
         need(native_count > 0, 'COMPANY_RUNTIME_UPSTREAM_NATIVE_REPLAY_MISSING')
@@ -148,7 +172,7 @@ def install_runtime(*, output_root, kind='baseline'):
              '_,_,admitted=_validate_checkpoint(source_root,checkpoint,baseline);paths=set()\n'
              '    if checkpoint.get("record_type") == "COMPANY_SOURCE_ADMISSION_V1":\n'
              '        return checkpoint,set(checkpoint["files"])')
-    if kind in {'ordinary', 'historical'}:
+    if kind in {'ordinary', 'historical', 'local'}:
         # The original baseline-ledger fast path returns no checkpoint. The
         # event census now needs its separately enrolled file closure in each
         # Run's installed data as well, even when no rows were appended.
@@ -187,7 +211,17 @@ def install_runtime(*, output_root, kind='baseline'):
                  '        from .company_source_authority import memo_read_roots\n'
                  '        allowed = (named, runtime, *memo_read_roots())\n')
         modified = (*modified, memo)
-    patch = ''.join(''.join(difflib.unified_diff(originals[p].splitlines(True),
+    if kind == 'local':
+        # A genuinely new history has a code-owned empty ledger. This never
+        # edits/re-prefixes an existing history or installs saved SEC bytes.
+        from .company_local_acquisition import install_empty_seed, patch_local_acquisition
+        local_originals, new_files = patch_local_acquisition(output)
+        for path, original in local_originals.items():
+            originals.setdefault(path, original)
+        modified = tuple(dict.fromkeys((*modified, *local_originals)))
+        install_empty_seed(output)
+        modified = (*modified, *new_files)
+    patch = ''.join(''.join(difflib.unified_diff(originals.get(p, '').splitlines(True),
         (output/p).read_text().splitlines(True), fromfile='a/'+p, tofile='b/'+p)) for p in modified)
     (output/'company-runtime-dispatch.patch').write_text(patch)
     snapshot = output/'requirements'/requirement_id; snapshot.mkdir()
@@ -227,8 +261,10 @@ def install_runtime(*, output_root, kind='baseline'):
     (snapshot/'CONTRACT.md').write_text('# Company separation runtime v1\n\n'
         'Inherit '+parent_id+' business semantics and all parent obligations.\n'
         'Verify complete source histories on the preparation side; computing consumes only the company admission.\n'
-        'Independent installed trust owns admission. Original ledgers, old Runs and closed budgets are unchanged.\n'
-        'No new SEC/provider/paid calls, activation, publication or deployment authority.\n')
+        'Independent installed trust owns admission. Original ledgers, old Runs and closed budgets are unchanged.\n'+
+        ('Local SEC calls require a separately authorized bounded invocation; installation grants no calls.\n'
+         if kind == 'local' else 'No new SEC call authority.\n')+
+        'No new provider/paid calls, activation, publication or deployment authority.\n')
     # Existing installation reads committed historical receipts and a tracked
     # rule inventory. The runtime Git directory is immutable during compute.
     _commit_runtime(output, 'Install fixed company computation runtime v1')

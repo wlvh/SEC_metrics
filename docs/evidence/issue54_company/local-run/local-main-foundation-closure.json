@@ -1,0 +1,2347 @@
+{
+  "main_sha": "af1984ad5f1a3598ded3626fe999d3abeffd29b9",
+  "source_parent": "issue_28_v13",
+  "scope": "execution_authority only; nested snapshots/foundation receipts and optional original D04 V14 remain required, not a cherry-pick recipe",
+  "file_count": 389,
+  "counts": {
+    "SAME": 217,
+    "ABSENT_FROM_MAIN": 156,
+    "DIFFERENT": 16
+  },
+  "files": [
+    {
+      "path": "catalog/company_traits.yaml",
+      "foundation_blob": "1889e93e517a5cd95bc31901934188904650e9d0",
+      "main_blob": "1889e93e517a5cd95bc31901934188904650e9d0",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/deterministic_metrics.json",
+      "foundation_blob": "dca940c96a6cdd926c47c19406a85968729282a8",
+      "main_blob": "dca940c96a6cdd926c47c19406a85968729282a8",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/disclosures/lodging_kpi_table.md",
+      "foundation_blob": "9f12eea7360647e688f596d5d740da26f249d7f7",
+      "main_blob": "9f12eea7360647e688f596d5d740da26f249d7f7",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/event_routes.json",
+      "foundation_blob": "6faca3b80fbb8f80a57678279e52b7ea4e433444",
+      "main_blob": "6faca3b80fbb8f80a57678279e52b7ea4e433444",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/A03_liquidity_coverage_ratio.md",
+      "foundation_blob": "9820f747975205acd833e97d0704cb35a2bc73a1",
+      "main_blob": "9820f747975205acd833e97d0704cb35a2bc73a1",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/A04_net_interest_margin.md",
+      "foundation_blob": "1b0fe6aeef20561f1b4226b1c8989056fc44bde4",
+      "main_blob": "1b0fe6aeef20561f1b4226b1c8989056fc44bde4",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/A09_nonperforming_loan_ratio.md",
+      "foundation_blob": "7dbe3f2f863fb1ef9c03b4f8d30d77c418d80bb1",
+      "main_blob": "7dbe3f2f863fb1ef9c03b4f8d30d77c418d80bb1",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/A11_assets_under_management.md",
+      "foundation_blob": "811708b24a19afdc2307e2c56b1a65943495d500",
+      "main_blob": "811708b24a19afdc2307e2c56b1a65943495d500",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/A12_trading_exposure.md",
+      "foundation_blob": "f4a2ae845fcb6a9ea1f08fadd5a271485955c67c",
+      "main_blob": "f4a2ae845fcb6a9ea1f08fadd5a271485955c67c",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/A13_geographic_exposure.md",
+      "foundation_blob": "0bd13f38a807da8c94ca50f1cdca0834580eb846",
+      "main_blob": "0bd13f38a807da8c94ca50f1cdca0834580eb846",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/B01_revenue.md",
+      "foundation_blob": "7cdb7ef2a273d8be67c90ba53dbd2ee29a4a19ab",
+      "main_blob": "7cdb7ef2a273d8be67c90ba53dbd2ee29a4a19ab",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/B03_ebitda_margin.md",
+      "foundation_blob": "8de5a03f868e55f28a263daf6dbf2502a2e3acc8",
+      "main_blob": "8de5a03f868e55f28a263daf6dbf2502a2e3acc8",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/B06_debt_to_equity.md",
+      "foundation_blob": "886cc9028a91c0f709386d88f63caf1090c761ce",
+      "main_blob": "886cc9028a91c0f709386d88f63caf1090c761ce",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/B10_occupancy.md",
+      "foundation_blob": "55ddf701cce86c55e1ced3bc0573a71a384b9524",
+      "main_blob": "55ddf701cce86c55e1ced3bc0573a71a384b9524",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/B11_revpar.md",
+      "foundation_blob": "a9e32c8023a0c5f8d26aae82470dde77eae53a27",
+      "main_blob": "a9e32c8023a0c5f8d26aae82470dde77eae53a27",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/metrics/B13_capacity_utilization.md",
+      "foundation_blob": "9be5d555962e9273f74c888e1c4a857b7b505f4d",
+      "main_blob": "9be5d555962e9273f74c888e1c4a857b7b505f4d",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/ordinary_lodging/B10.md",
+      "foundation_blob": "a7a8e006f88bb294c26d4a714203e2e814da3188",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_lodging/B11.md",
+      "foundation_blob": "6159df309dbcfc75039043c07d9c797f067468dc",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A01.md",
+      "foundation_blob": "4f02c5d76652fd729cd9c36b3cd8f6d4f272aaf8",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A02.md",
+      "foundation_blob": "c5df414d8fb4b627ccd3cac4b5bc709f932b4946",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A05.md",
+      "foundation_blob": "77362ca2bc07590738709a88777a65e59f53e786",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A06.md",
+      "foundation_blob": "3e75fbb7e49696524ca932868d7dd66c09704e2a",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A07.md",
+      "foundation_blob": "b1171c6249831bfc3360ded394243511e53c2e2c",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A08.md",
+      "foundation_blob": "f28b5464ef146b21597fed0a1bcd1561fc9ae5c3",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/A10.md",
+      "foundation_blob": "4894dbb537919490de194bd86cb248f38aa4dd36",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B02.md",
+      "foundation_blob": "951101d090b91b630d84f885d468a2920b3f29c0",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B04.md",
+      "foundation_blob": "bcf614ba4772b29abb5be78165b801bebda504ed",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B05.md",
+      "foundation_blob": "180b6469ce8b0932af67afd77422042e65f5a929",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B07.md",
+      "foundation_blob": "c89d32536997238ce0f40fc14c14e84445dad859",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B08.md",
+      "foundation_blob": "95a55264972c09aa57fc0b7b374061422f70b91d",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B09.md",
+      "foundation_blob": "c16197b07b1cd6aa26504739ce71e28a8039c4ec",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/B12.md",
+      "foundation_blob": "b8fe819f0e55d6b1269512d92e5e4ecf4b8a8cfe",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/C01.md",
+      "foundation_blob": "4e7335b6c19282dca0460d7f7f5afb79f9d0217f",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/E01.md",
+      "foundation_blob": "85db84c35c45bec54e9d272c8c0704483949a9c0",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/E02.md",
+      "foundation_blob": "d5b4830d6a0fabb4d50d795c4ce6758dc9da6292",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/E03.md",
+      "foundation_blob": "ffc5a838a8449593ffa73f0320becba54e6163bc",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/E04.md",
+      "foundation_blob": "581c28fa94bffd1c744eb8e31fb34753b1f54070",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/ordinary_zero_ai/E05.md",
+      "foundation_blob": "361be96315ec40687be89cf8ad15c1b5b7f25376",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_normal/A03_liquidity_coverage_ratio.md",
+      "foundation_blob": "063ca48a0bce26f6c315d756e7ac7b80db8b3402",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_normal/A04_net_interest_margin.md",
+      "foundation_blob": "c3d7b53cc85b4fc112d629dab75d086f903f7ee6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_normal/A09_nonperforming_loan_ratio.md",
+      "foundation_blob": "c23e4cd25f327b5ab4124c007eaa7616478b4531",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_normal/A11_assets_under_management.md",
+      "foundation_blob": "c6a553a4c81fa90a4997acf0f4c5cf1d6c7b07a8",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_normal/A12_trading_exposure.md",
+      "foundation_blob": "9f6e08deed3ff5c8fcd8073cc7c057113de1e087",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_normal/A13_geographic_exposure.md",
+      "foundation_blob": "00c8ed3ecbc3152d5d001c1a5a26473740bf25f3",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r4_v2/A03_liquidity_coverage_ratio.md",
+      "foundation_blob": "da01a0e6bd14d735f20ba80a76ed016b7f981df2",
+      "main_blob": "da01a0e6bd14d735f20ba80a76ed016b7f981df2",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r4_v2/A04_net_interest_margin.md",
+      "foundation_blob": "2920a3d392773bc18453f30b7826dc0f6d3e6815",
+      "main_blob": "2920a3d392773bc18453f30b7826dc0f6d3e6815",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r4_v2/A09_nonperforming_loan_ratio.md",
+      "foundation_blob": "4fd08beb4c89e7a626bf07c4cfca7276a2ff12c4",
+      "main_blob": "4fd08beb4c89e7a626bf07c4cfca7276a2ff12c4",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r4_v2/A11_assets_under_management.md",
+      "foundation_blob": "3bbc7ab9f91daec4aef7f5c74d65b2b31039efbe",
+      "main_blob": "3bbc7ab9f91daec4aef7f5c74d65b2b31039efbe",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r4_v2/A12_trading_exposure.md",
+      "foundation_blob": "32a9a74e5b5b7180b07731b8e8c63f65927038b2",
+      "main_blob": "32a9a74e5b5b7180b07731b8e8c63f65927038b2",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r4_v2/A13_geographic_exposure.md",
+      "foundation_blob": "aa56c4560543ad2cf7c30b29ac3db099c38ee6bb",
+      "main_blob": "aa56c4560543ad2cf7c30b29ac3db099c38ee6bb",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r5/B06_bond_leases_v5.md",
+      "foundation_blob": "e04bcf3a8ac8d5d6c5f3189c7c99c1367b01558a",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/B06_guarded_v3.md",
+      "foundation_blob": "834e217ca8f3525e24210262c9297f31d9a7d5c6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/B06_inclusive_table_v6.md",
+      "foundation_blob": "51d8468d617aba2acad0b4fe717deff24882a33e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/B06_new_source.md",
+      "foundation_blob": "a78088e0c12bd806b37e925559fc49fda0496b5d",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/B06_new_source_v2.md",
+      "foundation_blob": "1974e43c78f67c5b7fc856319ebf6fd929efea07",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/B06_note_carrying_v4.md",
+      "foundation_blob": "a0fd1b42e7f8f6ce9e69179935e0192f3564cf3b",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/B06_structured.md",
+      "foundation_blob": "79ec225e601ef44eec1bd35fa04b22003c8d85e7",
+      "main_blob": "79ec225e601ef44eec1bd35fa04b22003c8d85e7",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r5/C03_peo_total_compensation.md",
+      "foundation_blob": "fd229e9d1d39a4dc370869adb86495283245f8c9",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/C03_reported_compensation_v2.md",
+      "foundation_blob": "a86a5755a8687345102dae806420813b7b5343c5",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/C04_auditor_changes.md",
+      "foundation_blob": "5ce77fd4370cc05c91c3a613fcb5aa6a51912ab6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/C04_auditor_changes_v2.md",
+      "foundation_blob": "65aa92fcc9ba690df9d63b0be3b4282cd2e11da0",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/C04_auditor_changes_v3.md",
+      "foundation_blob": "7415519aa49aaefacd4fd68da1faafaf60130671",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r5/history/B06_carrying_v2.md",
+      "foundation_blob": "302bbdd54f34ee3045ecca9385544a06e530271d",
+      "main_blob": "302bbdd54f34ee3045ecca9385544a06e530271d",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r5/history/B06_structured_v1.md",
+      "foundation_blob": "002defecfb9bf885e9ec2c066e6a3c1b186d29b0",
+      "main_blob": "002defecfb9bf885e9ec2c066e6a3c1b186d29b0",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/r6/B03_impairment_excluded_v1.md",
+      "foundation_blob": "311cd495a8bd72b24e0e2d68f3ff9728de614fed",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/C02_board_composition_terms_v1.json",
+      "foundation_blob": "e15d8f96f725d17c23d958983c6db432c26dca3a",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/C02_board_disclosures_v1.md",
+      "foundation_blob": "8bb388d72fbcdefcf340dbe83119932a0111732e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/C02_board_disclosures_v2.md",
+      "foundation_blob": "2201b41931e3c45a1b46b5b8af1eb244d31c0193",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/C02_board_disclosures_v3.md",
+      "foundation_blob": "c4a1a6b94a765eda86f999662ec449156b9290d5",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/D01_risk_factor_headings.md",
+      "foundation_blob": "866fe75c055a31f52f4382afd80c0c8d71395b91",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/D02_item8_category_28_v1.json",
+      "foundation_blob": "a0801d1b5c52bfcea3adbb39c7020c4969ac6834",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/D02_item8_category_28_v2.json",
+      "foundation_blob": "682e63a2f3c22d16aa2d4cc66dc2d37e6b07383b",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/D02_legal_disclosures_v1.md",
+      "foundation_blob": "2c403dbb88aeac9295e1363892760649064a5cc1",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/text_business_candidates_v1.json",
+      "foundation_blob": "4c4d2ed7ba147c3ed558a0e50157efc0f1fe61e1",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/r6/text_results_v2_policy.json",
+      "foundation_blob": "7765a3daad213aef5c6132f46e67903c0f7cac57",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "catalog/table_task_contracts.json",
+      "foundation_blob": "1a08499ce974dcf3bb7b6939c076e352e6a5c578",
+      "main_blob": "1a08499ce974dcf3bb7b6939c076e352e6a5c578",
+      "status": "SAME"
+    },
+    {
+      "path": "catalog/zero_ai_public_projection.json",
+      "foundation_blob": "a240bc571f98cecb5c8756723ca34eca3e663f92",
+      "main_blob": "a240bc571f98cecb5c8756723ca34eca3e663f92",
+      "status": "SAME"
+    },
+    {
+      "path": "config/annual_amendment_scope_v1.json",
+      "foundation_blob": "5f62092323cb6fdd21ed0f76be6cf5deae2153eb",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/annual_candidate_adoption_v1.json",
+      "foundation_blob": "0023e2ac45cf980b9b247f26623b01b9ba8fc59b",
+      "main_blob": "0023e2ac45cf980b9b247f26623b01b9ba8fc59b",
+      "status": "SAME"
+    },
+    {
+      "path": "config/annual_candidate_adoption_v2.json",
+      "foundation_blob": "1f18262573055d61ff9b745ef24939800900d9ec",
+      "main_blob": "1f18262573055d61ff9b745ef24939800900d9ec",
+      "status": "SAME"
+    },
+    {
+      "path": "config/annual_candidate_adoption_v3.json",
+      "foundation_blob": "4432abf3818621ff4f3bdbdd80e659195bd54d52",
+      "main_blob": "4432abf3818621ff4f3bdbdd80e659195bd54d52",
+      "status": "SAME"
+    },
+    {
+      "path": "config/annual_continuity_request.json",
+      "foundation_blob": "49e92bc36d51f11e460b2c8f510f9b2076ceb984",
+      "main_blob": "49e92bc36d51f11e460b2c8f510f9b2076ceb984",
+      "status": "SAME"
+    },
+    {
+      "path": "config/b06_bond_debt_set_v1.json",
+      "foundation_blob": "82633602530a56068949a2f034cb14c5e88466c2",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_bond_leases_v1.json",
+      "foundation_blob": "492250d4d527fad4e291c40c0885e8210fde06d2",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_current_input_v1.json",
+      "foundation_blob": "8be67183572bd39f39f8c71072c8d637608fd0fd",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_financing_inventory_v1.json",
+      "foundation_blob": "2cc282043af77646cef5ad50d4a8269235c9cfc0",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_inclusive_table_v1.json",
+      "foundation_blob": "0987cdb0b6688325d07b3907a9d379c7ba7399ad",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_new_source_v1.json",
+      "foundation_blob": "919f70a011bf00152814606abd69fffc6de588d3",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_note_carrying_v1.json",
+      "foundation_blob": "031822d9f6eda32be114e00c41dd4843b8abeae1",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/b06_special_scope_v1.json",
+      "foundation_blob": "d77c6e4a9328104fe9290c748848cc4df4c36de3",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/company_registry.csv",
+      "foundation_blob": "267a83ab0b997dd21506117edbc9017093dfffd3",
+      "main_blob": "267a83ab0b997dd21506117edbc9017093dfffd3",
+      "status": "SAME"
+    },
+    {
+      "path": "config/instant_balance_amendment_v1.json",
+      "foundation_blob": "d21202af91d9d6ccfb2d87799c3c2c22b9366c84",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/issue28_normal_candidates_v1.json",
+      "foundation_blob": "2ea4c4ddfadc3aefa8705890ab48e231132b7a80",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/issue28_normal_results_v1.json",
+      "foundation_blob": "29df5685d2bd56c52660900f354a3c73300327c1",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/issue28_normal_results_v2.json",
+      "foundation_blob": "b5c5f309185e2894ab13083377346be60eb6b88c",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/issue_15_release_plan.json",
+      "foundation_blob": "ce5d5cfdbee30c281815944f5d3661a35c92c87a",
+      "main_blob": "ce5d5cfdbee30c281815944f5d3661a35c92c87a",
+      "status": "SAME"
+    },
+    {
+      "path": "config/metric_applicability.yaml",
+      "foundation_blob": "bada55033ffefea9d39a464c87ea17666308956d",
+      "main_blob": "bada55033ffefea9d39a464c87ea17666308956d",
+      "status": "SAME"
+    },
+    {
+      "path": "config/normal_accession_metrics_v1.json",
+      "foundation_blob": "b534e4ee5399c3057b0614a92c21e49564c4807f",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/normal_candidate_sources_v1.json",
+      "foundation_blob": "9ec976944e99236e2f7311fdf2b43b3f9501dea6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/normal_fiscal_year_labels_v1.json",
+      "foundation_blob": "c9f540297592f740a08684923b32a748cbe8fd8c",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/ordinary_income_input_v1.json",
+      "foundation_blob": "bd9ac1cd9943bc30062f4235d5cb540e3965774b",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/ordinary_lodging_table_v1.json",
+      "foundation_blob": "762873c6260687d88ddef62b90eb4bf0bc8850cf",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/ordinary_public_projection_v1.json",
+      "foundation_blob": "2fb313bf98dd17acdbff7614ba511e1d24894370",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "config/provider_model_runtime.json",
+      "foundation_blob": "7521ee47e0add4f2813e1a27e15c84da6fa5ac67",
+      "main_blob": "7521ee47e0add4f2813e1a27e15c84da6fa5ac67",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r4_fixture_acquisitions_v1.json",
+      "foundation_blob": "0bce8c9e92777d94f589edede30565a6669a400d",
+      "main_blob": "0bce8c9e92777d94f589edede30565a6669a400d",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r4_fixture_company_authority_v1.json",
+      "foundation_blob": "e97d416ec3384289c63719d257478cae1b9e03cf",
+      "main_blob": "e97d416ec3384289c63719d257478cae1b9e03cf",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r4_fixture_matrix_v1.json",
+      "foundation_blob": "7d89206b72f1335860eb96146edee0f7c5aac0b8",
+      "main_blob": "7d89206b72f1335860eb96146edee0f7c5aac0b8",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r4_numeric_normalization_v1.json",
+      "foundation_blob": "280f53e8b79119ac44aac6fb3bf176aee9486291",
+      "main_blob": "280f53e8b79119ac44aac6fb3bf176aee9486291",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r4_public_projection_v1.json",
+      "foundation_blob": "2f04611cd6d7ae6794b1f16bafc16643f19f06e0",
+      "main_blob": "2f04611cd6d7ae6794b1f16bafc16643f19f06e0",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r4_task_contracts_v2.json",
+      "foundation_blob": "71d5b2a6ab84d6fdd43a4e0deb81414218214a93",
+      "main_blob": "71d5b2a6ab84d6fdd43a4e0deb81414218214a93",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r5_b06_debt_sets_v3.json",
+      "foundation_blob": "8f2eddc3a2818e8410d990718d743d4085719901",
+      "main_blob": "8f2eddc3a2818e8410d990718d743d4085719901",
+      "status": "SAME"
+    },
+    {
+      "path": "config/r5_b06_structured_v1.json",
+      "foundation_blob": "46c67c58529197c9a809fe59850de268878656a6",
+      "main_blob": "46c67c58529197c9a809fe59850de268878656a6",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_15_lodging_r3.json",
+      "foundation_blob": "214c33f460ceabb301f9f6214567011bb8302d16",
+      "main_blob": "214c33f460ceabb301f9f6214567011bb8302d16",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_15_zero_ai_r1.json",
+      "foundation_blob": "4d9b1f30a8f808f9028a47b16783dd055dce21ce",
+      "main_blob": "4d9b1f30a8f808f9028a47b16783dd055dce21ce",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_15_zero_ai_r2.json",
+      "foundation_blob": "52df4feac03455a1bebefbfca245bd0c57131ec2",
+      "main_blob": "52df4feac03455a1bebefbfca245bd0c57131ec2",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_28_b06_structured_draft.json",
+      "foundation_blob": "06d2987f1465d89be48a7118f928484d046030e9",
+      "main_blob": "06d2987f1465d89be48a7118f928484d046030e9",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_28_r4_offline_v1.json",
+      "foundation_blob": "7679f0239a58519a09b97d08186b91ebc7f42e16",
+      "main_blob": "7679f0239a58519a09b97d08186b91ebc7f42e16",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_28_r4_offline_v2.json",
+      "foundation_blob": "419e9b7aea14de923b55f0853797bbb9551c3656",
+      "main_blob": "419e9b7aea14de923b55f0853797bbb9551c3656",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_28_r4_scoped_engine_v2.json",
+      "foundation_blob": "d44af68dc8ee2d6622bd8fc218e592cc4490b247",
+      "main_blob": "d44af68dc8ee2d6622bd8fc218e592cc4490b247",
+      "status": "SAME"
+    },
+    {
+      "path": "config/release_plans/issue_28_r4_scoped_engine_v3.json",
+      "foundation_blob": "d394d945b9fea35a190b686b9040f42be22d86c6",
+      "main_blob": "d394d945b9fea35a190b686b9040f42be22d86c6",
+      "status": "SAME"
+    },
+    {
+      "path": "config/sec_config.json",
+      "foundation_blob": "e5e1c9b7e451117ceb9aa74912e941e987c8f423",
+      "main_blob": "e5e1c9b7e451117ceb9aa74912e941e987c8f423",
+      "status": "SAME"
+    },
+    {
+      "path": "config/source_strategy_fallback_representation.json",
+      "foundation_blob": "bdfa30b9cc85a4629de04ebb1ca1a4f0566d509a",
+      "main_blob": "bdfa30b9cc85a4629de04ebb1ca1a4f0566d509a",
+      "status": "SAME"
+    },
+    {
+      "path": "config/source_strategy_registry.json",
+      "foundation_blob": "3c868dd9cc624514a4385dd0bdc26241a16b4004",
+      "main_blob": "3c868dd9cc624514a4385dd0bdc26241a16b4004",
+      "status": "SAME"
+    },
+    {
+      "path": "config/table_qualification_freeze.json",
+      "foundation_blob": "8dc62ef9dd346717a4d25dd9e457c0f1e28a8c70",
+      "main_blob": "8dc62ef9dd346717a4d25dd9e457c0f1e28a8c70",
+      "status": "SAME"
+    },
+    {
+      "path": "config/table_qualification_matrix.json",
+      "foundation_blob": "50b06d62b4719133052dc2e7976f32e36d5e8ce0",
+      "main_blob": "50b06d62b4719133052dc2e7976f32e36d5e8ce0",
+      "status": "SAME"
+    },
+    {
+      "path": "config/validation_source_policy.json",
+      "foundation_blob": "d6aae3b2d556985daab40c201260c834762fa566",
+      "main_blob": "d6aae3b2d556985daab40c201260c834762fa566",
+      "status": "SAME"
+    },
+    {
+      "path": "config/vnext_release_plan.json",
+      "foundation_blob": "3cf3b9c7052432948045115390374b0f4c9f70d5",
+      "main_blob": "3cf3b9c7052432948045115390374b0f4c9f70d5",
+      "status": "SAME"
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/frozen-parent-v10-index.json",
+      "foundation_blob": "e749fe3563a379695625ab8e5ec4aefed7a5ed84",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "docs/evidence/r5_b06_followup/amendment_assessments.json",
+      "foundation_blob": "bf7c8cc00b13b1edbcc15d005d8f9c6b264cfda3",
+      "main_blob": "bf7c8cc00b13b1edbcc15d005d8f9c6b264cfda3",
+      "status": "SAME"
+    },
+    {
+      "path": "docs/evidence/r5_b06_followup/measurement_relationships.json",
+      "foundation_blob": "a1cf8f6a670c1c8ee97243096c3f7ed152e0e601",
+      "main_blob": "a1cf8f6a670c1c8ee97243096c3f7ed152e0e601",
+      "status": "SAME"
+    },
+    {
+      "path": "docs/evidence/r5_b06_scope/composition_assessments.json",
+      "foundation_blob": "d70cf5ef33e9ed543ea3e993c6fabfa6561c2211",
+      "main_blob": "d70cf5ef33e9ed543ea3e993c6fabfa6561c2211",
+      "status": "SAME"
+    },
+    {
+      "path": "docs/evidence/r5_b06_scope/debt_scope_relationships.json",
+      "foundation_blob": "e915f3a98cefb867921caf30bf66f94de4661097",
+      "main_blob": "e915f3a98cefb867921caf30bf66f94de4661097",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/00_smoke_test_sec_access.py",
+      "foundation_blob": "f19c41e57fab0e53078fa2c558d2e4b6804a152c",
+      "main_blob": "f19c41e57fab0e53078fa2c558d2e4b6804a152c",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/01_resolve_companies.py",
+      "foundation_blob": "9e2f450f53a0be16d3f618be28409c3cf623dbce",
+      "main_blob": "9e2f450f53a0be16d3f618be28409c3cf623dbce",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/02_inventory_filings.py",
+      "foundation_blob": "2cca94157c0d1205a245c8bb7bbf68d656fbd06b",
+      "main_blob": "2cca94157c0d1205a245c8bb7bbf68d656fbd06b",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/03_companyfacts_inventory.py",
+      "foundation_blob": "b17dc18c7d49a15bf9cde5b89828f9f2b0e39c97",
+      "main_blob": "b17dc18c7d49a15bf9cde5b89828f9f2b0e39c97",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/04_compute_standard_metrics.py",
+      "foundation_blob": "e19dc2ca8dab9165a525f4d7ea9243ceb53e1760",
+      "main_blob": "e19dc2ca8dab9165a525f4d7ea9243ceb53e1760",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/05_fetch_accession_materials.py",
+      "foundation_blob": "19c5a35b45794027506e79213185312a5399c8c1",
+      "main_blob": "19c5a35b45794027506e79213185312a5399c8c1",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/06_parse_xbrl_instances.py",
+      "foundation_blob": "252435ff26fdbe049dd6a14cfd82f364cfdd64d9",
+      "main_blob": "252435ff26fdbe049dd6a14cfd82f364cfdd64d9",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/07_extract_8k_events.py",
+      "foundation_blob": "e981a95dc7df8d70cfc7ed6b8fb9c96690ac5e64",
+      "main_blob": "e981a95dc7df8d70cfc7ed6b8fb9c96690ac5e64",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/08_extract_def14a.py",
+      "foundation_blob": "8ab4d590a818433e48e2a759f4867d32b2ab5b32",
+      "main_blob": "8ab4d590a818433e48e2a759f4867d32b2ab5b32",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/09_extract_mda_and_risk_text.py",
+      "foundation_blob": "c6ad526ca8e01584c434bd6f530bda90b8933c8a",
+      "main_blob": "c6ad526ca8e01584c434bd6f530bda90b8933c8a",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/10_run_golden_assertions.py",
+      "foundation_blob": "3e1d72a57b5516bb3480e29c5eeca6ebee2b03b7",
+      "main_blob": "3e1d72a57b5516bb3480e29c5eeca6ebee2b03b7",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/11_build_report.py",
+      "foundation_blob": "48dc40839a56cb40c00c2601ef5b5b15f3515685",
+      "main_blob": "48dc40839a56cb40c00c2601ef5b5b15f3515685",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/12_validate_repair.py",
+      "foundation_blob": "9683ad589d0c28a93deb40b35c6fb052e8d682f8",
+      "main_blob": "9683ad589d0c28a93deb40b35c6fb052e8d682f8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/git_workspace.py",
+      "foundation_blob": "9e361dd9864c3e30638002b2bb2848857111b566",
+      "main_blob": "9e361dd9864c3e30638002b2bb2848857111b566",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/sec_http.py",
+      "foundation_blob": "1717a09bd229ece2522c53f1c56f473161de9807",
+      "main_blob": "1717a09bd229ece2522c53f1c56f473161de9807",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/sec_pipeline.py",
+      "foundation_blob": "6f9c5825719654da5a8b0cc913620b9a8511e77e",
+      "main_blob": "6f9c5825719654da5a8b0cc913620b9a8511e77e",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/sec_urls.py",
+      "foundation_blob": "4cb3f678661b32bc8a9ecf878b7ce6eac06b5839",
+      "main_blob": "4cb3f678661b32bc8a9ecf878b7ce6eac06b5839",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/validation_provenance.py",
+      "foundation_blob": "4bb6a6c1c630e77bcf3de0e3fe82cad75bc74789",
+      "main_blob": "4bb6a6c1c630e77bcf3de0e3fe82cad75bc74789",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/__init__.py",
+      "foundation_blob": "e0d7d4ef90285785431884b64223f5e6470408a8",
+      "main_blob": "e0d7d4ef90285785431884b64223f5e6470408a8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/ai_adapter.py",
+      "foundation_blob": "9fdfe8a81acad361c1babbd90409cd42ab5a68ae",
+      "main_blob": "fef551ca6937249ef4e0a80d486037b51f451fc1",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/annual_adoption.py",
+      "foundation_blob": "b3d8eaf953d37b55a89471b92e96ac75f6b58d4a",
+      "main_blob": "b3d8eaf953d37b55a89471b92e96ac75f6b58d4a",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_adoption_policy.py",
+      "foundation_blob": "bc5a3c577d251ccbbd5f5a93d37db582ff698945",
+      "main_blob": "bc5a3c577d251ccbbd5f5a93d37db582ff698945",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_amendment_scope.py",
+      "foundation_blob": "b7e9e639ebe77e4e53fbe0e61ad99238875aa820",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/annual_candidate.py",
+      "foundation_blob": "c4486a4c331de9813f5f34d1b78f7368df134fe5",
+      "main_blob": "c4486a4c331de9813f5f34d1b78f7368df134fe5",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_continuity.py",
+      "foundation_blob": "aac2b2901b8e22949759048fdb555c78a0432cc6",
+      "main_blob": "aac2b2901b8e22949759048fdb555c78a0432cc6",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_continuity_publication.py",
+      "foundation_blob": "f04d4116b5a70679ba600f06ce2c94b641497f66",
+      "main_blob": "f04d4116b5a70679ba600f06ce2c94b641497f66",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_continuity_snapshot.py",
+      "foundation_blob": "b954da1afb7da2796cf58d78c232d74e32576981",
+      "main_blob": "b954da1afb7da2796cf58d78c232d74e32576981",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_continuity_sources.py",
+      "foundation_blob": "2101137d3f69b65b34edca75cbdb73cb21ee916b",
+      "main_blob": "2101137d3f69b65b34edca75cbdb73cb21ee916b",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_continuity_trigger.py",
+      "foundation_blob": "232fcc7448f79c085f389695465f34acc3872f60",
+      "main_blob": "232fcc7448f79c085f389695465f34acc3872f60",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_evidence.py",
+      "foundation_blob": "8d6829098805836c087bc42edd439fe0b52d8cd4",
+      "main_blob": "8d6829098805836c087bc42edd439fe0b52d8cd4",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_input.py",
+      "foundation_blob": "13f1b7e7a72892ee8ff50718bc027a33cd40613d",
+      "main_blob": "13f1b7e7a72892ee8ff50718bc027a33cd40613d",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_projection.py",
+      "foundation_blob": "e7646b1e924737f303d884155b88b596f0ab53ef",
+      "main_blob": "e7646b1e924737f303d884155b88b596f0ab53ef",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_publication.py",
+      "foundation_blob": "c63f229d8defa4d76ad3ca7f9c1e969973851ab1",
+      "main_blob": "c63f229d8defa4d76ad3ca7f9c1e969973851ab1",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_publication_authority.py",
+      "foundation_blob": "4db693fd424426c402e19bdbf8ad6789a9d4f90b",
+      "main_blob": "4db693fd424426c402e19bdbf8ad6789a9d4f90b",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_regression.py",
+      "foundation_blob": "9a9f2de54b30d41d6e5985f4e923ba7c1d2aa3b8",
+      "main_blob": "9a9f2de54b30d41d6e5985f4e923ba7c1d2aa3b8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_regression_synthetic.py",
+      "foundation_blob": "96bca853b1c995c68aafcc6ea89112f750edac9f",
+      "main_blob": "96bca853b1c995c68aafcc6ea89112f750edac9f",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_repair_budget.py",
+      "foundation_blob": "2cb454b9d15a7bbd2cd03876f8c15d46b53f2722",
+      "main_blob": "2cb454b9d15a7bbd2cd03876f8c15d46b53f2722",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_runtime.py",
+      "foundation_blob": "8b44d4174a6a15a76c0af2751655c061669bdc8b",
+      "main_blob": "8b44d4174a6a15a76c0af2751655c061669bdc8b",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/annual_update.py",
+      "foundation_blob": "e7c284cf01f6901404fa435f554b7bfc2fc60a9a",
+      "main_blob": "e7c284cf01f6901404fa435f554b7bfc2fc60a9a",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/b03_depreciation_scope.py",
+      "foundation_blob": "0ef884d4d2f3ba8d88e72a565915e180286bbd6a",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b03_exact_impairment_relation.py",
+      "foundation_blob": "9ca006f48fad6fc90439428214ebd3a748e3c0e6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b03_impairment_adjusted_run.py",
+      "foundation_blob": "15dbe46704b1f0fe63c0fadd21ae754e60426787",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_bond_leases.py",
+      "foundation_blob": "781082967be6bc2a6d1e631876f7ffbd25f670f8",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_current_input.py",
+      "foundation_blob": "03df0c984b987943937cf9103226cfe6a340e285",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_disclosure.py",
+      "foundation_blob": "5ac3f4c844ed3dc26c4f71a5ec71c6242f99993c",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_disclosure_v2.py",
+      "foundation_blob": "557d0a421aeea20ee813980457e75827bfec29f3",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_financing_inventory.py",
+      "foundation_blob": "69673ca2d13d80dc6d3b0fb8eec8ed9249343612",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_guarded_result_v3.py",
+      "foundation_blob": "cc77faec58e151ffd1c31d3609611d3fea3b9149",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_inclusive_table.py",
+      "foundation_blob": "810d12abed68da2e5d30a77628d3d79a37215df7",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_new_source.py",
+      "foundation_blob": "b01969ea2c0d877009c9c2fa7b2f416086208ae4",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_note_carrying.py",
+      "foundation_blob": "500f5c42c9211adcc99031d5b4e2cbb53d7606f6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/b06_source_admission.py",
+      "foundation_blob": "923f42fc40940180984538d1c9c62eb25630eabf",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/batch_workflow.py",
+      "foundation_blob": "92c85cefc463ef9e5c50cf42986f7983984f87fa",
+      "main_blob": "32344b90e3dc61b507635c8300a81e82cf8ff491",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/c02_composition_text_results.py",
+      "foundation_blob": "374ee2696f58930e441fec3c40e3430cb950c4c6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/c02_grouped_source.py",
+      "foundation_blob": "65bddc09c166ce5dba435fdeeba7365390ba18be",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/c04_registration_successor.py",
+      "foundation_blob": "d03e1d9cf4430693c62273a93cb9358497bf1cfb",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/c04_verified_document_alias.py",
+      "foundation_blob": "84cf155c33891e365f6cc12ab7662bb05208b224",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/calculator.py",
+      "foundation_blob": "5c438f7364f4025bc15230bd2250c7082a0f0565",
+      "main_blob": "07f02e9313bf1539a02bfff70a977a8d4bb5c73c",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/candidate_permission.py",
+      "foundation_blob": "54f453ffa5a51eb90dee87ded2cd0f6eed9d87a4",
+      "main_blob": "54f453ffa5a51eb90dee87ded2cd0f6eed9d87a4",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/canonical.py",
+      "foundation_blob": "b0bd55c388bf2b30121af2d56a40ba6ac0687ade",
+      "main_blob": "b0bd55c388bf2b30121af2d56a40ba6ac0687ade",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/composite_scope.py",
+      "foundation_blob": "a1b098b39106e646201d6bebdffeb6abbaa4b6a9",
+      "main_blob": "a1b098b39106e646201d6bebdffeb6abbaa4b6a9",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/constraints.py",
+      "foundation_blob": "1fd99772356592da8bf0e229b8ebe496662379a3",
+      "main_blob": "0ed260e48d2997b5daf1c431fbf2a425af093d4f",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/continuous_call_ledger.py",
+      "foundation_blob": "332e6d83c2955f6a3a864093393872c86c1b72e5",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/continuous_call_policy.py",
+      "foundation_blob": "a43e0bffb2b25c8aef65a824f2f28db092b24c3f",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/continuous_sec_acquisition.py",
+      "foundation_blob": "43246c38bad6cb711a6be64f9b4396e2d2af32a6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/cutover.py",
+      "foundation_blob": "e1bed285ec47fb081e09fb40d73bf3444209cdfb",
+      "main_blob": "e1bed285ec47fb081e09fb40d73bf3444209cdfb",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/d01_emphasis_results.py",
+      "foundation_blob": "ae382037edd9285a023b3d8bac4cf7581a838daf",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/d01_emphasis_source.py",
+      "foundation_blob": "6ae519f306ea7dabc3e9944e19e6a0af90a9d061",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/d02_item8_category_28_v1.py",
+      "foundation_blob": "8be39cc76ed823d7bd6da573e09b27b7e1a62c88",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/d02_item8_category_28_v2.py",
+      "foundation_blob": "e2d2a1d395eb33dec5492c11a6b88216d6e2b747",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/d02_text_results_v3.py",
+      "foundation_blob": "6aee88e4cf4d404a0ee9d3970c12c3ca0e35e62d",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/deterministic_router.py",
+      "foundation_blob": "986fcfb50a8ca0886f99125d2e780e065553b245",
+      "main_blob": "986fcfb50a8ca0886f99125d2e780e065553b245",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/e01_item_text_28_v1.py",
+      "foundation_blob": "6e99477c524d4775bb2fbca4a5879e9fd6c1e06d",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/evidence.py",
+      "foundation_blob": "b658f90c99c13da8a5c55b9918bc0df505442248",
+      "main_blob": "b658f90c99c13da8a5c55b9918bc0df505442248",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/fault_matrix.py",
+      "foundation_blob": "aeda9f1e0e092ea46279c2035d0a737d182a37b8",
+      "main_blob": "aeda9f1e0e092ea46279c2035d0a737d182a37b8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/financial_balance_scope.py",
+      "foundation_blob": "3885d5b94373d3d7d9843407f72485887e76a665",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/financial_candidates.py",
+      "foundation_blob": "f5a935091b41707c190d65c8a4a296fe1a903bdf",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/financial_duration.py",
+      "foundation_blob": "6c6d955355e6e891b4ab86369a55e3b5e78c891d",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/financial_relationships.py",
+      "foundation_blob": "486e32dedd3ab5b5536f5b793cc1f72cb0c20b73",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/financial_results.py",
+      "foundation_blob": "06c957345ec82d4d12f8aa0d1bcd7ffbfe479a66",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/financial_structured.py",
+      "foundation_blob": "9401a6727809eb078600bc326a60b0950ff77c34",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/fiscal_year_labels.py",
+      "foundation_blob": "95c848da47838586d182332eb5a2608a58ba722f",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/governance_compensation_table.py",
+      "foundation_blob": "315a1ab2245bf3b0e8ebb432cb0d0d4474897f54",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/governance_signals.py",
+      "foundation_blob": "8607a21f7eac30e63033d6913d500c511cb5ce09",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/historical_board_composition.py",
+      "foundation_blob": "a5f238c61c560daf65affd4aaf3a4e43f7020ca6",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/historical_board_composition_v2.py",
+      "foundation_blob": "cf7c0ac689d53b653f93286720323d76f0bed568",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/instant_balance_amendment.py",
+      "foundation_blob": "d7d2b696beae6cc0f375b9334db85420b92624d7",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/invocation_control.py",
+      "foundation_blob": "78294a49dd1f3ec6a850ed1a381c39921b429cb5",
+      "main_blob": "6e74c4db33cafe9e5d0f6509552539076761a9a8",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/live_scoped_reader.py",
+      "foundation_blob": "24b50c60cd585d562bfea29f81e18272b55ed16d",
+      "main_blob": "24b50c60cd585d562bfea29f81e18272b55ed16d",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/lodging_table_source.py",
+      "foundation_blob": "b9878a582933bb241caeec0df421155c78ce45cd",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_accession_results.py",
+      "foundation_blob": "3a00d98a49f3a2679b4764af2f839941f0e4e225",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_annual_input.py",
+      "foundation_blob": "8d37f1dd19227f0d065f9b4f77279bc507012218",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_annual_input_v2.py",
+      "foundation_blob": "14cad6ddb1c63b01c41ebf55928f7ea9220e8c23",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_bond_debt_results.py",
+      "foundation_blob": "d94c2e810c6efc275671e237b75fe4b5cbba1f0e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_candidates.py",
+      "foundation_blob": "acd87b7769c7c55a114df3bc49a6689df0899852",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_companyfacts_results.py",
+      "foundation_blob": "38462ff60479245c49705a59a8832f95d6c94b3b",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_governance_input.py",
+      "foundation_blob": "4a41f62b2530f423d6ac347a800d72786b0124f4",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_inclusive_debt_results.py",
+      "foundation_blob": "498dc3a71998c2bdcda8012914ca975cb0c08b83",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_lodging_results.py",
+      "foundation_blob": "48af617a6d1e2c90963e8a13508b69c8d1ac660b",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_note_debt_results.py",
+      "foundation_blob": "4656aae7bd57bc08c8138e4e2d0e0503da639f81",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_numeric_projection.py",
+      "foundation_blob": "29bd4a3fd5a4a40c6132a67d6a162ea4deeca5bb",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_run_inputs.py",
+      "foundation_blob": "adf1e6d838a3f5a25005ce61882dacf2546c186f",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_run_specs.py",
+      "foundation_blob": "5bdf5dad7f22c9830736b63479c01f8fe5092f63",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_run_v2.py",
+      "foundation_blob": "be47f21c3439248c59a169b469a0848f1e21883e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "foundation_blob": "071bcc9ee9455b613530de33848cdd7bac1b7752",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_source_authority.py",
+      "foundation_blob": "ca47eb735252cdc2a3dc7924a3b972717758a1fd",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_text_input_v2.py",
+      "foundation_blob": "628a4167e5bc5e965430568220343c0a95b4e987",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/normal_zero_ai_results.py",
+      "foundation_blob": "2a2b1ce240377fcad8cad0ddb99635430d9f0741",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/observations.py",
+      "foundation_blob": "425a14fb419ede14d9c0b667a0681edceba6a5e0",
+      "main_blob": "3e4942d4ce22e70021bf35099785b2bc2cf1afd1",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/offline_execution_session.py",
+      "foundation_blob": "9f908c9bc3e8f449e908feb80ae75803cef7997a",
+      "main_blob": "9f908c9bc3e8f449e908feb80ae75803cef7997a",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/ordinary_d02_category_update.py",
+      "foundation_blob": "aa2fa336ad404a50b3f123213809e0eaafcf20d9",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_d02_category_update_v2.py",
+      "foundation_blob": "2d50a9990dd1bffeb1f09fec2a435220dd6a51fb",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_d02_item8_v1.py",
+      "foundation_blob": "2e850f7575c4e482600efd96704607ca8432323b",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_d02_item8_v2.py",
+      "foundation_blob": "0d811cf26516848025037dba67d77c0fd20ad63e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_debt_guard.py",
+      "foundation_blob": "cef8c415dd17446bef3add42dbee7821dfda621c",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_e01_item_text_input.py",
+      "foundation_blob": "1c704474a36454e341de1f5c082c338574d40e92",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_financial_results.py",
+      "foundation_blob": "81caf9d3c9e2c30811529f5d5e1364fe4790760a",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_income_input.py",
+      "foundation_blob": "8e1d8b07635c1e2faca9305d75666f582a8e032e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_processing_source.py",
+      "foundation_blob": "a667011cf4c52afcf268334d69878a84befaeccc",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_projection.py",
+      "foundation_blob": "545c48eaa16dc9b30eac26f7caa0b761b60859e3",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_remaining_cases.py",
+      "foundation_blob": "a4981ea883842e8ac52724376cdaec27f97b15c4",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_source_authority.py",
+      "foundation_blob": "f3c2a2446b6395359f8fdb2fd54a4a8e988e0671",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_source_session.py",
+      "foundation_blob": "7f43f17f5f629456fcc0cbfefa7f77da4a882c7e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_special_debt_scope.py",
+      "foundation_blob": "2d6ecef6dd43fbaca45df4feb6c5a277c70ee164",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_storage_identity.py",
+      "foundation_blob": "b647937f03c69def93e80d0809962ad357564ed7",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_text_input.py",
+      "foundation_blob": "f2be83163dd414a64af931df3dc0f569d8e5a5da",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "foundation_blob": "2b1bcc1536b7184e9226a1a89d219ad3fa78b658",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/paired_measure_v1.py",
+      "foundation_blob": "18c2c42dce5337a28616346f0c6baa1205e4cd44",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/projection_independence.py",
+      "foundation_blob": "42d4012232aed7d0ecbc7abd9ba8ff78e8096e29",
+      "main_blob": "42d4012232aed7d0ecbc7abd9ba8ff78e8096e29",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/projector.py",
+      "foundation_blob": "5baac690a799ff2e4b993dac616b4ddd276c4d5c",
+      "main_blob": "962467c59c4213d459c11d2e14d83fb7c8aec094",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/provider_runtime.py",
+      "foundation_blob": "3531c180fd3f9d48cbeae8f90dbb7120301402b9",
+      "main_blob": "3531c180fd3f9d48cbeae8f90dbb7120301402b9",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/public_projection.py",
+      "foundation_blob": "2b2deebf3af82caac411903283f452cad6b813b9",
+      "main_blob": "2b2deebf3af82caac411903283f452cad6b813b9",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/publication.py",
+      "foundation_blob": "c8586a6c561b2f349e5e516cc89af87755e28d8d",
+      "main_blob": "1acb02c5e5835c119edd34436857a7d6d659016b",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/publication_results.py",
+      "foundation_blob": "bb92379998a53b9eb81ee140d9f567914f0cdeec",
+      "main_blob": "d33376d95934e3e0b11d024c41873c7514354294",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/qualification.py",
+      "foundation_blob": "077cd1da52cd25989e67696eb3c27a323e529a6a",
+      "main_blob": "077cd1da52cd25989e67696eb3c27a323e529a6a",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_fixture_authority.py",
+      "foundation_blob": "268babe882bc45e3b010e357d2c16a1ea7509392",
+      "main_blob": "268babe882bc45e3b010e357d2c16a1ea7509392",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_label_policy.py",
+      "foundation_blob": "98e0b12724acd6b49b3a72f22a10cc9677d113d2",
+      "main_blob": "98e0b12724acd6b49b3a72f22a10cc9677d113d2",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_live_authority.py",
+      "foundation_blob": "b654d92eb9a50c4bf30a09fda19da7462e30fc01",
+      "main_blob": "b654d92eb9a50c4bf30a09fda19da7462e30fc01",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_live_plan.py",
+      "foundation_blob": "44e88ab8055057284eaa34d81b385824247a79c3",
+      "main_blob": "44e88ab8055057284eaa34d81b385824247a79c3",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_live_qualification.py",
+      "foundation_blob": "32ad2c4b75415f4c2a53ba2e81ccba9673e3fc8d",
+      "main_blob": "32ad2c4b75415f4c2a53ba2e81ccba9673e3fc8d",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_materialization.py",
+      "foundation_blob": "8e85d8971495463e65e252799a908982d2e189f7",
+      "main_blob": "8e85d8971495463e65e252799a908982d2e189f7",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_offline_qualification.py",
+      "foundation_blob": "ca24741d6d3836571e22e5de70447859631470ec",
+      "main_blob": "ca24741d6d3836571e22e5de70447859631470ec",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_projection.py",
+      "foundation_blob": "8e4e67eb70fa4258219bb0e1628b71d03b7b62c8",
+      "main_blob": "8e4e67eb70fa4258219bb0e1628b71d03b7b62c8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_publication.py",
+      "foundation_blob": "d343ca8a6eb4a2a6c49c57876565178914a97700",
+      "main_blob": "d343ca8a6eb4a2a6c49c57876565178914a97700",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_release.py",
+      "foundation_blob": "fd3b4018f322c754a93185798877cda0082b7a81",
+      "main_blob": "fd3b4018f322c754a93185798877cda0082b7a81",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_run_store.py",
+      "foundation_blob": "e0bf1fd48ccf7702ca08b606f2d9aae5f3661f27",
+      "main_blob": "e0bf1fd48ccf7702ca08b606f2d9aae5f3661f27",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_source_audit.py",
+      "foundation_blob": "3921fc5cecbf728680b32aab1bdd9ddc8a820060",
+      "main_blob": "3921fc5cecbf728680b32aab1bdd9ddc8a820060",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_structured_run.py",
+      "foundation_blob": "787642468687337ce522d6793832d8c3d0766bd4",
+      "main_blob": "787642468687337ce522d6793832d8c3d0766bd4",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_structured_sources.py",
+      "foundation_blob": "a1bf8c791ac1b832c5be2e0dcb2730be628a9e3b",
+      "main_blob": "a1bf8c791ac1b832c5be2e0dcb2730be628a9e3b",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r4_task_contracts.py",
+      "foundation_blob": "9c2d9345350a6f33f35b3c957e54d2b10383b1f2",
+      "main_blob": "9c2d9345350a6f33f35b3c957e54d2b10383b1f2",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_amendments.py",
+      "foundation_blob": "66c5175b70d374702014589bb83fa537cde0d394",
+      "main_blob": "66c5175b70d374702014589bb83fa537cde0d394",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_measurement.py",
+      "foundation_blob": "0f620508a1336a4ef4b1668c76340cf6f3ca0ce8",
+      "main_blob": "0f620508a1336a4ef4b1668c76340cf6f3ca0ce8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_publication.py",
+      "foundation_blob": "9bf124ae753de8131398d262886ebe2bf7043a0d",
+      "main_blob": "9bf124ae753de8131398d262886ebe2bf7043a0d",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_scope.py",
+      "foundation_blob": "9fa622355cc1ddd498b4dd810f40d6366553b744",
+      "main_blob": "9fa622355cc1ddd498b4dd810f40d6366553b744",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_structured.py",
+      "foundation_blob": "3d909306cf0865d479288890f8623096a4b84ac2",
+      "main_blob": "249da54f5a89c6c743a78f17f02626b4e6355dd7",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/ratchet_release.py",
+      "foundation_blob": "f5e7042f05c3bebc19df20f7ce7a478e74365cc6",
+      "main_blob": "f5e7042f05c3bebc19df20f7ce7a478e74365cc6",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/reader.py",
+      "foundation_blob": "97b2c807a49842db0c843109762838e73d09b5d5",
+      "main_blob": "97b2c807a49842db0c843109762838e73d09b5d5",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/reader_input.py",
+      "foundation_blob": "d506df6ebe60dda9ed04731449e92d3b74320513",
+      "main_blob": "d506df6ebe60dda9ed04731449e92d3b74320513",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/recorded_fixtures.py",
+      "foundation_blob": "ea856f381c875acdfa230416bfbf645efa89b18e",
+      "main_blob": "ea856f381c875acdfa230416bfbf645efa89b18e",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/records.py",
+      "foundation_blob": "29571764c4c0537c4b2e4abc1ada55123da4f67c",
+      "main_blob": "5ee9cc41b93bbf9a6ec691cf0825af2c39c5da69",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/render.py",
+      "foundation_blob": "10c09fd26eb2e8ebb15eb86dc0c9697a57284386",
+      "main_blob": "10c09fd26eb2e8ebb15eb86dc0c9697a57284386",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/replay.py",
+      "foundation_blob": "e486128df6d9aaaf070afa997b129776a3ac4c1f",
+      "main_blob": "e486128df6d9aaaf070afa997b129776a3ac4c1f",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/report.py",
+      "foundation_blob": "2aabf110fa92f6f7ef62a83342a9c27db8380ca6",
+      "main_blob": "2aabf110fa92f6f7ef62a83342a9c27db8380ca6",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile.py",
+      "foundation_blob": "5420bc6bf8b0a1197561598a858a277e035bf17c",
+      "main_blob": "b020eb6499fd0ebc3772a1a674e9c6a46070aaaf",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v1.py",
+      "foundation_blob": "885189d486e6414b45c53d999c087970ef6ad040",
+      "main_blob": "885189d486e6414b45c53d999c087970ef6ad040",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v10.py",
+      "foundation_blob": "22d00aa926ea6588394c335e119d3f5f601cb1d8",
+      "main_blob": "22d00aa926ea6588394c335e119d3f5f601cb1d8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v12.py",
+      "foundation_blob": "6b0c7a40c60c1758d3c7b552ab46c47b722bec4a",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v13.py",
+      "foundation_blob": "2cc663487a0e2df83fa8145f6e646c8749b88a55",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v14.py",
+      "foundation_blob": "d1ff70aad91892aaf3f907ba06f6dce8633daa2c",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v2.py",
+      "foundation_blob": "58e009ef3fbae60a799d1d34555f57e2a7db8f5a",
+      "main_blob": "58e009ef3fbae60a799d1d34555f57e2a7db8f5a",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v3.py",
+      "foundation_blob": "9703afd7a60b23eedb53e54097190e1787e6a9cf",
+      "main_blob": "9703afd7a60b23eedb53e54097190e1787e6a9cf",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v4.py",
+      "foundation_blob": "b87ad17b3213d5ff993c42240d49389d41efcade",
+      "main_blob": "b87ad17b3213d5ff993c42240d49389d41efcade",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v5.py",
+      "foundation_blob": "00b6571a3980d988febd7790e46f35bbb5b275e6",
+      "main_blob": "00b6571a3980d988febd7790e46f35bbb5b275e6",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v6.py",
+      "foundation_blob": "341c0afbf699d58fbaf636b8560510da6a522fc3",
+      "main_blob": "341c0afbf699d58fbaf636b8560510da6a522fc3",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v7.py",
+      "foundation_blob": "23f29713285fcc7a267eb8dd6c9cda7a01d260b0",
+      "main_blob": "23f29713285fcc7a267eb8dd6c9cda7a01d260b0",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v8.py",
+      "foundation_blob": "c4ac984cc0bcfe25efb190169ad0fea6c41114f5",
+      "main_blob": "c4ac984cc0bcfe25efb190169ad0fea6c41114f5",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v9.py",
+      "foundation_blob": "c52cce87bb9436edf00c713cf1fa441ccf31df68",
+      "main_blob": "c52cce87bb9436edf00c713cf1fa441ccf31df68",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/requirements.py",
+      "foundation_blob": "db3842115d277a5f4ba1f6698de2d590588e32df",
+      "main_blob": "db3842115d277a5f4ba1f6698de2d590588e32df",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/resource_limits.py",
+      "foundation_blob": "7e974ca4d65a710cd7a8d4dbaf6a2793c0256eca",
+      "main_blob": "7e974ca4d65a710cd7a8d4dbaf6a2793c0256eca",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/review.py",
+      "foundation_blob": "97eecbd78cc251bb892ce333d3e3143bc71dd1b8",
+      "main_blob": "97eecbd78cc251bb892ce333d3e3143bc71dd1b8",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/risk_signals.py",
+      "foundation_blob": "9eb3abf22fa20e63a7027c97198faa540023e8cf",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/run_store.py",
+      "foundation_blob": "29e7cc311bfa58aee6930b4658aecb80c33897c1",
+      "main_blob": "06b5dcc8518f7e353b3ed6bb619b7a673a31bc20",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/scope_contract.py",
+      "foundation_blob": "1f6bbfefcf5431a4635b0562be4d7a3a72f6db63",
+      "main_blob": "1f6bbfefcf5431a4635b0562be4d7a3a72f6db63",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/scoped_reader.py",
+      "foundation_blob": "4ff5f46508216e5769729750ea6b32337132db69",
+      "main_blob": "4ff5f46508216e5769729750ea6b32337132db69",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/source_scope.py",
+      "foundation_blob": "7fc1272e2f47dd2da435ba78c46ec1b3612d3fc7",
+      "main_blob": "7fc1272e2f47dd2da435ba78c46ec1b3612d3fc7",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/source_strategy.py",
+      "foundation_blob": "da0f0c9f965921278316f50b480d90b8c4bc9ae2",
+      "main_blob": "da0f0c9f965921278316f50b480d90b8c4bc9ae2",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/sources.py",
+      "foundation_blob": "cc8277c60083161443a6f99b1cff1933ef86f6b4",
+      "main_blob": "cc8277c60083161443a6f99b1cff1933ef86f6b4",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/specs.py",
+      "foundation_blob": "bb235a4f5a813474eafd726f8015198cec1b868b",
+      "main_blob": "79069f65a927c95ab8785593922de6ed2d03281f",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "scripts/vnext/stage_a_snapshot.py",
+      "foundation_blob": "6d85e2ae065a9f9ea996b9c53081d0a07bdb8516",
+      "main_blob": "6d85e2ae065a9f9ea996b9c53081d0a07bdb8516",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/stage_c_b_packet.py",
+      "foundation_blob": "565029ff2d854d13339c69517d964d5d1fe566d0",
+      "main_blob": "565029ff2d854d13339c69517d964d5d1fe566d0",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/stage_c_context_packet.py",
+      "foundation_blob": "16562907b077f74f7e16b0b5c66b906ac9c200db",
+      "main_blob": "16562907b077f74f7e16b0b5c66b906ac9c200db",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/stage_c_packet.py",
+      "foundation_blob": "a7aff365860b85abf8c7d0012211e6b434fc6ed5",
+      "main_blob": "a7aff365860b85abf8c7d0012211e6b434fc6ed5",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/states.py",
+      "foundation_blob": "a7056bcd3eaecbeeb1790bf91f9915829ec09fc6",
+      "main_blob": "a7056bcd3eaecbeeb1790bf91f9915829ec09fc6",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_context_attestation.py",
+      "foundation_blob": "8bf5cf1c444ae79211eedafb55cd6e05a2b7be34",
+      "main_blob": "8bf5cf1c444ae79211eedafb55cd6e05a2b7be34",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_context_comparison.py",
+      "foundation_blob": "835a8476604420acd52a278045513e22fc63f61d",
+      "main_blob": "835a8476604420acd52a278045513e22fc63f61d",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_context_measurement.py",
+      "foundation_blob": "1c1561b49878182f6a25a05f4aeba5ce077f681b",
+      "main_blob": "1c1561b49878182f6a25a05f4aeba5ce077f681b",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_grid.py",
+      "foundation_blob": "fe4500c3058eb8e5729526cc57531d055df24725",
+      "main_blob": "fe4500c3058eb8e5729526cc57531d055df24725",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_payload.py",
+      "foundation_blob": "80dfd05cf79626e0e4e975037fc077bae2c8cfc2",
+      "main_blob": "80dfd05cf79626e0e4e975037fc077bae2c8cfc2",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_qualification_freeze.py",
+      "foundation_blob": "540d08e552fcb39b94ada262b2b8e79a4bf30234",
+      "main_blob": "540d08e552fcb39b94ada262b2b8e79a4bf30234",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/table_task_contracts.py",
+      "foundation_blob": "f3d7f79b4815843e816c34a6f8352e691228d111",
+      "main_blob": "f3d7f79b4815843e816c34a6f8352e691228d111",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/terminal_cycle.py",
+      "foundation_blob": "fc486f6078efa30a03235e9ed580a2d02d2817bf",
+      "main_blob": "fc486f6078efa30a03235e9ed580a2d02d2817bf",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/text_business_candidates.py",
+      "foundation_blob": "b6a53725174e1f32c9888fe49f44379080e3bc7d",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/text_coverage.py",
+      "foundation_blob": "8918bdef85a187e70c4557cb55cafcf8edad69a1",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/text_results.py",
+      "foundation_blob": "d978b30499295c07f4d0e1774d26f43cf8663b96",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/text_results_v2.py",
+      "foundation_blob": "96a6ebbd0c71c3692bbd951fcce4e22e8eab339e",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/text_review.py",
+      "foundation_blob": "1273b25f7f4aefcbf2eab7ee4c9fe8c33c759de1",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/text_run_validation.py",
+      "foundation_blob": "85eff778643315f7d97b532db5a34524d88ed923",
+      "main_blob": null,
+      "status": "ABSENT_FROM_MAIN"
+    },
+    {
+      "path": "scripts/vnext/traits.py",
+      "foundation_blob": "17f87fd3befa94d65c2a67c618b132dc54343fc6",
+      "main_blob": "17f87fd3befa94d65c2a67c618b132dc54343fc6",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/workflow.py",
+      "foundation_blob": "722d1328d96ccad5d119aeebf03b0c91befdb343",
+      "main_blob": "722d1328d96ccad5d119aeebf03b0c91befdb343",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/zero_ai_r2.py",
+      "foundation_blob": "d8ef5999b8a801c3f9c261db80430ec4aa0899c5",
+      "main_blob": "d8ef5999b8a801c3f9c261db80430ec4aa0899c5",
+      "status": "SAME"
+    },
+    {
+      "path": "scripts/vnext/zero_ai_release.py",
+      "foundation_blob": "6d7e795c3c07e9244c2584813a9abdc3ec392a9a",
+      "main_blob": "6d7e795c3c07e9244c2584813a9abdc3ec392a9a",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/acquire_r4_fixture_filings.py",
+      "foundation_blob": "fafc0a0240bb16ecae80b5b3ff4496f1434d7d06",
+      "main_blob": "fafc0a0240bb16ecae80b5b3ff4496f1434d7d06",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/audit_r4_sources.py",
+      "foundation_blob": "c8829d809a1f2146a9838fe98bffd49d3586b3cf",
+      "main_blob": "c8829d809a1f2146a9838fe98bffd49d3586b3cf",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/benchmark_jpm_full_materialization.py",
+      "foundation_blob": "5e48a698bdc06f0af219337c6744bf109befd96c",
+      "main_blob": "5e48a698bdc06f0af219337c6744bf109befd96c",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/benchmark_r4_offline_session.py",
+      "foundation_blob": "31419f5711ec9159404dbc38fd5687b327c07fea",
+      "main_blob": "31419f5711ec9159404dbc38fd5687b327c07fea",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/check_annual_label_repair.py",
+      "foundation_blob": "fdb0363a4ecd224716b5d640e2cee8da27e3480f",
+      "main_blob": "fdb0363a4ecd224716b5d640e2cee8da27e3480f",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/check_capability_contract_alignment.py",
+      "foundation_blob": "f700d21d0ce5cedef4cd7e78824442ed91cfcf5e",
+      "main_blob": "f700d21d0ce5cedef4cd7e78824442ed91cfcf5e",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/check_no_company_literals.py",
+      "foundation_blob": "9ce14f3d000023d41aaf0dd73eec7d0c23972c23",
+      "main_blob": "9ce14f3d000023d41aaf0dd73eec7d0c23972c23",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/check_provider_egress.py",
+      "foundation_blob": "3ee81a3983cf5de72ab42a56b361e5942fb5e508",
+      "main_blob": "318d0762ec05607df2ff2f6638bcd508535a565a",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "tools/check_validation_snapshot.py",
+      "foundation_blob": "0302b5f35f440ad4cc4f79635ad5356a9b8433e5",
+      "main_blob": "0302b5f35f440ad4cc4f79635ad5356a9b8433e5",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/check_vnext_semantics.py",
+      "foundation_blob": "33f20321be90bca33f594e27b5b3896c28a9bdbc",
+      "main_blob": "33f20321be90bca33f594e27b5b3896c28a9bdbc",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/check_zero_ai_projection.py",
+      "foundation_blob": "b9c9cd1b20a64311baddf7b468867c3842a03dd4",
+      "main_blob": "b9c9cd1b20a64311baddf7b468867c3842a03dd4",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_issue28_v2_snapshot.py",
+      "foundation_blob": "69196c542855c2ec70119d320524ee934f1cdcb4",
+      "main_blob": "69196c542855c2ec70119d320524ee934f1cdcb4",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_issue28_v3_snapshot.py",
+      "foundation_blob": "d1a6e8cf3ac6c40263386e507c43cded5cb86a04",
+      "main_blob": "d1a6e8cf3ac6c40263386e507c43cded5cb86a04",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_stage_a_validation_snapshot.py",
+      "foundation_blob": "40e352730c9ac1b63b1fc7cc4179f63fcf924482",
+      "main_blob": "40e352730c9ac1b63b1fc7cc4179f63fcf924482",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_stage_c_a_packet.py",
+      "foundation_blob": "b3498d5777d916d0b2d5451cfb335063c07121ba",
+      "main_blob": "b3498d5777d916d0b2d5451cfb335063c07121ba",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_stage_c_b_packet.py",
+      "foundation_blob": "2b992d8680fdbf6a877e2267832cad1c757e1143",
+      "main_blob": "2b992d8680fdbf6a877e2267832cad1c757e1143",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_stage_c_context_attestation_packet.py",
+      "foundation_blob": "9ebe2b5deca7f7d7c280244dbfe7d2b622fe124b",
+      "main_blob": "9ebe2b5deca7f7d7c280244dbfe7d2b622fe124b",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_table_context_feasibility_attestation.py",
+      "foundation_blob": "ac8936c743b33940785d4119fb3850f84e91da4e",
+      "main_blob": "ac8936c743b33940785d4119fb3850f84e91da4e",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/create_table_qualification_owner_decision_packet.py",
+      "foundation_blob": "fc326b46366fe19ef012a806d1898e053192dda4",
+      "main_blob": "fc326b46366fe19ef012a806d1898e053192dda4",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/freeze_table_qualification.py",
+      "foundation_blob": "184a0331984e07e385b81c03a7d271a17f971859",
+      "main_blob": "184a0331984e07e385b81c03a7d271a17f971859",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/investigate_jpm_financial_grid.py",
+      "foundation_blob": "32d738483b0b33b76ffed092bd86e7f151ca29e9",
+      "main_blob": "32d738483b0b33b76ffed092bd86e7f151ca29e9",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/investigate_sibling_table_context.py",
+      "foundation_blob": "d1214c587a80a91e1e6f07a413055055eae756a0",
+      "main_blob": "d1214c587a80a91e1e6f07a413055055eae756a0",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/investigate_table_context_minimization.py",
+      "foundation_blob": "eb85c42f65742e72933f1d93e0f117e8954b9017",
+      "main_blob": "eb85c42f65742e72933f1d93e0f117e8954b9017",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/qualify_r4_offline.py",
+      "foundation_blob": "ccc7e67700f31176b4ab2a04d01c3af935142a30",
+      "main_blob": "ccc7e67700f31176b4ab2a04d01c3af935142a30",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/r4_materialization_worker.py",
+      "foundation_blob": "2e17a3a57040bf69dff77773d44e4a9330b4debd",
+      "main_blob": "2e17a3a57040bf69dff77773d44e4a9330b4debd",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/run_acceptance.py",
+      "foundation_blob": "d545bab4394800dafa820b87f4abbf63a39ab5aa",
+      "main_blob": "d545bab4394800dafa820b87f4abbf63a39ab5aa",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/run_fast_tests.py",
+      "foundation_blob": "b75cf1fcf3fcf03e83e36bc87dc2c0b14051de2a",
+      "main_blob": "3f5ae8edc14850b5746abd3beddb66638eae051f",
+      "status": "DIFFERENT"
+    },
+    {
+      "path": "tools/visual/build_flow1_deck.py",
+      "foundation_blob": "d26fa82b04fa3771086bd2d157c39a180037eac5",
+      "main_blob": "d26fa82b04fa3771086bd2d157c39a180037eac5",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/visual/build_flow3_deck.py",
+      "foundation_blob": "1a4b0afe727446c3169e12d96bee6976251de1c1",
+      "main_blob": "1a4b0afe727446c3169e12d96bee6976251de1c1",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_annual_candidate.py",
+      "foundation_blob": "0f811e046d1a1db80c1a1d8b891ce32f54cb352c",
+      "main_blob": "0f811e046d1a1db80c1a1d8b891ce32f54cb352c",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_annual_continuity.py",
+      "foundation_blob": "d8f9cd4fa5ebc52d73d26b64749b500e60f1f2a0",
+      "main_blob": "d8f9cd4fa5ebc52d73d26b64749b500e60f1f2a0",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_annual_publication.py",
+      "foundation_blob": "d2f7484d4c25cb061aca538cedff83d0dc6a21a4",
+      "main_blob": "d2f7484d4c25cb061aca538cedff83d0dc6a21a4",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_annual_runtime.py",
+      "foundation_blob": "40688bae25ca8838807408b1af1ac8767022c33e",
+      "main_blob": "40688bae25ca8838807408b1af1ac8767022c33e",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_annual_update.py",
+      "foundation_blob": "0567e331edebcdd534d65a240ed8ad5e07baf1d4",
+      "main_blob": "0567e331edebcdd534d65a240ed8ad5e07baf1d4",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_capture_qualification_fixture.py",
+      "foundation_blob": "fae96d5bc570cc8e630df59990179f0ca89fd3e0",
+      "main_blob": "fae96d5bc570cc8e630df59990179f0ca89fd3e0",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_cutover.py",
+      "foundation_blob": "bf35410e2a8d9a8aa6049e97976bbe922976fa09",
+      "main_blob": "bf35410e2a8d9a8aa6049e97976bbe922976fa09",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_fault_matrix.py",
+      "foundation_blob": "33fede73ed95b6f90f9dfd0d0e682cdb5480d463",
+      "main_blob": "33fede73ed95b6f90f9dfd0d0e682cdb5480d463",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_operator.py",
+      "foundation_blob": "e2ed38b8616c126f753eb190384b5f373552a381",
+      "main_blob": "e2ed38b8616c126f753eb190384b5f373552a381",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_qualification.py",
+      "foundation_blob": "aaebf21ee4b4fd89f21668f1047a26a28ac5b933",
+      "main_blob": "aaebf21ee4b4fd89f21668f1047a26a28ac5b933",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_r4_qualification.py",
+      "foundation_blob": "db75983147ebc22cbff98ac53ab506e6de5308b8",
+      "main_blob": "db75983147ebc22cbff98ac53ab506e6de5308b8",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_r4_release.py",
+      "foundation_blob": "0df4df1d5df837f81bc8a4b10e1b2dddb6f27f56",
+      "main_blob": "0df4df1d5df837f81bc8a4b10e1b2dddb6f27f56",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_r5_b06.py",
+      "foundation_blob": "53bef2c4d86d9b5a3f0cf6e56664e14a4923dbfd",
+      "main_blob": "53bef2c4d86d9b5a3f0cf6e56664e14a4923dbfd",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_review.py",
+      "foundation_blob": "bc3a02d0b2c5d5972c86708a04674120bdb84d38",
+      "main_blob": "bc3a02d0b2c5d5972c86708a04674120bdb84d38",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_table_context_measurement.py",
+      "foundation_blob": "12ff232ac5dab0554ecdab56a74a0c23acddb281",
+      "main_blob": "12ff232ac5dab0554ecdab56a74a0c23acddb281",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_terminal_cycle.py",
+      "foundation_blob": "6c82cd99f33ea61c47ba2777cd19769d26f9d318",
+      "main_blob": "6c82cd99f33ea61c47ba2777cd19769d26f9d318",
+      "status": "SAME"
+    },
+    {
+      "path": "tools/vnext_zero_ai_release.py",
+      "foundation_blob": "cc467a1a40150e2e865b39b832532c546f545b13",
+      "main_blob": "cc467a1a40150e2e865b39b832532c546f545b13",
+      "status": "SAME"
+    }
+  ]
+}

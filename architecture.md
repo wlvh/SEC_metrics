@@ -1,5 +1,8 @@
 # SEC_metrics 架构说明
 
+本地公司 `run` 薄编排见 `docs/company_local_run.md`：固定程序自动安装，独立子进程依次执行现有 SEC 发现/捕获、公司交接/安装、计算和原生冷出口。新任务使用仅登记/规则/空账本的 `issue_54_v4` 固定树；原获取及计算模块只在该新安装树做必要分派，不改旧执行字节、来源历史或额度。来源 journal 移至独立可写 trust，计算仍禁网和拒绝采集现场读取；原 LIVE 判断和其原 SEC 版本由各自运行树独立认证。工作目录固定公司、累积上限和程序版本，重复运行不重置；输出按本次运行保留，失败仍可原生读取旧结果并明确本次状态。
+<!-- capability-anchor: CAPABILITY.local_company_run -->
+
 公司交接入口见 `docs/company_compute_boundary.md`。来源准备校验完整获取历史，再携带完整账本元数据和目标公司的依赖原件；计算只读固定程序/规则与独立信任登记，每公司state持有导入及计算共用锁。baseline保持原核心，实际增量/历史使用各自后继固定树，旧Run不重签。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 

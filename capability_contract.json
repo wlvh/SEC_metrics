@@ -1164,6 +1164,21 @@
         "test_anchor": "tests/vnext/test_capacity_visible_source_roles.py::VisibleSourceRoleTest.test_complete_response_preserves_plan_with_unrelated_debt_denial",
         "test_status": "automated_recorded",
         "since": "2026-09-23"
+      },
+      {
+        "anchor_id": "CAPABILITY.local_company_run",
+        "type": "capability",
+        "status": "active",
+        "statement": "Draft本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。真实首次和复跑仍待本任务SEC许可；不授Merge/部署/发布/active。",
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_local.py::CompanyLocalTest",
+        "test_status": "automated_partial_scenario",
+        "since": "2026-10-03"
       }
     ],
     "capability_boundaries": [

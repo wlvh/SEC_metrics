@@ -20,12 +20,12 @@ from .company_source_authority import need
 TRUST_VARIABLE = 'SEC_METRICS_PROCESSING_TRUST_ROOT'
 
 
-def worker(action, program, packet, source, work):
+def worker(action, program, packet, source, work, *, environment=None):
     work = Path(work)
     child = subprocess.run([sys.executable,'-B',str(Path(__file__).with_name('company_processing_read.py')),
         action,str(program),str(packet),str(source),str(work)],capture_output=True,text=True,
         cwd=work if work.is_dir() else work.parent,
-        env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
+        env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1', **(environment or {})})
     need(child.returncode==0,'COMPANY_PROCESSING_AUTHENTICATION_FAILED:'+(
         child.stderr.strip().splitlines()[-1] if child.stderr.strip() else 'WORKER_FAILED'))
     return json.loads(child.stdout)
@@ -124,7 +124,7 @@ def verify_saved_equivalence(*, program_root, packet_root, work, runtime_roots=(
 
 
 def compute_saved_processing(*, root, source, admission, company_id, packet_root, program_root,
-                             source_version=None):
+                             source_version=None, source_runtime=None, source_trust=None):
     location=os.environ.get(TRUST_VARIABLE)
     need(location,'COMPANY_PROCESSING_TRUST_ROOT_REQUIRED')
     trust=external(location)
@@ -137,13 +137,25 @@ def compute_saved_processing(*, root, source, admission, company_id, packet_root
     need(acquired or source_version is None, 'COMPANY_PROCESSING_SOURCE_VERSION_ON_BASELINE')
     original_source = source
     original_admission = admission
+    need((source_runtime is None) == (source_trust is None),
+         'COMPANY_PROCESSING_ORIGINAL_SOURCE_RUNTIME_AND_TRUST_REQUIRED')
+    need(source_runtime is None or acquired, 'COMPANY_PROCESSING_ORIGINAL_SOURCE_RUNTIME_ON_BASELINE')
+
+    def authenticate_original():
+        if source_runtime is None:
+            return require_company(source_root=original_source, company_id=company_id)
+        from .company_source_authority import TRUST_VARIABLE as source_trust_variable
+        verified = worker('source-admission', external(source_runtime), packet_root,
+            original_source, root, environment={source_trust_variable: str(external(source_trust))})
+        need(verified['company_id'] == company_id, 'COMPANY_PROCESSING_ORIGINAL_SOURCE_WRONG_COMPANY')
+        return verified
     if acquired:
         from .company_source_authority import require_company
         from .normal_source_authority import ROOT
-        need(any((ROOT/'requirements'/name).is_dir() for name in ('issue_54_v1', 'issue_54_v2')),
+        need(any((ROOT/'requirements'/name).is_dir() for name in ('issue_54_v1', 'issue_54_v2', 'issue_54_v4')),
              'COMPANY_PROCESSING_ACQUIRED_RUNTIME_REQUIRED')
         original_source = external(source_version)
-        original_admission = require_company(source_root=original_source, company_id=company_id)
+        original_admission = authenticate_original()
         need(original_admission['original_checkpoint'] is None and 'D04' in original_admission['metric_ids'],
              'COMPANY_PROCESSING_ORIGINAL_BASELINE_SOURCE_VERSION_REQUIRED')
     target=root/'updates/processing/D04'/metadata['requirement_closure_hash'][7:]
@@ -195,7 +207,7 @@ def compute_saved_processing(*, root, source, admission, company_id, packet_root
                 'original_source_checkpoint_id':original_admission['checkpoint_id']}
         completed=worker('compute',program_root,packet_root,original_source,work)
         if acquired:
-            require_company(source_root=original_source, company_id=company_id)
+            need(authenticate_original() == original_admission, 'COMPANY_PROCESSING_ORIGINAL_SOURCE_CHANGED')
             require_company(source_root=source, company_id=company_id)
         need(completed['native_assessment_completed'] is True,'COMPANY_PROCESSING_RESULT_WITHHELD')
         # Preserve authenticated processing bytes beside (not inside) SEC data.

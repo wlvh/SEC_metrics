@@ -1,0 +1,116 @@
+{
+  "elapsed_seconds": "0.6579070160078118",
+  "record_type": "LOCAL_COMPANY_ACQUISITION_V1",
+  "company_id": "marriott_international",
+  "execution_mode": "LIVE",
+  "status": "SOURCES_PARTIAL",
+  "source_root": "/workspace/work/local-final-acquire-only/acquisition/source-inputs",
+  "captures": [],
+  "reused_source_urls": [],
+  "unresolved": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "method": "GET",
+      "roles": [
+        "sec_submissions_inventory"
+      ],
+      "accession": "",
+      "media_type": "application/json",
+      "refresh_for_new_discovery": true,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "method": "GET",
+      "roles": [
+        "companyfacts"
+      ],
+      "accession": "",
+      "media_type": "application/json",
+      "refresh_for_new_discovery": true,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false
+    }
+  ],
+  "discovery": {
+    "record_type": "ORDINARY_SOURCE_REQUIREMENTS",
+    "schema_version": 1,
+    "company_id": "marriott_international",
+    "primary_cik": "1048286",
+    "status": "METADATA_REFRESH_REQUIRED",
+    "metadata": {
+      "status": "CURRENT_METADATA_UNAVAILABLE",
+      "complete_filing_inventory_proven": false
+    },
+    "prepared_annual_input": null,
+    "filing_selection": null,
+    "metadata_declared_annual_selection": null,
+    "annual_source_identity_verified": false,
+    "requirements": [
+      {
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "method": "GET",
+        "roles": [
+          "sec_submissions_inventory"
+        ],
+        "accession": "",
+        "media_type": "application/json",
+        "refresh_for_new_discovery": true,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "method": "GET",
+        "roles": [
+          "companyfacts"
+        ],
+        "accession": "",
+        "media_type": "application/json",
+        "refresh_for_new_discovery": true,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false
+      }
+    ],
+    "missing_or_failed_source_urls": [
+      "https://data.sec.gov/submissions/CIK0001048286.json",
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+    ],
+    "unresolved_dependency_urls": [
+      "https://data.sec.gov/submissions/CIK0001048286.json",
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+    ],
+    "new_discovery_dataset_urls": [
+      "https://data.sec.gov/submissions/CIK0001048286.json",
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+    ],
+    "limitations": [],
+    "unique_known_get_count": 2,
+    "complete_new_source_graph_known": false,
+    "discovery_scope": "CURRENT_AND_PRIOR_ANNUAL_LATEST_PROXY_AND_FISCAL_8K_DOCUMENTS",
+    "all_39_metric_source_acceptance_proven": false,
+    "current_sec_freshness_proven": false,
+    "fetch_authorized": false,
+    "source_acquisition_credit": false,
+    "metric_executed": false,
+    "production_authorized": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "module_sha256": "01ca6ccbfdb5dfbaa1bc1d4410fd00271aece87189c80bbd1351edca96f7528a",
+    "requirements_id": "sha256:0f705041e0c601da2c93a429295ea94bd14678d7bbceff78f041e9276b868226"
+  },
+  "stop_reason": "INVOCATION_SEC_LIMIT_REACHED",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "charged_sec_claims": 0,
+  "simulated_sec_claims": 0,
+  "metric_executed": false,
+  "production_authorized": false
+}

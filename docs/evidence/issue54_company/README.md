@@ -1,5 +1,7 @@
 # #54 公司交接实测材料
 
+本地产品贯通增量见 [local-run/README.md](local-run/README.md)：`run` / 独立 `acquire`、原生空账本录制29＋2、完整39项失败/待处理状态及具体main依赖。真实首次SEC验收仍待本任务独立许可；既有分离层和消费者证据按未变部分复用。
+
 对应 `COMPANY-SEPARATION-v2.1-20261002`，接续 PR55 `0442896740c2f320fa999f932bc4d4ae0bfdf856`，普通父程序 `0bc24734736bb1e6cb34fbcf7ab9fece6951764e`。唯一当前执行记录在 [#54 §7](https://github.com/wlvh/SEC_metrics/issues/54)，本目录保存可复核材料。新增真实 SEC/provider/paid 全部 0/0/0；没有 Ready、合并、采纳、部署或 active 权限。
 
 `file-index.json` 逐文件登记原路径、字节数及 SHA256；`diagnostic-*.py` 是本次实际诊断脚本，包含执行目录，不能当作产品默认路径。输入来自原提交或封印归档，没有重新获取。产品命令和读写位置见 [运行说明](../../company_compute_boundary.md)。保存包、固定运行树及旧 Run 都按原字节保留；不同固定运行树的 Requirement closure 不混用。

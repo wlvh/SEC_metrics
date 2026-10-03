@@ -1,0 +1,86 @@
+{
+  "scope": "Marriott current FY2025: ordinary B01/D01 plus pre-existing structural N/A B13; source already prepared through recorded HTTP only",
+  "calculation_status": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY"
+    },
+    {
+      "metric_id": "D01",
+      "status": "CANDIDATE_READY"
+    },
+    {
+      "metric_id": "B13",
+      "status": "CANDIDATE_READY"
+    }
+  ],
+  "native_view": [
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "run_id": "run:ordinary-integrated:454d87e0460321f2d01bd028afef72c43c894ecc63f30ad21d972bf9f3f6f872",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:2488199dad3bf927cb0dcaa54643e700d2dbc5eeb7405961f0afa1e9e611f22a",
+      "replay_status": "PASSED",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    },
+    {
+      "metric_id": "B13",
+      "result_id": "sha256:376e6bda8877a7ae39a8f53055091125ce8b1a825275cfe6495bcb735b313411",
+      "run_id": "run:ordinary-integrated:b056f31d06bee53778d0e60fda28034f4855def51bd038ec4d31ff688f2e659c",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:2488199dad3bf927cb0dcaa54643e700d2dbc5eeb7405961f0afa1e9e611f22a",
+      "replay_status": "PASSED",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    },
+    {
+      "metric_id": "D01",
+      "result_id": "sha256:2c52d630eaca52a5c547b32a9a6affa2799576597d24a129ee07d0fee02b524d",
+      "run_id": "run:ordinary-integrated:f036bbfd0c7b4f3806fcb348a4bdcae2967f692e852f993cb86d8f18fa183669",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:2488199dad3bf927cb0dcaa54643e700d2dbc5eeb7405961f0afa1e9e611f22a",
+      "replay_status": "PASSED",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    }
+  ],
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "row_statuses": [
+    {
+      "metric_id": "B01",
+      "status": "OK",
+      "applicability": null,
+      "quality": null
+    },
+    {
+      "metric_id": "B13",
+      "status": "N_A_STRUCTURAL",
+      "applicability": null,
+      "quality": null
+    },
+    {
+      "metric_id": "D01",
+      "status": "TEXT_QUAL",
+      "applicability": null,
+      "quality": null
+    }
+  ]
+}

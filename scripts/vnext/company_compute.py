@@ -11,7 +11,8 @@ from .company_source_authority import require_company, need
 
 
 def compute_company(*, state_root, company_id, metric_ids, report_end=None, fiscal_year=None,
-                    processing_package=None, processing_runtime=None, processing_source_version=None):
+                    processing_package=None, processing_runtime=None, processing_source_version=None,
+                    processing_source_runtime=None, processing_source_trust=None):
     """Keep the import lock until all selected Runs and references are durable."""
     with locked_company(state_root) as root:
         current = recover_import(root)
@@ -43,6 +44,9 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
              'COMPANY_PROCESSING_INPUT_REQUIRES_D04')
         need(processing_source_version is None or processing_package is not None,
              'COMPANY_PROCESSING_SOURCE_VERSION_REQUIRES_PROCESSING_INPUT')
+        need((processing_source_runtime is None and processing_source_trust is None)
+             or processing_source_version is not None,
+             'COMPANY_PROCESSING_SOURCE_RUNTIME_REQUIRES_SOURCE_VERSION')
         need(not historical or processing_package is None,
              'COMPANY_PROCESSING_HISTORY_ADAPTER_NOT_IMPLEMENTED')
         need(not native or set(metric_ids) <= {'B13', 'D04'},
@@ -77,13 +81,14 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
                             from .company_processing import compute_saved_processing
                             results[metric] = compute_saved_processing(root=root, source=source, admission=admission,
                                 company_id=company_id, packet_root=processing_package, program_root=processing_runtime,
-                                source_version=processing_source_version)
+                                source_version=processing_source_version,
+                                source_runtime=processing_source_runtime, source_trust=processing_source_trust)
                         except Exception as error:
                             results[metric] = {'metric_id': metric, 'status': 'PROCESSING_INPUT_REJECTED',
                                 'reason': str(error), 'business_metric_completed': False}
                         continue
                     results[metric] = processing_errors.get(metric) or {'metric_id': metric, 'status': 'AI_PROCESSING_INPUT_REQUIRED',
-                        'reason': 'SEC sources are installed. Supply independently trusted complete D04 processing input with its original fixed runtime; an acquired history additionally needs its admitted original baseline company source version and whole-source equivalence. B13 assessment adaptation and new AI calls require a subsequent issue.',
+                        'reason': 'SEC sources are installed. Supply independently trusted complete D04 processing input with its original fixed runtime; an acquired history also needs its admitted original baseline company source version and whole-source equivalence. Changed judgment inputs require a separately configured and authorized processing entry. This entry has no new model-call authorization; B13 complete-company processing remains owned by #28.',
                         'business_metric_completed': False}
                 elif metric == 'C04':
                     from .c04_update_cycle import run_company as run_c04

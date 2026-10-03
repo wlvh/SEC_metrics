@@ -11,6 +11,89 @@ def need(condition, reason):
     if not condition: raise ValueError(reason)
 
 
+def project_capture_identity(current, original):
+    """Project observation-only IDs for the unchanged original strict checker.
+
+    Actual current proofs/semantic source remain saved separately and unchanged.
+    Only request_attempt_id and its document/unit hash derivatives may differ;
+    changed references, payloads, ordering or coverage receive no projection.
+    The original checker still compares all annual data, body sets and requests.
+    """
+    from copy import deepcopy
+    from vnext.canonical import content_hash
+    for value in (current, original):
+        need(value['semantic_source_id'] == content_hash(value={
+            k: v for k, v in value.items() if k != 'semantic_source_id'}),
+            'COMPANY_PROCESSING_CAPTURE_PROJECTION_SOURCE_CHANGED')
+    projected = deepcopy(current)
+    docs = original['documents']
+    if len(current['documents']) != len(docs) or len(current['units']) != len(original['units']):
+        return current, None
+    document_ids, unit_ids, observations = {}, {}, []
+    for new, old in zip(current['documents'], docs):
+        left, right = new['source_reference'], old['source_reference']
+        if {k: v for k, v in left.items() if k != 'request_attempt_id'} != {
+                k: v for k, v in right.items() if k != 'request_attempt_id'}:
+            return current, None
+        document_ids[new['document_id']] = old['document_id']
+        observations.append({'source_reference_id': left['source_reference_id'],
+            'current_request_attempt_id': left.get('request_attempt_id'),
+            'original_request_attempt_id': right.get('request_attempt_id')})
+    for new, old in zip(current['units'], original['units']):
+        body = {k: v for k, v in new.items() if k != 'unit_id'}
+        old_body = {k: v for k, v in old.items() if k != 'unit_id'}
+        need(new['unit_id'] == content_hash(value=body)
+             and old['unit_id'] == content_hash(value=old_body),
+             'COMPANY_PROCESSING_CAPTURE_PROJECTION_UNIT_CHANGED')
+        body['document_id'] = document_ids.get(body['document_id'])
+        if body != old_body:
+            return current, None
+        unit_ids[new['unit_id']] = old['unit_id']
+    for new, old in zip(projected['documents'], docs):
+        new['document_id'] = document_ids[new['document_id']]
+        if 'request_attempt_id' in old['source_reference']:
+            new['source_reference']['request_attempt_id'] = old['source_reference']['request_attempt_id']
+        else:
+            new['source_reference'].pop('request_attempt_id', None)
+        binding = new.get('registrant_name_binding', {})
+        for key in ('cover_caption', 'cover_name'):
+            caption = binding.get(key, {})
+            if caption.get('document_id') in document_ids:
+                caption['document_id'] = document_ids[caption['document_id']]
+        new['source_unit_ids'] = [unit_ids.get(i, i) for i in new['source_unit_ids']]
+    for unit in projected['units']:
+        unit['document_id'] = document_ids[unit['document_id']]
+        unit['unit_id'] = unit_ids[unit['unit_id']]
+    projected['required_unit_ids'] = [unit_ids.get(i, i) for i in projected['required_unit_ids']]
+    # Annual discovery also records the observations that supplied its facts
+    # and table. Project only those IDs, with every other annual field still
+    # checked by the original content comparison below.
+    annual_observations = []
+    def annual_attempts(new, old, location):
+        for key in ('companyfacts_input', 'table_input'):
+            left, right = new.get(key), old.get(key)
+            if isinstance(left, dict) and isinstance(right, dict) and 'request_attempt_id' in left:
+                annual_observations.append({'location': location+'/'+key,
+                    'current_request_attempt_id': left['request_attempt_id'],
+                    'original_request_attempt_id': right.get('request_attempt_id')})
+                if 'request_attempt_id' in right:
+                    left['request_attempt_id'] = right['request_attempt_id']
+                else:
+                    left.pop('request_attempt_id')
+        if isinstance(new.get('original_input'), dict) and isinstance(old.get('original_input'), dict):
+            annual_attempts(new['original_input'], old['original_input'], location+'/original_input')
+    annual_attempts(projected['prepared_annual_input'], original['prepared_annual_input'], 'prepared_annual_input')
+    projected['semantic_source_id'] = content_hash(value={k: v for k, v in projected.items()
+                                                        if k != 'semantic_source_id'})
+    body = {'record_type': 'CURRENT_CAPTURE_IDENTITY_PROJECTION',
+        'actual_current_source_id': current['semantic_source_id'],
+        'comparison_source_id': projected['semantic_source_id'],
+        'original_source_id': original['semantic_source_id'], 'observations': observations,
+        'document_ids': document_ids, 'unit_ids': unit_ids, 'annual_observations': annual_observations,
+        'current_source_proofs_rewritten': False, 'original_records_rewritten': False}
+    return projected, {**body, 'projection_id': content_hash(value=body)}
+
+
 def main():
     action, program, packet, source, work = sys.argv[1:]
     program = Path(program); packet = Path(packet); source = Path(source); work = Path(work)
@@ -20,13 +103,26 @@ def main():
     from vnext.canonical import strict_json_file
     from vnext.requirements import load_requirement_snapshot
     from vnext.requirement_profile_v1 import validate_execution_authority
+    if action == 'source-admission':
+        # The old baseline remains owned by its own fixed tree; the empty
+        # local runtime must never re-sign it as a new-history baseline.
+        from vnext.company_source_authority import require_company
+        metadata = strict_json_file(path=packet/'processing.json')
+        admission = require_company(source_root=source, company_id=metadata['company_id'])
+        identity = 'issue_54_v1'
+        requirement = load_requirement_snapshot(snapshot_dir=program/'requirements'/identity)
+        validate_execution_authority(repo_root=program, requirement=requirement)
+        need(admission['original_checkpoint'] is None, 'COMPANY_PROCESSING_ORIGINAL_BASELINE_REQUIRED')
+        print(json.dumps(admission))
+        return
     if action == 'current':
         from vnext.company_source_authority import require_company
         from vnext.r6_semantic_source import prepare_d04_semantic_source
         from vnext.d04_native_assessment import native_source
         metadata = strict_json_file(path=packet/'processing.json')
         record = strict_json_file(path=packet/'config/ordinary_going_concern_assessment.json')
-        identity = 'issue_54_v2' if (program/'requirements/issue_54_v2').is_dir() else 'issue_54_v1'
+        identity = next(i for i in ('issue_54_v4', 'issue_54_v2', 'issue_54_v1')
+                        if (program/'requirements'/i).is_dir())
         requirement = load_requirement_snapshot(snapshot_dir=program/'requirements'/identity)
         validate_execution_authority(repo_root=program, requirement=requirement)
         require_company(source_root=source, company_id=metadata['company_id'])
@@ -44,8 +140,20 @@ def main():
          patch.object(socket, 'getaddrinfo', side_effect=ValueError('COMPANY_PROCESSING_DNS_FORBIDDEN')):
         if action == 'equivalence':
             from vnext.capacity_update_input import source_equivalence
-            proof = source_equivalence(current=strict_json_file(path=work/'current-semantic-source.json'),
-                                       original=strict_json_file(path=packet/'processing-source.json'))
+            current = strict_json_file(path=work/'current-semantic-source.json')
+            original = strict_json_file(path=packet/'processing-source.json')
+            projection = None
+            # Only the new empty-history company adapter needs observation ID
+            # projection. Previously accepted prefix histories keep old checks.
+            creator = Path(__file__).resolve().parents[2]
+            if (creator/'requirements/issue_54_v4').is_dir():
+                current, projection = project_capture_identity(current, original)
+            proof = source_equivalence(current=current, original=original)
+            if projection is not None:
+                from vnext.canonical import content_hash
+                body = {k: v for k, v in proof.items() if k != 'equivalence_id'}
+                body['capture_identity_projection'] = projection
+                proof = {**body, 'equivalence_id': content_hash(value=body)}
             print(json.dumps(proof))
             return
         if action == 'export':

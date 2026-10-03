@@ -1,5 +1,8 @@
 # SEC_metrics 测试与验证流程
 
+本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。真实SEC首次＋重复运行尚待许可，不把录制准入换成LIVE。
+<!-- capability-anchor: CAPABILITY.local_company_run -->
+
 公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
 
 公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。

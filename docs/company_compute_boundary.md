@@ -18,6 +18,8 @@
 
 ## 使用与证据
 
+日常本地使用优先走 [单命令 `run` 与独立 `acquire`](company_local_run.md)，由程序管理以下内部步骤。本文分阶段命令继续用于两个环境分别调度、诊断和既有来源恢复；新任务的空来源路径与保存混合来源恢复分别说明，不能相互充当验收。
+
 `tools/vnext_company.py` 提供 `export`、`install-runtime`、`install`、`compute`、`results`、`export-results`、`export-processing`。所有路径必须显式传入、绝对且无 symlink，输出不得覆盖程序或 active 工作区。下面的 `/srv/sec-metrics` 是部署方选择的示例，不要求该目录、个人 HOME、root 或特权功能。
 
 来源准备端先用原机制校验完整来源历史。A 类读取已提交基线；B 类使用原 recorded 获取会话，在同一个 `ledger.root/source-inputs` 追加目标公司；C 类可以在准备端恢复合法保存的混合获取归档。不能删账本行、改行号、拼接不同历史或另设真实额度。然后执行：
