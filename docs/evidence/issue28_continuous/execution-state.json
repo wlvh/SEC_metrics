@@ -3654,6 +3654,34 @@
       "status": "DONE",
       "ordinary_messages": 1,
       "dedup_note": "No live/same purpose+module agent, no register match or same-SHA evidence. New product-scope diff not covered by ended d01index reviews; those identity findings/results are reused, not reopened. Underscore task naming required by spawn schema."
+    },
+    {
+      "task_name": "review_d01header_31beeab",
+      "purpose": "review",
+      "module": "d01header",
+      "patch_sha": "31beeab5486a30366afa395124c7ecbb492c93b8",
+      "scope_paths": [
+        "scripts/vnext/d01_running_header_28_v1.py",
+        "scripts/vnext/d01_emphasis_results_v3.py",
+        "scripts/vnext/d01_emphasis_results.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_remaining_cases.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_d01_header_update_v3.py",
+        "tools/vnext_normal_update.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/"
+      ],
+      "spawned_at": "2026-10-03T04:22:45.599632+00:00",
+      "ended_at": "2026-10-03T04:33:14.187197+00:00",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md",
+      "verdict": "PASS_LIMITED_D01_HEADER_RECEIVER",
+      "status": "DONE",
+      "ordinary_messages": 2,
+      "dedup_note": "No live agent; register and independent summaries have no same patch/scope. Prior D01 punctuation/index and scope views reused, not re-reviewed; underscore task name required by tool schema.",
+      "review_started_at": "2026-10-03T04:24:24.688166+00:00"
     }
   ],
   "ci_capacity_20260922": {
@@ -11639,7 +11667,7 @@
     ]
   },
   "d01_running_header_current_receiver_20261003": {
-    "status": "NEW_V3_PRIVATE_NORMAL_CLI_AND_INSTALLED_COLD_PASS_PENDING_EXACT_DIFF_REVIEW",
+    "status": "PRIVATE_NORMAL_CLI_COLD_AND_EXACT_DIFF_REVIEW_PASS_LIMITED",
     "evidence": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/README.md",
     "peer_sha": "af29ab2f41f40a442c13a3453c97d2c476f3536b",
     "peer_patch_state": "PENDING_PROVIDER_APPLICATION; PURE_SUBSTITUTIONS_PINNED_IN_RECEIVER",
@@ -11714,6 +11742,10 @@
       "d01_emphasis_results:explicit_v3_build_text_evidence/replay_text_result",
       "tools/vnext_normal_update:explicit_wrapper_selection"
     ],
-    "default_binding_function_and_frozen_root_bytes_unchanged": true
+    "default_binding_function_and_frozen_root_bytes_unchanged": true,
+    "patch_sha": "31beeab5486a30366afa395124c7ecbb492c93b8",
+    "review_path": "docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md",
+    "review_verdict": "PASS_LIMITED_D01_HEADER_RECEIVER",
+    "installed_execution_and_rule_files_match_patch_sha": 404
   }
 }
