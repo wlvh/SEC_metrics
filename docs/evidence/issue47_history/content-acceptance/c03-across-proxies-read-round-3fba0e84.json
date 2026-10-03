@@ -14,6 +14,7 @@
     },
     "checked_against_the_reading": [
      "value",
+     "filings_contain_the_filing_the_reading_opened",
      "window"
     ],
     "entities": [],
@@ -21,9 +22,7 @@
     "filings": [
      "0000019617-22-000303"
     ],
-    "not_named_by_the_reading": [
-     "filings"
-    ],
+    "not_named_by_the_reading": [],
     "period_end": "2021-12-31",
     "period_start": "2021-01-01",
     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
@@ -35,7 +34,17 @@
     "19617"
    ],
    "company_id": "jpmorgan_chase",
-   "opened_filings_the_result_names": [],
+   "confirmed_only_by_the_filing_the_route_read": true,
+   "decision": "docs/evidence/issue47_history/owner-decisions-2026-09-30/c03-convention.json",
+   "first_report": "0000019617-22-000303",
+   "first_report_read_from": "SUMMARY_COMPENSATION_TABLE",
+   "later_amounts": [
+    84428145,
+    85159860
+   ],
+   "opened_filings_the_result_names": [
+    "0000019617-22-000303"
+   ],
    "period": [
     "2021-01-01",
     "2021-12-31"
@@ -80,9 +89,45 @@
     }
    ],
    "published": "84428145",
-   "read": null,
-   "verdict": "NOT_READ",
-   "why_not_read": "FIRST_REPORT_NOT_ONE_TOTAL_IN_THE_FILING_THE_RESULT_NAMES"
+   "read": "84428145",
+   "read_as": "FIRST_REPORTED",
+   "untagged_first_reports": [
+    {
+     "accession": "0000019617-22-000303",
+     "components": [
+      1500000,
+      5000000,
+      25000000,
+      52620000,
+      25486,
+      282659
+     ],
+     "document": "evidence/request_attempts/5a/5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc/a2022proxystatement.htm",
+     "header": [
+      "Name and principal position",
+      "Year",
+      "Salary ($)1",
+      "Bonus($)2",
+      "Stockawards ($)3",
+      "Optionawards ($)4",
+      "Change in pensionvalue and non-qualifieddeferred compensationearnings ($)5",
+      "All othercompensation ($)6",
+      "Total ($)"
+     ],
+     "named_by_the_result": true,
+     "peo_names_in_the_tagged_proxies": [
+      "James Dimon"
+     ],
+     "person_cell": "James DimonChairman and CEO",
+     "read_from": "SUMMARY_COMPENSATION_TABLE",
+     "sha256": "5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+     "values": [
+      84428145
+     ]
+    }
+   ],
+   "verdict": "MATCH",
+   "why_not_read": null
   }
  },
  "proxies_read": 39,

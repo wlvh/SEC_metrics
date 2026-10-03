@@ -6516,6 +6516,83 @@
      "what_this_releases": "this entry, for this result under this version only: the targeted round's result after the running-header successor (e14d3ca9), whose lines the reading read as the filing's headings in order. The batch result that carries the running header stays withdrawn by it."
     }
    ]
+  },
+  {
+   "defect_id": "C02_JPMORGAN_2021_FIRST_READING_OF_A_NEW_LAYOUT_DISAGREES",
+   "company_id": "jpmorgan_chase",
+   "metric_id": "C02",
+   "period_end": "2021-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "The first two-direction reading of this position (JPMorgan's 2022 proxy, readable only since the image-cover repair landed in e14d3ca9, so none of the 49 selector repairs or the uniform adjudication's rules was written on it) disagrees with the selection the round 3fba0e84 result published (result 9d42878a..., 51 excerpts): 4 blocks taken that state no composition fact (531 nominee attributes, 971 the policy to separate the Chair and CEO at the next transition, 3511 shareholder outreach on it, 3513 the Lead Independent Director's powers) and 37 blocks stating facts the value lacks. The sharpest: the value names no Chair - it takes Dimon's card title (719, 'Chairman and Chief Executive Officer of JPMorgan Chase & Co.') but not his name (718), and in the published order 719 follows 'James S. Crown', so the text reads as if Crown held the role; the cards print the committee list before the director's name, so each committee list also follows the previous director's name. Also missing: the five principal standing committees and the Stock and Executive Committees by name, the two Specific Purpose Committees and their members (stated only in the membership table and its A/B legend), that every principal standing committee is independent, that all nominees are current directors, that Dimon sits on no committee, and the financial-expert and risk-expertise determinations (1052). Withdrawn until a release names a result whose selection agrees with this reading.",
+   "root_cause": "Not measured block by block. Read off the reading: the selector's card reading takes a title or committee list without the name the card prints after it, and its list and table readers do not reach a chart of committee names or a membership table whose seats are given by a legend. This is the first time the rule selector was judged on a layout no rule was written on, which is the question #47 body v1.2 section 3.1 asks.",
+   "scope_measured": "tools/read_c02_composition.py with the reading c02-older-years/judgements/jpmorgan_chase-2021-12-31.json: selected 51 (44 fact, 3 mixed, 4 not), found outside the selection 85, missed after redundancy 37, wrongly taken 4 (c02-older-years/jpmorgan-2021-comparison.json); against the round's result: DIFFERS, the result's excerpts are the selected blocks in order (content-acceptance/c02-composition-read-jpm-2021-round-3fba0e84.json).",
+   "found_by": "an independent subagent's two-direction reading of the committed packet (51 selected, 2,394 pool blocks), merged by tools/read_c02_composition.py --merge",
+   "repair_state": "REGISTERED_NOT_REPAIRED",
+   "why_not_repaired_yet": "Not repaired in the selector: one reading of one layout, and the question it raises - whether more rules or the model method should read C02 on older layouts - is section 3.1's, whose development validation (c02-model-method/) is waiting on the meaning alignment with #28 (Issue #28 comment 5968060727). A selector repair here would be written on this reading, which would then stop being held-out evidence.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-older-years/judgements/jpmorgan_chase-2021-12-31.json",
+    "docs/evidence/issue47_history/c02-older-years/jpmorgan-2021-comparison.json",
+    "docs/evidence/issue47_history/content-acceptance/c02-composition-read-jpm-2021-round-3fba0e84.json"
+   ],
+   "blocks_taken_that_are_not_composition": [
+    {
+     "i": 531,
+     "why": "Attributes and skills all nominees possess; 'independent perspective' is a personal attribute, not an independence determination"
+    },
+    {
+     "i": 971,
+     "why": "Policy that the Chair and CEO positions shall be separate at the next CEO transition, subject to the Board's determination then: a future, conditional policy, not the current composition"
+    },
+    {
+     "i": 3511,
+     "why": "Shareholder outreach on separating the Chair and CEO roles at the next transition; states no composition fact"
+    },
+    {
+     "i": 3513,
+     "why": "Powers of the Lead Independent Director role and a rebuttal of the proposal; does not say who holds the role or how the board is composed"
+    }
+   ],
+   "blocks_stating_facts_the_value_lacks": [
+    42,
+    43,
+    45,
+    55,
+    56,
+    325,
+    392,
+    394,
+    527,
+    717,
+    718,
+    723,
+    951,
+    1041,
+    1052,
+    1062,
+    1064,
+    1111,
+    1112,
+    1115,
+    1116,
+    1130,
+    1131,
+    1132,
+    1133,
+    1134,
+    1135,
+    1136,
+    1137,
+    1138,
+    1140,
+    1141,
+    1143,
+    1144,
+    1145,
+    1146,
+    3510
+   ],
+   "adjudication_not_applied": "The uniform adjudication (c02-composition-facts/adjudicate.py) was not re-run over this reading. Applied in memory it decides four of its blocks: 971, 3511 and 3513 FACT under CHAIR_CEO_STRUCTURE (the reader: NOT) and 717 NOT under CARD_TENURE_FIELD (the reader: MIXED). On the three the reader is taken: the rule's own text excludes statements about policy or proposals, and they are a policy for the next CEO transition, the shareholder outreach on it, and a rebuttal of the proposal - the rule's pattern (and the selector's, which took all three) reaches wording it was not written on. Recorded, not repaired, for the reason why_not_repaired_yet gives; under the rules as written the position would still disagree: 717 would no longer count as missed, the other 36 missed blocks would, and 531 stays wrongly taken."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

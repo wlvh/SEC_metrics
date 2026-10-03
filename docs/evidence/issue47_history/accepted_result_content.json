@@ -32674,6 +32674,115 @@
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_JPMORGAN_2021",
+   "accepted_value": "84428145",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:3fba0e84f41093d468b3a5ed7933c126d087cfb7977e1007f7a95449f7f2e89d",
+     "result_id": "sha256:5e4f9429b44bea0fc31ee0920b7e5a2d614116dadbbd03996583f1f4a2905725",
+     "run_id": "run:historical-period:bd0dfdc0a0066071adc9581216f44c563fd467ae362a1c6871dbf78d9e62894d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000019617-22-000303"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "jpmorgan_chase",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round-3fba0e84.json",
+   "method": "a year the saved proxies report differently, read as the owner decided a year is read - as first reported (c03-convention.json, answer A) - where the first report is a proxy filed before the pay-versus-performance table was required, so it tags no total: the result's own filing read off its Summary Compensation Table by tools/read_c03_across_proxies.py, which imports none of the route's governance modules. The table is the one carrying the columns Item 402(c)(2) prescribes; the row is the person every tagged proxy names as the year's PEO (ecd:PeoName); it is read only if its components add up to its total and the filing precedes every tagged report; every later amount is recorded beside it.",
+   "metric_id": "C03",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "first_report_tables": [
+     {
+      "accession": "0000019617-22-000303",
+      "components": [
+       1500000,
+       5000000,
+       25000000,
+       52620000,
+       25486,
+       282659
+      ],
+      "document": "evidence/request_attempts/5a/5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc/a2022proxystatement.htm",
+      "header": [
+       "Name and principal position",
+       "Year",
+       "Salary ($)1",
+       "Bonus($)2",
+       "Stockawards ($)3",
+       "Optionawards ($)4",
+       "Change in pensionvalue and non-qualifieddeferred compensationearnings ($)5",
+       "All othercompensation ($)6",
+       "Total ($)"
+      ],
+      "named_by_the_result": true,
+      "peo_names_in_the_tagged_proxies": [
+       "James Dimon"
+      ],
+      "person_cell": "James DimonChairman and CEO",
+      "read_from": "SUMMARY_COMPENSATION_TABLE",
+      "sha256": "5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+      "values": [
+       84428145
+      ]
+     }
+    ],
+    "proxies": [
+     {
+      "accession": "0000019617-23-000281",
+      "document": "evidence/request_attempts/2a/2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f/jpm-20230403.htm",
+      "named_by_the_result": false,
+      "sha256": "2ab44d1c1709e5af744bbcc37209b1a6a9d1dc9c12a7a707286840b7b356ee9f",
+      "values": [
+       84428145
+      ]
+     },
+     {
+      "accession": "0000019617-24-000273",
+      "document": "evidence/request_attempts/a7/a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741/jpm-20240406.htm",
+      "named_by_the_result": false,
+      "sha256": "a7df917dca5b97de5b09eb220ed30c500ae8570a90fb2d45dc0442d3797b1741",
+      "values": [
+       84428145
+      ]
+     },
+     {
+      "accession": "0000019617-25-000321",
+      "document": "evidence/request_attempts/08/085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c/jpm-20250405.htm",
+      "named_by_the_result": false,
+      "sha256": "085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
+      "values": [
+       85159860
+      ]
+     },
+     {
+      "accession": "0000019617-26-000096",
+      "document": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+      "named_by_the_result": false,
+      "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+      "values": [
+       85159860
+      ]
+     }
+    ]
+   },
+   "what_this_does_not_establish": "confirmation of the amount by a document the route did not read: the later proxies name the person but report the year again, two with this amount and two with another, so the amount is confirmed by the route's own filing read with independent code and by its table's own arithmetic; nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_JPMORGAN_2022",
    "accepted_value": "34848606",
    "checked_identity": {
@@ -68315,6 +68424,7 @@
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round3.json",
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-full-frame.json",
+  "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round-3fba0e84.json",
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
   "docs/evidence/issue47_history/content-acceptance/bank-measures-read-round-004c5771.json",
   "docs/evidence/issue47_history/content-acceptance/bank-statement-facts-read-full-frame.json",
@@ -68386,6 +68496,12 @@
    "acceptances_contributed": 6,
    "content_sha256": "sha256:a448614da839124aeef0f4db5d53cc1eb4a0a549c6265b8f55968ad843391150",
    "positions_examined": 7,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round-3fba0e84.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:f96530ffb8d07c2cc1b98a66a886ace0371aaa0a76e94f32e9aed00f918f0d43",
+   "positions_examined": 1,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-round3.json": {

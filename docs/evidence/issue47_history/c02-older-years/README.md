@@ -75,3 +75,37 @@ nothing distinctive is not tested by it.
 No older-year C02 value is accepted, and none was before. The general selector
 repairs follow the decided classes; a repair written on these 27 readings has
 no held-out material left and is labelled so.
+
+## JPMorgan FY2021: the first reading of a layout no rule was written on (2026-10-03)
+
+JPMorgan's 2022 proxy became readable only when the image-cover repair landed
+(e14d3ca9), after every selector repair and adjudication rule above was written,
+so this is the first time the rule selector is judged on a layout that shaped
+none of its rules. The packet was built by `tools/read_c02_composition.py
+--packet` on the export-restored root (51 selected blocks, 2,394 pool blocks); a
+fresh-context subagent read it under `reader-brief.md` and the answer was merged
+as `judgements/jpmorgan_chase-2021-12-31.json`.
+
+Against the targeted round 3fba0e84's result (51 excerpts, the selected blocks
+in order) the reading disagrees (`jpmorgan-2021-comparison.json`;
+`../content-acceptance/c02-composition-read-jpm-2021-round-3fba0e84.json`):
+4 blocks taken that state no composition fact and 37 fact blocks missed. The
+value names no Chair: it takes Dimon's card title (719, "Chairman and Chief
+Executive Officer of JPMorgan Chase & Co.") without his name (718), and in the
+published order 719 follows "James S. Crown", so the text reads as if Crown held
+the role. The cards print the committee list before the director's name, so each
+committee list also follows the previous director's name. The five principal
+standing committees, the Stock and Executive Committees, the two Specific
+Purpose Committees and their members (only in the membership table and its A/B
+legend) are not in the value. Registered as
+`C02_JPMORGAN_2021_FIRST_READING_OF_A_NEW_LAYOUT_DISAGREES`; not repaired, so the
+reading stays held-out evidence for section 3.1's question (more rules or the
+model method).
+
+The uniform adjudication was not re-run over this reading. Applied in memory it
+decides 971, 3511 and 3513 FACT under CHAIR_CEO_STRUCTURE (the reader: NOT) and
+717 NOT under CARD_TENURE_FIELD (the reader: MIXED). On the three the reader is
+taken: the rule's own text excludes statements about policy or proposals, and
+they are the policy to separate the roles at the next CEO transition, the
+shareholder outreach on it, and a rebuttal of the proposal - the rule's pattern
+(and the selector's, which took all three) reaches wording it was not written on.

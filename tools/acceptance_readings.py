@@ -114,7 +114,11 @@ GOVERNANCE_READINGS = (GOVERNANCE, *GOVERNANCE_RESTORED_ROOT_READINGS)
 # file per closure its positions compare.
 C03_ACROSS_PROXIES = (EVIDENCE + "c03-across-proxies-read-batch.json",
                       EVIDENCE + "c03-across-proxies-read-round3.json",
-                      EVIDENCE + "c03-across-proxies-read-full-frame.json")
+                      EVIDENCE + "c03-across-proxies-read-full-frame.json",
+                      # JPMorgan FY2021, whose first report is a proxy filed
+                      # before the pay-versus-performance table and tags no
+                      # total: read off its Summary Compensation Table.
+                      EVIDENCE + "c03-across-proxies-read-round-3fba0e84.json")
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D02's older years, read in both directions by tools/read_d02_excerpts.py from
 # packets built off the saved filings (excerpts, blocks skipped inside Item 3

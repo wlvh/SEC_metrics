@@ -293,6 +293,9 @@ def _read_from(position):
                 "auditor_last_year": row["auditor_named_in_the_previous_years_filing"],
                 "eight_k_item_4_01_in_window": row["eight_k_item_4_01_in_window"]}
     if path in C03_ACROSS_PROXIES:
+        if "untagged_first_reports" in case:
+            return {"proxies": case["proxies_reporting_the_target_period"],
+                    "first_report_tables": case["untagged_first_reports"]}
         return {"proxies": case["proxies_reporting_the_target_period"]}
     if path == TEXT:
         return {"excerpts": case["excerpts"], "chars": case["chars"]}
@@ -336,6 +339,8 @@ def _method_and_limit(position):
     if path in GOVERNANCE_READINGS:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path in C03_ACROSS_PROXIES:
+        if position["case"].get("first_report_read_from") == "SUMMARY_COMPENSATION_TABLE":
+            return C03_FIRST_REPORTED_TABLE_METHOD, C03_FIRST_REPORTED_TABLE_LIMIT
         if position["case"].get("read_as") == "FIRST_REPORTED":
             return C03_FIRST_REPORTED_METHOD, C03_FIRST_REPORTED_LIMIT
         return C03_ACROSS_PROXIES_METHOD, C03_ACROSS_PROXIES_LIMIT
@@ -424,6 +429,21 @@ C03_FIRST_REPORTED_LIMIT = (
  "confirmation by a document the route did not read: the later proxies report "
  "another amount, so the only confirmation is the route's own filing read with "
  "independent code - the standard the latest years' C03 meet; nor " + COMMON)
+C03_FIRST_REPORTED_TABLE_METHOD = (
+ "a year the saved proxies report differently, read as the owner decided a year is "
+ "read - as first reported (c03-convention.json, answer A) - where the first report "
+ "is a proxy filed before the pay-versus-performance table was required, so it tags "
+ "no total: the result's own filing read off its Summary Compensation Table by "
+ "tools/read_c03_across_proxies.py, which imports none of the route's governance "
+ "modules. The table is the one carrying the columns Item 402(c)(2) prescribes; the "
+ "row is the person every tagged proxy names as the year's PEO (ecd:PeoName); it is "
+ "read only if its components add up to its total and the filing precedes every "
+ "tagged report; every later amount is recorded beside it.")
+C03_FIRST_REPORTED_TABLE_LIMIT = (
+ "confirmation of the amount by a document the route did not read: the later "
+ "proxies name the person but report the year again, two with this amount and two "
+ "with another, so the amount is confirmed by the route's own filing read with "
+ "independent code and by its table's own arithmetic; nor " + COMMON)
 COMPENSATION_METHOD = ("the Summary Compensation Table's own CEO row, read off the "
                        "table. Its five components sum to its total, so the number "
                        "is confirmed by the table's arithmetic as well as by "
