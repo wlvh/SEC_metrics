@@ -1,0 +1,95 @@
+{
+ "record_type": "ISSUE_47_B06_NOTE_FORMS_NAMED_INJECTIONS",
+ "code_sha256": "sha256:d4e601d0074d543443d5cc5ffa0eb8d299489b6cc21ad38dff4ea7a1295962cb",
+ "control_cases": 10,
+ "control_passed": true,
+ "mutations": [
+  {
+   "mutation": "reverse-prior-date",
+   "named_case": "HistoricalNoteCarryingTest.test_wholly_prior_principal_balance_is_not_current_debt",
+   "caught_by_named_case": true,
+   "failures": [],
+   "errors": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest.test_wholly_prior_principal_balance_is_not_current_debt"
+   ]
+  },
+  {
+   "mutation": "ignore-dollar-sign-in-share-count",
+   "named_case": "HistoricalNoteCarryingTest.test_mixed_cash_or_nonshare_quantities_are_not_excluded",
+   "caught_by_named_case": true,
+   "failures": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest.test_mixed_cash_or_nonshare_quantities_are_not_excluded (sentence='As of December 31, 2024, options to purchase $1.3 million shares of common stock remained outstanding under the Notes due 2025 Hedge, and 2025 Warrants exercisable to purchase approximately 1.3 million shares remained outstanding.')"
+   ],
+   "errors": []
+  },
+  {
+   "mutation": "allow-note-count-as-equity",
+   "named_case": "HistoricalNoteCarryingTest.test_mixed_cash_or_nonshare_quantities_are_not_excluded",
+   "caught_by_named_case": true,
+   "failures": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest.test_mixed_cash_or_nonshare_quantities_are_not_excluded (sentence='As of December 31, 2024, options to purchase approximately 1.3 million shares of common stock remained outstanding under the Notes due 2025 Hedge, and 2025 Warrants exercisable to purchase approximately 1.3 million notes remained outstanding.')"
+   ],
+   "errors": []
+  },
+  {
+   "mutation": "asset-without-concept",
+   "named_case": "HistoricalNoteCarryingTest.test_commercial_paper_liability_or_wrong_table_is_unresolved",
+   "caught_by_named_case": true,
+   "failures": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest.test_commercial_paper_liability_or_wrong_table_is_unresolved (args=('The cash equivalents, restricted cash and marketable securities consist of the following:', 'us-gaap:DebtDisclosureTextBlock'))"
+   ],
+   "errors": []
+  },
+  {
+   "mutation": "asset-all-borrowings",
+   "named_case": "HistoricalNoteCarryingTest.test_commercial_paper_liability_or_wrong_table_is_unresolved",
+   "caught_by_named_case": true,
+   "failures": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest.test_commercial_paper_liability_or_wrong_table_is_unresolved (args=('The cash equivalents, restricted cash and marketable securities consist of the following:', 'us-gaap:DebtSecuritiesAvailableForSaleTableTextBlock', 'Borrowings'))"
+   ],
+   "errors": []
+  },
+  {
+   "mutation": "rate-without-standard-namespace",
+   "named_case": "HistoricalNoteRateMaterialTest.test_custom_rate_or_another_pure_financing_fact_remains_unresolved",
+   "caught_by_named_case": true,
+   "failures": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest.test_custom_rate_or_another_pure_financing_fact_remains_unresolved (prefix='sha256:d4a21718e6ae9ef7b1da95a7e296acb75cde563635d3895ae3421e038936073b')"
+   ],
+   "errors": []
+  },
+  {
+   "mutation": "rate-without-pure-unit",
+   "named_case": "HistoricalNoteRateMaterialTest.test_rate_caption_with_currency_is_not_a_nonmonetary_rate",
+   "caught_by_named_case": true,
+   "failures": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest.test_rate_caption_with_currency_is_not_a_nonmonetary_rate"
+   ],
+   "errors": []
+  },
+  {
+   "mutation": "frozen-source-call",
+   "named_case": "HistoricalNoteRateMaterialTest.test_standard_pure_rate_leaves_complete_debt_and_equity_unchanged",
+   "caught_by_named_case": true,
+   "failures": [],
+   "errors": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest.test_standard_pure_rate_leaves_complete_debt_and_equity_unchanged"
+   ]
+  },
+  {
+   "mutation": "frozen-asset-call",
+   "named_case": "HistoricalNoteRateMaterialTest.test_article_in_actual_asset_note_does_not_move_debt",
+   "caught_by_named_case": true,
+   "failures": [],
+   "errors": [
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest.test_article_in_actual_asset_note_does_not_move_debt"
+   ]
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "isolation": "in-memory variants in a separate review checkout; no frozen file edited"
+}

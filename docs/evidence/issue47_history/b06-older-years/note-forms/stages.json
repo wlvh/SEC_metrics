@@ -1,0 +1,66 @@
+{
+ "position": "enphase_energy:2024-12-31",
+ "stages": {
+  "base": {
+   "stage": "NOTE_CARRYING",
+   "reason": "NOTE_CARRYING_UNRESOLVED_FINANCING_FACT:debtinstrumentinterestrateeffectivepercentage",
+   "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+   "result": {
+    "value": null,
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+   }
+  },
+  "effective_rate_only": {
+   "stage": "NOTE_CARRYING",
+   "reason": "NOTE_CARRYING_NARRATIVE_PERIOD_UNPROVEN:Following the repurchase combined with repurchase in previous years, as of December 31, 2023, $102.2 million aggregate principal amount of the Notes due 2025 remained outstanding.",
+   "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+   "result": {
+    "value": null,
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+   }
+  },
+  "explicit_prior_principal": {
+   "stage": "NOTE_CARRYING",
+   "reason": "NOTE_CARRYING_UNRESOLVED_NARRATIVE_BALANCE:As of December 31, 2024, options to purchase approximately 1.3 million shares of common stock remained outstanding under the Notes due 2025 Hedge, and 2025 Warrants exercisable to purchase approximately 1.3 million shares remained outstanding.",
+   "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+   "result": {
+    "value": null,
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+   }
+  },
+  "equity_share_counts": {
+   "stage": "NOTE_CARRYING",
+   "reason": "NOTE_CARRYING_UNRESOLVED_RELATED_TABLE_ROW:Commercial paper",
+   "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+   "result": {
+    "value": null,
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+   }
+  },
+  "asset_heading_article": {
+   "stage": "NOTE_CARRYING",
+   "reason": null,
+   "classification": "SOURCE_RECONCILED_NOTE_CARRYING",
+   "result": {
+    "value": "1.563451362278755750189672227",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   }
+  }
+ },
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "prototype_only": true
+}

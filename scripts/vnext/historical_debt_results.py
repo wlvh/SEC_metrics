@@ -72,6 +72,7 @@ from . import normal_candidates as _frozen_candidates
 from .historical_financial_wording import successor
 from . import normal_inclusive_debt_results as inclusive
 from . import normal_note_debt_results as note
+from .historical_note_carrying import inspect_note_carrying as historical_note_carrying
 from . import ordinary_special_debt_scope as special
 
 import sys
@@ -527,7 +528,7 @@ def prepare_historical_note_debt_case(*, repo_root: Path, company_id: str,
         if any(any(str(m).split(":")[-1] in restricted for m in c["dimensions"].values())
                for c in parsed.contexts.values() if c["period_end"] == end):
             raise note.NoteCarryingError("NOTE_CARRYING_SEPARATE_INDUSTRIAL_SCOPE_REQUIRED")
-        source_proof = note.inspect_note_carrying(primary=preparation["primary"],
+        source_proof = historical_note_carrying(primary=preparation["primary"],
                                                   xml=preparation["xml"], prepared=original)
         rule = spec["compiled"]["quality_rule"]
         path = repo_root / rule["debt_set_registry"]

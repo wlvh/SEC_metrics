@@ -1,0 +1,68 @@
+{
+ "adjudication": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+ "adjudication_sha256": "sha256:e8a1a4f198b62bfb9e2e2f3a7d5700aa47147e1192203bacb6dd9577ebc1e4d0",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "per_position": {
+  "macys-2022": {
+   "adjudicated_blocks": [
+    629,
+    1875,
+    1943
+   ],
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1",
+     "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+     "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001558370-22-005031",
+     "0001564590-22-011726"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-01-29",
+    "period_start": "2021-01-31",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "counts": {
+    "found_outside_the_selection": 26,
+    "resting_on_adjudication": 3,
+    "selected": 89,
+    "selected_fact": 78,
+    "selected_mixed": 8
+   },
+   "governance_accession": "0001558370-22-005031",
+   "governance_document": "evidence/request_attempts/d4/d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007/tmb-20220520xdef14a.htm",
+   "period_end": "2022-01-29",
+   "published_excerpts": 89,
+   "published_excerpts_are_the_selected_blocks_in_order": true,
+   "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
+   "reading_sha256": "sha256:2786d6a1d4c42556d43cdc6f9e3f66b9b6d5be72b0e7c99fcd95f38b4637ea71",
+   "reading_verdict": "READING_AGREES",
+   "result_candidate_hash_is_the_recomputed_one": true,
+   "value_sha256": "sha256:396dd609ab9f700ad734453c04d64a195acc4778a665719cb28bf0700a3d40e3",
+   "verdict": "MATCH"
+  }
+ },
+ "reader": "tools/read_c02_composition.py",
+ "record_type": "ISSUE_47_C02_COMPOSITION_READ",
+ "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1"
+}

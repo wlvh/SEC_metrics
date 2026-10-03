@@ -3760,7 +3760,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/macys-2022-01-29.json) disagrees with the selection the current code makes from the saved filing: 1 block(s) taken that state no composition fact (1089: a criterion (past committee-chair service) for choosing a lead independent director; names no one and states no composition); 48 block(s) stating a composition fact that no taken block states (640: Blake chairs the CMD Committee (card field); his CMD membership also in 1153; 642: Blake on the Finance Committee (card field)). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "SELECTION_REPAIRED_RESULT_NOT_RECOMPUTED",
+   "repair_state": "SELECTION_REPAIRED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
@@ -3791,7 +3791,19 @@
     "evidence": "docs/evidence/issue47_history/c02-selector-repairs/repair-50/measured-38.json",
     "selection_agrees_with_existing_reading": true,
     "native_result_recomputed": false
-   }
+   },
+   "released": [
+    {
+     "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+     "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1",
+     "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-aaea32da.json (macys-2022: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
+     "reading_sha256": "sha256:2786d6a1d4c42556d43cdc6f9e3f66b9b6d5be72b0e7c99fcd95f38b4637ea71",
+     "adjudication_sha256": "sha256:e8a1a4f198b62bfb9e2e2f3a7d5700aa47147e1192203bacb6dd9577ebc1e4d0",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result, whose excerpts the reading found within the meaning with no fact missed under the recorded adjudication. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "defect_id": "C02_MACYS_2023_OLDER_YEAR_READING_DISAGREES",

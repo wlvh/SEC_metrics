@@ -30735,6 +30735,62 @@
    "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C02_MACYS_2022",
+   "accepted_value": "sha256:396dd609ab9f700ad734453c04d64a195acc4778a665719cb28bf0700a3d40e3",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1",
+     "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+     "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001558370-22-005031",
+     "0001564590-22-011726"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-01-29",
+    "period_start": "2021-01-31",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-aaea32da.json",
+   "method": "a packet built from the saved governance document by tools/read_c02_composition.py through the route's own selection - every selected block, and a pool of every block using the owner's words for composition facts with every short block within sixteen blocks of one (the rule docs/evidence/issue47_history/c02-older-years/pool_rule.py chose because, with the selection, it holds every fact block the latest-year readers found) - read by an independent reader (a fresh-context subagent of the same model family, not a person) against c02-older-years/reader-brief.md: every selected block judged, and every pool block stating a composition fact listed with the blocks that state the same fact. Accepted only where no selected block is judged outside the meaning, no listed fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2022-01-29",
+   "read_from": {
+    "adjudicated_blocks": [
+     629,
+     1875,
+     1943
+    ],
+    "counts": {
+     "found_outside_the_selection": 26,
+     "resting_on_adjudication": 3,
+     "selected": 89,
+     "selected_fact": 78,
+     "selected_mixed": 8
+    },
+    "governance_document": "evidence/request_attempts/d4/d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007/tmb-20220520xdef14a.htm",
+    "published_excerpts": 89,
+    "reading": "docs/evidence/issue47_history/c02-older-years/judgements/macys-2022-01-29.json",
+    "reading_sha256": "sha256:2786d6a1d4c42556d43cdc6f9e3f66b9b6d5be72b0e7c99fcd95f38b4637ea71"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. It is not a held-out test: repairs 7 to 45 of the selector and the unified adjudication were written against these same older-year readings, so this is agreement with a reading of the material the rules were fitted on. The pool is a rule too - a fact stated only in a long block that uses none of the pool's words and lies more than sixteen blocks from one is not read - and the readers are agents of one model family whose judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C02_MACYS_2023",
    "accepted_value": "sha256:ada18d38cf4a9b2a01303778b97b2b7e10261b6dbaa0edcaf930d046c8cad8f0",
    "checked_identity": {
@@ -68632,6 +68688,7 @@
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read-round-cf166529.json",
   "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-cf166529.json",
   "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json",
+  "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-aaea32da.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-full-frame.json",
@@ -68692,6 +68749,12 @@
    "acceptances_contributed": 10,
    "content_sha256": "sha256:69030611b2bd430688071a4622bd65e2998f87a93d79380b2d3b0e41e9d6365a",
    "positions_examined": 10,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-aaea32da.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:70ba554d309c969e350da7e24c051944bf8006684f5b4d2fc0b6e3709ed3cabc",
+   "positions_examined": 1,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-cf166529.json": {

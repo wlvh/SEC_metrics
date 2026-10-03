@@ -95,7 +95,9 @@ C02_LATEST_READINGS = (C02_COMPOSITION, C02_COMPOSITION_ROUND)
 # same way; one file per closure its positions compare.
 C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read-round-cf166529.json",
                             # Two older-year positions recomputed after selector repair 47.
-                            EVIDENCE + "c02-older-years-read-round-ed67e401.json")
+                            EVIDENCE + "c02-older-years-read-round-ed67e401.json",
+                            # Macy's FY2021 after the bare committee/card boundary repair.
+                            EVIDENCE + "c02-older-years-read-round-aaea32da.json")
 C02_COMPOSITION_READINGS = (*C02_LATEST_READINGS, *C02_OLDER_YEARS_READINGS)
 GOVERNANCE = EVIDENCE + "governance-read.json"
 # C04 for the 50-period batch's years the checkout does not hold, over a root

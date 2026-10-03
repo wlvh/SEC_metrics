@@ -1,0 +1,38 @@
+{
+ "record_type": "ISSUE_47_B06_PRE_NATIVE_REFERENCE",
+ "company_id": "enphase_energy",
+ "period_end": "2024-12-31",
+ "reader": "tools/read_debt_to_equity.py (no route import)",
+ "reference": {
+  "read": "1.563451362278755750189672227",
+  "why": null,
+  "total_debt": "1302380000",
+  "equity": "833016000",
+  "balance_sheet": {
+   "debt_rows": [
+    {
+     "caption": "Debt, current",
+     "concept": "us-gaap:LongTermDebtCurrent",
+     "value": "101291000"
+    },
+    {
+     "caption": "Debt, non-current",
+     "concept": "us-gaap:LongTermDebtNoncurrent",
+     "value": "1201089000"
+    }
+   ],
+   "equity_row": {
+    "caption": "Total stockholders\u2019 equity",
+    "concept": "us-gaap:StockholdersEquity",
+    "value": "833016000"
+   }
+  },
+  "finance_leases": {
+   "treatment": "NONE",
+   "evidence": "does not have any finance leases",
+   "add": "0"
+  },
+  "source_sha256": "sha256:275bc6e2e21fc31a5eab74232ee05f3572c1f36573608d5bd84e3e6eaec79bfe"
+ },
+ "native_result_credit": false
+}

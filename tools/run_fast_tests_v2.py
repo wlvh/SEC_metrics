@@ -517,6 +517,8 @@ SOURCE_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMateri
 FAST_TESTS += ("tests.vnext.test_d01_running_header",)
 FAST_TESTS += ("tests.vnext.test_c02_model_processing",)
 FAST_TESTS += ("tests.vnext.test_c02_model_review_view",)
+FAST_TESTS += ("tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest",)
+SOURCE_TESTS += ("tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

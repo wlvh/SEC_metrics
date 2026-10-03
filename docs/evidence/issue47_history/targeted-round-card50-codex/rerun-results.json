@@ -1,0 +1,39 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "driver_seconds": 446,
+ "position_count": 1,
+ "positions": [
+  {
+   "company_id": "macys",
+   "evidence_count": 89,
+   "metric_id": "C02",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-01-29",
+   "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1",
+   "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+   "row_hash": "sha256:4272db943ebdf08264501d017d206447d8299f9ae2bf11948177a13ccd8f8d46",
+   "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+   "selection_id": "sha256:8d7f4145f157c5d6f40de061b2a9dd60f5cea507f9a2e980b1a362a9fabf4107",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value_characters": 8089,
+   "value_lines": 89
+  }
+ ],
+ "public_rows": 1,
+ "read_back_problems": [],
+ "record_type": "ISSUE_47_TARGETED_ROUND",
+ "requirement_closure_hashes": [
+  "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1"
+ ],
+ "runtime_tree": {
+  "carries": "docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch",
+  "commit": "c55871eb7dc13ae63cc4ab670fad9c690f0eea2c"
+ }
+}
