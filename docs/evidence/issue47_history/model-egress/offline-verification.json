@@ -2,16 +2,16 @@
  "all_checks_passed": true,
  "bound_files": {
   "docs/evidence/issue47_history/model-egress/egress-registration.patch": {
-   "sha256": "bd24ecc009178e44774aa06675d0c929651cfd2370d37a4a9da1639762a736b7",
-   "size": 145238
+   "sha256": "e452d120490f90c07fd4095ca259d529a87ff7abb044b827ebecb1be4ad1d80d",
+   "size": 159838
   },
   "docs/evidence/issue47_history/model-egress/verify.py": {
-   "sha256": "e247c4f3fdc863dceecb0273e76c7855970d9a423b537221fe137d8a8bb53b4b",
-   "size": 63795
+   "sha256": "d06137c5a75aecdc9f4a5c63714b92764d59567129fbbd16b67dcfe5a96f8f2d",
+   "size": 70941
   },
   "requirements/issue_47_v1/baseline_manifest.json": {
-   "sha256": "5ae7e2ec9cf03751fca15e795558c9a574a7450f1d4d82de1de7117a7925ebdd",
-   "size": 74019
+   "sha256": "896f8d29791f72de62f236fcf923f5704b5b16b04aed8043329225c53e897705",
+   "size": 84941
   },
   "scripts/vnext/ai_adapter.py": {
    "sha256": "61b2e0ee4b78d7bfeef9a35db7d6be7cdf838b3aa4ca4a90a4adae743c405b7c",
@@ -21,49 +21,65 @@
    "sha256": "e76f2b586e6d0ebe965909d38fafc1d0155ce8b1f0a091250be12d93c7c2a29e",
    "size": 10670
   },
+  "scripts/vnext/historical_ledger_start.py": {
+   "sha256": "5c759356fa85fd243fe9d5f3aaedd82bce3d39c5305f14503d9958a48e424868",
+   "size": 14998
+  },
   "scripts/vnext/historical_model_calls.py": {
-   "sha256": "eb0fd518ef4d4e16b8abaf5e2bb3f1d9c3c8a63dbef71e868d64d03e63af6c5d",
-   "size": 74055
+   "sha256": "094fa9a3156faa3a16f3d157902e8cf88f82e82723486c02c30f34c88aacad0d",
+   "size": 80269
   },
   "scripts/vnext/historical_model_egress.py": {
-   "sha256": "1bbc5e5362f1b2f4f332494f34c65e76af93dea5f234550a860c04c159279e1a",
-   "size": 25511
+   "sha256": "fc3e7d1a4ab705c4464c221bfad1066a3ef8fe06343bdb7df91aa8bc203aff58",
+   "size": 26361
+  },
+  "scripts/vnext/historical_model_export.py": {
+   "sha256": "f586c78d0bdac7162f57ec8300a0fc9ab635218c62632032fc957c1bfca682fb",
+   "size": 10599
   },
   "scripts/vnext/historical_source_acquisition.py": {
-   "sha256": "aee66b2f72f281238f1b02d8e21716554fd6d18e31c2776e733e20bb67fba585",
-   "size": 37626
+   "sha256": "7ecf32c86333f023442ae94c7b1c0cbb0481c35857074fb30c8d62c528d6f29a",
+   "size": 44033
+  },
+  "scripts/vnext/historical_source_export.py": {
+   "sha256": "2ce70f804434a9e906666af5e13c8d31f53f6280be51f6924b3e76d2714c0fd0",
+   "size": 28470
   },
   "scripts/vnext/invocation_control.py": {
    "sha256": "b51d93618f9c41b9f2377fe465c65c3081aac1ce0aac1000d9afc7400f1d08a4",
    "size": 140328
   },
   "tests/vnext/d04_synthetic_output.py": {
-   "sha256": "5a355bcad56cf3a971ce775c68c43cf4329bf47e31b0f5fbefa219a88fe62b75",
-   "size": 3351
+   "sha256": "eb35b3bc6f28797d1c94dc1e275263892da32531a92ba54daf5dc4087150fa09",
+   "size": 3815
   },
   "tests/vnext/test_historical_model_calls.py": {
-   "sha256": "fee60cda105d2351db1830dd26ba3d3633f73d4c3badfb454c21e5da7dcab5f7",
-   "size": 43493
+   "sha256": "9b8366545716078e5e76ea0cda2bfc7aeb7b774f37b88a1cd65372bc334f4cc9",
+   "size": 67071
   },
   "tests/vnext/test_historical_model_egress.py": {
-   "sha256": "e9020c4f0f387a2e85d4fe3414f11b056421026ffc752465851886a4abb89acd",
-   "size": 102879
+   "sha256": "043d4c9f0b79cd51e4ade7064b0dc433b3c64a205c3c3a0ff5e842e754da4071",
+   "size": 115670
   },
   "tests/vnext/test_historical_source_acquisition.py": {
-   "sha256": "06be7e9724490157465a2ea8e0b7d4d042e97a22d4ba99f61be2a1a38656746d",
-   "size": 12636
+   "sha256": "01162cdce96d08e0bf270e12dec3d0556497bb2b40c8f54ce9f3a5ddc23b6bbd",
+   "size": 18425
   },
   "tools/check_provider_egress.py": {
    "sha256": "a8c7ca66b4ff9c7ff089dc0a0a504f3471e69300203207e7c4f4d4b3e4e6a3d2",
    "size": 14654
   },
   "tools/vnext_historical_model.py": {
-   "sha256": "c9a4d662b6a155208c5ec3dda05a064383762acd9cb3ad0074a2f83a453b214e",
-   "size": 9227
+   "sha256": "35636ae41012490106a289bf78473a89963663d99a964fb1f8d9f1f5e90d57d6",
+   "size": 9928
+  },
+  "tools/vnext_historical_model_export.py": {
+   "sha256": "d2113dd38cc5ac5b9aeb50b990f49f53de649b3407c4edf4c47e3e703a984fad",
+   "size": 3007
   },
   "tools/vnext_mint_historical_requirement.py": {
-   "sha256": "4402f278e2c1e45cdafc9b66f2fd3118fee0b4c289ddc131b74b83f04aa3d174",
-   "size": 23541
+   "sha256": "d3caf6596cace90002980089baf7d3e804eea3453d9d86c8f54b77abf3543507",
+   "size": 29114
   }
  },
  "calls": {
@@ -98,7 +114,7 @@
    "scripts/vnext/continuous_semantic_calls.py::_Transport.send",
    "scripts/vnext/historical_model_egress.py::_Transport.send"
   ],
-  "gate_receipt_id": "sha256:7181de7b83d04a61850e0138642e193662a293bd94b445c93a3d718113355789",
+  "gate_receipt_id": "sha256:37e432ef1413657c3b64fe4c14c53369cda2de2ea00357b25b6c6f6d6c6aa3b6",
   "repository_transport_factories": [
    "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
    "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
@@ -109,28 +125,28 @@
  "execution": {
   "contract": "docs/evidence/issue47_history/owner-decisions-2026-09-28/decisions.json",
   "copies": [
-   "rt-new.verify-copies-u4fign2h/copy-0",
-   "rt-new.verify-copies-u4fign2h/copy-1",
-   "rt-new.verify-copies-u4fign2h/copy-2"
+   "egress-seal-4.verify-copies-m5ls7c_8/copy-0",
+   "egress-seal-4.verify-copies-m5ls7c_8/copy-1",
+   "egress-seal-4.verify-copies-m5ls7c_8/copy-2"
   ],
   "manifest": {
-   "digest": "sha256:08171beb96457b6119c05354ef27f5e9c6eea1e97f51d85aa4f9d18fa5017cb1",
-   "entries": 12264,
+   "digest": "sha256:170ed84dade4c262b8e456f6a2f9b7cbfae8b5217863a17ce2271114f5601302",
+   "entries": 14988,
    "scope": "every file and link under the tree, .git included, __pycache__ directories left out"
   },
   "mode": "PARALLEL_WORKER_COPIES",
-  "order": "slow expected classes first (TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener, ASocketOpensOnlyForTheCountedSendItBelongsTo, ACompleteAssessmentRegistersOnlyFromItsOwnSlots, EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted, AD02ReviewIsOneCountedCallOnTheSamePath, TheLedgerCannotBeResetByDeletingIt, OnlyTheRequestsTheApprovalNamesAreClaimed), then the rest in list order; each injection ran once, in its own process, in whichever copy was free - 'copy' in each row names it",
+  "order": "slow expected classes first (TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener, ASocketOpensOnlyForTheCountedSendItBelongsTo, ACompleteAssessmentRegistersOnlyFromItsOwnSlots, EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted, AD02ReviewIsOneCountedCallOnTheSamePath, TheLedgerCannotBeResetByDeletingIt, TheLiveLedgerNeedsItsPublishedStart, OnlyTheRequestsTheApprovalNamesAreClaimed), then the rest in list order; each injection ran once, in its own process, in whichever copy was free - 'copy' in each row names it",
   "seconds": {
-   "copies": 54,
-   "final_manifests": 28,
-   "injections": 6125,
-   "suite": 4755,
-   "total": 10982
+   "copies": 88,
+   "final_manifests": 131,
+   "injections": 8535,
+   "suite": 5416,
+   "total": 14223
   }
  },
  "fault_injections": [
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -146,11 +162,11 @@
    "id": "A_REQUEST_MAY_BE_REDRAWN",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 312,
+   "seconds": 372,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 1,
    "expected_class": "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -166,7 +182,7 @@
    "id": "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 208,
+   "seconds": 248,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -186,11 +202,11 @@
    "id": "HTTP_402_DOES_NOT_STOP",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 1022,
+   "seconds": 1272,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 1,
    "expected_class": "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -206,11 +222,11 @@
    "id": "UNKNOWN_USAGE_DOES_NOT_STOP",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 342,
+   "seconds": 414,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "TheLedgerCannotBeResetByDeletingIt",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -226,11 +242,11 @@
    "id": "SLOTS_ARE_COUNTED_WITHOUT_THE_CLAIM_LOG",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 104,
+   "seconds": 126,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "TheLedgerCannotBeResetByDeletingIt",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -246,11 +262,11 @@
    "id": "THE_ANCHOR_IS_INSIDE_THE_ROOT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 136,
+   "seconds": 168,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "TheLedgerCannotBeResetByDeletingIt",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -266,7 +282,7 @@
    "id": "THE_STOP_IS_READ_FROM_THE_TERMINAL",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 70,
+   "seconds": 88,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -286,11 +302,11 @@
    "id": "A_LEDGER_ROOT_MAY_BE_AN_ALIAS",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 38,
+   "seconds": 48,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "TheApprovalIsReadStrictly",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -306,11 +322,11 @@
    "id": "THE_SEC_ROOT_IS_COMPARED_AS_TEXT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 36,
+   "seconds": 46,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 2,
    "expected_class": "TheApprovalIsReadStrictly",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -326,11 +342,11 @@
    "id": "THE_POLICY_IS_READ_LAST_KEY_WINS",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 38,
+   "seconds": 48,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "TheApprovalIsReadStrictly",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -346,11 +362,11 @@
    "id": "THE_APPROVAL_IS_READ_LAST_KEY_WINS",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 38,
+   "seconds": 48,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "TheApprovalIsReadStrictly",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -366,11 +382,11 @@
    "id": "AN_EDITED_APPROVAL_IS_ACCEPTED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 36,
+   "seconds": 48,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "TheApprovalIsReadStrictly",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -386,7 +402,7 @@
    "id": "THE_APPROVED_RECEIPT_IS_NOT_CHECKED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 36,
+   "seconds": 48,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -396,7 +412,7 @@
    "failures": [
     {
      "case": "test_a_request_the_approval_does_not_name_claims_nothing",
-     "raised": "AssertionError: \"ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED:D04:\" does not match \"ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED:sha256:fbaba8d0c117ec8c3acffb4d5dbf397deb15fad488111e473b38a160f316082a\""
+     "raised": "AssertionError: \"ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED:D04:\" does not match \"ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED:sha256:d91c36576d9c38a5c89369a5e2e1c130747fd00ce18ff3328015082f3f489249\""
     }
    ],
    "file": "scripts/vnext/historical_model_calls.py",
@@ -406,11 +422,11 @@
    "id": "THE_SCOPE_IGNORES_THE_REQUEST_DIGEST",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 198,
+   "seconds": 248,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 1,
    "expected_class": "OnlyTheRequestsTheApprovalNamesAreClaimed",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -426,11 +442,11 @@
    "id": "THE_LEDGER_TRUSTS_THE_CALLER_S_GRANTS",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 266,
+   "seconds": 328,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 2,
    "expected_class": "OnlyTheRequestsTheApprovalNamesAreClaimed",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -446,11 +462,11 @@
    "id": "THE_RECEIPT_NEED_NOT_BIND_THE_SNAPSHOT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 36,
+   "seconds": 48,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "OnlyIssue47sOwnAuthorityReachesTheCallPath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -466,11 +482,11 @@
    "id": "A_SEND_NEED_NOT_BE_COUNTED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 98,
+   "seconds": 126,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "OnlyIssue47sOwnAuthorityReachesTheCallPath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -486,7 +502,7 @@
    "id": "THE_SOURCE_IS_NOT_REBUILT_FROM_THE_FILING",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 74,
+   "seconds": 96,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -506,7 +522,7 @@
    "id": "A_CONTEXT_OVERRUN_DOES_NOT_STOP",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 120,
+   "seconds": 144,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -526,7 +542,7 @@
    "id": "A_LIVE_CALL_MAY_BE_PLANNED_WITHOUT_THE_REFERENCE_TOKENIZER",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 262,
+   "seconds": 320,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -546,17 +562,17 @@
    "id": "THE_LIMIT_IS_ANSWERED_BEFORE_THE_REFERENCE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 232,
+   "seconds": 280,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 1,
    "expected_class": "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite",
    "expected_class_outcome": "CAUGHT",
    "failures": [
     {
      "case": "test_the_suite_refuses_to_run_beside_an_existing_allowance",
-     "raised": "FileExistsError: [Errno 17] File exists: '/tmp/issue47-verify-suite-vh74zx92/tmp/issue47-fixture-xovwrl_s/config/issue47_historical_model_calls_v1.json'"
+     "raised": "FileExistsError: [Errno 17] File exists: '/tmp/issue47-verify-suite-w0h0rlp8/tmp/issue47-fixture-ilb6y_3l/config/issue47_historical_model_calls_v1.json'"
     }
    ],
    "file": "tests/vnext/test_historical_model_egress.py",
@@ -570,7 +586,7 @@
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 1,
    "expected_class": "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -586,11 +602,11 @@
    "id": "THE_FIXTURES_REMOVE_WHAT_THEY_DID_NOT_WRITE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 2,
+   "seconds": 4,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 1,
    "expected_class": "tests.vnext.test_historical_source_acquisition.TheGithubReaderPassesGhOnlyWhatItNeeds",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -626,11 +642,11 @@
    "id": "THE_RUNNER_GOES_ON_PAST_A_STOP",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 1938,
+   "seconds": 2400,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 1,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -646,11 +662,11 @@
    "id": "A_REQUEST_NEED_NOT_BE_ITS_METRIC_S_TYPE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 60,
+   "seconds": 84,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -666,11 +682,11 @@
    "id": "AN_E01_ANSWER_IS_HELD_TO_D04_S_CONTRACT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 22,
+   "seconds": 34,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -686,7 +702,7 @@
    "id": "AN_E01_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 32,
+   "seconds": 46,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -706,7 +722,7 @@
    "id": "THE_RUNNER_REGISTERS_AN_INCOMPLETE_POSITION",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 624,
+   "seconds": 774,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -726,11 +742,11 @@
    "id": "A_D02_ANSWER_IS_HELD_TO_E01_S_CONTRACT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 160,
+   "seconds": 72,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "AD02ReviewIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -746,11 +762,11 @@
    "id": "A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 240,
+   "seconds": 106,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -766,11 +782,11 @@
    "id": "THE_SEND_DOES_NOT_ASK_WHICH_PROCESS_RESERVED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 222,
+   "seconds": 272,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -786,11 +802,11 @@
    "id": "THE_SEND_DOES_NOT_ASK_WHICH_OWNER_RESERVED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 218,
+   "seconds": 262,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -806,11 +822,11 @@
    "id": "THE_SEND_DOES_NOT_ASK_WHICH_EXECUTION_RESERVED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 212,
+   "seconds": 262,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -826,11 +842,11 @@
    "id": "THE_SEND_ACCEPTS_MORE_THAN_ONE_MARKER",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 226,
+   "seconds": 262,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -846,11 +862,11 @@
    "id": "THE_SEND_DOES_NOT_ASK_WHICH_PLAN_WAS_MARKED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 220,
+   "seconds": 258,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 1,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -866,7 +882,7 @@
    "id": "THE_SEND_DOES_NOT_ASK_WHICH_TRANSPORT_WAS_MARKED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 214,
+   "seconds": 258,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -886,11 +902,11 @@
    "id": "A_LIVE_LEDGER_MAY_BE_ANYWHERE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 276,
+   "seconds": 344,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 1,
    "expected_class": "TheLedgerCannotBeResetByDeletingIt",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -906,11 +922,11 @@
    "id": "A_LEDGER_FOR_ANOTHER_ALLOWANCE_IS_USED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 70,
+   "seconds": 88,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -926,7 +942,7 @@
    "id": "NO_CUMULATIVE_LIMIT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 136,
+   "seconds": 172,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -946,11 +962,11 @@
    "id": "A_CALLERS_ALLOWANCE_IS_TRUSTED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 54,
+   "seconds": 66,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "OnlyIssue47sOwnAuthorityReachesTheCallPath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -966,7 +982,7 @@
    "id": "THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 106,
+   "seconds": 132,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -986,7 +1002,7 @@
    "id": "NO_SOURCE_CHECK_AT_THE_SOCKET",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 430,
+   "seconds": 526,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -996,7 +1012,7 @@
    "failures": [
     {
      "case": "test_the_approval_is_rechecked_on_github_before_the_socket",
-     "raised": "AssertionError: HistoricalModelCallError not raised"
+     "raised": "+ CONTEXT_REFERENCE_MISMATCH"
     }
    ],
    "file": "scripts/vnext/historical_model_egress.py",
@@ -1006,7 +1022,7 @@
    "id": "NO_GITHUB_RECHECK_BEFORE_THE_SOCKET",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 1200,
+   "seconds": 1388,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1015,8 +1031,28 @@
    "expected_class_outcome": "CAUGHT",
    "failures": [
     {
+     "case": "test_the_approval_is_rechecked_on_github_before_the_socket",
+     "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_SAVED_DELEGATION_DIFFERS_FROM_GITHUB"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_the_approval_is_rechecked_on_github_before_the_socket"
+   ],
+   "id": "A_FAILED_RECHECK_LEAVES_THE_SLOT_OPEN",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 1368,
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "copy": 2,
+   "expected_class": "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
      "case": "test_recorded_bytes_cannot_run_live",
-     "raised": "+ [PosixPath('/tmp/issue47-verify-suite-poym49s0/tmp/issue47-egress-uk4jtsm2/granted-ledger/calls/0001')]"
+     "raised": "+ [PosixPath('/tmp/issue47-verify-suite-d2vhizw9/tmp/issue47-egress-nhoxh1yy/granted-ledger/calls/0001')]"
     }
    ],
    "file": "scripts/vnext/historical_model_egress.py",
@@ -1026,7 +1062,7 @@
    "id": "RECORDED_BYTES_ARE_ONLY_REFUSED_AFTER_THE_CLAIM",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 1154,
+   "seconds": 1438,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1046,7 +1082,7 @@
    "id": "A_SECOND_TRANSPORT_CALLER",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 6,
+   "seconds": 8,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -1066,17 +1102,17 @@
    "id": "REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 568,
+   "seconds": 690,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 0,
+   "copy": 1,
    "expected_class": "ACompleteAssessmentRegistersOnlyFromItsOwnSlots",
    "expected_class_outcome": "CAUGHT",
    "failures": [
     {
      "case": "test_a_failed_slot_cannot_complete_an_assessment",
-     "raised": "vnext.historical_counted_calls.CountedCallError: ISSUE_47_COUNTED_CALL_DID_NOT_ANSWER_WITH_THIS_OUTPUT:sha256:622c5c0046104e3eedce91bd4b70ad139838c498649cc92e7215ddd6080cf177"
+     "raised": "vnext.historical_counted_calls.CountedCallError: ISSUE_47_COUNTED_CALL_DID_NOT_ANSWER_WITH_THIS_OUTPUT:sha256:9c0f2ec9dcba50f867c063a8fc66dcc64b6d6e1e7dfc6590d1eaea5faa9d8117"
     }
    ],
    "file": "scripts/vnext/historical_model_egress.py",
@@ -1086,7 +1122,7 @@
    "id": "A_FAILED_SLOT_MAY_BE_REGISTERED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 266,
+   "seconds": 334,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -1107,7 +1143,7 @@
    "id": "THE_CONTROLLER_BRANCH_IS_ABSENT",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT_AT_FIXTURE",
-   "seconds": 26,
+   "seconds": 34,
    "suite_result": "FAILED (errors=1)"
   },
   {
@@ -1127,11 +1163,11 @@
    "id": "PLANS_MAY_NOT_KEEP_AN_UNAVAILABLE_PRICE",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 58,
+   "seconds": 72,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "AMappingIsNotAnAllowanceAndALedgerIsNotAGrant",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1147,11 +1183,11 @@
    "id": "A_MAPPING_IS_NOT_HELD_TO_THE_FILE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 54,
+   "seconds": 66,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "AMappingIsNotAnAllowanceAndALedgerIsNotAGrant",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1167,7 +1203,7 @@
    "id": "A_LEDGER_A_MAPPING_DESCRIBED_MAY_CLAIM",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 38,
+   "seconds": 46,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1187,11 +1223,11 @@
    "id": "THE_DIGEST_IS_ISSUE_28_S_SEMANTIC_ONE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 38,
+   "seconds": 46,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1207,11 +1243,11 @@
    "id": "THE_HOOK_RELEASES_BYTES_WITHOUT_A_COUNTED_SEND",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 152,
+   "seconds": 182,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 1,
+   "copy": 2,
    "expected_class": "TheLedgerCannotBeResetByDeletingIt",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1227,11 +1263,11 @@
    "id": "THE_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 202,
+   "seconds": 250,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1247,7 +1283,7 @@
    "id": "A_LIVE_CONFIRMATION_NEEDS_NO_CALLS",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 50,
+   "seconds": 66,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1267,11 +1303,11 @@
    "id": "A_LIVE_REVIEW_NEEDS_NO_CALLS",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 288,
+   "seconds": 138,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 1,
+   "copy": 0,
    "expected_class": "ACompleteAssessmentRegistersOnlyFromItsOwnSlots",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1287,11 +1323,11 @@
    "id": "A_LIVE_ASSESSMENT_NEEDS_NO_CALLS",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 234,
+   "seconds": 294,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1307,27 +1343,7 @@
    "id": "A_COUNTED_CALL_NEED_NOT_BE_LIVE",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 58,
-   "suite_result": "FAILED (failures=1)"
-  },
-  {
-   "copy": 2,
-   "expected_class": "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener",
-   "expected_class_outcome": "CAUGHT",
-   "failures": [
-    {
-     "case": "test_the_runner_calls_each_request_once_and_registers_the_position",
-     "raised": ""
-    }
-   ],
-   "file": "scripts/vnext/historical_counted_calls.py",
-   "first_caught_by": [
-    "test_the_runner_calls_each_request_once_and_registers_the_position"
-   ],
-   "id": "A_COUNTED_CALL_NEED_NOT_HAVE_ANSWERED_WITH_THIS_OUTPUT",
-   "minted_for_the_injection": true,
-   "outcome": "CAUGHT",
-   "seconds": 1817,
+   "seconds": 80,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1344,10 +1360,30 @@
    "first_caught_by": [
     "test_the_runner_calls_each_request_once_and_registers_the_position"
    ],
+   "id": "A_COUNTED_CALL_NEED_NOT_HAVE_ANSWERED_WITH_THIS_OUTPUT",
+   "minted_for_the_injection": true,
+   "outcome": "CAUGHT",
+   "seconds": 2316,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_the_runner_calls_each_request_once_and_registers_the_position",
+     "raised": ""
+    }
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "first_caught_by": [
+    "test_the_runner_calls_each_request_once_and_registers_the_position"
+   ],
    "id": "A_LIVE_REGISTRATION_NEEDS_NO_REGISTERED_APPROVAL",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 1817,
+   "seconds": 2326,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1367,11 +1403,11 @@
    "id": "A_NESTED_ANSWER_ESCAPES_THE_CALL_PATH",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 74,
+   "seconds": 100,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1387,11 +1423,11 @@
    "id": "A_NESTED_RESPONSE_ESCAPES_THE_CALL_PATH",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 64,
+   "seconds": 86,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1407,11 +1443,11 @@
    "id": "AN_OBSERVATION_MISMATCH_IS_RAISED_PAST_THE_RESPONSE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 118,
+   "seconds": 144,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 0,
+   "copy": 1,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1427,11 +1463,11 @@
    "id": "AN_OBSERVATION_MISMATCH_DOES_NOT_STOP",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 118,
+   "seconds": 144,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 0,
+   "copy": 2,
    "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1447,7 +1483,7 @@
    "id": "AN_E01_OR_D02_SOURCE_IS_NOT_REBUILT",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 98,
+   "seconds": 138,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1467,11 +1503,11 @@
    "id": "AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 96,
+   "seconds": 132,
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1491,7 +1527,7 @@
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1511,7 +1547,7 @@
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1531,7 +1567,7 @@
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1551,7 +1587,7 @@
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1571,7 +1607,7 @@
    "suite_result": "FAILED (failures=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1587,27 +1623,7 @@
    "id": "UNBOUND_CHECKOUT_CODE_MAY_RUN",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 200,
-   "suite_result": "FAILED (failures=1)"
-  },
-  {
-   "copy": 0,
-   "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
-   "expected_class_outcome": "CAUGHT",
-   "failures": [
-    {
-     "case": "test_code_read_from_the_checkout_s_bytecode_is_refused",
-     "raised": ""
-    }
-   ],
-   "file": "scripts/vnext/historical_model_calls.py",
-   "first_caught_by": [
-    "test_code_read_from_the_checkout_s_bytecode_is_refused"
-   ],
-   "id": "CHECKOUT_BYTECODE_MAY_RUN",
-   "minted_for_the_injection": false,
-   "outcome": "CAUGHT",
-   "seconds": 134,
+   "seconds": 242,
    "suite_result": "FAILED (failures=1)"
   },
   {
@@ -1624,14 +1640,34 @@
    "first_caught_by": [
     "test_code_read_from_the_checkout_s_bytecode_is_refused"
    ],
+   "id": "CHECKOUT_BYTECODE_MAY_RUN",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 162,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 2,
+   "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_code_read_from_the_checkout_s_bytecode_is_refused",
+     "raised": ""
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_code_read_from_the_checkout_s_bytecode_is_refused"
+   ],
    "id": "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 134,
+   "seconds": 164,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 0,
+   "copy": 1,
    "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1647,11 +1683,391 @@
    "id": "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE",
    "minted_for_the_injection": false,
    "outcome": "CAUGHT",
-   "seconds": 54,
+   "seconds": 66,
    "suite_result": "FAILED (errors=1)"
   },
   {
+   "copy": 0,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_ledger_behind_the_branch_s_export_sends_nothing",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_a_ledger_behind_the_branch_s_export_sends_nothing"
+   ],
+   "id": "THE_LIVE_LEDGER_SKIPS_THE_START",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 146,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 1,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_edited_marker_opens_nothing",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_an_edited_marker_opens_nothing"
+   ],
+   "id": "AN_EDITED_START_MARKER_COUNTS",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 146,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_marker_the_owner_did_not_post_does_not_count",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_a_marker_the_owner_did_not_post_does_not_count"
+   ],
+   "id": "A_STRANGERS_START_MARKER_COUNTS",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 148,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 1,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_earlier_start_from_another_host_wins",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_an_earlier_start_from_another_host_wins"
+   ],
+   "id": "THE_LATEST_START_MARKER_COUNTS",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 148,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
    "copy": 2,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_earlier_start_from_another_host_wins",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_an_earlier_start_from_another_host_wins"
+   ],
+   "id": "THE_START_MARKER_NEED_NOT_BE_THIS_HOST_S",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 148,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_new_container_meets_the_published_start",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_a_new_container_meets_the_published_start"
+   ],
+   "id": "A_STARTED_APPROVAL_STARTS_AGAIN_ON_A_NEW_HOST",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 148,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 1,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_export_blocks_a_later_start_and_restores_only_as_a_record",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_an_export_blocks_a_later_start_and_restores_only_as_a_record"
+   ],
+   "id": "THE_MARKER_CARRIES_THE_WHOLE_RECORD",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 252,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 2,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_ledger_behind_the_branch_s_export_sends_nothing",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_a_ledger_behind_the_branch_s_export_sends_nothing"
+   ],
+   "id": "A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 150,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_marker_not_from_this_issue_or_account_does_not_count",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_a_marker_not_from_this_issue_or_account_does_not_count"
+   ],
+   "id": "A_MARKER_FROM_ANYWHERE_COUNTS",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheModelLedgerTravelsToTheBranchAndBack",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_export_of_a_ledger_never_started_here_is_refused",
+     "raised": ""
+    }
+   ],
+   "file": "scripts/vnext/historical_model_export.py",
+   "first_caught_by": [
+    "test_an_export_of_a_ledger_never_started_here_is_refused"
+   ],
+   "id": "AN_EXPORT_BEGINS_A_LEDGER",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheModelLedgerTravelsToTheBranchAndBack",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_export_only_moves_forward",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_export.py",
+   "first_caught_by": [
+    "test_an_export_only_moves_forward"
+   ],
+   "id": "AN_EXPORT_MAY_GO_BACKWARDS",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_export_blocks_a_later_start_and_restores_only_as_a_record",
+     "raised": "?  ^      +++"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_export.py",
+   "first_caught_by": [
+    "test_an_export_blocks_a_later_start_and_restores_only_as_a_record"
+   ],
+   "id": "A_RESTORE_MAY_LAND_BESIDE_A_START",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 254,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_re_approval_cannot_start_over_requests_another_approval_claimed",
+     "raised": ""
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_a_re_approval_cannot_start_over_requests_another_approval_claimed"
+   ],
+   "id": "A_RE_APPROVAL_REDRAWS_CLAIMED_REQUESTS",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_ledger_behind_its_export_is_refused",
+     "raised": ""
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_a_ledger_behind_its_export_is_refused"
+   ],
+   "id": "ALL_APPROVALS_SHARE_ONE_EXPORT",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_source_acquisition.TheRestReaderReadsOnlyThisIssuesComments",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_redirected_read_is_refused",
+     "raised": "AssertionError: HistoricalAcquisitionError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_source_acquisition.py",
+   "first_caught_by": [
+    "test_a_redirected_read_is_refused"
+   ],
+   "id": "A_REDIRECTED_READ_IS_TRUSTED",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 2,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_export_blocks_a_later_start_and_restores_only_as_a_record",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "first_caught_by": [
+    "test_an_export_blocks_a_later_start_and_restores_only_as_a_record"
+   ],
+   "id": "THE_START_IGNORES_THE_EXPORT",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 254,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 1,
+   "expected_class": "TheLiveLedgerNeedsItsPublishedStart",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_a_ledger_behind_the_branch_s_export_sends_nothing",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_export.py",
+   "first_caught_by": [
+    "test_a_ledger_behind_the_branch_s_export_sends_nothing"
+   ],
+   "id": "THE_EXPORT_NAMES_NO_APPROVAL",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 150,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_an_sec_marker_neither_starts_nor_blocks_the_model_ledger",
+     "raised": "AssertionError: \"ISSUE_47_MODEL_LEDGER_NOT_STARTED\" does not match \"ISSUE_47_MODEL_LEDGER_STARTED_ELSEWHERE:https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5900000101\""
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_an_sec_marker_neither_starts_nor_blocks_the_model_ledger"
+   ],
+   "id": "THE_MODEL_START_IS_THE_SEC_START",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
+   "expected_class": "tests.vnext.test_historical_source_acquisition.TheRestReaderReadsOnlyThisIssuesComments",
+   "expected_class_outcome": "CAUGHT",
+   "failures": [
+    {
+     "case": "test_only_this_issue_s_comment_resources_are_readable",
+     "raised": "AssertionError: a request was made"
+    }
+   ],
+   "file": "scripts/vnext/historical_source_acquisition.py",
+   "first_caught_by": [
+    "test_only_this_issue_s_comment_resources_are_readable"
+   ],
+   "id": "THE_REST_READER_READS_ANY_PATH",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "seconds": 2,
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "copy": 0,
    "expected_class": "TheEgressGateNamesExactlyOneNewCaller",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1667,11 +2083,11 @@
    "id": "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 12,
+   "seconds": 16,
    "suite_result": "FAILED (errors=1)"
   },
   {
-   "copy": 2,
+   "copy": 0,
    "expected_class": "TheEgressGateNamesExactlyOneNewCaller",
    "expected_class_outcome": "CAUGHT",
    "failures": [
@@ -1687,7 +2103,7 @@
    "id": "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE",
    "minted_for_the_injection": true,
    "outcome": "CAUGHT",
-   "seconds": 12,
+   "seconds": 16,
    "suite_result": "FAILED (errors=1)"
   }
  ],
@@ -1717,12 +2133,12 @@
    "size": 51821
   },
   "issue_28_v13": {
-   "sha256": "e32e45efdd81208f77b78c5d06354b2d989a120677795838d6521bf9c588fa52",
-   "size": 72153
+   "sha256": "ac857a07f3bf9789b7ff5a1f1ad69506208cd77cdb349dbf3cb60de379552b5d",
+   "size": 84952
   },
   "issue_28_v14": {
-   "sha256": "42fe84036e9c5d1cf6f068a6610df8edfee4f8854961d73917dfbb2abd0d30f2",
-   "size": 89286
+   "sha256": "69abc8cc87bd5d44ee4337b500dbf47220fa1ea2fa94f4b5473dbdcb681e46d9",
+   "size": 96106
   },
   "issue_28_v2": {
    "sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
@@ -1757,8 +2173,8 @@
    "size": 39818
   },
   "issue_47_v1": {
-   "sha256": "5ae7e2ec9cf03751fca15e795558c9a574a7450f1d4d82de1de7117a7925ebdd",
-   "size": 74019
+   "sha256": "896f8d29791f72de62f236fcf923f5704b5b16b04aed8043329225c53e897705",
+   "size": 84941
   }
  },
  "generations_that_record_the_boundary_files": {
@@ -1831,12 +2247,12 @@
  },
  "live_call_authorized": false,
  "production_authorized": false,
- "receipt_id": "sha256:7dd330d2f3cacf8e2c1facd5faa104ca8036bc31c263657ab63a453ac8cd3cec",
+ "receipt_id": "sha256:316100f62eb71a66fec467b2366a64e0f4d7eb32453db972fcb84b67eb6defe4",
  "record_type": "ISSUE_47_MODEL_EGRESS_OFFLINE_VERIFICATION",
  "requirement_id": "issue_47_v1",
  "suite": {
   "failed": [],
-  "ran": "Ran 121 tests in 3 processes, one per test module",
+  "ran": "Ran 153 tests in 3 processes, one per test module",
   "returncode": 0,
   "summary": "OK"
  },

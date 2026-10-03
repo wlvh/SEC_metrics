@@ -1,11 +1,18 @@
 {
- "budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-model-v1",
+ "budget_root": "/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1",
+ "execution": {
+  "durability": "the ledger root and the start record beside it are lost with the container. The start marker on issue 47 carries only a digest of the local record, so a new container cannot rebuild the start from it, and once the branch carries this approval's export a start refuses and the live path refuses a ledger behind it. Before the first export is pushed nothing guards a lost container whose marker is deleted. A restored ledger is a record; spending more from it is the owner's decision, and a re-approval cannot name a request an earlier approval's export claimed",
+  "host": "the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 (issue 47 comment 5882788074)",
+  "provider_key": "DEEPSEEK_API_KEY from the environment's settings, set by the owner; never in the chat, the repository or a comment; it takes effect in a new session. The container's egress proxy re-terminates TLS, so the key, the prompts and the responses are visible to it",
+  "transport": "HTTPS to the fixed provider host through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not the provider's. 'Verified against GitHub' means as the proxy relayed it; the start record names the reader, the proxy and the CA bundle's digest",
+  "what_the_gates_bind": "the executor's code path, not the executor: in the container the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and holds the provider key, so it could fake a read-back or call the provider without this code. The gates guard against accidents and make the owner's decision auditable; the controls that bind the executor are outside it: a dedicated provider key with a provider-side credit limit, revoked after the run, and the committed exports compared with the provider's own usage log"
+ },
  "maximum_additional_provider_paid_sec_calls": [
   35,
   35,
   0
  ],
- "model_wiring_receipt_id": "sha256:7dd330d2f3cacf8e2c1facd5faa104ca8036bc31c263657ab63a453ac8cd3cec",
+ "model_wiring_receipt_id": "sha256:316100f62eb71a66fec467b2366a64e0f4d7eb32453db972fcb84b67eb6defe4",
  "production_authorized": false,
  "record_type": "ISSUE_47_HISTORICAL_MODEL_DELEGATION",
  "requirement_id": "issue_47_v1",
@@ -44,14 +51,14 @@
      "D04"
     ],
     "request_digests": [
-     "sha256:5bf8a1a8430691550caed3fcea08a1c2dd6807fe1aa3088db6ed76b9306daa73",
-     "sha256:7fbda556d87bfacb395e1b27c3f02a5006ca9c460f82c13ddbd5017e907d2fec",
-     "sha256:9b383bd3f96810ef7afec75ac566ecb01e85c5f19ba88047c348fe92b5b2b372",
-     "sha256:adf1c359d831c5ee44cb7e0d28f9d2ef347633d75af684729683dec34b88bfab",
-     "sha256:b917c1c78a45ba1cdc07f912c26f6b4db24fd55abcdfc218ae0478e3e69c610b",
-     "sha256:e977df5218ad3b163e4f16c08d5bf75b6eeebdef5c7e112b760a3076ef9be2e0",
-     "sha256:fbaba8d0c117ec8c3acffb4d5dbf397deb15fad488111e473b38a160f316082a",
-     "sha256:fef8634ae2c981b4df5fefe3fa60e1c030b84a07e7d13c5d7535476405d6a139"
+     "sha256:035b339ef0b73eadebc60eca7d9f96325163ad05cd4961192dfdf0c7e0d97c64",
+     "sha256:049d0a5c43268e2a45bbb70d0a3a95b0d3123ab72a0739bb70b64ffed46fd329",
+     "sha256:0f2cadb8118c068808eeb4a0f5e13e7586f1c7a2f863b24d34e15cab8cb65ec9",
+     "sha256:55a916ad4477b19ca732202dd1582a6ad7bbba3d7c16dce1db84c7a66a367594",
+     "sha256:adc49b8026b936a2ecd920cac84dbce86186f142236bd9de206a52542ad4c918",
+     "sha256:d91c36576d9c38a5c89369a5e2e1c130747fd00ce18ff3328015082f3f489249",
+     "sha256:e863215103cc78a95cd5746cd25721b2d9995ec9952e623bc44372f9f1fd8345",
+     "sha256:f762a3f5dc100706d6e04b5193f988eeb04884da9cc2e80ffecb2d2d663551a9"
     ]
    },
    {
@@ -65,14 +72,14 @@
      "D04"
     ],
     "request_digests": [
-     "sha256:6645309d8f0d3056908749cfd18a3836f1056055de432f2927a511a85da6f4a0",
-     "sha256:82fb079c844b2de1a0d6d02173a2b54c0e8cc4addc7bb0ccc7384171c9c9892e",
-     "sha256:8fd86306701745313c0c405ddba93018d6fee5234e217193fee021828fd5e94b",
-     "sha256:9451d60a51bb51fecab8125423b5ae070581291c55a9246c2e796fd4ba0f9150",
-     "sha256:a1cb96c1637ab1ce77f31809516bb575876c48b05fc91aa0dd6890caeddbff2d",
-     "sha256:c46221544c221ad74ed7fd25e099ab84c16219d9fd32cfba5fe9e42a8b028e5d",
-     "sha256:cc791f2b4e873fdaaa9067aa9e90e8256acda7a4164ab824942851f85155c463",
-     "sha256:e250b9bdc5b5546ef17fd98c1aa55af6310f9f5696626054c5ba9d6697f4852a"
+     "sha256:2f553f5aa318cf0327158b681f0908ef203c50381083b6ce9c7461c581d396f1",
+     "sha256:352746682d884c5d94cb468f463b5d4f0e2358573eacaa40c896d0522c33a349",
+     "sha256:4c6375760e553f73d5468bc4d6e0ce32237b503c6b655ee160436864ff5db36b",
+     "sha256:5eed18a990ab06fb4aad25490c36773af56b8912c2851d279882e0e0c600202d",
+     "sha256:6c7f77dfb0d3861df13c26b4b6a98df4fec9e9ab2cc573b52b2cd13ae92b8f6f",
+     "sha256:a2ade001c7940bd186a0bf56f6a3a4afadce1ccc6c81395931c11047f93b8794",
+     "sha256:a4b09fc4e72c1dadb2f17232080d6a71a53c31e442915463548d4be9bd9b7a0b",
+     "sha256:aafe3604c3f15935d635a9632317972fc8737560d451108260fb8fc730ccfb0a"
     ]
    },
    {

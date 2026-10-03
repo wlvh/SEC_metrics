@@ -1,0 +1,45 @@
+{
+ "approval_body": {
+  "path": "docs/evidence/issue47_history/model-egress/approval-comment-body.json",
+  "sha256": "9a368413797ddef13ecaf98dfa9f4f3b55a6a8db6f035605f761828e38883e6c",
+  "size": 8913
+ },
+ "bound_files": 20,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "carried_from_the_checkout": [
+  "docs/evidence/issue47_history/model-egress/offline-verification.json",
+  "docs/evidence/issue47_history/model-egress/approval-comment-body.json",
+  "config/issue47_historical_model_calls_v1.json",
+  "docs/evidence/issue47_history/model-egress/approval-comment.json",
+  "docs/evidence/issue47_history/model-egress/granted-model-ledger.json",
+  "evidence/issue47_model_calls/"
+ ],
+ "egress_patch": {
+  "path": "docs/evidence/issue47_history/model-egress/egress-registration.patch",
+  "sha256": "e452d120490f90c07fd4095ca259d529a87ff7abb044b827ebecb1be4ad1d80d",
+  "size": 159838
+ },
+ "receipt": {
+  "path": "docs/evidence/issue47_history/model-egress/offline-verification.json",
+  "sha256": "327a701d38339568f749a2d0675aefecaa8c94b54b4b4aa60880a00a35ad6719",
+  "size": 71145
+ },
+ "receipt_id": "sha256:316100f62eb71a66fec467b2366a64e0f4d7eb32453db972fcb84b67eb6defe4",
+ "record_type": "ISSUE_47_MODEL_CALL_RUN_PACKAGE",
+ "registration_patch": {
+  "path": "docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch",
+  "sha256": "49fdf9ddfaaad50c2df335fbffa63662fb31ced1c923797cc230ea3d78bfb24a",
+  "size": 17491
+ },
+ "schema_version": 1,
+ "sealed_commit": "5640c3679b43029926820d4f9034061d9df0cc90",
+ "tokenizer_requirement": {
+  "path": "requirements-continuous-context.txt",
+  "sha256": "6a73817410dd18a434a0feedba3c6f08f721e18db923893258828c72fb6cfcec",
+  "size": 269
+ }
+}
