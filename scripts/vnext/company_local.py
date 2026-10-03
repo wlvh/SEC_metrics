@@ -109,6 +109,8 @@ def configure_task(work, company_id, sec_allowance):
 def _status_tables(output, company, rows, summary):
     """Unavailable acquisition still yields an explicit full-scope state table."""
     from .publication import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
+    from .normal_annual_input import _registry_rows
+    display = next(c['display_name'] for c in _registry_rows(repo_root=ROOT) if c['company_id'] == company)
     table = output/'metrics_matrix.csv'
     if table.exists():
         reader = csv.DictReader(io.StringIO(table.read_text(encoding='utf-8-sig')))
@@ -117,14 +119,15 @@ def _status_tables(output, company, rows, summary):
     else:
         fields, matrix = METRIC_FIELDS, []
     present = {row['metric_id'] for row in matrix}
-    matrix.extend({**{f: '' for f in fields}, 'company': company,
+    matrix.extend({**{f: '' for f in fields}, 'company': display,
             'metric_id': metric, 'status': row['status'], 'notes': row.get('reason', '')}
             for metric, row in rows.items() if metric not in present)
-    extras = ('local_run_id', 'local_run_status', 'local_metric_status',
+    extras = ('company_id', 'local_run_id', 'local_run_status', 'local_metric_status',
               'requested_in_local_run', 'local_source_status')
     fields = (*fields, *(f for f in extras if f not in fields))
     for row in matrix:
-        row.update(local_run_id=summary['run_id'], local_run_status=summary['status'],
+        need(not row.get('company_id') or row['company_id'] == company, 'LOCAL_OUTPUT_WRONG_COMPANY')
+        row.update(company_id=company, local_run_id=summary['run_id'], local_run_status=summary['status'],
             local_metric_status=rows[row['metric_id']]['status'],
             requested_in_local_run=row['metric_id'] in summary['selected_metrics'],
             local_source_status=summary.get('source_status', 'ACQUISITION_STAGE_FAILED'))

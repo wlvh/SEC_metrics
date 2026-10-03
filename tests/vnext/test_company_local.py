@@ -127,6 +127,8 @@ class CompanyLocalTest(unittest.TestCase):
         with Path(result['outputs']['metrics_matrix.csv']).open(encoding='utf-8-sig') as stream:
             table = list(csv.DictReader(stream))
         self.assertEqual(len({r['metric_id'] for r in table}), 39)
+        self.assertTrue(all(r['company_id'] == 'marriott_international' for r in table))
+        self.assertTrue(all(r['company'] == 'Marriott International' for r in table if r['metric_id'] != 'B01'))
         self.assertEqual(table[0]['value'], '10')
 
     def test_acquisition_crash_cannot_be_reported_as_complete(self):
