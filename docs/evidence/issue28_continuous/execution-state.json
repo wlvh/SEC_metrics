@@ -3635,6 +3635,25 @@
       "status": "DONE",
       "ordinary_messages": 1,
       "dedup_note": "list_agents no live/same-purpose agent; subagent_register no B06 full-original audit; existing independent B03 Ford reviews different module/scope. This is once-only complete financial statements/notes read beyond prior XBRL/table probes; underscore task naming required by spawn tool."
+    },
+    {
+      "task_name": "review_productscope_82e162f",
+      "purpose": "review",
+      "module": "productscope",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/test_current_view.py",
+        "docs/evidence/issue28_continuous/known_result_defects.json"
+      ],
+      "patch_sha": "82e162f818063938461c703985bbfe6b63c83c31",
+      "spawned_at": "2026-10-03T02:00:43.476814+00:00",
+      "ended_at": "2026-10-03T02:07:43Z",
+      "tool_calls": 18,
+      "result_path": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-productscope-82e162f/conclusion.md",
+      "verdict": "PASS_LIMITED_NEW_PRODUCT_SCOPE_DIFF",
+      "status": "DONE",
+      "ordinary_messages": 1,
+      "dedup_note": "No live/same purpose+module agent, no register match or same-SHA evidence. New product-scope diff not covered by ended d01index reviews; those identity findings/results are reused, not reopened. Underscore task naming required by spawn schema."
     }
   ],
   "ci_capacity_20260922": {
@@ -11557,18 +11576,18 @@
     }
   },
   "latest_ci_natural_observation_20261003": {
-    "head_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
-    "run_id": 37082879179,
-    "status": "in_progress",
+    "head_sha": "8dec94686fd4479228f7c262baa6eae782890e0b",
+    "run_id": 37086890390,
+    "status": "queued",
     "conclusion": null,
-    "updated_at": "2026-10-03T01:21:27Z",
+    "updated_at": "2026-10-03T01:38:54Z",
     "audit_evidence_head": "decd85a245534ed05b3536ba9b92100d74311c48",
     "audit_evidence_run_id": 37086113754,
     "audit_evidence_run_status": "queued",
     "not_a_terminal_success": true
   },
   "current_390_legacy_product_scope_20261003": {
-    "status": "FINITE_LEGACY_SCOPE_LIMITS_IMPLEMENTED_SHORT_TEST_PASS_PENDING_INCREMENT_REVIEW",
+    "status": "LIMITED_SCOPE_DIFF_INDEPENDENT_REVIEW_PASS_NO_NEW_PRODUCT_RESULT_CREDIT",
     "evidence": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/product-scope-comparison.json",
     "base_tested_head": "8dec94686fd4479228f7c262baa6eae782890e0b",
     "uncommitted_scope_diff_tested": true,
@@ -11584,7 +11603,12 @@
       0,
       0
     ],
-    "no_new_result_or_full_company": true
+    "no_new_result_or_full_company": true,
+    "tested_patch_sha": "82e162f818063938461c703985bbfe6b63c83c31",
+    "independent_review": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/independent-review-productscope-82e162f/conclusion.md",
+    "independent_short_tests": 19,
+    "independent_finite_controls": 15,
+    "new_target_content_acceptance": false
   },
   "shared_read_20261003_product_scope": {
     "peer47_sha": "594da5aeb345a1e3bc287c783bfb3fd172a11527",
