@@ -68,6 +68,27 @@ class CompanyImportTest(unittest.TestCase):
                 self.assertEqual('ALREADY_INSTALLED', self.install(2)['status'])
                 self.assertTrue((self.state/'versions'/first['checkpoint_id'][7:]).is_dir())
 
+    def test_declared_event_saved_paths_preserve_original_body_and_header_locators(self):
+        base = 'https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/'
+        requirements = [{'source_url': base+name, 'roles': [role]} for name, role in (
+            ('d890503d8k.htm', 'fiscal_event_primary'),
+            ('0001193125-25-009110.hdr.sgml', 'fiscal_event_header'))]
+        rows = [{'source_url': r['source_url'], 'document_name': r['source_url'].rsplit('/',1)[-1],
+                 'status_code': '200', 'error': '',
+                 'repo_relative_path': 'evidence/request_attempts/'+str(i)+'/body',
+                 'headers_repo_relative_path': 'evidence/request_attempts/'+str(i)+'/headers.json'}
+                for i,r in enumerate(requirements)]
+        saved = json.loads(json.dumps(rows))
+        aliases = handoff.event_saved_paths(requirements, rows, 'marriott_international', {1048286})
+        self.assertEqual(len(aliases), 4)
+        self.assertEqual(aliases['evidence/accession_materials/marriott_international_1048286_000119312525009110/d890503d8k.htm'], rows[0]['repo_relative_path'])
+        self.assertEqual(rows, saved)
+        with self.assertRaisesRegex(ValueError, 'SAVED_PATH_IDENTITY_INVALID'):
+            handoff.event_saved_paths(requirements, rows, 'different_company', {1})
+        failed = {**rows[0], 'status_code': '403', 'error': 'HTTP 403'}
+        after = handoff.event_saved_paths(requirements, [*rows,failed], 'marriott_international', {1048286})
+        self.assertFalse(any('d890503d8k.htm' in p for p in after))
+
     def test_first_install_interruption_never_exposes_uncommitted_source(self):
         for position in ('before_source_replace', 'after_old_source_move', 'after_new_source_move'):
             with self.subTest(position=position):

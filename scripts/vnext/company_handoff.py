@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import shutil
 from uuid import uuid4
+from urllib.parse import urlsplit
 
 from sec_http import parse_request_log_rows, write_immutable_bytes
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_file
@@ -60,6 +61,38 @@ def rule_bindings(requirement_id='issue_28_v13'):
     need(not set(authority['execution_authority']['files']) & PROCESSING_STATE_PATHS,
          'COMPANY_HANDOFF_PROCESSING_STATE_CLASSIFIED_AS_RULE')
     return {relative: binding(ROOT/relative) for relative in sorted(paths)}
+
+
+def event_saved_paths(requirements, rows, company_id, ciks):
+    """Project declared event captures into the existing saved-path reader.
+
+    Originals and HTTP headers still come from their unchanged ledger rows.
+    This creates package copies, never edits the acquisition root or ledger.
+    """
+    declared = {r['source_url'] for r in requirements
+                if set(r['roles']) & {'fiscal_event_header', 'fiscal_event_primary'}}
+    latest = {r['source_url']: r for r in rows}
+    aliases = {}
+    for url in sorted(declared):
+        row = latest.get(url)
+        if row is None or row['status_code'] != '200' or row['error']:
+            continue
+        parts = urlsplit(url).path.split('/')
+        need(urlsplit(url).scheme == 'https' and urlsplit(url).netloc == 'www.sec.gov'
+             and len(parts) == 7 and parts[1:4] == ['Archives', 'edgar', 'data']
+             and parts[4].isdigit() and int(parts[4]) in ciks
+             and parts[5].isdigit() and len(parts[5]) == 18
+             and parts[6] == row['document_name'] and parts[6] not in {'', '.', '..'},
+             'COMPANY_EVENT_SAVED_PATH_IDENTITY_INVALID')
+        directory = 'evidence/accession_materials/{}_{}_{}'.format(
+            company_id, int(parts[4]), parts[5])
+        target = directory+'/'+parts[6]
+        for destination, field in ((target, 'repo_relative_path'),
+                                   (target+'.headers.json', 'headers_repo_relative_path')):
+            need(bool(row[field]), 'COMPANY_EVENT_SAVED_PATH_SOURCE_MISSING')
+            if destination != row[field]:
+                aliases[destination] = row[field]
+    return aliases
 
 
 def export_company(*, source_root, output_root, trust_root, company_id,
@@ -127,6 +160,7 @@ def export_company(*, source_root, output_root, trust_root, company_id,
         if row['source_url'] in urls:
             paths.update(row[field] for field in ('repo_relative_path', 'headers_repo_relative_path')
                          if row[field] and (source/row[field]).is_file())
+    aliases = event_saved_paths(requirements, rows, company_id, ciks) if declared_frame is None else {}
     files = {}
     for relative in sorted(paths):
         path = resolve_repository_file(repo_root=source, repo_relative_path=relative)
@@ -139,6 +173,11 @@ def export_company(*, source_root, output_root, trust_root, company_id,
                     'evidence/requests_log.csv', 'evidence/requests_log_manifest.json'}:
                 _baseline_file(source, relative, baseline)
         files[relative] = binding(path)
+    for relative, original_path in aliases.items():
+        need(original_path in files, 'COMPANY_EVENT_SAVED_PATH_OUTSIDE_VERIFIED_CLOSURE')
+        if relative in files:
+            need(files[relative] == files[original_path], 'COMPANY_EVENT_SAVED_PATH_CONFLICT')
+        files[relative] = files[original_path]
     rule_requirement_id = 'issue_28_v13' if declared_frame is None else 'issue_47_v1'
     rule_files = rule_bindings(rule_requirement_id)
     credit = ('PREEXISTING_SAVED_ACQUISITIONS_ONLY' if original is None else original['source_credit'])
@@ -160,13 +199,16 @@ def export_company(*, source_root, output_root, trust_root, company_id,
         'original_checkpoint': original, 'source_credit': credit,
         'real_sec_credit': False if original is None else original['real_sec_credit'],
         'production_authorized': False}
+    if aliases:
+        body['saved_path_origins'] = aliases
     checkpoint = {**body, 'checkpoint_id': content_hash(value=body)}
     staged = output.parent/('.'+output.name+'.preparing-'+uuid4().hex)
     staged.mkdir(parents=True)
     try:
         for relative in sorted(set(files) | set(rule_files)):
             origin = source if relative in files else ROOT
-            raw = resolve_repository_file(repo_root=origin, repo_relative_path=relative).read_bytes()
+            raw = resolve_repository_file(repo_root=origin,
+                repo_relative_path=aliases.get(relative, relative)).read_bytes()
             target = staged/relative; target.parent.mkdir(parents=True, exist_ok=True)
             write_immutable_bytes(path=target, content=raw)
         write_immutable_bytes(path=staged/EXPORT_PATH, content=canonical_json_bytes(value=checkpoint))

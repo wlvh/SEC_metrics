@@ -193,6 +193,15 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         try:
             program = configure_task(work, company_id, sec_allowance)
             summary['program_root'] = str(program)
+            # A bounded repair may advance preparation while preserving the
+            # original acquisition binding and all existing computing Runs.
+            preparation = strict_json_file(path=work/'local-company.json').get('preparation_program_root')
+            preparation_program = absolute(preparation) if preparation else program
+            if preparation:
+                need(preparation_program.parent == work/'programs'
+                     and (preparation_program/'requirements/issue_54_v4').is_dir(),
+                     'LOCAL_PREPARATION_PROGRAM_MISSING_OR_CHANGED')
+            summary['preparation_program_root'] = str(preparation_program)
             common_env = {'SEC_METRICS_ACQUISITION_TRUST_ROOT': str(work/'trust/acquisition'),
                           'SEC_METRICS_SOURCE_TRUST_ROOT': str(work/'trust/company')}
             acquisition = _invoke(program, ['acquire', '--company', company_id,
@@ -224,7 +233,7 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
                 '--trust-root', work/'trust/company', '--company', company_id]
             for metric in supported:
                 export_args.extend(['--metric', metric])
-            handoff = _invoke(program, export_args, report_file=output/'stages/handoff.json', environment=common_env)
+            handoff = _invoke(preparation_program, export_args, report_file=output/'stages/handoff.json', environment=common_env)
             summary['stages']['handoff'] = handoff
             need(handoff['returncode'] == 0, 'LOCAL_SOURCE_HANDOFF_FAILED')
             state = work/'company-state'
