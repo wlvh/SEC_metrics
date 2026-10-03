@@ -1,0 +1,120 @@
+{
+  "source_json_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "prompt_sha256": "b390051096045342d3ebef296751d912642f713563ad1d873215292cd9bc7eee",
+  "output_root": "/private/tmp/issue28-d03-complete-context-plan-20261003-final",
+  "source_id": "sha256:f49af1b29cbc3c0a86e7ee6c51b4f8ea6f39c6b3abfa82b09b86f96531e7a8e8",
+  "source_unit_ids": [
+    "sha256:c602ecc69500ffb50c421970157577cb6e31c757c5bbb45f15ae8dc5e7fc7fc1",
+    "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+    "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+    "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+    "sha256:26eb8d47590552f5545a76e257dd0a54f4ed161142810120aa07bdd528675c7e",
+    "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+    "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+    "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+    "sha256:734d6521a7c143c93d94125039f289bb10301651fcadafd74dcdf7b7acbc31d6",
+    "sha256:c6ef86dacec03f8ee48100d4312e724e5e72141b27239dc125b49c622ae86500",
+    "sha256:e8e52e77f5b27911e433d8b17ce0a5e9ae6b2fafd6e211de7788a78f12997c8c",
+    "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+    "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+    "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+    "sha256:63366ffe097dbfd068a8b491df8d159a8e3113b8a80f49898c317d596a5ca963",
+    "sha256:4f09dc3894af46541d905226c85e0c8dd6fb00e99aae2a0862a928a7b907929d",
+    "sha256:b9c8510355033183a1c2881d9b2c5eaf71fb1d5b78af737e1ccfbbc744369da6"
+  ],
+  "original_units_unchanged_and_exactly_restored": true,
+  "old_group_count": 5,
+  "candidate_request_count": 6,
+  "model_correctness_or_output_fit_verified": false,
+  "live_authorized": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "requests": [
+    {
+      "index": 0,
+      "responsibility_unit_ids": [
+        "sha256:c602ecc69500ffb50c421970157577cb6e31c757c5bbb45f15ae8dc5e7fc7fc1",
+        "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+        "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+        "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+        "sha256:26eb8d47590552f5545a76e257dd0a54f4ed161142810120aa07bdd528675c7e"
+      ],
+      "complete_visible_rows": 1965,
+      "native_unit_count": 0,
+      "request_sha256": "3fb6e62568a8f5e3bb4bc8ea01b33492753f43eb93117290e56ca6e8f4a188b6",
+      "input_tokens": 70971,
+      "context_tokens": 75067,
+      "fits": true
+    },
+    {
+      "index": 1,
+      "responsibility_unit_ids": [
+        "sha256:045315d7c3b48a73cf5ada70e5cdb85a5d5d6c617e477f697bd435788be17157",
+        "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9"
+      ],
+      "complete_visible_rows": 1965,
+      "native_unit_count": 2,
+      "request_sha256": "81be9744ccec1538512e3adec2e64c892b992d9e324caae541e21c018bf4350a",
+      "input_tokens": 157845,
+      "context_tokens": 161941,
+      "fits": true
+    },
+    {
+      "index": 2,
+      "responsibility_unit_ids": [
+        "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666",
+        "sha256:734d6521a7c143c93d94125039f289bb10301651fcadafd74dcdf7b7acbc31d6"
+      ],
+      "complete_visible_rows": 1965,
+      "native_unit_count": 2,
+      "request_sha256": "9398c4a2cee5e0fabc62f135000ffd2e01bfbfae7041ad294fa3c435ac4a6263",
+      "input_tokens": 158836,
+      "context_tokens": 162932,
+      "fits": true
+    },
+    {
+      "index": 3,
+      "responsibility_unit_ids": [
+        "sha256:c6ef86dacec03f8ee48100d4312e724e5e72141b27239dc125b49c622ae86500",
+        "sha256:e8e52e77f5b27911e433d8b17ce0a5e9ae6b2fafd6e211de7788a78f12997c8c",
+        "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736"
+      ],
+      "complete_visible_rows": 1965,
+      "native_unit_count": 3,
+      "request_sha256": "7a9ff4d581c856a0b1589121421bf377ea3990f5243260d76a236a21539a1cbd",
+      "input_tokens": 194044,
+      "context_tokens": 198140,
+      "fits": true
+    },
+    {
+      "index": 4,
+      "responsibility_unit_ids": [
+        "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+        "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+        "sha256:63366ffe097dbfd068a8b491df8d159a8e3113b8a80f49898c317d596a5ca963",
+        "sha256:4f09dc3894af46541d905226c85e0c8dd6fb00e99aae2a0862a928a7b907929d"
+      ],
+      "complete_visible_rows": 1965,
+      "native_unit_count": 4,
+      "request_sha256": "f730f0b9ab55d1501fbfeb7cd93aed1d4e053eda6b941f9bc44bf89aaac6f6d5",
+      "input_tokens": 172676,
+      "context_tokens": 176772,
+      "fits": true
+    },
+    {
+      "index": 5,
+      "responsibility_unit_ids": [
+        "sha256:b9c8510355033183a1c2881d9b2c5eaf71fb1d5b78af737e1ccfbbc744369da6"
+      ],
+      "complete_visible_rows": 1965,
+      "native_unit_count": 1,
+      "request_sha256": "c80a1a1cec6fd460730ae50edc0a7c32ba18557e62ec202532f6c1faf78b43b7",
+      "input_tokens": 100564,
+      "context_tokens": 104660,
+      "fits": true
+    }
+  ]
+}

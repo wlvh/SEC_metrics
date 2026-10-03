@@ -11978,5 +11978,31 @@
     "remaining_source_size_path": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/remaining-source-size.json",
     "actual_full_source_call_plan_unchanged": true,
     "task_revisions_remaining": 0
+  },
+  "d03_complete_context_plan_20261003": {
+    "state": "COMPLETE_ORIGINAL_SOURCE_LOSSLESS_INPUT_PLAN_MEASURED_ONLY",
+    "evidence": "docs/evidence/issue28_continuous/d03-complete-context-plan-20261003/README.md",
+    "tested_base_sha": "6219efe68b10fe50e4829d19b89f9a787019b57f",
+    "source_id": "sha256:f49af1b29cbc3c0a86e7ee6c51b4f8ea6f39c6b3abfa82b09b86f96531e7a8e8",
+    "original_unit_count": 17,
+    "old_groups": 5,
+    "candidate_requests": 6,
+    "input_reference_tokens_total": 855056,
+    "maximum_context_reference_tokens": 198160,
+    "output_limit_unchanged": 4096,
+    "source_identity_unchanged": true,
+    "source_bytes_exact_restore": true,
+    "mechanical_checks_passed": 8,
+    "all_source_model_or_native_acceptance": false,
+    "target_provider_authorized": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "task_semantics_changed": false,
+    "representation_and_output_scope_only": true,
+    "actual_full_source_call_plan_unchanged": true,
+    "remaining": "All-unit model output and cross-request relation/conflict handling, exact native persistence/replay, limited review and real-call permission. Six request measurement is one company only and not a new execution grant."
   }
 }
