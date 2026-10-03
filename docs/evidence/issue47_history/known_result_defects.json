@@ -7752,6 +7752,40 @@
      "integration": "MERGED; no change"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "edda3b29",
+   "own_commit_at_read": "41146999",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; only latest_peer_read_commit moved (to #47's 5a2ebebf); no defect entry, release or acceptance limit added",
+   "baseline": "Read since ff9667ea: three commits, all inside docs/evidence/issue28_continuous/. None of their files is recorded in the issue_47_v1 snapshot: mint --check passes unchanged on the merged tree. The sealed run package 5640c367 does not move.",
+   "increments": [
+    {
+     "commit": "94b3c904",
+     "marker": "[shared-with-#47]",
+     "subject": "C02 model content check of #28's Enphase FY2025 answer against the original: 32 of 41 facts supported as worded; F27 tags an incumbent's re-election as a membership change; F3 drops the 'we (including our affiliates)' scope; F35-F41 card skill evaluations kept at the qualification boundary; Class I/III continuing directors missed; skill-matrix and board-snapshot images not in the text input; no Result, Run or DeepSeek credit",
+     "affects_47": "None to #47's values. #47 checked its own four C02 development answers (Ford FY2022, Lumen FY2021, Pfizer FY2022, JPMorgan FY2021) for the same shapes: no incumbent re-election tagged as a membership change (8 membership_change facts, all actual joins, departures, role changes or rotations); no affiliate-scoped count read as board size (8 board_size facts, none of whose cited blocks mentions an affiliate); the classified-board shape cannot occur (all four elect every director annually), so it is unverified; the four proxies carry 69 to 428 images each and #47's input is text only, the same coverage limit. The card skill evaluations are the class named as the one remaining C02 qualification disagreement in #47's reply 5969862604.",
+     "integration": "MERGED; no change"
+    },
+    {
+     "commit": "28a439b6",
+     "marker": "[shared-with-#47]",
+     "subject": "D03 native input check on one saved filing with a retained development response, no native credit",
+     "affects_47": "None: #47 has no D03 route and D03 is outside the 35 approved calls.",
+     "integration": "MERGED; no change"
+    },
+    {
+     "commit": "edda3b29",
+     "marker": "[shared-with-#47]",
+     "subject": "Peer baseline sync: #28's register records #47's 5a2ebebf as its latest peer read, and its execution state the prior CI terminal",
+     "affects_47": "None.",
+     "integration": "MERGED; no change"
+    }
+   ]
   }
  ]
 }
