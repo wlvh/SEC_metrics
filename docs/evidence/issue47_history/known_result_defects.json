@@ -7476,6 +7476,40 @@
      "integration": "MERGED"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.1",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "9e37beb9",
+   "own_commit_at_read": "6ce6fc86",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; adds product_scope_acceptance_limits (20 exact legacy C02/E01 Result identities, ordinary latest year) and a mechanical receipt note on the Enphase C02 Result 8fb7d6e3; the defects array is unchanged",
+   "baseline": "Read since 8dec9468: three commits, their messages and file lists, the two READMEs, the independent-review conclusion and the register delta; merged as 6ce6fc86. Every changed file is under docs/evidence/issue28_continuous/ and none is among the paths requirements/issue_47_v1/baseline_manifest.json binds; the snapshot check passes on the merged tree, so neither the parent closure nor the snapshot the model-egress receipt binds moved.",
+   "increments": [
+    {
+     "commit": "82e162f8",
+     "marker": "[shared-with-#47]",
+     "subject": "Distinguish legacy C02 and E01 contracts from current product acceptance",
+     "affects_47": "None for #47's trusted counts, checked rather than assumed. #47's coverage grants an acceptance only when the result's spec_closure_hash equals the one the reading recorded (historical_coverage.py), so a reading under an old contract cannot stand for a result under the new one. The register's 39 C02 acceptances all bind the composition-facts Spec catalog/r6/C02_board_disclosures_historical_v2.md (closure 9075321f, recompiled here); the 10 values the excerpt selector published before it were all withdrawn and carry no acceptance. Of 9 E01 acceptances, 5 bind the content-confirmed Spec catalog/r6/E01_content_confirmed_ma_v1.md (49ada0cc) and 4 bind the ordinary item-count Spec catalog/ordinary_zero_ai/E01.md (7d5864cc): Enphase 0, Ford 2, Lumen 7 and Southwest 2 for 2025, read before the owner's 09-27 decision. In the 50-period frame (closure 500ddf5f) E01 is computed under 49ada0cc, so those 4 grant nothing there; Enphase 2025's 0 is granted by its own content-confirmed reading, and the frame's 3 positions reported as ACCEPTANCE_DOES_NOT_MATCH_THIS_RESULT on filings, spec_closure_hash, unit and value fit Ford, Lumen and Southwest, whose content-confirmed windows are withheld (inferred from that field list; the committed report does not list the positions and the batch's run directories are no longer on disk). They remain valid only as readings of the old contract's counts (most of Ford's, Lumen's and Southwest's 1.01 items are borrowing agreements, which the new target excludes).",
+     "integration": "MERGED; no change"
+    },
+    {
+     "commit": "4e219cc7",
+     "marker": "[shared-with-#47]",
+     "subject": "Record limited review of legacy product scope acceptance limits",
+     "affects_47": "None: #28's independent review of 82e162f8 for its own current-390 view; evidence only.",
+     "integration": "MERGED"
+    },
+    {
+     "commit": "9e37beb9",
+     "marker": "[shared-with-#47]",
+     "subject": "Preserve original Enphase C02 Run and issue its exact copy validation receipt",
+     "affects_47": "None for #47's values: a mechanical validation receipt for #28's ordinary Enphase FY2025 C02 Result 8fb7d6e3 under its own V13 install. #47's Enphase FY2025 C02 is a different Result under the historical composition Spec and selector _v3, read and accepted separately.",
+     "integration": "MERGED"
+    }
+   ]
   }
  ]
 }
