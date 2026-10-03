@@ -1,0 +1,90 @@
+{
+  "tested_head_plus_worktree": "10d725b0542667247b6648d4984dd796b9a06e9b",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "data_root": "/private/tmp/issue28-d01-running-header-processing-20261003/26223fc8410d0090b8cc9c8a5ad6e29061500002cd3d6764ed558c4fc462a6ac",
+  "state_root": "/private/tmp/issue28-c02-native-pending-20261003",
+  "samples": [
+    {
+      "company_id": "enphase_energy",
+      "folder": "/private/tmp/issue28-c02-native-pending-20261003/enphase_energy",
+      "candidate_hash": "sha256:0fcd6612e61410573c4c13291aaa66f0a2680f05f21e90200542b46c036a6055",
+      "review_unit_hash": "sha256:531654efe750ba7821cebb0fd18c5f5fa8a513d1982fd24d4a30f06ad990965d",
+      "build_seconds": null,
+      "cold_seconds": 7.934,
+      "source_admission": {
+        "checkpoint_id": "sha256:1cc31c90e839e246c6ad82eb7eb7a6c9fa1de8247a6626cdd3866d3d8b6cf178",
+        "new_business_calls": {
+          "paid": 0,
+          "provider": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "real_sec_credit": false,
+        "record_type": "VERIFIED_ORDINARY_ACQUIRED_INPUTS",
+        "request_attempt_ids": [
+          "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97",
+          "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd",
+          "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd",
+          "request:attempt:3499a2f68c2258b105e14f6dcacdff5f8f679a1f4584ad1766b6566a9ca6d54a"
+        ],
+        "selected_new_request_attempt_ids": [],
+        "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "source_manifest_sha256": "b086bdd1a2108307bd2b3aa55e2a58c330d27258ee446d6cbb59e477bcd8d2ec",
+        "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270"
+      },
+      "pending": "PENDING",
+      "system_approval_eligible": false,
+      "fact_count": 41,
+      "unresolved": 4,
+      "source_and_response_bytes_preserved": true
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "folder": "/private/tmp/issue28-c02-native-pending-20261003/paramount_skydance_paramount_global",
+      "candidate_hash": "sha256:a4af97536c63333fe6f01d3c68a06ddde9a03612ef199b29e4f703649a98b740",
+      "review_unit_hash": "sha256:060ef8f2efe9575f367895a52686be780f91f4aee8b44ec0640ba7a5a530c7ac",
+      "build_seconds": 7.801,
+      "cold_seconds": 9.006,
+      "source_admission": {
+        "record_type": "VERIFIED_ORDINARY_ACQUIRED_INPUTS",
+        "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+        "source_manifest_sha256": "b086bdd1a2108307bd2b3aa55e2a58c330d27258ee446d6cbb59e477bcd8d2ec",
+        "checkpoint_id": "sha256:1cc31c90e839e246c6ad82eb7eb7a6c9fa1de8247a6626cdd3866d3d8b6cf178",
+        "request_attempt_ids": [
+          "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb",
+          "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd",
+          "request:attempt:e6e256328eb75c4b1db4eafde1643cfd8f432ced9c0d0338747d01c9eb54bd9e",
+          "request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71"
+        ],
+        "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "real_sec_credit": false,
+        "selected_new_request_attempt_ids": [],
+        "new_business_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "pending": "PENDING",
+      "system_approval_eligible": false,
+      "fact_count": 42,
+      "unresolved": 2,
+      "source_and_response_bytes_preserved": true
+    }
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "native_result_or_run_created": false,
+  "status": "PASS_NATIVE_PENDING_MAPPING_AND_INDEPENDENT_REPLAY",
+  "protected_original_bytes_unchanged": true,
+  "tested_worktree_files": {
+    "scripts/vnext/c02_model_processing.py": "734256bab876bbf2fcbabdfa0acdc21a3776f4e86870cf68b048b576f04a4e39",
+    "catalog/r6/C02_model_source_development_v1.md": "38bcbca15f0c2113c6ed8a17ea960f59b14570c738956703049ed83c1ce3d899",
+    "tests/vnext/test_c02_model_processing.py": "8e82119c9b0be5c2ec519d4a6448f4989b1355c2fb8d983366188766bcd95005",
+    "tools/run_fast_tests_v2.py": "4f2a7654b443802ed17318850e78ca2e822b89abf32db21aa7f219aba7f55a07"
+  }
+}
