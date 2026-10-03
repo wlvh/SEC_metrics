@@ -3754,6 +3754,24 @@
       "ordinary_messages": 3,
       "dedup_note": "No live agent, same patch SHA/scope or c02native review. Both fixed-task input diagnoses and past C02 selector reviews reused, no semantic re-extraction.",
       "actual_started_at": "2026-10-03T06:45:52Z"
+    },
+    {
+      "task_name": "diagnose_d03input_fc4f6fc",
+      "purpose": "diagnose",
+      "module": "d03input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint/"
+      ],
+      "patch_sha": "fc4f6fce2961b28599413d8b0877b325476650a5",
+      "spawned_at": "2026-10-03T07:16:12.244547+00:00",
+      "ended_at": "2026-10-03T07:22:38.218090+00:00",
+      "tool_calls": 36,
+      "result_path": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/independent-input-fc4f6fc/conclusion.md",
+      "verdict": "COMPLETE_INPUT_DIAGNOSIS_REQUIRES_CONTRACT_ALIGNMENT",
+      "status": "DONE",
+      "ordinary_messages": 2,
+      "dedup_note": "No live agent or same SHA/d03input diagnostic. Prior recorded module tests and D03 regex reviews reused, no code review or semantic re-extraction of prior answers. Scope is first actual model read of joint original visible text across old boundary; NOT full17unit or live validation.",
+      "actual_started_at": "2026-10-03T07:16:49.900457+00:00"
     }
   ],
   "ci_capacity_20260922": {
@@ -11921,5 +11939,20 @@
     "review_path": "docs/evidence/issue28_continuous/c02-model-native-mapping-20261003/independent-review-cd8f587/conclusion.md",
     "review_verdict": "PASS_SCOPED_DEVELOPMENT_NATIVE_MAPPING",
     "next_required": "Explicit semantic acceptance and full model Run/update integration; no new real-purpose permission granted"
+  },
+  "d03_model_cross_group_20261003": {
+    "state": "FIRST_INPUT_DIAGNOSIS_COMPLETE_CONTRACT_AND_DATE_CORRECTION_PREPARED",
+    "evidence": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/README.md",
+    "initial_overall": "EXPLICIT_PRESENT_based_on_tax_examinations; not current D03 acceptance",
+    "reference_omission_found": true,
+    "initial_date_field_errors_retained": true,
+    "scope": "all visible text, not full17units",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "target_provider_authorized": false,
+    "substantive_task_revisions_used": 1
   }
 }

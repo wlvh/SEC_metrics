@@ -1,0 +1,124 @@
+{
+  "task": "One-shot independent joint visible-text D03 input diagnosis",
+  "provided_checkout_label": "fc4f6fce2961b28599413d8b0877b325476650a5",
+  "checkout_label_verified": false,
+  "utc_observed_start": "2026-10-03T07:16:49.900457+00:00",
+  "utc_complete_source_reading": "2026-10-03T07:19:51.414485+00:00",
+  "utc_finish": "2026-10-03T07:22:38.218090+00:00",
+  "elapsed_seconds": 348.317633,
+  "only_input_directory": "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint",
+  "prompt_read_first": true,
+  "complete_read_ranges": [
+    [
+      0,
+      149
+    ],
+    [
+      150,
+      349
+    ],
+    [
+      350,
+      399
+    ],
+    [
+      400,
+      459
+    ],
+    [
+      460,
+      599
+    ],
+    [
+      600,
+      799
+    ],
+    [
+      800,
+      999
+    ],
+    [
+      1000,
+      1079
+    ],
+    [
+      1080,
+      1199
+    ],
+    [
+      1200,
+      1299
+    ],
+    [
+      1300,
+      1449
+    ],
+    [
+      1450,
+      1599
+    ],
+    [
+      1600,
+      1739
+    ],
+    [
+      1740,
+      1964
+    ]
+  ],
+  "visible_blocks_completely_read": 1965,
+  "coverage_gaps": [],
+  "source_output_truncation_seen": false,
+  "keyword_substitution_for_full_reading": false,
+  "source_sha256": "37678af6f93e1ebf5863190f1c18444c753cb4c2f3e4b2060ec4ce73b82d4bdb",
+  "source_hash_matches_metadata": true,
+  "request_sha256": "b97114b3117d7fc80ad5cd516ed7350cc3a34c40576f7a8cef62943df961e810",
+  "request_hash_matches_context_measurement": true,
+  "other_input_file_sha256": {
+    "prompt.txt": "6a9509b11de429c07a3470ad06a2c9deea2d9bec0fc6861f0c50ced241420c8c",
+    "metadata.json": "341a2bb960efe8ad1ab6499033bef6a013f20b6e9a0dad2bcaa746c84d8033bd",
+    "context-measurement.json": "e40b147437c2e27199122f5ca663c3190f30c7f29ed4189099e5d3f9484ea619"
+  },
+  "scope": "Joint visible blocks B0-B1964 only; 12 native fact/supplement units omitted by supplied metadata.",
+  "context_measurement_status": "Prepared-input estimate only; not current model token usage or actual provider execution.",
+  "tools_outer_functions_exec": 18,
+  "tools_inner_exec_command": 18,
+  "tools_total": 36,
+  "tool_call_outline": [
+    "1: list exact input directory, UTC start, read prompt",
+    "2: read metadata/context-measurement and B0-B149",
+    "3-15: sequential fixed ranges B150-B1964, as listed above",
+    "16: input hashes, contiguous block IDs, request JSON structure and exact source inclusion; UTC reading complete",
+    "17: write model raw JSON response.log exactly once using exclusive creation",
+    "18: JSON parse, actual-source reference membership and input hashes; write diagnostic.log and conclusion.md"
+  ],
+  "ordinary_messages": {
+    "opening": 1,
+    "questions": 0,
+    "final": 1,
+    "total_including_final": 2
+  },
+  "semantic_extraction": "Performed by this independent development model after full visible-text reading; no semantic rule code or expected answer read.",
+  "mechanical_checks": {
+    "raw_json_parsed": true,
+    "all_evidence_references_in_actual_source": true,
+    "source_input_hash_checked": true,
+    "request_hash_checked": true
+  },
+  "raw_response_written_once": true,
+  "raw_response_rewritten": false,
+  "response_postprocessing": "None: no deduplication, relabeling, clipping, repair, or regenerated success.",
+  "actual_provider_business_calls": 0,
+  "actual_paid_business_calls": 0,
+  "actual_sec_business_calls": 0,
+  "network_or_api_calls": 0,
+  "native_result_or_run_generated": false,
+  "production_credit": false,
+  "limitations": [
+    "No actual DeepSeek/provider execution was performed.",
+    "Provider identity/tokenizer metadata belongs to prepared input, not this model execution.",
+    "Actual model input/output token usage is not exposed; no independent measured-token claim is made.",
+    "Referenced documents outside the supplied visible text were not accessed.",
+    "Underlying raw filing origin/hash was declared by metadata, not independently reacquired or verified."
+  ]
+}
