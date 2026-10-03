@@ -3875,6 +3875,24 @@
       "verdict": "NEEDS_FIX_CONTENT_SCOPE_CLASSIFICATION_AND_COVERAGE_NOT_FULL_ACCEPTANCE",
       "message_count": 2,
       "elapsed_seconds": 1147.23
+    },
+    {
+      "task_name": "diagnose_d03native_94b3c90",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_responsibility4",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/4",
+        "docs/evidence/issue28_continuous/d03-complete-context-plan-20261003/input-prompt.txt",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003"
+      ],
+      "patch_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+      "spawned_at": "2026-10-03T13:06:57.589839+00:00",
+      "ended_at": "2026-10-03T13:21:58.727062+00:00",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_NATIVE_INPUT_DIAGNOSIS_UNRESOLVED_NO_COMPANY_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 833.262
     }
   ],
   "ci_capacity_20260922": {
@@ -12271,7 +12289,8 @@
       0,
       0
     ],
-    "next": "Align exact qualification scope and choose a bounded next method decision; do not alter raw output or launch a third same-method correction. Independent D03/native and other queue engineering continues."
+    "next": "Align exact qualification scope and choose a bounded next method decision; do not alter raw output or launch a third same-method correction. Independent D03/native and other queue engineering continues.",
+    "peer_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5969416517"
   },
   "shared_increment_read_c02_content_20261003": {
     "own_sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
@@ -12282,5 +12301,47 @@
       5969096649
     ],
     "disposition": "Peer supplied full Pfizer FY2022 qualification contexts and corrected adjudication interpretation. Three concrete role/skill statements remain for contract alignment; peer adjudication not owner authority or own acceptance. JPM FY2021 held-out/source layout defect does not automatically withdraw current FY2025. Own current C02 model content not accepted; no peer core copied."
+  },
+  "ci_94b3c904": {
+    "run_id": 37124740852,
+    "head_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA"
+  },
+  "d03_native_input_development_20261003": {
+    "state": "ONE_NEW_NATIVE_RESPONSIBILITY_RESPONSE_SHAPE_RAW_PERSISTENCE_AND_COLD_READ_PASS_LIMITED",
+    "tested_base_sha": "94b3c904825a65be75ef66c0bbc2843855d548f3",
+    "uncommitted_evidence_processor": true,
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/README.md",
+    "source_id": "sha256:f49af1b29cbc3c0a86e7ee6c51b4f8ea6f39c6b3abfa82b09b86f96531e7a8e8",
+    "request_sha256": "6d1fbe971d46a3c5fac136e5547362a17e056efd238c6c579f04e27cf43dc26e",
+    "response_sha256": "59ccfeb447d76555c14537816940be01aac3e804b7afb6c1d38245e721894097",
+    "new_native_units_read": 4,
+    "outer_objects": 20,
+    "nested_objects": 6,
+    "shared_visible_context_rows": 1965,
+    "findings": 5,
+    "unresolved": 2,
+    "scope_current_involvement": "UNRESOLVED",
+    "response_reference_tokens": 1939,
+    "processing_sha256": "ad67ce514a05e6c0a32a72bb68e15b6e782099439271ad49e5f038b1c71eecbb",
+    "mechanical_controls": 14,
+    "checks_seconds": 0.249,
+    "cold_seconds": 0.125,
+    "native_credit": false,
+    "target_model_real_calls_authorized": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "prompt_or_source_modified": false,
+    "old_visible_answer_rebound": false,
+    "current_production_contract_changed": false,
+    "future_code_independent_review": "NOT_RUNTIME_INTEGRATION_REVIEW; agent only audited input/output source semantics",
+    "remaining_native_units_not_model_read": 8,
+    "new_six_request_plan_responses_complete": false,
+    "next": "Five other exact new-format responses and cross-request relationship/coverage remain; old visible answer cannot be relabeled new request. Narrow mechanical prototype only; native approval/Run and new real-purpose permission not provided."
   }
 }
