@@ -3764,14 +3764,29 @@
       ],
       "patch_sha": "fc4f6fce2961b28599413d8b0877b325476650a5",
       "spawned_at": "2026-10-03T07:16:12.244547+00:00",
-      "ended_at": "2026-10-03T07:22:38.218090+00:00",
-      "tool_calls": 36,
+      "ended_at": "2026-10-03T07:33:36.147049+00:00",
+      "tool_calls": 42,
       "result_path": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/independent-input-fc4f6fc/conclusion.md",
-      "verdict": "COMPLETE_INPUT_DIAGNOSIS_REQUIRES_CONTRACT_ALIGNMENT",
+      "verdict": "COMPLETE_SCOPED_INPUT_DIAGNOSIS_AFTER_ONE_CONTRACT_CORRECTION",
       "status": "DONE",
-      "ordinary_messages": 2,
+      "ordinary_messages": 3,
       "dedup_note": "No live agent or same SHA/d03input diagnostic. Prior recorded module tests and D03 regex reviews reused, no code review or semantic re-extraction of prior answers. Scope is first actual model read of joint original visible text across old boundary; NOT full17unit or live validation.",
-      "actual_started_at": "2026-10-03T07:16:49.900457+00:00"
+      "actual_started_at": "2026-10-03T07:16:49.900457+00:00",
+      "initial_diagnosis_ended_at": "2026-10-03T07:22:38.218090+00:00",
+      "incremental_scope": {
+        "patch_sha": "1e6f45b0ee3713eabbfd2d8210208f627b9d4ee6",
+        "scope_paths": [
+          "/private/tmp/issue28-d03-cross-group-model-input-20261003/joint-contract-aligned/"
+        ],
+        "started_at": "2026-10-03T07:29:40.455475+00:00",
+        "prior_tools": 36,
+        "prior_messages": 2,
+        "source_unchanged_reuse_read": true,
+        "one_task_correction_only": true
+      },
+      "incremental_tools": 6,
+      "incremental_messages": 1,
+      "no_more_followup_due_message_cap": true
     }
   ],
   "ci_capacity_20260922": {
@@ -11941,7 +11956,7 @@
     "next_required": "Explicit semantic acceptance and full model Run/update integration; no new real-purpose permission granted"
   },
   "d03_model_cross_group_20261003": {
-    "state": "FIRST_INPUT_DIAGNOSIS_COMPLETE_CONTRACT_AND_DATE_CORRECTION_PREPARED",
+    "state": "ALIGNED_MODEL_AND_ORIGINAL_SOURCE_CROSS_GROUP_DIAGNOSIS_COMPLETE_LIMITED",
     "evidence": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/README.md",
     "initial_overall": "EXPLICIT_PRESENT_based_on_tax_examinations; not current D03 acceptance",
     "reference_omission_found": true,
@@ -11953,6 +11968,15 @@
       0
     ],
     "target_provider_authorized": false,
-    "substantive_task_revisions_used": 1
+    "substantive_task_revisions_used": 1,
+    "aligned_overall": "UNRESOLVED",
+    "aligned_findings": 7,
+    "aligned_output_reference_tokens": 1793,
+    "aligned_input_reference_tokens": 65705,
+    "all17unit_or_native_acceptance": false,
+    "source_contract_and_original_response_kept": true,
+    "remaining_source_size_path": "docs/evidence/issue28_continuous/d03-model-cross-group-20261003/remaining-source-size.json",
+    "actual_full_source_call_plan_unchanged": true,
+    "task_revisions_remaining": 0
   }
 }
