@@ -1,0 +1,64 @@
+{
+  "reviewed_unit_ids": [
+    "sha256:c6ef86dacec03f8ee48100d4312e724e5e72141b27239dc125b49c622ae86500",
+    "sha256:e8e52e77f5b27911e433d8b17ce0a5e9ae6b2fafd6e211de7788a78f12997c8c",
+    "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736"
+  ],
+  "findings": [
+    {
+      "kind": "OTHER_MEANING",
+      "subject": "Marriott income-tax recognition policy and assumed taxing-authority examination",
+      "event_dates": [],
+      "reported_context_times": [
+        "FY2025 source context: 2025-01-01 to 2025-12-31"
+      ],
+      "status": "Accounting recognition assumption; this assigned passage does not report initiation or current involvement in a governmental investigation.",
+      "evidence": [
+        {
+          "unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 24
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1065
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1201
+        }
+      ],
+      "description": "Object 24 states the more-likely-than-not tax-recognition threshold, assuming examination by the appropriate taxing authority, and refers to Note 6. This is an accounting assumption rather than a reported investigation step. Note 6 in the supplied visible context separately reports IRS settlement through tax year 2022, ongoing 2023 and 2024 tax-year audits, and foreign/state/local examinations. Those actual administrative examinations do not establish a linked D03 governmental investigation or enforcement matter in this assigned policy passage; do not turn the assumed examination into a second current case."
+    },
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Marriott unspecified legal proceedings and claims in its legal-contingency accounting policy",
+      "event_dates": [],
+      "reported_context_times": [
+        "FY2025 source context: 2025-01-01 to 2025-12-31"
+      ],
+      "status": "Legal proceedings are expressly reported, but their governmental actor, investigated subject and investigation/enforcement linkage are not established by this generic statement.",
+      "evidence": [
+        {
+          "unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 36
+        },
+        {
+          "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 1113
+        }
+      ],
+      "description": "Object 36 says that the Company is subject to various legal proceedings and claims, then describes when it accrues estimated losses and revises those accruals. It does not identify a governmental investigator, a recipient of government process, an investigated subject or a current investigation/enforcement relationship. Do not label these unspecified claims as government investigations or assume they are all private. The statement cannot be matched to a separate disclosed matter merely from this accounting policy."
+    }
+  ],
+  "scope_current_involvement": "UNRESOLVED",
+  "unresolved": [
+    "These three responsibility units establish neither explicit present D03 governmental investigation/enforcement involvement nor an explicit scoped declaration of no such action. This is not a whole-company absence conclusion.",
+    "The Note 6 cross-reference supplies context about actual tax audits/examinations, but the linked D03 investigation/enforcement relation remains unproved; the context-only audit paragraph is not independently reassessed as a new company matter here.",
+    "The shared visible context includes specific legal/regulatory matters, including data-security resolutions and remaining status uncertainty. Findings cannot be created solely from those context-only blocks; the generic legal-contingency policy does not establish their identity or universal closure."
+  ]
+}

@@ -3928,6 +3928,24 @@
       "message_count": 2,
       "elapsed_seconds": 869.894,
       "elapsed_scope": "From first recorded clock; earlier first command conservatively about16.58min total"
+    },
+    {
+      "task_name": "diagnose_d03group3_2a71112",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_facts45_supp0_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/3",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group3"
+      ],
+      "patch_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
+      "spawned_at": "2026-10-03T15:19:25.930293+00:00",
+      "ended_at": "2026-10-03T15:37:13.225131+00:00",
+      "tool_calls": 67,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group3/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_GROUP3_INPUT_DIAGNOSIS_UNRESOLVED_NO_NATIVE_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 826.137,
+      "elapsed_scope": "From first recorded clock; earlier initial reads not timed, lower bound only"
     }
   ],
   "ci_capacity_20260922": {
@@ -12390,10 +12408,12 @@
   "ci_edda3b29": {
     "run_id": 37126897053,
     "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
-    "state": "in_progress",
-    "terminal": null,
+    "state": "completed",
+    "terminal": "success",
     "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
-    "observed_updated_at": "2026-10-03T14:18:10Z"
+    "observed_updated_at": "2026-10-03T14:18:10Z",
+    "updated_at": "2026-10-03T14:44:56Z",
+    "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
     "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
@@ -12485,5 +12505,62 @@
       0,
       0
     ]
+  },
+  "ci_2a711128": {
+    "run_id": 37132088260,
+    "head_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
+    "state": "queued",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA"
+  },
+  "shared_increment_read_68025386": {
+    "peer_read_sha": "68025386",
+    "prior_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
+    "scope": "Peer own C02 Marriott FY2022/FY2023 repair47 recompute releases; no shared source core change. Current FY2025/model proposals not automatically released. Peer read summaries of own C02/D03 evidence and own SEC driver export receipts not applied as credit."
+  },
+  "d03_group3_development_20261003": {
+    "state": "FOURTH_NEW_FORMAT_RESPONSE_CHECKED_SAVED_COLD_LIMITED",
+    "tested_base_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/group3/README.md",
+    "uncommitted_evidence_callsite": true,
+    "request_sha256": "a6573132e7f5902d40ebd593da5612d9c28cc9d47fe81edded3f249c14aa2385",
+    "response_sha256": "77731e3adbf3abdd72d8d3d98526f3e89ed0c7504b4c3694ad10789c203d782f",
+    "native_facts": 370,
+    "outer_supplement_objects": 41,
+    "nested_objects": 11,
+    "visible_context_rows": 1965,
+    "findings": 2,
+    "unresolved": 3,
+    "output_reference_tokens": 1090,
+    "input_reference_tokens": 194064,
+    "context_reference_tokens": 198160,
+    "processing_sha256": "9ce6f6659769faac20b79d531cbb28183fe45fd35957d31475fc261afe8a116a",
+    "checks_seconds": 0.161,
+    "cold_seconds": 0.124,
+    "new_request_response_indices_available": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "new_request_response_indices_missing": [
+      0,
+      5
+    ],
+    "native_units_not_model_read": 1,
+    "native_or_real_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "c02_qualification_owner_decision_pending": {
+    "state": "EXACT_NARROW_OWNER_QUESTION_SENT_NOT_GENERAL_C02_REOPENED",
+    "peer_comment": 5969862604,
+    "peer_read_sha": "68025386",
+    "scope": "Issuer evaluation of named member suitability/experience contribution without named standard; 7Enphase/10Paramount model statements and parallel historical class, not external credential or role facts",
+    "real_call_permission_added": false,
+    "old_response_rewritten": false
   }
 }
