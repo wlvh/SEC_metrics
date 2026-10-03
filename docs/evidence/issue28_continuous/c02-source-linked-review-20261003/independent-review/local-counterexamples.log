@@ -1,0 +1,90 @@
+{
+  "seconds": 11.286,
+  "checks": [
+    {
+      "case": "one_real_enphase_read",
+      "seconds": 11.24,
+      "view_hash": "sha256:ad4f350178ede1059eb5b2848ae76b9239db87fe2b78ce6a1e705a6a0818cee9",
+      "unit_hash": "sha256:8fe82aaaa0816c7da083ac31be18daa94091da5001a985ba8871b61ad64b6f0f",
+      "native_construction_mocked": false,
+      "source_and_parent_readers": "observed_without_output_substitution"
+    },
+    {
+      "case": "real_reference_coverage_and_whole_parent_appendix",
+      "facts": 41,
+      "unresolved": 4,
+      "unique_citations": 68,
+      "uncertainty_only_432_433": true,
+      "entire_original_rendered_suffix": true,
+      "whole_selected_claim_set_unchanged": true,
+      "normalized_scope": {},
+      "status": "PENDING",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "external_candidate_identity_early_guard",
+      "rejected": "C02_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED"
+    },
+    {
+      "case": "external_parent_unit_identity_early_guard",
+      "rejected": "C02_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED"
+    },
+    {
+      "case": "missing_external_view_identity",
+      "rejected": "C02_REVIEW_EXTERNAL_VIEW_ID_REQUIRED"
+    },
+    {
+      "case": "actual_native_unit_SYSTEM_approval",
+      "rejected": "SYSTEM review requires exact enum scope evidence"
+    },
+    {
+      "case": "uncertainty_span_changed_low_level",
+      "rejected": "C02_REVIEW_SOURCE_SPAN_CHANGED"
+    },
+    {
+      "case": "source_identity_changed_low_level",
+      "rejected": "C02_REVIEW_ORIGINAL_SOURCE_CHANGED"
+    },
+    {
+      "case": "parent_status_changed_low_level",
+      "rejected": "C02_REVIEW_PARENT_PROCESSING_CHANGED"
+    },
+    {
+      "case": "cached_authenticated_rebuild_saved_display_changed",
+      "rejected": "C02_REVIEW_SAVED_VIEW_CHANGED"
+    },
+    {
+      "case": "cached_authenticated_rebuild_saved_context_changed",
+      "rejected": "C02_REVIEW_SAVED_VIEW_CHANGED"
+    },
+    {
+      "case": "cached_authenticated_rebuild_saved_SYSTEM_flag_changed",
+      "rejected": "C02_REVIEW_SAVED_VIEW_CHANGED"
+    },
+    {
+      "case": "complete_native_self_reseal_original_external_view_id",
+      "rejected": "C02_REVIEW_EXPECTED_VIEW_ID_CHANGED"
+    },
+    {
+      "case": "complete_native_self_reseal_attacker_external_view_id_cached_rebuild",
+      "rejected": "C02_REVIEW_EXPECTED_VIEW_ID_CHANGED"
+    },
+    {
+      "case": "paramount_saved_bytes_only_no_source_replay",
+      "facts": 42,
+      "unresolved": 2,
+      "unique_citations": 87,
+      "whole_parent_rendered_suffix": true,
+      "source_authentication_reused_from_saved_unmodified_evidence": true
+    }
+  ],
+  "original_parent_and_view_files_unchanged": true,
+  "counts": {
+    "socket_or_child_events": 0
+  },
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}
