@@ -3932,7 +3932,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2022-12-31.json) disagrees with the selection the current code makes from the saved filing: 4 block(s) taken that state no composition fact (367: plan eligibility; '13 non-employee directors' is neither the board's size nor its independent count; 825: Hobart's other public company board (DICK'S), not the registrant's board); 15 block(s) stating a composition fact that no taken block states (504: Chairman of the Board and CEO roles kept separate for over ten years; rest is rationale; 665: Capuano's card: Executive Committee member). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json",
@@ -3946,18 +3946,26 @@
    ],
    "partial_repair": {
     "sentence_member_list": "8 blocks now taken, every one judged a composition fact: committee pages whose 'Members:' line is written as a sentence - a period at its end and a comma before its last 'and' - which failed the whole list, so neither the line nor its committee heading was taken (scripts/vnext/historical_board_composition.py name_list; docs/evidence/issue47_history/c02-selector-repairs/README.md section 3 [shared-with-#28]).",
-    "still_open": "0 fact block(s) missed (none) and 2 block(s) taken that state no composition fact (825, 922); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "quoted_nickname": "2 blocks now taken, every one judged a composition fact: a director whose name is printed with a quoted nickname ('Steven T. “Terry” Clontz') failed person_name, so his card was not read and a committee roster ended at his name (scripts/vnext/historical_board_composition.py _NICKNAME) (docs/evidence/issue47_history/c02-selector-repairs/README.md section 5 [shared-with-#28]).",
     "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "where_clause_body_35": "Repair 35 places a board named in a 'where' clause at the body before it: 0 block(s) added, 1 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 35 [shared-with-#28]).",
-    "board_size_at_attendance_37": "Repair 37 reads the board's size where attendance at its meeting is reported ('All 14 directors then serving attended', and on a board whose directors all stand each year 'All 12 directors nominated for election in 2024 attended'): 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28]). (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28])."
+    "board_size_at_attendance_37": "Repair 37 reads the board's size where attendance at its meeting is reported ('All 14 directors then serving attended', and on a board whose directors all stand each year 'All 12 directors nominated for election in 2024 attended'): 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28]). (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28]).",
+    "card_names_47": "Repair 47 reads a bulleted list entry (another public company's board, a committee) as a list entry, not as the card's director name, and no longer counts list items and spacer blocks in the card's reach: with it the selection agrees with the reading (docs/evidence/issue47_history/c02-selector-repairs/README.md section 47 [shared-with-#28], measured-47-card-names.json). This entry's state was not updated when repair 47 landed; it is updated with the targeted round that recomputed the result (targeted-round-ed67e401)."
    },
-   "selection_problems": {
-    "wrongly_taken": [
-     825,
-     922
-    ]
-   }
+   "selection_problems": {},
+   "released": [
+    {
+     "result_id": "sha256:691f6b1b9a1724f2503f16011999c2a3ad09550d7799b7e9296a69022828b98f",
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "run_id": "run:historical-period:f405e222efdd0f4c7f072ef7fae36ac99f32384de764661d9c38b2ff99157a23",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json (marriott-2022: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json",
+     "reading_sha256": "sha256:738b114bde0c0591e94ef81497866a6104b01bd11a2b1d8d1b7d82fc3d260694",
+     "adjudication_sha256": "sha256:e8a1a4f198b62bfb9e2e2f3a7d5700aa47147e1192203bacb6dd9577ebc1e4d0",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result, whose excerpts the reading found within the meaning with no fact missed under the recorded adjudication. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "defect_id": "C02_MARRIOTT_2023_OLDER_YEAR_READING_DISAGREES",
@@ -3969,7 +3977,7 @@
    "summary": "The two-direction reading of this proxy (c02-older-years/judgements/marriott_international-2023-12-31.json) disagrees with the selection the current code makes from the saved filing: 2 block(s) taken that state no composition fact (1537: Entry under McCarthy's other current public company boards (Alignment Healthcare), not the registrant's board; 1583: Reid biography; the board/governance committee named is the Consumer Goods Forum's, not the registrant's). A set with wrong or missing members is not the right set, so the coordinate is withdrawn; the original Run stays readable.",
    "scope_measured": "27 older-year C02 positions read in both directions; 26 disagree with the selection (49 blocks taken that state no composition fact, 256 fact blocks missed), Pfizer FY2024 agrees. Compared on 2026-10-01 with tools/read_c02_composition.py --readings-dir c02-older-years/judgements on the final acquisition's restored root (comparison.json).",
    "found_by": "c02-older-years readings (one fresh-context reader of the same model family per position, not a person), held to the route's own selection by tools/read_c02_composition.py",
-   "repair_state": "PARTLY_REPAIRED_SELECTION_STILL_DISAGREES",
+   "repair_state": "SELECTION_AGREES_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "The classes readers split on are decided by rule for every reading (c02-composition-facts/adjudicate.py, adjudication.json); the problems left are the selector's, repaired one bounded problem at a time ([shared-with-#28]). Readings that shaped a rule are regression material for it, not held-out validation.",
    "evidence": [
     "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2023-12-31.json",
@@ -3980,18 +3988,27 @@
     "docs/evidence/issue47_history/c02-selector-repairs/measured-35-where-clause-body.json",
     "docs/evidence/issue47_history/c02-selector-repairs/measured-37-board-size-at-attendance.json"
    ],
-   "selection_problems": {
-    "wrongly_taken": [
-     1537
-    ]
-   },
+   "selection_problems": {},
    "partial_repair": {
-    "still_open": "0 fact block(s) missed (none) and 1 block(s) taken that state no composition fact (1537); the selection still disagrees with the reading, so the coordinate stays withdrawn.",
+    "still_open": "Today's selection agrees with the reading. The withdrawn result was computed by an earlier version; it stays withdrawn until a result is recomputed, read against this reading and released by result_id.",
     "chair_ceo_structure": "2 block(s) now taken that state whether the board's chair and the chief executive are two people or one (CHAIR_CEO_STRUCTURE), every one judged a composition fact by the reading or by the uniform adjudication; 0 dropped (docs/evidence/issue47_history/c02-selector-repairs/README.md section 7 [shared-with-#28]).",
     "linked_statements_18": "Repair 18 reads a statement that carries a cross-reference link: 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 18 [shared-with-#28]).",
     "where_clause_body_35": "Repair 35 places a board named in a 'where' clause at the body before it: 0 block(s) added, 1 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 35 [shared-with-#28]).",
-    "board_size_at_attendance_37": "Repair 37 reads the board's size where attendance at its meeting is reported ('All 14 directors then serving attended', and on a board whose directors all stand each year 'All 12 directors nominated for election in 2024 attended'): 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28]). (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28])."
-   }
+    "board_size_at_attendance_37": "Repair 37 reads the board's size where attendance at its meeting is reported ('All 14 directors then serving attended', and on a board whose directors all stand each year 'All 12 directors nominated for election in 2024 attended'): 1 block(s) added, 0 removed (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28]). (docs/evidence/issue47_history/c02-selector-repairs/README.md section 37 [shared-with-#28]).",
+    "card_names_47": "Repair 47 reads a bulleted list entry (another public company's board, a committee) as a list entry, not as the card's director name, and no longer counts list items and spacer blocks in the card's reach: with it the selection agrees with the reading (docs/evidence/issue47_history/c02-selector-repairs/README.md section 47 [shared-with-#28], measured-47-card-names.json). This entry's state was not updated when repair 47 landed; it is updated with the targeted round that recomputed the result (targeted-round-ed67e401)."
+   },
+   "released": [
+    {
+     "result_id": "sha256:7effe488c80552f08fa4441f3a205144f71fd00a817c7e8bf08a9a624779e9d7",
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "run_id": "run:historical-period:a544bd090cfe82871a3f03ff6a881e37f93eac2f3ac95cec092400777ce5f1f6",
+     "accepted_by": "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json (marriott-2023: READING_AGREES, MATCH)",
+     "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2023-12-31.json",
+     "reading_sha256": "sha256:90b9d51bcd5a5cde36455a64073ff1977e35042f7610b579cedb4d0892617833",
+     "adjudication_sha256": "sha256:e8a1a4f198b62bfb9e2e2f3a7d5700aa47147e1192203bacb6dd9577ebc1e4d0",
+     "what_this_releases": "this entry, for this result under this version only: the targeted round's result, whose excerpts the reading found within the meaning with no fact missed under the recorded adjudication. Any other result at this coordinate stays withdrawn by it."
+    }
+   ]
   },
   {
    "defect_id": "C02_MARRIOTT_2024_OLDER_YEAR_READING_DISAGREES",

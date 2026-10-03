@@ -31094,6 +31094,114 @@
    "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. It is not a held-out test: repairs 7 to 45 of the selector and the unified adjudication were written against these same older-year readings, so this is agreement with a reading of the material the rules were fitted on. The pool is a rule too - a fact stated only in a long block that uses none of the pool's words and lies more than sixteen blocks from one is not read - and the readers are agents of one model family whose judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C02_MARRIOTT_2022",
+   "accepted_value": "sha256:9f9d1304e4370c15caf3b505f94a8d5c5fec97d17db6bdce8d469280ee0100a0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:691f6b1b9a1724f2503f16011999c2a3ad09550d7799b7e9296a69022828b98f",
+     "run_id": "run:historical-period:f405e222efdd0f4c7f072ef7fae36ac99f32384de764661d9c38b2ff99157a23"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-23-014123",
+     "0001628280-23-003485"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json",
+   "method": "a packet built from the saved governance document by tools/read_c02_composition.py through the route's own selection - every selected block, and a pool of every block using the owner's words for composition facts with every short block within sixteen blocks of one (the rule docs/evidence/issue47_history/c02-older-years/pool_rule.py chose because, with the selection, it holds every fact block the latest-year readers found) - read by an independent reader (a fresh-context subagent of the same model family, not a person) against c02-older-years/reader-brief.md: every selected block judged, and every pool block stating a composition fact listed with the blocks that state the same fact. Accepted only where no selected block is judged outside the meaning, no listed fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2022-12-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     367,
+     661,
+     726
+    ],
+    "counts": {
+     "found_outside_the_selection": 97,
+     "resting_on_adjudication": 3,
+     "selected": 78,
+     "selected_fact": 57,
+     "selected_mixed": 18
+    },
+    "governance_document": "evidence/request_attempts/55/559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c/ny20006599x500_def14a.htm",
+    "published_excerpts": 78,
+    "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2022-12-31.json",
+    "reading_sha256": "sha256:738b114bde0c0591e94ef81497866a6104b01bd11a2b1d8d1b7d82fc3d260694"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. It is not a held-out test: repairs 7 to 45 of the selector and the unified adjudication were written against these same older-year readings, so this is agreement with a reading of the material the rules were fitted on. The pool is a rule too - a fact stated only in a long block that uses none of the pool's words and lies more than sixteen blocks from one is not read - and the readers are agents of one model family whose judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_MARRIOTT_2023",
+   "accepted_value": "sha256:9a9a440dac19cfbfe235ef7daa51156dc1a1b3b5b1cfc2c1ea8004cb0eb47f3a",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+     "result_id": "sha256:7effe488c80552f08fa4441f3a205144f71fd00a817c7e8bf08a9a624779e9d7",
+     "run_id": "run:historical-period:a544bd090cfe82871a3f03ff6a881e37f93eac2f3ac95cec092400777ce5f1f6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-24-015465",
+     "0001628280-24-004372"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json",
+   "method": "a packet built from the saved governance document by tools/read_c02_composition.py through the route's own selection - every selected block, and a pool of every block using the owner's words for composition facts with every short block within sixteen blocks of one (the rule docs/evidence/issue47_history/c02-older-years/pool_rule.py chose because, with the selection, it holds every fact block the latest-year readers found) - read by an independent reader (a fresh-context subagent of the same model family, not a person) against c02-older-years/reader-brief.md: every selected block judged, and every pool block stating a composition fact listed with the blocks that state the same fact. Accepted only where no selected block is judged outside the meaning, no listed fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "adjudicated_blocks": [],
+    "counts": {
+     "found_outside_the_selection": 154,
+     "resting_on_adjudication": 0,
+     "selected": 109,
+     "selected_fact": 93,
+     "selected_mixed": 16
+    },
+    "governance_document": "evidence/request_attempts/a2/a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954/ny20015439x1_def14a.htm",
+    "published_excerpts": 109,
+    "reading": "docs/evidence/issue47_history/c02-older-years/judgements/marriott_international-2023-12-31.json",
+    "reading_sha256": "sha256:90b9d51bcd5a5cde36455a64073ff1977e35042f7610b579cedb4d0892617833"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. It is not a held-out test: repairs 7 to 45 of the selector and the unified adjudication were written against these same older-year readings, so this is agreement with a reading of the material the rules were fitted on. The pool is a rule too - a fact stated only in a long block that uses none of the pool's words and lies more than sixteen blocks from one is not read - and the readers are agents of one model family whose judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C02_MARRIOTT_2024",
    "accepted_value": "sha256:4723943a2a79ad16193aaf5d7ad68c467a2a6e4aefcfea0620105367039d9641",
    "checked_identity": {
@@ -68418,6 +68526,7 @@
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
   "docs/evidence/issue47_history/content-acceptance/c02-composition-read-round-cf166529.json",
   "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-cf166529.json",
+  "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-batch.json",
   "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read-full-frame.json",
@@ -68484,6 +68593,12 @@
    "acceptances_contributed": 21,
    "content_sha256": "sha256:27eb47de01b5bcf6df551b2cf36d89bbcec8a7307cb4a3fc1cfcbecb95d1a3fd",
    "positions_examined": 27,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/c02-older-years-read-round-ed67e401.json": {
+   "acceptances_contributed": 2,
+   "content_sha256": "sha256:836854d216a56c1d4f99814ebf4d09cf38c7bdcbe0ab7c180c735c29d5f400fe",
+   "positions_examined": 2,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/c03-across-proxies-read-batch.json": {

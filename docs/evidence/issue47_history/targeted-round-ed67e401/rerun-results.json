@@ -1,0 +1,57 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "driver_seconds": 892,
+ "position_count": 2,
+ "positions": [
+  {
+   "company_id": "marriott_international",
+   "evidence_count": 78,
+   "metric_id": "C02",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+   "result_id": "sha256:691f6b1b9a1724f2503f16011999c2a3ad09550d7799b7e9296a69022828b98f",
+   "row_hash": "sha256:b4e7c5ac020f0b5d1867348cf3edbbacaa31e15a7212eae51a7b85ae48268290",
+   "run_id": "run:historical-period:f405e222efdd0f4c7f072ef7fae36ac99f32384de764661d9c38b2ff99157a23",
+   "selection_id": "sha256:d6e60387efcf6aef63ad4e613e85b2ab494af78445e1eadd89a1ba02ad904fce",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value_characters": 14531,
+   "value_lines": 78
+  },
+  {
+   "company_id": "marriott_international",
+   "evidence_count": 109,
+   "metric_id": "C02",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "requirement_closure_hash": "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c",
+   "result_id": "sha256:7effe488c80552f08fa4441f3a205144f71fd00a817c7e8bf08a9a624779e9d7",
+   "row_hash": "sha256:188e00714768c033e7aa7a75871605d7c7fcd2a2bbb6b2b9fc2f4c6935082459",
+   "run_id": "run:historical-period:a544bd090cfe82871a3f03ff6a881e37f93eac2f3ac95cec092400777ce5f1f6",
+   "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+   "separate_process_read_back_same_run_and_result": true,
+   "stage": "PUBLIC_ROW",
+   "value_characters": 11467,
+   "value_lines": 109
+  }
+ ],
+ "public_rows": 2,
+ "read_back_problems": [],
+ "record_type": "ISSUE_47_TARGETED_ROUND",
+ "requirement_closure_hashes": [
+  "sha256:ed67e40130d5ade19f1720537cd7467de337b9169ddb33f3596c65e97855f90c"
+ ],
+ "runtime_tree": {
+  "carries": "docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch",
+  "commit": "ca4d11e9a15a723475aa5e5edb6518ad2e6a4304"
+ }
+}

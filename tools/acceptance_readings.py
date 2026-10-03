@@ -93,7 +93,9 @@ C02_LATEST_READINGS = (C02_COMPOSITION, C02_COMPOSITION_ROUND)
 # Older years, read from packets (the selection and a pool around it) by
 # independent readers against c02-older-years/reader-brief.md and compared the
 # same way; one file per closure its positions compare.
-C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read-round-cf166529.json",)
+C02_OLDER_YEARS_READINGS = (EVIDENCE + "c02-older-years-read-round-cf166529.json",
+                            # Two older-year positions recomputed after selector repair 47.
+                            EVIDENCE + "c02-older-years-read-round-ed67e401.json")
 C02_COMPOSITION_READINGS = (*C02_LATEST_READINGS, *C02_OLDER_YEARS_READINGS)
 GOVERNANCE = EVIDENCE + "governance-read.json"
 # C04 for the 50-period batch's years the checkout does not hold, over a root
