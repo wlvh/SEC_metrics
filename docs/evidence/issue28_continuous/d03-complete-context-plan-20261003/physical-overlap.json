@@ -1,0 +1,43 @@
+{
+  "source_raw_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+  "all_native_outer_xml_matches_original": true,
+  "boundary_examples": [
+    {
+      "visible_block": 416,
+      "visible_unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+      "raw_span_sha256": "0def077316343f859602e0ac7909df6d2e1411edbbb3a6eaf95e4bacb7a4c043",
+      "enclosing_native_objects": []
+    },
+    {
+      "visible_block": 438,
+      "visible_unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+      "raw_span_sha256": "1a04fa2015443c479205f5b49d8535865ff9dbfe79a951d9830bf69a06f6d1dd",
+      "enclosing_native_objects": []
+    },
+    {
+      "visible_block": 1201,
+      "visible_unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+      "raw_span_sha256": "d47f5f9f9e99268d04f2b4cc41ce619acc6807312688ea8fd6c780cd8921f6b6",
+      "enclosing_native_objects": [
+        {
+          "unit_id": "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 2
+        }
+      ]
+    },
+    {
+      "visible_block": 1317,
+      "visible_unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+      "raw_span_sha256": "12ac0515cd4c32e06e91561216113ab79bf1136aac6eb173da09e9fdc4e2783f",
+      "enclosing_native_objects": [
+        {
+          "unit_id": "sha256:8518e7a54266404c6d85a17f1a3057ac9cb95add1ff07b3079ae26d7c9f3bcb0",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 5
+        }
+      ]
+    }
+  ],
+  "meaning": "Physical source overlap only. It does not establish event identity, classification, closure, or absence. Company-level relation/conflict handling is still required."
+}

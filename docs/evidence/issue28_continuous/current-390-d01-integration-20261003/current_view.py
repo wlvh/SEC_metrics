@@ -18,6 +18,14 @@ REQUIRED_PROOF_PATHS = frozenset({
     'docs/evidence/issue28_continuous/collab-d01-content-20261002/mechanical-receipts.md',
     'docs/evidence/issue28_continuous/collab-d01-page-boundary-20261002/independent-review-865d822/conclusion.md',
 })
+JPM_DIR = BASE / 'd01-jpm-content-20261003'
+JPM_CONTENT_REVIEW_RESULT = 'sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89'
+JPM_REQUIRED_PROOF_PATHS = frozenset({
+    'docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md',
+    'docs/evidence/issue28_continuous/d01-jpm-content-20261003/mechanical-summary.json',
+    'docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md',
+    'docs/evidence/issue28_continuous/collab-d01-running-header-20261003/cold.log',
+})
 import sys
 sys.path.insert(0, str(ROOT / 'scripts'))
 from vnext.records import validate_record
@@ -96,19 +104,28 @@ def read(path):
     return json.loads(path.read_text())
 
 
-def apply_d01_delta(rows, delta, mechanically_checked):
-    if delta['coordinate_count'] != 390 or len(delta['changed_coordinates']) != 2:
+def apply_d01_delta(rows, delta, mechanically_checked, *, expected_count=2):
+    # The original two-result path keeps its checks. The explicit one-result
+    # successor is only the independently read JPMorgan source, not arbitrary
+    # caller-selected coordinates or an inheritance of old validation credit.
+    if (type(expected_count) is not int or expected_count not in (1, 2)
+            or delta['coordinate_count'] != 390 or len(delta['changed_coordinates']) != expected_count):
         raise ValueError('D01_DELTA_SCOPE_INVALID')
     keys = set()
     checked = {entry['company_id']: entry for entry in mechanically_checked['results']}
-    if (mechanically_checked['status'] != 'PASS_TWO_EXACT_RUN_COPY_MECHANICAL_RECEIPTS'
-            or len(checked) != 2 or len(mechanically_checked['results']) != 2):
+    expected_status = ('PASS_ONE_EXACT_JPM_RUN_COPY_MECHANICAL_RECEIPT' if expected_count == 1
+                       else 'PASS_TWO_EXACT_RUN_COPY_MECHANICAL_RECEIPTS')
+    if (mechanically_checked['status'] != expected_status
+            or len(checked) != expected_count or len(mechanically_checked['results']) != expected_count
+            or (expected_count == 1 and set(checked) != {'jpmorgan_chase'})):
         raise ValueError('D01_CHECKED_SUMMARY_SCOPE_INVALID')
     for item in delta['changed_coordinates']:
         key = (item['company_id'], item['metric_id'])
         if key in keys or key not in rows or key[1] != 'D01':
             raise ValueError('D01_DELTA_COORDINATE_INVALID')
         keys.add(key)
+        if expected_count == 1 and item['result_id'] != JPM_CONTENT_REVIEW_RESULT:
+            raise ValueError('D01_JPM_CONTENT_REVIEW_IDENTITY_CHANGED')
         prior = rows[key]
         if (prior['implementation_identity']['result_id'] != item['prior_result_id']
                 or prior['source_period'] != item['current_row']['source_period']):
@@ -146,7 +163,8 @@ def apply_d01_delta(rows, delta, mechanically_checked):
         rows[key] = current
 
 
-def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked):
+def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked,
+             *, jpm_delta=None, jpm_checked=None):
     rows = {(row['company_id'], row['metric_id']): deepcopy(row) for row in parent['rows']}
     if len(rows) != 390 or parent['coordinate_count'] != 390:
         raise ValueError('CURRENT_INDEX_COORDINATE_SET_INVALID')
@@ -178,6 +196,10 @@ def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked):
             row['source_credit'] = 'SEE_SELECTED_BOUNDED_DELTA_ORIGINAL_SCOPE'
             row['selected_evidence'] = {'delta': delta['record_type'], 'coordinate': ':'.join(key)}
     apply_d01_delta(rows, d01_delta, mechanically_checked)
+    if (jpm_delta is None) != (jpm_checked is None):
+        raise ValueError('D01_JPM_PAIRED_PROOF_REQUIRED')
+    if jpm_delta is not None:
+        apply_d01_delta(rows, jpm_delta, jpm_checked, expected_count=1)
     product_scope_pending = apply_product_scope_limits(rows, parent, defects)
     withheld = set()
     for defect in defects['defects']:
@@ -198,13 +220,15 @@ def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked):
             'rows': list(rows.values()), 'selected_known_defect_coordinate_count': len(withheld),
             'selected_product_scope_pending_count': len(product_scope_pending),
             'selected_nondefect_product_scope_pending_count': len(product_scope_pending - withheld),
-            'selected_saved_scope_D01_restorations': 2,
+            'selected_saved_scope_D01_restorations': 2 + int(jpm_delta is not None),
             'other_coordinates_newly_validated_by_this_delta': False,
             'full_current_head_reexecution': False, 'all390_acceptance': False,
             'production_authorized': False, 'new_business_calls': [0, 0, 0]}
 
 
-def load_current_view():
+def load_current_view(*, include_jpm_reviewed=False):
+    if type(include_jpm_reviewed) is not bool:
+        raise ValueError('D01_JPM_SELECTION_INVALID')
     d01 = read(Path(__file__).with_name('delta.json'))
     if set(d01['proof_file_sha256']) != REQUIRED_PROOF_PATHS:
         raise ValueError('D01_REQUIRED_PROOF_SET_CHANGED')
@@ -224,13 +248,26 @@ def load_current_view():
     limits = defects.get('product_scope_acceptance_limits', {})
     if limits.get('parent_index_sha256') != digest(PARENT):
         raise ValueError('CURRENT_PRODUCT_SCOPE_PARENT_BYTES_CHANGED')
+    jpm, jpm_checked = None, None
+    if include_jpm_reviewed:
+        jpm = read(JPM_DIR / 'delta.json')
+        if (jpm['parent_index_sha256'] != digest(PARENT)
+                or set(jpm['proof_file_sha256']) != JPM_REQUIRED_PROOF_PATHS):
+            raise ValueError('D01_JPM_REQUIRED_PROOF_SET_CHANGED')
+        for relative, expected in jpm['proof_file_sha256'].items():
+            if digest(ROOT / relative) != expected:
+                raise ValueError('D01_JPM_PROOF_BYTES_CHANGED:' + relative)
+        jpm_checked = read(JPM_DIR / 'mechanical-summary.json')
     return assemble(read(PARENT), list(map(read, prior_paths)), d01,
-                    defects, read(CHECKED_PATH))
+                    defects, read(CHECKED_PATH), jpm_delta=jpm,
+                    jpm_checked=jpm_checked)
 
 
 if __name__ == '__main__':
     import sys
-    result = load_current_view()
+    if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and sys.argv[2] != '--include-jpm-reviewed'):
+        raise ValueError('VIEW_ARGUMENTS_INVALID')
+    result = load_current_view(include_jpm_reviewed=len(sys.argv) == 3)
     output = Path(sys.argv[1])
     if not output.is_absolute() or output == ROOT or ROOT in output.parents:
         raise ValueError('VIEW_OUTPUT_MUST_BE_EXTERNAL')
