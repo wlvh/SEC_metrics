@@ -1,0 +1,432 @@
+{
+ "record_type": "ISSUE_47_DEV_DRY_RUN_CHECK",
+ "what_this_is": "development-model answers to the exact request messages, checked by the contracts' own validate_answer and counting and compared with a development reference; not DeepSeek, not LIVE, no call credit",
+ "rows": [
+  {
+   "request": "D02-enphase_energy-2025-12-31",
+   "answer_bytes": 2748,
+   "answer_tokens": 946,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 36,
+   "in_scope": [
+    "b1445",
+    "b1446",
+    "b1958",
+    "b2015"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [],
+   "reference_in": [
+    "b1445",
+    "b1446",
+    "b2015"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-ford_motor_company-2025-12-31",
+   "answer_bytes": 38,
+   "answer_tokens": 13,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 0,
+   "in_scope": [],
+   "cannot_tell": [],
+   "also_in_scope": [],
+   "reference_in": [],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-lumen_technologies-2025-12-31",
+   "answer_bytes": 3485,
+   "answer_tokens": 1126,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 39,
+   "in_scope": [
+    "b1621",
+    "b2102",
+    "b3381",
+    "b3382",
+    "b3383",
+    "b3384"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b1622"
+   ],
+   "reference_in": [
+    "b1621",
+    "b1622",
+    "b3381",
+    "b3382",
+    "b3383",
+    "b3384"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-macys-2026-01-31",
+   "answer_bytes": 2925,
+   "answer_tokens": 954,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 30,
+   "in_scope": [
+    "b1010",
+    "b1011",
+    "b1065",
+    "b820"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b1064",
+    "b1424",
+    "b1429",
+    "b1432",
+    "b1433",
+    "b1434",
+    "b1435",
+    "b1436"
+   ],
+   "reference_in": [
+    "b1010",
+    "b1011",
+    "b1064",
+    "b1065",
+    "b1424",
+    "b1429",
+    "b1432",
+    "b1433",
+    "b1434",
+    "b1435",
+    "b1436",
+    "b820"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-marriott_international-2023-12-31",
+   "answer_bytes": 1754,
+   "answer_tokens": 539,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 17,
+   "in_scope": [
+    "b1082",
+    "b1083",
+    "b1084"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b1081"
+   ],
+   "reference_in": [
+    "b1081",
+    "b1082",
+    "b1083",
+    "b1084"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-marriott_international-2024-12-31",
+   "answer_bytes": 1517,
+   "answer_tokens": 483,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 16,
+   "in_scope": [
+    "b1111",
+    "b1112",
+    "b1113"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b1110"
+   ],
+   "reference_in": [
+    "b1110",
+    "b1111",
+    "b1112",
+    "b1113"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-marriott_international-2025-12-31",
+   "answer_bytes": 1649,
+   "answer_tokens": 442,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 16,
+   "in_scope": [
+    "b1111",
+    "b1112",
+    "b1113",
+    "b1290",
+    "b1321",
+    "b1322"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b1110"
+   ],
+   "reference_in": [
+    "b1110",
+    "b1111",
+    "b1112",
+    "b1113",
+    "b1321",
+    "b1322"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-paramount_skydance_paramount_global-2024-12-31",
+   "answer_bytes": 1902,
+   "answer_tokens": 633,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 21,
+   "in_scope": [
+    "b2010",
+    "b2012",
+    "b2827",
+    "b2830"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b2009",
+    "b2011"
+   ],
+   "reference_in": [
+    "b2010",
+    "b2012",
+    "b2827"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-paramount_skydance_paramount_global-2025-12-31",
+   "answer_bytes": 2523,
+   "answer_tokens": 816,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 26,
+   "in_scope": [
+    "b1900",
+    "b2108",
+    "b2110",
+    "b3199"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [
+    "b2107",
+    "b2109"
+   ],
+   "reference_in": [
+    "b1900",
+    "b2108",
+    "b2110"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-pfizer-2025-12-31",
+   "answer_bytes": 5289,
+   "answer_tokens": 1743,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 65,
+   "in_scope": [
+    "b2301",
+    "b2302",
+    "b2343",
+    "b2349",
+    "b2351",
+    "b2584",
+    "b2596",
+    "b3819",
+    "b3820",
+    "b3994"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [],
+   "reference_in": [
+    "b2301",
+    "b2302",
+    "b2351",
+    "b2596",
+    "b3819",
+    "b3820",
+    "b3994"
+   ],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-salesforce-2026-01-31",
+   "answer_bytes": 1621,
+   "answer_tokens": 590,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 24,
+   "in_scope": [],
+   "cannot_tell": [],
+   "also_in_scope": [],
+   "reference_in": [],
+   "missed": [],
+   "wrongly_taken": []
+  },
+  {
+   "request": "D02-southwest_airlines-2025-12-31",
+   "answer_bytes": 2911,
+   "answer_tokens": 895,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "must_decide": 28,
+   "in_scope": [
+    "b1428",
+    "b1560",
+    "b1579",
+    "b1580",
+    "b1581",
+    "b1584",
+    "b1585"
+   ],
+   "cannot_tell": [],
+   "also_in_scope": [],
+   "reference_in": [
+    "b1428",
+    "b1510",
+    "b1511",
+    "b1579",
+    "b1580",
+    "b1581",
+    "b1584",
+    "b1585",
+    "b2176"
+   ],
+   "missed": [
+    "b1510",
+    "b1511",
+    "b2176"
+   ],
+   "wrongly_taken": []
+  },
+  {
+   "request": "E01-ford_motor_company-2025-12-31",
+   "answer_bytes": 1519,
+   "answer_tokens": 468,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": 0,
+   "withheld_reason": null,
+   "items": 7,
+   "disagreements": [],
+   "reference_value": 0
+  },
+  {
+   "request": "E01-lumen_technologies-2025-12-31",
+   "answer_bytes": 3601,
+   "answer_tokens": 1024,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": 1,
+   "withheld_reason": null,
+   "items": 15,
+   "disagreements": [],
+   "reference_value": 1
+  },
+  {
+   "request": "E01-macys-2026-01-31",
+   "answer_bytes": 1891,
+   "answer_tokens": 529,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": 0,
+   "withheld_reason": null,
+   "items": 6,
+   "disagreements": [],
+   "reference_value": 0
+  },
+  {
+   "request": "E01-marriott_international-2025-12-31",
+   "answer_bytes": 1056,
+   "answer_tokens": 249,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": 0,
+   "withheld_reason": null,
+   "items": 2,
+   "disagreements": [],
+   "reference_value": 0
+  },
+  {
+   "request": "E01-paramount_skydance_paramount_global-2024-12-31",
+   "answer_bytes": 2590,
+   "answer_tokens": 736,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": null,
+   "withheld_reason": "HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT",
+   "items": 8,
+   "disagreements": [],
+   "reference_value": null
+  },
+  {
+   "request": "E01-pfizer-2025-12-31",
+   "answer_bytes": 755,
+   "answer_tokens": 226,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": 1,
+   "withheld_reason": null,
+   "items": 3,
+   "disagreements": [],
+   "reference_value": 1
+  },
+  {
+   "request": "E01-southwest_airlines-2025-12-31",
+   "answer_bytes": 751,
+   "answer_tokens": 208,
+   "max_output_tokens": 4096,
+   "fits_the_output_ceiling": true,
+   "contract_check": "PASSED",
+   "value": 0,
+   "withheld_reason": null,
+   "items": 3,
+   "disagreements": [],
+   "reference_value": 0
+  }
+ ]
+}
