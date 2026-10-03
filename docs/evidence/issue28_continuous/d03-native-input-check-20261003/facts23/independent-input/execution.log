@@ -1,0 +1,37 @@
+Independent once-only development diagnosis
+Started UTC: 2026-10-03T14:41:00+00:00 (approximate; exact initial time was not captured)
+Fixed SHA: 07634fe8b6aefa583eaba37353c9446c815f02a8
+Allowed input: /private/tmp/issue28-d03-complete-context-plan-20261003-checked/2/input.json
+Input SHA256: 68065b8718f77dbb1f650dbebaae9cb6d388ab010f0c2f63e9b8a06c92b5afdc
+Request SHA256: 596ef5aa691c7c65c0c10e9ef24656a8fc3bc350b3db81ead74c05773975a7c7
+Restoration helpers: _xml_values, _restore_rows, _restore_units extracted through AST; no project module import or provider request
+Restoration preserves fact dictionaries, all row attributes, shared dictionaries, continuation attributes and literal XML styles.
+Conservative tool count so far: 6 (3 functions.exec plus 3 nested exec_command)
+Ordinary messages so far: 1 initial commentary; final pending
+Native counts: [212, 219]
+Visible count: 1965
+
+Final tool inventory (every functions.exec contained exactly one exec_command):
+1. HEAD/input files/allowed helper source
+2. Input/request structure and fixed system message
+3. Restore via AST helpers; save full restoration log
+4. Shared dictionaries and initial native rows (output truncated)
+5. Complete compact native unit 2 read view (middle truncated)
+6. Recovered native 475-518 plus first 110 rows of unit 3 (middle truncated)
+7. Recovered native 653-672/611 plus remaining rows of unit 3
+8. All 77 context XML and dictionaries read
+9. Visible chunks 0-1: blocks 0-342
+10. Visible chunks 2-3: blocks 343-412
+11. Visible chunks 4-5: blocks 413-544
+12. Visible chunks 6-7: blocks 545-806
+13. Visible chunks 8-9: blocks 807-1082
+14. Visible chunks 10-11: blocks 1083-1395
+15. Visible chunks 12-13: blocks 1396-1704
+16. Visible chunks 14-15: blocks 1705-1964
+17. Full roundtrip/source byte identity and original continuation log
+18. Once-only raw response write, local reference checks and final report/log write
+Final conservative tool count: 36; ordinary messages including final: 2; questions: 0
+Completed UTC: 2026-10-03T14:57:34.580924+00:00
+Elapsed from first captured clock: 869.894 seconds
+Response SHA256: 70fe1a24627ff171efadbfbc24eca50841a73418d92a65343467d7df69722e12
+No response repair or repeat extraction. All assigned rows read.

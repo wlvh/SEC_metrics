@@ -3893,6 +3893,41 @@
       "verdict": "COMPLETE_LIMITED_NATIVE_INPUT_DIAGNOSIS_UNRESOLVED_NO_COMPANY_CREDIT",
       "message_count": 2,
       "elapsed_seconds": 833.262
+    },
+    {
+      "task_name": "diagnose_d03facts01_edda3b2",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_facts01_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/1",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts01"
+      ],
+      "patch_sha": "edda3b2903090417e00cecda858487b036ca4e74",
+      "spawned_at": "2026-10-03T13:57:48.930788+00:00",
+      "ended_at": "2026-10-03T14:14:05.832279+00:00",
+      "tool_calls": 40,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts01/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_NATIVE_FACTS01_INPUT_DIAGNOSIS_UNRESOLVED_NO_NATIVE_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 909.832279
+    },
+    {
+      "task_name": "diagnose_d03facts23_07634fe",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_marriott_native_facts23_source_input",
+      "scope_paths": [
+        "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/2",
+        "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts23"
+      ],
+      "patch_sha": "07634fe8b6aefa583eaba37353c9446c815f02a8",
+      "spawned_at": "2026-10-03T14:41:49.227462+00:00",
+      "ended_at": "2026-10-03T14:57:34.580924+00:00",
+      "tool_calls": 36,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts23/independent-input/conclusion.md",
+      "verdict": "COMPLETE_LIMITED_NATIVE_FACTS23_INPUT_DIAGNOSIS_UNRESOLVED_NO_NATIVE_CREDIT",
+      "message_count": 2,
+      "elapsed_seconds": 869.894,
+      "elapsed_scope": "From first recorded clock; earlier first command conservatively about16.58min total"
     }
   ],
   "ci_capacity_20260922": {
@@ -12351,5 +12386,104 @@
     "terminal": "success",
     "updated_at": "2026-10-03T13:10:52Z",
     "scope": "Exact prior head; not following commits"
+  },
+  "ci_edda3b29": {
+    "run_id": 37126897053,
+    "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
+    "state": "in_progress",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
+    "observed_updated_at": "2026-10-03T14:18:10Z"
+  },
+  "last_remote_delivery": {
+    "head_sha": "edda3b2903090417e00cecda858487b036ca4e74",
+    "draft_pr": 43,
+    "branch": "task/b06-new-source",
+    "issue_queue_server_exact_updated_at": "2026-10-03T13:41:42Z",
+    "native_goal_status": "active",
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "shared_increment_read_f07d089c": {
+    "peer_read_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
+    "prior_sha": "5a2ebebf5c60d208e6e1131da2c5d0246808974a",
+    "scope": "Peer own run-package counts before claims; no shared source core/register or current source result change. No code imported or peer credit used."
+  },
+  "d03_native_facts01_development_20261003": {
+    "state": "SECOND_NEW_FORMAT_RAW_RESPONSE_AND_EXISTING_MECHANICAL_CHECKER_CASE_PASS_LIMITED",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts01/README.md",
+    "tested_base_sha": "edda3b2903090417e00cecda858487b036ca4e74",
+    "uncommitted_evidence_case": true,
+    "request_sha256": "7d47c99294d05d67ac3ce5b6c5f741357a84e5062302d9e14d025d66b401c32b",
+    "response_sha256": "e20c682f259eb7e30d8f7c0f62c11a14c5d624c1d041aea81a7f4b88fb67de83",
+    "native_facts_read": 428,
+    "new_native_units_read": 2,
+    "visible_context_rows": 1965,
+    "findings": 3,
+    "unresolved": 2,
+    "scope_current_involvement": "UNRESOLVED",
+    "output_reference_tokens": 2016,
+    "processing_sha256": "f342d2bd783fc82f3b1a5e2cb839889e998e82e5fe08d58b3e7062692e44bb7f",
+    "mechanical_controls": 9,
+    "checks_seconds": 0.3,
+    "cold_seconds": 0.146,
+    "new_request_response_indices_available": [
+      1,
+      4
+    ],
+    "new_plan_request_response_indices_missing": [
+      0,
+      2,
+      3,
+      5
+    ],
+    "remaining_native_units_not_model_read": 6,
+    "old_case4_processor_and_packet_unchanged": true,
+    "source_continuation_structure_verified": "f-408 -> f-408-1(owner3) -> f-408-2(owner4); not matter identity",
+    "native_or_target_model_credit": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "d03_native_facts23_development_20261003": {
+    "state": "THIRD_NEW_FORMAT_RAW_RESPONSE_EXISTING_CHECKER_SAVE_AND_COLD_PASS_LIMITED",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/facts23/README.md",
+    "tested_base_sha": "07634fe8b6aefa583eaba37353c9446c815f02a8",
+    "uncommitted_evidence_adapter": true,
+    "native_units_read": 2,
+    "native_facts_read": 431,
+    "visible_context_rows": 1965,
+    "request_sha256": "596ef5aa691c7c65c0c10e9ef24656a8fc3bc350b3db81ead74c05773975a7c7",
+    "response_sha256": "70fe1a24627ff171efadbfbc24eca50841a73418d92a65343467d7df69722e12",
+    "findings": 3,
+    "unresolved": 5,
+    "scope_current_involvement": "UNRESOLVED",
+    "output_reference_tokens": 2103,
+    "processing_sha256": "150b026284f38525a54a98e77faa2215135992389b781abacaa1b572ca257934",
+    "checks_seconds": 0.172,
+    "cold_seconds": 0.133,
+    "new_request_response_indices_available": [
+      1,
+      2,
+      4
+    ],
+    "new_plan_request_response_indices_missing": [
+      0,
+      3,
+      5
+    ],
+    "remaining_native_units_not_model_read": 4,
+    "all_source_company_acceptance": false,
+    "case4_and_facts01_processor_bytes_unchanged": true,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
