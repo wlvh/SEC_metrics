@@ -22,7 +22,8 @@
   "file": "docs/evidence/issue47_history/c02-older-years/judgements/pfizer-2022-12-31.json",
   "reader": "independent subagent reading, 2026-10-01 (one packet)",
   "read_as": "independent subagent reading: a fresh agent given c02-older-years/reader-brief.md and the packet, not the selector's rules or any earlier reading",
-  "matched_by": "block index and the block text hash the reading recorded"
+  "matched_by": "block index and the block text hash the reading recorded",
+  "adjudication": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json"
  },
  "disputed_blocks": [
   413,
@@ -56,7 +57,8 @@
       "verdict": "MIXED",
       "why": "Independent Directors decided to keep the Chairman and CEO roles combined in Bourla; the rest is rationale",
       "listed_as": "pool_facts"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 724,
@@ -70,7 +72,8 @@
       "verdict": "MIXED",
       "why": "Independent Directors re-elected Narayen as Lead Independent Director; the rest is his tenure and qualifications",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 3140,
@@ -84,7 +87,8 @@
       "verdict": "MIXED",
       "why": "Narayen Lead Independent Director since 2018, re-elected by the independent Directors; the rest is tenure and qualifications",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   },
@@ -114,7 +118,8 @@
      "raw_end_byte": 2137825,
      "raw_span_sha256": "df02e1ec6980de037cc2482085bfeca38e48bc7b8eea6a6dbff6cece9c246f1f",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3136,
@@ -128,7 +133,8 @@
       "verdict": "FACT",
       "why": "Independent Directors kept Bourla as Chairman and CEO and Narayen as Lead Independent Director",
       "listed_as": "pool_facts"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 3137,
@@ -138,7 +144,8 @@
      "raw_end_byte": 2141123,
      "raw_span_sha256": "2f09c87f06c656a5ad8450c96fceb4a366bfd278808362be9ac0f8679cb3d433",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 3138,
@@ -148,7 +155,8 @@
      "raw_end_byte": 2141644,
      "raw_span_sha256": "1471ce80ed1968ec0c1e56b39ec2c1b699cb6acfefad74da5fa16718e3ae7653",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     }
    ]
   },
@@ -177,7 +185,8 @@
       "verdict": "FACT",
       "why": "Audit Committee page title",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 820,
@@ -191,7 +200,8 @@
       "verdict": "FACT",
       "why": "All Audit members independent and financially literate",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 821,
@@ -205,7 +215,8 @@
       "verdict": "FACT",
       "why": "All Audit members are audit committee financial experts",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   },
@@ -233,7 +244,8 @@
       "verdict": "FACT",
       "why": "Compensation Committee page title",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 838,
@@ -247,7 +259,8 @@
       "verdict": "FACT",
       "why": "All Compensation members are Rule 16b-3 non-employee directors (status determination)",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   },
@@ -277,6 +290,10 @@
       "verdict": "NOT",
       "why": "Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact",
       "listed_as": "selected"
+     },
+     "unified_adjudication": {
+      "rule": "MEMBERSHIP_CRITERIA_DETERMINATION",
+      "decision": "FACT"
      }
     },
     {
@@ -287,7 +304,8 @@
      "raw_end_byte": 289815,
      "raw_span_sha256": "91717f8f7bc5e6be3c71fa1e70c1e18d88db6340c6f4d38571173409eeb1d300",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     }
    ]
   },
@@ -312,7 +330,8 @@
      "raw_end_byte": 577611,
      "raw_span_sha256": "571df7549a955a7234d74632c0949bb7ef8ae89ffd71de7bc2d0348e861b22f3",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 895,
@@ -322,7 +341,8 @@
      "raw_end_byte": 577981,
      "raw_span_sha256": "fb35e9457bc0302f2809a57e3774e48e099c40b475516d76078e0a2874695709",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 897,
@@ -336,6 +356,10 @@
       "verdict": "NOT",
       "why": "G&S report on assessment and evaluation process, overboarding compliance, retirement-age policy and director pay review; no composition outcome",
       "listed_as": "selected"
+     },
+     "unified_adjudication": {
+      "rule": "MEMBERSHIP_CRITERIA_DETERMINATION",
+      "decision": "FACT"
      }
     }
    ]
@@ -359,7 +383,8 @@
       "verdict": "MIXED",
       "why": "All twelve Board members stand for re-election (size 12); the rest is the voting standard and substitute-nominee procedure",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 356,
@@ -369,7 +394,8 @@
      "raw_end_byte": 256304,
      "raw_span_sha256": "8a3d15d20557e0baa87ae67d813a893fc433c697e427d14f0bc4848a21bff569",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 357,
@@ -379,7 +405,8 @@
      "raw_end_byte": 256502,
      "raw_span_sha256": "22b61594d1597d1756cf807bf87a10b28f06fa12a905b094fd3f8c871625bc39",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 358,
@@ -389,7 +416,8 @@
      "raw_end_byte": 256970,
      "raw_span_sha256": "d5e684281530da845c0f5bc4b1ad86833159e8c80c26bbae954d66bf8216e4c1",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 359,
@@ -399,7 +427,8 @@
      "raw_end_byte": 257474,
      "raw_span_sha256": "2043762268601f9d4e4148e130a948d8295e12f4a59ae2e5f7aa595a3a0c76ad",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 360,
@@ -409,7 +438,8 @@
      "raw_end_byte": 258144,
      "raw_span_sha256": "1d1b0ab0dad46e73322c3ee42833a620ebf57ce68d34774cb65b5fc1eab033c3",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 361,
@@ -419,7 +449,8 @@
      "raw_end_byte": 258558,
      "raw_span_sha256": "43520d394a43876c76e0eb399c2ca46009ff37e56d0ba24b57b859893c9c45f7",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 362,
@@ -429,7 +460,8 @@
      "raw_end_byte": 259119,
      "raw_span_sha256": "ee8028066e95e128c55cf3cf63bb5acc38328cbe7b911a8f2d4f523d0959b699",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 363,
@@ -439,7 +471,8 @@
      "raw_end_byte": 259587,
      "raw_span_sha256": "4d233f4e88b4abd0e07a03978085c25474759591f2613cbf5d18c3dd9705850b",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 364,
@@ -453,6 +486,10 @@
       "verdict": "NOT",
       "why": "Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact",
       "listed_as": "selected"
+     },
+     "unified_adjudication": {
+      "rule": "MEMBERSHIP_CRITERIA_DETERMINATION",
+      "decision": "FACT"
      }
     }
    ]
@@ -470,7 +507,8 @@
      "raw_end_byte": 289416,
      "raw_span_sha256": "b38029159fec4074cddce1ff968bde85fa69ff1e6e1c7e686c27f3244b935c4d",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 413,
@@ -480,7 +518,8 @@
      "raw_end_byte": 289815,
      "raw_span_sha256": "91717f8f7bc5e6be3c71fa1e70c1e18d88db6340c6f4d38571173409eeb1d300",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 414,
@@ -494,7 +533,8 @@
       "verdict": "FACT",
       "why": "Nominee-table header naming the Audit and Compensation committee columns",
       "listed_as": "pool_facts"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   },
@@ -511,7 +551,8 @@
      "raw_end_byte": 2121375,
      "raw_span_sha256": "6e21685694c3c8bb9169157f604469301d766ba3def278db1d0036af1c168701",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3096,
@@ -521,7 +562,8 @@
      "raw_end_byte": 2121775,
      "raw_span_sha256": "7fe6074b8643017ecc3e7a0e7ed4a19dd34f71c0ad105ee08ab3b755bade3fef",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 3097,
@@ -531,7 +573,8 @@
      "raw_end_byte": 2121991,
      "raw_span_sha256": "59ec236231838cb7a7d437dfcd4560c18d24d8d0dc2795e047eed52ca210e2a5",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3098,
@@ -541,7 +584,8 @@
      "raw_end_byte": 2122470,
      "raw_span_sha256": "dbd9f14a15029819119888937c757fcec42ec68d8ec497ebf4a82c9014edd83a",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3099,
@@ -551,7 +595,8 @@
      "raw_end_byte": 2123050,
      "raw_span_sha256": "7eee16f6bd3ef0e4de350a69a021909d66352118084d8e1949b3bed7f5bbbdc8",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     }
    ]
   },
@@ -568,7 +613,8 @@
      "raw_end_byte": 2129483,
      "raw_span_sha256": "06acaf2f640597bee58242d8a4cc2d6015fe5dfcef184283e81e499f7c98ade5",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3117,
@@ -578,7 +624,8 @@
      "raw_end_byte": 2129982,
      "raw_span_sha256": "41dbd78d9f28d984cc1ba08e4dc19a641e222f28f791e83c8f017693cab82864",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     }
    ]
   },
@@ -595,7 +642,8 @@
      "raw_end_byte": 2134981,
      "raw_span_sha256": "92eb65dbce5878cee89025e9c7221fd1b6d98fb39bbdb18ee2578a68f8af2cad",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 3128,
@@ -605,7 +653,8 @@
      "raw_end_byte": 2135867,
      "raw_span_sha256": "a25f303c337db8fd86080bde4d5b2308e98f8cc50288211e1825235626f0b1b0",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3129,
@@ -615,7 +664,8 @@
      "raw_end_byte": 2136928,
      "raw_span_sha256": "b2ddffc0f080384eade5482470884bcdce57b9527ecb35e4d24bd463e2c1fc69",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3130,
@@ -625,7 +675,8 @@
      "raw_end_byte": 2137152,
      "raw_span_sha256": "fd89ace4734987faa43e460456018668d7492adfba66635c107697f8a2f82121",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3131,
@@ -635,7 +686,8 @@
      "raw_end_byte": 2137825,
      "raw_span_sha256": "df02e1ec6980de037cc2482085bfeca38e48bc7b8eea6a6dbff6cece9c246f1f",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3132,
@@ -645,7 +697,8 @@
      "raw_end_byte": 2138657,
      "raw_span_sha256": "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 3133,
@@ -655,7 +708,8 @@
      "raw_end_byte": 2139081,
      "raw_span_sha256": "63cc03fe659ee2d7c164358379366de487d9c0cdf5eae0498ac941d05abf1bf4",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3134,
@@ -665,7 +719,8 @@
      "raw_end_byte": 2139713,
      "raw_span_sha256": "cfedb774dc851b90002010ccfc4ed70dc0ffce029cbe5d967542c0384377f5a7",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3135,
@@ -675,7 +730,8 @@
      "raw_end_byte": 2140104,
      "raw_span_sha256": "7d2fc1c81568d714e957631341231f7fb85e7ee5f270b8db1d40067cbd4c247f",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3136,
@@ -689,7 +745,8 @@
       "verdict": "FACT",
       "why": "Independent Directors kept Bourla as Chairman and CEO and Narayen as Lead Independent Director",
       "listed_as": "pool_facts"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 3137,
@@ -699,7 +756,8 @@
      "raw_end_byte": 2141123,
      "raw_span_sha256": "2f09c87f06c656a5ad8450c96fceb4a366bfd278808362be9ac0f8679cb3d433",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "NOT_IN_THE_READING_PACKET"
+     "older_year_reading": "NOT_IN_THE_READING_PACKET",
+     "unified_adjudication": null
     },
     {
      "block": 3138,
@@ -709,7 +767,8 @@
      "raw_end_byte": 2141644,
      "raw_span_sha256": "1471ce80ed1968ec0c1e56b39ec2c1b699cb6acfefad74da5fa16718e3ae7653",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3139,
@@ -719,7 +778,8 @@
      "raw_end_byte": 2142786,
      "raw_span_sha256": "aa9f6e9a83639cabe02f957b16aedf933e85c9217e142460b30bda434987e34c",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 3140,
@@ -733,7 +793,8 @@
       "verdict": "MIXED",
       "why": "Narayen Lead Independent Director since 2018, re-elected by the independent Directors; the rest is tenure and qualifications",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   },
@@ -750,7 +811,8 @@
      "raw_end_byte": 478477,
      "raw_span_sha256": "22cf40c5b5f17c77dce704892fdb5930791b6b62eab54e7f4f9364a7aafd1bbd",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 721,
@@ -760,7 +822,8 @@
      "raw_end_byte": 479754,
      "raw_span_sha256": "8042aa97e0fdb8d27da19603f70853a361c6f456aef1df39702cb4dac0584566",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 722,
@@ -770,7 +833,8 @@
      "raw_end_byte": 480316,
      "raw_span_sha256": "40f3e5898b32452e5a8e98e775bc805aa8fe52eb7ce37c8d55216c2ad64b1bd1",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 723,
@@ -784,7 +848,8 @@
       "verdict": "MIXED",
       "why": "Independent Directors decided to keep the Chairman and CEO roles combined in Bourla; the rest is rationale",
       "listed_as": "pool_facts"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 724,
@@ -798,7 +863,8 @@
       "verdict": "MIXED",
       "why": "Independent Directors re-elected Narayen as Lead Independent Director; the rest is his tenure and qualifications",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   },
@@ -815,7 +881,8 @@
      "raw_end_byte": 577611,
      "raw_span_sha256": "571df7549a955a7234d74632c0949bb7ef8ae89ffd71de7bc2d0348e861b22f3",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 895,
@@ -825,7 +892,8 @@
      "raw_end_byte": 577981,
      "raw_span_sha256": "fb35e9457bc0302f2809a57e3774e48e099c40b475516d76078e0a2874695709",
      "taken_by_the_route_selector": false,
-     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT"
+     "older_year_reading": "IN_THE_PACKET_NOT_LISTED_AS_A_FACT",
+     "unified_adjudication": null
     },
     {
      "block": 896,
@@ -839,7 +907,8 @@
       "verdict": "FACT",
       "why": "Bourla stays Chairman and CEO and Narayen Lead Independent Director (leadership determination)",
       "listed_as": "pool_facts"
-     }
+     },
+     "unified_adjudication": null
     },
     {
      "block": 897,
@@ -853,6 +922,10 @@
       "verdict": "NOT",
       "why": "G&S report on assessment and evaluation process, overboarding compliance, retirement-age policy and director pay review; no composition outcome",
       "listed_as": "selected"
+     },
+     "unified_adjudication": {
+      "rule": "MEMBERSHIP_CRITERIA_DETERMINATION",
+      "decision": "FACT"
      }
     },
     {
@@ -867,7 +940,8 @@
       "verdict": "MIXED",
       "why": "No new Directors elected during 2022; the rest is succession-planning process",
       "listed_as": "selected"
-     }
+     },
+     "unified_adjudication": null
     }
    ]
   }
