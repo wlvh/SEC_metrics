@@ -12543,9 +12543,11 @@
   "ci_2a711128": {
     "run_id": 37132088260,
     "head_sha": "2a711128de8fc301054ff4cfac5f7dea6aeba81e",
-    "state": "queued",
-    "terminal": null,
-    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA"
+    "state": "completed",
+    "terminal": "success",
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE_EXACT_FULL_SHA",
+    "updated_at": "2026-10-03T16:10:00Z",
+    "scope": "Exact predecessor only"
   },
   "shared_increment_read_68025386": {
     "peer_read_sha": "68025386",
@@ -12660,5 +12662,19 @@
       0
     ],
     "next": "Minimal native pending/company evidence integration plus a clear positive source example; necessary code review. Exact real D03 purpose/resource authorization still not granted."
+  },
+  "d03_complete_development_material_retention": {
+    "state": "EXACT_BYTES_COPIED_AFTER_OBSERVED_TEMP_SOURCE_LOSS",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-input-check-20261003/retention-record.json",
+    "persistent_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004",
+    "files": 38,
+    "bytes": 13213623,
+    "new_ledger_created": false,
+    "source_or_response_identity_changed": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
