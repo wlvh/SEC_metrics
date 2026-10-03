@@ -121,6 +121,42 @@ class EachFilingSpecificStepTest(unittest.TestCase):
                              for shape in control_shapes))
 
 
+class JPMorgansLayoutTest(unittest.TestCase):
+    """JPMorgan sets its item titles by size, prints part labels as running
+    headers, and lays its cover out as a table: three things the reader does
+    because this filing needed them, run on the filing."""
+
+    FULL_FRAME = "docs/evidence/issue47_history/content-acceptance/d01-full-frame-read.json"
+
+    def _row(self, label):
+        return json.loads((ROOT / self.FULL_FRAME).read_text(encoding="utf-8"))["per_position"][label]
+
+    def _read(self, label):
+        row = self._row(label)
+        return reader.headings_and_other_marks(
+            raw_bytes=_saved_bytes(row["document"]),
+            registrant_names=row["registrant_names_tagged_in_the_filing"])
+
+    def test_an_item_title_set_by_size_alone_starts_the_item(self):
+        headings, _, _ = self._read("jpmorgan-2022")
+        self.assertEqual("Summary", headings[0])
+        self.assertGreater(len(headings), 50)
+
+    def test_a_running_part_label_is_page_furniture(self):
+        headings, _, _ = self._read("jpmorgan-2025")
+        self.assertNotIn("Part I", headings)
+        self.assertNotIn("Parts I and II", headings)
+        self.assertEqual(["Parts I and II"], self._row("jpmorgan-2025")["published_not_read"])
+
+    def test_a_cover_set_as_a_table_is_read_from_its_tagged_date(self):
+        raw = _saved_bytes(self._row("jpmorgan-2025")["document"]).decode("utf-8", "replace")
+        self.assertEqual(["December 31 , 2025"],
+                         reader._tagged_texts(raw, "dei:DocumentPeriodEndDate"))
+        row = self._row("jpmorgan-2025")
+        self.assertEqual(("2025-12-31", "TAGGED_COVER_DATE"),
+                         (row["fiscal_year_end_on_the_cover"], row["cover_period_read_from"]))
+
+
 class AFlaggedLineIsReadOnlyThroughItsJudgementTest(unittest.TestCase):
     """The reading offers both readings of a flagged line and applies neither.
 

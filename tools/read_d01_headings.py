@@ -51,8 +51,20 @@ from vnext.historical_run_receipts import collect_run_receipts, index_receipts  
 BLOCK_TAGS = {"div", "p", "tr", "li", "table", "h1", "h2", "h3", "h4", "h5", "h6"}
 VOID_TAGS = {"br", "img", "hr", "meta", "link", "input", "col", "wbr"}
 ITEM_1A = re.compile(r"^\s*item\s*1a\b", re.I)
+# The item's title alone in a block of its own. JPMorgan sets its item titles in
+# a larger size, not in bold or underline, so a heading-marked start alone does
+# not find its Item 1A; a block holding nothing but the title does. A contents
+# row that repeats the title carries page numbers and is not this, and the
+# longest-span rule below still keeps a contents row from being taken for the
+# item.
+ITEM_1A_TITLE = re.compile(r"\s*item\s*1a\s*[.:]?\s*risk\s+factors\s*\.?\s*", re.I)
 NEXT_ITEM = re.compile(r"^\s*item\s*(?:1b|1c|2)\b", re.I)
-FURNITURE = re.compile(r"^(?:table of contents|\d+|[ivx]+-\d+|.*form 10-k.*)$", re.I)
+# Page furniture. A block holding only a part label is JPMorgan's running page
+# header: it prints "Part I" at the top of each right-hand page of Item 1A, and
+# "Parts I and II" at the top of the page where Part I ends, which the item's
+# end heading follows; inside Item 1A a part label can be nothing else.
+FURNITURE = re.compile(r"^(?:table of contents|\d+|[ivx]+-\d+|.*form 10-k.*"
+                       r"|parts?\s+[ivx]+(?:\s*(?:,|and|&)\s*[ivx]+)*)$", re.I)
 WEIGHT = re.compile(r"font-weight\s*:\s*(bold|bolder|\d+)", re.I)
 
 
@@ -268,7 +280,8 @@ def read_item_1a(*, raw_bytes):
     blocks = parser.blocks
     starts = [index for index, runs in enumerate(blocks)
               if ITEM_1A.match(_text(runs)) and not any(r[4] for r in runs)
-              and _marked_prefix(runs, marks=("bold", "underline"))]
+              and (_marked_prefix(runs, marks=("bold", "underline"))
+                   or ITEM_1A_TITLE.fullmatch(_text(runs)))]
     if not starts:
         raise SystemExit("ITEM_1A_HEADING_NOT_FOUND")
     spans = []
@@ -346,6 +359,27 @@ def headings_and_other_marks(*, raw_bytes, registrant_names=()):
     return headings, shapes, others
 
 
+def _tagged_texts(document, name):
+    """Each printed text of the inline facts named ``name``, nested tags removed.
+
+    A fact's printed text can hold other facts: JPMorgan tags the cover date as
+    dei:DocumentPeriodEndDate around a dei:CurrentFiscalYearEndDate holding
+    "December 31", so the text runs to the matching close tag, not the first.
+    """
+    texts = []
+    for start in re.finditer(r'<ix:nonNumeric\b[^>]*\bname="' + re.escape(name) + r'"[^>]*>',
+                             document):
+        depth, position = 1, start.end()
+        for tag in re.finditer(r"<(/?)ix:nonNumeric\b[^>]*>", document[position:]):
+            depth += -1 if tag.group(1) else 1
+            if depth == 0:
+                inner = document[position:position + tag.start()]
+                texts.append(re.sub(r"\s+", " ", re.sub(r"<[^>]+>|&#160;|&nbsp;", " ",
+                                                         inner)).strip())
+                break
+    return texts
+
+
 def read_position(*, index, closure, company_id, period_end, judgements, source_root=REPO):
     """One position: select the result, read its filing, compare both ways.
 
@@ -384,6 +418,18 @@ def read_position(*, index, closure, company_id, period_end, judgements, source_
                                       raw.decode("utf-8", "replace")))
     cover = re.search(r"for (?:the )?fiscal year ended ([A-Za-z]+) (\d{1,2}) ?, ?(\d{4})",
                       flat, re.I)
+    cover_from = "COVER_PHRASE"
+    if cover is None:
+        # JPMorgan sets its cover as a table whose columns interleave in the
+        # flattened text ("For the fiscal year ended Commission file December 31
+        # , 2025 number 1-5805"), so the phrase is not contiguous. The cover's
+        # date is then read where the filing tags it on the cover,
+        # dei:DocumentPeriodEndDate, as printed; the row records which was read.
+        tagged = sorted(set(_tagged_texts(raw.decode("utf-8", "replace"),
+                                          "dei:DocumentPeriodEndDate")))
+        if len(tagged) == 1:
+            cover = re.fullmatch(r"([A-Za-z]+) (\d{1,2}) ?, ?(\d{4})", tagged[0])
+            cover_from = "TAGGED_COVER_DATE"
     cover_end = None
     if cover:
         import datetime
@@ -413,6 +459,7 @@ def read_position(*, index, closure, company_id, period_end, judgements, source_
         "reading": "D01_HEADINGS_READ_FROM_THE_FILING_BYTES", "company_id": company_id,
         "period_end": period_end, "accession": accession, "registrant_cik": cik,
         "document": storage, "fiscal_year_end_on_the_cover": cover_end,
+        "cover_period_read_from": cover_from if cover_end else None,
         "registrant_names_tagged_in_the_filing": registrant_names,
         "headings_read": distinct,
         "repeated_heading_occurrences_grouped": len(lines) - len(distinct),

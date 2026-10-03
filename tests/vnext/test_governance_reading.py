@@ -117,10 +117,25 @@ class TheCommittedReadingRederivesTest(unittest.TestCase):
             reader.window_items(events={"one.json": rows, "two.json": other}, label="x")
 
     def test_a_restored_root_reading_rederives_from_the_bytes_it_recorded(self):
-        """C04 over the export: this year's 10-K and last year's instance, by path."""
-        from tools.acceptance_readings import GOVERNANCE_FULL_FRAME, saved_bytes
-        body = json.loads((ROOT / GOVERNANCE_FULL_FRAME).read_text(encoding="utf-8"))
-        self.assertEqual(["C04"], body["metrics_read"])
+        """C04 over the export: this year's 10-K and last year's instance, by path.
+
+        Every restored-root reading, each with the metrics it says it read; C03
+        is read in one of them, from the checkout's proxy the result names.
+        """
+        from tools.acceptance_readings import GOVERNANCE_RESTORED_ROOT_READINGS
+        read_from = 0
+        metrics_read = {}
+        for path in GOVERNANCE_RESTORED_ROOT_READINGS:
+            body = json.loads((ROOT / path).read_text(encoding="utf-8"))
+            metrics_read[path] = tuple(body["metrics_read"])
+            read_from += self._rederive(body)
+        self.assertEqual({("C04",), ("C03", "C04")}, set(metrics_read.values()))
+        # Most previous years were saved only by the acquisition.
+        self.assertGreater(read_from, 0)
+
+    def _rederive(self, body):
+        from tools.acceptance_readings import saved_bytes
+        metrics = tuple(body["metrics_read"])
         read_from = 0
         for label, row in body["per_position"].items():
             read_by = row["C04"]["eight_k_window_read_by"]
@@ -142,14 +157,28 @@ class TheCommittedReadingRederivesTest(unittest.TestCase):
                 cik=row["cik"], source_document=row["target_document"],
                 selection={"prior_filing": row["prior_filing"]},
                 published={"C03": row["C03"]["published"], "C04": row["C04"]["published"]},
-                event_items=items, metrics=("C04",), read_text=text, auditor_names=names)
+                event_items=items, metrics=metrics, read_text=text, auditor_names=names)
+            if "C03" in metrics:
+                bound = row["C03"].get("checked_identity", {}).get("filings", [])
+                reader.limit_c03_to_the_proxies_the_result_names(
+                    row=entry["C03"], result_filings=set(bound))
             with self.subTest(label):
                 for metric in ("C03", "C04"):
                     self.assertEqual({k: v for k, v in row[metric].items()
                                       if k not in ("checked_identity", "eight_k_window_read_by")},
                                      entry[metric])
-        # Most previous years were saved only by the acquisition.
-        self.assertGreater(read_from, 0)
+        return read_from
+
+    def test_c03_over_a_restored_root_stands_only_on_the_proxies_the_result_names(self):
+        """A later proxy reporting an older year is not this reading's to give."""
+        from tools.acceptance_readings import GOVERNANCE_JPMORGAN_2025
+        row = json.loads((ROOT / GOVERNANCE_JPMORGAN_2025).read_text(encoding="utf-8"))[
+            "per_position"]["jpmorgan-2025"]["C03"]
+        self.assertEqual(("MATCH", []), (row["verdict"], row["proxies_the_result_does_not_name"]))
+        limited = reader.limit_c03_to_the_proxies_the_result_names(
+            row={k: v for k, v in row.items() if k != "checked_identity"}, result_filings=set())
+        self.assertEqual((None, "NOT_READ", "A_PROXY_THE_RESULT_DOES_NOT_NAME_REPORTS_THE_PERIOD"),
+                         (limited["read"], limited["verdict"], limited["why_not_read"]))
 
     def test_the_ledger_s_latest_copy_must_have_its_recorded_digest(self):
         import csv

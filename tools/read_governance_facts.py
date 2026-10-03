@@ -35,6 +35,12 @@ accession's directory, which must have succeeded and whose saved bytes must
 have the digest the ledger recorded. The path read is recorded, so the test
 reads the same bytes back out of the export. C03 is not read there: a year's
 CEO pay across every proxy that reports it is tools/read_c03_across_proxies.py.
+The one exception is a period the checkout cannot select whose only reporting
+proxy the checkout holds - the latest year of a registrant whose saved history
+blocks the checkout cannot read (JPMorgan): with
+--c03-from-the-proxies-the-result-names, C03 is read from the checkout's
+proxies and keeps a verdict only where every proxy reporting the period is a
+filing the result names.
 """
 import argparse
 import collections
@@ -317,7 +323,8 @@ def read_case(*, company_id, label, period, cik, source_document, selection,
         root, rows: The data root read and, for a restored root, its request
             ledger rows, through which a filing only the acquisition saved is
             read.
-        metrics: What is read; a restored-root reading reads C04 only.
+        metrics: What is read; a restored-root reading reads C04 only, or C03 as
+            well where its proxies are the ones the result names.
         read_text, auditor_names: How the test reads back the bytes a reading
             recorded; by default, off ``root``.
     """
@@ -434,6 +441,28 @@ def _read_c04(*, entry, source_document, selection, published, event_items, cik,
                                 else "MATCH" if value == Decimal(c04) else "DIFFERS")}
 
 
+def limit_c03_to_the_proxies_the_result_names(*, row, result_filings):
+    """Over a restored root, C03 stands only on proxies the result itself names.
+
+    The proxies read here are the checkout's, which are the latest year's. For
+    an older year they are later reports of it, and a year's value is its first
+    report (the owner's C03 decision), so a later proxy's number is not this
+    reading's to give; tools/read_c03_across_proxies.py reads a year across
+    every proxy that reports it. For the latest year the only proxy reporting
+    it is the one the result names, and the reading stands: the route's own
+    filing read by this code, the standard the latest years' C03 meet.
+    """
+    from acceptance_readings import accession_of_document
+    others = [hit["proxy"] for hit in row.get("proxies_reporting_the_target_period", ())
+              if accession_of_document(repo_root=REPO, document=hit["proxy"])[0]
+              not in result_filings]
+    row["proxies_the_result_does_not_name"] = others
+    if others and row["verdict"] != "NO_PUBLISHED_VALUE":
+        row.update({"read": None, "verdict": "NOT_READ",
+                    "why_not_read": "A_PROXY_THE_RESULT_DOES_NOT_NAME_REPORTS_THE_PERIOD"})
+    return row
+
+
 def window_items(*, events, label):
     """The 8-K item codes of this position's window, and the reading they are from.
 
@@ -494,8 +523,15 @@ def main():
     parser.add_argument("--output", default=OUT)
     parser.add_argument("--source-root", type=Path, default=None,
                         help="a data root holding filings the checkout does not, such as "
-                             "one restored from the acquisition's export (C04 only)")
+                             "one restored from the acquisition's export (C04, and C03 "
+                             "with the flag below)")
+    parser.add_argument("--c03-from-the-proxies-the-result-names", action="store_true",
+                        help="with --source-root, read C03 too, from the checkout's proxies, and "
+                             "give it a verdict only where every proxy reporting the period is a "
+                             "filing the result names (a period the checkout cannot select)")
     arguments = parser.parse_args()
+    if arguments.c03_from_the_proxies_the_result_names and arguments.source_root is None:
+        raise SystemExit("THE_C03_FLAG_IS_FOR_A_RESTORED_ROOT_READING")
     if (arguments.case or arguments.source_root is not None) and arguments.output == OUT:
         raise SystemExit("A_CASE_OR_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
     source = REPO if arguments.source_root is None else arguments.source_root.resolve()
@@ -505,7 +541,7 @@ def main():
         import csv
         with (source / "evidence/requests_log.csv").open(encoding="utf-8", newline="") as opened:
             rows = list(csv.DictReader(opened))
-        metrics = ("C04",)
+        metrics = ("C03", "C04") if arguments.c03_from_the_proxies_the_result_names else ("C04",)
     output = REPO / arguments.output
     receipts = []
     for root in arguments.runs_root:
@@ -524,18 +560,22 @@ def main():
         selection, period, cik, document = _case_input(company_id=company_id,
                                                        report_end=report_end,
                                                        source_root=source)
-        published = {}
+        published, result_filings = {}, {}
         for metric in ("C03", "C04"):
             result = select_receipt(found=index.get((company_id, metric, report_end), []),
                                     closure=arguments.closure)["result"]
             published[metric] = (None if result is None or result.get("value") is None
                                   else str(result["value"]))
+            result_filings[metric] = set((result or {}).get("filings") or ())
         window_from, event_items = window_items(events=events, label=label)
         entry = read_case(company_id=company_id, label=label, period=period, cik=cik,
                           source_document=document, selection=selection,
                           published=published, event_items=event_items,
                           root=source, rows=rows, metrics=metrics)
         entry["C04"]["eight_k_window_read_by"] = window_from
+        if arguments.source_root is not None and "C03" in metrics:
+            limit_c03_to_the_proxies_the_result_names(row=entry["C03"],
+                                                      result_filings=result_filings["C03"])
         for metric in metrics:
             row = entry[metric]
             if row["published"] is None:

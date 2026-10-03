@@ -99,7 +99,16 @@ GOVERNANCE = EVIDENCE + "governance-read.json"
 # C04 for the 50-period batch's years the checkout does not hold, over a root
 # restored from the export (tools/read_governance_facts.py --source-root).
 GOVERNANCE_FULL_FRAME = EVIDENCE + "governance-read-full-frame.json"
-GOVERNANCE_READINGS = (GOVERNANCE, GOVERNANCE_FULL_FRAME)
+# Paramount's predecessor FY2024 C04, which the full-frame reading left unread:
+# its 8-K window was read by event-count-read-paramount-2024.json, not by the
+# event readings that reading was given.
+GOVERNANCE_PARAMOUNT_2024 = EVIDENCE + "governance-read-paramount-2024.json"
+# JPMorgan's FY2025, whose period only the restored root can select: C03 from
+# the checkout's proxy the result names, and C04.
+GOVERNANCE_JPMORGAN_2025 = EVIDENCE + "governance-read-jpmorgan-2025.json"
+GOVERNANCE_RESTORED_ROOT_READINGS = (GOVERNANCE_FULL_FRAME, GOVERNANCE_PARAMOUNT_2024,
+                                     GOVERNANCE_JPMORGAN_2025)
+GOVERNANCE_READINGS = (GOVERNANCE, *GOVERNANCE_RESTORED_ROOT_READINGS)
 # An older year's C03, read from every saved proxy that tags it (a year is
 # reported again by each later proxy) by tools/read_c03_across_proxies.py; one
 # file per closure its positions compare.
@@ -147,9 +156,12 @@ HEADINGS_SOUTHWEST_PAGE_SPLIT = EVIDENCE + "d01-southwest-page-split-read.json"
 # The batch's latest-year results, read again: D01's Spec moved from v1 to v2 (the
 # item bound only), so the results carry another identity than the ones read before.
 HEADINGS_LATEST_YEARS_BATCH = EVIDENCE + "d01-latest-years-read-batch.json"
+# The 50-period batch's positions no reading had covered: JPMorgan's five
+# years, Pfizer FY2021 and Salesforce FY2022-FY2024, over the restored root.
+HEADINGS_FULL_FRAME = EVIDENCE + "d01-full-frame-read.json"
 D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
                 HEADINGS_PARAMOUNT_PREDECESSOR, HEADINGS_OLDER_YEARS, HEADINGS_OLDER_YEARS_BATCH,
-                HEADINGS_SOUTHWEST_PAGE_SPLIT, HEADINGS_LATEST_YEARS_BATCH)
+                HEADINGS_SOUTHWEST_PAGE_SPLIT, HEADINGS_LATEST_YEARS_BATCH, HEADINGS_FULL_FRAME)
 RPO = EVIDENCE + "rpo-read.json"
 # Another year's B12, read the same way from that year's own filing.
 RPO_BATCH = EVIDENCE + "rpo-read-batch.json"

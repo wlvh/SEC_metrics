@@ -1,0 +1,147 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "eight_k_windows_from": [
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-batch.json",
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "metrics_read": [
+  "C03",
+  "C04"
+ ],
+ "needed_facts_not_read": [],
+ "per_position": {
+  "jpmorgan-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:0b02a59dd20ee970f9f4fc667ebe4821254f402dfbdcb71cecd307fa6820fc63",
+      "run_id": "run:historical-period:0fa560efd2f918b9cf361e7071cf0778ad4742b2600062ce396f9d531aa943dd"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000019617-26-000096"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 2,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": false,
+      "proxy": "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm",
+      "values": [
+       40632724
+      ]
+     }
+    ],
+    "proxies_the_result_does_not_name": [],
+    "published": "40632724",
+    "read": "40632724",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+      "result_id": "sha256:766f54b3498df906dacf40fc76a8b934639fa304519cf80143fb3a4ba8a5cb2a",
+      "run_id": "run:historical-period:0ad6d4393f005f1c20f205f48b3df1cd2f779f9e263e0d8631c87027ea174525"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000019617-25-000040",
+      "0000019617-25-000042",
+      "0000019617-25-000056",
+      "0000019617-25-000270",
+      "0000019617-25-000332",
+      "0000019617-25-000334",
+      "0000019617-25-000483",
+      "0000019617-25-000485",
+      "0000019617-25-000509",
+      "0000019617-25-000510",
+      "0000019617-25-000518",
+      "0000019617-25-000520",
+      "0000019617-25-000907",
+      "0000019617-25-001100",
+      "0001193125-25-006009",
+      "0001193125-25-012230",
+      "0001193125-25-013396",
+      "0001193125-25-020070",
+      "0001193125-25-078015",
+      "0001193125-25-089203",
+      "0001193125-25-163423",
+      "0001193125-25-246803",
+      "0001628280-25-044845",
+      "0001628280-25-044887",
+      "0001628280-26-008131"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "eight_k_window_read_by": [
+     "docs/evidence/issue47_history/content-acceptance/event-count-read-full-frame.json"
+    ],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/jpmorgan_chase_19617_000001961725000270/jpm-20241231_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "19617",
+   "company_id": "jpmorgan_chase",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000019617-25-000270",
+    "primaryDocument": "jpm-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_governance_facts.py",
+ "record_type": "ISSUE_47_GOVERNANCE_READ",
+ "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+ "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window."
+}
