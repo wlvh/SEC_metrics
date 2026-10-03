@@ -1,8 +1,10 @@
 """Show that the run package's request check refuses what it should, and that each of its checks bears weight.
 
 ``build_run_package.hold_to_the_approval`` compares the digests the package
-rebuilt with the measurement and with the approval body. Rebuilding takes
-minutes, so these cases give it the digests directly: the measured ones (the
+rebuilt with the measurement and with the approval body, and
+``hold_to_the_counts`` compares each rebuilt request's body bytes and pinned
+reference input tokens with the measured ones. Rebuilding takes minutes, so
+these cases give the checks their inputs directly: the measured ones (the
 sealed commit's three measurement files, which a dry-run build of the package
 reproduced 35 for 35) and an approval body laid out by the proposal's own
 grants. Each case states the outcome it must have - pass, or one named
@@ -133,6 +135,29 @@ def cases(recorded, body):
     return rows
 
 
+def count_cases(counts):
+    """(name, computed, recorded, expected) for hold_to_the_counts."""
+    key = sorted(counts)[0]
+    digest = sorted(counts[key])[0]
+    rows = [("control: the measured body bytes and reference counts", counts, counts, "PASS")]
+    for field, what in (("reference_input_tokens", "one rebuilt request counts one token more than measured"),
+                        ("provider_body_bytes", "one rebuilt request's body is one byte longer than measured")):
+        changed = copy.deepcopy(counts)
+        changed[key][digest][field] += 1
+        rows.append((what, changed, counts, "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES"))
+    return rows
+
+
+def count_outcome(builder, computed, recorded):
+    try:
+        builder.hold_to_the_counts(computed=copy.deepcopy(computed), recorded=copy.deepcopy(recorded))
+    except SystemExit as refusal:
+        return str(refusal).split(":", 1)[0]
+    except Exception as error:
+        return "ERROR:" + type(error).__name__
+    return "PASS"
+
+
 def outcome(builder, computed, recorded, body):
     try:
         builder.hold_to_the_approval(computed=copy.deepcopy(computed), recorded=copy.deepcopy(recorded),
@@ -160,6 +185,7 @@ INJECTIONS = [
     ("THE_CAP_MAY_CARRY_SEC_CALLS",
      "    if body[\"maximum_additional_provider_paid_sec_calls\"] != [total, total, 0]:\n",
      "    if body[\"maximum_additional_provider_paid_sec_calls\"][:2] != [total, total]:\n"),
+    ("THE_COUNTS_ARE_NOT_CHECKED", "    if moved:\n", "    if False:\n"),
 ]
 
 
@@ -171,10 +197,17 @@ def main():
     _measurements_are_the_sealed_ones(builder, arguments.sealed_commit)
     recorded = builder._measured(REPO)
     body = _body(recorded)
-    rows = cases(recorded, body)
+    counts = builder._measured_counts(REPO)
+    if {key: sorted(requests) for key, requests in counts.items()} != recorded:
+        raise SystemExit("THE_MEASURED_COUNTS_ARE_NOT_FOR_THE_MEASURED_DIGESTS")
+    # Each check as (case, how to ask a builder, expected outcome).
+    rows = [(name, (lambda b, c=computed, h=held, a=approval: outcome(b, c, h, a)), expected)
+            for name, computed, held, approval, expected in cases(recorded, body)]
+    rows += [(name, (lambda b, c=computed, h=held: count_outcome(b, c, h)), expected)
+             for name, computed, held, expected in count_cases(counts)]
     control = []
-    for name, computed, held, approval, expected in rows:
-        got = outcome(builder, computed, held, approval)
+    for name, ask, expected in rows:
+        got = ask(builder)
         control.append({"case": name, "expected": expected, "got": got})
         if got != expected:
             raise SystemExit("A_CASE_HAS_THE_WRONG_OUTCOME_ON_THE_UNCHANGED_CHECK: " + json.dumps(control[-1]))
@@ -185,13 +218,14 @@ def main():
             raise SystemExit("AN_INJECTION_EDIT_DOES_NOT_HIT_EXACTLY_ONCE: " + label)
         changed = _load(source.replace(old, new))
         moved = [{"case": name, "expected": expected, "got": got}
-                 for name, computed, held, approval, expected in rows
-                 for got in [outcome(changed, computed, held, approval)] if got != expected]
+                 for name, ask, expected in rows for got in [ask(changed)] if got != expected]
         injected.append({"injection": label, "caught": bool(moved), "caught_by": moved})
     result = {"record_type": "ISSUE_47_RUN_PACKAGE_CHECK_INJECTIONS",
-              "checks": "build_run_package.hold_to_the_approval",
+              "checks": "build_run_package.hold_to_the_approval, build_run_package.hold_to_the_counts",
               "sealed_commit_measurements": arguments.sealed_commit,
               "positions": len(recorded), "requests": sum(len(v) for v in recorded.values()),
+              "reference_input_tokens": sum(row["reference_input_tokens"] for requests in counts.values()
+                                            for row in requests.values()),
               "control": control, "injections": injected,
               "all_caught": all(row["caught"] for row in injected), "calls": [0, 0, 0]}
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

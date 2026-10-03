@@ -1,9 +1,10 @@
 {
  "record_type": "ISSUE_47_RUN_PACKAGE_CHECK_INJECTIONS",
- "checks": "build_run_package.hold_to_the_approval",
+ "checks": "build_run_package.hold_to_the_approval, build_run_package.hold_to_the_counts",
  "sealed_commit_measurements": "5640c367",
  "positions": 22,
  "requests": 35,
+ "reference_input_tokens": 3037062,
  "control": [
   {
    "case": "control: the measured digests and the body laid out from them",
@@ -59,6 +60,21 @@
    "case": "the cap carries an SEC call",
    "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
    "got": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS"
+  },
+  {
+   "case": "control: the measured body bytes and reference counts",
+   "expected": "PASS",
+   "got": "PASS"
+  },
+  {
+   "case": "one rebuilt request counts one token more than measured",
+   "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+   "got": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES"
+  },
+  {
+   "case": "one rebuilt request's body is one byte longer than measured",
+   "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+   "got": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES"
   }
  ],
  "injections": [
@@ -151,6 +167,22 @@
     {
      "case": "the cap carries an SEC call",
      "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
+     "got": "PASS"
+    }
+   ]
+  },
+  {
+   "injection": "THE_COUNTS_ARE_NOT_CHECKED",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "one rebuilt request counts one token more than measured",
+     "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+     "got": "PASS"
+    },
+    {
+     "case": "one rebuilt request's body is one byte longer than measured",
+     "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
      "got": "PASS"
     }
    ]

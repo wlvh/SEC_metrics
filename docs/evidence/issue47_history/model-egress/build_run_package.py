@@ -17,7 +17,12 @@ each measured position's ledger digests must equal the measurement, and each
 grant must name exactly the digests of the positions it covers, adding up to
 the cap. A claim computes the same digest and refuses one no grant names, so a
 package that rebuilt other request bytes would otherwise stop at its first
-claim, after the owner had approved and the key had been issued. Development
+claim, after the owner had approved and the key had been issued. Each request's
+body is also counted with the pinned reference tokenizer and must weigh what
+was measured: the live path stops the allowance when the service's count is
+not that count, and the tokenizer is a dependency of the container, not of the
+commit (requirements-continuous-context.txt, pinned in run-package.json).
+Development
 commits after the sealed one never enter the package's code. Three kinds of
 file come from the checkout instead, because they are written after the seal
 and do not change what runs:
@@ -69,27 +74,54 @@ EXPORTS = "evidence/issue47_model_calls"
 MEASUREMENTS = {"D04": HERE + "d04-request-measurement.json",
                 "E01": "docs/evidence/issue47_history/e01-content-confirmed/request-measurement.json",
                 "D02": "docs/evidence/issue47_history/d02-item-8-review/request-measurement.json"}
+# What each measured request's body weighed, compared request by request.
+COUNTED = ("provider_body_bytes", "reference_input_tokens")
+# The dependency the reference count needs (continuous_request_context pins its
+# version and its tokenizer file); a package without it refuses before a claim.
+TOKENIZER_REQUIREMENT = "requirements-continuous-context.txt"
 # Run inside the built package, by the package's own code: every measured
 # position's ledger digests under the approved transport, with the functions a
-# claim uses (historical_model_calls.planned_request_digests). Nothing is sent.
+# claim uses (historical_model_calls.planned_request_digests), and each digested
+# request's body counted with the pinned reference tokenizer the live path
+# compares the service's count with. Nothing is sent.
 DIGESTS_IN_THE_PACKAGE = r"""
 import json
 import sys
 from pathlib import Path
 sys.path.insert(0, "scripts")
 from vnext import historical_model_calls as calls
+from vnext.continuous_request_context import measure_request
+from vnext.continuous_semantic_calls import request_body
 from vnext.normal_period_selection import resolve_period_selection
 root = Path.cwd().resolve()
 if Path(calls.__file__).resolve().parents[2] != root:
     raise SystemExit("RUN_PACKAGE_CODE_IS_NOT_THE_PACKAGES:" + calls.__file__)
 transport = json.loads(sys.argv[1])
-digests = {}
+# Each request the claim path's own function digests, held as it digests it.
+digested = []
+digest_of = calls.ledger_digest
+def holding(request, policy):
+    digest = digest_of(request, policy)
+    digested.append((digest, request, policy))
+    return digest
+calls.ledger_digest = holding
+digests, counts = {}, {}
 for metric, company, end in json.loads(sys.argv[2]):
+    key = metric + ":" + company + ":" + end
     selection = resolve_period_selection(repo_root=root, company_id=company, report_end=end)
-    digests[metric + ":" + company + ":" + end] = sorted(calls.planned_request_digests(
+    del digested[:]
+    returned = calls.planned_request_digests(
         company_id=company, metric_id=metric, period_selection=selection, transport=transport,
-        data_root=root))
-print(json.dumps(digests, sort_keys=True))
+        data_root=root)
+    if [digest for digest, _, _ in digested] != list(returned):
+        raise SystemExit("RUN_PACKAGE_DIGESTED_REQUESTS_ARE_NOT_THE_RETURNED_ONES:" + key)
+    digests[key] = sorted(returned)
+    counts[key] = {}
+    for digest, request, policy in digested:
+        body = request_body(request, policy)
+        counts[key][digest] = {"provider_body_bytes": len(body), "reference_input_tokens": measure_request(
+            body, require_reference=True)["input_tokens"]}
+print(json.dumps({"digests": digests, "counts": counts}, sort_keys=True))
 """
 
 
@@ -122,19 +154,31 @@ def _have_commit(commit):
         raise SystemExit("RUN_PACKAGE_SEALED_COMMIT_UNREACHABLE: " + commit)
 
 
-def _measured(target):
-    """Every measured position's recorded digests, read as the proposal reads them."""
+def _measured_rows(target):
+    """Every measured position's request rows, read as the proposal reads them."""
     read = {metric: json.loads((target / path).read_text(encoding="utf-8"))
             for metric, path in MEASUREMENTS.items()}
-    recorded = {}
+    rows = {}
     for key, row in read["D04"]["positions"].items():
-        recorded["D04:" + key] = sorted(request["ledger_digest"] for request in row["requests"])
+        rows["D04:" + key] = row["requests"]
     for row in read["E01"]["windows"]:
         if "request_id" in row:
-            recorded["E01:" + row["company_id"] + ":" + row["report_end"]] = [row["ledger_digest"]]
+            rows["E01:" + row["company_id"] + ":" + row["report_end"]] = [row]
     for row in read["D02"]["positions"]:
-        recorded["D02:" + row["company_id"] + ":" + row["report_end"]] = [row["ledger_digest"]]
-    return recorded
+        rows["D02:" + row["company_id"] + ":" + row["report_end"]] = [row]
+    return rows
+
+
+def _measured(target):
+    """Every measured position's recorded digests."""
+    return {key: sorted(row["ledger_digest"] for row in rows)
+            for key, rows in _measured_rows(target).items()}
+
+
+def _measured_counts(target):
+    """Every measured request's body bytes and reference input tokens, by digest."""
+    return {key: {row["ledger_digest"]: {name: row[name] for name in COUNTED} for row in rows}
+            for key, rows in _measured_rows(target).items()}
 
 
 def reproduce_requests(target, body):
@@ -152,10 +196,36 @@ def reproduce_requests(target, body):
             [sys.executable, "-c", DIGESTS_IN_THE_PACKAGE, json.dumps(body["transport"]),
              json.dumps(positions)], cwd=target, capture_output=True, text=True,
             env={**os.environ, "PYTHONPYCACHEPREFIX": cache, "PYTHONDONTWRITEBYTECODE": "1"})
+    if done.returncode != 0 and "CONTINUOUS_CONTEXT_REFERENCE_REQUIRED" in done.stderr:
+        # The live path would refuse the same way before a claim; here it is
+        # found before the key is used, with what fixes it.
+        raise SystemExit("RUN_PACKAGE_REFERENCE_TOKENIZER_UNAVAILABLE: python3 -m pip install "
+                         "--require-hashes -r " + TOKENIZER_REQUIREMENT + "\n" + done.stderr[-600:])
     if done.returncode != 0:
         raise SystemExit("RUN_PACKAGE_REQUESTS_NOT_REBUILT:\n" + done.stderr[-2000:])
     computed = json.loads(done.stdout.strip().splitlines()[-1])
-    return hold_to_the_approval(computed=computed, recorded=recorded, body=body)
+    held = hold_to_the_approval(computed=computed["digests"], recorded=recorded, body=body)
+    held["reference_counts"] = hold_to_the_counts(computed=computed["counts"],
+                                                  recorded=_measured_counts(target))
+    return held
+
+
+def hold_to_the_counts(*, computed, recorded):
+    """Each rebuilt request's body bytes and reference input tokens against the measurement.
+
+    The live path stops the whole allowance when the service's input count is
+    not the pinned reference tokenizer's count for the body it sent
+    (CONTEXT_REFERENCE_MISMATCH), after that call is paid. The package counts
+    every approved request with the same tokenizer before any claim: a missing
+    or other-version tokenizer refuses in the package (measure_request requires
+    the pinned one), and a count other than the measured one refuses here.
+    """
+    moved = sorted(key for key in set(computed) | set(recorded) if computed.get(key) != recorded.get(key))
+    if moved:
+        raise SystemExit("RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES: " + ",".join(moved))
+    return {"requests": sum(len(requests) for requests in computed.values()),
+            "reference_input_tokens": sum(row["reference_input_tokens"] for requests in computed.values()
+                                          for row in requests.values())}
 
 
 def hold_to_the_approval(*, computed, recorded, body):
@@ -211,6 +281,8 @@ def record(sealed_commit):
              "registration_patch": {"path": REGISTRATION_PATCH,
                                     **_sha(_committed(sealed_commit, REGISTRATION_PATCH))},
              "egress_patch": {"path": EGRESS_PATCH, **_sha(_committed(sealed_commit, EGRESS_PATCH))},
+             "tokenizer_requirement": {"path": TOKENIZER_REQUIREMENT,
+                                       **_sha(_committed(sealed_commit, TOKENIZER_REQUIREMENT))},
              "receipt_id": receipt["receipt_id"], "receipt": {"path": RECEIPT, **_sha(receipt_raw)},
              "approval_body": {"path": APPROVAL_BODY, **_sha(body_raw)},
              "bound_files": len(receipt["bound_files"]),

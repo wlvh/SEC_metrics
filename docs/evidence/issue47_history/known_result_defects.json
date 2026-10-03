@@ -7712,6 +7712,26 @@
      "integration": "MERGED; no change"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "dee04f5f",
+   "own_commit_at_read": "23fc9716",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; unchanged by these three commits (no defect entry, release or acceptance limit added)",
+   "baseline": "Read since 06d109f6: three commits, all under docs/evidence/issue28_continuous/ (b13-model-output-pilot-20261003/, continuation.md, execution-state.json); the README, the commit messages and the file list. Merged as 790c1e70. None of the changed files is recorded in the issue_47_v1 snapshot (mint --check passes unchanged), so the closure and the sealed run package 5640c367 do not move.",
+   "increments": [
+    {
+     "commit": "79b43ba5, 706ca43c, dee04f5f",
+     "marker": "[shared-with-#47]",
+     "subject": "B13 development output trial on the source of #28's failed call 192 (Enphase FY2025): an independent-context answer under the base request form declared itself incomplete (14 proposals, 5 required, 3,002 reference output tokens); the one allowed expression correction answered 39 proposals at 4,900 tokens, over the 4,096 output reserve; both answers kept as failures, no candidate, evidence, result or run",
+     "affects_47": "None today: #47's B13 applicable branch (Ford, Enphase) is not wired and waits for #28's request contract (remaining-work list); the trial shows the base contract cannot deliver one complete assessment within the output reserve, so #47 does not port it. The out-of-scope branch #47 runs (N_A_STRUCTURAL for the other companies) is untouched.",
+     "integration": "MERGED; no change"
+    }
+   ]
   }
  ]
 }
