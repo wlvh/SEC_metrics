@@ -10720,10 +10720,14 @@
   },
   "current_unique_queue_update": {
     "issue28_section": 3,
-    "head": "51f9cd7cccf5814cc1219c467f902aca271d8692",
-    "server_readback": true,
-    "shared_collab_v1_1_and_section6_untouched": true,
-    "next_actual_task": "D01 current390 exact replacement index; limited difference review; unresolved B13/D03/C02/D02 and company updates remain"
+    "updated_at": "2026-10-03T01:41:28Z",
+    "server_readback_exact": true,
+    "written_head": "8dec94686fd4479228f7c262baa6eae782890e0b",
+    "all_other_sections_and_collaboration_block_unchanged": true,
+    "evidence_included": [
+      "C04_TWO_LEGITIMATE_SAVED_SOURCE_VERSIONS_AND_DUAL_COLD_READ",
+      "FORD_B06_FULL_FINANCIAL_SOURCE_SCOPE"
+    ]
   },
   "collab54_interface_20261003": {
     "version": "COMPANY-SEPARATION-v2.1-20261002",
@@ -11545,7 +11549,12 @@
       0,
       0
     ],
-    "scope_limit": "Two legitimate saved same-fiscal-year source versions; program replay and bytes only, no new full content/390/OpenShift/production credit. Reused first-C04/idempotence/wrong-company recovery evidence; no product source/default/binding changes."
+    "scope_limit": "Two legitimate saved same-fiscal-year source versions; program replay and bytes only, no new full content/390/OpenShift/production credit. Reused first-C04/idempotence/wrong-company recovery evidence; no product source/default/binding changes.",
+    "shared_notification": {
+      "comment_id": 5964192295,
+      "server_readback_exact": true,
+      "commit": "8dec94686fd4479228f7c262baa6eae782890e0b"
+    }
   },
   "latest_ci_natural_observation_20261003": {
     "head_sha": "1f6272512d96e8bd0ea617bca010a4977791f80d",
@@ -11557,5 +11566,29 @@
     "audit_evidence_run_id": 37086113754,
     "audit_evidence_run_status": "queued",
     "not_a_terminal_success": true
+  },
+  "current_390_legacy_product_scope_20261003": {
+    "status": "FINITE_LEGACY_SCOPE_LIMITS_IMPLEMENTED_SHORT_TEST_PASS_PENDING_INCREMENT_REVIEW",
+    "evidence": "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/product-scope-comparison.json",
+    "base_tested_head": "8dec94686fd4479228f7c262baa6eae782890e0b",
+    "uncommitted_scope_diff_tested": true,
+    "known_bad_selected_coords_unchanged": 17,
+    "exact_legacy_scope_pending": 20,
+    "only_product_scope_pending_not_confirmed_defect": 8,
+    "other_370_rows_unchanged": true,
+    "known_defects_array_unchanged": true,
+    "D01_saved_scope_restorations_retained": 2,
+    "short_tests_passed": 19,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "no_new_result_or_full_company": true
+  },
+  "shared_read_20261003_product_scope": {
+    "peer47_sha": "594da5aeb345a1e3bc287c783bfb3fd172a11527",
+    "peer54_sha": "303d751f29e57dc68ab7848b6b184dc4ab8c4b83",
+    "peer47_delta": "Provider received selected28 1f627251 and documented historical release metadata. No shared core revision; C02/D02 gates and source acceptance boundaries unchanged."
   }
 }

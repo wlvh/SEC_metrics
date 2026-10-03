@@ -117,6 +117,86 @@ class CurrentViewTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'D01_REQUIRED_PROOF_SET_CHANGED'):
             self.real_load(delta)
 
+    def test_exact_legacy_contract_results_keep_history_without_current_product_credit(self):
+        before = deepcopy(self.parent)
+        view = self.view()
+        selected = [r for r in view['rows'] if 'current_product_scope_limit' in r]
+        self.assertEqual(20, len(selected))
+        for row in selected:
+            old = next(r for r in self.parent['rows'] if
+                       (r['company_id'], r['metric_id']) == (row['company_id'], row['metric_id']))
+            self.assertEqual(old['value'], row['historical_contract_value'])
+            self.assertIsNone(row['value'])
+            self.assertEqual(old['implementation_identity'], row['implementation_identity'])
+            self.assertFalse(row['current_product_scope_credit'])
+            self.assertFalse(row['current_product_scope_limit']['confirmed_content_defect_inferred'])
+        self.assertEqual(before, self.parent)
+
+    def test_product_scope_gap_does_not_inflate_confirmed_defect_count(self):
+        view = self.view()
+        self.assertEqual(17, view['selected_known_defect_coordinate_count'])
+        self.assertEqual(20, view['selected_product_scope_pending_count'])
+        rows = [r for r in view['rows'] if 'current_product_scope_limit' in r
+                and 'current_defect_ids' not in r]
+        self.assertEqual(len(rows), view['selected_nondefect_product_scope_pending_count'])
+        marriott = next(r for r in rows if r['company_id'] == 'marriott_international' and r['metric_id'] == 'E01')
+        self.assertEqual('0', marriott['historical_contract_value'])
+        self.assertEqual('PENDING_CURRENT_PRODUCT_SCOPE_ACCEPTANCE', marriott['current_display_status'])
+
+    def test_missing_limit_cannot_silently_restore_old_product_credit(self):
+        for kind in ('all', 'one'):
+            data = deepcopy(self.defects)
+            if kind == 'all':
+                del data['product_scope_acceptance_limits']
+            else:
+                data['product_scope_acceptance_limits']['limits'].pop()
+            with self.subTest(kind=kind), self.assertRaisesRegex(ValueError, 'CURRENT_PRODUCT_SCOPE'):
+                self.view(defects=data)
+
+    def test_wrong_scope_identity_or_goal_is_rejected(self):
+        for field, value in [('company_id', 'wrong-company'), ('spec_closure_hash', 'sha256:' + 'f' * 64),
+                             ('current_product_goal', 'all governance text'),
+                             ('confirmed_content_defect_inferred', True)]:
+            data = deepcopy(self.defects)
+            data['product_scope_acceptance_limits']['limits'][0][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED'):
+                self.view(defects=data)
+
+    def test_limit_cannot_be_promoted_into_new_call_authority(self):
+        data = deepcopy(self.defects)
+        data['product_scope_acceptance_limits']['authority']['calls_or_production_authorized'] = True
+        with self.assertRaisesRegex(ValueError, 'CURRENT_PRODUCT_SCOPE_AUTHORITY_CHANGED'):
+            self.view(defects=data)
+
+    def test_differently_identified_successor_is_not_retracted_as_old_contract_or_accepted(self):
+        original = assemble(self.parent, [], self.delta, self.defects, self.checked)
+        parent = deepcopy(self.parent)
+        row = next(r for r in parent['rows'] if r['company_id'] == 'marriott_international' and r['metric_id'] == 'E01')
+        # Change only the selected row after the frozen-parent limit is derived.
+        # Use a bounded earlier-delta as a successor; it carries no acceptance.
+        delta = {'coordinate_count': 390, 'record_type': 'ISOLATED_TEST_ONLY',
+            'changed_coordinates': [{'company_id': 'marriott_international', 'metric_id': 'E01',
+                'prior_result_id': row['implementation_identity']['result_id'],
+                'current_result_id': 'sha256:' + 'b' * 64, 'current_category': 'NUMERIC_RESULT',
+                'current_value': '1'}]}
+        view = assemble(parent, [delta], self.delta, self.defects, self.checked)
+        changed = next(r for r in view['rows'] if r['company_id'] == 'marriott_international' and r['metric_id'] == 'E01')
+        self.assertNotIn('current_product_scope_limit', changed)
+        self.assertNotIn('current_product_scope_credit', changed)
+        self.assertEqual('PRIOR_BOUNDED_DELTA_SCOPE_ONLY', changed['selected_result_validation_scope'])
+        self.assertFalse(view['other_coordinates_newly_validated_by_this_delta'])
+        old_count = original['selected_product_scope_pending_count']
+        self.assertEqual(old_count - 1, view['selected_product_scope_pending_count'])
+
+    def test_normal_loader_binds_product_limits_to_exact_parent_index(self):
+        data = deepcopy(self.defects)
+        data['product_scope_acceptance_limits']['parent_index_sha256'] = '0' * 64
+        target = BASE / 'known_result_defects.json'
+        original_read = current_view.read
+        with patch.object(current_view, 'read', side_effect=lambda path: data if path == target else original_read(path)):
+            with self.assertRaisesRegex(ValueError, 'CURRENT_PRODUCT_SCOPE_PARENT_BYTES_CHANGED'):
+                current_view.load_current_view()
+
 
 if __name__ == '__main__':
     unittest.main()

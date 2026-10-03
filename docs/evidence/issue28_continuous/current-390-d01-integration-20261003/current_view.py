@@ -22,6 +22,71 @@ import sys
 sys.path.insert(0, str(ROOT / 'scripts'))
 from vnext.records import validate_record
 
+LEGACY_PRODUCT_SPEC_PATHS = {
+    'C02': 'catalog/r6/C02_board_disclosures_v1.md',
+    'E01': 'catalog/ordinary_zero_ai/E01.md',
+}
+CURRENT_PRODUCT_GOALS = {
+    'C02': "adopt 'composition facts' (构成事实)",
+    'E01': "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+}
+
+
+def apply_product_scope_limits(rows, parent, register):
+    """Keep exact old-contract results outside new-goal acceptance.
+
+    This labels an acceptance gap, not a newly established content defect.
+    A differently identified successor gets no acceptance from this function.
+    """
+    from vnext.specs import compile_spec_file
+
+    limits = register.get('product_scope_acceptance_limits')
+    if not isinstance(limits, dict) or limits.get('record_type') != 'ISSUE28_FINITE_LEGACY_PRODUCT_SCOPE_ACCEPTANCE_LIMITS':
+        raise ValueError('CURRENT_PRODUCT_SCOPE_LIMITS_REQUIRED')
+    authority = limits.get('authority', {})
+    if (authority.get('collaboration_version') != 'COLLAB-28-47-v1.1'
+            or authority.get('owner_decision_commit') != '48b46a2d742eb3e3b8bd5a6404908745046b5d2f'
+            or authority.get('owner_decision_path') != 'docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json'
+            or authority.get('calls_or_production_authorized') is not False):
+        raise ValueError('CURRENT_PRODUCT_SCOPE_AUTHORITY_CHANGED')
+    old_specs = {metric: compile_spec_file(path=ROOT/path, dependency_specs={})['spec_closure_hash']
+                 for metric, path in LEGACY_PRODUCT_SPEC_PATHS.items()}
+    expected = {row['implementation_identity']['result_id']: row for row in parent['rows']
+                if row['metric_id'] in old_specs
+                and row['implementation_identity']['spec_closure_hash'] == old_specs[row['metric_id']]}
+    entries = limits.get('limits', [])
+    if (limits.get('scope_count') != len(entries) or len(expected) != 20
+            or len(entries) != len(expected)
+            or {entry.get('result_id') for entry in entries} != set(expected)):
+        raise ValueError('CURRENT_PRODUCT_SCOPE_LIMIT_SET_CHANGED')
+    selected = set()
+    for entry in entries:
+        old = expected[entry['result_id']]
+        metric = old['metric_id']
+        key = (old['company_id'], metric)
+        if (entry.get('company_id') != key[0] or entry.get('metric_id') != metric
+                or entry.get('source_period') != old['source_period']
+                or entry.get('spec_closure_hash') != old_specs[metric]
+                or entry.get('legacy_spec_path') != LEGACY_PRODUCT_SPEC_PATHS[metric]
+                or entry.get('current_product_goal') != CURRENT_PRODUCT_GOALS[metric]
+                or entry.get('status') != 'LEGACY_CONTRACT_NOT_ACCEPTED_UNDER_CURRENT_PRODUCT_GOAL'
+                or entry.get('confirmed_content_defect_inferred') is not False):
+            raise ValueError('CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED')
+        row = rows[key]
+        if row['implementation_identity'].get('result_id') != entry['result_id']:
+            continue
+        if (row['source_period'] != entry['source_period']
+                or row['implementation_identity'].get('spec_closure_hash') != entry['spec_closure_hash']):
+            raise ValueError('CURRENT_PRODUCT_SCOPE_SELECTED_IDENTITY_CHANGED')
+        row['historical_contract_value'] = row['value']
+        row['value'] = None
+        row['current_display_status'] = 'PENDING_CURRENT_PRODUCT_SCOPE_ACCEPTANCE'
+        row['current_product_scope_limit'] = deepcopy(entry)
+        row['current_product_scope_credit'] = False
+        row['selected_result_validation_scope'] = 'HISTORICAL_CONTRACT_ONLY_CURRENT_PRODUCT_GOAL_NOT_ACCEPTED'
+        selected.add(key)
+    return selected
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -113,6 +178,7 @@ def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked):
             row['source_credit'] = 'SEE_SELECTED_BOUNDED_DELTA_ORIGINAL_SCOPE'
             row['selected_evidence'] = {'delta': delta['record_type'], 'coordinate': ':'.join(key)}
     apply_d01_delta(rows, d01_delta, mechanically_checked)
+    product_scope_pending = apply_product_scope_limits(rows, parent, defects)
     withheld = set()
     for defect in defects['defects']:
         key = (defect['company_id'], defect['metric_id'])
@@ -130,6 +196,8 @@ def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked):
         raise ValueError('CURRENT_VIEW_CHANGED_DENOMINATOR')
     return {'record_type': 'ISSUE28_EXISTING_390_DEVELOPMENT_VIEW', 'coordinate_count': 390,
             'rows': list(rows.values()), 'selected_known_defect_coordinate_count': len(withheld),
+            'selected_product_scope_pending_count': len(product_scope_pending),
+            'selected_nondefect_product_scope_pending_count': len(product_scope_pending - withheld),
             'selected_saved_scope_D01_restorations': 2,
             'other_coordinates_newly_validated_by_this_delta': False,
             'full_current_head_reexecution': False, 'all390_acceptance': False,
@@ -152,8 +220,12 @@ def load_current_view():
     for relative, expected in d01['proof_file_sha256'].items():
         if digest(ROOT / relative) != expected:
             raise ValueError('D01_CURRENT_PROOF_BYTES_CHANGED:' + relative)
+    defects = read(BASE / 'known_result_defects.json')
+    limits = defects.get('product_scope_acceptance_limits', {})
+    if limits.get('parent_index_sha256') != digest(PARENT):
+        raise ValueError('CURRENT_PRODUCT_SCOPE_PARENT_BYTES_CHANGED')
     return assemble(read(PARENT), list(map(read, prior_paths)), d01,
-                    read(BASE / 'known_result_defects.json'), read(CHECKED_PATH))
+                    defects, read(CHECKED_PATH))
 
 
 if __name__ == '__main__':
