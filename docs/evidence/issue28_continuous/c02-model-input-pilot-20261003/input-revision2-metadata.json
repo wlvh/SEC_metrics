@@ -1,0 +1,73 @@
+{
+  "record_type": "DEVELOPMENT_SOURCE_ONLY_C02_INPUT",
+  "source_reference": {
+    "accession": "0001463101-26-000026",
+    "company_id": "enphase_energy",
+    "document_name": "enph-20260401.htm",
+    "raw_asset_id": "sha256:7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+    "record_type": "SOURCE_REFERENCE",
+    "request_attempt_id": "request:attempt:3499a2f68c2258b105e14f6dcacdff5f8f679a1f4584ad1766b6566a9ca6d54a",
+    "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+    "source_role": "governance_proxy",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000026/enph-20260401.htm"
+  },
+  "raw_blob": {
+    "byte_length": 1649968,
+    "media_type": "text/html",
+    "raw_asset_id": "sha256:7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+    "record_type": "RAW_BLOB",
+    "storage_uri": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm"
+  },
+  "filing": {
+    "form": "DEF 14A",
+    "filingDate": "2026-04-01",
+    "accessionNumber": "0001463101-26-000026",
+    "primaryDocument": "enph-20260401.htm"
+  },
+  "source_sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+  "source_blocks": 2784,
+  "visible_characters": 370347,
+  "input_sha256": "3fb17ff46af9c5d95a46d927a76a61eadcd7cebc02da267df14dd72a1e835062",
+  "source_state": "COMPLETE_LOCAL_DOCUMENT",
+  "all_blocks_retained": true,
+  "selector_used": false,
+  "prior_answer_included": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "request_context": {
+    "request_sha256": "4ec3827cab6b905dc2c34ca60c5871d3f62abeefbdb813d305382160484386eb",
+    "request_bytes": 410572,
+    "rendered_prompt_sha256": "e9c69269a5d283b087cc4f8a89b4776cc8f96ba7a63d3cd8bb69ee03fa843374",
+    "rendered_prompt_bytes": 402118,
+    "input_tokens": 88916,
+    "output_reserve_tokens": 4096,
+    "context_tokens": 93012,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 4096
+    }
+  },
+  "no_native_or_production_credit": true,
+  "revision": "PILOT2_ENUM_AND_CITATION_ONLY",
+  "source_and_locator_bytes_unchanged": true
+}

@@ -3682,6 +3682,25 @@
       "ordinary_messages": 2,
       "dedup_note": "No live agent; register and independent summaries have no same patch/scope. Prior D01 punctuation/index and scope views reused, not re-reviewed; underscore task name required by tool schema.",
       "review_started_at": "2026-10-03T04:24:24.688166+00:00"
+    },
+    {
+      "task_name": "diagnose_c02input_76da71e",
+      "purpose": "diagnose",
+      "module": "c02input",
+      "scope_paths": [
+        "/private/tmp/issue28-c02-blind-source-pilot1-20261003/"
+      ],
+      "patch_sha": "76da71e258f71fb42461513710cfbb540de9b28c",
+      "spawned_at": "2026-10-03T05:15:06.404509+00:00",
+      "ended_at": "2026-10-03T05:24:28.713451+00:00",
+      "tool_calls": 46,
+      "result_path": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/independent-input-76da71e/conclusion.md",
+      "verdict": "COMPLETE_BLIND_INPUT_DIAGNOSIS_WITH_SCHEMA_LIMIT",
+      "status": "DONE",
+      "ordinary_messages": 2,
+      "dedup_note": "No live agent, same SHA or c02input purpose/module result. Older 48-item content audit reused as regression; this isolated context receives only complete source input and no answers; authorized method5.8 and one-time large-original input diagnosis.",
+      "first_recorded_time": "2026-10-03T05:15:55.893751+00:00",
+      "exact_turn_start_not_recorded": true
     }
   ],
   "ci_capacity_20260922": {
@@ -11753,7 +11772,7 @@
     "actual_server_body_read_at": "2026-10-03T05:02:20Z",
     "input_scope": "Enphase 2026 DEF14A complete 2784 visible blocks; development/regression material",
     "evidence": "docs/evidence/issue28_continuous/c02-model-input-pilot-20261003/",
-    "state": "REFERENCE_AND_SOURCE_ONLY_INPUT_PREPARED_PENDING_BLIND_INPUT_DIAGNOSIS",
+    "state": "FIRST_BLIND_COMPLETE_33_FACTS_5_UNRESOLVED_SCHEMA_REVISION_PREPARED",
     "input_root": "/private/tmp/issue28-c02-blind-source-pilot1-20261003",
     "input_tokens": 88815,
     "output_limit": 4096,
@@ -11763,7 +11782,15 @@
       0
     ],
     "no_native_or_production_credit": true,
-    "AGENTS_bound_in_current_V13_V14": false
+    "AGENTS_bound_in_current_V13_V14": false,
+    "first_response_tokens": 2098,
+    "first_response_facts": 33,
+    "first_response_unresolved": 5,
+    "full_source_read_by_blind_agent": true,
+    "not_target_provider_test": true,
+    "second_input_root": "/private/tmp/issue28-c02-blind-source-pilot2-20261003",
+    "second_input_tokens": 88916,
+    "source_bytes_unchanged": true
   },
   "shared_increment_read_20261003_0505": {
     "own_sha": "0387187501ddfb5c31df774ddc5540257f4f3ad8",

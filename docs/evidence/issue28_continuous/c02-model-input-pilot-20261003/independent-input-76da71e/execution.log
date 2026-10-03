@@ -1,0 +1,29 @@
+UTC_FIRST_RECORDED_START=2026-10-03T05:15:55.893751+00:00
+Timing note: the prompt-only first read preceded this first explicit clock sample; exact turn-start time was not captured and is not invented.
+ASSOCIATED_PATCH_SHA=76da71e258f71fb42461513710cfbb540de9b28c
+MODEL_TASK=independent source-only development extraction; no provider API invocation
+ALLOWED_INPUT_DIRECTORY=/private/tmp/issue28-c02-blind-source-pilot1-20261003/
+READ_SEQUENCE=prompt.txt first; metadata/context identity and lengths next; complete source in fixed ranges; request body mechanical exact-content check after reading
+READ_RANGES=0-99;100-299;300-499;500-599;600-799;800-999;1000-1299;1300-1499;1500-1699;1700-1899;1900-2099;2030-2059(reread);2100-2299;2300-2499;2500-2599;2600-2649;2650-2699;2700-2783
+TRUNCATION=first 1900-2099 call returned 12129 original tokens and clipped B2034-B2056; complete reread 2030-2059 covered the clipped span, including boundary blocks
+ACTUAL_COMPLETE_SOURCE_READ=B0-B2783, all 2784 blocks, no known gap after reread
+OTHER_INPUT_READS=metadata.json and context-measurement.json complete; locators.json parsed mechanically (head displayed, not human-read in full); request-body.json parsed mechanically, system displayed in full, complete user content exact-matched to fully read source.txt
+EXCLUDED_READS=no repository AGENTS, code, original Run/Result, reader conclusions, reference.md, parent evidence or expected answer read
+NETWORK_OR_BUSINESS_CALLS=0
+ACCOUNT_OPERATIONS=0
+SPAWN_COMMIT_PUSH_OTHER_ISSUE_OPERATIONS=0
+TOOLS_COMPLETED_AT_RESPONSE_WRITE=44 (22 functions.exec plus 22 nested exec_command; final mechanical verification not yet included)
+ORDINARY_MESSAGES_BEFORE_FINAL=1 opening commentary; 0 questions
+RESPONSE_POLICY=written once from model extraction; no semantic validator or answer-comparison; no post-write reclassification or deduplication
+MECHANICAL_CHECKS={"json_parse": "PASS", "facts": 33, "unresolved": 5, "locator_references": "PASS", "missing_locator_ids": [], "source_input_hash_matches": true, "request_hash_matches": true}
+INPUT_SHA256 prompt.txt 846aef1222b70a391e7a9bc745e8d75b1c9ecf49834f8e28365c983a4c81f824
+INPUT_SHA256 source.txt 3fb17ff46af9c5d95a46d927a76a61eadcd7cebc02da267df14dd72a1e835062
+INPUT_SHA256 metadata.json 30a684d31cd1b03589b9c67395541361a988200b05a850eef959b75a3aec0bfd
+INPUT_SHA256 locators.json cf5b73fb243ba952ed8e8e897a2b7c0c333b10bed3b757d108da646bc7be243d
+INPUT_SHA256 request-body.json 78dfeb6fac64c57dd61f6b95528c914aa76d09925abc06533786a90fb8fbeed4
+INPUT_SHA256 context-measurement.json 53bed7794989392c2c8d0e46e0f87e7bf261483489111444600dabc71d961f96
+UTC_END=2026-10-03T05:24:28.713451+00:00
+FINAL_ACTUAL_TOOL_COUNT=46 (23 functions.exec plus 23 nested exec_command)
+FINAL_ORDINARY_MESSAGE_COUNT=2 (1 opening commentary and 1 final report; 0 questions)
+RESPONSE_AFTER_CHECKS=unchanged; no rewrite
+HARD_LIMITS=46 <= 80 tools; elapsed from first explicit timestamp under 90 minutes; 2 <= 3 ordinary messages
