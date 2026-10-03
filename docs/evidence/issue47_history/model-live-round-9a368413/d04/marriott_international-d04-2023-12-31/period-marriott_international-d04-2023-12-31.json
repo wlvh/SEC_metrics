@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "marriott_international",
+ "label": "marriott_international-d04-2023-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "D04"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 33,
+    "COMPUTED": 3
+   },
+   "seconds": 622.0
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 37.9
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "D04"
+   ],
+   "seconds": 178.2
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 5,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 141.0
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.0
+  }
+ },
+ "positions": {
+  "D04": {
+   "binding_id": "sha256:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+   "data_root": "/workspace/work/issue47-model-native-d04/marriott_international-d04-2023-12-31/data-marriott_international-d04-2023-12-31",
+   "evidence_count": 1,
+   "memo_off_read_back": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+    "run_id": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+   "row_hash": "sha256:2cdc6525ae493803dd1f570780bf2534387c432a4d7fa0f20d5e6d5ff07ca0a0",
+   "run_dir": "/workspace/work/issue47-model-native-d04/marriott_international-d04-2023-12-31/run-marriott_international-d04-2023-12-31-D04",
+   "run_id": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+   "separate_process_read_back": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+    "run_id": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": null
+  }
+ },
+ "report_end": "2023-12-31",
+ "seconds": 979.8,
+ "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+ "xbrl_parses": 1
+}

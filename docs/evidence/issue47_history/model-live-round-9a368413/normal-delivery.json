@@ -368,7 +368,7 @@
     },
     "content_acceptance": {
      "proven": false,
-     "reason": "NOT_PROVEN:ACCEPTANCE_DOES_NOT_MATCH_THIS_RESULT:value",
+     "reason": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
      "acceptances_not_applied": [
       {
        "acceptance_id": "CONTENT_D02_MARRIOTT_2023",
@@ -381,7 +381,7 @@
      "accepted_by": null,
      "accepted_value": null,
      "what_the_acceptance_does_not_establish": null,
-     "withdrawn_by": null,
+     "withdrawn_by": "D02_PAID_MARRIOTT_INTERNATIONAL_20231231_SELF_INSURANCE_DISCLOSURE_MISSED",
      "released_defect_ids": []
     }
    },
@@ -413,7 +413,7 @@
     },
     "content_acceptance": {
      "proven": false,
-     "reason": "NOT_PROVEN:ACCEPTANCE_DOES_NOT_MATCH_THIS_RESULT:value",
+     "reason": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
      "acceptances_not_applied": [
       {
        "acceptance_id": "CONTENT_D02_MARRIOTT_2024",
@@ -426,18 +426,346 @@
      "accepted_by": null,
      "accepted_value": null,
      "what_the_acceptance_does_not_establish": null,
-     "withdrawn_by": null,
+     "withdrawn_by": "D02_PAID_MARRIOTT_INTERNATIONAL_20241231_SELF_INSURANCE_DISCLOSURE_MISSED",
      "released_defect_ids": []
     }
    },
    "quality": "EXACT",
    "publication": "PUBLISHED",
    "value_sha256": "7194d2aeb44047b8d1221f5df58e4404619af38f52e0c23254722fb2586cf5ff"
+  },
+  {
+   "company_id": "marriott_international",
+   "metric_id": "D04",
+   "report_end": "2023-12-31",
+   "layers": {
+    "native_run": {
+     "proven": true,
+     "run_id": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5"
+    },
+    "public_row": {
+     "proven": true,
+     "row_hash": "sha256:2cdc6525ae493803dd1f570780bf2534387c432a4d7fa0f20d5e6d5ff07ca0a0",
+     "evidence_count": 1,
+     "receipt_id": "sha256:97bd8a830b34af6e6b7af065e8608b0a21f818bd6461196e79ecb01ff7848fce",
+     "period_selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+     "rendered_by": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+     "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+     "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+     "also_rendered_by": 0
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+     "acceptances_not_applied": [],
+     "accepted_by": null,
+     "accepted_value": null,
+     "what_the_acceptance_does_not_establish": null,
+     "withdrawn_by": null,
+     "released_defect_ids": []
+    }
+   },
+   "quality": "NONE",
+   "publication": "WITHHELD",
+   "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+  },
+  {
+   "company_id": "marriott_international",
+   "metric_id": "D04",
+   "report_end": "2024-12-31",
+   "layers": {
+    "native_run": {
+     "proven": true,
+     "run_id": "run:historical-period:ac385486fa81bbb78e37deed633c5f45e09f6674ac92920a6df6ed036c3be882",
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "result_id": "sha256:5cc606360939089630724afc5e6076c2024171c6dc501bc698298e785b2ac500"
+    },
+    "public_row": {
+     "proven": true,
+     "row_hash": "sha256:4cffec818725d190dacf75f5d8018f91d86d97dd959372d770626177f983919e",
+     "evidence_count": 1,
+     "receipt_id": "sha256:bdb449145a5808de3cde156abe9efd3cffe2b58187cdbce1f58a2d6844c51012",
+     "period_selection_id": "sha256:c135b5a87acdd2e5d3af55dd52003da94e49f816156b6837dc72b6f3f97efee4",
+     "rendered_by": "run:historical-period:ac385486fa81bbb78e37deed633c5f45e09f6674ac92920a6df6ed036c3be882",
+     "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+     "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+     "also_rendered_by": 0
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+     "acceptances_not_applied": [],
+     "accepted_by": null,
+     "accepted_value": null,
+     "what_the_acceptance_does_not_establish": null,
+     "withdrawn_by": null,
+     "released_defect_ids": []
+    }
+   },
+   "quality": "NONE",
+   "publication": "WITHHELD",
+   "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "D04",
+   "report_end": "2024-12-31",
+   "layers": {
+    "native_run": {
+     "proven": true,
+     "run_id": "run:historical-period:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "result_id": "sha256:6240a9c644aaac6190507dc13de931782857349425abc8cbb648df1d0d673711"
+    },
+    "public_row": {
+     "proven": true,
+     "row_hash": "sha256:0e547ed6d9d1990114da075ef46fa4846a0b87f358f9d70731c133171946f91d",
+     "evidence_count": 2,
+     "receipt_id": "sha256:207d5ae3143a3a48099abb585e2db88ed3ad7f9b58181bd060aef73cd8a256c7",
+     "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+     "rendered_by": "run:historical-period:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+     "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+     "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+     "also_rendered_by": 0
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+     "acceptances_not_applied": [],
+     "accepted_by": null,
+     "accepted_value": null,
+     "what_the_acceptance_does_not_establish": null,
+     "withdrawn_by": null,
+     "released_defect_ids": []
+    }
+   },
+   "quality": "NONE",
+   "publication": "WITHHELD",
+   "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+  },
+  {
+   "company_id": "lumen_technologies",
+   "metric_id": "D02",
+   "report_end": "2025-12-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0010",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "macys",
+   "metric_id": "D02",
+   "report_end": "2026-01-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0011",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "marriott_international",
+   "metric_id": "D02",
+   "report_end": "2025-12-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0014",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "D02",
+   "report_end": "2024-12-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0015",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "D02",
+   "report_end": "2025-12-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0016",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "report_end": "2025-12-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0017",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "salesforce",
+   "metric_id": "D02",
+   "report_end": "2026-01-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0018",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
+  },
+  {
+   "company_id": "southwest_airlines",
+   "metric_id": "D02",
+   "report_end": "2025-12-31",
+   "layers": {
+    "native_run": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "public_row": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    },
+    "content_acceptance": {
+     "proven": false,
+     "reason": "NEW_MODEL_ASSESSMENT_NOT_REGISTERED_AFTER_CONTRACT_FAILURE"
+    }
+   },
+   "unsuccessful_slots": [
+    {
+     "slot": "0019",
+     "status": "FAILED_TERMINAL"
+    }
+   ],
+   "old_results_not_consulted_or_relabelled": true
   }
  ],
+ "scope": "All 22 positions of this 35-call round; old results are not assessed by this read.",
+ "approved_positions": 22,
+ "new_live_registered_positions": 14,
+ "layer_counts": {
+  "native_run": 14,
+  "public_row": 14,
+  "content_acceptance": 7
+ },
  "calls": [
   0,
   0,
   0
- ]
+ ],
+ "production_authorized": false
 }

@@ -1,0 +1,56 @@
+{
+ "record_type": "ISSUE_47_D04_FINAL_NATIVE_READ",
+ "positions": [
+  {
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "run_id": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+   "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+   "phases_seconds": {
+    "create": 622.0,
+    "install": 37.9,
+    "memo_off_read_back": 178.2,
+    "read_back": 141.0,
+    "select": 0.0
+   }
+  },
+  {
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "run_id": "run:historical-period:ac385486fa81bbb78e37deed633c5f45e09f6674ac92920a6df6ed036c3be882",
+   "result_id": "sha256:5cc606360939089630724afc5e6076c2024171c6dc501bc698298e785b2ac500",
+   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+   "phases_seconds": {
+    "create": 661.6,
+    "install": 39.3,
+    "memo_off_read_back": 186.4,
+    "read_back": 132.3,
+    "select": 0.0
+   }
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "run_id": "run:historical-period:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+   "result_id": "sha256:6240a9c644aaac6190507dc13de931782857349425abc8cbb648df1d0d673711",
+   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+   "phases_seconds": {
+    "create": 1315.2,
+    "install": 87.9,
+    "memo_off_read_back": 336.1,
+    "read_back": 286.4,
+    "select": 0.1
+   }
+  }
+ ],
+ "native_run": 3,
+ "public_row": 3,
+ "same_run_and_result_in_each_of_two_cold_processes": true,
+ "content_acceptance": 0,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
