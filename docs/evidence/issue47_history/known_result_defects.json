@@ -7608,6 +7608,33 @@
      "integration": "MERGED; no change"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-03",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "06d109f6",
+   "own_commit_at_read": "7555d25b",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "PRESENT; the entry for #47's JPMorgan FY2025 running-header finding (D01_JPMORGAN_2025_RUNNING_HEADER_PARTS_I_AND_II_TAKEN_AS_A_HEADING) moves from 'withheld, peer fix not consumed' to a released successor f8da5496 in #28's development 390 view; the original result 99442738 stays withdrawn there",
+   "baseline": "Read since 6219efe6: three commits, all under docs/evidence/issue28_continuous/ (the D01 JPMorgan content reading with its independent original reading and receiver review, and a D03 context plan). None of the changed files is recorded in the issue_47_v1 snapshot (mint --check passes unchanged after the merge), so the closure and the sealed run package 5640c367 do not move.",
+   "increments": [
+    {
+     "commit": "bec78d98, 06d109f6",
+     "marker": "[shared-with-#47]",
+     "subject": "JPMorgan FY2025 D01: #28's own V3 successor read against the original (56 headings, no miss or wrong inclusion; 'Parts I and II' running header excluded), received only through an explicit development view",
+     "affects_47": "No #47 value moves: the reading binds #28's result f8da5496, not #47's. It agrees with #47's own reading of its JPMorgan FY2025 D01 in round 3fba0e84 (56 lines, accepted there), a second reading of the same filing by another route; #47 does not take credit from it.",
+     "integration": "MERGED; no change"
+    },
+    {
+     "commit": "ea6293c5",
+     "marker": "none",
+     "subject": "D03 full-source context plan and bounds",
+     "affects_47": "None: #47 has no D03 route.",
+     "integration": "MERGED; no change"
+    }
+   ]
   }
  ]
 }
