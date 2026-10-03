@@ -11038,7 +11038,8 @@
     "server_receipt": {
       "id": 5962391576,
       "server_readback": true
-    }
+    },
+    "successor_disposition": "303d751f new adapter independently consumed actual52 history with original complete baseline version and source-equivalence proof; previous8a refusal retained historically"
   },
   "ci_37070847594": {
     "head": "64c95e71eb85590afb66721b61be768087e5124d",
@@ -11378,5 +11379,98 @@
       0
     ],
     "family_child_read_not_independent_human_acceptance": true
+  },
+  "collab54_52_LIVE_D04_consumer_20261003": {
+    "provider_sha": "303d751f29e57dc68ab7848b6b184dc4ab8c4b83",
+    "consumer_head_at_test": "899001f79250cef05a0d71d50e611db956806fe0",
+    "evidence": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/consumer-live-d04-v1",
+    "status": "PASS_COMPANY_ACQUIRED_SOURCE_WITH_SAVED_LIVE_D04_AND_REPEAT",
+    "steps": [
+      {
+        "name": "original-source-export-full-baseline",
+        "exit": 0,
+        "seconds": 3.2,
+        "root": "/private/tmp/issue28-company-consumer-20261003/provider-code",
+        "guarded": false
+      },
+      {
+        "name": "current-source-export",
+        "exit": 0,
+        "seconds": 31.025,
+        "root": "/private/tmp/issue28-company-consumer-20261003/provider-code",
+        "guarded": false
+      },
+      {
+        "name": "source-install",
+        "exit": 0,
+        "seconds": 0.859,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-303-live-d04",
+        "guarded": true
+      },
+      {
+        "name": "compute",
+        "exit": 0,
+        "seconds": 194.293,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-303-live-d04",
+        "guarded": true
+      },
+      {
+        "name": "repeat",
+        "exit": 0,
+        "seconds": 91.24,
+        "root": "/private/tmp/issue28-company-consumer-20261003/runtime-303-live-d04",
+        "guarded": true
+      }
+    ],
+    "original_baseline_and_current52_versions_separate": true,
+    "equivalence": {
+      "current_source_id": "sha256:4810c0be23c57cc4d20be20a011876b333a0633839cfa757f358f1577c4e4d2e",
+      "equivalence_id": "sha256:a108b727c7651780f433c2d07ced29bb26331fec4fef66a509dbcdc994ee4648",
+      "new_acquisition_credit": false,
+      "new_provider_execution": false,
+      "original_provider_bytes_rewritten": false,
+      "original_source_id": "sha256:6fbbc9244e78b185ff176d9431aefc173cfc8c02d3058fcd41b1ee7fc6761c05",
+      "record_type": "CURRENT_NATIVE_SOURCE_EQUIVALENCE",
+      "source_body_set_hash": "sha256:711b88b39e40384995d841ae4b594922daee5d173e145e6a6b0deef35809fd00",
+      "substantive_request_set_hash": "sha256:d14e1caf4a5ec5cbd9b2702fe6e5624ff29771d7bb9f66dddfb2728d691a23de"
+    },
+    "old_requirement_and_LIVE_Run_Result_unchanged": true,
+    "Run_id": "run:ordinary-integrated:128f6ccad812a47063e47640c3c997ff50d812bb8763135ac822a292b7e9743c",
+    "Result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+    "one_native_Run_after_repeat": true,
+    "protected_unchanged": true,
+    "current_bound_header_negative": {
+      "status": "PASS_CURRENT_SOURCE_HEADER_REFUSED",
+      "seconds": 0.657,
+      "actual_source_proof": {
+        "accession": "",
+        "content_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41",
+        "document_name": "CIK0001463101.json",
+        "request_attempt_id": "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97",
+        "request_body_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41",
+        "request_body_size": 168172,
+        "request_headers_repo_relative_path": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json.85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127.headers.json",
+        "request_headers_sha256": "85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0001463101.json"
+      }
+    },
+    "first_run_install_is_not_source_package_failure_retained": true,
+    "negative_first_expected_error_name_corrected_only": true,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_complete_D04_company": 0,
+    "source_index": "docs/evidence/issue28_continuous/collab54-interfaces-20261003/enphase-52-existing-source-index.json",
+    "openshift_or_full390_acceptance": false
+  },
+  "collab_peer_increment_562128fc": {
+    "peer_read_commit": "562128fc",
+    "baseline": "52d94470",
+    "scope": "Peer merged own base899 plus CLI/CI evidence; no relevant shared source core change or defect-release credit copied"
   }
 }
