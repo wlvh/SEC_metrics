@@ -4308,6 +4308,117 @@
       "dedup_note": "No live agent; no sameSHA guard result/register/evidence. Old actual-wire code review ended at3message cap; only new protected ledger config lookup and exact old-runtime read boundary, no repeated full module/model extraction.",
       "review_started_at": "2026-10-04T11:15:52Z",
       "actual_review_seconds": 429
+    },
+    {
+      "task_name": "review_b03view_569ea0a",
+      "purpose": "review",
+      "module": "b03view",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
+        "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/delta.json",
+        "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/test_receiving_view.py"
+      ],
+      "patch_sha": "569ea0ad772368ce50d4b30053375a4e4ad53be6",
+      "spawned_at": "2026-10-04T12:05:24.467314+00:00",
+      "ended_at": "2026-10-04T12:11:24Z",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/independent-view-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_VIEW_ONLY",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live agent, sameSHA register/independent result absent. Earlier URI and D01 view reviews preserved; only explicit oneB03 sameResult/newRun proof selection delta.",
+      "review_started_at": "2026-10-04T12:06:16Z",
+      "actual_review_seconds": 308
+    },
+    {
+      "task_name": "review_d03chain_26ad04f",
+      "purpose": "review",
+      "module": "d03_logical_continuation",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/logical_source.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/test_logical_source.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/measure_preflight.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/actual-preflight.json"
+      ],
+      "patch_sha": "26ad04fbbc84f3316b927f349955e6a365d22c5c",
+      "spawned_at": "2026-10-04T12:46:53.419380+00:00",
+      "ended_at": "2026-10-04T12:55:29Z",
+      "tool_calls": 26,
+      "ordinary_messages": 2,
+      "result_path": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_LITERAL_CLOSURE_NOT_FULL_COMPANY",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "Authoritative list only root running and three completed earlier agents; register/evidence no sameSHA/new closure scope. Earlier source/context/decoder reviews preserved; no new model answer or repeated source/NLP review.",
+      "review_started_at": "2026-10-04T12:48:15Z",
+      "actual_review_seconds": 434
+    },
+    {
+      "task_name": "review_d03mapping_14f74c3",
+      "purpose": "review",
+      "module": "d03_complete_task_mapping",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/mapping-prompt.txt",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/test_task_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/measure_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/replay_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task-mapping.md",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/actual-task-mapping.json"
+      ],
+      "patch_sha": "14f74c3e313180d6c4d4e5c48ecf499ca72d4dae",
+      "spawned_at": "2026-10-04T15:42:50.485341+00:00",
+      "ended_at": "2026-10-04T15:52:03.503590+00:00",
+      "tool_calls": 26,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/independent-mapping-review/conclusion.md",
+      "verdict": "PASS_LIMITED_INPUT_OWNERSHIP_RESOURCE_MAPPING",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "Authoritative list only root running; sameSHA/new mapping scope absent from register/evidence. Earlier complete-chain reviewer ended; actual new compiler/partial data views/ownership/context/resource compiler scope, not repeated XML closure or model extraction.",
+      "review_started_at": "2026-10-04T15:44:00.229024+00:00",
+      "actual_review_seconds": 483.274566
+    },
+    {
+      "task_name": "diagnose_d03mapped_f7cb317",
+      "purpose": "DEVELOPMENT_INPUT_CHECK",
+      "module": "d03_complete_mapped_input",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-task-mapping-20261004/marriott/requests/ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496.json"
+      ],
+      "patch_sha": "f7cb3179f6af1e87d9d7b75877d186527b8aee15",
+      "spawned_at": "2026-10-04T16:06:38.940996+00:00",
+      "ended_at": "2026-10-04T16:18:54.798332+00:00",
+      "tool_calls": 46,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-input/conclusion.md",
+      "verdict": "ACTUAL_INPUT_READ_DONE_MISSING_C88_C89_DICTIONARIES_RECORDED",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live child; sameSHA/new complete logical-chain+atomic task input result absent. Old bounded fragment request trial ended; this task provides complete up-front chains and different non-overlapping responsibility. Parent original reference frozenf7cb before answer, withheld from reader; no same old paid group retry.",
+      "review_started_at": "2026-10-04T16:07:42.109879+00:00",
+      "actual_review_seconds": 672.688453
     }
   ],
   "ci_capacity_20260922": {
@@ -13900,6 +14011,233 @@
     "old_runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195",
     "old_runtime_material_scope": "Exact imported code plus existing configuration/spec/requirement authorities; raw SEC data and original native packet not copied/resigned. Frozen old mapper remains3097ae19. Source root stays original.",
     "guard_fix_review_sha": "9000d02a1a0ee57f967fe4690a2f407150e68662",
-    "guard_fix_review": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-guard-review/conclusion.md"
+    "guard_fix_review": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-guard-review/conclusion.md",
+    "delivery_head": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
+    "provider_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5979438617",
+    "queue_readback": "EXACT_EXISTING_C02_ROW_COMMON_RULE_UNCHANGED",
+    "queue_body_sha256": "f5ae4c7d7740d0b05ce53018032c18bdaed3d0ba1312696bd9d25b476c8cf498",
+    "old_runtime_after_change_read_seconds": 5.633
+  },
+  "ci_c7a96eae": {
+    "run_id": 37198645311,
+    "head_sha": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
+    "status": "completed",
+    "conclusion": "success",
+    "read_kind": "One valid immediate full40SHA observation after push; initial shortSHA lookup returnedempty and is not evidence. Reference workflow37198645286 success is separate.",
+    "updated_at": "2026-10-04T12:06:08Z",
+    "scope": "Prior C02 extraction archive and configured-ledger guard; not newB03 view diff."
+  },
+  "b03_marriott_390_receiving_20261004": {
+    "status": "PASS_EXPLICIT_FINITE_VIEW_LIMITED_REVIEW",
+    "evidence": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/",
+    "fixed_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+    "selected_new_run_id": "run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa",
+    "original_run_status_preserved": "OPEN",
+    "mechanical_copy_seconds": 25.749,
+    "original_attempt_bytes_unchanged": true,
+    "external_uri_repair_admission_credit_copied_to_native_receipt": false,
+    "selected_scope": "Approved458M D&A roles, exclude135M revenue deduction, URI repair proof and saved private run. Not all economic amortization/currenthead reexecution.",
+    "value": "0.1756281982738868097456656229",
+    "new_view_option": "--include-marriott-b03-reviewed",
+    "default_view_unchanged": true,
+    "coordinate_count": 390,
+    "known_selected_defect_coordinates": 17,
+    "other389_rows_changed": false,
+    "new_company_results": 0,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Exactnew view/proof binding review, then maintain current queue without rerunning original update.",
+    "reviewed_sha": "569ea0ad772368ce50d4b30053375a4e4ad53be6",
+    "review_path": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/independent-view-review/conclusion.md",
+    "review_scope": "Explicit oneB03 saved-scope Run selection and exact source proof; not all-economic scope or new currenthead update.",
+    "delivery_head": "49977fb5c283c3b341f2e257c993420d3e902e63",
+    "queue_readback": "EXACT_EXISTING_UNIFIED_VIEW_ROW_ONLY",
+    "queue_body_sha256": "6f0df9284928c54224a48d51dd318e9aff3777883c79530ee6187d4330f0fa4d"
+  },
+  "shared_increment_read_41949f67": {
+    "peer_sha": "41949f67dc01d47c4eb9d69afc1f977fab3619d8",
+    "previous": "e182857946cc4add2ef3e24a1ece6feffc93227d",
+    "register_delta": "peer_register_reads only",
+    "core_formatter_selector_unchanged": true,
+    "peer_scope": "Local continuation gates and historicalB06 source/C02 probe evidence. Own currentMarriott B03 unaffected; C02 source/core credit not copied.",
+    "read_fresh_fetch_success": true
+  },
+  "foundation_owner_read_20261004": {
+    "fixed_sha": "3e5e8cdf24ab16b415377459e822a45fcfce28ef",
+    "branch": "task/issue28-foundation-main-candidate",
+    "thread_title": "Issue #28 跨越 issues 54",
+    "scope": "Read fixed evidence only. Main generic scanner/old fixture work belongs to that staged integration, not duplicated in originalPR43; no other worktree modified."
+  },
+  "ci_49977fb5": {
+    "run_id": 37201399895,
+    "head_sha": "49977fb5c283c3b341f2e257c993420d3e902e63",
+    "status": "in_progress",
+    "conclusion": null,
+    "observation": "One immediate valid full40SHA reading after push; reference workflow success not main result.",
+    "natural_checkpoint_updated_at": "2026-10-04T12:55:04Z"
+  },
+  "shared_increment_read_429f9fcc": {
+    "own_read_sha": "49977fb5c283c3b341f2e257c993420d3e902e63",
+    "peer_read_sha": "429f9fcc0bba5a49bc08c69ff12f56340dfaabfa",
+    "previous_peer_sha": "41949f67dc01d47c4eb9d69afc1f977fab3619d8",
+    "register_delta": "Peer records its own pinned C02 upstream merge/preflight. No new result defect or source formatter repair.",
+    "related_read": "local-runtime-compatibility-2026-10-04/README.md and JPM FY2025 reference metadata, not all37 judgments or historical outputs.",
+    "disposition": "Same original raw bea52712, different prepared request/document identity. Reuse source clues only; no historical reading credit transferred. Current14 mark/legend source check is own direct reading.",
+    "first_wrong_path": "c02-table-model-input-20261004/README.md absent; actual committed path then read. No absence-of-defects inference."
+  },
+  "c02_table_member_legend_20261004": {
+    "state": "ORIGINAL_POSITIVE_SYMBOL_RELATION_CHECKED_INPUT_CHANGE_NOT_IMPLEMENTED",
+    "rule": "COLLAB-28-47-v1.2 and Issue28 section5.8",
+    "evidence": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/member-legend-source-check.json",
+    "scope": "Current JPM2026-04-06 DEF14A, same rawbea52712 as initial table trial. Fourteen principal membership marks reference adjacent original Member legend; all14 corroborated by original table22 and unchanged model answer.",
+    "old_reference_request_answer_native_preserved": true,
+    "model_answers_added": 0,
+    "fix_context_consumed": false,
+    "native_or_complete_company_credit": false,
+    "next": "Shared input owner#47 can preserve original symbol/legend metadata. Keep qualification media, Stock/Executive identities and whole-scope omissions unresolved; no second answer absent substantive adequate input repair.",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "delivered_sha": "058c80b198cde14a05077c9e448048f895a117c8",
+    "provider_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5979951136",
+    "server_notice_readback_exact": true,
+    "issue28_queue_readback_exact": true
+  },
+  "ci_058c80b1": {
+    "main_run_id": 37202384734,
+    "head_sha": "058c80b198cde14a05077c9e448048f895a117c8",
+    "status": "completed",
+    "conclusion": "success",
+    "initial_read_error": "vnext-fast-v2.yml not in default-branch workflow list; used full40SHA run lookup, did not treat failure as no CI.",
+    "reference_run_id": 37202384742,
+    "reference_is_not_main": true,
+    "natural_checkpoint_updated_at": "2026-10-04T12:44:59Z",
+    "terminal_updated_at": "2026-10-04T13:25:54Z"
+  },
+  "d03_logical_continuation_preflight_20261004": {
+    "status": "PASS_LITERAL_CLOSURE_RESOURCE_PREFLIGHT_AND_LIMITED_CODE_REVIEW",
+    "rule": "COLLAB-28-47-v1.2 and Issue28 section5.8",
+    "evidence": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/README.md",
+    "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+    "original_source_units": 17,
+    "original_native_facts": 1229,
+    "started_chains": 27,
+    "complete_literal_chains": 27,
+    "physical_segments_all_chains": 72,
+    "old_answer_four_anchors_physical_segments": 33,
+    "four_complete_chains_context_tokens": 134632,
+    "old_eight_location_contract_changed": false,
+    "model_answer_added": false,
+    "whole_source_responsibility_mapping_ready": false,
+    "semantic_native_or_company_credit": false,
+    "next": "Map all original responsibilities and shared context into bounded tasks; preserve10 remaining roots and1202 non-chain facts. No new model answer or complete company call plan yet. D03 real-purpose/resource/opportunity/wiring decisions remain separate.",
+    "ledger_sha256_unchanged": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "reviewed_patch_sha": "26ad04fbbc84f3316b927f349955e6a365d22c5c",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/independent-review/conclusion.md",
+    "tested_prototype_files_match_committed_patch": true,
+    "original_responsibility_inventory": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/original-responsibility-inventory.json",
+    "remaining_coverage": {
+      "visible_blocks": 1965,
+      "native_facts": 1229,
+      "non_chain_native_facts": 1202,
+      "supplement_roots": 65,
+      "whole_roots_in_chains": 55,
+      "remaining_footnote_and_relationship_roots": 10,
+      "remaining_root_raw_bytes": 4764
+    },
+    "delivery_head": "f661962f7939e7eeaed92491e8ad74473215f782",
+    "issue28_unique_queue_updated_readback_exact": true
+  },
+  "ci_f661962f": {
+    "main_run_id": 37204125514,
+    "head_sha": "f661962f7939e7eeaed92491e8ad74473215f782",
+    "status": "completed",
+    "conclusion": "success",
+    "observation": "One immediate full40SHA query after push; no re-run. Reference workflow37204125466 is separate.",
+    "terminal_updated_at": "2026-10-04T13:48:56Z"
+  },
+  "d03_complete_task_mapping_20261004": {
+    "status": "PASS_COMPLETE_MARRIOTT_INPUT_MAPPING_AND_LIMITED_NEW_DIFF_REVIEW",
+    "evidence": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task-mapping.md",
+    "source_units_unchanged": true,
+    "marriott_original_items": 3259,
+    "marriott_proposed_initial_requests": 16,
+    "marriott_max_context_tokens": 149722,
+    "marriott_actual_initial_measure_seconds": 3.728,
+    "marriott_guarded_final_replay_seconds": 8.162,
+    "jpm_status": "STOP_SHARED_VISIBLE_CONTEXT_RESOURCE",
+    "jpm_actual_task_context_tokens": 473727,
+    "jpm_proposed_initial_requests": null,
+    "jpm_source_items": 19764,
+    "no_new_model_or_company_credit": true,
+    "no_new_opportunities_or_live_permission": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Original reference first for one actual mapped Marriott responsibility, then one input-only blind development response. Keep ended old context trial ended; JPM context arrangement unresolved; no D03 real-purpose/opportunity grant.",
+    "reviewed_patch_sha": "14f74c3e313180d6c4d4e5c48ecf499ca72d4dae",
+    "review_path": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/independent-mapping-review/conclusion.md",
+    "review_scope": "Compiler/partial-source views, owned vs context, codec, finite guards and16 saved wires; not original semantic reference/model output/native company acceptance.",
+    "actual_tested_files_match_reviewed_sha": true,
+    "delivered_head": "9a70b9bae833129e278bb3856ee6474d033356c4",
+    "issue28_unique_queue_exact_readback": true
+  },
+  "shared_increment_read_f20d48ea": {
+    "own_sha_at_read": "f661962f7939e7eeaed92491e8ad74473215f782",
+    "peer_sha": "f20d48ea7420dc650c07de09b9f241d11dc28285",
+    "previous_peer_sha": "429f9fcc0bba5a49bc08c69ff12f56340dfaabfa",
+    "register_unchanged": true,
+    "related_delta": "historical_bond_sections.py fixed-zero registry/version lookup, not D03 source/task input. No common new C02 formatter or D03 core repair; no peer result credit copied."
+  },
+  "ci_9a70b9ba": {
+    "main_run_id": 37214773268,
+    "head_sha": "9a70b9bae833129e278bb3856ee6474d033356c4",
+    "status": "in_progress",
+    "conclusion": null,
+    "immediate_valid_head_observation": true,
+    "reference_workflow_success_not_main": true
+  },
+  "d03_mapped_task_blind_trial_20261005": {
+    "status": "INITIAL_RESPONSE_STRUCTURE_PASS_SOURCE_RELATIONSHIPS_LIMITED_INPUT_DICTIONARY_FIX_REQUIRED",
+    "evidence": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005",
+    "reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
+    "input_request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
+    "input_request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-task-mapping-20261004/marriott/requests/ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496.json",
+    "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+    "actual_task_index": 5,
+    "context_tokens": 134727,
+    "owned_items": 69,
+    "initial_context_consumed": true,
+    "fix_context_consumed": false,
+    "old_context_trial_reopened": false,
+    "model_or_company_credit": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "reader_task_name": "diagnose_d03mapped_f7cb317",
+    "raw_response_sha256": "f5d5368d3c7c5f1e03f82a15c7fd8a03fe5cd214ba22d276d9071859aa38f9aa",
+    "output_reference_tokens": 1165,
+    "findings": 4,
+    "unresolved": 4,
+    "comparison_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/initial-comparison.json",
+    "confirmed_missing_contexts": [
+      "c-88",
+      "c-89"
+    ],
+    "next": "Fix actual whole-XML dictionary dependency closure from admitted source; retain initial wire/response and reference. Then limited delta review and the single substantive input-correction context, not a third old fragment trial. No DeepSeek purpose or semantic/company credit."
   }
 }

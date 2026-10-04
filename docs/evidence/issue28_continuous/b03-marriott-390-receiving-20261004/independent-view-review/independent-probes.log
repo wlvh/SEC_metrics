@@ -1,0 +1,71 @@
+{
+  "base": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
+  "target": "569ea0ad772368ce50d4b30053375a4e4ad53be6",
+  "checks": [
+    {
+      "jpm_selected": false,
+      "default_equals_exact_base": true,
+      "changed_coordinates": [
+        [
+          "marriott_international",
+          "B03"
+        ]
+      ],
+      "withheld": 18,
+      "product_limits": 20
+    },
+    {
+      "jpm_selected": true,
+      "default_equals_exact_base": true,
+      "changed_coordinates": [
+        [
+          "marriott_international",
+          "B03"
+        ]
+      ],
+      "withheld": 17,
+      "product_limits": 20
+    },
+    {
+      "cli_flags": [],
+      "exit_code": 0,
+      "exact_api_output": true
+    },
+    {
+      "cli_flags": [
+        "--include-marriott-b03-reviewed"
+      ],
+      "exit_code": 0,
+      "exact_api_output": true
+    },
+    {
+      "cli_flags": [
+        "--include-jpm-reviewed",
+        "--include-marriott-b03-reviewed"
+      ],
+      "exit_code": 0,
+      "exact_api_output": true
+    },
+    {
+      "cli_flags": [
+        "--include-marriott-b03-reviewed",
+        "--include-jpm-reviewed"
+      ],
+      "exit_code": 0,
+      "exact_api_output": true
+    },
+    {
+      "refused_cli_flags": [
+        "--include-marriott-b03-reviewed",
+        "--include-marriott-b03-reviewed"
+      ],
+      "output_not_written": true
+    },
+    {
+      "refused_cli_flags": [
+        "--unknown"
+      ],
+      "output_not_written": true
+    }
+  ]
+}

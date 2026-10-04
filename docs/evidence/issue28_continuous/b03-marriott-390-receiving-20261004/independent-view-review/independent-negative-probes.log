@@ -1,0 +1,34 @@
+[
+  {
+    "case": "wrong_run",
+    "refused": "B03_MARRIOTT_SCOPE_OR_RUN_PROOF_INVALID"
+  },
+  {
+    "case": "wrong_receipt",
+    "refused": "FAILED validation receipt lacks a failed gate"
+  },
+  {
+    "case": "changed_native",
+    "refused": "B03_MARRIOTT_REPAIRED_ADMISSION_IDENTITY_CHANGED"
+  },
+  {
+    "case": "wrong_scope_root",
+    "refused": "B03_MARRIOTT_SCOPE_OR_RUN_PROOF_INVALID"
+  },
+  {
+    "case": "proof_hash",
+    "refused": "B03_MARRIOTT_PROOF_BYTES_CHANGED:docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/exercise-repair.json"
+  },
+  {
+    "case": "period_start",
+    "refused": "B03_MARRIOTT_SCOPE_OR_RUN_PROOF_INVALID"
+  },
+  {
+    "case": "proofset_plus",
+    "refused": "B03_MARRIOTT_REQUIRED_PROOF_SET_CHANGED"
+  },
+  {
+    "case": "economic_claim",
+    "refused": "B03_MARRIOTT_SCOPE_OR_RUN_PROOF_INVALID"
+  }
+]

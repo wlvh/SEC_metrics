@@ -117,3 +117,31 @@ The narrow9000d02 guard delta then passed independent review:25 tools/3messages,
 17 tests and old-runtime禁网原ID冷读. The old wider mapper and the model output
 were not resampled or reapproved. This is a path-protection integration fix,
 not a change to extraction or additional business permission.
+
+## Post-trial original Member legend check
+
+The current parent subsequently checked a specific missing-input relationship,
+without changing the pretrial reference, request, response or native objects.
+`check_member_legend.py` uses the existing table parser and the same authenticated
+original bytes. All 14 non-text member marks in table116 reference the same
+literal image src/alt/style as the adjacent table117 legend labelled `Member`
+in original B1276. Their row/column positions match the 14 named principal
+committee memberships independently listed in original table22. The existing
+blind response already states those same positive relations using the textual
+roster. No new missed principal membership or false relation was identified in
+this limited comparison; blank cells still do not prove non-membership.
+
+`member-legend-source-check.json` preserves the exact original tag locations,
+digests, legend and context. This supports a concrete source representation
+improvement: retain the mark locations and their original legend relation in
+the delivered input. It does not interpret image pixels, resolve qualification
+matrix images, establish Stock/Executive identities, or prove full-filing
+coverage. The original model's three unresolved entries remain unchanged:
+evidence learned after the response must not be inserted into its old request.
+
+The shared input implementation remains owned by #47; the receiving route
+provides this current-source counterexample and the positive table22 comparison.
+No parallel formatter, semantic regex, new model answer or business call was
+created. Peer429f9fcc was read at a fixed commit: its own full JPM reference
+uses the same raw original, but a different request/document identity. That
+reading is a shared development clue, not this route's independent acceptance.

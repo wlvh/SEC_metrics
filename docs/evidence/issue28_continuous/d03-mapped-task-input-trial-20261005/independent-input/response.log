@@ -1,0 +1,124 @@
+{
+  "findings": [
+    {
+      "subject": "Marriott International, Inc. — U.S. federal income tax returns for tax years through 2022",
+      "event_dates": [],
+      "reported_context_times": [
+        "All issues settled as of year-end 2025",
+        "Tax years through 2022 are the examined return periods, not the settlement date"
+      ],
+      "status": "All reported issues for tax years through 2022 settled as of year-end 2025",
+      "description": "The U.S. Internal Revenue Service has examined the Company's federal income tax returns. The Company reports that all issues for tax years through 2022 have been settled as of year-end 2025. This statement does not close the separately reported 2023 and 2024 audits or examinations in other jurisdictions.",
+      "evidence": [
+        [
+          7,
+          "NATIVE_FACT",
+          507
+        ],
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1201
+        ]
+      ]
+    },
+    {
+      "subject": "Marriott International, Inc. — U.S. federal income tax audits for tax years 2023 and 2024",
+      "event_dates": [],
+      "reported_context_times": [
+        "2023 and 2024 are the tax years under audit",
+        "Currently ongoing in the FY2025 Form 10-K filed February 10, 2026",
+        "Native context c-1 covers January 1 through December 31, 2025; it is an accounting reporting interval"
+      ],
+      "status": "Ongoing as reported",
+      "description": "In the paragraph discussing U.S. Internal Revenue Service examinations of the Company's federal income tax returns, the Company expressly reports that its 2023 and 2024 tax-year audits are currently ongoing. The source does not give their commencement dates, disputed issues, proposed adjustments or outcomes.",
+      "evidence": [
+        [
+          7,
+          "NATIVE_FACT",
+          507
+        ],
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1201
+        ]
+      ]
+    },
+    {
+      "subject": "Marriott International, Inc. consolidated tax-return disclosure — various foreign, state and local income tax returns",
+      "event_dates": [],
+      "reported_context_times": [
+        "Under examination in the FY2025 Form 10-K filed February 10, 2026",
+        "No examined tax years specified for these returns"
+      ],
+      "status": "Under examination by the applicable taxing authorities as reported",
+      "description": "The Company states that it files income tax returns, including subsidiary returns, in jurisdictions around the world, and that various foreign, state and local income tax returns are also under examination by the applicable taxing authorities. The disclosure identifies these categories collectively and does not identify individual authorities, jurisdictions, subsidiaries, return years or matters.",
+      "evidence": [
+        [
+          7,
+          "NATIVE_FACT",
+          507
+        ],
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1201
+        ]
+      ]
+    },
+    {
+      "subject": "Marriott International, Inc. consolidated tax disclosure — settlements with unidentified taxing authorities",
+      "event_dates": [],
+      "reported_context_times": [
+        "2023 and 2024 are the annual unrecognized-tax-benefit roll-forward periods"
+      ],
+      "status": "Settlements reported; individual matters and authorities unidentified",
+      "description": "The complete unrecognized-tax-benefit roll-forward reports decreases attributable to settlements with taxing authorities of $9 million in the 2023 section and $2 million in the 2024 section. These are changes in the unrecognized-tax-benefit balance, not identified cash settlement payments or fines. The table does not identify which proceedings or authorities produced those settlements, or whether they correspond to the separately described IRS matters through tax year 2022.",
+      "evidence": [
+        [
+          7,
+          "NATIVE_FACT",
+          507
+        ],
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1187
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1192
+        ]
+      ]
+    }
+  ],
+  "unresolved": [
+    "The source gives no actual commencement dates for the ongoing IRS or other tax examinations and no exact settlement dates. The tax years examined, annual accounting periods and year-end status date cannot substitute for those event dates.",
+    "The foreign, state and local examination disclosure does not identify particular authorities, jurisdictions, subsidiaries, tax years, allegations, proposed adjustments or outcomes. Jurisdictions named in the effective-tax-rate and taxes-paid tables do not identify the jurisdictions under examination.",
+    "The 2023 and 2024 settlement-related roll-forward decreases cannot be assigned to specific IRS, foreign, state or local examinations from the supplied text; their relationship to the IRS issues settled through tax year 2022 is unknown.",
+    "The aggregate unrecognized-tax-benefit, accrued-interest and penalty balances do not identify amounts, penalties or final governmental determinations for any particular ongoing examination. No such attribution is established here."
+  ],
+  "scan_complete": true
+}

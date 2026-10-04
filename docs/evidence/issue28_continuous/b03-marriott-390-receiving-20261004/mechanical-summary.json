@@ -1,0 +1,98 @@
+{
+  "original_attempt": "/private/tmp/issue28-b03-marriott-namespace-repair-20261001/normal-update/marriott_international/metrics/B03/attempts/aa11c78b0cd64e1fb7b88bd65393b780",
+  "installed_code_data_root": "/private/tmp/issue28-b03-marriott-namespace-repair-20261001/normal-update/marriott_international/metrics/B03/attempts/aa11c78b0cd64e1fb7b88bd65393b780/data",
+  "run_copy": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b03-marriott-390-receiving-20261004/run-copy",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "formal_adoption": false,
+  "return_code": 0,
+  "seconds": 25.749,
+  "original_files_unchanged": true,
+  "mechanical_result": {
+    "status": "PASSED_MECHANICAL_COPY_ONLY",
+    "receipt": {
+      "status": "PASSED",
+      "view_id": "run:sha256:47d2217e70df5c79bda0a72eee8e26c70f6595c39a3e48955304f733269dfbdd",
+      "checks": [
+        {
+          "check": "REVIEW_BINDINGS",
+          "status": "PASS"
+        },
+        {
+          "check": "REVIEW_ASSETS",
+          "status": "PASS"
+        },
+        {
+          "check": "REPOSITORY_BINDINGS",
+          "status": "PASS"
+        },
+        {
+          "check": "RESULT_EXACT_SET",
+          "status": "PASS"
+        },
+        {
+          "check": "RECORD_GRAPH_REPLAY",
+          "status": "PASS"
+        },
+        {
+          "check": "EXECUTION_SEMANTICS",
+          "status": "PASS"
+        },
+        {
+          "check": "ARTIFACT_EXACT_SET",
+          "status": "PASS"
+        }
+      ],
+      "artifact_hashes": {
+        "records.jsonl": {
+          "sha256": "e03cbd264e805ef1d0519efa3bbc1e36757340c07960ed9168e8fd34cf6f7aa3",
+          "size": 12200
+        },
+        "review_decisions.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        }
+      },
+      "record_type": "VALIDATION_RECEIPT",
+      "validation_receipt_id": "sha256:8eebd819fc8efb5a79ac5d546f1d64070044dc3d2f6ed2bd8fd07191f6ababd0"
+    },
+    "native_result": {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "metric_id": "B03",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+      "unit": "ratio",
+      "value": "0.1756281982738868097456656229"
+    },
+    "run_id": "run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa",
+    "requirement_id": "issue_28_v13",
+    "requirement_closure_hash": "sha256:33ee286c21be8262e550939e2a94512775996635c569bcd12531efca2014ed83",
+    "runtime_module": "/private/tmp/issue28-b03-marriott-namespace-repair-20261001/normal-update/marriott_international/metrics/B03/attempts/aa11c78b0cd64e1fb7b88bd65393b780/data/scripts/vnext/run_store.py",
+    "public_row_sha256": {
+      "metrics_matrix.csv": "cca9e6d1eec62a8dedff3fbb4fd2c2f0eb918d334dec53de514bfe1c56de96f4",
+      "metric_evidence.csv": "3a30295b177f1673148a6afe246487652650fdf2f9b6a907b39d90eba69c00c4"
+    },
+    "current_uri_repair_admission_credit_from_this_replay": false,
+    "calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "status": "PASS_ONE_EXACT_MARRIOTT_B03_RUN_COPY",
+  "changed_copy_files": [
+    "validation.json"
+  ]
+}
