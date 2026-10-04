@@ -487,3 +487,28 @@ shard 2 在 1150.889 秒完成，但 E01 阅读登记模块有两条旧断言失
 [失败、复现及修复](../ci-e01-reading-register-2026-10-04/README.md) 保留实际原因；
 `42cc582b` 修正测试后 45 项相关回归通过。此批四片没有全通过，当前修复 head 的
 完整 CI 仍须另读，不把其余三片的结果拼成一个新 head 的完整成功。
+
+## E01 测试修后：42cc582b 完整 CI 通过
+
+[run 37183809006](https://github.com/wlvh/SEC_metrics/actions/runs/37183809006) 的所有原生
+作业、快速层、四个来源分片及来源聚合均已结束 success；reference run 37183808994
+也 success。`saved-source-finishes-head-42cc582b.json` 保存四份完整最终报告、逐作业
+终态及准确170个唯一入口/0重叠。四片实际分别为1057.486、1711.561、1622.443、
+1667.746秒，保持原两worker、单项上限和35分钟作业上限。早前失败和取消不重标。
+此结果只证明修正E01断言的上一提交；随后B06 head `37a38d2f` 的当前CI另读，
+不能因前一提交成功宣称它完整通过。
+
+## B06 head 37a38d2f：完整 CI 已通过
+
+[vNext 37185864084](https://github.com/wlvh/SEC_metrics/actions/runs/37185864084) 和
+[reference 37185864087](https://github.com/wlvh/SEC_metrics/actions/runs/37185864087)
+均 completed/success。实际checkout merge `d2f8fb15`，head `37a38d2f`、base `05d11df2`。
+四片43/42/42/44入口，总171唯一入口、0重叠、全部rc0；运行器实耗分别
+1675.446/1384.593/1424.593/1615.020秒。新增B06原件模块8例实耗83.004秒，
+没有提高240秒单项或35分钟作业上限。四份完整报告在
+`saved-source-finishes-head-37a38d2f.json`；该文件保持当时JPM作业尚未结束的读取事实。
+
+`complete-ci-head-37a38d2f.json`另存后续17个作业最终全部success及两个workflow终态，
+并从日志读取快速层的完整182入口报告：单次完整PASSED，231.519秒，原30秒单项上限，
+最慢17.370秒。它不重标本地首批182入口的快照超时。CI只证明该准确代码/检查范围，
+不等于C02/B06完整业务内容接受；后续提交仍须显示自己的CI状态。
