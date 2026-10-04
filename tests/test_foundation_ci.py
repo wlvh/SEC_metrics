@@ -21,6 +21,10 @@ class FoundationCiPartitionTest(unittest.TestCase):
         self.assertEqual(len(ci.inherited.FAST_TESTS),
                          len(result['fast'])+len(result['source-material']))
         self.assertIn('tests.vnext.test_financial_duration',result['source-material'])
+        # v2 already recognizes this whole-table original as needing a
+        # different execution shape. Preserve it whole under material limits.
+        self.assertIn(ci.v2.REPLACED,result['source-material'])
+        self.assertNotIn(ci.v2.REPLACED,result['fast'])
 
     def test_duplicate_inherited_selector_is_rejected(self):
         original=ci.inherited.FAST_TESTS

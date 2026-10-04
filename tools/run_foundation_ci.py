@@ -16,7 +16,8 @@ import run_fast_tests_v2 as v2
 def partition():
     original = tuple(inherited.FAST_TESTS)
     source = tuple(s for s in original
-                   if any(s.startswith(prefix) for prefix in v2.SOURCE_PREFIXES))
+                   if s == v2.REPLACED
+                   or any(s.startswith(prefix) for prefix in v2.SOURCE_PREFIXES))
     fast = tuple(s for s in original if s not in source)
     if (len(set(original)) != len(original) or set(fast) & set(source)
             or set(fast) | set(source) != set(original)
