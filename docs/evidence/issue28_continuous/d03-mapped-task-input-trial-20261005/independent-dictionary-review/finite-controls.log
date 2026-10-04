@@ -1,0 +1,41 @@
+[
+  {
+    "case": "already-present-dictionary-missing-distinct-namespace",
+    "source_digest": "aa47d477cdd3b95064a9c428790403c349069c60b44000c39c99d52ab3bcb582",
+    "source_single_document": true,
+    "source_digest_and_unit_ids_checked_by_census": true,
+    "no_continuedat_anchors": true,
+    "supplement_xml": "<outer><ix:nonFraction contextRef=\"c1\">10</ix:nonFraction></outer>",
+    "context_definition": {
+      "raw_xml": "<context>2025</context>",
+      "namespace_environment_id": "context-only-env"
+    },
+    "present_namespace_keys": [
+      "env"
+    ],
+    "result": "ACCEPTED",
+    "namespace_after_codec": false,
+    "owned_items": 2,
+    "restored_context_equal_original": true
+  },
+  {
+    "case": "original-namespace-positive-control",
+    "source_digest": "32a68c54a4208e6c2bf9a73cadcea23fae612e1cba9158924f6a76c4d39afbe6",
+    "source_single_document": true,
+    "source_digest_and_unit_ids_checked_by_census": true,
+    "no_continuedat_anchors": true,
+    "supplement_xml": "<outer><ix:nonFraction contextRef=\"c1\">10</ix:nonFraction></outer>",
+    "context_definition": {
+      "raw_xml": "<context>2025</context>",
+      "namespace_environment_id": "context-only-env"
+    },
+    "present_namespace_keys": [
+      "env",
+      "context-only-env"
+    ],
+    "result": "ACCEPTED",
+    "namespace_after_codec": true,
+    "owned_items": 2,
+    "restored_context_equal_original": true
+  }
+]

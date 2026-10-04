@@ -1,0 +1,14 @@
+审阅工具记录（wrapper 与内层保守计数）
+01 functions.exec：clock__curr_time；exec_command Git status/HEAD/限定 diff stat；exec_command MEMORY.md 精确关键词查询无命中；exec_command gh issue view 28（只读，updatedAt 2026-10-04T16:30:57Z）。累计 5。
+02 functions.exec：限定源码/测试 Git diff；task_mapping.py nl；四份指定报告/日志及指定测试方法定位。累计 9。
+03 functions.exec：既有指定测试和 _source/codec 方法定位；私有保存材料文件名/报告路径定位；指定 unittest 写 specified-tests.log。累计 13。
+04 functions.exec：有限读取 _source/codec 与 replay_mapping.py 的报告入口；文件清单和保存 source_path 定位。累计 16。一次 guessed manifest 路径不存在；随后按实际文件定位。一次单行保存报告 rg 输出过长，未执行全计划。
+05 functions.exec：fixture/逻辑链字典 guard 路径读取及原答摘要字段定位；原编译器和依赖 git show 精确字节取回/哈希比较，原答仅哈希与 Git bytes 比较。累计 19。
+06 functions.exec：首次有限 present-namespace 控制（有 supplement 同 env，故进一步区分 env）；只写 finite-controls.log。累计 21。
+07 functions.exec：改用 distinct context-only-env 的有限 integrated prepare 反例及同路径正向控制，只写 finite-controls.log。累计 23。
+08 functions.exec：禁 socket/subprocess 后从实际 source 仅重建 corrected-request 一次；旧新 payload 精确比较、独立 literal ref 匹配、codec bytes 核对，只写 one-request-rebuild.log。累计 25。
+09 functions.exec：clock__curr_time；依赖 current bytes/原答记录 hash 比较，更新 preservation.log，核对 HEAD/status。累计 28。
+10 functions.exec：仅写 conclusion.md/tool-audit.log，UTC 结束时间由 datetime UTC 获取。累计 30。
+11 functions.exec（实际最终核查）：读取 conclusion 与日志存在性、Git status、记录 UTC。最终实际 32，未超过 80。实际最终核查另写 final-audit.log。
+UTC 开始 2026-10-04 16:44:23 UTC；归档时间 2026-10-04 16:51:55 UTC
+最终核查 UTC 2026-10-04 16:52:24 UTC

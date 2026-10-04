@@ -54,17 +54,17 @@ def _complete_xml_dictionaries(source, parts):
             need(matches, 'XML_DICTIONARY_DEPENDENCY_MISSING')
             first_ui, definition = matches[0]
             need(all(v == definition for _, v in matches), 'XML_DICTIONARY_DEPENDENCY_CONFLICT')
+            unit = source['units'][first_ui]
+            env = definition['namespace_environment_id']
+            need(env in unit['payload']['namespace_environments'], 'XML_DICTIONARY_NAMESPACE_MISSING')
             if key in present[kind]:
                 need(present[kind][key] == definition, 'XML_DICTIONARY_PRESENT_CHANGED')
                 continue
-            unit = source['units'][first_ui]
             part = donors.setdefault(first_ui, {'kind': 'NATIVE_FACTS', 'document_id': unit['document_id'],
                 'parent_source_unit_id': unit['unit_id'], 'original_indices': [],
                 'dictionary_context_only': True,
                 'payload': {'facts': [], 'contexts': {}, 'units': {}, 'namespace_environments': {}}})
             part['payload'][kind][key] = deepcopy(definition)
-            env = definition['namespace_environment_id']
-            need(env in unit['payload']['namespace_environments'], 'XML_DICTIONARY_NAMESPACE_MISSING')
             part['payload']['namespace_environments'][env] = deepcopy(unit['payload']['namespace_environments'][env])
             present[kind][key] = definition
     parts.extend(donors[i] for i in sorted(donors))
