@@ -1,0 +1,566 @@
+{
+ "record_type": "ISSUE47_LOCAL_WORKTREE_INPUT_TRANSFER",
+ "source_commit": "7b7f6ad9b5f00f704af93951bf9e48f31bdab882",
+ "created_at_utc": "2026-10-04",
+ "archives": [
+  {
+   "file": "c02-table-context-v2.tar.gz",
+   "bytes": 5187202,
+   "sha256": "b4661cc97db1b6a28c2a7d0b57c75ba803095d33205ae3c58e03adf2128b3df9",
+   "expanded_bytes": 52443678,
+   "file_count": 40,
+   "scope": "Four exact final development inputs plus original text documents, full table grids, raw primary HTML and recorded headers. No model answer or approval is bundled into these inputs.",
+   "members": [
+    {
+     "path": "c02/ford_motor_company-2022-12-31/context-measurement.json",
+     "bytes": 1174,
+     "sha256": "4c98eb46e13e1141617db7e900b89aed2c5b71e612fd793a3f1190331fa9ef01"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/document.json",
+     "bytes": 1372160,
+     "sha256": "ef62e424de1568a123f2215ba131752c76492ab2593ece3a02e2d3b863c62ad9"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/metadata.json",
+     "bytes": 2035,
+     "sha256": "ba3e5350debc7b4e5f505339d3cf721dcd1cd80a6bd504ff20fb3f400bf1019c"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/original-primary-headers-00.json",
+     "bytes": 1688,
+     "sha256": "6481e8b1c7b52fda00ff3b50c2488794e9e048989f0a32d739b9a6d054ab0b4d"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/original-primary.bin",
+     "bytes": 3389488,
+     "sha256": "1a3b6fedb789ddf2cedce0050317744da84afc737d754fba4d57b40d261fb2b1"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/prompt.txt",
+     "bytes": 3870,
+     "sha256": "b51ac75d6d739f517ebf0f5a6d6dcd04228af475ef8d0ffd39860f07102e1bfb"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/request-body.json",
+     "bytes": 621147,
+     "sha256": "146142032aea59dcc713cd07e6dfd1a44aaa0b8083ce8a5bcbc53115440b9f32"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/source-preparation-metadata.json",
+     "bytes": 1775,
+     "sha256": "ce5d0676919d768acea2598206f66fd83f4663c0b6ffae8c9511161bd01f69a1"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/table-grid.json",
+     "bytes": 2000582,
+     "sha256": "953dfa4037bb5f309125b59f0b22bae9262d3334b65fa0cb811d4003235d4763"
+    },
+    {
+     "path": "c02/ford_motor_company-2022-12-31/view.json",
+     "bytes": 601760,
+     "sha256": "b7097ec92ac0a7a7680f939ad6620bb808d1d79b9cc64e47dbb496b515b85320"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/context-measurement.json",
+     "bytes": 1174,
+     "sha256": "3a3839fe98f3ee1f884e12c0514855cf408cfb7f5ad68f8cf16379c251d58d5e"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/document.json",
+     "bytes": 1213124,
+     "sha256": "5e510d1b5a4ebcacf4833df7a434d1695ce087419c72123b591a669a0e818d39"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/metadata.json",
+     "bytes": 2064,
+     "sha256": "b12f1a8bd376be367f102b4bd08408c4372ad9f46ee1ee39a22a61c072b3c46a"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/original-primary-headers-00.json",
+     "bytes": 1644,
+     "sha256": "64c9db1ea3079c467fbc11aae051f0aea16d35478ab3594acbb55e7d99114033"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/original-primary.bin",
+     "bytes": 2767528,
+     "sha256": "5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/prompt.txt",
+     "bytes": 3877,
+     "sha256": "fa9d6df85e0783c857732657324757d9b8f477cae56b5f8299cc8a5785d5e38e"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/request-body.json",
+     "bytes": 602924,
+     "sha256": "c912d3a8bcd1ab5350eef9c733110e3a9fa9ae6ce7ec4ac1a635dd454835931a"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/source-preparation-metadata.json",
+     "bytes": 1803,
+     "sha256": "285025d8520cb1079aadd3b7331a8ec18665561bee5360405bd27a2f7f74717b"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/table-grid.json",
+     "bytes": 7849378,
+     "sha256": "8f958f993e810d57aeab606aea5b4b02299ec066b80fcdd58cd1ec7a94fbcdcd"
+    },
+    {
+     "path": "c02/jpmorgan_chase-2021-12-31/view.json",
+     "bytes": 583274,
+     "sha256": "f8b3fd7c88b7914fd29f7df232f2ceaf510e772bb0d83e616b79238bd57af8ae"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/context-measurement.json",
+     "bytes": 1175,
+     "sha256": "d9ebdec2d8cd13184bcc936caa5739afa4bbe80a5eb8d21d572fa81b6a30ae67"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/document.json",
+     "bytes": 1628869,
+     "sha256": "fe7276fcd73206c423974b3a88b5d24accb75651b5ad61403eed7c3a14899138"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/metadata.json",
+     "bytes": 2047,
+     "sha256": "6c2b452732fcb64d8bdb57afb63f91b579e2ebb762cb0d3df9b67a0bc9b0aff1"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/original-primary-headers-00.json",
+     "bytes": 1659,
+     "sha256": "69a0582a963128e71388d58338a2c30f8370f5f7d97004bd5c639bb8370fc874"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/original-primary.bin",
+     "bytes": 3966321,
+     "sha256": "f3c138a9411eaeeb7272b6da5be398dd79e9c92d1fbdf42fea8f72f25b1067d8"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/prompt.txt",
+     "bytes": 3881,
+     "sha256": "c493750a65817622c0613fa24bed48f9164c5631e0d399bc8aa0eba48ca7a526"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/request-body.json",
+     "bytes": 842620,
+     "sha256": "c6c224c5d73152b7a2712114d4715053934b2318cebf397d63c37193256b67a5"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/source-preparation-metadata.json",
+     "bytes": 1786,
+     "sha256": "d58044b5c389c973508cef3200966ee58cadd248165b6787b58bb86f41fed953"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/table-grid.json",
+     "bytes": 11019938,
+     "sha256": "73f5917cbdba99142fb1f797558cb6751974fcb6c8ec0b141bdb27f17e2fe47a"
+    },
+    {
+     "path": "c02/lumen_technologies-2021-12-31/view.json",
+     "bytes": 815424,
+     "sha256": "fff4bcb92227bbcd62d70f63ae69c2358e35fca3d5365f95e8ba5bebfa203ad8"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/context-measurement.json",
+     "bytes": 1174,
+     "sha256": "ac1239e86c5799d0d11aae4e3a5122b50160f1e32e1937524a7bd37f3106b11a"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/document.json",
+     "bytes": 1110822,
+     "sha256": "468ac093fd213b97562f9cfec52ffea6a9428ab66c3e41089572ae7092d5ac48"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/metadata.json",
+     "bytes": 2019,
+     "sha256": "3761c37bff736f2c658df6726d4881b5fd8ae5f74b1db3c80f0a12b154ba6b48"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/original-primary-headers-00.json",
+     "bytes": 1703,
+     "sha256": "a0e5b4e56d82bc7c0332128ddc1a22408bff0ed55d96ed2bd1ef780e97db8205"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/original-primary.bin",
+     "bytes": 2372694,
+     "sha256": "cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/prompt.txt",
+     "bytes": 3868,
+     "sha256": "3b00c89d2106f36fbb6135456e6ef71a331bbc07fa05c7e90cd96f117a42f850"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/request-body.json",
+     "bytes": 652340,
+     "sha256": "c40ac56cfdb82f068c81091e23e1cef22344d0306af6a99288fe9b7d00890f8b"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/source-preparation-metadata.json",
+     "bytes": 1758,
+     "sha256": "47b68d75a97ef03a37d8a690eaf896f51e1c931d5a3f0d797dbd9d381293b320"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/table-grid.json",
+     "bytes": 8356610,
+     "sha256": "50d907cc30464150b86002d7a8bfae90e4743ca8a5012eb64ecbf38a7ecd2049"
+    },
+    {
+     "path": "c02/pfizer-2022-12-31/view.json",
+     "bytes": 634501,
+     "sha256": "34133da4779fab1ed38fa195c3f26d06c362e3277b96ec43cc0e8645ee470eee"
+    }
+   ]
+  },
+  {
+   "file": "b06-financing-v3.tar.gz",
+   "bytes": 1221312,
+   "sha256": "31720f004afdce4ce2cee01aa3d29b6140be94751f9d4ee79a383edb1fce860e",
+   "expanded_bytes": 12278540,
+   "file_count": 35,
+   "scope": "Normal Macy FY2024 capture, prior component diagnostic and all seven v3 source-preparation outputs. Development only; no complete B06 scope proof, Run, acceptance or runtime wiring.",
+   "members": [
+    {
+     "path": "b06/capture/balance-reports.json",
+     "bytes": 43486,
+     "sha256": "eb698db2f099f110fac2e600a23dae453fbf654f62ef432af70e3cf50b7aa6b2"
+    },
+    {
+     "path": "b06/capture/candidate-bonds.json",
+     "bytes": 113312,
+     "sha256": "06d93c022b079f13d7547f886c515757f611fc38e3dd7d512643d98f78a484f7"
+    },
+    {
+     "path": "b06/capture/candidate-composition.json",
+     "bytes": 409446,
+     "sha256": "fb53d5936d365627179a603494f0a4f9c3ffda40fe405ff98936b9bb7133ad9f"
+    },
+    {
+     "path": "b06/capture/candidate-members.json",
+     "bytes": 72245,
+     "sha256": "bdea75fadbd2510118e146fee2b1c84c99c07cb42eeb80134934dfd066290f9b"
+    },
+    {
+     "path": "b06/capture/commitments.html",
+     "bytes": 1024,
+     "sha256": "48fbbcf035b942f6448d901a5b9e9fe808911253bcded123f21d542aefc452f5"
+    },
+    {
+     "path": "b06/capture/commitments.txt",
+     "bytes": 877,
+     "sha256": "b4c1c7044493adb916e70e60b216cf515d846d6a0e5ba9bf15b97e9cccca1dcd"
+    },
+    {
+     "path": "b06/capture/component.json",
+     "bytes": 37674,
+     "sha256": "23182571bf9b992d9a77000d2180b86ee7e4cbfe160bd8965a0d78987a9de810"
+    },
+    {
+     "path": "b06/capture/debt.html",
+     "bytes": 82193,
+     "sha256": "fd07eb9879eafb21e7bd6f0c483a5ad4ea11ecc6ff8e9722c91b83041f2c4f44"
+    },
+    {
+     "path": "b06/capture/debt.txt",
+     "bytes": 5265,
+     "sha256": "e413bde65ab3a24a34a5f5dce1be89a8228141c7a9f7a7b79bdf84010cfd1058"
+    },
+    {
+     "path": "b06/capture/fair_value.html",
+     "bytes": 15098,
+     "sha256": "159468e7d568eade18790f7d893394fe9daed56530cb747dd63c2b041611648e"
+    },
+    {
+     "path": "b06/capture/fair_value.txt",
+     "bytes": 1893,
+     "sha256": "42d1590c4eb03cf7b6a8a9e30f9609ce247b632cf3e7c8bc205e9cf754f967a3"
+    },
+    {
+     "path": "b06/capture/fair_value_table.html",
+     "bytes": 5464,
+     "sha256": "b46234d604d8c96d62aef913a1974456932b5701fe285942e3ef77f5f8fa899b"
+    },
+    {
+     "path": "b06/capture/fair_value_table.txt",
+     "bytes": 262,
+     "sha256": "471cdc88f246ba210fe352ac7a9e7ff098a8b7769a94bc9c031163a85510b962"
+    },
+    {
+     "path": "b06/capture/lease_classification.html",
+     "bytes": 20362,
+     "sha256": "ea31c078bf19e5ad6a80600c9500b60a9c743882f6585611524b140875c4888e"
+    },
+    {
+     "path": "b06/capture/lease_classification.txt",
+     "bytes": 1319,
+     "sha256": "8e2d23d711b205f965e885900cf29f33655eefd89caca108a7f9fdba70d343f1"
+    },
+    {
+     "path": "b06/capture/lease_maturity.html",
+     "bytes": 18875,
+     "sha256": "ef038338ef3ec04bea972adf29f550bbd076341dd448e300d3301dd2ebeb73e4"
+    },
+    {
+     "path": "b06/capture/lease_maturity.txt",
+     "bytes": 854,
+     "sha256": "cf1eb9a8f3783deef4618d007742962ac16eba172c3651d24125e7fdc7dca378"
+    },
+    {
+     "path": "b06/capture/native-bond-facts.json",
+     "bytes": 13274,
+     "sha256": "1fc045e675f2c9762aefb161e80a38f08013e8914900c7388574d99b6a0deceb"
+    },
+    {
+     "path": "b06/capture/prepared.json",
+     "bytes": 7361,
+     "sha256": "44b4ecd26bbca6f8477e63ccbbf763d85ffed39579ca5818702a085ff014a5f9"
+    },
+    {
+     "path": "b06/capture/primary-capacity-facts.json",
+     "bytes": 2224,
+     "sha256": "3d523c9c4d9425beba4071b3ea842e0331e06cbccfcdb10feee9b3ad91e80faf"
+    },
+    {
+     "path": "b06/capture/primary-document.json",
+     "bytes": 951394,
+     "sha256": "45db249252afa2fc6e6522b00501bf0d0ff8f7e6d42f94d884273b2cf73e488b"
+    },
+    {
+     "path": "b06/capture/primary-visible-search.txt",
+     "bytes": 296553,
+     "sha256": "fbf0853a17d704bdc8618e6b33991e4b6bf035ebb1c567637a05a8c22a923bb3"
+    },
+    {
+     "path": "b06/capture/primary.bin",
+     "bytes": 2171242,
+     "sha256": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549"
+    },
+    {
+     "path": "b06/capture/schedule.html",
+     "bytes": 30176,
+     "sha256": "0a370c0284d231b6da837e0d0bbe3cf5b406a437f5debe651747106dc7e85f27"
+    },
+    {
+     "path": "b06/capture/schedule.txt",
+     "bytes": 1135,
+     "sha256": "bf72a3319a2f944da66241f9a66ddc750371e333a854d98b816806f6295daa70"
+    },
+    {
+     "path": "b06/capture/sources.json",
+     "bytes": 2187,
+     "sha256": "713c630941a118425a99004ac20bb064a52abf7bbc36523732e0b42beabfe590"
+    },
+    {
+     "path": "b06/capture/xml-capacity-facts.json",
+     "bytes": 1828,
+     "sha256": "fe134567735fc47e8a90d74d48c886a852979650dbbc823650b27c0d146f9aab"
+    },
+    {
+     "path": "b06/capture/xml.bin",
+     "bytes": 2004486,
+     "sha256": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e"
+    },
+    {
+     "path": "b06/source-v3/document.json",
+     "bytes": 840181,
+     "sha256": "87e1112c63804161448ced4027608de96e62331aef8e826c9c17b6f982fb4bd9"
+    },
+    {
+     "path": "b06/source-v3/metadata.json",
+     "bytes": 1746,
+     "sha256": "f40d93b9174df9b09a42f7a77a1e596b9766a71ec4d77e85945f5ba723dddc03"
+    },
+    {
+     "path": "b06/source-v3/native-current-financing-facts.json",
+     "bytes": 265709,
+     "sha256": "1728dd8dc7ed7611ca6a9f24192069138ccc5574b30f3730925948bfd2aea140"
+    },
+    {
+     "path": "b06/source-v3/normal-b06-source-binding.json",
+     "bytes": 11864,
+     "sha256": "8bead84e624769cab754e4da9685f6ad673611aeca28bfbe229e3569365a3ed3"
+    },
+    {
+     "path": "b06/source-v3/source-only-package.json",
+     "bytes": 651453,
+     "sha256": "8ccd641b89506d3fb3bdb8c201e7be224f407ebcc8839dc5a7a3ac219e31f7ff"
+    },
+    {
+     "path": "b06/source-v3/table-grid.json",
+     "bytes": 3812835,
+     "sha256": "d12b78b1006472f7c9d71531b7bb56f559622546f925e431df81e6123d694a2b"
+    },
+    {
+     "path": "b06/source-v3/view.json",
+     "bytes": 383243,
+     "sha256": "d232beaf3551dbe55a95405cd46332ed3db94b9df7c9314098ed26c9f9236b76"
+    }
+   ]
+  },
+  {
+   "file": "ford-reading-and-checks.tar.gz",
+   "bytes": 132272,
+   "sha256": "eb734475e0c868d7d02658dc81da9b07ff1c1d3fc7551898f6f8d835831375db",
+   "expanded_bytes": 439138,
+   "file_count": 21,
+   "scope": "Fourteen complete executor reading packets/index and two post-commit mechanical check logs. Reader judgments and frozen references remain in their existing committed evidence paths.",
+   "members": [
+    {
+     "path": "checks/7b7f6ad9/alignment.log",
+     "bytes": 108,
+     "sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb"
+    },
+    {
+     "path": "checks/7b7f6ad9/mint.log",
+     "bytes": 46,
+     "sha256": "def6ccc71abfbc5f3fe86206d9076322ee067fdde8236426c10c67ad88ddaf7b"
+    },
+    {
+     "path": "checks/7b7f6ad9/summary.json",
+     "bytes": 157,
+     "sha256": "267aade00e9af45033ede8c369476d8cb795a7e2926a0bae42fcb661067b8931"
+    },
+    {
+     "path": "checks/f477ed2a/alignment.log",
+     "bytes": 108,
+     "sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb"
+    },
+    {
+     "path": "checks/f477ed2a/mint.log",
+     "bytes": 46,
+     "sha256": "def6ccc71abfbc5f3fe86206d9076322ee067fdde8236426c10c67ad88ddaf7b"
+    },
+    {
+     "path": "checks/f477ed2a/summary.json",
+     "bytes": 157,
+     "sha256": "267aade00e9af45033ede8c369476d8cb795a7e2926a0bae42fcb661067b8931"
+    },
+    {
+     "path": "ford-reading/block-00.txt",
+     "bytes": 32126,
+     "sha256": "b8178233131fba67bf68f2e47630fb8bfc222a1de3de565bcc42cbea4e7a83ed"
+    },
+    {
+     "path": "ford-reading/block-01.txt",
+     "bytes": 31918,
+     "sha256": "cf2feb07ccda263c0cbb3e256a27e84b82aec76469ba74069179fdbc5619e4c5"
+    },
+    {
+     "path": "ford-reading/block-02.txt",
+     "bytes": 32014,
+     "sha256": "0c6c2fafd14aaa35e7f6b09b4a94680f286ef7d2859d1ae5a0f5f79cd38728b4"
+    },
+    {
+     "path": "ford-reading/block-03.txt",
+     "bytes": 32312,
+     "sha256": "e68a79d04b131d8bed0483143350edcce3ec1ba723c559d11d1f67d33276c466"
+    },
+    {
+     "path": "ford-reading/block-04.txt",
+     "bytes": 32126,
+     "sha256": "1c6f8407573ebc95ef8acc3af765c7fd543c291ddf10c1b5255c64ae28b11d88"
+    },
+    {
+     "path": "ford-reading/block-05.txt",
+     "bytes": 32231,
+     "sha256": "dfaab18cafb1994f804e70b6c486680ce66afdc773aaac040f1f7c3829ea5dfe"
+    },
+    {
+     "path": "ford-reading/block-06.txt",
+     "bytes": 32114,
+     "sha256": "40eeff1d36e05c3e82c1a79eced765b6ddea493ac6ec62a1b1b56bcb59134755"
+    },
+    {
+     "path": "ford-reading/block-07.txt",
+     "bytes": 31195,
+     "sha256": "8ca3fd536c02dc01ba33058031fffc7106aa1709d4136f5834c1207d1222679e"
+    },
+    {
+     "path": "ford-reading/block-08.txt",
+     "bytes": 32168,
+     "sha256": "5d93f3859488538c7ee25fabccdc4e96e38685c4da43196e7e66bc620cf22c82"
+    },
+    {
+     "path": "ford-reading/block-09.txt",
+     "bytes": 31991,
+     "sha256": "6819a649d8d50ee9a316fc14d62193554748c74217cff25fff631eefff70068e"
+    },
+    {
+     "path": "ford-reading/block-10.txt",
+     "bytes": 31723,
+     "sha256": "f125cc55d1c97a18bc0fbd1e96179307e2969dfdff607372f006f93b13068cf5"
+    },
+    {
+     "path": "ford-reading/block-11.txt",
+     "bytes": 31433,
+     "sha256": "5d47adc77b9383dbc3323ef4d9ab5c2b1c8844509c755ac5016bc83de0ba824c"
+    },
+    {
+     "path": "ford-reading/block-12.txt",
+     "bytes": 32014,
+     "sha256": "1a18149b6ec588c743c826f280486871a19ced45f6e9d73592929bb91046c082"
+    },
+    {
+     "path": "ford-reading/block-13.txt",
+     "bytes": 21840,
+     "sha256": "8ab21b368899b050a816a73124efa493fe05b54c833e7545ad1bb59a1acecb6a"
+    },
+    {
+     "path": "ford-reading/index.json",
+     "bytes": 1311,
+     "sha256": "3615675f367856fb1e022ca6d37181316ebd37a32370dd9c57c159ee3014db11"
+    }
+   ]
+  }
+ ],
+ "c02_exact_identity_checks": [
+  {
+   "position": "ford_motor_company:2022-12-31",
+   "request_sha256": "146142032aea59dcc713cd07e6dfd1a44aaa0b8083ce8a5bcbc53115440b9f32",
+   "original_raw_sha256": "1a3b6fedb789ddf2cedce0050317744da84afc737d754fba4d57b40d261fb2b1",
+   "input_tokens": 168124,
+   "fits": true,
+   "exact_final_artifacts_match_committed_metadata": true
+  },
+  {
+   "position": "jpmorgan_chase:2021-12-31",
+   "request_sha256": "c912d3a8bcd1ab5350eef9c733110e3a9fa9ae6ce7ec4ac1a635dd454835931a",
+   "original_raw_sha256": "5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+   "input_tokens": 143723,
+   "fits": true,
+   "exact_final_artifacts_match_committed_metadata": true
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "request_sha256": "c6c224c5d73152b7a2712114d4715053934b2318cebf397d63c37193256b67a5",
+   "original_raw_sha256": "f3c138a9411eaeeb7272b6da5be398dd79e9c92d1fbdf42fea8f72f25b1067d8",
+   "input_tokens": 216976,
+   "fits": false,
+   "exact_final_artifacts_match_committed_metadata": true
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "request_sha256": "c40ac56cfdb82f068c81091e23e1cef22344d0306af6a99288fe9b7d00890f8b",
+   "original_raw_sha256": "cfc584e96fa3611e5c72bd4bef190792131a206bef17421ee98c61312c69c626",
+   "input_tokens": 156091,
+   "fits": true,
+   "exact_final_artifacts_match_committed_metadata": true
+  }
+ ],
+ "b06_exact_metadata_and_raw_source_checks": true,
+ "credential_pattern_scan": "No credential patterns found in selected bytes",
+ "source_export": "evidence/issue47_acquired",
+ "model_call_export": "evidence/issue47_model_calls/9a368413797ddef1",
+ "normal_saved_source_admission_still_required_for_business_runs": true,
+ "restore_full_authenticated_source_root_from_existing_export_for_rebuild": true,
+ "archives_do_not_restore_call_ledger_or_grant_calls": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "production_authorized": false
+}
