@@ -13727,10 +13727,11 @@
   "ci_b8b11946": {
     "run_id": 37192650793,
     "head_sha": "b8b11946fafce5363056511e4261a3950f7f4dfd",
-    "status": "queued",
+    "status": "in_progress",
     "conclusion": null,
     "workflow": "vNext fast suite",
-    "observation": "One immediate observation after push; no final state yet. Reference workflow success is separate."
+    "observation": "One immediate observation after push; no final state yet. Reference workflow success is separate.",
+    "last_natural_updated_at": "2026-10-04T10:05:06Z"
   },
   "shared_increment_read_e1828579": {
     "provider_sha": "e182857946cc4add2ef3e24a1ece6feffc93227d",
@@ -13783,6 +13784,43 @@
     "actual_tested_mapper_bytes_match_commit": true,
     "review_verdict": "PASS_LIMITED_ACTUAL_WIRE_MAPPING",
     "review_path": "docs/evidence/issue28_continuous/c02-table-native-processing-20261004/independent-wire-review/conclusion.md",
-    "review_actual_read_seconds": 5.447
+    "review_actual_read_seconds": 5.447,
+    "delivery_head": "df84865dd64260b7dd6307b852b058f3305a307e",
+    "provider_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5978950249",
+    "queue_body_sha256": "92ad5c4871e6d7d8689f10b640cd60b6680fd85ae88d0d8dbb60ce05640e72c4",
+    "queue_readback": "EXACT_EXISTING_C02_METHOD_ROW_ONLY_COMMON_RULE_UNCHANGED"
+  },
+  "ci_df84865d": {
+    "run_id": 37194640595,
+    "head_sha": "df84865dd64260b7dd6307b852b058f3305a307e",
+    "status": "in_progress",
+    "conclusion": null,
+    "observation": "One immediate reading after push; not final. Separate Metrics reference success is not main CI success."
+  },
+  "c02_table_model_input_trial_20261004": {
+    "status": "ORIGINAL_REFERENCE_FROZEN_BEFORE_BLIND_INPUT",
+    "own_base_sha": "df84865dd64260b7dd6307b852b058f3305a307e",
+    "method": "Complete original block dictionary plus all source table text/header grids, restoring lost row/column associations; same extraction task. Genuine representation change, not third same plain-block retry.",
+    "company": "jpmorgan_chase",
+    "filing": "DEF14A2026-04-06 /0000019617-26-000096",
+    "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+    "request_sha256": "5397bcbfae90ffef4ead2f10ed27df8113d9250ea6f8f2668f17cb85951e9b1e",
+    "reference_sha256": "ad80d69b6dc7b3f404b315854b682b5cffe8157b9694680414a32307a787c92f",
+    "reference_created_at": "2026-10-04T10:27:30.294534+00:00",
+    "evidence": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/",
+    "maximum_initial_contexts": 1,
+    "maximum_substantive_fix_contexts": 1,
+    "initial_context_consumed": false,
+    "fix_context_consumed": false,
+    "same_old_batch_reopened": false,
+    "semantic_credit": false,
+    "company_result": false,
+    "business_calls": [
+      0,
+      0,
+      0
+    ],
+    "reference_scope": "Twelve specified source relationships and time/subject/uncertainty controls; not exhaustive whole-filing omission inventory.",
+    "pending_owner_qualification_boundary_retained": true
   }
 }
