@@ -52,13 +52,20 @@ No full raw-grid roundtrip, model extraction or semantic success is claimed.
 
 Twelve targeted tests passed, including moved committee columns, duplicate B
 texts, overlapping spans, omitted table/block, wrong source parent, incomplete
-or ambiguous ordinary input and over-limit retention. New limited code review
-is pending; previously reviewed selector/mapper/long company chains are reused
+or ambiguous ordinary input and over-limit retention. The exact `51ccf588` limited code review passed: 30 tools, 3 messages,
+12 prescribed tests plus 5 boundary probes and actual禁网重建4.837s; previously reviewed selector/mapper/long company chains are reused
 only within their unchanged scope. Old withheld JPM results remain withheld.
 
 Prior-head main CI 37181198231 finished SUCCESS at 2026-10-04T06:34:38Z;
 it does not cover this new uncommitted code. Business calls 0/0/0; actual ledger
 143/143/52, remaining97/97/28, batch21/66 unchanged. No production permission.
-Next: review this exact input delta, communicate the current original image/
+Next: communicate the current original image/
 table limitation to #47, then choose only a meaningful new-method test after
 its input boundary is adequate. No automatic restart of the failed old batch.
+
+The preparation-time observed code digests were checked against committed
+`51ccf588`: every observed repository Python file matches. The source/data root
+identity remains the receipt's original root, not a new execution authority.
+[Limited review](independent-input-review/conclusion.md) deliberately leaves
+model extraction, current semantic completeness, native mapper integration and
+DeepSeek permission unaccepted.
