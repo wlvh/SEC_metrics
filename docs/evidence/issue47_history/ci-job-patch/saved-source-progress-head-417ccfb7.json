@@ -1,0 +1,2871 @@
+{
+ "record_type": "ISSUE_47_COMPLETE_SAVED_SOURCE_CI_PROGRESS",
+ "workflow_run_id": 37175720539,
+ "workflow_result": "CANCELLED",
+ "jobs": [
+  {
+   "job_id": 111357795576,
+   "shard_index": 0,
+   "log_sha256": "d8efaac157f8298b01d73e41ea6c5fbd92a60a1d2b83a21df4e7e12b7c974fb4",
+   "checkout_merge": "dd0cc95c55f0dd572918cd86038612e4fa5b7fab",
+   "head": "417ccfb788f39f53e5ef2b2d825a3fa46efc11bf",
+   "base": "e8fa288095edc894101628d49392572c9c49e7af",
+   "started": [
+    "tests.vnext.test_historical_sec_session",
+    "tests.vnext.test_continuous_sec_acquisition",
+    "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",
+    "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+    "tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",
+    "tests.vnext.test_historical_semantic_routes",
+    "tests.vnext.test_historical_period_results",
+    "tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",
+    "tests.vnext.test_normal_accession_results",
+    "tests.vnext.test_b06_inclusive_table",
+    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+    "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",
+    "tests.vnext.test_historical_event_window",
+    "tests.vnext.test_historical_text_boundary",
+    "tests.vnext.test_historical_accession_releases",
+    "tests.vnext.test_historical_dei",
+    "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",
+    "tests.vnext.test_historical_risk_headings",
+    "tests.vnext.test_historical_predecessor_periods",
+    "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+    "tests.vnext.test_d01_byte_reading",
+    "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",
+    "tests.vnext.test_normal_source_requirements",
+    "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",
+    "tests.vnext.test_capacity_text_results",
+    "tests.vnext.test_b06_note_carrying",
+    "tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",
+    "tests.vnext.test_capacity_native_assessment",
+    "tests.vnext.test_normal_run_inputs",
+    "tests.vnext.test_r6_regulatory_semantics",
+    "tests.vnext.test_historical_proxy_compensation",
+    "tests.vnext.test_historical_structural_results",
+    "tests.vnext.test_historical_debt_fallback_forms",
+    "tests.vnext.test_historical_proxy_identity",
+    "tests.vnext.test_historical_capacity_results",
+    "tests.vnext.test_fiscal_year_labels"
+   ],
+   "finished": [
+    {
+     "finished": "tests.vnext.test_continuous_sec_acquisition",
+     "return_code": 0,
+     "seconds": 268.3
+    },
+    {
+     "finished": "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",
+     "return_code": 0,
+     "seconds": 210.77
+    },
+    {
+     "finished": "tests.vnext.test_historical_sec_session",
+     "return_code": 0,
+     "seconds": 524.591
+    },
+    {
+     "finished": "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+     "return_code": 0,
+     "seconds": 241.4
+    },
+    {
+     "finished": "tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",
+     "return_code": 0,
+     "seconds": 200.471
+    },
+    {
+     "finished": "tests.vnext.test_historical_period_results",
+     "return_code": 0,
+     "seconds": 157.37
+    },
+    {
+     "finished": "tests.vnext.test_historical_semantic_routes",
+     "return_code": 0,
+     "seconds": 217.656
+    },
+    {
+     "finished": "tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",
+     "return_code": 0,
+     "seconds": 170.411
+    },
+    {
+     "finished": "tests.vnext.test_normal_accession_results",
+     "return_code": 0,
+     "seconds": 133.061
+    },
+    {
+     "finished": "tests.vnext.test_b06_inclusive_table",
+     "return_code": 0,
+     "seconds": 132.335
+    },
+    {
+     "finished": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+     "return_code": 0,
+     "seconds": 118.093
+    },
+    {
+     "finished": "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",
+     "return_code": 0,
+     "seconds": 107.857
+    },
+    {
+     "finished": "tests.vnext.test_historical_event_window",
+     "return_code": 0,
+     "seconds": 111.369
+    },
+    {
+     "finished": "tests.vnext.test_historical_accession_releases",
+     "return_code": 0,
+     "seconds": 91.454
+    },
+    {
+     "finished": "tests.vnext.test_historical_text_boundary",
+     "return_code": 0,
+     "seconds": 151.075
+    },
+    {
+     "finished": "tests.vnext.test_historical_dei",
+     "return_code": 0,
+     "seconds": 89.111
+    },
+    {
+     "finished": "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",
+     "return_code": 0,
+     "seconds": 116.765
+    },
+    {
+     "finished": "tests.vnext.test_historical_risk_headings",
+     "return_code": 0,
+     "seconds": 125.396
+    },
+    {
+     "finished": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+     "return_code": 0,
+     "seconds": 63.218
+    },
+    {
+     "finished": "tests.vnext.test_historical_predecessor_periods",
+     "return_code": 0,
+     "seconds": 112.963
+    },
+    {
+     "finished": "tests.vnext.test_d01_byte_reading",
+     "return_code": 0,
+     "seconds": 62.126
+    },
+    {
+     "finished": "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",
+     "return_code": 0,
+     "seconds": 94.987
+    },
+    {
+     "finished": "tests.vnext.test_normal_source_requirements",
+     "return_code": 0,
+     "seconds": 61.337
+    },
+    {
+     "finished": "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",
+     "return_code": 0,
+     "seconds": 53.963
+    },
+    {
+     "finished": "tests.vnext.test_capacity_text_results",
+     "return_code": 0,
+     "seconds": 52.033
+    },
+    {
+     "finished": "tests.vnext.test_b06_note_carrying",
+     "return_code": 0,
+     "seconds": 47.719
+    },
+    {
+     "finished": "tests.vnext.test_capacity_native_assessment",
+     "return_code": 0,
+     "seconds": 43.761
+    },
+    {
+     "finished": "tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",
+     "return_code": 0,
+     "seconds": 68.984
+    },
+    {
+     "finished": "tests.vnext.test_r6_regulatory_semantics",
+     "return_code": 0,
+     "seconds": 42.792
+    },
+    {
+     "finished": "tests.vnext.test_normal_run_inputs",
+     "return_code": 0,
+     "seconds": 45.21
+    },
+    {
+     "finished": "tests.vnext.test_historical_structural_results",
+     "return_code": 0,
+     "seconds": 38.693
+    },
+    {
+     "finished": "tests.vnext.test_historical_proxy_compensation",
+     "return_code": 0,
+     "seconds": 58.66
+    },
+    {
+     "finished": "tests.vnext.test_historical_debt_fallback_forms",
+     "return_code": 0,
+     "seconds": 53.052
+    },
+    {
+     "finished": "tests.vnext.test_historical_proxy_identity",
+     "return_code": 0,
+     "seconds": 37.535
+    }
+   ],
+   "not_finished_after_start": [
+    "tests.vnext.test_fiscal_year_labels",
+    "tests.vnext.test_historical_capacity_results"
+   ],
+   "cancelled": true,
+   "events": [
+    {
+     "time": "2026-10-04T04:01:20.4517511Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_sec_session",
+      "timeout_seconds": 1500
+     }
+    },
+    {
+     "time": "2026-10-04T04:01:20.4521647Z {",
+     "data": {
+      "started": "tests.vnext.test_continuous_sec_acquisition",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:05:48.7522020Z {",
+     "data": {
+      "finished": "tests.vnext.test_continuous_sec_acquisition",
+      "return_code": 0,
+      "seconds": 268.3
+     }
+    },
+    {
+     "time": "2026-10-04T04:05:48.7523629Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:19.5225934Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",
+      "return_code": 0,
+      "seconds": 210.77
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:19.5227678Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+      "timeout_seconds": 360
+     }
+    },
+    {
+     "time": "2026-10-04T04:10:05.0429836Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_sec_session",
+      "return_code": 0,
+      "seconds": 524.591
+     }
+    },
+    {
+     "time": "2026-10-04T04:10:05.0431631Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:13:20.9226604Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+      "return_code": 0,
+      "seconds": 241.4
+     }
+    },
+    {
+     "time": "2026-10-04T04:13:20.9228209Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_semantic_routes",
+      "timeout_seconds": 600
+     }
+    },
+    {
+     "time": "2026-10-04T04:13:25.5137489Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",
+      "return_code": 0,
+      "seconds": 200.471
+     }
+    },
+    {
+     "time": "2026-10-04T04:13:25.5138735Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_period_results",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:02.8834184Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_period_results",
+      "return_code": 0,
+      "seconds": 157.37
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:02.8835846Z {",
+     "data": {
+      "started": "tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:58.5815188Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_semantic_routes",
+      "return_code": 0,
+      "seconds": 217.656
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:58.5816353Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_accession_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:18:53.2941603Z {",
+     "data": {
+      "finished": "tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",
+      "return_code": 0,
+      "seconds": 170.411
+     }
+    },
+    {
+     "time": "2026-10-04T04:18:53.2942883Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_inclusive_table",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:11.6403426Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_accession_results",
+      "return_code": 0,
+      "seconds": 133.061
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:11.6404689Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:05.6291223Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_inclusive_table",
+      "return_code": 0,
+      "seconds": 132.335
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:05.6292841Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:09.7333007Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+      "return_code": 0,
+      "seconds": 118.093
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:09.7334453Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_event_window",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:53.4857805Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",
+      "return_code": 0,
+      "seconds": 107.857
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:53.4859520Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_text_boundary",
+      "timeout_seconds": 1500
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:01.1018943Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_event_window",
+      "return_code": 0,
+      "seconds": 111.369
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:01.1020221Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_accession_releases",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:32.5563009Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_accession_releases",
+      "return_code": 0,
+      "seconds": 91.454
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:32.5564058Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_dei",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:24.5606175Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_text_boundary",
+      "return_code": 0,
+      "seconds": 151.075
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:24.5607819Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:01.6673421Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_dei",
+      "return_code": 0,
+      "seconds": 89.111
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:01.6674506Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_risk_headings",
+      "timeout_seconds": 600
+     }
+    },
+    {
+     "time": "2026-10-04T04:27:21.3260993Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",
+      "return_code": 0,
+      "seconds": 116.765
+     }
+    },
+    {
+     "time": "2026-10-04T04:27:21.3262791Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_predecessor_periods",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:28:07.0632201Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_risk_headings",
+      "return_code": 0,
+      "seconds": 125.396
+     }
+    },
+    {
+     "time": "2026-10-04T04:28:07.0633311Z {",
+     "data": {
+      "started": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:10.2818350Z {",
+     "data": {
+      "finished": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+      "return_code": 0,
+      "seconds": 63.218
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:10.2819145Z {",
+     "data": {
+      "started": "tests.vnext.test_d01_byte_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:14.2895418Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_predecessor_periods",
+      "return_code": 0,
+      "seconds": 112.963
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:14.2897138Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:12.4075675Z {",
+     "data": {
+      "finished": "tests.vnext.test_d01_byte_reading",
+      "return_code": 0,
+      "seconds": 62.126
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:12.4077088Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_source_requirements",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:49.2764250Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",
+      "return_code": 0,
+      "seconds": 94.987
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:49.2765182Z {",
+     "data": {
+      "started": "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:13.7447913Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_source_requirements",
+      "return_code": 0,
+      "seconds": 61.337
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:13.7448558Z {",
+     "data": {
+      "started": "tests.vnext.test_capacity_text_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:43.2397200Z {",
+     "data": {
+      "finished": "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",
+      "return_code": 0,
+      "seconds": 53.963
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:43.2398327Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_note_carrying",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:05.7778503Z {",
+     "data": {
+      "finished": "tests.vnext.test_capacity_text_results",
+      "return_code": 0,
+      "seconds": 52.033
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:05.7781361Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:30.9590876Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_note_carrying",
+      "return_code": 0,
+      "seconds": 47.719
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:30.9591805Z {",
+     "data": {
+      "started": "tests.vnext.test_capacity_native_assessment",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:14.7198371Z {",
+     "data": {
+      "finished": "tests.vnext.test_capacity_native_assessment",
+      "return_code": 0,
+      "seconds": 43.761
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:14.7199855Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_run_inputs",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:14.7622518Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",
+      "return_code": 0,
+      "seconds": 68.984
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:14.7623835Z {",
+     "data": {
+      "started": "tests.vnext.test_r6_regulatory_semantics",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:57.5540676Z {",
+     "data": {
+      "finished": "tests.vnext.test_r6_regulatory_semantics",
+      "return_code": 0,
+      "seconds": 42.792
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:57.5541910Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_proxy_compensation",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:59.9298105Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_run_inputs",
+      "return_code": 0,
+      "seconds": 45.21
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:59.9299007Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_structural_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:38.6228202Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_structural_results",
+      "return_code": 0,
+      "seconds": 38.693
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:38.6229154Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_debt_fallback_forms",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:56.2142241Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_proxy_compensation",
+      "return_code": 0,
+      "seconds": 58.66
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:56.2143380Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_proxy_identity",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:31.6750628Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_debt_fallback_forms",
+      "return_code": 0,
+      "seconds": 53.052
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:31.6751654Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_capacity_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:33.7497059Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_proxy_identity",
+      "return_code": 0,
+      "seconds": 37.535
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:33.7498330Z {",
+     "data": {
+      "started": "tests.vnext.test_fiscal_year_labels",
+      "timeout_seconds": 240
+     }
+    }
+   ]
+  },
+  {
+   "job_id": 111357795512,
+   "shard_index": 1,
+   "log_sha256": "9d46eab499b7f8306be61252c30ba2209b444b3de33d6f8cd018e85fdc421aef",
+   "checkout_merge": "dd0cc95c55f0dd572918cd86038612e4fa5b7fab",
+   "head": "417ccfb788f39f53e5ef2b2d825a3fa46efc11bf",
+   "base": "e8fa288095edc894101628d49392572c9c49e7af",
+   "started": [
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+    "tests.vnext.test_historical_debt_results",
+    "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+    "tests.vnext.test_historical_coverage",
+    "tests.vnext.test_d02_item8_current_material",
+    "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+    "tests.vnext.test_regulatory_fact_review",
+    "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+    "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt",
+    "tests.vnext.test_c02_member_successor.C02MemberScopeMaterialTest",
+    "tests.vnext.test_historical_plan_replay",
+    "tests.vnext.test_instant_balance_amendment",
+    "tests.vnext.test_c02_board_reading",
+    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+    "tests.vnext.test_annual_amendment_scope",
+    "tests.vnext.test_historical_amendment_note",
+    "tests.vnext.test_historical_part_iii_admission",
+    "tests.vnext.test_historical_running_header",
+    "tests.vnext.test_ordinary_e01_item_text_input",
+    "tests.vnext.test_historical_amendment_admission",
+    "tests.vnext.test_historical_source_acquisition",
+    "tests.vnext.test_r6_historical_controls",
+    "tests.vnext.test_b06_financing_inventory",
+    "tests.vnext.test_ordinary_special_debt_scope",
+    "tests.vnext.test_normal_annual_input_v2",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected",
+    "tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected",
+    "tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_saved_marriott_context_only_stays_unapproved_without_fake_unresolved",
+    "tests.vnext.test_historical_instance_sources",
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition",
+    "tests.vnext.test_continuous_semantic_calls",
+    "tests.vnext.test_lodging_table_source",
+    "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",
+    "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+    "tests.vnext.test_native_assessment_replay",
+    "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest",
+    "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients",
+    "tests.vnext.test_historical_d02_marks",
+    "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected",
+    "tests.vnext.test_historical_ecd_release",
+    "tests.vnext.test_historical_governance_input"
+   ],
+   "finished": [
+    {
+     "finished": "tests.vnext.test_historical_debt_results",
+     "return_code": 0,
+     "seconds": 252.154
+    },
+    {
+     "finished": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+     "return_code": 0,
+     "seconds": 420.651
+    },
+    {
+     "finished": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+     "return_code": 0,
+     "seconds": 213.614
+    },
+    {
+     "finished": "tests.vnext.test_historical_coverage",
+     "return_code": 0,
+     "seconds": 193.375
+    },
+    {
+     "finished": "tests.vnext.test_d02_item8_current_material",
+     "return_code": 0,
+     "seconds": 176.163
+    },
+    {
+     "finished": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+     "return_code": 0,
+     "seconds": 167.398
+    },
+    {
+     "finished": "tests.vnext.test_regulatory_fact_review",
+     "return_code": 0,
+     "seconds": 163.837
+    },
+    {
+     "finished": "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",
+     "return_code": 0,
+     "seconds": 134.031
+    },
+    {
+     "finished": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+     "return_code": 0,
+     "seconds": 199.568
+    },
+    {
+     "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt",
+     "return_code": 0,
+     "seconds": 133.723
+    },
+    {
+     "finished": "tests.vnext.test_c02_member_successor.C02MemberScopeMaterialTest",
+     "return_code": 0,
+     "seconds": 130.96
+    },
+    {
+     "finished": "tests.vnext.test_historical_plan_replay",
+     "return_code": 0,
+     "seconds": 118.631
+    },
+    {
+     "finished": "tests.vnext.test_instant_balance_amendment",
+     "return_code": 0,
+     "seconds": 117.674
+    },
+    {
+     "finished": "tests.vnext.test_c02_board_reading",
+     "return_code": 0,
+     "seconds": 109.774
+    },
+    {
+     "finished": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+     "return_code": 0,
+     "seconds": 91.435
+    },
+    {
+     "finished": "tests.vnext.test_annual_amendment_scope",
+     "return_code": 0,
+     "seconds": 88.542
+    },
+    {
+     "finished": "tests.vnext.test_historical_amendment_note",
+     "return_code": 0,
+     "seconds": 133.678
+    },
+    {
+     "finished": "tests.vnext.test_historical_part_iii_admission",
+     "return_code": 0,
+     "seconds": 129.188
+    },
+    {
+     "finished": "tests.vnext.test_historical_running_header",
+     "return_code": 0,
+     "seconds": 73.591
+    },
+    {
+     "finished": "tests.vnext.test_ordinary_e01_item_text_input",
+     "return_code": 0,
+     "seconds": 64.738
+    },
+    {
+     "finished": "tests.vnext.test_historical_amendment_admission",
+     "return_code": 0,
+     "seconds": 64.435
+    },
+    {
+     "finished": "tests.vnext.test_r6_historical_controls",
+     "return_code": 0,
+     "seconds": 57.25
+    },
+    {
+     "finished": "tests.vnext.test_historical_source_acquisition",
+     "return_code": 0,
+     "seconds": 89.879
+    },
+    {
+     "finished": "tests.vnext.test_b06_financing_inventory",
+     "return_code": 0,
+     "seconds": 59.789
+    },
+    {
+     "finished": "tests.vnext.test_ordinary_special_debt_scope",
+     "return_code": 0,
+     "seconds": 73.084
+    },
+    {
+     "finished": "tests.vnext.test_normal_annual_input_v2",
+     "return_code": 0,
+     "seconds": 46.258
+    },
+    {
+     "finished": "tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",
+     "return_code": 0,
+     "seconds": 44.814
+    },
+    {
+     "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected",
+     "return_code": 0,
+     "seconds": 70.977
+    },
+    {
+     "finished": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected",
+     "return_code": 0,
+     "seconds": 45.314
+    },
+    {
+     "finished": "tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_saved_marriott_context_only_stays_unapproved_without_fake_unresolved",
+     "return_code": 0,
+     "seconds": 55.223
+    },
+    {
+     "finished": "tests.vnext.test_historical_instance_sources",
+     "return_code": 0,
+     "seconds": 59.717
+    },
+    {
+     "finished": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition",
+     "return_code": 0,
+     "seconds": 40.9
+    },
+    {
+     "finished": "tests.vnext.test_continuous_semantic_calls",
+     "return_code": 0,
+     "seconds": 37.135
+    },
+    {
+     "finished": "tests.vnext.test_lodging_table_source",
+     "return_code": 0,
+     "seconds": 51.773
+    },
+    {
+     "finished": "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",
+     "return_code": 0,
+     "seconds": 26.762
+    },
+    {
+     "finished": "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+     "return_code": 0,
+     "seconds": 36.76
+    },
+    {
+     "finished": "tests.vnext.test_native_assessment_replay",
+     "return_code": 0,
+     "seconds": 33.595
+    },
+    {
+     "finished": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients",
+     "return_code": 0,
+     "seconds": 28.528
+    },
+    {
+     "finished": "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest",
+     "return_code": 0,
+     "seconds": 41.108
+    },
+    {
+     "finished": "tests.vnext.test_historical_d02_marks",
+     "return_code": 0,
+     "seconds": 40.341
+    },
+    {
+     "finished": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected",
+     "return_code": 0,
+     "seconds": 28.381
+    }
+   ],
+   "not_finished_after_start": [
+    "tests.vnext.test_historical_ecd_release",
+    "tests.vnext.test_historical_governance_input"
+   ],
+   "cancelled": true,
+   "events": [
+    {
+     "time": "2026-10-04T04:01:16.9889265Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:01:16.9891268Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_debt_results",
+      "timeout_seconds": 900
+     }
+    },
+    {
+     "time": "2026-10-04T04:05:29.1427893Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_debt_results",
+      "return_code": 0,
+      "seconds": 252.154
+     }
+    },
+    {
+     "time": "2026-10-04T04:05:29.1431390Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+      "timeout_seconds": 300
+     }
+    },
+    {
+     "time": "2026-10-04T04:08:17.6400743Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+      "return_code": 0,
+      "seconds": 420.651
+     }
+    },
+    {
+     "time": "2026-10-04T04:08:17.6403197Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_coverage",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:02.7567764Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+      "return_code": 0,
+      "seconds": 213.614
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:02.7569093Z {",
+     "data": {
+      "started": "tests.vnext.test_d02_item8_current_material",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:31.0155142Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_coverage",
+      "return_code": 0,
+      "seconds": 193.375
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:31.0156734Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+      "timeout_seconds": 300
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:58.9202518Z {",
+     "data": {
+      "finished": "tests.vnext.test_d02_item8_current_material",
+      "return_code": 0,
+      "seconds": 176.163
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:58.9204399Z {",
+     "data": {
+      "started": "tests.vnext.test_regulatory_fact_review",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:18.4137313Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+      "return_code": 0,
+      "seconds": 167.398
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:18.4138755Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:42.7570649Z {",
+     "data": {
+      "finished": "tests.vnext.test_regulatory_fact_review",
+      "return_code": 0,
+      "seconds": 163.837
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:42.7572356Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:56.7885020Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",
+      "return_code": 0,
+      "seconds": 134.031
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:56.7886337Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:17:37.9816713Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+      "return_code": 0,
+      "seconds": 199.568
+     }
+    },
+    {
+     "time": "2026-10-04T04:17:37.9820109Z {",
+     "data": {
+      "started": "tests.vnext.test_c02_member_successor.C02MemberScopeMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:10.5116920Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt",
+      "return_code": 0,
+      "seconds": 133.723
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:10.5118578Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_plan_replay",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:48.9417752Z {",
+     "data": {
+      "finished": "tests.vnext.test_c02_member_successor.C02MemberScopeMaterialTest",
+      "return_code": 0,
+      "seconds": 130.96
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:48.9418855Z {",
+     "data": {
+      "started": "tests.vnext.test_instant_balance_amendment",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:09.1423133Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_plan_replay",
+      "return_code": 0,
+      "seconds": 118.631
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:09.1424715Z {",
+     "data": {
+      "started": "tests.vnext.test_c02_board_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:46.6155015Z {",
+     "data": {
+      "finished": "tests.vnext.test_instant_balance_amendment",
+      "return_code": 0,
+      "seconds": 117.674
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:46.6156061Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:58.9161553Z {",
+     "data": {
+      "finished": "tests.vnext.test_c02_board_reading",
+      "return_code": 0,
+      "seconds": 109.774
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:58.9162688Z {",
+     "data": {
+      "started": "tests.vnext.test_annual_amendment_scope",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:18.0503733Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+      "return_code": 0,
+      "seconds": 91.435
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:18.0506200Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_amendment_note",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:27.4577671Z {",
+     "data": {
+      "finished": "tests.vnext.test_annual_amendment_scope",
+      "return_code": 0,
+      "seconds": 88.542
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:27.4578851Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_part_iii_admission",
+      "timeout_seconds": 600
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:31.7290329Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_amendment_note",
+      "return_code": 0,
+      "seconds": 133.678
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:31.7291382Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_running_header",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:36.6459782Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_part_iii_admission",
+      "return_code": 0,
+      "seconds": 129.188
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:36.6460880Z {",
+     "data": {
+      "started": "tests.vnext.test_ordinary_e01_item_text_input",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:45.3204367Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_running_header",
+      "return_code": 0,
+      "seconds": 73.591
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:45.3205595Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_amendment_admission",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:27:41.3844582Z {",
+     "data": {
+      "finished": "tests.vnext.test_ordinary_e01_item_text_input",
+      "return_code": 0,
+      "seconds": 64.738
+     }
+    },
+    {
+     "time": "2026-10-04T04:27:41.3846057Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_source_acquisition",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:27:49.7554146Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_amendment_admission",
+      "return_code": 0,
+      "seconds": 64.435
+     }
+    },
+    {
+     "time": "2026-10-04T04:27:49.7554999Z {",
+     "data": {
+      "started": "tests.vnext.test_r6_historical_controls",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:28:47.0052279Z {",
+     "data": {
+      "finished": "tests.vnext.test_r6_historical_controls",
+      "return_code": 0,
+      "seconds": 57.25
+     }
+    },
+    {
+     "time": "2026-10-04T04:28:47.0053616Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_financing_inventory",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:11.2635454Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_source_acquisition",
+      "return_code": 0,
+      "seconds": 89.879
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:11.2636497Z {",
+     "data": {
+      "started": "tests.vnext.test_ordinary_special_debt_scope",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:46.7942427Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_financing_inventory",
+      "return_code": 0,
+      "seconds": 59.789
+     }
+    },
+    {
+     "time": "2026-10-04T04:29:46.7943730Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_annual_input_v2",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:24.3476146Z {",
+     "data": {
+      "finished": "tests.vnext.test_ordinary_special_debt_scope",
+      "return_code": 0,
+      "seconds": 73.084
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:24.3477814Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:33.0524890Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_annual_input_v2",
+      "return_code": 0,
+      "seconds": 46.258
+     }
+    },
+    {
+     "time": "2026-10-04T04:30:33.0529067Z {",
+     "data": {
+      "started": "tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:17.8661567Z {",
+     "data": {
+      "finished": "tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",
+      "return_code": 0,
+      "seconds": 44.814
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:17.8663687Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:35.3245387Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected",
+      "return_code": 0,
+      "seconds": 70.977
+     }
+    },
+    {
+     "time": "2026-10-04T04:31:35.3248229Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_saved_marriott_context_only_stays_unapproved_without_fake_unresolved",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:03.1800755Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected",
+      "return_code": 0,
+      "seconds": 45.314
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:03.1801719Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_instance_sources",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:30.5479921Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_saved_marriott_context_only_stays_unapproved_without_fake_unresolved",
+      "return_code": 0,
+      "seconds": 55.223
+     }
+    },
+    {
+     "time": "2026-10-04T04:32:30.5481226Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:02.8969537Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_instance_sources",
+      "return_code": 0,
+      "seconds": 59.717
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:02.8970616Z {",
+     "data": {
+      "started": "tests.vnext.test_continuous_semantic_calls",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:11.4482714Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition",
+      "return_code": 0,
+      "seconds": 40.9
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:11.4484732Z {",
+     "data": {
+      "started": "tests.vnext.test_lodging_table_source",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:40.0317634Z {",
+     "data": {
+      "finished": "tests.vnext.test_continuous_semantic_calls",
+      "return_code": 0,
+      "seconds": 37.135
+     }
+    },
+    {
+     "time": "2026-10-04T04:33:40.0318921Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:03.2211991Z {",
+     "data": {
+      "finished": "tests.vnext.test_lodging_table_source",
+      "return_code": 0,
+      "seconds": 51.773
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:03.2214493Z {",
+     "data": {
+      "started": "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:06.7943339Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",
+      "return_code": 0,
+      "seconds": 26.762
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:06.7945095Z {",
+     "data": {
+      "started": "tests.vnext.test_native_assessment_replay",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:39.9816180Z {",
+     "data": {
+      "finished": "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+      "return_code": 0,
+      "seconds": 36.76
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:39.9817329Z {",
+     "data": {
+      "started": "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:40.3888974Z {",
+     "data": {
+      "finished": "tests.vnext.test_native_assessment_replay",
+      "return_code": 0,
+      "seconds": 33.595
+     }
+    },
+    {
+     "time": "2026-10-04T04:34:40.3890722Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:08.9169538Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients",
+      "return_code": 0,
+      "seconds": 28.528
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:08.9170873Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_d02_marks",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:21.0894439Z {",
+     "data": {
+      "finished": "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest",
+      "return_code": 0,
+      "seconds": 41.108
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:21.0897076Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:49.2582426Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_d02_marks",
+      "return_code": 0,
+      "seconds": 40.341
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:49.2584101Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_ecd_release",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:49.4707518Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected",
+      "return_code": 0,
+      "seconds": 28.381
+     }
+    },
+    {
+     "time": "2026-10-04T04:35:49.4709525Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_governance_input",
+      "timeout_seconds": 240
+     }
+    }
+   ]
+  },
+  {
+   "job_id": 111357795412,
+   "shard_index": 2,
+   "log_sha256": "ff92fb77ef5abbede49d338a4d7cc2f20bcc0aecd679b6bc9875545a0a747fca",
+   "checkout_merge": "dd0cc95c55f0dd572918cd86038612e4fa5b7fab",
+   "head": "417ccfb788f39f53e5ef2b2d825a3fa46efc11bf",
+   "base": "e8fa288095edc894101628d49392572c9c49e7af",
+   "started": [
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+    "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+    "tests.vnext.test_normal_zero_ai_results",
+    "tests.vnext.test_normal_companyfacts_results",
+    "tests.vnext.test_historical_board_composition_filings",
+    "tests.vnext.test_historical_da_scope_route",
+    "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",
+    "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",
+    "tests.vnext.test_b06_bond_leases",
+    "tests.vnext.test_historical_financial_results",
+    "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",
+    "tests.vnext.test_historical_d02_route_repairs",
+    "tests.vnext.test_historical_event_items",
+    "tests.vnext.test_historical_financial_wording_filings",
+    "tests.vnext.test_historical_governance_results",
+    "tests.vnext.test_historical_run_replay",
+    "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",
+    "tests.vnext.test_historical_filing_inventory",
+    "tests.vnext.test_b06_combined_borrowings",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result",
+    "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",
+    "tests.vnext.test_historical_governance_text",
+    "tests.vnext.test_historical_lodging_results",
+    "tests.vnext.test_historical_block_inputs",
+    "tests.vnext.test_ordinary_income_input",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy",
+    "tests.vnext.test_a05_formula_material",
+    "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration",
+    "tests.vnext.test_historical_d02_category_route",
+    "tests.vnext.test_historical_shared_sources",
+    "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass",
+    "tests.vnext.test_historical_metadata_context",
+    "tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",
+    "tests.vnext.test_bank_measures_reading",
+    "tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",
+    "tests.vnext.test_event_count_reading",
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected",
+    "tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",
+    "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients",
+    "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients",
+    "tests.vnext.test_historical_note_navigation",
+    "tests.vnext.test_history_block_coherence",
+    "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes",
+    "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic",
+    "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_unrelated_hypothetical_example_preserves_reported_var",
+    "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements",
+    "tests.vnext.test_text_results",
+    "tests.vnext.test_c04_registration_successor",
+    "tests.vnext.test_e01_candidate_reading",
+    "tests.vnext.test_historical_da_scope_candidate",
+    "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary",
+    "tests.vnext.test_statement_fact_reading",
+    "tests.vnext.test_historical_derivation_memo",
+    "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+    "tests.vnext.test_debt_to_equity_reading"
+   ],
+   "finished": [
+    {
+     "finished": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+     "return_code": 0,
+     "seconds": 208.311
+    },
+    {
+     "finished": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+     "return_code": 0,
+     "seconds": 272.457
+    },
+    {
+     "finished": "tests.vnext.test_normal_zero_ai_results",
+     "return_code": 0,
+     "seconds": 153.84
+    },
+    {
+     "finished": "tests.vnext.test_normal_companyfacts_results",
+     "return_code": 0,
+     "seconds": 132.78
+    },
+    {
+     "finished": "tests.vnext.test_historical_board_composition_filings",
+     "return_code": 0,
+     "seconds": 117.758
+    },
+    {
+     "finished": "tests.vnext.test_historical_da_scope_route",
+     "return_code": 0,
+     "seconds": 116.394
+    },
+    {
+     "finished": "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",
+     "return_code": 0,
+     "seconds": 110.23
+    },
+    {
+     "finished": "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",
+     "return_code": 0,
+     "seconds": 109.557
+    },
+    {
+     "finished": "tests.vnext.test_b06_bond_leases",
+     "return_code": 0,
+     "seconds": 94.736
+    },
+    {
+     "finished": "tests.vnext.test_historical_financial_results",
+     "return_code": 0,
+     "seconds": 87.439
+    },
+    {
+     "finished": "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",
+     "return_code": 0,
+     "seconds": 92.186
+    },
+    {
+     "finished": "tests.vnext.test_historical_d02_route_repairs",
+     "return_code": 0,
+     "seconds": 79.196
+    },
+    {
+     "finished": "tests.vnext.test_historical_event_items",
+     "return_code": 0,
+     "seconds": 111.859
+    },
+    {
+     "finished": "tests.vnext.test_historical_financial_wording_filings",
+     "return_code": 0,
+     "seconds": 106.728
+    },
+    {
+     "finished": "tests.vnext.test_historical_governance_results",
+     "return_code": 0,
+     "seconds": 63.942
+    },
+    {
+     "finished": "tests.vnext.test_historical_run_replay",
+     "return_code": 0,
+     "seconds": 65.816
+    },
+    {
+     "finished": "tests.vnext.test_historical_filing_inventory",
+     "return_code": 0,
+     "seconds": 53.27
+    },
+    {
+     "finished": "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",
+     "return_code": 0,
+     "seconds": 81.228
+    },
+    {
+     "finished": "tests.vnext.test_b06_combined_borrowings",
+     "return_code": 0,
+     "seconds": 48.377
+    },
+    {
+     "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result",
+     "return_code": 0,
+     "seconds": 45.366
+    },
+    {
+     "finished": "tests.vnext.test_historical_governance_text",
+     "return_code": 0,
+     "seconds": 41.755
+    },
+    {
+     "finished": "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",
+     "return_code": 0,
+     "seconds": 62.853
+    },
+    {
+     "finished": "tests.vnext.test_historical_block_inputs",
+     "return_code": 0,
+     "seconds": 38.847
+    },
+    {
+     "finished": "tests.vnext.test_historical_lodging_results",
+     "return_code": 0,
+     "seconds": 61.643
+    },
+    {
+     "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy",
+     "return_code": 0,
+     "seconds": 31.486
+    },
+    {
+     "finished": "tests.vnext.test_ordinary_income_input",
+     "return_code": 0,
+     "seconds": 49.209
+    },
+    {
+     "finished": "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration",
+     "return_code": 0,
+     "seconds": 29.585
+    },
+    {
+     "finished": "tests.vnext.test_a05_formula_material",
+     "return_code": 0,
+     "seconds": 45.148
+    },
+    {
+     "finished": "tests.vnext.test_historical_d02_category_route",
+     "return_code": 0,
+     "seconds": 29.735
+    },
+    {
+     "finished": "tests.vnext.test_historical_shared_sources",
+     "return_code": 0,
+     "seconds": 28.752
+    },
+    {
+     "finished": "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",
+     "return_code": 0,
+     "seconds": 27.642
+    },
+    {
+     "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+     "return_code": 0,
+     "seconds": 37.601
+    },
+    {
+     "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass",
+     "return_code": 0,
+     "seconds": 35.668
+    },
+    {
+     "finished": "tests.vnext.test_historical_metadata_context",
+     "return_code": 0,
+     "seconds": 32.587
+    },
+    {
+     "finished": "tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",
+     "return_code": 0,
+     "seconds": 22.67
+    },
+    {
+     "finished": "tests.vnext.test_bank_measures_reading",
+     "return_code": 0,
+     "seconds": 25.14
+    },
+    {
+     "finished": "tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",
+     "return_code": 0,
+     "seconds": 20.811
+    },
+    {
+     "finished": "tests.vnext.test_event_count_reading",
+     "return_code": 0,
+     "seconds": 22.816
+    },
+    {
+     "finished": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected",
+     "return_code": 0,
+     "seconds": 28.577
+    },
+    {
+     "finished": "tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",
+     "return_code": 0,
+     "seconds": 25.26
+    },
+    {
+     "finished": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients",
+     "return_code": 0,
+     "seconds": 18.07
+    },
+    {
+     "finished": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients",
+     "return_code": 0,
+     "seconds": 18.13
+    },
+    {
+     "finished": "tests.vnext.test_historical_note_navigation",
+     "return_code": 0,
+     "seconds": 15.236
+    },
+    {
+     "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes",
+     "return_code": 0,
+     "seconds": 13.049
+    },
+    {
+     "finished": "tests.vnext.test_history_block_coherence",
+     "return_code": 0,
+     "seconds": 15.948
+    },
+    {
+     "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic",
+     "return_code": 0,
+     "seconds": 13.393
+    },
+    {
+     "finished": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_unrelated_hypothetical_example_preserves_reported_var",
+     "return_code": 0,
+     "seconds": 17.959
+    },
+    {
+     "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements",
+     "return_code": 0,
+     "seconds": 13.0
+    },
+    {
+     "finished": "tests.vnext.test_text_results",
+     "return_code": 0,
+     "seconds": 16.405
+    },
+    {
+     "finished": "tests.vnext.test_c04_registration_successor",
+     "return_code": 0,
+     "seconds": 13.365
+    },
+    {
+     "finished": "tests.vnext.test_e01_candidate_reading",
+     "return_code": 0,
+     "seconds": 10.755
+    },
+    {
+     "finished": "tests.vnext.test_historical_da_scope_candidate",
+     "return_code": 0,
+     "seconds": 7.682
+    },
+    {
+     "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary",
+     "return_code": 0,
+     "seconds": 6.498
+    },
+    {
+     "finished": "tests.vnext.test_statement_fact_reading",
+     "return_code": 0,
+     "seconds": 7.14
+    },
+    {
+     "finished": "tests.vnext.test_historical_derivation_memo",
+     "return_code": 0,
+     "seconds": 1.969
+    },
+    {
+     "finished": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+     "return_code": 0,
+     "seconds": 0.943
+    },
+    {
+     "finished": "tests.vnext.test_debt_to_equity_reading",
+     "return_code": 0,
+     "seconds": 2.153
+    }
+   ],
+   "not_finished_after_start": [],
+   "cancelled": false,
+   "events": [
+    {
+     "time": "2026-10-04T04:01:15.4653918Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:01:15.4655986Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+      "timeout_seconds": 300
+     }
+    },
+    {
+     "time": "2026-10-04T04:04:43.7766425Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+      "return_code": 0,
+      "seconds": 208.311
+     }
+    },
+    {
+     "time": "2026-10-04T04:04:43.7768421Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_zero_ai_results",
+      "timeout_seconds": 600
+     }
+    },
+    {
+     "time": "2026-10-04T04:05:47.9219016Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+      "return_code": 0,
+      "seconds": 272.457
+     }
+    },
+    {
+     "time": "2026-10-04T04:05:47.9220926Z {",
+     "data": {
+      "started": "tests.vnext.test_normal_companyfacts_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:07:17.6163076Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_zero_ai_results",
+      "return_code": 0,
+      "seconds": 153.84
+     }
+    },
+    {
+     "time": "2026-10-04T04:07:17.6164253Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_board_composition_filings",
+      "timeout_seconds": 600
+     }
+    },
+    {
+     "time": "2026-10-04T04:08:00.7017415Z {",
+     "data": {
+      "finished": "tests.vnext.test_normal_companyfacts_results",
+      "return_code": 0,
+      "seconds": 132.78
+     }
+    },
+    {
+     "time": "2026-10-04T04:08:00.7018378Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_da_scope_route",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:15.3740627Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_board_composition_filings",
+      "return_code": 0,
+      "seconds": 117.758
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:15.3742188Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:57.0961604Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_da_scope_route",
+      "return_code": 0,
+      "seconds": 116.394
+     }
+    },
+    {
+     "time": "2026-10-04T04:09:57.0965917Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:05.6042904Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",
+      "return_code": 0,
+      "seconds": 110.23
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:05.6043801Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_bond_leases",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:46.6535889Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",
+      "return_code": 0,
+      "seconds": 109.557
+     }
+    },
+    {
+     "time": "2026-10-04T04:11:46.6537349Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_financial_results",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:12:40.3400022Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_bond_leases",
+      "return_code": 0,
+      "seconds": 94.736
+     }
+    },
+    {
+     "time": "2026-10-04T04:12:40.3401981Z {",
+     "data": {
+      "started": "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:13:14.0928117Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_financial_results",
+      "return_code": 0,
+      "seconds": 87.439
+     }
+    },
+    {
+     "time": "2026-10-04T04:13:14.0929749Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_d02_route_repairs",
+      "timeout_seconds": 1200
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:12.5260945Z {",
+     "data": {
+      "finished": "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",
+      "return_code": 0,
+      "seconds": 92.186
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:12.5262146Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_event_items",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:33.2891481Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_d02_route_repairs",
+      "return_code": 0,
+      "seconds": 79.196
+     }
+    },
+    {
+     "time": "2026-10-04T04:14:33.2892709Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_financial_wording_filings",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:04.3849094Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_event_items",
+      "return_code": 0,
+      "seconds": 111.859
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:04.3851178Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_governance_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:20.0175902Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_financial_wording_filings",
+      "return_code": 0,
+      "seconds": 106.728
+     }
+    },
+    {
+     "time": "2026-10-04T04:16:20.0177875Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_run_replay",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:17:08.3266639Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_governance_results",
+      "return_code": 0,
+      "seconds": 63.942
+     }
+    },
+    {
+     "time": "2026-10-04T04:17:08.3270634Z {",
+     "data": {
+      "started": "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:17:25.8336552Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_run_replay",
+      "return_code": 0,
+      "seconds": 65.816
+     }
+    },
+    {
+     "time": "2026-10-04T04:17:25.8337914Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_filing_inventory",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:18:19.1040392Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_filing_inventory",
+      "return_code": 0,
+      "seconds": 53.27
+     }
+    },
+    {
+     "time": "2026-10-04T04:18:19.1041630Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_combined_borrowings",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:18:29.5549173Z {",
+     "data": {
+      "finished": "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",
+      "return_code": 0,
+      "seconds": 81.228
+     }
+    },
+    {
+     "time": "2026-10-04T04:18:29.5550979Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:07.4807576Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_combined_borrowings",
+      "return_code": 0,
+      "seconds": 48.377
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:07.4809109Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:14.9211373Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result",
+      "return_code": 0,
+      "seconds": 45.366
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:14.9213016Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_governance_text",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:56.6759927Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_governance_text",
+      "return_code": 0,
+      "seconds": 41.755
+     }
+    },
+    {
+     "time": "2026-10-04T04:19:56.6761570Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_lodging_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:20:10.3335815Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",
+      "return_code": 0,
+      "seconds": 62.853
+     }
+    },
+    {
+     "time": "2026-10-04T04:20:10.3337693Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_block_inputs",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:20:49.1810883Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_block_inputs",
+      "return_code": 0,
+      "seconds": 38.847
+     }
+    },
+    {
+     "time": "2026-10-04T04:20:49.1811610Z {",
+     "data": {
+      "started": "tests.vnext.test_ordinary_income_input",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:20:58.3193209Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_lodging_results",
+      "return_code": 0,
+      "seconds": 61.643
+     }
+    },
+    {
+     "time": "2026-10-04T04:20:58.3194745Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:29.8054037Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy",
+      "return_code": 0,
+      "seconds": 31.486
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:29.8055340Z {",
+     "data": {
+      "started": "tests.vnext.test_a05_formula_material",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:38.3904766Z {",
+     "data": {
+      "finished": "tests.vnext.test_ordinary_income_input",
+      "return_code": 0,
+      "seconds": 49.209
+     }
+    },
+    {
+     "time": "2026-10-04T04:21:38.3906722Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:07.9752966Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration",
+      "return_code": 0,
+      "seconds": 29.585
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:07.9754623Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_d02_category_route",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:14.9534120Z {",
+     "data": {
+      "finished": "tests.vnext.test_a05_formula_material",
+      "return_code": 0,
+      "seconds": 45.148
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:14.9535480Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_shared_sources",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:37.7102438Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_d02_category_route",
+      "return_code": 0,
+      "seconds": 29.735
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:37.7104319Z {",
+     "data": {
+      "started": "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:43.7052881Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_shared_sources",
+      "return_code": 0,
+      "seconds": 28.752
+     }
+    },
+    {
+     "time": "2026-10-04T04:22:43.7054288Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:05.3518648Z {",
+     "data": {
+      "finished": "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",
+      "return_code": 0,
+      "seconds": 27.642
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:05.3520696Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:21.3060982Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+      "return_code": 0,
+      "seconds": 37.601
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:21.3062608Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_metadata_context",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:41.0195211Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass",
+      "return_code": 0,
+      "seconds": 35.668
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:41.0196921Z {",
+     "data": {
+      "started": "tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:53.8927458Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_metadata_context",
+      "return_code": 0,
+      "seconds": 32.587
+     }
+    },
+    {
+     "time": "2026-10-04T04:23:53.8929100Z {",
+     "data": {
+      "started": "tests.vnext.test_bank_measures_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:03.6891205Z {",
+     "data": {
+      "finished": "tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",
+      "return_code": 0,
+      "seconds": 22.67
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:03.6892722Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:19.0331354Z {",
+     "data": {
+      "finished": "tests.vnext.test_bank_measures_reading",
+      "return_code": 0,
+      "seconds": 25.14
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:19.0332318Z {",
+     "data": {
+      "started": "tests.vnext.test_event_count_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:24.4999062Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",
+      "return_code": 0,
+      "seconds": 20.811
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:24.5000637Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:41.8494130Z {",
+     "data": {
+      "finished": "tests.vnext.test_event_count_reading",
+      "return_code": 0,
+      "seconds": 22.816
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:41.8495512Z {",
+     "data": {
+      "started": "tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:53.0773788Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected",
+      "return_code": 0,
+      "seconds": 28.577
+     }
+    },
+    {
+     "time": "2026-10-04T04:24:53.0776062Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:07.1092673Z {",
+     "data": {
+      "finished": "tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",
+      "return_code": 0,
+      "seconds": 25.26
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:07.1094333Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:11.1470603Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients",
+      "return_code": 0,
+      "seconds": 18.07
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:11.1472326Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_note_navigation",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:25.2396900Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients",
+      "return_code": 0,
+      "seconds": 18.13
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:25.2398433Z {",
+     "data": {
+      "started": "tests.vnext.test_history_block_coherence",
+      "timeout_seconds": 480
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:26.3831733Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_note_navigation",
+      "return_code": 0,
+      "seconds": 15.236
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:26.3834098Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:39.4323252Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes",
+      "return_code": 0,
+      "seconds": 13.049
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:39.4325220Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:41.1879212Z {",
+     "data": {
+      "finished": "tests.vnext.test_history_block_coherence",
+      "return_code": 0,
+      "seconds": 15.948
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:41.1880665Z {",
+     "data": {
+      "started": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_unrelated_hypothetical_example_preserves_reported_var",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:52.8250099Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic",
+      "return_code": 0,
+      "seconds": 13.393
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:52.8252008Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:59.1472018Z {",
+     "data": {
+      "finished": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_unrelated_hypothetical_example_preserves_reported_var",
+      "return_code": 0,
+      "seconds": 17.959
+     }
+    },
+    {
+     "time": "2026-10-04T04:25:59.1473446Z {",
+     "data": {
+      "started": "tests.vnext.test_text_results",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:05.8248553Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements",
+      "return_code": 0,
+      "seconds": 13.0
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:05.8250172Z {",
+     "data": {
+      "started": "tests.vnext.test_c04_registration_successor",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:15.5522374Z {",
+     "data": {
+      "finished": "tests.vnext.test_text_results",
+      "return_code": 0,
+      "seconds": 16.405
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:15.5523760Z {",
+     "data": {
+      "started": "tests.vnext.test_e01_candidate_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:19.1900822Z {",
+     "data": {
+      "finished": "tests.vnext.test_c04_registration_successor",
+      "return_code": 0,
+      "seconds": 13.365
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:19.1902000Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_da_scope_candidate",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:26.3075232Z {",
+     "data": {
+      "finished": "tests.vnext.test_e01_candidate_reading",
+      "return_code": 0,
+      "seconds": 10.755
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:26.3076791Z {",
+     "data": {
+      "started": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:26.8717899Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_da_scope_candidate",
+      "return_code": 0,
+      "seconds": 7.682
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:26.8719648Z {",
+     "data": {
+      "started": "tests.vnext.test_statement_fact_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:32.8057007Z {",
+     "data": {
+      "finished": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary",
+      "return_code": 0,
+      "seconds": 6.498
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:32.8059354Z {",
+     "data": {
+      "started": "tests.vnext.test_historical_derivation_memo",
+      "timeout_seconds": 300
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:34.0120613Z {",
+     "data": {
+      "finished": "tests.vnext.test_statement_fact_reading",
+      "return_code": 0,
+      "seconds": 7.14
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:34.0123316Z {",
+     "data": {
+      "started": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:34.7751665Z {",
+     "data": {
+      "finished": "tests.vnext.test_historical_derivation_memo",
+      "return_code": 0,
+      "seconds": 1.969
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:34.7752605Z {",
+     "data": {
+      "started": "tests.vnext.test_debt_to_equity_reading",
+      "timeout_seconds": 240
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:34.9549406Z {",
+     "data": {
+      "finished": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+      "return_code": 0,
+      "seconds": 0.943
+     }
+    },
+    {
+     "time": "2026-10-04T04:26:36.9277718Z {",
+     "data": {
+      "finished": "tests.vnext.test_debt_to_equity_reading",
+      "return_code": 0,
+      "seconds": 2.153
+     }
+    }
+   ]
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "limitation": "Unreached or started-but-unfinished cases are not passes. Successful shard 2 alone is not success of the source-material aggregate."
+}

@@ -1094,3 +1094,10 @@ C02 核心事实核查：`PYTHONPATH=scripts python3 -m unittest tests.vnext.tes
 C02不是模型抽取测试：新视图未作独立输入回答，Lumen完整输入仍超限。
 CI第四分片的170入口无重叠、无遗漏；不降低单项限时，不改冻结的旧runner。
 最终180快速入口串行通过，原30秒单项上限保留，399.758秒，逐项结果随上述证据保存。
+
+
+### Issue #47 完整文字与独立输入阅读后续（2026-10-04）
+
+`python3 -m unittest -q tests.vnext.test_d03_context_requests tests.vnext.test_c02_table_context tests.vnext.test_source_tier_split`：合并最新比较 base 后 22 例通过。四分片 workflow `4d6540ca` 只改两处参数，7 个分片覆盖守卫通过并实际推送；来源层聚合须等待全部四片，旧取消不计通过。
+
+`docs/evidence/issue47_history/d04-full-text-read-2026-10-04/README.md` 给出完整 39 包、原生文字映射和 16 原答 SHA/74 单元的离线核对命令；新目录完整重建报告逐字节一致。这是执行者实际语义阅读加机械覆盖，14 图片及全面数值分析未覆盖，不是完整申报接受。`c02-table-context-2026-10-04/verify_independent.py` 核精确输入、原件及 46 事实引用和原七关系/输出尺寸；实际独立阅读由一个获准子代理完成，不能把引用存在当业务正确证明。`measure_layout_variants.py` 三种完整表示均恢复全部文字/表头格，Lumen 乐观下界仍超限；无新 provider/paid/SEC、Review、Run 或接受。

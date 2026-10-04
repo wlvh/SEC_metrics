@@ -459,3 +459,19 @@ base 为 `41d9d859`，不是当前后移的 base。三个 saved-source 分片均
 `git apply --check` 与分片覆盖的六项测试通过，不需要再次写整份 YAML。
 本 session 尚无已证实可写 workflows 的凭据，原实际拒绝记录保留；
 四片补丁仍待具备该权限的维护者应用。没有减少断言或重置旧失败。
+
+## 2026-10-04 后续：当前凭据可推送，四片已落地
+
+head `417ccfb7` 的 run 37175720539 已终态 cancelled，实际 checkout 为
+merge `dd0cc95c`（head `417ccfb7` / base `e8fa2880`）。shard 2 完整通过 57 个入口，
+shard 0/1 到 35 分钟取消，分别完成 34/41 个入口且全部 rc0；未完成部分不能记通过。
+本次逐入口日志在 `saved-source-progress-head-417ccfb7.json`，旧三片全取消记录保留原义。
+
+在隔离 worktree 应用现有 `0005`，7 个分片守卫通过、diff 只含 matrix 的第四项与
+`--shard-count 4` 两处；没有提高 case/job 上限、删除入口或减少断言。
+提交 `4d6540ca` 已实际成功推到本 Issue 两个开发分支，证明当前会话凭据可写此 workflow。
+早期 GitHub App 拒绝来自当时凭据，不能再当成本会话的阻塞。`0005` 对已应用的当前
+workflow 不再适用；不是另一个等待维护者复制整份 YAML 的任务。
+
+run 37182511452 对 `4d6540ca` 已启动四片实跑，reference run 37182511534 成功。
+最终 CI 状态须读实际 head/base/merge 和所有分片；资源估计及局部成功均不替代聚合通过。
