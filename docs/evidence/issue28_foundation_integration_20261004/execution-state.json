@@ -117,6 +117,57 @@
         "existing_installation_cases": 2
       },
       "coverage_limit": "Alias predicate, two selected tests and changed binding/parent hashes only; previous unchanged review inherited; no whole PR/business/CI approval"
+    },
+    {
+      "task_name": "review_foundationci_8f6640b",
+      "purpose": "review",
+      "module": "inherited_ci_partition",
+      "scope_paths": [
+        "tools/run_foundation_ci.py",
+        ".github/workflows/vnext-fast.yml:95fast/24material",
+        "tests/test_foundation_ci.py",
+        "TESTING.md:CI partition row"
+      ],
+      "patch_sha": "8f6640bcdfddbbaa5fca42619f1bbb69ec7a50b9",
+      "spawned_at": "2026-10-04T15:38:26.531806+00:00",
+      "ended_at": "2026-10-04T15:43:53.796544+00:00",
+      "tool_calls": 30,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-partition.md",
+      "verdict": "PASS_FOR_INHERITED_CI_PARTITION_ONLY_NOT_FULL_ACCEPTANCE",
+      "dedup_note": "No live/register/result match. New CI-only partition diff, earliermain audit/alias reviews inherited, no repeat source or business review.",
+      "review_started_at": "2026-10-04T15:39:20+00:00",
+      "base_sha": "d71546054fa1037f8c4c4880ec61a83b5e2c43de",
+      "functions_exec_calls": 7,
+      "nested_tool_calls": 23,
+      "internal_exec_command_calls": 22,
+      "internal_clock_calls": 1,
+      "ordinary_messages": 2,
+      "questions": 0,
+      "elapsed_seconds": 273.797,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-partition.log",
+      "finding_codes": [],
+      "merge_ready": false,
+      "independent_tests": {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_foundation_ci -v",
+        "exit_code": 0,
+        "tests": 3,
+        "unittest_seconds": 0.001,
+        "process_seconds": 0.070277,
+        "list_commands": [
+          {
+            "suite": "fast",
+            "selectors": 95,
+            "exit_code": 0
+          },
+          {
+            "suite": "source-material",
+            "selectors": 24,
+            "exit_code": 0
+          }
+        ],
+        "actual_119_selectors_executed": false
+      },
+      "coverage_limit": "Exact 119 selector partition, unchanged original runners, existing 30/240 case limits, CI 5/15 minute jobs and three structural unit tests only; no new business suite, main full acceptance or remote CI green claim."
     }
   ]
 }
