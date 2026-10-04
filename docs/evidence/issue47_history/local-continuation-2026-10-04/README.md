@@ -226,3 +226,9 @@ Ford historical bytes cannot be relabelled into it. Its useful pending-review
 boundary is read and deferred for historical adaptation until the input method
 passes the proved omission/output gates. No competitive mapper, full peer merge,
 peer Result or credit was introduced; the read is appended to the same register.
+
+Post-commit `mint --check` and capability alignment against the pinned remote
+`df84865d` both pass on implementation commit `51198ebb`; the two protected audit
+sidecars are byte-identical after restoration. The attached logs bind that exact
+source commit. This follow-up adds evidence only; it does not change source or
+acceptance semantics. Final-head checks are rerun before push.

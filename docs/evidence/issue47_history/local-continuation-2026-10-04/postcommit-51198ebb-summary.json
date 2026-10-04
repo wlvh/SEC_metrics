@@ -1,0 +1,34 @@
+{
+ "head": "51198ebb0b1a9a23c9f12f48251c2a66e950947b",
+ "base": "df84865dd64260b7dd6307b852b058f3305a307e",
+ "checks": [
+  {
+   "name": "mint",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "tools/vnext_mint_historical_requirement.py",
+    "--check"
+   ],
+   "return_code": 0
+  },
+  {
+   "name": "alignment",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "tools/check_capability_contract_alignment.py",
+    "--base-ref",
+    "origin/task/b06-new-source"
+   ],
+   "return_code": 0
+  }
+ ],
+ "protected_before": {
+  "outputs/semantic_audit_receipt.json": "f0444ff33222ce13996ad21b19864a8df9f2f55d75d29232853e2790e575cc77",
+  "outputs/scalability_audit.csv": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+ },
+ "protected_after_commands": {
+  "outputs/semantic_audit_receipt.json": "f0444ff33222ce13996ad21b19864a8df9f2f55d75d29232853e2790e575cc77",
+  "outputs/scalability_audit.csv": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+ },
+ "restored_exactly": true
+}
