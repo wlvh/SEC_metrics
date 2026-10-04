@@ -79,6 +79,19 @@ class MainScalabilityAuditTest(unittest.TestCase):
         with self.assertRaisesRegex(PublicationError,'successor installation is incomplete'):
             _execute_scalability_audit(repo_root=root)
 
+    def test_dangling_successor_aliases_never_fall_back_to_legacy(self):
+        for links in ('both','tool','policy'):
+            with self.subTest(links=links):
+                root=self.fixture();tool=root/'tools/check_main_scalability.py'
+                policy=root/'config/main_scalability_exemptions_v1.json'
+                tool.unlink();policy.unlink()
+                if links in ('both','tool'):
+                    tool.symlink_to(root/'missing-main-tool.py')
+                if links in ('both','policy'):
+                    policy.symlink_to(root/'missing-main-policy.json')
+                with self.assertRaisesRegex(PublicationError,'successor installation is incomplete'):
+                    _execute_scalability_audit(repo_root=root)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -37,6 +37,46 @@
         "seconds": 0.004
       },
       "merge_ready": false
+    },
+    {
+      "task_name": "review_mainaudit_d164888",
+      "purpose": "review",
+      "module": "main_audit_historical_fix",
+      "scope_paths": [
+        "scripts/vnext/publication.py:main audit selection",
+        "scripts/vnext/ordinary_scalability_audit.py:optional policy and syntax proof",
+        "tools/check_main_scalability.py",
+        "config/main_scalability_exemptions_v1.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_main_scalability_audit.py",
+        "tests/vnext/test_issue28_requirement_transition.py:fixed historical objects",
+        "tests/vnext/projection_fixture_support.py:successor tool copy",
+        ".github/workflows/vnext-fast.yml:main-foundation coverage"
+      ],
+      "patch_sha": "d1648880e7518f019f734a00e0a3444dab45a9bc",
+      "spawned_at": "2026-10-04T12:32:04.593145+00:00",
+      "ended_at": "2026-10-04T12:40:22.731Z",
+      "tool_calls": 29,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-increment.md",
+      "verdict": "CHANGES_REQUESTED_FOR_MAIN_SELECTOR_DANGLING_ALIAS_BOUNDARY",
+      "dedup_note": "No live match, register SHA/module or exact evidence result. Old469 boundary review ended; new audit/fixture/binding increment only, inherited unchanged source/transport findings reused.",
+      "functions_exec_calls": 11,
+      "nested_tool_calls": 17,
+      "collaboration_tool_calls": 1,
+      "ordinary_messages": 3,
+      "elapsed_seconds": 443,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-increment.log",
+      "finding_codes": [
+        "P2_MAIN_SELECTOR_DANGLING_ALIAS_FALLBACK"
+      ],
+      "merge_ready": false,
+      "independent_tests": {
+        "authorized_suite_rerun": false,
+        "small_ast_cases": 5,
+        "selector_state_model_cases": 1,
+        "no_filesystem_writes_in_counterexamples": true
+      }
     }
   ]
 }

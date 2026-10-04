@@ -175,4 +175,34 @@ Read a pinned version while pointer and mirrors move. ... ok
 test_pointer_predecessor_must_match_committed_switch_history (tests.vnext.test_publication.PublicationTest.test_pointer_predecessor_must_match_committed_switch_history)
 Reject a pointer whose predecessor lacks its committed edge. ... ok
 test_pre_pointer_crash_orphan_edge_cannot_authorize_pointer (tests.vnext.test_publication.PublicationTest.test_pre_pointer_crash_orphan_edge_cannot_authorize_pointer)
-Require writer recovery; no orphan edge alone authorizes a switch. ... 
+Require writer recovery; no orphan edge alone authorizes a switch. ... ok
+test_projection_cannot_forge_run_or_release_identity (tests.vnext.test_publication.PublicationTest.test_projection_cannot_forge_run_or_release_identity)
+Bind staged Result IDs and release bytes to the verified Run. ... ok
+test_publication_entrypoints_do_not_accept_ledger_authority (tests.vnext.test_publication.PublicationTest.test_publication_entrypoints_do_not_accept_ledger_authority)
+Keep request-ledger facts derived inside publication entrypoints. ... ok
+test_publication_layout_is_derived_from_one_root (tests.vnext.test_publication.PublicationTest.test_publication_layout_is_derived_from_one_root)
+Make pointer, status, storage, and mirror aliases inexpressible. ... ok
+test_publication_view_never_creates_missing_authority_lock (tests.vnext.test_publication.PublicationTest.test_publication_view_never_creates_missing_authority_lock)
+Fail closed without creating a lock from a read-only consumer. ... ok
+test_reader_waits_for_pointer_edge_transaction (tests.vnext.test_publication.PublicationTest.test_reader_waits_for_pointer_edge_transaction)
+Expose no pointer-before-edge half state to a concurrent reader. ... ok
+test_real_withheld_candidate_preserves_previous_active (tests.vnext.test_publication.PublicationTest.test_real_withheld_candidate_preserves_previous_active)
+Block a replayable 1.01% B03 failure before bundle preparation. ... ok
+test_receipt_binds_exact_artifacts_checks_and_view (tests.vnext.test_publication.PublicationTest.test_receipt_binds_exact_artifacts_checks_and_view)
+Reject every receipt that did not validate this exact view. ... ok
+test_recorded_bundle_cannot_commit_through_private_orchestrator_primitive (tests.vnext.test_publication.PublicationTest.test_recorded_bundle_cannot_commit_through_private_orchestrator_primitive)
+Keep PASSED_RECORDED_ONLY outside even the private mutation path. ... ok
+test_recorded_legacy_locator_is_portable_but_formal_rejects (tests.vnext.test_publication.PublicationTest.test_recorded_legacy_locator_is_portable_but_formal_rejects)
+Close exact working bytes offline without weakening live policy. ... ok
+test_recorded_sandbox_owns_root_authority_and_supports_cas (tests.vnext.test_publication.PublicationTest.test_recorded_sandbox_owns_root_authority_and_supports_cas)
+Commit only RECORDED bundles below the fixed workspace root. ... ok
+test_recorded_sandbox_rejects_formal_publication_namespace (tests.vnext.test_publication.PublicationTest.test_recorded_sandbox_rejects_formal_publication_namespace)
+Do not hide recorded bytes below formal immutable storage. ... ok
+test_recorded_sandbox_rejects_workspace_outside_repository (tests.vnext.test_publication.PublicationTest.test_recorded_sandbox_rejects_workspace_outside_repository)
+Do not let a caller redirect RECORDED mirrors to another root. ... ok
+test_rollback_rejects_prepared_never_committed_sibling (tests.vnext.test_publication.PublicationTest.test_rollback_rejects_prepared_never_committed_sibling)
+Allow rollback only to the committed predecessor. ... ok
+test_rollback_then_restore_reuses_only_verified_bundles (tests.vnext.test_publication.PublicationTest.test_rollback_then_restore_reuses_only_verified_bundles)
+Return to the committed successor without rerunning a producer. ... ok
+test_scalability_gate_executes_real_scanner (tests.vnext.test_publication.PublicationTest.test_scalability_gate_executes_real_scanner)
+Reject a company branch added after the candidate gate ran. ... 
