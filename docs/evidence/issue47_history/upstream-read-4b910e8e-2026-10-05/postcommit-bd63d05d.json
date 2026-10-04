@@ -1,0 +1,30 @@
+{
+  "head": "bd63d05dcc887ef2c1874c3dd4c37a0f453d15bf",
+  "checks": [
+    {
+      "name": "mint",
+      "command": [
+        "work/issue47-venv/bin/python",
+        "tools/vnext_mint_historical_requirement.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 1.2048649159260094
+    },
+    {
+      "name": "alignment",
+      "command": [
+        "work/issue47-venv/bin/python",
+        "tools/check_capability_contract_alignment.py",
+        "--base-ref",
+        "origin/task/b06-new-source"
+      ],
+      "returncode": 0,
+      "seconds": 18.123543082969263
+    }
+  ],
+  "protected_outputs_restored": {
+    "outputs/semantic_audit_receipt.json": "f0444ff33222ce13996ad21b19864a8df9f2f55d75d29232853e2790e575cc77",
+    "outputs/scalability_audit.csv": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+  }
+}
