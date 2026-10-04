@@ -4102,6 +4102,31 @@
       },
       "dedup_note": "list_agents no live; new SHA no register/result; predecessor review ended at3 messages. Genuine unreviewed namespace dependency delta only, old findings retained; permitted v1.2/new-SHA increment rule, not repeat whole scope.",
       "elapsed_seconds": 334
+    },
+    {
+      "task_name": "review_d03task_c0cef25",
+      "purpose": "review",
+      "module": "d03_bounded_task_contract",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/task_contract.py",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/scan-prompt.txt",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/test_task_contract.py",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/measured-plan.json"
+      ],
+      "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+      "spawned_at": "2026-10-04T04:18:35Z",
+      "ended_at": "2026-10-04T04:24:00.182727Z",
+      "tool_calls": 20,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_P2_PROMPT_ROW_LAYOUT",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; register/evidence no same SHA or bounded-task contract; prior literal/namespace reviews cover unchanged different module. New actual prototype scope, no repeated model extraction.",
+      "elapsed_seconds": "325.182727"
     }
   ],
   "ci_capacity_20260922": {
@@ -13331,10 +13356,10 @@
   "ci_e8fa2880": {
     "head_sha": "e8fa288095edc894101628d49392572c9c49e7af",
     "run_id": 37174399397,
-    "state": "in_progress",
-    "terminal": null,
-    "read": "IMMEDIATE_AFTER_PUSH_ONCE",
-    "updated_at": "2026-10-04T03:33:21Z"
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL",
+    "updated_at": "2026-10-04T04:14:20Z"
   },
   "issue28_context_queue_readback_20261004": {
     "readback_equal": true,
@@ -13344,7 +13369,7 @@
     "common_protocol_and_other_sections_unchanged": true
   },
   "d03_bounded_task_contract_20261004": {
-    "state": "EXECUTABLE_OFFLINE_PROTOTYPE_MEASURED_REVIEW_PENDING_NOT_MODEL_OR_COMPANY_READY",
+    "state": "PROMPT_ROW_LAYOUT_P2_FIXED_INCREMENT_REVIEW_PENDING",
     "evidence": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004",
     "tested_base_sha": "e8fa288095edc894101628d49392572c9c49e7af",
     "prototype_code_in_evidence_not_normal_runtime": true,
@@ -13391,6 +13416,37 @@
       0,
       0
     ],
-    "next": "Independent mechanical prototype review, then input-only actual developer trial for new whole-owner/context representation; do not reopen ended JPM/C02/B13 batches. Ten-company D03 plan/cost and target-model permission not yet established."
+    "next": "Independent mechanical prototype review, then input-only actual developer trial for new whole-owner/context representation; do not reopen ended JPM/C02/B13 batches. Ten-company D03 plan/cost and target-model permission not yet established.",
+    "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+    "independent_review": {
+      "state": "REQUEST_CHANGES_P2_PROMPT_ROW_LAYOUT",
+      "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-review/conclusion.md",
+      "tool_calls": 20,
+      "ordinary_messages": 3
+    },
+    "prompt_fix": {
+      "old_review_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+      "historical_request_changes_preserved": true,
+      "changed": "prompt correct original-index dictionary and row_layout; one corresponding structural/source-order regression; no semantic or model answer change",
+      "short_tests": 12,
+      "short_test_seconds": "0.349",
+      "measure_seconds": "39.184",
+      "prompt_sha256": "bb99f904d3d5c5492b2ce094ec1e5a6e055d34883a3d9a8429f71d26723222f7",
+      "sources": [
+        {
+          "company": "marriott",
+          "first_scan_count": 5,
+          "total_design_ceiling": 10,
+          "maximum_context_tokens": 185915
+        },
+        {
+          "company": "jpm",
+          "first_scan_count": 38,
+          "total_design_ceiling": 76,
+          "maximum_context_tokens": 186203
+        }
+      ]
+    }
   }
 }

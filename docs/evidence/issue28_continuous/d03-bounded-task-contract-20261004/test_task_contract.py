@@ -172,6 +172,27 @@ class BoundedTaskPrototypeTest(unittest.TestCase):
             _, _, pending = contract._context(self.source, self.digest, [self.f.fact['unit_id']], requests)
         self.assertEqual(pending[0]['reason'], 'D03_TASK_CONTINUATION_LOCATION_CEILING')
 
+    def test_prompt_named_dictionary_layout_restores_original_index_order_and_fact_columns(self):
+        prompt = (contract.HERE/'scan-prompt.txt').read_text()
+        self.assertIn('payload.row_layout.source_order', prompt)
+        self.assertIn('DICTIONARY', prompt)
+        self.assertNotIn('row_layouts', prompt)
+        packed = self.task['payload']['source_units']
+        for unit in packed:
+            payload = unit['payload']; layout = payload['row_layout']
+            name = 'blocks' if unit['kind'] == 'VISIBLE_TEXT' else 'facts'
+            self.assertIsInstance(payload[name], dict)
+            decoded = [dict(zip(layout['columns'], payload[name][str(i)])) for i in layout['source_order']]
+            if 'fact_columns' in layout:
+                for row in decoded:
+                    row['fact'] = dict(zip(layout['fact_columns'], row['fact']))
+            self.assertEqual(decoded, self.task['provided_units'][unit['unit_id']]['payload'][name])
+        payload = {'blocks': {'10': ['ten', 10], '2': ['two', 2]},
+                   'row_layout': {'source_order': [2, 10], 'columns': ['text', 'block_index']}}
+        decoded = [dict(zip(payload['row_layout']['columns'], payload['blocks'][str(i)]))
+                   for i in payload['row_layout']['source_order']]
+        self.assertEqual([b['block_index'] for b in decoded], [2, 10])
+
 
 if __name__ == '__main__':
     unittest.main()
