@@ -525,6 +525,8 @@ SOURCE_TESTS += ("tests.vnext.test_historical_note_carrying.HistoricalNoteRateMa
 FAST_TESTS += ("tests.vnext.test_d03_model_processing",)
 FAST_TESTS += ("tests.vnext.test_d03_model_review_cli",)
 FAST_TESTS += ("tests.vnext.test_d03_context_requests",)
+FAST_TESTS += ("tests.vnext.test_historical_bond_sections",)
+SOURCE_TESTS += ("tests.vnext.test_historical_bond_sections_material.HistoricalBondSectionMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
@@ -686,9 +688,12 @@ def _run_source_case(name):
 # are weights for splitting the tier across its CI jobs, not limits - a wrong
 # weight unbalances the split and fails nothing. Balanced on these figures,
 # three shards carry about 30.3 minutes a lane; the fourth shard
-# (docs/evidence/issue47_history/ci-job-patch/0005) is a workflow change this
-# branch cannot push.
+# (docs/evidence/issue47_history/ci-job-patch/0005) is now applied and pushed;
+# current credentials support that workflow change (4d6540ca).
 SOURCE_CI_SECONDS = {
+    # New eight-case scope tier: local full regression 78.947s, conservatively
+    # weighted at 1.2x pending its first CI measurement. This is an estimate.
+    "tests.vnext.test_historical_bond_sections_material.HistoricalBondSectionMaterialTest": 95,
     "tests.vnext.test_historical_sec_session": 445,
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 395,
     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 349,

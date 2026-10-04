@@ -73,6 +73,7 @@ from .historical_financial_wording import successor
 from . import normal_inclusive_debt_results as inclusive
 from . import normal_note_debt_results as note
 from .historical_note_carrying import inspect_note_carrying as historical_note_carrying
+from .historical_bond_sections import inspect_bond_debt_scope as historical_bond_debt_scope
 from . import ordinary_special_debt_scope as special
 
 import sys
@@ -607,7 +608,7 @@ _RECONCILED_GRAMMARS = {
                   "prefix": "INCLUSIVE_DEBT"},
 }
 _RECONCILED_GRAMMARS["bond"]["error"] = bond.BondLeaseError
-_RECONCILED_GRAMMARS["bond"]["inspect"] = bond.inspect_bond_debt_scope
+_RECONCILED_GRAMMARS["bond"]["inspect"] = historical_bond_debt_scope
 _RECONCILED_GRAMMARS["inclusive"]["error"] = inclusive.InclusiveDebtError
 _RECONCILED_GRAMMARS["inclusive"]["inspect"] = inclusive.inspect_inclusive_debt_scope
 

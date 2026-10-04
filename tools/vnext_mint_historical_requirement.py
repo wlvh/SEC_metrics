@@ -120,6 +120,7 @@ NEW_RULE_FILES = (
     # check them.
     "scripts/vnext/historical_debt_results.py",
     "scripts/vnext/historical_note_carrying.py",
+    "scripts/vnext/historical_bond_sections.py",
     # B10 and B11 read a table in the annual report itself, and the ordinary
     # source preparation resolves that report as the newest one. These bytes
     # decide which filing's table a pinned period is read from, so both roots

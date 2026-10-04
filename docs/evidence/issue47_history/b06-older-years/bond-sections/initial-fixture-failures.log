@@ -1,0 +1,42 @@
+test_both_positive_classes_have_separate_native_values (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_both_positive_classes_have_separate_native_values) ... ok
+test_current_and_gross_reconciliations_are_retained (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_current_and_gross_reconciliations_are_retained) ... ok
+test_disagreeing_xml_amount_cannot_use_the_visible_note (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_disagreeing_xml_amount_cannot_use_the_visible_note) ... ok
+test_duplicate_within_one_section_is_still_rejected (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_duplicate_within_one_section_is_still_rejected) ... FAIL
+test_matching_amount_cannot_move_a_native_fact_to_the_other_class (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_matching_amount_cannot_move_a_native_fact_to_the_other_class) ... ok
+test_unique_labels_keep_the_complete_frozen_proof (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_unique_labels_keep_the_complete_frozen_proof) ... ERROR
+test_unrelated_grid_or_changed_context_is_not_a_member_witness (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_unrelated_grid_or_changed_context_is_not_a_member_witness) ... ok
+test_zero_class_is_preserved_as_a_distinct_source_occurrence (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_zero_class_is_preserved_as_a_distinct_source_occurrence) ... ok
+
+======================================================================
+ERROR: test_unique_labels_keep_the_complete_frozen_proof (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_unique_labels_keep_the_complete_frozen_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue47-bond-members-dev/tests/vnext/test_historical_bond_sections.py", line 85, in test_unique_labels_keep_the_complete_frozen_proof
+    self.assertEqual(_native_bond_members(**args, bonds=bonds), native_bond_members(**args, bonds=bonds))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue47-bond-members-dev/scripts/vnext/b06_bond_leases.py", line 471, in _native_bond_members
+    chosen = precision_choice(left+right)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue47-bond-members-dev/scripts/vnext/r5_b06_scope.py", line 25, in precision_choice
+    need(len({c['value'] for c in finest})==1,'DEBT_SAME_PRECISION_CONFLICT')
+  File "/workspace/work/issue47-bond-members-dev/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: DEBT_SAME_PRECISION_CONFLICT
+
+======================================================================
+FAIL: test_duplicate_within_one_section_is_still_rejected (tests.vnext.test_historical_bond_sections.HistoricalBondSectionTest.test_duplicate_within_one_section_is_still_rejected)
+----------------------------------------------------------------------
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BOND_AMOUNT_OUTSIDE_SECTION
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue47-bond-members-dev/tests/vnext/test_historical_bond_sections.py", line 91, in test_duplicate_within_one_section_is_still_rejected
+    with self.assertRaisesRegex(ValueError, 'BOND_MEMBER_DUPLICATED'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "BOND_MEMBER_DUPLICATED" does not match "BOND_LEASE_BOND_AMOUNT_OUTSIDE_SECTION"
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.054s
+
+FAILED (failures=1, errors=1)
