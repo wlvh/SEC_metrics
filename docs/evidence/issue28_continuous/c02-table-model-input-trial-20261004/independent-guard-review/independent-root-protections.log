@@ -1,0 +1,68 @@
+SANDBOX_PROFILE: (version 1)(allow default)(deny network*)(deny file-write* (subpath "/Users/lyuhongwang/Developer/SEC_metrics") (subpath "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195") (subpath "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13") (subpath "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-model-input-trial-20261004/native-initial"))
+PYTHONPATH: scripts
+{
+  "budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "checks": [
+    {
+      "case": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+      "refusal": "C02_TABLE_MODEL_LIVE_LEDGER_OUTPUT"
+    },
+    {
+      "case": "/Users/lyuhongwang/.local/state/sec_metrics",
+      "refusal": "C02_TABLE_MODEL_LIVE_LEDGER_OUTPUT"
+    },
+    {
+      "case": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/independent-review-child",
+      "refusal": "C02_TABLE_MODEL_LIVE_LEDGER_OUTPUT"
+    },
+    {
+      "case": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "refusal": "C02_TABLE_MODEL_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED"
+    },
+    {
+      "case": "/Users/lyuhongwang/Developer",
+      "refusal": "C02_TABLE_MODEL_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED"
+    },
+    {
+      "case": "/Users/lyuhongwang/Developer/SEC_metrics/independent-review-child",
+      "refusal": "C02_TABLE_MODEL_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED"
+    },
+    {
+      "case": "relative",
+      "refusal": "C02_TABLE_MODEL_ABSOLUTE_OUTPUT_REQUIRED"
+    },
+    {
+      "case": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i/alias/child",
+      "refusal": "C02_TABLE_MODEL_OUTPUT_ALIAS"
+    },
+    {
+      "case": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i/active",
+      "refusal": "C02_TABLE_MODEL_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED"
+    },
+    {
+      "case": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i/active/child",
+      "refusal": "C02_TABLE_MODEL_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED"
+    },
+    {
+      "case": "outside code / ledger / active",
+      "accepted": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i/safe"
+    },
+    {
+      "case": "source=/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i/safe",
+      "refusal": "C02_TABLE_MODEL_SOURCE_OUTPUT_OVERLAP"
+    },
+    {
+      "case": "source=/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i/safe/source",
+      "refusal": "C02_TABLE_MODEL_SOURCE_OUTPUT_OVERLAP"
+    },
+    {
+      "case": "source=/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/c02-guard-independent-kr_9fs7i",
+      "refusal": "C02_TABLE_MODEL_SOURCE_OUTPUT_OVERLAP"
+    }
+  ],
+  "temporary_files_cleaned": true,
+  "no_model_provider_sec_actions": true
+}
+
+RETURN_CODE: 0
+WALL_SECONDS: 0.135

@@ -92,3 +92,28 @@ Actual business ledger SHA remains6023bf17 (195 claims,143/143/52), remaining
 97/97/28, batch21/66. All development work here0/0/0. Old results, failures and
 190 identities preserved; no peer worktree/snapshot/ledger/state was operated.
 Other lawful original-queue work continues; Goal remains active.
+
+## Actual CI failure and minimal correction
+
+The previous `df84865d` main CI37194640595 completed failure at10:48:05UTC.
+One real test failed: exact-source scalability audit classified the dated
+original ledger directory in the new output guard as a fiscal-date literal;
+the shard aggregator failed afterward. This was an assertion, not a timeout
+or C02 response failure. `ci-df84865d-specific-failure.json` preserves the exact
+test/log, without hiding other test results.
+
+`9000d02` changes only that guard to read the same budget_root from existing
+configuration, with a configured-root regression. No audit exemption/fiscal
+check was changed;31 focused checks passed. Before modifying active mapper
+bytes, the exact old imported runtime/definition authorities were retained at
+the explicit old-runtime path, separately from original source/data and native
+model packet. The first snapshot omitted an import-time JSON; startup
+configuration/spec/requirement authorities were then included without copying
+SEC/evidence/output/ledger material. Old-runtime original-ID replay passed
+before and after the change in5.471/5.633s. The old candidate/unit/raw response
+remain the initial saved identities; they were not resigned with the new hash.
+
+The narrow9000d02 guard delta then passed independent review:25 tools/3messages,
+17 tests and old-runtime禁网原ID冷读. The old wider mapper and the model output
+were not resampled or reapproved. This is a path-protection integration fix,
+not a change to extraction or additional business permission.

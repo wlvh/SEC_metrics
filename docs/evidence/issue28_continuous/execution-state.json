@@ -4282,6 +4282,32 @@
       "dedup_note": "No live agent; no sameSHA input-model record/result/evidence. Earlier reviews covered mechanical code, not independent model extraction; old Enphase/Paramount plain-source batch ended. New full-table representation, different current JPM original; parent reference frozen before dispatch and forbidden to reader.",
       "review_started_at": "2026-10-04T10:31:54.895601+00:00",
       "actual_seconds": 495.652235
+    },
+    {
+      "task_name": "review_c02guard_9000d02",
+      "purpose": "review",
+      "module": "c02guard",
+      "scope_paths": [
+        "scripts/vnext/c02_table_model_processing.py:_root",
+        "tests/vnext/test_c02_table_model_processing.py:test_configured_ledger_guard_is_not_a_fixed_fiscal_period"
+      ],
+      "patch_sha": "9000d02a1a0ee57f967fe4690a2f407150e68662",
+      "spawned_at": "2026-10-04T11:14:58.606246+00:00",
+      "ended_at": "2026-10-04T11:23:01Z",
+      "tool_calls": 25,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-guard-review/conclusion.md",
+      "verdict": "PASS_LIMITED_GUARD_CONFIG_DELTA",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live agent; no sameSHA guard result/register/evidence. Old actual-wire code review ended at3message cap; only new protected ledger config lookup and exact old-runtime read boundary, no repeated full module/model extraction.",
+      "review_started_at": "2026-10-04T11:15:52Z",
+      "actual_review_seconds": 429
     }
   ],
   "ci_capacity_20260922": {
@@ -13872,6 +13898,8 @@
     "native_read_seconds": 5.532,
     "all_model_native_files_equal": true,
     "old_runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195",
-    "old_runtime_material_scope": "Exact imported code plus existing configuration/spec/requirement authorities; raw SEC data and original native packet not copied/resigned. Frozen old mapper remains3097ae19. Source root stays original."
+    "old_runtime_material_scope": "Exact imported code plus existing configuration/spec/requirement authorities; raw SEC data and original native packet not copied/resigned. Frozen old mapper remains3097ae19. Source root stays original.",
+    "guard_fix_review_sha": "9000d02a1a0ee57f967fe4690a2f407150e68662",
+    "guard_fix_review": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-guard-review/conclusion.md"
   }
 }
