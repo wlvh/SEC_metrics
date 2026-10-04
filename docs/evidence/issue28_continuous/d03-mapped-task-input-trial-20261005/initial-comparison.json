@@ -1,0 +1,53 @@
+{
+  "record_type": "PARENT_ACTUAL_MAPPED_RESPONSE_STRUCTURE_AND_ORIGINAL_COMPARISON",
+  "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
+  "response_sha256": "f5d5368d3c7c5f1e03f82a15c7fd8a03fe5cd214ba22d276d9071859aa38f9aa",
+  "original_reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
+  "facts": 4,
+  "unresolved": 4,
+  "output_reference_tokens": 1165,
+  "structure_and_reference_ownership": "PASS",
+  "reference_results": [
+    {
+      "reference": "R1",
+      "actual_finding": 0,
+      "source_relation": "SUPPORTED_LIMITED_SETTLEMENT_NOT_UNIVERSAL_CLOSURE"
+    },
+    {
+      "reference": "R2",
+      "actual_finding": 1,
+      "source_relation": "SUPPORTED_CURRENT_AUDIT_TAX_YEARS_NOT_EVENT_DATES"
+    },
+    {
+      "reference": "R3",
+      "actual_finding": 2,
+      "source_relation": "SUPPORTED_UNNAMED_AUTHORITIES_SCOPE_RETAINED"
+    }
+  ],
+  "post_response_forward_check": {
+    "actual_finding": 3,
+    "source_relation": "The pre-read owned table contains9M/2M decreases attributable to settlements in2023/2024 roll-forward sections. The answer does not invent case identity, fines or payment amounts. This is forward checking, not a retroactively added reference."
+  },
+  "confirmed_input_defect": {
+    "missing_context_ids": [
+      "c-88",
+      "c-89"
+    ],
+    "source_contains_definitions_in_original_unit_position": 8,
+    "literal_meaning": "Income tax payment dimensions Switzerland and other foreign jurisdictions, not proof of examination location.",
+    "cause": "Whole supplied XML roots can contain native references whose definitions live outside the selected original fact-unit dictionaries.",
+    "scope": "Prototype source metadata closure, not old Source or model failure."
+  },
+  "semantic_scope_limit": "Accurate tax-source statements do not themselves prove an investigative/enforcement matter under D03. Administrative-versus-investigative relevance and whole metric acceptance remain unproved. No scope decision added.",
+  "overall": "NEEDS_INPUT_CONTEXT_DICTIONARY_FIX; LIMITED_SOURCE_RELATIONSHIPS_SUPPORTED_NOT_D03_COMPLETE",
+  "same_input_fix_context_used": false,
+  "original_answer_changed": false,
+  "old_context_trial_reopened": false,
+  "new_native_result_or_provider_credit": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

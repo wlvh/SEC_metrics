@@ -4394,6 +4394,31 @@
       "dedup_note": "Authoritative list only root running; sameSHA/new mapping scope absent from register/evidence. Earlier complete-chain reviewer ended; actual new compiler/partial data views/ownership/context/resource compiler scope, not repeated XML closure or model extraction.",
       "review_started_at": "2026-10-04T15:44:00.229024+00:00",
       "actual_review_seconds": 483.274566
+    },
+    {
+      "task_name": "diagnose_d03mapped_f7cb317",
+      "purpose": "DEVELOPMENT_INPUT_CHECK",
+      "module": "d03_complete_mapped_input",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-task-mapping-20261004/marriott/requests/ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496.json"
+      ],
+      "patch_sha": "f7cb3179f6af1e87d9d7b75877d186527b8aee15",
+      "spawned_at": "2026-10-04T16:06:38.940996+00:00",
+      "ended_at": "2026-10-04T16:18:54.798332+00:00",
+      "tool_calls": 46,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-input/conclusion.md",
+      "verdict": "ACTUAL_INPUT_READ_DONE_MISSING_C88_C89_DICTIONARIES_RECORDED",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live child; sameSHA/new complete logical-chain+atomic task input result absent. Old bounded fragment request trial ended; this task provides complete up-front chains and different non-overlapping responsibility. Parent original reference frozenf7cb before answer, withheld from reader; no same old paid group retry.",
+      "review_started_at": "2026-10-04T16:07:42.109879+00:00",
+      "actual_review_seconds": 672.688453
     }
   ],
   "ci_capacity_20260922": {
@@ -14185,7 +14210,7 @@
     "reference_workflow_success_not_main": true
   },
   "d03_mapped_task_blind_trial_20261005": {
-    "status": "PARENT_ORIGINAL_REFERENCE_FROZEN_BEFORE_INPUT_ONLY_RESPONSE",
+    "status": "INITIAL_RESPONSE_STRUCTURE_PASS_SOURCE_RELATIONSHIPS_LIMITED_INPUT_DICTIONARY_FIX_REQUIRED",
     "evidence": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005",
     "reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
     "input_request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
@@ -14194,7 +14219,7 @@
     "actual_task_index": 5,
     "context_tokens": 134727,
     "owned_items": 69,
-    "initial_context_consumed": false,
+    "initial_context_consumed": true,
     "fix_context_consumed": false,
     "old_context_trial_reopened": false,
     "model_or_company_credit": false,
@@ -14202,6 +14227,17 @@
       0,
       0,
       0
-    ]
+    ],
+    "reader_task_name": "diagnose_d03mapped_f7cb317",
+    "raw_response_sha256": "f5d5368d3c7c5f1e03f82a15c7fd8a03fe5cd214ba22d276d9071859aa38f9aa",
+    "output_reference_tokens": 1165,
+    "findings": 4,
+    "unresolved": 4,
+    "comparison_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/initial-comparison.json",
+    "confirmed_missing_contexts": [
+      "c-88",
+      "c-89"
+    ],
+    "next": "Fix actual whole-XML dictionary dependency closure from admitted source; retain initial wire/response and reference. Then limited delta review and the single substantive input-correction context, not a third old fragment trial. No DeepSeek purpose or semantic/company credit."
   }
 }
