@@ -4139,7 +4139,7 @@
       ],
       "patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
       "spawned_at": "2026-10-04T04:29:06Z",
-      "ended_at": "2026-10-04T04:36:50Z",
+      "ended_at": "2026-10-04T04:36:12.353136Z",
       "tool_calls": 31,
       "ordinary_messages": 3,
       "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-decoder-review/conclusion.md",
@@ -4149,7 +4149,9 @@
         "minutes": 90,
         "ordinary_messages": 3
       },
-      "dedup_note": "list_agents no live; sameSHA register/evidence no hit; genuine new prompt/regression delta after prior task-review ended at3 messages. Old P2 retained and unchanged scope inherited."
+      "dedup_note": "list_agents no live; sameSHA register/evidence no hit; genuine new prompt/regression delta after prior task-review ended at3 messages. Old P2 retained and unchanged scope inherited.",
+      "review_started_at": "2026-10-04T04:29:52Z",
+      "elapsed_review_seconds": "380.353136"
     }
   ],
   "ci_capacity_20260922": {
@@ -13480,6 +13482,67 @@
       "ordinary_messages": 3,
       "tested_one_actual_scan_and_followup": true,
       "semantic_or_company_credit": false
-    }
+    },
+    "remote_delivery_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9"
+  },
+  "ci_19e84a7e": {
+    "head_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9",
+    "run_id": 37177584195,
+    "state": "in_progress",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE",
+    "updated_at": "2026-10-04T04:38:26Z"
+  },
+  "d03_bounded_task_queue_readback_20261004": {
+    "server_updated_at": "2026-10-04T04:40:41Z",
+    "readback_pending": false,
+    "only_existing_nav_and_D03_row_changed": true,
+    "readback_equal": true,
+    "body_sha256": "7eb422d2b3f23d9382001aa542eeca35381442d1145847e7dbda73cfc73e09ad"
+  },
+  "shared_increment_read_417ccfb7": {
+    "peer_read_sha": "417ccfb788f39f53e5ef2b2d825a3fa46efc11bf",
+    "preceding_read_sha": "397443d8478ed38727b7f3579ae71bc474a2acf5",
+    "register_delta": "peer readback only, no new defect/release imported",
+    "increment": "Historical C02 full table-grid input preserves row/column relationships; current current-year/table-media gap potentially relevant, not a selector fix or new content acceptance. Lumen historical complete input remains over200000. Read README fixed path after one wrong path failed; no old cache claimed current.",
+    "own_action": "Read source/interface concept; own C02 ended batch and withheld identities stay unchanged. Do not clone own ledger or copy historical acceptance. Subsequent C02 representation work only under actual new-method scope."
+  },
+  "d03_native_context_input_trial_20261004": {
+    "state": "PARENT_REFERENCE_COMPLETE_BLIND_INPUT_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004",
+    "base_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9",
+    "initial_four_owner_resource_failure": 230644,
+    "changed_grouping_parameter_not_service_limit": 150000,
+    "source_unchanged": true,
+    "request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-headroom.json",
+    "request_sha256": "83bd638ed53b51f20f12056b74baad2e0f4a33087af9816bab58ae9b7f38e4f4",
+    "owner_ids": [
+      "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+      "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666"
+    ],
+    "first_context_tokens": 127540,
+    "tax_context_fixture_followup_tokens": 172112,
+    "full_source_plan": [
+      {
+        "company": "marriott",
+        "first": 6,
+        "design_ceiling": 12
+      },
+      {
+        "company": "jpm",
+        "first": 51,
+        "design_ceiling": 102
+      }
+    ],
+    "old_ended_JPM_batch_reopened": false,
+    "not_new_holdout_source": true,
+    "reference_before_blind": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/reference-before-blind.md",
+    "new_model_answers": 0,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "company_result_created": false
   }
 }
