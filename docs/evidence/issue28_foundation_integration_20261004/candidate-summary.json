@@ -53,5 +53,20 @@
     "verdict": "PASS_FOR_BOUNDED_INTAKE_WITH_LIMITATIONS_NOT_MERGE_READY",
     "scope": "Fixed source/authority/old publication byte boundaries and D04 transport; four independently run V12 negatives; creator long logs read only",
     "nonblocking_scope_metadata_correction": "C1 corrected; no runtime/snapshot/packet changes"
-  }
+  },
+  "ordinary_c04_native_positive": {
+    "status": "PASS_LIMITED",
+    "seconds": 30.82064141589217,
+    "data_root": "/private/tmp/issue28-foundation-c04-positive-run/data",
+    "spec": "catalog/r5/C04_auditor_changes_v3.md",
+    "new_process_replay": "PASS_BYTE_IDENTICAL",
+    "scope": "Existing saved Marriott FY2025; no new-year acquisition or new company acceptance"
+  },
+  "publication_read": {
+    "current_default_open": "PASS_WITH_REQUIRED_ISOLATED_OPERATOR_LOCK",
+    "historical_R3": "PASS_ORIGINAL_LEGACY_REQUIREMENT_HASHES_V1",
+    "active_bytes_changed": false
+  },
+  "provider_egress_gate": "PASS_322_SOURCE_FILES",
+  "reference_generator_check": "PASS"
 }
