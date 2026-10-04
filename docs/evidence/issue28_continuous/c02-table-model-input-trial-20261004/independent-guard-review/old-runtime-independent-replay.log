@@ -1,0 +1,22 @@
+SANDBOX_PROFILE: (version 1)(allow default)(deny network*)(deny file-write* (subpath "/Users/lyuhongwang/Developer/SEC_metrics") (subpath "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195") (subpath "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13") (subpath "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-model-input-trial-20261004/native-initial"))
+PYTHONPATH: /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195/scripts
+{
+  "seconds": 5.624,
+  "imported_mapper": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195/scripts/vnext/c02_table_model_processing.py",
+  "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "packet_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-model-input-trial-20261004/native-initial",
+  "file_hashes_before_and_after_equal": true,
+  "original_manifest_hashes_match": true,
+  "candidate_hash": "sha256:f94c88771b7f8627470fd06fe44427d58af0fce75a5a856dc97d4b06896b3bf4",
+  "review_unit_hash": "sha256:8faf9fec2e563a8c7ee4693df427501697a8483f30fd6f78fe31deb1955b335c",
+  "native_status": "PENDING",
+  "system_approval_refused": true,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}
+
+RETURN_CODE: 0
+WALL_SECONDS: 5.781

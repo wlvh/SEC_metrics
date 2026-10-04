@@ -531,6 +531,8 @@ FAST_TESTS += ("tests.vnext.test_b06_financing_context",)
 FAST_TESTS += ("tests.vnext.test_c02_responsibility_packets",)
 FAST_TESTS += ("tests.vnext.test_c02_development_response_codec",)
 SOURCE_TESTS += ("tests.vnext.test_historical_bond_sections_material.HistoricalBondSectionMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_c02_table_development_input",)
+FAST_TESTS += ("tests.vnext.test_c02_table_model_processing",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

@@ -8219,6 +8219,34 @@
     }
    ],
    "next_read": "Pin and read only subsequent relevant changes before integration or affected acceptance."
+  },
+  {
+   "read_on": "2026-10-04",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
+   "own_commit_at_read": "41949f67dc01d47c4eb9d69afc1f977fab3619d8",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_defect_register_unchanged": true,
+   "increments": [
+    {
+     "commits": [
+      "51ccf588",
+      "b8b11946",
+      "4c9e195e",
+      "df84865d",
+      "005fdcdd",
+      "50fbf66f",
+      "9000d02a",
+      "c7a96eae"
+     ],
+     "scope": "Additive ordinary C02 table input and pending Review processing, blind development evidence, configured ledger-root guard",
+     "integration": "MERGED_AFTER_PINNED_PREFLIGHT",
+     "affects_47": "Merge resolves the actual fast-selector conflict preventing PR CI. All seven added registrations are retained. The 24 selected table-input/model-processing/formatter tests passed in an isolated own clone before merge. Current original #28 V13/V14 Requirement files and plain-block paths are unchanged. No historical task is relabelled ordinary; Ford omission/output and images/qualification remain blockers. Peer development response and pending native review are not historical Run/acceptance or call credit.",
+     "tests": "24 focused preflight cases; focused post-merge and snapshot checks logged separately"
+    }
+   ],
+   "next_read": "Only later relevant increments; no automatic baseline or credit transfer."
   }
  ]
 }

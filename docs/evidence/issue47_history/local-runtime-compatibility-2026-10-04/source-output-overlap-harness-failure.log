@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/runtime-install-probe.py", line 16, in <module>
+    result=install_historical_inputs(data_root=out,company_id='jpmorgan_chase',metric_id='B08',period_selection=selection,source_root=source)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/scripts/vnext/historical_package.py", line 74, in install_historical_inputs
+    source_root = ROOT if source_root is None else _external(Path(source_root))
+                                                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/scripts/vnext/normal_run_v3.py", line 36, in _external
+    return check(Path(path))
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/scripts/vnext/b06_new_source.py", line 31, in _external
+    need(path!=root and root not in path.parents and not (path/'outputs/active_publication.json').exists(),'B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED

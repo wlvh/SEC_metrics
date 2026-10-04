@@ -1,0 +1,119 @@
+scripts/vnext/c02_table_model_processing.py
+166: def _root(directory):
+167:     path = Path(directory)
+168:     _need(path.is_absolute(), 'ABSOLUTE_OUTPUT_REQUIRED')
+169:     _need(first_symlink_in_path(path=path) is None, 'OUTPUT_ALIAS')
+170:     path = path.resolve()
+171:     ledger = Path(strict_json_file(path=ROOT/
+172:         'config/issue28_continuous_calls_v1.json')['budget_root']).resolve()
+173:     _need(path != ledger and ledger not in path.parents and path not in ledger.parents, 'LIVE_LEDGER_OUTPUT')
+174:     _need(path != ROOT and ROOT not in path.parents and path not in ROOT.parents
+175:           and not any((p/'outputs/active_publication.json').exists() for p in (path, *path.parents)),
+176:           'OUTSIDE_CODE_AND_PUBLICATION_REQUIRED')
+177:     return path
+178: 
+179: 
+180: def save_table_development_assessment(*, directory, **arguments):
+181:     root = _root(directory)
+182:     data = Path(arguments['data_root']).resolve()
+183:     _need(root != data and data not in root.parents and root not in data.parents,
+184:           'SOURCE_OUTPUT_OVERLAP')
+185:     out = build_table_development_assessment(**arguments)
+186:     files = {'request-body.bin': out['request_body'], 'response.bin': out['response_body'],
+187:         'processing/c02/table-metadata.json': _bytes(out['processing']),
+188:         'review-context.json': out['review_context_bytes'], 'review.md': out['rendered_review_bytes'],
+189:         'records.jsonl': b''.join(_bytes(r)+b'\n' for r in out['records'])}
+190:     # Immutable resume reuses exact earlier bytes. Records are the final gate.
+191:     for name, raw in files.items():
+192:         target = root/name
+193:         _need(first_symlink_in_path(path=target) is None, 'OUTPUT_ALIAS')
+194:         write_immutable_bytes(path=target, content=raw)
+195:     return out
+196: 
+197: 
+198: def read_table_development_assessment(*, directory, data_root, company_id,
+199:                                     expected_candidate_hash, expected_review_unit_hash):
+200:     root = _root(directory)
+201:     _need(not any(p.is_symlink() for p in root.rglob('*')), 'OUTPUT_ALIAS')
+202:     meta = strict_json_loads(text=(root/'processing/c02/table-metadata.json').read_text())
+203:     out = build_table_development_assessment(data_root=data_root, company_id=company_id,
+204:         task_text=meta['task_text'], request_body=(root/'request-body.bin').read_bytes(),
+205:         response_body=(root/'response.bin').read_bytes(), expected_request_sha256=meta['request_sha256'],
+206:         expected_response_sha256=meta['response_sha256'], origin=meta['origin'])
+207:     _need(out['records'][2]['candidate_hash'] == expected_candidate_hash
+208:           and out['records'][5]['review_unit_hash'] == expected_review_unit_hash, 'EXPECTED_NATIVE_IDENTITIES')
+209:     saved = [strict_json_loads(text=line) for line in (root/'records.jsonl').read_text().splitlines()]
+210:     _need(out['records'] == saved and meta == out['processing']
+211:           and out['review_context_bytes'] == (root/'review-context.json').read_bytes()
+212:           and out['rendered_review_bytes'] == (root/'review.md').read_bytes(), 'SAVED_NATIVE_REPLAY_CHANGED')
+213:     return out
+
+tests/vnext/test_c02_table_model_processing.py
+184:     def test_protected_and_relative_outputs_are_refused(self):
+185:         for root in [m.ROOT, m.ROOT.parent, m.ROOT/'new', Path('relative'),
+186:                      Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/new')]:
+187:             with self.subTest(root=root), self.assertRaises(ValueError):
+188:                 m._root(root)
+189:         with tempfile.TemporaryDirectory() as folder:
+190:             root = Path(folder).resolve()
+191:             (root/'alias').symlink_to(root/'target', target_is_directory=True)
+192:             with self.assertRaisesRegex(ValueError, 'OUTPUT_ALIAS'):
+193:                 m._root(root/'alias'/'child')
+194: 
+195:     def test_configured_ledger_guard_is_not_a_fixed_fiscal_period(self):
+196:         with tempfile.TemporaryDirectory() as folder:
+197:             base = Path(folder).resolve()
+198:             ledger = base/'configured-live-ledger'
+199:             with patch.object(m, 'strict_json_file', return_value={'budget_root': str(ledger)}):
+200:                 for forbidden in [ledger, ledger/'child', base]:
+201:                     with self.subTest(root=forbidden), self.assertRaisesRegex(ValueError, 'LIVE_LEDGER_OUTPUT'):
+202:                         m._root(forbidden)
+203:                 self.assertEqual(m._root(base/'development'), base/'development')
+
+scripts/vnext/canonical.py
+196: def strict_json_file(
+197:     *, path: Path, allowed_fields: Optional[Set[str]] = None
+198: ) -> object:
+199:     """Read one regular UTF-8 file through the strict JSON boundary.
+200: 
+201:     Args:
+202:         path: Input JSON path.
+203:         allowed_fields: Optional exact root field set.
+204: 
+205:     Returns:
+206:         Strict parsed JSON.
+207: 
+208:     Raises:
+209:         CanonicalError: When the path is not a regular non-symlink file or its
+210:             bytes are not valid UTF-8 strict JSON.
+211:     """
+212:     if path.is_symlink() or not path.is_file():
+213:         raise CanonicalError(
+214:             "JSON input must be a regular file: {}".format(path)
+215:         )
+216:     try:
+217:         text = path.read_text(encoding="utf-8")
+218:     except UnicodeDecodeError as error:
+219:         raise CanonicalError(
+220:             "JSON input must be UTF-8: {}".format(path)
+221:         ) from error
+222:     return strict_json_loads(text=text, allowed_fields=allowed_fields)
+
+scripts/git_workspace.py
+71: def first_symlink_in_path(*, path: Path) -> Path | None:
+72:     """Return the first symlink in one unresolved lexical path.
+73: 
+74:     Args:
+75:         path: Absolute or relative locator whose components must not redirect.
+76: 
+77:     Returns:
+78:         The first symlink component, or None when every component is direct.
+79:     """
+80:     current = Path(path.anchor) if path.is_absolute() else Path()
+81:     parts = path.parts[1:] if path.is_absolute() else path.parts
+82:     # The locator must be inspected before resolve() erases path identity.
+83:     for part in parts:
+84:         current /= part
+85:         if current.is_symlink():
+86:             return current
+87:     return None

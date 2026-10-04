@@ -1,0 +1,55 @@
+START_UTC: 2026-10-04 11:15:52 UTC
+INITIAL_SHA: 9000d02a1a0ee57f967fe4690a2f407150e68662
+FINAL_OBSERVED_SHA: 9000d02a1a0ee57f967fe4690a2f407150e68662
+BASE: 50fbf66feb898c139b747329b26984de1da7c880
+
+Exact scoped diff:
+diff --git a/scripts/vnext/c02_table_model_processing.py b/scripts/vnext/c02_table_model_processing.py
+index d330ac55..26ec009d 100644
+--- a/scripts/vnext/c02_table_model_processing.py
++++ b/scripts/vnext/c02_table_model_processing.py
+@@ -9,7 +9,7 @@ from pathlib import Path
+ 
+ from git_workspace import first_symlink_in_path
+ from sec_http import write_immutable_bytes
+-from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_loads
++from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_loads, strict_json_file
+ from .c02_grouped_source import grouped_governance_source
+ from .c02_model_processing import _bytes, _response
+ from .c02_model_review_view import source_review_view
+@@ -168,7 +168,8 @@ def _root(directory):
+     _need(path.is_absolute(), 'ABSOLUTE_OUTPUT_REQUIRED')
+     _need(first_symlink_in_path(path=path) is None, 'OUTPUT_ALIAS')
+     path = path.resolve()
+-    ledger = Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13').resolve()
++    ledger = Path(strict_json_file(path=ROOT/
++        'config/issue28_continuous_calls_v1.json')['budget_root']).resolve()
+     _need(path != ledger and ledger not in path.parents and path not in ledger.parents, 'LIVE_LEDGER_OUTPUT')
+     _need(path != ROOT and ROOT not in path.parents and path not in ROOT.parents
+           and not any((p/'outputs/active_publication.json').exists() for p in (path, *path.parents)),
+diff --git a/tests/vnext/test_c02_table_model_processing.py b/tests/vnext/test_c02_table_model_processing.py
+index 793c4c97..058c3188 100644
+--- a/tests/vnext/test_c02_table_model_processing.py
++++ b/tests/vnext/test_c02_table_model_processing.py
+@@ -191,3 +191,13 @@ class C02TableModelProcessingTest(unittest.TestCase):
+             (root/'alias').symlink_to(root/'target', target_is_directory=True)
+             with self.assertRaisesRegex(ValueError, 'OUTPUT_ALIAS'):
+                 m._root(root/'alias'/'child')
++
++    def test_configured_ledger_guard_is_not_a_fixed_fiscal_period(self):
++        with tempfile.TemporaryDirectory() as folder:
++            base = Path(folder).resolve()
++            ledger = base/'configured-live-ledger'
++            with patch.object(m, 'strict_json_file', return_value={'budget_root': str(ledger)}):
++                for forbidden in [ledger, ledger/'child', base]:
++                    with self.subTest(root=forbidden), self.assertRaisesRegex(ValueError, 'LIVE_LEDGER_OUTPUT'):
++                        m._root(forbidden)
++                self.assertEqual(m._root(base/'development'), base/'development')
+
+Boundary files unchanged: ["config/issue28_continuous_calls_v1.json", "scripts/vnext/ordinary_scalability_audit.py", "config/ordinary_scalability_exemptions_v1.json", "tests/vnext/test_ordinary_scalability_audit.py", "catalog/r6/C02_model_table_development_v1.md", "scripts/vnext/continuous_call_policy.py", "scripts/vnext/continuous_call_ledger.py"]
+
+Final status (pre-existing execution-state change left untouched):
+ M docs/evidence/issue28_continuous/execution-state.json
+?? docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-guard-review/
+
+Tool accounting: 10 wrappers + 15 nested = 25; includes one wrapper-only setup error (undefined JS repr), which executed no nested tool or mutation.
