@@ -1,0 +1,27 @@
+review_started_utc=2026-10-04T04:18:35Z
+reviewed_sha=c0cef253ae5373e8c8fbd224d14cbb5bc941fab8
+base_sha=e8fa288095edc894101628d49392572c9c49e7af
+read_live_issue28_utc=2026-10-04T04:18:35Z
+review_scope=offline bounded task prototype only
+tool_calls_before_this_wrapper=10
+messages_so_far=1
+task_contract.py: sha256=16b7a78c2b9cf14ce4dcfbc080d6b093ff0b90ff4e48321f19569a65c8f7a8bb bytes=12687 matches_reviewed_sha=True
+scan-prompt.txt: sha256=11db864f92aec2d93e9f1770cc013ec0d5c895cfb7c287258dc8208da2f8340d bytes=4593 matches_reviewed_sha=True
+test_task_contract.py: sha256=2f5e709a6717a6a2e4dee1ad3c70b1549cc5757963e3215fe0ce72c3ce2fd208 bytes=12012 matches_reviewed_sha=True
+measure_actual.py: sha256=6ef5f5fb4e2e06150f06086b5285293791e52546969f39bb8a5d46cf69ccd1d4 bytes=6157 matches_reviewed_sha=True
+measured-plan.json: sha256=e8e0284d3819902ef6da1bd4e8d9897c809b482a4a49142786a3903a6cbb3025 bytes=20565 matches_reviewed_sha=True
+actual-recorded-path.json: sha256=276e676f9ac657119eb5198093a01ec5500faf358187b30579639858e7330d6d bytes=8257 matches_reviewed_sha=True
+recorded-initial-response.json: sha256=ede7032ce9331a9407a5a9c67028453d2a1e49ea2f95f6d2f379cd84f963c26e bytes=1042 matches_reviewed_sha=True
+recorded-followup-response.json: sha256=0f0619f6839cb19684a82cee67ce9c3c940d0497bda39cf05ec6ad121cc5ae71 bytes=848 matches_reviewed_sha=True
+plan_metadata {"actual_model_validation": false, "business_calls": [0, 0, 0], "complete_company_ready": false, "ledger_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb", "ledger_unchanged": true, "product_code_root": "/Users/lyuhongwang/Developer/SEC_metrics", "prompt_sha256": "11db864f92aec2d93e9f1770cc013ec0d5c895cfb7c287258dc8208da2f8340d", "prototype_code_root": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004", "prototype_sha256": "16b7a78c2b9cf14ce4dcfbc080d6b093ff0b90ff4e48321f19569a65c8f7a8bb", "seconds": "38.515"}
+sample_verified {"actual_model_output4096_verified": false, "all_first_scan_fit": true, "all_original_owner_and_identity_payloads_roundtrip": true, "company": "marriott", "complete_ownership_once": true, "completion_guaranteed": false, "context_sufficiency_verified": false, "design_total_ceiling": 10, "first_scan_count": 5, "followup_count_ceiling": 5, "input_token_sum_first_scan": 750159, "live_authorized": false, "maximum_context_tokens": 185857, "runtime_opportunity_guard_connected": false, "seconds": "4.179", "source_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004/source.json", "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b", "source_unit_count": 17}
+sample_verified {"actual_model_output4096_verified": false, "all_first_scan_fit": true, "all_original_owner_and_identity_payloads_roundtrip": true, "company": "jpm", "complete_ownership_once": true, "completion_guaranteed": false, "context_sufficiency_verified": false, "design_total_ceiling": 76, "first_scan_count": 38, "followup_count_ceiling": 38, "input_token_sum_first_scan": 6022247, "live_authorized": false, "maximum_context_tokens": 186145, "runtime_opportunity_guard_connected": false, "seconds": "32.041", "source_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004/source.json", "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9", "source_unit_count": 130}
+stored_response_hashes_and_measured_ownership_verified=True
+review_ended_utc=2026-10-04T04:24:00.182727+00:00
+conservative_tool_calls=20 (7 wrappers + 13 nested)
+ordinary_messages=3 (opening + progress + final)
+verdict=REQUEST_CHANGES
+all_reviewed_files_still_match_target_sha=True
+final_observed_status:
+ M docs/evidence/issue28_continuous/execution-state.json
+?? docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-review/

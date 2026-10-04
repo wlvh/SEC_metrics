@@ -1,0 +1,30 @@
+test_complete_plan_keeps_every_original_owner_once_and_fixed_design_ceiling (test_task_contract.BoundedTaskPrototypeTest.test_complete_plan_keeps_every_original_owner_once_and_fixed_design_ceiling) ... ERROR
+test_foreign_anchor_wrong_evidence_and_mutable_task_fields_refused (test_task_contract.BoundedTaskPrototypeTest.test_foreign_anchor_wrong_evidence_and_mutable_task_fields_refused) ... ok
+test_missing_context_and_output_work_never_become_empty_success (test_task_contract.BoundedTaskPrototypeTest.test_missing_context_and_output_work_never_become_empty_success) ... ok
+test_new_response_digest_and_whole_4096_budget_checked_before_projection (test_task_contract.BoundedTaskPrototypeTest.test_new_response_digest_and_whole_4096_budget_checked_before_projection) ... ok
+test_nonempty_scan_exact_context_and_once_followup_are_structural_only (test_task_contract.BoundedTaskPrototypeTest.test_nonempty_scan_exact_context_and_once_followup_are_structural_only) ... ok
+test_second_context_need_is_retained_without_another_request (test_task_contract.BoundedTaskPrototypeTest.test_second_context_need_is_retained_without_another_request) ... ok
+test_unsupplied_item_in_added_context_unit_is_not_accepted (test_task_contract.BoundedTaskPrototypeTest.test_unsupplied_item_in_added_context_unit_is_not_accepted) ... ok
+
+======================================================================
+ERROR: test_complete_plan_keeps_every_original_owner_once_and_fixed_design_ceiling (test_task_contract.BoundedTaskPrototypeTest.test_complete_plan_keeps_every_original_owner_once_and_fixed_design_ceiling)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/test_task_contract.py", line 45, in test_complete_plan_keeps_every_original_owner_once_and_fixed_design_ceiling
+    plan = contract.scan_plan(self.source, self.digest, max_owner_units=1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/task_contract.py", line 76, in scan_plan
+    trial = _prepare_scan(source, digest, current + [unit['unit_id']], by_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/task_contract.py", line 50, in _prepare_scan
+    packed, shared = _shared_units(provided)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 128, in _shared_units
+    key = obj['namespace_environment_id']
+          ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'namespace_environment_id'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.253s
+
+FAILED (errors=1)

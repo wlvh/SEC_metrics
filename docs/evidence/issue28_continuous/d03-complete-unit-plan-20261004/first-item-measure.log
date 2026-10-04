@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-complete-unit-plan-20261004/measure-item-context.py", line 14, in <module>
+    namespace={};exec(compile(pre,str(HERE/'measure.py'),'exec'),namespace)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-complete-unit-plan-20261004/measure.py", line 13, in <module>
+    ROOT=Path(__file__).resolve().parents[4];HERE=Path(__file__).parent
+              ^^^^^^^^
+NameError: name '__file__' is not defined. Did you mean: '__name__'?

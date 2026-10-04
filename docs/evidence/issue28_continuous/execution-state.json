@@ -4019,6 +4019,183 @@
       "dedup_note": "No live matching agent/register/independent conclusion. Prior mapper review covers unchanged source mapping only, reused. Genuine uncovered CLI save/read/resume delta; old completed reviewer2 messages cannot followup within3 cap when new commentary+final required.",
       "message_count": 2,
       "elapsed_minutes": 6.65
+    },
+    {
+      "task_name": "diagnose_d03unit_f474a69",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT",
+      "module": "d03_jpm_owned_visible20_input",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004/source-unit-pilot"
+      ],
+      "patch_sha": "f474a69779c05d5a01fcc51755e28ebd913b9f1a",
+      "spawned_at": "2026-10-03T19:20:27.460725+00:00",
+      "ended_at": "2026-10-03T19:34:59.748779+00:00",
+      "tool_calls": 28,
+      "result_path": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/independent-input/conclusion.md",
+      "verdict": "ONE_BLIND_INITIAL_DEVELOPMENT_RESPONSE_COMPLETE_PARTIAL_SCOPE",
+      "dedup_note": "No live matching agent, register or exact SHA conclusion. Historical JPM source-fact predicate review is reused as regression reference, not re-reviewed; this is first blind model extraction of this new actual whole-unit/input representation. Not a paid request/wholecompany trial; underscore tool naming.",
+      "message_count": 3,
+      "elapsed_seconds": 806.231675
+    },
+    {
+      "task_name": "diagnose_d03time_010e56c",
+      "purpose": "LARGE_ORIGINAL_ONE_TIME_AUDIT_INCREMENT",
+      "module": "d03_jpm_owned_visible20_time_field_increment",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004/source-unit-pilot-time"
+      ],
+      "patch_sha": "010e56cd6f669253c8b7c46125d236a3573f53e3",
+      "spawned_at": "2026-10-03T19:49:58.933933+00:00",
+      "ended_at": "2026-10-03T20:01:58.905106+00:00",
+      "tool_calls": 29,
+      "result_path": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/independent-time-input/conclusion.md",
+      "verdict": "ONE_TARGETED_TIME_FIELD_INCREMENT_DEVELOPER_RESPONSE_COMPLETE_PARTIAL_SCOPE",
+      "dedup_note": "Read prior original-unit response/results first: genuine scheduled-action field defect. Prior reader completed at3 messages and cannot followup. New SHA/prompt temporal-field increment only, same source bytes reused, exactly one correction, no renamed third trial or same-byte review.",
+      "message_count": 3,
+      "elapsed_seconds": 669.905
+    },
+    {
+      "task_name": "review_d03context_7c50eab",
+      "purpose": "review",
+      "module": "d03_literal_context",
+      "scope_paths": [
+        "scripts/vnext/d03_context_requests.py",
+        "tests/vnext/test_d03_context_requests.py",
+        "tools/run_fast_tests_v2.py selector-only",
+        "docs/evidence/issue28_continuous/d03-literal-context-20261004"
+      ],
+      "patch_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+      "spawned_at": "2026-10-04T03:12:34Z",
+      "ended_at": "2026-10-04T03:20:40Z",
+      "tool_calls": 21,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-literal-context-20261004/independent-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_P2_CONTEXT_UNIT_NAMESPACE_DEPENDENCIES",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; register no same patch/module; existing independent results no sameSHA/scope. Old mapper/CLI reviews cover distinct unchanged code. tool task naming requires underscores.",
+      "elapsed_seconds": 486
+    },
+    {
+      "task_name": "review_d03ns_97f8380",
+      "purpose": "review",
+      "module": "d03_literal_context_namespace_increment",
+      "scope_paths": [
+        "scripts/vnext/d03_context_requests.py namespace-only delta",
+        "tests/vnext/test_d03_context_requests.py namespace regression",
+        "docs/evidence/issue28_continuous/d03-literal-context-20261004/namespace-fix-actual-save.json"
+      ],
+      "patch_sha": "97f8380db30fc954587aec2cddcd8f103ffa16e0",
+      "spawned_at": "2026-10-04T03:25:41Z",
+      "ended_at": "2026-10-04T03:31:15Z",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-literal-context-20261004/independent-namespace-review/conclusion.md",
+      "verdict": "LIMITED_APPROVE_NAMESPACE_INCREMENT",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; new SHA no register/result; predecessor review ended at3 messages. Genuine unreviewed namespace dependency delta only, old findings retained; permitted v1.2/new-SHA increment rule, not repeat whole scope.",
+      "elapsed_seconds": 334
+    },
+    {
+      "task_name": "review_d03task_c0cef25",
+      "purpose": "review",
+      "module": "d03_bounded_task_contract",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/task_contract.py",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/scan-prompt.txt",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/test_task_contract.py",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/measured-plan.json"
+      ],
+      "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+      "spawned_at": "2026-10-04T04:18:35Z",
+      "ended_at": "2026-10-04T04:24:00.182727Z",
+      "tool_calls": 20,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_P2_PROMPT_ROW_LAYOUT",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; register/evidence no same SHA or bounded-task contract; prior literal/namespace reviews cover unchanged different module. New actual prototype scope, no repeated model extraction.",
+      "elapsed_seconds": "325.182727"
+    },
+    {
+      "task_name": "review_d03decode_ada4647",
+      "purpose": "review",
+      "module": "d03_bounded_task_contract_decoder_increment",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/scan-prompt.txt decoder paragraph",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/test_task_contract.py new dictionary-order regression",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/measured-plan.json current prompt binding"
+      ],
+      "patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
+      "spawned_at": "2026-10-04T04:29:06Z",
+      "ended_at": "2026-10-04T04:36:12.353136Z",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-decoder-review/conclusion.md",
+      "verdict": "LIMITED_APPROVE_DECODER_INCREMENT",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; sameSHA register/evidence no hit; genuine new prompt/regression delta after prior task-review ended at3 messages. Old P2 retained and unchanged scope inherited.",
+      "review_started_at": "2026-10-04T04:29:52Z",
+      "elapsed_review_seconds": "380.353136"
+    },
+    {
+      "task_name": "diagnose_d03input_84bba04",
+      "purpose": "diagnose",
+      "module": "d03_native_owner_context_input",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-headroom.json"
+      ],
+      "patch_sha": "84bba0461b187b231ed59be7ed5f425e1bf9d835",
+      "spawned_at": "2026-10-04T05:10:26Z",
+      "ended_at": "2026-10-04T05:23:32Z",
+      "tool_calls": 38,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/independent-input/conclusion.md",
+      "verdict": "INPUT_READ_COMPLETE_BUT_RESPONSE_REFERENCE_KIND_FAILED",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; register/evidence no same SHA/new owner-context contract. Earlier Marriott source used old full-visible six-response input; this is new two-owner/explicit-context task. Prior ended JPM/C02/B13 developer batches not reopened; no answers supplied.",
+      "review_started_at": "2026-10-04T05:15:35Z",
+      "elapsed_seconds": 477
+    },
+    {
+      "task_name": "diagnose_d03refs_f05e5b6",
+      "purpose": "diagnose",
+      "module": "d03_native_owner_context_reference_enum_increment",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-reference-kinds.json"
+      ],
+      "patch_sha": "f05e5b692985a2b805ec928a83c57fc5e2e21be5",
+      "spawned_at": "2026-10-04T05:31:52Z",
+      "ended_at": "2026-10-04T05:44:00Z",
+      "tool_calls": 36,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/independent-reference-kinds/conclusion.md",
+      "verdict": "REFERENCE_ENUM_FIXED_BUT_CONTEXT_TASK_BLOCKED_AFTER_ONE_CORRECTION",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "No live agent, same SHA/register/result absent. First new-task reader ended at3 messages. Only substantive missing reference-enum prompt correction, same original userSource bytes; no third trial approved."
     }
   ],
   "ci_capacity_20260922": {
@@ -12489,15 +12666,18 @@
     "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
-    "head_sha": "be21d9f6164c6bbdb8c3ecad39bf4f81a5115732",
-    "draft_pr": 43,
+    "head_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
     "branch": "task/b06-new-source",
-    "new_calls": [
+    "pr": 43,
+    "draft": true,
+    "current_ci": 37154925474,
+    "terminal": null,
+    "change_scope": "Offline exact-source responsibility/context resource measurement only; no product default/binding change",
+    "calls": [
       0,
       0,
       0
-    ],
-    "native_goal_status": "active"
+    ]
   },
   "shared_increment_read_f07d089c": {
     "peer_read_sha": "f07d089cb01d4527d2f44fad41bf3187d6743ff4",
@@ -12800,9 +12980,10 @@
   "ci_0eec48cb": {
     "head_sha": "0eec48cbb6b71a1bf5be47ce32e2702636bbe76a",
     "run_id": 37144143813,
-    "state": "queued",
+    "state": "in_progress",
     "terminal": null,
-    "read": "IMMEDIATE_AFTER_PUSH_ONCE"
+    "read": "NATURAL_CHECKPOINT_NOT_TERMINAL",
+    "updated_at": "2026-10-03T18:52:26Z"
   },
   "shared_increment_read_32f9696e": {
     "peer_read_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
@@ -12918,5 +13099,512 @@
     "normal_update_ready": false,
     "patch_sha": "f5db8911a47ef1b6e08551f7a2946ec5734e68ee",
     "read_scope_limit": "development-input.json attachment not authenticated by native reader; source/actual wires/native records/context/display and external identities verified; no locator-history authority from attachment alone."
+  },
+  "ci_dc9850ca": {
+    "head_sha": "dc9850ca7c854c7bc1b6f05cb4224886c1829dd7",
+    "run_id": 37146162255,
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL_EXACT_HEAD",
+    "updated_at": "2026-10-03T20:07:23Z"
+  },
+  "issue28_queue_server_readback_20261004": {
+    "updated_at": "2026-10-03T21:46:47Z",
+    "body_sha256": "2bed674b9b05a272bb10a6d4db949dec3dce154f89a8a65a376e1e38c653977f",
+    "edited_scope": "Navigation and existing D03 row only; protected common/permission sections unchanged",
+    "next": "Bounded context followup/output contract and complete request cap; no live request or another source-unit correction."
+  },
+  "d03_jpm_original_unit_development_20261004": {
+    "state": "BOUNDED_BATCH_ENDED_INITIAL_PLUS_ONE_CORRECTION; ACTUAL_POSITIVE_CASES_AND_TIME_FIELD_FIXED_NO_COMPANY_CREDIT",
+    "evidence": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/README.md",
+    "full_visible": {
+      "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "input_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004",
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+      "source_seconds": 19.626,
+      "documents": 1,
+      "units_total": 130,
+      "visible_units": 23,
+      "visible_rows": 11146,
+      "native_units_total": 107,
+      "request_sha256": "d9c8b641f189ecd81d605d218083e76d48b2688ddf52338d908356319925ffa6",
+      "measurement": {
+        "request_sha256": "d9c8b641f189ecd81d605d218083e76d48b2688ddf52338d908356319925ffa6",
+        "request_bytes": 1375475,
+        "rendered_prompt_sha256": "99ed5ff15c483d0b389ef0d9be164b2eb8dc8e96adfd8fdaf32e7a5cbf9ead67",
+        "rendered_prompt_bytes": 1352601,
+        "input_tokens": 330532,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 334628,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": false,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      },
+      "full_company_input": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "bounded_unit_input": {
+      "input_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-jpm-positive-20261004/source-unit-pilot",
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+      "owner_units": 1,
+      "context_only_units": 1,
+      "original_unit_count": 130,
+      "whole_source_coverage": false,
+      "company_native_acceptance": false,
+      "request_sha256": "ff62244c598060e9e94bd4c310187147f7635ca99c3f85588093c3fafc508fd6",
+      "prompt_sha256": "f506056ca0d0bac5cc1c126b6f5a7bc3e53cda10f6b31f38bca525720c731f00",
+      "measurement": {
+        "request_sha256": "ff62244c598060e9e94bd4c310187147f7635ca99c3f85588093c3fafc508fd6",
+        "request_bytes": 322118,
+        "rendered_prompt_sha256": "1474eec6bcfe5d06f412c50b5dfe1ed88b3cc6005bf18d7095b12fb65e07e27a",
+        "rendered_prompt_bytes": 308364,
+        "input_tokens": 96456,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 100552,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      },
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "parent_reference": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/parent-reference.md",
+    "parent_reference_scope": "Full Note30/risk aggregate/alias; not full11146block omission audit. Whole one owner plus whole context unit delivered, 2/130 source units only.",
+    "model_response": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/independent-input/response.log",
+    "code_changed": false,
+    "real_call_permission_added": false,
+    "company_result_created": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "checked": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/checked.json",
+    "time_increment": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/time-input-summary.json",
+    "remaining_corrections_after_time_increment": 0,
+    "final_response": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/independent-time-input/response.log",
+    "final_checked": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/checked-time.json",
+    "comparison": "docs/evidence/issue28_continuous/d03-jpm-positive-development-20261004/comparison-final.md",
+    "initial_output_tokens": 2772,
+    "final_output_tokens": 3623,
+    "initial_findings": 14,
+    "final_findings": 19,
+    "remaining_corrections": 0,
+    "full_company_mapping": false,
+    "whole_source_coverage": false
+  },
+  "shared_increment_read_231a204d": {
+    "peer_read_sha": "231a204dc6ae11a4005e0151e47270ea65e0b553",
+    "prior_read_sha": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
+    "scope": "Peer own Enphase historical B06 acceptance and seven own E01 live exports; shared defect register unchanged; no D03 core changes or receiving acceptance copied."
+  },
+  "ci_41d9d859": {
+    "head_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
+    "run_id": 37150607827,
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL_EXACT_HEAD",
+    "updated_at": "2026-10-03T21:07:52Z"
+  },
+  "shared_increment_read_c74ce046": {
+    "peer_read_sha": "c74ce04630b57c2a03d9f1bd7b293b97e21da734",
+    "prior_read_sha": "231a204dc6ae11a4005e0151e47270ea65e0b553",
+    "scope": "Peer own E01/D04 real export and known-defect updates read. E01 Pfizer old identity release is peer-only; new Marriott FY2023/FY2024 D02 paid omissions do not automatically apply to #28 FY2025. Current Marriott D02 is already withheld under own existing defect, no credit imported or new metric-wide withdrawal. No shared D03 source core change."
+  },
+  "d03_complete_unit_plan_20261004": {
+    "state": "FULL_OWNERSHIP_RESOURCE_MEASURED; CONTEXT_AND_OUTPUT_PLAN_NOT_READY",
+    "evidence": "docs/evidence/issue28_continuous/d03-complete-unit-plan-20261004/README.md",
+    "own_base_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
+    "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+    "whole_unit_context": {
+      "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "owned_units_once": true,
+      "source_payloads_roundtrip": true,
+      "requests_if_single_unit": 130,
+      "fits_count": 87,
+      "oversized_count": 43,
+      "native_physical_link_count": 294,
+      "unresolved_physical_links": [],
+      "maximum_context": 591694,
+      "seconds": 27.227,
+      "semantic_context_sufficiency_verified": false,
+      "prompt_input_shared_representation_not_yet_blind_tested": true,
+      "live_authorized": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "shared_item_context": {
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "owned_units_once": true,
+      "original_owner_unit_count": 130,
+      "owner_payloads_roundtrip": true,
+      "xml_context_slice_hashes_verified": true,
+      "physical_link_count": 294,
+      "unresolved_physical_links": [],
+      "request_count_if_one_unit": 130,
+      "fits_count": 101,
+      "oversized_count": 29,
+      "maximum_context": 496266,
+      "seconds": 22.723,
+      "model_blind_input_not_tested": true,
+      "semantic_context_sufficiency_verified": false,
+      "complete_company_ready": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "first_scan_190k": {
+      "source_id": "sha256:cc5dc5cccffc36cb397268bbd38cf77926a60317c364edcd7253644e37f7a4dd",
+      "original_unit_count": 130,
+      "ownership_complete_once": true,
+      "request_count_first_scan": 38,
+      "all_first_scan_requests_fit": true,
+      "maximum_context": 186082,
+      "maximum_owner_units_per_scan": 4,
+      "grouping_input_target_not_service_limit": 190000,
+      "followup_context_request_count_unmeasured": true,
+      "followup_dynamic_cap_unfixed": true,
+      "output4096_or_semantic_coverage_unverified": true,
+      "complete_company_ready": false,
+      "business_calls": [
+        0,
+        0,
+        0
+      ],
+      "seconds": 26.069
+    },
+    "first_scan_is_not_total_call_cap": true,
+    "semantic_acceptance": false,
+    "company_result_created": false,
+    "real_purpose_permission_added": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "A bounded exact-context followup/output contract and full task cap, no more blind source-unit correction; new representation needs actual input-only validation before live."
+  },
+  "ci_75f0905e": {
+    "head_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
+    "run_id": 37154925474,
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL",
+    "updated_at": "2026-10-03T21:48:32Z"
+  },
+  "shared_increment_read_397443d8": {
+    "peer_read_sha": "397443d8478ed38727b7f3579ae71bc474a2acf5",
+    "preceding_read_sha": "c74ce04630b57c2a03d9f1bd7b293b97e21da734",
+    "remote_verified": "git@github.com:wlvh/SEC_metrics.git",
+    "defect_register_delta": "UNCHANGED",
+    "related_increment": "Peer D04 historical cold-read and limited-content records; no code delta to own D03 or current D04. No peer acceptance copied; current D04 candidates preserved.",
+    "peer_runtime_ledger_snapshot_operated": false
+  },
+  "d03_literal_context_20261004": {
+    "state": "LITERAL_LOOKUP_AND_NAMESPACE_DELTA_LIMITED_REVIEW_PASSED_NOT_COMPANY_READY",
+    "tested_base_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
+    "tested_uncommitted_delta": [
+      "scripts/vnext/d03_context_requests.py",
+      "tests/vnext/test_d03_context_requests.py",
+      "tools/run_fast_tests_v2.py"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/d03-literal-context-20261004",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "processing_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-literal-context-20261004",
+    "actual_save_seconds": "1.276",
+    "actual_cold_seconds": "1.277",
+    "short_tests": {
+      "count": 19,
+      "seconds": "0.209",
+      "log": "docs/evidence/issue28_continuous/d03-literal-context-20261004/targeted-tests.log"
+    },
+    "mechanical_scope": "Exact owned anchor and same-document XML id or visible range; original unit/item and context dictionaries preserved; missing/ambiguous/limits retain unresolved without guessing/trimming. External source and packet digests and source replay required.",
+    "source_authentication_repeated": false,
+    "native_result_or_run_created": false,
+    "shared_default_changes": [],
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "limits": {
+      "max_requests": 8,
+      "max_visible_blocks": 32,
+      "max_context_bytes": 262144
+    },
+    "limits_are_company_or_provider_authorization": false,
+    "next": "Complete bounded scan-output/context-followup contract and static/dynamic full-company accounting before any new model input trial or true-purpose request. Existing JPM developer batch remains ended.",
+    "patch_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+    "independent_review": {
+      "patch_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+      "state": "REQUEST_CHANGES_P2_CONTEXT_UNIT_NAMESPACE_DEPENDENCIES",
+      "result_path": "docs/evidence/issue28_continuous/d03-literal-context-20261004/independent-review/conclusion.md",
+      "scope": "new literal-context delta, not source semantics",
+      "tool_calls": 21,
+      "ordinary_messages": 3
+    },
+    "namespace_dependency_fix": {
+      "initial_review_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+      "old_verdict_preserved": true,
+      "new_tests": "20 short tests including separate context/unit prefix rebinding, missing map, bytes cap",
+      "changed_paths": [
+        "scripts/vnext/d03_context_requests.py",
+        "tests/vnext/test_d03_context_requests.py"
+      ],
+      "old_actual_xml_visible_packets_unchanged": true,
+      "new_fact_packet": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-literal-context-20261004/marriott-fact-dependencies-context.json",
+      "old_native_mapper_and_cli_unchanged": true,
+      "old_P2_closed_only_in_new_delta": true,
+      "short_tests_seconds": "0.222"
+    },
+    "namespace_fix_patch_sha": "97f8380db30fc954587aec2cddcd8f103ffa16e0",
+    "namespace_fix_independent_review": {
+      "state": "LIMITED_APPROVE_NAMESPACE_INCREMENT",
+      "patch_sha": "97f8380db30fc954587aec2cddcd8f103ffa16e0",
+      "result_path": "docs/evidence/issue28_continuous/d03-literal-context-20261004/independent-namespace-review/conclusion.md",
+      "tests": 9,
+      "independent_assertions": 34,
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "semantic_or_company_credit": false
+    },
+    "remote_delivery_sha": "e8fa288095edc894101628d49392572c9c49e7af"
+  },
+  "ci_e8fa2880": {
+    "head_sha": "e8fa288095edc894101628d49392572c9c49e7af",
+    "run_id": 37174399397,
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL",
+    "updated_at": "2026-10-04T04:14:20Z"
+  },
+  "issue28_context_queue_readback_20261004": {
+    "readback_equal": true,
+    "body_sha256": "bdd38c359146b1bc7820ba2d3fef3f11f127490b18a4f4dafc8daeea10831cd2",
+    "server_updated_at": "2026-10-04T03:34:50Z",
+    "changed_scope": "existing navigation sentence and sole D03 queue row only",
+    "common_protocol_and_other_sections_unchanged": true
+  },
+  "d03_bounded_task_contract_20261004": {
+    "state": "OFFLINE_TASK_CONTRACT_LIMITED_REVIEW_PASSED_NOT_MODEL_OR_COMPANY_READY",
+    "evidence": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004",
+    "tested_base_sha": "e8fa288095edc894101628d49392572c9c49e7af",
+    "prototype_code_in_evidence_not_normal_runtime": true,
+    "product_bindings_or_defaults_changed": false,
+    "model_answers_new": 0,
+    "recorded_fixtures_not_answers": true,
+    "short_tests": {
+      "count": 11,
+      "seconds": "0.336",
+      "log": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/recorded-tests-request-binding.log"
+    },
+    "sources": [
+      {
+        "company": "marriott",
+        "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+        "complete_original_unit_count": 17,
+        "first_scan_count": 5,
+        "followup_design_ceiling": 5,
+        "design_total_ceiling": 10,
+        "max_context": 185857,
+        "first_input_reference_tokens": 750159
+      },
+      {
+        "company": "jpm",
+        "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+        "complete_original_unit_count": 130,
+        "first_scan_count": 38,
+        "followup_design_ceiling": 38,
+        "design_total_ceiling": 76,
+        "max_context": 186145,
+        "first_input_reference_tokens": 6022247
+      }
+    ],
+    "max_followups_per_scan": 1,
+    "max_locations_including_forward_continuation": 8,
+    "max_context_bytes": 262144,
+    "repeat_scope": "Changed decoder/prompt, literal continuation and actual request binding only; no old long material/native replay. First fixture missing namespace metadata failure retained.",
+    "measured_seconds": "38.515",
+    "runtime_opportunity_guard_connected": false,
+    "live_authorized": false,
+    "company_result_created": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "One representative input-only developer test of genuinely new whole-owner/explicit-context task design, with original-source reference first; old JPM positive batch and C02/B13 ended batches not reopened. Full ten-company D03 resources, runtime guards, native company and target-model permission remain unproved.",
+    "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+    "independent_review": {
+      "state": "REQUEST_CHANGES_P2_PROMPT_ROW_LAYOUT",
+      "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-review/conclusion.md",
+      "tool_calls": 20,
+      "ordinary_messages": 3
+    },
+    "prompt_fix": {
+      "old_review_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
+      "historical_request_changes_preserved": true,
+      "changed": "prompt correct original-index dictionary and row_layout; one corresponding structural/source-order regression; no semantic or model answer change",
+      "short_tests": 12,
+      "short_test_seconds": "0.349",
+      "measure_seconds": "39.184",
+      "prompt_sha256": "bb99f904d3d5c5492b2ce094ec1e5a6e055d34883a3d9a8429f71d26723222f7",
+      "sources": [
+        {
+          "company": "marriott",
+          "first_scan_count": 5,
+          "total_design_ceiling": 10,
+          "maximum_context_tokens": 185915
+        },
+        {
+          "company": "jpm",
+          "first_scan_count": 38,
+          "total_design_ceiling": 76,
+          "maximum_context_tokens": 186203
+        }
+      ]
+    },
+    "decoder_fix_patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
+    "decoder_fix_independent_review": {
+      "patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
+      "state": "LIMITED_APPROVE_DECODER_INCREMENT",
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-decoder-review/conclusion.md",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "tested_one_actual_scan_and_followup": true,
+      "semantic_or_company_credit": false
+    },
+    "remote_delivery_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9"
+  },
+  "ci_19e84a7e": {
+    "head_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9",
+    "run_id": 37177584195,
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL",
+    "updated_at": "2026-10-04T05:13:37Z"
+  },
+  "d03_bounded_task_queue_readback_20261004": {
+    "server_updated_at": "2026-10-04T04:40:41Z",
+    "readback_pending": false,
+    "only_existing_nav_and_D03_row_changed": true,
+    "readback_equal": true,
+    "body_sha256": "7eb422d2b3f23d9382001aa542eeca35381442d1145847e7dbda73cfc73e09ad"
+  },
+  "shared_increment_read_417ccfb7": {
+    "peer_read_sha": "417ccfb788f39f53e5ef2b2d825a3fa46efc11bf",
+    "preceding_read_sha": "397443d8478ed38727b7f3579ae71bc474a2acf5",
+    "register_delta": "peer readback only, no new defect/release imported",
+    "increment": "Historical C02 full table-grid input preserves row/column relationships; current current-year/table-media gap potentially relevant, not a selector fix or new content acceptance. Lumen historical complete input remains over200000. Read README fixed path after one wrong path failed; no old cache claimed current.",
+    "own_action": "Read source/interface concept; own C02 ended batch and withheld identities stay unchanged. Do not clone own ledger or copy historical acceptance. Subsequent C02 representation work only under actual new-method scope."
+  },
+  "d03_native_context_input_trial_20261004": {
+    "state": "BATCH_ENDED_NO_FOLLOWUP_CONTEXT_CEILING_REACHED",
+    "evidence": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004",
+    "base_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9",
+    "initial_four_owner_resource_failure": 230644,
+    "changed_grouping_parameter_not_service_limit": 150000,
+    "source_unchanged": true,
+    "request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-headroom.json",
+    "request_sha256": "83bd638ed53b51f20f12056b74baad2e0f4a33087af9816bab58ae9b7f38e4f4",
+    "owner_ids": [
+      "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+      "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666"
+    ],
+    "first_context_tokens": 127540,
+    "tax_context_fixture_followup_tokens": 172112,
+    "full_source_plan": [
+      {
+        "company": "marriott",
+        "first": 6,
+        "design_ceiling": 12
+      },
+      {
+        "company": "jpm",
+        "first": 51,
+        "design_ceiling": 102
+      }
+    ],
+    "old_ended_JPM_batch_reopened": false,
+    "not_new_holdout_source": true,
+    "reference_before_blind": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/reference-before-blind.md",
+    "new_model_answers": 2,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "company_result_created": false,
+    "raw_response_sha256": "83fdeae32d6fb8a11d680860d996cf3308076c1f3fae9021abaec00873212a04",
+    "first_response_failure": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/first-response-failure.json",
+    "actual_output_tokens": 1187,
+    "reference_kind_fix_request": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-reference-kinds.json",
+    "reference_kind_fix_sha256": "db4cb7c9c71e94e5f757cf3663d725585cd65298fd476a2d6089b48c2af05370",
+    "prompt_corrections_used": 1,
+    "corrected_raw_response_sha256": "61eb869defc8a41063ab81ca2b097eccd80d269dd9386c54ade13608403bfdac",
+    "corrected_output_tokens": 1238,
+    "corrected_postprocessing": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/corrected-scan-postprocessing.json",
+    "followup_generated": false,
+    "third_model_response_allowed": false,
+    "content_limitations": [
+      "correct reference enum after explicit contract correction",
+      "seven locations resolved, one pending after continuation ceiling, initial reply retains eleven absent targets",
+      "fact546 accounting table reporting years in event_dates cannot automatically be government-event dates",
+      "partial physical source only, no semantic/company/deepseek credit"
+    ],
+    "next": "New method responsibility/context decision after stopped batch; no third response or higher limits. Continue other lawful independent work. Prompt enum delta remains limited review pending, not reason to pause wholeIssue."
   }
 }
