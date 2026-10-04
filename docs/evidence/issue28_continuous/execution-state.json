@@ -13937,9 +13937,11 @@
   "ci_c7a96eae": {
     "run_id": 37198645311,
     "head_sha": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
-    "status": "in_progress",
-    "conclusion": null,
-    "read_kind": "One valid immediate full40SHA observation after push; initial shortSHA lookup returnedempty and is not evidence. Reference workflow37198645286 success is separate."
+    "status": "completed",
+    "conclusion": "success",
+    "read_kind": "One valid immediate full40SHA observation after push; initial shortSHA lookup returnedempty and is not evidence. Reference workflow37198645286 success is separate.",
+    "updated_at": "2026-10-04T12:06:08Z",
+    "scope": "Prior C02 extraction archive and configured-ledger guard; not newB03 view diff."
   },
   "b03_marriott_390_receiving_20261004": {
     "status": "PASS_EXPLICIT_FINITE_VIEW_LIMITED_REVIEW",
@@ -13966,7 +13968,10 @@
     "next": "Exactnew view/proof binding review, then maintain current queue without rerunning original update.",
     "reviewed_sha": "569ea0ad772368ce50d4b30053375a4e4ad53be6",
     "review_path": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/independent-view-review/conclusion.md",
-    "review_scope": "Explicit oneB03 saved-scope Run selection and exact source proof; not all-economic scope or new currenthead update."
+    "review_scope": "Explicit oneB03 saved-scope Run selection and exact source proof; not all-economic scope or new currenthead update.",
+    "delivery_head": "49977fb5c283c3b341f2e257c993420d3e902e63",
+    "queue_readback": "EXACT_EXISTING_UNIFIED_VIEW_ROW_ONLY",
+    "queue_body_sha256": "6f0df9284928c54224a48d51dd318e9aff3777883c79530ee6187d4330f0fa4d"
   },
   "shared_increment_read_41949f67": {
     "peer_sha": "41949f67dc01d47c4eb9d69afc1f977fab3619d8",
@@ -13981,5 +13986,37 @@
     "branch": "task/issue28-foundation-main-candidate",
     "thread_title": "Issue #28 跨越 issues 54",
     "scope": "Read fixed evidence only. Main generic scanner/old fixture work belongs to that staged integration, not duplicated in originalPR43; no other worktree modified."
+  },
+  "ci_49977fb5": {
+    "run_id": 37201399895,
+    "head_sha": "49977fb5c283c3b341f2e257c993420d3e902e63",
+    "status": "queued",
+    "conclusion": null,
+    "observation": "One immediate valid full40SHA reading after push; reference workflow success not main result."
+  },
+  "shared_increment_read_429f9fcc": {
+    "own_read_sha": "49977fb5c283c3b341f2e257c993420d3e902e63",
+    "peer_read_sha": "429f9fcc0bba5a49bc08c69ff12f56340dfaabfa",
+    "previous_peer_sha": "41949f67dc01d47c4eb9d69afc1f977fab3619d8",
+    "register_delta": "Peer records its own pinned C02 upstream merge/preflight. No new result defect or source formatter repair.",
+    "related_read": "local-runtime-compatibility-2026-10-04/README.md and JPM FY2025 reference metadata, not all37 judgments or historical outputs.",
+    "disposition": "Same original raw bea52712, different prepared request/document identity. Reuse source clues only; no historical reading credit transferred. Current14 mark/legend source check is own direct reading.",
+    "first_wrong_path": "c02-table-model-input-20261004/README.md absent; actual committed path then read. No absence-of-defects inference."
+  },
+  "c02_table_member_legend_20261004": {
+    "state": "ORIGINAL_POSITIVE_SYMBOL_RELATION_CHECKED_INPUT_CHANGE_NOT_IMPLEMENTED",
+    "rule": "COLLAB-28-47-v1.2 and Issue28 section5.8",
+    "evidence": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/member-legend-source-check.json",
+    "scope": "Current JPM2026-04-06 DEF14A, same rawbea52712 as initial table trial. Fourteen principal membership marks reference adjacent original Member legend; all14 corroborated by original table22 and unchanged model answer.",
+    "old_reference_request_answer_native_preserved": true,
+    "model_answers_added": 0,
+    "fix_context_consumed": false,
+    "native_or_complete_company_credit": false,
+    "next": "Shared input owner#47 can preserve original symbol/legend metadata. Keep qualification media, Stock/Executive identities and whole-scope omissions unresolved; no second answer absent substantive adequate input repair.",
+    "calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
