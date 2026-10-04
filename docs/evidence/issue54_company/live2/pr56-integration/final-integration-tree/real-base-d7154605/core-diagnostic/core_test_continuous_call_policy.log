@@ -1,0 +1,17 @@
+.F...
+======================================================================
+FAIL: test_current_wiring_rejects_stale_declared_requirement_closure (tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_current_wiring_rejects_stale_declared_requirement_closure)
+----------------------------------------------------------------------
+vnext.sources.SourceError: Source path is not a regular file: /home/user/work/integration/docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/work/integration/tests/vnext/test_continuous_call_policy.py", line 83, in test_current_wiring_rejects_stale_declared_requirement_closure
+    with self.assertRaisesRegex(ValueError,'CONTINUOUS_OFFLINE_WIRING_MISSING_OR_CHANGED'):
+AssertionError: "CONTINUOUS_OFFLINE_WIRING_MISSING_OR_CHANGED" does not match "Source path is not a regular file: /home/user/work/integration/docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json"
+
+----------------------------------------------------------------------
+Ran 5 tests in 9.097s
+
+FAILED (failures=1)

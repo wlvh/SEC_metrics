@@ -81,3 +81,5 @@ CSV：[首跑矩阵](first/metrics_matrix.csv) / [证据](first/metric_evidence.
 ## PR56 集成
 
 见 [pr56-integration/pr56-consumer-check.json](pr56-integration/pr56-consumer-check.json)。
+
+真实基础 `d7154605` 上的最终组合树检查与 CI 覆盖去向：[COVERAGE-MAP.md](pr56-integration/final-integration-tree/COVERAGE-MAP.md)。`final-integration-check.json` 是先前基于 `9d1ece07` + 模拟补件的诊断记录，保留原样。

@@ -1,0 +1,29 @@
+load rc=0 seconds=8
+company rc=0 seconds=2
+fast rc=1 seconds=211
+mf_unittest rc=0 seconds=229
+mf_scalability rc=0 seconds=24
+mf_egress rc=0 seconds=3
+mf_reference rc=0 seconds=0
+alignment rc=0 seconds=5
+update_cycle rc=0 seconds=1
+FINAL_DONE
+core_test_ordinary_source_authority rc=0 seconds=14
+core_test_ordinary_source_session rc=0 seconds=10
+core_test_ordinary_storage_identity rc=0 seconds=0
+core_test_continuous_sec_acquisition rc=0 seconds=238
+core_test_continuous_call_ledger rc=0 seconds=1
+core_test_continuous_call_policy rc=1 seconds=10
+core_test_normal_source_requirements rc=0 seconds=52
+core_test_prior_html_dependency rc=0 seconds=1
+core_test_c04_update_cycle rc=0 seconds=189
+core_test_c04_refresh_resume rc=0 seconds=236
+core_test_c04_source_only_install rc=0 seconds=1569
+core_test_registered_native_update rc=0 seconds=1
+core_test_d04_native_assessment rc=0 seconds=2
+core_test_native_request_construction rc=0 seconds=18
+core_test_normal_run_v3_material rc=0 seconds=1
+core_test_ordinary_source_run_material rc=0 seconds=0
+core_test_d04_run_material rc=0 seconds=740
+core_test_remaining_source_run_material rc=0 seconds=1
+CORE_DONE
