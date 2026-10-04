@@ -1,0 +1,1111 @@
+{
+  "record_type": "PARENT_ORIGINAL_TO_BLIND_INPUT_COMPARISON",
+  "reference_sha256": "ad80d69b6dc7b3f404b315854b682b5cffe8157b9694680414a32307a787c92f",
+  "response_sha256": "12e209aa081ebdfc2e52fb8759c36427d2ad65efc537c20b13044eb9908499e9",
+  "mode": "Actual original reading and manual comparison; source span hashes/JSON are mechanical checks only; parent not independent human reviewer.",
+  "reference_points": [
+    {
+      "reference_id": "R01",
+      "response_fact_indices": [
+        0,
+        13
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R02",
+      "response_fact_indices": [
+        1
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R03",
+      "response_fact_indices": [
+        16,
+        49
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R04",
+      "response_fact_indices": [
+        6,
+        17
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R05",
+      "response_fact_indices": [
+        18,
+        19
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R06",
+      "response_fact_indices": [
+        14,
+        15,
+        16
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R07",
+      "response_fact_indices": [
+        33
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R08",
+      "response_fact_indices": [
+        35,
+        36
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R09",
+      "response_fact_indices": [
+        20,
+        23,
+        24,
+        25,
+        26,
+        27,
+        32
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R10",
+      "response_fact_indices": [
+        21
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R11",
+      "response_fact_indices": [
+        22
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    },
+    {
+      "reference_id": "R12",
+      "response_fact_indices": [
+        30,
+        31
+      ],
+      "judgment": "MATCH_WITH_ORIGINAL_SUBJECT_TIME_AND_UNCERTAINTY"
+    }
+  ],
+  "all_forward_facts": [
+    {
+      "fact_index": 0,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_size",
+        "statement": "The current Board has 11 directors, all also current nominees.",
+        "source_blocks": [
+          347,
+          529,
+          1252,
+          1256,
+          1259,
+          1262,
+          1263,
+          1264,
+          1265,
+          1266,
+          1269,
+          1270,
+          1273,
+          1274
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 1,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_size",
+        "statement": "Twelve directors served at the 2025 annual meeting.",
+        "source_blocks": [
+          530
+        ],
+        "stated_time": "2025 annual meeting"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 2,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Stephen B. Burke has served as a director since 2004.",
+        "source_blocks": [
+          627,
+          631,
+          527
+        ],
+        "stated_time": "Since 2004; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 3,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Linda B. Bammann has served as a director since 2013.",
+        "source_blocks": [
+          655,
+          658,
+          527
+        ],
+        "stated_time": "Since 2013; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 4,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Michele G. Buck has served as a director since 2025.",
+        "source_blocks": [
+          694,
+          697,
+          527
+        ],
+        "stated_time": "Since 2025; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 5,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Alicia Boler Davis has served as a director since 2023.",
+        "source_blocks": [
+          728,
+          731,
+          527
+        ],
+        "stated_time": "Since 2023; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 6,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "James Dimon has served as a director since 2004.",
+        "source_blocks": [
+          766,
+          769,
+          527
+        ],
+        "stated_time": "Since 2004; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 7,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Alex Gorsky has served as a director since 2022.",
+        "source_blocks": [
+          798,
+          801,
+          527
+        ],
+        "stated_time": "Since 2022; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 8,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Mellody Hobson has served as a director since 2018.",
+        "source_blocks": [
+          833,
+          836,
+          527
+        ],
+        "stated_time": "Since 2018; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 9,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Phebe N. Novakovic has served as a director since 2020.",
+        "source_blocks": [
+          864,
+          867,
+          527
+        ],
+        "stated_time": "Since 2020; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 10,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Virginia M. Rometty has served as a director since 2020.",
+        "source_blocks": [
+          905,
+          908,
+          527
+        ],
+        "stated_time": "Since 2020; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 11,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Brad D. Smith has served as a director since 2025.",
+        "source_blocks": [
+          935,
+          938,
+          527
+        ],
+        "stated_time": "Since 2025; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 12,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "Mark A. Weinberger has served as a director since 2024.",
+        "source_blocks": [
+          981,
+          984,
+          527
+        ],
+        "stated_time": "Since 2024; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 13,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_membership",
+        "statement": "All 11 current directors are nominees for a one-year term expiring at the 2027 annual meeting, conditional on election.",
+        "source_blocks": [
+          477,
+          529
+        ],
+        "stated_time": "2026 annual meeting to 2027 annual meeting, if elected"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 14,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_independence",
+        "statement": "The Board determined ten non-management directors independent under NYSE and Firm standards: Bammann, Buck, Burke, Davis, Gorsky, Hobson, Novakovic, Rometty, Smith and Weinberger.",
+        "source_blocks": [
+          996,
+          1003
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 15,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_independence",
+        "statement": "James Dimon, the CEO, is the only non-independent current nominee.",
+        "source_blocks": [
+          347,
+          380,
+          383,
+          3559
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 16,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_independence",
+        "statement": "The Board determined Todd A. Combs independent during his Board service, with only immaterial relationships.",
+        "source_blocks": [
+          1003
+        ],
+        "stated_time": "During Board service ending December 2025"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 17,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_leadership",
+        "statement": "James Dimon has been Board Chair since 2006 and currently combines Chair and CEO roles.",
+        "source_blocks": [
+          766,
+          767,
+          769,
+          1087
+        ],
+        "stated_time": "Since 2006; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 18,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_leadership",
+        "statement": "Stephen B. Burke has been Lead Independent Director since 2021.",
+        "source_blocks": [
+          627,
+          629,
+          46,
+          69,
+          3548
+        ],
+        "stated_time": "Since 2021; CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 19,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "board_leadership",
+        "statement": "Following its annual review, the independent Board retained the combined Chair/CEO structure and Burke as Lead Independent Director.",
+        "source_blocks": [
+          1089
+        ],
+        "stated_time": "March 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 20,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_structure",
+        "statement": "Five principal standing committees exist: Audit, Compensation & Management Development, Corporate Governance & Nominating, Public Responsibility and Risk.",
+        "source_blocks": [
+          1160,
+          1161,
+          3935,
+          3943,
+          3957
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 21,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_structure",
+        "statement": "Two additional standing committees exist: Stock and Executive.",
+        "source_blocks": [
+          1242,
+          1243,
+          1244,
+          1245
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 22,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_structure",
+        "statement": "Two specific purpose committees currently exist: Markets Compliance and Omnibus.",
+        "source_blocks": [
+          1247,
+          1249
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 23,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "Audit members are Michele G. Buck, Alex Gorsky, Phebe N. Novakovic and Mark A. Weinberger (Chair).",
+        "source_blocks": [
+          694,
+          698,
+          699,
+          798,
+          802,
+          803,
+          864,
+          868,
+          869,
+          981,
+          985,
+          986,
+          1173
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 24,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "Compensation & Management Development members are Stephen B. Burke (Chair), Linda B. Bammann and Virginia M. Rometty.",
+        "source_blocks": [
+          627,
+          632,
+          633,
+          655,
+          659,
+          661,
+          905,
+          909,
+          911
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 25,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "Corporate Governance & Nominating members are Stephen B. Burke, Michele G. Buck, Alex Gorsky and Virginia M. Rometty (Chair).",
+        "source_blocks": [
+          627,
+          632,
+          634,
+          694,
+          698,
+          700,
+          798,
+          802,
+          804,
+          905,
+          909,
+          910
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 26,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "Public Responsibility members are Alicia Boler Davis, Mellody Hobson (Chair), Phebe N. Novakovic and Brad D. Smith.",
+        "source_blocks": [
+          728,
+          732,
+          733,
+          833,
+          837,
+          838,
+          864,
+          868,
+          870,
+          935,
+          939,
+          940
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 27,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "Risk members are Linda B. Bammann (Chair), Alicia Boler Davis, Mellody Hobson and Brad D. Smith.",
+        "source_blocks": [
+          655,
+          659,
+          660,
+          728,
+          732,
+          734,
+          833,
+          837,
+          839,
+          935,
+          939,
+          941
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 28,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "The dated CMDC report identifies independent members Stephen B. Burke (Chair), Linda B. Bammann and Virginia M. Rometty.",
+        "source_blocks": [
+          2549,
+          2551,
+          2552,
+          2553,
+          2554
+        ],
+        "stated_time": "March 17, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Dated committee reports are kept distinct from current filing; no double count produced."
+    },
+    {
+      "fact_index": 29,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "The dated Audit report lists Mark A. Weinberger (Chair), Michele Buck, Alex Gorsky and Phebe N. Novakovic.",
+        "source_blocks": [
+          3439,
+          3440,
+          3441,
+          3442,
+          3443,
+          3444
+        ],
+        "stated_time": "March 16, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Dated committee reports are kept distinct from current filing; no double count produced."
+    },
+    {
+      "fact_index": 30,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "The current matrix assigns Burke, Hobson and Rometty code A, identified by the footnote as Markets Compliance Committee.",
+        "source_blocks": [
+          1252,
+          1253,
+          1254,
+          1255,
+          1256,
+          1258,
+          1266,
+          1268,
+          1270,
+          1272,
+          1279,
+          1280
+        ],
+        "stated_time": "CURRENT_IN_FILING; code footnote refers to 2025"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Current table header and explicitly2025 code footnote both retained; no silent year-end/current-only substitution."
+    },
+    {
+      "fact_index": 31,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_membership",
+        "statement": "The current matrix assigns Linda B. Bammann code B, identified by the footnote as Omnibus Committee.",
+        "source_blocks": [
+          1252,
+          1253,
+          1254,
+          1255,
+          1259,
+          1261,
+          1279,
+          1281
+        ],
+        "stated_time": "CURRENT_IN_FILING; code footnote refers to 2025"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Current table header and explicitly2025 code footnote both retained; no silent year-end/current-only substitution."
+    },
+    {
+      "fact_index": 32,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_independence",
+        "statement": "All five principal standing committees consist solely of independent directors.",
+        "source_blocks": [
+          338,
+          495,
+          1073,
+          1161
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 33,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_independence",
+        "statement": "The Board determined all directors who served on Audit and CMDC met their additional NYSE independence and qualitative criteria.",
+        "source_blocks": [
+          1004
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 34,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "committee_independence",
+        "statement": "The Audit report states all four non-management members are independent under Firm, NYSE and SEC audit-committee standards.",
+        "source_blocks": [
+          3409,
+          3439,
+          3440,
+          3441,
+          3442,
+          3443,
+          3444
+        ],
+        "stated_time": "March 16, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Dated committee reports are kept distinct from current filing; no double count produced."
+    },
+    {
+      "fact_index": 35,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "The Board determined all four Audit members—Buck, Gorsky, Novakovic and Weinberger—financially literate and SEC-defined audit committee financial experts.",
+        "source_blocks": [
+          1173,
+          3409,
+          3439,
+          3440,
+          3441,
+          3442,
+          3443,
+          3444
+        ],
+        "stated_time": "CURRENT_IN_FILING; Audit report dated March 16, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Dated committee reports are kept distinct from current filing; no double count produced."
+    },
+    {
+      "fact_index": 36,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "The Board determined Risk Chair Linda B. Bammann has Federal Reserve-required experience identifying, assessing and managing large, complex financial-firm risk exposures.",
+        "source_blocks": [
+          1173
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier."
+    },
+    {
+      "fact_index": 37,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "The filing assesses all nominees as possessing independent perspective, integrity, judgment, work ethic, conviction, collaboration, inquisitiveness and willingness to challenge management.",
+        "source_blocks": [
+          540,
+          541,
+          526
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 38,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Burke’s filing-assessed highlights: public company governance, human capital management, leadership of a large complex organization, and finance/accounting.",
+        "source_blocks": [
+          605,
+          606,
+          607,
+          608,
+          609,
+          610,
+          627,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 39,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Bammann’s filing-assessed highlights: risk management/controls, financial services, regulated industries and human capital management.",
+        "source_blocks": [
+          635,
+          636,
+          637,
+          638,
+          639,
+          655,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 40,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Buck’s filing-assessed highlights: finance/accounting, leadership of a large complex organization, public company governance and human capital management.",
+        "source_blocks": [
+          670,
+          671,
+          672,
+          673,
+          674,
+          694,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 41,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Davis’s filing-assessed highlights: risk management/controls, technology, regulated industries and international business operations.",
+        "source_blocks": [
+          701,
+          702,
+          703,
+          704,
+          705,
+          728,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 42,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Dimon’s filing-assessed highlights: financial services, large complex organization leadership, human capital management, regulated industries and international business operations.",
+        "source_blocks": [
+          743,
+          744,
+          745,
+          746,
+          747,
+          748,
+          766,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 43,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Gorsky’s filing-assessed highlights: finance/accounting, technology, international business operations and public company governance.",
+        "source_blocks": [
+          770,
+          771,
+          772,
+          773,
+          774,
+          798,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 44,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Hobson’s filing-assessed highlights: financial services, risk management/controls, public company governance and sustainability.",
+        "source_blocks": [
+          813,
+          814,
+          815,
+          816,
+          817,
+          833,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 45,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Novakovic’s filing-assessed highlights: technology, finance/accounting, large complex organization leadership and sustainability.",
+        "source_blocks": [
+          840,
+          841,
+          842,
+          843,
+          844,
+          864,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 46,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Rometty’s filing-assessed highlights: technology, public company governance, human capital management and international business operations.",
+        "source_blocks": [
+          879,
+          880,
+          881,
+          882,
+          883,
+          905,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 47,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Smith’s filing-assessed highlights: technology, risk management/controls, financial services and sustainability.",
+        "source_blocks": [
+          912,
+          913,
+          914,
+          915,
+          916,
+          935,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 48,
+      "status": "SOURCE_SUPPORTED_KIND_POLICY_PENDING",
+      "original_entry": {
+        "kind": "member_qualification",
+        "statement": "Weinberger’s filing-assessed highlights: finance/accounting, large complex organization leadership, regulated industries and sustainability.",
+        "source_blocks": [
+          950,
+          951,
+          952,
+          953,
+          954,
+          981,
+          527
+        ],
+        "stated_time": "CURRENT_IN_FILING"
+      },
+      "reason": "Issuer text attribution is supported; whether non-standard skills/fitness is mandatory member_qualification remains the existing narrow owner decision. No new permission inferred."
+    },
+    {
+      "fact_index": 49,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "membership_change",
+        "statement": "Todd A. Combs resigned from the Board in December 2025; the Firm announced his resignation on December 8.",
+        "source_blocks": [
+          64,
+          528,
+          1489,
+          1502
+        ],
+        "stated_time": "December 2025; announced December 8, 2025"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Actual announced resignation/new committee assignment is distinguished from continued tenure; Combs announcement day is separate from resignation month."
+    },
+    {
+      "fact_index": 50,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "membership_change",
+        "statement": "Virginia M. (Ginni) Rometty became Corporate Governance & Nominating Chair earlier in 2026.",
+        "source_blocks": [
+          47,
+          54,
+          400,
+          405,
+          905,
+          910
+        ],
+        "stated_time": "Earlier in 2026, before April 6, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Actual announced resignation/new committee assignment is distinguished from continued tenure; Combs announcement day is separate from resignation month."
+    },
+    {
+      "fact_index": 51,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "membership_change",
+        "statement": "Alex Gorsky and Michele Buck joined Corporate Governance & Nominating earlier in 2026.",
+        "source_blocks": [
+          47,
+          54,
+          365,
+          371,
+          385,
+          389
+        ],
+        "stated_time": "Earlier in 2026, before April 6, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Actual announced resignation/new committee assignment is distinguished from continued tenure; Combs announcement day is separate from resignation month."
+    },
+    {
+      "fact_index": 52,
+      "status": "SUPPORTED_SOURCE_ASSERTION",
+      "original_entry": {
+        "kind": "membership_change",
+        "statement": "Brad Smith and Alicia Boler Davis joined Public Responsibility earlier in 2026.",
+        "source_blocks": [
+          47,
+          54,
+          372,
+          378,
+          407,
+          412
+        ],
+        "stated_time": "Earlier in 2026, before April 6, 2026"
+      },
+      "reason": "Parent read the exact cited original blocks and relevant complete table, including subject/time qualifiers; not an automated semantic classifier. Actual announced resignation/new committee assignment is distinguished from continued tenure; Combs announcement day is separate from resignation month."
+    }
+  ],
+  "supported_within_existing_clear_scope": 41,
+  "source_supported_narrow_kind_policy_pending": 12,
+  "unresolved": [
+    {
+      "index": 0,
+      "original_entry": {
+        "source_blocks": [
+          570,
+          572,
+          573,
+          574,
+          575,
+          576,
+          577,
+          578,
+          579,
+          580,
+          581,
+          582,
+          583,
+          596
+        ],
+        "reason": "The qualification matrix has no textual director column names or qualification marks. Its image-only associations cannot be recovered; textual qualification highlights are extracted separately."
+      },
+      "judgment": "PRESERVED_GENUINE_INPUT_LIMITATION_NOT_ABSENCE"
+    },
+    {
+      "index": 1,
+      "original_entry": {
+        "source_blocks": [
+          1252,
+          1253,
+          1276,
+          1277,
+          1278
+        ],
+        "reason": "Member symbols are not rendered in the committee matrix. Blank cells cannot establish non-membership or recover additional symbol-only relations; visible chairs/codes and textual memberships are retained."
+      },
+      "judgment": "PRESERVED_GENUINE_INPUT_LIMITATION_NOT_ABSENCE"
+    },
+    {
+      "index": 2,
+      "original_entry": {
+        "source_blocks": [
+          1243,
+          1244,
+          1245,
+          1249,
+          1252,
+          1279,
+          1280,
+          1281
+        ],
+        "reason": "Stock and Executive member/chair identities and Markets Compliance/Omnibus chair identities cannot be established from the supplied text and layout."
+      },
+      "judgment": "PRESERVED_GENUINE_INPUT_LIMITATION_NOT_ABSENCE"
+    }
+  ],
+  "new_positive_source_relation": "Current JPM name/role and Stock/Executive presence now appear; principal memberships/chairs and specific-purpose A/B column relation no longer lost by plain text.",
+  "no_known_clear_scope_contradiction_found_in_this_read": true,
+  "no_exhaustive_whole_source_omission_proof": true,
+  "qualification_matrix_media": "Supplier input lacks image director/mark associations; cannot certify all matrix qualification relations.",
+  "negative_controls": "No year-end board asserted, Combs current status not assumed, other-company careers not misattributed as registrant roles; continued tenure not treated as new membership.",
+  "post_response_findings_scope": "The response also finds actual2026 committee reassignment and dated committee-report assertions outside pre-frozen reference angles. Those were source-checked afterward and are forward validation, not added to the pretrial reference.",
+  "overall": "PASS_LIMITED_DEVELOPMENT_SOURCE_RELATIONSHIPS_WITH_POLICY_MEDIA_COVERAGE_LIMITS",
+  "substantive_fix_used": false,
+  "reasons_not_to_fix": "No detected concrete wrong source relationship in supported angles; do not change prompt to manufacture policy authorization or to pretend missing images exist.",
+  "no_company_result_credit": true,
+  "no_DeepSeek_credit": true,
+  "no_scope_policy_change": true,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

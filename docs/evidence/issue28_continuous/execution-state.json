@@ -4257,6 +4257,31 @@
       "start_time_precision": "Use parent spawn registration; first agent date tool output truncated, no exact review start asserted.",
       "elapsed_from_dispatch_seconds": 543.653,
       "elapsed_is_exact_review_timer": false
+    },
+    {
+      "task_name": "diagnose_c02tableinput_005fdcd",
+      "purpose": "DEVELOPMENT_INPUT_CHECK",
+      "module": "c02tableinput",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/request-body.json"
+      ],
+      "patch_sha": "005fdcdd8b0c12678d695ca2a4746b5a372cb846",
+      "spawned_at": "2026-10-04T10:31:12.993830+00:00",
+      "ended_at": "2026-10-04T10:40:10.547836+00:00",
+      "tool_calls": 54,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-input/conclusion.md",
+      "verdict": "DONE_INPUT_ONLY_DEVELOPMENT_RESPONSE",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live agent; no sameSHA input-model record/result/evidence. Earlier reviews covered mechanical code, not independent model extraction; old Enphase/Paramount plain-source batch ended. New full-table representation, different current JPM original; parent reference frozen before dispatch and forbidden to reader.",
+      "review_started_at": "2026-10-04T10:31:54.895601+00:00",
+      "actual_seconds": 495.652235
     }
   ],
   "ci_capacity_20260922": {
@@ -13798,7 +13823,7 @@
     "observation": "One immediate reading after push; not final. Separate Metrics reference success is not main CI success."
   },
   "c02_table_model_input_trial_20261004": {
-    "status": "ORIGINAL_REFERENCE_FROZEN_BEFORE_BLIND_INPUT",
+    "status": "PASS_LIMITED_DEVELOPMENT_RELATIONSHIPS_POLICY_MEDIA_COMPLETENESS_PENDING",
     "own_base_sha": "df84865dd64260b7dd6307b852b058f3305a307e",
     "method": "Complete original block dictionary plus all source table text/header grids, restoring lost row/column associations; same extraction task. Genuine representation change, not third same plain-block retry.",
     "company": "jpmorgan_chase",
@@ -13810,7 +13835,7 @@
     "evidence": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/",
     "maximum_initial_contexts": 1,
     "maximum_substantive_fix_contexts": 1,
-    "initial_context_consumed": false,
+    "initial_context_consumed": true,
     "fix_context_consumed": false,
     "same_old_batch_reopened": false,
     "semantic_credit": false,
@@ -13821,6 +13846,25 @@
       0
     ],
     "reference_scope": "Twelve specified source relationships and time/subject/uncertainty controls; not exhaustive whole-filing omission inventory.",
-    "pending_owner_qualification_boundary_retained": true
+    "pending_owner_qualification_boundary_retained": true,
+    "raw_response_sha256": "12e209aa081ebdfc2e52fb8759c36427d2ad65efc537c20b13044eb9908499e9",
+    "facts": 53,
+    "unresolved": 3,
+    "reference_output_tokens": 3434,
+    "forward_original_citations": 211,
+    "clear_scope_source_supported": 41,
+    "kind_owner_boundary_pending": 12,
+    "reference_sha256_unchanged": true,
+    "comparison_path": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/reference-to-actual-comparison.json",
+    "target_request_plan": "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/minimum-target-request-plan.json",
+    "native_save_seconds": 5.329,
+    "postprocessing_native_status": "PENDING",
+    "candidate_hash": "sha256:f94c88771b7f8627470fd06fe44427d58af0fce75a5a856dc97d4b06896b3bf4",
+    "review_unit_hash": "sha256:8faf9fec2e563a8c7ee4693df427501697a8483f30fd6f78fe31deb1955b335c",
+    "semantic_result_credit": false,
+    "DeepSeek_credit": false,
+    "next": "Actual native independent read and remaining media/completeness/qualification decision; no gratuitous same-method second answer or regex. Minimal target plan1+1 max2 only a proposal, not ready/purpose permission.",
+    "native_read_seconds": 5.532,
+    "all_model_native_files_equal": true
   }
 }
