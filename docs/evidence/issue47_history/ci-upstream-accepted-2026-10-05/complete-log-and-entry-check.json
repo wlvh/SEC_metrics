@@ -1,0 +1,59 @@
+{
+ "tested_head": "9d60bbd06cae9d353c030c4a8314967f396419a2",
+ "tested_merge": "db9b52163b252e0b402d7ed9327b1697b27874cf",
+ "tested_base": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
+ "local_accepted_upstream_equals_ci_base": true,
+ "all_17_vnext_jobs_success": true,
+ "complete_original_vnext_log_bytes": 838915,
+ "complete_original_vnext_log_sha256": "ac126c1c7bc8c56ff2cdd036765d623357503776c06e1f9daf637055e6f67e53",
+ "complete_reference_log_bytes": 47959,
+ "complete_reference_log_sha256": "a14a1cbf76756c6c04580d1257eaac0f0ff90656c1d626f041b5c92205721d36",
+ "entry_summaries": [
+  {
+   "job": "vNext fast suite",
+   "status": "PASSED",
+   "evidence_tier": "FAST_LOCAL_ONLY",
+   "entries": 188,
+   "duration_seconds": 265.124,
+   "nonzero": []
+  },
+  {
+   "job": "vNext saved-source material (shard 2)",
+   "status": "PASSED",
+   "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+   "entries": 42,
+   "duration_seconds": 1571.121,
+   "nonzero": []
+  },
+  {
+   "job": "vNext saved-source material (shard 0)",
+   "status": "PASSED",
+   "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+   "entries": 43,
+   "duration_seconds": 1591.978,
+   "nonzero": []
+  },
+  {
+   "job": "vNext saved-source material (shard 3)",
+   "status": "PASSED",
+   "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+   "entries": 44,
+   "duration_seconds": 940.981,
+   "nonzero": []
+  },
+  {
+   "job": "vNext saved-source material (shard 1)",
+   "status": "PASSED",
+   "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+   "entries": 42,
+   "duration_seconds": 1747.217,
+   "nonzero": []
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_native_run_or_acceptance_credit": false
+}
