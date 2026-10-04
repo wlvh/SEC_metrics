@@ -1,0 +1,132 @@
+{
+  "record_type": "ISSUE28_MARRIOTT_B03_SAME_RESULT_CURRENT_RUN_PROOF_DELTA",
+  "coordinate_count": 390,
+  "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",
+  "prior_run_id": "run:ordinary-integrated:b5e9b4cc855e2384d989d01e23270bd312e32f4cc82680ca498007f620ce2df9",
+  "native_result": {
+    "applicability": "APPLICABLE",
+    "company_id": "marriott_international",
+    "metric_id": "B03",
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+    "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+    "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+    "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+    "unit": "ratio",
+    "value": "0.1756281982738868097456656229"
+  },
+  "mechanical_receipt": {
+    "status": "PASSED",
+    "view_id": "run:sha256:47d2217e70df5c79bda0a72eee8e26c70f6595c39a3e48955304f733269dfbdd",
+    "checks": [
+      {
+        "check": "REVIEW_BINDINGS",
+        "status": "PASS"
+      },
+      {
+        "check": "REVIEW_ASSETS",
+        "status": "PASS"
+      },
+      {
+        "check": "REPOSITORY_BINDINGS",
+        "status": "PASS"
+      },
+      {
+        "check": "RESULT_EXACT_SET",
+        "status": "PASS"
+      },
+      {
+        "check": "RECORD_GRAPH_REPLAY",
+        "status": "PASS"
+      },
+      {
+        "check": "EXECUTION_SEMANTICS",
+        "status": "PASS"
+      },
+      {
+        "check": "ARTIFACT_EXACT_SET",
+        "status": "PASS"
+      }
+    ],
+    "artifact_hashes": {
+      "records.jsonl": {
+        "sha256": "e03cbd264e805ef1d0519efa3bbc1e36757340c07960ed9168e8fd34cf6f7aa3",
+        "size": 12200
+      },
+      "review_decisions.jsonl": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    "record_type": "VALIDATION_RECEIPT",
+    "validation_receipt_id": "sha256:8eebd819fc8efb5a79ac5d546f1d64070044dc3d2f6ed2bd8fd07191f6ababd0"
+  },
+  "current_row": {
+    "company_id": "marriott_international",
+    "metric_id": "B03",
+    "result_category": "NUMERIC_RESULT",
+    "quality": "EXACT",
+    "applicability": "APPLICABLE",
+    "value": "0.1756281982738868097456656229",
+    "unit": "ratio",
+    "reason_code": "PASS",
+    "source_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "source_period_basis": "BOUND_NATIVE_RESULT_AND_RECORDED_TARGET_PERIOD",
+    "implementation_identity": {
+      "run_id": "run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "head": "1c9f5621e4e09f891d597fa7edcea970a3d434dc",
+      "evidence_date": "2026-09-12",
+      "current_code_replay_claim": false,
+      "requirement_id": "issue_28_v13",
+      "requirement_closure_hash": "sha256:33ee286c21be8262e550939e2a94512775996635c569bcd12531efca2014ed83",
+      "semantic_execution_root": "/private/tmp/issue28-b03-marriott-namespace-repair-20261001/normal-update/marriott_international/metrics/B03/attempts/aa11c78b0cd64e1fb7b88bd65393b780/data",
+      "reviewed_scope": "APPROVED_SELECTED_458M_DA_NOT_ECONOMIC_ALL_AMORTIZATION"
+    },
+    "evidence_type": "SAVED_SEC_ORIGINAL_NATIVE_DEVELOPMENT_RESULT",
+    "source_credit": "SAVED_ORIGINAL_SEC_SOURCE_NO_NEW_ACQUISITION",
+    "selected_evidence": {
+      "path": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/delta.json",
+      "scope": "Existing approved D&A roles plus source-admission URI repair and original private cold evidence; not full economic D&A or latest-head update."
+    },
+    "evidence_history": [],
+    "run_status": "PASSED_MECHANICAL_ON_EXACT_COPY",
+    "public_row_status": "REPLAYED_EXACT_SAVED_CANDIDATE_ROW",
+    "historical_native_record_retained": true,
+    "new_real_result_this_review": false,
+    "current_head_full_revalidated": false,
+    "formal_adoption_or_active_credit": false,
+    "real_disclosure_limitation_established": false,
+    "remaining_responsibility": "Current affected-path evidence and unified update/release acceptance; no blanket rerun claim"
+  },
+  "repair_admission": {
+    "selected_DA_usd": "458000000",
+    "excluded_revenue_amortization_usd": "135000000",
+    "source_relation_status": "COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED",
+    "module_sha256": "acc01df28a45c56c89d0c9c280487434b25efd0ac0ee60d8f659ce25a2b8429f",
+    "economic_all_amortization_proven": false
+  },
+  "proof_file_sha256": {
+    "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/exercise-repair.json": "c749de13ab96ee69511b34500df17a3e866a3f6576afc1d9c25f3dcb40200a2b",
+    "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/cold-repair.json": "557b1b76c207794a4a95df32c4fb82074689abca40fc0e497251515ea0d53838",
+    "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/independent-review/followup-2bbd769.md": "f7e754dba94165152acc00d5b8c1a2c6518000420cfd556ca5e6152b2c49fc3e",
+    "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/mechanical-summary.json": "14c5adf20665f9d224e4393beaf83ee7600b2d035507bbee913dcd6324d8f577"
+  },
+  "new_company_coordinate": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "all390_acceptance": false
+}

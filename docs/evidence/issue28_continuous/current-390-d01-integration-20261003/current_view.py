@@ -26,6 +26,13 @@ JPM_REQUIRED_PROOF_PATHS = frozenset({
     'docs/evidence/issue28_continuous/collab-d01-running-header-20261003/independent-review-31beeab/conclusion.md',
     'docs/evidence/issue28_continuous/collab-d01-running-header-20261003/cold.log',
 })
+MARRIOTT_B03_DIR = BASE / 'b03-marriott-390-receiving-20261004'
+MARRIOTT_B03_REQUIRED_PROOFS = frozenset({
+    'docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/exercise-repair.json',
+    'docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/cold-repair.json',
+    'docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/independent-review/followup-2bbd769.md',
+    'docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/mechanical-summary.json',
+})
 import sys
 sys.path.insert(0, str(ROOT / 'scripts'))
 from vnext.records import validate_record
@@ -163,8 +170,53 @@ def apply_d01_delta(rows, delta, mechanically_checked, *, expected_count=2):
         rows[key] = current
 
 
+def apply_marriott_b03_delta(rows, delta, checked):
+    """Select a later Run for the same Result, with its repaired admission proof."""
+    key = ('marriott_international', 'B03')
+    wanted = 'sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a'
+    prior = rows[key]
+    current = deepcopy(delta['current_row'])
+    native = validate_record(record=delta['native_result'])
+    receipt = validate_record(record=delta['mechanical_receipt'])
+    exact = checked['mechanical_result']
+    if (delta.get('record_type') != 'ISSUE28_MARRIOTT_B03_SAME_RESULT_CURRENT_RUN_PROOF_DELTA'
+            or checked.get('changed_copy_files') != ['validation.json']):
+        raise ValueError('B03_MARRIOTT_PROOF_TYPE_INVALID')
+    if (delta['coordinate_count'] != 390 or (current['company_id'], current['metric_id']) != key
+            or checked['status'] != 'PASS_ONE_EXACT_MARRIOTT_B03_RUN_COPY'
+            or checked['return_code'] != 0 or checked['original_files_unchanged'] is not True
+            or delta['prior_run_id'] != prior['implementation_identity']['run_id']
+            or prior['implementation_identity']['result_id'] != wanted
+            or native['result_id'] != wanted or exact['native_result'] != native
+            or (native['company_id'], native['metric_id']) != key
+            or current['source_period'] != prior['source_period']
+            or native['period_start'] != current['source_period']['period_start']
+            or native['period_end'] != current['source_period']['period_end']
+            or current['implementation_identity']['result_id'] != wanted
+            or current['implementation_identity']['run_id'] != exact['run_id']
+            or exact['run_id'] == delta['prior_run_id']
+            or current['implementation_identity']['requirement_closure_hash'] != exact['requirement_closure_hash']
+            or current['implementation_identity']['spec_closure_hash'] != native['spec_closure_hash']
+            or current['implementation_identity']['semantic_execution_root'] != checked['installed_code_data_root']
+            or receipt != exact['receipt'] or receipt['status'] != 'PASSED'
+            or delta['repair_admission']['selected_DA_usd'] != '458000000'
+            or delta['repair_admission']['excluded_revenue_amortization_usd'] != '135000000'
+            or delta['repair_admission']['module_sha256'] != 'acc01df28a45c56c89d0c9c280487434b25efd0ac0ee60d8f659ce25a2b8429f'
+            or delta['repair_admission']['economic_all_amortization_proven'] is not False
+            or delta['repair_admission']['source_relation_status'] != 'COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED'
+            or current['formal_adoption_or_active_credit'] is not False
+            or any(current[f] != native[f] for f in ('value','unit','quality','applicability','reason_code'))):
+        raise ValueError('B03_MARRIOTT_SCOPE_OR_RUN_PROOF_INVALID')
+    current['evidence_history'] = [*prior['evidence_history'], prior['selected_evidence']]
+    current['prior_implementation_identity'] = deepcopy(prior['implementation_identity'])
+    current['selected_result_validation_scope'] = 'BOUND_APPROVED_DA_SCOPE_REPAIRED_ADMISSION_AND_MECHANICAL_RUN_ONLY'
+    current['economic_all_amortization_scope_proven'] = False
+    rows[key] = current
+
+
 def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked,
-             *, jpm_delta=None, jpm_checked=None):
+             *, jpm_delta=None, jpm_checked=None, marriott_b03_delta=None,
+             marriott_b03_checked=None):
     rows = {(row['company_id'], row['metric_id']): deepcopy(row) for row in parent['rows']}
     if len(rows) != 390 or parent['coordinate_count'] != 390:
         raise ValueError('CURRENT_INDEX_COORDINATE_SET_INVALID')
@@ -200,6 +252,10 @@ def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked,
         raise ValueError('D01_JPM_PAIRED_PROOF_REQUIRED')
     if jpm_delta is not None:
         apply_d01_delta(rows, jpm_delta, jpm_checked, expected_count=1)
+    if (marriott_b03_delta is None) != (marriott_b03_checked is None):
+        raise ValueError('B03_MARRIOTT_PAIRED_PROOF_REQUIRED')
+    if marriott_b03_delta is not None:
+        apply_marriott_b03_delta(rows, marriott_b03_delta, marriott_b03_checked)
     product_scope_pending = apply_product_scope_limits(rows, parent, defects)
     withheld = set()
     for defect in defects['defects']:
@@ -221,14 +277,18 @@ def assemble(parent, prior_deltas, d01_delta, defects, mechanically_checked,
             'selected_product_scope_pending_count': len(product_scope_pending),
             'selected_nondefect_product_scope_pending_count': len(product_scope_pending - withheld),
             'selected_saved_scope_D01_restorations': 2 + int(jpm_delta is not None),
+            **({'selected_saved_scope_Marriott_B03_run_refresh': 1}
+               if marriott_b03_delta is not None else {}),
             'other_coordinates_newly_validated_by_this_delta': False,
             'full_current_head_reexecution': False, 'all390_acceptance': False,
             'production_authorized': False, 'new_business_calls': [0, 0, 0]}
 
 
-def load_current_view(*, include_jpm_reviewed=False):
+def load_current_view(*, include_jpm_reviewed=False, include_marriott_b03_reviewed=False):
     if type(include_jpm_reviewed) is not bool:
         raise ValueError('D01_JPM_SELECTION_INVALID')
+    if type(include_marriott_b03_reviewed) is not bool:
+        raise ValueError('B03_MARRIOTT_SELECTION_INVALID')
     d01 = read(Path(__file__).with_name('delta.json'))
     if set(d01['proof_file_sha256']) != REQUIRED_PROOF_PATHS:
         raise ValueError('D01_REQUIRED_PROOF_SET_CHANGED')
@@ -258,16 +318,45 @@ def load_current_view(*, include_jpm_reviewed=False):
             if digest(ROOT / relative) != expected:
                 raise ValueError('D01_JPM_PROOF_BYTES_CHANGED:' + relative)
         jpm_checked = read(JPM_DIR / 'mechanical-summary.json')
+    marriott, marriott_checked = None, None
+    if include_marriott_b03_reviewed:
+        marriott = read(MARRIOTT_B03_DIR/'delta.json')
+        if (marriott['parent_index_sha256'] != digest(PARENT)
+                or set(marriott['proof_file_sha256']) != MARRIOTT_B03_REQUIRED_PROOFS):
+            raise ValueError('B03_MARRIOTT_REQUIRED_PROOF_SET_CHANGED')
+        for relative, expected in marriott['proof_file_sha256'].items():
+            if digest(ROOT/relative) != expected:
+                raise ValueError('B03_MARRIOTT_PROOF_BYTES_CHANGED:' + relative)
+        marriott_checked = read(MARRIOTT_B03_DIR/'mechanical-summary.json')
+        proof_dir = BASE/'b03-marriott-contract-exclusion-20261001'
+        admitted = read(proof_dir/'exercise-repair.json')
+        cold = read(proof_dir/'cold-repair.json')
+        if (admitted['normal_cli_return_code'] != 0
+                or admitted['b03_status'] != 'CANDIDATE_READY'
+                or admitted['tested_module_sha256'] != marriott['repair_admission']['module_sha256']
+                or admitted['result_id'] != marriott['native_result']['result_id']
+                or cold['result_id'] != admitted['result_id']
+                or cold['run_id'] != marriott_checked['mechanical_result']['run_id']
+                or cold['value'] != marriott['native_result']['value']
+                or cold['source_relation_status'] != marriott['repair_admission']['source_relation_status']
+                or cold['private_release_selection_basis'] != 'NATIVE_PUBLISHED_RESULT'
+                or cold['public_row_files_byte_equal'] is not True
+                or cold['watched_private_files_unchanged'] is not True):
+            raise ValueError('B03_MARRIOTT_REPAIRED_ADMISSION_IDENTITY_CHANGED')
     return assemble(read(PARENT), list(map(read, prior_paths)), d01,
                     defects, read(CHECKED_PATH), jpm_delta=jpm,
-                    jpm_checked=jpm_checked)
+                    jpm_checked=jpm_checked, marriott_b03_delta=marriott,
+                    marriott_b03_checked=marriott_checked)
 
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and sys.argv[2] != '--include-jpm-reviewed'):
+    options = sys.argv[2:]
+    if (len(sys.argv) < 2 or len(options) != len(set(options))
+            or not set(options).issubset({'--include-jpm-reviewed', '--include-marriott-b03-reviewed'})):
         raise ValueError('VIEW_ARGUMENTS_INVALID')
-    result = load_current_view(include_jpm_reviewed=len(sys.argv) == 3)
+    result = load_current_view(include_jpm_reviewed='--include-jpm-reviewed' in options,
+                              include_marriott_b03_reviewed='--include-marriott-b03-reviewed' in options)
     output = Path(sys.argv[1])
     if not output.is_absolute() or output == ROOT or ROOT in output.parents:
         raise ValueError('VIEW_OUTPUT_MUST_BE_EXTERNAL')
