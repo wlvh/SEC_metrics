@@ -1,0 +1,312 @@
+{
+  "contexts": {
+    "c-1": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-1\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-14": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-14\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:FeeServiceMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-15": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-15\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:FeeServiceMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-22": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-22\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-23": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-23\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-24": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-24\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-25": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-25\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-30": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-30\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:LoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-31": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-31\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:LoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-32": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-32\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:ContractServicesExcludingLoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-33": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-33\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:ContractServicesExcludingLoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-34": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-34\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:LoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-35": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-35\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:LoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-36": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-36\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:LoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-37": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-37\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2023-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-38": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-38\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2022-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-39": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-39\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2022-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-40": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-40\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2022-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-41": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-41\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2022-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-42": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-42\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2022-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-43": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-43\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2022-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-44": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-44\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-45": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-45\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-46": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-46\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-47": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-47\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-48": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-48\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-49": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-49\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2023-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-50": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-50\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2023-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-51": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-51\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2023-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-52": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-52\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2023-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-53": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-53\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2023-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-54": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-54\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-55": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-55\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-56": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-56\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-57": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-57\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-58": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-58\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-59": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-59\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-60": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-60\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-61": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-61\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-62": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-62\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-63": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-63\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-64": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-64\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-65": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-65\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-66": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-66\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-67": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-67\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-68": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-68\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-69": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-69\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:CommonStockMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-70": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-70\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AdditionalPaidInCapitalMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-71": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-71\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:RetainedEarningsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-72": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-72\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:TreasuryStockCommonMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-73": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-73\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:StatementEquityComponentsAxis\">us-gaap:AccumulatedOtherComprehensiveIncomeMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-74": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-74\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"srt:ProductOrServiceAxis\">mar:ContractServicesExcludingLoyaltyProgramMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-75": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-75\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:CapitalizedContractCostAxis\">mar:CostsIncurredtoFulfillContractsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-76": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-76\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:CapitalizedContractCostAxis\">mar:CostsIncurredtoFulfillContractsMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-77": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-77\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:ValuationTechniqueAxis\">us-gaap:ValuationTechniqueDiscountedCashFlowMember</xbrldi:explicitMember><xbrldi:explicitMember dimension=\"us-gaap:MeasurementInputTypeAxis\">us-gaap:MeasurementInputDiscountRateMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-78": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-78\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AssetAcquisitionAxis\">mar:CitizenMBrandMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-07-01</xbrli:startDate><xbrli:endDate>2025-09-30</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-79": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-79\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AssetAcquisitionAxis\">mar:CitizenMBrandMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-09-30</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-80": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-80\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AssetAcquisitionAxis\">mar:CitizenMBrandMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-81": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-81\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AwardTypeAxis\">us-gaap:RestrictedStockUnitsRSUMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-82": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-82\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AwardTypeAxis\">us-gaap:RestrictedStockUnitsRSUMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-83": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-83\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AwardTypeAxis\">us-gaap:RestrictedStockUnitsRSUMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-84": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-84\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AwardTypeAxis\">us-gaap:RestrictedStockUnitsRSUMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-85": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-85\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:AwardTypeAxis\">us-gaap:RestrictedStockUnitsRSUMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>"
+    },
+    "c-86": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-86\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeTaxAuthorityAxis\">country:US</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    },
+    "c-87": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:context id=\"c-87\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001048286</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:IncomeTaxAuthorityAxis\">country:CA</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>"
+    }
+  },
+  "namespace_environments": {
+    "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c": {
+      "": "http://www.w3.org/1999/xhtml",
+      "country": "http://xbrl.sec.gov/country/2025",
+      "cyd": "http://xbrl.sec.gov/cyd/2025",
+      "dei": "http://xbrl.sec.gov/dei/2025",
+      "ecd": "http://xbrl.sec.gov/ecd/2025",
+      "iso4217": "http://www.xbrl.org/2003/iso4217",
+      "ix": "http://www.xbrl.org/2013/inlineXBRL",
+      "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+      "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+      "link": "http://www.xbrl.org/2003/linkbase",
+      "mar": "http://www.marriott.com/20251231",
+      "srt": "http://fasb.org/srt/2025",
+      "us-gaap": "http://fasb.org/us-gaap/2025",
+      "xbrldi": "http://xbrl.org/2006/xbrldi",
+      "xbrli": "http://www.xbrl.org/2003/instance",
+      "xlink": "http://www.w3.org/1999/xlink",
+      "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+    }
+  },
+  "units": {
+    "hotel": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:unit id=\"hotel\"><xbrli:measure>mar:hotel</xbrli:measure></xbrli:unit>"
+    },
+    "hotelroom": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:unit id=\"hotelroom\"><xbrli:measure>mar:hotelRoom</xbrli:measure></xbrli:unit>"
+    },
+    "number": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:unit id=\"number\"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>"
+    },
+    "shares": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:unit id=\"shares\"><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unit>"
+    },
+    "usd": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:unit id=\"usd\"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>"
+    },
+    "usdPerShare": {
+      "namespace_environment_id": "sha256:2063b97c2889de88d2c8e0474ee1aeaabd277301b092cfc8b232678f06a6d87c",
+      "raw_xml": "<xbrli:unit id=\"usdPerShare\"><xbrli:divide><xbrli:unitNumerator><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unitNumerator><xbrli:unitDenominator><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unitDenominator></xbrli:divide></xbrli:unit>"
+    }
+  },
+  "xml_style_attributes": {}
+}

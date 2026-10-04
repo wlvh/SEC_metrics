@@ -4152,6 +4152,29 @@
       "dedup_note": "list_agents no live; sameSHA register/evidence no hit; genuine new prompt/regression delta after prior task-review ended at3 messages. Old P2 retained and unchanged scope inherited.",
       "review_started_at": "2026-10-04T04:29:52Z",
       "elapsed_review_seconds": "380.353136"
+    },
+    {
+      "task_name": "diagnose_d03input_84bba04",
+      "purpose": "diagnose",
+      "module": "d03_native_owner_context_input",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-headroom.json"
+      ],
+      "patch_sha": "84bba0461b187b231ed59be7ed5f425e1bf9d835",
+      "spawned_at": "2026-10-04T05:10:26Z",
+      "ended_at": "2026-10-04T05:23:32Z",
+      "tool_calls": 38,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/independent-input/conclusion.md",
+      "verdict": "INPUT_READ_COMPLETE_BUT_RESPONSE_REFERENCE_KIND_FAILED",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; register/evidence no same SHA/new owner-context contract. Earlier Marriott source used old full-visible six-response input; this is new two-owner/explicit-context task. Prior ended JPM/C02/B13 developer batches not reopened; no answers supplied.",
+      "review_started_at": "2026-10-04T05:15:35Z",
+      "elapsed_seconds": 477
     }
   ],
   "ci_capacity_20260922": {
@@ -13508,7 +13531,7 @@
     "own_action": "Read source/interface concept; own C02 ended batch and withheld identities stay unchanged. Do not clone own ledger or copy historical acceptance. Subsequent C02 representation work only under actual new-method scope."
   },
   "d03_native_context_input_trial_20261004": {
-    "state": "PARENT_REFERENCE_COMPLETE_BLIND_INPUT_PENDING",
+    "state": "FIRST_INPUT_REPLY_REJECTED_ONE_REFERENCE_ENUM_PROMPT_FIX_READY",
     "evidence": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004",
     "base_sha": "19e84a7e81cc5a4ba0099d56b04a71a41851d3b9",
     "initial_four_owner_resource_failure": 230644,
@@ -13537,12 +13560,18 @@
     "old_ended_JPM_batch_reopened": false,
     "not_new_holdout_source": true,
     "reference_before_blind": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/reference-before-blind.md",
-    "new_model_answers": 0,
+    "new_model_answers": 1,
     "calls": [
       0,
       0,
       0
     ],
-    "company_result_created": false
+    "company_result_created": false,
+    "raw_response_sha256": "83fdeae32d6fb8a11d680860d996cf3308076c1f3fae9021abaec00873212a04",
+    "first_response_failure": "docs/evidence/issue28_continuous/d03-native-context-input-trial-20261004/first-response-failure.json",
+    "actual_output_tokens": 1187,
+    "reference_kind_fix_request": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-native-context-input-trial-20261004/scan-request-reference-kinds.json",
+    "reference_kind_fix_sha256": "db4cb7c9c71e94e5f757cf3663d725585cd65298fd476a2d6089b48c2af05370",
+    "prompt_corrections_used": 1
   }
 }
