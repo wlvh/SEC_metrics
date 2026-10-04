@@ -17,7 +17,7 @@ from typing import Callable, Dict, List, Mapping, Optional, Sequence
 
 from .canonical import CanonicalError, canonical_json_bytes, content_hash
 from .canonical import decimal_text, parse_decimal, parse_utc_timestamp
-from .canonical import sha256_bytes, strict_json_file
+from .canonical import sha256_bytes, strict_json_file, strict_json_loads
 from .requirements import load_requirement_snapshot
 
 
@@ -230,6 +230,9 @@ def _prepare_successor_invocation_authority_from_requirement(
     from .requirement_profile import requirement_authority_paths, validate_execution_authority
     from .sources import resolve_repository_file
 
+    if requirement.get("requirement_id") == "issue_28_v14":
+        return _continuous_invocation_authority(requirement=requirement, repo_root=repo_root)
+
     from .r4_label_policy import CURRENT_R4_REQUIREMENT, label_policy
     if requirement.get("requirement_id") not in {"issue_28_v2", CURRENT_R4_REQUIREMENT}:
         raise InvocationControlError("Scoped R4 invocation requires a registered R4 revision")
@@ -273,6 +276,29 @@ def _prepare_successor_invocation_authority_from_requirement(
         files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
     return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY, root=root,
         identity=identity, policy=bound_policy, transport=transport["choice"], files=files)
+
+
+def _continuous_invocation_authority(*, requirement, repo_root):
+    """Explicit new delegation identity over the existing WB-3 controller."""
+    from .continuous_call_policy import load_delegation, invocation_policy
+    from .ai_adapter import configured_annual_transport_policy
+    from .requirement_profile import requirement_authority_paths, validate_execution_authority
+    from .sources import resolve_repository_file
+    root = repo_root.resolve(strict=True)
+    validate_execution_authority(repo_root=root, requirement=requirement)
+    load_delegation(requirement=requirement, online=False)
+    selected = configured_annual_transport_policy(requirement=requirement, repo_root=root)
+    identity = {"artifact_requirement_generation":"EXPLICIT_REQUIREMENT_V1",
+        "requirement_id":requirement["requirement_id"],"requirement_closure_hash":requirement["requirement_closure_hash"],
+        "requirement_hashes":requirement["hashes"]}
+    transport = selected.as_mapping()
+    transport["pre_execution_context_tokens_max"] = requirement["effective_decisions"]["S-TRANSPORT-RETRY"]["choice"]["context_ceiling_tokens"]
+    files = {}
+    for relative in requirement_authority_paths(repo_root=root,requirement=requirement):
+        raw = resolve_repository_file(repo_root=root,repo_relative_path=relative).read_bytes()
+        files[relative] = {"sha256":sha256_bytes(content=raw),"size":len(raw)}
+    return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY,root=root,
+        identity=identity,policy=invocation_policy(requirement=requirement),transport=transport,files=files)
 
 
 def prepare_annual_candidate_invocation_authority(*, requirement, repo_root):
@@ -550,9 +576,11 @@ def validate_successor_execution_receipt(*, receipt, plan, authorization_binding
                     "billing_class", "paid_call_observation_source", "paid_model_provider_call_observed"))
                 or attempt["response_body_sha256"] != sha256_bytes(content=response_body)):
             raise InvocationControlError("Successor attempt identity/bytes differs")
-        usage = _usage(value=attempt["usage"])
+        with _successor_plan_context(repo_root=repo_root, authority=authority):
+            usage = _usage(value=attempt["usage"])
         _utc(value=attempt["finished_at_utc"], label="attempt finish time")
         if status == "SUCCEEDED" and (attempt["status_code"] != 200 or attempt["error_class"] != ""
+                or usage["input_tokens"] is None or usage["output_tokens"] is None
                 or usage["input_tokens"] > validated["resource_limits"]["maximum_context_tokens"]):
             raise InvocationControlError("Successor success HTTP/usage context gate differs")
     success = bundle["success_response_receipt"]
@@ -687,11 +715,21 @@ def _reject_monetary_fields(*, value: object, path: str) -> None:
             )
 
 
-def _decimal_observation(*, value: object, label: str) -> str:
+def _continuous_observations() -> bool:
+    """Only the new explicit policy preserves unavailable observations as null."""
+    authority = _SUCCESSOR_AUTHORITY.get()
+    return (type(authority) is SuccessorInvocationAuthority
+            and strict_json_loads(text=authority._identity.decode("utf-8"))
+            .get("requirement_id") == "issue_28_v14")
+
+
+def _decimal_observation(*, value: object, label: str) -> Optional[str]:
     """Return canonical non-negative monetary observability text.
 
     Monetary observations are recorded but never compared with a cap.
     """
+    if value is None and _continuous_observations():
+        return None
     if not isinstance(value, str):
         raise InvocationControlError("{} must be decimal text".format(label))
     try:
@@ -1284,6 +1322,8 @@ def _usage(*, value: object) -> Dict[str, object]:
         "cache_hit_input_tokens",
         "cache_miss_input_tokens",
     ):
+        if usage[field] is None and _continuous_observations():
+            continue
         if type(usage[field]) is not int or usage[field] < 0:
             raise InvocationControlError("Provider usage tokens are invalid")
     _decimal_observation(value=usage["actual_cost"], label="actual cost")
@@ -2735,6 +2775,11 @@ def execute_invocation(
                 },
             )
         result = _transport_result(value=raw_result)
+        if (_continuous_observations() and result["status_code"] == 200
+                and not result["error_class"]
+                and any(result["usage"][field] is None for field in
+                        ("input_tokens", "output_tokens"))):
+            result["error_class"] = "USAGE_UNKNOWN"
         classification = _classify(result=result)
         acceptance_draft: Optional[Mapping[str, object]] = None
         if classification == "SUCCESS":

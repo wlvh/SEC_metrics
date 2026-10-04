@@ -256,3 +256,23 @@ def reviewed_observation(
         source_binding=source_binding,
         approval_effect_hash=str(decision["approval_effect_hash"]),
     )
+
+
+def _build_text_observation(*, metric_id, semantic_role, company_id, period_start,
+                            period_end, scope, value, source_binding,
+                            approval_effect_hash):
+    """Internal constructor; use text_results.reviewed_text_observations publicly.
+
+    The explicit marker participates in identity. Old numeric observations do
+    not acquire a default marker or a different normalization/hash algorithm.
+    """
+    identity = {"semantic_role": semantic_role, "metric_id": metric_id,
+                "company_id": company_id, "period_start": period_start,
+                "period_end": period_end, "scope": dict(scope),
+                "scope_key": scope_key(scope=scope), "value": value,
+                "unit": "text", "source_binding": dict(source_binding),
+                "value_kind": "TEXT_V1"}
+    record = {**identity, "record_type": "VERIFIED_OBSERVATION",
+              "observation_id": content_hash(value=identity), "quality": "EXACT",
+              "approval_effect_hash": approval_effect_hash}
+    return validate_record(record=record)

@@ -947,6 +947,12 @@ def calculate_metric(
     if target["scope_key"] != scope_key(scope=target["scope"]):
         raise CalculationError("Calculation target scope_key differs")
     semantic = compiled_spec["compiled"]
+    if semantic["kind"] == "direct_text":
+        if structured_facts:
+            raise CalculationError("Text result cannot bypass review with structured facts")
+        result, trace = calculate_text_metric(compiled_spec=compiled_spec, target=target,
+            company_traits=company_traits, observations=verified_observations)
+        return result, trace, list(verified_observations)
     execution_target = dict(target)
     execution_target["metric_id"] = semantic["metric_id"]
     if not metric_is_applicable(
@@ -1248,6 +1254,10 @@ def withheld_metric_result(
         raise CalculationError("WITHHELD target scope_key differs")
     if not reason_code:
         raise CalculationError("WITHHELD reason_code is required")
+    if compiled_spec["compiled"]["kind"] == "direct_text":
+        from .text_results import build_text_result_and_trace
+        return build_text_result_and_trace(compiled_spec=compiled_spec,
+            target={**target, "accession": None, "entity": None}, reason_code=reason_code)
     return _result_and_trace(
         compiled_spec=compiled_spec,
         target=target,
@@ -1260,3 +1270,23 @@ def withheld_metric_result(
         trace_steps=[{"event": "WITHHELD", "reason_code": reason_code}],
         input_ids=[],
     )
+
+
+def calculate_text_metric(*, compiled_spec, target, company_traits, observations):
+    """Render reviewed exact source excerpts through the same Result/Trace types.
+
+    This is a pure calculator. The native Run must separately replay originals,
+    Candidate/Evidence and the effective review chain with replay_text_result.
+    """
+    from .text_results import build_text_result_and_trace, payload_from_observations, text_policy
+    text_policy(compiled_spec)
+    fields = {"company_id", "period_start", "period_end", "accession", "entity", "scope", "scope_key"}
+    if set(target) != fields or target["scope_key"] != scope_key(scope=target["scope"]):
+        raise CalculationError("Text calculation target fields/scope differ")
+    if not metric_is_applicable(applicability=compiled_spec["compiled"]["applicability"], traits=company_traits):
+        if observations:
+            raise CalculationError("Structural text result cannot consume observations")
+        return build_text_result_and_trace(compiled_spec=compiled_spec, target=target,
+            reason_code="TRAIT_NOT_APPLICABLE", structural=True)
+    payload = payload_from_observations(compiled_spec=compiled_spec, target=target, observations=observations)
+    return build_text_result_and_trace(compiled_spec=compiled_spec, target=target, payload=payload)

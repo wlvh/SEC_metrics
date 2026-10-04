@@ -1,0 +1,16 @@
+{
+  "record_type": "B13_APPROVED_SOURCE_RULES",
+  "schema_version": 1,
+  "approval_policy": "config/issue28_continuous_calls_v1.json",
+  "approval_field": "b13",
+  "numeric_spec": "catalog/r5/B13_production_capacity_v1.md",
+  "text_spec": "catalog/r5/B13_capacity_disclosures_v1.md",
+  "related_production_capacity_pattern": "\\b(?:production|manufacturing)\\s+capacity\\b|\\bcapacity\\s+utilization\\b|\\butilization\\s+(?:of\\s+)?(?:our\\s+)?(?:manufacturing|production)\\b|\\boperating\\b[^.!?]{0,80}\\bplants\\b[^.!?]{0,80}\\bfull\\s+capacity\\b",
+  "possible_actual_production_pattern": "\\b(?:actual\\s+(?:production|output)|(?:we|the company)\\s+(?:produced|manufactured)|production\\s+(?:volume|units|output))\\b",
+  "forbidden_substitute_pattern": "\\b(?:sales|shipments|shipped|installed|future|planned)\\b",
+  "text_method": "PRODUCTION_CAPACITY_DISCLOSURE_EXCERPTS_V1",
+  "review_required": true,
+  "absence_from_keyword_miss_authorized": false,
+  "native_route_enabled": false,
+  "production_authorized": false
+}

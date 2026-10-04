@@ -1,0 +1,13 @@
+{
+  "record_type": "B06_CURRENT_ORIGINAL_INPUT_POLICY",
+  "schema_version": 1,
+  "input_class": "ORIGINAL_CURRENT_DEBT_AND_EQUITY",
+  "metric_ids": ["B06"],
+  "measurement": "CURRENT_PRIMARY_REGISTRANT_CONSOLIDATED_PERIOD_END_ONLY",
+  "financial_subject_pattern": "\\b(?:debts?|borrowings?|bonds?|debentures?|finance leases?|financing leases?|capital leases?|stockholders[’']? equity|shareholders[’']? equity|equity balances?|liabilities)\\b",
+  "current_amount_pattern": "\\b(?:total debt|long[- ]term debt|short[- ]term debt|borrowings|finance lease liabilities|stockholders[’']? equity|shareholders[’']? equity|equity balance)\\b.{0,100}\\b(?:was|were|is|are|amounted to|totaled|totalled|of)\\s+(?:approximately |about )?\\$?[0-9]",
+  "cross_entity_combination_authorized": false,
+  "annual_continuity_proven": false,
+  "debt_completeness_proven": false,
+  "production_authorized": false
+}

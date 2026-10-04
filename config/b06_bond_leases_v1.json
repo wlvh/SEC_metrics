@@ -1,0 +1,81 @@
+{
+  "record_type": "B06_BOND_AND_SEPARATE_LEASE_SOURCE_POLICY",
+  "schema_version": 1,
+  "scope": "consolidated_nonbank",
+  "note_concepts": {
+    "debt": "DebtDisclosureTextBlock",
+    "schedule": "ScheduleOfDebtTableTextBlock",
+    "lease_classification": "LesseeLeaseTableTextBlock",
+    "lease_maturity": "FinanceLeaseLiabilityMaturityTableTextBlock",
+    "fair_value": "FairValueMeasurementInputsDisclosureTextBlock",
+    "fair_value_table": "FairValueByBalanceSheetGroupingTextBlock",
+    "commitments": "CommitmentsAndContingenciesDisclosureTextBlock"
+  },
+  "classification_introduction": "ROU assets and lease liabilities consist of:",
+  "classification_labels": {
+    "current": "Accounts payable and accrued liabilities",
+    "noncurrent": "Long-Term Lease Liabilities"
+  },
+  "finance_row_pattern": "Finance \\(a\\)",
+  "operating_row_pattern": "Operating \\(b\\)",
+  "finance_concepts": {
+    "current": "FinanceLeaseLiabilityCurrent",
+    "noncurrent": "FinanceLeaseLiabilityNoncurrent",
+    "total": "FinanceLeaseLiability",
+    "payments": "FinanceLeaseLiabilityPaymentsDue",
+    "interest": "FinanceLeaseLiabilityUndiscountedExcessAmount"
+  },
+  "maturity_labels": {
+    "payments": "Total undiscounted lease payments",
+    "interest": "Less amount representing interest",
+    "total": "Total lease liabilities"
+  },
+  "scale_text": "(millions)",
+  "scale": 1000000,
+  "bond_member_pattern": "[0-9]+(?:\\.[0-9]+)?% Senior (?:exchanged )?(?:debentures|notes) due [0-9]{4}",
+  "bond_cost_label": "Unamortized debt issue costs and discount",
+  "bond_premium_pattern": "Premium on acquired debt, using an effective interest yield of [0-9.]+% to [0-9.]+%",
+  "balance_concepts": {
+    "current": "us-gaap:DebtCurrent",
+    "gross": "m:LongTermDebtGrossIncludingCurrentMaturities",
+    "premium": "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent",
+    "cost": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet",
+    "carrying": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+    "total_borrowing": "m:LongTermDebtIncludingCurrentMaturities",
+    "fair_value": "m:LongTermDebtIncludingCurrentMaturitiesFairValue",
+    "noncurrent_lease": "m:NoncurrentLeaseLiability",
+    "operating_current": "us-gaap:OperatingLeaseLiabilityCurrent",
+    "operating_noncurrent": "us-gaap:OperatingLeaseLiabilityNoncurrent",
+    "operating_total": "us-gaap:OperatingLeaseLiability",
+    "combined_lease": "m:LeaseLiability",
+    "merchandise_payable": "us-gaap:AccountsPayableCurrent",
+    "accrued": "us-gaap:AccruedLiabilitiesCurrent",
+    "equity": "us-gaap:StockholdersEquity"
+  },
+  "balance_sheet_labels": {
+    "current": "Short-term debt",
+    "carrying": "Long-Term Debt",
+    "noncurrent_lease": "Long-Term Lease Liabilities",
+    "merchandise_payable": "Merchandise accounts payable",
+    "accrued": "Accounts payable and accrued liabilities",
+    "equity": "Total Shareholders' Equity"
+  },
+  "supplier_note_concepts": {
+    "program": "SupplierFinanceProgramTextBlock",
+    "table": "SupplierFinanceProgramTableTextBlock"
+  },
+  "supplier_narrative": "Supplier Finance Programs The Company has agreements with third-party financial institutions to facilitate supply chain finance (\"SCF\") programs. The programs allow qualifying suppliers to sell their receivables, on an invoice level at the selection of the supplier, from the Company to the financial institution and negotiate their outstanding receivable arrangements and associated fees directly with the financial institution. {registrant} is not party to the agreements between the supplier and the financial institution. The supplier invoices that have been confirmed as valid under the SCF programs require payment in full by the financial institution to the supplier by the original maturity date of the invoice, or discounted payment at an earlier date as agreed upon with the supplier. The Company's obligations to its suppliers, including amounts due and scheduled payment terms, are not impacted by a supplier's participation in the SCF programs. All outstanding amounts related to suppliers participating in the SCF programs are recorded within merchandise accounts payable in the Consolidated Balance Sheets and associated payments are included in operating activities in the Consolidated Statements of Cash Flows. The following table sets forth the changes in the outstanding obligations under the SCF programs:",
+  "supplier_table_labels": {
+    "opening": "Confirmed obligations outstanding at the beginning of the year",
+    "confirmed": "Invoices confirmed during the year",
+    "paid": "Confirmed invoices paid during the year",
+    "closing": "Confirmed obligations outstanding at the end of the year"
+  },
+  "supplier_concepts": {
+    "closing": "SupplierFinanceProgramObligation",
+    "confirmed": "SupplierFinanceProgramObligationIncrease",
+    "paid": "SupplierFinanceProgramObligationDecreaseSettlement"
+  },
+  "source_acquisition_credit": false,
+  "production_authorized": false
+}

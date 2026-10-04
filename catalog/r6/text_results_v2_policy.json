@@ -1,0 +1,23 @@
+{
+  "record_type": "TEXT_RESULT_CAPABILITY_POLICY",
+  "schema_version": 1,
+  "policy_id": "text_results_v2_reported_facts_v2",
+  "current_accrual_candidate_concept_pattern": "(?:LossContingenc.*Accrual|Accru.*Litigat|LitigationReserve)",
+  "excluded_unaccrued_concept_pattern": "(?:NotAccrued|Unaccrued)",
+  "current_fact_interval_policy": "CONTEXT_END_WITHIN_ANNUAL_INTERVAL",
+  "matching_fact_action": "VERIFY_REPORTED_FACT_EVIDENCE_AND_CONTINUE_SOURCE_DISCLOSURES",
+  "no_silent_text_fallback": true,
+  "cik_identifier_schemes": [
+    "http://www.sec.gov/CIK",
+    "https://www.sec.gov/CIK"
+  ],
+  "numeric_inline_namespaces": [
+    "http://www.xbrl.org/2013/inlineXBRL",
+    "http://www.xbrl.org/2008/inlineXBRL"
+  ],
+  "monetary_unit_namespace": "http://www.xbrl.org/2003/iso4217",
+  "supported_currency_codes": ["USD", "EUR"],
+  "unformatted_decimal_lexical_pattern": "[+-]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)",
+  "dot_decimal_supported_lexical_pattern": "[+-]?(?:(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)(?:\\.[0-9]*)?|\\.[0-9]+)",
+  "unsupported_numeric_fact_action": "RETAIN_SOURCE_LITERAL_WITHOUT_VERIFIED_NORMALIZED_AMOUNT"
+}

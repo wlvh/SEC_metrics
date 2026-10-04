@@ -287,8 +287,15 @@ def scoped_repository(
     """
     repo_root = workspace / "repo"
     repo_root.mkdir()
-    for relative in ("catalog", "config", "fixtures", "requirements"):
+    for relative in ("catalog", "config", "fixtures"):
         shutil.copytree(REPO_ROOT / relative, repo_root / relative)
+    # This fixture localizes the Issue #15 parent and registry. A copied
+    # successor still binds the original ten-company parent bytes and cannot
+    # describe this repository. Keep the historical authority chain explicit;
+    # otherwise source-strategy replay selects a stale Issue #28 successor.
+    for requirement_id in ("ai_first_v3_3_1", "issue_15_v1"):
+        shutil.copytree(REPO_ROOT / "requirements" / requirement_id,
+                        repo_root / "requirements" / requirement_id)
     foundation = json.loads(
         (
             REPO_ROOT
@@ -335,6 +342,10 @@ def scoped_repository(
             REPO_ROOT / "tools" / filename,
             repo_root / "tools" / filename,
         )
+    # These R1/R2 compatibility tests execute today's validators against the
+    # frozen historical configuration and receipts, not today's model choice.
+    from tests.vnext.historical_authority_support import copy_foundation_receipts
+    copy_foundation_receipts(repo_root)
     registry_path = repo_root / "config" / "company_registry.csv"
     with registry_path.open(encoding="utf-8", newline="") as stream:
         reader = csv.DictReader(stream)

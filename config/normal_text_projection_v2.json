@@ -1,0 +1,52 @@
+{
+  "record_type": "NORMAL_CANDIDATE_PRESENTATION_POLICY",
+  "schema_version": 2,
+  "production_authorized": false,
+  "metrics": {
+    "D01": {
+      "status_exact": "TEXT_QUAL",
+      "source_class": "MDA",
+      "unit": "text",
+      "formula": "verbatim Item 1A headings",
+      "confidence": "",
+      "concept_or_section": "Item 1A",
+      "metric_context_style": "constant",
+      "context_or_dimension": "registrant risk disclosures",
+      "evidence_context_style": "text_source_span",
+      "evidence_unit_policy": "observation",
+      "evidence_extraction_method": "verbatim_source_excerpt",
+      "parser_version": "TEXT_V1",
+      "notes": "Verbatim headings from the original annual filing. Disclosures do not assert that risks occurred."
+    },
+    "C02": {
+      "status_exact": "TEXT_QUAL",
+      "source_class": "PROXY",
+      "unit": "text",
+      "formula": "verbatim governance disclosures",
+      "confidence": "",
+      "concept_or_section": "Governance disclosures",
+      "metric_context_style": "constant",
+      "context_or_dimension": "annual reporting group; board measurement date not inferred",
+      "evidence_context_style": "text_source_span",
+      "evidence_unit_policy": "observation",
+      "evidence_extraction_method": "verbatim_source_excerpt",
+      "parser_version": "TEXT_V1",
+      "notes": "Source filing dates describe disclosure availability. The annual period only groups disclosures; no board measurement date or board count is inferred."
+    },
+    "D02": {
+      "status_exact": "TEXT_QUAL",
+      "source_class": "MDA",
+      "unit": "text",
+      "formula": "verbatim legal disclosures",
+      "confidence": "",
+      "concept_or_section": "Item 3 and financial notes",
+      "metric_context_style": "constant",
+      "context_or_dimension": "registrant legal disclosures",
+      "evidence_context_style": "text_source_span",
+      "evidence_unit_policy": "observation",
+      "evidence_extraction_method": "verbatim_source_excerpt",
+      "parser_version": "TEXT_V1",
+      "notes": "Verbatim legal disclosures retain their source periods. No current aggregate litigation liability or case count is inferred."
+    }
+  }
+}
