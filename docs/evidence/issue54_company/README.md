@@ -2,6 +2,8 @@
 
 最新实际交付见 [Marriott真实首跑/复跑](live-marriott/README.md)：空来源任务经 `run` 完成31次真实SEC GET，复跑36候选独立冷读通过，39项逐项状态及3项限制、CSV/证据/摘要、来源/运行身份和main集成责任明确。此前 [local-run](local-run/README.md) 录制接线及既有消费者证据按原范围保留，不重新升级。
 
+2026-10-04接班：[D04接收与基础集成核对](d04-handoff-intake/README.md)。按固定基线补齐工作镜像后，原LIVE f252a7a4在原基线来源上复现原Result e523b7a9并冷读一致，产品代码零改动、0/0/0；原live现场本会话不可见，与LIVE当前来源的等价待现场交接，见同目录 site-handover.json。
+
 对应 `COMPANY-SEPARATION-v2.1-20261002`，接续 PR55 `0442896740c2f320fa999f932bc4d4ae0bfdf856`，普通父程序 `0bc24734736bb1e6cb34fbcf7ab9fece6951764e`。唯一当前执行记录在 [#54 §7](https://github.com/wlvh/SEC_metrics/issues/54)，本目录保存可复核材料。本页下方初始分离层阶段新增真实 SEC/provider/paid 为0/0/0；后续授权的Marriott真实GET另在 live-marriott 独立累计31次。没有 Ready、合并、采纳、部署或 active 权限。
 
 `file-index.json` 逐文件登记原路径、字节数及 SHA256；`diagnostic-*.py` 是本次实际诊断脚本，包含执行目录，不能当作产品默认路径。输入来自原提交或封印归档，没有重新获取。产品命令和读写位置见 [运行说明](../../company_compute_boundary.md)。保存包、固定运行树及旧 Run 都按原字节保留；不同固定运行树的 Requirement closure 不混用。

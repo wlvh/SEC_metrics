@@ -1,0 +1,25 @@
+[
+ {
+  "case": "baseline-path-holds-e3eeefe3-original-input-instead-of-9112ca35-mirror",
+  "stage": "export (prepared root copy)",
+  "status": "REJECTED",
+  "reason": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:evidence/submissions/CIK0001048286.json"
+ },
+ {
+  "case": "actual-bound-e3eeefe3-headers-tampered-in-package-copy",
+  "stage": "install (fresh state)",
+  "status": "REJECTED",
+  "reason": "ValueError: COMPANY_SOURCE_BYTES_CHANGED:evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+  "state_after": "only latest_import.json; no source installed"
+ },
+ {
+  "case": "changed-processing-bytes",
+  "status": "REJECTED",
+  "reason": "COMPANY_PROCESSING_BOUND_FILE_CHANGED:processing-source.json"
+ },
+ {
+  "case": "wrong-company",
+  "status": "REJECTED",
+  "reason": "COMPANY_PROCESSING_WRONG_COMPANY_OR_AUTHORITY"
+ }
+]
