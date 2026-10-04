@@ -14,6 +14,38 @@
     "Selected stage needs bounded main-target review of 17 existing core execution paths and new interface/rule inventory; PR55 CI green is not that review",
     "Original Marriott source exporter at fixed83 refuses declared old submissions mirror absent even though authenticated content-addressed source exists; source-only handoff must retain history and original locator identity"
   ],
-  "calls": [0,0,0],
-  "merge_or_production_authorized": false
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "merge_or_production_authorized": false,
+  "pr55_consumer_install": {
+    "status": "PASS",
+    "requirement_id": "issue_54_v4",
+    "authority_hash": "sha256:792b50955674f1a1a007f2a1b5f55b7520d5ad4f5b7973e7b102c9e7278aa251",
+    "seconds": 2.3505118750035763,
+    "scope": "Isolated fixed18 PR55 overlay; no merge/retarget/source capture",
+    "ancestor_completion": "installer-ancestor-completion.json"
+  },
+  "ordinary_positive_checks": {
+    "B01_saved_source_update": "CANDIDATE_READY",
+    "unchanged_reentry": "NO_SOURCE_CONTENT_CHANGE",
+    "public_row_native_replay": "BYTE_IDENTICAL",
+    "old_source_policy": "Rejected without adaptation; explicit existing current_processing_source used",
+    "negative_harness": "First script missed RunStoreError; separately fixed and executed period/lock negatives, old log retained",
+    "source_unchanged": true,
+    "unfinished_intent_recovery": "INTERRUPTED_THEN_NO_SOURCE_CONTENT_CHANGE_NO_NEW_RUN",
+    "changed_public_rows": "REJECTED_UPDATE_SUCCESS_ROW_CHANGED"
+  },
+  "d04_portable_transfer": {
+    "processing_id": "sha256:f252a7a4f64c778ed5666a090c364990bcd3c648c81a0059272614f8e75f84fe",
+    "program_members": 652,
+    "source_proof_members": 8,
+    "processing_packet_bytes": 4485876,
+    "actual_receiver_authenticator": "PASS_AT_FIXED83",
+    "tamper_and_wrong_company": "REJECTED",
+    "linux_execution": "Not performed by this Mac receiver; material available through fixed Git references and exact transport bytes"
+  },
+  "consumer_fixture_ancestor_completion": "17 unchanged main files omitted by the sparse overlay fixture, not 17 newly changed candidate files"
 }

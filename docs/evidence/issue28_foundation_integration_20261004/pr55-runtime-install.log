@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-foundation-83-overlay/tools/vnext_company.py", line 176, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/issue28-foundation-83-overlay/tools/vnext_company.py", line 131, in main
+    result = install_runtime(output_root=args.output_root, kind=args.kind)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-foundation-83-overlay/scripts/vnext/company_runtime_install.py", line 76, in install_runtime
+    target.write_bytes(receipts[relative]['bytes'] if relative in receipts else (ROOT/relative).read_bytes())
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/issue28-foundation-83-overlay/docs/evidence/annual_runtime/repair/source-audit-independent.json'
