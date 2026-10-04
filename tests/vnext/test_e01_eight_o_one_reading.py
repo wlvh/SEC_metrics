@@ -176,11 +176,11 @@ class TheRegisterTakesE01FromThisReadingOnlyTest(unittest.TestCase):
         # the header count never opens an 8.01. The owner's content-confirmed
         # definition has readings of its own (tools/read_e01_candidates.py)
         # under its own Spec; the two never grant each other's results.
-        from tools.acceptance_readings import E01_CANDIDATE_READINGS
+        from tools.acceptance_readings import E01_CANDIDATE_READINGS, E01_PAID_READINGS
         register = json.loads((ROOT / REGISTER).read_text(encoding="utf-8"))
         e01 = [entry for entry in register["acceptances"] if entry["metric_id"] == "E01"]
-        self.assertLessEqual({entry["evidence"] for entry in e01},
-                             {READING, *E01_CANDIDATE_READINGS})
+        self.assertEqual({entry["evidence"] for entry in e01},
+                         {READING, *E01_CANDIDATE_READINGS, *E01_PAID_READINGS})
         item_rule = [entry for entry in e01 if entry["evidence"] == READING]
         content = [entry for entry in e01 if entry["evidence"] != READING]
         self.assertEqual({"enphase_energy", "ford_motor_company", "lumen_technologies",
@@ -196,10 +196,20 @@ class TheRegisterTakesE01FromThisReadingOnlyTest(unittest.TestCase):
         self.assertEqual(("pfizer", "E01", "2025-12-31", None),
                          (entry["company_id"], entry["metric_id"], entry["period_end"],
                           entry["result_id"]))
-        # Coordinate-level, so the published 0 stays withdrawn; the one release
-        # names the Run that read the item and withheld the window.
-        self.assertEqual([release["result_id"] for release in entry["released"]],
-                         ["sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81"])
+        # Coordinate-level: the original zero stays withdrawn. The first exact
+        # release withheld the window; the later paid content-confirmed result
+        # was separately read as 1. Neither releases other results/closures.
+        self.assertEqual(
+            [{key: release[key] for key in ("result_id", "requirement_closure_hash", "run_id", "read_by")}
+             for release in entry["released"]],
+            [{"result_id": "sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81",
+              "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+              "run_id": "run:historical-period:4e855cc11bdebd8cdb0f1bfcdaa5ea7f52d040ecdff92eafc2ba4b655b2a970e",
+              "read_by": READING},
+             {"result_id": "sha256:17710f4d827f1719e0aa3014bbbcfa3d2a1ff1a951b8d546dcbee5f32af257e6",
+              "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+              "run_id": "run:historical-period:066f9a5dae70a4ac69187a62bf061ad21996eb44efde78754424e33ff6046b1a",
+              "read_by": "docs/evidence/issue47_history/content-acceptance/e01-paid-content-confirmed-read.json"}])
 
 
 if __name__ == "__main__":
