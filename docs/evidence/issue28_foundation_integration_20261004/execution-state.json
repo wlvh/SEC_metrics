@@ -77,6 +77,46 @@
         "selector_state_model_cases": 1,
         "no_filesystem_writes_in_counterexamples": true
       }
+    },
+    {
+      "task_name": "review_mainauditalias_9a51b24",
+      "purpose": "review",
+      "module": "main_audit_alias_fix",
+      "scope_paths": [
+        "scripts/vnext/publication.py:exists/is_symlink predicate only",
+        "tests/vnext/test_main_scalability_audit.py:dangling cases",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json"
+      ],
+      "patch_sha": "9a51b24b95373ad4f41076e01fab55a591b193fd",
+      "spawned_at": "2026-10-04T12:46:02.343323+00:00",
+      "ended_at": "2026-10-04T12:50:33.322805+00:00",
+      "tool_calls": 20,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-alias-fix.md",
+      "verdict": "PASS_FOR_DANGLING_ALIAS_FIX_ONLY_NOT_MERGE_READY",
+      "dedup_note": "Oldd164 review ended at3 messages; new precise P2 predicate/binding diff unreviewed. No live/matching register/summary; inherit all unchanged findings, do not repeat whole audit.",
+      "functions_exec_calls": 8,
+      "nested_tool_calls": 12,
+      "internal_exec_command_calls": 11,
+      "internal_clock_calls": 1,
+      "ordinary_messages": 2,
+      "elapsed_seconds": 271,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-alias-fix.log",
+      "finding_codes": [],
+      "closed_finding_codes": [
+        "P2_MAIN_SELECTOR_DANGLING_ALIAS_FALLBACK"
+      ],
+      "merge_ready": false,
+      "independent_tests": {
+        "command": "PYTHONPATH=scripts:tools PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest -v tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_dangling_successor_aliases_never_fall_back_to_legacy tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_partial_or_alias_successor_installation_fails_closed",
+        "exit_code": 0,
+        "tests": 2,
+        "seconds": 0.361,
+        "new_dangling_subtests": 3,
+        "existing_installation_cases": 2
+      },
+      "coverage_limit": "Alias predicate, two selected tests and changed binding/parent hashes only; previous unchanged review inherited; no whole PR/business/CI approval"
     }
   ]
 }

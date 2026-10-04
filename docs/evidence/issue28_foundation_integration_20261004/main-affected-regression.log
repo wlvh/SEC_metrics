@@ -205,4 +205,112 @@ Allow rollback only to the committed predecessor. ... ok
 test_rollback_then_restore_reuses_only_verified_bundles (tests.vnext.test_publication.PublicationTest.test_rollback_then_restore_reuses_only_verified_bundles)
 Return to the committed successor without rerunning a producer. ... ok
 test_scalability_gate_executes_real_scanner (tests.vnext.test_publication.PublicationTest.test_scalability_gate_executes_real_scanner)
-Reject a company branch added after the candidate gate ran. ... 
+Reject a company branch added after the candidate gate ran. ... ok
+test_scalability_gate_scans_vnext_sources (tests.vnext.test_publication.PublicationTest.test_scalability_gate_scans_vnext_sources)
+Reject a registry ticker branch inside vNext production code. ... ok
+test_self_signed_pass_without_gate_execution_cannot_prepare (tests.vnext.test_publication.PublicationTest.test_self_signed_pass_without_gate_execution_cannot_prepare)
+Reject a valid candidate whose PASS labels lack execution proof. ... ok
+test_semantic_gate_binds_checker_bytes (tests.vnext.test_publication.PublicationTest.test_semantic_gate_binds_checker_bytes)
+Reject a checker replaced by a replay of its prior PASS bytes. ... ok
+test_switch_receipt_graph_has_one_connected_root_and_tip (tests.vnext.test_publication.PublicationTest.test_switch_receipt_graph_has_one_connected_root_and_tip)
+Reject a validly hashed disconnected switch-history root. ... ok
+test_symlinked_artifacts_parent_cannot_escape_root (tests.vnext.test_publication.PublicationTest.test_symlinked_artifacts_parent_cannot_escape_root)
+Reject latest-status storage redirected through its parent. ... ok
+test_symlinked_pointer_or_manifest_is_not_authoritative (tests.vnext.test_publication.PublicationTest.test_symlinked_pointer_or_manifest_is_not_authoritative)
+Reject authority files that resolve outside their named path. ... ok
+test_symlinked_publication_storage_cannot_escape_root (tests.vnext.test_publication.PublicationTest.test_symlinked_publication_storage_cannot_escape_root)
+Reject a publications directory redirected outside its root. ... ok
+test_threaded_formal_fixture_restores_commit_authority (tests.vnext.test_publication.PublicationTest.test_threaded_formal_fixture_restores_commit_authority)
+Reject worker-owned authority patches before they can leak. ... ok
+test_two_concurrent_publishers_have_one_winner (tests.vnext.test_publication.PublicationTest.test_two_concurrent_publishers_have_one_winner)
+Serialize commits so a stale CAS publisher cannot win. ... ok
+test_unrelated_ledger_tail_preserves_used_publication_prefix (tests.vnext.test_publication.PublicationTest.test_unrelated_ledger_tail_preserves_used_publication_prefix)
+Do not bind later requests that this Batch never consumed. ... ok
+test_withheld_or_incomplete_bundle_cannot_prepare (tests.vnext.test_publication.PublicationTest.test_withheld_or_incomplete_bundle_cannot_prepare)
+Block publication on applicable WITHHELD or missing files. ... ok
+test_changed_bytes_and_non_sec_origin_fail_closed (tests.vnext.test_source_records.SourceRecordTest.test_changed_bytes_and_non_sec_origin_fail_closed)
+Reject byte drift and provider substitution before evidence use. ... ok
+test_companyfacts_adapter_binds_bytes_cik_and_accession (tests.vnext.test_source_records.SourceRecordTest.test_companyfacts_adapter_binds_bytes_cik_and_accession)
+Materialize only the Run-bound filing from exact company bytes. ... ok
+test_explicit_port_is_not_an_official_sec_origin (tests.vnext.test_source_records.SourceRecordTest.test_explicit_port_is_not_an_official_sec_origin)
+Reject a lookalike SEC authority with a non-standard port. ... ok
+test_handcrafted_reference_cannot_bypass_official_origin (tests.vnext.test_source_records.SourceRecordTest.test_handcrafted_reference_cannot_bypass_official_origin)
+Reapply the SEC origin rule when records are loaded from disk. ... ok
+test_parent_traversal_and_symlink_are_rejected (tests.vnext.test_source_records.SourceRecordTest.test_parent_traversal_and_symlink_are_rejected)
+Keep repository-relative bindings portable and non-aliased. ... ok
+test_same_bytes_support_multiple_distinct_source_references (tests.vnext.test_source_records.SourceRecordTest.test_same_bytes_support_multiple_distinct_source_references)
+Reuse one RawBlob with distinct filing observation identities. ... ok
+test_decision_timestamp_suffix_is_not_enough (tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_decision_timestamp_suffix_is_not_enough)
+Parse the complete UTC timestamp instead of trusting its suffix. ... ok
+test_exact_snapshot_binds_r2_r3_release_and_approved_d01 (tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_exact_snapshot_binds_r2_r3_release_and_approved_d01)
+Bind both contracts and resolve D-01 without erasing its pending root. ... ok
+test_parallel_decision_children_fail_closed (tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_parallel_decision_children_fail_closed)
+Reject two records that supersede the same effective parent. ... ok
+test_r3_addendum_byte_change_invalidates_snapshot (tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_r3_addendum_byte_change_invalidates_snapshot)
+Reject mutable Issue drift after the exact R3 bytes are frozen. ... ok
+test_requirement_byte_change_invalidates_snapshot (tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_requirement_byte_change_invalidates_snapshot)
+Reject an FSD byte edit even when every other file is unchanged. ... ok
+test_r1_r3_historical_chain_and_root_mirrors_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28HistoricalReadBackIntegrationTest.test_r1_r3_historical_chain_and_root_mirrors_remain_exact)
+Preserve R3 active, exact R2, R1 availability and 14 mirrors. ... ERROR
+test_profile_snapshot_loads_with_historical_parent_fast_smoke (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke)
+Load profile authority and its exact Issue #15 parent locally. ... ok
+test_baseline_binds_exact_merged_main_and_parent_tree (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree)
+Resolve recorded Git objects without treating live HEAD as authority. ... ok
+test_contract_byte_drift_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_contract_byte_drift_fails_closed)
+Reject one changed snapshot byte before semantic evaluation. ... ok
+test_create_run_binds_explicit_successor_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_create_run_binds_explicit_successor_identity)
+Persist successor fields without changing the legacy RUN subtype. ... ok
+test_decision_fork_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_decision_fork_fails_after_outer_rebinding)
+Reject two otherwise valid children of one Decision root. ... ok
+test_extra_snapshot_file_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_extra_snapshot_file_fails_closed)
+Reject a structurally valid but unbound sixth file. ... ok
+test_incomplete_transfer_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_incomplete_transfer_fails_after_outer_rebinding)
+Require one and only one disposition for every parent Decision. ... ok
+test_invariant_profile_contains_references_not_policy_values (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_invariant_profile_contains_references_not_policy_values)
+Keep policy content in the Decision Register, not a JSON DSL. ... ok
+test_issue15_snapshot_bytes_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_issue15_snapshot_bytes_remain_exact)
+Freeze all seven Issue #15 files independently of child metadata. ... ok
+test_legacy_publication_keeps_hash_only_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity)
+Accept R3's historical shape but never relabel it as successor. ... ok
+test_parent_closure_drift_fails_after_child_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_parent_closure_drift_fails_after_child_rebinding)
+Reject a coordinated fake parent hash in baseline and transfer. ... ok
+test_parent_snapshot_symlink_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_parent_snapshot_symlink_fails_closed)
+Reject a redirected parent directory before historical dispatch. ... ok
+test_profile_dispatch_is_generation_driven_not_issue_branch (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_profile_dispatch_is_generation_driven_not_issue_branch)
+Load a later revision through a retained engine, not an Issue branch. ... ok
+test_retry_safety_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_retry_safety_fails_after_outer_rebinding)
+Reject a policy-content change that enables automatic retry. ... ok
+test_run_requirement_dispatch_requires_explicit_successor_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_run_requirement_dispatch_requires_explicit_successor_identity)
+Route new Runs by bound identity while retaining old dispatch. ... ok
+test_snapshot_symlink_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_snapshot_symlink_fails_closed)
+Reject a child file that redirects outside the five-file snapshot. ... ok
+test_successor_artifact_identity_is_all_or_nothing (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_successor_artifact_identity_is_all_or_nothing)
+Reject missing or forged identity for every successor artifact type. ... ok
+test_unknown_invariant_kind_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_unknown_invariant_kind_fails_after_outer_rebinding)
+Reject an attempted arbitrary rule-engine extension. ... ok
+test_validator_identity_drift_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_validator_identity_drift_fails_closed)
+Bind the generic evaluator implementation used by this snapshot. ... ok
+test_an_installed_metric_from_outside_this_policy_is_rejected (tests.vnext.test_normal_run_authority.NormalRunAuthorityTest.test_an_installed_metric_from_outside_this_policy_is_rejected) ... ok
+test_empty_and_multiple_spec_sets_are_rejected_before_record_dispatch (tests.vnext.test_normal_run_authority.NormalRunAuthorityTest.test_empty_and_multiple_spec_sets_are_rejected_before_record_dispatch) ... ok
+test_imported_snapshot_cannot_remove_execution_authority (tests.vnext.test_normal_run_authority.NormalRunAuthorityTest.test_imported_snapshot_cannot_remove_execution_authority) ... ok
+test_old_table_spec_cannot_select_a_path_without_ordinary_source_replay (tests.vnext.test_normal_run_authority.NormalRunAuthorityTest.test_old_table_spec_cannot_select_a_path_without_ordinary_source_replay) ... ok
+
+======================================================================
+ERROR: test_r1_r3_historical_chain_and_root_mirrors_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28HistoricalReadBackIntegrationTest.test_r1_r3_historical_chain_and_root_mirrors_remain_exact)
+Preserve R3 active, exact R2, R1 availability and 14 mirrors.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/tests/vnext/test_issue28_requirement_transition.py", line 548, in test_r1_r3_historical_chain_and_root_mirrors_remain_exact
+    parent = load_requirement_snapshot(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/requirements.py", line 1774, in _load_issue_15_snapshot
+    raise RequirementError(
+vnext.requirements.RequirementError: Issue #15 runtime authority bytes differ: config/provider_model_runtime.json
+
+----------------------------------------------------------------------
+Ran 150 tests in 1872.998s
+
+FAILED (errors=1)

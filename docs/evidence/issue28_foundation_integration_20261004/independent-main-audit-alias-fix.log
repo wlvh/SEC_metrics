@@ -1,0 +1,23 @@
+test_dangling_successor_aliases_never_fall_back_to_legacy (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_dangling_successor_aliases_never_fall_back_to_legacy) ... ok
+test_partial_or_alias_successor_installation_fails_closed (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_partial_or_alias_successor_installation_fails_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.361s
+
+OK
+
+Static-check first attempt failed because reviewer script omitted canonical LF; no product finding. Corrected using canonical.py:419 LF rule.
+Independent static checks at 9a51b24b95373ad4f41076e01fab55a591b193fd
+exact_head_and_five_scoped_files: "MATCH"
+publication_current_binding_both_versions: {"sha256": "4dd32668e94c02f0e9ebe6f40dfaaf2914b67fa0a3cf7d1f4f92047ed2ca98f8", "size": 276337}
+V14_parent_snapshot_files_matched: 5
+independently_recomputed_V13_closure_and_V14_parent_transfer_match: "sha256:f78c9e5869b77b7646b575ce8a73f77bf7d555b843b10e41ce3c028991400663"
+only_expected_binding_fields_changed requirements/issue_28_v13/baseline_manifest.json: ["/execution_authority/files/scripts/vnext/publication.py/sha256", "/execution_authority/files/scripts/vnext/publication.py/size"]
+only_expected_binding_fields_changed requirements/issue_28_v14/baseline_manifest.json: ["/execution_authority/files/scripts/vnext/publication.py/sha256", "/execution_authority/files/scripts/vnext/publication.py/size", "/parent/requirement_closure_hash", "/parent/snapshot_files/baseline_manifest.json/sha256"]
+only_expected_binding_fields_changed requirements/issue_28_v14/transfer_manifest.json: ["/parent_requirement_closure_hash"]
+
+Review command: PYTHONPATH=scripts:tools PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest -v tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_dangling_successor_aliases_never_fall_back_to_legacy tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_partial_or_alias_successor_installation_fails_closed
+Verdict: PASS_FOR_DANGLING_ALIAS_FIX_ONLY_NOT_MERGE_READY
+Planned total including final read-back: 20 tools (8 functions.exec, 11 exec_command, 1 clock); 2 ordinary messages; 0 questions.
+Ended_at: 2026-10-04T12:50:33.322805+00:00
+Elapsed to write: 271 seconds
