@@ -12523,13 +12523,13 @@
     "scope": "Exact prior head only"
   },
   "last_remote_delivery": {
-    "head_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
+    "head_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
     "branch": "task/b06-new-source",
     "pr": 43,
     "draft": true,
-    "current_ci": 37150607827,
+    "current_ci": 37154925474,
     "terminal": null,
-    "change_scope": "Only retained development input/reference/answers/checks, no product code/default/binding change",
+    "change_scope": "Offline exact-source responsibility/context resource measurement only; no product default/binding change",
     "calls": [
       0,
       0,
@@ -12966,10 +12966,10 @@
     "updated_at": "2026-10-03T20:07:23Z"
   },
   "issue28_queue_server_readback_20261004": {
-    "updated_at": "2026-10-03T20:12:41Z",
-    "body_sha256": "fd36c29df643cc38c33adea3d8c1cb66e53abbcadd054e4ecf9eb15ffd629950",
-    "edited_scope": "Current navigation and D03 existing row; common/permission sections unchanged",
-    "next": "Full-source task/context and resource plan beyond bounded unit experiment, no third correction or D03 live request."
+    "updated_at": "2026-10-03T21:46:47Z",
+    "body_sha256": "2bed674b9b05a272bb10a6d4db949dec3dce154f89a8a65a376e1e38c653977f",
+    "edited_scope": "Navigation and existing D03 row only; protected common/permission sections unchanged",
+    "next": "Bounded context followup/output contract and complete request cap; no live request or another source-unit correction."
   },
   "d03_jpm_original_unit_development_20261004": {
     "state": "BOUNDED_BATCH_ENDED_INITIAL_PLUS_ONE_CORRECTION; ACTUAL_POSITIVE_CASES_AND_TIME_FIELD_FIXED_NO_COMPANY_CREDIT",
@@ -13104,10 +13104,10 @@
   "ci_41d9d859": {
     "head_sha": "41d9d85916048b39648e605afe969a24e28e70b2",
     "run_id": 37150607827,
-    "state": "queued",
-    "terminal": null,
-    "read": "IMMEDIATE_AFTER_PUSH_ONCE",
-    "updated_at": "2026-10-03T20:10:50Z"
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL_EXACT_HEAD",
+    "updated_at": "2026-10-03T21:07:52Z"
   },
   "shared_increment_read_c74ce046": {
     "peer_read_sha": "c74ce04630b57c2a03d9f1bd7b293b97e21da734",
@@ -13192,5 +13192,56 @@
       0
     ],
     "next": "A bounded exact-context followup/output contract and full task cap, no more blind source-unit correction; new representation needs actual input-only validation before live."
+  },
+  "ci_75f0905e": {
+    "head_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
+    "run_id": 37154925474,
+    "state": "completed",
+    "terminal": "success",
+    "read": "NATURAL_CHECKPOINT_TERMINAL",
+    "updated_at": "2026-10-03T21:48:32Z"
+  },
+  "shared_increment_read_397443d8": {
+    "peer_read_sha": "397443d8478ed38727b7f3579ae71bc474a2acf5",
+    "preceding_read_sha": "c74ce04630b57c2a03d9f1bd7b293b97e21da734",
+    "remote_verified": "git@github.com:wlvh/SEC_metrics.git",
+    "defect_register_delta": "UNCHANGED",
+    "related_increment": "Peer D04 historical cold-read and limited-content records; no code delta to own D03 or current D04. No peer acceptance copied; current D04 candidates preserved.",
+    "peer_runtime_ledger_snapshot_operated": false
+  },
+  "d03_literal_context_20261004": {
+    "state": "IMPLEMENTED_TESTED_INDEPENDENT_REVIEW_PENDING",
+    "tested_base_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
+    "tested_uncommitted_delta": [
+      "scripts/vnext/d03_context_requests.py",
+      "tests/vnext/test_d03_context_requests.py",
+      "tools/run_fast_tests_v2.py"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/d03-literal-context-20261004",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "processing_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-literal-context-20261004",
+    "actual_save_seconds": "1.276",
+    "actual_cold_seconds": "1.277",
+    "short_tests": {
+      "count": 19,
+      "seconds": "0.209",
+      "log": "docs/evidence/issue28_continuous/d03-literal-context-20261004/targeted-tests.log"
+    },
+    "mechanical_scope": "Exact owned anchor and same-document XML id or visible range; original unit/item and context dictionaries preserved; missing/ambiguous/limits retain unresolved without guessing/trimming. External source and packet digests and source replay required.",
+    "source_authentication_repeated": false,
+    "native_result_or_run_created": false,
+    "shared_default_changes": [],
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "limits": {
+      "max_requests": 8,
+      "max_visible_blocks": 32,
+      "max_context_bytes": 262144
+    },
+    "limits_are_company_or_provider_authorization": false,
+    "next": "Complete bounded scan-output/context-followup contract and static/dynamic full-company accounting before any new model input trial or true-purpose request. Existing JPM developer batch remains ended."
   }
 }

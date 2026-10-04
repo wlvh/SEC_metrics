@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-literal-context-20261004/verify_actual.py", line 85, in <module>
+    main()
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-literal-context-20261004/verify_actual.py", line 63, in main
+    write_immutable_bytes(path=packet_path, raw=raw)
+TypeError: write_immutable_bytes() got an unexpected keyword argument 'raw'

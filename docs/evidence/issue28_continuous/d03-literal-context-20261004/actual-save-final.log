@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-literal-context-20261004/verify_actual.py", line 85, in <module>
+    main()
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-literal-context-20261004/verify_actual.py", line 80, in main
+    (HERE/('actual-cold.json' if args.read else 'actual-save.json')).write_bytes(evidence_json_bytes(report))
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_unit_index.py", line 166, in evidence_json_bytes
+    return _bytes(value) + b'\n'
+           ^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r6_semantic_source.py", line 35, in _bytes
+    return json.dumps(exact_json_value(value),ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf-8')
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 23, in exact_json_value
+    canonical_json_bytes(value=value)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 350, in _canonicalize
+    raise CanonicalError("Binary float is forbidden; use Decimal")
+vnext.canonical.CanonicalError: Binary float is forbidden; use Decimal
