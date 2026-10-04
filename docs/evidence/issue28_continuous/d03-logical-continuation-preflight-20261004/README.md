@@ -89,8 +89,8 @@ scan counts. A genuinely different development task must have its own original
 reference before blind input testing; the ended context-request trial is not
 reopened. This original is regression/development material, not a holdout.
 
-That next step is now implemented and measured as an additional increment
-awaiting separate review in [task-mapping.md](task-mapping.md). Its16-request Marriott
+That next step is now implemented, measured and separately reviewed as an
+additional increment in [task-mapping.md](task-mapping.md). Its16-request Marriott
 input proposal and explicit JPM resource stop do not inherit the earlier
 four-anchor review or gain model/company credit.
 

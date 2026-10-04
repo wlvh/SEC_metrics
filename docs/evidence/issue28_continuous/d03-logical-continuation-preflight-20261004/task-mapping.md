@@ -68,7 +68,16 @@ measurements and ownership. Full requests are stored outside code under its
 explicit private_request_root; no answers or ledger are embedded. The first
 background job's launch/done/log are retained; it is terminal, not restarted.
 
-Next: limited new-difference review, then select an actual mapped Marriott task,
+The new-difference review passed at14f74c3e:26 conservative tools,3 ordinary
+messages, UTC15:44:00.229024–15:52:03.503590; five specified tests, one16-request
+actual-source replay and23 finite control assertions. See
+[conclusion and retained logs](independent-mapping-review/conclusion.md).
+Its first finite-control script used an unchanged empty-map value and therefore
+failed to create its intended tamper; that diagnostic-script error and correction
+are retained. This review grants only the stated input/ownership/resource scope,
+not a model answer or whole-company semantic acceptance.
+
+Next: select an actual mapped Marriott task,
 read its original source responsibility to freeze a reference, and test the
 genuinely different input in one blind development context. Keep original/regression
 material distinct from untouched validation. Do not buy D03 calls before the

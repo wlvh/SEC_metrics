@@ -4363,6 +4363,37 @@
       "dedup_note": "Authoritative list only root running and three completed earlier agents; register/evidence no sameSHA/new closure scope. Earlier source/context/decoder reviews preserved; no new model answer or repeated source/NLP review.",
       "review_started_at": "2026-10-04T12:48:15Z",
       "actual_review_seconds": 434
+    },
+    {
+      "task_name": "review_d03mapping_14f74c3",
+      "purpose": "review",
+      "module": "d03_complete_task_mapping",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/mapping-prompt.txt",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/test_task_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/measure_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/replay_mapping.py",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task-mapping.md",
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/actual-task-mapping.json"
+      ],
+      "patch_sha": "14f74c3e313180d6c4d4e5c48ecf499ca72d4dae",
+      "spawned_at": "2026-10-04T15:42:50.485341+00:00",
+      "ended_at": "2026-10-04T15:52:03.503590+00:00",
+      "tool_calls": 26,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/independent-mapping-review/conclusion.md",
+      "verdict": "PASS_LIMITED_INPUT_OWNERSHIP_RESOURCE_MAPPING",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "Authoritative list only root running; sameSHA/new mapping scope absent from register/evidence. Earlier complete-chain reviewer ended; actual new compiler/partial data views/ownership/context/resource compiler scope, not repeated XML closure or model extraction.",
+      "review_started_at": "2026-10-04T15:44:00.229024+00:00",
+      "actual_review_seconds": 483.274566
     }
   ],
   "ci_capacity_20260922": {
@@ -14111,7 +14142,7 @@
     "terminal_updated_at": "2026-10-04T13:48:56Z"
   },
   "d03_complete_task_mapping_20261004": {
-    "status": "COMPLETE_MARRIOTT_INPUT_RESOURCE_PLAN_AND_SAVED_WIRE_REPLAY_NEW_CODE_REVIEW_PENDING",
+    "status": "PASS_COMPLETE_MARRIOTT_INPUT_MAPPING_AND_LIMITED_NEW_DIFF_REVIEW",
     "evidence": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task-mapping.md",
     "source_units_unchanged": true,
     "marriott_original_items": 3259,
@@ -14130,7 +14161,11 @@
       0,
       0
     ],
-    "next": "Limited actual task/compiler delta review, then original-reference-first blind development input validation of a mapped Marriott responsibility. No third old context answer; JPM needs a bounded different context arrangement, not cropping."
+    "next": "Original reference first for one actual mapped Marriott responsibility, then one input-only blind development response. Keep ended old context trial ended; JPM context arrangement unresolved; no D03 real-purpose/opportunity grant.",
+    "reviewed_patch_sha": "14f74c3e313180d6c4d4e5c48ecf499ca72d4dae",
+    "review_path": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/independent-mapping-review/conclusion.md",
+    "review_scope": "Compiler/partial-source views, owned vs context, codec, finite guards and16 saved wires; not original semantic reference/model output/native company acceptance.",
+    "actual_tested_files_match_reviewed_sha": true
   },
   "shared_increment_read_f20d48ea": {
     "own_sha_at_read": "f661962f7939e7eeaed92491e8ad74473215f782",
