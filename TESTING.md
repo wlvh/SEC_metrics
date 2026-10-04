@@ -1112,6 +1112,9 @@ Issue #47 B06 期限栏关系（2026-10-04，`b06-older-years/bond-sections/`）
 仍使用原30秒单入口上限。前者守精确 Registry4 转换、非转换普通词拒绝、nil/sign、
 命名空间、单位和 HTML/XML 冲突；后者守完整输入保留、必需文件集合/摘要、
 包内文字/表格与来源计数，不将输入准备当来源准入。
+`historical_fixed_zero` 另验证 Registry4 版本规则缺失、额外字段、错误数值/类型/来源
+一律拒绝。来源层 `tests.vnext.test_ordinary_scalability_audit` 保留原扫描语义，
+真实公司/期间常量负例不豁免；官方 QName 位于历史双根绑定配置。
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest \

@@ -1235,7 +1235,10 @@ Issue #47 B06应计来源增量（2026-10-04）：继续读Note7 B1399–1415，
 
 Issue #47本地接续入口：`docs/evidence/issue47_history/local-continuation-2026-10-04/README.md`。
 既有`historical_bond_sections.source_value`只在历史融资库存/显式开发准备中解释精确
-Registry4零值；`tools/prepare_b06_financing_context.py`只冻结完整开发输入、核文件及计量，
-不授Run/接受/新调用。原v3七文件保留可重建，临时恢复材料与本地环境在忽略的`work/`。
+Registry4零值。
+Registry4 QName 的版本配置 `config/historical_inline_fixed_zero_v1.json` 同时进入
+历史规则与执行 authority；不扩充 #28 的扫描豁免或改写冻结普通检查器。
+`tools/prepare_b06_financing_context.py`只冻结完整开发输入、核文件及计量，不授
+Run/接受/新调用。原v3七文件保留可重建，临时恢复材料与本地环境在忽略的`work/`。
 `tools/prepare_c02_responsibility_packets.py`仅验证C02全量来源的责任分配与资源门；
 原Lumen单请求超限保留，不裁来源、不提高上限，也不把两个输入fits当成指标正确。

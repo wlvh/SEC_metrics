@@ -82,3 +82,24 @@ The reference binder and comparison helpers bind manually read judgments; they
 are not NLP classifiers, new model requests, or semantic acceptance checks.
 Each probe and input archive has0/0/0 new provider/paid/SEC calls. The prior grants,
 35 consumed model calls, source budget and fixed execution package remain as before.
+
+## Second complete executor reading
+
+FY2024 now also has all3993 visible text blocks read and raw-span verified,
+with38 manual reference units and the complete15x18 opening roster and14x21
+member table. Its62 old excerpt bindings match original bytes. The comparison
+keeps specific findings separate from already supported facts: names and five
+A/B positives are omitted, but both new directors' election/effective dates and
+the two May2024 retirements are already present in the saved selection. Four
+Audit qualifications are supported by the report and signed names. Blank image
+marks, self-reported skills/attributes and policy meaning remain unresolved;
+no complete metric acceptance or total error count is assigned.
+
+Smith's October2024 election takes effect January21,2025; Buck's December2024
+election takes effect March17,2025. Twelve current proxy nominees are not a
+year-end2024 snapshot. Shareholder criticism of Burke's independence is a
+separate speaker's assertion; the issuer expressly states the named NYSE/Firm
+independence determination. Future Chair/CEO proposals/policies do not appoint
+a new Chair. The archived input bytes remain unchanged; FY2022/FY2023 reading
+is still pending in this continuation. The old acceptance/defect registers do
+not change from this executor reference development.

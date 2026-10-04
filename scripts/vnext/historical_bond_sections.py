@@ -7,23 +7,45 @@ The frozen reader remains the path for globally unique labels, preserving its
 proof bytes. This is a composition repair, not financing completeness credit.
 """
 from . import b06_bond_leases as frozen
-from .canonical import content_hash
+from .canonical import content_hash, strict_json_file
 from .historical_dei import release_aware, release_aware_with
 from .historical_financial_wording import successor
 from .governance_signals import _qname, _source_value, GovernanceSignalError
+from .normal_source_authority import ROOT
+from .sources import resolve_repository_file
+
+
+FIXED_ZERO_RULE_PATH = 'config/historical_inline_fixed_zero_v1.json'
+
+
+def fixed_zero_qname():
+    # A dated technical namespace is an explicit versioned rule, not a
+    # financial period. The historical Requirement binds this config on both
+    # code and installed data roots; the frozen ordinary scanner is unchanged.
+    rule = strict_json_file(path=resolve_repository_file(
+        repo_root=ROOT, repo_relative_path=FIXED_ZERO_RULE_PATH))
+    if (type(rule) is not dict or set(rule) != {'record_type', 'schema_version', 'namespace', 'local_name',
+                     'canonical_value'}
+            or rule['record_type'] != 'HISTORICAL_INLINE_FIXED_ZERO_RULE'
+            or type(rule['schema_version']) is not int or rule['schema_version'] != 1
+            or type(rule['namespace']) is not str
+            or not rule['namespace'].startswith('http://www.xbrl.org/inlineXBRL/transformation/')
+            or rule['local_name'] != 'fixed-zero' or rule['canonical_value'] != '0'):
+        raise GovernanceSignalError('HISTORICAL_INLINE_FIXED_ZERO_RULE_INVALID')
+    return rule['namespace'], rule['local_name']
 
 
 def source_value(fact, metadata):
     """Read Registry 4's fixed-zero without guessing from the visible word.
 
-    The exact 2020-02-12 transformation maps any text to zero. The original
+    The exact configured Registry 4 transformation maps any text to zero. The original
     text is retained; nil and unsupported signs still fail. Other transforms
     keep the frozen reader's behavior, including the narrower numdash rule.
     This normalizes a reported fact, never its debt membership or completeness.
     """
     attrs, namespaces = metadata['attrs'], metadata['namespaces']
-    if _qname(attrs.get('format', ''), namespaces) != (
-            'http://www.xbrl.org/inlineXBRL/transformation/2020-02-12', 'fixed-zero'):
+    transform = _qname(attrs.get('format', ''), namespaces)
+    if transform[1] != 'fixed-zero' or transform != fixed_zero_qname():
         return _source_value(fact, metadata)
     nil = [v for k, v in attrs.items() if _qname(k, namespaces) == (
         'http://www.w3.org/2001/XMLSchema-instance', 'nil')]

@@ -121,6 +121,10 @@ NEW_RULE_FILES = (
     "scripts/vnext/historical_debt_results.py",
     "scripts/vnext/historical_note_carrying.py",
     "scripts/vnext/historical_bond_sections.py",
+    # Registry 4's QName is a technical version identity, not a fiscal date.
+    # It controls which original text may normalize to zero, so it is a
+    # historical rule checked on both code and installed input roots.
+    "config/historical_inline_fixed_zero_v1.json",
     # B10 and B11 read a table in the annual report itself, and the ordinary
     # source preparation resolves that report as the newest one. These bytes
     # decide which filing's table a pinned period is read from, so both roots

@@ -1,14 +1,38 @@
 """Registry 4 transforms source text; it does not infer a missing debt balance."""
 import copy
+import json
+from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
 
 from vnext.governance_signals import _source_value
 from vnext.historical_bond_sections import financing_inventory, source_value
+from vnext import historical_bond_sections as reader
 
 REGISTRY = 'http://www.xbrl.org/inlineXBRL/transformation/2020-02-12'
 
 
 class HistoricalFixedZeroTest(unittest.TestCase):
+    def test_missing_or_invalid_version_rule_fails_closed(self):
+        original = json.loads((reader.ROOT / reader.FIXED_ZERO_RULE_PATH).read_text())
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp).resolve()
+            path = root / reader.FIXED_ZERO_RULE_PATH
+            path.parent.mkdir()
+            with patch.object(reader, 'ROOT', root):
+                with self.assertRaises(ValueError):
+                    source_value(*self.arguments())
+                for rule in [[], dict(original, canonical_value='1'),
+                             dict(original, schema_version=True),
+                             dict(original, local_name='numdash'),
+                             dict(original, namespace='http://example.org/transform'),
+                             dict(original, extra='unapproved')]:
+                    path.write_text(json.dumps(rule))
+                    with self.subTest(rule=rule), self.assertRaisesRegex(ValueError,
+                            'HISTORICAL_INLINE_FIXED_ZERO_RULE_INVALID'):
+                        source_value(*self.arguments())
+
     def arguments(self, text='no', transform='fixed-zero'):
         return ({'text': text, 'scale': '6', 'sign': ''}, {
             'attrs': {'format': 'ixt:' + transform},

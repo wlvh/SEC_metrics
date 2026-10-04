@@ -1323,6 +1323,9 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 `historical_bond_sections` 的融资库存只把本地数值导入转向 `source_value`。
 它按精确的 XBRL Registry4 `2020-02-12/fixed-zero` 将供应文字转为零，保留原文、
 nil/sign 拒绝、单位、期间、主体及 HTML/XML 对账；其他转换仍走冻结读取器。
+该 QName 位于 `config/historical_inline_fixed_zero_v1.json`，由历史 Requirement
+在代码根和安装输入根同时绑定；标准版本日期不会作为生产 Python 的财年常量。
+冻结的普通扩展性检查器未变，缺失或无效配置先拒绝。
 这不赋债务角色或完整性，普通 #28 读取器不改。显式开发准备另保留期末
 `StockholdersEquity` 原生事实；默认 v3 的七文件仍可逐字节重建。
 `tools/prepare_b06_financing_context.py` 将完整来源包、批准债务定义、固定任务和
