@@ -4308,6 +4308,33 @@
       "dedup_note": "No live agent; no sameSHA guard result/register/evidence. Old actual-wire code review ended at3message cap; only new protected ledger config lookup and exact old-runtime read boundary, no repeated full module/model extraction.",
       "review_started_at": "2026-10-04T11:15:52Z",
       "actual_review_seconds": 429
+    },
+    {
+      "task_name": "review_b03view_569ea0a",
+      "purpose": "review",
+      "module": "b03view",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py",
+        "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/delta.json",
+        "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/test_receiving_view.py"
+      ],
+      "patch_sha": "569ea0ad772368ce50d4b30053375a4e4ad53be6",
+      "spawned_at": "2026-10-04T12:05:24.467314+00:00",
+      "ended_at": "2026-10-04T12:11:24Z",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/independent-view-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_VIEW_ONLY",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live agent, sameSHA register/independent result absent. Earlier URI and D01 view reviews preserved; only explicit oneB03 sameResult/newRun proof selection delta.",
+      "review_started_at": "2026-10-04T12:06:16Z",
+      "actual_review_seconds": 308
     }
   ],
   "ci_capacity_20260922": {
@@ -13915,7 +13942,7 @@
     "read_kind": "One valid immediate full40SHA observation after push; initial shortSHA lookup returnedempty and is not evidence. Reference workflow37198645286 success is separate."
   },
   "b03_marriott_390_receiving_20261004": {
-    "status": "PASS_EXPLICIT_VIEW_PENDING_LIMITED_REVIEW",
+    "status": "PASS_EXPLICIT_FINITE_VIEW_LIMITED_REVIEW",
     "evidence": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/",
     "fixed_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
     "selected_new_run_id": "run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa",
@@ -13936,7 +13963,10 @@
       0,
       0
     ],
-    "next": "Exactnew view/proof binding review, then maintain current queue without rerunning original update."
+    "next": "Exactnew view/proof binding review, then maintain current queue without rerunning original update.",
+    "reviewed_sha": "569ea0ad772368ce50d4b30053375a4e4ad53be6",
+    "review_path": "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/independent-view-review/conclusion.md",
+    "review_scope": "Explicit oneB03 saved-scope Run selection and exact source proof; not all-economic scope or new currenthead update."
   },
   "shared_increment_read_41949f67": {
     "peer_sha": "41949f67dc01d47c4eb9d69afc1f977fab3619d8",

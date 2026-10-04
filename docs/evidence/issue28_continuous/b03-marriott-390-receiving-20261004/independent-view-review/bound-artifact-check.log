@@ -1,0 +1,91 @@
+{
+  "manifest": {
+    "record_type": "SUCCESSOR_RUN",
+    "status": "OPEN",
+    "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation_file_hash": "37554af40227c4fbcf4042d4550961d4335fe4b072254596fd7381b0f996d7b2",
+    "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "run_id": "run:ordinary-integrated:bb6ec093fb8fde7682cf83ca955c282e4d3c62471301cffaddfdbd0e915250fa",
+    "company_id": "marriott_international",
+    "company_traits": [
+      "lodging",
+      "non_financial"
+    ],
+    "target_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "source_references": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:8483c531940100379bd44f9d4f6c3fc1ed47986590151c30f340f2b4a305ef9f",
+        "raw_asset_id": "sha256:76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "SUBMISSIONS-1048286",
+        "document_name": "CIK0001048286.json",
+        "source_role": "sec_submissions_inventory",
+        "request_attempt_id": "request:attempt:6896d1362854820736923746670b478cde2d36feec8af78eec214eece402ef4d"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "accession": "0001048286-26-000007",
+        "document_name": "CIK0001048286.json",
+        "source_role": "companyfacts",
+        "request_attempt_id": "request:attempt:22ed74ba0cecc79436308cefb75924a5c26aaae0dd4e6fa3833e5ec5e58a5df8"
+      }
+    ],
+    "missing_required_source_roles": [],
+    "spec_file_hashes": {
+      "catalog/metrics/B01_revenue.md": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+      "catalog/metrics/B03_ebitda_margin.md": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608"
+    },
+    "requirement_hashes": {
+      "baseline_sha256": "21418b4e96af7cc771738c3433ef74ba2db4b1f0911c40253960772807b8ae4a",
+      "contract_sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+      "decision_register_sha256": "b527ad97d3c5352ddc62f54927e13c218205c88b9031d0a1004bb768b5a0b00f",
+      "invariant_profile_sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+      "transfer_manifest_sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+      "parent_requirement_closure_hash": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c",
+      "validator_sha256": "b06a50acafece1cc6fa0f0c0b8d57d780b1e6f13768c0efd5d8bbf7a49e17dab"
+    },
+    "requirement_closure_hash": "sha256:33ee286c21be8262e550939e2a94512775996635c569bcd12531efca2014ed83",
+    "requirement_id": "issue_28_v13",
+    "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+    "task_contract_bindings": [],
+    "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "exact_result_receipt_and_artifact_bytes": true,
+  "copy_diff": [
+    "validation.json"
+  ],
+  "proof_paths_verified": [
+    "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/exercise-repair.json",
+    "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/cold-repair.json",
+    "docs/evidence/issue28_continuous/b03-marriott-contract-exclusion-20261001/independent-review/followup-2bbd769.md",
+    "docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004/mechanical-summary.json"
+  ],
+  "installed_has_external_uri_module": false,
+  "installed_runtime_module_matches": true,
+  "repair_module_in_repo_current_sha256": "acc01df28a45c56c89d0c9c280487434b25efd0ac0ee60d8f659ce25a2b8429f",
+  "repair_module_name": "scripts/vnext/b03_contract_amortization_scope.py",
+  "native_target_period_matches_row": true
+}
