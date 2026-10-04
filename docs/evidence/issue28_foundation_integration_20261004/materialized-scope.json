@@ -416,10 +416,24 @@
     "SOP.md",
     "capability_contract.json",
     "outputs/semantic_audit_receipt.json",
-    "tests/vnext/projection_fixture_support.py",
     "tests/vnext/test_invocation_control.py"
   ],
   "reason": "Non-authority operational documents, audit artifacts and unrelated test fixture versions remain main; old published behavior not switched.",
   "stage_choice": "Full fixed runtime milestone: all303 scripts/tools/catalog/config/requirements changed paths, exact snapshot/frozen closure; no all-PR43 evidence, results, source ledger or production switch.",
-  "not_minimal_hand_assembly": true
+  "not_minimal_hand_assembly": true,
+  "historical_test_helper": {
+    "path": "tests/vnext/projection_fixture_support.py",
+    "source": "0bc24734736bb1e6cb34fbcf7ab9fece6951764e",
+    "reason": "Restore frozen Issue15 provider/config receipt fixture semantics; not a production policy change"
+  },
+  "additional_targeted_test_dependencies": [
+    "tests/vnext/test_normal_run_authority.py",
+    "tests/vnext/test_normal_annual_input_v2.py",
+    "tests/vnext/test_c04_registration_successor.py",
+    "tests/vnext/test_ordinary_update_cycle.py",
+    "tests/vnext/test_normal_zero_ai_results.py",
+    "tests/vnext/test_normal_companyfacts_results.py",
+    "tests/vnext/test_governance_signals.py",
+    "tests/vnext/test_text_coverage.py"
+  ]
 }

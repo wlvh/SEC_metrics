@@ -1,0 +1,42 @@
+{
+  "scope": "Isolated main candidate review receipt only; original shared issue28 execution-state is not overwritten",
+  "source_register_checked": "24c0 read-only, no sameSHA/purpose module result",
+  "subagent_register": [
+    {
+      "task_name": "review_foundation_469d3ea",
+      "purpose": "review",
+      "module": "foundation_main_boundary",
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/records.py",
+        "scripts/vnext/run_store.py",
+        "scripts/vnext/publication.py",
+        "scripts/vnext/invocation_control.py",
+        "requirements/issue_28_v13",
+        "requirements/issue_28_v14",
+        "docs/evidence/issue28_foundation_integration_20261004"
+      ],
+      "patch_sha": "469d3ea42e2346e03976e8d4a50db1d2f7de9289",
+      "spawned_at": "2026-10-04T10:18:14.856530+00:00",
+      "ended_at": "2026-10-04T10:30:33.910273+00:00",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-boundary-review.md",
+      "verdict": "PASS_FOR_BOUNDED_INTAKE_WITH_LIMITATIONS_NOT_MERGE_READY",
+      "functions_exec_calls": 19,
+      "nested_tool_calls": 20,
+      "ordinary_messages": 2,
+      "elapsed_seconds": 672,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-boundary-review.log",
+      "finding_codes": [
+        "C1_STALE_KEPT_MAIN_TEST_HELPER_ENTRY"
+      ],
+      "independent_tests": {
+        "command": "PYTHONPATH=scripts:tools PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_normal_run_authority",
+        "exit_code": 0,
+        "tests": 4,
+        "seconds": 0.004
+      },
+      "merge_ready": false
+    }
+  ]
+}
