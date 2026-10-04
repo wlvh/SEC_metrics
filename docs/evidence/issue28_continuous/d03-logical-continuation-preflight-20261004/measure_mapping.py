@@ -60,7 +60,7 @@ def run():
               'new_model_response':False,'new_native_or_company_credit':False,
               'business_calls':[0,0,0],
               'additional_call_opportunities_granted':0,'semantic_acceptance':False}
-    (HERE/'actual-task-mapping.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    (HERE/'actual-task-mapping.json').write_text(json.dumps(report,ensure_ascii=False,separators=(',',':'))+'\n')
 
 
 if __name__=='__main__':
