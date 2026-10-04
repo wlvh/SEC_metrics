@@ -588,3 +588,5 @@ Supplement5四对象/1965正文全读，46工具/2消息/506.7秒，空findings�
 2026-10-05 D03 XML字典修复已在活跃prototype落地（新差异待审）：按整XML literal contextRef/unitRef补跨原Native单位字典与namespace，dictionary-only部分视图不增owner。8定向测试通过；实际修后48adcf76输入仍同提示/Source/69责任/完整正文/context引用/续链，135342上下文。完整Marriott仍16请求3259项最大149722，全实际XML引用已补齐。原14f74c3编译器/提示/未变库保存，另进程精确重建原ca828c05请求；原答f5d5368d不改。下一项新差异限定审阅，随后仅一次开发修正，当前机会尚未消费。原账本/生产0变动；本段0/0/0。
 
 ac25689c字典修复独审REQUEST_CHANGES保留：32工具/3消息、16:44:23–16:52:24UTC。P2为已存在context/unit定义分支continue跳过namespace检查；实际prepare残缺/补全正反例成立。现已将原definition的namespace检查放到两分支前，补完整prepare现有字典＋独立env缺失回归，9测试通过。该局部修后增量待限定复核；唯一模型补验尚未执行，135342修后输入和69责任未变，原答历史不改。无新业务调用，未放松门禁。
+
+9dd88083 局部present-namespace修后独审PASS：26工具/3消息、17:05:05–17:09:46UTC；指定9测试通过，实际prepare原P2被拒/补env正例保留，修后48adcf76单份重建字节和135342计量保持。旧ac25689c失败不改成后来通过；本次只结案该P2，非D03语义或公司信用。现在进入本批唯一一次 corrected-input开发上下文，未新增真实调用许可。

@@ -4446,6 +4446,32 @@
       "dedup_note": "No live child, sameSHA/new actual dictionary dependency delta absent. Wider14f review and old complete-chain checks unchanged/reused, original reader ended at3 messages. No repeated semantics or new model answer.",
       "review_started_at": "2026-10-04T16:44:23Z",
       "actual_review_seconds": 481
+    },
+    {
+      "task_name": "review_d03present_9dd8808",
+      "purpose": "review",
+      "module": "d03_present_namespace_increment",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task_mapping.py:present branch namespace check move",
+        "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/test_xml_dictionary_closure.py:actual prepare regression"
+      ],
+      "patch_sha": "9dd880832c22574ca59bc5c4efa0b91a6b92473d",
+      "spawned_at": "2026-10-04T17:03:40.459590+00:00",
+      "ended_at": "2026-10-04T17:09:46Z",
+      "tool_calls": 26,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-present-review/conclusion.md",
+      "verdict": "PASS_P2_PRESENT_NAMESPACE_INCREMENT",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live child; no sameSHA/scope evidence. Prior actual dictionary reviewer ended at3message cap. Only genuine newly fixed present-namespace P2 increment, not repeat whole module/source extraction; previous failure retained.",
+      "review_started_at": "2026-10-04T17:05:05Z",
+      "actual_review_seconds": 281
     }
   ],
   "ci_capacity_20260922": {
@@ -14237,7 +14263,7 @@
     "reference_workflow_success_not_main": true
   },
   "d03_mapped_task_blind_trial_20261005": {
-    "status": "DICTIONARY_FIX_REVIEW_P2_CORRECTED_9_TESTS_PASS_NARROW_FOLLOWUP_REVIEW_PENDING",
+    "status": "XML_DICTIONARY_FIX_AND_PRESENT_NAMESPACE_P2_LIMITED_REVIEW_PASS_CORRECTED_INPUT_READY_FOR_SINGLE_DEV_CONTEXT",
     "evidence": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005",
     "reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
     "input_request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
@@ -14265,7 +14291,7 @@
       "c-88",
       "c-89"
     ],
-    "next": "Narrow review of present-namespace P2 increment, then single corrected developer input. Old reviewfailure/rawanswers/runtime intact, no live purpose or company credit.",
+    "next": "Execute one corrected input-only developer context using48adcf76; initial input/reference/response retained. No extra correction afterward, no DeepSeek purpose or company credit.",
     "delivered_head": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
     "issue28_unique_queue_readback_exact": true,
     "corrected_request_sha256": "48adcf767a8d6f63208a79e4ad015f4653a30bc3bde3ae3d7125256a7da54c69",
@@ -14282,7 +14308,10 @@
     "dictionary_review_sha": "ac25689cb8d5ae68512ebfb6fa09f677a645f95e",
     "dictionary_review_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-dictionary-review/conclusion.md",
     "dictionary_review_failure_retained": true,
-    "present_namespace_P2_fix": "Validate original definition namespace before both existing and donor branches; actual prepare negative/positive retained."
+    "present_namespace_P2_fix": "Validate original definition namespace before both existing and donor branches; actual prepare negative/positive retained.",
+    "present_namespace_review_sha": "9dd880832c22574ca59bc5c4efa0b91a6b92473d",
+    "present_namespace_review_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-present-review/conclusion.md",
+    "present_namespace_P2_closed": true
   },
   "ci_4b910e8e": {
     "main_run_id": 37216904397,
