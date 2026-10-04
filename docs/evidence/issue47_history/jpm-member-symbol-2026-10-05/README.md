@@ -40,3 +40,44 @@ The local two-source outputs, original failed log and final logs are archived
 and SHA-bound by `manifest.json`. Native Runs/acceptance/provider/paid/SEC calls
 added are all zero. No upstream code merge or production formatter change was
 made; only this finite source diagnostic was adapted locally.
+
+## Bounded source-only input proposal
+
+`prepare_image_markup.py` reads all original img nodes through the production
+raw-table parser and verifies cell origins/spans against the complete saved
+grid. It preserves every node, including7/8 outside cells, and does not select
+only the Member symbols or prefill their meaning. All original block/text/grid
+packet fields remain identical. This is an offline development proposal, not
+the ordinary/historical production formatter or a new target-model execution.
+
+The first rich representation retains raw tags, parsed attributes and hashes
+for604FY2025/617FY2024 nodes. Its complete requests reach266217/260471 input
+tokens and fail the unchanged context cap. Both actual requests and measurements
+are retained. The final helper reproduces their exact request bytes, with its
+new code hash recorded separately rather than relabelling the earlier generator.
+
+One subsequent attribute-tuple representation uses a shared dictionary of
+every parsed attribute name/value, with byte positions and actual cell origins/
+spans for every node. It round-trips all those metadata objects exactly. Raw
+tag quoting/spelling and tag hashes stay in the original/source sidecar rather
+than the provider representation; that distinction is explicit in the prompt
+and receipt. Image pixels are still unsupplied, so this is not a complete image
+or all-media representation. Duplicate original attributes reject rather than
+silently choosing one, and future such sources need their own representation.
+
+FY2024 compact input is155174+4096=159270; requestSHA
+323e250187a1b16eeb63ffc41d96170907b9641ea6643e071793c63d60eb3b89.
+FY2025 is161908+4096=166004; requestSHA
+2ab53c907b657ad4f5a1dd271d822ed081eb6ca8f15d535050951d4466b6a1d4.
+Both fit. Original source,200000context,4096reserve,task/output contract,model
+and provider envelope stay as before; only the explicit source-metadata
+supplement/decoding explanation is proposed. Neither request has a new model
+answer. Source attributes plus a literal legend may enable positive relations,
+but independent context still needs to prove readability/coverage and time/
+qualification boundaries before any integration or paid acceptance.
+
+Four memory checks cover UTF-8/repeated/self-closing/outside nodes with rowspan,
+nested cell ownership, changed grid rejection and duplicate attribute rejection.
+Original source files are not changed. `input-proposals.tar.gz` and
+`input-proposals-manifest.json` bind the two initial failures, their byte-identical
+replays, both compact proposals, original-tag sidecars, logs and these checks.
