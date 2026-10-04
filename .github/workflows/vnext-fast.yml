@@ -27,7 +27,7 @@ jobs:
       - name: Verify company import transactions
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census
+        run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
 
       - name: Run fast suite
         env:

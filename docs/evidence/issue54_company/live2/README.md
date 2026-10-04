@@ -72,6 +72,12 @@ CSV：[首跑矩阵](first/metrics_matrix.csv) / [证据](first/metric_evidence.
 
 恢复说明见该分支的 `artifacts/issue54-live2/RESTORE.md`。继续原采集需要把任务目录放回绑定的绝对路径 `/home/user/work/live2/work`（账本 binding 和 Run 均记录了该路径），或明确登记重新挂载；不重签。D04 的处理包、原程序和原处理信任可以由 Git `7ed952bb` 的 `materialize-d04-handoff.py` 重建，不重复打包。没有提交任何令牌、密钥或私人凭据。
 
+磁盘需求（逻辑字节）：最小计算包下载 5.5 MB、展开 50 MB，另需固定程序树约 39 MB 和 tokenizer 依赖；计算全部 38 项后 company-state 约 1.85 GB，每次完整冷导出约 1.7 GB。完整任务包下载 14.0 MB、展开 2.2 GB，重建三次冷导出约 5.0 GB。高压缩率来自大量重复的规则和来源副本，不代表运行只需 14 MB。
+
+## D04 交给 #28 的材料
+
+两个原文版本都可以直接取得：原判断用的 `c372495a`（2048661 字节）在 `0bc24734` 的 `evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm` 及其 headers；本轮的 `2068d818`（2048769 字节）及其 headers 在最小计算包的 `company-source/evidence/request_attempts/20/…`，账本行见 `requests_log.csv`。差异分析、17 单元和 4 请求的比对见 `d04-current-source-equivalence.json`。是否引入处理层等价证明、版本和负例，由 #28 决定，不是 PR55 的合并前置。
+
 ## PR56 集成
 
 见 [pr56-integration/pr56-consumer-check.json](pr56-integration/pr56-consumer-check.json)。
