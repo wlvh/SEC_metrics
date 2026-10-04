@@ -35,3 +35,11 @@ private clone, then post-merge41 focused/snapshot cases passed. All seven new
 registrations are retained; the inherited Requirement authority remains unchanged.
 A new full fast run and final-head CI follow the merge rather than borrowing
 previous-head green status. No Ready, merge to PR43, formal adoption or active switch.
+
+Merged-head full fast188 selectors PASS, jobs1,196.168s, original30s cap.
+Source/actual model/full-company acceptance is not inferred. Imported original
+peer inspection logs contain trailing whitespace, and the received formatter
+has a final blank LF; those bytes are retained rather than editing peer evidence.
+Own merge-resolution/evidence paths pass whitespace checks.
+New current-source reading now covers B0–B882, with the tool-truncated B630–634
+recovered explicitly. This is still a partial full-document reference, not credit.

@@ -1,16 +1,189 @@
 {
- "position":"jpmorgan_chase:2025-12-31",
- "reader":"Codex main executor from complete original text/table input",
- "read_packets":[{"file":"jpmorgan_chase-2025-12-31-00.txt","blocks":[0,434],"fully_displayed":true}],
- "facts_from_this_range":[
-  {"statement":"James Dimon signs as Chairman and Chief Executive Officer; the source is the April 6, 2026 proxy within the FY2025 reporting container, not a December 31 board snapshot.","blocks":[37,43,44,53]},
-  {"statement":"Stephen B. Burke is Lead Independent Director.","blocks":[46,49,68,69,354,355]},
-  {"statement":"During early 2026, Rometty became Corporate Governance and Nominating Chair; Gorsky and Buck joined that committee, Smith and Boler Davis joined Public Responsibility.","blocks":[54]},
-  {"statement":"Todd Combs resigned from the Board in December 2025 to join management; a change of executive role is not treated as continued Board membership.","blocks":[64]},
-  {"statement":"Eleven nominees are listed; all independent except the CEO, with proposed service until the next annual meeting if elected.","blocks":[347,354,359,365,372,380,385,390,396,400,407,414]},
-  {"statement":"Complete nominee roster and the principal committee text columns appear in the opening summary; other-company principal occupations and heritage-company tenure remain separate.","blocks":[348,353,354,357,358,359,363,364,365,370,371,372,378,379,380,383,385,388,389,390,393,394,395,396,398,399,400,405,406,407,412,413,414,417,418,419]}
+ "position": "jpmorgan_chase:2025-12-31",
+ "reader": "Codex main executor from complete original text/table input",
+ "read_packets": [
+  {
+   "file": "jpmorgan_chase-2025-12-31-00.txt",
+   "blocks": [
+    0,
+    434
+   ],
+   "fully_displayed": true
+  },
+  {
+   "file": "jpmorgan_chase-2025-12-31-01.txt",
+   "blocks": [
+    435,
+    882
+   ],
+   "fully_displayed": true,
+   "truncated_gap_to_restore": [
+    630,
+    634
+   ],
+   "truncated_gap_recovered": [
+    630,
+    634
+   ]
+  }
  ],
- "complete_document_semantically_read":false,
- "images_interpreted":false,
- "new_runs":0,"new_acceptances":0,"calls":[0,0,0]
+ "facts_from_this_range": [
+  {
+   "statement": "James Dimon signs as Chairman and Chief Executive Officer; the source is the April 6, 2026 proxy within the FY2025 reporting container, not a December 31 board snapshot.",
+   "blocks": [
+    37,
+    43,
+    44,
+    53
+   ]
+  },
+  {
+   "statement": "Stephen B. Burke is Lead Independent Director.",
+   "blocks": [
+    46,
+    49,
+    68,
+    69,
+    354,
+    355
+   ]
+  },
+  {
+   "statement": "During early 2026, Rometty became Corporate Governance and Nominating Chair; Gorsky and Buck joined that committee, Smith and Boler Davis joined Public Responsibility.",
+   "blocks": [
+    54
+   ]
+  },
+  {
+   "statement": "Todd Combs resigned from the Board in December 2025 to join management; a change of executive role is not treated as continued Board membership.",
+   "blocks": [
+    64
+   ]
+  },
+  {
+   "statement": "Eleven nominees are listed; all independent except the CEO, with proposed service until the next annual meeting if elected.",
+   "blocks": [
+    347,
+    354,
+    359,
+    365,
+    372,
+    380,
+    385,
+    390,
+    396,
+    400,
+    407,
+    414
+   ]
+  },
+  {
+   "statement": "Complete nominee roster and the principal committee text columns appear in the opening summary; other-company principal occupations and heritage-company tenure remain separate.",
+   "blocks": [
+    348,
+    353,
+    354,
+    357,
+    358,
+    359,
+    363,
+    364,
+    365,
+    370,
+    371,
+    372,
+    378,
+    379,
+    380,
+    383,
+    385,
+    388,
+    389,
+    390,
+    393,
+    394,
+    395,
+    396,
+    398,
+    399,
+    400,
+    405,
+    406,
+    407,
+    412,
+    413,
+    414,
+    417,
+    418,
+    419
+   ]
+  },
+  {
+   "statement": "All eleven current nominees are existing directors, one-year proposed term to 2027; twelve directors attended the 2025 meeting. These are distinct current/proposed/historical times. Combs resignation was announced December8,2025, which is not an independently stated exact resignation day.",
+   "blocks": [
+    477,
+    527,
+    528,
+    529,
+    530
+   ]
+  },
+  {
+   "statement": "Burke is Lead Independent Director since2021; Bammann director since2013 with Risk chair and CMDC; Buck since2025 with Audit/CGNC; Boler Davis since2023 with PRC/Risk; Gorsky since2022 with Audit/CGNC; Hobson since2018 PRC chair/Risk; Novakovic since2020 Audit/PRC. Outside-company roles are kept separate.",
+   "blocks": [
+    627,
+    629,
+    655,
+    658,
+    659,
+    660,
+    661,
+    694,
+    697,
+    698,
+    699,
+    700,
+    728,
+    731,
+    732,
+    733,
+    734,
+    798,
+    801,
+    802,
+    803,
+    804,
+    833,
+    836,
+    837,
+    838,
+    839,
+    864,
+    867,
+    868,
+    869,
+    870
+   ]
+  },
+  {
+   "statement": "James Dimon current director since2004/chair since2006/CEO since2005 are attributed to JPM; BankOne chairman2000–2004 is a separate predecessor role. Source card explicitly states both his name and current JPM title, contrary to older selection omitting the adjacent name.",
+   "blocks": [
+    750,
+    751,
+    754,
+    766,
+    767,
+    769
+   ]
+  }
+ ],
+ "complete_document_semantically_read": false,
+ "images_interpreted": false,
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "calls": [
+  0,
+  0,
+  0
+ ]
 }
