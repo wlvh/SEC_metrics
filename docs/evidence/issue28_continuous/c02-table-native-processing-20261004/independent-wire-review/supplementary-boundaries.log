@@ -1,0 +1,38 @@
+{
+  "source": "synthetic program fixture; unchanged source preparer mocked to isolate new seam",
+  "network_and_subprocess": "blocked",
+  "checks": [
+    {
+      "check": "DEVELOPMENT_MODEL_keeps_pending",
+      "status": "PASS",
+      "detail": "model_answer_tested=True is only developmental; semantic_acceptance=False and both units remain pending"
+    },
+    {
+      "check": "different_valid_response_cannot_overwrite",
+      "status": "PASS",
+      "detail": "Immutable request artifact changed: <temporary-root>/saved/response.bin"
+    },
+    {
+      "check": "self_consistent_replacement_refused_by_old_external_pins",
+      "status": "PASS",
+      "detail": "C02_TABLE_MODEL_EXPECTED_NATIVE_IDENTITIES"
+    },
+    {
+      "check": "read_refuses_partial_set",
+      "status": "PASS",
+      "detail": "<temporary-root>/partial/records.jsonl"
+    },
+    {
+      "check": "records_last_interruption_resumes_exactly",
+      "status": "PASS",
+      "detail": "five prior files retained, records final gate restored and independent read succeeds"
+    }
+  ],
+  "temporary_files": "TemporaryDirectory exited and removed",
+  "model_extraction_credit": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

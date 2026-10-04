@@ -4226,6 +4226,37 @@
       "dedup_note": "list_agents has no live c02table; no same SHA register or existing independent conclusion. New representation/source wrapper only; old C02 model batch not reopened.",
       "review_started_at": "2026-10-04T09:22:55Z",
       "actual_review_seconds": 651
+    },
+    {
+      "task_name": "review_c02tablewire_4c9e195",
+      "purpose": "review",
+      "module": "c02tablewire",
+      "scope_paths": [
+        "scripts/vnext/c02_table_model_processing.py",
+        "catalog/r6/C02_model_table_development_v1.md",
+        "tests/vnext/test_c02_table_model_processing.py",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "4c9e195e631f87e5c83f95c9eba46946d581ccde",
+      "spawned_at": "2026-10-04T10:01:42.697970+00:00",
+      "ended_at": "2026-10-04T10:10:46.350731Z",
+      "tool_calls": 32,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/c02-table-native-processing-20261004/independent-wire-review/conclusion.md",
+      "verdict": "PASS_LIMITED_ACTUAL_WIRE_MAPPING",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "list_agents no active reviewer; sameSHA/register/evidence absent. Prior formatter/source-input review51cc has ended and covers different files, inherited unchanged; new actual-wire native mapping only.",
+      "review_earliest_persistent_log": "2026-10-04T10:03:59.982447Z",
+      "review_exact_started_at": null,
+      "start_time_precision": "Use parent spawn registration; first agent date tool output truncated, no exact review start asserted.",
+      "elapsed_from_dispatch_seconds": 543.653,
+      "elapsed_is_exact_review_timer": false
     }
   ],
   "ci_capacity_20260922": {
@@ -13713,7 +13744,7 @@
     "disposition": "No source formatter/core repair invalidates this batch. Peer independent FY2021 reply supports limited text assertions with output/image caveats; own FY2025 has its own original row/column check, not copied acceptance. Peer four historical D04 filings differ from own current10 results; no whole current withdrawal or new acceptance inferred. B06 interest/accrual/bond additions are source candidates, not an industrial allocation or same-scope denominator solution."
   },
   "c02_table_native_processing_20261004": {
-    "status": "PASS_PROGRAM_CHAIN_REVIEW_PENDING",
+    "status": "PASS_PROGRAM_CHAIN_AND_LIMITED_NEW_CODE_REVIEW",
     "own_base_sha": "b8b11946fafce5363056511e4261a3950f7f4dfd",
     "scope": "Explicit current C02 table wire to native pending objects. Actual ordinary source and code, author-supplied recorded program response only. No model trial or company result.",
     "module": "scripts/vnext/c02_table_model_processing.py",
@@ -13747,6 +13778,11 @@
     ],
     "batch_used": 21,
     "old_model_initial_fix_batch_reopened": false,
-    "next": "Limited exact-new-difference code review, then adequate shared media/context boundary before a meaningful new-method input-only trial. No automatic DeepSeek purpose, old group chance, company acceptance or production."
+    "next": "Shared media/content boundary for a genuinely different model input; code/native mapping ready for development-only pending proposals. No ended-batch restart, DeepSeek credit, company acceptance or production.",
+    "reviewed_sha": "4c9e195e631f87e5c83f95c9eba46946d581ccde",
+    "actual_tested_mapper_bytes_match_commit": true,
+    "review_verdict": "PASS_LIMITED_ACTUAL_WIRE_MAPPING",
+    "review_path": "docs/evidence/issue28_continuous/c02-table-native-processing-20261004/independent-wire-review/conclusion.md",
+    "review_actual_read_seconds": 5.447
   }
 }

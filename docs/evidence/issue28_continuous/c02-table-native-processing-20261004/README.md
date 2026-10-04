@@ -65,8 +65,16 @@ peer worktree/state/ledger operation. Original processing/source identities and
 all business failures stay unchanged. New paths are absent from existing
 V13/V14 JSON manifest path lists; no real execution binding is claimed.
 
-Required limited code review is pending for this new mapper/Spec delta only.
+The exact `4c9e195e` mapper/Spec delta passed limited independent review: 32
+tools, 3 messages; 35 tests, 5 supplementary boundaries and unmocked禁网冷读
+5.447s. Its six processing files retained their SHA. The first review timestamp
+was truncated; parent spawn time and earliest persistent log are distinguished
+in the register, not turned into an invented exact review timer.
 After it, a genuinely new-method development input still needs adequate media
 and content reference before blind extraction; DeepSeek-purpose permission,
 complete company acceptance, normal update and production remain separate.
 Business calls0/0/0; no new current390 result or completion percentage.
+
+The actual preparation-time mapper SHA was checked against committed `4c9e195e`
+and matches. [Review](independent-wire-review/conclusion.md) does not accept
+model semantics, completeness, paid purpose, update/Run or production.
