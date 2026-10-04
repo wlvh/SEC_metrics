@@ -1,0 +1,3 @@
+# Fixed fast-suite input subset
+
+This main-foundation reception carries the original0bc replay index bytes and only the six content-addressed objects required by the existing fast selector tests (B06 saved original arguments and one historical numeric carrier). It is not the complete original PR43 review package or a current B06 acceptance grant. No index entry or original object is rewritten; missing unrelated index members remain outside this test-only subset. Exact carried objects are recorded in docs/evidence/issue28_foundation_integration_20261004/fast-test-source-objects-completion.json. No new archive, production result, or request was made.
