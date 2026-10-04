@@ -728,6 +728,8 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
+Issue #28的main基础接收增加显式source-aware扫描入口：当前程序同时携带`tools/check_main_scalability.py`及其main policy时，Publication使用它；缺一个或出现alias时拒绝，旧程序没有这组入口则仍使用冻结旧工具。算法复用ordinary AST校验，必须同时满足确切源码hash/size、具体语法位置和完整豁免使用证明；不能把公司/财年值或任意ticker白名单化。旧扫描文件、历史Run/Publication和active字节保留，当前未冻结V13/V14执行绑定同步；此接入不授合并或生产权限。
+
 Issue #15 historical D-26保留20个fast/local并发条目；Requirement smoke现在同时加载profile-driven Issue #28与exact Issue #15 parent，R2 smoke只验证active edge和完整R2 bundle。GitHub CI执行同一fast set；`PASSED_FAST_LOCAL_ONLY`与CI green均不能升级为portable R3 integration、live或full acceptance。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。

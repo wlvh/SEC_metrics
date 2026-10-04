@@ -3066,6 +3066,13 @@ def _execute_scalability_audit(*, repo_root: Path) -> list:
         PublicationError: When the executable or scan result is unsafe.
     """
     tool_path = repo_root / "tools" / "check_no_company_literals.py"
+    successor = repo_root / "tools" / "check_main_scalability.py"
+    successor_policy = repo_root / "config" / "main_scalability_exemptions_v1.json"
+    if successor.exists() or successor_policy.exists():
+        if (successor.is_symlink() or not successor.is_file()
+                or successor_policy.is_symlink() or not successor_policy.is_file()):
+            raise PublicationError("Main scalability successor installation is incomplete")
+        tool_path = successor
     if tool_path.is_symlink() or not tool_path.is_file():
         raise PublicationError("Scalability audit executable is unsafe")
     try:

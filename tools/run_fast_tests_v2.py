@@ -26,6 +26,7 @@ FAST_TESTS = tuple(selector for original in inherited.FAST_TESTS
     "tests.vnext.test_regulatory_investigation_candidates",
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
+    "tests.vnext.test_main_scalability_audit",
 )
 ALL_PREVIOUS_SELECTORS = FAST_TESTS
 # These selectors parse complete saved filings, often with several independent
@@ -41,6 +42,7 @@ SOURCE_PREFIXES = (
     "tests.vnext.test_text_results",
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
+    "tests.vnext.test_main_scalability_audit",
 )
 SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for p in SOURCE_PREFIXES)) + (
     "tests.vnext.test_normal_companyfacts_results",

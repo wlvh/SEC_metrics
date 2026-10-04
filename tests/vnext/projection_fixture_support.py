@@ -342,6 +342,9 @@ def scoped_repository(
             REPO_ROOT / "tools" / filename,
             repo_root / "tools" / filename,
         )
+    successor = REPO_ROOT / "tools" / "check_main_scalability.py"
+    if successor.is_file():
+        shutil.copy2(successor, repo_root / "tools" / successor.name)
     # These R1/R2 compatibility tests execute today's validators against the
     # frozen historical configuration and receipts, not today's model choice.
     from tests.vnext.historical_authority_support import copy_foundation_receipts

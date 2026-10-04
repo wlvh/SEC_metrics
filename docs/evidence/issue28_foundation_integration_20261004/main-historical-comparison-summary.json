@@ -1,0 +1,41 @@
+[
+  {
+    "label": "main-original-two-broad-regressions",
+    "root": "/private/tmp/issue28-foundation-main-control-af1984ad",
+    "selectors": [
+      "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree",
+      "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity"
+    ],
+    "seconds": 0.29895774996839464,
+    "returncode": 1
+  },
+  {
+    "label": "main-fixed-two-broad-regressions",
+    "root": "/private/tmp/issue28-foundation-main-control-af1984ad",
+    "selectors": [
+      "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree",
+      "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity"
+    ],
+    "seconds": 0.3132587920408696,
+    "returncode": 0
+  },
+  {
+    "label": "candidate-fixed-two-broad-regressions",
+    "root": "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics",
+    "selectors": [
+      "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree",
+      "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity"
+    ],
+    "seconds": 0.20234641595743597,
+    "returncode": 0
+  },
+  {
+    "label": "candidate-historical-transition-full",
+    "root": "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics",
+    "selectors": [
+      "tests.vnext.test_issue28_requirement_transition"
+    ],
+    "seconds": 41.32479849993251,
+    "returncode": 1
+  }
+]

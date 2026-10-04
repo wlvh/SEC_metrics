@@ -26,3 +26,27 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python3 tools/run_fast_tests.py --jobs 4
+
+  main-foundation:
+    name: Main foundation audit and historical compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out fixed candidate
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Validate main audit and fixed historical objects
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: |
+          python3 -m unittest -v tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
+          python3 tools/check_main_scalability.py --output /tmp/main-scalability-audit.csv
+          python3 tools/check_provider_egress.py
+          python3 tools/generate_metrics_reference.py --check
