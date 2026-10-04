@@ -13818,9 +13818,14 @@
   "ci_df84865d": {
     "run_id": 37194640595,
     "head_sha": "df84865dd64260b7dd6307b852b058f3305a307e",
-    "status": "in_progress",
-    "conclusion": null,
-    "observation": "One immediate reading after push; not final. Separate Metrics reference success is not main CI success."
+    "status": "completed",
+    "conclusion": "failure",
+    "observation": "One immediate reading after push; not final. Separate Metrics reference success is not main CI success.",
+    "updated_at": "2026-10-04T10:48:05Z",
+    "failure_job": 111413856313,
+    "failure_test": "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+    "failure_kind": "FIXED_LEDGER_PATH_DATE_CLASSIFIED_AS_FISCAL_LITERAL",
+    "fix": "Existing config budget_root replaces constant in newC02 protection; tests26+.audit5 pass. No whitelist or unapproved scope/period rule."
   },
   "c02_table_model_input_trial_20261004": {
     "status": "PASS_LIMITED_DEVELOPMENT_RELATIONSHIPS_POLICY_MEDIA_COMPLETENESS_PENDING",
@@ -13865,6 +13870,8 @@
     "DeepSeek_credit": false,
     "next": "Actual native independent read and remaining media/completeness/qualification decision; no gratuitous same-method second answer or regex. Minimal target plan1+1 max2 only a proposal, not ready/purpose permission.",
     "native_read_seconds": 5.532,
-    "all_model_native_files_equal": true
+    "all_model_native_files_equal": true,
+    "old_runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195",
+    "old_runtime_material_scope": "Exact imported code plus existing configuration/spec/requirement authorities; raw SEC data and original native packet not copied/resigned. Frozen old mapper remains3097ae19. Source root stays original."
   }
 }

@@ -191,3 +191,13 @@ class C02TableModelProcessingTest(unittest.TestCase):
             (root/'alias').symlink_to(root/'target', target_is_directory=True)
             with self.assertRaisesRegex(ValueError, 'OUTPUT_ALIAS'):
                 m._root(root/'alias'/'child')
+
+    def test_configured_ledger_guard_is_not_a_fixed_fiscal_period(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder).resolve()
+            ledger = base/'configured-live-ledger'
+            with patch.object(m, 'strict_json_file', return_value={'budget_root': str(ledger)}):
+                for forbidden in [ledger, ledger/'child', base]:
+                    with self.subTest(root=forbidden), self.assertRaisesRegex(ValueError, 'LIVE_LEDGER_OUTPUT'):
+                        m._root(forbidden)
+                self.assertEqual(m._root(base/'development'), base/'development')

@@ -9,7 +9,7 @@ from pathlib import Path
 
 from git_workspace import first_symlink_in_path
 from sec_http import write_immutable_bytes
-from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_loads
+from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_loads, strict_json_file
 from .c02_grouped_source import grouped_governance_source
 from .c02_model_processing import _bytes, _response
 from .c02_model_review_view import source_review_view
@@ -168,7 +168,8 @@ def _root(directory):
     _need(path.is_absolute(), 'ABSOLUTE_OUTPUT_REQUIRED')
     _need(first_symlink_in_path(path=path) is None, 'OUTPUT_ALIAS')
     path = path.resolve()
-    ledger = Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13').resolve()
+    ledger = Path(strict_json_file(path=ROOT/
+        'config/issue28_continuous_calls_v1.json')['budget_root']).resolve()
     _need(path != ledger and ledger not in path.parents and path not in ledger.parents, 'LIVE_LEDGER_OUTPUT')
     _need(path != ROOT and ROOT not in path.parents and path not in ROOT.parents
           and not any((p/'outputs/active_publication.json').exists() for p in (path, *path.parents)),
