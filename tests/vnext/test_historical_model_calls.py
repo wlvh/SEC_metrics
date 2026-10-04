@@ -650,6 +650,24 @@ class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestC
                                         "ISSUE_47_MODEL_TEST_CANNOT_USE_A_GRANTED_OR_CHECKOUT_LEDGER"):
                 calls.recorded_model_ledger(root=root, allowance=self.allowance)
 
+    def test_a_granted_root_alias_cannot_become_a_recorded_test_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory).resolve()
+            granted = base / 'granted'
+            granted.mkdir()
+            alias = base / 'alias'
+            alias.symlink_to(granted, target_is_directory=True)
+            allowance = {**self.allowance, 'budget_root': str(alias)}
+            for root in [granted, alias, granted / 'child', alias / 'child', base]:
+                with self.subTest(root=root), self.assertRaisesRegex(
+                        calls.HistoricalModelCallError,
+                        'ISSUE_47_MODEL_TEST_CANNOT_USE_A_GRANTED_OR_CHECKOUT_LEDGER'):
+                    calls.recorded_model_ledger(root=root, allowance=allowance)
+            # A disjoint synthetic root still works; no ledger lock/write is
+            # performed on either spelling of the granted root.
+            self.assertIsNotNone(calls.recorded_model_ledger(
+                root=base.parent / (base.name + '-disjoint'), allowance=allowance))
+
 
 class NothingHereReachesAProvider(unittest.TestCase):
     """The state today: the patch is not applied, so every path to the socket is closed."""

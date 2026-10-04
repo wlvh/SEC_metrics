@@ -1106,3 +1106,40 @@ CI第四分片的170入口无重叠、无遗漏；不降低单项限时，不改
 Issue #47 四片 CI 的 E01 阅读登记回归（2026-10-04，`ci-e01-reading-register-2026-10-04/`）：37182511452 的 shard2 原样发现 `test_e01_eight_o_one_reading` 两个断言失败，本地 15 项复现相同。登记已有付费阅读及 Pfizer 新确切 Result 的第二释放，测试还停在旧来源集合/单项释放。现在严格核完整五类来源及两个 Result/closure/Run/read_by 身份，不改登记或业务答案。E01 原阅读、付费阅读和接受身份共 45 项通过，4.315 秒，原失败及错误模块命令单存；快速层选择未动，181 入口先前通过可复用，当前完整 CI 另验。
 
 Issue #47 B06 期限栏关系（2026-10-04，`b06-older-years/bond-sections/`）：新fast类10项及继承原完整scope反例的source类8项在隔离工作树通过，78.947秒；完整当前原件证明字节相同。历史级联13项通过240.410秒，DEI引用/分片9项通过5.931秒。实际FY2024原件的21成员与组件通过，但完整B06仍在后续具名性质检查拒绝，不建Run或增接受。快照新增绑定规则，继承authority不变。fast首批182入口的一个快照模块30.036秒超时，原FAILED报告保留；同模块5项单测15.731秒通过，原运行器同30秒上限限定重跑16.673秒rc0，两次执行合计核完182入口。不能报告为一次完整PASS，不提高上限。新source调度95秒仅是本地×1.2初估，待其首轮CI实测。
+
+**Issue #47 本地 B06 零值/完整开发请求（2026-10-04）**：fast 增加
+`tests.vnext.test_historical_fixed_zero` 与 `tests.vnext.test_b06_financing_context`，
+仍使用原30秒单入口上限。前者守精确 Registry4 转换、非转换普通词拒绝、nil/sign、
+命名空间、单位和 HTML/XML 冲突；后者守完整输入保留、必需文件集合/摘要、
+包内文字/表格与来源计数，不将输入准备当来源准入。
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest \
+  tests.vnext.test_historical_fixed_zero tests.vnext.test_b06_financing_context \
+  tests.vnext.test_historical_bond_sections tests.vnext.test_c02_table_context \
+  tests.vnext.test_compact_table_payload -v
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest \
+  tests.vnext.test_historical_debt_results tests.vnext.test_historical_debt_fallback_forms \
+  tests.vnext.test_historical_bond_sections_material tests.vnext.test_historical_dei -v
+```
+
+本地定向28项与来源/级联61项通过；源码、原件、旧v3七文件、新完整请求及其
+参考 tokenizer 字节重建分别有收据。Ford 新一次独立子代理原答不修改；执行者
+另检查冻结前参考、出处和目标 tokenizer，54陈述有来源支持，35合并参考单元中
+F35前董事漏答，输出4448超4096；14发行人评价的口径仍未决，没有接受信用。
+检查前保存 `outputs/semantic_audit_receipt.json` 与 `outputs/scalability_audit.csv`，
+完成后逐字节还原，证据见本地接续目录。完整 fast/CI 终态按对应实际报告读取。
+
+本地Lumen责任输入探针新增fast模块
+`tests.vnext.test_c02_responsibility_packets`：全文B文本、全表描述符及完整表格/额外
+字符串联合必须等于原view，缺表/重复/单元变动/字典变动与块责任空档/重叠均拒绝。
+真实Lumen只做两种完整字典分配及至多10次离线整表责任边界计量，原单请求失败保留；
+未证明跨包内容整合或目标模型输出。`test_historical_model_calls`另增加批准根symlink
+拼写的录制根负例；修复只规范化双方路径比较，不打开/改写批准账本或原模型包。
+
+`tests.vnext.test_c02_development_response_codec`只验证开发输出的字段/重复字符串引用，
+逐对象保留statement/source_blocks/stated_time/unresolved，错误引用、bool索引、额外
+字段及超64项拒绝，不替原答补缺或授信用。原Ford4448-token原答完整编码后3570，
+只证明无损结构可装下，未证明模型能生成。fast最终185入口串行通过193.922秒；
+随后新增codec入口经同一原30秒runner单独通过，合计186入口有证据，不能说是一轮
+186全套PASS。第一轮184中的路径负例失败和超时报告均保留。

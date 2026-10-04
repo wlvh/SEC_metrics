@@ -1,0 +1,44 @@
+{
+ "record_type": "ISSUE47_B06_LOCAL_REBUILD_AND_TRANSFORM_DIFF",
+ "frozen_v3_all_seven_files_byte_identical": true,
+ "frozen_v3_files": {
+  "document.json": "87e1112c63804161448ced4027608de96e62331aef8e826c9c17b6f982fb4bd9",
+  "metadata.json": "f40d93b9174df9b09a42f7a77a1e596b9766a71ec4d77e85945f5ba723dddc03",
+  "native-current-financing-facts.json": "1728dd8dc7ed7611ca6a9f24192069138ccc5574b30f3730925948bfd2aea140",
+  "normal-b06-source-binding.json": "8bead84e624769cab754e4da9685f6ad673611aeca28bfbe229e3569365a3ed3",
+  "source-only-package.json": "8ccd641b89506d3fb3bdb8c201e7be224f407ebcc8839dc5a7a3ac219e31f7ff",
+  "table-grid.json": "d12b78b1006472f7c9d71531b7bb56f559622546f925e431df81e6123d694a2b",
+  "view.json": "d232beaf3551dbe55a95405cd46332ed3db94b9df7c9314098ed26c9f9236b76"
+ },
+ "v4_unchanged_full_text_grid_view_and_normal_binding": true,
+ "v4_candidate_counts_unchanged": {
+  "primary": 152,
+  "xml": 152
+ },
+ "only_native_fact_changes": [
+  {
+   "source_kind": "primary",
+   "ordinal": 829,
+   "before_value": null,
+   "before_issue": "C03_ZERO_TRANSFORM_TEXT_CONFLICT",
+   "after_value": "0",
+   "after_issue": null
+  },
+  {
+   "source_kind": "primary",
+   "ordinal": 833,
+   "before_value": null,
+   "before_issue": "C03_ZERO_TRANSFORM_TEXT_CONFLICT",
+   "after_value": "0",
+   "after_issue": null
+  }
+ ],
+ "complete_b06_proven": false,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}

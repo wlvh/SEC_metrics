@@ -1,0 +1,21 @@
+{
+  "request_sha256": "146142032aea59dcc713cd07e6dfd1a44aaa0b8083ce8a5bcbc53115440b9f32",
+  "answer_path": "/tmp/issue47-ford-input-only-20261004/ford-development-answer.json",
+  "answer_sha256": "ac10fa5cb614bcafd650308c626d0d8c45a1b1c0d46d95a9dd69f624514613f5",
+  "fact_count": 54,
+  "unresolved_count": 3,
+  "read_blocks": "B0-B4911",
+  "read_extra_cell_caption_strings": "S4912-S5194",
+  "read_tables": "table_000001-table_000402",
+  "replayed_truncated_intervals": [
+    "B650-B745",
+    "B1064-B1273",
+    "B4603-B4669"
+  ],
+  "limitations": [
+    "Input-only development extraction; no LIVE/native result or acceptance credit.",
+    "No other business files, network, SEC/provider, external model/API, repository writes, Run creation or delegation.",
+    "Dictionary text, source block identity, table spans and positive marker mappings used as supplied; source images not interpreted.",
+    "Qualifications attributed to filing assessments, not independently verified credentials."
+  ]
+}

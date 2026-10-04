@@ -1356,7 +1356,7 @@ def require_published_model_start(*, allowance, reader, checkout=None):
 def recorded_model_ledger(*, root, allowance):
     """Offline tests only: a recorded ledger in a root no allowance grants."""
     root = Path(root).resolve()
-    granted = Path(str(allowance.get("budget_root") or "/nonexistent-granted-root"))
+    granted = Path(str(allowance.get("budget_root") or "/nonexistent-granted-root")).resolve()
     _need(root != granted and granted not in root.parents and root not in granted.parents
           and root != ROOT and ROOT not in root.parents,
           "ISSUE_47_MODEL_TEST_CANNOT_USE_A_GRANTED_OR_CHECKOUT_LEDGER")

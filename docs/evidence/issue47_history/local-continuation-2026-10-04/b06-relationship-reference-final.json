@@ -1,0 +1,2192 @@
+{
+ "record_type": "ISSUE47_B06_EXECUTOR_RELATIONSHIP_REFERENCE_INCREMENT",
+ "source_sha256": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+ "base_references": [
+  "../b06-older-years/financing-context/executor-source-reference.json",
+  "../b06-older-years/financing-context/executor-source-reference-v3.json"
+ ],
+ "statements": [
+  {
+   "id": "R09",
+   "blocks": [
+    1267,
+    1268,
+    1269,
+    1270,
+    1271,
+    1272,
+    1273,
+    1274,
+    1275,
+    1276,
+    1277,
+    1278,
+    1279,
+    1280,
+    1281,
+    1282,
+    1283,
+    1284,
+    1285,
+    1286,
+    1287,
+    1288,
+    1289,
+    1290,
+    1291,
+    1292,
+    1293,
+    1294,
+    1295,
+    1296,
+    1297,
+    1298,
+    1299,
+    1300,
+    1301,
+    1302,
+    1303,
+    1304,
+    1305,
+    1306,
+    1307,
+    1308,
+    1309,
+    1310,
+    1311,
+    1312,
+    1313,
+    1314,
+    1315,
+    1316,
+    1317,
+    1318,
+    1319,
+    1320,
+    1321,
+    1399,
+    1400,
+    1401,
+    1402,
+    1403,
+    1404,
+    1405,
+    1406,
+    1407,
+    1408,
+    1409,
+    1410,
+    1411,
+    1412,
+    1413,
+    1414,
+    1415,
+    1734,
+    1735,
+    1736,
+    1737,
+    1738,
+    1739
+   ],
+   "statement": "The company separately reports USD 48 million of accrued interest in Note 7 accounts payable/accrued liabilities. Note 6 bond principal USD 2,785 million minus USD 20 million unamortized issue costs/discount plus USD 14 million premium equals USD 2,779 million carrying borrowing (current USD 6 million plus noncurrent USD 2,773 million), independently corroborated in Note 12. The USD 48 million is not an arithmetic member of that reported USD 2,779 million. This establishes separate presentation and measurement, not an approved instruction to add or exclude interest from B06. Debt-set treatment of a separately recognized financing accrual remains unresolved."
+  },
+  {
+   "id": "R10",
+   "blocks": [
+    854,
+    1763,
+    1764,
+    1765,
+    1766,
+    1767,
+    1768,
+    1769,
+    1770,
+    1771,
+    1772
+   ],
+   "statement": "Supplier programs leave the Company obligations, amounts and scheduled payment terms unchanged; the Company is not party to the supplier-financial institution agreements. Outstanding USD 116 million is within merchandise accounts payable; USD 112 million beginning plus USD 854 million invoices minus USD 850 million paid equals USD 116 million ending. These source facts support the reported trade-payable nature under the approved ordinary-trade exclusion without conducting an expanded supply-chain reclassification. The taxonomy name alone does not decide nature."
+  },
+  {
+   "id": "R11",
+   "blocks": [
+    851,
+    852,
+    853,
+    854,
+    855,
+    856,
+    857,
+    858,
+    859,
+    860,
+    861,
+    862,
+    863,
+    864,
+    865,
+    866,
+    867,
+    868,
+    869,
+    870
+   ],
+   "statement": "The consolidated balance sheet reports USD 4,552 million total shareholders equity and separately presents short-term debt, long-term debt, long-term lease liabilities, merchandise accounts payable, and accounts payable/accrued liabilities. The complete accounts-payable total cannot be added as debt: it contains operating and other reported categories, including the separately identified finance-lease and interest components. The current undimensioned native StockholdersEquity in both sources independently supports USD 4,552 million; a future ratio must use this same scope."
+  }
+ ],
+ "raw_block_citations": [
+  {
+   "text": "LIABILITIES AND SHAREHOLDERS’ EQUITY",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "LIABILITIES AND SHAREHOLDERS’ EQUITY",
+    "raw_start_byte": 835757,
+    "raw_end_byte": 835799,
+    "raw_span_sha256": "e619adbe8aa0467a304dfcd76bc1ad209597199da7dfdf81a6cd9507c847ea24"
+   },
+   "block_index": 851,
+   "raw_start_byte": 835757,
+   "raw_end_byte": 835799,
+   "raw_span_sha256": "e619adbe8aa0467a304dfcd76bc1ad209597199da7dfdf81a6cd9507c847ea24"
+  },
+  {
+   "text": "Current Liabilities:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 852,
+   "raw_start_byte": 836275,
+   "raw_end_byte": 836295,
+   "raw_span_sha256": "112ba791701c3ce9abc9644d76c5e3201f03a5c6c0a5817d803fe09bf499a602"
+  },
+  {
+   "text": "Short-term debt$6 $—",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 853,
+   "raw_start_byte": 836726,
+   "raw_end_byte": 838048,
+   "raw_span_sha256": "2e89bd219aa15eb814970120e847bdadd2272dffcc3a903daae37f124b4182e3"
+  },
+  {
+   "text": "Merchandise accounts payable1,893 1,913",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 854,
+   "raw_start_byte": 838386,
+   "raw_end_byte": 839387,
+   "raw_span_sha256": "82bcf8f1c7c095dedd3bb7f96bbd66612358c5f393265182791fa0fa520af32c"
+  },
+  {
+   "text": "Accounts payable and accrued liabilities2,625 2,571",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 855,
+   "raw_start_byte": 839725,
+   "raw_end_byte": 840744,
+   "raw_span_sha256": "7a70b87a4389c47e1db39e04f986607e7695f63a2960efec9a5d5f0a4a53d5c3"
+  },
+  {
+   "text": "Income taxes payable— 48",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 856,
+   "raw_start_byte": 841082,
+   "raw_end_byte": 842046,
+   "raw_span_sha256": "bfe30008f5182eb51bff7db77de0afac59eb1d34882db2d53ba6106c3212dcde"
+  },
+  {
+   "text": "Total Current Liabilities4,524 4,532",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 857,
+   "raw_start_byte": 842384,
+   "raw_end_byte": 843452,
+   "raw_span_sha256": "0c6d3fd86bf1f6f2526c79b85d1ddfe15dd1a1764921cfd4a3b163b4a199b1c9"
+  },
+  {
+   "text": "Long-Term Debt2,773 2,998",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 858,
+   "raw_start_byte": 843807,
+   "raw_end_byte": 844826,
+   "raw_span_sha256": "744989ceebf4a2826906fe2795967aec5b5a5bd6e807149ee49e1f2fe4a5c2ea"
+  },
+  {
+   "text": "Long-Term Lease Liabilities2,927 2,986",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 859,
+   "raw_start_byte": 845155,
+   "raw_end_byte": 846147,
+   "raw_span_sha256": "15de9a8ac5e8c51d2839e31735db0f7269c7e582dbc4489cc02556866f93ad74"
+  },
+  {
+   "text": "Deferred Income Taxes724 745",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 860,
+   "raw_start_byte": 846476,
+   "raw_end_byte": 847426,
+   "raw_span_sha256": "6539a2638cfd2b57fdd4f15e8bbc5a823a78ad827fa76012ea10f37394d358bc"
+  },
+  {
+   "text": "Other Liabilities902 950",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 861,
+   "raw_start_byte": 847755,
+   "raw_end_byte": 848691,
+   "raw_span_sha256": "6abdabdc7af00b42d2a06f9be9e295b8c844714cdfc34e4bc80cfa8b61f59c7d"
+  },
+  {
+   "text": "Shareholders’ Equity:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 862,
+   "raw_start_byte": 849020,
+   "raw_end_byte": 849047,
+   "raw_span_sha256": "068856516c1bed80832b1ebe3dc023b2a9cd6686f06c01a0f506f3a9e309a2d6"
+  },
+  {
+   "text": "Common stock (277.7 and 274.2 shares outstanding)",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 863,
+   "raw_start_byte": 849499,
+   "raw_end_byte": 849840,
+   "raw_span_sha256": "881153a6bacf271545e3766c643681f3b5bf3a6a34ed9aeeb284efb9d3503fa1"
+  },
+  {
+   "text": "3 3",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 864,
+   "raw_start_byte": 850188,
+   "raw_end_byte": 850741,
+   "raw_span_sha256": "10a1e3b96fadde8636074d38b1650b895493e7237d5a4534f692810f7929d8c6"
+  },
+  {
+   "text": "Additional paid-in capital300 352",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 865,
+   "raw_start_byte": 851079,
+   "raw_end_byte": 852040,
+   "raw_span_sha256": "2e254ba93fda4ad2bad1b4517313e674a2eb0e8ab49359de9a647631a198594f"
+  },
+  {
+   "text": "Accumulated equity6,499 6,088",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 866,
+   "raw_start_byte": 852378,
+   "raw_end_byte": 853393,
+   "raw_span_sha256": "1763778eaf2bd234768a22d35d5ce6a1f441badc77f14b73627284124b286adc"
+  },
+  {
+   "text": "Treasury stock(1,801)(1,912)",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 867,
+   "raw_start_byte": 853731,
+   "raw_end_byte": 854714,
+   "raw_span_sha256": "cca3dcebb92d7f7d7af536eec948d147e571432425fd3db39a417ba18522b065"
+  },
+  {
+   "text": "Accumulated other comprehensive loss(449)(496)",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 868,
+   "raw_start_byte": 855052,
+   "raw_end_byte": 856059,
+   "raw_span_sha256": "aa35e12e75f88cab385a699863064f80b6f462e6977a44165b852475af755c23"
+  },
+  {
+   "text": "Total Shareholders' Equity4,552 4,035",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 869,
+   "raw_start_byte": 856397,
+   "raw_end_byte": 857466,
+   "raw_span_sha256": "c80595e253dabc5ae4dd63a7b0d63585d170df32cd94ab86eb7ce02f1a8f583d"
+  },
+  {
+   "text": "Total Liabilities and Shareholders’ Equity$16,402 $16,246",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 870,
+   "raw_start_byte": 857830,
+   "raw_end_byte": 859545,
+   "raw_span_sha256": "12f7ced6f91e6a5ca036ece46e2751cfa8b93c6c2d86a0918d8f312858cfe33b"
+  },
+  {
+   "text": "6. Financing",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "6. Financing",
+    "raw_start_byte": 1292954,
+    "raw_end_byte": 1293107,
+    "raw_span_sha256": "2256290c224a178470459d01a843e9b40edc3e6037d39316227cab1ee82c18af"
+   },
+   "block_index": 1267,
+   "raw_start_byte": 1292954,
+   "raw_end_byte": 1293107,
+   "raw_span_sha256": "2256290c224a178470459d01a843e9b40edc3e6037d39316227cab1ee82c18af"
+  },
+  {
+   "text": "The Company's debt is as follows:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1268,
+   "raw_start_byte": 1293423,
+   "raw_end_byte": 1293456,
+   "raw_span_sha256": "4416f8f4201afe06627ee1411810bf19d256c79a0b1f597cea8a154fa1f2878f"
+  },
+  {
+   "text": "February 1,",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "February 1,",
+    "raw_start_byte": 1294205,
+    "raw_end_byte": 1294216,
+    "raw_span_sha256": "b84493a72281a1348696476cb81543e933df00b67fd5b19d76afc97e7b0b2bbd"
+   },
+   "block_index": 1269,
+   "raw_start_byte": 1294205,
+   "raw_end_byte": 1294216,
+   "raw_span_sha256": "b84493a72281a1348696476cb81543e933df00b67fd5b19d76afc97e7b0b2bbd"
+  },
+  {
+   "text": "2025February 3,",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "2025February 3,",
+    "raw_start_byte": 1294221,
+    "raw_end_byte": 1294502,
+    "raw_span_sha256": "7b1c6942cce309e4e8193996097ac13ad5c9a4fc39483f30344a734bacbeb672"
+   },
+   "block_index": 1270,
+   "raw_start_byte": 1294221,
+   "raw_end_byte": 1294502,
+   "raw_span_sha256": "7b1c6942cce309e4e8193996097ac13ad5c9a4fc39483f30344a734bacbeb672"
+  },
+  {
+   "text": "2024",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "2024",
+    "raw_start_byte": 1294507,
+    "raw_end_byte": 1294511,
+    "raw_span_sha256": "6557739a67283a8de383fc5c0997fbec7c5721a46f28f3235fc9607598d9016b"
+   },
+   "block_index": 1271,
+   "raw_start_byte": 1294507,
+   "raw_end_byte": 1294511,
+   "raw_span_sha256": "6557739a67283a8de383fc5c0997fbec7c5721a46f28f3235fc9607598d9016b"
+  },
+  {
+   "text": "(millions)",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "(millions)",
+    "raw_start_byte": 1294764,
+    "raw_end_byte": 1294775,
+    "raw_span_sha256": "30ff2e13166cdd711522bd750bd6e8ac0562d05f0ed0414baf7b5c1a54404d86"
+   },
+   "block_index": 1272,
+   "raw_start_byte": 1294764,
+   "raw_end_byte": 1294775,
+   "raw_span_sha256": "30ff2e13166cdd711522bd750bd6e8ac0562d05f0ed0414baf7b5c1a54404d86"
+  },
+  {
+   "text": "Short-term debt:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1273,
+   "raw_start_byte": 1295005,
+   "raw_end_byte": 1295021,
+   "raw_span_sha256": "0c8aef5f964b700102303250d71fb8dc5471871ccc88c60c7366d95b96f95944"
+  },
+  {
+   "text": "7.60% Senior debentures due 2025",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1274,
+   "raw_start_byte": 1295766,
+   "raw_end_byte": 1295832,
+   "raw_span_sha256": "76e795a3e8c6f8ef6aa3ad1fe2f6a1fc1012465f467eb420c3af8d6b40b91cde"
+  },
+  {
+   "text": "$6 $—",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1275,
+   "raw_start_byte": 1296053,
+   "raw_end_byte": 1297147,
+   "raw_span_sha256": "e1e0ee59954e301523363faca230a5dfe31b91d1f5658ecd39c3c7a0b53422f9"
+  },
+  {
+   "text": "$6 $—",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1276,
+   "raw_start_byte": 1297560,
+   "raw_end_byte": 1298756,
+   "raw_span_sha256": "734067b74fdf3c2d7d6071f5d8fb2e83df23e35c3182dc04edb9d233bfd6acc6"
+  },
+  {
+   "text": "Long-term debt:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1277,
+   "raw_start_byte": 1299111,
+   "raw_end_byte": 1299700,
+   "raw_span_sha256": "f8ea17d17d474cc374c782da91cc6cacbd9d91525c42a94a66b4be64a2368f3f"
+  },
+  {
+   "text": "7.60% Senior debentures due 2025",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1278,
+   "raw_start_byte": 1300253,
+   "raw_end_byte": 1300319,
+   "raw_span_sha256": "76e795a3e8c6f8ef6aa3ad1fe2f6a1fc1012465f467eb420c3af8d6b40b91cde"
+  },
+  {
+   "text": "$— $6",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1279,
+   "raw_start_byte": 1300540,
+   "raw_end_byte": 1301668,
+   "raw_span_sha256": "c1263b1d8d33ee097fd76f3f70760249013a850d0c943c2475494b51dbc7a398"
+  },
+  {
+   "text": "6.79% Senior debentures due 2027",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1280,
+   "raw_start_byte": 1302320,
+   "raw_end_byte": 1302386,
+   "raw_span_sha256": "8aa64cf3142287957c3b8d521a6707b0e801776aee64cced5aadae6741c4d666"
+  },
+  {
+   "text": "61 71",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1281,
+   "raw_start_byte": 1302747,
+   "raw_end_byte": 1303315,
+   "raw_span_sha256": "03e098a889cd7edf7b0add220a06148af3659da2da8595d122796dd7422c7118"
+  },
+  {
+   "text": "6.70% Senior debentures due 2028",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1282,
+   "raw_start_byte": 1303969,
+   "raw_end_byte": 1304035,
+   "raw_span_sha256": "9dde84731bcfd40f32217453222239850b287409a6a5dfefebc099891ce23f78"
+  },
+  {
+   "text": "28 29",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1283,
+   "raw_start_byte": 1304397,
+   "raw_end_byte": 1304966,
+   "raw_span_sha256": "4fa3dd057a07133b53e2a4f433d0c99b52d4ba87ccdbf148fb689fbcd187127c"
+  },
+  {
+   "text": "7.00% Senior debentures due 2028",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1284,
+   "raw_start_byte": 1305620,
+   "raw_end_byte": 1305686,
+   "raw_span_sha256": "b21513c943adf96ccbf5df5148010995f57c76cb048ff810d1959f432bad2dca"
+  },
+  {
+   "text": "94 105",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1285,
+   "raw_start_byte": 1306048,
+   "raw_end_byte": 1306618,
+   "raw_span_sha256": "c47e81f055b4d2b2deb76e7b579f57767c38d857c181cca537a87991dd6e0db2"
+  },
+  {
+   "text": "6.70% Senior exchanged debentures due 2028",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1286,
+   "raw_start_byte": 1307272,
+   "raw_end_byte": 1307348,
+   "raw_span_sha256": "dcf55ed8fca664e9492f51d54c3058fda159ba831a0558e3926164d96fd10eb9"
+  },
+  {
+   "text": "54 73",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1287,
+   "raw_start_byte": 1307710,
+   "raw_end_byte": 1308279,
+   "raw_span_sha256": "7328a5a7eb2f2a81a80943583f1baa70e1e4bddd05af46f77ae0a2f78cf97b12"
+  },
+  {
+   "text": "8.75% Senior exchanged debentures due 2029",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1288,
+   "raw_start_byte": 1308933,
+   "raw_end_byte": 1309009,
+   "raw_span_sha256": "c857b3c289476cb5b6a6214f7d0a5673f71a597e99d722887a2a73f913a1536f"
+  },
+  {
+   "text": "13 13",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1289,
+   "raw_start_byte": 1309371,
+   "raw_end_byte": 1309940,
+   "raw_span_sha256": "5510480260ec72ec6a5acef7459cc59128d940461733874a0f903344393773b8"
+  },
+  {
+   "text": "6.90% Senior debentures due 2029",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1290,
+   "raw_start_byte": 1310594,
+   "raw_end_byte": 1310660,
+   "raw_span_sha256": "c916a15fc355c88af50aeddef1139462b9bf05b8c58ee3162da5858b927b8e0b"
+  },
+  {
+   "text": "72 79",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1291,
+   "raw_start_byte": 1311022,
+   "raw_end_byte": 1311591,
+   "raw_span_sha256": "444680e12ed6268a37e16c7a27bad0960270ead0a18ad599dc28ee059d4907b7"
+  },
+  {
+   "text": "5.875% Senior notes due 2029",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1292,
+   "raw_start_byte": 1312245,
+   "raw_end_byte": 1312307,
+   "raw_span_sha256": "9c143573e47ae3a05de74f617e131634cb46f719d0a2dfc994ae6bca4d63aca7"
+  },
+  {
+   "text": "326 500",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1293,
+   "raw_start_byte": 1312669,
+   "raw_end_byte": 1313240,
+   "raw_span_sha256": "024dfd420099b91ca428a5208a57488d9f5a7af281c050907ebee1387adb0036"
+  },
+  {
+   "text": "5.875% Senior notes due 2030",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1294,
+   "raw_start_byte": 1313894,
+   "raw_end_byte": 1313956,
+   "raw_span_sha256": "435f356499b98c1bfb06771cc08eb9dd3390f1606854a839b3c6151f56a4592a"
+  },
+  {
+   "text": "425 425",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1295,
+   "raw_start_byte": 1314318,
+   "raw_end_byte": 1314889,
+   "raw_span_sha256": "12042880c5be5fb4e16ae3837998f2c27f55c5a1ce3d28440d0156ec60c2b817"
+  },
+  {
+   "text": "7.875% Senior exchanged debentures due 2030",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1296,
+   "raw_start_byte": 1315543,
+   "raw_end_byte": 1315620,
+   "raw_span_sha256": "86f3533df05a22f6cba5513b5a276b7817ed5599e1755f589de86c2c97b40974"
+  },
+  {
+   "text": "5 5",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1297,
+   "raw_start_byte": 1315982,
+   "raw_end_byte": 1316549,
+   "raw_span_sha256": "b184be645edcbf01a136197afb83ad03add1080410c18e834c0cec1177f897c5"
+  },
+  {
+   "text": "7.875% Senior debentures due 2030",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1298,
+   "raw_start_byte": 1317203,
+   "raw_end_byte": 1317270,
+   "raw_span_sha256": "a4217008f1a9f1c480c998c79c1240b3afc8e3e605cb7bab9e117e20d4a4f6cb"
+  },
+  {
+   "text": "5 5",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1299,
+   "raw_start_byte": 1317632,
+   "raw_end_byte": 1318199,
+   "raw_span_sha256": "cbe0905fb6fb7e7addb07478ce26de0eb42a8a5891fc43c8932ca5c5d3a520ba"
+  },
+  {
+   "text": "6.90% Senior debentures due 2032",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1300,
+   "raw_start_byte": 1318853,
+   "raw_end_byte": 1318919,
+   "raw_span_sha256": "1d33588ae26fee1759f636fa4b41be8eee12a1fc0e52ea0d6ef232b13eeb1277"
+  },
+  {
+   "text": "12 12",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1301,
+   "raw_start_byte": 1319281,
+   "raw_end_byte": 1319850,
+   "raw_span_sha256": "26ec3abf7fd51ba685bd1d1daa7407ec4e77c019a5512576d7b5ea0f97ea425e"
+  },
+  {
+   "text": "6.125% Senior notes due 2032",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1302,
+   "raw_start_byte": 1320504,
+   "raw_end_byte": 1320566,
+   "raw_span_sha256": "b9fc34618788c9ad5168dc1d021c6b3489a68a4be8358fe6a3b3992fe736f195"
+  },
+  {
+   "text": "425 425",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1303,
+   "raw_start_byte": 1320928,
+   "raw_end_byte": 1321499,
+   "raw_span_sha256": "5e6865143f9be7933c17cf3c9f2823a90c8e6c65266749987d7d191edb1b6a89"
+  },
+  {
+   "text": "6.90% Senior exchanged debentures due 2032",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1304,
+   "raw_start_byte": 1322153,
+   "raw_end_byte": 1322229,
+   "raw_span_sha256": "a9850f96f63d0cf70523cc855ec1d405805cddeb02db92c1578a929cd67f46ee"
+  },
+  {
+   "text": "1 1",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1305,
+   "raw_start_byte": 1322591,
+   "raw_end_byte": 1323158,
+   "raw_span_sha256": "a1c545ceff5a5fdd1f412e5c7ed41f9698ba4a43e32f0a0cd78871a829ac3b04"
+  },
+  {
+   "text": "4.50% Senior notes due 2034",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1306,
+   "raw_start_byte": 1323812,
+   "raw_end_byte": 1323873,
+   "raw_span_sha256": "a32a66aa644b4413a58ff3dbb8e3104b1865278c48a381ab8d055dc05f2fe708"
+  },
+  {
+   "text": "367 367",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1307,
+   "raw_start_byte": 1324235,
+   "raw_end_byte": 1324806,
+   "raw_span_sha256": "5c379d841103d266e88e07d0b983a75159d8f465464c01ddcdb24eba3f77a71a"
+  },
+  {
+   "text": "6.70% Senior exchanged debentures due 2034",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1308,
+   "raw_start_byte": 1325460,
+   "raw_end_byte": 1325536,
+   "raw_span_sha256": "de92a1ecc18e8d497663c47389ccf2fba4b123e7d020caa0409329f6a7226d4c"
+  },
+  {
+   "text": "181 181",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1309,
+   "raw_start_byte": 1325898,
+   "raw_end_byte": 1326469,
+   "raw_span_sha256": "0d732f78bfc165e17b419356226fdc1c43c7321bb646cdfd5f5d1404a8bf47e4"
+  },
+  {
+   "text": "6.70% Senior debentures due 2034",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1310,
+   "raw_start_byte": 1327123,
+   "raw_end_byte": 1327189,
+   "raw_span_sha256": "5fb63c8ff2b7632649b281ffa8734629ffcd5a233e9ebbf9719e61484aaeb955"
+  },
+  {
+   "text": "18 18",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1311,
+   "raw_start_byte": 1327551,
+   "raw_end_byte": 1328120,
+   "raw_span_sha256": "932159e5cb888f8438fef5fade25dc88ebba8ebbe07ba7c01dd323450e38d07b"
+  },
+  {
+   "text": "6.375% Senior notes due 2037",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1312,
+   "raw_start_byte": 1328774,
+   "raw_end_byte": 1328836,
+   "raw_span_sha256": "74feb452743a0a8b1e49393577ee85298b05fc926b9e5476056650a308d592c1"
+  },
+  {
+   "text": "192 192",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1313,
+   "raw_start_byte": 1329198,
+   "raw_end_byte": 1329769,
+   "raw_span_sha256": "edb65febcefd946ef88bc755efc570b8a73e15752e216df7dc6900c397cce1e5"
+  },
+  {
+   "text": "5.125% Senior notes due 2042",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1314,
+   "raw_start_byte": 1330423,
+   "raw_end_byte": 1330485,
+   "raw_span_sha256": "77b4bbb39df0d48356074607934105d2c92d9a79ade1db3cfb47e7423b3f13c6"
+  },
+  {
+   "text": "250 250",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1315,
+   "raw_start_byte": 1330847,
+   "raw_end_byte": 1331418,
+   "raw_span_sha256": "d0de6cb8f115bb5cc47880c9609502e61b3dba1561b198f575185a0992e48444"
+  },
+  {
+   "text": "4.30% Senior notes due 2043",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1316,
+   "raw_start_byte": 1332072,
+   "raw_end_byte": 1332133,
+   "raw_span_sha256": "076c521591515d80267c26135d38d4b27ff4e86aa19ce0767f20cd4f0f12eb9b"
+  },
+  {
+   "text": "250 250",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1317,
+   "raw_start_byte": 1332495,
+   "raw_end_byte": 1333066,
+   "raw_span_sha256": "f8facd7c17f7d08362a1c77e942751b59bb2868b19df51c101eee4d55d67d688"
+  },
+  {
+   "text": "Unamortized debt issue costs and discount(20)(25)",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1318,
+   "raw_start_byte": 1333404,
+   "raw_end_byte": 1334428,
+   "raw_span_sha256": "1cd3532f5ec74d1180e6ca9464f73c6b43da6abb9b1a8776a8c48639fb04938c"
+  },
+  {
+   "text": "Premium on acquired debt, using an effective interest yield of 6.021% to 7.654%",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1319,
+   "raw_start_byte": 1334788,
+   "raw_end_byte": 1335535,
+   "raw_span_sha256": "38d47090b4c9f4f7971cea5c82114ec20dac37c9418ab2078effc671dfaaaa6f"
+  },
+  {
+   "text": "1416",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1320,
+   "raw_start_byte": 1335903,
+   "raw_end_byte": 1336350,
+   "raw_span_sha256": "69e986e75ce552cbe5f20a5c06cecd021faf3ce553cd43d676a3810db30f676d"
+  },
+  {
+   "text": "$2,773 $2,998",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1321,
+   "raw_start_byte": 1336711,
+   "raw_end_byte": 1338117,
+   "raw_span_sha256": "a4217d5f3926ae5b96b7e7698b8f26177259e6547dd27f0a94af6c3ca30a42d1"
+  },
+  {
+   "text": "7. Accounts Payable and Accrued Liabilities",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "7. Accounts Payable and Accrued Liabilities",
+    "raw_start_byte": 1412703,
+    "raw_end_byte": 1412919,
+    "raw_span_sha256": "668fd79f3d1568f3f94218046171f7b31655538644f36a9372671b6e8eed889a"
+   },
+   "block_index": 1399,
+   "raw_start_byte": 1412703,
+   "raw_end_byte": 1412919,
+   "raw_span_sha256": "668fd79f3d1568f3f94218046171f7b31655538644f36a9372671b6e8eed889a"
+  },
+  {
+   "text": "February 1,",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "February 1,",
+    "raw_start_byte": 1413798,
+    "raw_end_byte": 1413809,
+    "raw_span_sha256": "b84493a72281a1348696476cb81543e933df00b67fd5b19d76afc97e7b0b2bbd"
+   },
+   "block_index": 1400,
+   "raw_start_byte": 1413798,
+   "raw_end_byte": 1413809,
+   "raw_span_sha256": "b84493a72281a1348696476cb81543e933df00b67fd5b19d76afc97e7b0b2bbd"
+  },
+  {
+   "text": "2025February 3,",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "2025February 3,",
+    "raw_start_byte": 1413814,
+    "raw_end_byte": 1414095,
+    "raw_span_sha256": "f52b300eeb799c44a5cb23fc7af54673530d8416225775ef2f028eac13dc3930"
+   },
+   "block_index": 1401,
+   "raw_start_byte": 1413814,
+   "raw_end_byte": 1414095,
+   "raw_span_sha256": "f52b300eeb799c44a5cb23fc7af54673530d8416225775ef2f028eac13dc3930"
+  },
+  {
+   "text": "2024",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "2024",
+    "raw_start_byte": 1414100,
+    "raw_end_byte": 1414104,
+    "raw_span_sha256": "6557739a67283a8de383fc5c0997fbec7c5721a46f28f3235fc9607598d9016b"
+   },
+   "block_index": 1402,
+   "raw_start_byte": 1414100,
+   "raw_end_byte": 1414104,
+   "raw_span_sha256": "6557739a67283a8de383fc5c0997fbec7c5721a46f28f3235fc9607598d9016b"
+  },
+  {
+   "text": "(millions)",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "(millions)",
+    "raw_start_byte": 1414376,
+    "raw_end_byte": 1414386,
+    "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+   },
+   "block_index": 1403,
+   "raw_start_byte": 1414376,
+   "raw_end_byte": 1414386,
+   "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+  },
+  {
+   "text": "Accounts payable$853 $747",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1404,
+   "raw_start_byte": 1414613,
+   "raw_end_byte": 1415920,
+   "raw_span_sha256": "4bd0fc2a5c58340ca55fd75229429a4dd6037bddf1c7af6af452d0a790e44501"
+  },
+  {
+   "text": "Property related liabilities446 424",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1405,
+   "raw_start_byte": 1416246,
+   "raw_end_byte": 1417177,
+   "raw_span_sha256": "eec97d7a1fe93c0677b8a9801f83ca85faae444676c3137682679eb4794a5be0"
+  },
+  {
+   "text": "Gift cards and customer rewards353 384",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1406,
+   "raw_start_byte": 1417503,
+   "raw_end_byte": 1418473,
+   "raw_span_sha256": "e2bd18c3a3ab0b5ccf985f0be62d431cd86874239c592e79837f405d0fdbd30b"
+  },
+  {
+   "text": "Accrued wages and vacation233 177",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1407,
+   "raw_start_byte": 1418799,
+   "raw_end_byte": 1419758,
+   "raw_span_sha256": "027b9972053e44f5f01154d0f41ea3c1656497542e7614b7947c91759f98980c"
+  },
+  {
+   "text": "Current portion of post employment and postretirement benefits156 163",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1408,
+   "raw_start_byte": 1420084,
+   "raw_end_byte": 1421089,
+   "raw_span_sha256": "654bfd6c8cb5fd815bc3e9ef31ff06f548ae3dc03b1903bd99540e17b08c3674"
+  },
+  {
+   "text": "Allowance for future sales returns114 136",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1409,
+   "raw_start_byte": 1421415,
+   "raw_end_byte": 1422400,
+   "raw_span_sha256": "7468f54d7535fbbe6df0e06f0ba38c263ee67dc5f6cb532caf573032020252ef"
+  },
+  {
+   "text": "Taxes other than income taxes110 136",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1410,
+   "raw_start_byte": 1422726,
+   "raw_end_byte": 1423706,
+   "raw_span_sha256": "864d17206361912610497c394912df98c3694724d9bc0c6e2b173c132d558fea"
+  },
+  {
+   "text": "Current portion of workers' compensation and general liability reserves87 85",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1411,
+   "raw_start_byte": 1424032,
+   "raw_end_byte": 1425038,
+   "raw_span_sha256": "482103b4c12d9d7853c7494051fb1588b020c640d69a629d9a484bb014f86443"
+  },
+  {
+   "text": "Accrued interest48 53",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1412,
+   "raw_start_byte": 1425364,
+   "raw_end_byte": 1426289,
+   "raw_span_sha256": "8054253dbb1eb5045251a747d21a10e74b71515b89c07b52d8255ee540b0b171"
+  },
+  {
+   "text": "Restructuring accruals, including severance31 47",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1413,
+   "raw_start_byte": 1426615,
+   "raw_end_byte": 1427577,
+   "raw_span_sha256": "f355e3138246ac133496d68644a016cb1a40cb8c32a0b1829a09b202f268f1de"
+  },
+  {
+   "text": "Other194 219",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1414,
+   "raw_start_byte": 1427903,
+   "raw_end_byte": 1428835,
+   "raw_span_sha256": "b855be410ee7f56470fd6b968d6cae5944568f822c42aaa28f1ad7e0c5102961"
+  },
+  {
+   "text": "$2,625 $2,571",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1415,
+   "raw_start_byte": 1429287,
+   "raw_end_byte": 1430703,
+   "raw_span_sha256": "8a86035e173e8ec75b6e735d5bdf21bc4687002b9d6e775178a4c81f5193968b"
+  },
+  {
+   "text": "Other financial instruments not measured at fair value on a recurring basis include cash and cash equivalents, receivables, certain-short term investments and other assets, short-term debt, merchandise accounts payable, accounts payable and accrued liabilities and long-term debt. With the exception of long-term debt, the carrying amount of these financial instruments approximates fair value because of the short maturity of these instruments. The fair values of long-term debt, excluding capitalized leases, are generally estimated based on quoted market prices for identical or similar instruments, and are classified as Level 2 measurements within the hierarchy as defined by applicable accounting standards.",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1734,
+   "raw_start_byte": 1879667,
+   "raw_end_byte": 1880380,
+   "raw_span_sha256": "cfd00ef47e155b2b2dc35664a8b5b5c6403e1b88bcb4a78bc0539c050cc6245e"
+  },
+  {
+   "text": "The following table shows the estimated fair value of the Company's long-term debt, including the current portion of long-term debt:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1735,
+   "raw_start_byte": 1880642,
+   "raw_end_byte": 1880774,
+   "raw_span_sha256": "5d189751225035b4ebc1451838ccabf06259da266b3bd1b752d359d9c1599209"
+  },
+  {
+   "text": "Notional AmountCarrying AmountFair Value",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "Notional AmountCarrying AmountFair Value",
+    "raw_start_byte": 1881623,
+    "raw_end_byte": 1882195,
+    "raw_span_sha256": "68abc4046e4e98175c1af8e48a307814f44425ba302b15be909e65668feff3e7"
+   },
+   "block_index": 1736,
+   "raw_start_byte": 1881623,
+   "raw_end_byte": 1882195,
+   "raw_span_sha256": "68abc4046e4e98175c1af8e48a307814f44425ba302b15be909e65668feff3e7"
+  },
+  {
+   "text": "(millions)",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "(millions)",
+    "raw_start_byte": 1882468,
+    "raw_end_byte": 1882478,
+    "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+   },
+   "block_index": 1737,
+   "raw_start_byte": 1882468,
+   "raw_end_byte": 1882478,
+   "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+  },
+  {
+   "text": "February 1, 2025$2,785 $2,779 $2,467",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1738,
+   "raw_start_byte": 1882708,
+   "raw_end_byte": 1884900,
+   "raw_span_sha256": "95a8cdcfbec2c39cea7532997f2a3b137c462e131e3f6bc14bf1fc7d590253d9"
+  },
+  {
+   "text": "February 3, 20243,007 2,998 2,706",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1739,
+   "raw_start_byte": 1885229,
+   "raw_end_byte": 1886833,
+   "raw_span_sha256": "b71ca843f5a7f538db0ca43f50f2a9ff2dd4438f6748f5d198f1047debceee4d"
+  },
+  {
+   "text": "15. Supplier Finance Programs",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "15. Supplier Finance Programs",
+    "raw_start_byte": 1924407,
+    "raw_end_byte": 1924587,
+    "raw_span_sha256": "7da9635cc667fd3e9440b0ce0916b533913c113ca34d759a5d96556bb9acf408"
+   },
+   "block_index": 1763,
+   "raw_start_byte": 1924407,
+   "raw_end_byte": 1924587,
+   "raw_span_sha256": "7da9635cc667fd3e9440b0ce0916b533913c113ca34d759a5d96556bb9acf408"
+  },
+  {
+   "text": "The Company has agreements with third-party financial institutions to facilitate supply chain finance (\"SCF\") programs. The programs allow qualifying suppliers to sell their receivables, on an invoice level at the selection of the supplier, from the Company to the financial institution and negotiate their outstanding receivable arrangements and associated fees directly with the financial institution. Macy's, Inc. is not party to the agreements between the supplier and the financial institution. The supplier invoices that have been confirmed as valid under the SCF programs require payment in full by the financial institution to the supplier by the original maturity date of the invoice, or discounted payment at an earlier date as agreed upon with the supplier. The Company's obligations to its suppliers, including amounts due and scheduled payment terms, are not impacted by a supplier's participation in the SCF programs.",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1764,
+   "raw_start_byte": 1924782,
+   "raw_end_byte": 1925713,
+   "raw_span_sha256": "29250fb08afdba0919d581295dd6317ab31fec494f36c260c5466f66cfb02d42"
+  },
+  {
+   "text": "All outstanding amounts related to suppliers participating in the SCF programs are recorded within merchandise accounts payable in the Consolidated Balance Sheets and associated payments are included in operating activities in the Consolidated Statements of Cash Flows.",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1765,
+   "raw_start_byte": 1925861,
+   "raw_end_byte": 1926217,
+   "raw_span_sha256": "25fd343176bca37274d14776068ade766684b974218d4f0d4fe007913a0f0b49"
+  },
+  {
+   "text": "The following table sets forth the changes in the outstanding obligations under the SCF programs:",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1766,
+   "raw_start_byte": 1926475,
+   "raw_end_byte": 1926572,
+   "raw_span_sha256": "aa6cd4482e670736c40d1ea3bdf88769d0e7fef26bfd55836e8af04328768fd8"
+  },
+  {
+   "text": "February 1, 2025February 3, 2024",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "February 1, 2025February 3, 2024",
+    "raw_start_byte": 1927271,
+    "raw_end_byte": 1927569,
+    "raw_span_sha256": "685630f8833b55992fda04858b5556676c3360a5d25a0e537cbdb9a1d9873ae7"
+   },
+   "block_index": 1767,
+   "raw_start_byte": 1927271,
+   "raw_end_byte": 1927569,
+   "raw_span_sha256": "685630f8833b55992fda04858b5556676c3360a5d25a0e537cbdb9a1d9873ae7"
+  },
+  {
+   "text": "(millions)",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "(millions)",
+    "raw_start_byte": 1927841,
+    "raw_end_byte": 1927851,
+    "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+   },
+   "block_index": 1768,
+   "raw_start_byte": 1927841,
+   "raw_end_byte": 1927851,
+   "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+  },
+  {
+   "text": "Confirmed obligations outstanding at the beginning of the year$112 $63",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1769,
+   "raw_start_byte": 1928081,
+   "raw_end_byte": 1929468,
+   "raw_span_sha256": "062930d5aadfd8a7acce221eab89df2cfd497b8f32d9c7c510c490fb81c8625b"
+  },
+  {
+   "text": "Invoices confirmed during the year854809",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1770,
+   "raw_start_byte": 1929797,
+   "raw_end_byte": 1930640,
+   "raw_span_sha256": "9afaa0cd79d786978248fa8782a0de46e810b8ec0a7431375a7e5f38ec607cbf"
+  },
+  {
+   "text": "Confirmed invoices paid during the year(850)(760)",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1771,
+   "raw_start_byte": 1930887,
+   "raw_end_byte": 1931887,
+   "raw_span_sha256": "1c16aa955026b5e2e438bcada8b16c15024ec93f594f6baf3b6d209d58889997"
+  },
+  {
+   "text": "Confirmed obligations outstanding at the end of the year$116 $112",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1772,
+   "raw_start_byte": 1932216,
+   "raw_end_byte": 1933877,
+   "raw_span_sha256": "9ed0f23f4c604cd4d07cc0dd48f4b28653260e1aa5b0c3ee9f2968a15fc86475"
+  }
+ ],
+ "native_source_pairs": {
+  "168": {
+   "primary": {
+    "ordinal": 168,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "DebtCurrent"
+    ],
+    "source_text": "6",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:DebtCurrent",
+     "scale": "6",
+     "id": "f-149"
+    },
+    "normalized_source_value": "6000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 168,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "debtcurrent"
+    ],
+    "source_text": "6000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-149",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "6000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "178": {
+   "primary": {
+    "ordinal": 178,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "LongTermDebtAndCapitalLeaseObligations"
+    ],
+    "source_text": "2,773",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+     "format": "ixt:num-dot-decimal",
+     "scale": "6",
+     "id": "f-159"
+    },
+    "normalized_source_value": "2773000000",
+    "format_qname": [
+     "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+     "num-dot-decimal"
+    ],
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 178,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "longtermdebtandcapitalleaseobligations"
+    ],
+    "source_text": "2773000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-159",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "2773000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "198": {
+   "primary": {
+    "ordinal": 198,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquity"
+    ],
+    "source_text": "4,552",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:StockholdersEquity",
+     "format": "ixt:num-dot-decimal",
+     "scale": "6",
+     "id": "f-179"
+    },
+    "normalized_source_value": "4552000000",
+    "format_qname": [
+     "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+     "num-dot-decimal"
+    ],
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 198,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequity"
+    ],
+    "source_text": "4552000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-179",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "4552000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "783": {
+   "primary": {
+    "ordinal": 783,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet"
+    ],
+    "source_text": "20",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet",
+     "scale": "6",
+     "id": "f-778"
+    },
+    "normalized_source_value": "20000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 783,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnet"
+    ],
+    "source_text": "20000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-778",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "20000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "789": {
+   "primary": {
+    "ordinal": 789,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "DebtInstrumentUnamortizedPremiumNoncurrent"
+    ],
+    "source_text": "14",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent",
+     "scale": "6",
+     "id": "f-784"
+    },
+    "normalized_source_value": "14000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 789,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "debtinstrumentunamortizedpremiumnoncurrent"
+    ],
+    "source_text": "14000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-784",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "14000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "938": {
+   "primary": {
+    "ordinal": 938,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "InterestPayableCurrent"
+    ],
+    "source_text": "48",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:InterestPayableCurrent",
+     "scale": "6",
+     "id": "f-933"
+    },
+    "normalized_source_value": "48000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 938,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "interestpayablecurrent"
+    ],
+    "source_text": "48000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-933",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "48000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "1490": {
+   "primary": {
+    "ordinal": 1490,
+    "concept_qname": [
+     "http://www.macys.com/20250201",
+     "LongTermDebtGrossIncludingCurrentMaturities"
+    ],
+    "source_text": "2,785",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "m:LongTermDebtGrossIncludingCurrentMaturities",
+     "format": "ixt:num-dot-decimal",
+     "scale": "6",
+     "id": "f-1488"
+    },
+    "normalized_source_value": "2785000000",
+    "format_qname": [
+     "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+     "num-dot-decimal"
+    ],
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 1490,
+    "concept_qname": [
+     "http://www.macys.com/20250201",
+     "longtermdebtgrossincludingcurrentmaturities"
+    ],
+    "source_text": "2785000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-1488",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "2785000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "1491": {
+   "primary": {
+    "ordinal": 1491,
+    "concept_qname": [
+     "http://www.macys.com/20250201",
+     "LongTermDebtIncludingCurrentMaturities"
+    ],
+    "source_text": "2,779",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "m:LongTermDebtIncludingCurrentMaturities",
+     "format": "ixt:num-dot-decimal",
+     "scale": "6",
+     "id": "f-1489"
+    },
+    "normalized_source_value": "2779000000",
+    "format_qname": [
+     "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+     "num-dot-decimal"
+    ],
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 1491,
+    "concept_qname": [
+     "http://www.macys.com/20250201",
+     "longtermdebtincludingcurrentmaturities"
+    ],
+    "source_text": "2779000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-1489",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "2779000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  },
+  "1546": {
+   "primary": {
+    "ordinal": 1546,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "SupplierFinanceProgramObligation"
+    ],
+    "source_text": "116",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:SupplierFinanceProgramObligation",
+     "scale": "6",
+     "id": "f-1546"
+    },
+    "normalized_source_value": "116000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 1546,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "supplierfinanceprogramobligation"
+    ],
+    "source_text": "116000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-1546",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "116000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  }
+ },
+ "reading_scope": "Necessary balance-sheet, Note6 debt schedule, Note7 accrual, Note12 carrying/fair value and Note15 supplier terms. All 152 candidate entries were inspected as source values; this is not a full semantic classification of every document block or medium.",
+ "interest_debt_set_disposition": "UNRESOLVED",
+ "complete_b06_proven": false,
+ "runtime_operands": false,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}

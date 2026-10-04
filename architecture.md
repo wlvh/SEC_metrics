@@ -1318,3 +1318,22 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 - 后一半小写开头。
 
 合并方式：前一半的 `leading_emphasis` 改为两半的文字、从前一半起点到后一半终点的原始字节跨度及其摘要；后一半的 `leading_emphasis` 置空。块文本与其余逐块字段仍是冻结解析器的，冻结的标题选择器、`text_claim_from_block` 与证据检查一行未动（证据检查核对的正是这个跨度的字节摘要）。只有发生了合并的文档多带一个 `headings_joined_across_a_page` 记录，其余文档逐字节不变。独立的 D01 读取器（`tools/read_d01_headings.py`）不用小写这一条：任何"一行只含标题、不以句末标点结束、只隔页面装饰又接一行标题"都要一条记录的判断。
+
+**Issue #47 B06 原生零值与开发输入（2026-10-04）**：既有
+`historical_bond_sections` 的融资库存只把本地数值导入转向 `source_value`。
+它按精确的 XBRL Registry4 `2020-02-12/fixed-zero` 将供应文字转为零，保留原文、
+nil/sign 拒绝、单位、期间、主体及 HTML/XML 对账；其他转换仍走冻结读取器。
+这不赋债务角色或完整性，普通 #28 读取器不改。显式开发准备另保留期末
+`StockholdersEquity` 原生事实；默认 v3 的七文件仍可逐字节重建。
+`tools/prepare_b06_financing_context.py` 将完整来源包、批准债务定义、固定任务和
+输出合同组成既有两消息请求，只做原文件集合/摘要、全部文字/表格关系及完整请求
+计量，无 transport/Run/接受。运行仍扣留未证明的 B06；手动参考诊断不接入运行。
+本地证据及独立 Ford 输入验证见
+`docs/evidence/issue47_history/local-continuation-2026-10-04/`。
+
+历史录制模型账本的根不得与批准根重叠。macOS`/var`与`/private/var`指向同一路径时，
+`recorded_model_ledger`在比较前规范化两边，仍拒绝根/父/子重叠，只允许不相交的
+synthetic根；这不改变真实执行账本、原许可或封存包。
+`tools/prepare_c02_responsibility_packets.py`是隔离开发的资源探针：完整原表按全局ID
+分配、每包保留所有原B文字、额外单元文字只按责任分配，联合严格重建原view。
+至多10次离线整表边界计量，不改变原上下文上限；跨包关系整合/最终完整性仍未接入。

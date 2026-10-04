@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/docs/evidence/issue47_history/local-continuation-2026-10-04/prepare_d02_development_requests.py", line 91, in <module>
+    args=parser.parse_args();prepare(args.export,args.out)
+                             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/docs/evidence/issue47_history/local-continuation-2026-10-04/prepare_d02_development_requests.py", line 61, in prepare
+    assert json.loads(body['messages'][1]['content'])==semantic
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

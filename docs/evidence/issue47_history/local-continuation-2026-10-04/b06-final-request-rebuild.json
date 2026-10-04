@@ -1,0 +1,118 @@
+{
+ "record_type": "ISSUE47_B06_COMPLETE_REQUEST_FRESH_REBUILD",
+ "request_all_four_files_byte_identical": true,
+ "request_sha256": "9feffb1239bfeae017d9ad233fa1267333f14d98b7b6491132fd80d42aee951e",
+ "all_original_152_candidates_retained_per_source": true,
+ "added_native_equity_facts": {
+  "primary": [
+   {
+    "ordinal": 198,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquity"
+    ],
+    "source_text": "4,552",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:StockholdersEquity",
+     "format": "ixt:num-dot-decimal",
+     "scale": "6",
+     "id": "f-179"
+    },
+    "normalized_source_value": "4552000000",
+    "format_qname": [
+     "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+     "num-dot-decimal"
+    ],
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  ],
+  "xml": [
+   {
+    "ordinal": 198,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequity"
+    ],
+    "source_text": "4552000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-179",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "4552000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  ]
+ },
+ "full_text_table_view_and_normal_binding_unchanged": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}

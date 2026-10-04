@@ -10,6 +10,28 @@ from . import b06_bond_leases as frozen
 from .canonical import content_hash
 from .historical_dei import release_aware, release_aware_with
 from .historical_financial_wording import successor
+from .governance_signals import _qname, _source_value, GovernanceSignalError
+
+
+def source_value(fact, metadata):
+    """Read Registry 4's fixed-zero without guessing from the visible word.
+
+    The exact 2020-02-12 transformation maps any text to zero. The original
+    text is retained; nil and unsupported signs still fail. Other transforms
+    keep the frozen reader's behavior, including the narrower numdash rule.
+    This normalizes a reported fact, never its debt membership or completeness.
+    """
+    attrs, namespaces = metadata['attrs'], metadata['namespaces']
+    if _qname(attrs.get('format', ''), namespaces) != (
+            'http://www.xbrl.org/inlineXBRL/transformation/2020-02-12', 'fixed-zero'):
+        return _source_value(fact, metadata)
+    nil = [v for k, v in attrs.items() if _qname(k, namespaces) == (
+        'http://www.w3.org/2001/XMLSchema-instance', 'nil')]
+    if nil and nil not in [['false'], ['0']]:
+        raise GovernanceSignalError('C03_NIL_TARGET_COMPENSATION')
+    if attrs.get('sign', '') not in {'', '-'}:
+        raise GovernanceSignalError('C03_UNSUPPORTED_SIGN')
+    return '0'
 
 
 SCHEDULE_FORMS = ((
@@ -82,7 +104,17 @@ def native_bond_members(primary, xml, prepared, bonds):
 
 inspect_bond_lease_composition = release_aware_with(
     frozen.inspect_bond_lease_composition, _bond_schedule=bond_schedule)
+
+# Redirect this one local import on #47's existing historical path. The
+# ordinary inventory, its word-zero branch and all reconciliation checks stay
+# available from their original, Requirement-bound bytes.
+financing_inventory = release_aware(successor(frozen._financing_inventory, ((
+    '    from .governance_signals import _source_value, _qname',
+    '    from .historical_bond_sections import source_value as _source_value\n'
+    '    from .governance_signals import _qname',
+),)))
 inspect_bond_debt_scope = release_aware_with(
     frozen.inspect_bond_debt_scope,
     inspect_bond_lease_composition=inspect_bond_lease_composition,
-    _native_bond_members=native_bond_members)
+    _native_bond_members=native_bond_members,
+    _financing_inventory=financing_inventory)

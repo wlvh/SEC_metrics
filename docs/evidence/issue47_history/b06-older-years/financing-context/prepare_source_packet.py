@@ -21,6 +21,7 @@ from vnext.continuous_request_context import _load_tokenizer
 from vnext.deterministic_router import parse_accession_xbrl_source
 from vnext.governance_signals import _qname, _source_value
 from vnext.historical_debt_results import historical_b06_preparation
+from vnext.historical_bond_sections import source_value as registry4_source_value
 from vnext.historical_xbrl_parse import xbrl_parsed_once
 from vnext.normal_history_plan import checkpoint_replayed_once
 from vnext.table_grid import build_table_grid
@@ -32,7 +33,10 @@ def sha(value):
     return hashlib.sha256(value).hexdigest()
 
 
-def prepare(capture, source_root, out):
+def prepare(capture, source_root, out, source_value_version='frozen'):
+    if source_value_version not in {'frozen', 'historical-registry4'}:
+        raise ValueError('Unsupported source-value version')
+    read_value = _source_value if source_value_version == 'frozen' else registry4_source_value
     if out.exists():
         raise FileExistsError('Use a new output directory; retain old packets')
     prepared = json.loads((capture / 'prepared.json').read_bytes())
@@ -79,14 +83,16 @@ def prepare(capture, source_root, out):
         for f in parsed.facts:
             context = parsed.contexts[f['context_ref']]
             info = meta.facts[f['ordinal']]
+            required_equity = (source_value_version == 'historical-registry4'
+                               and info['concept'][1].casefold() == 'stockholdersequity')
             if not (context['period_start'] == context['period_end'] == end
-                    and f['unit_ref'] and potential.search(info['concept'][1])):
+                    and f['unit_ref'] and (potential.search(info['concept'][1]) or required_equity)):
                 continue
             # Keep other entities visible if supplied; do not silently drop
             # or combine them with the registrant.
             proof = _verified_context(native={**context, 'dimensions':dict(context['dimensions'])}, metadata=meta)
             try:
-                value, issue = _source_value(f, info), None
+                value, issue = read_value(f, info), None
             except ValueError as error:
                 value, issue = None, str(error)
             rows.append({'ordinal': f['ordinal'], 'concept_qname':list(info['concept']),
@@ -133,6 +139,10 @@ def prepare(capture, source_root, out):
                 'artifacts':{p.name:sha(p.read_bytes()) for p in sorted(out.iterdir())},
                 'runtime_wired':False, 'provider_trial':False, 'new_runs':0,'new_acceptances':0,
                 'calls':[0,0,0], 'production_authorized':False}
+    if source_value_version != 'frozen':
+        metadata['source_value_version'] = source_value_version
+        metadata['required_equity_concept_retained'] = 'StockholdersEquity'
+        metadata['source_value_module_sha256'] = sha(Path(registry4_source_value.__code__.co_filename).read_bytes())
     (out/'metadata.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=1)+'\n')
     print(json.dumps({k:metadata[k] for k in ['block_count','table_count','native_candidate_counts','source_only_reference_tokens','runtime_wired','calls']}))
 
@@ -142,6 +152,7 @@ if __name__ == '__main__':
     p.add_argument('--capture',type=Path,required=True)
     p.add_argument('--source-root',type=Path,required=True)
     p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--source-value-version', choices=['frozen', 'historical-registry4'], default='frozen')
     a=p.parse_args()
     with patch.object(socket, 'socket', side_effect=AssertionError('NETWORK_FORBIDDEN')):
-        prepare(a.capture, a.source_root, a.out)
+        prepare(a.capture, a.source_root, a.out, a.source_value_version)
