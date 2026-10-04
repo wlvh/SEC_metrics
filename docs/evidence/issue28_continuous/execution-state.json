@@ -14210,7 +14210,7 @@
     "reference_workflow_success_not_main": true
   },
   "d03_mapped_task_blind_trial_20261005": {
-    "status": "INITIAL_RESPONSE_STRUCTURE_PASS_SOURCE_RELATIONSHIPS_LIMITED_INPUT_DICTIONARY_FIX_REQUIRED",
+    "status": "LITERAL_XML_DICTIONARY_CODE_FIX_TESTED_NEW_DIFF_REVIEW_PENDING_SINGLE_CORRECTION_CONTEXT_UNUSED",
     "evidence": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005",
     "reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
     "input_request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
@@ -14238,6 +14238,31 @@
       "c-88",
       "c-89"
     ],
-    "next": "Fix actual whole-XML dictionary dependency closure from admitted source; retain initial wire/response and reference. Then limited delta review and the single substantive input-correction context, not a third old fragment trial. No DeepSeek purpose or semantic/company credit."
+    "next": "Limited new dictionary-closure difference review, then the single substantive corrected-input developer response. Preserve first reference/wire/answer. No DeepSeek or company credit.",
+    "delivered_head": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
+    "issue28_unique_queue_readback_exact": true,
+    "corrected_request_sha256": "48adcf767a8d6f63208a79e4ad015f4653a30bc3bde3ae3d7125256a7da54c69",
+    "corrected_request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-mapped-task-input-trial-20261005/corrected-request.json",
+    "corrected_context_tokens": 135342,
+    "code_fix_tests_passed": 8,
+    "corrected_complete_marriott_plan": {
+      "initial_requests": 16,
+      "original_items": 3259,
+      "max_context_tokens": 149722,
+      "all_xml_dictionary_references_resolved": true
+    },
+    "old_compiler_exact_request_replay": true
+  },
+  "ci_4b910e8e": {
+    "main_run_id": 37216904397,
+    "head_sha": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
+    "status": "queued",
+    "conclusion": null,
+    "observation": "One immediate valid fullSHA query; separate reference workflow success not main."
+  },
+  "shared_increment_read_27cef339": {
+    "peer_sha": "27cef339192b9c5f3ec4a3dd1172554ea19b4c00",
+    "previous": "f20d48ea7420dc650c07de09b9f241d11dc28285",
+    "scope": "Four peer JPM reference and CI records only; no D03 common code delta or peer acceptance credit copied."
   }
 }

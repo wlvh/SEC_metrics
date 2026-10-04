@@ -50,6 +50,30 @@ that relevance; no source assertion here becomes approved D03 current-involvemen
 or case-count credit. Those meaning/coverage limits stay separate from fixing the
 two missing XML dictionaries.
 
+## Literal dictionary dependency correction
+
+The active offline compiler now collects contextRef/unitRef from every delivered
+whole XML root and resolves those keys against the same admitted document's
+original native dictionaries. Missing/conflicting definitions or missing namespace
+environments stop rather than guess. Definitions outside the selected fact parts
+are supplied as explicit dictionary-only PARTIAL views (empty fact/owner indices),
+with original donor identity and namespace dependencies. This adds no ownership.
+Eight focused tests passed; U+037E, separate context/unit namespaces, repeated equal
+definitions, missing/conflicting dependencies and prior task mapping are covered.
+
+Actual task5 corrected wire48adcf76 adds c-88/c-89 without changing prompt, source,
+69 owned references, complete text, native context references or continuation paths.
+Context is135342. Rechecked complete Marriott mapping still has16 requests/3259
+items and max149722; every actual XML context/unit key resolves. Existing whole
+source metadata and first raw response stay untouched. The old14f74c3 compiler and
+prompt were retained with exact Git/library digests and successfully rebuilt the
+oldca828c05 request, including its original missing dictionaries.
+
+This new code difference awaits its own limited review; the14f74c3 wider review
+does not silently cover it. The single input-correction model context is still
+unused. No additional prompt/classifier, business definition, provider permission
+or final-company credit was added.
+
 Verdict: limited source-relationship extraction and reference structure passed;
 the input needs dictionary closure repair. Initial context1 consumed; the one
 substantive-correction context remains unused. Next fix literal dependencies from
