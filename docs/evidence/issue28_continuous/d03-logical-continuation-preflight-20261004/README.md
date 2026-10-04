@@ -73,6 +73,14 @@ or these five envelopes is used to claim a full-company call ceiling.
 
 ## Remaining work and permissions
 
+`original-responsibility-inventory.json` records the next concrete coverage
+boundary:1965 original visible blocks and1229 native facts remain accountable.
+The72 chain slices include55 complete original supplement roots plus17 nested
+slices. Ten further roots (five fact-footnote relationships and five footnotes,
+4764 raw bytes) are not swallowed by this representation and must remain in
+future input. The1202 facts without started chains are not discarded. This is
+an actual structural census, not a claim that those disclosures are irrelevant.
+
 The next useful input-design step is to map all original responsibilities into
 complete, non-overlapping owned tasks, retaining shared context and unowned
 supplement content, then measure actual maximum request count. This cannot be
@@ -83,7 +91,11 @@ reopened. This original is regression/development material, not a holdout.
 
 No production code/default/Requirement changed, so unchanged ordinary tests,
 saved model objects and large material chains are reused. New literal-closure
-code requires only its limited-difference review. D03 DeepSeek purpose, final
+code passed its [limited-difference review](independent-review/conclusion.md)
+at26ad04fb:26 conservative tools,2 ordinary messages, UTC12:48:15–12:55:29;
+four specified tests, one exact-source replay and15 finite control assertions.
+The reviewer did not remeasure the envelopes, read model answers or certify
+the later whole-responsibility inventory. D03 DeepSeek purpose, final
 request/ledger mapping, opportunities, total resource decision and final wiring
 remain ungranted/unconnected. This input proof grants none of them.
 

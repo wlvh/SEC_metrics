@@ -1,0 +1,16 @@
+PASS truthful two-hop XML chain retains order, Unicode, unit/root ordinals and bytes
+PASS multi-hop cycle retains physical prefix and unresolved target
+PASS dangling tail retains exact resolved prefix
+PASS wrong namespace at later segment is rejected without dropping prefix
+PASS target with native-fact kind is not accepted as continuation
+PASS duplicate fact ordinal within owner refused
+PASS undefined anchor namespace prefix refused
+PASS numeric anchor type refused
+PASS fact/context/measurement-unit distinct namespace dependencies retained
+PASS output copies cannot mutate original source
+PASS re-signed escalation refused: full_original_scope_covered
+PASS re-signed escalation refused: semantic_acceptance
+PASS re-signed escalation refused: old_eight_location_contract_changed
+PASS re-signed escalation refused: live_task_authorized
+PASS re-signed status relabeling refused
+{"checks_passed": 15, "business_calls": [0, 0, 0], "no_model_answer_read_or_generated": true}

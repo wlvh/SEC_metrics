@@ -1,0 +1,179 @@
+{
+  "record_type": "D03_ORIGINAL_RESPONSIBILITY_INVENTORY_NOT_COMPLETED_TASK_MAPPING",
+  "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "logical_packet_sha256": "cde003d55b88d4cd7f67a3a5d245fe03f034f88009c01c9f15c7cbfb7d3d0f4b",
+  "original_unit_count": 17,
+  "all_visible_blocks": 1965,
+  "all_native_facts": 1229,
+  "native_anchors_with_started_chains": 27,
+  "other_native_fact_responsibilities": 1202,
+  "unique_chain_slices": 72,
+  "original_supplement_roots": 65,
+  "whole_root_already_preserved_in_chains": 55,
+  "remaining_root_responsibilities": [
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 0,
+      "local_name": "relationship",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "arcrole": "http://www.xbrl.org/2003/arcrole/fact-footnote",
+        "fromrefs": "f-76 f-77 f-78 f-94 f-95 f-96 f-112 f-113 f-114",
+        "linkrole": "http://www.xbrl.org/2003/role/link",
+        "order": "1",
+        "torefs": "fn-1"
+      },
+      "raw_xml_sha256": "801d91c5ebc1906a0e7f980b28fd32a7fa5aa637539bcb56d90c817a3dc6e28a",
+      "raw_xml_bytes": 204,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 1,
+      "local_name": "relationship",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "arcrole": "http://www.xbrl.org/2003/arcrole/fact-footnote",
+        "fromrefs": "f-82 f-83 f-84 f-88 f-89 f-90",
+        "linkrole": "http://www.xbrl.org/2003/role/link",
+        "order": "2",
+        "torefs": "fn-2"
+      },
+      "raw_xml_sha256": "cfaaf2d7e5f78b0f66e77c8ed515733c0cab751b15134a8d9c23d53ddb4c87f3",
+      "raw_xml_bytes": 186,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 2,
+      "local_name": "relationship",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "arcrole": "http://www.xbrl.org/2003/arcrole/fact-footnote",
+        "fromrefs": "f-294 f-295 f-296 f-297 f-298 f-299",
+        "linkrole": "http://www.xbrl.org/2003/role/link",
+        "order": "3",
+        "torefs": "fn-3"
+      },
+      "raw_xml_sha256": "5e3e32850e423aec41ba61b9bd33424fa3eca5d67dc06f32768a9164b02161b1",
+      "raw_xml_bytes": 192,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 3,
+      "local_name": "relationship",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "arcrole": "http://www.xbrl.org/2003/arcrole/fact-footnote",
+        "fromrefs": "f-216 f-217 f-218",
+        "linkrole": "http://www.xbrl.org/2003/role/link",
+        "order": "4",
+        "torefs": "fn-4"
+      },
+      "raw_xml_sha256": "df40ecae8b0beaeb1120703275cc840273d9e65b2f98f1ca39ceac975fa91d09",
+      "raw_xml_bytes": 174,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 4,
+      "local_name": "relationship",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "arcrole": "http://www.xbrl.org/2003/arcrole/fact-footnote",
+        "fromrefs": "f-366",
+        "linkrole": "http://www.xbrl.org/2003/role/link",
+        "order": "5",
+        "torefs": "fn-5"
+      },
+      "raw_xml_sha256": "46ee4ea32fba291295780f5dc13c63f0988338288e80c0c9bbc8877b4b95409b",
+      "raw_xml_bytes": 162,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 6,
+      "local_name": "footnote",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "footnoterole": "http://www.xbrl.org/2003/role/footnote",
+        "id": "fn-1"
+      },
+      "raw_xml_sha256": "afa65872188a7a19242d740ea2b16dcbc78ab867bd4bee59a7833113e516c618",
+      "raw_xml_bytes": 282,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 7,
+      "local_name": "footnote",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "footnoterole": "http://www.xbrl.org/2003/role/footnote",
+        "id": "fn-2"
+      },
+      "raw_xml_sha256": "8a60c1b8c68819c410138c6a488330da9973448f3876886b25d9cbc6cea156f4",
+      "raw_xml_bytes": 526,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 8,
+      "local_name": "footnote",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "footnoterole": "http://www.xbrl.org/2003/role/footnote",
+        "id": "fn-3"
+      },
+      "raw_xml_sha256": "8b92888b210008efae4f380b23ce6c71dca9704e58be085d61d9b314c0877bb6",
+      "raw_xml_bytes": 789,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 9,
+      "local_name": "footnote",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "footnoterole": "http://www.xbrl.org/2003/role/footnote",
+        "id": "fn-4"
+      },
+      "raw_xml_sha256": "1def1a8098a7a245109226f5f19ab45168b1633617541a386e2ba4f54b4a4fa2",
+      "raw_xml_bytes": 713,
+      "nested_objects": 0
+    },
+    {
+      "original_unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "kind": "NATIVE_SUPPLEMENT",
+      "source_index": 10,
+      "local_name": "footnote",
+      "namespace": "http://www.xbrl.org/2013/inlineXBRL",
+      "attributes": {
+        "footnoterole": "http://www.xbrl.org/2003/role/footnote",
+        "id": "fn-5"
+      },
+      "raw_xml_sha256": "8196c91a8bf668ab5b7b91bed9aa6b3da51dac11ddf434bbb873fe7b63e87647",
+      "raw_xml_bytes": 1536,
+      "nested_objects": 0
+    }
+  ],
+  "remaining_roots_total_bytes": 4764,
+  "next_input_requirement": "All1965 visible blocks, all1229 native facts and all65 supplement roots must remain accountable. Original fromrefs/torefs preserve five footnote relationships. Do not delete the remaining10 roots or treat context period as an event time. Keep original required-unit identities and distinguish owned responsibility from shared context.",
+  "full_original_scope_delivered_to_new_model": false,
+  "whole_source_semantics_proven": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
