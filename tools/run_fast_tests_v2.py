@@ -183,6 +183,7 @@ FAST_TESTS += ("tests.vnext.test_c02_model_review_view",)
 FAST_TESTS += ("tests.vnext.test_d03_model_processing",)
 FAST_TESTS += ("tests.vnext.test_d03_model_review_cli",)
 FAST_TESTS += ("tests.vnext.test_d03_context_requests",)
+FAST_TESTS += ("tests.vnext.test_c02_table_development_input",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
