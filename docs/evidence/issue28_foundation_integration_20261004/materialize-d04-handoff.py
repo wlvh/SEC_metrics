@@ -67,6 +67,11 @@ def main():
     shutil.copytree(program, old_source, ignore=shutil.ignore_patterns('.git'))
     sources = json.loads((HERE/'d04-source-object-locators.json').read_text())
     restore(repository, old_source, sources['files'])
+    mirrors = json.loads((HERE/'d04-legacy-baseline-mirrors.json').read_text())
+    # These legacy working mirrors belong to the trusted baseline. In
+    # particular its submissions bytes are distinct from the original D04
+    # immutable e3 acquisition; neither is used to overwrite the other.
+    restore(repository, old_source, mirrors['files'])
     for part in ('processing', 'processing-trust'):
         shutil.copytree(HERE/'d04-transfer'/part, output/part)
     metadata = json.loads((output/'processing/processing.json').read_text())
@@ -80,7 +85,8 @@ def main():
         'output_root':str(output), 'original_source_members':len(sources['files']),
         'program_members':len(locators['files']), 'calls':[0,0,0],
         'scope':'Transport only; run the fixed83 authenticator before consumption',
-        'source_package_export':'Still blocked by the absent declared legacy mirror',
+        'legacy_working_locators':len(mirrors['files']),
+        'source_package_export':'Baseline mirrors restored; consumer verifies export/admission',
         'production_authorized':False}, indent=2))
 
 
