@@ -13325,6 +13325,72 @@
       "tool_calls": 31,
       "ordinary_messages": 3,
       "semantic_or_company_credit": false
-    }
+    },
+    "remote_delivery_sha": "e8fa288095edc894101628d49392572c9c49e7af"
+  },
+  "ci_e8fa2880": {
+    "head_sha": "e8fa288095edc894101628d49392572c9c49e7af",
+    "run_id": 37174399397,
+    "state": "in_progress",
+    "terminal": null,
+    "read": "IMMEDIATE_AFTER_PUSH_ONCE",
+    "updated_at": "2026-10-04T03:33:21Z"
+  },
+  "issue28_context_queue_readback_20261004": {
+    "readback_equal": true,
+    "body_sha256": "bdd38c359146b1bc7820ba2d3fef3f11f127490b18a4f4dafc8daeea10831cd2",
+    "server_updated_at": "2026-10-04T03:34:50Z",
+    "changed_scope": "existing navigation sentence and sole D03 queue row only",
+    "common_protocol_and_other_sections_unchanged": true
+  },
+  "d03_bounded_task_contract_20261004": {
+    "state": "EXECUTABLE_OFFLINE_PROTOTYPE_MEASURED_REVIEW_PENDING_NOT_MODEL_OR_COMPANY_READY",
+    "evidence": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004",
+    "tested_base_sha": "e8fa288095edc894101628d49392572c9c49e7af",
+    "prototype_code_in_evidence_not_normal_runtime": true,
+    "product_bindings_or_defaults_changed": false,
+    "model_answers_new": 0,
+    "recorded_fixtures_not_answers": true,
+    "short_tests": {
+      "count": 11,
+      "seconds": "0.336",
+      "log": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/recorded-tests-request-binding.log"
+    },
+    "sources": [
+      {
+        "company": "marriott",
+        "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+        "complete_original_unit_count": 17,
+        "first_scan_count": 5,
+        "followup_design_ceiling": 5,
+        "design_total_ceiling": 10,
+        "max_context": 185857,
+        "first_input_reference_tokens": 750159
+      },
+      {
+        "company": "jpm",
+        "source_sha256": "11189144bf0bff60c8995086f9fb2bfa253a38a1206d557a059b9c771f8486a9",
+        "complete_original_unit_count": 130,
+        "first_scan_count": 38,
+        "followup_design_ceiling": 38,
+        "design_total_ceiling": 76,
+        "max_context": 186145,
+        "first_input_reference_tokens": 6022247
+      }
+    ],
+    "max_followups_per_scan": 1,
+    "max_locations_including_forward_continuation": 8,
+    "max_context_bytes": 262144,
+    "repeat_scope": "Changed decoder/prompt, literal continuation and actual request binding only; no old long material/native replay. First fixture missing namespace metadata failure retained.",
+    "measured_seconds": "38.515",
+    "runtime_opportunity_guard_connected": false,
+    "live_authorized": false,
+    "company_result_created": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Independent mechanical prototype review, then input-only actual developer trial for new whole-owner/context representation; do not reopen ended JPM/C02/B13 batches. Ten-company D03 plan/cost and target-model permission not yet established."
   }
 }
