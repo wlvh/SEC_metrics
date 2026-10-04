@@ -103,3 +103,40 @@ independence determination. Future Chair/CEO proposals/policies do not appoint
 a new Chair. The archived input bytes remain unchanged; FY2022/FY2023 reading
 is still pending in this continuation. The old acceptance/defect registers do
 not change from this executor reference development.
+
+## Four complete executor readings
+
+The preceding partial-reading descriptions are historical checkpoints. FY2022
+and FY2023 now also have every supplied visible text block read, with all raw
+spans checked:4413 and4630 blocks,40 and45 manually consolidated reference
+units. The complete38x18/14x21 FY2022 and32x18/14x21 FY2023 nominee/member tables
+are preserved. Both years' necessary committee marks are supplied text,
+including seven and six positive A/B relations. Other media and qualification
+policy remain unresolved. The four references total17142 supplied blocks and
+160 consolidation units; neither count is accepted metric coverage.
+
+All57 FY2022 and62 FY2023 old selected excerpts bind exactly to original text
+and spans. The saved comparisons distinguish missing identities, committee
+names/relations and named standards from already supported facts. FY2022
+already preserves the July2022 Gorsky and March2023 Davis appointment dates,
+but omits Davis's explicit "Not yet assigned" committee status. The signed
+Audit report already supports Flynn/Neal/Novakovic; its omission of the separate
+2022 SEC-and-NYSE expert clause and Bammann Federal Reserve qualification is
+recorded without declaring those three Audit qualifications wholly missing.
+
+FY2023 has ten nominees and twelve current directors. Flynn and Neal remain
+current through the term expiry on the eve of the May2024 meeting. Weinberger
+is a January2024 Audit member; his future chair role and Gorsky's future Audit/
+PRC membership are conditional on election. Gorsky's already determined SEC
+financial-expert qualification does not make him a current Audit member. Crown's
+historical service until death in June2023 remains separate. The proposed stock
+plan's nine nonemployee Directors versus eleven current named nonmanagement
+directors is an unresolved source-frame distinction; a possible prospective
+explanation is identified as inference, not substituted for either number.
+
+The four old selections total239 exactly supported excerpts. This proves
+their original source bindings, while the manual findings show incomplete or
+mixed content. It does not prove four complete metrics, all-media reading or
+qualification acceptance. No old Result, selector, defect/acceptance register,
+Run, provider package or source grant is modified. `four-jpm-reference-summary.json`
+binds the four references, comparisons and read notes for portable review.

@@ -30,3 +30,13 @@ WITHHELD/null; new provider/paid/SEC calls and native Runs are all zero.
 Final pushed-head CI must be read separately from the original failure and local
 passes. The already running429f9fcc jobs contain the pre-fix code and retain
 their actual result.
+
+The pushed implementation head f20d48ea7420dc650c07de09b9f241d11dc28285 now has
+its own completed/success vNext37202827491 and reference37202827514. Actual
+tested merge3229d5aa1d29a38835d691d35aca437ff1cbfd16 uses the fixed comparison
+base c7a96eae8dbd6df9f01bc4db9a14014b69f487ef. All17 vNext jobs,171 saved-source
+entries and188 fast entries pass at unchanged limits. The four source shards
+have44/43/42/42 terminals. Complete downloaded CI stdout and parsed job/suite
+terminals are bound by bytes/SHA in `final-f20d48ea/summary.json`; no artifact
+download was available, and no artifact export is claimed. This evidence belongs
+to f20d48ea; any later documentation/evidence head has its own checks.
