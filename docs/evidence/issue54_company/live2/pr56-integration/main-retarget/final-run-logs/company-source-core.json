@@ -1,0 +1,57 @@
+{
+ "job": "company-source-core",
+ "timeout_minutes": 15,
+ "steps": [
+  {
+   "name": "Source admission, sessions, storage identity, call ledger/policy and discovery",
+   "rc": 0,
+   "seconds": 102.1,
+   "log": "company-source-core--0.log",
+   "unittest_summary": [
+    {
+     "allowed_skips": 0,
+     "errors": 0,
+     "failures": 0,
+     "run": 84,
+     "skip_reasons": [],
+     "skipped": 0,
+     "tests": [
+      "tests.vnext.test_ordinary_source_authority",
+      "tests.vnext.test_ordinary_source_session",
+      "tests.vnext.test_ordinary_storage_identity",
+      "tests.vnext.test_continuous_call_ledger",
+      "tests.vnext.test_continuous_call_policy",
+      "tests.vnext.test_normal_source_requirements",
+      "tests.vnext.test_prior_html_dependency",
+      "tests.vnext.test_d04_native_assessment",
+      "tests.vnext.test_native_request_construction"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Registered native update (one skip pre-existing in the original workflow)",
+   "rc": 0,
+   "seconds": 0.4,
+   "log": "company-source-core--1.log",
+   "unittest_summary": [
+    {
+     "allowed_skips": 1,
+     "errors": 0,
+     "failures": 0,
+     "run": 9,
+     "skip_reasons": [
+      "Requires an already registered copied native source fixture"
+     ],
+     "skipped": 1,
+     "tests": [
+      "tests.vnext.test_registered_native_update"
+     ]
+    }
+   ]
+  }
+ ],
+ "seconds": 102.6,
+ "ok": true,
+ "within_timeout": true
+}

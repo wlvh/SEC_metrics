@@ -1,0 +1,28 @@
+{
+ "job": "company-c04-source-install",
+ "timeout_minutes": 50,
+ "steps": [
+  {
+   "name": "C04 source-only install from saved sources",
+   "rc": 0,
+   "seconds": 1532.3,
+   "log": "company-c04-source-install--0.log",
+   "unittest_summary": [
+    {
+     "allowed_skips": 0,
+     "errors": 0,
+     "failures": 0,
+     "run": 9,
+     "skip_reasons": [],
+     "skipped": 0,
+     "tests": [
+      "tests.vnext.test_c04_source_only_install"
+     ]
+    }
+   ]
+  }
+ ],
+ "seconds": 1532.3,
+ "ok": true,
+ "within_timeout": true
+}
