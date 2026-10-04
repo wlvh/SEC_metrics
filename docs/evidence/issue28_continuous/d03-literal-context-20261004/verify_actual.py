@@ -36,6 +36,7 @@ def blocked(*args, **kwargs):
 
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('--read', action='store_true')
+    parser.add_argument('--namespace-fix', action='store_true')
     args = parser.parse_args()
     # Both phases prohibit sockets; cold replay additionally prohibits child processes.
     socket.socket = blocked
@@ -44,8 +45,14 @@ def main():
     ledger = STATE/'issue28-2026-09-13/claims.jsonl'
     before = sha256_file(path=ledger)
     results = []
-    manifest = json.loads((OUT/'external-digests.json').read_text()) if args.read else {}
-    for name, source_path, digest, owner, anchor, targets in SAMPLES:
+    digest_name = 'namespace-fix-external-digests.json' if args.namespace_fix else 'external-digests.json'
+    manifest = json.loads((OUT/digest_name).read_text()) if args.read else {}
+    samples = SAMPLES
+    if args.namespace_fix:
+        _, path, digest, owner, anchor, _ = SAMPLES[0]
+        samples = [('marriott-fact-dependencies', path, digest, owner, anchor,
+                    [{'kind': 'XML_ELEMENT_ID', 'element_id': 'f-408'}])]
+    for name, source_path, digest, owner, anchor, targets in samples:
         source_raw = source_path.read_bytes()
         assert sha256_bytes(content=source_raw) == digest
         source = json.loads(source_raw)
@@ -70,14 +77,17 @@ def main():
                         'context_bytes': packet['context_bytes'], 'packet_sha256': manifest[name]['packet_sha256'],
                         'lookup_or_replay': 'PASS_LITERAL_ONLY'})
     if not args.read:
-        write_immutable_bytes(path=OUT/'external-digests.json', content=evidence_json_bytes(manifest))
+        write_immutable_bytes(path=OUT/digest_name, content=evidence_json_bytes(manifest))
     assert sha256_file(path=ledger) == before
     report = {'phase': 'cold_read' if args.read else 'save', 'results': results,
         'seconds': format(time.monotonic()-started, '.3f'), 'ledger_sha256': before,
         'ledger_unchanged': True, 'network_and_subprocess_forbidden': True,
         'source_acquisition_reauthenticated': False, 'semantic_acceptance': False,
         'complete_company_ready': False, 'business_calls': [0, 0, 0]}
-    (HERE/('actual-cold.json' if args.read else 'actual-save.json')).write_bytes(evidence_json_bytes(report))
+    report_name = 'actual-cold.json' if args.read else 'actual-save.json'
+    if args.namespace_fix:
+        report_name = 'namespace-fix-' + report_name
+    (HERE/report_name).write_bytes(evidence_json_bytes(report))
     print(json.dumps(report))
 
 

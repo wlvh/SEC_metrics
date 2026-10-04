@@ -4053,6 +4053,31 @@
       "dedup_note": "Read prior original-unit response/results first: genuine scheduled-action field defect. Prior reader completed at3 messages and cannot followup. New SHA/prompt temporal-field increment only, same source bytes reused, exactly one correction, no renamed third trial or same-byte review.",
       "message_count": 3,
       "elapsed_seconds": 669.905
+    },
+    {
+      "task_name": "review_d03context_7c50eab",
+      "purpose": "review",
+      "module": "d03_literal_context",
+      "scope_paths": [
+        "scripts/vnext/d03_context_requests.py",
+        "tests/vnext/test_d03_context_requests.py",
+        "tools/run_fast_tests_v2.py selector-only",
+        "docs/evidence/issue28_continuous/d03-literal-context-20261004"
+      ],
+      "patch_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+      "spawned_at": "2026-10-04T03:12:34Z",
+      "ended_at": "2026-10-04T03:20:40Z",
+      "tool_calls": 21,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-literal-context-20261004/independent-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_P2_CONTEXT_UNIT_NAMESPACE_DEPENDENCIES",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; register no same patch/module; existing independent results no sameSHA/scope. Old mapper/CLI reviews cover distinct unchanged code. tool task naming requires underscores.",
+      "elapsed_seconds": 486
     }
   ],
   "ci_capacity_20260922": {
@@ -13210,7 +13235,7 @@
     "peer_runtime_ledger_snapshot_operated": false
   },
   "d03_literal_context_20261004": {
-    "state": "IMPLEMENTED_TESTED_INDEPENDENT_REVIEW_PENDING",
+    "state": "NAMESPACE_DEPENDENCY_P2_FIXED_INCREMENT_REVIEW_PENDING",
     "tested_base_sha": "75f0905ed0626f5bb740902196fe3adee1a3348c",
     "tested_uncommitted_delta": [
       "scripts/vnext/d03_context_requests.py",
@@ -13242,6 +13267,27 @@
       "max_context_bytes": 262144
     },
     "limits_are_company_or_provider_authorization": false,
-    "next": "Complete bounded scan-output/context-followup contract and static/dynamic full-company accounting before any new model input trial or true-purpose request. Existing JPM developer batch remains ended."
+    "next": "Complete bounded scan-output/context-followup contract and static/dynamic full-company accounting before any new model input trial or true-purpose request. Existing JPM developer batch remains ended.",
+    "patch_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+    "independent_review": {
+      "patch_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+      "state": "REQUEST_CHANGES_P2_CONTEXT_UNIT_NAMESPACE_DEPENDENCIES",
+      "result_path": "docs/evidence/issue28_continuous/d03-literal-context-20261004/independent-review/conclusion.md",
+      "scope": "new literal-context delta, not source semantics",
+      "tool_calls": 21,
+      "ordinary_messages": 3
+    },
+    "namespace_dependency_fix": {
+      "initial_review_sha": "7c50eab93f8e99d28dd6ecd5a04bf9992a479ad7",
+      "old_verdict_preserved": true,
+      "new_tests": "20 short tests including separate context/unit prefix rebinding, missing map, bytes cap",
+      "changed_paths": [
+        "scripts/vnext/d03_context_requests.py",
+        "tests/vnext/test_d03_context_requests.py"
+      ],
+      "old_actual_xml_visible_packets_unchanged": true,
+      "new_fact_packet": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-literal-context-20261004/marriott-fact-dependencies-context.json",
+      "old_native_mapper_and_cli_unchanged": true
+    }
   }
 }

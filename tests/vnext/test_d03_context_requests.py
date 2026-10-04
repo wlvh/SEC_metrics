@@ -18,7 +18,7 @@ class D03ContextRequestsTest(unittest.TestCase):
             'attributes': {'id': 'f1', 'continuedat': 'continued'},
             'namespace_environment_id': 'env', 'expanded_concept': ['uri', 'Note'],
             'fact': {'ordinal': 9, 'context_ref': 'c1', 'unit_ref': '', 'text': 'First part'}}],
-            'contexts': {'c1': {'period': '2025'}}, 'units': {},
+            'contexts': {'c1': {'raw_xml': '<context>2025</context>', 'namespace_environment_id': 'env'}}, 'units': {},
             'namespace_environments': {'env': {'ix': 'inline-uri'}}})
         root_raw = '<outer><continued id="continued">exact\u037e</continued></outer>'
         a, b = root_raw.index('<continued'), root_raw.index('</continued>') + len('</continued>')
@@ -59,11 +59,43 @@ class D03ContextRequestsTest(unittest.TestCase):
         xml, fact = [r['context'][0] for r in packet['rows']]
         self.assertEqual(xml['raw_xml'], '<continued id="continued">exact\u037e</continued>')
         self.assertEqual(xml['original_unit_id'], self.supp['unit_id'])
-        self.assertEqual(fact['context'], {'period': '2025'})
+        self.assertEqual(fact['context'], self.fact['payload']['contexts']['c1'])
         self.assertEqual(fact['original_item'], self.fact['payload']['facts'][0])
         self.assertEqual(packet['responsibility_unit_ids'], [self.fact['unit_id']])
         self.assertFalse(packet['semantic_acceptance'])
         self.assertFalse(packet['company_result_created'])
+
+    def test_fact_context_and_unit_keep_separate_namespace_dependencies_and_caps(self):
+        payload = deepcopy(self.fact['payload'])
+        payload['facts'][0]['fact']['unit_ref'] = 'u1'
+        payload['contexts']['c1'] = {'raw_xml': '<xbrli:context id="c1"/>',
+                                     'namespace_environment_id': 'context-env'}
+        payload['units']['u1'] = {'raw_xml': '<xbrli:unit><xbrli:measure>z:USD</xbrli:measure></xbrli:unit>',
+                                  'namespace_environment_id': 'unit-env'}
+        payload['namespace_environments'] = {'env': {'z': 'urn:fact'},
+            'context-env': {'xbrli': 'urn:context'},
+            'unit-env': {'xbrli': 'urn:unit', 'z': 'urn:currency'}}
+        dependency_unit = self.unit('NATIVE_FACTS', payload)
+        source = self.seal([self.visible, dependency_unit, self.supp])
+        old_fact, old_anchor = self.fact, self.anchor
+        self.fact = dependency_unit
+        self.anchor = {**self.anchor, 'unit_id': dependency_unit['unit_id']}
+        try:
+            packet = self.run_requests([self.xml('f1')], source)
+            context = packet['rows'][0]['context'][0]
+            self.assertEqual(context['namespace_environments'], payload['namespace_environments'])
+            self.assertEqual(context['namespace_environments'][context['unit']['namespace_environment_id']]['z'],
+                             'urn:currency')
+            before_fix_shape = {k: v for k, v in context.items() if k != 'namespace_environments'}
+            cap = len(evidence_json_bytes([before_fix_shape]))
+            capped = self.run_requests([self.xml('f1')], source, max_context_bytes=cap)
+            self.assertEqual(capped['rows'][0]['reason'], 'D03_CONTEXT_BYTE_LIMIT')
+            broken = deepcopy(payload); del broken['namespace_environments']['unit-env']
+            broken_unit = self.unit('NATIVE_FACTS', broken)
+            with self.assertRaisesRegex(ValueError, 'DICTIONARY_MISSING'):
+                self.run_requests([self.xml('f1')], self.seal([self.visible, dependency_unit, broken_unit, self.supp]))
+        finally:
+            self.fact, self.anchor = old_fact, old_anchor
 
     def test_complete_visible_range_keeps_original_text_and_indices(self):
         packet = self.run_requests([{'anchor': self.anchor,

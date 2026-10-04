@@ -60,10 +60,22 @@ def _xml_items(unit):
             _need((not context_ref or context_ref in p['contexts'])
                   and (not unit_ref or unit_ref in p['units'])
                   and env in p['namespace_environments'], 'D03_CONTEXT_FACT_DICTIONARY_MISSING')
+            context, measure_unit = p['contexts'].get(context_ref), p['units'].get(unit_ref)
+            environments = {env: p['namespace_environments'][env]}
+            for dependency in (context, measure_unit):
+                if dependency is None:
+                    continue
+                _need(type(dependency) is dict
+                      and type(dependency.get('namespace_environment_id')) is str
+                      and dependency['namespace_environment_id'] in p['namespace_environments'],
+                      'D03_CONTEXT_FACT_DICTIONARY_MISSING')
+                dependency_env = dependency['namespace_environment_id']
+                environments[dependency_env] = p['namespace_environments'][dependency_env]
             yield element_id, {'original_unit_id': unit['unit_id'], 'kind': 'NATIVE_FACT',
                 'source_index': fact['ordinal'], 'element_id': element_id,
-                'original_item': wrapper, 'context': p['contexts'].get(context_ref),
-                'unit': p['units'].get(unit_ref), 'namespaces': p['namespace_environments'][env]}
+                'original_item': wrapper, 'context': context, 'unit': measure_unit,
+                'namespaces': p['namespace_environments'][env],
+                'namespace_environments': environments}
     elif unit['kind'] == 'NATIVE_SUPPLEMENTS':
         for index, root in enumerate(unit['payload']['objects']):
             _need(sha256_bytes(content=root['raw_xml'].encode('utf-8')) == root['raw_xml_sha256'],
