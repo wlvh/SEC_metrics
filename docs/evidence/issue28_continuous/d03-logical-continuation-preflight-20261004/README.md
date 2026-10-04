@@ -89,6 +89,11 @@ scan counts. A genuinely different development task must have its own original
 reference before blind input testing; the ended context-request trial is not
 reopened. This original is regression/development material, not a holdout.
 
+That next step is now implemented and measured as an additional increment
+awaiting separate review in [task-mapping.md](task-mapping.md). Its16-request Marriott
+input proposal and explicit JPM resource stop do not inherit the earlier
+four-anchor review or gain model/company credit.
+
 No production code/default/Requirement changed, so unchanged ordinary tests,
 saved model objects and large material chains are reused. New literal-closure
 code passed its [limited-difference review](independent-review/conclusion.md)

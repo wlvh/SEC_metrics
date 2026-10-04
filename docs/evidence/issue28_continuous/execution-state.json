@@ -14055,12 +14055,13 @@
   "ci_058c80b1": {
     "main_run_id": 37202384734,
     "head_sha": "058c80b198cde14a05077c9e448048f895a117c8",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "initial_read_error": "vnext-fast-v2.yml not in default-branch workflow list; used full40SHA run lookup, did not treat failure as no CI.",
     "reference_run_id": 37202384742,
     "reference_is_not_main": true,
-    "natural_checkpoint_updated_at": "2026-10-04T12:44:59Z"
+    "natural_checkpoint_updated_at": "2026-10-04T12:44:59Z",
+    "terminal_updated_at": "2026-10-04T13:25:54Z"
   },
   "d03_logical_continuation_preflight_20261004": {
     "status": "PASS_LITERAL_CLOSURE_RESOURCE_PREFLIGHT_AND_LIMITED_CODE_REVIEW",
@@ -14097,6 +14098,45 @@
       "whole_roots_in_chains": 55,
       "remaining_footnote_and_relationship_roots": 10,
       "remaining_root_raw_bytes": 4764
-    }
+    },
+    "delivery_head": "f661962f7939e7eeaed92491e8ad74473215f782",
+    "issue28_unique_queue_updated_readback_exact": true
+  },
+  "ci_f661962f": {
+    "main_run_id": 37204125514,
+    "head_sha": "f661962f7939e7eeaed92491e8ad74473215f782",
+    "status": "completed",
+    "conclusion": "success",
+    "observation": "One immediate full40SHA query after push; no re-run. Reference workflow37204125466 is separate.",
+    "terminal_updated_at": "2026-10-04T13:48:56Z"
+  },
+  "d03_complete_task_mapping_20261004": {
+    "status": "COMPLETE_MARRIOTT_INPUT_RESOURCE_PLAN_AND_SAVED_WIRE_REPLAY_NEW_CODE_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task-mapping.md",
+    "source_units_unchanged": true,
+    "marriott_original_items": 3259,
+    "marriott_proposed_initial_requests": 16,
+    "marriott_max_context_tokens": 149722,
+    "marriott_actual_initial_measure_seconds": 3.728,
+    "marriott_guarded_final_replay_seconds": 8.162,
+    "jpm_status": "STOP_SHARED_VISIBLE_CONTEXT_RESOURCE",
+    "jpm_actual_task_context_tokens": 473727,
+    "jpm_proposed_initial_requests": null,
+    "jpm_source_items": 19764,
+    "no_new_model_or_company_credit": true,
+    "no_new_opportunities_or_live_permission": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Limited actual task/compiler delta review, then original-reference-first blind development input validation of a mapped Marriott responsibility. No third old context answer; JPM needs a bounded different context arrangement, not cropping."
+  },
+  "shared_increment_read_f20d48ea": {
+    "own_sha_at_read": "f661962f7939e7eeaed92491e8ad74473215f782",
+    "peer_sha": "f20d48ea7420dc650c07de09b9f241d11dc28285",
+    "previous_peer_sha": "429f9fcc0bba5a49bc08c69ff12f56340dfaabfa",
+    "register_unchanged": true,
+    "related_delta": "historical_bond_sections.py fixed-zero registry/version lookup, not D03 source/task input. No common new C02 formatter or D03 core repair; no peer result credit copied."
   }
 }
