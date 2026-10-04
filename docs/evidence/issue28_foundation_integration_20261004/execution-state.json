@@ -167,7 +167,67 @@
         ],
         "actual_119_selectors_executed": false
       },
-      "coverage_limit": "Exact 119 selector partition, unchanged original runners, existing 30/240 case limits, CI 5/15 minute jobs and three structural unit tests only; no new business suite, main full acceptance or remote CI green claim."
+      "coverage_limit": "Exact 119 selector partition, unchanged original runners, existing 30/240 case limits, CI 5/15 minute jobs and three structural unit tests only; no new business suite, main full acceptance or remote CI green claim.",
+      "increments": [
+        {
+          "patch_sha": "bee3b0fef6390553e980d4f5f208e3677106472a",
+          "scope_paths": [
+            "tools/run_foundation_ci.py:classify inherited v2.REPLACED as material",
+            "tests/test_foundation_ci.py:VAR intact membership"
+          ],
+          "started_at": "2026-10-04T15:55:07.025049+00:00",
+          "ended_at": "2026-10-04T15:58:15.956015+00:00",
+          "tool_calls": 10,
+          "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-var-increment.md",
+          "verdict": "PASS_FOR_ORIGINAL_VAR_CLASSIFICATION_INCREMENT_ONLY_NOT_FULL_ACCEPTANCE",
+          "remaining_agent_limits": {
+            "tool_calls": 50,
+            "ordinary_messages": 1
+          },
+          "dedup_note": "Existing purpose/module agent reused; one final only, unchanged95/24 review not repeated.",
+          "base_sha": "8f6640bcdfddbbaa5fca42619f1bbb69ec7a50b9",
+          "functions_exec_calls": 4,
+          "nested_tool_calls": 6,
+          "internal_exec_command_calls": 6,
+          "ordinary_messages": 1,
+          "questions": 0,
+          "elapsed_seconds": 188.931,
+          "cumulative_tool_calls": 40,
+          "cumulative_functions_exec_calls": 11,
+          "cumulative_nested_tool_calls": 29,
+          "cumulative_internal_exec_command_calls": 28,
+          "cumulative_internal_clock_calls": 1,
+          "cumulative_ordinary_messages": 3,
+          "cumulative_active_review_seconds": 462.728,
+          "cumulative_wall_seconds_since_first_read": 1135.956,
+          "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-var-increment.log",
+          "finding_codes": [],
+          "merge_ready": false,
+          "independent_tests": {
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_foundation_ci -v",
+            "exit_code": 0,
+            "tests": 3,
+            "unittest_seconds": 0.001,
+            "process_seconds": 0.053329,
+            "list_commands": [
+              {
+                "suite": "fast",
+                "selectors": 94,
+                "exit_code": 0,
+                "process_seconds": 0.038067
+              },
+              {
+                "suite": "source-material",
+                "selectors": 25,
+                "exit_code": 0,
+                "process_seconds": 0.03714
+              }
+            ],
+            "actual_var_or_119_execution": false
+          },
+          "coverage_limit": "One existing v2.REPLACED predicate and two intact-membership assertions only; original 119 selectors and whole VAR assertion retained; prior CI review inherited, no full CI/main acceptance."
+        }
+      ]
     }
   ]
 }

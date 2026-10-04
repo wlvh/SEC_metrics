@@ -137,7 +137,19 @@
         "case_limit": 240,
         "job_minutes": 15
       },
-      "independent_review": "PASS_FOR_INHERITED_CI_PARTITION_ONLY_NOT_FULL_ACCEPTANCE"
+      "independent_review": "PASS_FOR_INHERITED_CI_PARTITION_ONLY_NOT_FULL_ACCEPTANCE",
+      "final_partition": {
+        "fast": 94,
+        "material": 25,
+        "total": 119,
+        "delta": "Original existingv2.REPLACED wholeVAR moved intact; no added/removed selectors",
+        "original_var_material_worker": {
+          "return_code": 0,
+          "seconds": 19.032,
+          "timeout_seconds": 240
+        },
+        "increment_review": "PASS_FOR_ORIGINAL_VAR_CLASSIFICATION_INCREMENT_ONLY_NOT_FULL_ACCEPTANCE"
+      }
     }
   }
 }
