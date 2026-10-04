@@ -43,12 +43,15 @@
  "old_package_on_new_runtime": {
   "package": "live2 first-run handoff sha256:fd811db5...",
   "result": "REJECTED",
-  "reason": "sys\t0m0.148s",
+  "reason": "COMPANY_HANDOFF_RULE_VERSION_CHANGED",
   "rule_files_differing": [
    "config/issue28_normal_results_v2.json",
    "config/main_scalability_exemptions_v1.json (new)",
    "config/ordinary_scalability_exemptions_v1.json"
-  ]
+  ],
+  "raised_at": "rt-local/scripts/vnext/company_handoff.py check_package -> need(admission['rules'] == rule_bindings(...))",
+  "log": "old-package-install-on-pr56-runtime.stderr.log line 18",
+  "record_correction": "first commit stored the trailing timing line (\"sys 0m0.148s\") instead of the exception; corrected from the saved stderr, failure itself unchanged"
  },
  "reexport_same_live2_source_on_new_runtime": {
   "checkpoint_id": "sha256:0e5b06ee66015e7b60e342b12d08a0e5eae1dc9fe5bf0537625affec06aa4271",

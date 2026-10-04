@@ -62,4 +62,4 @@ python /path/to/SEC_metrics/tools/vnext_company.py acquire \
 
 Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC GET、27份来源复用，复跑36个原生候选独立冷读通过；39项中D02/D03/D04仍明确限制，不是39项业务验收或正式发布。实际CSV、摘要、来源/运行版本、修复与合并依赖见[真实运行材料](evidence/issue54_company/live-marriott/README.md)；[此前本地接线材料](evidence/issue54_company/local-run/README.md)仍按录制范围保留。
 
-2026-10-04另以新工作目录从空来源重新真实运行（新增29+2次GET，含原31次累计62/120），首跑36候选冷读通过、复跑0新Run、局部重入保留其它行；已配置的旧LIVE D04因SEC网页在HTML末尾注入脚本使原始字节身份变化，严格等价被拒并如实保留。见[本轮材料](evidence/issue54_company/live2/README.md)。
+2026-10-04另以新工作目录从空来源重新真实运行（新增29+2次GET，含原31次累计62/120），首跑36候选冷读通过、复跑0新Run、局部重入保留其它行；已配置的旧LIVE D04因本次收到的10-K比原版本多一个script元素（注入方未归因）、原始字节身份不同，严格等价按现行规则被拒并如实保留。见[本轮材料](evidence/issue54_company/live2/README.md)。

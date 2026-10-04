@@ -28,7 +28,7 @@
   "required_unit_ids",
   "units"
  ],
- "byte_difference": "current body = original body + one <script type=\"text/javascript\"  src=\"/ve5kkgOKS/...\"></script> element inserted before </body> by the SEC web front end (108 bytes); no other byte differs",
+ "byte_difference": "current body = original body + one <script type=\"text/javascript\"  src=\"/ve5kkgOKS/...\"></script> element before </body> (108 bytes); no other byte differs. Received through SecHttpClient -> environment egress proxy -> sec.gov; the inserting party and purpose are not attributed.",
  "units": {
   "count": [
    17,
@@ -36,7 +36,7 @@
   ],
   "payloads_equal_ignoring_raw_byte_identifiers": true,
   "documents_equal_ignoring_raw_byte_identifiers": true,
-  "injected_script_in_any_unit": false
+  "additional_script_in_any_unit": false
  },
  "native_requests": {
   "count": [
@@ -54,8 +54,9 @@
    true,
    true,
    true
-  ]
+  ],
+  "note": "equal_after_masking_sha256_identifiers is a diagnostic only, not a production equivalence criterion; identifiers may refer to different originals, units, periods or evidence"
  },
- "why_new_judgment_or_rule_is_needed": "The four original LIVE requests embed unit/document identifiers derived from the raw 10-K bytes. The saved responses answer those exact requests; the current source yields the same text but different identifiers, so the strict rule cannot reuse them. Reuse would need either an owner-approved canonicalization of SEC-injected markup before identity derivation (policy/Requirement change, #28) or a new authorized judgment on the current requests. Neither was done: no source swap, no re-signing, no model call.",
+ "why_new_judgment_or_rule_is_needed": "The strict rejection is expected behavior: source_equivalence compares full source structure, annual input/period selection, per-source URL/accession/document/raw body hash and actual requests. The four original LIVE requests embed identifiers derived from the raw 10-K bytes; the saved responses answer those exact requests. Possible future direction (owner #28, versioned, with negatives; not a PR55 merge prerequisite): keep raw response/headers/request identity and raw hashes, and add a separate versioned proof of content equivalence under fixed processing rules plus a verified identifier correspondence; any removal of confirmed additional markup happens only in a derived processing layer. Alternatively a separately authorized new judgment. Neither was done: no source swap, no re-signing, no model call.",
  "other_metrics_unaffected": "36 candidates completed and cold-replayed in the same run"
 }
