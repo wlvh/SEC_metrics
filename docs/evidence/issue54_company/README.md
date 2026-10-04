@@ -2,6 +2,8 @@
 
 最新实际交付见 [Marriott真实首跑/复跑](live-marriott/README.md)：空来源任务经 `run` 完成31次真实SEC GET，复跑36候选独立冷读通过，39项逐项状态及3项限制、CSV/证据/摘要、来源/运行身份和main集成责任明确。此前 [local-run](local-run/README.md) 录制接线及既有消费者证据按原范围保留，不重新升级。
 
+2026-10-04 [live2 新真实任务](live2/README.md)：从空来源新采集29+2次GET（含原31次累计62/120），36候选冷读通过、复跑0新Run，D04因SEC注入脚本严格等价被拒，材料持久存储于分支 claude/brave-cori-zbxo2v。
+
 2026-10-04接班：[D04接收与基础集成核对](d04-handoff-intake/README.md)。按固定基线补齐工作镜像后，原LIVE f252a7a4在原基线来源上复现原Result e523b7a9并冷读一致，产品代码零改动、0/0/0；原live现场本会话不可见，与LIVE当前来源的等价待现场交接，见同目录 site-handover.json。
 
 对应 `COMPANY-SEPARATION-v2.1-20261002`，接续 PR55 `0442896740c2f320fa999f932bc4d4ae0bfdf856`，普通父程序 `0bc24734736bb1e6cb34fbcf7ab9fece6951764e`。唯一当前执行记录在 [#54 §7](https://github.com/wlvh/SEC_metrics/issues/54)，本目录保存可复核材料。本页下方初始分离层阶段新增真实 SEC/provider/paid 为0/0/0；后续授权的Marriott真实GET另在 live-marriott 独立累计31次。没有 Ready、合并、采纳、部署或 active 权限。

@@ -1,0 +1,61 @@
+{
+ "record_type": "D04_CURRENT_SOURCE_EQUIVALENCE_RESULT",
+ "verdict": "NOT_EQUIVALENT_UNDER_STRICT_V14_RULE",
+ "rejection": [
+  "COMPANY_PROCESSING_AUTHENTICATION_FAILED:ValueError: UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED"
+ ],
+ "rejected_by": "capacity_update_input.source_equivalence (original V14 program, unchanged) via fixed 83 company_processing equivalence worker",
+ "original": {
+  "processing_id": "sha256:f252a7a4f64c778ed5666a090c364990bcd3c648c81a0059272614f8e75f84fe",
+  "input_record_id": "sha256:bcab858fc514ecc16c0ae962085644393c7c550556b7474eceae16dbf12053c0",
+  "semantic_source_id": "sha256:dfe61c693d1293ff7dd90a6c0ef19a7760d70cf467e662d43cb9528f317c02d9",
+  "result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+  "annual_10k_body": {
+   "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+   "bytes": 2048661
+  }
+ },
+ "current": {
+  "semantic_source_id": "sha256:f093605f3f7a67b872cca7e626a9e339c5069926c0e21ee1d9a435db6f23f5d7",
+  "annual_10k_body": {
+   "sha256": "2068d81830ea882910ef7043026445bae69f925c094dbb40d030de4afc001151",
+   "bytes": 2048769
+  },
+  "same_url_accession_document": true
+ },
+ "substantive_keys_differing": [
+  "documents",
+  "required_unit_ids",
+  "units"
+ ],
+ "byte_difference": "current body = original body + one <script type=\"text/javascript\"  src=\"/ve5kkgOKS/...\"></script> element inserted before </body> by the SEC web front end (108 bytes); no other byte differs",
+ "units": {
+  "count": [
+   17,
+   17
+  ],
+  "payloads_equal_ignoring_raw_byte_identifiers": true,
+  "documents_equal_ignoring_raw_byte_identifiers": true,
+  "injected_script_in_any_unit": false
+ },
+ "native_requests": {
+  "count": [
+   4,
+   4
+  ],
+  "byte_equal": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "equal_after_masking_sha256_identifiers": [
+   true,
+   true,
+   true,
+   true
+  ]
+ },
+ "why_new_judgment_or_rule_is_needed": "The four original LIVE requests embed unit/document identifiers derived from the raw 10-K bytes. The saved responses answer those exact requests; the current source yields the same text but different identifiers, so the strict rule cannot reuse them. Reuse would need either an owner-approved canonicalization of SEC-injected markup before identity derivation (policy/Requirement change, #28) or a new authorized judgment on the current requests. Neither was done: no source swap, no re-signing, no model call.",
+ "other_metrics_unaffected": "36 candidates completed and cold-replayed in the same run"
+}
