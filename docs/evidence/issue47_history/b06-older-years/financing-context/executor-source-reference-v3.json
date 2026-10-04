@@ -1,0 +1,438 @@
+{
+ "record_type": "ISSUE47_B06_EXECUTOR_LIMITED_ORIGINAL_REFERENCE",
+ "source_packet_metadata": {
+  "record_type": "ISSUE47_B06_FINANCING_SOURCE_CONTEXT_DEVELOPMENT",
+  "company_id": "macys",
+  "report_end": "2025-02-01",
+  "source_reference_ids": {
+   "primary": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+   "xml": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00"
+  },
+  "raw_sha256": {
+   "primary": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+   "xml": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e"
+  },
+  "block_count": 2140,
+  "table_count": 108,
+  "expanded_cells": 21099,
+  "native_candidate_counts": {
+   "primary": 152,
+   "xml": 152
+  },
+  "source_only_payload_bytes": 651453,
+  "source_only_reference_tokens": 185762,
+  "source_only_measurement_is_not_complete_request_measurement": true,
+  "block_text_and_expanded_text_header_grids_identical": true,
+  "normal_b06_saved_source_admission_rebuilt": true,
+  "normal_input_binding_id": "sha256:2089fce72393a39f50debf9e4d22b66919a1957c870903558b2e24365a802d5b",
+  "artifacts": {
+   "document.json": "87e1112c63804161448ced4027608de96e62331aef8e826c9c17b6f982fb4bd9",
+   "native-current-financing-facts.json": "1728dd8dc7ed7611ca6a9f24192069138ccc5574b30f3730925948bfd2aea140",
+   "normal-b06-source-binding.json": "8bead84e624769cab754e4da9685f6ad673611aeca28bfbe229e3569365a3ed3",
+   "source-only-package.json": "8ccd641b89506d3fb3bdb8c201e7be224f407ebcc8839dc5a7a3ac219e31f7ff",
+   "table-grid.json": "d12b78b1006472f7c9d71531b7bb56f559622546f925e431df81e6123d694a2b",
+   "view.json": "d232beaf3551dbe55a95405cd46332ed3db94b9df7c9314098ed26c9f9236b76"
+  },
+  "runtime_wired": false,
+  "provider_trial": false,
+  "new_runs": 0,
+  "new_acceptances": 0,
+  "calls": [
+   0,
+   0,
+   0
+  ],
+  "production_authorized": false
+ },
+ "reading_scope": {
+  "md_and_a_blocks": [
+   [
+    560,
+    597
+   ]
+  ],
+  "debt_note_blocks": [
+   [
+    1335,
+    1347
+   ]
+  ],
+  "accrued_liabilities_blocks": [
+   [
+    1399,
+    1415
+   ]
+  ],
+  "lease_classification_and_maturity_blocks": [
+   [
+    1145,
+    1165
+   ],
+   [
+    1183,
+    1202
+   ]
+  ],
+  "purchase_commitments_blocks": [
+   [
+    1761,
+    1762
+   ]
+  ],
+  "all_2140_blocks_semantically_read": false,
+  "all_current_candidates_per_source_semantically_classified": false,
+  "all_media_interpreted": false
+ },
+ "arithmetic_usd_millions": {
+  "capacity": "3000 - 144 = 2856",
+  "availability": "2856 - 397 = 2459",
+  "lease_carrying": "23 - 8 = 2 + 13 = 15"
+ },
+ "existing_borrowing_component_reference": "../bond-sections/source-probe-summary.json",
+ "full_b06_complete": false,
+ "automatic_business_completion": false,
+ "provider_trial": false,
+ "runtime_wired": false,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "production_authorized": false,
+ "limitation": "This is a limited executor reference, not an exhaustive fact inventory or independent input-only response. The manual operands in the earlier downstream diagnostic never enter the runtime.",
+ "incremental_reference": true,
+ "base_reference": {
+  "file": "executor-source-reference.json",
+  "sha256": "419b8741d33f8677ed947cd7b82fbb622b70bf8bee3fa7606b5c66753d0fca24",
+  "unchanged_statements": 7,
+  "unchanged_citations": 36,
+  "unchanged_native_pairs": 8
+ },
+ "reference_statements": [
+  {
+   "id": "R08",
+   "blocks": [
+    1399,
+    1400,
+    1401,
+    1402,
+    1403,
+    1404,
+    1405,
+    1406,
+    1407,
+    1408,
+    1409,
+    1410,
+    1411,
+    1412,
+    1413,
+    1414,
+    1415
+   ],
+   "statement": "Note 7 separately reports USD 48 million accrued interest within accounts payable and accrued liabilities at February 1, 2025, versus USD 53 million previously. Official InterestPayableCurrent in HTML/XML supports USD 48 million. This is a recognized current payable, distinct from the MD&A future USD 1.4 billion interest commitments. The earlier financing candidate class omits it; its precise relationship to the approved debt set remains to be demonstrated, not silently added or excluded."
+  }
+ ],
+ "raw_block_citations": [
+  {
+   "text": "7. Accounts Payable and Accrued Liabilities",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "7. Accounts Payable and Accrued Liabilities",
+    "raw_start_byte": 1412703,
+    "raw_end_byte": 1412919,
+    "raw_span_sha256": "668fd79f3d1568f3f94218046171f7b31655538644f36a9372671b6e8eed889a"
+   },
+   "block_index": 1399,
+   "raw_start_byte": 1412703,
+   "raw_end_byte": 1412919,
+   "raw_span_sha256": "668fd79f3d1568f3f94218046171f7b31655538644f36a9372671b6e8eed889a"
+  },
+  {
+   "text": "February 1,",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "February 1,",
+    "raw_start_byte": 1413798,
+    "raw_end_byte": 1413809,
+    "raw_span_sha256": "b84493a72281a1348696476cb81543e933df00b67fd5b19d76afc97e7b0b2bbd"
+   },
+   "block_index": 1400,
+   "raw_start_byte": 1413798,
+   "raw_end_byte": 1413809,
+   "raw_span_sha256": "b84493a72281a1348696476cb81543e933df00b67fd5b19d76afc97e7b0b2bbd"
+  },
+  {
+   "text": "2025February 3,",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "2025February 3,",
+    "raw_start_byte": 1413814,
+    "raw_end_byte": 1414095,
+    "raw_span_sha256": "f52b300eeb799c44a5cb23fc7af54673530d8416225775ef2f028eac13dc3930"
+   },
+   "block_index": 1401,
+   "raw_start_byte": 1413814,
+   "raw_end_byte": 1414095,
+   "raw_span_sha256": "f52b300eeb799c44a5cb23fc7af54673530d8416225775ef2f028eac13dc3930"
+  },
+  {
+   "text": "2024",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "2024",
+    "raw_start_byte": 1414100,
+    "raw_end_byte": 1414104,
+    "raw_span_sha256": "6557739a67283a8de383fc5c0997fbec7c5721a46f28f3235fc9607598d9016b"
+   },
+   "block_index": 1402,
+   "raw_start_byte": 1414100,
+   "raw_end_byte": 1414104,
+   "raw_span_sha256": "6557739a67283a8de383fc5c0997fbec7c5721a46f28f3235fc9607598d9016b"
+  },
+  {
+   "text": "(millions)",
+   "linked": false,
+   "emphasized": true,
+   "leading_emphasis": {
+    "text": "(millions)",
+    "raw_start_byte": 1414376,
+    "raw_end_byte": 1414386,
+    "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+   },
+   "block_index": 1403,
+   "raw_start_byte": 1414376,
+   "raw_end_byte": 1414386,
+   "raw_span_sha256": "15982c2dc957764b31e1bfe8a289c19b56157dafc0f3031bb44a542cae830018"
+  },
+  {
+   "text": "Accounts payable$853 $747",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1404,
+   "raw_start_byte": 1414613,
+   "raw_end_byte": 1415920,
+   "raw_span_sha256": "4bd0fc2a5c58340ca55fd75229429a4dd6037bddf1c7af6af452d0a790e44501"
+  },
+  {
+   "text": "Property related liabilities446 424",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1405,
+   "raw_start_byte": 1416246,
+   "raw_end_byte": 1417177,
+   "raw_span_sha256": "eec97d7a1fe93c0677b8a9801f83ca85faae444676c3137682679eb4794a5be0"
+  },
+  {
+   "text": "Gift cards and customer rewards353 384",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1406,
+   "raw_start_byte": 1417503,
+   "raw_end_byte": 1418473,
+   "raw_span_sha256": "e2bd18c3a3ab0b5ccf985f0be62d431cd86874239c592e79837f405d0fdbd30b"
+  },
+  {
+   "text": "Accrued wages and vacation233 177",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1407,
+   "raw_start_byte": 1418799,
+   "raw_end_byte": 1419758,
+   "raw_span_sha256": "027b9972053e44f5f01154d0f41ea3c1656497542e7614b7947c91759f98980c"
+  },
+  {
+   "text": "Current portion of post employment and postretirement benefits156 163",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1408,
+   "raw_start_byte": 1420084,
+   "raw_end_byte": 1421089,
+   "raw_span_sha256": "654bfd6c8cb5fd815bc3e9ef31ff06f548ae3dc03b1903bd99540e17b08c3674"
+  },
+  {
+   "text": "Allowance for future sales returns114 136",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1409,
+   "raw_start_byte": 1421415,
+   "raw_end_byte": 1422400,
+   "raw_span_sha256": "7468f54d7535fbbe6df0e06f0ba38c263ee67dc5f6cb532caf573032020252ef"
+  },
+  {
+   "text": "Taxes other than income taxes110 136",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1410,
+   "raw_start_byte": 1422726,
+   "raw_end_byte": 1423706,
+   "raw_span_sha256": "864d17206361912610497c394912df98c3694724d9bc0c6e2b173c132d558fea"
+  },
+  {
+   "text": "Current portion of workers' compensation and general liability reserves87 85",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1411,
+   "raw_start_byte": 1424032,
+   "raw_end_byte": 1425038,
+   "raw_span_sha256": "482103b4c12d9d7853c7494051fb1588b020c640d69a629d9a484bb014f86443"
+  },
+  {
+   "text": "Accrued interest48 53",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1412,
+   "raw_start_byte": 1425364,
+   "raw_end_byte": 1426289,
+   "raw_span_sha256": "8054253dbb1eb5045251a747d21a10e74b71515b89c07b52d8255ee540b0b171"
+  },
+  {
+   "text": "Restructuring accruals, including severance31 47",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1413,
+   "raw_start_byte": 1426615,
+   "raw_end_byte": 1427577,
+   "raw_span_sha256": "f355e3138246ac133496d68644a016cb1a40cb8c32a0b1829a09b202f268f1de"
+  },
+  {
+   "text": "Other194 219",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1414,
+   "raw_start_byte": 1427903,
+   "raw_end_byte": 1428835,
+   "raw_span_sha256": "b855be410ee7f56470fd6b968d6cae5944568f822c42aaa28f1ad7e0c5102961"
+  },
+  {
+   "text": "$2,625 $2,571",
+   "linked": false,
+   "emphasized": false,
+   "leading_emphasis": null,
+   "block_index": 1415,
+   "raw_start_byte": 1429287,
+   "raw_end_byte": 1430703,
+   "raw_span_sha256": "8a86035e173e8ec75b6e735d5bdf21bc4687002b9d6e775178a4c81f5193968b"
+  }
+ ],
+ "native_source_pairs": {
+  "938": {
+   "primary": {
+    "ordinal": 938,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "InterestPayableCurrent"
+    ],
+    "source_text": "48",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "unitref": "usd",
+     "contextref": "c-6",
+     "decimals": "-6",
+     "name": "us-gaap:InterestPayableCurrent",
+     "scale": "6",
+     "id": "f-933"
+    },
+    "normalized_source_value": "48000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   },
+   "xml": {
+    "ordinal": 938,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "interestpayablecurrent"
+    ],
+    "source_text": "48000000",
+    "context_ref": "c-6",
+    "context": {
+     "context_ref": "c-6",
+     "identifiers": [
+      {
+       "value": "0000794367",
+       "scheme": "http://www.sec.gov/CIK"
+      }
+     ],
+     "period_fields": [
+      {
+       "kind": "instant",
+       "value": "2025-02-01"
+      }
+     ],
+     "dimensions": [],
+     "typed_dimension_count": 0
+    },
+    "declared_unit": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "numeric_attributes": {
+     "contextref": "c-6",
+     "decimals": "-6",
+     "id": "f-933",
+     "unitref": "usd"
+    },
+    "normalized_source_value": "48000000",
+    "format_qname": null,
+    "nil_attributes": [],
+    "normalization_issue": null,
+    "semantic_role_assigned": false
+   }
+  }
+ },
+ "combined_reference_totals": {
+  "statements": 8,
+  "source_citations": 53,
+  "native_pairs": 9
+ }
+}

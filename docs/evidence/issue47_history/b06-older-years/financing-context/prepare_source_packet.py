@@ -67,9 +67,10 @@ def prepare(capture, source_root, out):
     view = model_view(document, derived)
     assert_matches(view, document, derived)
     inventories = {}
-    # The same broad *candidate* concept class as the existing financing
-    # inventory. Membership here is not a debt/asset/commitment decision.
-    potential = re.compile(r'debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures', re.I)
+    # Retain the existing inventory's broad candidate class, and interest/
+    # accrual source candidates that it misses. This includes unrelated tax
+    # and equity items; membership is not a debt/asset/commitment decision.
+    potential = re.compile(r'debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures|interest|accru', re.I)
     for kind in raw:
         parsed = parse_accession_xbrl_source(raw_bytes=raw[kind])
         meta = _ReportedFactMetadata(); meta.feed(raw[kind].decode('utf-8-sig')); meta.close()
