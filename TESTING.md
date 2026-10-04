@@ -1084,3 +1084,13 @@ C02 核心事实核查：`PYTHONPATH=scripts python3 -m unittest tests.vnext.tes
 **银行指标的独立阅读（2026-10-02）**：`tests.vnext.test_bank_measures_reading`（saved-source 层，17 例，本机约 20 秒）守 `tools/read_bank_measures.py`：已提交阅读的每个位置从已存字节逐项重推；在 FY2021 年报上，带同样字样却不是该量的行都在而不被读（VaR 口径调整表的 Total VaR、排除某项业务的净收益率、另一张表的 Total international）；构造表格守每条规则：几张表说法不一、表头没有目标年度或没有期间、表头同时写两种单位、营业收入列之外的国际合计、没有 Avg./Min/Max 拆分的 VaR、LCR 只有一个来源或在另一个主体名下，都不读；阅读工具不导入任何金融检查模块。注错 `docs/evidence/issue47_history/reading-producers/bank_injections.py`。
 
 **银行报表事实的独立阅读（2026-10-02）**：`tests.vnext.test_bank_statement_facts_reading`（saved-source 层，12 例，本机约 6 秒）守 `tools/read_bank_statement_facts.py`：已提交阅读的每个位置从它点名的目标年报与上一年年报逐项重推；有发布值却不读的只能是"目标年报重述了上一年"，FY2021 A05 那一处的两个数钉在用例里；目录规格与读取器用的逐项相等，目录点名的每个公式都能算，平均分母是两年末的平均；构造文档守每条规则：目标年报重述的上一年不读、取自上一年申报的分量从上一年年报读、维度多一个少一个都不读、两个命名空间说法不一不读、按已批顺序取第一个概念；读取器不导入路线模块（读被测模块自己的源码）。注错 `docs/evidence/issue47_history/reading-producers/bank_statement_injections.py`。
+
+
+### Issue #47 C02 table context（2026-10-04）
+
+`python3 -m unittest -v tests.vnext.test_c02_table_context tests.vnext.test_source_tier_split`：
+六项源表示守卫及七项分片守卫，共13项通过。实际四份完整来源输入的文字/表头网格
+展开比较与上下文计量见 `docs/evidence/issue47_history/c02-table-context-2026-10-04/`。
+C02不是模型抽取测试：新视图未作独立输入回答，Lumen完整输入仍超限。
+CI第四分片的170入口无重叠、无遗漏；不降低单项限时，不改冻结的旧runner。
+最终180快速入口串行通过，原30秒单项上限保留，399.758秒，逐项结果随上述证据保存。

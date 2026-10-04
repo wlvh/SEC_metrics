@@ -441,3 +441,21 @@ consequences worth stating rather than assuming:
 Three runs in a row lost a saved-source shard at 35 minutes: `409fc032` (run 36732217875, shards 1 and 2), `58d79aa2` (run 36737846710, shard 1) and `e8da5e96` (run 36742366729, shards 0 and 1). Every case any shard reached passed; nothing failed. The progress lines (`saved-source-timings-2026-09-30.json`) show why it was one shard more than the others: 60 of the 147 cases had no measured weight and sat at the 30-second default, and they are not 30 seconds (the B03 contract-amortization case is 60, the D03 current-source replay 92, the historical DA-scope route 99). In `58d79aa2`, shards 0 and 2 finished in 3,319 and 3,222 case-seconds while shard 1 had 4,074 behind it and eight cases to go.
 
 The table now holds the mean of those three runs for every case (1 to 3 measurements each; the two cases no run reached are local measurements times 1.2). The mean tier is 11,768 case-seconds: balanced, 32.7 minutes a lane over three shards, 24.5 over four. So three shards pass on a typical runner with little room, and not on the slow ones seen (the same shard ran up to 1.2 times as long between these runs). The fourth shard (`0005`) is still the remedy, and still a workflow change for the owner or the base.
+
+
+## 2026-10-04：最新三个分片均达到 35 分钟
+
+最新 head `397443d8` 的工作流 37153256158 实测 merge `f0790859`，
+base 为 `41d9d859`，不是当前后移的 base。三个 saved-source 分片均被取消；
+其余原生作业及快速层通过，总 saved-source 门禁失败。
+`saved-source-timings-2026-10-04.json` 只取日志中的逐入口进度：112 个已结束入口全部返回 0，
+另有 58 个当前入口未完成，不能记通过。原报告中 in_progress 已过时。
+
+三片的已结束 case-seconds 分别为 4096.609、4091.038、4123.393。
+这些入口实耗合计与旧权重的比例为 1.2181。保持所有 170 个入口、每项上限及两个 worker，
+用该比率估计未结束项，再按当前确定性调度模拟：三片约 36.4–37.9 分钟；
+四片约 27.1–28.4 分钟，不含安装、checkout 和运行器变化，不能当 CI 通过证据。
+既有 `0005-fourth-saved-source-shard.patch` 仍逐字适用于当前工作流，
+`git apply --check` 与分片覆盖的六项测试通过，不需要再次写整份 YAML。
+本 session 尚无已证实可写 workflows 的凭据，原实际拒绝记录保留；
+四片补丁仍待具备该权限的维护者应用。没有减少断言或重置旧失败。

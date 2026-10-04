@@ -22,6 +22,12 @@ def _weight(name):
 
 
 class TheSplitCoversTheTierOnceTest(unittest.TestCase):
+    def test_four_shards_cover_the_complete_tier_once(self):
+        shards = [RUNNER._selected_tests("source-material", index, 4) for index in range(4)]
+        flattened = [case for shard in shards for case in shard]
+        self.assertEqual(sorted(RUNNER.SOURCE_TESTS), sorted(flattened))
+        self.assertEqual(len(flattened), len(set(flattened)))
+
     def test_every_case_is_in_exactly_one_shard(self):
         shards = [RUNNER._selected_tests("source-material", index, 2) for index in (0, 1)]
         self.assertEqual(set(), set(shards[0]) & set(shards[1]))

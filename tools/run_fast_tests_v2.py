@@ -516,6 +516,8 @@ FAST_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorFastTest
 SOURCE_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",)
 FAST_TESTS += ("tests.vnext.test_d01_running_header",)
 FAST_TESTS += ("tests.vnext.test_c02_model_processing",)
+# Historical C02 table text/geometry transport; constructed sources only.
+FAST_TESTS += ("tests.vnext.test_c02_table_context",)
 FAST_TESTS += ("tests.vnext.test_c02_model_review_view",)
 FAST_TESTS += ("tests.vnext.test_historical_note_carrying.HistoricalNoteCarryingTest",)
 FAST_TESTS += ("tests.vnext.test_paid_e01_reading.PaidE01ReadingTest",)

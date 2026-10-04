@@ -1,0 +1,54 @@
+{
+ "record_type": "ISSUE_47_C02_TABLE_CONTEXT_DEVELOPMENT",
+ "position": "jpmorgan_chase:2021-12-31",
+ "source_reference_id": "sha256:e86b41e02e4c45c89efde486c6326c0c5f8a2028782c91e35d5524836a719b7d",
+ "raw_asset_id": "sha256:5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+ "document_id": "sha256:d6a51ae44290dc81c63744e2a9c7d86c51fb14024359e2ad3c62dac399bd4f05",
+ "filing": {
+  "accessionNumber": "0000019617-22-000303",
+  "filingDate": "2022-04-04",
+  "reportDate": "2022-05-17",
+  "acceptanceDateTime": "2022-04-04T10:06:31.000Z",
+  "act": "34",
+  "form": "DEF 14A",
+  "fileNumber": "001-05805",
+  "filmNumber": "22800289",
+  "items": "",
+  "core_type": "DEF 14A",
+  "size": 52038796,
+  "isXBRL": 0,
+  "isInlineXBRL": 0,
+  "isXBRLNumeric": null,
+  "primaryDocument": "a2022proxystatement.htm",
+  "primaryDocDescription": "DEF 14A",
+  "metadata_origin": {
+   "inventory_name": "CIK0000019617-submissions-033.json",
+   "row_index": 2092
+  }
+ },
+ "blocks": 4064,
+ "tables": 428,
+ "expanded_cells": 38166,
+ "block_text_and_expanded_text_header_grids_identical": true,
+ "full_raw_grid_round_trip_claimed": false,
+ "task_sha256": "eb9ac6f4592dc8ea93d92a99198a4f1a53ae12c42545d376a8f31e134370203b",
+ "artifacts": {
+  "table-grid.json": "8f958f993e810d57aeab606aea5b4b02299ec066b80fcdd58cd1ec7a94fbcdcd",
+  "document.json": "5e510d1b5a4ebcacf4833df7a434d1695ce087419c72123b591a669a0e818d39",
+  "view.json": "f8b3fd7c88b7914fd29f7df232f2ceaf510e772bb0d83e616b79238bd57af8ae",
+  "request-body.json": "c912d3a8bcd1ab5350eef9c733110e3a9fa9ae6ce7ec4ac1a635dd454835931a",
+  "prompt.txt": "fa9d6df85e0783c857732657324757d9b8f477cae56b5f8299cc8a5785d5e38e"
+ },
+ "input_tokens": 143723,
+ "fits": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "model_answer_tested": false,
+ "production_authorized": false,
+ "representation": "C02_BLOCKS_AND_TABLE_TEXT_HEADER_GRID_V2",
+ "source_preparation_metadata_sha256": "285025d8520cb1079aadd3b7331a8ec18665561bee5360405bd27a2f7f74717b",
+ "source_tool_sha256": "72c9823b78a59f67718e656da2762285829d78966eea972cba346c83ec9f2fba"
+}

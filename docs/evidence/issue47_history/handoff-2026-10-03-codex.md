@@ -31,3 +31,14 @@ SEC两份许可已执行，1547实际请求+224丢失时保守计入=1771/1867�
 不改#28绑定路径；注错只在隔离克隆/内存；检查器后还原outputs/semantic_audit_receipt.json和outputs/scalability_audit.csv；不用pkill -f/pgrep -f。PR仍Draft，无Ready/合并/正式采纳/active权限。
 
 最终核对：D04三份全部通过两次另进程冷读；22批准位置的正常三层14/14/7（8合同失败无新Run，3已知缺陷撤回，4尚无内容接受），179完整快速入口在原30秒单项上限全部通过，最慢26.689秒。主快照与能力合同检查通过。细节、首次超时及最终通过均保留在本轮目录；GitHub CI状态单独按实际head读，不将本地通过代写为CI通过。
+
+
+## 2026-10-04继续开发
+
+C02新输入开发见c02-table-context-2026-10-04/README.md及tools/prepare_c02_table_context.py：
+所有文字块及表格文字/表头网格保留，原任务正文不变，最终三个样本fit、Lumen完整单请求超限。
+七个JPMorgan表格对应只为原件参考，新输入抽取、模型/原生验收仍未进行，接受909/缺陷104不动。
+#28固定读75f0905e，只有D03开发资料增量，peer_register_reads记明不需历史运行接入；base比较枝自动后移，未把D03信用搬到历史。
+最新397443d8 CI实际测试merge f079085/base41d9d859：快速及其它原生全过，三个saved-source分片均取消，112完成入口全过、58未完成不能算通过。
+已有0005四片补丁apply --check通过，最新逐项计时及估算见ci-job-patch/saved-source-timings-2026-10-04.json；工作流改动仍需要具备workflows权限的维护者。
+D04全文、D02/Pfizer/Marriott、其他历史缺口与待#28合同继续保留；未新增provider/paid/SEC调用或代批。

@@ -8120,6 +8120,27 @@
      "integration": "MERGED; D03 development credit is not historical or full semantic credit"
     }
    ]
+  },
+  {
+   "read_on": "2026-10-04",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_issue": "https://github.com/wlvh/SEC_metrics/issues/28",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "75f0905ed0626f5bb740902196fe3adee1a3348c",
+   "own_commit_at_read": "397443d8478ed38727b7f3579ae71bc474a2acf5",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_state": "No register delta from the already consumed dc9850ca. Current issue and latest shared comments read, including original C02 qualification reply and own Result counterexample.",
+   "baseline": "Read fixed dc9850ca..75f0905e Git diff and Issue #28 current queue / section5.8. Four commits add only D03 development and complete-unit resource evidence; no historical input, binding or model package changes. Read #54 notifications through 5972069514: its event material projection explicitly excludes historical declared_frame; no historical receiving credit imported.",
+   "increments": [
+    {
+     "commit": "f474a697,010e56cd,41d9d859,75f0905e",
+     "marker": null,
+     "subject": "D03 bounded JPM source responsibility/context experiment and complete-unit resource measurements.",
+     "affects_47": "No D03 historical route and no D03 model grant. Full-unit context still has oversized units; no complete-company or historical acceptance follows. New C02 table context experiment uses only the already authenticated own historical sources and the existing public table-grid parser.",
+     "integration": "READ_NO_RUNTIME_INTEGRATION_REQUIRED",
+     "read_from": "Fixed Git commits and current Issue #28 queue; no new shared notification or receiving credit inferred."
+    }
+   ]
   }
  ]
 }
