@@ -43,3 +43,42 @@ has a final blank LF; those bytes are retained rather than editing peer evidence
 Own merge-resolution/evidence paths pass whitespace checks.
 New current-source reading now covers B0–B882, with the tool-truncated B630–634
 recovered explicitly. This is still a partial full-document reference, not credit.
+
+## Completed continuation after that checkpoint
+
+The final four-input preparation log and the 28-member archive/manifest preserve
+the actual request bytes. FY2025 final input is129792 tokens, request SHA
+27b73af1c487b16c2b71601a04c76909b9c20f9289f27b6e8b1b33e5106715cb;
+the earlier129805 figure was a preceding preparation, not these final bytes.
+All supplied FY2025 blocks B0–B4105 have now been read, every raw span checked,
+and the complete14x18 nominee/committee summary and13x21 member table preserved.
+The37-unit executor reference is development material; fourteen member-image
+marks and qualification-policy meaning remain unresolved. No all-media metric
+acceptance is claimed. The other three full inputs are prepared but not yet read
+in this continuation.
+
+The old58 selected FY2025 excerpts all match original text/spans. Manual comparison
+confirms the missing Dimon ownership, Stock/Executive names, four A/B positives
+and Bammann's Federal Reserve qualification; director share retention is a
+governance policy rather than a composition fact. Mixed process/fact paragraphs
+retain their real determinations. The old Audit paragraph plus signed names
+already supports the four named experts, so an omitted duplicate paragraph is
+not counted as four missing qualifications. No selector, old Result, acceptance
+or defect register is rewritten by this comparison.
+
+Three normal input installation probes finished with two independent process
+cold replays each, sockets forbidden. JPM FY2022 B08 and B09 are both correctly
+structurally inapplicable under the non-financial catalog rule; they do not prove
+a positive numeric path. Ford FY2022 B09 does:25134000000 USD, EXACT, with identical
+binding and result in both cold reads. These use the private clone41949f67 and
+an independently restored external source root, not the worktree's unjournaled
+root. The clone also contains six explicitly received, untracked peer C02 files
+for preflight; its installed structured execution authority remains byte-bound.
+The saved calculator Result's PUBLISHED field is not a formal publication;
+these probes created no native Run or acceptance and changed no active pointer.
+The original failed helpers remain beside the successful final logs/reports.
+
+The reference binder and comparison helpers bind manually read judgments; they
+are not NLP classifiers, new model requests, or semantic acceptance checks.
+Each probe and input archive has0/0/0 new provider/paid/SEC calls. The prior grants,
+35 consumed model calls, source budget and fixed execution package remain as before.

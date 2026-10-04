@@ -1,0 +1,244 @@
+{
+ "record_type": "ISSUE47_LOCAL_PRIVATE_CLONE_INSTALL_COLD_REPLAY_PROBE",
+ "code_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004",
+ "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-external-source-20261004/source-inputs",
+ "installed_input_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-input-install-20261004-ford-b09",
+ "install_receipt": {
+  "record_type": "HISTORICAL_PERIOD_INSTALL_RECEIPT",
+  "schema_version": 1,
+  "company_id": "ford_motor_company",
+  "primary_metric_id": "B09",
+  "binding_id": "sha256:fdab929075b00f5fd2413a761c940b67d79e332d41db613cec11358dad2eab34",
+  "period_selection_id": "sha256:26e995c52e960593ffcd37eae3808a2debe7efb31cb58864f0b2c4f67dca2509",
+  "installed_requirement_id": "issue_28_v13",
+  "installer_sha256": "f2c92767f5a715c57985d224e88b940db4c765f5bd0e4b1f994986b68aeb8eea",
+  "native_run_created": false,
+  "calls": {
+   "provider": 0,
+   "paid": 0,
+   "sec": 0
+  },
+  "production_authorized": false,
+  "receipt_id": "sha256:bdd1905b6d283c05f19ac8284e8c8a30a83d8c875c3e601ff250c3492adac294"
+ },
+ "binding": {
+  "record_type": "HISTORICAL_PERIOD_INPUT_BINDING",
+  "schema_version": 1,
+  "kind": "STRUCTURED",
+  "primary_metric_id": "B09",
+  "company_id": "ford_motor_company",
+  "period_selection_id": "sha256:26e995c52e960593ffcd37eae3808a2debe7efb31cb58864f0b2c4f67dca2509",
+  "target_report_end": "2022-12-31",
+  "requested_fiscal_year": null,
+  "input_id": "sha256:c5f49e6a9224e937203243931d88061759fddc44c4b16a32ae7c8e1f81cb5fd3",
+  "source_admission": {
+   "record_type": "VERIFIED_ORDINARY_ACQUIRED_INPUTS",
+   "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+   "source_manifest_sha256": "9974150fa41b13057f2f33c4bca24bfc013cdc763c44acfa10ac36f0c5fce821",
+   "checkpoint_id": "sha256:8fd479648aea793c6f89ddc08069fdf7d9f7b8e5620fba1ad3d7bda822062f1c",
+   "request_attempt_ids": [
+    "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+    "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+    "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+    "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+    "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+   ],
+   "source_credit": "VERIFIED_SEC_ACQUISITION",
+   "real_sec_credit": true,
+   "selected_new_request_attempt_ids": [
+    "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+    "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c"
+   ],
+   "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+   },
+   "production_authorized": false
+  },
+  "spec_paths": {
+   "B09": "catalog/ordinary_zero_ai/B09.md"
+  },
+  "spec_closure_hashes": {
+   "B09": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f"
+  },
+  "target_period": {
+   "fiscal_year": 2022,
+   "period_start": "2022-12-31",
+   "period_end": "2022-12-31"
+  },
+  "requirement_id": "issue_28_v13",
+  "requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+  "native_run_created": false,
+  "production_authorized": false,
+  "binding_id": "sha256:fdab929075b00f5fd2413a761c940b67d79e332d41db613cec11358dad2eab34"
+ },
+ "two_independent_process_reads": [
+  {
+   "binding": {
+    "record_type": "HISTORICAL_PERIOD_INPUT_BINDING",
+    "schema_version": 1,
+    "kind": "STRUCTURED",
+    "primary_metric_id": "B09",
+    "company_id": "ford_motor_company",
+    "period_selection_id": "sha256:26e995c52e960593ffcd37eae3808a2debe7efb31cb58864f0b2c4f67dca2509",
+    "target_report_end": "2022-12-31",
+    "requested_fiscal_year": null,
+    "input_id": "sha256:c5f49e6a9224e937203243931d88061759fddc44c4b16a32ae7c8e1f81cb5fd3",
+    "source_admission": {
+     "record_type": "VERIFIED_ORDINARY_ACQUIRED_INPUTS",
+     "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+     "source_manifest_sha256": "9974150fa41b13057f2f33c4bca24bfc013cdc763c44acfa10ac36f0c5fce821",
+     "checkpoint_id": "sha256:8fd479648aea793c6f89ddc08069fdf7d9f7b8e5620fba1ad3d7bda822062f1c",
+     "request_attempt_ids": [
+      "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+      "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+      "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+      "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+      "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+     ],
+     "source_credit": "VERIFIED_SEC_ACQUISITION",
+     "real_sec_credit": true,
+     "selected_new_request_attempt_ids": [
+      "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+      "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c"
+     ],
+     "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+     },
+     "production_authorized": false
+    },
+    "spec_paths": {
+     "B09": "catalog/ordinary_zero_ai/B09.md"
+    },
+    "spec_closure_hashes": {
+     "B09": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f"
+    },
+    "target_period": {
+     "fiscal_year": 2022,
+     "period_start": "2022-12-31",
+     "period_end": "2022-12-31"
+    },
+    "requirement_id": "issue_28_v13",
+    "requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+    "native_run_created": false,
+    "production_authorized": false,
+    "binding_id": "sha256:fdab929075b00f5fd2413a761c940b67d79e332d41db613cec11358dad2eab34"
+   },
+   "value": "25134000000",
+   "quality": "EXACT",
+   "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+   },
+   "full_result": {
+    "company_id": "ford_motor_company",
+    "metric_id": "B09",
+    "period_start": "2022-12-31",
+    "period_end": "2022-12-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "25134000000",
+    "unit": "USD",
+    "trace_id": "sha256:260061f141e24d77589c27c84055e04035dee9e9495205f6a86fd0c4c35c3f12",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:310cc5001a5a5b2793be53ae0fc7706d8710f963ce728b31e712a797dd4e0501"
+   }
+  },
+  {
+   "binding": {
+    "record_type": "HISTORICAL_PERIOD_INPUT_BINDING",
+    "schema_version": 1,
+    "kind": "STRUCTURED",
+    "primary_metric_id": "B09",
+    "company_id": "ford_motor_company",
+    "period_selection_id": "sha256:26e995c52e960593ffcd37eae3808a2debe7efb31cb58864f0b2c4f67dca2509",
+    "target_report_end": "2022-12-31",
+    "requested_fiscal_year": null,
+    "input_id": "sha256:c5f49e6a9224e937203243931d88061759fddc44c4b16a32ae7c8e1f81cb5fd3",
+    "source_admission": {
+     "record_type": "VERIFIED_ORDINARY_ACQUIRED_INPUTS",
+     "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+     "source_manifest_sha256": "9974150fa41b13057f2f33c4bca24bfc013cdc763c44acfa10ac36f0c5fce821",
+     "checkpoint_id": "sha256:8fd479648aea793c6f89ddc08069fdf7d9f7b8e5620fba1ad3d7bda822062f1c",
+     "request_attempt_ids": [
+      "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+      "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+      "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+      "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+      "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+     ],
+     "source_credit": "VERIFIED_SEC_ACQUISITION",
+     "real_sec_credit": true,
+     "selected_new_request_attempt_ids": [
+      "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+      "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c"
+     ],
+     "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+     },
+     "production_authorized": false
+    },
+    "spec_paths": {
+     "B09": "catalog/ordinary_zero_ai/B09.md"
+    },
+    "spec_closure_hashes": {
+     "B09": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f"
+    },
+    "target_period": {
+     "fiscal_year": 2022,
+     "period_start": "2022-12-31",
+     "period_end": "2022-12-31"
+    },
+    "requirement_id": "issue_28_v13",
+    "requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+    "native_run_created": false,
+    "production_authorized": false,
+    "binding_id": "sha256:fdab929075b00f5fd2413a761c940b67d79e332d41db613cec11358dad2eab34"
+   },
+   "value": "25134000000",
+   "quality": "EXACT",
+   "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+   },
+   "full_result": {
+    "company_id": "ford_motor_company",
+    "metric_id": "B09",
+    "period_start": "2022-12-31",
+    "period_end": "2022-12-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "25134000000",
+    "unit": "USD",
+    "trace_id": "sha256:260061f141e24d77589c27c84055e04035dee9e9495205f6a86fd0c4c35c3f12",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:310cc5001a5a5b2793be53ae0fc7706d8710f963ce728b31e712a797dd4e0501"
+   }
+  }
+ ],
+ "both_reads_identical": true,
+ "code_from_private_clone_inputs_from_installed_root": true,
+ "network_forbidden": true,
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
