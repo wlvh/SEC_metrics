@@ -13990,9 +13990,10 @@
   "ci_49977fb5": {
     "run_id": 37201399895,
     "head_sha": "49977fb5c283c3b341f2e257c993420d3e902e63",
-    "status": "queued",
+    "status": "in_progress",
     "conclusion": null,
-    "observation": "One immediate valid full40SHA reading after push; reference workflow success not main result."
+    "observation": "One immediate valid full40SHA reading after push; reference workflow success not main result.",
+    "natural_checkpoint_updated_at": "2026-10-04T12:26:11Z"
   },
   "shared_increment_read_429f9fcc": {
     "own_read_sha": "49977fb5c283c3b341f2e257c993420d3e902e63",
@@ -14014,6 +14015,43 @@
     "native_or_complete_company_credit": false,
     "next": "Shared input owner#47 can preserve original symbol/legend metadata. Keep qualification media, Stock/Executive identities and whole-scope omissions unresolved; no second answer absent substantive adequate input repair.",
     "calls": [
+      0,
+      0,
+      0
+    ],
+    "delivered_sha": "058c80b198cde14a05077c9e448048f895a117c8",
+    "provider_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5979951136",
+    "server_notice_readback_exact": true,
+    "issue28_queue_readback_exact": true
+  },
+  "ci_058c80b1": {
+    "main_run_id": 37202384734,
+    "head_sha": "058c80b198cde14a05077c9e448048f895a117c8",
+    "status": "queued",
+    "conclusion": null,
+    "initial_read_error": "vnext-fast-v2.yml not in default-branch workflow list; used full40SHA run lookup, did not treat failure as no CI.",
+    "reference_run_id": 37202384742,
+    "reference_is_not_main": true
+  },
+  "d03_logical_continuation_preflight_20261004": {
+    "status": "ACTUAL_LITERAL_CLOSURE_AND_RESOURCE_PREFLIGHT_PASS_LIMITED_CODE_REVIEW_PENDING",
+    "rule": "COLLAB-28-47-v1.2 and Issue28 section5.8",
+    "evidence": "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/README.md",
+    "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+    "original_source_units": 17,
+    "original_native_facts": 1229,
+    "started_chains": 27,
+    "complete_literal_chains": 27,
+    "physical_segments_all_chains": 72,
+    "old_answer_four_anchors_physical_segments": 33,
+    "four_complete_chains_context_tokens": 134632,
+    "old_eight_location_contract_changed": false,
+    "model_answer_added": false,
+    "whole_source_responsibility_mapping_ready": false,
+    "semantic_native_or_company_credit": false,
+    "next": "Limited closure-code review, then full original responsibility/context mapping. No third answer to ended old context trial or inherited company request count. D03 real purpose/resources/opportunity guards/wiring separately needed.",
+    "ledger_sha256_unchanged": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "new_business_calls": [
       0,
       0,
       0
