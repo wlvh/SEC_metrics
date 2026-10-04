@@ -4127,6 +4127,29 @@
       },
       "dedup_note": "list_agents no live; register/evidence no same SHA or bounded-task contract; prior literal/namespace reviews cover unchanged different module. New actual prototype scope, no repeated model extraction.",
       "elapsed_seconds": "325.182727"
+    },
+    {
+      "task_name": "review_d03decode_ada4647",
+      "purpose": "review",
+      "module": "d03_bounded_task_contract_decoder_increment",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/scan-prompt.txt decoder paragraph",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/test_task_contract.py new dictionary-order regression",
+        "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/measured-plan.json current prompt binding"
+      ],
+      "patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
+      "spawned_at": "2026-10-04T04:29:06Z",
+      "ended_at": "2026-10-04T04:36:50Z",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-decoder-review/conclusion.md",
+      "verdict": "LIMITED_APPROVE_DECODER_INCREMENT",
+      "limits": {
+        "tools": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup_note": "list_agents no live; sameSHA register/evidence no hit; genuine new prompt/regression delta after prior task-review ended at3 messages. Old P2 retained and unchanged scope inherited."
     }
   ],
   "ci_capacity_20260922": {
@@ -13369,7 +13392,7 @@
     "common_protocol_and_other_sections_unchanged": true
   },
   "d03_bounded_task_contract_20261004": {
-    "state": "PROMPT_ROW_LAYOUT_P2_FIXED_INCREMENT_REVIEW_PENDING",
+    "state": "OFFLINE_TASK_CONTRACT_LIMITED_REVIEW_PASSED_NOT_MODEL_OR_COMPANY_READY",
     "evidence": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004",
     "tested_base_sha": "e8fa288095edc894101628d49392572c9c49e7af",
     "prototype_code_in_evidence_not_normal_runtime": true,
@@ -13416,7 +13439,7 @@
       0,
       0
     ],
-    "next": "Independent mechanical prototype review, then input-only actual developer trial for new whole-owner/context representation; do not reopen ended JPM/C02/B13 batches. Ten-company D03 plan/cost and target-model permission not yet established.",
+    "next": "One representative input-only developer test of genuinely new whole-owner/explicit-context task design, with original-source reference first; old JPM positive batch and C02/B13 ended batches not reopened. Full ten-company D03 resources, runtime guards, native company and target-model permission remain unproved.",
     "patch_sha": "c0cef253ae5373e8c8fbd224d14cbb5bc941fab8",
     "independent_review": {
       "state": "REQUEST_CHANGES_P2_PROMPT_ROW_LAYOUT",
@@ -13447,6 +13470,16 @@
           "maximum_context_tokens": 186203
         }
       ]
+    },
+    "decoder_fix_patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
+    "decoder_fix_independent_review": {
+      "patch_sha": "ada4647a106d32dacd1e40811294edf32034bb74",
+      "state": "LIMITED_APPROVE_DECODER_INCREMENT",
+      "result_path": "docs/evidence/issue28_continuous/d03-bounded-task-contract-20261004/independent-decoder-review/conclusion.md",
+      "tool_calls": 31,
+      "ordinary_messages": 3,
+      "tested_one_actual_scan_and_followup": true,
+      "semantic_or_company_credit": false
     }
   }
 }
