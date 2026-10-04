@@ -23,7 +23,9 @@
 
 `7c50eab9` 原独审 **REQUEST_CHANGES**，21工具/3消息/486秒，原结论保留。反例证明 native fact 的 context/unit 可使用不同 namespace environment；仅带事实环境时，`z:USD` 可能被误解。独立回放相等也重复这个遗漏，不能证明表示完整。
 
-修后保留事实、context、unit 所引用的全部环境映射，缺任一依赖拒绝，完整新增字典计入字节上限。新增前缀重绑定、依赖缺失及计入上限的回归；20项短测试0.209秒通过，见 `namespace-fix-tests-completed.log`，首个新反例测试自己的 owner fixture 接线错误保留在失败日志中，修正 fixture 后通过。增加一份实际 Marriott `f-408` 事实依赖包，另有保存/冷读记录；两份先前 XML/正文包不改签。修后测试树见 `namespace-fix-tested-tree.json`。原代理已达3消息上限，不再向其追加；后续独审仅接未覆盖的字典增量，不重审未变部分。
+修后保留事实、context、unit 所引用的全部环境映射，缺任一依赖拒绝，完整新增字典计入字节上限。新增前缀重绑定、依赖缺失及计入上限的回归；20项短测试0.222秒通过，见 `namespace-fix-tests-completed.log`，首个新反例测试自己的 owner fixture 接线错误保留在失败日志中，修正 fixture 后通过。增加一份实际 Marriott `f-408` 事实依赖包，保存0.184秒、冷读0.175秒；两份先前 XML/正文包不改签。修后测试树见 `namespace-fix-tested-tree.json`。原代理已达3消息上限，不再向其追加；新代理仅接未覆盖的字典增量，没有重审未变部分。
+
+修后代码 `97f8380db30fc954587aec2cddcd8f103ffa16e0` 已获 **LIMITED_APPROVE**：9项独立测试及34项独立断言，新实际事实包直接字节/依赖比对与冷回放通过。工具31/普通消息3/334秒，见 `independent-namespace-review/conclusion.md`。原 REQUEST_CHANGES 仍按原提交解释；该P2仅在新差异范围解除，不是 D03语义、完整公司或全PR验收。当前提交与被测文件字节对应见 `commit-byte-correspondence.json`；没有把未提交测试改写成最初基线执行。
 
 ## 仍须完成
 

@@ -1,0 +1,35 @@
+PASS three distinct dependencies preserve exact dictionaries
+PASS context and measure QName prefixes resolve in their own environments
+PASS fact/context/unit literal data preserved
+PASS unreferenced namespace dictionary excluded
+PASS source not mutated
+PASS all namespace bytes counted
+PASS old shape smaller
+PASS exact byte cap permits complete item
+PASS one byte below rejects all context
+PASS old shape byte limit rejects all context
+PASS cumulative cap counts dependency maps per exported row
+PASS missing contexts environment rejected
+PASS missing contexts environment id rejected
+PASS non-string contexts environment id rejected
+PASS missing contexts object rejected
+PASS missing units environment rejected
+PASS missing units environment id rejected
+PASS non-string units environment id rejected
+PASS missing units object rejected
+PASS shared environments deduplicate all
+PASS shared environments deduplicate fact-context
+PASS shared environments deduplicate fact-unit
+PASS independent synthetic packet replays
+PASS resigned environment tampering rejected by source rebuild
+PASS actual source and packet match fixed external disk digests
+PASS actual disk serialization exact
+PASS actual packet remains one owned exact fact lookup
+PASS actual independent cold replay
+PASS actual complete dictionary selected independently from original source
+PASS actual fact context and unit exact
+PASS actual namespace dictionaries counted in 3952 context bytes
+PASS actual no semantic/company/business-call credit
+PASS actual old byte limit rejects new larger full context
+PASS save report hash agrees without executing parent writer
+{"checks": 34, "synthetic_context_bytes": 1453, "synthetic_without_maps_bytes": 949, "actual_context_bytes": 3952, "actual_without_maps_bytes": 3108, "actual_dependency_environment_count": 1, "network_and_subprocess_forbidden": true, "business_calls": [0, 0, 0], "verdict": "PASS_LITERAL_NAMESPACE_ONLY"}
