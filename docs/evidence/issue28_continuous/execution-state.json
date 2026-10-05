@@ -14445,6 +14445,17 @@
     "review_verdict": "PASS_SCOPED_RECEIVING",
     "corrected_raw_response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
     "corrected_postprocessing_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/corrected-postprocessing.json",
-    "corrected_reference_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/corrected-reference-comparison.json"
+    "corrected_reference_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/corrected-reference-comparison.json",
+    "delivered_head": "f80f4370b65f1d9414081c720a8cafce02f0d69e",
+    "queue_readback_exact": true,
+    "provider_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5995437366",
+    "target_request_plan": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/minimum-target-request-plan.json",
+    "native_wire_pipeline_ready": false
+  },
+  "ci_f80f4370": {
+    "head_sha": "f80f4370b65f1d9414081c720a8cafce02f0d69e",
+    "status": "NO_MATCHING_RUN_OR_CHECK_RETURNED",
+    "conclusion": null,
+    "scope": "ExactfullSHA query empty; PR43samehead verifiedchecks empty. No conclusion inferred from priorgreen, no rerun/dispatch requested."
   }
 }
