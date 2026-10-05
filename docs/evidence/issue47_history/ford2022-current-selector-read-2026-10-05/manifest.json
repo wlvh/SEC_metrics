@@ -1,0 +1,62 @@
+{
+ "record_type": "ISSUE47_COMMITTED_FORD_NORMAL_SOURCE_READING",
+ "archive": {
+  "path": "input-materials.tar.gz",
+  "bytes": 833696,
+  "sha256": "075b04abfc8af9c7b6070b907bab4b6dba4dee47285124915616a6071fa25e05"
+ },
+ "members": [
+  {
+   "path": "bind_comparison.py",
+   "bytes": 5840,
+   "sha256": "12fb3735395432a0d1ec396cc574ab32d6b0200dd7d3581a1e6fd1e06486fcad"
+  },
+  {
+   "path": "current-rule-comparison.json",
+   "bytes": 75504,
+   "sha256": "ead6990c0382a49af2c7ddabdc7e59f323da27622b223a455ba487aff6c2c2d0"
+  },
+  {
+   "path": "current-selector.json",
+   "bytes": 3744669,
+   "sha256": "dda0a959b303967473ea348e1634498020546d072db326fac67be922b6240d8b"
+  },
+  {
+   "path": "full-biography-table105.json",
+   "bytes": 23887,
+   "sha256": "01dd8a36d05c6f9d8fb03136f966321ef1789a4d1d3d8d8234369b9bf5e18bbc"
+  },
+  {
+   "path": "read_normal_source.py",
+   "bytes": 3284,
+   "sha256": "e005ddc0746283c5ca0d60480666c1b0116470d4b5c5072485e3153c289130f4"
+  },
+  {
+   "path": "selector-after-reference.json",
+   "bytes": 2676,
+   "sha256": "4b76d9d4cd5dee8184cb5a811ba7f02e3ddb06ed78da82833b910e096df974ae"
+  }
+ ],
+ "dependencies": [
+  {
+   "path": "evidence/issue47_local_inputs/c02-table-context-v2.tar.gz",
+   "sha256": "b4661cc97db1b6a28c2a7d0b57c75ba803095d33205ae3c58e03adf2128b3df9"
+  },
+  {
+   "path": "docs/evidence/issue47_history/c02-table-context-2026-10-04/reference-ford-2022.json",
+   "sha256": "bdaf80e1feec073ddaf331803a5f316db6c7c2760ca4e3cf2691c63b7775a84b"
+  },
+  {
+   "path": "docs/evidence/issue47_history/c02-table-context-2026-10-04/ford-pre-trial-freeze.json",
+   "sha256": "56be3baaebe6b00c4c1c60d41a50482fa6245a11a97ba3342ffc36a996ec1a0e"
+  }
+ ],
+ "normal_source_dependency": "evidence/issue47_acquired restore",
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}

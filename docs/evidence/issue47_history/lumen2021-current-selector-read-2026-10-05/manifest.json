@@ -1,0 +1,60 @@
+{
+ "record_type": "ISSUE47_COMMITTED_LUMEN_CURRENT_NORMAL_SOURCE_READING",
+ "archive": {
+  "path": "input-materials.tar.gz",
+  "bytes": 840888,
+  "sha256": "42a5eefd8ccc95854a39ebd4bdb943a591a69c1f23830a6f734a0f918c3cdb84"
+ },
+ "members": [
+  {
+   "path": "bind_comparison.py",
+   "bytes": 5009,
+   "sha256": "4bc71287a51a83074ed16bb95ea2637ac86f6030f9f3b47180299fe66ae503a8"
+  },
+  {
+   "path": "company-as-person-trace.json",
+   "bytes": 1092,
+   "sha256": "5f837792f43d76aae4a6fa22d2a28610754dde7b5b8551744cb0978523d94abe"
+  },
+  {
+   "path": "current-rule-comparison.json",
+   "bytes": 56604,
+   "sha256": "fb80b080d0c078cbab01169af47661398fafa5378b484e12456c095a1cc89e4c"
+  },
+  {
+   "path": "current-selector.json",
+   "bytes": 3492560,
+   "sha256": "9ccf2f17e46572ef9fc36b974eb9038586118986aef5015564f4b1c4cf98d25a"
+  },
+  {
+   "path": "read_normal_source.py",
+   "bytes": 3327,
+   "sha256": "0984049a4f36eccae5a569ccb635754030e496602587495bbeb1e1fb4420598c"
+  },
+  {
+   "path": "selector-after-reference.json",
+   "bytes": 2462,
+   "sha256": "f7f932a5b0bd6f7cdc66a5a497e01fa5a76e00e5b0a6f847141c1df410ac8c81"
+  }
+ ],
+ "dependencies": [
+  {
+   "path": "evidence/issue47_local_inputs/c02-table-context-v2.tar.gz",
+   "sha256": "b4661cc97db1b6a28c2a7d0b57c75ba803095d33205ae3c58e03adf2128b3df9"
+  },
+  {
+   "path": "docs/evidence/issue47_history/lumen-full-executor-read-2026-10-05/reference-materials.tar.gz",
+   "sha256": "8e2d92983739688b264832b2d54dfcabba9501a90b522d3549ce7a5c34d41f33"
+  }
+ ],
+ "reference_member": "lumen2021-c02-executor-reference.json",
+ "reference_sha256": "ba811d27e6a4568ea579919346dab04ee0415f3c273f1500faf35dd5a852f703",
+ "normal_source_dependency": "evidence/issue47_acquired restore",
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}
