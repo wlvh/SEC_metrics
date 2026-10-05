@@ -1,0 +1,305 @@
+{
+  "environment": "Codex managed Linux workspace, UID1000; not user local computer or cross-platform/OpenShift acceptance",
+  "first_raw_empty": true,
+  "execution_source_commits": {
+    "first": "b4f97bba3539b89fa045dd221329a2f76cb5fd67",
+    "repeat": "b8f3ac04ca82d39b8072acd7c710ff6d74f75f44"
+  },
+  "latest_baseline_path_guard_commit": "0e6153c711893192d27cd2c514e26525ea1ab95e",
+  "total_actual_sec_gets": 31,
+  "all_successful": true,
+  "provider_paid": [
+    0,
+    0
+  ],
+  "allowance_sec": 120,
+  "runs": [
+    {
+      "label": "first",
+      "output_directory": "/workspace/work/live-marriott-outputs/20261003T163448Z-f6e42f9b",
+      "flow_status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "selected_metric_count": 39,
+      "metric_count": 39,
+      "metric_status_counts": {
+        "CANDIDATE_READY": 30,
+        "INPUT_FAILED": 6,
+        "UPDATE_BLOCKED": 1,
+        "IMPLEMENTATION_GAP": 1,
+        "AI_PROCESSING_INPUT_REQUIRED": 1
+      },
+      "csv_status_counts": {
+        "N_A_STRUCTURAL": 13,
+        "OK": 8,
+        "NOT_MEANINGFUL": 1,
+        "MDA_OK": 1,
+        "WITHHELD": 7,
+        "INPUT_FAILED": 6,
+        "UPDATE_BLOCKED": 1,
+        "AI_PROCESSING_INPUT_REQUIRED": 1,
+        "IMPLEMENTATION_GAP": 1
+      },
+      "metric_ids_by_csv_status": {
+        "AI_PROCESSING_INPUT_REQUIRED": [
+          "D04"
+        ],
+        "IMPLEMENTATION_GAP": [
+          "D03"
+        ],
+        "INPUT_FAILED": [
+          "C01",
+          "E01",
+          "E02",
+          "E03",
+          "E04",
+          "E05"
+        ],
+        "MDA_OK": [
+          "B10"
+        ],
+        "NOT_MEANINGFUL": [
+          "B06"
+        ],
+        "N_A_STRUCTURAL": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13"
+        ],
+        "OK": [
+          "B01",
+          "B02",
+          "B03",
+          "B04",
+          "B05",
+          "B07",
+          "B08",
+          "B09"
+        ],
+        "UPDATE_BLOCKED": [
+          "D02"
+        ],
+        "WITHHELD": [
+          "B11",
+          "B12",
+          "B13",
+          "C02",
+          "C03",
+          "C04",
+          "D01"
+        ]
+      },
+      "calls": {
+        "paid": 0,
+        "provider": 0,
+        "sec": 29
+      },
+      "new_gets": 29,
+      "successful_gets": 29,
+      "failed_gets": 0,
+      "reused_source_urls": 0,
+      "received_response_body_bytes": 13604999,
+      "actual_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "filing": {
+        "acceptanceDateTime": "2026-02-10T23:35:55.000Z",
+        "accessionNumber": "0001048286-26-000007",
+        "act": "34",
+        "core_type": "XBRL",
+        "fileNumber": "001-13881",
+        "filingDate": "2026-02-10",
+        "filmNumber": "26614897",
+        "form": "10-K",
+        "isInlineXBRL": 1,
+        "isXBRL": 1,
+        "isXBRLNumeric": null,
+        "items": "",
+        "primaryDocDescription": "10-K",
+        "primaryDocument": "mar-20251231.htm",
+        "reportDate": "2025-12-31",
+        "size": 12393244
+      },
+      "source_checkpoint_id": "sha256:671a25cd86baceec0cd20a6be08cbb225328ce65bf46e91fb435a80ca39da4d9",
+      "summary_view_installed_version_match": true,
+      "stage_seconds": {
+        "acquire": "175.481425",
+        "compute": "808.095771",
+        "export-results": "253.559658",
+        "handoff": "5.897156",
+        "install": "0.908389"
+      },
+      "total_seconds": "1243.990465",
+      "native_replay_counts": {
+        "PASSED": 23,
+        "FAILED": 7,
+        "NO_CANDIDATE": 8
+      },
+      "logical_company_ids_complete": true,
+      "business_acceptance": false
+    },
+    {
+      "label": "repeat",
+      "output_directory": "/workspace/work/live-marriott-outputs/20261003T171912Z-e2aade11",
+      "flow_status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "selected_metric_count": 39,
+      "metric_count": 39,
+      "metric_status_counts": {
+        "NO_SOURCE_CONTENT_CHANGE": 30,
+        "CANDIDATE_READY": 6,
+        "UPDATE_BLOCKED": 1,
+        "IMPLEMENTATION_GAP": 1,
+        "AI_PROCESSING_INPUT_REQUIRED": 1
+      },
+      "csv_status_counts": {
+        "N_A_STRUCTURAL": 15,
+        "OK": 9,
+        "NOT_MEANINGFUL": 1,
+        "MDA_OK": 2,
+        "8K_ITEM_OK": 6,
+        "TEXT_QUAL": 2,
+        "XBRL_OK": 1,
+        "UPDATE_BLOCKED": 1,
+        "AI_PROCESSING_INPUT_REQUIRED": 1,
+        "IMPLEMENTATION_GAP": 1
+      },
+      "metric_ids_by_csv_status": {
+        "8K_ITEM_OK": [
+          "C01",
+          "E01",
+          "E02",
+          "E03",
+          "E04",
+          "E05"
+        ],
+        "AI_PROCESSING_INPUT_REQUIRED": [
+          "D04"
+        ],
+        "IMPLEMENTATION_GAP": [
+          "D03"
+        ],
+        "MDA_OK": [
+          "B10",
+          "B11"
+        ],
+        "NOT_MEANINGFUL": [
+          "B06"
+        ],
+        "N_A_STRUCTURAL": [
+          "A01",
+          "A02",
+          "A03",
+          "A04",
+          "A05",
+          "A06",
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "B12",
+          "B13"
+        ],
+        "OK": [
+          "B01",
+          "B02",
+          "B03",
+          "B04",
+          "B05",
+          "B07",
+          "B08",
+          "B09",
+          "C04"
+        ],
+        "TEXT_QUAL": [
+          "C02",
+          "D01"
+        ],
+        "UPDATE_BLOCKED": [
+          "D02"
+        ],
+        "XBRL_OK": [
+          "C03"
+        ]
+      },
+      "calls": {
+        "paid": 0,
+        "provider": 0,
+        "sec": 2
+      },
+      "new_gets": 2,
+      "successful_gets": 2,
+      "failed_gets": 0,
+      "reused_source_urls": 27,
+      "received_response_body_bytes": 3417342,
+      "actual_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "filing": {
+        "acceptanceDateTime": "2026-02-10T23:35:55.000Z",
+        "accessionNumber": "0001048286-26-000007",
+        "act": "34",
+        "core_type": "XBRL",
+        "fileNumber": "001-13881",
+        "filingDate": "2026-02-10",
+        "filmNumber": "26614897",
+        "form": "10-K",
+        "isInlineXBRL": 1,
+        "isXBRL": 1,
+        "isXBRLNumeric": null,
+        "items": "",
+        "primaryDocDescription": "10-K",
+        "primaryDocument": "mar-20251231.htm",
+        "reportDate": "2025-12-31",
+        "size": 12393244
+      },
+      "source_checkpoint_id": "sha256:7050dd9ee6cfd0e50cbe3e2d694b6b1131c8fcc498d95579b41751fed7f3c896",
+      "summary_view_installed_version_match": true,
+      "stage_seconds": {
+        "acquire": "27.961234",
+        "compute": "393.538339",
+        "export-results": "290.572469",
+        "handoff": "6.385830",
+        "install": "1.128663"
+      },
+      "total_seconds": "719.631892",
+      "native_replay_counts": {
+        "PASSED": 36,
+        "NO_CANDIDATE": 2
+      },
+      "logical_company_ids_complete": true,
+      "business_acceptance": false
+    }
+  ],
+  "run_counts": {
+    "first_created": 30,
+    "repeat_created": 6,
+    "repeat_reused": 30,
+    "current": 36,
+    "all_first_manifest_hashes_unchanged": true
+  },
+  "raw_distinct_body_bytes": 13604999,
+  "not_measured": [
+    "one-time program installation elapsed outside the run command",
+    "cross-platform or cluster behavior"
+  ],
+  "explicit_limitations": {
+    "D02": "Original category-rule validation remains suspended; owner #28",
+    "D03": "No complete ordinary company Run interface; owner #28",
+    "D04": "No independently authenticated complete saved processing package at this task; original complete Marriott LIVE judgment is registered, package requested from #28. Not evidence that another model call is required."
+  }
+}

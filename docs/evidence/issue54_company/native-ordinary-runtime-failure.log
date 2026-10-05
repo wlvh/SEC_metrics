@@ -1,0 +1,25 @@
+{
+  "company_id": "jpmorgan_chase",
+  "status": "UPDATES_INCOMPLETE",
+  "metrics": [
+    {
+      "metric_id": "B13",
+      "status": "UPDATE_BLOCKED",
+      "error_type": "RequirementError",
+      "reason": "Normal successor rule bytes differ: scripts/vnext/normal_run_v3.py",
+      "last_verified_candidate": null,
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

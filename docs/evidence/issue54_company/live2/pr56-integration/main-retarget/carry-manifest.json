@@ -1,0 +1,167 @@
+{
+ "record_type": "PR55_MAIN_RETARGET_CARRY_MANIFEST",
+ "source_commit": "0bc24734736bb1e6cb34fbcf7ab9fece6951764e",
+ "reason": "inherited company-pipeline coverage absent from PR56 0be58051 (COVERAGE-MAP.md)",
+ "files": [
+  {
+   "path": "docs/evidence/issue28_continuous/b13-quantity-integration/d04-inventory.json",
+   "mode": "100644",
+   "git_blob": "8ec9f5afc95f381767b428a8d41cbf2c53967867"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/capacity-assessment.json",
+   "mode": "100644",
+   "git_blob": "419ad75ece73587172afef55f62d6bec503bb633"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/execution-rules.json",
+   "mode": "100644",
+   "git_blob": "d9d515825cbfcd95d731591ae829ae9d0af7dfd7"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/intent.json",
+   "mode": "100644",
+   "git_blob": "d07c1dfd4d98018b1cf602a97225c008078266dc"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/semantic-request.json",
+   "mode": "100644",
+   "git_blob": "0ecf8f6db418721bd657242b6a57112c61450ccc"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/terminal.json",
+   "mode": "100644",
+   "git_blob": "6e6d29f239ddb6c75b674df1916a51e3c56b452a"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/wire/assistant-output.bin",
+   "mode": "100644",
+   "git_blob": "7d15ed5f35b92f3947688cbc104f1023ac4a7d7b"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68/wire/journal.json",
+   "mode": "100644",
+   "git_blob": "fd06dbddb64ceb1b672e562811eff38363b40308"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+   "mode": "100644",
+   "git_blob": "b41713b6a1c27068bcbe477fffe88e844858a32c"
+  },
+  {
+   "path": "docs/evidence/issue28_continuous/resume-2026-09-14/b13-complete-source.tar.gz",
+   "mode": "100644",
+   "git_blob": "45101765a95063c59606e3b22f2b352863d7efb3"
+  },
+  {
+   "path": "tests/vnext/test_c04_refresh_resume.py",
+   "mode": "100644",
+   "git_blob": "9f214d2cf673a0658c2cbadf199fb880604c94bc"
+  },
+  {
+   "path": "tests/vnext/test_c04_source_only_install.py",
+   "mode": "100644",
+   "git_blob": "20ff8bae709acbf5bfb0afb7e2f7119f3ab7b1a8"
+  },
+  {
+   "path": "tests/vnext/test_c04_update_cycle.py",
+   "mode": "100644",
+   "git_blob": "d6002f071f449e9d5a4bed5c06b9f1701a4e32b4"
+  },
+  {
+   "path": "tests/vnext/test_capacity_semantic_review.py",
+   "mode": "100644",
+   "git_blob": "07c3218055073d95374847b2f8edaad82ce8540d"
+  },
+  {
+   "path": "tests/vnext/test_capacity_utilization_source.py",
+   "mode": "100644",
+   "git_blob": "ed2869cb687d5a49cdba04d3402cb5939b8eb95b"
+  },
+  {
+   "path": "tests/vnext/test_continuous_call_ledger.py",
+   "mode": "100644",
+   "git_blob": "d5e7fb63f360ac7b9640964ae90b9926a582760f"
+  },
+  {
+   "path": "tests/vnext/test_continuous_call_policy.py",
+   "mode": "100644",
+   "git_blob": "73f688975509f9a9a95b9291bb489fbf42e57f1e"
+  },
+  {
+   "path": "tests/vnext/test_continuous_sec_acquisition.py",
+   "mode": "100644",
+   "git_blob": "eaf3ac54c8299c71cf937923d24b6c44a73a02ec"
+  },
+  {
+   "path": "tests/vnext/test_d04_native_assessment.py",
+   "mode": "100644",
+   "git_blob": "259b1d2c84c0470879c514e91ece2ab049dae9e6"
+  },
+  {
+   "path": "tests/vnext/test_d04_run_material.py",
+   "mode": "100644",
+   "git_blob": "afcc9371b35fd44393594af8de959fbd60800791"
+  },
+  {
+   "path": "tests/vnext/test_native_request_construction.py",
+   "mode": "100644",
+   "git_blob": "2a58dcddef1b9c7ff30f9b2f316d49b2dd640abd"
+  },
+  {
+   "path": "tests/vnext/test_native_request_variants.py",
+   "mode": "100644",
+   "git_blob": "11a7b2d48146219fde7c9c83c575da4764ed6d21"
+  },
+  {
+   "path": "tests/vnext/test_normal_run_material.py",
+   "mode": "100644",
+   "git_blob": "f103f9bc2262fd6f30d7639865e86ea8231ab41b"
+  },
+  {
+   "path": "tests/vnext/test_normal_run_v3_material.py",
+   "mode": "100644",
+   "git_blob": "85a1b3c995f805e7adb5dd922f8d05b451b0354b"
+  },
+  {
+   "path": "tests/vnext/test_normal_source_requirements.py",
+   "mode": "100644",
+   "git_blob": "f5532cd5ff0604dfd06b3b04376bba1a082f9c39"
+  },
+  {
+   "path": "tests/vnext/test_ordinary_source_authority.py",
+   "mode": "100644",
+   "git_blob": "9dd4ea9e934a1516abdddd82f669505eecf4e650"
+  },
+  {
+   "path": "tests/vnext/test_ordinary_source_run_material.py",
+   "mode": "100644",
+   "git_blob": "965779e88b9edebc765ceb9636fa6c1449a44ecb"
+  },
+  {
+   "path": "tests/vnext/test_ordinary_source_session.py",
+   "mode": "100644",
+   "git_blob": "95d9b6b1a5ffb714e43c81b93a1e07b908a6f596"
+  },
+  {
+   "path": "tests/vnext/test_ordinary_storage_identity.py",
+   "mode": "100644",
+   "git_blob": "f623b3043faa5e04ed38e26804222a5336b1d3e6"
+  },
+  {
+   "path": "tests/vnext/test_prior_html_dependency.py",
+   "mode": "100644",
+   "git_blob": "b3d760cee02c08b89a99afa6639d1daafa73c821"
+  },
+  {
+   "path": "tests/vnext/test_registered_native_update.py",
+   "mode": "100644",
+   "git_blob": "e61e1b1c59f7f9f640e465f6de228f98c6455ccf"
+  },
+  {
+   "path": "tests/vnext/test_remaining_source_run_material.py",
+   "mode": "100644",
+   "git_blob": "cf9fc03d83e27056d604dd123b18ddf3eadf330c"
+  }
+ ]
+}

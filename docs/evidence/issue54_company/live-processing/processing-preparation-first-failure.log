@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/work/probe_live_d04_prepare.py", line 8, in <module>
+    start=time.monotonic(); report=export_processing(installed_root=view,output_root=w/'company-d04-live-processing',runtime_output_root=w/'company-d04-live-program',trust_root=w/'company-d04-live-trust',company_id='enphase_energy')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/sec-company-compute/scripts/vnext/company_processing.py", line 39, in export_processing
+    exported=worker('export',source,output,source,runtime)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/sec-company-compute/scripts/vnext/company_processing.py", line 27, in worker
+    need(child.returncode==0,'COMPANY_PROCESSING_AUTHENTICATION_FAILED:'+(
+  File "/workspace/work/sec-company-compute/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_PROCESSING_AUTHENTICATION_FAILED:ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE

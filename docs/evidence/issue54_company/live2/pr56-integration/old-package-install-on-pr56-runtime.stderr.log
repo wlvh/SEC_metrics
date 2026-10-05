@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/user/work/pr56-check/rt-local/tools/vnext_company.py", line 176, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/user/work/pr56-check/rt-local/tools/vnext_company.py", line 140, in main
+    result = install_company(package_root=args.package_root, state_root=args.state_root,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/work/pr56-check/rt-local/scripts/vnext/company_handoff.py", line 355, in install_company
+    result = _install_locked(package, root, company_id, fault)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/work/pr56-check/rt-local/scripts/vnext/company_handoff.py", line 369, in _install_locked
+    incoming = check_package(package_root=package, company_id=company_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/work/pr56-check/rt-local/scripts/vnext/company_handoff.py", line 289, in check_package
+    need(admission['rules'] == rule_bindings(admission.get('rule_requirement_id', 'issue_28_v13')),
+  File "/home/user/work/pr56-check/rt-local/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_RULE_VERSION_CHANGED
+
+real	0m0.539s
+user	0m0.389s
+sys	0m0.148s

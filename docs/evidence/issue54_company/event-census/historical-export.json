@@ -1,0 +1,24 @@
+{
+  "elapsed_seconds": 277.12969241099927,
+  "status": "EXPORTED",
+  "company_id": "jpmorgan_chase",
+  "output_root": "/workspace/work/company-event-historical-v2-export",
+  "native_candidates": [
+    {
+      "metric_id": "C01",
+      "period": {
+        "fiscal_year": 2023,
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31"
+      },
+      "attempt_id": "7a9d54214eb1479aaf9094a7c8165119",
+      "run_id": "run:historical-period:d33c592db675861cbcbb832261a3e6f914ab02a789147a7976c175298a69c60b",
+      "requirement_id": "issue_54_v3",
+      "requirement_closure_hash": "sha256:130b370202ab5ffb5108a9bb994e05181e22b8a96e94976c39cc3de68c2794ca",
+      "native_path": "native/C01/7a9d54214eb1479aaf9094a7c8165119",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    }
+  ],
+  "failed_candidates": [],
+  "bytes": 343014360
+}

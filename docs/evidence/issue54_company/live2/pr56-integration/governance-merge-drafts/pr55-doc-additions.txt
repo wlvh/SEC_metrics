@@ -1,0 +1,104 @@
+########## AGENTS.md
++## 公司级边界工作（#54）
++
++[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54主实现公司交接，#28/#47各自维护并验证消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。
++
+########## TESTING.md
++本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/is
++<!-- capability-anchor: CAPABILITY.local_company_run -->
++
++公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业�
++
++公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
++<!-- capability-anchor: CAPABILITY.company_import_transaction -->
++
++
++
++### #54 公司持续结果与保存处理输入（2026-10-03 北京时间）
++
++`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_company_results tests.vnext.test_company_processing -v` 为编排／信任回归，财报计算及渲染明确模拟；不替代真实来源、原生 Run 或内容验收。覆盖 B01+D01 后只更新 B01、多指标首次出口、单项失败／重放拒绝保留其它项、旧年度／历史多期间、混合 closure、已确认缺陷和当前来源未复核。保存处理包按外置信任及原请求／响�
++
++真实材料与原失败见 `docs/evidence/issue54_company/corrective-results/README.md`。CLI 查询／导出使用 `--runtime-root` 指定各结果的原固定树；D04 原录制材料保持原 V14 和 tokenizer0.22.2，只验证独立 SEC 来源与处理输入接线。原请求／响应不改签，无真实新增 SEC/provider/paid 调用；完整 LIVE 材料、内容独审和 OpenShift 未测部分分别登记。
+########## docs/business_user_guide.md
++直接运行一家公司的本地入口、工作目录与输出示例见 [本地公司运行](company_local_run.md)。它自动选择已披露完整财年并管理固定程序、来源交接和公司状态；CSV同时保留原结果身份及本次状态，摘要逐项交代39项，包括未实现/待判断。当前真实首次下载及同目录复跑验收仍待本任务SEC许可；已有29＋2次录制接线不算真实取数。完整业务接受与阶段完成分开，Draft输出不作正式�
++<!-- capability-anchor: CAPABILITY.local_company_run -->
++
++公司独立计算提供待审核的公司矩阵及证据表；局部更新保留已存在的其它指标和期间。查看每行的期间、来源版本、当前匹配/未复核及有效性，旧值不计成本次更新成功。已保存的完整D04判断可独立接入；来源改变或判断不完整时保留缺口，本入口不会调用新模型。这个Draft出口的固定程序、来源和信任要求见[公司接口说明](company_compute_boundary.md)。
++
++归档财年与实际测量窗口分别显示：例如 Paramount FY2025 的事件可能覆盖2024-01-01至2025-12-31。相同结果在其它运行版本已获缺陷释放、当前版本尚未释放时，仍扣留公司值并显示原接受引用；这不是新的内容错误结论，也不是当前版本已通过。
++<!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
++
++
++<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->
+########## interact.md
++本地入口 `python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状�
++<!-- capability-anchor: CAPABILITY.local_company_run -->
++
++公司来源包可以在未生成AI判断或Result时交付。`tools/vnext_company.py`在显式独立路径导入、计算和导出，每次只处理所选公司；导入失败明确记录，旧结果不冒充新来源完成。B13/D04无既有判断返回需处理输入状态。详见 `docs/company_compute_boundary.md` 及其实际覆盖限制。
++<!-- capability-anchor: CAPABILITY.company_import_transaction -->
++
++公司 `latest-execution.json` 只报告本次请求；`results` 和公司CSV从已有指标/期间/Run读取，局部更新保留其它结果并显示当前来源匹配或未复核。完整已保存D04判断及原V14程序通过独立处理包/信任接入；acquired精确同源复用另需单独准入的原公司SEC版本，完整来源或请求责任变化会拒绝。请求/响应/接受身份保持，入口没有新AI调用权限。
++
++公司视图的 `period` 是归档坐标，另列原生结果的测量窗口及其核验状态。缺陷对同一结果只在别的运行版本释放时，当前版本仍扣留，明确显示 `CURRENT_RUNTIME_RELEASE_REQUIRED` 并带原释放引用，不把它说成新发现的内容错误，也不自动接受当前版本。
++<!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
++
++
++<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->
+########## capability_contract.json
++      {
++        "anchor_id": "CAPABILITY.company_import_transaction",
++        "type": "capability",
++        "status": "active",
++        "statement": "Draft公司来源导入在独立state保持稳定source_root、不可变版本和共同计算锁；三个中断位置及首次导入中断恢复旧提交或隔离未提交输入，失败保留旧结果，重复安装幂等，跨公司及非前缀历史拒绝。非root只读来源包仅在私有暂存根临时增加跨目录rename所需权限并恢复版本原模式，输入包不改；只读包更新/中断/重启通过事务测试。交易测试替身只验证事务边界
++        "audience": [
++          "developer",
++          "reviewer",
++          "operator"
++        ],
++        "test_anchor": "tests/vnext/test_company_handoff.py::CompanyImportTest",
++        "test_status": "automated_recorded",
++        "since": "2026-10-02"
++      },
++      {
++        "anchor_id": "CAPABILITY.company_saved_processing_exact_source",
++        "type": "capability",
++        "status": "active",
++        "statement": "Draft公司D04保存处理输入与SEC来源分别交付和授信，原完整请求/响应/接受/source/input/Requirement不改签。基线以原V14计算；acquired历史须另外提供同公司原基线SEC版本，先由固定公司树重建完整当前语义来源并通过原source_equivalence再复用判断，当前账本完整保留。冷读重建来源和等价，源码根不得仅由receipt提名；局部或变更来源、跨公司、无原版本及未提供固定�
++        "audience": [
++          "developer",
++          "reviewer",
++          "operator"
++        ],
++        "test_anchor": "tests/vnext/test_company_processing.py::AcquiredProcessingBoundaryTest",
++        "test_status": "automated_partial_scenario",
++        "since": "2026-10-02"
++      },
++      {
++        "anchor_id": "CAPABILITY.company_result_period_and_validity",
++        "type": "capability",
++        "status": "active",
++        "statement": "Draft公司结果视图保留Run归档period，另从哈希核验的原生结果或冷重放投影读取measurement_period；不从财年推测事件窗口。公司CSV分别列归档期间、测量窗口和核验状态。已登记缺陷仍按结果编号与Requirement closure双绑定释放；同结果仅在其它运行版本获释放时显示CURRENT_RUNTIME_RELEASE_REQUIRED及原接受引用，公司值仍扣留，不说成新内容错误或当前版本通过。不同结�
++        "audience": [
++          "developer",
++          "reviewer",
++          "operator"
++        ],
++        "test_anchor": "tests/vnext/test_company_results.py::CompanyResultsTest.test_other_runtime_release_explains_hold_without_releasing_current_result",
++        "test_status": "automated_partial_scenario",
++        "since": "2026-10-03"
++      },
++      },
++      {
++        "anchor_id": "CAPABILITY.local_company_run",
++        "type": "capability",
++        "status": "active",
++        "statement": "Draft本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际�
++        "audience": [
++          "business_user",
++          "operator",
++          "developer",
++          "reviewer"
++        ],
++        "test_anchor": "tests/vnext/test_company_local.py::CompanyLocalTest",
++        "test_status": "automated_partial_scenario",
++        "since": "2026-10-03"

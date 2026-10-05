@@ -1,0 +1,42 @@
+{
+  "registry_commit": "af29ab2f",
+  "current_entry": {
+    "company_id": "paramount_skydance_paramount_global",
+    "metric_id": "D02",
+    "period": {
+      "period_end": "2024-12-31"
+    },
+    "result_id": "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd",
+    "requirement_closure_hash": "sha256:723f08af7371b5e7802ea228db11d078c850acda654c851cdfb976196b8369ab"
+  },
+  "holds": [
+    {
+      "defect_id": "D02_PARAMOUNT_2024_KEYWORD_PROXY_ADMITS_TRANSACTION_COST_NOTE",
+      "reason": "CURRENT_RUNTIME_RELEASE_REQUIRED",
+      "releases_in_other_runtimes": [
+        {
+          "result_id": "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd",
+          "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+          "run_id": "run:historical-period:19ef10fea9c82855eb1d1bd3791a998233f38a575f26d6b36c2cca117576fb7e",
+          "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json (paramount-2024: READING_AGREES, MATCH)",
+          "reading": "docs/evidence/issue47_history/d02-older-years/judgements/paramount_skydance_paramount_global-2024-12-31.json",
+          "reading_sha256": "sha256:7ba29a02d8e90127c44d0c001a9e2154663c9d70ad33e8aca4efd43c96cdfebe",
+          "what_this_releases": "this entry, for this result under this version only: the 41-period batch's result, whose eighteen excerpts the independent older-year reading accepted in both directions (block 2010 as litigation disclosure under SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE, and the italic labels 2877 and 2885 admitted by the label repair). Any other result at this coordinate stays withdrawn by it."
+        },
+        {
+          "result_id": "sha256:5aa340a13939e500dc9f8d952dc6a5bdb098c0a3b016c182ce6f9dba302d7ccd",
+          "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+          "run_id": "run:historical-period:440ac50534a6ffa4ec4de6b0d5c0d0ff09aed0e3ff82bc067a912919facca1eb",
+          "public_row_hash": "sha256:ccc3acf744b6dc9c11c25112d6b510300b9636363bc082e87aa6fae3442057cc",
+          "accepted_by": "docs/evidence/issue47_history/content-acceptance/d02-older-years-read.json (paramount-2024: READING_AGREES, MATCH)",
+          "reading": "docs/evidence/issue47_history/d02-older-years/judgements/paramount_skydance_paramount_global-2024-12-31.json",
+          "reading_sha256": "sha256:7ba29a02d8e90127c44d0c001a9e2154663c9d70ad33e8aca4efd43c96cdfebe",
+          "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under this version; named for that version on its own.",
+          "what_it_does_not_assert": "that any position outside docs/evidence/issue47_history/native-run-batch-2026-10-01 ran under this version, or anything about results with another result_id."
+        }
+      ]
+    }
+  ],
+  "original_released_entry_holds": [],
+  "scope": "Policy read only, fixed consumer identities; no native financial replay or business reacceptance"
+}

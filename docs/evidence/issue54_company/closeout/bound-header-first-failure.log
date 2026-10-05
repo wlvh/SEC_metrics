@@ -1,0 +1,59 @@
+Traceback (most recent call last):
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/batch_workflow.py", line 92, in _verified_request_locator
+    expected_body, expected_headers = legacy_response_snapshot_paths(
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/sec_http.py", line 857, in legacy_response_snapshot_paths
+    raise ValueError(
+ValueError: Legacy immutable response headers hash mismatch: /workspace/work/closeout-bound-header-negative/work/data/evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json.01be7271ae96e4466114270e71ce847e6de928ff5b1b933a6c76747284d2fea8.headers.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/work/probe_closeout_bound_header.py", line 38, in <module>
+    render_historical_run(data_root=work/'data', run_dir=work/'runs/C01', frozen=True)
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/historical_projection.py", line 122, in render_historical_run
+    manifest, records, _ = load_frozen_run(run_dir=run_dir, repo_root=data_root)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/run_store.py", line 3885, in load_frozen_run
+    _validate_record_graph(
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/run_store.py", line 2207, in _validate_record_graph
+    ordinary_case = validate_historical_authority(repo_root=repo_root, manifest=manifest,
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/historical_run.py", line 416, in validate_run_authority
+    case = replay_case(data_root=repo_root, manifest=manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/historical_run.py", line 313, in replay_case
+    selection = restore_period_selection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/normal_period_selection.py", line 300, in restore_period_selection
+    return _derive(repo_root=repo_root, company_id=company_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/normal_period_selection.py", line 71, in _derive
+    history = load_history_for_period(repo_root=repo_root, company_id=company_id,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/normal_history_catalog.py", line 261, in load_history_for_period
+    inventory = reader.read(submissions_url(cik=int(cik)),
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/normal_governance_input.py", line 184, in read
+    item = saved_source(repo_root=self.root, url=url, accession=accession)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/annual_update.py", line 76, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/batch_workflow.py", line 228, in request_attempt_binding
+    proof = _verified_request_locator(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/closeout-history-runtime-after/scripts/vnext/batch_workflow.py", line 114, in _verified_request_locator
+    raise BatchWorkflowError(
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/probe_closeout_bound_header.py", line 41, in <module>
+    assert any(marker in reason for marker in ('COMPANY_SOURCE_BYTES_CHANGED',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Request-ledger locator evidence is invalid

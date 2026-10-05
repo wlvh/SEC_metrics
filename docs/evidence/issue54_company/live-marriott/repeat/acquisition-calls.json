@@ -1,0 +1,155 @@
+{
+  "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 2
+  },
+  "capture_receipts": [
+    {
+      "actual_sec_egress_count": 1,
+      "automatic_retry_count": 0,
+      "company_id": "marriott_international",
+      "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/54",
+      "execution_mode": "LIVE",
+      "intent_id": "sha256:8aa04f8166255af75428190f47700fdf644833d3188e44f9e681d87b41a02910",
+      "ledger_after_sha256": "e0f8af965203c63f047f718c9741942a358a5a7d8fbb7a1c078ee84e14570823",
+      "ledger_before_sha256": "dd36b6314af32725bf4f39ce51faebd50ac920b36bae638e54e150dee4d0d334",
+      "ledger_row": {
+        "accession": "",
+        "content_length": "148231",
+        "content_sha256": "2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9",
+        "document_name": "CIK0001048286.json",
+        "error": "",
+        "headers_repo_relative_path": "evidence/request_attempts/24/2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9/CIK0001048286.json.88094d8ab534a63db765ae4e7df4c0b7449d5834a4db9b94e53519eceac77baa.headers.json",
+        "method": "GET",
+        "purpose": "ISSUE28_DECLARED_SOURCE_DEPENDENCY",
+        "repo_relative_path": "evidence/request_attempts/24/2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9/CIK0001048286.json",
+        "retry_attempt": "0",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "status_code": "200",
+        "timestamp_utc": "2026-10-03T17:19:23.386348+00:00",
+        "user_agent": "axaxl 12@qq.com"
+      },
+      "ledger_row_index": 29,
+      "production_authorized": false,
+      "proof": {
+        "accession": "",
+        "content_sha256": "2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9",
+        "document_name": "CIK0001048286.json",
+        "request_attempt_id": "request:attempt:84130bbb550259ea523e731264bcac7475b9579c68c7f6d5e31f99b81556c897",
+        "request_body_sha256": "2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9",
+        "request_body_size": 148231,
+        "request_headers_repo_relative_path": "evidence/request_attempts/24/2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9/CIK0001048286.json.88094d8ab534a63db765ae4e7df4c0b7449d5834a4db9b94e53519eceac77baa.headers.json",
+        "request_headers_sha256": "88094d8ab534a63db765ae4e7df4c0b7449d5834a4db9b94e53519eceac77baa",
+        "request_headers_size": 790,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/24/2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9/CIK0001048286.json",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json"
+      },
+      "receipt_id": "sha256:7e1cdd75b1953b40b8f9369659757e5ad58eb16d05d15a51fe29796aa4cd5887",
+      "record_type": "CONTINUOUS_SEC_RECEIPT",
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "wire": {
+        "body": {
+          "sha256": "2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9",
+          "size": 148231,
+          "source_path": "evidence/request_attempts/24/2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9/CIK0001048286.json"
+        },
+        "headers": {
+          "sha256": "88094d8ab534a63db765ae4e7df4c0b7449d5834a4db9b94e53519eceac77baa",
+          "size": 790,
+          "source_path": "evidence/request_attempts/24/2428111896211cad00c16b51937df2093fccc364e6cabfa371f493039b30e8e9/CIK0001048286.json.88094d8ab534a63db765ae4e7df4c0b7449d5834a4db9b94e53519eceac77baa.headers.json"
+        }
+      }
+    },
+    {
+      "actual_sec_egress_count": 1,
+      "automatic_retry_count": 0,
+      "company_id": "marriott_international",
+      "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/54",
+      "execution_mode": "LIVE",
+      "intent_id": "sha256:e7d980467fb6a40ec93b1a08f5ab4663c5457bfd72482c06164ce33174732b76",
+      "ledger_after_sha256": "d00d3bc5b05e5b1d5ab20b432a613b15766fe75925b03be1a5281089af620952",
+      "ledger_before_sha256": "e0f8af965203c63f047f718c9741942a358a5a7d8fbb7a1c078ee84e14570823",
+      "ledger_row": {
+        "accession": "",
+        "content_length": "3269111",
+        "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "document_name": "CIK0001048286.json",
+        "error": "",
+        "headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.3cdecc74b948d456fe414b95d87e5e72a688c895518d9ced3f87cfb58307d069.headers.json",
+        "method": "GET",
+        "purpose": "ISSUE28_DECLARED_SOURCE_DEPENDENCY",
+        "repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "retry_attempt": "0",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "status_code": "200",
+        "timestamp_utc": "2026-10-03T17:19:34.068060+00:00",
+        "user_agent": "axaxl 12@qq.com"
+      },
+      "ledger_row_index": 30,
+      "production_authorized": false,
+      "proof": {
+        "accession": "0001048286-26-000007",
+        "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "document_name": "CIK0001048286.json",
+        "request_attempt_id": "request:attempt:200b1fd7ae7fb4cee74c415ae8804ccc0dbef85ea2cdc43a700bfe97d9ae2d87",
+        "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "request_body_size": 3269111,
+        "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.3cdecc74b948d456fe414b95d87e5e72a688c895518d9ced3f87cfb58307d069.headers.json",
+        "request_headers_sha256": "3cdecc74b948d456fe414b95d87e5e72a688c895518d9ced3f87cfb58307d069",
+        "request_headers_size": 762,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+      },
+      "receipt_id": "sha256:5772d5bf29eafcd58ed9b3fc64ad42e6bbc09c33865c050be263930b7ff99c3a",
+      "record_type": "CONTINUOUS_SEC_RECEIPT",
+      "status": "SUCCEEDED",
+      "stop_reason": "",
+      "wire": {
+        "body": {
+          "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "size": 3269111,
+          "source_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json"
+        },
+        "headers": {
+          "sha256": "3cdecc74b948d456fe414b95d87e5e72a688c895518d9ced3f87cfb58307d069",
+          "size": 762,
+          "source_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.3cdecc74b948d456fe414b95d87e5e72a688c895518d9ced3f87cfb58307d069.headers.json"
+        }
+      }
+    }
+  ],
+  "reused_source_urls": [
+    "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/mar-20251104.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000114036126011590/ny20062722x771_def14a.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/d890503d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/d927802d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/d888404d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/d935320d8ka.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/d858138d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/d52476d8k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/mar-20250211.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/index.json",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/mar-20250506.htm",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+    "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/mar-20250805.htm"
+  ],
+  "stop_reason": null
+}

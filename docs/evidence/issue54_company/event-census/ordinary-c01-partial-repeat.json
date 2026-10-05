@@ -1,0 +1,256 @@
+{
+  "elapsed_seconds": 12.171935619997384,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "marriott_international",
+  "source_checkpoint_id": "sha256:f4c231078c8742ef6265661bfa25422ef24ad89324e0010d3087777e1483f796",
+  "source_root": "/workspace/work/company-event-ordinary-v2-state/source",
+  "metric_ids": [
+    "C01"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "C01",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "1deb43bf2ada468d99246d00a4b72b6b",
+      "latest_attempt": "1deb43bf2ada468d99246d00a4b72b6b",
+      "successful_attempt": "74f1d8baa8744402835449a54e47f6fc",
+      "previous_successful_attempt": "74f1d8baa8744402835449a54e47f6fc",
+      "last_verified_candidate": {
+        "attempt_id": "74f1d8baa8744402835449a54e47f6fc",
+        "targets": {
+          "C01": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "C01": {
+            "applicability": "APPLICABLE",
+            "company_id": "marriott_international",
+            "metric_id": "C01",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+            "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+            "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+            "trace_id": "sha256:605e984d540a425cb93fc8d491d42301e8975581c31eb62a6face44430e3213d",
+            "unit": "count",
+            "value": "3"
+          }
+        },
+        "rows_root": "/workspace/work/company-event-ordinary-v2-state/updates/metrics/C01/attempts/74f1d8baa8744402835449a54e47f6fc/rows"
+      },
+      "new_candidate_created": false,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "1deb43bf2ada468d99246d00a4b72b6b",
+        "configuration_id": "sha256:354198ce5ff95c756e7633aba41f4dba71757ae21f0acdbcf40d7675a365061a",
+        "intent_id": "sha256:d80fa168b97d19cbc275c3f16597fd54c62810b8698ebeccf35f58faf3d43755",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "completed_at": "2026-10-02T21:03:10.194263+00:00",
+        "input": {
+          "company_id": "marriott_international",
+          "metric_ids": [
+            "C01"
+          ],
+          "requirement_closure_hash": "sha256:d4ed95a95ff01c5cebb1905f27e3ced8a59f652226fcd9af957a439219c1e8f4",
+          "targets": {
+            "C01": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "C01": {
+              "C01": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+              "accession": "0001048286-26-000007",
+              "document_name": "CIK0001048286.json",
+              "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+              "accession": "",
+              "document_name": "CIK0001048286.json",
+              "sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+              "accession": "0001048286-25-000011",
+              "document_name": "0001048286-25-000011.hdr.sgml",
+              "sha256": "cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/mar-20251104.htm",
+              "accession": "0001048286-25-000011",
+              "document_name": "mar-20251104.htm",
+              "sha256": "7646c3d03541392d59169546a147ebe81586d2b71d2bc1aadc6b97eb8395b251"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "mar-20251231.htm",
+              "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+              "accession": "0001193125-25-009110",
+              "document_name": "0001193125-25-009110.hdr.sgml",
+              "sha256": "0b7fcc3b211556d4e1426e93c53dc37170a505bdcc8ad1309de1fc9690b2e9f7"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/d890503d8k.htm",
+              "accession": "0001193125-25-009110",
+              "document_name": "d890503d8k.htm",
+              "sha256": "bf87fec25bfd743d96b1624a36836e7c384ccd98b5aec5d12c8cda5fa95814f1"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+              "accession": "0001193125-25-036732",
+              "document_name": "0001193125-25-036732.hdr.sgml",
+              "sha256": "5b1ea9e16b1b97fb83873f648e991a654d4362e2b0751a82bb7ca94545177f7d"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/d927802d8k.htm",
+              "accession": "0001193125-25-036732",
+              "document_name": "d927802d8k.htm",
+              "sha256": "7db2b5693b4986de1da579c85126ff60d02500ff7466d2a2c482d289bfbadb5e"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+              "accession": "0001193125-25-118853",
+              "document_name": "0001193125-25-118853.hdr.sgml",
+              "sha256": "8c67669ade683e3325ec92076dbc2c6bba0a3a88b2bed1e9aa0389e079c99177"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/d888404d8k.htm",
+              "accession": "0001193125-25-118853",
+              "document_name": "d888404d8k.htm",
+              "sha256": "6779455e40834ac04711b927fc97f2da37df38e8cf017beddd3e35079bad9998"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+              "accession": "0001193125-25-118861",
+              "document_name": "0001193125-25-118861.hdr.sgml",
+              "sha256": "dceca997691cdbc0425a03c514b044a38d87b93062797c344b7e5dd45dd78602"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/d935320d8ka.htm",
+              "accession": "0001193125-25-118861",
+              "document_name": "d935320d8ka.htm",
+              "sha256": "633d2183a1e9cca6325b1fa7c07e6e21fcbf7fff61d7478c9e439cb23c778206"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+              "accession": "0001193125-25-158742",
+              "document_name": "0001193125-25-158742.hdr.sgml",
+              "sha256": "12606dfc17776def4d014b710c69365107ba57352ff38843233a631bba6bef4e"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/d858138d8k.htm",
+              "accession": "0001193125-25-158742",
+              "document_name": "d858138d8k.htm",
+              "sha256": "928bdbc0e8ce83bd5b0de7811956adade802f82cd49556eb2be6d936d68bcb7c"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+              "accession": "0001193125-25-184082",
+              "document_name": "0001193125-25-184082.hdr.sgml",
+              "sha256": "6b75de95cabe026c29bf30a19e7f03309d9021f9fb182e407b8fd455828fc152"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/d52476d8k.htm",
+              "accession": "0001193125-25-184082",
+              "document_name": "d52476d8k.htm",
+              "sha256": "3695c0469ad4abe8fd9243dbd6c4df63d5976c5fb1313f22bdbdd6bd7cca3cb4"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+              "accession": "0001628280-25-004772",
+              "document_name": "0001628280-25-004772.hdr.sgml",
+              "sha256": "4e94fd03f5e3cb69234b4f7f3983fcf702a37ffb3445d29cd0d3ffaf220b2aff"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/mar-20250211.htm",
+              "accession": "0001628280-25-004772",
+              "document_name": "mar-20250211.htm",
+              "sha256": "cde6d9fac69fa87cc232f3e56f991ea1fb6637b98f6a8595e6e60c5d95945d2d"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+              "accession": "0001628280-25-022390",
+              "document_name": "0001628280-25-022390.hdr.sgml",
+              "sha256": "33c79bd1b02375176040dde689e87ac5dc1fc731b97781972c6718697dc45063"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/mar-20250506.htm",
+              "accession": "0001628280-25-022390",
+              "document_name": "mar-20250506.htm",
+              "sha256": "e7d86dff6f2b681b9adb33d54e454fa00093e86557f5204f926e64b03bad8311"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+              "accession": "0001628280-25-037592",
+              "document_name": "0001628280-25-037592.hdr.sgml",
+              "sha256": "9c277c824dbe666f4e8ce126dd384f2e7db10f387e0e3e236528915755b29e81"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/mar-20250805.htm",
+              "accession": "0001628280-25-037592",
+              "document_name": "mar-20250805.htm",
+              "sha256": "8a305a1d91f7844d9b33127953592cb4a2df1f96ea849c17b3c977b310281be4"
+            }
+          ],
+          "content_id": "sha256:55d494160cc50777d060f3cda352f5d97ab8afe98d9814ab4dd4bd1ae49b8c6e"
+        },
+        "metrics": {},
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:3784e3d08148a41ede05b291c41f7e6dcc59855c9d8b13c5eeab451c80fcf429"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "compute_seconds": "11.426691",
+  "source_installation": {
+    "checkpoint_id": "sha256:f4c231078c8742ef6265661bfa25422ef24ad89324e0010d3087777e1483f796",
+    "company_id": "marriott_international",
+    "package_root": "/workspace/work/baseline-company-packages/marriott_international",
+    "source_root": "/workspace/work/company-event-ordinary-v2-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "runtime_root": "/workspace/work/company-event-ordinary-runtime-v2",
+  "execution_id": "db1a1971f1f14bb3b6e7955386311261",
+  "recorded_at": "2026-10-02T21:03:10.287849+00:00"
+}

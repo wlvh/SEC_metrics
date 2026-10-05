@@ -1,0 +1,100 @@
+{
+  "head": "2a642e56a8e2f88c884c92cd350cf742f5dd8cfa",
+  "run_id": 37038553144,
+  "source_shard_failed_cases": [
+    {
+      "duration_seconds": 30.316,
+      "return_code": 1,
+      "stderr_tail": "======================================================================\nFAIL: test_current_exact_reviewed_sources_only_have_no_business_literals (tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_ordinary_scalability_audit.py\", line 25, in test_current_exact_reviewed_sources_only_have_no_business_literals\n    self.assertEqual([], rows)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^\nAssertionError: Lists differ: [] != [{'file': 'scripts/vnext/company_runtime_i[221 chars]a.'}]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n{'file': 'scripts/vnext/company_runtime_install.py', 'line': '80', 'literal': '2026-09-18', 'type': 'fixed_fiscal_date', 'allowed': '0', 'reason': 'fixed fiscal date appears in production Python', 'replacement_plan': 'Use selected target/prior reportDate metadata.'}\n\n- []\n+ [{'allowed': '0',\n+   'file': 'scripts/vnext/company_runtime_install.py',\n+   'line': '80',\n+   'literal': '2026-09-18',\n+   'reason': 'fixed fiscal date appears in production Python',\n+   'replacement_plan': 'Use selected target/prior reportDate metadata.',\n+   'type': 'fixed_fiscal_date'}]\n\n----------------------------------------------------------------------\nRan 1 test in 29.559s\n\nFAILED (failures=1)\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+      "timeout_seconds": 240
+    }
+  ],
+  "source_shard_repair": "Use the unique upstream registration patch rather than a dated path literal; existing audit passes locally.",
+  "current_instant_job": {
+    "name": "vNext current-instant native Runs",
+    "id": 110942682985,
+    "conclusion": "cancelled",
+    "started_at": "2026-10-02T17:07:19Z",
+    "completed_at": "2026-10-02T17:37:34Z",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-02T17:07:19Z",
+        "completed_at": "2026-10-02T17:07:20Z"
+      },
+      {
+        "name": "Check out repository",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-02T17:07:20Z",
+        "completed_at": "2026-10-02T17:12:34Z"
+      },
+      {
+        "name": "Set up Python 3.14",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-02T17:12:34Z",
+        "completed_at": "2026-10-02T17:12:35Z"
+      },
+      {
+        "name": "Build current-balance and approved noncomparability Runs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-02T17:12:35Z",
+        "completed_at": "2026-10-02T17:34:32Z"
+      },
+      {
+        "name": "Reject false cash and missing amendment sources",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "number": 5,
+        "started_at": "2026-10-02T17:34:32Z",
+        "completed_at": "2026-10-02T17:37:32Z"
+      },
+      {
+        "name": "Reject forged inputless and numeric continuity terminals",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 6,
+        "started_at": "2026-10-02T17:37:32Z",
+        "completed_at": "2026-10-02T17:37:32Z"
+      },
+      {
+        "name": "Post Set up Python 3.14",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 11,
+        "started_at": "2026-10-02T17:37:32Z",
+        "completed_at": "2026-10-02T17:37:32Z"
+      },
+      {
+        "name": "Post Check out repository",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-02T17:37:32Z",
+        "completed_at": "2026-10-02T17:37:32Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-02T17:37:32Z",
+        "completed_at": "2026-10-02T17:37:32Z"
+      }
+    ],
+    "html_url": "https://github.com/wlvh/SEC_metrics/actions/runs/37038553144/job/110942682985"
+  },
+  "upstream_current_instant_ci_success": true,
+  "final_head_ci": "NOT_YET_RUN",
+  "independent_consumer_review": "REQUESTED_NO_REPLY"
+}

@@ -1,0 +1,52 @@
+{
+ "record_type": "PR55_PR56_FINAL_INTEGRATION_TREE_CHECK",
+ "checked_at_utc": "2026-10-04",
+ "tree": {
+  "base": "PR56 9d1ece070e70828ec99bfe6204a2e440f84b4730",
+  "layer_1_simulated_base_fix": "99 files copied from 0bc24734 (17 selected test modules, tests/vnext/test_text_business_candidates.py, docs/evidence/b06_new_source/ 81 files). DIAGNOSTIC ONLY: the real fix belongs to the PR56 owner (PR56 comment 5981276094).",
+  "layer_2_pr55": "git diff --binary 0bc24734 b949da33 applied with git apply --3way; 307 clean, 5 governance documents resolved from governance-merge-drafts/; tools/run_fast_tests_v2.py merged 3-way (keeps PR56 test_main_scalability_audit selector)",
+  "layer_3": "company CI step also runs tests.vnext.test_company_local (merged workflow does not run the v2 runner where PR55 had registered it); same change committed to PR55"
+ },
+ "governance_merge": {
+  "pr55_added_lines_kept": "81/81",
+  "main_lines_dropped": 0,
+  "files": [
+   "AGENTS.md",
+   "TESTING.md",
+   "capability_contract.json",
+   "docs/business_user_guide.md",
+   "interact.md"
+  ],
+  "stale_sentence_updated": "business guide / local_company_run statement no longer say real SEC first run is pending"
+ },
+ "load_check": {
+  "pure_9d1ece07_run_fast_tests": "68/119 unloadable (matches CI)",
+  "integration_run_fast_tests": "0/119 unloadable",
+  "pure_9d1ece07_run_fast_tests_v2": "98/146 unloadable (runner not used by any workflow)"
+ },
+ "results": {
+  "company_6_modules": "67 OK",
+  "run_fast_tests_jobs4": "114/119 pass; 5 FAST_TEST_TIMEOUT_SECONDS=30 (financial tests; each OK alone in 34-48 s on this 4-core container; same 5 with or without PR55)",
+  "main_foundation_unittest": "28 OK (227 s)",
+  "check_main_scalability": "PASS",
+  "check_provider_egress": "PASS",
+  "generate_metrics_reference --check": "PASS",
+  "check_capability_contract_alignment --base-ref af1984ad": "PASS (committed tree)"
+ },
+ "runtime": {
+  "install_runtime_local_authority": "sha256:da36e061db5a47f2a7ce21705f4560c3bb82c115eac5222462baf4025240d92a",
+  "identical_to_pr56_consumer_runtime_except": "tools/run_fast_tests_v2.py (test runner, not bound)",
+  "company_entry": "B01/C01 re-exported from live2 source and computed/cold-read on this runtime, values equal to the 83 run (pr56-consumer-check.json)"
+ },
+ "not_claimed": [
+  "GitHub CI green for any tree",
+  "fast suite green on this host (5 timeouts)",
+  "broad 146/150 regression",
+  "real base fix (simulated layer only)"
+ ],
+ "sec_provider_paid_calls": [
+  0,
+  0,
+  0
+ ]
+}

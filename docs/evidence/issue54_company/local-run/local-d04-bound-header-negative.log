@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/workspace/work/local-d04-bound-header-negative.py", line 15, in <module>
+    assert p.returncode!=0 and 'COMPANY_SOURCE_BOUND_FILE_CHANGED' in p.stderr,p.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/workspace/work/local-runtime-projection/tools/vnext_company.py", line 172, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/work/local-runtime-projection/tools/vnext_company.py", line 143, in main
+    result = compute_company(state_root=args.state_root, company_id=args.company,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_compute.py", line 18, in compute_company
+    current = recover_import(root)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_handoff.py", line 282, in recover_import
+    check_package(package_root=source, company_id=current['company_id'])
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_handoff.py", line 237, in check_package
+    admission = require_company(source_root=package, company_id=company_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_source_authority.py", line 164, in require_company
+    validate_checkpoint(source_root, checkpoint, baseline)
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_source_authority.py", line 57, in validate_checkpoint
+    return _validate_admission_bytes(data_root, checkpoint, baseline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_source_authority.py", line 86, in _validate_admission_bytes
+    need({'sha256': sha256_file(path=path), 'size': path.stat().st_size} == binding,
+  File "/workspace/work/local-runtime-projection/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_BYTES_CHANGED:evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json.37064d09accf92274b461c6acc122f38d810b6f02b38be051c68b2c90d0d1e66.headers.json
+

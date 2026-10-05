@@ -1,0 +1,49 @@
+{
+  "source_commit": "958a1e08d786362d1372225c5d34c2f9bfaf0617",
+  "configuration_before": {
+    "company_id": "marriott_international",
+    "preparation_program_root": "/workspace/work/live-marriott-20261004/programs/d7510ee061a19729771d9bf7874ff1d5049dcdc4f04074d47cc67471400d0cb0",
+    "program_root": "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182",
+    "sec_allowance": 120
+  },
+  "configuration_after": {
+    "company_id": "marriott_international",
+    "preparation_program_root": "/workspace/work/live-marriott-20261004/programs/37f05e089b5ca098d664a43719f06686e44dfbef2380e7fd5ffb546679395c18",
+    "program_root": "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182",
+    "sec_allowance": 120
+  },
+  "install_report": {
+    "status": "RUNTIME_INSTALLED",
+    "runtime_root": "/workspace/work/live-marriott-20261004/programs/37f05e089b5ca098d664a43719f06686e44dfbef2380e7fd5ffb546679395c18",
+    "requirement_id": "issue_54_v4",
+    "dispatch_files": [
+      "scripts/vnext/requirement_profile.py",
+      "scripts/vnext/run_store.py",
+      "scripts/vnext/normal_run_v3.py",
+      "scripts/vnext/ordinary_source_authority.py",
+      "scripts/vnext/records.py",
+      "scripts/vnext/capacity_run.py",
+      "scripts/vnext/ordinary_update_cycle.py",
+      "scripts/vnext/normal_zero_ai_results.py",
+      "scripts/vnext/normal_source_authority.py",
+      "scripts/vnext/continuous_sec_acquisition.py",
+      "config/sec_config.json",
+      "config/company_empty_source_baseline_v1.json",
+      "config/company_empty_source_seed/config/company_registry.csv",
+      "config/company_empty_source_seed/evidence/requests_log.csv",
+      "config/company_empty_source_seed/evidence/requests_log_manifest.json"
+    ],
+    "authority_hash": "sha256:e425c27307b492798a545cbcc77d3ad95ab928d411994460faea001c2aeb5ba5",
+    "sec_originals_installed": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false
+  },
+  "unchanged_acquisition_binding": true,
+  "unchanged_old_run_count": 30,
+  "new_sec_calls": 0,
+  "scope": "Preparation and result display controller only; acquisition and financial computation remain at original fixed program"
+}

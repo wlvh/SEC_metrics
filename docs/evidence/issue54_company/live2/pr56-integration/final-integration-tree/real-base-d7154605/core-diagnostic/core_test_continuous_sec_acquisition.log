@@ -1,0 +1,7 @@
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0000019617.json; status=503; error=HTTP Error 503: RECORDED
+{"status": "OFFLINE_SEC_CAPTURE_PASS", "calls": [0, 0, 0], "recorded_count_simulation": [0, 0, 3], "actual_http_path_verified": true, "retryable_http_zero_retry_verified": true, "checkpoint_import_and_failure_isolation_verified": true, "test_checkpoint_cannot_be_relabelled_live": true, "source_root": "/tmp/tmp2rnv58td/ledger/source-inputs", "native_selected_source_and_cold_preview_verified": true, "checkpoint_id": "sha256:66651e939df6e715e7c642176fbbe278b9b9eeb4280766f65ec6f0a63bb61081", "original_provider_fields_unchanged": true, "real_sec_credit": false, "production_authorized": false}
+.
+----------------------------------------------------------------------
+Ran 1 test in 237.441s
+
+OK

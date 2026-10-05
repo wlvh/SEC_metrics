@@ -1,0 +1,28 @@
+{
+ "job": "company-remaining-source-jpmorgan_chase",
+ "timeout_minutes": 45,
+ "steps": [
+  {
+   "name": "Remaining current-source adapters through native Runs and source-bound rejections",
+   "rc": 0,
+   "seconds": 2111.7,
+   "log": "company-remaining-source-jpmorgan_chase--0.log",
+   "unittest_summary": [
+    {
+     "allowed_skips": 0,
+     "errors": 0,
+     "failures": 0,
+     "run": 1,
+     "skip_reasons": [],
+     "skipped": 0,
+     "tests": [
+      "tests.vnext.test_remaining_source_run_material"
+     ]
+    }
+   ]
+  }
+ ],
+ "seconds": 2111.7,
+ "ok": true,
+ "within_timeout": true
+}

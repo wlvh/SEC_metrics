@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/workspace/work/isolated_company_cli.py", line 12, in <module>
+    runpy.run_path(str(runtime/'tools/vnext_company.py'),run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/work/company-d04-acquired-runtime-v2/tools/vnext_company.py", line 122, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/work/company-d04-acquired-runtime-v2/tools/vnext_company.py", line 95, in main
+    result = install_company(package_root=args.package_root, state_root=args.state_root,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/company-d04-acquired-runtime-v2/scripts/vnext/company_handoff.py", line 304, in install_company
+    result = _install_locked(package, root, company_id, fault)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/company-d04-acquired-runtime-v2/scripts/vnext/company_handoff.py", line 338, in _install_locked
+    os.rename(staging, version)
+PermissionError: [Errno 13] Permission denied: '/workspace/work/company-d04-c13-state/.version-2bb45794033b4db6b788f726ba43db08' -> '/workspace/work/company-d04-c13-state/versions/b9345f619be24e2755097a2cabf47278bb4de79a93058f771b01aeb53e679c05'

@@ -1,0 +1,16 @@
+{
+ "job": "main-foundation",
+ "timeout_minutes": 10,
+ "steps": [
+  {
+   "name": "Validate main audit and fixed historical objects",
+   "rc": 0,
+   "seconds": 312.1,
+   "log": "main-foundation--0.log",
+   "unittest_summary": []
+  }
+ ],
+ "seconds": 312.1,
+ "ok": true,
+ "within_timeout": true
+}

@@ -1,0 +1,38 @@
+{
+  "elapsed_seconds": 35.346210214000166,
+  "status": "EXPORTED",
+  "company_id": "marriott_international",
+  "output_root": "/workspace/work/company-results-corrected-export",
+  "native_candidates": [
+    {
+      "metric_id": "B01",
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "attempt_id": "dfee283fc881472c92eb6827c234a12f",
+      "run_id": "run:ordinary-integrated:006ee806ca7680491e299b53fdd9b0c1a71ed00db7c457a9b01773b9049fd8ab",
+      "requirement_id": "issue_28_v13",
+      "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+      "native_path": "native/B01/dfee283fc881472c92eb6827c234a12f",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    },
+    {
+      "metric_id": "D01",
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "attempt_id": "34f842a9c2f5493898ed7cac92f20174",
+      "run_id": "run:ordinary-integrated:8d2bf1864e39d677322745374d2800f668a4a8897a26327471c195aa742975e3",
+      "requirement_id": "issue_28_v13",
+      "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+      "native_path": "native/D01/34f842a9c2f5493898ed7cac92f20174",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    }
+  ],
+  "failed_candidates": [],
+  "bytes": 60287928
+}

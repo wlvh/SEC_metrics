@@ -1,0 +1,53 @@
+{
+  "status": "PASSED",
+  "uid": 1000,
+  "trust_readonly": true,
+  "checkpoint_id": "sha256:06b3629f57aa3528bf29103c754d73245814e2d0686c96089e4754b27032cd15",
+  "negative_probes": [
+    {
+      "case": "missing_body",
+      "path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json",
+      "status": "REJECTED",
+      "error_type": "SourceError",
+      "reason": "Source path is not a regular file: /workspace/work/company-admission-negatives/missing_body/evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json",
+      "seconds": 0.1898499279996031
+    },
+    {
+      "case": "missing_headers",
+      "path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json.dc666b0ce43644f52b587a6ae8335c7a98913d755bb9028c88dbae38f907624f.headers.json",
+      "status": "REJECTED",
+      "error_type": "SourceError",
+      "reason": "Source path is not a regular file: /workspace/work/company-admission-negatives/missing_headers/evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json.dc666b0ce43644f52b587a6ae8335c7a98913d755bb9028c88dbae38f907624f.headers.json",
+      "seconds": 0.1713654619998124
+    },
+    {
+      "case": "ledger_manifest_mismatch",
+      "path": "evidence/requests_log_manifest.json",
+      "status": "REJECTED",
+      "error_type": "JSONDecodeError",
+      "reason": "Extra data: line 7 column 1 (char 135)",
+      "seconds": 0.03761080000003858
+    },
+    {
+      "case": "wrong_company",
+      "path": null,
+      "status": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "COMPANY_SOURCE_WRONG_COMPANY",
+      "seconds": 0.0021040900001025875
+    },
+    {
+      "case": "changed_rule",
+      "path": "catalog/deterministic_metrics.json",
+      "status": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "COMPANY_HANDOFF_RULE_COPY_CHANGED:catalog/deterministic_metrics.json",
+      "seconds": 0.29109660500034806
+    }
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}
