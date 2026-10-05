@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/workspace/work/live-marriott-20261004/programs/37f05e089b5ca098d664a43719f06686e44dfbef2380e7fd5ffb546679395c18/scripts/vnext/company_result_read.py", line 46, in <module>
+    main()
+  File "/workspace/work/live-marriott-20261004/programs/37f05e089b5ca098d664a43719f06686e44dfbef2380e7fd5ffb546679395c18/scripts/vnext/company_result_read.py", line 39, in main
+    rendered = render_ordinary_run(data_root=work/'data', run_dir=work/'runs'/metric,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/ordinary_projection.py", line 61, in render_ordinary_run
+    manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/run_store.py", line 3485, in _mechanically_replay_open_run
+    _validate_record_graph(
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/run_store.py", line 2155, in _validate_record_graph
+    ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/normal_run_v3.py", line 521, in validate_normal_run_authority
+    case = replay_case(data_root=repo_root,manifest=manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/normal_run_v3.py", line 498, in replay_case
+    case = prepare_case(data_root=data_root,company_id=manifest["company_id"],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/normal_run_v3.py", line 163, in prepare_case
+    original = prepare_ordinary_zero_ai_run_input(repo_root=data_root,company_id=company_id,metric_id=metric_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/normal_run_inputs.py", line 27, in prepare_ordinary_zero_ai_run_input
+    component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/normal_zero_ai_results.py", line 180, in resolve_ordinary_zero_ai_metric
+    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/normal_annual_input_v2.py", line 55, in prepare_saved_annual_input
+    admission = verify_ordinary_source_proofs(data_root=repo_root,proofs=original["source_proofs"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/ordinary_source_authority.py", line 172, in verify_ordinary_source_proofs
+    _,old_ids,admitted=_validate_checkpoint(data_root,checkpoint,baseline)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/ordinary_source_authority.py", line 72, in _validate_checkpoint
+    return validate_checkpoint(data_root,checkpoint,baseline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/company_source_authority.py", line 57, in validate_checkpoint
+    return _validate_admission_bytes(data_root, checkpoint, baseline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/company_source_authority.py", line 86, in _validate_admission_bytes
+    need({'sha256': sha256_file(path=path), 'size': path.stat().st_size} == binding,
+  File "/workspace/work/live-marriott-20261004/programs/4e345a23cd82a17ba09c4b4cf7e9aed250a8f6d0ee67c0a6eede9fadb5c3f182/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_BYTES_CHANGED:evidence/request_attempts/cf/cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e/0001048286-25-000011.hdr.sgml.8b210caf109409d14ac96f25b074ffffd1a50d12074fb14e93bf2ece3282e309.headers.json

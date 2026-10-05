@@ -1,0 +1,28 @@
+{
+ "job": "company-partial-update",
+ "timeout_minutes": 30,
+ "steps": [
+  {
+   "name": "Independent results and historical periods through actual mixed outcomes",
+   "rc": 0,
+   "seconds": 763.1,
+   "log": "company-partial-update--0.log",
+   "unittest_summary": [
+    {
+     "allowed_skips": 0,
+     "errors": 0,
+     "failures": 0,
+     "run": 1,
+     "skip_reasons": [],
+     "skipped": 0,
+     "tests": [
+      "tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest"
+     ]
+    }
+   ]
+  }
+ ],
+ "seconds": 763.1,
+ "ok": true,
+ "within_timeout": true
+}

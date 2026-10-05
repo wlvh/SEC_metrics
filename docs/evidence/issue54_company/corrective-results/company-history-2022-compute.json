@@ -1,0 +1,191 @@
+{
+  "elapsed_seconds": 759.9461851750002,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:315d5e09e8ef2b400de6ba029615bb9d016a4568242b147d3b688311f532d217",
+  "source_root": "/workspace/work/company-history-export-scope-state/source",
+  "metric_ids": [
+    "A08"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": 2022
+  },
+  "metrics": [
+    {
+      "metric_id": "A08",
+      "status": "CANDIDATE_READY",
+      "new_candidate_created": true,
+      "last_verified_candidate": {
+        "attempt_id": "a98336cbb08145bcae7423567452bc65",
+        "rows_root": "/workspace/work/company-history-export-scope-state/updates/historical/2022-12-31/A08/attempts/a98336cbb08145bcae7423567452bc65/rows",
+        "receipt": {
+          "record_type": "HISTORICAL_RUN_RECEIPT",
+          "schema_version": 1,
+          "run_directory_name": "A08",
+          "run_id": "run:historical-period:5537e5e3790f1954ad78b2b9158cd98655812657239270eb3b02d3d5039c162d",
+          "run_status": "FROZEN",
+          "requirement_id": "issue_54_v3",
+          "requirement_closure_hash": "sha256:f4b80ea6b7143b0130c98052e0c470e6660cdb16edda7b802b7bc631d14a6683",
+          "company_id": "jpmorgan_chase",
+          "target_period": {
+            "fiscal_year": 2022,
+            "period_start": "2022-01-01",
+            "period_end": "2022-12-31"
+          },
+          "validation_status": "PASSED",
+          "results": [
+            {
+              "metric_id": "A08",
+              "result_id": "sha256:a120a521e1387d412bc5e20318ac233a7ff1610fbf0935931da2e71a52c64547",
+              "value": "0.929171038824763903462749213",
+              "unit": "ratio",
+              "quality": "EXACT",
+              "publication": "PUBLISHED",
+              "reason_code": "PASS",
+              "applicability": "APPLICABLE",
+              "period_start": "2022-01-01",
+              "period_end": "2022-12-31",
+              "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+              "value_kind": null,
+              "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+              "filings": [
+                "0000019617-23-000231"
+              ],
+              "entities": []
+            }
+          ],
+          "manifest_file_hashes_verified": true,
+          "verified_files": [
+            "records.jsonl",
+            "review_decisions.jsonl",
+            "validation.json"
+          ],
+          "unverified_files": [],
+          "public_row": {
+            "accepted": true,
+            "refusal": null,
+            "status": "FROZEN_CANDIDATE",
+            "run_id": "run:historical-period:5537e5e3790f1954ad78b2b9158cd98655812657239270eb3b02d3d5039c162d",
+            "run_status": "FROZEN",
+            "requirement_id": "issue_54_v3",
+            "result_id": "sha256:a120a521e1387d412bc5e20318ac233a7ff1610fbf0935931da2e71a52c64547",
+            "primary_metric_id": "A08",
+            "period_selection_id": "sha256:7628ee5265272a169661c2418023a0995c27e9996b73e312c74562c3f218b24e",
+            "row_hash": "sha256:5eec4187862786e275eeabfa985b206cf249826a8827bd9351492ec96c53d6fe",
+            "evidence_hash": "sha256:2d26a052237b4e04e4d37b6b8f899192c2a33b9c53dad25485953242a3471ef7",
+            "evidence_count": 2,
+            "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+            "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+            "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+            "production_authorized": false,
+            "receipt_id": "sha256:6db55f5814eee5866f3445857c61d0279c913fa742a4f5807511f1ffd990f62b"
+          },
+          "replayed": false,
+          "business_content_verified": false,
+          "receipt_id": "sha256:a160487b6d55bbdb37697628faacda964f1f1bdec533b440cb29b0c5ad73f12e"
+        },
+        "current_input_matches": true,
+        "period_selection": {
+          "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+          "schema_version": 1,
+          "policy_id": "ordinary_period_selection_v1",
+          "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+          "company_id": "jpmorgan_chase",
+          "reporting_cik": "19617",
+          "subject_policy": {
+            "mode": "CONTINUOUS_PRIMARY",
+            "selected_cik": "19617",
+            "cross_entity_combination_authorized": false
+          },
+          "target_report_end": "2022-12-31",
+          "requested_fiscal_year": 2022,
+          "current_filing": {
+            "form": "10-K",
+            "reportDate": "2022-12-31",
+            "filingDate": "2023-02-21",
+            "accessionNumber": "0000019617-23-000231",
+            "primaryDocument": "jpm-20221231.htm"
+          },
+          "current_amendments": [],
+          "prior_report_end": "2021-12-31",
+          "prior_filing": {
+            "form": "10-K",
+            "reportDate": "2021-12-31",
+            "filingDate": "2022-02-22",
+            "accessionNumber": "0000019617-22-000272",
+            "primaryDocument": "jpm-20211231.htm"
+          },
+          "prior_amendments": [],
+          "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+          "dependency_filing_roles": {
+            "target_primary": "0000019617-23-000231",
+            "target_amendment_primary": [],
+            "prior_annual_primary": "0000019617-22-000272",
+            "prior_amendment_primary": []
+          },
+          "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+          "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+          "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+          "source_set_identity": "sha256:3e8ff61fa60596ca0744c675f4c03436c649ed7c517d70e7826e668dc2f5da83",
+          "loaded_inventories": [
+            "CIK0000019617.json",
+            "CIK0000019617-submissions-001.json",
+            "CIK0000019617-submissions-002.json",
+            "CIK0000019617-submissions-003.json",
+            "CIK0000019617-submissions-004.json",
+            "CIK0000019617-submissions-005.json",
+            "CIK0000019617-submissions-006.json",
+            "CIK0000019617-submissions-007.json",
+            "CIK0000019617-submissions-008.json",
+            "CIK0000019617-submissions-009.json",
+            "CIK0000019617-submissions-010.json",
+            "CIK0000019617-submissions-011.json",
+            "CIK0000019617-submissions-012.json",
+            "CIK0000019617-submissions-013.json",
+            "CIK0000019617-submissions-014.json",
+            "CIK0000019617-submissions-015.json",
+            "CIK0000019617-submissions-016.json",
+            "CIK0000019617-submissions-017.json",
+            "CIK0000019617-submissions-018.json",
+            "CIK0000019617-submissions-019.json",
+            "CIK0000019617-submissions-020.json",
+            "CIK0000019617-submissions-021.json",
+            "CIK0000019617-submissions-022.json",
+            "CIK0000019617-submissions-023.json",
+            "CIK0000019617-submissions-024.json",
+            "CIK0000019617-submissions-025.json",
+            "CIK0000019617-submissions-026.json",
+            "CIK0000019617-submissions-027.json",
+            "CIK0000019617-submissions-028.json",
+            "CIK0000019617-submissions-029.json",
+            "CIK0000019617-submissions-030.json",
+            "CIK0000019617-submissions-031.json",
+            "CIK0000019617-submissions-032.json",
+            "CIK0000019617-submissions-033.json",
+            "CIK0000019617-submissions-034.json",
+            "CIK0000019617-submissions-035.json"
+          ],
+          "latest_restated_values_used": false,
+          "caller_supplied_selection_trusted": false,
+          "production_authorized": false,
+          "selection_id": "sha256:7628ee5265272a169661c2418023a0995c27e9996b73e312c74562c3f218b24e"
+        }
+      }
+    }
+  ],
+  "compute_seconds": "696.154940",
+  "source_installation": {
+    "checkpoint_id": "sha256:315d5e09e8ef2b400de6ba029615bb9d016a4568242b147d3b688311f532d217",
+    "company_id": "jpmorgan_chase",
+    "package_root": "/workspace/work/company-history-jpm-source",
+    "source_root": "/workspace/work/company-history-export-scope-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

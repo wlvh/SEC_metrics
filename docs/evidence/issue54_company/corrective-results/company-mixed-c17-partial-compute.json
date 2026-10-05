@@ -1,0 +1,136 @@
+{
+  "elapsed_seconds": 17.414451119999285,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "enphase_energy",
+  "source_checkpoint_id": "sha256:1483e21e51c75e4b25a7de3d9a3996155b7dcd1d755655cf8ffacb09cc653ddf",
+  "source_root": "/workspace/work/company-d04-state/source",
+  "metric_ids": [
+    "B01"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "2063d596024741ff8846ec627a72a4c5",
+      "latest_attempt": "2063d596024741ff8846ec627a72a4c5",
+      "successful_attempt": "6a668568cbb94591815f4853916a312b",
+      "previous_successful_attempt": "6a668568cbb94591815f4853916a312b",
+      "last_verified_candidate": {
+        "attempt_id": "6a668568cbb94591815f4853916a312b",
+        "targets": {
+          "B01": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "B01": {
+            "applicability": "APPLICABLE",
+            "company_id": "enphase_energy",
+            "metric_id": "B01",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:d061ef63cca5bfb1c243374adef3108e114e6aae4f0954883511c64d9867f5ba",
+            "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+            "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+            "trace_id": "sha256:b35f531ff36e8dfd1bc6668d379e1a1b40c3d27d3e79efc04d6855005f58c3db",
+            "unit": "USD",
+            "value": "1472985000"
+          }
+        },
+        "rows_root": "/workspace/work/company-d04-state/updates/metrics/B01/attempts/6a668568cbb94591815f4853916a312b/rows"
+      },
+      "new_candidate_created": false,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "2063d596024741ff8846ec627a72a4c5",
+        "configuration_id": "sha256:30220f97eae1ea7154d9e76d9757d2299e65cf6208d7da43797c48dff2492b73",
+        "intent_id": "sha256:32861041e6819bce070f6250203faf90ba25517721d99477184ecb0b5c6a6308",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "completed_at": "2026-10-02T20:23:20.350469+00:00",
+        "input": {
+          "company_id": "enphase_energy",
+          "metric_ids": [
+            "B01"
+          ],
+          "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+          "targets": {
+            "B01": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "B01": {
+              "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+              "accession": "0001463101-26-000013",
+              "document_name": "CIK0001463101.json",
+              "sha256": "ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+              "accession": "",
+              "document_name": "CIK0001463101.json",
+              "sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+              "accession": "0001463101-26-000013",
+              "document_name": "enph-20251231.htm",
+              "sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112"
+            }
+          ],
+          "content_id": "sha256:435bbc00068a27b3df93ddd7865b97048bc7a4b8e0d2b717b820edff048e60c4"
+        },
+        "metrics": {},
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:3e6abcce491200f570da2ee57b21997104fcb9a97d6521c81b1acaf8213aac61"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "compute_seconds": "16.846899",
+  "source_installation": {
+    "checkpoint_id": "sha256:1483e21e51c75e4b25a7de3d9a3996155b7dcd1d755655cf8ffacb09cc653ddf",
+    "company_id": "enphase_energy",
+    "package_root": "/workspace/work/baseline-company-packages/enphase_energy",
+    "source_root": "/workspace/work/company-d04-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "runtime_root": "/workspace/work/company-results-runtime-c17",
+  "execution_id": "66d227a0544e4db8b5e3e0448bfb7462",
+  "recorded_at": "2026-10-02T20:23:20.433869+00:00"
+}

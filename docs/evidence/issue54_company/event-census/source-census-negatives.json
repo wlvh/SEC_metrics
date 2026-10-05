@@ -1,0 +1,44 @@
+{
+  "status": "PASSED",
+  "scope": "REAL_TRUSTED_COMPANY_HEADER_CENSUS_PRIVATE_COPIES",
+  "uid": 1000,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "probes": [
+    {
+      "mutation": "declared-header-bytes",
+      "rejected": true,
+      "error_type": "ValueError",
+      "reason": "COMPANY_SOURCE_BYTES_CHANGED:evidence/accession_materials/marriott_international_1048286_000104828625000011/0001048286-25-000011.hdr.sgml",
+      "seconds": 0.05182313499972224,
+      "consumed_header_locator": "evidence/accession_materials/marriott_international_1048286_000104828625000011/0001048286-25-000011.hdr.sgml"
+    },
+    {
+      "mutation": "additional-header",
+      "rejected": true,
+      "error_type": "ValueError",
+      "reason": "COMPANY_EVENT_CENSUS_FILE_SET_DIFFERS_FROM_TRUST",
+      "seconds": 0.09009977800087654,
+      "consumed_header_locator": null
+    },
+    {
+      "mutation": "local-manifest-rehash",
+      "rejected": true,
+      "error_type": "SourceError",
+      "reason": "Source path is not a regular file: /workspace/work/baseline-company-trust/d6f404929a9256565784513d77e61d47350cff591c6592f340dab14e21f63176.json",
+      "seconds": 0.0013763610004389193,
+      "consumed_header_locator": null
+    },
+    {
+      "mutation": "wrong-company",
+      "rejected": true,
+      "error_type": "ValueError",
+      "reason": "COMPANY_SOURCE_WRONG_COMPANY",
+      "seconds": 0.0022508530018967576,
+      "consumed_header_locator": null
+    }
+  ]
+}

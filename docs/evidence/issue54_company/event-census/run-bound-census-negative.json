@@ -1,0 +1,59 @@
+{
+  "status": "PASSED",
+  "uid": 1000,
+  "run_id": "run:ordinary-integrated:c1a6eaa8e3af229d155f68908b178f1cf21aed805e813ca1c626adf81dce5808",
+  "source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+  "request_attempt_id": "request:attempt:90d6e0b380de55b7e508189591d0ccb2055093591fc30b0cb60dbc436c94badf",
+  "run_data_census_locator": "evidence/accession_materials/marriott_international_1048286_000119312525009110/0001193125-25-009110.hdr.sgml",
+  "undeclared_added_header": "updates/metrics/C01/attempts/74f1d8baa8744402835449a54e47f6fc/data/evidence/accession_materials/marriott_international_1048286_000119312525009110/undeclared.hdr.sgml",
+  "failed_candidates": [
+    {
+      "metric_id": "C01",
+      "attempt_id": "74f1d8baa8744402835449a54e47f6fc",
+      "rows_root": "/workspace/work/company-event-bound-export-negative/updates/metrics/C01/attempts/74f1d8baa8744402835449a54e47f6fc/rows",
+      "journal": "updates/metrics/C01",
+      "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "journal_latest_status": "NO_SOURCE_CONTENT_CHANGE",
+      "journal_latest_error": null,
+      "row_layout": "ordinary",
+      "company_id": "marriott_international",
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "run_id": "run:ordinary-integrated:c1a6eaa8e3af229d155f68908b178f1cf21aed805e813ca1c626adf81dce5808",
+      "run_status": "OPEN",
+      "requirement_id": "issue_54_v1",
+      "requirement_closure_hash": "sha256:d4ed95a95ff01c5cebb1905f27e3ced8a59f652226fcd9af957a439219c1e8f4",
+      "runtime_root": null,
+      "source_checkpoint_id": "sha256:f4c231078c8742ef6265661bfa25422ef24ad89324e0010d3087777e1483f796",
+      "last_checked_source_checkpoint_id": null,
+      "current_source_checkpoint_id": "sha256:f4c231078c8742ef6265661bfa25422ef24ad89324e0010d3087777e1483f796",
+      "current_input_matches": null,
+      "current_input_status": "NOT_RECHECKED",
+      "latest_attempt_status": "NO_SOURCE_CONTENT_CHANGE",
+      "latest_request_status": "NO_SOURCE_CONTENT_CHANGE",
+      "result_validity": "REPLAY_FAILED",
+      "replay_status": "FAILED",
+      "requested_in_latest_execution": true,
+      "confirmed_defects": [],
+      "view_key": "sha256:cf49a28469dc3434361642902e7edc94c46495f615dced9c5aa262a850173c26",
+      "reason": "COMPANY_RESULT_REPLAY_FAILED: ValueError: COMPANY_EVENT_CENSUS_FILE_SET_DIFFERS_FROM_TRUST"
+    }
+  ],
+  "unaffected_exported_metrics": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "seconds": 51.60697004499889,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

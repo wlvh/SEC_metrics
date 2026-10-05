@@ -1,0 +1,180 @@
+[
+  {
+    "company_id": "marriott_international",
+    "requests": 15,
+    "units": 17,
+    "source_id": "sha256:fb93f7f22653fb8a038d443b1941f8f621b467c42d321382e8bf4717135d774b",
+    "relations": [],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "southwest_airlines",
+    "requests": 23,
+    "units": 29,
+    "source_id": "sha256:1943b437fe4a6425fcf31da2418e8c5f659d96ada2b9e4abe3ef426dcdef3383",
+    "relations": [],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "ford_motor_company",
+    "requests": 42,
+    "units": 52,
+    "source_id": "sha256:4924bd567f3b1160401a775b52298821f97c41ae5ecfe9fbfd8f3093cd0e4892",
+    "relations": [
+      {
+        "unit_id": "sha256:0d720a5afbb6becc6ec98c5e5bee3b4d95484adfe444d42283b02e0106908169",
+        "source_index": 450,
+        "evidence_kind": "VISIBLE_BLOCK",
+        "statement_text": "Our success depends on our ability to continue to attract, develop, grow, support, and reward talented and diverse employees with domain expertise in engineering, software, technology, integrated services, supply chain, marketing, and finance, among other areas.",
+        "start_character": 117,
+        "end_character": 379,
+        "kind": null,
+        "subject": null,
+        "timing": null,
+        "reason": "D04_SOURCE_RELATION_NOT_DETERMINED"
+      },
+      {
+        "unit_id": "sha256:0d720a5afbb6becc6ec98c5e5bee3b4d95484adfe444d42283b02e0106908169",
+        "source_index": 450,
+        "evidence_kind": "VISIBLE_BLOCK",
+        "statement_text": "While we have been successful in attracting talent in recent years, as with any company, the ability to continue to attract talent is important, particularly in growth areas vital to our success such as software, electrification and adjacent technologies, and integrated services.",
+        "start_character": 380,
+        "end_character": 660,
+        "kind": null,
+        "subject": null,
+        "timing": null,
+        "reason": "D04_SOURCE_RELATION_NOT_DETERMINED"
+      },
+      {
+        "unit_id": "sha256:4be5c9027c73c6c8672ea47ce03eab1c130c8de09af3267a2830d8b5acb4de67",
+        "source_index": 1278,
+        "evidence_kind": "VISIBLE_BLOCK",
+        "statement_text": "•Ford Credit’s ability to continue funding through asset-backed financing structures",
+        "start_character": 0,
+        "end_character": 84,
+        "kind": null,
+        "subject": null,
+        "timing": null,
+        "reason": "D04_SOURCE_RELATION_NOT_DETERMINED"
+      }
+    ],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "pfizer",
+    "requests": 47,
+    "units": 54,
+    "source_id": "sha256:5ed73ad428e278ab5819824d85de3a876b6118e06a8d94fb80ca9d6fda289b42",
+    "relations": [
+      {
+        "unit_id": "sha256:8b84b75e86e2fce8828d13bdb49dc3ff6c5f6104800d0adf31e31796ea16e052",
+        "source_index": 2356,
+        "evidence_kind": "VISIBLE_BLOCK",
+        "statement_text": "•the value of the going-concern element of Seagen’s existing businesses (the higher rate of return on the assembled collection of net assets versus if Pfizer had acquired all of the net assets separately).",
+        "start_character": 0,
+        "end_character": 205,
+        "kind": "VALUATION_OR_OTHER_MEANING",
+        "subject": null,
+        "timing": null,
+        "reason": null
+      },
+      {
+        "unit_id": "sha256:eb2827ebd99f80e7d185db4b0ded3227a8755b4362ffe7c28656c0f37c62921e",
+        "source_index": 5,
+        "evidence_kind": "NATIVE_SUPPLEMENT",
+        "statement_text": "Specifically, the goodwill recorded as part of the acquisition of Seagen includes the following: </span></div><div style=\"margin-bottom:3pt;padding-left:9pt;text-indent:-9pt\"><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%\">&#8226;</span><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%;padding-left:6.2pt\">the expected specific synergies and other benefits that we believe will result from combining the operations of Seagen with the operations of Pfizer; </span></div><div style=\"margin-bottom:3pt;padding-left:9pt;text-indent:-9pt\"><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%\">&#8226;</span><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%;padding-left:6.2pt\">any intangible assets that do not qualify for separate recognition, as well as future, as yet unidentified projects and products; and </span></div><div style=\"margin-bottom:5pt;padding-left:9pt;text-indent:-9pt\"><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%\">&#8226;</span><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%;padding-left:6.2pt\">the value of the going-concern element of Seagen&#8217;s existing businesses (the higher rate of return on the assembled collection of net assets versus if Pfizer had acquired all of the net assets separately). </span></div><div style=\"margin-bottom:5pt\"><span style=\"color:#000000;font-family:'Arial',sans-serif;font-size:8pt;font-weight:400;line-height:120%\">Goodwill is not amortized and is not deductible for tax purposes.",
+        "start_character": 4322,
+        "end_character": 6098,
+        "kind": "VALUATION_OR_OTHER_MEANING",
+        "subject": null,
+        "timing": null,
+        "reason": null
+      }
+    ],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "jpmorgan_chase",
+    "requests": 111,
+    "units": 130,
+    "source_id": "sha256:9e8350409541568eab54bf21774ab16c62fc9da43c421f75ce36dd3917ec843b",
+    "relations": [],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "salesforce",
+    "requests": 20,
+    "units": 25,
+    "source_id": "sha256:5cd8e580ba5861d762c7de160725998917417be6d2ac0e6711840980a1835391",
+    "relations": [],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "lumen_technologies",
+    "requests": 33,
+    "units": 39,
+    "source_id": "sha256:09ba4d42d4898bcbde0c0be245bf1b74d73c775dfbb1ada30f91c2fda7859c80",
+    "relations": [],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "macys",
+    "requests": 19,
+    "units": 22,
+    "source_id": "sha256:81b9d3ecbdc352b44997e94cb0f7387f4a941c616cbea7dc896f7a76c2ffb7f2",
+    "relations": [],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "paramount_skydance_paramount_global",
+    "requests": 43,
+    "units": 51,
+    "source_id": "sha256:ae86f2baf580e850aaf0b23b411b3f1e0b040e4a517eb1ef65be6c55633cd1e8",
+    "relations": [
+      {
+        "unit_id": "sha256:4e91268d01b3aecdc3db6d2e3fcfb57eb64bb1fee5228541b071e358da5cdad5",
+        "source_index": 235,
+        "evidence_kind": "VISIBLE_BLOCK",
+        "statement_text": "Our ability to continue to attract, engage and retain streaming subscribers and active users (together, “users”), as well as generate corresponding subscription and advertising revenues, depends on a number of factors, including our ability to consistently provide appealing and differentiated content that resonates globally, offer a quality experience for selecting and viewing that content, execute a windowing strategy that maximizes service appeal and the value of our content, successfully market our content and services, and make effective choices globally regarding whether we distribute our content and services directly through our owned-and-operated services or through third parties, including through hard bundles, MVPD bundles and channel distributors.",
+        "start_character": 131,
+        "end_character": 898,
+        "kind": null,
+        "subject": null,
+        "timing": null,
+        "reason": "D04_SOURCE_RELATION_NOT_DETERMINED"
+      }
+    ],
+    "native_acceptance": false,
+    "absence_proven": false
+  },
+  {
+    "company_id": "enphase_energy",
+    "requests": 27,
+    "units": 29,
+    "source_id": "sha256:cf7707948341fb018b153005f23f4b95950778ba996c6089b25e669527272666",
+    "relations": [
+      {
+        "unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+        "source_index": 378,
+        "evidence_kind": "VISIBLE_BLOCK",
+        "statement_text": "•business and financial difficulties faced by our suppliers, distributors or other partners, including impacts to material costs, sales, liquidity levels, ability to continue investing in their businesses, ability to import or export goods, ability to meet development commitments and manufacturing capability; and",
+        "start_character": 0,
+        "end_character": 314,
+        "kind": "VALUATION_OR_OTHER_MEANING",
+        "subject": null,
+        "timing": null,
+        "reason": null
+      }
+    ],
+    "native_acceptance": false,
+    "absence_proven": false
+  }
+]

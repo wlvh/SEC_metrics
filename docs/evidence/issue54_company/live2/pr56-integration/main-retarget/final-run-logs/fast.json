@@ -1,0 +1,23 @@
+{
+ "job": "fast",
+ "timeout_minutes": 5,
+ "steps": [
+  {
+   "name": "Verify company import transactions",
+   "rc": 0,
+   "seconds": 1.0,
+   "log": "fast--0.log",
+   "unittest_summary": []
+  },
+  {
+   "name": "Run fast suite",
+   "rc": 0,
+   "seconds": 136.8,
+   "log": "fast--1.log",
+   "unittest_summary": []
+  }
+ ],
+ "seconds": 137.7,
+ "ok": true,
+ "within_timeout": true
+}

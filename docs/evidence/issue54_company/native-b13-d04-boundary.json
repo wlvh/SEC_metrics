@@ -1,0 +1,153 @@
+{
+  "elapsed_seconds": 85.19113004200062,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:8361117d4130dcee1c4cc6078f6fae96acc22c31d8cc1f1990ebaf5900df1332",
+  "source_root": "/workspace/work/company-native-release-state/source",
+  "metric_ids": [
+    "B13",
+    "D04"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "B13",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "0615bd6566f34245a491e36a685a7a7f",
+      "latest_attempt": "0615bd6566f34245a491e36a685a7a7f",
+      "successful_attempt": "0615bd6566f34245a491e36a685a7a7f",
+      "previous_successful_attempt": null,
+      "last_verified_candidate": {
+        "attempt_id": "0615bd6566f34245a491e36a685a7a7f",
+        "targets": {
+          "B13": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "B13": {
+            "applicability": "N_A_STRUCTURAL",
+            "company_id": "jpmorgan_chase",
+            "metric_id": "B13",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "NONE",
+            "reason_code": "TRAIT_NOT_APPLICABLE",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:c49050f9f9f2de8be39764f3e154d8941d4c4391aa391cb71a279552b558355c",
+            "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+            "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+            "text_payload": null,
+            "trace_id": "sha256:a0cc601d4d0eb4ffbb42db5cc993bd487a724afbfc32f22135fd9accde1bb816",
+            "unit": null,
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "rows_root": "/workspace/work/company-native-release-state/updates/native-v1/metrics/B13/attempts/0615bd6566f34245a491e36a685a7a7f/rows"
+      },
+      "new_candidate_created": true,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "0615bd6566f34245a491e36a685a7a7f",
+        "configuration_id": "sha256:ac91ec60770fe7fa96084d5b6f32449ccffb86967488a6e14340e1839d8ddcdd",
+        "intent_id": "sha256:7619412e323c9a170547e65ca539899a3cf27afaad8a9edd81ced2234f045828",
+        "status": "CANDIDATE_READY",
+        "completed_at": "2026-10-02T17:46:09.167844+00:00",
+        "input": {
+          "company_id": "jpmorgan_chase",
+          "metric_ids": [
+            "B13"
+          ],
+          "requirement_closure_hash": "sha256:237a1071b1ae96b4ec1fca2c52aa7776b50cebd8ebf2ed95386aea8da2551e12",
+          "targets": {
+            "B13": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "B13": {
+              "B13": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+              "accession": "0001628280-26-008131",
+              "document_name": "CIK0000019617.json",
+              "sha256": "e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+              "accession": "",
+              "document_name": "CIK0000019617.json",
+              "sha256": "36ee6cc90d5e0b240cc7b346f356a5cd8d7bf91e94f80b434884c784fcd78160"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+              "accession": "0001628280-26-008131",
+              "document_name": "jpm-20251231.htm",
+              "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+            }
+          ],
+          "content_id": "sha256:bf690b42752f912e609d549dc73bcf3d3c6bed2736970918972f038a9470a67b"
+        },
+        "metrics": {
+          "B13": {
+            "result_id": "sha256:c49050f9f9f2de8be39764f3e154d8941d4c4391aa391cb71a279552b558355c",
+            "publication": "PUBLISHED",
+            "source_credit": "RECORDED_TEST_ONLY",
+            "files": {
+              "metrics_matrix.csv": "405611006c0bfe98a746846ff236334052bb19c883c8aaa75d75b479354e7971",
+              "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+            },
+            "native_assessment_completed": true
+          }
+        },
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:8179817efadc1b40179b1a1b2dc7c95bd529c1c12310c050698313b868a55fc8"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    },
+    {
+      "metric_id": "D04",
+      "status": "AI_PROCESSING_INPUT_REQUIRED",
+      "reason": "SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.",
+      "business_metric_completed": false
+    }
+  ],
+  "compute_seconds": "83.978855",
+  "source_installation": {
+    "checkpoint_id": "sha256:8361117d4130dcee1c4cc6078f6fae96acc22c31d8cc1f1990ebaf5900df1332",
+    "company_id": "jpmorgan_chase",
+    "package_root": "/workspace/work/product-b-v2-source-v7",
+    "source_root": "/workspace/work/company-native-release-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

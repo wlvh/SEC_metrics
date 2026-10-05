@@ -1,0 +1,36 @@
+{
+  "status": "PASSED",
+  "positive_seconds": 13.560474707999674,
+  "source_request_attempt_id": "request:attempt:9e0d14d4671a430b2a3aed2fa0660090b987328274ff926d5ae9d77cb47a5fc6",
+  "negative_probes": [
+    {
+      "field": "request_repo_relative_path",
+      "path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json",
+      "before_sha256": "9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71",
+      "status": "REJECTED",
+      "error_type": "RunStoreError",
+      "reason": "Run RawBlob bytes changed",
+      "seconds": 0.14228735699998651
+    },
+    {
+      "field": "request_headers_repo_relative_path",
+      "path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json.dc666b0ce43644f52b587a6ae8335c7a98913d755bb9028c88dbae38f907624f.headers.json",
+      "before_sha256": "dc666b0ce43644f52b587a6ae8335c7a98913d755bb9028c88dbae38f907624f",
+      "status": "REJECTED",
+      "error_type": "BatchWorkflowError",
+      "reason": "Request-ledger locator evidence is invalid",
+      "seconds": 0.23289230499995028
+    }
+  ],
+  "uid": 1000,
+  "denied_read_roots": [
+    "/workspace/work/probe-b/ledger",
+    "/workspace/work/sec-company-compute/evidence"
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false
+}

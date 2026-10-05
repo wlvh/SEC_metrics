@@ -1,0 +1,138 @@
+{
+  "elapsed_seconds": 86.77623709599993,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:06b3629f57aa3528bf29103c754d73245814e2d0686c96089e4754b27032cd15",
+  "source_root": "/workspace/work/company-b-evolution/jpmorgan_chase/source",
+  "metric_ids": [
+    "A08"
+  ],
+  "metrics": [
+    {
+      "metric_id": "A08",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "c31d6367cdc84d8da51f6a7076b5e488",
+      "latest_attempt": "c31d6367cdc84d8da51f6a7076b5e488",
+      "successful_attempt": "c31d6367cdc84d8da51f6a7076b5e488",
+      "previous_successful_attempt": "58f9a3dab2fe4eebad8696d85f3f8643",
+      "last_verified_candidate": {
+        "attempt_id": "c31d6367cdc84d8da51f6a7076b5e488",
+        "targets": {
+          "A08": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "A08": {
+            "applicability": "APPLICABLE",
+            "company_id": "jpmorgan_chase",
+            "metric_id": "A08",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:e1299b76f91b194b2f2b5b4aec80a59d70e6d4d4085f45833dd4d9e83b49c15f",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+            "trace_id": "sha256:1666a06ed24663318ec1fca59ad9415911203fa146688cbc8352aacc5618cd83",
+            "unit": "ratio",
+            "value": "0.9115807340506899405928145595"
+          }
+        },
+        "rows_root": "/workspace/work/company-b-evolution/jpmorgan_chase/updates/metrics/A08/attempts/c31d6367cdc84d8da51f6a7076b5e488/rows"
+      },
+      "new_candidate_created": true,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "c31d6367cdc84d8da51f6a7076b5e488",
+        "configuration_id": "sha256:6125517eb282aa81a0bb9ae78bbf6a43c6bd0c5c483660c7215b844295cd4a7a",
+        "intent_id": "sha256:7fb391210af745a9d09731d19b7c9a654be24fe8e23455954fc76cf79c012967",
+        "status": "CANDIDATE_READY",
+        "completed_at": "2026-10-02T16:37:51.304970+00:00",
+        "input": {
+          "company_id": "jpmorgan_chase",
+          "metric_ids": [
+            "A08"
+          ],
+          "requirement_closure_hash": "sha256:22c1d25b6fb757f9abdbed64361ffd7f6ede5fbe7034d2d8619ac3a3f1fbf47d",
+          "targets": {
+            "A08": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "A08": {
+              "A08": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+              "accession": "0001628280-26-008131",
+              "document_name": "CIK0000019617.json",
+              "sha256": "e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+              "accession": "",
+              "document_name": "CIK0000019617-submissions-001.json",
+              "sha256": "bbd1683ff8a8f6a536766f18a0741f7dbfaf66d967e98ff4344cc5430e4340d7"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+              "accession": "",
+              "document_name": "CIK0000019617.json",
+              "sha256": "36ee6cc90d5e0b240cc7b346f356a5cd8d7bf91e94f80b434884c784fcd78160"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+              "accession": "0001628280-26-008131",
+              "document_name": "jpm-20251231.htm",
+              "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+            }
+          ],
+          "content_id": "sha256:76176fb22e255818ae7dc25b64315bbed258a821ab267357cf1c088b01e1376b"
+        },
+        "metrics": {
+          "A08": {
+            "result_id": "sha256:e1299b76f91b194b2f2b5b4aec80a59d70e6d4d4085f45833dd4d9e83b49c15f",
+            "publication": "PUBLISHED",
+            "source_credit": "RECORDED_TEST_ONLY",
+            "files": {
+              "metrics_matrix.csv": "3bfa5d8f7ec21655bbcf7e68cc2a2fcd5d93b0bf3cbdaa133f0b381633f74d8c",
+              "metric_evidence.csv": "92a8fc278618ce34034f02f65e78a4c13471e15f4fc8513293856720ccea9068"
+            }
+          }
+        },
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:9cf9f71fba0ba5ea95d3a95ec959bbdf3c4d4e37bdaccfc49d155ca2d3265183"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "compute_seconds": "85.621097",
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

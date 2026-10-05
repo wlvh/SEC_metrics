@@ -1,0 +1,107 @@
+{
+ "record_type": "PR56_CONSUMER_CHECK",
+ "pr56_head": "9d1ece070e70828ec99bfe6204a2e440f84b4730",
+ "previous_checked_candidate": "7ed952bbfc0c52aee11afeb18815de86eec24017",
+ "pr55": "4ab93a54 (product = 83db2c02)",
+ "composed_tree": "9d1ece07 + PR55 18 runtime paths (tools/run_fast_tests_v2.py must use the 3-way merge, not the 83 copy, to keep PR56 test_main_scalability_audit selector)",
+ "changed_runtime_files_7ed952bb_to_9d1ece07": [
+  "scripts/vnext/publication.py",
+  "scripts/vnext/ordinary_scalability_audit.py",
+  "tools/check_main_scalability.py (new)",
+  "config/issue28_normal_results_v2.json",
+  "config/ordinary_scalability_exemptions_v1.json",
+  "config/main_scalability_exemptions_v1.json (new)",
+  "requirements/issue_28_v13/baseline_manifest.json",
+  "requirements/issue_28_v13/decision_register.json",
+  "requirements/issue_28_v14/baseline_manifest.json",
+  "requirements/issue_28_v14/transfer_manifest.json",
+  "tools/run_fast_tests_v2.py (+2 lines)"
+ ],
+ "pr55_files_touched_by_pr56": 0,
+ "requirement_closures": {
+  "issue_28_v13": {
+   "7ed952bb": "99f07acd",
+   "9d1ece07": "sha256:f78c9e5869b77b7646b575ce8a73f77bf7d555b843b10e41ce3c028991400663"
+  },
+  "issue_28_v14": {
+   "7ed952bb": "8f993f08",
+   "9d1ece07": "sha256:a1f78a5772c8bdcdf32358d41e98e7221c4411690b16e5c0b77e07258748625f"
+  }
+ },
+ "installed_runtime_authority": {
+  "ordinary_issue_54_v1": {
+   "83": "sha256:0d59595684f2a037f3f8bf99373ff1f405a349207443d69206939b3e5a006a5b",
+   "composed_9d1ece07": "sha256:81bd01d98c5c3606d44f514d6889ec7cb875bda4a92c8a91bd9142012908cb70"
+  },
+  "local_issue_54_v4": {
+   "83": "sha256:792b50955674f1a1a007f2a1b5f55b7520d5ad4f5b7973e7b102c9e7278aa251",
+   "composed_9d1ece07": "sha256:da36e061db5a47f2a7ce21705f4560c3bb82c115eac5222462baf4025240d92a"
+  }
+ },
+ "installed_tree_difference": "only the 11 PR56 files plus derived issue_54_v1/v4 baseline/transfer manifests and docs/evidence/issue54_runtime/frozen-parent-requirement.json (parent closure)",
+ "requirement_load_and_validate_execution_authority": "issue_28_v13/v14 OK in composed tree; installed issue_54_v1/v4 OK",
+ "old_package_on_new_runtime": {
+  "package": "live2 first-run handoff sha256:fd811db5...",
+  "result": "REJECTED",
+  "reason": "COMPANY_HANDOFF_RULE_VERSION_CHANGED",
+  "rule_files_differing": [
+   "config/issue28_normal_results_v2.json",
+   "config/main_scalability_exemptions_v1.json (new)",
+   "config/ordinary_scalability_exemptions_v1.json"
+  ],
+  "raised_at": "rt-local/scripts/vnext/company_handoff.py check_package -> need(admission['rules'] == rule_bindings(...))",
+  "log": "old-package-install-on-pr56-runtime.stderr.log line 18",
+  "record_correction": "first commit stored the trailing timing line (\"sys 0m0.148s\") instead of the exception; corrected from the saved stderr, failure itself unchanged"
+ },
+ "reexport_same_live2_source_on_new_runtime": {
+  "checkpoint_id": "sha256:0e5b06ee66015e7b60e342b12d08a0e5eae1dc9fe5bf0537625affec06aa4271",
+  "sec_calls": 0
+ },
+ "compute_B01_C01_new_runtime": {
+  "seconds": 51.50923969099995,
+  "metrics": [
+   [
+    "B01",
+    "CANDIDATE_READY"
+   ],
+   [
+    "C01",
+    "CANDIDATE_READY"
+   ]
+  ]
+ },
+ "cold_export_new_runtime": {
+  "seconds": 18.820990101999996,
+  "status": "EXPORTED",
+  "business_fields_equal_to_83_run": {
+   "B01": "26186000000",
+   "C01": "3"
+  }
+ },
+ "full_pr55_delta_3way_on_9d1ece07": {
+  "paths": 312,
+  "conflicts": [
+   "AGENTS.md",
+   "TESTING.md",
+   "capability_contract.json",
+   "docs/business_user_guide.md",
+   "interact.md"
+  ],
+  "nature": "main removed 0bc24734 sections; PR55 only adds lines inside them",
+  "merge_drafts": "governance-merge-drafts/ (main version + PR55 additions; capability JSON 28+4 entries; placement of Markdown blocks to be reviewed at retarget; business guide line about pending SEC permission is stale and must be updated)"
+ },
+ "tests": {
+  "company_67_with_main_side_docs": "OK",
+  "test_main_scalability_audit+test_issue28_requirement_transition": "28 OK (224.7s)",
+  "check_main_scalability": "PASS (no PR55 hits)",
+  "check_provider_egress": "PASS",
+  "generate_metrics_reference --check": "PASS",
+  "capability_alignment": "not conclusive: needs committed merged docs (architecture.md anchors local_company_run/company_import_transaction require the 4 PR55 capabilities)"
+ },
+ "old_publication_read": "default PublicationView 24bf8f16 / matrix c0aa1c7d and R3 4f2542a2 / b390121c read OK; active pointer bytes unchanged",
+ "not_run": [
+  "full fast suite / 146-150 broad regression on composed tree",
+  "committed alignment check",
+  "live/provider paths"
+ ]
+}

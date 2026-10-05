@@ -1,0 +1,8 @@
+{"record_type": "ISSUE54_SEC_ALLOWANCE_CARRYOVER",
+ "granted_by": "repository owner instruction in this session, 2026-10-04",
+ "cumulative_cap_sec_get": 120,
+ "previously_recorded_consumption": {"sec_get": 31, "source": "docs/evidence/issue54_company/live-marriott/authorization.json, requests_log.csv (31 rows) at 83db2c02", "original_ledger_restored": false},
+ "this_task_allowance_sec_get": 89,
+ "provider_paid_calls": [0, 0],
+ "rules": ["1 request/second", "zero automatic retries", "project User-Agent from config/sec_config.json", "TLS verified through the environment egress proxy CA", "stop at the cap; no bypass of 403/429"],
+ "note": "Budget carryover only. The original 31 requests and their ledger are not reconstructed here; the new task ledger records only new requests."}

@@ -1,0 +1,201 @@
+{
+  "elapsed_seconds": 58.23370885299664,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "paramount_skydance_paramount_global",
+  "source_checkpoint_id": "sha256:a48403140e84c58cdd122bb7e45e1ca492492dbd0eeace0a4320ead7c30ad3e4",
+  "source_root": "/workspace/work/closeout-after-state/source",
+  "metric_ids": [
+    "C01"
+  ],
+  "period_request": {
+    "report_end": "2025-12-31",
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "C01",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "new_candidate_created": false,
+      "last_verified_candidate": {
+        "attempt_id": "3d7d24dd0a134945979fa8e6e4e5cad0",
+        "current_input_matches": true,
+        "period_selection": {
+          "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+          "caller_supplied_selection_trusted": false,
+          "company_id": "paramount_skydance_paramount_global",
+          "current_amendments": [
+            {
+              "accessionNumber": "0001140361-26-016758",
+              "filingDate": "2026-04-24",
+              "form": "10-K/A",
+              "primaryDocument": "ef20071103_10ka.htm",
+              "reportDate": "2025-12-31"
+            }
+          ],
+          "current_filing": {
+            "accessionNumber": "0002041610-26-000011",
+            "filingDate": "2026-02-25",
+            "form": "10-K",
+            "primaryDocument": "psky-20251231.htm",
+            "reportDate": "2025-12-31"
+          },
+          "dependency_filing_roles": {
+            "prior_amendment_primary": [],
+            "prior_annual_primary": null,
+            "target_amendment_primary": [
+              "0001140361-26-016758"
+            ],
+            "target_primary": "0002041610-26-000011"
+          },
+          "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+          "latest_restated_values_used": false,
+          "loaded_inventories": [
+            "CIK0002041610.json"
+          ],
+          "policy_id": "ordinary_period_selection_v1",
+          "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+          "prior_amendments": [],
+          "prior_filing": null,
+          "prior_report_end": null,
+          "prior_status": "NO_SAME_CIK_PRIOR_IN_COMPLETE_SAVED_SUBMISSIONS",
+          "production_authorized": false,
+          "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+          "reporting_cik": "2041610",
+          "requested_fiscal_year": null,
+          "schema_version": 1,
+          "selection_id": "sha256:00e01bf6b9e9c8c2e6714e53bb4efd94ece4fea617e4c2f533ff908a9dff2d67",
+          "source_set_identity": "sha256:cce06eb12db9356d7f66fee0246658026d81fd4a090793aeb15297b649ab72c4",
+          "subject_policy": {
+            "cross_entity_combination_authorized": false,
+            "mode": "SUCCESSOR_REGISTRANT_ONLY",
+            "per_metric_statement_scope_required": true,
+            "related_predecessor_ciks": [
+              "813828"
+            ],
+            "selected_cik": "2041610"
+          },
+          "target_report_end": "2025-12-31",
+          "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT"
+        },
+        "receipt": {
+          "business_content_verified": false,
+          "company_id": "paramount_skydance_paramount_global",
+          "manifest_file_hashes_verified": true,
+          "public_row": {
+            "accepted": true,
+            "evidence_count": 12,
+            "evidence_hash": "sha256:96ea2e553e1a42e9b46115510e03ea3e30efb94381b9c63ea8d4d62c1ce2b333",
+            "period_selection_id": "sha256:00e01bf6b9e9c8c2e6714e53bb4efd94ece4fea617e4c2f533ff908a9dff2d67",
+            "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+            "primary_metric_id": "C01",
+            "production_authorized": false,
+            "receipt_id": "sha256:ea04da66d5d0db28ce17e0dd008a6c778c67dad0e33688c7c30db179c484d548",
+            "refusal": null,
+            "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+            "requirement_id": "issue_54_v3",
+            "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+            "row_hash": "sha256:bdcfc81a66646967206adbd244e0ccc52d0decc873bf20ef1b0ffa1fbf7ecac7",
+            "run_id": "run:historical-period:1b88f762c808b921bc5738359b2582065933fd868368b69632606d5e9147026b",
+            "run_status": "FROZEN",
+            "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+            "status": "FROZEN_CANDIDATE"
+          },
+          "receipt_id": "sha256:249f6a43bb0501533cdac425e3e984a39505eb15d4357a86cc23ca794c7f142e",
+          "record_type": "HISTORICAL_RUN_RECEIPT",
+          "replayed": false,
+          "requirement_closure_hash": "sha256:ef00c13440ddf809d6fd406f5c861d4e55984a37c56bf31d019b590534e24adc",
+          "requirement_id": "issue_54_v3",
+          "results": [
+            {
+              "applicability": "APPLICABLE",
+              "entities": [],
+              "filings": [
+                "0000813828-24-000009",
+                "0000813828-24-000018",
+                "0000813828-24-000023",
+                "0000813828-24-000028",
+                "0000813828-24-000033",
+                "0000813828-24-000034",
+                "0000813828-24-000038",
+                "0000813828-24-000042",
+                "0000813828-24-000063",
+                "0000813828-24-000069",
+                "0000813828-24-000073",
+                "0000813828-24-000075",
+                "0000813828-24-000081",
+                "0000813828-24-000083",
+                "0000813828-24-000085",
+                "0000813828-24-000087",
+                "0000813828-25-000015",
+                "0000813828-25-000019",
+                "0001104659-25-123496",
+                "0001193125-24-050664",
+                "0001193125-24-122356",
+                "0001193125-24-177535",
+                "0001193125-24-196053",
+                "0001193125-24-196972",
+                "0001193125-24-253719",
+                "0001193125-25-036747",
+                "0001193125-25-052917",
+                "0001193125-25-115947",
+                "0001193125-25-120877",
+                "0001193125-25-165497",
+                "0001193125-25-170521",
+                "0001193125-25-175027",
+                "0001193125-25-310710",
+                "0002041610-25-000021",
+                "0002041610-25-000042"
+              ],
+              "metric_id": "C01",
+              "period_end": "2025-12-31",
+              "period_start": "2024-01-01",
+              "publication": "PUBLISHED",
+              "quality": "EXACT",
+              "reason_code": "PASS",
+              "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+              "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+              "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+              "unit": "count",
+              "value": "12",
+              "value_kind": null
+            }
+          ],
+          "run_directory_name": "C01",
+          "run_id": "run:historical-period:1b88f762c808b921bc5738359b2582065933fd868368b69632606d5e9147026b",
+          "run_status": "FROZEN",
+          "schema_version": 1,
+          "target_period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "unverified_files": [],
+          "validation_status": "PASSED",
+          "verified_files": [
+            "records.jsonl",
+            "review_decisions.jsonl",
+            "validation.json"
+          ]
+        },
+        "rows_root": "/workspace/work/closeout-after-state/updates/historical/2025-12-31/C01/attempts/3d7d24dd0a134945979fa8e6e4e5cad0/rows"
+      }
+    }
+  ],
+  "compute_seconds": "36.621359",
+  "source_installation": {
+    "checkpoint_id": "sha256:a48403140e84c58cdd122bb7e45e1ca492492dbd0eeace0a4320ead7c30ad3e4",
+    "company_id": "paramount_skydance_paramount_global",
+    "package_root": "/workspace/work/closeout-paramount-source",
+    "source_root": "/workspace/work/closeout-after-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "runtime_root": "/workspace/work/closeout-history-runtime-after",
+  "execution_id": "f1cca68c7ce24f85ada501f33364d59d",
+  "recorded_at": "2026-10-03T05:09:47.075261+00:00"
+}
