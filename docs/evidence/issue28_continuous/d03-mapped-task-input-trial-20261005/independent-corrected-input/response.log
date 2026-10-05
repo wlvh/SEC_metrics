@@ -1,0 +1,35 @@
+{
+  "findings": [
+    {
+      "subject": "Marriott International, Inc. and its subsidiaries: U.S. federal income tax returns for tax years through 2022",
+      "event_dates": [],
+      "reported_context_times": ["Tax years through 2022", "All issues reported settled as of year-end 2025"],
+      "status": "EXAMINED; ALL ISSUES SETTLED FOR TAX YEARS THROUGH 2022 AS OF YEAR-END 2025",
+      "description": "The company reports that the U.S. Internal Revenue Service has examined its federal income tax returns and that it had settled all issues for tax years through 2022 as of year-end 2025. The disclosure supplies neither the examination initiation dates nor the settlement dates. It does not establish that later tax-year examinations have ended or that these examinations were enforcement investigations alleging wrongdoing.",
+      "evidence": [[7, "NATIVE_FACT", 507], [12, "NATIVE_SUPPLEMENT", 2], [2, "VISIBLE_BLOCK", 1201]]
+    },
+    {
+      "subject": "Marriott International, Inc. and its subsidiaries: U.S. federal income tax audits for tax years 2023 and 2024",
+      "event_dates": [],
+      "reported_context_times": ["Tax years 2023 and 2024", "FY2025 Form 10-K, report date 2025-12-31, filed 2026-02-10"],
+      "status": "ONGOING AS REPORTED",
+      "description": "Immediately after discussing Internal Revenue Service examinations, the company states that its 2023 and 2024 tax-year audits are currently ongoing. The tax years identify the returns being audited, not the dates when the audits began. No allegation, proposed adjustment, enforcement charge, outcome, or monetary exposure is specified for these particular audits.",
+      "evidence": [[7, "NATIVE_FACT", 507], [12, "NATIVE_SUPPLEMENT", 2], [2, "VISIBLE_BLOCK", 1201]]
+    },
+    {
+      "subject": "Marriott International, Inc. and its subsidiaries: various foreign, state, and local income tax returns",
+      "event_dates": [],
+      "reported_context_times": ["FY2025 Form 10-K, report date 2025-12-31, filed 2026-02-10"],
+      "status": "UNDER EXAMINATION AS REPORTED",
+      "description": "The company reports that various foreign, state, and local income tax returns are also under examination by the applicable taxing authorities. The disclosure does not identify the particular authorities, jurisdictions, subsidiaries, tax years, initiation dates, allegations, or outcomes. Tax payments and the countries or states appearing elsewhere in the income tax tables cannot identify the jurisdictions conducting these examinations.",
+      "evidence": [[7, "NATIVE_FACT", 507], [12, "NATIVE_SUPPLEMENT", 2], [2, "VISIBLE_BLOCK", 1201]]
+    }
+  ],
+  "unresolved": [
+    "The owned income-tax disclosure establishes actual tax examinations, but does not say that they are enforcement investigations or allege misconduct. Their classification beyond the reported examination or audit is unresolved.",
+    "No examination commencement or settlement event dates are supplied. The 2023 and 2024 tax years, the FY2025 accounting context, and the filing date must not be substituted for such event dates.",
+    "The foreign, state, and local examinations are not individually attributable to named authorities, jurisdictions, subsidiaries, or tax years; the amounts of unrecognized tax benefits and related interest or penalties are not allocated to the specific examinations.",
+    "The owned native views are partial views of their original units. All provided owned references and continuation roots were examined, but this scan does not establish whole-company absence, zero investigations, semantic approval, or live execution. The EPA and Starwood-related regulatory matters appearing only in visible context are outside this request's owned references and are not repeated as owned findings."
+  ],
+  "scan_complete": true
+}
