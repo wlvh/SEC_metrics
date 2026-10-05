@@ -14457,5 +14457,42 @@
     "status": "NO_MATCHING_RUN_OR_CHECK_RETURNED",
     "conclusion": null,
     "scope": "ExactfullSHA query empty; PR43samehead verifiedchecks empty. No conclusion inferred from priorgreen, no rerun/dispatch requested."
+  },
+  "c02_image_native_processing_20261005": {
+    "status": "ACTUAL_NEW_WIRE_NATIVE_PENDING_SAVE_AND_INDEPENDENT_READ_PASS_LIMITED_REVIEW_PENDING",
+    "base_head": "ab56180588ded8b16728fa80e4d0d6dd2cec2331",
+    "module": "scripts/vnext/c02_image_model_processing.py",
+    "spec": "catalog/r6/C02_model_image_development_v1.md",
+    "source_input": "scripts/vnext/c02_image_development_input.py",
+    "fixed_image_context": "scripts/vnext/c02_image_context_c294b12f.py",
+    "provider_sha": "c294b12f05e648e9b598635292c6438a4ea1c072",
+    "evidence": "docs/evidence/issue28_continuous/c02-image-native-processing-20261005",
+    "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "processing_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-native-processing-20261005",
+    "request_sha256": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+    "response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
+    "candidate_hash": "sha256:d1298823a7fd72322d56596103fd8df23cb512d85a2003fe92aeceecc6a693db",
+    "review_unit_hash": "sha256:b7d17001edbc72211e33d5aebeb94eeb3a00ebd8d9afc036e0f2b7aa10821aac",
+    "save_seconds": 5.478,
+    "read_seconds": 5.672,
+    "all_saved_file_bytes_equal": true,
+    "images_saved": 604,
+    "model_entries_preserved": 53,
+    "old_bindings_changed": false,
+    "new_model_responses": 0,
+    "system_approval_eligible": false,
+    "new_native_result_run_or_provider": false,
+    "business_calls": [
+      0,
+      0,
+      0
+    ],
+    "remaining": "Limited actual new-code review; complete omission/media and qualification-kind boundary; target purpose/opportunity/count mapping/final wiring. Not whole C02 complete."
+  },
+  "collab_peer_increment_e5682db6": {
+    "peer_sha": "e5682db6c440175d96138c2aa30f79c7a1600b40",
+    "baseline": "e6b2bb8e2575b665a8e02290935953e632216f2f",
+    "scope": "No production or source formatter change. Register only appends own upstream9099read; no defect release/acceptance copied. Fixed image helper code version remainsc294/e6."
   }
 }
