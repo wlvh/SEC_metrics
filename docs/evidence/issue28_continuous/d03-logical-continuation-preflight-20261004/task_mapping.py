@@ -5,6 +5,7 @@ are never relabelled as those complete units. No model, ledger or native writer.
 """
 from copy import deepcopy
 from pathlib import Path
+from html.parser import HTMLParser
 
 import logical_source
 from vnext.d03_context_requests import _source
@@ -18,6 +19,55 @@ HERE = Path(__file__).parent
 def need(ok, reason):
     if not ok:
         raise ValueError('D03_MAPPING_' + reason)
+
+
+class _XMLDependencies(HTMLParser):
+    """Collect literal dictionary references, never classify source meaning."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.required = {'contexts': set(), 'units': set()}
+
+    def handle_starttag(self, tag, attrs):
+        values = dict(attrs)
+        for attr, kind in [('contextref', 'contexts'), ('unitref', 'units')]:
+            if values.get(attr):
+                self.required[kind].add(values[attr])
+
+
+def _complete_xml_dictionaries(source, parts):
+    """Add explicit dictionary-only partial views from the same admitted source."""
+    parser = _XMLDependencies()
+    present = {'contexts': {}, 'units': {}}
+    for part in parts:
+        if part['kind'] == 'NATIVE_FACTS':
+            for kind in present:
+                present[kind].update(part['payload'][kind])
+        else:
+            for obj in part['payload']['objects']:
+                parser.feed(obj['raw_xml'])
+    parser.close()
+    donors = {}
+    for kind, keys in parser.required.items():
+        for key in sorted(keys):
+            matches = [(ui, u['payload'][kind][key]) for ui, u in enumerate(source['units'])
+                       if u['kind'] == 'NATIVE_FACTS' and key in u['payload'][kind]]
+            need(matches, 'XML_DICTIONARY_DEPENDENCY_MISSING')
+            first_ui, definition = matches[0]
+            need(all(v == definition for _, v in matches), 'XML_DICTIONARY_DEPENDENCY_CONFLICT')
+            unit = source['units'][first_ui]
+            env = definition['namespace_environment_id']
+            need(env in unit['payload']['namespace_environments'], 'XML_DICTIONARY_NAMESPACE_MISSING')
+            if key in present[kind]:
+                need(present[kind][key] == definition, 'XML_DICTIONARY_PRESENT_CHANGED')
+                continue
+            part = donors.setdefault(first_ui, {'kind': 'NATIVE_FACTS', 'document_id': unit['document_id'],
+                'parent_source_unit_id': unit['unit_id'], 'original_indices': [],
+                'dictionary_context_only': True,
+                'payload': {'facts': [], 'contexts': {}, 'units': {}, 'namespace_environments': {}}})
+            part['payload'][kind][key] = deepcopy(definition)
+            part['payload']['namespace_environments'][env] = deepcopy(unit['payload']['namespace_environments'][env])
+            present[kind][key] = definition
+    parts.extend(donors[i] for i in sorted(donors))
 
 
 def census(source, digest):
@@ -107,6 +157,7 @@ def prepare(source, digest, mapping, owned):
         parts.append({'kind': unit['kind'], 'document_id': unit['document_id'],
                       'parent_source_unit_id': unit['unit_id'], 'original_indices': sorted(indices),
                       'payload': payload})
+    _complete_xml_dictionaries(source, parts)
     packed, shared = _shared_units(parts)
     need(_restore_units(packed, shared) == parts, 'NATIVE_PART_ROUNDTRIP_CHANGED')
     visible = [[r[0], r[2], mapping['items'][r]['text'], mapping['items'][r]['html_quotation_context']]

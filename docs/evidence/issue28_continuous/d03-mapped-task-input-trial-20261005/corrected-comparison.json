@@ -1,0 +1,50 @@
+{
+  "record_type": "PARENT_CORRECTED_MAPPED_RESPONSE_MECHANICAL_AND_ORIGINAL_COMPARISON",
+  "tested_code_commit": "851ca976eede74b849e2e8ad088d5df452d63f3e",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "data_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-mapped-task-input-trial-20261005",
+  "request_sha256": "48adcf767a8d6f63208a79e4ad015f4653a30bc3bde3ae3d7125256a7da54c69",
+  "response_sha256": "cee06e09745ae78179c36716bc32cba5418f83eec2a061b4c0aed62090ccf670",
+  "reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
+  "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "output_reference_tokens": 871,
+  "actual_hosted_usage": null,
+  "findings": 3,
+  "unresolved": 4,
+  "structure_and_reference_ownership": "PASS",
+  "event_date_arrays": [
+    [],
+    [],
+    []
+  ],
+  "frozen_reference_correspondence": [
+    {
+      "reference": "R1",
+      "actual_finding": 0,
+      "source_relation": "LIMITED_IRS_SETTLEMENT_THROUGH_2022_NOT_UNIVERSAL_CLOSURE"
+    },
+    {
+      "reference": "R2",
+      "actual_finding": 1,
+      "source_relation": "ONGOING_TAX_YEAR_2023_2024_AUDITS_NOT_START_DATES"
+    },
+    {
+      "reference": "R3",
+      "actual_finding": 2,
+      "source_relation": "UNNAMED_FOREIGN_STATE_LOCAL_EXAMINATIONS_NO_JURISDICTION_GUESS"
+    }
+  ],
+  "initial_answer_difference": "Initial fourth finding records9M/2M unrecognized-tax-benefit roll-forward decreases from unspecified settlements. Corrected answer omits this as a distinct finding; the source still contains it. Neither answer establishes case identity or investigative/enforcement relevance. No numeric completeness or model error rate claimed.",
+  "scope_limit": "Literal source correspondence only. Tax examinations are not upgraded to an investigative/enforcement D03 result. Broad draft request meaning, complete original-source recall and company/native acceptance are not proved.",
+  "input_dictionary_defect": "Literal c-88/c-89 and namespace dependencies resolved; donor adds no fact ownership. Reviewer P2 independently closed.",
+  "same_prompt_and_owned_responsibility": true,
+  "fix_context_consumed": true,
+  "batch_closed_no_further_same_method_response": true,
+  "original_answer_reference_source_unchanged": true,
+  "new_native_company_or_provider_credit": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

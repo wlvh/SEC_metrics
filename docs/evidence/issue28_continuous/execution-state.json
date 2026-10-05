@@ -4419,6 +4419,78 @@
       "dedup_note": "No live child; sameSHA/new complete logical-chain+atomic task input result absent. Old bounded fragment request trial ended; this task provides complete up-front chains and different non-overlapping responsibility. Parent original reference frozenf7cb before answer, withheld from reader; no same old paid group retry.",
       "review_started_at": "2026-10-04T16:07:42.109879+00:00",
       "actual_review_seconds": 672.688453
+    },
+    {
+      "task_name": "review_d03dict_ac25689",
+      "purpose": "review",
+      "module": "d03_xml_dictionary_closure",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task_mapping.py:_XMLDependencies/_complete_xml_dictionaries/prepare addition",
+        "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/test_xml_dictionary_closure.py",
+        "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/dictionary-correction.json"
+      ],
+      "patch_sha": "ac25689cb8d5ae68512ebfb6fa09f677a645f95e",
+      "spawned_at": "2026-10-04T16:42:30.299005+00:00",
+      "ended_at": "2026-10-04T16:52:24Z",
+      "tool_calls": 32,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-dictionary-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_P2_ALREADY_PRESENT_NAMESPACE_DEPENDENCY_MISSING",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live child, sameSHA/new actual dictionary dependency delta absent. Wider14f review and old complete-chain checks unchanged/reused, original reader ended at3 messages. No repeated semantics or new model answer.",
+      "review_started_at": "2026-10-04T16:44:23Z",
+      "actual_review_seconds": 481
+    },
+    {
+      "task_name": "review_d03present_9dd8808",
+      "purpose": "review",
+      "module": "d03_present_namespace_increment",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/task_mapping.py:present branch namespace check move",
+        "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/test_xml_dictionary_closure.py:actual prepare regression"
+      ],
+      "patch_sha": "9dd880832c22574ca59bc5c4efa0b91a6b92473d",
+      "spawned_at": "2026-10-04T17:03:40.459590+00:00",
+      "ended_at": "2026-10-04T17:09:46Z",
+      "tool_calls": 26,
+      "ordinary_messages": 3,
+      "result_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-present-review/conclusion.md",
+      "verdict": "PASS_P2_PRESENT_NAMESPACE_INCREMENT",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "ordinary_messages": 3,
+        "nested_spawn": false,
+        "commit_push": false
+      },
+      "dedup_note": "No live child; no sameSHA/scope evidence. Prior actual dictionary reviewer ended at3message cap. Only genuine newly fixed present-namespace P2 increment, not repeat whole module/source extraction; previous failure retained.",
+      "review_started_at": "2026-10-04T17:05:05Z",
+      "actual_review_seconds": 281
+    },
+    {
+      "task_name": "diagnose_d03fixed_851ca97",
+      "purpose": "DEVELOPMENT_INPUT_CHECK",
+      "module": "d03_mapped_input_dictionary_correction",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-mapped-task-input-trial-20261005/corrected-request.json"
+      ],
+      "patch_sha": "851ca976eede74b849e2e8ad088d5df452d63f3e",
+      "spawned_at": "2026-10-05T11:50:13.039688+00:00",
+      "ended_at": "2026-10-05T11:59:09.509873+00:00",
+      "tool_calls": 54,
+      "result_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-corrected-input/conclusion.md",
+      "verdict": "COMPLETED_INPUT_ONLY_SOURCE_EXTRACTION_NOT_SPEC_OR_COMPANY_ACCEPTANCE",
+      "tool_call_cap": 80,
+      "time_cap_minutes": 90,
+      "ordinary_message_cap": 3,
+      "reader_started_at": "2026-10-05T11:51:02.188717+00:00",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -14204,13 +14276,15 @@
   "ci_9a70b9ba": {
     "main_run_id": 37214773268,
     "head_sha": "9a70b9bae833129e278bb3856ee6474d033356c4",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "immediate_valid_head_observation": true,
-    "reference_workflow_success_not_main": true
+    "reference_workflow_success_not_main": true,
+    "terminal_updated_at": "2026-10-04T16:20:59Z",
+    "read_at_natural_checkpoint": true
   },
   "d03_mapped_task_blind_trial_20261005": {
-    "status": "INITIAL_RESPONSE_STRUCTURE_PASS_SOURCE_RELATIONSHIPS_LIMITED_INPUT_DICTIONARY_FIX_REQUIRED",
+    "status": "CORRECTED_INPUT_BLIND_TRIAL_ENDED_LIMITED_SOURCE_RELATIONS_PASS_NO_D03_BUSINESS_CREDIT",
     "evidence": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005",
     "reference_sha256": "05a2adc71c830055c18138c06055348dcd975b9076da88387d5722c44165210a",
     "input_request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
@@ -14220,7 +14294,7 @@
     "context_tokens": 134727,
     "owned_items": 69,
     "initial_context_consumed": true,
-    "fix_context_consumed": false,
+    "fix_context_consumed": true,
     "old_context_trial_reopened": false,
     "model_or_company_credit": false,
     "new_business_calls": [
@@ -14238,6 +14312,57 @@
       "c-88",
       "c-89"
     ],
-    "next": "Fix actual whole-XML dictionary dependency closure from admitted source; retain initial wire/response and reference. Then limited delta review and the single substantive input-correction context, not a third old fragment trial. No DeepSeek purpose or semantic/company credit."
+    "next": "No further same-method development response. Preserve all wires/answers/reference. Next address D03 investigative relevance and full-source output responsibility/native persistence with explicit contract; no live purpose or whole company credit.",
+    "delivered_head": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
+    "issue28_unique_queue_readback_exact": true,
+    "corrected_request_sha256": "48adcf767a8d6f63208a79e4ad015f4653a30bc3bde3ae3d7125256a7da54c69",
+    "corrected_request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-mapped-task-input-trial-20261005/corrected-request.json",
+    "corrected_context_tokens": 135342,
+    "code_fix_tests_passed": 8,
+    "corrected_complete_marriott_plan": {
+      "initial_requests": 16,
+      "original_items": 3259,
+      "max_context_tokens": 149722,
+      "all_xml_dictionary_references_resolved": true
+    },
+    "old_compiler_exact_request_replay": true,
+    "dictionary_review_sha": "ac25689cb8d5ae68512ebfb6fa09f677a645f95e",
+    "dictionary_review_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-dictionary-review/conclusion.md",
+    "dictionary_review_failure_retained": true,
+    "present_namespace_P2_fix": "Validate original definition namespace before both existing and donor branches; actual prepare negative/positive retained.",
+    "present_namespace_review_sha": "9dd880832c22574ca59bc5c4efa0b91a6b92473d",
+    "present_namespace_review_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/independent-present-review/conclusion.md",
+    "present_namespace_P2_closed": true,
+    "fix_context_consumed_at": "2026-10-05T11:50:13.039688+00:00",
+    "corrected_reader_task_name": "diagnose_d03fixed_851ca97",
+    "corrected_raw_response_sha256": "cee06e09745ae78179c36716bc32cba5418f83eec2a061b4c0aed62090ccf670",
+    "corrected_output_reference_tokens": 871,
+    "corrected_findings": 3,
+    "corrected_unresolved": 4,
+    "corrected_comparison_path": "docs/evidence/issue28_continuous/d03-mapped-task-input-trial-20261005/corrected-comparison.json",
+    "batch_closed": true
+  },
+  "ci_4b910e8e": {
+    "main_run_id": 37216904397,
+    "head_sha": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
+    "status": "completed",
+    "conclusion": "success",
+    "observation": "One immediate valid fullSHA query; separate reference workflow success not main.",
+    "terminal_updated_at": "2026-10-04T16:57:23Z",
+    "read_at_natural_checkpoint": true
+  },
+  "shared_increment_read_27cef339": {
+    "peer_sha": "27cef339192b9c5f3ec4a3dd1172554ea19b4c00",
+    "previous": "f20d48ea7420dc650c07de09b9f241d11dc28285",
+    "scope": "Four peer JPM reference and CI records only; no D03 common code delta or peer acceptance credit copied."
+  },
+  "collab_peer_increment_e6b2bb8e": {
+    "peer_read_commit": "e6b2bb8e2575b665a8e02290935953e632216f2f",
+    "baseline": "27cef339192b9c5f3ec4a3dd1172554ea19b4c00",
+    "read_date": "2026-10-05",
+    "collaboration_rule": "COLLAB-28-47-v1.2",
+    "production_scripts_changed": false,
+    "defect_register_change": "Two appended upstream-read records only; no peer defect/repair release or shared selector delta. Peer read and used4b910e8e under its own preflight. No shared acceptance credit copied.",
+    "relevant_source_evidence": "Complete D02 Marriott/Pfizer original readings and B06 source-census/statement-location evidence are available for later affected tasks; current D03 dictionary fix is own evidence prototype and unchanged by these increments."
   }
 }

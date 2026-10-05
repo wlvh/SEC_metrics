@@ -1,0 +1,30 @@
+{
+  "start_utc": "2026-10-05T11:51:02.188717+00:00",
+  "input_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-mapped-task-input-trial-20261005/corrected-request.json",
+  "input_sha256": "48adcf767a8d6f63208a79e4ad015f4653a30bc3bde3ae3d7125256a7da54c69",
+  "input_bytes": 505355,
+  "top_keys": [
+    "max_tokens",
+    "messages",
+    "model",
+    "response_format",
+    "stream",
+    "temperature",
+    "thinking"
+  ],
+  "message_count": 2,
+  "messages": [
+    {
+      "index": 0,
+      "role": "system",
+      "content_type": "str",
+      "content_characters": 2838
+    },
+    {
+      "index": 1,
+      "role": "user",
+      "content_type": "str",
+      "content_characters": 479493
+    }
+  ]
+}

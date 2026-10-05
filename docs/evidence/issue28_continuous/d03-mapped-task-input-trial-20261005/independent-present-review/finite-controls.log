@@ -1,0 +1,98 @@
+{
+  "utc_start": "2026-10-04T17:07:43.802015+00:00",
+  "utc_end": "2026-10-04T17:07:43.904211+00:00",
+  "baseline": "ac25689cb8d5ae68512ebfb6fa09f677a645f95e",
+  "head": "9dd880832c22574ca59bc5c4efa0b91a6b92473d",
+  "exact_existing_context_and_distinct_env_controls": {
+    "False": {
+      "census_admitted": true,
+      "ownership": [
+        [
+          1,
+          "NATIVE_FACT",
+          9
+        ],
+        [
+          2,
+          "NATIVE_SUPPLEMENT",
+          0
+        ]
+      ],
+      "observed_helper_calls": [
+        {
+          "version": "baseline",
+          "c1_already_present": true,
+          "env_defined": false,
+          "logical_chain_count": 0
+        },
+        {
+          "version": "head",
+          "c1_already_present": true,
+          "env_defined": false,
+          "logical_chain_count": 0
+        }
+      ],
+      "prepare": {
+        "baseline": {
+          "status": "PREPARED",
+          "env_present_in_shared": false,
+          "request_sha256": "32e93bbe0d073ba488035a553a3a6b70ab69fa0dda0e5c941daaae8baee419fb"
+        },
+        "head": {
+          "status": "REJECTED",
+          "reason": "D03_MAPPING_XML_DICTIONARY_NAMESPACE_MISSING"
+        }
+      },
+      "source_bytes_unchanged": true
+    },
+    "True": {
+      "census_admitted": true,
+      "ownership": [
+        [
+          1,
+          "NATIVE_FACT",
+          9
+        ],
+        [
+          2,
+          "NATIVE_SUPPLEMENT",
+          0
+        ]
+      ],
+      "observed_helper_calls": [
+        {
+          "version": "baseline",
+          "c1_already_present": true,
+          "env_defined": true,
+          "logical_chain_count": 0
+        },
+        {
+          "version": "head",
+          "c1_already_present": true,
+          "env_defined": true,
+          "logical_chain_count": 0
+        }
+      ],
+      "prepare": {
+        "baseline": {
+          "status": "PREPARED",
+          "env_present_in_shared": true,
+          "request_sha256": "19e53a9004e1a82973f6ea25e47a30a71a26f2d7662c6227290a03b8c27bd1d2"
+        },
+        "head": {
+          "status": "PREPARED",
+          "env_present_in_shared": true,
+          "request_sha256": "19e53a9004e1a82973f6ea25e47a30a71a26f2d7662c6227290a03b8c27bd1d2"
+        }
+      },
+      "source_bytes_unchanged": true
+    }
+  },
+  "network_subprocess_disabled_after_local_git_read": true,
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "seconds": 0.102
+}

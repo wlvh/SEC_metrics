@@ -50,11 +50,68 @@ that relevance; no source assertion here becomes approved D03 current-involvemen
 or case-count credit. Those meaning/coverage limits stay separate from fixing the
 two missing XML dictionaries.
 
-Verdict: limited source-relationship extraction and reference structure passed;
-the input needs dictionary closure repair. Initial context1 consumed; the one
-substantive-correction context remains unused. Next fix literal dependencies from
-the admitted source, test/review only that difference, then use at most that one
-correction. Do not resample the same input or reopen the old ended trial.
+## Literal dictionary dependency correction
+
+The active offline compiler now collects contextRef/unitRef from every delivered
+whole XML root and resolves those keys against the same admitted document's
+original native dictionaries. Missing/conflicting definitions or missing namespace
+environments stop rather than guess. Definitions outside the selected fact parts
+are supplied as explicit dictionary-only PARTIAL views (empty fact/owner indices),
+with original donor identity and namespace dependencies. This adds no ownership.
+Eight focused tests passed; U+037E, separate context/unit namespaces, repeated equal
+definitions, missing/conflicting dependencies and prior task mapping are covered.
+
+Actual task5 corrected wire48adcf76 adds c-88/c-89 without changing prompt, source,
+69 owned references, complete text, native context references or continuation paths.
+Context is135342. Rechecked complete Marriott mapping still has16 requests/3259
+items and max149722; every actual XML context/unit key resolves. Existing whole
+source metadata and first raw response stay untouched. The old14f74c3 compiler and
+prompt were retained with exact Git/library digests and successfully rebuilt the
+oldca828c05 request, including its original missing dictionaries.
+
+The initial limited review at ac25689 found a P2: already-present context definitions
+skipped their namespace dependency check. That historical failure is retained.
+The 9dd88083 increment moves the namespace validation ahead of both existing/donor
+branches. Its narrow follow-up review passed the actual prepare negative/positive,
+nine specified tests and one exact corrected-wire replay. It does not cover
+D03 business meaning or model accuracy.
+
+## Single corrected-input blind extraction: batch ended
+
+The only substantive-correction context was dispatched on 2026-10-05 using exact
+wire48adcf76. Its fresh context saw only the two actual input messages. It read
+all1965 visible blocks,64 native fact rows, five complete roots and the supplied
+metadata/dictionaries; it did not read the reference, old answer, Spec or source
+repository. The first raw answer `cee06e09` remains unchanged: three findings,
+four unresolved,871 pinned-reference output tokens. Actual Codex hosted usage is
+unknown. Conservative tools54/messages3, UTC11:51:02.188717–11:59:09.509873.
+
+Parent post-processing passes strict fields, exact available references, at least
+one owned reference per finding,4096 reference-token limit and preserved initial
+wire/answer/reference hashes. Direct comparison to the pre-frozen original supports
+all three limited relations: IRS issues through2022 settled as of year-end2025;
+2023/2024 tax-year audits ongoing; unnamed foreign/state/local returns examined.
+No event dates, specific subsidiary/authority or examination jurisdiction are
+invented. IRS prose uses collective company tax returns; it does not establish
+which subsidiary was separately audited.
+
+The original answer additionally listed9M/2M unrecognized-tax-benefit roll-forward
+decreases attributable to unnamed settlements; the corrected answer does not list
+these as a separate finding. Those rows remain in the unchanged original input.
+The difference is documented, without calling either four-versus-three case counts
+or the initial financial roll-forward observation a proved enforcement matter.
+This is a source-relationship check, not complete recall or metric acceptance.
+
+The confirmed missing c-88/c-89 input dictionaries are repaired, including exact
+namespace dependencies, without changing the prompt, source responsibility or
+old identities. Both development contexts are now consumed; this batch is ended.
+There will be no third or renamed same-method response. It is not a holdout.
+
+Verdict: literal dictionary repair and limited extracted source relationships
+passed. The broad draft task still does not establish investigative/enforcement
+relevance, full source semantic coverage or D03 company acceptance. Next work must
+address those actual responsibilities and native persistence, not resample this
+successful narrow source reading or extend a keyword classifier.
 
 There is no new native company acceptor for this wire. Parent's structural check
 is an evidence-level prototype, not the old D03 native mapper, independent code
