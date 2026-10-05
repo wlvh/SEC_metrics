@@ -59,11 +59,14 @@ actual32tests. This was a harness failure, not a business failure.
 
 Actual tested tree is ab561805 plus the new files/selector/TESTING diff, with
 source digests in targeted-checks.json, not yet a committed-SHA test claim.
-New differences need their own limited review. Prior 9ac5a02 receiving review
-covers literal metadata only and is not silently promoted to this mapper review.
+New differences at4459fcf9 have passed their own limited review:32tools/3messages,
+UTC13:47:25–13:54:57. Reviewer ran32cases and an independent5.778s actual cold read,
+plus optimized-mode controls and predecessor byte checks. This is new-code/program
+credit only. Prior9ac5a02 receiving review remains metadata-only and is not silently
+promoted to mapper/content/DeepSeek approval.
 
 Calls0/0/0; original ledger195claims SHA6023bf17 remains143/143/52, batch21/66.
 No new whole-company C02/390 acceptance, DeepSeek, Ready, merge, adoption or active
-change. Remaining gates: limited new-code review; source-wide omitted-direction
-and pixel/qualification scope; exact real purpose/opportunities and final wiring.
+change. Remaining gates: source-wide omitted-direction and pixel/qualification scope;
+exact real purpose/opportunities and final wiring. The new-code review is closed.
 The program connection is a concrete completed dependency, not metric completion.
