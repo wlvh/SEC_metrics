@@ -1,0 +1,54 @@
+{
+ "record_type": "ISSUE47_PARAMOUNT_E01_INCORPORATED_EXHIBIT_OWNER_REVIEW_PROPOSAL",
+ "position": "paramount_skydance_paramount_global:2024-12-31:E01",
+ "original_request_sha256": "11f9f8deeecc0691ed326daa2f2d65817d65bf24c90a32e16b5df07d5cf65554",
+ "unsettled_item": {
+  "accession": "0000813828-24-000018",
+  "heading": "Item 8.01",
+  "item_code": "8.01",
+  "item_id": "0000813828-24-000018#8.01@2224",
+  "primary_source_reference_id": "sha256:2907743a405076d34802da9378f8f6dad7f624a10909f90c7de858b8c21fc7e2",
+  "text": "Item 8.01 Other Events. On April 29, 2024, Paramount Global issued the press release filed herewith as Exhibit 99. The press release is incorporated by reference herein in its entirety. ",
+  "text_sha256": "sha256:5400332c9f43c56e24c41307f3b3d7467ae177815dbbdf8eb1d8f6e269e1140e"
+ },
+ "parent_primary": {
+  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/para-20240429.htm",
+  "source_path": "evidence/accession_materials/paramount_skydance_paramount_global_813828_000081382824000018/para-20240429.htm",
+  "sha256": "04c3af26f90298c45c7430014fe6b8b4e19e4e7690b3485e52d34f9e1889fbf0",
+  "full_visible_text_actually_read": true,
+  "only_substantive_item_codes": [
+   "8.01",
+   "9.01"
+  ],
+  "exhibit_anchor_raw_start": 25903,
+  "exhibit_anchor_raw_end": 26081,
+  "exhibit_anchor_sha256": "71abf44940f2690106b188059f975aa0586697357cd7e3b0fb24573b4250d813",
+  "literal_href": "ex-99.htm"
+ },
+ "source_to_acquire": {
+  "method": "GET",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+  "source_role": "incorporated_EX99",
+  "retry_count": 0,
+  "maximum_sec_attempts": 1
+ },
+ "existing_image_export_or_ledger_rows_for_exhibit": 0,
+ "ledger_sha256": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+ "existing_cumulative_approved_sec_calls": 1771,
+ "existing_cap": 1867,
+ "hypothetical_after_one_attempt": 1772,
+ "remaining_96_is_not_authorization": true,
+ "owner_resume_required": true,
+ "source_contract_decision_required": "Current question settles each candidate from its own item text. Admitting separately acquired incorporated exhibit must be an explicit successor input/contract; cannot patch old request/response or bind new source to old Run.",
+ "native_source_acquisition_dependency_wired": false,
+ "ledger_restore_rebinding_or_empty_new_ledger_authorized": false,
+ "new_provider_call_authorized": false,
+ "original_withheld_result_unchanged": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}
