@@ -294,6 +294,9 @@ def execute_r4_qualification(*, repo_root: Path, plan: Mapping, owner_comment=No
     from .ai_adapter import build_scoped_qualification_transport_adapter, run_scoped_ai_attempt
     from .live_scoped_reader import build_scoped_invocation_acceptance_context
     from .r4_run_store import create_r4_scoped_run, finalize_r4_scoped_run
+    from .r4_development import is_diagnostic
+    if is_diagnostic(plan):
+        raise R4QualificationError("Development diagnostics have no qualification credit")
     if context is None:
         context = prepare_r4_execution_context(repo_root=repo_root, requirement_id=plan["requirement_id"])
     if type(context) is not R4ExecutionPlanContext or context._root != repo_root.resolve():
@@ -364,6 +367,9 @@ def execute_r4_qualification(*, repo_root: Path, plan: Mapping, owner_comment=No
 
 def replay_r4_qualification(*, repo_root: Path, plan, context=None):
     """Independent disk replay; caller must supply a new disk-owned source session."""
+    from .r4_development import is_diagnostic
+    if is_diagnostic(plan):
+        raise R4QualificationError("Development diagnostics have no qualification credit")
     if context is None:
         context = prepare_r4_execution_context(repo_root=repo_root, requirement_id=plan["requirement_id"])
     if context._terminal_pins:

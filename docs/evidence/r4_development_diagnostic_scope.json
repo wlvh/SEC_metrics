@@ -1,0 +1,212 @@
+{
+  "record_type": "R4_DEVELOPMENT_DIAGNOSTIC_DECISION_REQUEST",
+  "authorization_state": "NOT_ISSUED",
+  "executable_live_plan": "NOT_CREATED_PENDING_DIAGNOSTIC_BOUNDARY_APPROVAL",
+  "request_set_id": "sha256:c8608d448f3591c56d79057159e143aaf2506f8d550d9ae2101c98ae6408c42d",
+  "interface_revision": "SOURCE_BOUND_MODEL_RESPONSIBILITIES_V1",
+  "source_input_commit": "f6117862093c78865be0f112cdf8a264f202ca27",
+  "source_requirement_id": "issue_28_v3",
+  "source_requirement_closure_hash": "sha256:58e821a4987cb65042570008021ea41819d5bd9071af66aa4f394eccac5940b7",
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "maximum_provider_calls": 9,
+  "maximum_paid_model_calls": 9,
+  "execution_order": "LISTED_ORDER_SEQUENTIAL",
+  "automatic_retry_count": 0,
+  "response_reuse_authorized": false,
+  "sec_calls_authorized": false,
+  "publication_authorized": false,
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "context_ceiling_tokens": 200000,
+  "stability_repeats": 0,
+  "prior_r4_live_calls_retained": 3,
+  "new_live_calls_executed": 0,
+  "continue_only_if": [
+    "Same sample has one complete, internally consistent, terminal execution and preserved raw request/response/usage.",
+    "Independent local response validation proves a definite content, schema or evidence rejection.",
+    "Source, authority, request, ledger, reservation and output integrity checks all pass.",
+    "No incomplete receipt or unknown remote outcome; next sample is the next distinct approved base request."
+  ],
+  "stop_on": [
+    "Authorization or exact implementation/request/source drift",
+    "Ledger/reservation/receipt/persistence inconsistency or failure",
+    "Unknown remote outcome or missing usage",
+    "HTTP errors including 401/402/429/5xx, timeouts; no retry",
+    "Payload/context/resource limit failure",
+    "Any failure not proven to be isolated sample content"
+  ],
+  "minimal_existing_code_adjustments": [
+    "Bind this development-only request set and reviewed implementation to a distinct purpose in existing plan/owner-comment machinery; keep source Requirement/proofs immutable, no new Requirement engine.",
+    "Use the same WB-3 reservation, one-shot transport, raw-wire journal and native validators in each existing plan-owned namespace; acceptance and socket-adjacent ordering must both recognize verified content-failure terminals for this purpose only.",
+    "Retain the formal 12-call stop-on-failure and publication validators unchanged; diagnostic records always have NONE credit. Do not continue based solely on EVIDENCE_FAILURE: that class also includes acceptance-receipt persistence failure."
+  ],
+  "entries": [
+    {
+      "final_required_dimensions": [
+        "entity_scope",
+        "aggregation"
+      ],
+      "fixture_id": "r4_a03_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "aggregation",
+        "entity_scope"
+      ],
+      "output_schema_sha256": "9bc75676af495be9029324c08fbc3affac81acc182ae1839af7df9c70b24ab85",
+      "request_bytes": 38558,
+      "request_sha256": "94f4235c1e7b3bde1a2ae392cf3a1498ea7ccd72e0205951689b4a905262bfa7",
+      "source_scope_manifest_id": "sha256:b9bb7d348236a6e78850fe26ed079f9b994db58dc968ef2af474588961806b73",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "entity_scope",
+        "aggregation"
+      ],
+      "fixture_id": "r4_a03_alternate",
+      "local_only_scope_dimensions": [
+        "aggregation",
+        "entity_scope"
+      ],
+      "model_scope_dimensions": [],
+      "output_schema_sha256": "209642f7f3dad7b275cd1fb0b57c151cdf64bef8372d3cc0c066e83326d06763",
+      "request_bytes": 16584,
+      "request_sha256": "1cab1e500dec4e505395428da017f31cd7dd6bfe683dee864b6e59b9d7381ae0",
+      "source_scope_manifest_id": "sha256:71bda2b375223d059770c7bc0a3f00b150da7213c3e08eeec3559916c444ea98",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "table_disambiguation_dimensions": [],
+      "task_period": "2025Q4"
+    },
+    {
+      "final_required_dimensions": [
+        "basis"
+      ],
+      "fixture_id": "r4_a04_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "basis"
+      ],
+      "output_schema_sha256": "f9e556d76249e7b344ff4b2277696bde3c5ccdf966457b60f1e45387b65f769b",
+      "request_bytes": 19899,
+      "request_sha256": "49d579f79ea09a2f107f0659d76f98fad117f9e9c104932d104040fd7e9b1601",
+      "source_scope_manifest_id": "sha256:e8420aae2fe5fbdf2745692f43df0132a816d4c6ada045639d617d0ca54c4b5d",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "basis"
+      ],
+      "fixture_id": "r4_a04_alternate",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "basis"
+      ],
+      "output_schema_sha256": "f9e556d76249e7b344ff4b2277696bde3c5ccdf966457b60f1e45387b65f769b",
+      "request_bytes": 21620,
+      "request_sha256": "90b3b22ba7b66f1aaa226c893bf89c5166b790bcbe1d67b66f7838b3e175de96",
+      "source_scope_manifest_id": "sha256:98ea543e93a7e514eb814ca0f03945678c4e756c58d4e4fad40777d05c794c75",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "loan_population"
+      ],
+      "fixture_id": "r4_a09_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "loan_population"
+      ],
+      "output_schema_sha256": "39e3ec3d3959bcf694363a4aded6b28cffa71eb813bd9855d9c54d8ac8af81a3",
+      "request_bytes": 15972,
+      "request_sha256": "f66a021295380005b51540075006a81c92b5262e68282fe38f4307af3e8fb7a8",
+      "source_scope_manifest_id": "sha256:c3b1032020d1ab8cd66a3717bc694b4d6d05cdfac316b2faa69e9b0787ee2b71",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "asset_scope"
+      ],
+      "fixture_id": "r4_a11_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "asset_scope"
+      ],
+      "output_schema_sha256": "aa0d2808e54d884318331b77cf2a13e297a8c8e52470ac8b417ed3149bf42e77",
+      "request_bytes": 20795,
+      "request_sha256": "b8e1cb973f0a99e69a1a1dd898f24ad0cabda65ec7b4473f60ceda7d0a140665",
+      "source_scope_manifest_id": "sha256:b9bc9776848b42572e948867aa8b1268204e62179485fb4aaeffd74739f21c2f",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "asset_scope"
+      ],
+      "fixture_id": "r4_a11_alternate",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "asset_scope"
+      ],
+      "output_schema_sha256": "aa0d2808e54d884318331b77cf2a13e297a8c8e52470ac8b417ed3149bf42e77",
+      "request_bytes": 28681,
+      "request_sha256": "5791dea45a619f308f2a591eeeee68caa30b1cc663cf3c22f8942a37f919d659",
+      "source_scope_manifest_id": "sha256:3065b093ef156ea4711d48f9415cd598a9adf7b7ad95b6aa08efe37d59cccecc",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "confidence_level",
+        "holding_period"
+      ],
+      "fixture_id": "r4_a12_production",
+      "local_only_scope_dimensions": [
+        "confidence_level",
+        "holding_period"
+      ],
+      "model_scope_dimensions": [],
+      "output_schema_sha256": "b5f01b3141168a01138e54fcf4075ca6b5bdabcd124f20354665773d0bd52321",
+      "request_bytes": 27416,
+      "request_sha256": "d6c397207c63d4d73d79b92ac5ab537b593256d10be811a24c2183d5bdfa9fb6",
+      "source_scope_manifest_id": "sha256:fe03ce3e99b989640cff83d571ab8c5a19d5e003cbbc36432f950606afad13d8",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "confidence_level",
+        "holding_period"
+      ],
+      "fixture_id": "r4_a12_alternate",
+      "local_only_scope_dimensions": [
+        "holding_period"
+      ],
+      "model_scope_dimensions": [
+        "confidence_level"
+      ],
+      "output_schema_sha256": "8f12942d09d98390fbd384840836fb251c6f7d9461d04726749658c5f07440fe",
+      "request_bytes": 28847,
+      "request_sha256": "a3b711ff25bdaf85ee27ffd46ea1eba34756f728d24c7eb39016b05d92e09bd0",
+      "source_scope_manifest_id": "sha256:72b292fe1274b841763834cc7bae2ada55acce27337701307d27b10c447e534c",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "table_disambiguation_dimensions": [
+        "confidence_level"
+      ],
+      "task_period": "FY2025"
+    }
+  ],
+  "interface_candidate_head": "207360f444da644ff9040b85eb91b02976532ac9",
+  "interface_candidate_tree": "0850fc5b2fdccc5e27b52429e94ed76a7403728b"
+}

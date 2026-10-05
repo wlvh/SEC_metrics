@@ -1,0 +1,72 @@
+{
+  "record_type": "R4_CELL_SELECTION_DIAGNOSTIC_WIRING_VALIDATION",
+  "reviewed_parent_head": "169ae77e05cacba5f214cba5fbaf4a748499e532",
+  "interface_revision": "REQUEST_LOCAL_CELL_SELECTION_V1",
+  "request_set_id": "sha256:670d566388cd68843a97eaef3858eee74b75586fcb323951e82aeaf0c88a95c0",
+  "request_bytes_unchanged": true,
+  "request_count": 9,
+  "total_request_bytes": 124568,
+  "new_real_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "historical_r4_calls_retained": 12,
+  "cli_live_plan": "PASS_PENDING_OWNER_AUTHORIZATION",
+  "owner_preflight_test": "PASS_EXPLICIT_SYNTHETIC_GITHUB_FIXTURES_ONLY",
+  "old_and_tampered_authorization": "REJECTED",
+  "normal_controller_statuses": [
+    "CONTENT_FAILED",
+    "ACCEPTED",
+    "STOP"
+  ],
+  "mock_calls": 3,
+  "remaining_mock_samples_unstarted": 6,
+  "independent_cli_replay": "EXACT_FROM_SAVED_PLAN_BINDING_NO_OFFLINE_OVERRIDE",
+  "duplicate_start": "REJECTED",
+  "old_request_generation": "EXACT_HISTORICAL_NINE",
+  "offline_live_guard": "RETAINED",
+  "interface_request_set_scope_tamper": "REJECTED",
+  "wiring_duration_seconds": 436.984,
+  "boundary_test_count": 15,
+  "boundary_status": "PASS",
+  "fast_entries": 32,
+  "fast_status": "PASS",
+  "reused_validation": "docs/evidence/r4_cell_selection_validation.json",
+  "not_repeated": [
+    "nine-sample Run freeze integration",
+    "performance benchmark",
+    "formal qualification",
+    "publication/rollback/restore"
+  ],
+  "test_correction": "First test expected fake-owner rejection before the temporary repository identity guard. The test now explicitly binds its temporary repository; no production guard changed.",
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "authorization": "NOT_ISSUED",
+  "logs": {
+    "wiring.log": {
+      "sha256": "74912d4f5242dd9f3fdb8c600298665682aa248f80233a31601b8b2fc9c4d462",
+      "size": 1413
+    },
+    "wiring-first-test-assertion.log": {
+      "sha256": "09be5a1d03e341224579f19c955f2deccc59853cd602edf253ecbe8bba711b70",
+      "size": 1410
+    },
+    "boundaries.log": {
+      "sha256": "6138422be86e5a09f1d52e045a107ea2ee24d27b076dec1ce964ebe03ab8fae5",
+      "size": 3141
+    },
+    "fast.json": {
+      "sha256": "3fe03acd3000161a4a840c83590706d990fdbe1f31629850e8f2ab393531ba73",
+      "size": 9630
+    },
+    "egress.json": {
+      "sha256": "c317a97cb9525c1245d16c713688d9e2066e88709249e1d8a4987f7c7bbab8bb",
+      "size": 1796
+    },
+    "recorded-replay.json": {
+      "sha256": "4d6e4174123b4777f3c04d94075bda3afca6f39d5507710f52d15ade3f8a9bdf",
+      "size": 7394
+    }
+  }
+}

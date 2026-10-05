@@ -63,6 +63,17 @@ AUTHORIZATION_BINDING_FIELDS = {
 }
 
 
+def invocation_namespace(plan, entry_id):
+    from .r4_development import is_diagnostic, RUNTIME_ROOT as development_root
+    root = development_root if is_diagnostic(plan) else RUNTIME_ROOT
+    return root + '/' + plan['pending_plan_id'][7:] + '/entries/' + entry_id[7:]
+
+
+def authorization_scope(plan):
+    from .r4_development import is_diagnostic, PURPOSE
+    return PURPOSE if is_diagnostic(plan) else "R4_LIVE_QUALIFICATION_ONLY"
+
+
 class R4AuthorizationError(ValueError):
     """Reject absent, relabelled, stale or unsafe R4 execution authority."""
 
@@ -238,8 +249,19 @@ def prepare_r4_execution_context(*, repo_root: Path, session=None, requirement_i
     # A copied release workspace may replay recorded data without borrowed Git.
     state = _git_state(repo_root=root, clean=False) if (root / ".git").exists() else {
         "head": None, "tree": None}
-    pointer, historical_files, historical_proof = _verified_predecessor(
-        repo_root=root, requirement=session._requirement)
+    if session._development is None:
+        pointer, historical_files, historical_proof = _verified_predecessor(
+            repo_root=root, requirement=session._requirement)
+    else:
+        # Diagnostics cannot publish; pin existing public bytes without a new
+        # R3/R2/R1 qualification replay or structured prerequisite Runs.
+        from .publication import ROOT_MIRROR_RELATIVE_PATHS
+        from .live_scoped_reader import _file_binding
+        pointer = _pointer(repo_root=root, requirement=session._requirement)
+        historical_files = {p: _file_binding(repo_root=root, relative=p)
+                            for p in set(ROOT_MIRROR_RELATIVE_PATHS.values()) | {'outputs/active_publication.json'}}
+        historical_proof = {"purpose": "UNCHANGED_PUBLIC_BYTES_ONLY_NO_PUBLICATION_CREDIT",
+                            "verified_files_hash": content_hash(value=historical_files)}
     context = R4ExecutionPlanContext(factory=_PLAN_FACTORY, root=root, session=session,
         schedule=schedule, requests=requests, pointer=pointer, state=state,
         historical_files=historical_files, historical_proof=historical_proof)
@@ -252,8 +274,16 @@ def _build_plan(context, *, mode, state):
         raise R4AuthorizationError("R4 plan requires an exact repository context/mode")
     context._check()
     schedule = strict_json_loads(text=context._schedule.decode("utf-8"))
+    development = context._session._development
+    if development is not None and development.offline_only and mode == 'LIVE':
+        raise R4AuthorizationError('Offline cell-selection implementation cannot grant provider calls')
+    if development is not None:
+        from .r4_development import verify_request_set
+        verify_request_set(context)
     entries = []
     for planned in schedule["entries"]:
+        if development is not None and planned['phase'] != 'BASE':
+            continue
         request = context._requests[planned["fixture_id"]].identity
         for key in ("source_scope_manifest_id", "task_contract_hash", "full_derived_asset_id",
                     "full_reader_input_manifest_id", "requirement_closure_hash"):
@@ -286,6 +316,14 @@ def _build_plan(context, *, mode, state):
                                         "call_bounds", "counts", "stability_selection")},
         "active_predecessor": {**context._pointer, "immutable_read_back": context._historical_proof},
         "entries": entries}
+    if development is not None:
+        from .r4_development import PLAN_TYPE
+        if len(entries) != 9:
+            raise R4AuthorizationError("Diagnostic must contain exactly nine distinct base entries")
+        body.update(record_type=PLAN_TYPE, implementation_authority=development.record,
+            qualification_credit="NONE_DEVELOPMENT_DIAGNOSTIC", stability_selection=[],
+            call_bounds={"hard_maximum":9,"target_minimum":0,"target_maximum":9},
+            counts={**body['counts'],"planned_provider_calls":9,"stability_provider_calls":0})
     return {**body, "pending_plan_id": content_hash(value=body)}
 
 
@@ -298,6 +336,8 @@ def build_r4_pending_live_plan(*, repo_root: Path, context=None):
         context = prepare_r4_execution_context(repo_root=repo_root)
     if type(context) is not R4ExecutionPlanContext or context._root != repo_root.resolve():
         raise R4AuthorizationError("Pending live plan context belongs to another repository")
+    if context._session._development is not None:
+        raise R4AuthorizationError("Diagnostic implementation cannot prepare a qualification plan")
     return _build_plan(context, mode="LIVE", state=state)
 
 
@@ -322,16 +362,27 @@ def validate_r4_execution_plan(*, plan, context, expected_plan_id, mode):
 
 def expected_r4_owner_approval(*, plan, exact_head, exact_tree):
     """Return the PR-C review format, not an approval or live grant."""
-    return {"decision": "AUTHORIZE_R4_LIVE_EXACT_HEAD", "scope": "R4_LIVE_QUALIFICATION_ONLY",
+    from .r4_development import is_diagnostic, SELECTION_REQUEST_SET_ID
+    diagnostic = is_diagnostic(plan)
+    body = {"decision": "AUTHORIZE_R4_DEVELOPMENT_DIAGNOSTIC_EXACT_HEAD" if diagnostic else "AUTHORIZE_R4_LIVE_EXACT_HEAD",
+        "scope": authorization_scope(plan),
         "exact_head": exact_head, "exact_tree": exact_tree,
         "requirement_id": plan["requirement_id"],
         "requirement_closure_hash": plan["requirement_closure_hash"],
         "pending_plan_id": plan["pending_plan_id"],
         "authorized_entry_ids": [entry["entry_id"] for entry in plan["entries"]],
         "provider_calls_authorized": True, "paid_model_calls_authorized": True,
-        "sec_calls_authorized": False, "maximum_provider_calls": 12,
+        "sec_calls_authorized": False, "maximum_provider_calls": 9 if diagnostic else 12,
         "automatic_retry_count": 0, "response_reuse_authorized": False,
         "publication_authorized": False}
+    if diagnostic:
+        binding = plan['implementation_authority']
+        body.update(request_set_id=binding['request_set_id'], qualification_credit="NONE",
+            content_failure_continuation="ONLY_VERIFIED_CONTENT_FAILURE_WITH_COMPLETE_DURABLE_TERMINAL",
+            other_failure_action="STOP")
+        if binding['request_set_id'] == SELECTION_REQUEST_SET_ID:
+            body['interface_revision'] = binding['interface_revision']
+    return body
 
 
 def validate_r4_live_authorization_receipt(*, receipt, plan, requirement, exact_head, exact_tree):
@@ -340,7 +391,8 @@ def validate_r4_live_authorization_receipt(*, receipt, plan, requirement, exact_
     _self_id(receipt, "receipt_id")
     repository = requirement["baseline"]["repository"]["identity"]
     owner = "github:" + repository.split("/", maxsplit=1)[0]
-    if (plan.get("record_type") != "R4_PENDING_LIVE_PLAN" or plan.get("execution_mode") != "LIVE"
+    from .r4_development import is_diagnostic
+    if ((plan.get("record_type") != "R4_PENDING_LIVE_PLAN" and not is_diagnostic(plan)) or plan.get("execution_mode") != "LIVE"
             or receipt["record_type"] != "R4_EXACT_HEAD_LIVE_AUTHORIZATION"
             or type(receipt["schema_version"]) is not int or receipt["schema_version"] != 1
             or not _GIT_OID.fullmatch(str(exact_head)) or not _GIT_OID.fullmatch(str(exact_tree))
@@ -351,7 +403,7 @@ def validate_r4_live_authorization_receipt(*, receipt, plan, requirement, exact_
             or receipt["requirement_closure_hash"] != requirement["requirement_closure_hash"]
             or receipt["pending_plan_id"] != plan["pending_plan_id"]
             or receipt["authorized_entry_ids"] != [e["entry_id"] for e in plan["entries"]]
-            or receipt["authorization_scope"] != "R4_LIVE_QUALIFICATION_ONLY"
+            or receipt["authorization_scope"] != authorization_scope(plan)
             or receipt["provider_calls_authorized"] is not True
             or receipt["paid_model_calls_authorized"] is not True
             or receipt["sec_calls_authorized"] is not False
@@ -441,7 +493,7 @@ def verify_r4_live_owner_comment(*, context, plan, source_url: str) -> VerifiedR
         "owner": "github:" + comment["user"]["login"], "approved_at_utc": comment["created_at"],
         "source_url": source_url, "approval_text": text,
         "approval_text_sha256": sha256_bytes(content=text.encode("utf-8")),
-        "authorization_scope": "R4_LIVE_QUALIFICATION_ONLY", "provider_calls_authorized": True,
+        "authorization_scope": authorization_scope(plan), "provider_calls_authorized": True,
         "paid_model_calls_authorized": True, "sec_calls_authorized": False,
         "automatic_retry_count": 0, "response_reuse_authorized": False}
     receipt["receipt_id"] = content_hash(value=receipt)
@@ -488,7 +540,7 @@ def _issue(*, context, plan, entry_id, receipt, mode, authorized_at_utc, state, 
     receipt_id = None if receipt is None else receipt["receipt_id"]
     owner_token = content_hash(value={"mode": mode, "plan": plan["pending_plan_id"],
         "entry": entry_id, "receipt": receipt_id, "authorized_at_utc": authorized_at_utc})
-    namespace = RUNTIME_ROOT + "/" + plan["pending_plan_id"].split(":")[1] + "/entries/" + entry_id.split(":")[1]
+    namespace = invocation_namespace(plan, entry_id)
     binding = {"record_type": "R4_EXECUTION_AUTHORIZATION_BINDING", "schema_version": 1,
         **{key: plan[key] for key in IDENTITY_FIELDS}, "execution_mode": mode,
         "pending_plan_id": plan["pending_plan_id"], "entry_id": entry_id,
@@ -552,7 +604,7 @@ def validate_portable_authorization_binding(*, binding, context):
     receipt_id = None if receipt is None else receipt["receipt_id"]
     owner_token = content_hash(value={"mode": mode, "plan": plan["pending_plan_id"],
         "entry": entry["entry_id"], "receipt": receipt_id, "authorized_at_utc": binding["authorized_at_utc"]})
-    namespace = RUNTIME_ROOT + "/" + plan["pending_plan_id"].split(":")[1] + "/entries/" + entry["entry_id"].split(":")[1]
+    namespace = invocation_namespace(plan, entry["entry_id"])
     if (binding["record_type"] != "R4_EXECUTION_AUTHORIZATION_BINDING"
             or type(binding["schema_version"]) is not int or binding["schema_version"] != 1
             or any(binding[key] != plan[key] for key in IDENTITY_FIELDS)
@@ -600,8 +652,9 @@ def authorization_fields(authorization, request_binding=None, for_socket=False):
         if state != {"head": binding["exact_head"], "tree": binding["exact_tree"]}:
             raise R4AuthorizationError("R4 execution head changed after authorization")
         from .r4_live_qualification import validate_r4_execution_prefix
-        validate_r4_execution_prefix(context=context, plan=plan, entry_id=binding["entry_id"],
-                                     for_socket=for_socket)
+        from .r4_development import is_diagnostic, validate_diagnostic_prefix
+        prefix = validate_diagnostic_prefix if is_diagnostic(plan) else validate_r4_execution_prefix
+        prefix(context=context, plan=plan, entry_id=binding["entry_id"], for_socket=for_socket)
     elif mode != "RECORDED_TEST" or binding["owner_receipt_id"] is not None:
         raise R4AuthorizationError("R4 authorization generation differs")
     workspace = context._root / binding["invocation_namespace"]

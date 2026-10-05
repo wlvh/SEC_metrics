@@ -1,0 +1,127 @@
+{
+  "source_requirement_id": "issue_28_v3",
+  "source_requirement_closure_hash": "sha256:58e821a4987cb65042570008021ea41819d5bd9071af66aa4f394eccac5940b7",
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "maximum_provider_calls": 9,
+  "maximum_paid_model_calls": 9,
+  "execution_order": "LISTED_ORDER_SEQUENTIAL",
+  "automatic_retry_count": 0,
+  "response_reuse_authorized": false,
+  "sec_calls_authorized": false,
+  "publication_authorized": false,
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "context_ceiling_tokens": 200000,
+  "stability_repeats": 0,
+  "continue_only_if": [
+    "Same sample has one complete, internally consistent, terminal execution and preserved raw request/response/usage.",
+    "Independent local response validation proves a definite content, schema or evidence rejection.",
+    "Source, authority, request, ledger, reservation and output integrity checks all pass.",
+    "No incomplete receipt or unknown remote outcome; next sample is the next distinct approved base request."
+  ],
+  "stop_on": [
+    "Authorization or exact implementation/request/source drift",
+    "Ledger/reservation/receipt/persistence inconsistency or failure",
+    "Unknown remote outcome or missing usage",
+    "HTTP errors including 401/402/429/5xx, timeouts; no retry",
+    "Payload/context/resource limit failure",
+    "Any failure not proven to be isolated sample content"
+  ],
+  "record_type": "R4_CELL_SELECTION_DIAGNOSTIC_SCOPE",
+  "authorization_state": "NOT_ISSUED",
+  "authorization_source": "EXACT_HEAD_GITHUB_OWNER_COMMENT_REQUIRED",
+  "reviewed_interface_head": "169ae77e05cacba5f214cba5fbaf4a748499e532",
+  "reviewed_interface_tree": "bab38397e8bc2546db3190db0e2c9aaf17079c76",
+  "reviewed_proposal_id": "sha256:296147be05bc2ea563645c94037e3bec87825a92a58e073abbf567fb517f79e5",
+  "request_set_id": "sha256:670d566388cd68843a97eaef3858eee74b75586fcb323951e82aeaf0c88a95c0",
+  "interface_revision": "REQUEST_LOCAL_CELL_SELECTION_V1",
+  "entries": [
+    {
+      "fixture_id": "r4_a03_production",
+      "output_schema_sha256": "0e3eda84c2fa6dce29e7e34cd8d4e575990387070a380c3f50ef7850a78d1e32",
+      "period": "FY2025",
+      "request_bytes": 29605,
+      "request_sha256": "0b3ee6812d9caa43c942c7d381a4d28acd9f10b521baec786b73422c1fa64b56",
+      "source_scope_manifest_id": "sha256:b9bb7d348236a6e78850fe26ed079f9b994db58dc968ef2af474588961806b73",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    },
+    {
+      "fixture_id": "r4_a03_alternate",
+      "output_schema_sha256": "2d2768d0bb315bcee567fdef696e91665d236f7285a7b0b8402cd1302eeabb20",
+      "period": "2025Q4",
+      "request_bytes": 4469,
+      "request_sha256": "22ad37ef0d058e2560790a675d48bdbbfeff903c20e846f2f4efebadaa818ece",
+      "source_scope_manifest_id": "sha256:71bda2b375223d059770c7bc0a3f00b150da7213c3e08eeec3559916c444ea98",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
+    },
+    {
+      "fixture_id": "r4_a04_production",
+      "output_schema_sha256": "aab7de3590fd0611efbf192cafe888fc167cd2eebc3be4551fffaeeb9230613d",
+      "period": "FY2025",
+      "request_bytes": 8272,
+      "request_sha256": "abfec7ce5d111db7013c3a2ac8eed254a976a09d20bffdafa55dbf8c972539c9",
+      "source_scope_manifest_id": "sha256:e8420aae2fe5fbdf2745692f43df0132a816d4c6ada045639d617d0ca54c4b5d",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    },
+    {
+      "fixture_id": "r4_a04_alternate",
+      "output_schema_sha256": "aab7de3590fd0611efbf192cafe888fc167cd2eebc3be4551fffaeeb9230613d",
+      "period": "FY2025",
+      "request_bytes": 10507,
+      "request_sha256": "1c6e95a7cc930453a0869ea52a28387c0cd54edc28c9e097c5a8550fa12522f8",
+      "source_scope_manifest_id": "sha256:98ea543e93a7e514eb814ca0f03945678c4e756c58d4e4fad40777d05c794c75",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
+    },
+    {
+      "fixture_id": "r4_a09_production",
+      "output_schema_sha256": "aab7de3590fd0611efbf192cafe888fc167cd2eebc3be4551fffaeeb9230613d",
+      "period": "FY2025",
+      "request_bytes": 3833,
+      "request_sha256": "a1546a827002136697387dc7c61629f3fe5cce1b8cf9c3ed85e95c0a390a789a",
+      "source_scope_manifest_id": "sha256:c3b1032020d1ab8cd66a3717bc694b4d6d05cdfac316b2faa69e9b0787ee2b71",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    },
+    {
+      "fixture_id": "r4_a11_production",
+      "output_schema_sha256": "aab7de3590fd0611efbf192cafe888fc167cd2eebc3be4551fffaeeb9230613d",
+      "period": "FY2025",
+      "request_bytes": 9443,
+      "request_sha256": "07282c4eb77985fe89e7900842ece54ab8da9538ea49bc9deb7a8f7ce9c139d8",
+      "source_scope_manifest_id": "sha256:b9bc9776848b42572e948867aa8b1268204e62179485fb4aaeffd74739f21c2f",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    },
+    {
+      "fixture_id": "r4_a11_alternate",
+      "output_schema_sha256": "aab7de3590fd0611efbf192cafe888fc167cd2eebc3be4551fffaeeb9230613d",
+      "period": "FY2025",
+      "request_bytes": 19742,
+      "request_sha256": "4c75f3f3253a71f2630fc2b5bc2d1133fd0546aa9af9519e4f9d4cc39d7fd921",
+      "source_scope_manifest_id": "sha256:3065b093ef156ea4711d48f9415cd598a9adf7b7ad95b6aa08efe37d59cccecc",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+    },
+    {
+      "fixture_id": "r4_a12_production",
+      "output_schema_sha256": "2d2768d0bb315bcee567fdef696e91665d236f7285a7b0b8402cd1302eeabb20",
+      "period": "FY2025",
+      "request_bytes": 18200,
+      "request_sha256": "c3764a4cc99980479f73d5be4c2fa5f74278bcf031fec181ed7300974ff76054",
+      "source_scope_manifest_id": "sha256:fe03ce3e99b989640cff83d571ab8c5a19d5e003cbbc36432f950606afad13d8",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    },
+    {
+      "fixture_id": "r4_a12_alternate",
+      "output_schema_sha256": "aab7de3590fd0611efbf192cafe888fc167cd2eebc3be4551fffaeeb9230613d",
+      "period": "FY2025",
+      "request_bytes": 20497,
+      "request_sha256": "dcebc2ab2d11240c7ceeabcd680319829bfa672affe645aeea15157f06b97b16",
+      "source_scope_manifest_id": "sha256:72b292fe1274b841763834cc7bae2ada55acce27337701307d27b10c447e534c",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+    }
+  ],
+  "known_observations": [
+    "Unproved bank-subsidiary alternatives remain UNRESOLVED.",
+    "Unproved same-value disclosure alternatives remain UNRESOLVED.",
+    "Report native acceptance and an independent source-content audit separately."
+  ]
+}

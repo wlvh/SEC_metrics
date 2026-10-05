@@ -1,0 +1,132 @@
+{
+  "record_type": "R4_CELL_SELECTION_OFFLINE_VALIDATION",
+  "interface_revision": "REQUEST_LOCAL_CELL_SELECTION_V1",
+  "historical_head": "185afc44679e3e7a3a2c5d2299aba88787acdad5",
+  "new_real_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "r4_historical_calls_retained": 12,
+  "historical_layered_audit": "docs/evidence/r4_nine_layered_audit.json",
+  "old_wire_json_invalid": 3,
+  "old_saved_schema_valid": 6,
+  "old_native_accepted": 5,
+  "old_native_accepted_with_confirmed_auxiliary_contradictions": [
+    "r4_a03_alternate",
+    "r4_a09_production"
+  ],
+  "boundary_test_groups": 5,
+  "normal_recorded_acceptances": 9,
+  "normal_run": "FROZEN",
+  "normal_run_value": "34000000",
+  "normal_run_unit": "USD",
+  "independent_replay": {
+    "results": [
+      {
+        "applicability": "APPLICABLE",
+        "company_id": "bank_of_america_corp",
+        "metric_id": "A12",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5cd7ee5326139e719963157f4a0199a73901abcf1a632ea313ee732e40625358",
+        "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+        "spec_closure_hash": "sha256:07f63dc98bc38fa86cea8b8032e9f6a1c73524db50fbde3e784758a2b0051582",
+        "trace_id": "sha256:f78ac4d602259d3a20672bea97a07e60ed76911441252ba46903bf45b7908299",
+        "unit": "USD",
+        "value": "34000000"
+      }
+    ],
+    "traces": [
+      {
+        "calculation_target": {
+          "accession": null,
+          "company_id": "bank_of_america_corp",
+          "entity": null,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "scope": {
+            "confidence_level": "ninety_five_percent",
+            "holding_period": "one_day"
+          },
+          "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5"
+        },
+        "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+        "input_observation_ids": [
+          "sha256:c823583890f7c233ad39ebb4471af4150f6adabb8fac8b99e5d9aee56b9ddd8d"
+        ],
+        "metric_id": "A12",
+        "quality": "EXACT",
+        "record_type": "EXECUTION_TRACE",
+        "result": "34000000",
+        "result_contract_hash": "sha256:c1cf630280a070d2d01c8e7a571d8b669fcdfc9aa3e63592caef5b0e4fb57057",
+        "spec_closure_hash": "sha256:07f63dc98bc38fa86cea8b8032e9f6a1c73524db50fbde3e784758a2b0051582",
+        "steps": [
+          {
+            "event": "REUSED_OBSERVATION",
+            "observation_id": "sha256:c823583890f7c233ad39ebb4471af4150f6adabb8fac8b99e5d9aee56b9ddd8d",
+            "role": "value_at_risk",
+            "value": "34000000"
+          },
+          {
+            "event": "FORMULA_RESULT",
+            "formula": "value_at_risk",
+            "quality": "EXACT",
+            "resolved_values": {
+              "value_at_risk": "34000000"
+            },
+            "value": "34000000"
+          }
+        ],
+        "trace_id": "sha256:f78ac4d602259d3a20672bea97a07e60ed76911441252ba46903bf45b7908299"
+      }
+    ],
+    "replay_content_hash": "sha256:1c0266a6fa0d1ffd22ecfb39dbbbdadf978012d6b7b3a4af312275627f431fe1",
+    "run_id": "run:r4:893f81cb37a7eba2463b600b71448bff3afaa2053569e71cad03349d1eb6866e",
+    "run_status": "FROZEN",
+    "execution_mode": "RECORDED_TEST",
+    "qualification_credit": "NONE_INDIVIDUAL_RUN",
+    "publication_credit": "NONE",
+    "response_reuse_authorized": false
+  },
+  "live_preparation": "REJECTED_FOR_OFFLINE_REVISION",
+  "old_and_new_request_bytes": [
+    218372,
+    124568
+  ],
+  "request_bytes_are_not_actual_token_measurements": true,
+  "fast_entries": 32,
+  "fast_status": "PASSED",
+  "scope_proof_limits": [
+    "Period evidence retains YEAR or COLUMN_DATE; no inference of quarterly averages",
+    "Unknown or contradictory header relations remain unresolved",
+    "Different_scope audit classification alone is not an exclusion proof",
+    "Non-geometric scope links are limited to the frozen source certificate and exact literals",
+    "Table currency scales require a measurement binding or currency symbol; headers are not currency values"
+  ],
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "no_benchmark_or_channel_change": true,
+  "logs": {
+    "boundaries-reviewed.log": {
+      "sha256": "5bd3ab95c9fb4e62e9987bbf1e44aa715ed8bc2e1041c4cf48d0199e49e8284f",
+      "size": 1052
+    },
+    "integration-reviewed.log": {
+      "sha256": "eb20f164d7a61381d276e0a8d7814810d0d9ad577505b9f118689632d5949ff5",
+      "size": 5703
+    },
+    "fast-final.json": {
+      "sha256": "8a29cbb852149738f96d2fd91412725450169980a4fc987c43db6d47f1d6e8dc",
+      "size": 9630
+    },
+    "egress-gate.json": {
+      "sha256": "f942d36a92129d9a39665279d318d5732738d47dd8b63d3bb3e92b14235c698d",
+      "size": 1796
+    }
+  }
+}

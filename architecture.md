@@ -234,6 +234,51 @@ policy extension through the existing engine registry; V1–V3 are immutable.
 Exact-head activation and live/release grants remain separate.
 <!-- capability-anchor: CAPABILITY.r4_label_offline_candidate -->
 
+The separate offline request revision `SOURCE_BOUND_MODEL_RESPONSIBILITIES_V1`
+partitions final scope into model and local-only dimensions from the verified
+source proof, retaining every table-disambiguation obligation. Its request
+schema requires empty arrays when no model scope is needed; selected-period
+instructions no longer apply to competing cells, and excluded candidates are
+distinguished from unresolved conflicts. Native Evidence does not clean model
+responses. The revision is persisted in offline attempts and rebuilt on disk
+replay. Historical requests and the formal 12-call executor retain their old
+bindings. The owner-approved nine-sample diagnostic uses `r4_development.py`
+through `diagnostic-plan/diagnostic-execute/diagnostic-replay` on the existing
+CLI. Its private implementation binding retains immutable v3 source semantics
+and pins current code separately, without a new Requirement engine. The same
+owner-comment capability, WB-3 reservation/opener, wire journal, native acceptance
+and disk replay execute each sample. Only complete, independently revalidated
+content failures permit continuation at both the loop and socket-adjacent gate;
+UNKNOWN, source/authority/usage or persistence failures stop. Atomic batch-start
+exclusion prevents duplicate starts. Diagnostic terminals and aggregates carry
+NONE credit and are rejected by formal qualification entrypoints. R3 bytes stay
+pinned; diagnostics never invoke Run freeze or publication.
+<!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
+
+`cell_selection.py` adds the `REQUEST_LOCAL_CELL_SELECTION_V1` adapter.
+The model selects request-local cell refs plus one target value string and
+necessary label refs; source IDs, geometry, raw labels and other-cell values
+are recovered locally. Refs encode namespace/table/row/column and the provider
+receives every original window cell, with no target/ref-value preselection.
+Spanning year/date headers, percent markers, bound scales, confidence headers
+and explicit balance/statistic labels support exclusion; dates do not imply
+quarterly averages. Unknown relations stay unresolved. A prior DIFFERENT_SCOPE
+classification alone cannot exclude a candidate. Cross-row scope links remain
+limited to the existing source certificate and exact source literals.
+The native Candidate keeps the original model digest; a hashed Evidence detail
+records the separate recovered projection and all exclusion sources. Normal
+acceptance, isolated recorded Run freeze and cold replay use the saved request
+revision. `selection-draft` remains an offline proposal. The separate committed
+cell-selection diagnostic scope pins its reviewed nine-request set; the normal
+`diagnostic-plan --request-set-id` selects that scope without granting calls.
+`diagnostic-authorization` prints the exact saved-plan owner text. Execute and
+disk replay restore the interface and request set from that plan's implementation
+binding, then rebuild all source/request/code identities. Offline experimental
+overrides still cannot prepare LIVE plans or enter the diagnostic CLI loader.
+Only the existing real GitHub exact-head preflight can authorize a new set;
+historical scope/approval files and default old request generation stay unchanged.
+<!-- capability-anchor: CAPABILITY.r4_cell_selection_adapter -->
+
 ### PR-B dormant successor release seam
 
 `r4_release.py` issues a private context from the complete independently

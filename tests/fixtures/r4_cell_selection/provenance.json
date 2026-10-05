@@ -1,0 +1,207 @@
+{
+  "classification": "HISTORICAL_READ_ONLY_DIAGNOSTIC",
+  "head": "185afc44679e3e7a3a2c5d2299aba88787acdad5",
+  "plan_id": "sha256:0cb1e27d2e3bf674f400f1455313305ecb084df5274ec6dab07c8540214f32f5",
+  "new_provider_calls": 0,
+  "qualification_credit": "NONE",
+  "cases": [
+    {
+      "fixture_id": "r4_a03_production",
+      "original_native_status": "CONTENT_FAILED",
+      "first_failure": "Reader response is not strict JSON",
+      "files": {
+        "wire.json": {
+          "path": "r4_a03_production.wire.json",
+          "sha256": "dbe42c9d7532877a8d1879db18dfba82ed89d3ba7815eb90fe7ea7b12e46c4ab",
+          "size": 3811
+        },
+        "request.json": {
+          "path": "r4_a03_production.request.json",
+          "sha256": "94f4235c1e7b3bde1a2ae392cf3a1498ea7ccd72e0205951689b4a905262bfa7",
+          "size": 38558
+        },
+        "schema.json": {
+          "path": "r4_a03_production.schema.json",
+          "sha256": "9bc75676af495be9029324c08fbc3affac81acc182ae1839af7df9c70b24ab85",
+          "size": 5710
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a03_alternate",
+      "original_native_status": "ACCEPTED",
+      "first_failure": null,
+      "files": {
+        "wire.json": {
+          "path": "r4_a03_alternate.wire.json",
+          "sha256": "fe9398b65e47c73fee8cd32763effb18fb41780f03709153e9ccf1f10ea2cb41",
+          "size": 2174
+        },
+        "request.json": {
+          "path": "r4_a03_alternate.request.json",
+          "sha256": "1cab1e500dec4e505395428da017f31cd7dd6bfe683dee864b6e59b9d7381ae0",
+          "size": 16584
+        },
+        "schema.json": {
+          "path": "r4_a03_alternate.schema.json",
+          "sha256": "209642f7f3dad7b275cd1fb0b57c151cdf64bef8372d3cc0c066e83326d06763",
+          "size": 5653
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a04_production",
+      "original_native_status": "ACCEPTED",
+      "first_failure": null,
+      "files": {
+        "wire.json": {
+          "path": "r4_a04_production.wire.json",
+          "sha256": "94dbfbf49372117fd925511a3f486cfc9940f9f9b53db18949b324ecb960a47e",
+          "size": 2826
+        },
+        "request.json": {
+          "path": "r4_a04_production.request.json",
+          "sha256": "49d579f79ea09a2f107f0659d76f98fad117f9e9c104932d104040fd7e9b1601",
+          "size": 19899
+        },
+        "schema.json": {
+          "path": "r4_a04_production.schema.json",
+          "sha256": "f9e556d76249e7b344ff4b2277696bde3c5ccdf966457b60f1e45387b65f769b",
+          "size": 5626
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a04_alternate",
+      "original_native_status": "CONTENT_FAILED",
+      "first_failure": "Reader table locator names an unsupplied asset",
+      "files": {
+        "wire.json": {
+          "path": "r4_a04_alternate.wire.json",
+          "sha256": "59ae9546b176295db605ffec9d97e1f7533a0d466c0092ad4a38816f3832e82c",
+          "size": 2776
+        },
+        "request.json": {
+          "path": "r4_a04_alternate.request.json",
+          "sha256": "90b3b22ba7b66f1aaa226c893bf89c5166b790bcbe1d67b66f7838b3e175de96",
+          "size": 21620
+        },
+        "schema.json": {
+          "path": "r4_a04_alternate.schema.json",
+          "sha256": "f9e556d76249e7b344ff4b2277696bde3c5ccdf966457b60f1e45387b65f769b",
+          "size": 5626
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a09_production",
+      "original_native_status": "ACCEPTED",
+      "first_failure": null,
+      "files": {
+        "wire.json": {
+          "path": "r4_a09_production.wire.json",
+          "sha256": "d7b764c43e0df8a98c447ab0278600055fb9bca1e5f0e9970f5ba9b0e628502e",
+          "size": 2278
+        },
+        "request.json": {
+          "path": "r4_a09_production.request.json",
+          "sha256": "f66a021295380005b51540075006a81c92b5262e68282fe38f4307af3e8fb7a8",
+          "size": 15972
+        },
+        "schema.json": {
+          "path": "r4_a09_production.schema.json",
+          "sha256": "39e3ec3d3959bcf694363a4aded6b28cffa71eb813bd9855d9c54d8ac8af81a3",
+          "size": 5666
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a11_production",
+      "original_native_status": "ACCEPTED",
+      "first_failure": null,
+      "files": {
+        "wire.json": {
+          "path": "r4_a11_production.wire.json",
+          "sha256": "ad83dc9d82aa68d5be42b02ca8878dbaba46701ecfac1afb0ebc05cc12cd9796",
+          "size": 2828
+        },
+        "request.json": {
+          "path": "r4_a11_production.request.json",
+          "sha256": "b8e1cb973f0a99e69a1a1dd898f24ad0cabda65ec7b4473f60ceda7d0a140665",
+          "size": 20795
+        },
+        "schema.json": {
+          "path": "r4_a11_production.schema.json",
+          "sha256": "aa0d2808e54d884318331b77cf2a13e297a8c8e52470ac8b417ed3149bf42e77",
+          "size": 5650
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a11_alternate",
+      "original_native_status": "CONTENT_FAILED",
+      "first_failure": "Reader response is not strict JSON",
+      "files": {
+        "wire.json": {
+          "path": "r4_a11_alternate.wire.json",
+          "sha256": "47c7bc3e8641f1069bddfbb16773584b7d876616fdd91824b86bc038d342ec90",
+          "size": 3625
+        },
+        "request.json": {
+          "path": "r4_a11_alternate.request.json",
+          "sha256": "5791dea45a619f308f2a591eeeee68caa30b1cc663cf3c22f8942a37f919d659",
+          "size": 28681
+        },
+        "schema.json": {
+          "path": "r4_a11_alternate.schema.json",
+          "sha256": "aa0d2808e54d884318331b77cf2a13e297a8c8e52470ac8b417ed3149bf42e77",
+          "size": 5650
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a12_production",
+      "original_native_status": "ACCEPTED",
+      "first_failure": null,
+      "files": {
+        "wire.json": {
+          "path": "r4_a12_production.wire.json",
+          "sha256": "c6ee412b2d42f0dd2e30fadf99687d43998f7217da6e27ef40660ccce562193d",
+          "size": 2130
+        },
+        "request.json": {
+          "path": "r4_a12_production.request.json",
+          "sha256": "d6c397207c63d4d73d79b92ac5ab537b593256d10be811a24c2183d5bdfa9fb6",
+          "size": 27416
+        },
+        "schema.json": {
+          "path": "r4_a12_production.schema.json",
+          "sha256": "b5f01b3141168a01138e54fcf4075ca6b5bdabcd124f20354665773d0bd52321",
+          "size": 5653
+        }
+      }
+    },
+    {
+      "fixture_id": "r4_a12_alternate",
+      "original_native_status": "CONTENT_FAILED",
+      "first_failure": "Reader response is not strict JSON",
+      "files": {
+        "wire.json": {
+          "path": "r4_a12_alternate.wire.json",
+          "sha256": "adb03955bde53145955d12bcdc1edb1f9142427bc29b12d3ca3f2913087137f5",
+          "size": 4247
+        },
+        "request.json": {
+          "path": "r4_a12_alternate.request.json",
+          "sha256": "a3b711ff25bdaf85ee27ffd46ea1eba34756f728d24c7eb39016b05d92e09bd0",
+          "size": 28847
+        },
+        "schema.json": {
+          "path": "r4_a12_alternate.schema.json",
+          "sha256": "8f12942d09d98390fbd384840836fb251c6f7d9461d04726749658c5f07440fe",
+          "size": 5670
+        }
+      }
+    }
+  ]
+}
