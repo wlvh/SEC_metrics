@@ -8303,6 +8303,32 @@
     }
    ],
    "next_read": "Only subsequent relevant increments; fixed accepted comparisonbase4b910e8e does not grant automatic upstream or credit transfer."
+  },
+  {
+   "read_on": "2026-10-05",
+   "collaboration_rule": "COLLAB-28-47-v1.2",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "9099e273a78e0719775698f1c3829f8f70444193",
+   "own_commit_at_read": "e799eea5155c7f5f25dfc10ea708dd4205b5caf0",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_sha256": "e549ec55eee37f35a1e239f8fea5a44e2d393969e283b4ba7fd1a93fd0f4d849",
+   "peer_defect_register_unchanged_from_4b910e8e": true,
+   "increments": [
+    {
+     "commits": [
+      "ac25689c",
+      "9dd88083",
+      "851ca976",
+      "9099e273"
+     ],
+     "scope": "D03 prototype literal XML context/unit dictionary and namespace dependency correction, retained failed review, narrow fix review and closed corrected input trial",
+     "integration": "MERGED_AFTER_PINNED_SCOPED_PREFLIGHT",
+     "affects_47": "40docs/evidence paths; no scripts/tools/requirements/workflow/production changes. No C02 normal selector or original model package changes. Dictionary-only donors add no responsibility. D03 business relevance and company/native persistence remain unproved; neither peer trial reused nor its quota/Run/acceptance copied.",
+     "tests": "Own nine XML dictionary/complete mapping cases PASS in isolated no-hardlinks clone with socket forbidden; all40changed Git files verified against pinned SHA index. Actual505355-byte input and full16-request plan replay not repeated; owner stored reports distinguished from own checks.",
+     "evidence": "docs/evidence/issue47_history/upstream-read-9099e273-2026-10-05/README.md"
+    }
+   ],
+   "next_read": "Only subsequent affected increments; fixed9099base does not imply automatic future receiving or credit."
   }
  ]
 }
