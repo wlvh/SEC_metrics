@@ -42,6 +42,19 @@ ACTIVE_R3 = (
 EXACT_R2 = (
     "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f"
 )
+
+
+def _historical_object(relative: str) -> bytes:
+    """Read the exact repository object declared by the frozen v1 baseline.
+
+    Root mirrors follow today's active publication. They are not v1/R3 test
+    fixtures, and this helper never writes or switches the current pointer.
+    """
+    baseline = strict_json_file(path=ISSUE_28_DIR / "baseline_manifest.json")
+    return subprocess.check_output(
+        ["git", "show", baseline["repository"]["commit"] + ":" + relative],
+        cwd=REPO_ROOT,
+    )
 ISSUE_15_FILE_BINDINGS = {
     "CONTRACT.md": (
         "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
@@ -161,9 +174,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
         ).strip()
         self.assertEqual(baseline["repository"]["tree"], repository_tree)
         self.assertEqual(baseline["parent"]["snapshot_git_tree"], parent_tree)
-        pointer = strict_json_file(
-            path=REPO_ROOT / "outputs" / "active_publication.json"
-        )
+        pointer = json.loads(_historical_object("outputs/active_publication.json"))
         self.assertEqual(
             baseline["active_publication"]["publication_id"], pointer["publication_id"],
         )
@@ -381,9 +392,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
 
     def test_legacy_publication_keeps_hash_only_identity(self) -> None:
         """Accept R3's historical shape but never relabel it as successor."""
-        pointer = strict_json_file(
-            path=REPO_ROOT / "outputs" / "active_publication.json"
-        )
+        pointer = json.loads(_historical_object("outputs/active_publication.json"))
         manifest = strict_json_file(
             path=(
                 REPO_ROOT
@@ -416,8 +425,9 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
     ) -> None:
         """Route new Runs by bound identity while retaining old dispatch."""
         successor = load_requirement_snapshot(snapshot_dir=ISSUE_28_DIR)
+        historical_root = historical_test_root()
         resolved = load_run_requirement_snapshot(
-            repo_root=REPO_ROOT,
+            repo_root=historical_root,
             task_contract_bindings=[],
             requirement_id=successor["requirement_id"],
             requirement_closure_hash=successor["requirement_closure_hash"],
@@ -428,7 +438,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
         self.assertEqual("issue_28_v1", resolved["requirement_id"])
         with self.assertRaisesRegex(RequirementError, "incomplete"):
             load_run_requirement_snapshot(
-                repo_root=REPO_ROOT,
+                repo_root=historical_root,
                 task_contract_bindings=[],
                 requirement_id="issue_28_v1",
                 requirement_hashes=successor["hashes"],
@@ -436,7 +446,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
                 artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
             )
         legacy = load_run_requirement_snapshot(
-            repo_root=REPO_ROOT, task_contract_bindings=[],
+            repo_root=historical_root, task_contract_bindings=[],
         )
         self.assertEqual("ai_first_v3_3_1", legacy["requirement_id"])
 
@@ -498,7 +508,11 @@ class Issue28HistoricalReadBackIntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         """Pin one fully verified active R3 chain for all assertions."""
-        cls.active = PublicationView.open(publication_root=REPO_ROOT)
+        pointer = json.loads(_historical_object("outputs/active_publication.json"))
+        r3_id = pointer["publication_id"]
+        r3_dir = REPO_ROOT / "outputs" / "publications" / r3_id
+        cls.active = PublicationView(publication_id=r3_id, bundle_dir=r3_dir,
+            manifest=verify_publication_bundle(bundle_dir=r3_dir))
         r2_id = str(cls.active.manifest["previous_publication_id"])
         r2_dir = REPO_ROOT / "outputs" / "publications" / r2_id
         r2_manifest = verify_publication_bundle(bundle_dir=r2_dir)
@@ -529,9 +543,10 @@ class Issue28HistoricalReadBackIntegrationTest(unittest.TestCase):
         for relative, root_relative in ROOT_MIRROR_RELATIVE_PATHS.items():
             self.assertEqual(
                 self.active.read_bytes(relative_path=relative),
-                (REPO_ROOT / root_relative).read_bytes(),
+                _historical_object(root_relative),
             )
-        parent = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
+        parent = load_requirement_snapshot(
+            snapshot_dir=historical_test_root() / "requirements/issue_15_v1")
         self.assertEqual(ISSUE_15_CLOSURE, parent["requirement_closure_hash"])
 
 

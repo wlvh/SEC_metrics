@@ -1,0 +1,19 @@
+{
+  "record_type": "ORDINARY_ACCESSION_METRIC_POLICY",
+  "schema_version": 1,
+  "base_catalog": "catalog/deterministic_metrics.json",
+  "period_basis": "SOURCE_END_DATE_INSTANT",
+  "us_gaap_namespace_pattern": "https?://fasb\\.org/us-gaap/[0-9]{4}",
+  "srt_namespace_pattern": "https?://fasb\\.org/srt/[0-9]{4}",
+  "dei_namespace_pattern": "https?://xbrl\\.sec\\.gov/dei/[0-9]{4}",
+  "numeric_inline_namespaces": ["http://www.xbrl.org/2008/inlineXBRL", "http://www.xbrl.org/2013/inlineXBRL"],
+  "unformatted_decimal_pattern": "[+-]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)",
+  "dot_decimal_pattern": "[+-]?(?:(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)(?:\\.[0-9]*)?|\\.[0-9]+)",
+  "metrics": {
+    "A01": {"canonical_unit": "ratio", "unit_measure": ["http://www.xbrl.org/2003/instance", "pure"], "concept_namespace": "US_GAAP", "measure": "REPORTED_PARENT_STANDARDIZED_TIER_ONE_CAPITAL_RATIO"},
+    "A02": {"canonical_unit": "ratio", "unit_measure": ["http://www.xbrl.org/2003/instance", "pure"], "concept_namespace": "CATALOG_MEMBER_EXTENSION", "measure": "REPORTED_PARENT_STANDARDIZED_CET1_RATIO"},
+    "B12": {"canonical_unit": "USD", "unit_measure": ["http://www.xbrl.org/2003/iso4217", "USD"], "concept_namespace": "US_GAAP", "measure": "REPORTED_UNDIMENSIONED_RPO_SUBSTITUTE_NOT_ARR_OR_CHURN"}
+  },
+  "creates_run": false,
+  "production_authorized": false
+}

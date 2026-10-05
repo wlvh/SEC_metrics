@@ -1,0 +1,62 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data",
+  "output_root": "/private/tmp/issue28-foundation-normal-smoke",
+  "source_scope": "Original saved FY2025, no online discovery",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "cases": [
+    {
+      "case": "saved-source-positive-update",
+      "outcome": {
+        "status": "INPUT_FAILED",
+        "attempt_id": "a67da97cf32a41bba3de1abaf06dd58b",
+        "latest_attempt": "a67da97cf32a41bba3de1abaf06dd58b",
+        "successful_attempt": null,
+        "previous_successful_attempt": null,
+        "last_verified_candidate": null,
+        "new_candidate_created": false,
+        "terminal": {
+          "record_type": "ORDINARY_UPDATE_TERMINAL",
+          "attempt_id": "a67da97cf32a41bba3de1abaf06dd58b",
+          "configuration_id": "sha256:b8347db7d0ce4958e525bb29ae249045c7d69741871d25304328ad822ba87370",
+          "intent_id": "sha256:5d91891c0ecf98e15626155ccec9cc6e84b2a3d147e147f328151b4d11b3a3ca",
+          "status": "INPUT_FAILED",
+          "completed_at": "2026-10-04T10:09:56.137057+00:00",
+          "input": null,
+          "metrics": {},
+          "error": {
+            "error_type": "ValueError",
+            "reason": "ORDINARY_INTEGRATED_INSTALLED_POLICY_CHANGED"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "record_id": "sha256:af98d9dbe39c08e5e05a89b574d051580ee891f44a4e4486b0d7cbf390fd6f06"
+        },
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    }
+  ],
+  "requirements": {
+    "issue_28_v13": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+    "issue_28_v14": "sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56"
+  },
+  "status": "FAIL",
+  "error": "Initial update failed: INPUT_FAILED",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/docs/evidence/issue28_foundation_integration_20261004/normal-foundation-smoke.py\", line 53, in main\n    raise AssertionError('Initial update failed: '+first['status'])\nAssertionError: Initial update failed: INPUT_FAILED\n",
+  "original_source_bytes_unchanged": true,
+  "seconds": 3.9549360000528395
+}

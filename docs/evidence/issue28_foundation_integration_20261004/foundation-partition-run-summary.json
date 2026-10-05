@@ -1,0 +1,30 @@
+[
+  {
+    "suite": "fast",
+    "jobs": 4,
+    "returncode": 0,
+    "seconds": 43.62463229219429,
+    "command": [
+      "/private/tmp/issue28-tokenizers-venv/bin/python",
+      "tools/run_foundation_ci.py",
+      "--suite",
+      "fast",
+      "--jobs",
+      "4"
+    ]
+  },
+  {
+    "suite": "source-material",
+    "jobs": 2,
+    "returncode": 0,
+    "seconds": 100.3316928751301,
+    "command": [
+      "/private/tmp/issue28-tokenizers-venv/bin/python",
+      "tools/run_foundation_ci.py",
+      "--suite",
+      "source-material",
+      "--jobs",
+      "2"
+    ]
+  }
+]

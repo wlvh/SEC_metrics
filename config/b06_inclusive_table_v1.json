@@ -1,0 +1,16 @@
+{
+  "record_type": "B06_INCLUSIVE_CARRYING_TABLE_POLICY",
+  "schema_version": 1,
+  "note_concepts": ["DebtDisclosureTextBlock", "ScheduleOfDebtTableTextBlock", "ScheduleOfMaturitiesOfLongTermDebtTableTextBlock", "LesseeLeasesPolicyTextBlock", "LesseeOperatingLeasesTextBlock", "CommitmentsAndContingenciesDisclosureTextBlock", "BusinessCombinationDisclosureTextBlock"],
+  "extension_note_concepts": ["FinancialInstrumentsAndFairValueDisclosureTextBlock"],
+  "acquisition_row_labels": {"BusinessCombinationRecognizedAssetAcquiredOperatingLeaseAsset": "Operating lease assets", "BusinessCombinationRecognizedLiabilityAssumedLongTermDebt": "Long-term debt (e)", "BusinessCombinationRecognizedIdentifiableAssetsAcquiredAndLiabilitiesAssumedCapitalLeaseObligation": "Operating lease liabilities", "BusinessCombinationRecognizedLiabilityAssumedProgrammingObligations": "Programming obligations (g)"},
+  "monetary_concepts": {"total": "DebtAndCapitalLeaseObligations", "current": "LongTermDebtAndCapitalLeaseObligationsCurrent", "noncurrent": "LongTermDebtAndCapitalLeaseObligations", "finance_lease": "FinanceLeaseLiability", "equity": "StockholdersEquity"},
+  "member_concepts": ["SeniorNotes", "JuniorSubordinatedNotes"],
+  "member_label_pattern": "[0-9]+(?:\\.[0-9]+)?% (?:Senior (?:Notes|Debentures)|Junior Subordinated Debentures) due [0-9]{4}",
+  "row_labels": {"finance_lease": "Obligations under finance leases", "total": "Total debt (b)", "current": "Less current portion", "noncurrent": "Total long-term debt, net of current portion"},
+  "scale_declaration": "(Tabular dollars in millions, except per share amounts)",
+  "scale": 1000000,
+  "current_subject_label_pattern": "Successor(?: \\([a-z]\\))?",
+  "source_acquisition_credit": false,
+  "production_authorized": false
+}

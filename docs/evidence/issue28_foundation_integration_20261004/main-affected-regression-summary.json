@@ -1,0 +1,16 @@
+{
+  "returncode": 1,
+  "seconds": 1873.2893662080169,
+  "command": [
+    "/private/tmp/issue28-tokenizers-venv/bin/python",
+    "-m",
+    "unittest",
+    "-v",
+    "tests.vnext.test_replay",
+    "tests.vnext.test_publication",
+    "tests.vnext.test_source_records",
+    "tests.vnext.test_requirement_baseline",
+    "tests.vnext.test_issue28_requirement_transition",
+    "tests.vnext.test_normal_run_authority"
+  ]
+}

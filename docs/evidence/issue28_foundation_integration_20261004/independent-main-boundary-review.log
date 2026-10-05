@@ -1,0 +1,116 @@
+Independent limited review audit log
+patch=469d3ea42e2346e03976e8d4a50db1d2f7de9289
+base=af1984ad5f1a3598ded3626fe999d3abeffd29b9
+milestone=0bc24734736bb1e6cb34fbcf7ab9fece6951764e
+consumer=83db2c0284d76cfe6a1fafc8703743add05738f8
+start=2026-10-04T10:19:21.629149Z
+scope=Static Git/file/code boundary inspection; one explicitly allowed unittest only.
+conservative_final_tool_count=39 (19 functions.exec and 20 nested tools, including final readback)
+ordinary_messages=2 (start and final); questions=0
+elapsed_at_report_write_seconds=672
+No HTTP/model calls, spawn, source/snapshot edits, commits or pushes.
+
+Tool observations:
+- Initial prerequisite dump exceeded output budget; large inventories were subsequently read as structured JSON and fully statically verified without printing every row.
+- One initial summary reader stopped on a list-vs-object assumption; corrected reader completed the targeted evidence.
+- One slow per-object static inspection yielded with no captured final stdout; the subsequent batched Git object audit below supplies the complete confirmed results. It is included in tool count.
+- No prior business result from memory was used.
+
+Confirmed static source/authority audit:
+INVENTORY 752 mismatches ['tests/vnext/projection_fixture_support.py']
+FIXED_RUNTIME_DELTA 303 MISMATCHES []
+ALL_REQUIREMENT_FILES 84 MISMATCHES []
+ANCESTOR17_UNCHANGED True
+PR55_RUNTIME_DELTA_LIST 18 equals_overlay True PEER_DELTA_IMPORTED []
+AUTHORITY issue_28_v13 execution_keys ['files', 'semantic_runtime_versions_hash'] files 389 bad []
+BASELINE_PARENT_FIELDS {"parent": {"requirement_id": "issue_28_v12", "requirement_closure_hash": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c", "snapshot_files": {"CONTRACT.md": {"sha256": "4662a3719d18118aca8443d7cae73093edc136fa73764861f8574d36a6131dd1", "size": 1479}, "baseline_manifest.json": {"sha256": "0535bb13cb56e79858cf8c3c235e53e581126dec6a2e77a7d17f0e8a8b5e21d2", "size": 51821}, "decision_register.json": {"sha256": "19266c140750a4a0d09b739f1c42d9d8d5a965a75b9d2524e5df6abdba07197a", "size": 3354}, "invariant_profile.json": {"sha256": "5e52d201b84479fa09a201a320b2ec823f2660e0af4439f86e013ad82f60a84a", "size": 343}, "transfer_manifest.json": {"sha256": "b6d43f5979e2088d5482a2cfc07afbf2ad62b8e1e651adba071e25cb60f91cb2", "size": 311}}}}
+AUTHORITY issue_28_v14 execution_keys ['files', 'semantic_runtime_versions_hash'] files 493 bad []
+BASELINE_PARENT_FIELDS {"parent": {"requirement_id": "issue_28_v13", "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d", "snapshot_files": {"decision_register.json": {"sha256": "bbeba2d0da7b424c74f882b3f021e58596623eacca5824f8f1735222cdef44ab", "size": 9199}, "baseline_manifest.json": {"sha256": "141461bdde8bec22ac869bc2dc4c14f0e60aef0f79f77a892a3ca0a7cc39afa7", "size": 80090}, "invariant_profile.json": {"sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa", "size": 416}, "CONTRACT.md": {"sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374", "size": 1211}, "transfer_manifest.json": {"sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06", "size": 311}}}}
+MAIN_PRESERVED outputs/active_publication.json True
+MAIN_PRESERVED outputs/metrics_matrix.csv True
+MAIN_PRESERVED outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59/publication_manifest.json True
+MAIN_PRESERVED config/issue_15_release_plan.json True
+MAIN_PRESERVED config/vnext_release_plan.json True
+MAIN_PRESERVED SOP.md True
+MAIN_PRESERVED capability_contract.json True
+TRANSPORT_LOCATORS d04-runtime-object-locators.json members 652 bad [] commits ['0bc24734736bb1e6cb34fbcf7ab9fece6951764e', '40ca426727dac1822e14eab4c993e760e236f2b4', '8346c326f04be5a863dc8bf2f010087a6f2025a3', '842f221029b0f7737bcd882a1e4b46260ef24662'] duplicate_targets 0
+TRANSPORT_LOCATORS d04-source-object-locators.json members 8 bad [] commits ['0bc24734736bb1e6cb34fbcf7ab9fece6951764e'] duplicate_targets 0
+CURRENT_WORKTREE_vs_CANDIDATE 
+
+
+Original transport/parent audit:
+TRANSPORT_RUNTIME_EXACT_METADATA True
+PACKET_BOUND_FILES [{'path': 'config/ordinary_going_concern_assessment.json', 'ok': True}, {'path': 'processing-source.json', 'ok': True}]
+PACKET_TRUST_BYTE_IDENTICAL True
+ORIGINAL_EXPORT_PRESENT processing True
+ORIGINAL_EXPORT_BYTES_MATCH processing True
+ORIGINAL_EXPORT_PRESENT processing-trust True
+ORIGINAL_EXPORT_BYTES_MATCH processing-trust True
+ORIGINAL_V14_MANIFEST_LOCATOR [{'path': 'requirements/issue_28_v14/baseline_manifest.json', 'sha256': '93fcec196d9b7efaf09400346ee2b732a06bfd00a635cff17656bfa6fe79aabd', 'size': 82680, 'git_blob': 'a2db2bab2345da58a72d713e5333b15ed0f95b93', 'commit': '40ca426727dac1822e14eab4c993e760e236f2b4', 'source_path': 'requirements/issue_28_v14/baseline_manifest.json'}]
+EXACT_REF_REACHABILITY [('0bc24734736bb1e6cb34fbcf7ab9fece6951764e', True), ('40ca426727dac1822e14eab4c993e760e236f2b4', True), ('8346c326f04be5a863dc8bf2f010087a6f2025a3', True), ('842f221029b0f7737bcd882a1e4b46260ef24662', True)]
+SOURCE_SCOPE_NAMES ['evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json', 'evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json', 'evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm', 'evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json', 'evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json', 'evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json', 'evidence/requests_log.csv', 'evidence/requests_log_manifest.json']
+SOURCE_PROOF_FILES_HEADERS 3
+PROCESSING_SOURCE_KEYS ['calls', 'company_id', 'documents', 'interpretation_created', 'metric_id', 'module_sha256', 'original_complete_source_id', 'original_source_packet_id', 'policy_sha256', 'prepared_annual_input', 'production_authorized', 'provider_request_created', 'record_type', 'request_context_format', 'required_unit_ids', 'response_contract_version', 'semantic_coverage_verified', 'semantic_source_id', 'source_admission', 'source_check_scope', 'source_freshness_verified', 'source_proofs', 'source_serialization_complete', 'units']
+ASSESSMENT_KEYS ['assessment', 'company_id', 'input_record_id', 'mode', 'native_requests', 'new_call_authority', 'production_authorized', 'record_type', 'request_context_format', 'requirement_closure_hash', 'response_contract_version', 'schema_version', 'source_id']
+NATIVE_REQUESTS 0
+ASSESSMENT input_record_id sha256:bcab858fc514ecc16c0ae962085644393c7c550556b7474eceae16dbf12053c0
+ASSESSMENT mode LIVE
+ASSESSMENT source_id sha256:dfe61c693d1293ff7dd90a6c0ef19a7760d70cf467e662d43cb9528f317c02d9
+ASSESSMENT record_type D04_REGISTERED_NATIVE_ASSESSMENT_INPUT
+ASSESSMENT assessment count=16
+ORIGINAL_PARENT_SNAPSHOTS_STATIC
+PARENT_SNAPSHOT_BOUND_FILES 72 bad []
+FROZEN_PARENT_INDEX
+keys ['record_type', 'source_commit', 'requirement_id', 'requirement_closure_hash', 'materialization', 'ordinary_validation_after_materialization', 'files']
+FROZEN_PARENT_MEMBERS 89 bad []
+
+
+Actual native request identities:
+ACTUAL_NATIVE_REQUESTS 4 type list
+NATIVE_REQUEST 0 keys ['acceptance_receipt', 'assistant_output', 'intent', 'ordinal', 'plan', 'request_id', 'semantic_request', 'source_revalidation', 'terminal', 'wire']
+IDENTITY {'ordinal': 115, 'request_id': 'sha256:d0e948679235f5da705a026bee1f5706712a010cd464d16b4e9cf057277ee3b5'}
+NATIVE_REQUEST 1 keys ['acceptance_receipt', 'assistant_output', 'intent', 'ordinal', 'plan', 'request_id', 'semantic_request', 'source_revalidation', 'terminal', 'wire']
+IDENTITY {'ordinal': 116, 'request_id': 'sha256:f73acd3ccc0022df6acfc83436df2cbb8ea4fdaf09f49626af7b9ac8deff3577'}
+NATIVE_REQUEST 2 keys ['acceptance_receipt', 'assistant_output', 'intent', 'ordinal', 'plan', 'request_id', 'semantic_request', 'source_revalidation', 'terminal', 'wire']
+IDENTITY {'ordinal': 117, 'request_id': 'sha256:8270d9755900b43ce3472c558e2187f1974e278530f36eb98f771aee905eac94'}
+NATIVE_REQUEST 3 keys ['acceptance_receipt', 'assistant_output', 'intent', 'ordinal', 'plan', 'request_id', 'semantic_request', 'source_revalidation', 'terminal', 'wire']
+IDENTITY {'ordinal': 118, 'request_id': 'sha256:c6c358f833877ebc41c0c561bdeb11180f106d04e1e63bfe7936dfc77552c9fa'}
+ORIGINAL_INSTALLED_ASSESSMENT_BYTES_MATCH True
+UTC_NOW 2026-10-04T10:26:59.405527+00:00
+
+EVIDENCE_LINES candidate-summary.json
+10   "merge_ready": false,
+11   "blockers": [
+12     "Main generic publication scalability gate scans added modules and refuses 9 protocol/transcription literals; default may not be silently disabled or redirected",
+13     "Old-main tests require frozen Issue15 provider/config receipts and legacy publication fixtures, not current mirror identities; matching historical support resolves first config precondition, remaining exact baseline fixture and scanner failures are recorded",
+48     "linux_execution": "Not performed by this Mac receiver; material available through fixed Git references and exact transport bytes"
+
+EVIDENCE_LINES materialized-scope.json
+415   "kept_main_paths": [
+419     "tests/vnext/projection_fixture_support.py",
+
+EVIDENCE_LINES README.md
+17 The first146 regression run failed22s (81errors/2failures) when an old-main helper copied the current provider config into frozen Issue15 authority. The matching historical helper from0bc restores frozen config/receipt semantics; rerun146 took405s, with70errors/2failures remaining. Logs are kept separately. Many remaining publication tests stop at the unchanged generic scanner: newly added B13 reference markerF and authorization transcription dates yield9 false identity/financial-date flags. The main publication gate cannot silently ignore them. Old transition fixtures also expect pre-current publication identities; these do not authorize switching a pointer back. No passing full regression/merge-ready claim is made. The old-main helper fai
+24 The fixed PR55 overlay uses only its18 delta paths, on this fixed foundation/main candidate. Its first sparse validation fixture omitted17 **already unchanged main ancestor files**; they are not17 new foundation source changes. After carrying those original ancestor paths, `install-runtime --kind local` actually completes in2.351s. The generated `issue_54_v4` authority is `sha256:792b50955674f1a1a007f2a1b5f55b7520d5ad4f5b7973e7b102c9e7278aa251`; it is a private installation, not a main merge, retarget or captured-source run. [Installer receipt](pr55-runtime-install-complete-summary.json), [carried ancestor paths](installer-ancestor-completion.json).
+26 Four ordinary authority negative tests and ten saved annual/C04 successor tests pass. They cover imported authority stripping, unsupported Spec dispatch, fiscal labels/exact strings, four-form explicit selection, original two-form default retention, wrong-form/metric/CIK and missing history coverage. No model or SEC request occurs. [Authority log](normal-run-authority.log), [annual/C04 log](annual-c04-targeted.log).
+42 The recipe has actually been executed into a new local receiver. Fixed83 `authenticate_processing` accepts the restored original f252a7a4 LIVE packet/program and rejects changed packet bytes and the wrong company. [Actual receiver log](d04-portable-authenticate.log). This verifies portable byte reconstruction and the existing interface; it does not claim the Linux executor has consumed it or the missing legacy mirror has been resolved. `COMPANY_SOURCE_DECLARED_LOCATOR_NOT_CARRIED` is still an accurately separate source-only export blocker.
+CURRENT_CODE_MAIN_DIFF_NUMSTAT
+48	3	scripts/vnext/invocation_control.py
+30	5	scripts/vnext/publication.py
+62	14	scripts/vnext/records.py
+251	6	scripts/vnext/run_store.py
+
+
+
+Independent allowed command:
+PYTHONPATH=scripts:tools PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_normal_run_authority
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+OK
+
+
+Other execution logs were READ ONLY. Their detailed source locations and failure classification are recorded in independent-main-boundary-review.md.
+Evidence-only correction noted: materialized-scope.json kept_main_paths still lists projection_fixture_support.py, but final candidate uses exact 0bc historical helper.
+Final verdict=PASS_FOR_BOUNDED_INTAKE_WITH_LIMITATIONS; NOT_MERGE_READY.

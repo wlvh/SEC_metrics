@@ -1,0 +1,8 @@
+{
+  "record_type": "HISTORICAL_C02_COMPOSITION_TERMS",
+  "schema_version": 1,
+  "metric_id": "C02",
+  "reader": "scripts/vnext/historical_board_composition.py",
+  "board_lead_role": "lead independent director",
+  "why_this_file": "The board's lead-director role is one of the phrases the approved source strategy owns for the governance family (config/source_strategy_registry.json, forbidden_production_literals), and business phrases of that list live in the catalog, not in executable code (tools/check_vnext_semantics.py). The reader inserts this phrase unescaped into four of its patterns, so it must be lower-case words separated by single spaces; the reader refuses anything else. The file's bytes are recorded by the issue_47_v1 snapshot as a rule file, so a change here moves the Requirement closure."
+}

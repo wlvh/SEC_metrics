@@ -1,0 +1,19 @@
+{
+  "record_type": "OWNER_POLICY_COMMENT_EVIDENCE",
+  "evidence_scope": "POLICY_CONTENT_ONLY",
+  "owner_comment_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5536668333",
+  "author": "github:wlvh",
+  "published_at_utc": "2026-09-04T06:33:01Z",
+  "updated_at_utc": "2026-09-04T06:33:01Z",
+  "raw_body": "{\n  \"decision\": \"APPROVE_SEC_CONTACT_AUTHORITY\",\n  \"scope\": \"POLICY_CONTENT_ONLY\",\n  \"default_contact_email\": \"12@qq.com\",\n  \"environment_override\": \"SEC_CONTACT_EMAIL\",\n  \"precedence\": \"EXPLICIT_ENVIRONMENT_IF_PRESENT_ELSE_REPOSITORY_DEFAULT\",\n  \"invalid_explicit_environment_override\": \"FAIL_CLOSED_NO_DEFAULT_FALLBACK\",\n  \"contact_is_public_user_agent_identity\": true,\n  \"provider_calls_authorized\": false,\n  \"paid_model_calls_authorized\": false,\n  \"live_qualification_authorized\": false,\n  \"publication_authorized\": false\n}\n",
+  "body_sha256": "a4cbf288a968a3e829f703bc89b2ba7c8e54be78eb66c5c476e6a28bbe898de8",
+  "posting_provenance": "OWNER_EXPLICIT_APPROVAL_RECORDED_BY_AUTHORIZED_AGENT",
+  "transition_activation": "NOT_ISSUED",
+  "provider_paid_live_publication_authorization": false,
+  "repository_configuration_evidence": {
+    "path": "config/sec_config.json",
+    "sha256": "6c8be0ba4acefbaf7edc0acbf76a9bc0db143970e3654f1d8bb32d13fb5a83fb",
+    "size": 143,
+    "raw_text": "{\n  \"organization\": \"axaxl\",\n  \"contact_email\": \"12@qq.com\",\n  \"rate_limit_per_sec\": 5,\n  \"max_retries\": 4,\n  \"backoff_initial_seconds\": 1.0\n}\n"
+  }
+}

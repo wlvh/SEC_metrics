@@ -1,0 +1,279 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data",
+  "output_root": "/private/tmp/issue28-foundation-normal-current-source-smoke",
+  "source_scope": "Original saved FY2025, no online discovery",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "cases": [
+    {
+      "case": "saved-source-positive-update",
+      "outcome": {
+        "status": "CANDIDATE_READY",
+        "attempt_id": "960c60b5bcf44c048491f14dcf693f9b",
+        "latest_attempt": "960c60b5bcf44c048491f14dcf693f9b",
+        "successful_attempt": "960c60b5bcf44c048491f14dcf693f9b",
+        "previous_successful_attempt": null,
+        "last_verified_candidate": {
+          "attempt_id": "960c60b5bcf44c048491f14dcf693f9b",
+          "targets": {
+            "B01": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "current_input_matches": true,
+          "results": {
+            "B01": {
+              "applicability": "APPLICABLE",
+              "company_id": "marriott_international",
+              "metric_id": "B01",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "publication": "PUBLISHED",
+              "quality": "EXACT",
+              "reason_code": "PASS",
+              "record_type": "METRIC_RESULT",
+              "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+              "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+              "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+              "trace_id": "sha256:1828a144f4508a873f104fe50753aa9b95b42ef3026adce3b4f106c2bbd9625f",
+              "unit": "USD",
+              "value": "26186000000"
+            }
+          },
+          "rows_root": "/private/tmp/issue28-foundation-normal-current-source-smoke/state/attempts/960c60b5bcf44c048491f14dcf693f9b/rows"
+        },
+        "new_candidate_created": true,
+        "terminal": {
+          "record_type": "ORDINARY_UPDATE_TERMINAL",
+          "attempt_id": "960c60b5bcf44c048491f14dcf693f9b",
+          "configuration_id": "sha256:b8347db7d0ce4958e525bb29ae249045c7d69741871d25304328ad822ba87370",
+          "intent_id": "sha256:f9ede6ad3870b757331f32cec85aacef1ea2ccd16322c9321bf1bce625ba82f3",
+          "status": "CANDIDATE_READY",
+          "completed_at": "2026-10-04T10:12:45.315612+00:00",
+          "input": {
+            "company_id": "marriott_international",
+            "metric_ids": [
+              "B01"
+            ],
+            "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+            "targets": {
+              "B01": {
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31"
+              }
+            },
+            "specs": {
+              "B01": {
+                "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+              }
+            },
+            "source_contents": [
+              {
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+                "accession": "0001048286-26-000007",
+                "document_name": "CIK0001048286.json",
+                "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+              },
+              {
+                "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+                "accession": "",
+                "document_name": "CIK0001048286.json",
+                "sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+              },
+              {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+                "accession": "0001048286-26-000007",
+                "document_name": "mar-20251231.htm",
+                "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+              }
+            ],
+            "content_id": "sha256:3153ae8336a55d4c1029988112623f301803dfdc9bb727c3ebb42f83a8d8f4f0"
+          },
+          "metrics": {
+            "B01": {
+              "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+              "publication": "PUBLISHED",
+              "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+              "files": {
+                "metrics_matrix.csv": "380c06e9cafc808a31f788e7629e9b8a1d8cc2f51f2984b8ba6fc3cdae4ff93b",
+                "metric_evidence.csv": "55f78cc218510561dc6115ada76b1f7884d45be0886485a5ccd277bc873a62c6"
+              }
+            }
+          },
+          "error": null,
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "record_id": "sha256:4d7e0bd45bec6989441691af56e7ac5fa0280cb64c29b9404d7fdb7222a9deb3"
+        },
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    },
+    {
+      "case": "unchanged-input-reuses-existing-run",
+      "outcome": {
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "ee943b2e5fe24049b1298c69ea760509",
+        "latest_attempt": "ee943b2e5fe24049b1298c69ea760509",
+        "successful_attempt": "960c60b5bcf44c048491f14dcf693f9b",
+        "previous_successful_attempt": "960c60b5bcf44c048491f14dcf693f9b",
+        "last_verified_candidate": {
+          "attempt_id": "960c60b5bcf44c048491f14dcf693f9b",
+          "targets": {
+            "B01": {
+              "fiscal_year": 2025,
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01"
+            }
+          },
+          "current_input_matches": true,
+          "results": {
+            "B01": {
+              "applicability": "APPLICABLE",
+              "company_id": "marriott_international",
+              "metric_id": "B01",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "publication": "PUBLISHED",
+              "quality": "EXACT",
+              "reason_code": "PASS",
+              "record_type": "METRIC_RESULT",
+              "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+              "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+              "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+              "trace_id": "sha256:1828a144f4508a873f104fe50753aa9b95b42ef3026adce3b4f106c2bbd9625f",
+              "unit": "USD",
+              "value": "26186000000"
+            }
+          },
+          "rows_root": "/private/tmp/issue28-foundation-normal-current-source-smoke/state/attempts/960c60b5bcf44c048491f14dcf693f9b/rows"
+        },
+        "new_candidate_created": false,
+        "terminal": {
+          "record_type": "ORDINARY_UPDATE_TERMINAL",
+          "attempt_id": "ee943b2e5fe24049b1298c69ea760509",
+          "configuration_id": "sha256:b8347db7d0ce4958e525bb29ae249045c7d69741871d25304328ad822ba87370",
+          "intent_id": "sha256:73cc2ce9456139c1bca86dacdaaddf9fa556e448c6a5fc29dee0168ffa900e65",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "completed_at": "2026-10-04T10:12:54.754585+00:00",
+          "input": {
+            "company_id": "marriott_international",
+            "metric_ids": [
+              "B01"
+            ],
+            "requirement_closure_hash": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+            "targets": {
+              "B01": {
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31"
+              }
+            },
+            "specs": {
+              "B01": {
+                "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+              }
+            },
+            "source_contents": [
+              {
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+                "accession": "0001048286-26-000007",
+                "document_name": "CIK0001048286.json",
+                "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+              },
+              {
+                "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+                "accession": "",
+                "document_name": "CIK0001048286.json",
+                "sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+              },
+              {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+                "accession": "0001048286-26-000007",
+                "document_name": "mar-20251231.htm",
+                "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+              }
+            ],
+            "content_id": "sha256:3153ae8336a55d4c1029988112623f301803dfdc9bb727c3ebb42f83a8d8f4f0"
+          },
+          "metrics": {},
+          "error": null,
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "record_id": "sha256:6a4f2290d5b9184224e62bbb95fffd5bd87cc558bb4c581c1242c3e22932f56b"
+        },
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    },
+    {
+      "case": "native-replay-and-public-row-byte-comparison",
+      "status": "PASS"
+    }
+  ],
+  "requirements": {
+    "issue_28_v13": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+    "issue_28_v14": "sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56"
+  },
+  "processing_source": {
+    "data_root": "/private/tmp/issue28-foundation-normal-current-source-smoke/processing-input/933abbbc14c6de912a87ee49e43c8601c449cf90013eb8d769b74a84b7203dbc",
+    "snapshot_id": "sha256:933abbbc14c6de912a87ee49e43c8601c449cf90013eb8d769b74a84b7203dbc",
+    "reused": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "row": {
+    "company": "Marriott International",
+    "cik": "1048286",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "26186000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "filed_date": "2026-02-10",
+    "concept_or_section": "Revenues",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a\"], \"source_candidate_count\": 3, \"source_reported_periods\": [[\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"], [\"2025-01-01\", \"2025-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS."
+  },
+  "status": "FAIL",
+  "error": "Run manifest record is invalid",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/run_store.py\", line 166, in _read_manifest\n    return validate_record(record=payload)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/records.py\", line 1881, in validate_record\n    _validate_record_semantics(record_type=semantic_type, record=record)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/records.py\", line 1215, in _validate_record_semantics\n    validate_run_coordinates(\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/records.py\", line 761, in validate_run_coordinates\n    raise RecordError(\"Run fiscal_year falls outside its exact period\")\nvnext.records.RecordError: Run fiscal_year falls outside its exact period\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/docs/evidence/issue28_foundation_integration_20261004/normal-foundation-smoke.py\", line 84, in main\n    render_ordinary_run(data_root=attempt/'data', run_dir=attempt/'runs/B01')\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/ordinary_projection.py\", line 61, in render_ordinary_run\n    manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/run_store.py\", line 3452, in _mechanically_replay_open_run\n    manifest = _read_manifest(run_dir=run_dir)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/scripts/vnext/run_store.py\", line 168, in _read_manifest\n    raise RunStoreError(\"Run manifest record is invalid\") from error\nvnext.run_store.RunStoreError: Run manifest record is invalid\n",
+  "original_source_bytes_unchanged": true,
+  "seconds": 45.71450312505476
+}

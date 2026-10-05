@@ -47,6 +47,10 @@ architecture.md
 
 需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
 
+当前 Issue #28 工程按[实时第3节唯一队列](https://github.com/wlvh/SEC_metrics/issues/28)接续，跨路线协作以 [COLLAB-28-47-v1.2](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1) 和 [第5.8节开发方法](https://github.com/wlvh/SEC_metrics/issues/28#ai-development-20261003)为准，不将下面历史阶段的局部停点当成当前总委托。与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 按 COMPANY-SEPARATION-v2.1 交接固定来源/程序/处理输入，预算和业务信用各自保留。
+
+本工作树 `task/issue28-foundation-main-candidate` 是 main 基础接收的隔离候选；固定范围、实际验证及剩余兼容缺口见 `docs/evidence/issue28_foundation_integration_20261004/README.md`。PR43 原业务现场由其原执行记录接续，不修改其他执行者工作树、账本或未提交状态。阶段接收不等于全部业务验收，不授 Merge、Ready、正式采纳、部署或 active 切换。
+
 ### 开发、复核 successor vNext Ratchet
 
 当前 PR32 的正常 R4 接线首先读取 `requirements/issue_28_v3/` 与

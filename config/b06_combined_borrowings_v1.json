@@ -1,0 +1,53 @@
+{
+  "record_type": "B06_COMBINED_BORROWING_SOURCE_POLICY",
+  "schema_version": 1,
+  "scope": "consolidated_nonbank",
+  "measurement": "REPORTED_CARRYING_AMOUNT",
+  "proven_classes": [
+    "current_borrowings",
+    "noncurrent_borrowings"
+  ],
+  "remaining_classes": [
+    "finance_leases"
+  ],
+  "source_note_concepts": {
+    "combined": "FinancialInstrumentsDisclosureTextBlock",
+    "short": "ScheduleOfShortTermDebtTextBlock",
+    "long": "ScheduleOfDebtInstrumentsTextBlock",
+    "accounting_policy": "BasisOfPresentationAndSignificantAccountingPoliciesTextBlock"
+  },
+  "source_monetary_concepts": {
+    "short": "DebtCurrent",
+    "noncurrent": "LongTermDebtNoncurrent",
+    "current_long": "LongTermDebtCurrent",
+    "other_short": "OtherShortTermBorrowings"
+  },
+  "short_labels": {
+    "commercial_paper": "Commercial paper, principal amount(?:\\s*\\([a-z]\\))?",
+    "current_principal": "Current portion of long-term debt, principal amount",
+    "other_short": "Other short-term borrowings, principal amount(?:\\s*\\([a-z]\\))?",
+    "principal": "Total short-term borrowings, principal amount",
+    "adjustment": "Net unamortized discounts, premiums and debt issuance costs",
+    "carrying": "Total Short-term borrowings, including current portion of long-term debt, carried at historical proceeds, as adjusted",
+    "fair_value_adjustment": "Net fair value adjustments related to hedging and purchase accounting"
+  },
+  "long_labels": {
+    "principal": "Total long-term debt, principal amount",
+    "fair_value_adjustment": "Net fair value adjustments related to hedging and purchase accounting",
+    "issuance_adjustment": "Net unamortized discounts, premiums and debt issuance costs",
+    "carrying": "Total long-term debt, carried at historical proceeds, as adjusted",
+    "current_excluded": "Current portion of long-term debt, carried at historical proceeds, as adjusted \\(not included above \\([^)]*\\)\\)"
+  },
+  "maturity_member_pattern": "Notes due [0-9]{4}(?:[-–][0-9]{4})? \\([^)]*\\)(?:\\s*\\([a-z]\\))?",
+  "date_header_prefix": "As of ",
+  "scale_header": "(MILLIONS)",
+  "unit": "USD",
+  "scale": 1000000,
+  "creates_metric_result": false,
+  "production_authorized": false,
+  "current_long_balance_label_pattern": "Short-term borrowings, including current portion of long-term debt: (?P<current_year>[0-9]{4})—\\$(?P<current_value>[0-9,]+); (?P<prior_year>[0-9]{4})—\\$(?P<prior_value>[0-9,]+)",
+  "rounding_statement": "Certain amounts in the consolidated financial statements and associated notes may not add due to rounding. All percentages have been calculated using unrounded amounts.",
+  "optional_short_roles": [
+    "fair_value_adjustment"
+  ]
+}

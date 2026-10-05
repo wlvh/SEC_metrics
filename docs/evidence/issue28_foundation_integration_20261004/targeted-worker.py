@@ -1,0 +1,5 @@
+import subprocess,time,os,json
+from pathlib import Path
+t=time.monotonic()
+x=subprocess.run(['/private/tmp/issue28-tokenizers-venv/bin/python', '-m', 'unittest', '-v', 'tests.vnext.test_normal_annual_input_v2', 'tests.vnext.test_c04_registration_successor'],cwd='/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics',env={**os.environ,"PYTHONPATH":"scripts:tools","PYTHONDONTWRITEBYTECODE":"1"},stdout=open('/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/docs/evidence/issue28_foundation_integration_20261004/annual-c04-targeted.log',"w"),stderr=subprocess.STDOUT)
+Path('/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics/docs/evidence/issue28_foundation_integration_20261004/annual-c04-targeted-summary.json').write_text(json.dumps({"returncode":x.returncode,"seconds":time.monotonic()-t,"command":['/private/tmp/issue28-tokenizers-venv/bin/python', '-m', 'unittest', '-v', 'tests.vnext.test_normal_annual_input_v2', 'tests.vnext.test_c04_registration_successor']},indent=2)+"\n")
