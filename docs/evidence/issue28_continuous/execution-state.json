@@ -4491,6 +4491,45 @@
       "ordinary_message_cap": 3,
       "reader_started_at": "2026-10-05T11:51:02.188717+00:00",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_c02images_9ac5a02",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "c02_image_source_metadata_receiving",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/c02-image-input-reception-20261005"
+      ],
+      "patch_sha": "9ac5a02da789ad81b6c94af90477935854e0c4df",
+      "spawned_at": "2026-10-05T12:12:52.507102+00:00",
+      "ended_at": "2026-10-05T12:26:07.570715+00:00",
+      "tool_calls": 35,
+      "result_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/independent-receiving-review/conclusion.md",
+      "verdict": "PASS_SCOPED_RECEIVING",
+      "tool_call_cap": 80,
+      "time_cap_minutes": 90,
+      "ordinary_message_cap": 3,
+      "ended_at_basis": "Parent observed completion; exact agent completion timestamp not reported",
+      "ordinary_messages": null,
+      "ordinary_messages_basis": "Not enumerated in final artifact; cap3 instruction retained"
+    },
+    {
+      "task_name": "diagnose_c02image_9ac5a02",
+      "purpose": "DEVELOPMENT_INPUT_CHECK",
+      "module": "c02_table_trial_image_metadata_correction",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/request-body.json"
+      ],
+      "patch_sha": "9ac5a02da789ad81b6c94af90477935854e0c4df",
+      "spawned_at": "2026-10-05T12:26:07.570715+00:00",
+      "ended_at": "2026-10-05T12:42:24.868761+00:00",
+      "tool_calls": 64,
+      "result_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/independent-corrected-input/conclusion.md",
+      "verdict": "COMPLETED_FULL_SUPPLIED_TEXT_TABLE_IMAGE_METADATA_NOT_PIXELS",
+      "tool_call_cap": 80,
+      "time_cap_minutes": 90,
+      "ordinary_message_cap": 3,
+      "reader_started_at": "2026-10-05T12:27:18.835479+00:00",
+      "ordinary_messages": 2
     }
   ],
   "ci_capacity_20260922": {
@@ -14037,7 +14076,7 @@
     "fix": "Existing config budget_root replaces constant in newC02 protection; tests26+.audit5 pass. No whitelist or unapproved scope/period rule."
   },
   "c02_table_model_input_trial_20261004": {
-    "status": "PASS_LIMITED_DEVELOPMENT_RELATIONSHIPS_POLICY_MEDIA_COMPLETENESS_PENDING",
+    "status": "INITIAL_PLUS_SINGLE_SOURCE_METADATA_FIX_ENDED_LIMITED_RELATIONS_PASS_MEDIA_POLICY_NATIVE_WIRE_PENDING",
     "own_base_sha": "df84865dd64260b7dd6307b852b058f3305a307e",
     "method": "Complete original block dictionary plus all source table text/header grids, restoring lost row/column associations; same extraction task. Genuine representation change, not third same plain-block retry.",
     "company": "jpmorgan_chase",
@@ -14050,7 +14089,7 @@
     "maximum_initial_contexts": 1,
     "maximum_substantive_fix_contexts": 1,
     "initial_context_consumed": true,
-    "fix_context_consumed": false,
+    "fix_context_consumed": true,
     "same_old_batch_reopened": false,
     "semantic_credit": false,
     "company_result": false,
@@ -14077,7 +14116,7 @@
     "review_unit_hash": "sha256:8faf9fec2e563a8c7ee4693df427501697a8483f30fd6f78fe31deb1955b335c",
     "semantic_result_credit": false,
     "DeepSeek_credit": false,
-    "next": "Actual native independent read and remaining media/completeness/qualification decision; no gratuitous same-method second answer or regex. Minimal target plan1+1 max2 only a proposal, not ready/purpose permission.",
+    "next": "No third same-method model answer. Explicit preserve-new-wire pending save/read, whole-scope omission/media and narrow qualification owner decision; target purpose/mapping/wiring still NOT_READY/NOT_GRANTED.",
     "native_read_seconds": 5.532,
     "all_model_native_files_equal": true,
     "old_runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195",
@@ -14088,7 +14127,19 @@
     "provider_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5979438617",
     "queue_readback": "EXACT_EXISTING_C02_ROW_COMMON_RULE_UNCHANGED",
     "queue_body_sha256": "f5ae4c7d7740d0b05ce53018032c18bdaed3d0ba1312696bd9d25b476c8cf498",
-    "old_runtime_after_change_read_seconds": 5.633
+    "old_runtime_after_change_read_seconds": 5.633,
+    "fix_context_consumed_at": "2026-10-05T12:26:07.570715+00:00",
+    "fix_reason": "Substantive source metadata omission: all original img attributes and actual cell positions restored without answer injection, source/task change or semantic regex.",
+    "corrected_request_sha256": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+    "corrected_request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/request-body.json",
+    "corrected_reader_task": "diagnose_c02image_9ac5a02",
+    "corrected_response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
+    "corrected_facts": 50,
+    "corrected_unresolved": 3,
+    "corrected_reference_output_tokens": 3207,
+    "corrected_clear_scope_supported": 38,
+    "corrected_qualification_kind_pending": 12,
+    "batch_closed": true
   },
   "ci_c7a96eae": {
     "run_id": 37198645311,
@@ -14366,7 +14417,7 @@
     "relevant_source_evidence": "Complete D02 Marriott/Pfizer original readings and B06 source-census/statement-location evidence are available for later affected tasks; current D03 dictionary fix is own evidence prototype and unchanged by these increments."
   },
   "c02_image_input_reception_20261005": {
-    "status": "ACTUAL_SOURCE_METADATA_PASS_NEW_WIRE_PROCESSING_NOT_CONNECTED",
+    "status": "SCOPED_RECEIVING_REVIEW_AND_CORRECTED_INPUT_PARSER_PASS_NO_COMPLETE_NATIVE_CREDIT",
     "provider_sha": "e6b2bb8e2575b665a8e02290935953e632216f2f",
     "introducing_sha": "c294b12f",
     "received_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/prepare_image_markup.py",
@@ -14381,13 +14432,19 @@
     "all_original_text_and_grid_unchanged": true,
     "all_media_semantics_proven": false,
     "old_mapper_rejects_changed_request": true,
-    "fix_context_consumed": false,
-    "model_answers_added": 0,
+    "fix_context_consumed": true,
+    "model_answers_added": 1,
     "business_calls": [
       0,
       0,
       0
     ],
-    "next": "Limited receiving review then explicit new-wire processing; no old-request rebind or target purpose/credit. At most the original table-trial one substantive correction."
+    "next": "No third same-method model answer. Explicit preserve-new-wire pending save/read, whole-scope omission/media and narrow qualification owner decision; target purpose/mapping/wiring still NOT_READY/NOT_GRANTED.",
+    "reviewed_sha": "9ac5a02da789ad81b6c94af90477935854e0c4df",
+    "review_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/independent-receiving-review/conclusion.md",
+    "review_verdict": "PASS_SCOPED_RECEIVING",
+    "corrected_raw_response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
+    "corrected_postprocessing_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/corrected-postprocessing.json",
+    "corrected_reference_path": "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/corrected-reference-comparison.json"
   }
 }
