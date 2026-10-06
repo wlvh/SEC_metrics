@@ -156,6 +156,34 @@ class HistoricalRangeTest(unittest.TestCase):
         self.assertEqual(row['local_metric_status'], 'REVIEW_REQUIRED')
         self.assertEqual(row['value'], '')
 
+    def test_daily_missing_years_follow_latest_range_outcomes(self):
+        from scripts.vnext import company_daily_results as daily
+        root = self.root/'state'
+        root.mkdir()
+        current = {'company_id': 'test_company', 'checkpoint_id': 'source-v1'}
+        view.save_execution(root=root, report={'company_id': 'test_company',
+            'source_checkpoint_id': current['checkpoint_id'],
+            'period_request': {'fiscal_year': 2022},
+            'metrics': [{'metric_id': 'B01', 'status': 'INPUT_FAILED'}]})
+        view.save_execution(root=root, report={'company_id': 'test_company',
+            'source_checkpoint_id': current['checkpoint_id'],
+            'period_request': {'fiscal_year_start': 2023, 'fiscal_year_end': 2024},
+            'metrics': [{'metric_id': 'B01', 'status': 'SOURCE_INPUT_REQUIRED',
+                         'period_request': {'fiscal_year': year}} for year in (2023, 2024)]})
+        output = self.root/'daily'
+        with patch.object(daily, 'locked_company', side_effect=lambda p: nullcontext(p)), \
+             patch.object(daily, 'recover_for_read', return_value=current):
+            daily.write_daily_results(state_root=root, output_root=output, company_id='test_company')
+        with (output/'metrics_matrix.csv').open(encoding='utf-8-sig') as stream:
+            rows = {int(r['fiscal_year']): r for r in csv.DictReader(stream)}
+        self.assertEqual(set(rows), {2022, 2023, 2024})
+        self.assertEqual(rows[2022]['requested_in_latest_execution'], 'False')
+        for year in (2023, 2024):
+            self.assertEqual(rows[year]['requested_in_latest_execution'], 'True')
+            self.assertEqual(rows[year]['period_role'], 'REQUESTED_WITHOUT_RESULT')
+            self.assertEqual(rows[year]['status'], 'SOURCE_INPUT_REQUIRED')
+            self.assertEqual(rows[year]['value'], '')
+
 
 if __name__ == '__main__':
     unittest.main()

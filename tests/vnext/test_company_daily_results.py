@@ -98,7 +98,7 @@ class CompanyDailyResultsTest(unittest.TestCase):
             'period_request':None,'metrics':[outcome]})
         return work
 
-    def read(self, *, defects=None, suffix='daily'):
+    def read(self, *, defects=None, suffix='daily', row_year=None):
         @contextmanager
         def locked(root): yield Path(root)
         registry = self.root.parent/'defects.json'
@@ -109,7 +109,8 @@ class CompanyDailyResultsTest(unittest.TestCase):
             result = daily.write_daily_results(state_root=self.root,output_root=self.root.parent/suffix,
                 company_id=self.company, defects_file=registry if defects else None)
         output = self.root.parent/suffix
-        row, = csv.DictReader(io.StringIO((output/'metrics_matrix.csv').read_text()))
+        rows=list(csv.DictReader(io.StringIO((output/'metrics_matrix.csv').read_text())))
+        row, = [r for r in rows if row_year is None or r['fiscal_year']==str(row_year)]
         return result,row,output
 
     def test_calculated_value_and_source_links_without_replay_or_copy(self):
@@ -117,6 +118,8 @@ class CompanyDailyResultsTest(unittest.TestCase):
         self.assertEqual((row['value'],row['unit'],row['period_start'],row['period_end']),('120','USD','2025-01-01','2025-12-31'))
         self.assertEqual(row['result_validity'],'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED')
         self.assertEqual(row['source_root'],str(work/'data'))
+        self.assertEqual(row['requested_in_latest_execution'],'True')
+        self.assertEqual(row['period_role'],'RUN_ARCHIVE_COORDINATE')
         self.assertFalse((out/'native').exists()); self.assertFalse(result['replay_performed'])
 
     def test_wrong_value_unit_or_measurement_is_withheld(self):
@@ -127,6 +130,32 @@ class CompanyDailyResultsTest(unittest.TestCase):
                 self.saved(row_changes=update); result,row,_ = self.read(suffix='daily'+str(self.serial))
                 self.assertEqual(result['status'],'READ_PARTIAL'); self.assertEqual(row['value'],'')
                 self.assertIn(reason,row['notes'])
+
+    def test_previous_period_outside_latest_request_stays_visible_but_is_not_requested(self):
+        self.saved()
+        save_execution(root=self.root,report={'record_type':'COMPANY_COMPUTATION_REFERENCES_V1',
+            'company_id':self.company,'source_checkpoint_id':self.current['checkpoint_id'],
+            'period_request':{'fiscal_year':2024},'metrics':[{'metric_id':'B01','status':'INPUT_FAILED'}]})
+        _,row,out=self.read(row_year=2025)
+        self.assertEqual(row['requested_in_latest_execution'],'False')
+        self.assertEqual(row['period_role'],'RUN_ARCHIVE_COORDINATE')
+        self.assertEqual(row['fiscal_year'],'2025')
+        rows=list(csv.DictReader(io.StringIO((out/'metrics_matrix.csv').read_text())))
+        pending=next(r for r in rows if r['fiscal_year']=='2024')
+        self.assertEqual((pending['status'],pending['period_role'],pending['requested_in_latest_execution']),
+                         ('INPUT_FAILED','REQUESTED_WITHOUT_RESULT','True'))
+
+    def test_missing_range_years_match_actual_latest_outcomes_not_range_header(self):
+        pending=[{'metric_id':'B01','period_request':{'fiscal_year':y},'latest_attempt_status':'SOURCE_INPUT_REQUIRED',
+                  'run_id':None,'result_validity':'NO_RESULT'} for y in (2022,2023,2024)]
+        latest={'period_request':{'fiscal_year_start':2023,'fiscal_year_end':2024},
+            'metrics':[{'metric_id':'B01','period_request':{'fiscal_year':y}} for y in (2023,2024)]}
+        view={'metrics':pending,'latest_execution':latest,'company_id':self.company}
+        with patch.object(daily,'build_company_view',return_value=view):
+            _,_,out=self.read(row_year=2022)
+        rows=list(csv.DictReader(io.StringIO((out/'metrics_matrix.csv').read_text())))
+        self.assertEqual([(r['fiscal_year'],r['requested_in_latest_execution']) for r in rows],
+                         [('2022','False'),('2023','True'),('2024','True')])
 
     def test_known_defect_release_of_another_result_does_not_release_this_result(self):
         self.saved()

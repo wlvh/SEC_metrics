@@ -1,0 +1,17 @@
+F
+======================================================================
+FAIL: test_daily_missing_years_follow_latest_range_outcomes (tests.vnext.test_company_historical_range.HistoricalRangeTest.test_daily_missing_years_follow_latest_range_outcomes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_company_historical_range.py", line 182, in test_daily_missing_years_follow_latest_range_outcomes
+    self.assertEqual(rows[year]['requested_in_latest_execution'], 'True')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'False' != 'True'
+- False
++ True
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)

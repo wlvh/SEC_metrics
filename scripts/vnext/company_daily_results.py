@@ -27,7 +27,8 @@ DAILY_FIELDS = ('company_id', 'run_id', 'result_id', 'requirement_id', 'requirem
     'current_input_status', 'latest_attempt_status', 'latest_request_status', 'result_validity',
     'source_credit', 'source_import_status', 'source_freshness', 'record_root', 'source_root',
     'archive_period_start', 'archive_period_end', 'archive_fiscal_year',
-    'measurement_period_start', 'measurement_period_end', 'measurement_period_status', 'defect_holds')
+    'measurement_period_start', 'measurement_period_end', 'measurement_period_status', 'defect_holds',
+    'requested_in_latest_execution', 'period_role')
 
 
 def _rows(raw):
@@ -126,7 +127,14 @@ def write_daily_results(*, state_root, output_root, company_id, runtime_roots=()
             entry.update(source_import_status=source_import.get('status','NOT_AVAILABLE'),
                          source_freshness='SAVED_VERSION_ONLY_NOT_ONLINE_CHECKED')
             if not entry.get('run_id'):
+                period = entry.get('period_request') or {}
+                latest = view.get('latest_execution') or {}
+                entry.update(period_role='REQUESTED_WITHOUT_RESULT',
+                    requested_in_latest_execution=any(m['metric_id']==entry['metric_id']
+                        and (m.get('period_request') or latest.get('period_request') or {})==period
+                        for m in latest.get('metrics',[])))
                 metric_rows.append({'metric_id': entry['metric_id'], 'status':entry['latest_attempt_status'],
+                    'fiscal_year':period.get('fiscal_year',''), 'period_end':period.get('report_end',''),
                     'notes':entry.get('reason'), **{k:entry.get(k) for k in DAILY_FIELDS}})
                 continue
             # A different code-package identity alone is no longer a content

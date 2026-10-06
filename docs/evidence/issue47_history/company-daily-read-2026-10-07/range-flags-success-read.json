@@ -1,0 +1,64 @@
+{
+  "upstream_commit": "df90e1f491ef8d028d9dc12120f807951062da04",
+  "elapsed_seconds": 10.749677,
+  "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/work/issue47-venv/bin/python",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tools/vnext_company.py",
+    "results",
+    "--state-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/historical-company-state",
+    "--output-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-history-daily-flags-df90-20261007",
+    "--trust-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/trust/company",
+    "--company",
+    "macys",
+    "--defects-file",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/docs/evidence/issue47_history/known_result_defects.json",
+    "--runtime-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/programs/historical-03d65fc886b8699aaf5d807061c257773390b4b51b8ff93de83b030a24cf064c"
+  ],
+  "result": {
+    "elapsed_seconds": 10.706569083034992,
+    "record_type": "COMPANY_DAILY_RESULT_VIEW_V1",
+    "company_id": "macys",
+    "output_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-history-daily-flags-df90-20261007",
+    "status": "READ",
+    "result_count": 2,
+    "replay_performed": false,
+    "attempts_copied": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "protected_files_unchanged": 16,
+  "comparison": {
+    "metrics_matrix.csv": {
+      "old_columns_unchanged": true,
+      "rows": 2,
+      "requested_in_latest_execution": [
+        "True",
+        "True"
+      ],
+      "period_role": [
+        "RUN_ARCHIVE_COORDINATE",
+        "RUN_ARCHIVE_COORDINATE"
+      ]
+    },
+    "metric_evidence.csv": {
+      "old_columns_unchanged": true,
+      "rows": 2,
+      "requested_in_latest_execution": [
+        "True",
+        "True"
+      ],
+      "period_role": [
+        "RUN_ARCHIVE_COORDINATE",
+        "RUN_ARCHIVE_COORDINATE"
+      ]
+    }
+  }
+}
