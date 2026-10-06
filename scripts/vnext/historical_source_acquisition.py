@@ -169,6 +169,10 @@ def _declared_frame(*, repo_root: Path, company_id: str, years: int):
     events = declare_event_sources(repo_root=Path(repo_root), company_id=company_id,
                                    count=years)
     requirements = _union(planned=plan["requirements"], added=events["requirements"])
+    from .historical_event_attachments import attachment_dependencies
+    requirements = _union(planned=requirements, added=attachment_dependencies(
+        repo_root=Path(repo_root), company_id=company_id,
+        requirements=events["requirements"], report_ends=targets))
     # The same hole, for the same reason, one metric later: C02's second source
     # is the annual meeting's proxy, or the amendment that adds Part III where
     # a company puts its governance information there, and the planner declares

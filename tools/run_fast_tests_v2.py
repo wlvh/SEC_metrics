@@ -534,6 +534,7 @@ SOURCE_TESTS += ("tests.vnext.test_historical_bond_sections_material.HistoricalB
 FAST_TESTS += ("tests.vnext.test_c02_table_development_input",)
 FAST_TESTS += ("tests.vnext.test_c02_table_model_processing",)
 FAST_TESTS += ("tests.vnext.test_c02_image_model_processing",)
+FAST_TESTS += ("tests.vnext.test_historical_event_attachments",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
