@@ -1,0 +1,39 @@
+{
+  "record_type": "ISSUE47_LIMITED_KNOWN_EXPORT_RESUME_PLAN_V1",
+  "authorization": "Owner chat: 批准附件范围并resume最多1次GET",
+  "logical_budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
+  "runtime_ledger_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-sec-ledger-resume-20261006",
+  "original_export": "evidence/issue47_acquired",
+  "original_claims_to_preserve": 1547,
+  "existing_conservative_reserve_to_preserve": 224,
+  "expected_counts_before": [
+    0,
+    0,
+    1771
+  ],
+  "maximum_counts_after": [
+    0,
+    0,
+    1772
+  ],
+  "company_id": "paramount_skydance_paramount_global",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+  "retry_count": 0,
+  "successor_wiring_receipt": "docs/evidence/issue47_history/acquisition-wiring/limited-known-resume-20261006/offline-wiring-receipt.json",
+  "execution_order": [
+    "Verify complete new offline receipt including full declared test accounting and exact source hashes.",
+    "Commit/push implementation and receipt; fixed execution clone contains remote export.",
+    "Restore same complete exported ledger at new location; preserve binding, slots, claims and earlier resume views; append location and one-capture bound with zero new lost-segment reserve.",
+    "Publish/read back executor resume marker, export/push updated chain before capture.",
+    "Call original counted SecHttpClient capture exactly for approved URL; fail/UNKNOWN consumes the one chance; no retry.",
+    "Export/read back source receipt and actual cumulative count; keep original model requests/answers/Run unchanged."
+  ],
+  "state": "DEVELOPMENT_OFFLINE_CHECKS_IN_PROGRESS_NOT_RESUMED_OR_CAPTURED",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_model_run_acceptance_permission": false,
+  "remaining_after_this_grant_not_authorized": 95
+}

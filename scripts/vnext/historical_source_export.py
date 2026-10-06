@@ -137,8 +137,19 @@ def _approval(*, ledger_root, mode, policy_root):
         return None
     _need(path.is_file(), "ISSUE_47_EXPORT_LIVE_LEDGER_WITHOUT_ALLOWANCE:" + POLICY_PATH)
     policy = strict_json_file(path=path)
-    _need(Path(policy["budget_root"]) == Path(ledger_root),
-          "ISSUE_47_EXPORT_LEDGER_IS_NOT_THE_GRANTED_ROOT:" + str(ledger_root))
+    if Path(policy["budget_root"]) != Path(ledger_root):
+        from .historical_sec_session import resume_chain_path
+        chain_path = resume_chain_path(Path(ledger_root))
+        _need(chain_path.is_file() and not chain_path.is_symlink(),
+              "ISSUE_47_EXPORT_LEDGER_IS_NOT_THE_GRANTED_ROOT:" + str(ledger_root))
+        from .historical_sec_resume import local_chain
+        record = local_chain(Path(ledger_root))[-1]
+        _need(record.get('runtime_ledger_root') == str(Path(ledger_root))
+              and record.get('budget_root') == policy['budget_root']
+              and record.get('delegation_url') == policy['delegation_url']
+              and record.get('delegation_body_sha256') == policy['delegation_body_sha256']
+              and record.get('bounded_capture', {}).get('maximum_additional_sec_calls') == 1,
+              "ISSUE_47_EXPORT_LEDGER_IS_NOT_THE_GRANTED_ROOT:" + str(ledger_root))
     return {key: policy[key] for key in ("delegation_url", "delegation_body_sha256",
                                          "delegation_record_path", "budget_root",
                                          "maximum_additional_provider_paid_sec_calls")}
@@ -529,4 +540,3 @@ def restore_acquisition(*, export_dir, out_root):
     return {"status": "RESTORED", "data_root": str(data_root), "import_id": record["import_id"],
             "execution_mode": index["execution_mode"], "rows": index["exported_row_count"],
             "journaled": journaled, "calls": [0, 0, 0]}
-

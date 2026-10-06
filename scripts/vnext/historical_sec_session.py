@@ -804,7 +804,7 @@ class HistoricalSecSession:
               and self.allowance["scope"].get("dependency_classes"),
               "ISSUE_47_ALLOWANCE_SCOPE_IS_NOT_ENFORCEABLE")
         if self.ledger.live:
-            _need(self.ledger.root == Path(self.allowance["budget_root"])
+            _need(self.ledger.root == Path(self.allowance.get("runtime_ledger_root", self.allowance["budget_root"]))
                   and self.response is None,
                   "ISSUE_47_LIVE_SESSION_MUST_USE_THE_GRANTED_ROOT")
         # A ledger pinned to an extension raises the cap; the session holding
@@ -845,6 +845,8 @@ class HistoricalSecSession:
             return "LIVE_PATH_REFUSED:" + str(refusal)
         if published["reserve_sec_calls"] != self.ledger._pinned_reserve:
             return "LIVE_PATH_REFUSED:ISSUE_47_LEDGER_RESUME_RESERVE_CHANGED"
+        if published.get('bounded_capture') != getattr(self.ledger, '_bounded_capture', None):
+            return 'LIVE_PATH_REFUSED:ISSUE_47_LIMITED_RESUME_SCOPE_CHANGED'
         return None
 
     def capture(self, *, company_id, url, years=5):
@@ -853,6 +855,14 @@ class HistoricalSecSession:
         validate_official_sec_url(url=url)
         with self.ledger.locked():
             self.ledger.require_unblocked()
+            limited = getattr(self.ledger, '_bounded_capture', None)
+            if limited is not None:
+                _need(company_id == limited['company_id'] and url == limited['source_url']
+                      and limited['maximum_additional_sec_calls'] == 1 and limited['retry_count'] == 0,
+                      'ISSUE_47_LIMITED_RESUME_TARGET_NOT_GRANTED')
+                counts = self.ledger.snapshot()['counts']
+                _need(counts[:2] == [0, 0] and limited['counts_before'][2] <= counts[2]
+                      < limited['maximum_counts'][2], 'ISSUE_47_LIMITED_RESUME_CALL_CONSUMED')
             refused = self._published_still()
             _need(refused is None, "ISSUE_47_" + str(refused))
             install_historical_source_inputs(root=self.data_root)
@@ -1382,6 +1392,8 @@ REQUIRED_WIRING_EVIDENCE = (
     # The instance declaration: the XBRL instances an annual accession's index
     # lists, which C04 and B06 read and the planner does not declare.
     "scripts/vnext/historical_instance_sources.py",
+    "scripts/vnext/historical_event_attachments.py",
+    "docs/evidence/issue47_history/event-attachment-declarations-v1.json",
     # The start that outlives the host, shared with the model ledger: a start
     # the gate refuses without is part of the path a grant is spent on.
     "scripts/vnext/historical_ledger_start.py",
@@ -1669,13 +1681,21 @@ def _resume_reserve(root):
     if not path.exists() and not path.is_symlink():
         return 0
     _need(path.is_file() and not path.is_symlink(), "ISSUE_47_LEDGER_RESUME_CHAIN_UNSAFE")
+    records = [strict_json_loads(text=line) for line in path.read_text(encoding="utf-8").splitlines()]
+    if not records:
+        # The ledger's existing pinned-reserve check owns an emptied chain,
+        # including its original refusal and unchanged charged count.
+        return 0
+    _need(type(records[-1]) is dict, "ISSUE_47_LEDGER_RESUME_CHAIN_INVALID")
+    logical_root = records[-1].get("budget_root")
+    _need(records[-1].get("runtime_ledger_root", logical_root) == str(Path(root)),
+          "ISSUE_47_LEDGER_RESUME_LOCATION_MISMATCH")
     total = 0
-    for line in path.read_text(encoding="utf-8").splitlines():
-        record = strict_json_loads(text=line)
+    for record in records:
         segment = record.get("lost_segment") if type(record) is dict else None
         reserve = segment.get("reserve_sec_calls") if type(segment) is dict else None
         _need(type(record) is dict and record.get("record_type") == RESUME_TYPE
-              and record.get("budget_root") == str(Path(root))
+              and record.get("budget_root") == logical_root
               and type(reserve) is int and reserve >= 0,
               "ISSUE_47_LEDGER_RESUME_CHAIN_INVALID")
         total += reserve
@@ -1740,7 +1760,7 @@ def require_published_start(*, allowance, reader, branch_export_index, checkout=
           == branch_export_index,
           "ISSUE_47_SEC_LEDGER_CHECKOUT_IS_NOT_THE_BRANCH_S_EXPORT:bring the checkout to the "
           "branch's tip; a checkout behind it would let a rolled-back ledger pass")
-    chain = resume_chain_path(Path(allowance["budget_root"]))
+    chain = resume_chain_path(Path(allowance.get("runtime_ledger_root", allowance["budget_root"])))
     from .historical_sec_resume import require_published_resume, resume_markers
     if chain.exists() or chain.is_symlink():
         return require_published_resume(allowance=allowance, reader=reader, checkout=checkout)
@@ -1770,7 +1790,7 @@ def _allowance_ledger(*, allowance, root, live):
                                 binding=_sealed(body, "binding_id"), live=live)
 
 
-def live_historical_session(*, branch_tip):
+def live_historical_session(*, branch_tip, runtime_ledger_root=None):
     """Issue #47's granted session, or a refusal naming what is missing.
 
     ``acquisition_allowance`` never falls back to Issue #28's record, so while
@@ -1789,9 +1809,14 @@ def live_historical_session(*, branch_tip):
     from .historical_source_acquisition import live_github_reader
     reader = live_github_reader()
     allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=reader)
+    if runtime_ledger_root is not None:
+        from .historical_source_acquisition import _typed_budget_root
+        _typed_budget_root(str(runtime_ledger_root))
+        allowance = {**allowance, 'runtime_ledger_root': str(Path(runtime_ledger_root))}
     _need(allowance["delegation_body_sha256"] and allowance["delegation_url"],
           "ISSUE_47_ALLOWANCE_DELEGATION_INCOMPLETE:" + POLICY_PATH)
-    verify_offline_wiring(receipt_path=allowance["sec_wiring_receipt_path"])
+    if runtime_ledger_root is None:
+        verify_offline_wiring(receipt_path=allowance["sec_wiring_receipt_path"])
     tip = branch_tip()
     branch_export_index = tip["export_index"]
 
@@ -1811,7 +1836,12 @@ def live_historical_session(*, branch_tip):
     extension = acquisition_extension(repo_root=ROOT, allowance=allowance,
                                       delegation_reader=reader)
     effective = extended_allowance(allowance=allowance, extension=extension)
-    ledger = live_ledger(allowance=effective, published=published())
+    checked = published()
+    if runtime_ledger_root is not None:
+        limited = checked.get('bounded_capture')
+        _need(limited is not None, 'ISSUE_47_RELOCATED_LEDGER_REQUIRES_LIMITED_RESUME')
+        verify_offline_wiring(receipt_path=limited.get('wiring_receipt_path'))
+    ledger = live_ledger(allowance=effective, published=checked)
     session = HistoricalSecSession(factory=_FACTORY, allowance=effective, ledger=ledger)
     session.published_check = published
     return session
@@ -1823,12 +1853,17 @@ def live_ledger(*, allowance, published):
     With an extension in ``allowance`` (``extended_allowance``), the ledger is
     also pinned to it - only if it is the ledger the extension continues.
     """
-    ledger = _allowance_ledger(allowance=allowance, root=Path(allowance["budget_root"]), live=True)
+    ledger = _allowance_ledger(allowance=allowance,
+        root=Path(allowance.get("runtime_ledger_root", allowance["budget_root"])), live=True)
     ledger.pin_resume_reserve(published["reserve_sec_calls"])
     if allowance.get("extension") is not None:
         _need(allowance["extension"].get("provenance_verified_against_github") is True,
               "ISSUE_47_LIVE_EXTENSION_NOT_READ_BACK_FROM_GITHUB")
         ledger.pin_extension(allowance["extension"])
+    if 'runtime_ledger_root' in allowance:
+        _need(published.get('bounded_capture') is not None,
+              'ISSUE_47_RELOCATED_LEDGER_REQUIRES_LIMITED_RESUME')
+    ledger._bounded_capture = published.get('bounded_capture')
     return ledger
 
 

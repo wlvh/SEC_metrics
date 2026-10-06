@@ -5207,3 +5207,64 @@ class ThePinnedBodyIsTheCommittedProposal(unittest.TestCase):
         if index["export_id"] == state["export_id"]:
             self.assertEqual(index["state_archive"]["members"]["ledger/claims.jsonl"],
                              state["claims"])
+
+
+class AKnownExportCanMoveOnlyForOneReviewedCapture(unittest.TestCase):
+    """Constructed ledger/source/approval fixtures; no actual SEC or user ledger."""
+    @classmethod
+    def setUpClass(cls):
+        cls.fixture = ALostHostResumesFromTheExportAndPaysForWhatItMayHaveSpent
+        cls.fixture.setUpClass()
+
+    def test_known_restore_preserves_claims_binding_and_counts_at_new_location(self):
+        f = self.fixture
+        root = f.base / ('known-' + os.urandom(6).hex())
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        for path in [SESSION_LEDGER.anchor_path(root), SESSION_LEDGER.mirror_path(root),
+                     SESSION_MODULE.resume_chain_path(root)]:
+            self.addCleanup(path.unlink, missing_ok=True)
+        from vnext.historical_event_attachments import POLICY_PATH
+        real_read = RESUME_MODULE.strict_json_file
+        policy = {'owner_chat_decision': f.DECISION['text'], 'items': [{
+            'company_id': _SCRIPTED_COMPANY, 'source_url': f.events[0]['source_url'],
+            'maximum_sec_attempts': 1, 'retry_count': 0}]}
+        def read(*, path):
+            return copy.deepcopy(policy) if Path(path) == RESUME_MODULE.ROOT/POLICY_PATH else real_read(path=path)
+        allowance = {**f.allowance, 'runtime_ledger_root': str(root)}
+        with f._live(), patch.object(RESUME_MODULE, 'strict_json_file', side_effect=read), \
+                patch.object(SESSION_MODULE, 'verify_offline_wiring'):
+            resumed = RESUME_MODULE.resume_ledger(allowance=allowance, reader=f._reader([f.start_marker]),
+                checkout=f.checkout, in_flight_company_ids=[], decision=dict(f.DECISION),
+                branch_export_index=f._index(f()), branch_tip_commit='0'*40,
+                known_capture={'company_id': _SCRIPTED_COMPANY, 'source_url': f.events[0]['source_url'],
+                               'wiring_receipt_path': 'in-memory-test-only.json'})
+        self.assertEqual((root/'claims.jsonl').read_bytes(), f.exported_claims)
+        self.assertEqual(strict_json_file(path=root/'binding.json'),
+                         SESSION_MODULE._allowance_ledger(allowance=allowance, root=root, live=True).binding)
+        self.assertEqual(resumed['record']['budget_root'], f.allowance['budget_root'])
+        self.assertEqual(resumed['record']['runtime_ledger_root'], str(root))
+        self.assertEqual(resumed['reserve']['reserve_sec_calls'], 0)
+        limited = resumed['record']['bounded_capture']
+        self.assertEqual(limited['counts_before'][2], len(f.exported_claims.splitlines()))
+        self.assertEqual(limited['maximum_counts'][2], limited['counts_before'][2]+1)
+        ledger = SESSION_MODULE._allowance_ledger(allowance=allowance, root=root, live=True)
+        ledger.pin_resume_reserve(0)
+        self.assertEqual(ledger.snapshot()['counts'], limited['counts_before'])
+        ledger._bounded_capture = limited
+        session = SESSION_MODULE.HistoricalSecSession(factory=SESSION_MODULE._FACTORY,
+                                                       allowance=allowance, ledger=ledger)
+        with f._live():
+            with self.assertRaisesRegex(HistoricalSessionError, 'LIMITED_RESUME_TARGET_NOT_GRANTED'):
+                session.capture(company_id=_SCRIPTED_COMPANY, url=f.events[1]['source_url'])
+            # Charge one attempted call in memory only, including a failed or
+            # UNKNOWN attempt: no second target request may reach transport.
+            exhausted = {**ledger.snapshot(), 'counts': limited['maximum_counts']}
+            with patch.object(ledger, 'snapshot', return_value=exhausted):
+                with self.assertRaisesRegex(HistoricalSessionError, 'LIMITED_RESUME_CALL_CONSUMED'):
+                    session.capture(company_id=_SCRIPTED_COMPANY, url=f.events[0]['source_url'])
+        self.assertEqual((root/'claims.jsonl').read_bytes(), f.exported_claims)
+        # Before publication/export of the new chain even the permitted URL
+        # cannot be reached by the live factory.
+        with self.assertRaises(HistoricalSessionError):
+            SESSION_MODULE.require_published_start(allowance=allowance,
+                reader=f._reader([f.start_marker]), checkout=f.checkout, branch_export_index=f._index(f()))

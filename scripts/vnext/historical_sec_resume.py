@@ -289,7 +289,7 @@ def _same_extension(exported, held):
 
 
 def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decision,
-                  branch_export_index, branch_tip_commit, now=None):
+                  branch_export_index, branch_tip_commit, now=None, known_capture=None):
     """Rebuild this approval's lost SEC ledger from the branch's export; return the marker to post.
 
     ``in_flight_company_ids`` are the companies the lost host could have been
@@ -311,7 +311,7 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
                                            restore_acquisition)
     kind = _sec_start()
     checkout = Path(checkout)
-    root = Path(allowance["budget_root"])
+    root = Path(allowance.get("runtime_ledger_root", allowance["budget_root"]))
     _need(root.is_absolute()
           and not any(path.is_symlink() for path in [root, *root.parents]),
           "RESUME_ROOT_UNSAFE:" + str(root))
@@ -329,7 +329,27 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
           and type(decision.get("received_at")) is str and bool(decision["received_at"]),
           "RESUME_DECISION_MISSING")
     companies = list(in_flight_company_ids)
-    _need(companies and len(companies) == len(set(companies)), "RESUME_IN_FLIGHT_COMPANIES_INVALID")
+    bounded = None
+    if known_capture is not None:
+        from .historical_event_attachments import POLICY_PATH as attachment_scope_path
+        scope = strict_json_file(path=ROOT/attachment_scope_path)
+        matches = [item for item in scope['items'] if item['company_id'] == known_capture.get('company_id')
+                   and item['source_url'] == known_capture.get('source_url')]
+        _need(len(matches) == 1 and not companies
+              and decision['text'] == scope['owner_chat_decision']
+              and matches[0]['maximum_sec_attempts'] == 1 and matches[0]['retry_count'] == 0,
+              'KNOWN_CAPTURE_DECISION_OR_SCOPE_INVALID')
+        _need('runtime_ledger_root' in allowance, 'KNOWN_CAPTURE_LOCATION_REQUIRED')
+        from .historical_sec_session import verify_offline_wiring
+        verify_offline_wiring(receipt_path=known_capture.get('wiring_receipt_path'))
+        bounded = {'company_id': matches[0]['company_id'], 'source_url': matches[0]['source_url'],
+                   'maximum_additional_sec_calls': 1, 'retry_count': 0,
+                   'owner_scope_path': attachment_scope_path,
+                   'wiring_receipt_path': known_capture['wiring_receipt_path'],
+                   'owner_scope_sha256': sha256_file(path=ROOT/attachment_scope_path)}
+    else:
+        _need('runtime_ledger_root' not in allowance, 'RELOCATION_REQUIRES_KNOWN_LIMITED_CAPTURE')
+        _need(companies and len(companies) == len(set(companies)), "RESUME_IN_FLIGHT_COMPANIES_INVALID")
     _need(exported_here(kind, allowance=allowance, checkout=checkout),
           "NOTHING_TO_RESUME:the checkout carries no export of this approval's ledger")
     export_dir = checkout / EXPORT_DIRECTORY
@@ -400,13 +420,22 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
         for slot in sorted((restored / "calls").iterdir()):
             claimed.setdefault(strict_json_file(path=slot / "sec-plan.json")["request"]["url"],
                                []).append(int(slot.name))
-        reserve = lost_segment_reserve(data_root=staging / "source-inputs", claimed_urls=claimed,
-                                       allowance=allowance, company_ids=companies)
+        reserve = ({'reserve_sec_calls': 0, 'by_company': {}} if bounded is not None else
+                   lost_segment_reserve(data_root=staging / "source-inputs", claimed_urls=claimed,
+                                        allowance=allowance, company_ids=companies))
+        if bounded is not None:
+            intents = [strict_json_loads(text=line) for line in claims.decode('utf-8').splitlines()]
+            _need(intents and all(intent['channel'] == 'SEC' for intent in intents),
+                  'KNOWN_CAPTURE_EXPORT_CHANNELS_CHANGED')
+            before = len(intents) + sum(view['lost_segment']['reserve_sec_calls'] for view in exported_chain)
+            bounded.update(counts_before=[0, 0, before], maximum_counts=[0, 0, before+1])
         record = {"record_type": RESUME_TYPE, "schema_version": 1,
                   "requirement_id": kind.requirement_id,
                   "delegation_url": allowance["delegation_url"],
                   "delegation_body_sha256": allowance["delegation_body_sha256"],
                   "budget_root": allowance["budget_root"],
+                  **({'runtime_ledger_root': str(root), 'bounded_capture': bounded}
+                     if bounded is not None else {}),
                   "resumes_start_record_sha256": start_sha,
                   "previous_resume_sha256": (exported_chain[-1]["resume_record_sha256"]
                                              if exported_chain else None),
@@ -420,7 +449,8 @@ def resume_ledger(*, allowance, reader, checkout, in_flight_company_ids, decisio
                       "in_flight_company_ids": companies,
                       "reserve_sec_calls": reserve["reserve_sec_calls"],
                       "by_company": reserve["by_company"],
-                      "basis": ("every due row inside a grant and not yet claimed of the "
+                      "basis": ("complete exported claims restored; existing conservative reserves retained; no new lost segment"
+                                if bounded is not None else "every due row inside a grant and not yet claimed of the "
                                 "companies the lost host could have been acquiring, computed "
                                 "from the restored export as a pass computes what to claim"),
                       "years": 5,
@@ -461,12 +491,27 @@ def require_published_resume(*, allowance, reader, checkout):
     """This host resumed the ledger, every resume is on GitHub, and it is not behind its export."""
     from .historical_source_export import EXPORT_DIRECTORY, INDEX_NAME
     kind = _sec_start()
-    root = Path(allowance["budget_root"])
+    root = Path(allowance.get("runtime_ledger_root", allowance["budget_root"]))
     start_path = start_record_path(root)
     _need(not start_path.exists() and not start_path.is_symlink(),
           "RESUME_BESIDE_A_START_RECORD:" + str(start_path))
     chain = local_chain(root)
     views = [resume_view(record) if "instance_nonce" in record else record for record in chain]
+    _need(views[-1].get("runtime_ledger_root", views[-1].get("budget_root")) == str(root),
+          "RESUME_LOCATION_IS_NOT_THIS_HOST")
+    if 'runtime_ledger_root' in allowance:
+        limited = views[-1].get('bounded_capture')
+        from .historical_event_attachments import POLICY_PATH as attachment_scope_path
+        scope = strict_json_file(path=ROOT/attachment_scope_path)
+        _need(type(limited) is dict and limited.get('owner_scope_path') == attachment_scope_path
+              and limited.get('owner_scope_sha256') == sha256_file(path=ROOT/attachment_scope_path)
+              and limited.get('maximum_additional_sec_calls') == 1 and limited.get('retry_count') == 0,
+              'LIMITED_RESUME_SCOPE_CHANGED')
+        _need(any(item['company_id'] == limited.get('company_id')
+                  and item['source_url'] == limited.get('source_url') for item in scope['items'])
+              and limited.get('counts_before', [])[:2] == [0, 0]
+              and limited.get('maximum_counts') == [0, 0, limited['counts_before'][2]+1],
+              'LIMITED_RESUME_COUNT_OR_TARGET_CHANGED')
     for view in views:
         _need(view.get("requirement_id") == kind.requirement_id
               and all(view.get(key) == allowance[key]
@@ -496,7 +541,7 @@ def require_published_resume(*, allowance, reader, checkout):
     for view in views:
         _need(_prefix(held, view["restored_export"]["claims"]),
               "RESUMED_LEDGER_IS_NOT_WHAT_WAS_RESTORED")
-    require_not_behind_export(kind, allowance=allowance, checkout=checkout)
+    require_not_behind_export(kind, allowance=allowance, checkout=checkout, ledger_root=root)
     index_path = Path(checkout) / EXPORT_DIRECTORY / INDEX_NAME
     exported = (_export_member(strict_json_file(path=index_path), "ledger/resumes.jsonl")
                 if exported_here(kind, allowance=allowance, checkout=checkout) else None)
@@ -507,4 +552,6 @@ def require_published_resume(*, allowance, reader, checkout):
     _need(exported is not None and _prefix(own, exported) and exported["size"] == len(own),
           "RESUME_NOT_EXPORTED:export the resumed ledger and push it before acquiring")
     return {"resume_record": chain[-1], "marker_url": published[-1]["comment"].get("html_url"),
-            "reserve_sec_calls": sum(view["lost_segment"]["reserve_sec_calls"] for view in views)}
+            "reserve_sec_calls": sum(view["lost_segment"]["reserve_sec_calls"] for view in views),
+            **({'bounded_capture': views[-1]['bounded_capture']}
+               if 'bounded_capture' in views[-1] else {})}

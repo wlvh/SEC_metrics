@@ -273,7 +273,7 @@ def require_published_start(kind, *, allowance, reader, checkout):
     return {"start_record": record, "marker_url": comment.get("html_url")}
 
 
-def require_not_behind_export(kind, *, allowance, checkout):
+def require_not_behind_export(kind, *, allowance, checkout, ledger_root=None):
     """This host's ledger holds at least what the checkout's export of it says was claimed.
 
     The export binds the claim log it carries by digest and size; the local
@@ -290,7 +290,7 @@ def require_not_behind_export(kind, *, allowance, checkout):
         binding = None
     _need(kind, type(binding) is dict and type(binding.get("size")) is int
           and type(binding.get("sha256")) is str, "EXPORT_UNREADABLE:" + str(path))
-    log = Path(allowance["budget_root"]) / "claims.jsonl"
+    log = Path(allowance["budget_root"] if ledger_root is None else ledger_root) / "claims.jsonl"
     held = log.read_bytes() if log.is_file() and not log.is_symlink() else b""
     _need(kind, len(held) >= binding["size"]
           and sha256_bytes(content=held[:binding["size"]]) == binding["sha256"],

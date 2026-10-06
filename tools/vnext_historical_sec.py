@@ -198,6 +198,11 @@ def main(argv=None):
     parser.add_argument("--in-flight-company", action="append")
     parser.add_argument("--decision-text")
     parser.add_argument("--decision-received-at")
+    parser.add_argument('--runtime-ledger-root', type=Path,
+                        help='Verified location recovery of the same ledger; never start a new budget')
+    parser.add_argument('--known-capture-url', help='Owner-reviewed single capture for a complete saved export')
+    parser.add_argument('--known-capture-company')
+    parser.add_argument('--wiring-receipt', help='Successor offline receipt for the limited known-export resume')
     args = parser.parse_args(argv)
     if args.command in ("list", "plan", "capture") and args.company is None:
         parser.error("--company is required for " + args.command)
@@ -206,7 +211,9 @@ def main(argv=None):
         parser.error("--approval-url is required for " + args.command)
     if args.command == "restore" and (args.export is None or args.out is None):
         parser.error("--export and --out are required for restore")
-    if args.command == "resume" and (not args.in_flight_company or not args.decision_text
+    if args.runtime_ledger_root is not None and args.command not in {'resume', 'capture', 'export'}:
+        parser.error('--runtime-ledger-root only supports resume/capture/export, never start or acquire')
+    if args.command == "resume" and (not (args.in_flight_company or args.known_capture_url) or not args.decision_text
                                      or not args.decision_received_at):
         parser.error("--in-flight-company, --decision-text and --decision-received-at are "
                      "required for resume")
@@ -230,13 +237,22 @@ def main(argv=None):
             from vnext.historical_sec_resume import resume_ledger
             reader = live_github_reader()
             allowance = _effective_allowance(reader)
+            known = None
+            if args.known_capture_url:
+                if not (args.runtime_ledger_root and args.known_capture_company and args.wiring_receipt):
+                    parser.error('Known single capture requires runtime location, company and successor wiring receipt')
+                from vnext.historical_source_acquisition import _typed_budget_root
+                _typed_budget_root(str(args.runtime_ledger_root))
+                allowance = {**allowance, 'runtime_ledger_root': str(args.runtime_ledger_root)}
+                known = {'company_id': args.known_capture_company, 'source_url': args.known_capture_url,
+                         'wiring_receipt_path': args.wiring_receipt}
             tip = _branch_tip()
             result = resume_ledger(
                 allowance=allowance,
-                reader=reader, checkout=ROOT, in_flight_company_ids=args.in_flight_company,
+                reader=reader, checkout=ROOT, in_flight_company_ids=args.in_flight_company or [],
                 decision={"text": args.decision_text,
                           "received_at": args.decision_received_at},
-                branch_export_index=tip["export_index"], branch_tip_commit=tip["commit"])
+                branch_export_index=tip["export_index"], branch_tip_commit=tip["commit"], known_capture=known)
         if args.command in ("acquire", "run"):
             session, acquired = _acquire(args)
             result = acquired if args.command == "acquire" else {**registered,
@@ -244,7 +260,7 @@ def main(argv=None):
         if args.command in ("export", "run"):
             allowance = acquisition_allowance(repo_root=ROOT,
                                               delegation_reader=live_github_reader())
-            exported = export_acquisition(ledger_root=allowance["budget_root"])
+            exported = export_acquisition(ledger_root=args.runtime_ledger_root or allowance["budget_root"])
             result = exported if args.command == "export" else {**result,
                                                                 "export": exported}
         if args.command == "restore":
@@ -268,7 +284,8 @@ def main(argv=None):
             # is which layer refuses: the execution chain now exists and is
             # exercised offline, so a refusal here names the missing grant
             # rather than a missing implementation.
-            session = live_historical_session(branch_tip=_branch_tip)
+            session = live_historical_session(branch_tip=_branch_tip,
+                                              runtime_ledger_root=args.runtime_ledger_root)
             result = session.capture(company_id=args.company, url=args.url,
                                      years=args.years)
     except HistoricalAcquisitionError as error:
