@@ -1,6 +1,6 @@
 # 本地运行一家公司的当前财年或历史财年范围
 
-main已通过PR57交付当期公司入口；`fiscal-years`为存量历史分支已实现功能，尚未入main。历史侧接续[#28共同规则](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)及[#47 H4](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)。来源与计算仍为独立阶段，`run`负责顺序调度；没有OpenShift部署、正式发布或active切换。旧分阶段入口及运行树仍按原身份读取旧Run。
+main已通过PR57交付当期公司入口；`fiscal-years`为存量历史分支已实现功能，尚未入main。历史侧接续[#28可信内部工具规则](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)及[#47 H4](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)。来源与计算仍为独立阶段，`run`负责顺序调度；没有OpenShift部署、正式发布或active切换。旧分阶段入口及运行树仍按原身份读取旧Run。
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
@@ -27,7 +27,21 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 `source-root`必须事先准备。当前历史模式从已保存来源做公司交接/导入，再完成范围计算和CSV/出处；这里的“准备”不包括自动发现新申报或补齐缺件，`run --period fiscal-years`本身不获取历史来源。存量实现使用原获取/恢复与旧安装方式，下面的旧机制说明只解释该版本，不是新开发前置。程序管理逐期间计算，不要求先运行别家公司或手工拼CSV。一次范围最多五个财年；每年都从申报自身DEI核对发行人财年标签，不把2025-02-01的Macy's FY2024改称FY2025。全部年份先解析，缺少或歧义年份在创建候选前拒绝，输出明确状态。
 
-来源准备端完整验证原账本；最终计算端只接收目标公司包与独立信任登记。`historical-company.json`固定历史程序，`historical-company-state`保留历史来源版本、原生Run和请求观察；已有`local-company.json`、当期程序与状态保留。计算整个范围持有同一个导入锁，每个Run仍保留原生期间和身份。CSV为每个请求财年/指标记录状态，旧范围外结果保留并标记未请求；单年失败不冒充零值，也不覆盖别年的请求状态。复跑沿原输入指纹核验已有候选；旧Run必须由创建它的固定树冷读。
+来源准备端完整验证原账本；最终计算端只接收目标公司包与独立信任登记。`historical-company.json`固定历史程序，`historical-company-state`保留历史来源版本、原生Run和请求观察；已有`local-company.json`、当期程序与状态保留。计算整个范围持有同一个导入锁，每个Run仍保留原生期间和身份。CSV为每个请求财年/指标记录状态，旧范围外结果保留并标记未请求；单年失败不冒充零值，也不覆盖别年的请求状态。复跑沿原输入指纹核验已有候选。日常保存结果由当前入口检查记录、值、期间、出处字节和已知缺陷；需要原生重放时另用原固定版本的显式审计出口。
+
+历史分支已接收公共日常读取接口。读取已有任务时，不重新执行上面的范围计算：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company macys \
+  --state-root /srv/sec-metrics/work/macys/historical-company-state \
+  --trust-root /srv/sec-metrics/work/macys/trust/company \
+  --runtime-root /srv/sec-metrics/work/macys/programs/<原固定程序目录> \
+  --defects-file /path/to/SEC_metrics/docs/evidence/issue47_history/known_result_defects.json \
+  --output-root /srv/sec-metrics/output/macys/saved-read-01
+```
+
+输出目录必须是新目录。`requested_in_latest_execution`说明该行是否属于最后一次实际请求；`period_role`区分保存Run的归档坐标与没有结果的请求行。两列同时进入指标与出处CSV；缺来源行保留请求财年和空值。日常读取不重算、不复制attempt，也不作模型内容接受或在线来源刷新。旧任务仍需上述既有路径参数，计算安装和自动历史取源的简化尚未完成。接收、范围反例及实际两年读取见[主要验证记录](evidence/issue47_history/company-daily-read-2026-10-07/README.md)。
 
 待接入的历史来源发现/补齐继续复用`normal_history_plan.plan_historical_sources`、`historical_source_acquisition.declared_frame`及既有SEC客户端；公司/期间/指标选择需贯穿缺件报告与按具体许可执行的获取，再交给同一入口计算。当前仍为独立步骤，尚无从空历史来源自动完成五年到CSV的交付；新轻量runtime/来源/日常读取由#28主实现，本方做历史适配。
 
