@@ -21,3 +21,5 @@
 历史比较应在同一公司/指标/实际期间的版本间进行；当前接口跨到更早年度返回SOURCE_SELECTION_REGRESSED，不能把`requires_candidate_processing=false`单独解读为可复用。不同请求年度继续用各自历史坐标，而不是公司全局最新结果。其他指标没有获得D04的解析等价规则。
 
 主要结果在`actual-history-comparison.json`及两份测试日志。新增DeepSeek/paid/SEC调用0，原指定EX-99/账本/旧Run/回答不改，没有业务接受或active切换。本项仅接收历史分支，尚未main，也不补完整D04媒体或五年业务验收。
+
+后续SVG边界：95849b6e只留外层SVG属性，改变内部path d时仍报相同；本方一例0.005秒FAIL，原失败保存。公共负责人9042dcd2保留完整SVG子树的有序tag/attrs/style/text/entity等内容，本方只接该模块增量，同一反例及小解析/期间例14项0.069秒通过。真实Macy原件中svg起始标签为0，未变长链直接复用；没有把较早实际比较冒称为9042新完整解析。本方未改公共实现或CI，模型身份/回答消费仍未接。

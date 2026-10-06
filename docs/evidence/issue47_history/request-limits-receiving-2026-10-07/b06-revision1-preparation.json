@@ -1,0 +1,53 @@
+{
+  "upstream_head": "ddcc61920d608d5ede64458bb02f3f166953f3df",
+  "original_request_sha256": "bdad31f0dc7b55a5f49f9308c74168b41dd44ee8748156bdfeeabc1ffa7a1966",
+  "limits_only_request_sha256": "2a8da24e7a91973c6d3c031d3459e448b78cd01f500d0e1b12417209a8ee5c9f",
+  "limits": {
+    "output_tokens": 8192,
+    "max_context_tokens": 200000,
+    "max_payload_bytes": 8388608
+  },
+  "same_complete_user_message": true,
+  "system_addition": "\nRepresent credit limits, borrowing capacity, availability and disclosed borrowing-base or reservation reductions as their own typed components when the supplied source reports distinct quantities. Record supported sum/difference relationships between their IDs; do not leave their values only inside the reason for an outstanding-borrowing component. For recognized liability groups whose nature or overlap is only partly explained, preserve the reported group and specific unresolved financing-nature or overlap question. Where a supported partial decomposition leaves a remainder, distinguish arithmetic remainder from proof of its nature; do not exclude the whole group from a generic label. This is not a request for an external financial investigation: use only the supplied filing and state what it does not establish. Keep the original output fields and source/native/table references, the approved debt definition, and null total/ratio whenever completeness is not demonstrated.\n",
+  "revision1_request_sha256": "56ed6a605e153f39ee216045f2e49251927a512bc119458faa847916f584e56a",
+  "measurement": {
+    "request_sha256": "56ed6a605e153f39ee216045f2e49251927a512bc119458faa847916f584e56a",
+    "request_bytes": 653220,
+    "rendered_prompt_sha256": "67fc77db829dc09184f57258df316eb00d84ce1942daf8f7fc041c405f17a91f",
+    "rendered_prompt_bytes": 620814,
+    "input_tokens": 188962,
+    "output_reserve_tokens": 8192,
+    "context_tokens": 197154,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:4211df72fd08c669213ba143fc488a0636e97ddb12f2f144cfdea5c94c248d2d",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 8192,
+      "request_limits": {
+        "output_tokens": 8192,
+        "max_context_tokens": 200000,
+        "max_payload_bytes": 8388608
+      }
+    }
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

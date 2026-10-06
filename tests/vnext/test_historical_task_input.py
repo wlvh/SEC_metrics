@@ -50,6 +50,15 @@ class HistoricalTaskInputTest(unittest.TestCase):
         self.assertNotIn(result['status'], {'NO_SOURCE_CONTENT_CHANGE',
                                          'PARSED_TASK_INPUT_UNCHANGED'})
 
+    def test_inline_svg_drawing_change_is_not_unchanged_media_input(self):
+        from tests.vnext.test_text_coverage import annual, binding, BODY
+        from vnext.ordinary_task_input import parsed_d04_document
+        svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">'
+               '<path d="M0 0 L10 10"/></svg>')
+        previous = parsed_d04_document(**binding(annual(BODY+svg)))
+        current = parsed_d04_document(**binding(annual(BODY+svg.replace('L10 10', 'L90 90'))))
+        self.assertNotEqual(previous['parsed_input_sha256'], current['parsed_input_sha256'])
+
 
 if __name__ == '__main__':
     unittest.main()

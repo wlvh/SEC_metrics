@@ -48,6 +48,14 @@ class ParsedTaskInputTest(unittest.TestCase):
                         body.replace('id="image-1"','id="image-2"')):
             self.assertNotEqual(original,self.parse(annual(changed))['parsed_input_sha256'])
 
+    def test_inline_svg_complete_drawing_styles_and_nested_content_are_not_lost(self):
+        svg='<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><style>.a{fill:red}</style><g transform="scale(2)"><path class="a" d="M0 0 L10 10"/><svg><text>USD 10</text></svg></g></svg>'
+        original=self.parse(annual(BODY+svg))
+        self.assertTrue(original['parsed_input']['svg_subtrees'])
+        for changed in (svg.replace('L10 10','L90 90'),svg.replace('fill:red','fill:blue'),
+                        svg.replace('scale(2)','scale(3)'),svg.replace('USD 10','USD 20')):
+            self.assertNotEqual(original['parsed_input_sha256'],self.parse(annual(BODY+changed))['parsed_input_sha256'])
+
     def test_period_and_subject_mismatch_are_errors(self):
         for changed in (annual(BODY,cik='67890'),annual(BODY,period='2024-12-31')):
             args=binding(changed)
