@@ -9,6 +9,7 @@ name: Company saved-source records
       - 'tests/vnext/test_company_parse_reuse.py'
       - 'tests/vnext/test_precalculated_case.py'
       - 'tests/vnext/test_saved_source_checks.py'
+      - 'tests/vnext/test_runtime_tools.py'
       - 'tests/vnext/test_separate_rule_root.py'
       - 'tests/vnext/test_selected_lodging_calculation.py'
       - 'tests/vnext/test_selected_lodging_source.py'
@@ -34,4 +35,4 @@ jobs:
       - name: Saved source through calculation, records, CSV and reading
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail -v
+        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools -v
