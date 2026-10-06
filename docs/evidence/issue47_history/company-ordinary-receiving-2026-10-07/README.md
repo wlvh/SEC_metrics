@@ -29,3 +29,5 @@
 37个保存来源、错件/最新失败及历史期间/公司消费者例0.764秒通过。上述完全同一个恢复source-inputs目录再次经实际FY2024选择/准备、历史B11 case与公共纯保存通过，总7.153秒（case2.697/save0.692），128.23 USD和2024区间保持。原ledger全部字节不变，没有制造journal或重新恢复整树；原失败保留为前驱。新校验标签SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED、real_sec_credit=False，只代表保存原件/请求关系已核，不重置或借用1771累计与来源调用信用。见restored-source-historical-case-after-r4.json。
 
 此处旧journal准备缺口已由公共接口解除；实际来源自动发现/补齐、已选历史期间进入公共普通状态及范围调度仍待。本方提供现有fiscal-years选择/组装及历史case，公共updater/reader索引由#28维护，避免另一套历史状态或公司pipeline。旧固定版本/Run和旧checkpoint显式接口保留，不反签历史。
+
+接收PR67公共325d65b7的明确fiscal_year/case_factory及多期间reader接口；公共默认当期布局不变，指定期间由公共updater保存到periods/FY<year>。34个受影响更新/读取例3.002秒通过。历史方在现有lodging模块增加prepare_historical_lodging_year_case，只接既有财年选择和同一计算case，不建立状态/存储。实际公司范围入口尚待公共run_saved_company增加范围参数后接入，以上不能作CLI完整接线结果。未重跑旧两年B01。

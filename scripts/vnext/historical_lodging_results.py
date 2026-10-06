@@ -154,6 +154,21 @@ def prepare_historical_lodging_case(*, repo_root: Path, company_id: str, metric_
         'selection': component['selection']}
 
 
+def prepare_historical_lodging_year_case(*, repo_root: Path, company_id: str,
+                                         metric_id: str, fiscal_year: int):
+    """Existing fiscal-year selection and calculation for the public updater.
+
+    The updater owns storage, recovery and unchanged-input reuse. This adapter
+    selects the requested issuer year from saved originals and returns the
+    same lodging case; it never chooses the latest filing or acquires a source.
+    """
+    from .normal_period_selection import resolve_period_selection
+    selection = resolve_period_selection(repo_root=repo_root, company_id=company_id,
+                                         fiscal_year=fiscal_year)
+    return prepare_historical_lodging_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, period_selection=selection)
+
+
 def _resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metric_id: str,
                                        period_selection):
     """Resolve B10 or B11 for the period the selection pins.
