@@ -127,16 +127,17 @@ def main(argv=None):
             session = local_session(root=work/'acquisition', company_id=args.company, allowance=args.sec_allowance)
             result = acquire_only(session=session, company_id=args.company, max_requests=args.max_sec_requests)
     elif args.command == 'export':
-        from contextlib import nullcontext
         from vnext.company_handoff import export_company
         declaration = None
         if args.history_years:
             from vnext.historical_source_acquisition import declared_frame
             declaration = lambda source, company: declared_frame(
                 repo_root=source, company_id=company, years=args.history_years)
-        if args.history_years:
-            from vnext.historical_run_replay import run_checks_replay_once
-        with run_checks_replay_once() if args.history_years else nullcontext():
+        from vnext.historical_run_replay import run_checks_replay_once
+        # Both consumers may receive a complete saved acquisition history.
+        # Every new state still executes the original frozen checkpoint;
+        # pure ledger work and identical-state replays reuse the existing scope.
+        with run_checks_replay_once():
             result = export_company(source_root=args.source_root, output_root=args.output_root,
                                     trust_root=args.trust_root, company_id=args.company,
                                     metric_ids=args.metric, declared_frame=declaration)
