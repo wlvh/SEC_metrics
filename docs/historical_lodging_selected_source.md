@@ -6,7 +6,7 @@
 
 主要验证：
 
-- `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_selected_lodging_source -v`：9 项小表格业务测试通过，0.060 秒；覆盖单位、范围、非自然年标签、年份列、脚注、当期/显式政策隔离、错来源/公司/期间、竞争表和截断，不安装整家公司。
+- `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_selected_lodging_source -v`：14 项短测试通过（9 项小表格、5 项最小DEI期间/主体测试），0.059 秒；覆盖单位、范围、非自然年标签、年份列、脚注、当期/显式政策隔离、错来源/公司/期间、竞争表和截断，不安装整家公司。新增最小DEI测试实际进入期间/主体判断，供#28 T1将慢的业务反例留在定向集成、快速层用小输入覆盖。
 - `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_selected_lodging_saved_sources -v`：2 项定向完整原件测试通过，4.808 秒；共享读取 Marriott FY2023/FY2024/FY2025，分别为 B10 `0.692/0.698/0.693`、B11 `124.7/128.23/128.8 USD`，原表数 `66/67/68`、`table_000011`、年份表头及原格文字/位置保留。当期旧接口与显式函数返回相同完整组件。
 - 实际当期消费者直接读取保存原件：B10 `0.693 ratio`、B11 `128.8 USD`，均 `EXACT`、`table_000011`；分别 2.642/1.878 秒。测试在表格适配层禁止再次准备公司，正常计算通过。只在内存生成原生计算记录，无 Run 保存或调用。
 - 历史消费者已有旧年测试：FY2021/FY2022 的 B10 `0.513/0.64`、B11 `74.66/110.64 USD` 及 FY2025 当期对照通过；4 项完整原件/拒绝测试 7.482 秒，另 4 项说明形式短测试通过。未重跑两年 B01、全量历史批次或旧信任/资格流程。

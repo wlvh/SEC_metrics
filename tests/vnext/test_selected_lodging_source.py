@@ -6,11 +6,64 @@ from unittest.mock import patch
 
 from vnext import lodging_table_source as lodging
 from vnext.canonical import content_hash, sha256_bytes
+from vnext.normal_annual_input import annual_period, NormalAnnualInputError
 from vnext.specs import compile_spec_file
 
 
 ROOT = Path(__file__).resolve().parents[2]
 HTML = (ROOT / "tests/fixtures/lodging_selected_table.html").read_bytes()
+
+
+def annual_source(**overrides):
+    """Small complete DEI input, with independent 52-week-year expectations."""
+    facts = {"DocumentType": "10-K", "DocumentPeriodEndDate": "2025-02-01",
+             "DocumentFiscalYearFocus": "2024", "DocumentFiscalPeriodFocus": "FY",
+             "AmendmentFlag": "false", "EntityCentralIndexKey": "0000000001"}
+    facts.update(overrides)
+    raw = ('<!doctype html><html xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" '
+           'xmlns:xbrli="http://www.xbrl.org/2003/instance" '
+           'xmlns:dei="http://xbrl.sec.gov/dei/2025"><body>'
+           '<xbrli:context id="annual"><xbrli:entity><xbrli:identifier '
+           'scheme="http://www.sec.gov/CIK">0000000001</xbrli:identifier></xbrli:entity>'
+           '<xbrli:period><xbrli:startDate>2024-02-04</xbrli:startDate>'
+           '<xbrli:endDate>2025-02-01</xbrli:endDate></xbrli:period></xbrli:context>')
+    for name, text in facts.items():
+        raw += f'<ix:nonNumeric name="dei:{name}" contextRef="annual">{text}</ix:nonNumeric>'
+    return (raw + '</body></html>').encode()
+
+
+class PreparedPeriodBusinessTest(unittest.TestCase):
+    def period(self, raw, cik="1"):
+        return annual_period(raw=raw, cik=cik, filing={"form": "10-K", "reportDate": "2025-02-01"})
+
+    def test_source_label_and_52_week_interval_are_kept(self):
+        self.assertEqual({"fiscal_year": 2024, "period_start": "2024-02-04", "period_end": "2025-02-01"},
+                         self.period(annual_source()))
+
+    def test_invalid_label_is_an_integrity_failure(self):
+        for label, reason in (("unknown", "ANNUAL_IDENTITY_CONFLICT"),
+                              ("1999", "DEI_FISCAL_YEAR_CONFLICT")):
+            with self.subTest(label=label), self.assertRaisesRegex(NormalAnnualInputError, reason) as caught:
+                self.period(annual_source(DocumentFiscalYearFocus=label))
+            self.assertEqual("SOURCE_INTEGRITY_ERROR", caught.exception.category)
+
+    def test_context_and_reported_cik_cannot_change_the_selected_subject(self):
+        for raw, cik, reason in ((annual_source(), "2", "DEI_SUBJECT_CONFLICT"),
+                                 (annual_source(EntityCentralIndexKey="2"), "1", "ANNUAL_IDENTITY_CONFLICT")):
+            with self.subTest(cik=cik), self.assertRaisesRegex(NormalAnnualInputError, reason) as caught:
+                self.period(raw, cik)
+            self.assertEqual("SOURCE_INTEGRITY_ERROR", caught.exception.category)
+
+    def test_quarter_and_amendment_are_not_an_ordinary_annual_selection(self):
+        for overrides in ({"DocumentFiscalPeriodFocus": "Q4"}, {"AmendmentFlag": "true"}):
+            with self.subTest(overrides=overrides), self.assertRaisesRegex(NormalAnnualInputError, "ANNUAL_IDENTITY_CONFLICT"):
+                self.period(annual_source(**overrides))
+
+    def test_short_interval_is_a_named_implementation_gap(self):
+        raw = annual_source(DocumentFiscalYearFocus="2025").replace(b"2024-02-04", b"2025-01-01")
+        with self.assertRaisesRegex(NormalAnnualInputError, "ANNUAL_DURATION_NOT_IMPLEMENTED") as caught:
+            self.period(raw)
+        self.assertEqual("IMPLEMENTATION_GAP", caught.exception.category)
 
 
 class SelectedLodgingSourceTest(unittest.TestCase):
