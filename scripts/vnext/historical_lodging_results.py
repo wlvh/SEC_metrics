@@ -17,18 +17,19 @@ from pathlib import Path
 from sec_urls import companyfacts_url, submissions_url
 
 from .annual_sources import saved_source
-from .calculator import (calculate_observation_metric, metric_is_applicable,
-                         withheld_metric_result)
+from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import content_hash, sha256_file
 from .historical_amendment_admission import AmendmentAdmissionError, amendment_admission
 from .historical_annual_input import prepare_historical_annual_input
 from . import lodging_table_source as frozen_lodging
 from .lodging_table_source import POLICY_PATH, LodgingSourceError
-from .normal_lodging_results import SPEC_PATHS as ORDINARY_SPEC_PATHS, _spec as _ordinary_spec
+from .normal_lodging_results import (
+    SPEC_PATHS as ORDINARY_SPEC_PATHS, _spec as _ordinary_spec,
+    calculate_selected_lodging_metric, SelectedLodgingCalculationError)
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources
 from .normal_source_authority import ROOT
-from .observations import scope_key, structured_observation
+from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import raw_blob_record, resolve_repository_file
 from .specs import compile_spec_file
@@ -127,6 +128,34 @@ def _spec(repo_root, metric_id):
 
 def resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metric_id: str,
                                       period_selection):
+    """Retain the existing component interface for historical consumers."""
+    component, _ = _resolve_historical_lodging_metric(
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        period_selection=period_selection)
+    return component
+
+
+def prepare_historical_lodging_case(*, repo_root: Path, company_id: str, metric_id: str,
+                                    period_selection):
+    """Adapt the same calculation to the shared saved-case writer, without a Run."""
+    component, prepared = _resolve_historical_lodging_metric(
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        period_selection=period_selection)
+    return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
+        'input_binding': {'record_type': 'HISTORICAL_SELECTED_LODGING_INPUT',
+                          'prepared_input': prepared, 'component_id': component['component_id']},
+        'source_records': component['source_records'], 'references': component['source_references'],
+        'source_proofs': component['source_proofs'], 'admission': component['source_admission'],
+        'spec_paths': {metric_id: component['spec_path']},
+        'compiled_specs': {metric_id: component['compiled_spec']},
+        'target_period': component['target_period'], 'expected_records': component['records'],
+        'results': {metric_id: component['result']}, 'traces': {metric_id: component['trace']},
+        'observations': [component['observation']] if component['observation'] is not None else [],
+        'selection': component['selection']}
+
+
+def _resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metric_id: str,
+                                       period_selection):
     """Resolve B10 or B11 for the period the selection pins.
 
     Args:
@@ -202,36 +231,16 @@ def resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metri
         fact = component["selection"]["facts"][metric_id]
         _need(fact["scope"] == scope and fact["period"] == period,
               "HISTORICAL_LODGING_SCOPE_OR_PERIOD_CHANGED")
-        amount = fact["source_witnesses"]["amount"]
-        binding = {"raw_asset_id": reference["raw_asset_id"],
-                   "source_reference_id": reference["source_reference_id"],
-                   "source_role": reference["source_role"],
-                   "document_name": reference["document_name"],
-                   "accession": reference["accession"], "entity": prepared["entity"],
-                   "form": prepared["filing"]["form"],
-                   "filed": prepared["filing"]["filingDate"],
-                   "derived_asset_id": component["derived_asset"]["derived_asset_id"],
-                   "table_locator": amount["locator"], "reported_raw_text": amount["raw_text"],
-                   "reported_value": fact["reported_value"],
-                   "reported_unit": fact["reported_unit"],
-                   "source_witnesses": fact["source_witnesses"],
-                   "source_component_id": component["component_id"],
-                   "period_basis": fact["period_basis"],
-                   "ordinary_source_policy_hash": component["policy_hash"]}
-        observation = structured_observation(
-            metric_id=metric_id, semantic_role=fact["semantic_role"], company_id=company_id,
-            period_start=period["period_start"], period_end=period["period_end"], scope=scope,
-            value=fact["value"], unit=fact["unit"], quality="EXACT", source_binding=binding)
-        result, trace = calculate_observation_metric(compiled_spec=spec, target=target,
-                                                    company_traits=traits,
-                                                    observation=observation)
+        try:
+            calculated = calculate_selected_lodging_metric(
+                prepared=prepared, component=component, reference=reference,
+                metric_id=metric_id, spec=spec, traits=traits)
+        except SelectedLodgingCalculationError as error:
+            raise HistoricalLodgingError(str(error)) from error
+        observation, result, trace = (calculated[key]
+                                     for key in ("observation", "result", "trace"))
         asset = component["derived_asset"]
-        selection = {"classification": "DETERMINISTIC_REPORTED_TABLE",
-                     "reason_code": result["reason_code"],
-                     "table_id": component["selection"]["table_id"],
-                     "source_component_id": component["component_id"],
-                     "period_basis": fact["period_basis"], "ai_response_used": False,
-                     "qualification_credit": False}
+        selection = calculated["selection"]
     except (AmendmentAdmissionError, HistoricalLodgingError, LodgingSourceError) as error:
         decided = isinstance(error, AmendmentAdmissionError) and str(error).startswith(
             "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED")
@@ -277,4 +286,4 @@ def resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metri
             "calls": {"provider": 0, "paid": 0, "sec": 0},
             "native_run_created": False, "production_authorized": False}
     body = exact_json_value(body)
-    return {**body, "component_id": content_hash(value=body)}
+    return {**body, "component_id": content_hash(value=body)}, prepared
