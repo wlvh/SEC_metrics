@@ -28,12 +28,18 @@
     "Call original counted SecHttpClient capture exactly for approved URL; fail/UNKNOWN consumes the one chance; no retry.",
     "Export/read back source receipt and actual cumulative count; keep original model requests/answers/Run unchanged."
   ],
-  "state": "DEVELOPMENT_OFFLINE_CHECKS_IN_PROGRESS_NOT_RESUMED_OR_CAPTURED",
+  "state": "LEDGER_RESTORED_MARKER_PUBLISHED_EXPORT_READY_TO_PUSH_NO_CAPTURE_YET",
   "new_business_calls": [
     0,
     0,
     0
   ],
   "new_model_run_acceptance_permission": false,
-  "remaining_after_this_grant_not_authorized": 95
+  "remaining_after_this_grant_not_authorized": 95,
+  "marker_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6017015367",
+  "actual_counts_before": [
+    0,
+    0,
+    1771
+  ]
 }
