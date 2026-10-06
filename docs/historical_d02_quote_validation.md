@@ -13,3 +13,5 @@
 - 历史消费者的现有请求、回答形状和未决处理短测试 12 项通过；原消费者接口保留。没有重复两年 B01、全量历史计算或旧资格/防伪测试。
 
 这份共用模块及历史适配尚待各自 PR 合入，不表示 main 的公司 CLI 已完成 D02 历史业务接入。这里修复报因，未改变法律范围判断或引文合同；Pfizer 税务误纳、Marriott 自保遗漏等内容缺陷仍在原队列。后续确需改变回答合同，应另列具体差异及受影响验证。
+
+自动CI的fast作业[37474922205/job/112307725659](https://github.com/wlvh/SEC_metrics/actions/runs/37474922205/job/112307725659)已失败：119个既有入口中，`test_invalid_source_fiscal_label_and_cik_are_integrity_failures`和`test_registry_company_04`各达到原30秒时限（exit 124），不是D02业务断言失败。未改公共CI、放宽时限或手工全量重跑；公共测试分层由#28 T1接收，本地定向通过不写成整条CI通过。PR59另提供小DEI期间/主体反例。
