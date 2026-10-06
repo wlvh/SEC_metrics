@@ -4,6 +4,8 @@
 
 历史公司入口的实际边界：main8588已交付当期公司入口；`fiscal-years`仍在PR52存量分支（本轮读取be366047），尚未入main。已完成并复用Macy两年B01保存来源后的范围计算、复跑/缺年与当期消费者验证。历史`run`要求预备`source-root`，其中“来源准备”只代表已保存来源的公司交接/导入；它不自行发现或获取缺少的历史来源，不是完整五年自动获取到CSV。历史发现/缺件声明已有`normal_history_plan`/`declared_frame`，补齐仍经独立获取入口和具体许可；把公司/期间/指标选择传入发现、缺件报告与必要补齐，再由同一公司入口调度计算/结果表，仍属H4/H6未完成接线。新路径消费#28轻量runtime/来源/读取增量，不再另造历史pipeline；原三公司五年先导和1950位置业务验收保持。
 
+H1共用引文检查已从main短分支提交为[小Draft PR58](https://github.com/wlvh/SEC_metrics/pull/58)，尚未合入；本历史分支的`historical_legal_review.py`改为消费相同`legal_review_contract.py`，登记接口保留。14项短测试覆盖8份原失败回答/14条逐字但过长引文；全部12个原D02请求在内存逐字节重建相同，4份原合同通过回答解析结果相同、8份仍失败但报因为长度。历史侧12项形状/未决测试及1项原登记读取正例通过，不复跑整家公司；完整验证说明与必要夹具只在PR58维护。该报因修复不解决D02内容误纳/遗漏，不给旧失败补接受。
+
 本轮不新增调用；原35模型机会不重复，SEC1771/1867。指定附件既有具体许可保留且未消费，此轮不执行。两年B01接线材料见[已保存验证](company-entry-history-2026-10-06/README.md)，不为说明修订重复运行。
 
 Immutable development evidence for the Issue #47 historical backfill. Nothing

@@ -97,15 +97,15 @@ class TheAnswerIsHeldToItsForm(unittest.TestCase):
         self.refused(answer([("b0", "MAYBE", LITIGATION[:40]), self.good[1]]),
                      "D02_REVIEW_DECISION_UNKNOWN:b0")
         self.refused(answer([("b0", "IN_SCOPE", None), self.good[1]]),
-                     "D02_REVIEW_QUOTE_NOT_THE_BLOCKS_OWN_WORDS:b0")
+                     "D02_REVIEW_QUOTE_MISSING:b0")
         self.refused(answer([("b0", "IN_SCOPE", FEES[:40]), self.good[1]]),
-                     "D02_REVIEW_QUOTE_NOT_THE_BLOCKS_OWN_WORDS:b0")
+                     "D02_REVIEW_QUOTE_FROM_ANOTHER_BLOCK:b0")
         self.refused(answer([("b0", "IN_SCOPE", LITIGATION[:10]), self.good[1]]),
-                     "D02_REVIEW_QUOTE_NOT_THE_BLOCKS_OWN_WORDS:b0")
+                     "D02_REVIEW_QUOTE_TOO_SHORT:b0")
         self.refused(answer([self.good[0], ("b1", "OUT_OF_SCOPE", FEES[:40])]),
                      "D02_REVIEW_OUT_OF_SCOPE_CARRIES_A_QUOTE:b1")
         self.refused(answer([("b0", "CANNOT_TELL_FROM_THE_TEXT", None), self.good[1]]),
-                     "D02_REVIEW_QUOTE_NOT_THE_BLOCKS_OWN_WORDS:b0")
+                     "D02_REVIEW_QUOTE_MISSING:b0")
 
     def test_a_short_block_is_quoted_whole(self):
         req = request("Legal Matters", LITIGATION, keyword=[1])
@@ -122,7 +122,7 @@ class TheAnswerIsHeldToItsForm(unittest.TestCase):
         self.refused(answer(self.good, [("b3", GUARANTEE[:40]), ("b3", GUARANTEE[:40])]),
                      "D02_REVIEW_BLOCK_ADDED_TWICE:b3")
         self.refused(answer(self.good, [("b3", LEASES[:40])]),
-                     "D02_REVIEW_QUOTE_NOT_THE_BLOCKS_OWN_WORDS:b3")
+                     "D02_REVIEW_QUOTE_FROM_ANOTHER_BLOCK:b3")
 
     def test_extra_keys_and_non_json_are_refused(self):
         self.refused(b"not json", "D02_REVIEW_ANSWER_NOT_STRICT_JSON")
