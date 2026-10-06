@@ -1,0 +1,17 @@
+{
+  "actual_command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_c02_image_model_processing tests.vnext.test_c02_table_model_processing tests.vnext.test_ordinary_scalability_audit -v",
+  "actual_passed": 32,
+  "actual_seconds": 11.51,
+  "exit_code": 0,
+  "base_commit": "ab56180588ded8b16728fa80e4d0d6dd2cec2331",
+  "new_or_changed_worktree_bytes": {
+    "scripts/vnext/c02_image_context_c294b12f.py": "2bf1dbe3438012c6177718a6971a24f1fa6bae5490b7190c11b361c510af16f9",
+    "scripts/vnext/c02_image_development_input.py": "5c98167fcb136f9c0aa1d3de35b97091503b8bd07236ff9046d8870a16241733",
+    "scripts/vnext/c02_image_model_processing.py": "9183c45095aff42ce23229c4c70a1518001e0d68b5429de095f34282c54d9aeb",
+    "catalog/r6/C02_model_image_development_v1.md": "0f3924fab9a79282cb94a4793403238e88fe86d459eb2e453e3835990dbe4a7f",
+    "tests/vnext/test_c02_image_model_processing.py": "432a56f173caf39074b1270df13ab265247482272adc7a40f022d93a72f1ea56",
+    "tools/run_fast_tests_v2.py": "21b6160fc9ab1b0d4c912b05cc9f6cc63e7039e9bd1defbd79d2905527636a6e"
+  },
+  "scope": "Short program/native/guard/scalability controls, not model extraction, full-company semantic or whole suite",
+  "old_large_material_repeated": false
+}

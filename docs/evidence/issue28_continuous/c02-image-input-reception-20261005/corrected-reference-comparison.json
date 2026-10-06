@@ -1,0 +1,132 @@
+{
+  "record_type": "PARENT_CORRECTED_C02_REFERENCE_SOURCE_AND_RAW_OUTPUT_COMPARISON",
+  "old_reference_sha256": "ad80d69b6dc7b3f404b315854b682b5cffe8157b9694680414a32307a787c92f",
+  "initial_response_sha256": "12e209aa081ebdfc2e52fb8759c36427d2ad65efc537c20b13044eb9908499e9",
+  "corrected_response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
+  "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+  "reference_and_prior_source_reading_reused_unchanged": true,
+  "actual_parser": "scripts/vnext/c02_model_processing.py:_response",
+  "actual_parser_pass": true,
+  "facts": 50,
+  "unresolved": 3,
+  "output_reference_tokens": 3207,
+  "prior_output_reference_tokens": 3434,
+  "facts_difference": [
+    {
+      "scope": "CMDC and Audit report rosters",
+      "old_items": [
+        24,
+        28,
+        23,
+        29
+      ],
+      "corrected_items": [
+        23,
+        22
+      ],
+      "meaning": "Each roster/report pair is represented together with its explicit report date retained; not missing committee membership."
+    },
+    {
+      "scope": "Current nonmanagement independence plus CEO exception",
+      "old_items": [
+        14,
+        15
+      ],
+      "corrected_items": [
+        14
+      ],
+      "meaning": "One statement preserves ten named independent directors and CEO Dimon exception."
+    },
+    {
+      "scope": "Additional NYSE Audit/CMDC independence and qualitative standards",
+      "old_items": [
+        33
+      ],
+      "corrected_items": [
+        31
+      ],
+      "meaning": "Classification changed committee_independence to member_qualification. Source-named standards and Board determination retained; not a new business-policy approval."
+    }
+  ],
+  "source_supported_clear_scope_items": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "source_supported_but_qualification_kind_owner_boundary_pending_items": [
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "original_reference_angles": "Original12 relationships preserved, report/filing times distinct; parent uses unchanged original reference and prior211citation source reading, not provider expected answers.",
+  "new_citation_original_reading": [
+    307,
+    308,
+    309,
+    487,
+    488,
+    571
+  ],
+  "all185actual_citation_spans_checked": true,
+  "corrected_media_scope": "Reader decoded all604source tags and recognized actualg49/adjacentMemberlegend relation. Five principal memberships/chairs agree with independently read original14positive marks and sourcecards. No claim of negative membership from blanks or allpixels interpreted.",
+  "unresolved_retained": [
+    "Qualification-matrix marks lack explicit qualification legend/pixels",
+    "Nominee/tenure image pixel content not supplied",
+    "Stock/Executive members/chairs and two special-purpose committee chairs not established"
+  ],
+  "completeness_limit": "Representative relationships and forward source checks, not exhaustive whole-filing omissions, all-media semantics or whole-company acceptance. Counts38/12 are this checked response partition, not390accepted values.",
+  "native_wire_status": "Old table-native mapper still refuses changed actual request; _response parses current rawJSON only. Explicit request-preserving successor/pending save-read remains needed. No old answer re-signed.",
+  "development_batch_closed": true,
+  "no_third_same_method_context": true,
+  "DeepSeek_credit": false,
+  "new_result_run_or_provider_attempt": false,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

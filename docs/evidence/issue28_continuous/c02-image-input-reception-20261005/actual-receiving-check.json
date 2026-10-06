@@ -1,0 +1,36 @@
+{
+  "record_type": "ISSUE28_CURRENT_SOURCE_IMAGE_METADATA_RECEIVING_CHECK",
+  "code_commit": "9099e273",
+  "code_uncommitted_paths": [
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/prepare_image_markup.py",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/check_actual.py"
+  ],
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "source_data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "processing_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005",
+  "provider_sha": "e6b2bb8e2575b665a8e02290935953e632216f2f",
+  "provider_introducing_sha": "c294b12f",
+  "actual_request_sha256": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+  "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+  "ordinary_input_binding_id": "sha256:41d151d6be449e17fa8b082788e8114b1a693cae15eaa24657d5dccdbc6fb517",
+  "input_tokens": 161921,
+  "context_tokens": 166017,
+  "all_source_images": 604,
+  "outside_cell": 7,
+  "images_with_pixels": 0,
+  "raw_tags_preserved_in_host_sidecar": true,
+  "original_text_grid_unchanged": true,
+  "source_prepare_seconds": 4.386,
+  "old_mapper_refusal": "C02_TABLE_MODEL_REQUEST_OR_RESOURCE_CHANGED",
+  "old_mapper_refusal_seconds": 4.301,
+  "new_response_generated": false,
+  "original_answer_or_reference_changed": false,
+  "fix_context_consumed": false,
+  "requires_explicit_actual_wire_postprocessor": true,
+  "new_native_or_semantic_result_credit": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "input_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/request-body.json",
+  "input_sha256": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+  "input_bytes": 603523,
+  "received_patch_sha": "9ac5a02da789ad81b6c94af90477935854e0c4df",
+  "patch_code_read": false,
+  "utc_start": "2026-10-05T12:27:18.835479+00:00",
+  "utc_end": "2026-10-05T12:42:24.868761+00:00",
+  "system_message_characters": 5111,
+  "user_message_characters": 573665,
+  "text_dictionary_entries_read": [
+    0,
+    5009
+  ],
+  "original_source_blocks_read": [
+    0,
+    4105
+  ],
+  "extra_dictionary_entries_read": [
+    4106,
+    5009
+  ],
+  "text_read_ranges_half_open": [
+    [
+      0,
+      649
+    ],
+    [
+      649,
+      1284
+    ],
+    [
+      1284,
+      1654
+    ],
+    [
+      1654,
+      2189
+    ],
+    [
+      2189,
+      2462
+    ],
+    [
+      2462,
+      2809
+    ],
+    [
+      2809,
+      3378
+    ],
+    [
+      3378,
+      3514
+    ],
+    [
+      3514,
+      3618
+    ],
+    [
+      3618,
+      3791
+    ],
+    [
+      3791,
+      4103
+    ],
+    [
+      4103,
+      4230
+    ],
+    [
+      4230,
+      4392
+    ],
+    [
+      4392,
+      5010
+    ]
+  ],
+  "recovered_text_truncation_ranges_half_open": [
+    [
+      1500,
+      1519
+    ],
+    [
+      1929,
+      1960
+    ],
+    [
+      3081,
+      3123
+    ]
+  ],
+  "metadata_inventory_truncation_recovered": "Complete key/count/type metadata was re-read separately; message 0 was visible in full.",
+  "geometry_entries_decoded": 33,
+  "tables_decoded": 409,
+  "table_origins_decoded": 3367,
+  "table_read_ranges_half_open": [
+    [
+      0,
+      80
+    ],
+    [
+      80,
+      226
+    ],
+    [
+      226,
+      313
+    ],
+    [
+      313,
+      409
+    ]
+  ],
+  "image_occurrences_decoded": 604,
+  "image_dictionary_entries_read_by_complete_expansion": 821,
+  "unused_image_dictionary_entries": [],
+  "image_read_ranges_half_open": [
+    [
+      0,
+      95
+    ],
+    [
+      95,
+      188
+    ],
+    [
+      188,
+      280
+    ],
+    [
+      280,
+      373
+    ],
+    [
+      373,
+      467
+    ],
+    [
+      467,
+      559
+    ],
+    [
+      559,
+      604
+    ]
+  ],
+  "image_metadata_raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+  "raw_asset_bytes_read": false,
+  "image_pixels_supplied": false,
+  "image_pixels_read": false,
+  "decode_address_issues": [],
+  "response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
+  "response_bytes": 12165,
+  "facts": 50,
+  "unresolved": 3,
+  "tool_counts": {
+    "functions_exec_wrappers": 32,
+    "exec_command_nested_calls": 32,
+    "conservative_total": 64
+  },
+  "ordinary_messages_including_final": 2,
+  "question_messages": 0,
+  "hosted_usage": "UNKNOWN",
+  "exact_deepseek_output_token_count": "UNKNOWN",
+  "provider_calls_made_by_this_task": 0,
+  "sec_calls_made_by_this_task": 0,
+  "network_calls_made_by_this_task": 0,
+  "response_written_once": true,
+  "response_post_write_adjustments": 0,
+  "source_code_review": false,
+  "semantic_approval": false,
+  "native_company_result": false,
+  "production_credit": false
+}

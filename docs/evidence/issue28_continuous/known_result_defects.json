@@ -1308,6 +1308,27 @@
       "repair_state": "SHARED_CORE_OWNER_47_REPAIR_PENDING; SUSPENDED_V4_NOT_REOPENED",
       "current_credit": "WITHDRAWN_EXACT_PRIVATE_RESULT_NO_NEW_390_WITHDRAWAL",
       "no_new_current_credit_previously_granted": true
+    },
+    {
+      "defect_id": "C02_JPMORGAN_COMPANY_ENTRY_2025_OWNER_AND_COMMITTEE_OMISSION_6d1a5055",
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:6d1a5055b0482e991081bd1f7db5387f77b4976a0828a6633f745c57ab722851",
+      "run_id": "run:ordinary-integrated:b92605d4483d71511b17c2d679dc68149657d9f2ae18d47e2e1a7ab37b023f69",
+      "requirement_closure_hash": "sha256:4931983d1429a31af8bb9ab113478bb6a368e6c7748066f89934f01081df7eed",
+      "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+      "source_blocks": [
+        766,
+        767,
+        1244,
+        1245
+      ],
+      "summary": "Actual installedcompany entry reproduces missingJamesDimon and Stock/Executivecommittee names on the same original. Mechanical source/Run/CSV success is not complete C02. Only this exact result/version is confirmed.",
+      "own_evidence": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/first-real-company-path-result.json",
+      "current_credit": "WITHDRAWN_EXACT_COMPANY_RESULT",
+      "repair_state": "C02_SHARED_SELECTION_CORE_OWNER47; ordinary receiving/native developer successor pending full integration",
+      "original_records_preserved": true
     }
   ],
   "latest_peer_read_commit": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
