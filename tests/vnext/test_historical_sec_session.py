@@ -5268,3 +5268,34 @@ class AKnownExportCanMoveOnlyForOneReviewedCapture(unittest.TestCase):
         with self.assertRaises(HistoricalSessionError):
             SESSION_MODULE.require_published_start(allowance=allowance,
                 reader=f._reader([f.start_marker]), checkout=f.checkout, branch_export_index=f._index(f()))
+
+
+class APublishedResumeUsesTheSameExtensionAsTheSession(unittest.TestCase):
+    def test_public_chain_check_receives_effective_allowance_before_any_transport(self):
+        from types import SimpleNamespace
+        from vnext import historical_source_acquisition as acquisition
+        from vnext import historical_sec_extension as extension_module
+        base = {'delegation_body_sha256': 'a'*64, 'delegation_url': 'in-memory-owner',
+                'sec_wiring_receipt_path': 'in-memory-original-receipt'}
+        extension = {'extension_ordinal': 1}
+        effective = {**base, 'extension': extension}
+        seen = []
+        def published(**kwargs):
+            seen.append(kwargs['allowance'])
+            if kwargs['allowance'].get('extension') != extension:
+                raise HistoricalSessionError('RESUME_WAS_CHARGED_UNDER_ANOTHER_EXTENSION')
+            return {'reserve_sec_calls': 0}
+        ledger = object()
+        with patch.object(acquisition, 'live_github_reader', return_value=lambda *a: None), \
+             patch.object(SESSION_MODULE, 'acquisition_allowance', return_value=base), \
+             patch.object(SESSION_MODULE, 'verify_offline_wiring'), \
+             patch.object(SESSION_MODULE, 'require_published_start', side_effect=published), \
+             patch.object(extension_module, 'require_extension_on_branch'), \
+             patch.object(extension_module, 'acquisition_extension', return_value=extension), \
+             patch.object(extension_module, 'extended_allowance', return_value=effective), \
+             patch.object(SESSION_MODULE, 'live_ledger', return_value=ledger), \
+             patch.object(SESSION_MODULE, 'HistoricalSecSession', return_value=SimpleNamespace()) as constructor:
+            result = SESSION_MODULE.live_historical_session(branch_tip=lambda: {'export_index': b'export'})
+            result.published_check()
+        self.assertEqual(seen, [effective, effective])
+        self.assertEqual(constructor.call_args.kwargs['allowance'], effective)

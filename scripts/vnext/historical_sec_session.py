@@ -1823,7 +1823,7 @@ def live_historical_session(*, branch_tip, runtime_ledger_root=None):
     # Before the session exists, so before any transport: a ledger with no
     # published start could be a second start of an allowance already begun.
     def published():
-        return require_published_start(allowance=allowance, reader=reader,
+        return require_published_start(allowance=effective, reader=reader,
                                        branch_export_index=branch_export_index)
 
     # The owner's extension of this approval, verified against GitHub the same

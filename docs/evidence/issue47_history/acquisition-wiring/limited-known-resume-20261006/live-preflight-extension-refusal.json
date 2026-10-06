@@ -1,0 +1,18 @@
+{
+  "status": "REFUSED_BEFORE_CAPTURE",
+  "refusal": "ISSUE_47_SEC_LEDGER_RESUME_WAS_CHARGED_UNDER_ANOTHER_EXTENSION",
+  "counts_unchanged": [
+    0,
+    0,
+    1771
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "resume_marker_unchanged": 6017015367,
+  "cause": "Factory publication callback received first allowance instead of effective allowance with the existing approved extension.",
+  "repair": "Pass the same effective allowance to publication guard and session; keep the extension consistency guard.",
+  "source_record_or_old_approval_modified": false
+}
