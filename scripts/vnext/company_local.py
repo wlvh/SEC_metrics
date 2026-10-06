@@ -109,7 +109,7 @@ def configure_task(work, company_id, sec_allowance):
 
 def _status_tables(output, company, rows, summary):
     """Unavailable acquisition still yields an explicit full-scope state table."""
-    from .publication import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
+    from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
     from .normal_annual_input import _registry_rows
     display = next(c['display_name'] for c in _registry_rows(repo_root=ROOT) if c['company_id'] == company)
     table = output/'metrics_matrix.csv'
@@ -385,7 +385,7 @@ def _range_program_identity(program):
 
 def _history_tables(output, company, outcomes, summary):
     """Keep a status for every requested coordinate, including unavailable years."""
-    from .publication import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
+    from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
     path = output/'metrics_matrix.csv'
     if path.exists():
         reader = csv.DictReader(io.StringIO(path.read_text(encoding='utf-8-sig')))

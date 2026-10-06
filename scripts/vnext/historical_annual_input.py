@@ -18,7 +18,7 @@ from pathlib import Path
 from sec_urls import (accession_document_url, companyfacts_url, submissions_file_url,
                       submissions_url)
 
-from .annual_update import saved_source
+from .annual_sources import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
 from .historical_dei import annual_period
 from .historical_fiscal_labels import inspect_prepared_fiscal_year_labels

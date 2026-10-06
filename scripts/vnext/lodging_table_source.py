@@ -9,7 +9,7 @@ from decimal import Decimal
 from pathlib import Path
 import re
 
-from .annual_update import saved_source
+from .annual_sources import saved_source
 from .canonical import content_hash,decimal_text,sha256_bytes,sha256_file,strict_json_file
 from .composite_scope import index_source_structure
 from .fiscal_year_labels import _DefinitionBlocks

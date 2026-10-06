@@ -26,6 +26,7 @@ from sec_http import validate_request_log_manifest
 from validation_provenance import ValidationProvenanceError
 from validation_provenance import capture_source_snapshot
 
+from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, PublicationError, _csv_bytes
 from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, sha256_file, strict_json_file
@@ -270,19 +271,6 @@ FAULT_RECEIPT_OUTCOMES = {
     "WITHHELD_BLOCKED",
 }
 FAULT_STATE_FIELDS = {"active_publication_id", "mirror_hashes"}
-METRIC_FIELDS = (
-    "company", "cik", "metric_id", "metric_name", "value", "unit",
-    "status", "source_class", "formula", "period_start", "period_end",
-    "fiscal_year", "fiscal_period", "accession", "form", "filed_date",
-    "concept_or_section", "context_or_dimension", "confidence", "notes",
-)
-EVIDENCE_FIELDS = (
-    "company", "cik", "metric_id", "source_url", "repo_relative_path",
-    "content_sha256", "accession", "document_name", "concept_or_section",
-    "context_or_dimension", "unit", "period_start", "period_end",
-    "value_raw", "value_normalized", "evidence_quote",
-    "extraction_method", "parser_version",
-)
 COVERAGE_FIELDS = (
     "company", "metric_id", "status", "source_class",
     "has_numeric_value", "has_evidence", "needs_text_extraction",
@@ -311,8 +299,6 @@ SEMANTIC_GATE_SOURCE_PATHS = {
 }
 
 
-class PublicationError(RuntimeError):
-    """Report incomplete bundles, CAS loss, tamper, or commit failure."""
 
 
 def _fault_injection_checkpoint(*, fault_point: str) -> None:
@@ -2545,29 +2531,6 @@ def _csv_rows(
     return rows
 
 
-def _csv_bytes(*, rows: list, fieldnames: tuple) -> bytes:
-    """Serialize one exact publication CSV deterministically.
-
-    Args:
-        rows: Ordered exact-schema string mappings.
-        fieldnames: Required output column order.
-
-    Returns:
-        UTF-8 CSV bytes with stable line endings.
-    """
-    output = io.StringIO(newline="")
-    writer = csv.DictWriter(
-        output,
-        fieldnames=list(fieldnames),
-        lineterminator="\n",
-        extrasaction="raise",
-    )
-    writer.writeheader()
-    for row in rows:
-        if set(row) != set(fieldnames):
-            raise PublicationError("Generated publication CSV schema differs")
-        writer.writerow({field: row[field] for field in fieldnames})
-    return output.getvalue().encode("utf-8")
 
 
 def _expected_coverage_rows(*, metrics: list, evidence: list) -> list:

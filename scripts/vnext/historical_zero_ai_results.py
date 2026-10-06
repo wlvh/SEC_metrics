@@ -32,7 +32,7 @@ from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url
 
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from . import b03_contract_amortization_scope as _contract_scope
 from .batch_workflow import BatchWorkflowError, _structured_concepts
 from .calculator import (calculate_metric, calculate_observation_metric,

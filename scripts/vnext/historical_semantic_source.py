@@ -51,7 +51,7 @@ from sec_urls import accession_document_url
 from . import capacity_semantic_source as frozen_capacity
 from . import going_concern_source as frozen_going_concern
 from . import r6_semantic_source as frozen_semantic
-from .annual_update import saved_source
+from .annual_sources import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file
 from .continuous_request_context import MAX_BYTES as REQUEST_PAYLOAD_BYTES
 from .historical_dei import release_aware, release_aware_with

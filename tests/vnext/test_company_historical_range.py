@@ -49,6 +49,10 @@ class HistoricalRangeTest(unittest.TestCase):
     def test_multi_period_read_keeps_each_request_status_and_legacy_run_identity(self):
         fixture = support.CompanyResultsTest()
         fixture.setUp()
+        # macOS exposes its temporary directory through /var -> /private/var.
+        # Resolve the fixture before writing state so this business case reaches
+        # period/result handling rather than the old path-alias guard.
+        fixture.root = fixture.root.resolve()
         self.addCleanup(fixture.doCleanups)
         first = fixture.journal('B01', end='2022-12-31')
         second = fixture.journal('B01', end='2023-12-31')

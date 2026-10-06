@@ -58,7 +58,7 @@ from .normal_governance_input import _Sources
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .r5_b06_scope import resolve_financing
-from .annual_update import saved_source
+from .annual_sources import saved_source
 from .normal_source_authority import ROOT
 from .sources import (companyfacts_structured_facts, raw_blob_record,
                       resolve_repository_file, source_reference_record)

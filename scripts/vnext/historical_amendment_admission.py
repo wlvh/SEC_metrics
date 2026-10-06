@@ -187,7 +187,7 @@ def per_filing_admissions(record) -> list:
 
 def _read_source(*, repo_root: Path, company_id: str, prepared, filing):
     """One saved filing read as the classifier and the note reader take it."""
-    from .annual_update import saved_source
+    from .annual_sources import saved_source
     from .sources import raw_blob_record, source_reference_record
     from sec_urls import accession_document_url
     url = accession_document_url(cik=int(prepared["entity"]),

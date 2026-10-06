@@ -16,7 +16,7 @@ from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url
 
-from .annual_update import saved_source
+from .annual_sources import saved_source
 from .calculator import (calculate_observation_metric, metric_is_applicable,
                          withheld_metric_result)
 from .canonical import content_hash, sha256_file

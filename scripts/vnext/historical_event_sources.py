@@ -165,7 +165,7 @@ def _read_saved(*, repo_root, url, accession=""):
     the reader still propagates, because it says something is wrong with what
     is saved rather than that something is missing.
     """
-    from .annual_update import AnnualUpdateError, saved_source
+    from .annual_sources import AnnualUpdateError, saved_source
     try:
         item = saved_source(repo_root=repo_root, url=url, accession=accession)
     except AnnualUpdateError as refusal:

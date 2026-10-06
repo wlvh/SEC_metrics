@@ -12,7 +12,7 @@ import re
 from sec_urls import accession_document_url, companyfacts_url, submissions_url
 
 from .annual_input import AnnualInputError, _registry_rows
-from .annual_update import AnnualUpdateError, saved_source
+from .annual_sources import AnnualUpdateError, saved_source
 from .canonical import content_hash, strict_json_loads
 from .deterministic_router import parse_accession_xbrl_source
 
