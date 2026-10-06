@@ -1,0 +1,734 @@
+{
+  "record_type": "C02_JPM2022_BOUNDED_METHOD_FINAL_COMPARISON",
+  "reference_sha256": "f5490737fae13557429446d6111bd7f9267d0b9ccf0ca8e4b0a8ecf0a08f2155",
+  "initial_request_sha256": "e2a4156447fd24f0452c43d5d81cc4963b362767ef6b715dc3a3ac24d39cd3ae",
+  "initial_answer_sha256": "cf7086c52f64f4478eca45539105407ae4344cf8796b97854f73f8bbbae73e0f",
+  "revision_request_sha256": "edfdc2937207f03c2601e3bbe118562bc153dee6fd2432bb21cc34647690a1a9",
+  "revision_answer_sha256": "30631732604fe2c5ff1f8c3de1c855db41ce0bfe2309c7de2bb87a24d2b04213",
+  "revision_notes_sha256": "b83093ae5f72fa68e39dc2f0193301edc289567437082d91b4f0c57b40b68e78",
+  "facts": 44,
+  "unresolved": 2,
+  "reference_output_tokens": 5162,
+  "output_reserve": 8192,
+  "maximum_context_tokens": 200000,
+  "source_user_unchanged": true,
+  "mechanical_form": "PASSED_BY_UNCHANGED_C02_RESPONSE_FUNCTION",
+  "forward_comparison": {
+    "facts": 44,
+    "cited_source_and_layout_supported": 43,
+    "source_supported_but_citation_set_incomplete": [
+      {
+        "fact_number": 1,
+        "finding": "12 nominees who are all current directors is correct; their existence alone does not establish an exhaustive current board. Complete supplied table133 corroborates the12 current roster, but the fact omits its block citations1262/1266-1278. This is not a fabricated count or a year-end snapshot."
+      }
+    ],
+    "all_new_cited_blocks_directly_read_again": true,
+    "classification": "The nonemployment and former-officer statement is now board_membership, separate from independence; actual Audit/CMDC additional standards are committee_independence."
+  },
+  "reverse_named_directors": [
+    {
+      "name": "Stephen B. Burke",
+      "answer_fact_number": 3,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Linda B. Bammann",
+      "answer_fact_number": 4,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Todd A. Combs",
+      "answer_fact_number": 5,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "James S. Crown",
+      "answer_fact_number": 6,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Alicia Boler Davis",
+      "answer_fact_number": 7,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "James Dimon",
+      "answer_fact_number": 8,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Timothy P. Flynn",
+      "answer_fact_number": 9,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Alex Gorsky",
+      "answer_fact_number": 10,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Mellody Hobson",
+      "answer_fact_number": 11,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Michael A. Neal",
+      "answer_fact_number": 12,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Phebe N. Novakovic",
+      "answer_fact_number": 13,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "name": "Virginia M. Rometty",
+      "answer_fact_number": 14,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    }
+  ],
+  "reverse_committee_relations": [
+    {
+      "reference_relation": {
+        "member": "Timothy P. Flynn",
+        "committee": "Audit",
+        "role": "Chair",
+        "table_id": "table_000133",
+        "row": 8,
+        "column": 3,
+        "raw_text": "Chair",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 22,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Michael A. Neal",
+        "committee": "Audit",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 11,
+        "column": 3,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 22,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Phebe N. Novakovic",
+        "committee": "Audit",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 12,
+        "column": 3,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 22,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Stephen B. Burke",
+        "committee": "Compensation & Management Development",
+        "role": "Chair",
+        "table_id": "table_000133",
+        "row": 2,
+        "column": 6,
+        "raw_text": "Chair",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 23,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Linda B. Bammann",
+        "committee": "Compensation & Management Development",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 3,
+        "column": 6,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 23,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Todd A. Combs",
+        "committee": "Compensation & Management Development",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 4,
+        "column": 6,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 23,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Virginia M. Rometty",
+        "committee": "Compensation & Management Development",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 13,
+        "column": 6,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 23,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Stephen B. Burke",
+        "committee": "Corporate Governance & Nominating",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 2,
+        "column": 9,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 24,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Todd A. Combs",
+        "committee": "Corporate Governance & Nominating",
+        "role": "Chair",
+        "table_id": "table_000133",
+        "row": 4,
+        "column": 9,
+        "raw_text": "Chair",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 24,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Virginia M. Rometty",
+        "committee": "Corporate Governance & Nominating",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 13,
+        "column": 9,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 24,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "James S. Crown",
+        "committee": "Public Responsibility",
+        "role": "Chair",
+        "table_id": "table_000133",
+        "row": 5,
+        "column": 12,
+        "raw_text": "Chair",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 25,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Mellody Hobson",
+        "committee": "Public Responsibility",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 10,
+        "column": 12,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 25,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Michael A. Neal",
+        "committee": "Public Responsibility",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 11,
+        "column": 12,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 25,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Linda B. Bammann",
+        "committee": "Risk",
+        "role": "Chair",
+        "table_id": "table_000133",
+        "row": 3,
+        "column": 15,
+        "raw_text": "Chair",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 26,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "James S. Crown",
+        "committee": "Risk",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 5,
+        "column": 15,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 26,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Alex Gorsky",
+        "committee": "Risk",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 9,
+        "column": 15,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 26,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Mellody Hobson",
+        "committee": "Risk",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 10,
+        "column": 15,
+        "raw_text": "Member",
+        "time": "CURRENT_TABLE_IN_FILING"
+      },
+      "answer_fact_number": 26,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Stephen B. Burke",
+        "committee": "Markets Compliance",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 2,
+        "column": 18,
+        "raw_text": "A",
+        "name_source_blocks": [
+          1279,
+          1280
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 28,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Linda B. Bammann",
+        "committee": "Omnibus",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 3,
+        "column": 18,
+        "raw_text": "B",
+        "name_source_blocks": [
+          1279,
+          1281
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 29,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Todd A. Combs",
+        "committee": "Markets Compliance",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 4,
+        "column": 18,
+        "raw_text": "A",
+        "name_source_blocks": [
+          1279,
+          1280
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 28,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "James S. Crown",
+        "committee": "Omnibus",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 5,
+        "column": 18,
+        "raw_text": "B",
+        "name_source_blocks": [
+          1279,
+          1281
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 29,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Mellody Hobson",
+        "committee": "Markets Compliance",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 10,
+        "column": 18,
+        "raw_text": "A",
+        "name_source_blocks": [
+          1279,
+          1280
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 28,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Michael A. Neal",
+        "committee": "Omnibus",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 11,
+        "column": 18,
+        "raw_text": "B",
+        "name_source_blocks": [
+          1279,
+          1281
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 29,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    },
+    {
+      "reference_relation": {
+        "member": "Virginia M. Rometty",
+        "committee": "Markets Compliance",
+        "role": "Member",
+        "table_id": "table_000133",
+        "row": 13,
+        "column": 18,
+        "raw_text": "A",
+        "name_source_blocks": [
+          1279,
+          1280
+        ],
+        "time": "CURRENT_TABLE_IN_FILING_WITH_2022_COMMITTEE_NAME_FOOTNOTE"
+      },
+      "answer_fact_number": 28,
+      "comparison": "SUPPORTED_REQUIRED_RELATION_PRESENT"
+    }
+  ],
+  "targeted_corrections": [
+    {
+      "source_blocks": [
+        1536,
+        443
+      ],
+      "answer_fact_number": 38,
+      "comparison": "RESTORED_ACTUAL_STATUS_WITH_EXCEPTION_AND_TIMING",
+      "finding": "No current/ever officer/employee statement preservesBammann former-officer exception and retirement2005; does not undo explicitindependence."
+    },
+    {
+      "source_blocks": [
+        3504,
+        3532
+      ],
+      "answer_fact_number": 35,
+      "comparison": "RESTORED_QUALIFICATION_LIMITATION",
+      "finding": "Board financial literacy/SECfinancialexpert assessment and actual nonprofessional accounting/audit practice limitation both preserved."
+    }
+  ],
+  "regressions_or_remaining": [
+    {
+      "initial_fact_numbers": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "source_blocks": [
+        673,
+        697,
+        729,
+        752,
+        783,
+        807,
+        840,
+        865,
+        906,
+        930,
+        956,
+        983
+      ],
+      "finding": "12 source-supported attributed individual nomination profiles frominitialanswer were omitted. Revision retained genericnomineeattributes and actualGorsky/Davisrecommendationreviews, treating otherprofiles as biographies. Qualification/role evaluation policy still pending; do not promote one interpretation as full completeness or revive oldcorrectness by merging answers."
+    },
+    {
+      "initial_unresolved_number": 1,
+      "source_blocks": [
+        584,
+        620,
+        621,
+        654,
+        655
+      ],
+      "finding": "Missing image/name/skill-matrix associations no longer appear inrevisionunresolved; original-image limitation remains only inexecutionnotes. No pixels supplied or interpreted, so full eachmedium acceptance is not proved."
+    },
+    {
+      "reference_note": 2,
+      "finding": "Current names/sinceyears andnomination2023retained; proposed term ending2024 ifelected not repeated inrevisionfacts. No completed2023 election inferred."
+    },
+    {
+      "unresolved": "Stock/Executive members/chairs andspecificcommittee chairs/date stayunknown, notempty. Specificfootnote2022 remains separate fromcurrenttableframe."
+    }
+  ],
+  "independent_reading": {
+    "direct_reading": {
+      "system": "Entire system message, including all task, output-contract, dictionary, table, geometry, blank-cell and image limitations, and non-employee/former-officer and financial-expert instructions.",
+      "user": "Entire parsed user source: B0-B4412, extra dictionary D4413-D5427, geometry G0-G31 and table objects T0-T440, including every supplied s/c/g/x entry. Source text and arrays were directly read from sequential tool outputs, not inferred from counts or keyword hits.",
+      "visible_block_batches": [
+        [
+          0,
+          199
+        ],
+        [
+          200,
+          599
+        ],
+        [
+          600,
+          999
+        ],
+        [
+          1000,
+          1399
+        ],
+        [
+          1400,
+          1799
+        ],
+        [
+          1800,
+          1999
+        ],
+        [
+          2000,
+          2299
+        ],
+        [
+          2300,
+          2599
+        ],
+        [
+          2600,
+          2999
+        ],
+        [
+          3000,
+          3299
+        ],
+        [
+          3300,
+          3599
+        ],
+        [
+          3600,
+          3799
+        ],
+        [
+          3800,
+          3899
+        ],
+        [
+          3900,
+          4099
+        ],
+        [
+          4100,
+          4412
+        ]
+      ],
+      "extra_dictionary_batches": [
+        [
+          4413,
+          4662
+        ],
+        [
+          4663,
+          4862
+        ],
+        [
+          4863,
+          5162
+        ],
+        [
+          5163,
+          5427
+        ]
+      ],
+      "table_batches": [
+        [
+          0,
+          19
+        ],
+        [
+          20,
+          59
+        ],
+        [
+          60,
+          99
+        ],
+        [
+          100,
+          149
+        ],
+        [
+          150,
+          199
+        ],
+        [
+          200,
+          249
+        ],
+        [
+          250,
+          299
+        ],
+        [
+          300,
+          349
+        ],
+        [
+          350,
+          399
+        ],
+        [
+          400,
+          440
+        ]
+      ],
+      "additional_rechecks": "T132 was decoded cell by cell with its text and explicit/default geometry; B1262-B1283, B2757-B2763, B3503-B3504, B3532, B3536-B3540 and B1535-B1536 were reread in full."
+    },
+    "programmatic_operations": {
+      "range": "Only the allowed request-body.json was read. Entire outer JSON and nested user JSON were parsed; hashes, byte/string lengths and structural counts were computed; contiguous requested ranges were printed without semantic filtering; T132 cell geometry/text was decoded; final JSON schema, allowed kinds, fact-count limit and original source-block bounds were checked in memory.",
+      "keyword_or_regex_semantic_scan": "NONE",
+      "automated_fact_extraction": "NONE",
+      "counts_are_not_direct_reading_evidence": true
+    },
+    "truncation_repairs": [
+      {
+        "initial_output": "B1000-B1399",
+        "repair_read_range": [
+          1169,
+          1210
+        ],
+        "status": "Fully reread including initially hidden B1175-B1207"
+      },
+      {
+        "initial_output": "B1400-B1799 plus prior repair",
+        "repair_read_range": [
+          1528,
+          1594
+        ],
+        "status": "Fully reread including initially hidden B1528-B1592"
+      },
+      {
+        "initial_output": "B3600-B3799",
+        "repair_read_range": [
+          3685,
+          3723
+        ],
+        "status": "Fully reread the hidden range"
+      },
+      {
+        "initial_output": "D4413-D4662 plus G0-G31 and T0-T19",
+        "repair_read_range": [
+          4546,
+          4572
+        ],
+        "status": "Fully reread hidden dictionary entries; all geometry and T0-T19 entries were visible in initial output"
+      }
+    ],
+    "unread_ranges": [],
+    "representation_limitations": [
+      "Original images were not included as interpreted pixels; matrix image markers and lost image-only associations were not reconstructed.",
+      "Blank-cell raw HTML spans, styles, entity spelling and images are not represented; decoded whitespace-normalized table strings were used as instructed.",
+      "The 2022 annual reporting container was not treated as a board measurement at December 31, 2022."
+    ],
+    "tools": {
+      "functions_exec_calls_including_this_write": 30,
+      "nested_exec_command_calls_including_this_write": 30,
+      "total_count_including_orchestration_and_nested_calls": 60,
+      "limit": 80,
+      "shell_commands": "Only Python standard-library reads of the single allowed input, sequential source printing/decoding, and this one creation of each output file.",
+      "parallel_calls": 0,
+      "subagents_spawned": 0,
+      "network_calls": 0,
+      "target_model_provider_SEC_calls": 0,
+      "other_data_files_read": 0,
+      "output_write_policy": "Each allowed output created once with exclusive creation mode; no overwrite, no other file writes and no subsequent output-file reread."
+    },
+    "timing": {
+      "first_explicit_wall_timestamp_utc": "2026-10-06T23:29:31.259651+00:00",
+      "output_preparation_timestamp_utc": "2026-10-06T23:34:11.961477+00:00",
+      "measured_tail_wall_seconds": 280.701826,
+      "full_turn_wall_seconds": null,
+      "full_turn_wall_note": "The first explicit timestamp was captured during the B3685-B3723 repair/B3800-B3899 read, not at task start. Exact complete turn wall time is therefore uninstrumented and is not invented. Tool results before this write each displayed approximately 0.1 seconds for their exec-cell duration; those rounded cell durations exclude model reading/reasoning and do not establish full turn elapsed time.",
+      "time_limit_minutes": 90
+    }
+  },
+  "method_status": "PARTIAL_EXTRACTION_NOT_READY_FOR_COMPLETE_METRIC",
+  "fixed_batch": "INITIAL_PLUS_UNIQUE_SUBSTANTIVE_REVISION_COMPLETED_NO_THIRD",
+  "default_selector_changed": false,
+  "old_results_failures_requests_or_runs_changed": false,
+  "native_runs": 0,
+  "full_metric_accepted": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}
