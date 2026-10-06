@@ -1,0 +1,270 @@
+{
+  "record_type": "C02_GROUP_INITIAL_SOURCE_COMPARISON",
+  "source_reference_sha256": "ba811d27e6a4568ea579919346dab04ee0415f3c273f1500faf35dd5a852f703",
+  "groups": [
+    {
+      "group": 1,
+      "request_sha256": "467a79460d65f086becebca9454556dfe766a264fdb22a69f3095336cf9214b2",
+      "answer_sha256": "da81cc5d95f53a8f95e6e89f88841a2c9ae45300e66e10ca5a28025204dec557",
+      "facts": 45,
+      "unresolved": 6,
+      "reference_output_tokens": 3143,
+      "wire_output_reserve": 8192,
+      "prompt_output_limit": 4096,
+      "table_count": 459,
+      "original_source_blocks": 5219
+    },
+    {
+      "group": 2,
+      "request_sha256": "b5a3beb52963995e4d85b7ddfd0262c02036cb4bcbafea0d496b197eadc00e11",
+      "answer_sha256": "1f326b8d31c8a812dc8ee4163df02ff77eba4287209b65586cf55114de12750c",
+      "facts": 0,
+      "unresolved": 1,
+      "reference_output_tokens": 131,
+      "wire_output_reserve": 8192,
+      "prompt_output_limit": 4096,
+      "table_count": 170,
+      "original_source_blocks": 5219
+    }
+  ],
+  "forward_comparison": {
+    "facts": 45,
+    "statements_supported_by_cited_original_blocks": 45,
+    "mechanical_index_basis": "zero-based strings[B], checked against all 328 frozen reference block texts",
+    "human_semantic_check": "Names, tenure, 19 committee membership relations, four chairs, dated changes, financial-expert assessment, disclosed card skill lists and actual/prospective frames checked against saved source.",
+    "classification_gap": {
+      "fact_number": 29,
+      "detail": "Non-employee determination is worded correctly but kind=committee_independence; non-employment alone must not supply independence credit."
+    },
+    "qualification_role_policy": "Owner evaluation pending; attributed prominent skills are not independently verified credentials."
+  },
+  "reverse_named_composition_units": [
+    {
+      "reference_unit_id": "L21-20",
+      "answer_fact_numbers": [
+        4,
+        21,
+        24
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-21",
+      "answer_fact_numbers": [
+        5,
+        22,
+        23
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-22",
+      "answer_fact_numbers": [
+        6,
+        21,
+        24
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-23",
+      "answer_fact_numbers": [
+        7,
+        21,
+        24
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-24",
+      "answer_fact_numbers": [
+        8,
+        22,
+        23
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-25",
+      "answer_fact_numbers": [
+        9,
+        17,
+        22
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-26",
+      "answer_fact_numbers": [
+        10,
+        18,
+        21
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-27",
+      "answer_fact_numbers": [
+        11,
+        21,
+        24
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-28",
+      "answer_fact_numbers": [
+        12,
+        22,
+        23
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-29",
+      "answer_fact_numbers": [
+        13,
+        22,
+        23
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-30",
+      "answer_fact_numbers": [
+        14,
+        15,
+        24
+      ],
+      "comparison": "PARTIAL",
+      "remaining": "President and CEO since 2018 not preserved; CEO identity appears elsewhere."
+    },
+    {
+      "reference_unit_id": "L21-31",
+      "answer_fact_numbers": [
+        15,
+        16
+      ],
+      "comparison": "PARTIAL",
+      "remaining": "SEC/NYSE/Corporate Governance Guidelines actual independence standards omitted."
+    },
+    {
+      "reference_unit_id": "L21-32",
+      "answer_fact_numbers": [
+        17,
+        18,
+        33
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-33",
+      "answer_fact_numbers": [
+        21
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-34",
+      "answer_fact_numbers": [
+        22
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-35",
+      "answer_fact_numbers": [
+        23
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-36",
+      "answer_fact_numbers": [
+        24
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-37",
+      "answer_fact_numbers": [
+        25,
+        26,
+        27
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-38",
+      "answer_fact_numbers": [
+        20
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-39",
+      "answer_fact_numbers": [
+        30,
+        31,
+        32
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-40",
+      "answer_fact_numbers": [
+        28,
+        29
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    },
+    {
+      "reference_unit_id": "L21-41",
+      "answer_fact_numbers": [
+        1,
+        2,
+        3
+      ],
+      "comparison": "SUPPORTED_REQUIRED_RELATIONS_PRESENT",
+      "remaining": null
+    }
+  ],
+  "reverse_counts": {
+    "named_composition_units": 22,
+    "required_relations_present": 20,
+    "partial": 2,
+    "consolidated_read_notes_not_counted_as_22_business_units": 19
+  },
+  "other_source_gap": "Annual appendix B4730 Compensation Committee name/context not preserved; do not count a fifth standing committee.",
+  "unresolved": "Lead independent designation, image/column skill matrix, subcommittee roster, unnamed changes and December31 measurement remain unresolved; group2 does not resolve group1 image gap.",
+  "method_limits": "Group2 scanned every string programmatically and directly reviewed listed text ranges; it did not directly read every visible block. All assigned complete layouts reviewed. Initial prompt says4096 although wire8192.",
+  "initial_batch_closed": true,
+  "targeted_revision_available": 1,
+  "full_metric_accepted": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_runs": 0,
+  "new_acceptances": 0
+}
