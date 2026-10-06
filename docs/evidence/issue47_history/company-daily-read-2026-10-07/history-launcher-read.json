@@ -1,0 +1,41 @@
+{
+  "stage": {
+    "returncode": 0,
+    "elapsed_seconds": "11.246002",
+    "command": [
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tools/vnext_company.py",
+      "results",
+      "--state-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/historical-company-state",
+      "--output-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/result-exports/history-daily-receive-20261007",
+      "--trust-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/trust/company",
+      "--company",
+      "macys",
+      "--defects-file",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/docs/evidence/issue47_history/known_result_defects.json",
+      "--runtime-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/programs/historical-03d65fc886b8699aaf5d807061c257773390b4b51b8ff93de83b030a24cf064c"
+    ],
+    "report_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-history-launcher-read-20261007/stages/export-results.json",
+    "result": {
+      "elapsed_seconds": "11.199607457965612",
+      "record_type": "COMPANY_DAILY_RESULT_VIEW_V1",
+      "company_id": "macys",
+      "output_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/result-exports/history-daily-receive-20261007",
+      "status": "READ",
+      "result_count": 2,
+      "replay_performed": false,
+      "attempts_copied": false,
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  },
+  "destination": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/result-exports/history-daily-receive-20261007",
+  "original_run_row_receipt_pointer_files_unchanged": 16
+}

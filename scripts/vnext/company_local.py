@@ -138,22 +138,18 @@ def _status_tables(output, company, rows, summary):
 
 
 def _export_current(program, work, output, company, key, environment, processing, state_root=None):
-    """Existing native readback also serves failed acquisition's old results."""
+    """Current launcher reads saved records; fixed creators keep calculation."""
     destination = work/'result-exports'/key
-    args = ['export-results', '--state-root', state_root or work/'company-state', '--output-root', destination,
-            '--trust-root', work/'trust/company', '--company', company]
+    args = ['results', '--state-root', state_root or work/'company-state', '--output-root', destination,
+            '--trust-root', work/'trust/company', '--company', company,
+            '--defects-file', ROOT/'docs/evidence/issue47_history/known_result_defects.json']
     for runtime in sorted((work/'programs').iterdir()):
         if not runtime.name.startswith('.'):
             args.extend(['--runtime-root', runtime])
     for field in ('runtime_root', 'source_runtime'):
         if processing.get(field):
             args.extend(['--runtime-root', absolute(processing[field])])
-    if processing.get('trust_root'):
-        args.extend(['--processing-trust-root', absolute(processing['trust_root'])])
-    configuration = work/'local-company.json'
-    controller = (strict_json_file(path=configuration).get('preparation_program_root')
-                  if configuration.exists() and state_root is None else None)
-    exported = _invoke(absolute(controller) if controller else program, args,
+    exported = _invoke(ROOT, args,
         report_file=output/'stages/export-results.json', environment=environment)
     if destination.is_dir():
         import shutil
@@ -323,7 +319,7 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         limited = summary.get('source_status') != 'SOURCES_READY' or any(
             rows[m]['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'} for m in selected)
         limited = limited or any(e.get('replay_status') == 'FAILED' or e.get('result_validity') in {
-            'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED'} for e in summary.get('result_view', []))
+            'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED', 'SAVED_RECORD_INVALID'} for e in summary.get('result_view', []))
         summary['status'] = ('FLOW_COMPLETED_WITH_LIMITATIONS' if limited else 'FLOW_COMPLETED') \
             if summary['flow_completed'] else 'FLOW_INCOMPLETE'
         summary['all_configured_business_metrics_completed'] = False
@@ -503,7 +499,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
             summary['source_checkpoint_id'] = view['source_checkpoint_id']
             summary['result_view'] = [{k: row.get(k) for k in ('metric_id', 'run_id', 'result_id',
                 'period', 'requirement_id', 'requirement_closure_hash', 'replay_status',
-                'result_validity', 'current_input_matches')} for row in view.get('metrics', [])]
+                'result_validity', 'current_input_matches', 'record_root', 'source_root')} for row in view.get('metrics', [])]
         except Exception as error:
             summary['failure'] = {'reason': str(error), 'error_type': type(error).__name__}
             for row in outcomes.values():
@@ -520,7 +516,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
         limited = any(row['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                       for row in outcomes.values())
         limited |= any(row.get('replay_status') == 'FAILED' or row.get('result_validity') in
-                       {'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED'}
+                       {'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED', 'SAVED_RECORD_INVALID'}
                        for row in summary.get('result_view', []))
         summary['status'] = ('FLOW_COMPLETED_WITH_LIMITATIONS' if limited else 'FLOW_COMPLETED') \
             if summary['flow_completed'] else 'FLOW_INCOMPLETE'

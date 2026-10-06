@@ -18,6 +18,24 @@ class HistoricalRangeTest(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name).resolve()
 
+    def test_history_daily_export_uses_current_launcher_and_own_defects(self):
+        work, output, creator = self.root/'task', self.root/'output', self.root/'old-creator'
+        (work/'programs/old-creator').mkdir(parents=True)
+        state = work/'historical-company-state'
+        key = 'saved-range'
+        with patch.object(local, '_invoke', return_value={'returncode': 0}) as invoke:
+            report, destination = local._export_current(creator, work, output, 'test_company',
+                key, {}, {}, state_root=state)
+        args = invoke.call_args.args
+        self.assertEqual(local.ROOT, args[0])
+        self.assertEqual('results', args[1][0])
+        self.assertEqual(state, args[1][args[1].index('--state-root')+1])
+        self.assertEqual(local.ROOT/'docs/evidence/issue47_history/known_result_defects.json',
+                         args[1][args[1].index('--defects-file')+1])
+        self.assertNotIn('--processing-trust-root', args[1])
+        self.assertEqual(work/'result-exports'/key, destination)
+        self.assertEqual(0, report['returncode'])
+
     def test_missing_issuer_year_creates_no_partial_candidates(self):
         program = self.root/'program'
         (program/'requirements/issue_54_v3').mkdir(parents=True)
