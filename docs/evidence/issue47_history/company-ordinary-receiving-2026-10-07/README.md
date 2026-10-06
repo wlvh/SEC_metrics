@@ -47,3 +47,5 @@ FY2025–2026缺年请求1.826秒，已有FY2025不计算，2026无源按原错�
 实际复用#28已有纯来源包（只含原件/headers/日志/company_registry，无catalog/计算config/code/答案），同一公司CLI FY2024/FY2025 B10/B11四值正确，禁止factory的复跑全为NO_SOURCE_CONTENT_CHANGE；正常读取四值、当期模式两值保持。没有安装树、来源树复制，42结果/指针文件在复跑与读取不变，普通检查记录允许追加。初检查错把整个可变updates树当不可变，原失败与两报告已存；后继检查全部业务断言过后记录器误索引read.status导致KeyError，原错误保留。记录从保存报告修复，另进程只读1.149秒再核四值/42文件，无重算补时；首跑/复跑/当期完整墙钟未保存，不编造。单FY2024 B11源至case实际探针7.631秒。
 
 历史规则根能力仍仅在PR52接续分支，所需历史选择/DEI等未在main；PR67共同包装亦未main。只实现保存来源后的受支持范围计算，不自动获取/补齐历史来源，不授完整五年接受。接收公共25/26测试平台路径别名失败另存program-rule-root-receive记录，已交公共维护方。
+
+78abaaf6之后必要结构检查：capability_alignment通过；mint --check在旧v13 normal_source_authority.py逐字节绑定返回失败。原日志和耗时见rule-root-structural-checks.json，两个检查副产物已按运行前字节恢复。按2026-10-06共同规则，这个旧绑定不再作为新普通运行/开发的前置；不改签旧Requirement/Run、不把该失败写成检查通过。公共入口实际运行验证与结构检查的含义分开。实际main仍8588ccbb，PR52 base实时218e32a7且origin同值，未接整支或借用上游Run/接受。
