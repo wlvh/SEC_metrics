@@ -1,0 +1,68 @@
+{
+  "request_sha256": "56ed6a605e153f39ee216045f2e49251927a512bc119458faa847916f584e56a",
+  "answer_sha256": "3fe3115af489653eea400c3d0507f949243dc56edc27592b7b773336613d8d23",
+  "components": 47,
+  "relations": 12,
+  "unresolved": 4,
+  "block_references": 236,
+  "native_references": 107,
+  "table_references": 55,
+  "output_reference_tokens": 9968,
+  "configured_output_budget": 8192,
+  "output_fits": false,
+  "provider_usage": null,
+  "table_source_id_mismatches": 55,
+  "table_id_examples": [
+    {
+      "answer_reference": {
+        "table_id": 92,
+        "row": 3,
+        "column": 4
+      },
+      "source_table_id_at_that_list_index": "table_000093",
+      "diagnostic_only_not_corrected_answer": true
+    },
+    {
+      "answer_reference": {
+        "table_id": 66,
+        "row": 28,
+        "column": 3
+      },
+      "source_table_id_at_that_list_index": "table_000067",
+      "diagnostic_only_not_corrected_answer": true
+    },
+    {
+      "answer_reference": {
+        "table_id": 66,
+        "row": 27,
+        "column": 3
+      },
+      "source_table_id_at_that_list_index": "table_000067",
+      "diagnostic_only_not_corrected_answer": true
+    }
+  ],
+  "format_or_binding_credit": false,
+  "observed_improvements": [
+    "Separate ABL credit limit, capacity, letter-of-credit reservation, inventory reduction and availability components plus two supported difference relations.",
+    "General AP853, property446, Other-current194, interest48, Other-noncurrent902 and unproved remainder99 explicitly retained unresolved.",
+    "Partial noncurrent803 and its arithmetic remainder99 distinguished from proof of remainder nature; no asset netting."
+  ],
+  "retained_supported_component_arithmetic": [
+    "2785+14-20=2779 million carrying",
+    "23-8=15=2+13 million finance leases",
+    "3000-144=2856;2856-397=2459 million capacity/availability"
+  ],
+  "remaining_method_limitations": [
+    "47 components enumerate all21 instrument occurrences and repeat scope/period/ref fields, causing output9968 above8192.",
+    "Numeric list-index table references differ from supplied table IDs; do not silently map and credit the original answer.",
+    "Debt total and ratio correctly remain null; financing nature and inclusion/overlap remain incomplete."
+  ],
+  "method_status": "INITIAL_PLUS_ONE_SUBSTANTIVE_REVISION_COMPLETE_NOT_READY_NO_THIRD_TRIAL",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "new_acceptances": 0
+}
