@@ -1,6 +1,8 @@
 # SEC_metrics 测试与验证流程
 
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。既有Marriott真实SEC首次与重复运行已按其原许可完成；录制测试不转成LIVE信用，业务结果仍分别等待接受。
+已退出的creator journal/伪造sidecar/冻结前缀拒绝不再作为当前来源必过测试；原版本在Git历史保留。原件/header/attempt/申报/最新失败检查见test_saved_source_checks，旧checkpoint导出及UNKNOWN保护仍保留。
+
 当前保存来源公司入口定向测试：`python -m unittest tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update -q`。小状态验证共享只读根、局部失败/旧期间、精确已知缺陷扣留、写锁、旧任务不重置及日常读取不更新；真实B01/B02公司CLI另见 `docs/evidence/issue28_company_records_20261007/`。测试没有付费或SEC调用，不把模拟状态例当业务内容验收。
 <!-- capability-anchor: CAPABILITY.current_saved_company_run -->
 

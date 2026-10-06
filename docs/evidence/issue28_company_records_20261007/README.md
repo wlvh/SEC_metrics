@@ -294,3 +294,17 @@ unrelated file changes preserve reuse, bad paths preserve old pointer.
 run_saved_company forwards this list for the owner-maintained historical
 factory. Small positive/negative tests pass; actual restored/range consumer
 will only re-read the affected missing-year task, not recalculate prior results.
+
+## Retired creator-trust-only tests
+
+Four ordinary_source_authority methods asserting missing creator journal, forged
+sidecar rejection, imported checkpoint changes or frozen prefix rejection were
+removed from current tests under trusted-internal-20261006. Their original
+source/failed executions remain in Git history. The body corruption assertion
+previously behind a now-obsolete export rejection is independently exercised
+by actual saved_source_checks tests for body/header bytes and missing inputs.
+Retained old checkpoint/export and unknown/failed terminal protection plus
+9 current source/identity tests pass11 checks2.644s. No skip, broad assertion
+relaxation or old receipt re-signing. This addresses the4 diagnosed obsolete
+trust assertions only; ancestor byte-binding and unrelated CI failures remain
+separate work, not automatically fixed or declared green.
