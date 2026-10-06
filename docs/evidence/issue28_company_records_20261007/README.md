@@ -235,3 +235,19 @@ the parent does not claim that its small fixtures or earlier constructed
 FY2024 case establish the whole history pipeline. The latest-only normal
 company CLI does not silently acquire a five-year expansion. New source
 permissions, quotas and production scope remain unchanged.
+
+## Public range orchestration
+
+run_saved_company now has optional fiscal_years/case_factory (bothNone keep
+current behavior). The bounded explicit1..5 unique fiscal-year list produces
+year×metric calls to the same updater and record/CSV reader; the existing
+historical consumer supplies its established selector/calculation factory.
+No public caller needs to rewrite company-task/latest-execution/output protocol.
+Failure remains per-period: a missing2025 gets a blank pending row with only
+requestedFY2025 (no invented dates), while2024's saved result/pointer remains.
+Current CLI stays latest-only; #47 range dispatcher integration/real-source
+acceptance is separately the consumer's work. Small explicit range tests show
+actual requested success period, failure isolation, two-period reading and
+rejection of missing factory/duplicate/unbounded years. Final80 combined
+tests5.777s pass. No new code platform, ledger, model permission or five-year
+business credit is granted by this shared orchestration seam.
