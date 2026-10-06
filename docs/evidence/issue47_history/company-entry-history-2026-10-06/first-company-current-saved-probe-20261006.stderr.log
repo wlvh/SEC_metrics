@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/company-current-saved-probe.py", line 23, in <module>
+    process=subprocess.run(command,stdout=out,stderr=err,cwd=base,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'},timeout=600)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1221, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2179, in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python', '/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py', 'export', '--source-root', '/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs', '--output-root', '/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-20261006/package', '--trust-root', '/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-20261006/trust', '--company', 'macys', '--metric', 'B01']' timed out after 600 seconds

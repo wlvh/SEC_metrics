@@ -1,0 +1,154 @@
+{
+ "status": "PASSED",
+ "development_commit": "0136edc6",
+ "scope": "saved-source current-year consumer; no real acquire/run network phase replay",
+ "stages": [
+  {
+   "stage": "runtime",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+    "install-runtime",
+    "--kind",
+    "ordinary",
+    "--output-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program"
+   ],
+   "exit_code": 0,
+   "seconds": 2.2770677090156823
+  },
+  {
+   "stage": "prepare",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+    "export",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--output-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/package",
+    "--trust-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+    "--company",
+    "macys",
+    "--metric",
+    "B01"
+   ],
+   "exit_code": 0,
+   "seconds": 37.66162366606295
+  },
+  {
+   "stage": "install",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program/tools/vnext_company.py",
+    "install",
+    "--package-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/package",
+    "--state-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/state",
+    "--trust-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+    "--company",
+    "macys"
+   ],
+   "exit_code": 0,
+   "seconds": 14.514460457954556
+  },
+  {
+   "stage": "compute",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program/tools/vnext_company.py",
+    "compute",
+    "--state-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/state",
+    "--trust-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+    "--company",
+    "macys",
+    "--metric",
+    "B01"
+   ],
+   "exit_code": 0,
+   "seconds": 194.6681436249055
+  },
+  {
+   "stage": "export",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+    "export-results",
+    "--state-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/state",
+    "--output-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/output",
+    "--trust-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+    "--company",
+    "macys",
+    "--runtime-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program"
+   ],
+   "exit_code": 0,
+   "seconds": 55.05574195808731
+  }
+ ],
+ "new_business_calls": [
+  0,
+  0,
+  0
+ ],
+ "business_acceptance": false,
+ "matrix_rows": [
+  {
+   "company": "Macy's",
+   "cik": "794367",
+   "metric_id": "B01",
+   "metric_name": "Revenue",
+   "value": "21764000000",
+   "unit": "USD",
+   "status": "OK",
+   "source_class": "STD_XBRL",
+   "formula": "direct",
+   "period_start": "2025-02-02",
+   "period_end": "2026-01-31",
+   "fiscal_year": "2025",
+   "fiscal_period": "ANNUAL",
+   "accession": "0001628280-26-021721",
+   "form": "10-K",
+   "filed_date": "2026-03-27",
+   "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-02\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:dee52774adf7f63a0ba3d59538c851bcfcefe14004fcbf5b75c4f20c4e349b0f\"], \"source_candidate_count\": 6, \"source_reported_periods\": [[\"2023-01-29\", \"2024-02-03\"], [\"2024-02-04\", \"2025-02-01\"], [\"2025-02-02\", \"2026-01-31\"]]}, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250\", \"sha256:333eadc460b0b7482c8deaa78eaae60779b8c8af193d0d9ebf3445c34b88b11c\"]}",
+   "confidence": "",
+   "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+   "company_id": "macys",
+   "run_id": "run:ordinary-integrated:22f0a25071b90bb3b8050a34e08290376e0f43a109d33bc4b37e39bd21b0f059",
+   "result_id": "sha256:cdd9caf6aa5eb77bf233fa14446adbfeef5e16a606f8a264a8b14063cdf4b1b2",
+   "requirement_id": "issue_54_v1",
+   "requirement_closure_hash": "sha256:7ecabd00787540ca0ff06bc4fb6d5abdcedf4ce3d98c31474b0266aed6ce5611",
+   "source_checkpoint_id": "sha256:03a72e3bfa22a89f65295dc19abd0aa635420b59ba6842fa0f1e7dd0848a8178",
+   "last_checked_source_checkpoint_id": "sha256:03a72e3bfa22a89f65295dc19abd0aa635420b59ba6842fa0f1e7dd0848a8178",
+   "current_source_checkpoint_id": "sha256:03a72e3bfa22a89f65295dc19abd0aa635420b59ba6842fa0f1e7dd0848a8178",
+   "original_source_checkpoint_id": "",
+   "current_source_equivalence_id": "",
+   "current_input_matches": "True",
+   "current_input_status": "MATCHED",
+   "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+   "latest_attempt_status": "CANDIDATE_READY",
+   "latest_request_status": "CANDIDATE_READY",
+   "requested_in_latest_execution": "True",
+   "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+   "saved_processing_mode": "",
+   "native_path": "native/B01/47e2a7cdf4d44c8a8b8989fb6551f28c",
+   "period_role": "RUN_ARCHIVE_COORDINATE",
+   "archive_period_start": "2025-02-02",
+   "archive_period_end": "2026-01-31",
+   "archive_fiscal_year": "2025",
+   "measurement_period_start": "2025-02-02",
+   "measurement_period_end": "2026-01-31",
+   "measurement_period_status": "NATIVE_REPLAY_VERIFIED",
+   "defect_holds": "[]"
+  }
+ ]
+}

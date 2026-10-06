@@ -8329,6 +8329,27 @@
     }
    ],
    "next_read": "Only subsequent affected increments; fixed9099base does not imply automatic future receiving or credit."
+  },
+  {
+   "read_on": "2026-10-06",
+   "collaboration_rule": "COLLAB-28-47-v1.3",
+   "peer_branch": "task/b06-new-source",
+   "peer_commit_read": "e0b3951b9d967bc25fee5e6bd6993edf2cf2c1d0",
+   "own_commit_at_read": "8c37a20f",
+   "peer_register_path": "docs/evidence/issue28_continuous/known_result_defects.json",
+   "peer_register_sha256": "3120dd3189d791b75fbe4ffc2c82f4d2c2b32337f56f842b203732dd7fc2a362",
+   "peer_defect_count": 32,
+   "peer_new_defect_ids": [
+    "C02_JPMORGAN_COMPANY_ENTRY_2025_OWNER_AND_COMMITTEE_OMISSION_6d1a5055"
+   ],
+   "integration": "b7d5ce30 merges fixed e0b increment; main company code8588 matches except authenticated current C02 dependency addition. Historical declaration now bypasses that current-only addition. Original snapshots and32peer/104own defects retain identities.",
+   "tests": "Own ab input/604image/span receiving preflight passed;29received local/C02 tests PASS after choosing nonalias macOS TMPDIR. Own73company/range tests PASS; actual installed-history source preparation/compute/CSV/cold replay in progress, no acceptance claimed.",
+   "evidence": "docs/evidence/issue47_history/company-entry-history-2026-10-06/",
+   "new_business_calls": [
+    0,
+    0,
+    0
+   ]
   }
  ]
 }
