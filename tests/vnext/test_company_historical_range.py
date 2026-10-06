@@ -94,6 +94,22 @@ class HistoricalRangeTest(unittest.TestCase):
         self.assertEqual(rows[2]['status'], 'SOURCE_INPUT_REQUIRED')
         self.assertEqual(rows[2]['value'], '')
 
+    def test_pinned_entry_is_checked_before_a_new_launcher_reuses_it(self):
+        from scripts.vnext.company_handoff import binding
+        program = self.root/'program'
+        entry = program/'tools/vnext_company.py'
+        entry.parent.mkdir(parents=True)
+        entry.write_text("commands = ['compute-range', '--fiscal-year-start', '--fiscal-year-end', 'export-results']\n")
+        baseline = program/'requirements/issue_54_v3/baseline_manifest.json'
+        baseline.parent.mkdir(parents=True)
+        baseline.write_text(json.dumps({'requirement_id': 'issue_54_v3',
+            'execution_authority': {'files': {'tools/vnext_company.py': binding(entry)}}}))
+        self.assertEqual(local._range_program_identity(program)['relation'],
+                         'LAUNCHER_VERIFIES_AND_CALLS_PINNED_ENTRY')
+        entry.write_text("commands = ['compute-range']\n")
+        with self.assertRaisesRegex(ValueError, 'FIXED_ENTRY_CHANGED'):
+            local._range_program_identity(program)
+
 
 if __name__ == '__main__':
     unittest.main()

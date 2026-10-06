@@ -127,15 +127,19 @@ def main(argv=None):
             session = local_session(root=work/'acquisition', company_id=args.company, allowance=args.sec_allowance)
             result = acquire_only(session=session, company_id=args.company, max_requests=args.max_sec_requests)
     elif args.command == 'export':
+        from contextlib import nullcontext
         from vnext.company_handoff import export_company
         declaration = None
         if args.history_years:
             from vnext.historical_source_acquisition import declared_frame
             declaration = lambda source, company: declared_frame(
                 repo_root=source, company_id=company, years=args.history_years)
-        result = export_company(source_root=args.source_root, output_root=args.output_root,
-                                trust_root=args.trust_root, company_id=args.company,
-                                metric_ids=args.metric, declared_frame=declaration)
+        if args.history_years:
+            from vnext.historical_run_replay import run_checks_replay_once
+        with run_checks_replay_once() if args.history_years else nullcontext():
+            result = export_company(source_root=args.source_root, output_root=args.output_root,
+                                    trust_root=args.trust_root, company_id=args.company,
+                                    metric_ids=args.metric, declared_frame=declaration)
     elif args.command == 'export-processing':
         from vnext.company_processing import export_processing
         result = export_processing(installed_root=args.installed_root, output_root=args.output_root,

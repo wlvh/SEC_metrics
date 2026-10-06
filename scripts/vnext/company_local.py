@@ -359,6 +359,26 @@ def _history_program(work, company_id):
     return program
 
 
+def _range_program_identity(program):
+    """Verify the pinned entry before a newer launcher may orchestrate it."""
+    import ast
+    from .company_handoff import binding
+    baseline = program/'requirements/issue_54_v3/baseline_manifest.json'
+    installed = strict_json_file(path=baseline)
+    need(installed['requirement_id'] == 'issue_54_v3', 'LOCAL_HISTORY_FIXED_REQUIREMENT_CHANGED')
+    entry = 'tools/vnext_company.py'
+    need(binding(program/entry) == installed['execution_authority']['files'][entry],
+         'LOCAL_HISTORY_FIXED_ENTRY_CHANGED')
+    tree = ast.parse((program/entry).read_text())
+    literals = {node.value for node in ast.walk(tree) if isinstance(node, ast.Constant)
+                and isinstance(node.value, str)}
+    need({'compute-range', '--fiscal-year-start', '--fiscal-year-end', 'export-results'} <= literals,
+         'LOCAL_HISTORY_FIXED_ENTRY_REQUIRES_EXPLICIT_UPGRADE')
+    return {'requirement_id': installed['requirement_id'], 'baseline': binding(baseline),
+            'entry': binding(program/entry), 'range_entry_protocol': 'COMPANY_FISCAL_RANGE_V1',
+            'relation': 'LAUNCHER_VERIFIES_AND_CALLS_PINNED_ENTRY'}
+
+
 def _history_tables(output, company, outcomes, summary):
     """Keep a status for every requested coordinate, including unavailable years."""
     from .publication import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
@@ -441,6 +461,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
         try:
             program = _history_program(work, company_id)
             summary['program_root'] = str(program)
+            summary['fixed_program_identity'] = _range_program_identity(program)
             package = work/'handoffs'/key
             args = ['export', '--source-root', source, '--output-root', package,
                     '--trust-root', work/'trust/company', '--company', company_id, '--history-years', 5]

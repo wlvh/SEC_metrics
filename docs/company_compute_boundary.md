@@ -65,7 +65,7 @@ python3 /srv/sec-metrics/runtime/ordinary-v1/tools/vnext_company.py compute \
 
 普通 `compute` 复用每指标 update controller；C04 调用专用四 form 更新入口。增量 B13 的零 AI 结构性 N/A 使用单独 `--kind native` 固定树（继承原 V14、后继 issue_54_v2）；普通树明确返回 NATIVE_RUNTIME_REQUIRED。完整已保存 D04 可通过独立处理包和其原 V14 固定运行树接入。基线直接使用其独立 SEC 公司来源；acquired 同源复用还需单独准入的原基线公司来源版本，以及完整原文、主体／期间、来源集合和实质请求责任的等价检查。新账本完整保留，不裁行或转换成基线。B13 判断登记、历史处理或变化后的来源仍返回明确待处理／拒绝；不计完成或请求新模型调用。来源包仍不携处理答案。
 
-历史准备从固定 #47 树调用 `export --history-years 5`，使用其 `declared_frame`；计算选择历史固定树并加 `--report-end YYYY-MM-DD` 或 `--fiscal-year YYYY`。这些消费者的实际通过范围须看证据索引，不能由接口存在推出五年全部业务验收。
+历史准备从固定 #47 树调用 `export --history-years 5`，使用其 `declared_frame`；当期C02额外依赖不强加给历史声明。对外 `run --period fiscal-years --fiscal-year-start … --fiscal-year-end … --source-root …`在同一公司入口完成准备、安装、计算与CSV/证据导出。分阶段历史计算继续支持`compute --report-end YYYY-MM-DD`或`--fiscal-year YYYY`，另有`compute-range`一次处理最多五个发行人财年标签：全部期间先解析，整个范围固定同一来源版本并持有同一导入锁。原生Run与每期间观察保持各自身份，范围观察按财年/指标读取状态。实际通过范围须看证据索引，不能由接口存在推出五年全部业务验收。
 
 `compute` 返回本次请求报告，并保存 `latest-execution.json` 与薄执行观察。`results`／`company-results.json` 从原每指标 journal、期间 current 指针和 native Run 生成公司视图；局部请求不删除其它指标及年份。既有成功指针仍由原消费者管理，不新增正式选版或 active。视图区分创建来源、最近核验来源、当前来源匹配／失败／未复核、Run／Requirement closure、最新请求及已确认缺陷。
 

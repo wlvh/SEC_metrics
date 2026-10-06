@@ -1,6 +1,6 @@
-# 本地运行一家公司的当前财年
+# 本地运行一家公司的当前财年或历史财年范围
 
-这是PR55的Draft本地入口。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+公司入口已通过PR57进入main；本分支按COLLAB-28-47-v1.3接入历史财年范围。来源与计算仍为独立阶段，`run`负责顺序调度；没有OpenShift部署、正式发布或active切换。旧分阶段入口及运行树仍按原身份读取旧Run。
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
@@ -12,7 +12,24 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
   --output-dir ./outputs/marriott
 ```
 
-公司须已在登记中。当前本地 `run`仅选择最新已披露完整10-K及其原文确认的财年，不硬编码年份，不承诺某份尚未披露财报。历史五年仍走既有历史入口，不成为本地首年启动前提。相对路径转为安全绝对路径；别名、源码树重叠、生产active目录及工作/输出重叠拒绝。
+公司须已在登记中。默认 `latest-complete-fy`选择最新已披露完整10-K及其原文确认的财年，不硬编码年份，不承诺某份尚未披露财报。历史范围不是当前财年首跑的前提。相对路径转为安全绝对路径；别名、源码树重叠、生产active目录及工作/输出重叠拒绝。
+
+历史模式使用同一入口，明确指定公司、发行人财年标签范围和指标：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py run \
+  --company macys --period fiscal-years \
+  --fiscal-year-start 2023 --fiscal-year-end 2024 --metric B01 \
+  --source-root /srv/sec-metrics/prepared-history/source-inputs \
+  --work-dir /srv/sec-metrics/work/macys \
+  --output-dir /srv/sec-metrics/output/macys
+```
+
+`source-root`是准备端已由原获取/恢复入口认证的保存来源，必须由同一准备程序的受控登记验证。历史模式进行来源准备及公司导出、固定历史程序安装、公司输入导入、范围计算和原生冷读导出；本入口不发SEC或模型请求，不建立新额度。程序管理逐期间计算，不要求先运行别家公司或手工拼CSV。一次范围最多五个财年；每年都从申报自身DEI核对发行人财年标签，不把2025-02-01的Macy's FY2024改称FY2025。全部年份先解析，缺少或歧义年份在创建候选前拒绝，输出明确状态。
+
+来源准备端完整验证原账本；最终计算端只接收目标公司包与独立信任登记。`historical-company.json`固定历史程序，`historical-company-state`保留历史来源版本、原生Run和请求观察；已有`local-company.json`、当期程序与状态保留。计算整个范围持有同一个导入锁，每个Run仍保留原生期间和身份。CSV为每个请求财年/指标记录状态，旧范围外结果保留并标记未请求；单年失败不冒充零值，也不覆盖别年的请求状态。复跑沿原输入指纹核验已有候选；旧Run必须由创建它的固定树冷读。
+
+这是公司入口接线范围，不能代替原完整五年业务验收。缺模型判断、来源或完整指标实现时仍返回限制/失败，已有专用入口和旧结果继续按原版本解释。
 
 本地程序自动安装固定的普通/native继承树（`issue_54_v4`继承V14），按已有Spec选择各自原生验证器，包含无需模型的B13结构性N/A；不修改普通、native或历史旧树。
 
