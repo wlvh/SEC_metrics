@@ -1,0 +1,90 @@
+{
+  "position": "marriott_international:2023-12-31:D02",
+  "reference_sha256": {
+    "normal": "fdd551701971d6cd4f39c772b2c82fa9b65b1cd2d4e267662ba93c50d24d207e",
+    "full": "7c6d4200a43dd964ca001277543c8afef69134add922faedaac2654a4309d0a4"
+  },
+  "trials": {
+    "initial": {
+      "request_sha256": "2daff560bc5cfbb52dc13b2125d7e1d0744b4813f38a06a6299e47ac29f22830",
+      "source_blocks": 538,
+      "must_decide": 17,
+      "input_reference_tokens": 24543,
+      "answer_sha256": "ceb0156e7eb5600d5aa7cf4c2c88783dc1f8bc061110c9dada64b21268f20976",
+      "output_reference_tokens": 645,
+      "contract": "PASS",
+      "positive_blocks": [
+        "b1081",
+        "b1082",
+        "b1083",
+        "b1084"
+      ],
+      "missing_from_frozen_reference": [
+        "b1217",
+        "b1244",
+        "b1245",
+        "b1246"
+      ],
+      "extra_against_frozen_reference": [],
+      "unsettled": []
+    },
+    "revision1": {
+      "request_sha256": "0fc4ab21423c5e440a331b3d8aeba946e033da675d614c32d0ba3aee9da55084",
+      "source_blocks": 839,
+      "must_decide": 27,
+      "input_reference_tokens": 31771,
+      "answer_sha256": "34f176cd9ea149584c1ad6ed23c1feb6c20756486bbbc6f0b19fc4c13f8c024e",
+      "output_reference_tokens": 1211,
+      "contract": "PASS",
+      "positive_blocks": [
+        "b1081",
+        "b1082",
+        "b1083",
+        "b1084",
+        "b1217",
+        "b1244",
+        "b1245",
+        "b1246",
+        "b1247",
+        "b1248",
+        "b1249",
+        "b1250",
+        "b1253"
+      ],
+      "missing_from_frozen_reference": [],
+      "extra_against_frozen_reference": [],
+      "unsettled": []
+    }
+  },
+  "same_fixed_system_prompt": true,
+  "full_response_in_original_normal_pool": [
+    "b1081",
+    "b1082",
+    "b1083",
+    "b1084",
+    "b1217",
+    "b1244",
+    "b1245",
+    "b1246"
+  ],
+  "full_response_other_already_owned_source_blocks": [
+    "b1247",
+    "b1248",
+    "b1249",
+    "b1250",
+    "b1253"
+  ],
+  "ownership_comparison_only_not_runtime_operands": true,
+  "causal_limit": "Full input also changes must_decide 17 to 27; the two trials do not isolate context as the only cause. Initial missing headings/event-description blocks cannot be classified as unsupported model omissions solely from the full-source reference.",
+  "method_status": "ONE_INITIAL_PLUS_ONE_SOURCE_CONTEXT_REVISION_COMPLETE_NO_THIRD_TRIAL",
+  "consumer_status": "Development constructor and shared pure answer validator used; normal production input preparation not yet changed; no target-model acceptance",
+  "media_complete": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "new_acceptances": 0,
+  "production_authorized": false
+}
