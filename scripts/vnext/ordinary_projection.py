@@ -73,7 +73,7 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
 
 
 def render_ordinary_records(*, data_root, manifest, records, case,
-                            receipt_status, source_validation):
+                            receipt_status, source_validation, prepared_annual_input=None):
     """Project already calculated records; the caller owns validation and state.
 
     This renderer does not load a Requirement or replay a Run. Its receipt
@@ -97,9 +97,21 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     _need(same_unit or percent_unit,
           "ORDINARY_PROJECTION_UNIT_CHANGED")
     company = next(c for c in projector._load_registry(repo_root=data_root) if c["company_id"] == manifest["company_id"])
-    annual = prepare_saved_annual_input(repo_root=data_root,company_id=manifest["company_id"])
+    annual = (prepare_saved_annual_input(repo_root=data_root,company_id=manifest["company_id"])
+              if prepared_annual_input is None else prepared_annual_input)
     period = annual["table_input"]["target_period"]
     _need(period["fiscal_year"] == manifest["target_period"]["fiscal_year"],"ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED")
+    if prepared_annual_input is not None:
+        from .traits import repository_company_ciks
+        _need(annual['company_id'] == manifest['company_id']
+              and str(int(annual['entity'])) in {str(int(c)) for c in
+                  repository_company_ciks(repo_root=data_root, company_id=manifest['company_id'])},
+              'ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED')
+        _need(annual['filing']['reportDate'] == period['period_end']
+              and result['period_end'] == period['period_end']
+              and (result['period_start'] == period['period_start'] or
+                   result['period_start'] == result['period_end']),
+              'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')
     indexes = projector._record_indexes(runs=[(manifest,records)])
     trace = indexes["traces"][result["trace_id"]]
     ordered,_ = projector._ordered_observations(trace=trace,observations=indexes["observations"],projection=projection)

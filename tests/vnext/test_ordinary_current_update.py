@@ -107,4 +107,27 @@ class CurrentUpdateTest(unittest.TestCase):
 
 
 CurrentUpdateTest.original_census = staticmethod(update._source_census)
+
+
+class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_lodging_only_changes_do_not_change_b01_processing_identity(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B01')
+        def changed(*,path):
+            return 'unrelated-lodging-version' if path.name=='normal_lodging_results.py' else original(path=path)
+        with patch.object(update,'sha256_file',side_effect=changed):
+            after=update._configuration(ROOT,'marriott_international','B01')
+        self.assertEqual(before,after)
+        self.assertNotIn('scripts/vnext/normal_lodging_results.py',before['processing_files'])
+
+    def test_consumed_parser_changes_still_change_processing_identity(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B01')
+        def changed(*,path):
+            return 'new-consumed-parser-version' if path.name=='deterministic_router.py' else original(path=path)
+        with patch.object(update,'sha256_file',side_effect=changed):
+            after=update._configuration(ROOT,'marriott_international','B01')
+        self.assertNotEqual(before['processing_files'].get('scripts/vnext/deterministic_router.py'),
+                            after['processing_files'].get('scripts/vnext/deterministic_router.py'))
+
 if __name__=='__main__':unittest.main()

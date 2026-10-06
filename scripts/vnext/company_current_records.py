@@ -16,14 +16,14 @@ from .company_handoff import _atomic_json
 from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
 from .normal_source_authority import ROOT
 from .ordinary_current_update import run_once
-from .ordinary_saved_result import METRIC_IDS, read_saved_result
+from .ordinary_saved_result import SAVED_METRIC_IDS, read_saved_result
 
 EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
                 'local_metric_status', 'period_role', 'result_validity',
                 'source_observation_status', 'defect_holds', 'requested_in_latest_execution')
 # Old E01 item-code counts do not satisfy the adopted content-confirmed M&A
 # definition. Keep them in old records, not the new company's current result.
-CURRENT_METRICS = METRIC_IDS - {'E01'}
+CURRENT_METRICS = SAVED_METRIC_IDS - {'E01'}
 
 
 def _need(condition, reason):
@@ -101,7 +101,8 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
             else:
                 try:
                     observation = {'metric_id': metric, **run_once(state_root=controller,
-                        source_root=source, company_id=company_id, metric_id=metric)}
+                        source_root=source, company_id=company_id, metric_id=metric,
+                        shared_input_root=work/'shared-inputs')}
                 except Exception as error:
                     observation = {'metric_id': metric, 'status': 'INPUT_OR_EXECUTION_FAILED',
                                    'reason': str(error), 'error_type': type(error).__name__}
@@ -193,12 +194,13 @@ def _read_current_company(root, company_id, defects_file, output_root):
                 'record_root': str(pointer.parent/'results'/state['version']),
                 'read_result_id': state['result_id'], 'requested_in_latest_execution': False}
     rows, matrix, evidence = [], [], []
+    shared_record_cache = {}
     for observation in observations.values():
         record = observation.get('record_root')
         if record:
             record = Path(record).resolve()
             _need(root in record.parents, 'COMPANY_CURRENT_RECORD_OUTSIDE_STATE')
-            saved = read_saved_result(output_root=record)
+            saved = read_saved_result(output_root=record, shared_record_cache=shared_record_cache)
             result = saved['result']
             _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']
                   and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')

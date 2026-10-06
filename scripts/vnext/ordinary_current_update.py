@@ -13,7 +13,7 @@ from urllib.parse import urlsplit
 from .annual_sources import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, create_saved_result, read_saved_result
+from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, create_saved_result, read_saved_result
 from .traits import repository_company_ciks
 
 
@@ -29,8 +29,23 @@ def _write(path, value):
 def _configuration(source, company, metric):
     policy = strict_json_file(path=ROOT/'config/issue28_normal_results_v2.json')
     paths = set(policy['rule_paths']) | set(policy['presentation_paths'])
+    # These files belong solely to the lodging producer. The zero-AI Spec
+    # set never prepares a lodging case; unrelated edits must not recalculate
+    # B01/B02 or their other supported deterministic neighbours.
+    if metric in METRIC_IDS:
+        paths.difference_update({'scripts/vnext/normal_lodging_results.py',
+            'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
+            'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
                   'scripts/vnext/csv_output.py','config/issue28_normal_results_v2.json'})
+    # The old Requirement inherited these dependencies implicitly. Ordinary
+    # records must name their actual shared parser/calculator dependencies.
+    paths.update('scripts/vnext/'+name+'.py' for name in (
+        'deterministic_router','calculator','canonical','records','observations',
+        'specs','sources','table_grid','resource_limits','traits','projector',
+        'governance_signals','annual_input','annual_sources','deterministic_catalog'))
+    paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
+                  'config/company_registry.csv'})
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
@@ -92,9 +107,9 @@ def _recover(root):
     return current
 
 
-def run_once(*, state_root, source_root, company_id, metric_id):
+def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None):
     """One current deterministic update; identical raw input never calculates."""
-    _need(metric_id in METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
+    _need(metric_id in SAVED_METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
     root,source = Path(state_root).resolve(),Path(source_root).resolve()
     _need(root != source and root not in source.parents and source not in root.parents,
           'CURRENT_UPDATE_STATE_SOURCE_OVERLAP')
@@ -134,7 +149,7 @@ def run_once(*, state_root, source_root, company_id, metric_id):
             # input. A newly selected filing necessarily changes submissions.
             version = uuid4().hex
             saved = create_saved_result(source_root=source,output_root=root/'results'/version,
-                company_id=company_id,metric_id=metric_id)
+                company_id=company_id,metric_id=metric_id, shared_input_root=shared_input_root)
             if previous:
                 _need(saved['result']['period_end']>=previous['period_end'], 'CURRENT_UPDATE_PERIOD_REGRESSED')
             state={'company_id':company_id,'metric_id':metric_id,'version':version,

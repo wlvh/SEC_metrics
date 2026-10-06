@@ -22,3 +22,9 @@
 历史侧已将原resolver输出薄适配为公共case的expected_records/results/compiled_specs/source_proofs及所选prepared_input，不重新准备或造新pipeline。实测该case进入公共纯投影仍被其无条件重选最新FY2025挡住，报ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED；公共负责人负责修复这一接缝，本方未复制投影器。恢复目录原件齐全但旧来源准入要求trusted journal的失败也保留在记录中，不能标成缺原件后自动GET。公共保存writer及普通历史公司范围接线仍待，当前小PR不宣称完整公司/五年接受。
 
 代码a0685346的[CI37522373390](https://github.com/wlvh/SEC_metrics/actions/runs/37522373390)已终态failure：快测作业、inherited source material和历史兼容作业success；多项公司作业仍在旧lodging_table_source字节绑定前拒绝，另一个独立更新例为UPDATES_PARTIAL/UPDATES_INCOMPLETE断言失败，尚未证明同因。作业状态和首个失败的原日志片段在主要记录的CI-a0685346文件；不将定向通过说成整个workflow绿灯，不为这些旧路径重签快照。
+
+后继已接公共PR67/1ae1fb25的save_calculated_case及纯renderer所选年度参数，原“重选FY2025”失败保留，当前缺口已修。真实历史选择器/消费者生成FY2024 B11 case4.089秒；公共纯保存0.588秒，在最新选择与计算factory设抛错时仍通过，值128.23 USD及实际2024区间不变。另进程冷读0.357秒，结果ID不变。30,624字节结果与3,554,659字节共用grid分别保存，没有创建旧Run。53个受影响保存/期间/历史消费者小例及单份真实来源准备5.468秒通过。
+
+同一当期公司CLI B10/B11新记录实际首跑6.135秒，CSV为69.3 percent/128.8 USD，内部B10仍0.693 ratio；当期期间FY2025保持。原任务复跑1.188秒，计算factory设抛错但没有调用，两个指标均NO_SOURCE_CONTENT_CHANGE；公共results日常CSV/出处0.536秒。两指标各约30KB结果，共用一份表格材料，不复制来源/程序树；主要结果在company-lodging-shared-records.json与historical-case-save-and-cold-read.json。
+
+这解除所选历史case的公共保存/投影接缝，也验证当期公司消费者；历史五年范围的普通状态/调度仍待接入同一入口，来源发现/补齐及旧外部journal依赖仍待H4，不写成完整五年自动交付。公共配置已先移除零AI不使用的lodging文件，增加实际parser依赖，尚未宣称所有配置已按指标分离；本方不改公共状态/配置规则。

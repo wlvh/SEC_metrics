@@ -10,12 +10,14 @@ import subprocess
 import time
 
 from sec_http import write_immutable_bytes
-from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
+from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file, strict_json_loads
 from .normal_run_inputs import prepare_ordinary_zero_ai_run_input
 from .normal_run_specs import installed_ordinary_spec_documents
 from .records import validate_record
 
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
+LODGING_METRIC_IDS = frozenset({'B10','B11'})
+SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS
 
 
 def _program_version(root):
@@ -50,9 +52,47 @@ def _validate_records(records, company_id, metric_id, result_id):
     return results[0]
 
 
-def create_saved_result(*, source_root, output_root, company_id, metric_id):
-    """Calculate through the existing source/Calculator, then commit a small record."""
-    _need(metric_id in METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
+def _ordinary_case(source, company, metric):
+    original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric)
+    detail = original['component']
+    if 'metrics' in detail:
+        detail = detail['metrics'][metric]
+    return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,
+        'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],
+        'references': original['source_references'], 'source_proofs': original['source_proofs'],
+        'admission': original['source_admission'], 'target_period': original['target_period'],
+        'expected_records': original['records'], 'results': {metric: original['primary_result']},
+        'prepared_annual_input': original['component'].get('prepared_input'),
+        'selection': detail.get('selection', detail.get('inspection'))}
+
+
+def create_saved_result(*, source_root, output_root, company_id, metric_id, shared_input_root=None):
+    """Prepare through the existing Calculator and save its actual records."""
+    _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
+    def prepare(source):
+        if metric_id in LODGING_METRIC_IDS:
+            from .normal_lodging_results import prepare_ordinary_lodging_case
+            return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id)
+        return _ordinary_case(source,company_id,metric_id)
+    return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
+        metric_id=metric_id, factory=prepare,
+        calculation_performed=True, shared_input_root=shared_input_root)
+
+
+def save_calculated_case(*, source_root, output_root, company_id, metric_id, case, shared_input_root=None):
+    """Persist an already calculated case; do not select sources or calculate again.
+
+    The case's business producer owns extraction and calculation correctness.
+    This writer checks records, actual source proofs and Spec/period/unit/trace
+    consistency and preserves its original input/result identities. It grants
+    no new model execution, source acquisition or business acceptance.
+    """
+    return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
+        metric_id=metric_id, factory=lambda source: case, calculation_performed=False,
+        shared_input_root=shared_input_root)
+
+
+def _save_case(*, source_root, output_root, company_id, metric_id, factory, calculation_performed, shared_input_root):
     source_root, output_root = Path(source_root).resolve(), Path(output_root).resolve()
     _need(source_root.is_dir() and source_root != output_root
           and source_root not in output_root.parents and output_root not in source_root.parents,
@@ -63,55 +103,80 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id):
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         started = time.monotonic()
         try:
-            original = prepare_ordinary_zero_ai_run_input(repo_root=source_root,
-                company_id=company_id, metric_id=metric_id)
+            case = factory(source_root)
             calculated = time.monotonic()
-            records, result = original['records'], original['primary_result']
-            _validate_records(records, company_id, metric_id, result['result_id'])
+            _need(case['primary_metric_id'] == metric_id, 'SAVED_CASE_METRIC_CHANGED')
+            records, result = case['expected_records'], case['results'][metric_id]
+            checked = _validate_records(records, company_id, metric_id, result['result_id'])
+            _need(checked == result, 'SAVED_CASE_RESULT_DIFFERS_FROM_RECORD')
+            spec, period = case['compiled_specs'][metric_id], case['target_period']
+            _need(result['spec_closure_hash'] == spec['spec_closure_hash'], 'SAVED_RESULT_SPEC_CHANGED')
+            _need(result['unit'] == spec['compiled']['canonical_unit'] or
+                  result['unit'] is None and result['value'] is None, 'SAVED_RESULT_UNIT_CHANGED')
+            _need(all(result[k] == period[k] for k in ('period_start', 'period_end')), 'SAVED_RESULT_PERIOD_CHANGED')
+            trace = next(r for r in records if r['record_type'] == 'EXECUTION_TRACE' and r['trace_id'] == result['trace_id'])
+            _need(trace['metric_id'] == metric_id and trace['spec_closure_hash'] == result['spec_closure_hash']
+                  and all(trace['calculation_target'][k] == result[k] for k in
+                          ('company_id','period_start','period_end','scope_key')), 'SAVED_CASE_TRACE_TARGET_CHANGED')
+            from .specs import compile_spec_files
+            from .sources import resolve_repository_file
+            actual_specs = compile_spec_files(paths=[resolve_repository_file(repo_root=source_root,
+                repo_relative_path=p) for p in case['spec_paths'].values()])
+            _need(all(actual_specs[m]['spec_closure_hash'] == s['spec_closure_hash']
+                      for m,s in case['compiled_specs'].items()), 'SAVED_CASE_INSTALLED_SPEC_DIFFERS')
             from .ordinary_source_authority import verify_ordinary_source_proofs
-            verify_ordinary_source_proofs(data_root=source_root, proofs=original['source_proofs'])
-            detail = original['component']
-            if 'metrics' in detail:
-                detail = detail['metrics'][metric_id]
-            case = {'primary_metric_id': metric_id, 'kind': 'STRUCTURED',
-                'input_binding': original, 'compiled_specs': original['compiled_specs'],
-                'spec_paths': original['spec_paths'], 'references': original['source_references'],
-                'admission': original['source_admission'],
-                'selection': detail.get('selection', detail.get('inspection'))}
-            identity = content_hash(value={'input_id': original['input_id'],
-                'result_id': result['result_id']})
+            verify_ordinary_source_proofs(data_root=source_root, proofs=case['source_proofs'])
+            input_id = case['input_binding'].get('input_id') or content_hash(value=case['input_binding'])
+            identity = content_hash(value={'input_id': input_id, 'result_id': result['result_id']})
             manifest = {'record_type': 'ORDINARY_SAVED_RESULT_V1', 'run_id': 'ordinary:'+identity[7:],
                 'status': 'CALCULATED', 'company_id': company_id, 'metric_id': metric_id,
-                'target_period': original['target_period'], 'result_id': result['result_id'],
-                'source_root': str(source_root), 'source_proofs': original['source_proofs'],
-                'source_references': original['source_references'],
-                'input_id': original['input_id'], 'program_root': str(Path(__file__).resolve().parents[2]),
+                'target_period': period, 'result_id': result['result_id'],
+                'source_root': str(source_root), 'source_proofs': case['source_proofs'],
+                'source_references': case['references'], 'input_id': input_id,
+                'program_root': str(Path(__file__).resolve().parents[2]),
                 'program_version': _program_version(Path(__file__).resolve().parents[2]),
-                'compiled_specs': original['compiled_specs'],
+                'compiled_specs': case['compiled_specs'],
+                'calculation_performed_by_writer': calculation_performed,
                 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
             from .ordinary_projection import render_ordinary_records
             rendered = render_ordinary_records(data_root=source_root, manifest=manifest,
-                records=records, case=case, receipt_status='CALCULATED_SAVED_SOURCE',
-                source_validation='SOURCE_CALCULATOR_AND_RECORD_CHECKS')
+                records=records, case=case, receipt_status='CALCULATED_SAVED_SOURCE' if calculation_performed else 'SAVED_PRECALCULATED_CASE',
+                source_validation='SOURCE_CALCULATOR_AND_RECORD_CHECKS' if calculation_performed else 'SOURCE_PROOFS_AND_PRECALCULATED_RECORD_CHECKS',
+                prepared_annual_input=case.get('prepared_annual_input') or case['input_binding'].get('prepared_input'))
             rows_at = time.monotonic()
-            files = {**rendered['files'], 'records.jsonl': b''.join(_json(r) for r in records),
+            persisted, shared = [], {}
+            for record in records:
+                if record['record_type'] != 'DERIVED_ASSET' or shared_input_root is None:
+                    persisted.append(record)
+                    continue
+                shared_root = Path(shared_input_root).resolve()
+                for protected in (source_root, output_root, Path(__file__).resolve().parents[2]):
+                    _need(shared_root != protected and protected not in shared_root.parents
+                          and shared_root not in protected.parents, 'SAVED_SHARED_INPUT_ROOT_OVERLAP')
+                shared_root.mkdir(parents=True, exist_ok=True)
+                raw = _json(record); digest = sha256_bytes(content=raw)
+                path = shared_root/(digest+'.json')
+                write_immutable_bytes(path=path, content=raw)
+                shared[digest] = {'path':str(path),'sha256':digest,'derived_asset_id':record['derived_asset_id']}
+                persisted.append({'record_type':'ORDINARY_SHARED_DERIVED_ASSET_REFERENCE', 'sha256':digest})
+            if shared:
+                manifest['shared_records'] = shared
+            files = {**rendered['files'], 'records.jsonl': b''.join(_json(r) for r in persisted),
                      'receipt.json': _json(rendered['receipt'])}
             for name, raw in files.items():
                 write_immutable_bytes(path=output_root/name, content=raw)
             manifest['files'] = {name: sha256_file(path=output_root/name) for name in files}
-            manifest['timings_seconds'] = {'prepare_and_calculate': format(calculated-started, '.6f'),
-                'check_and_project': format(rows_at-calculated, '.6f'),
-                'save': format(time.monotonic()-rows_at, '.6f')}
-            # Completion is written last; interruption cannot advertise success.
+            manifest['timings_seconds'] = {'prepare_and_calculate' if calculation_performed else 'accept_precalculated_case': format(calculated-started, '.6f'),
+                'check_and_project': format(rows_at-calculated, '.6f'), 'save': format(time.monotonic()-rows_at, '.6f')}
             write_immutable_bytes(path=output_root/'manifest.json', content=_json(manifest))
-            return {**read_saved_result(output_root=output_root), 'source_admission': original['source_admission']}
+            return {**read_saved_result(output_root=output_root), 'source_admission': case['admission']}
         except Exception as error:
             write_immutable_bytes(path=output_root/'failure.json',
                 content=_json({'status': 'FAILED', 'error_type': type(error).__name__, 'error': str(error)}))
             raise
 
 
-def read_saved_result(*, output_root):
+def read_saved_result(*, output_root, shared_record_cache=None):
     """Read saved values and rows, checking ordinary damage without recomputing."""
     root = Path(output_root)
     manifest = strict_json_file(path=root/'manifest.json')
@@ -121,7 +186,23 @@ def read_saved_result(*, output_root):
           'metrics_matrix.csv', 'metric_evidence.csv'}, 'SAVED_RESULT_FILES_MISSING')
     for name, expected in manifest['files'].items():
         _need(sha256_file(path=root/name) == expected, 'SAVED_RESULT_FILE_CHANGED:'+name)
-    records = [strict_json_loads(text=line) for line in (root/'records.jsonl').read_text().splitlines()]
+    records = []
+    for line in (root/'records.jsonl').read_text().splitlines():
+        record = strict_json_loads(text=line)
+        if record['record_type'] == 'ORDINARY_SHARED_DERIVED_ASSET_REFERENCE':
+            digest = record['sha256']; details = manifest.get('shared_records', {}).get(digest)
+            _need(details is not None and details['sha256'] == digest, 'SAVED_SHARED_RECORD_REFERENCE_MISSING')
+            path = Path(details['path']); key=(str(path),digest)
+            _need(path.is_file(), 'SAVED_SHARED_RECORD_MISSING')
+            if shared_record_cache is not None and key in shared_record_cache:
+                record = shared_record_cache[key]
+            else:
+                _need(sha256_file(path=path) == digest, 'SAVED_SHARED_RECORD_CHANGED')
+                record = strict_json_file(path=path)
+                if shared_record_cache is not None:shared_record_cache[key]=record
+            _need(record['record_type'] == 'DERIVED_ASSET' and
+                  record['derived_asset_id'] == details['derived_asset_id'], 'SAVED_SHARED_RECORD_ID_CHANGED')
+        records.append(record)
     result = _validate_records(records, manifest['company_id'], manifest['metric_id'], manifest['result_id'])
     _need(result['spec_closure_hash'] == manifest['compiled_specs'][manifest['metric_id']]['spec_closure_hash'],
           'SAVED_RESULT_SPEC_CHANGED')
