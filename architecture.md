@@ -1,6 +1,6 @@
 # SEC_metrics 架构说明
 
-2026-10-06当前简化按[受信任内部工具与运行队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)接续。公司pipeline已交付；本次只将CSV字段／严格编码器、保存来源读取及确定性Spec编译辅助移至轻量模块，尚未完成的未变不重算、日常轻量出表与新attempt共享属于后续R2/R3，不在此声明已实现。旧运行保存链仍按原版本读取。
+2026-10-06当前简化按[受信任内部工具与运行队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)接续。CSV字段／编码器、保存来源读取及确定性Spec编译辅助已移至轻量模块。保存来源候选CLI的B01路径复用原来源选择及Calculator，保存普通manifest、records、CSV和出处，完成标记最后写入；来源固定在原根，结果目录不复制规则/来源树。读取核对文件损坏与公司、期间、单位，不重算、不加载递归Requirement。其他原生路线、公司run整体及R2/R3仍待接续。旧Run按保存版本读取。
 <!-- capability-anchor: CAPABILITY.ordinary_runtime_tools_light -->
 
 本地公司 `run` 薄编排见 `docs/company_local_run.md`：固定程序自动安装，独立子进程依次执行现有 SEC 发现/捕获、公司交接/安装、计算和原生冷出口。新任务使用仅登记/规则/空账本的 `issue_54_v4` 固定树；原获取及计算模块只在该新安装树做必要分派，不改旧执行字节、来源历史或额度。来源 journal 移至独立可写 trust，计算仍禁网和拒绝采集现场读取；原 LIVE 判断和其原 SEC 版本由各自运行树独立认证。工作目录固定公司、累积上限和程序版本，重复运行不重置；输出按本次运行保留，失败仍可原生读取旧结果并明确本次状态。

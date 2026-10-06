@@ -61,6 +61,24 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
         manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
     _need(manifest["requirement_id"] in {REQUIREMENT_ID, 'issue_28_v14'},"ORDINARY_PROJECTION_REQUIREMENT_CHANGED")
     case = replay_case(data_root=data_root,manifest=manifest)
+    rendered = render_ordinary_records(data_root=data_root, manifest=manifest,
+        records=records, case=case,
+        receipt_status="FROZEN_CANDIDATE" if frozen else "VERIFIED_OPEN_PREVIEW",
+        source_validation="FULL_NATIVE_RUN_REPLAY")
+    if _return_replay_context:
+        # Same-operation callers can consume the Run/source replay already
+        # performed above. A later invocation still starts from disk.
+        rendered["replay_context"] = {"manifest":manifest,"records":records,"case":case}
+    return rendered
+
+
+def render_ordinary_records(*, data_root, manifest, records, case,
+                            receipt_status, source_validation):
+    """Project already calculated records; the caller owns validation and state.
+
+    This renderer does not load a Requirement or replay a Run. Its receipt
+    names the caller's actual checks rather than granting native replay credit.
+    """
     metric = case["primary_metric_id"]
     results = [r for r in records if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == metric]
     _need(len(results) == 1,"ORDINARY_PROJECTION_PRIMARY_RESULT_NOT_UNIQUE")
@@ -197,12 +215,12 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
         row["notes"] += " Selected source inputs include new SEC acquisition records; each input retains its own acquisition identity."
     _need(set(row)==set(csv_output.METRIC_FIELDS) and all(set(e)==set(csv_output.EVIDENCE_FIELDS) for e in evidence),
           "ORDINARY_PUBLIC_ROW_SCHEMA_CHANGED")
-    receipt={"record_type":"ORDINARY_INTEGRATED_ROW_RECEIPT","status":"FROZEN_CANDIDATE" if frozen else "VERIFIED_OPEN_PREVIEW",
+    receipt={"record_type":"ORDINARY_INTEGRATED_ROW_RECEIPT","status":receipt_status,
         "run_id":manifest["run_id"],"run_status":manifest["status"],"result_id":result["result_id"],
         "primary_metric_id":metric,"source_required_metric_ids":sorted(case["compiled_specs"]),
         "presentation_policy_sha256":sha256_file(path=ROOT/POLICY_PATH),"renderer_sha256":sha256_file(path=Path(__file__)),
         "row_hash":content_hash(value=row),"evidence_hash":content_hash(value=evidence),"evidence_count":len(evidence),
-        "source_validation":"FULL_NATIVE_RUN_REPLAY","production_authorized":False}
+        "source_validation":source_validation,"production_authorized":False}
     if 'mode' in case['input_binding']:
         receipt['semantic_assessment_mode'] = case['input_binding']['mode']
     if recorded:
@@ -216,8 +234,4 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
     rendered = {"row":row,"evidence":evidence,"receipt":{**receipt,"receipt_id":content_hash(value=receipt)},
         "files":{"metrics_matrix.csv":csv_output._csv_bytes(rows=[row],fieldnames=csv_output.METRIC_FIELDS),
                  "metric_evidence.csv":csv_output._csv_bytes(rows=evidence,fieldnames=csv_output.EVIDENCE_FIELDS)}}
-    if _return_replay_context:
-        # Same-operation callers can consume the Run/source replay already
-        # performed above. A later invocation still starts from disk.
-        rendered["replay_context"] = {"manifest":manifest,"records":records,"case":case}
     return rendered

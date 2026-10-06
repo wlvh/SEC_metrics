@@ -27,14 +27,32 @@ Run or business acceptance of other metrics.34directed tests pass in0.471s;
 CSV quote/newline/U+037E, exact columns, formula arity/unit/dimension checks and
 ordinary source/Spec import isolation are preserved.
 
-Known incomplete integration: existing full native CLI rejects the changed
-helper imports through a recursive old ancestor byte check. No check was
-suppressed or old frozen snapshot rewritten; partial binding refresh was
-reverted. The CLI is not reported successful. Native installed dependency
-compatibility/new trusted path remains to finish before calling this first R1
-delivery complete. Attempts to use the financial numeric renderer for B01 were
-also correctly rejected as outside that renderer's metric scope; no fabricated
-Run or fake CSV result was retained.
+Current saved-source CLI integration now succeeds for B01. It calls the same
+source preparation/Calculator, checks records and source proofs, then writes an
+ordinary record with result/period/unit/Spec/source/program version, CSV and
+source evidence. It does not install/re-sign a Requirement or copy a source or
+rule tree. Completion is written last under a write lock; an interrupted/failed
+attempt cannot advertise success. The new reader checks saved files and
+coordinates without calculation. The old failed CLI attempt and old snapshots
+remain intact; its failure was a recursive ancestor-code gate, not a business
+result failure. Other metric native routes and full company run installation are
+still legacy; this does not claim they have been simplified.
+
+One shared Marriott preparation plus small damage/company/period/unit/incomplete
+write tests and existing company orchestration/query tests: 39 tests passed in
+2.442s. The saved Company Facts original independently lists 26186000000 USD,
+FY2025, the exact 10-K accession and annual dates used by the result. New current
+CLI succeeded with exit0 in about2s; a separate process will read its committed
+output without source calculation. These are development/source results, not
+formal adoption or a new full-company acceptance.
+
+The inherited CI collection still exercises old ancestor/trust requirements;
+its obsolete runs37478200850 and37478354751 were requested cancelled, without
+cancelling any project capture or persistent calculation. A dedicated current
+runtime check now covers the affected small tests and real source calculation.
+It does not claim the old broad workflow is green. T1 will remove/partition the
+retired obligations according to the current Issue instruction rather than
+re-signing historical packages to make them pass.
 
 No source was fetched and no model called. Existing business definitions,
 source content, failed opportunity and budget history remain unchanged.

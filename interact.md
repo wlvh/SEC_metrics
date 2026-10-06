@@ -1,6 +1,6 @@
 # SEC_metrics 用户可观察行为
 
-2026-10-06普通运行工具减法：来源读取、确定性Spec编译及CSV字段/严格编码器独立于发布/资格模块；现有输出字段、引号、换行和错误语义保持。其他治理依赖和旧CLI祖先校验仍待退出，R2未变复用与日常轻量出表尚未完成。公司入口已交付与指标内容接受分别判断；C02待审公司出口是旧分支已实现、待main接收、业务未接受，不是默认run已完成C02。
+2026-10-06普通运行工具减法：来源读取、确定性Spec编译及CSV字段/严格编码器独立于发布/资格模块；输出字段、引号、换行和错误语义保持。`tools/vnext_normal_candidate.py --company marriott_international --metric B01 --source-root <保存来源> --output-root <新目录>` 使用普通结果记录，实际计算、保存并输出CSV/出处，不读取旧递归Requirement或复制规则树；读取保存记录不重算。其他指标的旧原生路径与公司run整体简化仍待完成，R2尚未完成。C02待审公司出口是旧分支已实现、待main接收、业务未接受，不是默认run已完成C02。
 <!-- capability-anchor: CAPABILITY.ordinary_runtime_tools_light -->
 
 本地入口 `python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状态；`--metric`调试子集仍保留39项状态，未请求项不冒充完成。来源部分或指标待处理时为 `FLOW_COMPLETED_WITH_LIMITATIONS` / exit 2，完整阶段失败为 `FLOW_INCOMPLETE`；流程结束不授业务正确性信用。真实SEC需本任务许可，默认单次及累积最多120、零重试/每用户本入口共享1次每秒；旧#28/#47额度不借用。已有来源按内容复用，新判断没有本入口调用授权。详见 [本地运行说明](docs/company_local_run.md)。

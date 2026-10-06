@@ -17,13 +17,13 @@
         "anchor_id": "CAPABILITY.ordinary_runtime_tools_light",
         "type": "capability",
         "status": "active",
-        "statement": "普通保存来源读取、确定性目录/Spec编译及严格CSV输出的小工具已移至annual_sources/deterministic_catalog/csv_output，不导入publication/cutover/qualification；公式/单位/维度/字段和错误语义保持。完整普通运行仍有其他治理依赖及旧祖先校验，新日常轻量出表、变化检测和attempt共享尚未实现。本方C02待审能力在旧分支已实现、待main接收、业务未接受。",
+        "statement": "普通保存来源读取、确定性目录/Spec编译及严格CSV输出的小工具已移至annual_sources/deterministic_catalog/csv_output，不导入publication/cutover/qualification；公式/单位/维度/字段和错误语义保持。保存来源候选CLI的B01已使用普通结果记录完成来源计算、CSV/出处及不重算读取，不加载递归Requirement或复制规则树；其他原生路径和公司run整体简化仍未完成，变化检测和attempt共享尚未实现。本方C02待审能力在旧分支已实现、待main接收、业务未接受。",
         "audience": [
           "developer",
           "reviewer"
         ],
         "test_anchor": "tests/vnext/test_runtime_tools.py::RuntimeToolsTest",
-        "test_status": "automated_small_input",
+        "test_status": "automated_partial",
         "since": "2026-10-06"
       },
       {
