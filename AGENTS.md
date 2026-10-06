@@ -1,8 +1,14 @@
 # SEC_metrics Agent 工作入口
 
-## 公司级边界工作（#54）
+## 2026-10-06 当前开发入口
 
-[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54主实现公司交接，#28/#47各自维护并验证消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。
+按 [Issue #28：受信任内部工具](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006) 与 [运行／测试减负队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification) 接续。它们替代冲突的 COLLAB v1.1—v1.3、默认堆在同一大PR、exact-head／clean-tree及旧防伪前置；业务口径、原件、已用调用／预算与合并、发布权限不变。新增公共改动从实际main短分支、小Draft PR交付，使用保存来源做受影响业务验证，不重跑无关长链。
+
+#54／PR57已交付公司pipeline；#28负责公共runtime、CLI、状态／结果读取、测试及当期集成，#47负责历史接入和既有C02/D02共用核心。OpenShift部署和内网AI接线仍另期。后文旧快照、资格／发布及候选现场说明仅供历史运行查询，不是新开发命令；本文件不复制Issue全文。C02待审公司出口在旧分支已实现、待main接收、业务未接受，不作为R1前置。
+
+## 已交付公司入口（#54／PR57）
+
+[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 已完成本期获取—计算分离与公司独立处理；运行说明见 `docs/company_compute_boundary.md`、`docs/company_local_run.md`。维护职责按上方当前入口；历史材料保留在 `docs/evidence/issue54_company/`。
 
 ## 0. 按任务选择阅读路径
 

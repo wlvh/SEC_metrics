@@ -1,0 +1,35 @@
+{
+  "base_head": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "tested_with_uncommitted_source_changes": true,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-jpm-d01-task-20261006",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-jpm-d01-task-20261006/updates/metrics/D01-header-v3/attempts/c4411f4e83934c82a24a9fa09de7c02c/runs/D01",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-jpm-d01-task-20261006/updates/metrics/D01-header-v3/attempts/c4411f4e83934c82a24a9fa09de7c02c/data",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-jpm-d01-daily-default-defects-20261006",
+  "real_saved_read_seconds": 0.5740816670004278,
+  "content": {
+    "metrics_matrix.csv": {
+      "rows": 1,
+      "original_business_columns_equal": true
+    },
+    "metric_evidence.csv": {
+      "rows": 56,
+      "original_business_columns_equal": true
+    }
+  },
+  "result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+  "validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+  "source_freshness": "SAVED_VERSION_ONLY_NOT_ONLINE_CHECKED",
+  "output_bytes": 144880,
+  "replay_performed": false,
+  "attempts_copied": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "peer_read_commit": "6e968a630028b395560f4ef06ad6714e252509ac",
+  "related_peer_scope": "B01/D01 registration; existing JPM2025 header defect handled by own fixed f8 result; no new semantic acceptance",
+  "selected_csv_helper_source": "e6dd436b:scripts/vnext/csv_output.py",
+  "peer_register_read_note": "Own fixed JPM2025 f8 result; current known running-header defect is for the old result, not automatically applied by metric name."
+}

@@ -1,6 +1,7 @@
 # SEC_metrics 用户可观察行为
 
 本地入口 `python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状态；`--metric`调试子集仍保留39项状态，未请求项不冒充完成。来源部分或指标待处理时为 `FLOW_COMPLETED_WITH_LIMITATIONS` / exit 2，完整阶段失败为 `FLOW_INCOMPLETE`；流程结束不授业务正确性信用。真实SEC需本任务许可，默认单次及累积最多120、零重试/每用户本入口共享1次每秒；旧#28/#47额度不借用。已有来源按内容复用，新判断没有本入口调用授权。详见 [本地运行说明](docs/company_local_run.md)。
+当前`run`默认用保存记录输出日常CSV/JSON，不重算旧结果或复制整树；`results --output-root`可单独调用。原件链接通过`source_root`与`repo_relative_path`定位，完整可搬迁审计导出仍显式调用`export-results`。日常读取是`SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED`，确诊缺陷精确扣留；失败来源/更新保留原期间值并标`PREVIOUS_RESULT`，不冒充当前来源通过。实现未覆盖与业务未接受仍单列。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
 公司来源包可以在未生成AI判断或Result时交付。`tools/vnext_company.py`在显式独立路径导入、计算和导出，每次只处理所选公司；导入失败明确记录，旧结果不冒充新来源完成。B13/D04无既有判断返回需处理输入状态。详见 `docs/company_compute_boundary.md` 及其实际覆盖限制。

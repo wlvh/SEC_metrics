@@ -80,6 +80,8 @@ def main(argv=None):
     view.add_argument('--company', required=True)
     view.add_argument('--defects-file', type=Path)
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
+    view.add_argument('--output-root', type=Path,
+                      help='Write daily CSV/JSON from saved records; no calculation replay or attempt copy')
     args = parser.parse_args(argv)
     start = time.monotonic()
     if args.command == 'run':
@@ -152,9 +154,14 @@ def main(argv=None):
                                      processing_source_runtime=args.processing_source_runtime,
                                      processing_source_trust=args.processing_source_trust_root)
         elif args.command == 'results':
-            from vnext.company_result_view import read_company_results
-            result = read_company_results(state_root=args.state_root, company_id=args.company,
-                                         defects_file=args.defects_file, runtime_roots=args.runtime_root)
+            if args.output_root:
+                from vnext.company_daily_results import write_daily_results
+                result = write_daily_results(state_root=args.state_root, output_root=args.output_root,
+                    company_id=args.company, defects_file=args.defects_file, runtime_roots=args.runtime_root)
+            else:
+                from vnext.company_result_view import read_company_results
+                result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                             defects_file=args.defects_file, runtime_roots=args.runtime_root)
         else:
             from vnext.company_result_export import export_results
             result = export_results(state_root=args.state_root, output_root=args.output_root,
@@ -169,7 +176,7 @@ def main(argv=None):
     if args.command == 'compute':
         return 0 if all(m['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                         for m in result['metrics']) else 2
-    return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0
+    return 2 if result.get('status') in {'EXPORTED_PARTIAL','READ_PARTIAL'} else 0
 
 
 if __name__ == '__main__':

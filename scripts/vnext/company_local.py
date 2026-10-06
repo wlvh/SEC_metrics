@@ -138,9 +138,9 @@ def _status_tables(output, company, rows, summary):
 
 
 def _export_current(program, work, output, company, key, environment, processing):
-    """Existing native readback also serves failed acquisition's old results."""
+    """Daily saved-record view; the creator program stays pinned for calculation."""
     destination = work/'result-exports'/key
-    args = ['export-results', '--state-root', work/'company-state', '--output-root', destination,
+    args = ['results', '--state-root', work/'company-state', '--output-root', destination,
             '--trust-root', work/'trust/company', '--company', company]
     for runtime in sorted((work/'programs').iterdir()):
         if not runtime.name.startswith('.'):
@@ -148,10 +148,10 @@ def _export_current(program, work, output, company, key, environment, processing
     for field in ('runtime_root', 'source_runtime'):
         if processing.get(field):
             args.extend(['--runtime-root', absolute(processing[field])])
-    if processing.get('trust_root'):
-        args.extend(['--processing-trust-root', absolute(processing['trust_root'])])
-    controller = strict_json_file(path=work/'local-company.json').get('preparation_program_root')
-    exported = _invoke(absolute(controller) if controller else program, args,
+    # Read with the current launcher, not a pinned creator which predates the
+    # daily interface. Source/rule compatibility may use its supplied old tree;
+    # calculation still runs that creator unchanged, above in run_local.
+    exported = _invoke(ROOT, args,
         report_file=output/'stages/export-results.json', environment=environment)
     if destination.is_dir():
         import shutil
@@ -271,11 +271,13 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
             summary['stages']['export-results'] = exported
             if destination.is_dir():
                 summary['native_result_export'] = str(destination)
+                summary['result_export_mode'] = 'DAILY_SAVED_RECORDS_NO_REPLAY'
                 summary['source_checkpoint_id'] = strict_json_file(path=destination/'company-results.json').get('source_checkpoint_id')
                 summary['result_view'] = [{k: entry.get(k) for k in (
                     'metric_id', 'result_id', 'run_id', 'period', 'period_role', 'measurement_period',
                     'requirement_id', 'requirement_closure_hash', 'source_checkpoint_id',
-                    'current_input_matches', 'result_validity', 'replay_status')}
+                    'current_input_matches', 'result_validity', 'replay_status', 'saved_read_status',
+                    'record_root', 'source_root')}
                     for entry in strict_json_file(path=destination/'company-results.json').get('metrics', [])]
             if compute['returncode'] != 0 and not executed.get('metrics'):
                 raise ValueError('LOCAL_COMPANY_COMPUTE_FAILED')
@@ -285,7 +287,8 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
                 if rows[metric]['status'] == 'SOURCE_INPUT_REQUIRED':
                     rows[metric]['reason'] = str(error)
             # No failed acquisition/import may erase previously readable Runs.
-            # Native replay remains mandatory; no old report is blindly merged.
+            # Saved records and original source checks still run; an old
+            # report alone cannot manufacture a readable current result.
             if program is not None and (work/'company-state/current_source.json').exists() \
                     and not (output/'company-results.json').exists():
                 try:
@@ -314,7 +317,8 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         limited = summary.get('source_status') != 'SOURCES_READY' or any(
             rows[m]['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'} for m in selected)
         limited = limited or any(e.get('replay_status') == 'FAILED' or e.get('result_validity') in {
-            'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED'} for e in summary.get('result_view', []))
+            'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED', 'SAVED_RECORD_INVALID'}
+            for e in summary.get('result_view', []))
         summary['status'] = ('FLOW_COMPLETED_WITH_LIMITATIONS' if limited else 'FLOW_COMPLETED') \
             if summary['flow_completed'] else 'FLOW_INCOMPLETE'
         summary['all_configured_business_metrics_completed'] = False

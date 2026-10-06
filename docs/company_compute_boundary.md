@@ -106,6 +106,8 @@ python3 "$PROGRAM/tools/vnext_company.py" export-results --state-root "$STATE" \
 
 最后目录包含公司 `metrics_matrix.csv`、`metric_evidence.csv`、视图、本次执行报告及原生输入/结果索引；输出目录必须是新目录。后续来源包仍安装到同一 `STATE/source`，计算固定一次版本。增量普通用 `--kind ordinary`，历史用独立 `--kind historical` 并传 `--report-end` 或 `--fiscal-year`；不要用新运行树继续旧闭包的普通 journal。混合运行树导出重复提供每个创建树的 `--runtime-root`。D04另按下面的独立处理示例接入。
 
+日常出表使用当前launcher的 `results --output-root <新目录>`；`run`已选择这条读取路径，计算仍使用任务原固定程序。它检查保存Result/Trace、Spec、单位、期间、CSV与引用原件，生成CSV/出处和JSON；不重放计算、不复制attempt，不授新内容接受。CSV中的`source_root`、`record_root`定位原保存输入，日常表不是可搬迁的完整审计包。默认消费本方已知缺陷登记；确诊错误扣留，来源/更新失败时旧值标`PREVIOUS_RESULT`，保留实际测量期间。只有代码包身份不同的旧解除前置不再阻止同一已保存结果的读取，但也不自动升级为新内容验收。旧来源包的恢复/兼容读取仍可需要其原固定树和登记；这不是R3/R4全部已完成。
+
 `export-results` 冷重放候选并保留每项 native Run/data/rows，同时生成公司 `metrics_matrix.csv` 和 `metric_evidence.csv`。先复用既有投影字段，再追加身份和状态列；旧值保留原期间，失败／未复核不算本次更新成功。`--runtime-root` 可重复，混合普通／历史／原生闭包分别在其固定树的新进程读取；来源规则也须与其中正确树逐文件匹配。单项重放失败形成 WITHHELD 行并返回 EXPORTED_PARTIAL／退出2，其它候选仍导出；缺少全部必要来源规则树在消费前拒绝。`--defects-file` 只读原 known_result_defects 登记，按精确结果／期间／解除身份扣留；未提供登记不代表没有缺陷，机械重放不授内容验收信用。旧原生字节保持，生产发布仍由原流程决定。
 
 实际实验、失败位置、分项体积和耗时见 [证据索引](evidence/issue54_company/README.md)。十家公司来源导出不等于全部 36 项或 30–60 分钟验收。Fable 外部报告保留原信用，尚未取得的原脚本/日志不记成本方复跑。
