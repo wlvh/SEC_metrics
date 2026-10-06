@@ -130,9 +130,9 @@ def write_daily_results(*, state_root, output_root, company_id, runtime_roots=()
                 period = entry.get('period_request') or {}
                 latest = view.get('latest_execution') or {}
                 entry.update(period_role='REQUESTED_WITHOUT_RESULT',
-                    requested_in_latest_execution=entry['metric_id'] in latest.get('metric_ids',
-                        [m['metric_id'] for m in latest.get('metrics',[])])
-                        and period == (latest.get('period_request') or {}))
+                    requested_in_latest_execution=any(m['metric_id']==entry['metric_id']
+                        and (m.get('period_request') or latest.get('period_request') or {})==period
+                        for m in latest.get('metrics',[])))
                 metric_rows.append({'metric_id': entry['metric_id'], 'status':entry['latest_attempt_status'],
                     'fiscal_year':period.get('fiscal_year',''), 'period_end':period.get('report_end',''),
                     'notes':entry.get('reason'), **{k:entry.get(k) for k in DAILY_FIELDS}})

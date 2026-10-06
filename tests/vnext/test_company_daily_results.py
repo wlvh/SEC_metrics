@@ -145,6 +145,18 @@ class CompanyDailyResultsTest(unittest.TestCase):
         self.assertEqual((pending['status'],pending['period_role'],pending['requested_in_latest_execution']),
                          ('INPUT_FAILED','REQUESTED_WITHOUT_RESULT','True'))
 
+    def test_missing_range_years_match_actual_latest_outcomes_not_range_header(self):
+        pending=[{'metric_id':'B01','period_request':{'fiscal_year':y},'latest_attempt_status':'SOURCE_INPUT_REQUIRED',
+                  'run_id':None,'result_validity':'NO_RESULT'} for y in (2022,2023,2024)]
+        latest={'period_request':{'fiscal_year_start':2023,'fiscal_year_end':2024},
+            'metrics':[{'metric_id':'B01','period_request':{'fiscal_year':y}} for y in (2023,2024)]}
+        view={'metrics':pending,'latest_execution':latest,'company_id':self.company}
+        with patch.object(daily,'build_company_view',return_value=view):
+            _,_,out=self.read(row_year=2022)
+        rows=list(csv.DictReader(io.StringIO((out/'metrics_matrix.csv').read_text())))
+        self.assertEqual([(r['fiscal_year'],r['requested_in_latest_execution']) for r in rows],
+                         [('2022','False'),('2023','True'),('2024','True')])
+
     def test_known_defect_release_of_another_result_does_not_release_this_result(self):
         self.saved()
         defect={'defect_id':'known-fixture-error','company_id':self.company,'metric_id':'B01','period_end':'2025-12-31',

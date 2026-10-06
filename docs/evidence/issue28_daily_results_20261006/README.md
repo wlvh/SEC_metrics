@@ -67,3 +67,12 @@ corrected here, with its failure log retained. The final41tests pass0.388s.
 The pending requested row now retains its requested fiscal year and explicit
 REQUESTED_WITHOUT_RESULT role; the old row is not marked requested. No old
 business row/result was changed to resolve this test.
+
+Receiver range follow-up: a range header2023--2024 differs from child year
+requests, so the previous equality against only the header was insufficient.
+The current pending-row flag now matches metric + exact period_request from
+latest actual outcomes (falls back to the single-request header when omitted).
+A three-row regression retains old2022=False and requested2023/2024=True;
+42directed tests pass. It does not infer membership merely from year bounds or
+metric name. Receiver's uncommitted failing test was described by them; this
+is our independent small input/output reproduction, not their full range rerun.
