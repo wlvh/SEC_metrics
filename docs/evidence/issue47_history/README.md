@@ -6,6 +6,10 @@
 
 H1共用引文检查已从main短分支提交为[小Draft PR58](https://github.com/wlvh/SEC_metrics/pull/58)，尚未合入；本历史分支的`historical_legal_review.py`改为消费相同`legal_review_contract.py`，登记接口保留。14项短测试覆盖8份原失败回答/14条逐字但过长引文；全部12个原D02请求在内存逐字节重建相同，4份原合同通过回答解析结果相同、8份仍失败但报因为长度。历史侧12项形状/未决测试及1项原登记读取正例通过，不复跑整家公司；完整验证说明与必要夹具只在PR58维护。该报因修复不解决D02内容误纳/遗漏，不给旧失败补接受。
 
+H3已提交为[小Draft PR59](https://github.com/wlvh/SEC_metrics/pull/59)，尚未合入main；本历史分支的B10/B11标准和旧年说明适配改为显式传来源/期间/政策，消费相同`read_selected_lodging_source`，退出表格读取中的`release_aware`/运行环境重写。Marriott保存FY2021–FY2025的已知值及当期消费者核对通过；公共短测试（14项）、定向完整原件（2项）和主要验证说明在PR59维护。上游历史DEI准备及公司任务固定版本/CSV接收仍待H4继续，不把组件验证写成完整公司或五年交付。
+
+归档e1828579两项CI（37192293732/37192293730）已只读核到最终success，未重跑。PR58自动fast作业的119旧入口中两项`normal_annual_input`命中原30秒超时，无业务断言报错；新D02定向测试通过。公共CI分层由#28 T1集成，PR59补有最小DEI期间/主体反例供快速层消费，未放宽原时限或手工触发全量。
+
 本轮不新增调用；原35模型机会不重复，SEC1771/1867。指定附件既有具体许可保留且未消费，此轮不执行。两年B01接线材料见[已保存验证](company-entry-history-2026-10-06/README.md)，不为说明修订重复运行。
 
 Immutable development evidence for the Issue #47 historical backfill. Nothing

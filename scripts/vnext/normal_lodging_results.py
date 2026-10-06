@@ -60,7 +60,7 @@ def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str)
         selection={'classification':'STRUCTURAL','reason_code':'TRAIT_NOT_APPLICABLE'}
     else:
         try:
-            source_component=prepare_saved_lodging_source(repo_root=repo_root,company_id=company_id)
+            source_component=prepare_saved_lodging_source(repo_root=repo_root,company_id=company_id,prepared_input=prepared)
             component=source_component['component'];fact=component['selection']['facts'][metric_id]
             _need(source_component['prepared_input']==prepared and component['source_reference']==primary['source_reference'],
                   'ORDINARY_LODGING_SOURCE_SELECTION_CHANGED')

@@ -1,51 +1,16 @@
-"""B10 and B11 for a pinned annual period, from the filing's own statistics table.
+"""B10/B11 for an explicitly selected historical filing and DEI annual period.
 
-B10 and B11 are the two metrics this repository answers from a table
-in the annual report itself rather than from XBRL. The ordinary route already
-does that deterministically - ``lodging_table_source`` rebuilds the whole table
-set, matches the scope contract against the table's own headers and geometry,
-and reads the reported figure - so this route is the same arithmetic on a
-different filing.
+The ordinary and historical consumers use lodging_table_source's same
+read_selected_lodging_source function. Source preparation owns issuer, filing,
+period and amendment decisions; the table reader receives that selection and
+an explicit policy, and verifies table year, scope, currency, footnotes and
+raw cell positions. No lodging function namespace or bytecode is rewritten.
 
-One rule is replaced and it is the only one: the ordinary source preparation
-calls ``prepare_saved_annual_input``, which means the newest annual report.
-Everything downstream of that already takes the filing and the period as
-arguments - ``inspect_lodging_table_source`` re-derives the source's own annual
-period from its bytes and refuses if it disagrees with the period it was given
-- so pointing it at a pinned filing is a substitution, not a reimplementation.
-
-What was measured before writing it: the ordinary chain's answer for the one
-lodging company in this repository. Marriott's FY2025 gives B10 = 0.693 and
-B11 = 128.8 USD, both EXACT and PUBLISHED, both from ``table_000011``, with
-``ai_response_used`` false. A historical route that produced a different value,
-or the same value from a different table, would be a different route wearing
-this one's name, and the regression asserts the whole tuple rather than the
-number.
-
-Amendments go through the approved policy like every other historical route:
-B10 and B11 are statement-class inputs and are not among the nine metric IDs
-the policy does not cover, so a period carrying an amendment is decided rather
-than refused on sight.
-
-One wording differs, and only where the frozen check refuses it. The approved
-table introduction is the sentence the newest reports print ("The following
-table presents ... for 2023, and 2023 compared to 2022."). Marriott's FY2022
-report says "The following tables present ... for 2022, and ...", and FY2021's
-also drops the comma ("for 2021 and 2021 compared to 2020"). Same period and
-the same scope sentence, in the plural and without the comma. Only when the
-frozen inspector refuses a table because that introduction is unproven is the
-filing inspected again with the introduction pattern that also accepts those
-two forms; every other check, and every other policy value, is the frozen one.
-The component then carries the successor policy's hash (``policy_hash``), so a
-reader can tell which wording admitted it. Measured before writing it: with
-only that pattern changed, FY2021 and FY2022 resolve to one table each and
-every other frozen check passes; FY2023 onward the frozen inspector already
-accepts and nothing changes.
-
-What this does not do: reach a value where the target filing's own original is
-not saved. B10 and B11 read only the target filing - no prior period, no
-accession index - so they are the cheapest historical metrics in the set, but
-a period whose primary document is missing still produces a named source gap.
+Older filings retain the approved plural introduction and optional comma
+policy, tried only when the standard introduction is unproven. Other failures
+remain failures. This adaptation does not acquire missing originals, create
+new calls or change saved Runs; upstream historical DEI preparation is a
+separate consumer still being simplified.
 """
 from pathlib import Path
 
@@ -57,10 +22,8 @@ from .calculator import (calculate_observation_metric, metric_is_applicable,
 from .canonical import content_hash, sha256_file
 from .historical_amendment_admission import AmendmentAdmissionError, amendment_admission
 from .historical_annual_input import prepare_historical_annual_input
-from .historical_dei import release_aware, release_aware_with
 from . import lodging_table_source as frozen_lodging
-from .lodging_table_source import (POLICY_PATH, LodgingSourceError,
-                                   inspect_lodging_table_source)
+from .lodging_table_source import POLICY_PATH, LodgingSourceError
 from .normal_lodging_results import SPEC_PATHS as ORDINARY_SPEC_PATHS, _spec as _ordinary_spec
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources
@@ -70,10 +33,6 @@ from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import raw_blob_record, resolve_repository_file
 from .specs import compile_spec_file
 from .traits import repository_company_traits
-
-# The frozen readers this module calls, answering the DEI namespace question
-# for every taxonomy release (historical_dei).
-inspect_lodging_table_source = release_aware(inspect_lodging_table_source)
 
 INTRODUCTION_REFUSAL = "LODGING_TABLE_PERIOD_AND_OPERATING_INTRODUCTION_UNPROVEN"
 # The two forms older reports print, as two replacements in the frozen pattern;
@@ -95,14 +54,27 @@ def _older_introduction(pattern):
 OLDER_INTRODUCTION_POLICY = {
     **frozen_lodging.POLICY,
     "table_introduction_pattern": _older_introduction(frozen_lodging.POLICY["table_introduction_pattern"])}
-_OLDER_CONTEXT = release_aware_with(frozen_lodging._source_context, POLICY=OLDER_INTRODUCTION_POLICY)
-inspect_older_introduction = release_aware_with(
-    frozen_lodging.inspect_lodging_table_source, POLICY=OLDER_INTRODUCTION_POLICY,
-    _source_context=_OLDER_CONTEXT)
+def _inspect_selected(*, policy, raw, blob, reference, filing, company_id, cik, period):
+    # Historical preparation already checked the filing's DEI interval and issuer.
+    # CIK remains in this adapter signature for its existing consumers; table
+    # reading receives the resulting explicit selection, period and policy.
+    specs = {metric: compile_spec_file(path=ROOT / path, dependency_specs={})
+             for metric, path in policy["metric_specs"].items()}
+    return frozen_lodging.read_selected_lodging_source(
+        raw=raw, blob=blob, reference=reference, filing=filing, company_id=company_id,
+        period=period, policy=policy, specs=specs)
+
+
+def inspect_lodging_table_source(**arguments):
+    return _inspect_selected(policy=frozen_lodging.POLICY, **arguments)
+
+
+def inspect_older_introduction(**arguments):
+    return _inspect_selected(policy=OLDER_INTRODUCTION_POLICY, **arguments)
 
 
 def inspect_with_older_introduction(**arguments):
-    """The frozen inspection; the older introduction forms only where the frozen one refuses them.
+    """The shared inspection; older forms only when the standard introduction is unproven.
 
     The frozen inspector refuses with ``LODGING_MATCHING_TABLE_NOT_UNIQUE`` and
     lists why each table with the metric headers failed. The older forms are

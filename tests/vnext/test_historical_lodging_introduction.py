@@ -22,7 +22,7 @@ from vnext import historical_lodging_results as route
 from vnext import lodging_table_source as frozen
 from vnext.annual_update import saved_source
 from vnext.canonical import content_hash, sha256_bytes
-from vnext.historical_dei import overrides_of, release_aware
+from vnext.historical_dei import release_aware
 from vnext.normal_annual_input import annual_period as frozen_annual_period
 from vnext.sources import raw_blob_record, source_reference_record
 
@@ -124,9 +124,6 @@ class TheOlderFormsAreTwoAndOnlyTwoTest(unittest.TestCase):
         changed = {key for key in frozen.POLICY if frozen.POLICY[key] != route.OLDER_INTRODUCTION_POLICY[key]}
         self.assertEqual(set(frozen.POLICY), set(route.OLDER_INTRODUCTION_POLICY))
         self.assertEqual({"table_introduction_pattern"}, changed)
-        self.assertEqual({"POLICY": route.OLDER_INTRODUCTION_POLICY}, overrides_of(route._OLDER_CONTEXT))
-        self.assertEqual({"POLICY": route.OLDER_INTRODUCTION_POLICY, "_source_context": route._OLDER_CONTEXT},
-                         overrides_of(route.inspect_older_introduction))
 
     def test_the_older_pattern_accepts_the_three_printed_forms_and_the_frozen_one_only_the_newest(self):
         older = route.OLDER_INTRODUCTION_POLICY["table_introduction_pattern"]
