@@ -56,3 +56,13 @@ re-signing historical packages to make them pass.
 
 No source was fetched and no model called. Existing business definitions,
 source content, failed opportunity and budget history remain unchanged.
+
+### Further R1 subtraction: lodging entry (2026-10-07)
+
+The generic null Result/Trace constructor moves byte-for-byte in its function AST from `zero_ai_r2` to the existing `calculator`; legacy module re-exports the same callable. The lodging entry imports the Calculator directly. Lodging source reading now imports the already extracted `annual_sources.saved_source`. No selected table/claim logic, formula, unit or fiscal policy changes and no new shared framework.
+
+Actual fresh-process lodging entry previously loaded publication, qualification, zero_ai_release and zero_ai_r2; now none of those four is imported. Module count270→240 and one observed import0.103→0.073s, not a repeated statistical performance claim. `run_store` and `requirements` remain through other unchanged paths, so this is one concrete subtraction rather than full governance removal.
+
+Actual original-source ordinary preparation/calculation retains Marriott FY2025B10=0.693ratio/B11=128.8USD, periods2025-01-01..2025-12-31 and exact same Result IDs as PR67's source-only current company output. This direct existing producer check takes3.204s/2.459s; it does not by itself prove this main-based branch's whole company CLI has migrated. JPMorganB10 remains structural N/A with no invented occupancy. No new business calls or old Run changes.
+
+31 affected small Calculator/Spec/record/import tests pass1.038s, including fresh-process no-publication import and legacy callable identity. An initial command guessed nonexistent test module names; its loader failure is preserved separately and is not a passed test. Actual tested basee6dd436b plus source delta hashes, program root and unchanged main8588 are recorded. Old broad ancestor binding CI is not signed around or claimed green.

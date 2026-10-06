@@ -73,5 +73,23 @@ print('LIGHT_ORDINARY_TOOLS_OK')
         self.assertEqual(child.returncode, 0, child.stderr)
         self.assertEqual(child.stdout.strip(), 'LIGHT_ORDINARY_TOOLS_OK')
 
+    def test_lodging_source_and_result_entry_do_not_import_publication_or_qualification(self):
+        code = """import sys
+sys.path.insert(0,'scripts')
+from vnext.normal_lodging_results import prepare_ordinary_lodging_case
+for name in ('vnext.publication','vnext.qualification','vnext.zero_ai_release','vnext.zero_ai_r2'):
+ assert name not in sys.modules,name
+print('LIGHT_LODGING_ENTRY_OK')
+"""
+        child = subprocess.run([sys.executable, '-B', '-c', code], cwd=ROOT,
+                               capture_output=True, text=True)
+        self.assertEqual(child.returncode, 0, child.stderr)
+        self.assertEqual(child.stdout.strip(), 'LIGHT_LODGING_ENTRY_OK')
+
+    def test_legacy_null_result_constructor_remains_the_same_callable(self):
+        from scripts.vnext.calculator import _manual_result_trace
+        from scripts.vnext.zero_ai_r2 import _manual_result_trace as retained
+        self.assertIs(retained, _manual_result_trace)
+
 
 if __name__ == '__main__': unittest.main()

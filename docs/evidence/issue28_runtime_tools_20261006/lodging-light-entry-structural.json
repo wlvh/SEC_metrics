@@ -1,0 +1,54 @@
+{
+  "elapsed_seconds": 6.573476209072396,
+  "result": {
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:54be27fb704bcca55fdbf6a2b2e9974a147f58b2a04efc562f13d1e57b232a8f",
+    "company_id": "jpmorgan_chase",
+    "metric_id": "B10",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+    "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+    "applicability": "N_A_STRUCTURAL",
+    "quality": "NONE",
+    "publication": "PUBLISHED",
+    "reason_code": "TRAIT_NOT_APPLICABLE",
+    "value": null,
+    "unit": null,
+    "trace_id": "sha256:8c8d131be2a2a301b44dee4a1c0fb395f184a58d22eef6ddcb5221afef254de6"
+  },
+  "trace": {
+    "record_type": "EXECUTION_TRACE",
+    "trace_id": "sha256:8c8d131be2a2a301b44dee4a1c0fb395f184a58d22eef6ddcb5221afef254de6",
+    "metric_id": "B10",
+    "calculation_target": {
+      "accession": null,
+      "company_id": "jpmorgan_chase",
+      "entity": null,
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope": {
+        "property_population": "comparable",
+        "operating_scope": "systemwide",
+        "geography": "worldwide"
+      },
+      "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5"
+    },
+    "input_observation_ids": [],
+    "steps": [
+      {
+        "event": "N_A_STRUCTURAL"
+      }
+    ],
+    "quality": "NONE",
+    "result": null,
+    "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+    "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+    "result_contract_hash": "sha256:7ea57225b1c4daef13edcce9fed07fbcf363a42b56ded4be03bcb471b5ca16f8"
+  },
+  "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  }
+}

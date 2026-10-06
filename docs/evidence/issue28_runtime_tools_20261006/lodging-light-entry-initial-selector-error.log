@@ -1,0 +1,37 @@
+======================================================================
+ERROR: test_calculator (unittest.loader._FailedTest.test_calculator)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_calculator
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.vnext.test_calculator'
+
+
+======================================================================
+ERROR: test_specs (unittest.loader._FailedTest.test_specs)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_specs
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.vnext.test_specs'
+
+
+======================================================================
+ERROR: test_records (unittest.loader._FailedTest.test_records)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_records
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.vnext.test_records'
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.259s
+
+FAILED (errors=3)
