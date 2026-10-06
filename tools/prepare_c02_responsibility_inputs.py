@@ -53,6 +53,8 @@ def prepare_groups(raw, *, limits=None, max_groups=8):
             'Other whole tables are assigned to sibling groups; do not treat an unassigned table as absent. '
             +ownership+' Use all supplied text for entity, time, qualification and relationship context. '
             'Keep the original fact and unresolved schema. State any relationship you cannot establish as unresolved.\n\n'
+            'No group may establish global absence, whole-metric completeness or acceptance. '
+            'Retain unresolved cross-group dependencies for separate reconciliation of both original answers.\n\n'
             +original_prompt)
         request['messages'][1]['content']=_bytes({**data,'tables':tables[start:end]}).decode('utf-8')
         wire=_bytes(request)
