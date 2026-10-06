@@ -4554,6 +4554,60 @@
       "ordinary_message_cap": 3,
       "reader_started_at": "2026-10-05T13:47:25Z",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_companyc02_e0b3951",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "company_c02_source_handoff_adapter",
+      "scope_paths": [
+        "scripts/vnext/company_handoff.py",
+        "tests/vnext/test_company_handoff.py",
+        "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005"
+      ],
+      "patch_sha": "e0b3951b9d967bc25fee5e6bd6993edf2cf2c1d0",
+      "spawned_at": "2026-10-06T03:59:17.652097+00:00",
+      "ended_at": "2026-10-06T05:22:34.122706+00:00",
+      "tool_calls": 54,
+      "result_path": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/independent-handoff-review/conclusion.md",
+      "verdict": "PASS_LIMITED",
+      "tool_call_cap": 80,
+      "time_cap_minutes": 90,
+      "ordinary_message_cap": 3,
+      "ordinary_messages": 3,
+      "reader_started_at": "2026-10-06T03:59:50Z"
+    },
+    {
+      "task_name": "review_companyc02pending_ba9d9e6",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "company_c02_development_handoff",
+      "scope_paths": [
+        "scripts/vnext/company_c02_development.py",
+        "scripts/vnext/company_c02_development_read.py",
+        "scripts/vnext/company_runtime_install.py",
+        "scripts/vnext/company_result_view.py",
+        "scripts/vnext/company_result_export.py",
+        "tools/vnext_company.py",
+        "tests/vnext/test_company_c02_development.py",
+        "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/pending-processing"
+      ],
+      "patch_sha": "ba9d9e641022a2d5e75dad96a3b81f7d8ad752b1",
+      "spawned_at": "2026-10-06T09:58:15.946007+00:00",
+      "ended_at": "2026-10-06T12:14:02.251820+00:00",
+      "tool_calls": 33,
+      "result_path": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/pending-processing/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_WITH_TIME_CAP_VIOLATION",
+      "tool_call_cap": 80,
+      "time_cap_minutes": 90,
+      "ordinary_message_cap": 3,
+      "ordinary_messages": 3,
+      "reader_started_at": "2026-10-06T09:58:51Z",
+      "last_verified_at": "2026-10-06T11:12:35Z",
+      "elapsed_seconds_reported": 7118,
+      "resource_cap_compliant": false,
+      "time_cap_exceeded_minutes": 28.6333,
+      "report_written_at": "2026-10-06T11:57:29.355177+00:00",
+      "report_corrected_at": "2026-10-06T12:14:02.251820+00:00",
+      "elapsed_seconds_to_report_correction": 8111.25182
     }
   ],
   "ci_capacity_20260922": {
@@ -12812,12 +12866,12 @@
     "updated_at": "2026-10-03T11:17:50Z"
   },
   "current_head_ci_observation": {
-    "sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
-    "run_id": 37121403254,
-    "status": "queued",
-    "conclusion": null,
-    "observed_once_after_push": true,
-    "preceding_main_success": "37117666339@dee04f5f"
+    "sha": "ba9d9e641022a2d5e75dad96a3b81f7d8ad752b1",
+    "records": [],
+    "status": "NO_CURRENT_HEAD_RUN_RECORD",
+    "mergeable": "CONFLICTING",
+    "old_ci_not_inherited": true,
+    "observed_once_after_push": true
   },
   "current_head_delivery_checkpoint": {
     "sha": "ff9667ea85634c59ebc4fd9191e54e8281d697eb",
@@ -14541,7 +14595,7 @@
     "source_package_contains_ai_answers": false,
     "short_import_trust_cases": 17,
     "canonical_temp_tests_passed": true,
-    "remaining": "Scoped adapter review and new C02 pending package actual company entry/evidence; old task read/resume/explicit upgrade and affected companyCI coverage. Current source-path repair real CLI works but confirmed exact new C02 bad result is withheld.",
+    "remaining": "Append-only main conflict integration and incoming company CI coverage; C02 content/omissions/pixels/12 narrow qualifications and target-model authorization remain separate.",
     "new_business_calls": [
       0,
       0,
@@ -14553,7 +14607,44 @@
     "after_source_fix_compute": "CANDIDATE_READY",
     "new_result_content_valid": false,
     "confirmed_exact_result_held": "sha256:6d1a5055b0482e991081bd1f7db5387f77b4976a0828a6633f745c57ab722851",
-    "company_csv_wrong_value_removed": true
+    "company_csv_wrong_value_removed": true,
+    "source_handoff_review": {
+      "patch_sha": "e0b3951b9d967bc25fee5e6bd6993edf2cf2c1d0",
+      "verdict": "PASS_LIMITED",
+      "result_path": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/independent-handoff-review/conclusion.md",
+      "scope": "C02 authenticated consumer dependencies, fixed main interface receive, actual source package and exact result hold; not new processing/old task/full company acceptance"
+    },
+    "development_pending_company_entry": {
+      "status": "ACTUAL_COMPANY_ENTRY_AND_MIXED_COLD_EXPORT_PASS_LIMITED_TECHNICAL_REVIEW_WITH_TIME_CAP_VIOLATION",
+      "evidence": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/pending-processing",
+      "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-boundary-closed-20261006",
+      "new_task_source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-final-task-20261006/source",
+      "old_program_read_and_source_resume": true,
+      "mixed_old_invalid_and_new_pending_export": true,
+      "csv_development_rows": 1,
+      "developer_fact_rows": 50,
+      "unresolved_rows": 3,
+      "new_result_or_run": false,
+      "native_ids_preserved": true,
+      "calls": [
+        0,
+        0,
+        0
+      ],
+      "limited_review_scope_verdict": "PASS_LIMITED",
+      "review_path": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/pending-processing/independent-review/conclusion.md",
+      "review_resource_compliant": false,
+      "review_time_overrun_minutes": 28.6333,
+      "review_disposition": "Technical checks completed before 90m, late report/resource-cap violation retained separately; do not claim compliant execution. No agent continuation or duplicate same-SHA review, no content/Result/Run/production credit."
+    },
+    "peer_interface_notice": {
+      "url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6014643204",
+      "created_at": "2026-10-06T10:49:20Z",
+      "body_sha256": "031032d479226f1d946b37383dc0f6652937dbb2e2a2e2d28c49103d5435882f",
+      "scope": "Current company source omission/exact hold, fixed development pending dependencies, shared core ownership retained",
+      "readback_actual": true,
+      "peer_state_not_modified": true
+    }
   },
   "issue28_tracking_closed_in_error": {
     "closed_at": "2026-10-05T04:06:04Z",
@@ -14561,5 +14652,11 @@
     "closing_merge_pr": 56,
     "objective_complete": false,
     "issue_state_or_closure_history_modified": false
+  },
+  "collab_peer_increment_72d4d338": {
+    "peer_sha": "72d4d33854c8b411ddc5fca7a1d0c644ad85c121",
+    "baseline": "e5682db6c440175d96138c2aa30f79c7a1600b40",
+    "actual_increment": "Paramount undeclared exhibit offline refusal evidence only; no production/C02 core or defect register change",
+    "no_peer_credit_copied": true
   }
 }

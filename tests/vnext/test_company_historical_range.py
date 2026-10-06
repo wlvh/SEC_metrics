@@ -110,6 +110,30 @@ class HistoricalRangeTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'FIXED_ENTRY_CHANGED'):
             local._range_program_identity(program)
 
+    def test_development_reviews_keep_their_own_period_and_pending_status(self):
+        root = self.root/'state'
+        root.mkdir()
+        current = {'company_id': 'test_company', 'checkpoint_id': 'source-v1'}
+        view.save_execution(root=root, report={'company_id': 'test_company',
+            'source_checkpoint_id': current['checkpoint_id'],
+            'period_request': {'fiscal_year_start': 2023, 'fiscal_year_end': 2024},
+            'metrics': [{'metric_id': 'C02', 'status': 'REVIEW_REQUIRED',
+                         'period_request': {'fiscal_year': year},
+                         'development_review_id': 'pending-'+str(year)} for year in (2023, 2024)]})
+        pending = view.build_company_view(root=root, company_id='test_company', current=current)['metrics']
+        self.assertEqual({r['period_request']['fiscal_year']: r['development_review_id'] for r in pending},
+                         {2023: 'pending-2023', 2024: 'pending-2024'})
+        output = self.root/'output'
+        output.mkdir()
+        (output/'metrics_matrix.csv').write_text('metric_id,period_end,fiscal_year,status,value,development_review_id\nC02,2025-02-01,2024,REVIEW_REQUIRED,,pending-2024\n')
+        local._history_tables(output, 'test_company', [{'metric_id': 'C02', 'requested_fiscal_year': 2024,
+            'requested_report_end': '2025-02-01', 'status': 'CANDIDATE_READY'}],
+            {'run_id': 'test', 'status': 'FLOW_COMPLETED_WITH_LIMITATIONS'})
+        with (output/'metrics_matrix.csv').open(encoding='utf-8-sig') as stream:
+            row = next(csv.DictReader(stream))
+        self.assertEqual(row['local_metric_status'], 'REVIEW_REQUIRED')
+        self.assertEqual(row['value'], '')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,33 @@
+{
+  "elapsed_seconds": 5.9911608749534935,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-final-task-20261006/source",
+  "source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+  "metric_ids": [
+    "C02"
+  ],
+  "period_request": {
+    "report_end": "2025-12-31",
+    "fiscal_year": null
+  },
+  "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-runtime-final-20261006",
+  "metrics": [
+    {
+      "metric_id": "C02",
+      "status": "REVIEW_REQUIRED",
+      "development_review_id": "sha256:d30c9cd0caa1838b8996eb477037e6233f9dba342190a995b46e77ebd4c58861",
+      "business_metric_completed": false
+    }
+  ],
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "execution_id": "1947264080aa473491deb645c77b9978",
+  "recorded_at": "2026-10-06T09:27:23.758640+00:00",
+  "review_id": "sha256:d30c9cd0caa1838b8996eb477037e6233f9dba342190a995b46e77ebd4c58861",
+  "candidate_hash": "sha256:d1298823a7fd72322d56596103fd8df23cb512d85a2003fe92aeceecc6a693db"
+}

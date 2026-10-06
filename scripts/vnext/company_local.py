@@ -129,7 +129,7 @@ def _status_tables(output, company, rows, summary):
     for row in matrix:
         need(not row.get('company_id') or row['company_id'] == company, 'LOCAL_OUTPUT_WRONG_COMPANY')
         row.update(company_id=company, local_run_id=summary['run_id'], local_run_status=summary['status'],
-            local_metric_status=rows[row['metric_id']]['status'],
+            local_metric_status='REVIEW_REQUIRED' if row.get('development_review_id') else rows[row['metric_id']]['status'],
             requested_in_local_run=row['metric_id'] in summary['selected_metrics'],
             local_source_status=summary.get('source_status', 'ACQUISITION_STAGE_FAILED'))
     table.write_bytes(_csv_bytes(rows=matrix, fieldnames=fields))
@@ -328,6 +328,10 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
             if summary['flow_completed'] else 'FLOW_INCOMPLETE'
         summary['all_configured_business_metrics_completed'] = False
         summary['elapsed_seconds'] = format(time.monotonic()-start, '.6f')
+        if (output/'company-results.json').is_file():
+            summary['development_reviews'] = strict_json_file(path=output/'company-results.json').get('development_reviews', [])
+            if summary['flow_completed'] and summary['development_reviews']:
+                summary['status'] = 'FLOW_COMPLETED_WITH_LIMITATIONS'
         _status_tables(output, company_id, rows, summary)
         summary['outputs'] = {name: str(output/name) for name in ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}
         _atomic_json(output/'run_summary.json', summary)
@@ -400,7 +404,7 @@ def _history_tables(output, company, outcomes, summary):
         row.update(company_id=company, local_run_id=summary['run_id'],
             local_run_status=summary['status'], requested_in_local_run=bool(match),
             requested_fiscal_year=match['requested_fiscal_year'] if match else '',
-            local_metric_status=match['status'] if match else 'NOT_REQUESTED',
+            local_metric_status='REVIEW_REQUIRED' if row.get('development_review_id') else match['status'] if match else 'NOT_REQUESTED',
             local_source_status=summary.get('source_status', 'SOURCE_PREPARATION_FAILED'))
     for outcome in outcomes:
         if (outcome['requested_fiscal_year'], outcome['metric_id']) in covered:
@@ -527,6 +531,10 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
             summary['stages'][name] = {k: stage.get(k) for k in
                                       ('returncode', 'elapsed_seconds', 'command', 'report_file')}
         summary['elapsed_seconds'] = format(time.monotonic()-started, '.6f')
+        if (output/'company-results.json').is_file():
+            summary['development_reviews'] = strict_json_file(path=output/'company-results.json').get('development_reviews', [])
+            if summary['flow_completed'] and summary['development_reviews']:
+                summary['status'] = 'FLOW_COMPLETED_WITH_LIMITATIONS'
         _history_tables(output, company_id, list(outcomes.values()), summary)
         summary['outputs'] = {name: str(output/name) for name in
                              ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}

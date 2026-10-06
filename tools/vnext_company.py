@@ -44,6 +44,20 @@ def main(argv=None):
     processing.add_argument('--runtime-output-root', required=True, type=Path)
     processing.add_argument('--trust-root', required=True, type=Path)
     processing.add_argument('--company', required=True)
+    c02_export = sub.add_parser('export-c02-review-input', help='Enroll existing development-only C02 pending material separately from SEC sources')
+    c02_export.add_argument('--assessment-root', required=True, type=Path)
+    c02_export.add_argument('--source-root', required=True, type=Path)
+    c02_export.add_argument('--output-root', required=True, type=Path)
+    c02_export.add_argument('--trust-root', required=True, type=Path)
+    c02_export.add_argument('--company', required=True)
+    c02_export.add_argument('--candidate-hash', required=True)
+    c02_export.add_argument('--review-unit-hash', required=True)
+    c02_import = sub.add_parser('import-c02-review', help='Use admitted company originals and an independently trusted answer to create pending review, never a Result')
+    c02_import.add_argument('--state-root', required=True, type=Path)
+    c02_import.add_argument('--trust-root', required=True, type=Path)
+    c02_import.add_argument('--company', required=True)
+    c02_import.add_argument('--review-input', required=True, type=Path)
+    c02_import.add_argument('--c02-review-trust-root', required=True, type=Path)
     runtime = sub.add_parser('install-runtime', help='Install a separately bound fixed computing runtime')
     runtime.add_argument('--output-root', required=True, type=Path)
     runtime.add_argument('--kind', choices=['baseline', 'ordinary', 'native', 'historical', 'local'], default='baseline')
@@ -84,6 +98,7 @@ def main(argv=None):
     results.add_argument('--defects-file', type=Path,
                          help='Existing known_result_defects register, read only')
     results.add_argument('--processing-trust-root', type=Path)
+    results.add_argument('--c02-review-trust-root', type=Path)
     view = sub.add_parser('results', help='Read all native company metric/period references')
     view.add_argument('--state-root', required=True, type=Path)
     view.add_argument('--trust-root', required=True, type=Path)
@@ -145,12 +160,20 @@ def main(argv=None):
         from vnext.company_processing import export_processing
         result = export_processing(installed_root=args.installed_root, output_root=args.output_root,
             runtime_output_root=args.runtime_output_root, trust_root=args.trust_root, company_id=args.company)
+    elif args.command == 'export-c02-review-input':
+        from vnext.company_c02_development import export_review_input
+        result = export_review_input(assessment_root=args.assessment_root, data_root=args.source_root,
+            output_root=args.output_root, trust_root=args.trust_root, company_id=args.company,
+            expected_candidate_hash=args.candidate_hash, expected_review_unit_hash=args.review_unit_hash)
     elif args.command == 'install-runtime':
         from vnext.company_runtime_install import install_runtime
         result = install_runtime(output_root=args.output_root, kind=args.kind)
     else:
         from vnext.company_source_authority import TRUST_VARIABLE
         os.environ[TRUST_VARIABLE] = str(args.trust_root)
+        if getattr(args, 'c02_review_trust_root', None):
+            from vnext.company_c02_development import TRUST_VARIABLE as c02_review_trust_variable
+            os.environ[c02_review_trust_variable] = str(args.c02_review_trust_root)
         if getattr(args, 'processing_trust_root', None):
             from vnext.company_processing import TRUST_VARIABLE as processing_trust_variable
             os.environ[processing_trust_variable] = str(args.processing_trust_root)
@@ -165,6 +188,12 @@ def main(argv=None):
             result = compute_company_range(state_root=args.state_root, company_id=args.company,
                 metric_ids=args.metric, fiscal_year_start=args.fiscal_year_start,
                 fiscal_year_end=args.fiscal_year_end)
+        elif args.command == 'import-c02-review':
+            from vnext.company_worker_guard import install_worker_guards
+            install_worker_guards(ROOT)
+            from vnext.company_c02_development import import_review
+            result = import_review(state_root=args.state_root, company_id=args.company,
+                                   packet_root=args.review_input)
         elif args.command == 'compute':
             if (ROOT/'requirements/issue_54_v4').is_dir():
                 from vnext.company_worker_guard import install_worker_guards

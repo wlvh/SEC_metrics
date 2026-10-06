@@ -39,6 +39,14 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 同样的命令可再次运行，固定原程序及任务账本不变。先刷新发现用元数据，复用已验证的不可变原件；实质来源内容未变时，现有指标更新接口复用候选，没有新Run。来源更新经不可变公司版本和稳定`company-state/source`路径导入，计算固定该版本；导入中断沿既有恢复机制，不暴露混合输入。
 
+### C02 开发抽取的显式待审入口
+
+`export-c02-review-input`在准备端重验已保存开发对象的原候选／阅读身份，另存六份请求、响应和阅读材料，并登记到独立的`--trust-root`。SEC来源包不携带这些答案，也不因此新增调用权限。
+
+新安装的`ordinary`程序可以执行`import-c02-review --state-root <已导入公司任务> --trust-root <来源信任目录> --company <公司> --review-input <开发材料包> --c02-review-trust-root <开发材料独立信任目录>`。程序由实际公司原件重建完整请求，保存或重读`REVIEW_REQUIRED`对象；它不会产生Result/Run或自动批准模型陈述。重复导入复用相同对象，原开发身份与旧公司Run保持。
+
+`export-results`同时指定`--c02-review-trust-root`和原对象的`--runtime-root`，在独立进程使用固定创建代码、原来源版本和独立信任重新验证。CSV另列空值待审行；证据CSV区分模型陈述`value_raw`与引用原文`evidence_quote`，完整六文件和绑定收据进入`development/C02/`。原有错误Result的精确扣留仍生效，不会由待审包解除。旧程序仍可以读取旧Run；显式升级新程序是使用新入口的前置，不修改旧安装树。没有开发材料的旧导出结构保持。
+
 每次输出：
 
 ```text

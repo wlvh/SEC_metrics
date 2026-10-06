@@ -21,6 +21,14 @@ SUCCESSOR_MODULES = ('company_source_authority', 'company_handoff',
                      'company_processing', 'company_processing_read', 'company_worker_guard',
                      'company_event_census', 'company_local', 'company_local_acquisition')
 
+# Explicit development-only successor dependencies. Binding these in a fresh
+# installation does not alter already installed creators or parent defaults.
+C02_REVIEW_MODULES = ('company_c02_development', 'company_c02_development_read',
+    'c02_image_model_processing', 'c02_image_development_input',
+    'c02_image_context_c294b12f', 'c02_table_development_input',
+    'c02_table_context_417ccfb7', 'c02_model_processing', 'c02_model_review_view',
+    'c02_grouped_source')
+
 
 def _replace(path, old, new, count=1):
     text = path.read_text()
@@ -231,7 +239,8 @@ def install_runtime(*, output_root, kind='baseline'):
     snapshot = output/'requirements'/requirement_id; snapshot.mkdir()
     authority = {**parent['execution_authority'], 'files': dict(parent['execution_authority']['files'])}
     for relative in (*modified, *upstream_modified, 'tools/vnext_company.py',
-                     *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES)):
+                     *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES),
+                     *('scripts/vnext/'+m+'.py' for m in C02_REVIEW_MODULES)):
         authority['files'][relative] = binding(output/relative)
     frozen_parent = 'docs/evidence/issue54_runtime/frozen-parent-requirement.json'
     (output/frozen_parent).parent.mkdir(parents=True, exist_ok=True)
@@ -242,7 +251,8 @@ def install_runtime(*, output_root, kind='baseline'):
     baseline = {'record_type': 'REQUIREMENT_BASELINE_MANIFEST', 'schema_version': 1,
         'requirement_id': requirement_id, 'requirement_generation': 'COMPANY_SEPARATION_V1',
         'artifact_requirement_generation': 'EXPLICIT_REQUIREMENT_V1',
-        'production_authorized': False, 'new_rule_files': {},
+        'production_authorized': False, 'new_rule_files': {
+            'catalog/r6/C02_model_image_development_v1.md': binding(output/'catalog/r6/C02_model_image_development_v1.md')},
         'parent': {'requirement_id': parent_id,
             'requirement_closure_hash': parent['requirement_closure_hash'],
             'loaded_snapshot': {'path': frozen_parent, **binding(output/frozen_parent)},
