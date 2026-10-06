@@ -1,0 +1,16 @@
+======================================================================
+ERROR: test_previous_period_outside_latest_request_stays_visible_but_is_not_requested (tests.vnext.test_company_daily_results.CompanyDailyResultsTest.test_previous_period_outside_latest_request_stays_visible_but_is_not_requested)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_daily_results.py", line 138, in test_previous_period_outside_latest_request_stays_visible_but_is_not_requested
+    _,row,out=self.read()
+              ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_daily_results.py", line 112, in read
+    row, = csv.DictReader(io.StringIO((output/'metrics_matrix.csv').read_text()))
+    ^^^^
+ValueError: too many values to unpack (expected 1)
+
+----------------------------------------------------------------------
+Ran 41 tests in 0.383s
+
+FAILED (errors=1)

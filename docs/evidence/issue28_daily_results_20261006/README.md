@@ -51,3 +51,11 @@ Marriott D04 script-equivalence integration, shared new-attempt program/source
 installation and all-company business completion remain in the existing queue.
 This PR completes the daily reading part, not all of R2. No business calls,
 fee/budget changes, adoption or production actions.
+
+Issue47's actual Macy range consumer reported two missing CSV metadata fields
+(JSON already had them). Daily metric/evidence output now retains
+requested_in_latest_execution and period_role.41small regressions pass,
+including an old FY2025 row outside a new FY2024 request. This is receiver-
+reported evidence of the missing columns plus our direct CSV regression,
+not a claim that we reran their historical company. Business20/18columns are
+unchanged; no new reading/approval object or full metadata migration added.

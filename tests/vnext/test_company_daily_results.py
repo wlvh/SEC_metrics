@@ -117,6 +117,8 @@ class CompanyDailyResultsTest(unittest.TestCase):
         self.assertEqual((row['value'],row['unit'],row['period_start'],row['period_end']),('120','USD','2025-01-01','2025-12-31'))
         self.assertEqual(row['result_validity'],'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED')
         self.assertEqual(row['source_root'],str(work/'data'))
+        self.assertEqual(row['requested_in_latest_execution'],'True')
+        self.assertEqual(row['period_role'],'RUN_ARCHIVE_COORDINATE')
         self.assertFalse((out/'native').exists()); self.assertFalse(result['replay_performed'])
 
     def test_wrong_value_unit_or_measurement_is_withheld(self):
@@ -127,6 +129,16 @@ class CompanyDailyResultsTest(unittest.TestCase):
                 self.saved(row_changes=update); result,row,_ = self.read(suffix='daily'+str(self.serial))
                 self.assertEqual(result['status'],'READ_PARTIAL'); self.assertEqual(row['value'],'')
                 self.assertIn(reason,row['notes'])
+
+    def test_previous_period_outside_latest_request_stays_visible_but_is_not_requested(self):
+        self.saved()
+        save_execution(root=self.root,report={'record_type':'COMPANY_COMPUTATION_REFERENCES_V1',
+            'company_id':self.company,'source_checkpoint_id':self.current['checkpoint_id'],
+            'period_request':{'fiscal_year':2024},'metrics':[{'metric_id':'B01','status':'INPUT_FAILED'}]})
+        _,row,out=self.read()
+        self.assertEqual(row['requested_in_latest_execution'],'False')
+        self.assertEqual(row['period_role'],'RUN_ARCHIVE_COORDINATE')
+        self.assertEqual(row['fiscal_year'],'2025')
 
     def test_known_defect_release_of_another_result_does_not_release_this_result(self):
         self.saved()

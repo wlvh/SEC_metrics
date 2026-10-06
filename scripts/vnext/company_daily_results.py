@@ -27,7 +27,8 @@ DAILY_FIELDS = ('company_id', 'run_id', 'result_id', 'requirement_id', 'requirem
     'current_input_status', 'latest_attempt_status', 'latest_request_status', 'result_validity',
     'source_credit', 'source_import_status', 'source_freshness', 'record_root', 'source_root',
     'archive_period_start', 'archive_period_end', 'archive_fiscal_year',
-    'measurement_period_start', 'measurement_period_end', 'measurement_period_status', 'defect_holds')
+    'measurement_period_start', 'measurement_period_end', 'measurement_period_status', 'defect_holds',
+    'requested_in_latest_execution', 'period_role')
 
 
 def _rows(raw):
