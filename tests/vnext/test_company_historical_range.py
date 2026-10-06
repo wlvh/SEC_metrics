@@ -18,6 +18,33 @@ class HistoricalRangeTest(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name).resolve()
 
+    def test_lodging_range_uses_the_public_company_records_and_existing_year_factory(self):
+        from scripts.vnext import company_current_records as current
+        from scripts.vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        source = self.root/'source'; source.mkdir()
+        expected = {'status': 'FLOW_COMPLETED', 'metrics': []}
+        with patch.object(current, 'run_saved_company', return_value=expected) as run, \
+             patch.object(local, '_history_program', side_effect=AssertionError('No native installation')):
+            actual = local.run_local(company_id='marriott_international', work_dir=self.root/'work',
+                output_dir=self.root/'output', period='fiscal-years', metric_ids=['B10', 'B11'],
+                fiscal_year_start=2024, fiscal_year_end=2025, source_root=source)
+        self.assertIs(actual, expected)
+        self.assertEqual(run.call_args.kwargs['fiscal_years'], [2024, 2025])
+        self.assertIs(run.call_args.kwargs['case_factory'], prepare_historical_lodging_year_case)
+
+    def test_retained_native_history_is_not_replaced_by_ordinary_storage(self):
+        from scripts.vnext import company_current_records as current
+        source = self.root/'source'; source.mkdir()
+        work = self.root/'work'; (work/'historical-company-state').mkdir(parents=True)
+        with patch.object(current, 'run_saved_company') as ordinary, \
+             patch.object(local, '_history_program', side_effect=ValueError('retained native path')):
+            report = local.run_local(company_id='marriott_international', work_dir=work,
+                output_dir=self.root/'output', period='fiscal-years', metric_ids=['B11'],
+                fiscal_year_start=2024, fiscal_year_end=2024, source_root=source)
+        ordinary.assert_not_called()
+        self.assertEqual(report['failure']['reason'], 'retained native path')
+        self.assertFalse((work/'company-task.json').exists())
+
     def test_history_daily_export_uses_current_launcher_and_own_defects(self):
         work, output, creator = self.root/'task', self.root/'output', self.root/'old-creator'
         (work/'programs/old-creator').mkdir(parents=True)

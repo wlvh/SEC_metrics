@@ -55,7 +55,7 @@ def _defects(result, registry):
 
 
 def run_saved_company(*, company_id, source_root, work_dir, output_dir,
-                      metric_ids=None, defects_file=None):
+                      metric_ids=None, defects_file=None, fiscal_years=None, case_factory=None):
     """Calculate changed inputs and read durable results into ordinary CSVs."""
     from .normal_annual_input import _registry_rows
     from .deterministic_router import shared_xbrl_parses
@@ -76,6 +76,11 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
     selected = sorted(configured) if metric_ids is None else list(metric_ids)
     _need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
           'COMPANY_CURRENT_METRIC_SCOPE_INVALID')
+    _need(fiscal_years is None or type(fiscal_years) in (list,tuple) and 0<len(fiscal_years)<=5
+          and all(type(y) is int and 1900<=y<=9998 for y in fiscal_years)
+          and len(fiscal_years)==len(set(fiscal_years)), 'COMPANY_CURRENT_FISCAL_YEAR_SCOPE_INVALID')
+    _need((fiscal_years is None and case_factory is None) or fiscal_years is not None and callable(case_factory),
+          'COMPANY_CURRENT_SELECTED_YEARS_REQUIRE_CASE_FACTORY')
     registry = _registry(defects_file)
     work.mkdir(parents=True, exist_ok=True)
     _need(not (work/'local-company.json').exists() and not (work/'current_source.json').exists(),
@@ -93,8 +98,10 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
         output = outputs/key
         output.mkdir(parents=True)
         observations, matrix, evidence = [], [], []
-        for metric in selected:
+        scopes = [(year,metric) for year in ([None] if fiscal_years is None else fiscal_years) for metric in selected]
+        for year,metric in scopes:
             controller = work/'updates'/metric
+            period_controller = controller if year is None else controller/'periods'/('FY'+str(year))
             if metric not in CURRENT_METRICS:
                 observation = {'metric_id': metric, 'status': 'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED',
                                'reason': 'This saved-source branch has no complete current processing interface for '+metric}
@@ -102,18 +109,19 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                 try:
                     observation = {'metric_id': metric, **run_once(state_root=controller,
                         source_root=source, company_id=company_id, metric_id=metric,
-                        shared_input_root=work/'shared-inputs')}
+                        shared_input_root=work/'shared-inputs',fiscal_year=year,case_factory=case_factory)}
                 except Exception as error:
                     observation = {'metric_id': metric, 'status': 'INPUT_OR_EXECUTION_FAILED',
                                    'reason': str(error), 'error_type': type(error).__name__}
             observations.append(observation)
-            pointer = controller/'current-result.json'
+            if year is not None:observation['requested_fiscal_year']=year
+            pointer = period_controller/'current-result.json'
             previous = observation['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
             new_record = observation.get('result_root') if observation['status'] == 'CANDIDATE_WITHHELD' else None
             if pointer.is_file() or new_record:
                 try:
                     state = strict_json_file(path=pointer) if pointer.is_file() else None
-                    record = Path(new_record) if new_record else controller/'results'/state['version']
+                    record = Path(new_record) if new_record else period_controller/'results'/state['version']
                     saved = read_saved_result(output_root=record)
                     result = saved['result']
                     _need(result['company_id'] == company_id and result['metric_id'] == metric,
@@ -147,6 +155,7 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                 'local_metric_status': observation['status'], 'result_validity': 'NO_CURRENT_RESULT',
                 'period_role': 'REQUESTED_WITHOUT_RESULT', 'source_root': str(source),
                 'requested_in_latest_execution': True})
+            if year is not None:matrix[-1]['fiscal_year']=str(year)
         complete = all(o['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                        and not o.get('defect_holds') and not o.get('saved_read_error')
                        and not o.get('source_observation_errors') for o in observations)
@@ -156,6 +165,7 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
             'program_root': str(ROOT), 'record_root': str(work), 'output_root': str(output),
             'source_mode': 'SAVED_ONLY_NO_ONLINE_DISCOVERY',
             'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+        if fiscal_years is not None:report['selected_fiscal_years']=list(fiscal_years)
         # No copytree, native replay, trust installation or rule sealing.
         for name, raw in (('metrics_matrix.csv', _csv_bytes(rows=matrix, fieldnames=(*METRIC_FIELDS, *EXTRA_FIELDS))),
                           ('metric_evidence.csv', _csv_bytes(rows=evidence, fieldnames=EVIDENCE_FIELDS))):

@@ -203,6 +203,47 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(len(view['metrics']),2)
         self.assertEqual({v['result_id'] for v in view['metrics']},{'B01-result','B01-prior'})
 
+    def test_range_public_entry_isolates_missing_year_and_exports_actual_success_period(self):
+        def factory(**kwargs):return {'target_period':{'fiscal_year':kwargs['fiscal_year']}}
+        calls=[]
+        def update(**kw):
+            year=kw['fiscal_year'];calls.append((year,kw['metric_id']))
+            if year==2025:return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'selected annual source missing'}
+            controller=kw['state_root']/'periods'/('FY'+str(year));record=controller/'results/one'
+            record.mkdir(parents=True)
+            value={'company_id':'marriott_international','metric_id':'B01','period_start':'2024-01-01',
+                   'period_end':'2024-12-31','result_id':'FY2024-result'}
+            row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':'B01',
+                 'value':'99','unit':'USD','period_start':'2024-01-01','period_end':'2024-12-31','fiscal_year':'2024','status':'OK'}
+            self.values[str(record)]={'result':value,'manifest':{'target_period':{'fiscal_year':2024}},
+                'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                         'metric_evidence.csv':_csv_bytes(rows=[],fieldnames=EVIDENCE_FIELDS)}}
+            (controller/'current-result.json').write_text(json.dumps({'company_id':'marriott_international',
+                'metric_id':'B01','version':'one','result_id':'FY2024-result','requested_fiscal_year':2024}))
+            return {'status':'CANDIDATE_READY','result_root':str(record),'result_id':'FY2024-result'}
+        with patch.object(current,'run_once',side_effect=update):
+            report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],defects_file=self.registry,
+                fiscal_years=[2024,2025],case_factory=factory)
+        self.assertEqual(calls,[(2024,'B01'),(2025,'B01')])
+        self.assertEqual(report['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+        rows=self.rows(report)
+        self.assertEqual(rows[0]['fiscal_year'],'2024');self.assertEqual(rows[0]['value'],'99')
+        self.assertEqual(rows[1]['fiscal_year'],'2025');self.assertEqual(rows[1]['value'],'')
+        self.assertEqual(rows[1]['period_start'],'')
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(len(view['metrics']),2)
+
+    def test_range_requires_unique_bounded_years_and_existing_factory(self):
+        for years in ([],[2024,2024],list(range(2020,2026))):
+            with self.assertRaisesRegex(ValueError,'FISCAL_YEAR_SCOPE_INVALID'):
+                current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                    work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],fiscal_years=years,
+                    case_factory=lambda **k:None)
+        with self.assertRaisesRegex(ValueError,'REQUIRE_CASE_FACTORY'):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],fiscal_years=[2024])
+
 
 class SavedSourceCompanyEntryTest(unittest.TestCase):
     """One real source/Calculator preparation shared across read/reentry checks."""
