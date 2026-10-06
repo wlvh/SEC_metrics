@@ -1,0 +1,22 @@
+...E.......................
+======================================================================
+ERROR: test_wrong_unit_cannot_become_an_exact_result (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_wrong_unit_cannot_become_an_exact_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-lodging-selected-source-20261006/tests/vnext/test_selected_lodging_calculation.py", line 67, in test_wrong_unit_cannot_become_an_exact_result
+    r=self.calculate(component=c)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-lodging-selected-source-20261006/tests/vnext/test_selected_lodging_calculation.py", line 35, in calculate
+    return calculate_selected_lodging_metric(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-lodging-selected-source-20261006/scripts/vnext/normal_lodging_results.py", line 73, in calculate_selected_lodging_metric
+    result,trace=calculate_observation_metric(compiled_spec=spec,target=target,company_traits=traits,observation=observation)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-lodging-selected-source-20261006/scripts/vnext/calculator.py", line 1188, in calculate_observation_metric
+    raise CalculationError(
+        "Direct observation binding differs: {}".format(field)
+    )
+vnext.calculator.CalculationError: Direct observation binding differs: unit
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.130s
+
+FAILED (errors=1)

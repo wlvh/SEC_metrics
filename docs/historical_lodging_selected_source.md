@@ -14,3 +14,9 @@
 新增功能在小 PR 与存量历史适配分支，尚未合入 main；本项完成共用表格函数与消费者接线验证，不代替公司任务固定版本/CSV 的后续接收或完整五年业务验收。已保存原件、原 Run 与固定程序不修改。本轮模型/SEC 新增调用均为 0，历史来源发现/补齐仍按 H4/H6 接入同一公司入口。
 
 自动CI[37478482242](https://github.com/wlvh/SEC_metrics/actions/runs/37478482242)失败，已读具体Marriott旧安装/Run作业：在准备指标之前，V14祖先检查以`Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py`拒绝本次现行源码。该作业没有进入新表格业务判断，不能称公司CI通过；本次保存原件/真实当期消费者通过仍按上述范围解释。公共新版runtime/CI接收由#28继续，不为本PR重封祖先、回写旧Run或放宽业务断言。
+
+2026-10-07接续共用计算：新增`normal_lodging_results.calculate_selected_lodging_metric`，消费已选原表组件、实际年度输入、同一指标定义和行业规则，统一原文/格位置到观察值的绑定及Calculator。当期case与存量历史消费者实际调用同一函数，后者的重复绑定和计算块移除；历史上游选择/修订与旧Run读口仍各自保留，未搬入main。本函数不重选最新、不重复解析来源、不保存Run，也不暴露任意正则。指定来源的拒绝与计算器单位拒绝区分，计算器异常保持原类型。
+
+新增5个短计算例和原14个短来源/DEI例，共19例0.079秒通过；wrong-unit首轮测试误预期WITHHELD，实际计算器原本抛错拒绝，修正的是断言并保留首轮失败。实际main基短分支的当期B10/B11经原case入口分别4.985/3.257秒通过；历史分支当期和指定FY2024共四项也进入同一函数，每项调用一次，FY2024为0.698 ratio/128.23 USD，期间及原格witness保留。只验证本次受影响消费者，原五年表格/旧年说明验证继续复用。详细输出在[本次主要计算记录](evidence/issue47_history/lodging-shared-calculation-2026-10-07/)。
+
+历史侧已将原resolver输出薄适配为公共case的expected_records/results/compiled_specs/source_proofs及所选prepared_input，不重新准备或造新pipeline。实测该case进入公共纯投影仍被其无条件重选最新FY2025挡住，报ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED；公共负责人负责修复这一接缝，本方未复制投影器。恢复目录原件齐全但旧来源准入要求trusted journal的失败也保留在记录中，不能标成缺原件后自动GET。公共保存writer及普通历史公司范围接线仍待，当前小PR不宣称完整公司/五年接受。

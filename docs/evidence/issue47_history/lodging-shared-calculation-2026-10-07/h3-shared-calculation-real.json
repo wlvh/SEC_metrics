@@ -1,0 +1,1130 @@
+{
+  "actual_consumers": [
+    {
+      "route": "CURRENT",
+      "metric": "B10",
+      "seconds": 3.9751414998900145,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.693",
+        "unit": "ratio",
+        "trace_id": "sha256:5ebeeb1463c2324e08b876ace2bae8171f4353ca0d2063ee94a495b6df213404",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:99aa23eb1fa7ca190a86c64b492d7b0e7c43735c7b5ab0b31ee9fda736be4edf"
+      },
+      "observation": {
+        "semantic_role": "occupancy",
+        "metric_id": "B10",
+        "company_id": "marriott_international",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope": {
+          "property_population": "comparable",
+          "operating_scope": "systemwide",
+          "geography": "worldwide"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "value": "0.693",
+        "unit": "ratio",
+        "source_binding": {
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "source_role": "target_primary",
+          "document_name": "mar-20251231.htm",
+          "accession": "0001048286-26-000007",
+          "entity": "1048286",
+          "form": "10-K",
+          "filed": "2026-02-10",
+          "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+          "table_locator": {
+            "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+            "table_id": "table_000011",
+            "row_index": 26,
+            "column_index": 15,
+            "origin_row_index": 26,
+            "origin_column_index": 15,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "reported_raw_text": "69.3&#160;",
+          "reported_value": "69.3",
+          "reported_unit": "%",
+          "source_witnesses": {
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 15,
+                "origin_row_index": 26,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 2
+              },
+              "raw_text": "69.3&#160;",
+              "text": "69.3",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "unit": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 17,
+                "origin_row_index": 26,
+                "origin_column_index": 17,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "%",
+              "text": "%",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 4,
+                "column_index": 15,
+                "origin_row_index": 4,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2025",
+              "text": "2025",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "measure": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 3,
+                "column_index": 15,
+                "origin_row_index": 3,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 12
+              },
+              "raw_text": "Occupancy",
+              "text": "Occupancy",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "population_and_operating_scope": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 18,
+                "column_index": 0,
+                "origin_row_index": 18,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "Comparable Systemwide Properties",
+              "text": "Comparable Systemwide Properties",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "geography": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 0,
+                "origin_row_index": 26,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "\nWorldwide (2)",
+              "text": "Worldwide (2)",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            }
+          },
+          "source_component_id": "sha256:02b06d8f310062d09e4a16a28c01f0e4a583f786136df6cad9b38a6b2f35ef29",
+          "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+          "ordinary_source_policy_hash": "sha256:a1a4ab2cdf27d574a17e9f3672f6a318890f13ddf28d5c5500aa26a10cf7e81b"
+        },
+        "record_type": "VERIFIED_OBSERVATION",
+        "observation_id": "sha256:aa638a70e7f94df2568861cbe3ee96fa34ca5b78c83267038cf96678636c5604",
+        "quality": "EXACT",
+        "approval_effect_hash": ""
+      },
+      "selection": {
+        "classification": "DETERMINISTIC_REPORTED_TABLE",
+        "reason_code": "PASS",
+        "table_id": "table_000011",
+        "source_component_id": "sha256:02b06d8f310062d09e4a16a28c01f0e4a583f786136df6cad9b38a6b2f35ef29",
+        "source_witnesses": {
+          "amount": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 26,
+              "column_index": 15,
+              "origin_row_index": 26,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "69.3&#160;",
+            "text": "69.3",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "unit": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 26,
+              "column_index": 17,
+              "origin_row_index": 26,
+              "origin_column_index": 17,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "%",
+            "text": "%",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "year": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 4,
+              "column_index": 15,
+              "origin_row_index": 4,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "2025",
+            "text": "2025",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "measure": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 3,
+              "column_index": 15,
+              "origin_row_index": 3,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 12
+            },
+            "raw_text": "Occupancy",
+            "text": "Occupancy",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "population_and_operating_scope": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 18,
+              "column_index": 0,
+              "origin_row_index": 18,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "Comparable Systemwide Properties",
+            "text": "Comparable Systemwide Properties",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "geography": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 26,
+              "column_index": 0,
+              "origin_row_index": 26,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "\nWorldwide (2)",
+            "text": "Worldwide (2)",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          }
+        },
+        "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+        "ai_response_used": false,
+        "qualification_credit": false
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "common_calculator_calls": 1
+    },
+    {
+      "route": "CURRENT",
+      "metric": "B11",
+      "seconds": 2.669914250029251,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "128.8",
+        "unit": "USD",
+        "trace_id": "sha256:466efbf32f4ee91959a378f59836162d468555aa66cf3592f80ef011a373bb60",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:ae7ab493bc2adb1bc0546d4ec10b2f9510edf0b4d014f50083eaeb8a9c130ee6"
+      },
+      "observation": {
+        "semantic_role": "revpar",
+        "metric_id": "B11",
+        "company_id": "marriott_international",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope": {
+          "property_population": "comparable",
+          "operating_scope": "systemwide",
+          "geography": "worldwide"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "value": "128.8",
+        "unit": "USD",
+        "source_binding": {
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "source_role": "target_primary",
+          "document_name": "mar-20251231.htm",
+          "accession": "0001048286-26-000007",
+          "entity": "1048286",
+          "form": "10-K",
+          "filed": "2026-02-10",
+          "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+          "table_locator": {
+            "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+            "table_id": "table_000011",
+            "row_index": 26,
+            "column_index": 4,
+            "origin_row_index": 26,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "reported_raw_text": "128.80&#160;",
+          "reported_value": "128.80",
+          "reported_unit": "$",
+          "source_witnesses": {
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 4,
+                "origin_row_index": 26,
+                "origin_column_index": 4,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "128.80&#160;",
+              "text": "128.80",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "unit": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 3,
+                "origin_row_index": 26,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "$",
+              "text": "$",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 4,
+                "column_index": 3,
+                "origin_row_index": 4,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2025",
+              "text": "2025",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "measure": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 3,
+                "column_index": 3,
+                "origin_row_index": 3,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9
+              },
+              "raw_text": "RevPAR",
+              "text": "RevPAR",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "population_and_operating_scope": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 18,
+                "column_index": 0,
+                "origin_row_index": 18,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "Comparable Systemwide Properties",
+              "text": "Comparable Systemwide Properties",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "geography": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 0,
+                "origin_row_index": 26,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "\nWorldwide (2)",
+              "text": "Worldwide (2)",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            }
+          },
+          "source_component_id": "sha256:02b06d8f310062d09e4a16a28c01f0e4a583f786136df6cad9b38a6b2f35ef29",
+          "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+          "ordinary_source_policy_hash": "sha256:a1a4ab2cdf27d574a17e9f3672f6a318890f13ddf28d5c5500aa26a10cf7e81b"
+        },
+        "record_type": "VERIFIED_OBSERVATION",
+        "observation_id": "sha256:8f9daae998e10ae3465e80e0510b44eb17eeb81820415595c5c2fc5cf7dded29",
+        "quality": "EXACT",
+        "approval_effect_hash": ""
+      },
+      "selection": {
+        "classification": "DETERMINISTIC_REPORTED_TABLE",
+        "reason_code": "PASS",
+        "table_id": "table_000011",
+        "source_component_id": "sha256:02b06d8f310062d09e4a16a28c01f0e4a583f786136df6cad9b38a6b2f35ef29",
+        "source_witnesses": {
+          "amount": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 26,
+              "column_index": 4,
+              "origin_row_index": 26,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "128.80&#160;",
+            "text": "128.80",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "unit": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 26,
+              "column_index": 3,
+              "origin_row_index": 26,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "$",
+            "text": "$",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "year": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 4,
+              "column_index": 3,
+              "origin_row_index": 4,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "2025",
+            "text": "2025",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "measure": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 3,
+              "column_index": 3,
+              "origin_row_index": 3,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 9
+            },
+            "raw_text": "RevPAR",
+            "text": "RevPAR",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "population_and_operating_scope": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 18,
+              "column_index": 0,
+              "origin_row_index": 18,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "Comparable Systemwide Properties",
+            "text": "Comparable Systemwide Properties",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          },
+          "geography": {
+            "locator": {
+              "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+              "table_id": "table_000011",
+              "row_index": 26,
+              "column_index": 0,
+              "origin_row_index": 26,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "\nWorldwide (2)",
+            "text": "Worldwide (2)",
+            "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+          }
+        },
+        "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+        "ai_response_used": false,
+        "qualification_credit": false
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "common_calculator_calls": 1
+    },
+    {
+      "route": "HISTORICAL",
+      "metric": "B10",
+      "seconds": 4.214705209014937,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.698",
+        "unit": "ratio",
+        "trace_id": "sha256:2af727c601df6e62ccc9862ebc7c3e2fb337bb0c129d683699773ffa3523234b",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d"
+      },
+      "observation": {
+        "semantic_role": "occupancy",
+        "metric_id": "B10",
+        "company_id": "marriott_international",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "scope": {
+          "property_population": "comparable",
+          "operating_scope": "systemwide",
+          "geography": "worldwide"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "value": "0.698",
+        "unit": "ratio",
+        "source_binding": {
+          "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+          "source_role": "target_primary",
+          "document_name": "mar-20241231.htm",
+          "accession": "0001628280-25-004818",
+          "entity": "1048286",
+          "form": "10-K",
+          "filed": "2025-02-11",
+          "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+          "table_locator": {
+            "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+            "table_id": "table_000011",
+            "row_index": 28,
+            "column_index": 15,
+            "origin_row_index": 28,
+            "origin_column_index": 15,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "reported_raw_text": "69.8&#160;",
+          "reported_value": "69.8",
+          "reported_unit": "%",
+          "source_witnesses": {
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 28,
+                "column_index": 15,
+                "origin_row_index": 28,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 2
+              },
+              "raw_text": "69.8&#160;",
+              "text": "69.8",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "unit": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 28,
+                "column_index": 17,
+                "origin_row_index": 28,
+                "origin_column_index": 17,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "%",
+              "text": "%",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 3,
+                "column_index": 15,
+                "origin_row_index": 3,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2024",
+              "text": "2024",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "measure": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 2,
+                "column_index": 15,
+                "origin_row_index": 2,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 12
+              },
+              "raw_text": "Occupancy",
+              "text": "Occupancy",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "population_and_operating_scope": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 19,
+                "column_index": 0,
+                "origin_row_index": 19,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "Comparable Systemwide Properties",
+              "text": "Comparable Systemwide Properties",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "geography": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 28,
+                "column_index": 0,
+                "origin_row_index": 28,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "\nWorldwide (2)",
+              "text": "Worldwide (2)",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            }
+          },
+          "source_component_id": "sha256:9e8b52e89ac01119e0441fa94efea3d0ce97ed6de03f501f275abb3b8259b436",
+          "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+          "ordinary_source_policy_hash": "sha256:a1a4ab2cdf27d574a17e9f3672f6a318890f13ddf28d5c5500aa26a10cf7e81b"
+        },
+        "record_type": "VERIFIED_OBSERVATION",
+        "observation_id": "sha256:ad4588c5197495a836f24e2399c2c445f659b46c500cc959d6c1a883ac239df0",
+        "quality": "EXACT",
+        "approval_effect_hash": ""
+      },
+      "selection": {
+        "classification": "DETERMINISTIC_REPORTED_TABLE",
+        "reason_code": "PASS",
+        "table_id": "table_000011",
+        "source_component_id": "sha256:9e8b52e89ac01119e0441fa94efea3d0ce97ed6de03f501f275abb3b8259b436",
+        "source_witnesses": {
+          "amount": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 28,
+              "column_index": 15,
+              "origin_row_index": 28,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "69.8&#160;",
+            "text": "69.8",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "unit": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 28,
+              "column_index": 17,
+              "origin_row_index": 28,
+              "origin_column_index": 17,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "%",
+            "text": "%",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "year": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 3,
+              "column_index": 15,
+              "origin_row_index": 3,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "2024",
+            "text": "2024",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "measure": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 2,
+              "column_index": 15,
+              "origin_row_index": 2,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 12
+            },
+            "raw_text": "Occupancy",
+            "text": "Occupancy",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "population_and_operating_scope": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 19,
+              "column_index": 0,
+              "origin_row_index": 19,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "Comparable Systemwide Properties",
+            "text": "Comparable Systemwide Properties",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "geography": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 28,
+              "column_index": 0,
+              "origin_row_index": 28,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "\nWorldwide (2)",
+            "text": "Worldwide (2)",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          }
+        },
+        "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+        "ai_response_used": false,
+        "qualification_credit": false
+      },
+      "target_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "common_calculator_calls": 1
+    },
+    {
+      "route": "HISTORICAL",
+      "metric": "B11",
+      "seconds": 4.075335792033002,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B11",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "128.23",
+        "unit": "USD",
+        "trace_id": "sha256:1f24164f61677cc12c2dc63d0f79347d6d0bb644031ece55ac1ab6c3861b09f1",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31"
+      },
+      "observation": {
+        "semantic_role": "revpar",
+        "metric_id": "B11",
+        "company_id": "marriott_international",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "scope": {
+          "property_population": "comparable",
+          "operating_scope": "systemwide",
+          "geography": "worldwide"
+        },
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "value": "128.23",
+        "unit": "USD",
+        "source_binding": {
+          "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+          "source_role": "target_primary",
+          "document_name": "mar-20241231.htm",
+          "accession": "0001628280-25-004818",
+          "entity": "1048286",
+          "form": "10-K",
+          "filed": "2025-02-11",
+          "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+          "table_locator": {
+            "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+            "table_id": "table_000011",
+            "row_index": 28,
+            "column_index": 4,
+            "origin_row_index": 28,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "reported_raw_text": "128.23&#160;",
+          "reported_value": "128.23",
+          "reported_unit": "$",
+          "source_witnesses": {
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 28,
+                "column_index": 4,
+                "origin_row_index": 28,
+                "origin_column_index": 4,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "128.23&#160;",
+              "text": "128.23",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "unit": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 28,
+                "column_index": 3,
+                "origin_row_index": 28,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "$",
+              "text": "$",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 3,
+                "column_index": 3,
+                "origin_row_index": 3,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2024",
+              "text": "2024",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "measure": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9
+              },
+              "raw_text": "RevPAR",
+              "text": "RevPAR",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "population_and_operating_scope": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 19,
+                "column_index": 0,
+                "origin_row_index": 19,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "Comparable Systemwide Properties",
+              "text": "Comparable Systemwide Properties",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            },
+            "geography": {
+              "locator": {
+                "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+                "table_id": "table_000011",
+                "row_index": 28,
+                "column_index": 0,
+                "origin_row_index": 28,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "\nWorldwide (2)",
+              "text": "Worldwide (2)",
+              "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+            }
+          },
+          "source_component_id": "sha256:9e8b52e89ac01119e0441fa94efea3d0ce97ed6de03f501f275abb3b8259b436",
+          "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+          "ordinary_source_policy_hash": "sha256:a1a4ab2cdf27d574a17e9f3672f6a318890f13ddf28d5c5500aa26a10cf7e81b"
+        },
+        "record_type": "VERIFIED_OBSERVATION",
+        "observation_id": "sha256:b749267a04b2f2fb966dd0e2f150bcaed253a67ab2cedd5200e52a5f6627cd62",
+        "quality": "EXACT",
+        "approval_effect_hash": ""
+      },
+      "selection": {
+        "classification": "DETERMINISTIC_REPORTED_TABLE",
+        "reason_code": "PASS",
+        "table_id": "table_000011",
+        "source_component_id": "sha256:9e8b52e89ac01119e0441fa94efea3d0ce97ed6de03f501f275abb3b8259b436",
+        "source_witnesses": {
+          "amount": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 28,
+              "column_index": 4,
+              "origin_row_index": 28,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "128.23&#160;",
+            "text": "128.23",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "unit": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 28,
+              "column_index": 3,
+              "origin_row_index": 28,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "$",
+            "text": "$",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "year": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 3,
+              "column_index": 3,
+              "origin_row_index": 3,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "2024",
+            "text": "2024",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "measure": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 9
+            },
+            "raw_text": "RevPAR",
+            "text": "RevPAR",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "population_and_operating_scope": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 19,
+              "column_index": 0,
+              "origin_row_index": 19,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "Comparable Systemwide Properties",
+            "text": "Comparable Systemwide Properties",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          },
+          "geography": {
+            "locator": {
+              "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+              "table_id": "table_000011",
+              "row_index": 28,
+              "column_index": 0,
+              "origin_row_index": 28,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "\nWorldwide (2)",
+            "text": "Worldwide (2)",
+            "grid_sha256": "sha256:16fda921957b071c4d73b1a16331b62b122810cc2084a9f92ae05a976dbfa96a"
+          }
+        },
+        "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+        "ai_response_used": false,
+        "qualification_credit": false
+      },
+      "target_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "common_calculator_calls": 1
+    }
+  ],
+  "selection": {
+    "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+    "schema_version": 1,
+    "policy_id": "ordinary_period_selection_v1",
+    "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+    "company_id": "marriott_international",
+    "reporting_cik": "1048286",
+    "subject_policy": {
+      "mode": "CONTINUOUS_PRIMARY",
+      "selected_cik": "1048286",
+      "cross_entity_combination_authorized": false
+    },
+    "target_report_end": "2024-12-31",
+    "requested_fiscal_year": 2024,
+    "current_filing": {
+      "form": "10-K",
+      "reportDate": "2024-12-31",
+      "filingDate": "2025-02-11",
+      "accessionNumber": "0001628280-25-004818",
+      "primaryDocument": "mar-20241231.htm"
+    },
+    "current_amendments": [],
+    "prior_report_end": "2023-12-31",
+    "prior_filing": {
+      "form": "10-K",
+      "reportDate": "2023-12-31",
+      "filingDate": "2024-02-13",
+      "accessionNumber": "0001628280-24-004372",
+      "primaryDocument": "mar-20231231.htm"
+    },
+    "prior_amendments": [],
+    "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+    "dependency_filing_roles": {
+      "target_primary": "0001628280-25-004818",
+      "target_amendment_primary": [],
+      "prior_annual_primary": "0001628280-24-004372",
+      "prior_amendment_primary": []
+    },
+    "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+    "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+    "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+    "source_set_identity": "sha256:e240deda1080bd317a72241c999cdfa68bdd12b58e4b30a17cfef297662d6ab8",
+    "loaded_inventories": [
+      "CIK0001048286.json"
+    ],
+    "latest_restated_values_used": false,
+    "caller_supplied_selection_trusted": false,
+    "production_authorized": false,
+    "selection_id": "sha256:8e785ef8f328850f5eb87e790b565789c74cd53d7a188a6c66e8c075ba93853b"
+  },
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006",
+  "test_preparation": "Existing operation-local historical_xbrl_parse reused during directed test only; original source business checks remain active.",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_Run": false
+}
