@@ -12,3 +12,5 @@
 
 
 2026-10-06：所有者已在本会话批准附件范围及最多一次SEC GET恢复。8cf2bc9e新增仅后继输入的明确附件声明：实际认证原父文档SHA、原178字节链接跨度和同accession官方URL，正常historical_dependency现已返回该附件；独立无网络实际读取通过（approved-actual-dependency.json），四项内存负例通过。仍未获取附件，累计SEC1771/1867不变。原固定包、请求、答案和Run不改签。原/root物理路径在macOS不可用；同一本完整账本的已验证位置恢复、1771→最多1772的目标限定、原链及发布resume标记接线尚待完成，不创建空账本或借用其他额度。
+
+2026-10-06按完整简化指令重新核本机：没有相关SEC执行进程、claims/binding打开句柄或待完成reservation；原账本1547个调用槽，最后1546/1547终态均SUCCEEDED，claims SHA仍为`a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262`，计入224保守预留后累计1771。无1548槽，来源账本无指定EX-99 URL。恢复标记[6017015367](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6017015367)只表示已登记这次具体恢复，不表示HTTP已发生。实际CLI拒绝已保存为`capture-preclaim-refusal-20261006.json`：新增调用[0,0,0]，在HTTP前因`ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT:paramount_skydance_paramount_global:FISCAL_EVENT_FILING:2024-12-31`停止。该次许可仍未消费；不重发、不扩大用途、不改原运行机制，不创建空账本。此次核查未发现远端UNKNOWN或在途持久写入，附件获取/后继内容核对仍列H6，其他离线工作继续。
