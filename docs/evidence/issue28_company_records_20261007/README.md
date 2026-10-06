@@ -61,3 +61,8 @@ unrelated HEAD does not gate reading. Source files must remain available for
 future update checks; daily results read saved records without claiming new
 source freshness. Native audit/export is the retained explicit old interface.
 No business calls, new allowance, Ready, merge, adoption, deployment or active.
+
+Committed-tree correspondence: a6dfe53e contains the tested source/test bytes
+with no remaining code difference. Capability structure check againstmain8588
+passes on that commit; it is structural evidence only. The following evidence
+append changes no code, sources or assertions.
