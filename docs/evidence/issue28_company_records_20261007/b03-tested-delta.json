@@ -1,0 +1,32 @@
+{
+  "tested_base": "4e2f4b2dddabd0ab2847a583e5acf457282c2b95",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "source_deltas": {
+    ".github/workflows/company-current-records.yml": "5342993752270b7cb0ec2e04d2962e79cdaf98f19ec8ff2390346bd5872371e9",
+    "docs/evidence/issue28_continuous/known_result_defects.json": "4195ed46ded753b89ef4e0faf790cd3016d4daff284e8b6c9ae7f5e4fef133b2",
+    "scripts/vnext/annual_amendment_scope.py": "bd70d270d9747ac2d8ba72987b77c54c752c450847280174e8e56d2bd2560323",
+    "scripts/vnext/instant_balance_amendment.py": "e0b84318ba14393301caa623c9caa31ea3f301c48ddcf500e06368ec71eb180a",
+    "scripts/vnext/normal_candidates.py": "c30098ed5190882f8db91e5b315c01ab9b8b8cc7a9e7761cf8f362d4630d4fca",
+    "scripts/vnext/normal_companyfacts_results.py": "9b7fb613e75dd981a0a791a741253ce481bd617224c659e21f104450a9edb2f2",
+    "scripts/vnext/normal_governance_input.py": "e6b4e3f2b5e80ac4fa63346e56faab4ab249443de3eb3f37fccf8ee30af3e8d4",
+    "scripts/vnext/normal_run_inputs.py": "7c71a64181a320112725d0f4c0cb5f0f8435a4c37d2e6c3a48496394cc6212a6",
+    "scripts/vnext/normal_zero_ai_results.py": "0d320851e12ee54bf7ea5360015aec75e80daf4e93902dc824ec93450d2d1e86",
+    "scripts/vnext/ordinary_current_update.py": "6c95ffc161f14fd494bf305bad9301c2627a19cffcebbed9cf8d43574fcf956a",
+    "scripts/vnext/ordinary_income_input.py": "7c78e5bb8448fd0783207d0de71a69421e05807936c1273aeb5da653577dbf60",
+    "scripts/vnext/ordinary_saved_result.py": "71c2fc6f71a1d03f002feecf7beb29a905f85949ec93fa206c2987f7449788a1",
+    "tests/vnext/test_separate_rule_root.py": "28d26391cbd42d76246988de6cf06b7595e28a1f5758861e4e39e2b903a688d9",
+    "scripts/vnext/ordinary_da_scope_v1.py": "784000b23e9075d35bd2752300fd60bb36b624dadce44b035eefa8ca9b5f626e",
+    "scripts/vnext/ordinary_b03_input_scope.py": "f6d5ba5b01be13f66f6ec642e198f5c001d7cd7d36753c1ba9aaebf3f756cf9a",
+    "tests/vnext/test_b03_current_input_scope.py": "12f0a611b6bb4ba213cb649db33b49d68fd5aede5427f4f37f6041ec920e0e9a"
+  },
+  "peer_sha": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
+  "peer_file": "scripts/vnext/historical_da_scope_candidate.py",
+  "consumer_file": "scripts/vnext/ordinary_da_scope_v1.py",
+  "consumer_copy_bytes_equal": true,
+  "tests": {
+    "finite": 9,
+    "finite_seconds": 8.563,
+    "combined": 116,
+    "combined_seconds": 70.275
+  }
+}

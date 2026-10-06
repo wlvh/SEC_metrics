@@ -55,8 +55,9 @@ def _validate_records(records, company_id, metric_id, result_id):
 
 def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
-    separate_rules = metric in {'B01','B02'} or metric not in SUPPORTED_METRICS
+    separate_rules = metric in {'B01','B02','B03'} or metric not in SUPPORTED_METRICS
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
+        **({'validate_depreciation_scope':True} if metric=='B03' else {}),
         **({'rules_root':program} if separate_rules else {}))
     detail = original['component']
     if 'metrics' in detail:
@@ -67,6 +68,8 @@ def _ordinary_case(source, company, metric):
         'admission': original['source_admission'], 'target_period': original['target_period'],
         'expected_records': original['records'], 'results': {metric: original['primary_result']},
         'rules_root':str(program) if separate_rules else str(source),
+        **({'input_assessments':{'depreciation_scope':detail['selection']['depreciation_scope']}}
+           if metric == 'B03' and detail.get('selection',{}).get('depreciation_scope') is not None else {}),
         'prepared_annual_input': original['component'].get('prepared_input'),
         'selection': detail.get('selection', detail.get('inspection'))}
 
@@ -169,6 +172,11 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
                 manifest['shared_records'] = shared
             files = {**rendered['files'], 'records.jsonl': b''.join(_json(r) for r in persisted),
                      'receipt.json': _json(rendered['receipt'])}
+            if case.get('input_assessments'):
+                files['input-assessments.json'] = _json({'record_type':'ORDINARY_INPUT_ASSESSMENTS_V1',
+                    'company_id':company_id,'metric_id':metric_id,'input_id':input_id,
+                    'result_id':result['result_id'],'target_period':period,
+                    'assessments':case['input_assessments']})
             for name, raw in files.items():
                 write_immutable_bytes(path=output_root/name, content=raw)
             manifest['files'] = {name: sha256_file(path=output_root/name) for name in files}
@@ -188,8 +196,9 @@ def read_saved_result(*, output_root, shared_record_cache=None):
     manifest = strict_json_file(path=root/'manifest.json')
     _need(manifest['record_type'] == 'ORDINARY_SAVED_RESULT_V1'
           and manifest['status'] == 'CALCULATED', 'SAVED_RESULT_NOT_COMPLETE')
-    _need(set(manifest['files']) == {'records.jsonl', 'receipt.json',
-          'metrics_matrix.csv', 'metric_evidence.csv'}, 'SAVED_RESULT_FILES_MISSING')
+    base_files = {'records.jsonl', 'receipt.json','metrics_matrix.csv', 'metric_evidence.csv'}
+    _need(base_files <= set(manifest['files'])
+          and set(manifest['files'])-base_files <= {'input-assessments.json'}, 'SAVED_RESULT_FILES_MISSING')
     for name, expected in manifest['files'].items():
         _need(sha256_file(path=root/name) == expected, 'SAVED_RESULT_FILE_CHANGED:'+name)
     records = []
@@ -217,6 +226,14 @@ def read_saved_result(*, output_root, shared_record_cache=None):
           'SAVED_RESULT_UNIT_CHANGED')
     _need(all(result[key] == manifest['target_period'][key] for key in ('period_start', 'period_end')),
           'SAVED_RESULT_PERIOD_CHANGED')
+    assessment = None
+    if 'input-assessments.json' in manifest['files']:
+        assessment = strict_json_file(path=root/'input-assessments.json')
+        _need(assessment['record_type']=='ORDINARY_INPUT_ASSESSMENTS_V1'
+              and all(assessment[k]==manifest[k] for k in
+                      ('company_id','metric_id','input_id','result_id','target_period'))
+              and type(assessment['assessments']) is dict, 'SAVED_INPUT_ASSESSMENT_COORDINATE_CHANGED')
     return {'manifest': manifest, 'result': result,
             'files': {name: (root/name).read_bytes() for name in ('metrics_matrix.csv', 'metric_evidence.csv')},
-            'receipt': strict_json_file(path=root/'receipt.json')}
+            'receipt': strict_json_file(path=root/'receipt.json'),
+            **({} if assessment is None else {'input_assessments':assessment['assessments']})}

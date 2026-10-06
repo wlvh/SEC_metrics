@@ -54,7 +54,7 @@ class SeparateRuleRootTest(unittest.TestCase):
         self.assertFalse((self.source/'scripts').exists())
         self.assertEqual(self.record['result']['value'],'26186000000')
         self.assertEqual(self.record['manifest']['rules_root'],str(REPO_ROOT))
-        self.assertEqual(self.record['manifest']['source_root'],str(self.source))
+        self.assertEqual(self.record['manifest']['source_root'],str(self.source.resolve()))
 
     def test_saved_result_read_retains_value_unit_period_and_source_rows(self):
         actual=read_saved_result(output_root=self.root/'result')

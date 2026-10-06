@@ -1,0 +1,22 @@
+======================================================================
+ERROR: test_marriott_composition_458m_and_135m_revenue_deduction_excluded (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_marriott_composition_458m_and_135m_revenue_deduction_excluded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 106, in test_marriott_composition_458m_and_135m_revenue_deduction_excluded
+    saved=self.saved['marriott_international'];records=[json.loads(s) for s in saved['files']['records.jsonl'].decode().splitlines()]
+                                                                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'records.jsonl'
+
+======================================================================
+ERROR: test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01 (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 119, in test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01
+    records=[json.loads(s) for s in saved['files']['records.jsonl'].decode().splitlines()]
+                                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'records.jsonl'
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.010s
+
+FAILED (errors=2)

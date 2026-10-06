@@ -166,7 +166,8 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
     return all_claims,all_manifests,all_filings,evidence
 
 
-def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None):
+def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
+                                   validate_depreciation_scope=False):
     """Derive native records from current saved annual input, without a Run.
 
     No caller fact, period, filing, answer, compiled Spec or source receipt is
@@ -176,7 +177,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
     rules = repo_root if rules_root is None else Path(rules_root)
-    _need(rules_root is None or metric_id=='B01','NORMAL_ZERO_AI_SEPARATE_RULE_ROOT_ROUTE_NOT_READY')
+    _need(rules_root is None or metric_id in {'B01','B03'},'NORMAL_ZERO_AI_SEPARATE_RULE_ROOT_ROUTE_NOT_READY')
     authority = _authority(rules)
     if rules_root is not None:
         from .company_registry import _registry_rows
@@ -198,7 +199,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
             "window":period,"status":"SOURCE_RECONSTRUCTION_PENDING","financial_cross_entity_combination_authorized":False}
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
-    reader.primary(prepared["filing"])
+    primary_source = reader.primary(prepared["filing"])
     facts_source = reader.read(companyfacts_url(cik=int(prepared["entity"])), accession=prepared["filing"]["accessionNumber"],
         role="companyfacts", media_type="application/json")
     traits = repository_company_traits(repo_root=rules, company_id=company_id)
@@ -207,6 +208,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     amendment_input = None
     income_input = None
     income_observation_checks = []
+    depreciation_scope = None
     if metric_id in {"B01", "B03"}:
         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
         if metric_id == "B03":
@@ -224,7 +226,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         "scope":scope, "scope_key":scope_key(scope=scope)}
     try:
         if metric_id in {"B01","B03"} and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY":
-            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id)
+            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id,
+                **({} if rules_root is None else {'rules_root':rules_root}))
             period = income_input["statement_period"]
             target = {**target,"period_start":period["period_start"],"period_end":period["period_end"]}
             amendment_input = {**income_input["amendment_input"],"decision":"INPUT_PROPERTY_PROVEN",
@@ -233,7 +236,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
               "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
         if prepared["amendments"] and income_input is None:
             amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,
-                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW")
+                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW",
+                **({} if rules_root is None else {'rules_root':rules_root}))
             _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared),
                   "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS", "SOURCE_INTEGRITY_ERROR")
             _need(amendment_input["decision"] == "INPUT_PROPERTY_PROVEN", "NORMAL_AMENDMENT_INPUT_SCOPE_UNRESOLVED")
@@ -257,6 +261,41 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                 reusable.extend(dep_observations)
             result, trace, observations = calculate_metric(compiled_spec=spec,
                 target=execution_target, company_traits=traits, structured_facts=facts, verified_observations=reusable)
+            if metric_id == 'B03' and validate_depreciation_scope and result['publication'] == 'PUBLISHED' and result['value'] is not None:
+                from .ordinary_b03_input_scope import inspect_depreciation_input, DIRECT, WITHHELD_REASON
+                from .b03_contract_amortization_scope import assess_current_b03_scope
+                try:
+                    depreciation_scope = inspect_depreciation_input(raw_bytes=primary_source['raw_bytes'],
+                        entity=prepared['entity'], period=period, observations=observations)
+                    if depreciation_scope['status'] == 'RETAKE':
+                        original_decision = depreciation_scope
+                        disproved = set(DIRECT) - {depreciation_scope['concept']}
+                        eligible = [fact for fact in facts if fact['concept'].split(':')[-1] not in disproved]
+                        result, trace, observations = calculate_metric(compiled_spec=spec,
+                            target=execution_target, company_traits=traits, structured_facts=eligible,
+                            verified_observations=reusable)
+                        depreciation_scope = inspect_depreciation_input(raw_bytes=primary_source['raw_bytes'],
+                            entity=prepared['entity'], period=period, observations=observations)
+                        depreciation_scope['retake_decision'] = original_decision
+                        if depreciation_scope['status'] != 'KEEP':
+                            depreciation_scope.update(status='WITHHOLD', reason_code=WITHHELD_REASON,
+                                why='ONE_APPROVED_RETAKE_DID_NOT_PROVE_PRIMARY_QUANTITY')
+                    if depreciation_scope['status'] == 'KEEP':
+                        existing = assess_current_b03_scope(case={'primary_metric_id':'B03',
+                            'results':{'B03':result}, 'observations':observations, 'target_period':period,
+                            'source_proofs':prepared['source_proofs']}, data_root=repo_root)
+                        depreciation_scope['existing_scope_check'] = existing
+                        if existing['blocked']:
+                            depreciation_scope.update(status='WITHHOLD', reason_code=WITHHELD_REASON,
+                                why=existing['status'])
+                except ValueError as error:
+                    depreciation_scope = {'status':'WITHHOLD','reason_code':WITHHELD_REASON,
+                        'why':str(error),'error_type':type(error).__name__,
+                        'category':'SOURCE_SCOPE_OR_IMPLEMENTATION_UNRESOLVED'}
+                if depreciation_scope['status'] == 'WITHHOLD':
+                    depreciation_scope['rejected_observations'] = observations
+                    result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code=WITHHELD_REASON)
+                    observations = []
             if income_input is not None:
                 income_observation_checks = verify_income_observations(income_input,observations)
             selection = {"source_candidate_count":len(facts), "selected_fact_ids":[o["source_binding"]["fact_id"] for o in observations],
@@ -289,6 +328,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code="NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED")
         observations = []
         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
+    if depreciation_scope is not None:
+        selection['depreciation_scope'] = depreciation_scope
     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
     if amendment_input is not None: proofs.extend(amendment_input["source_proofs"])
     if income_input is not None: proofs.extend(income_input["source_proofs"])

@@ -124,11 +124,13 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, r
     amendment_input = None;instant_amendment_input = None;common_error = None
     subject_error = "NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None
     if prepared["amendments"]:
-        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES")
+        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES",
+            **({} if rules_root is None else {'rules_root':rules_root}))
         _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared), "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
         if amendment_input["decision"] != "INPUT_PROPERTY_PROVEN":
             common_error = "NORMAL_COMPANYFACTS_AMENDMENT_INPUT_SCOPE_UNRESOLVED"
-            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id)
+            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id,
+                **({} if rules_root is None else {'rules_root':rules_root}))
             _need(instant_amendment_input["prepared_input"] == prepared.get("original_input",prepared),
                   "NORMAL_INSTANT_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
     needs_prior = any(metric_is_applicable(applicability=route["applicability"], traits=traits)

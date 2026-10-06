@@ -1119,6 +1119,51 @@
       "current_credit": "WITHDRAWN_EXACT_COMPANY_RESULT",
       "repair_state": "C02_SHARED_SELECTION_CORE_OWNER47; ordinary receiving/native developer successor pending full integration",
       "original_records_preserved": true
+    },
+    {
+      "defect_id": "B03_SALESFORCE_FY2026_CURRENT_SOURCE_FIRST_CONCEPT_SUBTOTAL",
+      "metric_id": "B03",
+      "company_id": "salesforce",
+      "period_end": "2026-01-31",
+      "result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+      "repair_state": "EXPLICIT_ORDINARY_SCOPE_ADAPTER_PENDING_FINAL_VALIDATION",
+      "current_credit": "WITHDRAWN_CONFIRMED_FIXED_ASSET_SUBTOTAL_USED_AS_TOTAL",
+      "summary": "The original primary labels 1.2bn as fixed-asset D&A, while the approved B03 requires complete D&A and excludes impairment. The larger 3.631bn cash-flow amount is not automatically substituted.",
+      "peer_origin": {
+        "commit": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
+        "defect_id": "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json",
+        "docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "scope_limit": "Actual current normal API identity and one actual archived index/evidence identity only; no claim of all historical scans or current 390 acceptance."
+    },
+    {
+      "defect_id": "B03_SALESFORCE_FY2026_ARCHIVED_RESULT_FIXED_ASSET_SUBTOTAL",
+      "metric_id": "B03",
+      "company_id": "salesforce",
+      "period_end": "2026-01-31",
+      "result_id": "sha256:e13a5d8c1d2764bbd47392cab62777d7a318aa76e653ecd7277c2270eac41acf",
+      "repair_state": "EXPLICIT_ORDINARY_SCOPE_ADAPTER_PENDING_FINAL_VALIDATION",
+      "current_credit": "WITHDRAWN_CONFIRMED_FIXED_ASSET_SUBTOTAL_USED_AS_TOTAL",
+      "summary": "The original primary labels 1.2bn as fixed-asset D&A, while the approved B03 requires complete D&A and excludes impairment. The larger 3.631bn cash-flow amount is not automatically substituted.",
+      "peer_origin": {
+        "commit": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
+        "defect_id": "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL",
+        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
+      },
+      "evidence": [
+        "docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json",
+        "docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json"
+      ],
+      "released": [],
+      "original_record_retained": true,
+      "scope_limit": "Actual current normal API identity and one actual archived index/evidence identity only; no claim of all historical scans or current 390 acceptance.",
+      "run_id": "run:cutover:6e9c015ffb9418a7f85175720dbe1aa768a910175fb6be26084a596d9b8acff5"
     }
   ],
   "purpose": "Current company read: precise known defects from this Issue; no copied result count or content acceptance summary.",

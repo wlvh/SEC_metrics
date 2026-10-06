@@ -4,7 +4,7 @@ import re
 
 from .annual_amendment_scope import prepare_saved_amendment_scopes
 from .instant_balance_amendment import _part_iii_details, POLICY as AMENDMENT_RULE
-from .normal_candidates import _prepare_b06
+from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
 from .normal_annual_input import annual_period
 from .normal_source_authority import ROOT
 from .normal_annual_input_v2 import exact_json_value
@@ -78,12 +78,14 @@ def native_income_reports(source,annual,concepts):
     return rows
 
 
-def prepare_current_income_input(*,repo_root,company_id):
-    rules=strict_json_file(path=repo_root/POLICY_PATH)
+def prepare_current_income_input(*,repo_root,company_id,rules_root=None):
+    policy_root=repo_root if rules_root is None else Path(rules_root)
+    rules=strict_json_file(path=policy_root/POLICY_PATH)
     need(rules==strict_json_file(path=ROOT/POLICY_PATH),'INSTALLED_RULES_CHANGED')
     prepared=_prepare_b06(repo_root=repo_root,company_id=company_id)
     annual=prepared['input_binding']['prepared_annual_input']
-    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id)
+    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id,
+        **({} if rules_root is None else {'rules_root':rules_root}))
     blobs={r['raw_asset_id']:r for r in amendments['source_records'] if r['record_type']=='RAW_BLOB'}
     checks=[]
     for scope in amendments['scopes']:
@@ -91,8 +93,8 @@ def prepare_current_income_input(*,repo_root,company_id):
         raw=(repo_root/blobs[ref['raw_asset_id']]['storage_uri']).read_bytes()
         checks.append(inspect_income_amendment(scope,raw,rules))
     from .batch_workflow import _structured_concepts
-    b01=compile_spec_file(path=repo_root/'catalog/metrics/B01_revenue.md',dependency_specs={})
-    b03=compile_spec_file(path=repo_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})
+    b01=compile_spec_file(path=policy_root/'catalog/metrics/B01_revenue.md',dependency_specs={})
+    b03=compile_spec_file(path=policy_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})
     concepts=sorted(set(_structured_concepts(compiled_spec=b01))|set(_structured_concepts(compiled_spec=b03)))
     reports={kind:native_income_reports(prepared[kind],annual,concepts) for kind in ['primary','xml']}
     revenue=b01['compiled']['inputs']['revenue']['structured_role']['approved_concepts']
@@ -119,7 +121,7 @@ def prepare_current_income_input(*,repo_root,company_id):
         'revenue_period_proof':selected,'original_reports':reports,'amendment_input':amendments,
         'amendment_checks':checks,'source_proofs':proofs,'source_records':records,
         'source_admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),
-        'policy_sha256':sha256_file(path=repo_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,
+        'policy_sha256':sha256_file(path=policy_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,
         'native_result_created':False,'production_authorized':False})
     return {**body,'income_input_id':content_hash(value=body)}
 
