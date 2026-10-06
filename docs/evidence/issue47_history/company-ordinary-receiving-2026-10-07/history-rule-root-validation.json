@@ -1,0 +1,80 @@
+{
+  "record_type": "HISTORICAL_COMPANY_SOURCE_RULE_ROOT_RECEIVING",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "rules_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1",
+  "source_contents": "Existing originals/headers/request-log and company_registry only; no catalog, calculation config, code or answers.",
+  "source_file_count": 11,
+  "source_files_unchanged_assertion_completed_before_late_record_error": true,
+  "shared_public_updater_store_reader": true,
+  "actual_rows": [
+    {
+      "metric_id": "B10",
+      "fiscal_year": "2024",
+      "value": "69.8",
+      "unit": "percent"
+    },
+    {
+      "metric_id": "B11",
+      "fiscal_year": "2024",
+      "value": "128.23",
+      "unit": "USD"
+    },
+    {
+      "metric_id": "B10",
+      "fiscal_year": "2025",
+      "value": "69.3",
+      "unit": "percent"
+    },
+    {
+      "metric_id": "B11",
+      "fiscal_year": "2025",
+      "value": "128.8",
+      "unit": "USD"
+    }
+  ],
+  "operations": [
+    {
+      "label": "first",
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "elapsed_seconds": null
+    },
+    {
+      "label": "repeat",
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "elapsed_seconds": null
+    },
+    {
+      "label": "read",
+      "exit_code": 0,
+      "status": null,
+      "elapsed_seconds": null
+    },
+    {
+      "label": "current",
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "elapsed_seconds": null
+    }
+  ],
+  "measured_record_repair_independent_read_seconds": 1.1493447499815375,
+  "original_case_probe_seconds": 7.630543041974306,
+  "timing_limitation": "Late validation record serialization KeyError after all business assertions; exact initial/repeat/current subprocess durations were not saved. No recalc to manufacture timing; repaired record from saved reports and a new read only.",
+  "repeat_factory_forbidden": true,
+  "result_and_pointer_bytes_unchanged_on_repeat_and_read_assertions_completed": true,
+  "new_read_protected_files_unchanged": true,
+  "protected_result_file_count": 42,
+  "ordinary_check_intents_and_terminals_may_append": true,
+  "program_or_source_tree_copies": 0,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "ledger_unchanged_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+  "old_runs_rewritten": false,
+  "automatic_historical_source_acquisition": false,
+  "full_five_year_business_accepted": false
+}

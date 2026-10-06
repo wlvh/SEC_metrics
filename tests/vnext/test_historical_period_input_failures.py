@@ -1,6 +1,7 @@
 """Fiscal-label failures retain their cause instead of manufacturing a source gap."""
 from contextlib import ExitStack
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -10,6 +11,21 @@ from vnext.ordinary_source_authority import OrdinarySourceAuthorityError
 
 
 class HistoricalPeriodInputFailureTest(unittest.TestCase):
+    def test_separate_program_rules_cannot_hide_a_wrong_source_company(self):
+        from tests.vnext.common import REPO_ROOT
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary)
+            (source/'config').mkdir()
+            registry = (REPO_ROOT/'config/company_registry.csv').read_text()
+            (source/'config/company_registry.csv').write_text(registry.replace('1048286', '19617'))
+            with patch.object(selection, 'load_history_for_period',
+                              side_effect=AssertionError('Wrong company must fail before source lookup')):
+                with self.assertRaisesRegex(selection.PeriodSelectionError,
+                        'ORDINARY_PERIOD_SELECTION_SOURCE_SUBJECT_REGISTRY_CHANGED') as caught:
+                    selection.resolve_period_selection(repo_root=source,
+                        rules_root=REPO_ROOT, company_id='marriott_international', fiscal_year=2024)
+            self.assertEqual(caught.exception.category, 'SOURCE_INTEGRITY_ERROR')
+
     def resolve_failure(self, errors, periods=('2024-12-31',)):
         with ExitStack() as stack:
             stack.enter_context(patch.object(selection,'load_history_for_period',return_value={'limitations':[]}))

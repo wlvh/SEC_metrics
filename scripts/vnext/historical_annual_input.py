@@ -42,7 +42,7 @@ def _need(condition, reason, category="SOURCE_INTEGRITY_ERROR"):
         raise NormalAnnualInputError(reason, category)
 
 
-def prepare_original_historical_input(*, repo_root: Path, company_id: str, period_selection):
+def prepare_original_historical_input(*, repo_root: Path, company_id: str, period_selection, rules_root=None):
     """Return the original-input body for the pinned period.
 
     The body keeps the frozen current-route shape so every downstream consumer
@@ -71,7 +71,7 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
     payload = strict_json_loads(text=inventory["raw"].decode("utf-8"))
     selection = selected_historical_filing(repo_root=repo_root, company=company,
                                            submissions=payload,
-                                           period_selection=period_selection)
+                                           period_selection=period_selection, rules_root=rules_root)
     # Re-derived and equal, so the record's subject policy is the period's own:
     # the registry's for the primary's periods, the filing registrant's own for
     # a predecessor's.
@@ -149,20 +149,21 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
     return {**body, "input_id": content_hash(value=body)}
 
 
-def prepare_historical_annual_input(*, repo_root: Path, company_id: str, period_selection):
+def prepare_historical_annual_input(*, repo_root: Path, company_id: str, period_selection, rules_root=None):
     """Resolve the pinned period's issuer fiscal-year label from its own source.
 
     The label policy, its installed policy file and the inspector module are the
     frozen current ones; only the period they are pointed at is explicit here.
     """
     policy = strict_json_file(path=resolve_repository_file(
-        repo_root=repo_root, repo_relative_path=FISCAL_LABEL_POLICY_PATH))
+        repo_root=repo_root if rules_root is None else Path(rules_root),
+        repo_relative_path=FISCAL_LABEL_POLICY_PATH))
     if (policy != strict_json_file(path=ROOT / FISCAL_LABEL_POLICY_PATH)
             or policy["policy_id"] != "ordinary_fiscal_year_labels_v1"):
         raise NormalAnnualInputError("ORDINARY_FISCAL_LABEL_INSTALLED_POLICY_CHANGED",
                                      "AUTHORITY_CONFLICT")
     original = prepare_original_historical_input(repo_root=repo_root, company_id=company_id,
-                                                 period_selection=period_selection)
+                                                 period_selection=period_selection, rules_root=rules_root)
     verify_ordinary_source_proofs(data_root=repo_root, proofs=original["source_proofs"])
     report = inspect_prepared_fiscal_year_labels(repo_root=repo_root, prepared=original)
     inspected = report["inspection"]

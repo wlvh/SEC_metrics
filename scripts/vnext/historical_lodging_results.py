@@ -145,20 +145,20 @@ def _spec(repo_root, metric_id):
 
 
 def resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metric_id: str,
-                                      period_selection):
+                                      period_selection, rules_root=None):
     """Retain the existing component interface for historical consumers."""
     component, _ = _resolve_historical_lodging_metric(
         repo_root=repo_root, company_id=company_id, metric_id=metric_id,
-        period_selection=period_selection)
+        period_selection=period_selection, rules_root=rules_root)
     return component
 
 
 def prepare_historical_lodging_case(*, repo_root: Path, company_id: str, metric_id: str,
-                                    period_selection):
+                                    period_selection, rules_root=None):
     """Adapt the same calculation to the shared saved-case writer, without a Run."""
     component, prepared = _resolve_historical_lodging_metric(
         repo_root=repo_root, company_id=company_id, metric_id=metric_id,
-        period_selection=period_selection)
+        period_selection=period_selection, rules_root=rules_root)
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
         'input_binding': {'record_type': 'HISTORICAL_SELECTED_LODGING_INPUT',
                           'prepared_input': prepared, 'component_id': component['component_id']},
@@ -169,11 +169,12 @@ def prepare_historical_lodging_case(*, repo_root: Path, company_id: str, metric_
         'target_period': component['target_period'], 'expected_records': component['records'],
         'results': {metric_id: component['result']}, 'traces': {metric_id: component['trace']},
         'observations': [component['observation']] if component['observation'] is not None else [],
-        'selection': component['selection']}
+        'selection': component['selection'],
+        **({} if rules_root is None else {'rules_root': str(Path(rules_root))})}
 
 
 def prepare_historical_lodging_year_case(*, repo_root: Path, company_id: str,
-                                         metric_id: str, fiscal_year: int):
+                                         metric_id: str, fiscal_year: int, rules_root=None):
     """Existing fiscal-year selection and calculation for the public updater.
 
     The updater owns storage, recovery and unchanged-input reuse. This adapter
@@ -181,14 +182,15 @@ def prepare_historical_lodging_year_case(*, repo_root: Path, company_id: str,
     same lodging case; it never chooses the latest filing or acquires a source.
     """
     from .normal_period_selection import resolve_period_selection
+    rules = ROOT if rules_root is None else Path(rules_root)
     selection = resolve_period_selection(repo_root=repo_root, company_id=company_id,
-                                         fiscal_year=fiscal_year)
+                                         fiscal_year=fiscal_year, rules_root=rules)
     return prepare_historical_lodging_case(repo_root=repo_root, company_id=company_id,
-        metric_id=metric_id, period_selection=selection)
+        metric_id=metric_id, period_selection=selection, rules_root=rules)
 
 
 def _resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metric_id: str,
-                                       period_selection):
+                                       period_selection, rules_root=None):
     """Resolve B10 or B11 for the period the selection pins.
 
     Args:
@@ -210,16 +212,17 @@ def _resolve_historical_lodging_metric(*, repo_root: Path, company_id: str, metr
     _need(metric_id in SPEC_PATHS,
           "HISTORICAL_LODGING_METRIC_NOT_WIRED:" + metric_id, "IMPLEMENTATION_GAP")
     root = Path(repo_root)
-    installed_policy = resolve_repository_file(repo_root=root, repo_relative_path=POLICY_PATH)
+    rules = root if rules_root is None else Path(rules_root)
+    installed_policy = resolve_repository_file(repo_root=rules, repo_relative_path=POLICY_PATH)
     _need(installed_policy.read_bytes() == (ROOT / POLICY_PATH).read_bytes(),
           "HISTORICAL_LODGING_INSTALLED_POLICY_CHANGED", "AUTHORITY_CONFLICT")
     ledger = sha256_file(path=root / "evidence/requests_log.csv")
-    spec = _spec(root, metric_id)
+    spec = _spec(rules, metric_id)
     prepared = prepare_historical_annual_input(repo_root=root, company_id=company_id,
-                                               period_selection=period_selection)
+                                               period_selection=period_selection, rules_root=rules_root)
     table_input = prepared["table_input"]
     period = table_input["target_period"]
-    traits = repository_company_traits(repo_root=root, company_id=company_id)
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     # The same three reads the ordinary route makes, so the Run carries the
     # inventory and the company facts the selection rests on and not only the
     # one document the value came out of.

@@ -1,0 +1,72 @@
+{
+  "elapsed_seconds": 14.738236250123009,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261006T233601Z-b1f84a69",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B10",
+    "B11"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B10",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "e3ae8721d3a74b2783c6fee4ff15ecd1",
+      "version": "bbc8659db0134086be4279f680056863",
+      "result_id": "sha256:99aa23eb1fa7ca190a86c64b492d7b0e7c43735c7b5ab0b31ee9fda736be4edf",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1/state/updates/B10/results/bbc8659db0134086be4279f680056863",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:99aa23eb1fa7ca190a86c64b492d7b0e7c43735c7b5ab0b31ee9fda736be4edf",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1/state/updates/B10/results/bbc8659db0134086be4279f680056863",
+      "program_version": {
+        "commit": "7abd4606032613ab642dd0cb952dcacc4a0c43ab",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B11",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "f7b899a3befb49f7b4f81cd97a5dc713",
+      "version": "7d9bced405624fcea5282ca40ac5cdf1",
+      "result_id": "sha256:ae7ab493bc2adb1bc0546d4ec10b2f9510edf0b4d014f50083eaeb8a9c130ee6",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1/state/updates/B11/results/7d9bced405624fcea5282ca40ac5cdf1",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:ae7ab493bc2adb1bc0546d4ec10b2f9510edf0b4d014f50083eaeb8a9c130ee6",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1/state/updates/B11/results/7d9bced405624fcea5282ca40ac5cdf1",
+      "program_version": {
+        "commit": "7abd4606032613ab642dd0cb952dcacc4a0c43ab",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-rule-root-20261007-1/outputs/20261006T233601Z-b1f84a69",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

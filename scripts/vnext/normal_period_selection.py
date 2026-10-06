@@ -59,12 +59,23 @@ def _report_end(value):
     return value
 
 
-def _derive(*, repo_root, company_id, report_end, requested_fiscal_year):
-    """Build the selection body from the complete saved annual catalog."""
-    policy = _policy(repo_root)
+def _selected_company(repo_root, company_id, rules_root):
+    """Check the source package describes the program's selected company."""
     companies = [c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id]
     _need(len(companies) == 1, "ORDINARY_PERIOD_SELECTION_COMPANY_NOT_UNIQUE", "IMPLEMENTATION_GAP")
     company = companies[0]
+    if rules_root is not None:
+        rules = [c for c in _registry_rows(repo_root=Path(rules_root))
+                 if c["company_id"] == company_id]
+        _need(len(rules) == 1 and company == rules[0],
+              "ORDINARY_PERIOD_SELECTION_SOURCE_SUBJECT_REGISTRY_CHANGED")
+    return company
+
+
+def _derive(*, repo_root, company_id, report_end, requested_fiscal_year, rules_root=None):
+    """Build the selection body from the complete saved annual catalog."""
+    policy = _policy(repo_root if rules_root is None else Path(rules_root))
+    company = _selected_company(repo_root, company_id, rules_root)
     subject_policy = _subject_policy(company)
     cik = company["primary_cik"]
     try:
@@ -201,7 +212,7 @@ def _predecessor_period(*, repo_root, company, report_end, primary_periods,
 
 
 def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=None,
-                             fiscal_year=None):
+                             fiscal_year=None, rules_root=None):
     """Return the verified selection for one requested historical period.
 
     Exactly one of ``report_end`` (an SEC annual report end date) and
@@ -214,9 +225,11 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
           "ORDINARY_PERIOD_SELECTION_EXACTLY_ONE_REQUEST_REQUIRED", "IMPLEMENTATION_GAP")
     if report_end is not None:
         return _derive(repo_root=repo_root, company_id=company_id,
-                       report_end=_report_end(report_end), requested_fiscal_year=None)
+                       report_end=_report_end(report_end), requested_fiscal_year=None,
+                       rules_root=rules_root)
     _need(type(fiscal_year) is int and 1900 <= fiscal_year <= 9998,
           "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_INVALID", "IMPLEMENTATION_GAP")
+    company = _selected_company(repo_root, company_id, rules_root)
     try:
         # A report end can only carry this label if it falls in the label's own
         # year or the next one, so the catalog is loaded down to that boundary.
@@ -236,10 +249,8 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
     # A registered predecessor's periods are candidates on the same terms as in
     # _derive: only older than the primary's oldest annual report, and read
     # from that registrant's own catalog. _derive then re-proves the choice.
-    companies = [c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id]
-    _need(len(companies) == 1, "ORDINARY_PERIOD_SELECTION_COMPANY_NOT_UNIQUE", "IMPLEMENTATION_GAP")
     oldest = primary_periods[-1]["report_date"] if primary_periods else None
-    for predecessor in _subject_policy(companies[0]).get("related_predecessor_ciks", ()):
+    for predecessor in _subject_policy(company).get("related_predecessor_ciks", ()):
         try:
             earlier = load_history_for_period(repo_root=repo_root, company_id=company_id,
                                               report_end=str(fiscal_year) + "-01-01",
@@ -258,7 +269,7 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
     for period in candidates:
         try:
             observed = issuer_fiscal_year(repo_root=repo_root, company_id=company_id,
-                                          report_end=period["report_date"])
+                                          report_end=period["report_date"], rules_root=rules_root)
         except (NormalAnnualInputError, ValueError) as error:
             category = getattr(error, 'category', None)
             if str(error) == 'ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED':
@@ -289,11 +300,11 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
     _need(len(matched) == 1, "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_MISSING_OR_AMBIGUOUS",
           "SOURCE_UNAVAILABLE" if not matched else "SOURCE_INTEGRITY_ERROR")
     return _derive(repo_root=repo_root, company_id=company_id, report_end=matched[0],
-                   requested_fiscal_year=fiscal_year)
+                   requested_fiscal_year=fiscal_year, rules_root=rules_root)
 
 
 def restore_period_selection(*, repo_root: Path, company_id: str, target_report_end: str,
-                             requested_fiscal_year=None):
+                             requested_fiscal_year=None, rules_root=None):
     """Rebuild a selection that was already resolved, from its own recorded request.
 
     A replay restores the request that was installed, not a fresh one. A period
@@ -316,10 +327,10 @@ def restore_period_selection(*, repo_root: Path, company_id: str, target_report_
           "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_INVALID", "IMPLEMENTATION_GAP")
     return _derive(repo_root=repo_root, company_id=company_id,
                    report_end=_report_end(target_report_end),
-                   requested_fiscal_year=requested_fiscal_year)
+                   requested_fiscal_year=requested_fiscal_year, rules_root=rules_root)
 
 
-def issuer_fiscal_year(*, repo_root: Path, company_id: str, report_end: str):
+def issuer_fiscal_year(*, repo_root: Path, company_id: str, report_end: str, rules_root=None):
     """Resolve one selected period's issuer fiscal-year label from its own source.
 
     The label comes from the unchanged fiscal-label policy reading that filing's
@@ -330,13 +341,14 @@ def issuer_fiscal_year(*, repo_root: Path, company_id: str, report_end: str):
     # Imported here because the historical input layer consumes this module.
     from .historical_annual_input import prepare_historical_annual_input
     selection = _derive(repo_root=repo_root, company_id=company_id,
-                        report_end=_report_end(report_end), requested_fiscal_year=None)
+                        report_end=_report_end(report_end), requested_fiscal_year=None,
+                        rules_root=rules_root)
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
-                                               period_selection=selection)
+                                               period_selection=selection, rules_root=rules_root)
     return prepared["table_input"]["target_period"]["fiscal_year"]
 
 
-def selected_historical_filing(*, repo_root: Path, company, submissions, period_selection):
+def selected_historical_filing(*, repo_root: Path, company, submissions, period_selection, rules_root=None):
     """Re-derive a pinned selection from source and return the filing set.
 
     The returned shape is exactly what the unchanged latest-period selector
@@ -358,7 +370,8 @@ def selected_historical_filing(*, repo_root: Path, company, submissions, period_
           "SUBMISSIONS_ENTITY_CONFLICT")
     rebuilt = _derive(repo_root=repo_root, company_id=company["company_id"],
                       report_end=_report_end(period_selection.get("target_report_end")),
-                      requested_fiscal_year=period_selection.get("requested_fiscal_year"))
+                      requested_fiscal_year=period_selection.get("requested_fiscal_year"),
+                      rules_root=rules_root)
     _need(rebuilt == period_selection
           and content_hash(value={k: v for k, v in rebuilt.items() if k != "selection_id"})
           == rebuilt["selection_id"],
