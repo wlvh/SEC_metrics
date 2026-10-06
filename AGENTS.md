@@ -1,10 +1,16 @@
 # SEC_metrics Agent 工作入口
 
-## 公司级边界工作（#54）
+## 2026-10-06 当前开发入口
 
-[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54主实现公司交接，#28/#47各自维护并验证消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。
+按 [Issue #28：受信任内部工具](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006) 与 [运行／测试减负队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification) 接续。它们替代冲突的 COLLAB v1.1—v1.3、默认堆在同一大PR、exact-head／clean-tree及旧防伪前置；业务口径、原件、已用调用／预算与合并、发布权限不变。新增公共改动从实际main短分支、小Draft PR交付，使用保存来源做受影响业务验证，不重跑无关长链。
 
-## 0. 按任务选择阅读路径
+#54／PR57已交付公司pipeline；#28负责公共runtime、CLI、状态／结果读取、测试及当期集成，#47负责历史接入和既有C02/D02共用核心。OpenShift部署和内网AI接线仍另期。后文旧快照、资格／发布及候选现场说明仅供历史运行查询，不是新开发命令；本文件不复制Issue全文。C02待审公司出口在旧分支已实现、待main接收、业务未接受，不作为R1前置。
+
+## 已交付公司入口（#54／PR57）
+
+[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 已完成本期获取—计算分离与公司独立处理；运行说明见 `docs/company_compute_boundary.md`、`docs/company_local_run.md`。维护职责按上方当前入口；历史材料保留在 `docs/evidence/issue54_company/`。
+
+## 0. 资料导航（旧运行说明按原版本读取）
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。
 
@@ -51,13 +57,13 @@ architecture.md
 
 需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
 
-当前 Issue #28 工程按[实时第3节唯一队列](https://github.com/wlvh/SEC_metrics/issues/28)接续，跨路线协作以 [COLLAB-28-47-v1.2](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1) 和 [第5.8节开发方法](https://github.com/wlvh/SEC_metrics/issues/28#ai-development-20261003)为准，不将下面历史阶段的局部停点当成当前总委托。与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 按 COMPANY-SEPARATION-v2.1 交接固定来源/程序/处理输入，预算和业务信用各自保留。
+当前工程按上方2026-10-06入口和唯一队列执行。历史基础候选工作树 `task/issue28-foundation-main-candidate` 已经由PR56接入main；其验证与局限见 `docs/evidence/issue28_foundation_integration_20261004/README.md`，不再指定当前工作区或新PR现场。
 
-本工作树 `task/issue28-foundation-main-candidate` 是 main 基础接收的隔离候选；固定范围、实际验证及剩余兼容缺口见 `docs/evidence/issue28_foundation_integration_20261004/README.md`。PR43 原业务现场由其原执行记录接续，不修改其他执行者工作树、账本或未提交状态。阶段接收不等于全部业务验收，不授 Merge、Ready、正式采纳、部署或 active 切换。
+### 历史 successor vNext Ratchet 查询
 
-### 开发、复核 successor vNext Ratchet
+以下是旧阶段的原执行说明，仅用于解释／读取保存版本；新开发不按其资格或防伪要求启动。
 
-当前 PR32 的正常 R4 接线首先读取 `requirements/issue_28_v3/` 与
+当时 PR32 的正常 R4 接线首先读取 `requirements/issue_28_v3/` 与
 `docs/r4_minimal_fix/README.md`。标签政策已获 owner 批准；exact-head
 激活、implementation merge、新 live plan/grant 仍按既有顺序独立完成。
 旧 v2 快照、engine 与证书目录只按原规则解释，不改历史失败。
@@ -241,7 +247,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 测试文件和 fixture 的职责统一由 `TESTING.md` 管理，不在此逐项复制。新增、删除或改变上述核心文件职责时，必须同步更新本节。
 
-## 2. 权威边界
+## 2. 历史验收边界（新开发规则见顶部）
 
 - 架构事实以代码、配置、测试和 `architecture.md` 为准。
 - 指标业务口径以 `02_指标定义_SEC_10公司单年指标.md` 和实现/validation 为准。
@@ -254,7 +260,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - 生成报告和 CSV 是当前代码与输入的 snapshot，不替代源代码、契约、provenance sidecar 或独立 gate。
 - vNext 实现能力以 FSD、immutable R2、R3 Addendum、effective Decision、catalog、代码与测试为准；当前运行状态只由 qualification/live/staging/publication/full receipts 和 active pointer 证明。没有 active pointer 时，现有 root 结果入口不因代码已实现而自动切换。
 
-### Source provenance 与当前 checkout
+### 旧运行 source provenance 与其 checkout
 
 `manifest.source_commit` 是运行时观察值，不应被孤立解释：
 
@@ -275,7 +281,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 8. 修改测试、fixture、测试副作用或推荐顺序时更新 `TESTING.md`。
 9. `PR_BODY.md` 是被忽略的本地发布草稿，只在用户明确要求 PR 时由长期模板生成，永不提交。
 10. 修改生成型 README/report 行为时改 generator 或稳定 post-processor；不得只手工编辑生成文件。
-11. 新增或改变会影响运行/验收的文件，先更新 `config/validation_source_policy.json` 的角色；新增 SOP 权威引用必须由 policy 覆盖并通过 provenance 回归。
+11. 旧正式验收的角色／provenance按保存版本解释；新开发记录来源、程序和配置以排错，按本次实际影响验证，不把旧防伪角色登记作为一般前置。
 
 ## 4. SEC 与数据规则
 

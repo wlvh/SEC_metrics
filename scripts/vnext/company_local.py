@@ -109,7 +109,7 @@ def configure_task(work, company_id, sec_allowance):
 
 def _status_tables(output, company, rows, summary):
     """Unavailable acquisition still yields an explicit full-scope state table."""
-    from .publication import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
+    from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
     from .normal_annual_input import _registry_rows
     display = next(c['display_name'] for c in _registry_rows(repo_root=ROOT) if c['company_id'] == company)
     table = output/'metrics_matrix.csv'

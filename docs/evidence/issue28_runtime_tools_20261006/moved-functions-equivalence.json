@@ -1,0 +1,47 @@
+{
+  "original_main": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "source_symbols": {
+    "publication.py": [
+      "EVIDENCE_FIELDS",
+      "METRIC_FIELDS",
+      "PublicationError",
+      "_csv_bytes"
+    ],
+    "zero_ai_r2.py": [
+      "_compiled_deterministic_spec",
+      "_load_deterministic_catalog",
+      "_validate_deterministic_branch",
+      "_validate_deterministic_component"
+    ],
+    "annual_update.py": [
+      "AnnualUpdateError",
+      "_require",
+      "_rows",
+      "_utc",
+      "saved_source"
+    ]
+  },
+  "destination_symbols": {
+    "csv_output.py": [
+      "EVIDENCE_FIELDS",
+      "METRIC_FIELDS",
+      "PublicationError",
+      "_csv_bytes"
+    ],
+    "deterministic_catalog.py": [
+      "_compiled_deterministic_spec",
+      "_load_deterministic_catalog",
+      "_validate_deterministic_branch",
+      "_validate_deterministic_component"
+    ],
+    "annual_sources.py": [
+      "AnnualUpdateError",
+      "_require",
+      "_rows",
+      "_utc",
+      "saved_source"
+    ]
+  },
+  "function_bodies_and_field_values_ast_identical": true,
+  "grants_no_business_result_credit": true
+}

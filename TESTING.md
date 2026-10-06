@@ -1,6 +1,6 @@
 # SEC_metrics 测试与验证流程
 
-本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。真实SEC首次＋重复运行尚待许可，不把录制准入换成LIVE。
+本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。#54已按其单独授权完成真实Marriott首跑／复跑，见 `docs/evidence/issue54_company/live-marriott/`、`live2/`。这证明代码路径的既有执行，不授新调用、不等于全部业务结果接受或OpenShift验收。新开发采用#28三层测试与受影响验证，旧资格／反篡改测试不作为已退出新路径的必过集合。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
 公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。

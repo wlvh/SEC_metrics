@@ -10,7 +10,7 @@ from datetime import date,timedelta
 import re
 
 from sec_urls import submissions_url,submissions_file_url,companyfacts_url,accession_document_url,accession_directory_url,hdr_sgml_url
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError
 from .canonical import CanonicalError,content_hash,sha256_file,strict_json_loads
 from .normal_annual_input import _registry_rows,select_filing,annual_period,NormalAnnualInputError

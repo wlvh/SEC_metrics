@@ -13,7 +13,7 @@ from sec_http import (SecHttpClient,parse_request_log_rows,request_log_prefix_by
                       validate_request_log_manifest,request_log_attempt_id)
 from sec_urls import submissions_url,companyfacts_url
 from git_workspace import first_symlink_in_path
-from .annual_update import saved_source
+from .annual_sources import saved_source
 from .batch_workflow import validate_request_attempt_binding
 from .canonical import content_hash,sha256_file,strict_json_file,canonical_json_bytes
 from .normal_annual_input import _registry_rows,prepare_saved_annual_input

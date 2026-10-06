@@ -9,7 +9,7 @@ from decimal import DecimalException
 from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url, submissions_file_url
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError
 from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
@@ -27,7 +27,7 @@ from .sources import resolve_repository_file, SourceError
 from .traits import repository_company_traits
 from .zero_ai_r2 import (_load_deterministic_catalog, _compiled_deterministic_spec,
     _deterministic_metric_graph, _manual_result_trace, _exact_filing_source_set)
-from .zero_ai_release import ZeroAiReleaseError
+from .deterministic_catalog import ZeroAiReleaseError
 
 
 CATALOG_PATH = "catalog/deterministic_metrics.json"

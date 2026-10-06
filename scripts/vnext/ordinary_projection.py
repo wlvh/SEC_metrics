@@ -7,7 +7,7 @@ fact rather than presenting the computed ratio as a verbatim source amount.
 import json
 from pathlib import Path
 
-from . import projector, publication
+from . import projector, csv_output
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
 from .normal_annual_input_v2 import prepare_saved_annual_input
@@ -115,7 +115,7 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
                       'ORDINARY_A05_SELECTED_BRANCH_CHANGED')
                 projection = {**projection, 'formula': A05_FORMULA_TEXT}
     view = {"compiled":{"name":item["name"] or spec["compiled"]["name"],"reported_unit":spec["compiled"]["reported_unit"],"legacy_projection":projection}}
-    baseline = {key:"" for key in publication.METRIC_FIELDS}
+    baseline = {key:"" for key in csv_output.METRIC_FIELDS}
     baseline.update(company=company["display_name"],cik=company["primary_cik"],metric_id=metric,
         metric_name=view["compiled"]["name"],unit=projection["unit"],status=result["quality"],
         source_class=projection["source_class"],formula=projection.get("formula",""),
@@ -128,7 +128,7 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
             period_start=result["period_start"],period_end=result["period_end"],fiscal_year=str(period["fiscal_year"]),notes=projection.get("notes",""))
     else:
         row,evidence,_ = projector._project_result(result=result,trace=trace,company=company,spec=view,baseline_row=baseline,
-            indexes=indexes,fiscal_year=str(period["fiscal_year"]),metric_fields=publication.METRIC_FIELDS)
+            indexes=indexes,fiscal_year=str(period["fiscal_year"]),metric_fields=csv_output.METRIC_FIELDS)
     if metric in {'B13', 'D04'} and result['reason_code'] in {
             'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE', 'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE'}:
         from .capacity_run import project_defined_absence
@@ -195,7 +195,7 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
         row["notes"] += " Recorded source refresh test using preexisting SEC content; no new SEC acquisition."
     elif case["admission"].get("real_sec_credit") is True:
         row["notes"] += " Selected source inputs include new SEC acquisition records; each input retains its own acquisition identity."
-    _need(set(row)==set(publication.METRIC_FIELDS) and all(set(e)==set(publication.EVIDENCE_FIELDS) for e in evidence),
+    _need(set(row)==set(csv_output.METRIC_FIELDS) and all(set(e)==set(csv_output.EVIDENCE_FIELDS) for e in evidence),
           "ORDINARY_PUBLIC_ROW_SCHEMA_CHANGED")
     receipt={"record_type":"ORDINARY_INTEGRATED_ROW_RECEIPT","status":"FROZEN_CANDIDATE" if frozen else "VERIFIED_OPEN_PREVIEW",
         "run_id":manifest["run_id"],"run_status":manifest["status"],"result_id":result["result_id"],
@@ -214,8 +214,8 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
                        real_sec_credit=case["admission"]["real_sec_credit"],
                        selected_new_request_attempt_ids=case["admission"]["selected_new_request_attempt_ids"])
     rendered = {"row":row,"evidence":evidence,"receipt":{**receipt,"receipt_id":content_hash(value=receipt)},
-        "files":{"metrics_matrix.csv":publication._csv_bytes(rows=[row],fieldnames=publication.METRIC_FIELDS),
-                 "metric_evidence.csv":publication._csv_bytes(rows=evidence,fieldnames=publication.EVIDENCE_FIELDS)}}
+        "files":{"metrics_matrix.csv":csv_output._csv_bytes(rows=[row],fieldnames=csv_output.METRIC_FIELDS),
+                 "metric_evidence.csv":csv_output._csv_bytes(rows=evidence,fieldnames=csv_output.EVIDENCE_FIELDS)}}
     if _return_replay_context:
         # Same-operation callers can consume the Run/source replay already
         # performed above. A later invocation still starts from disk.
