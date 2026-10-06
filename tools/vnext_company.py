@@ -132,8 +132,9 @@ def main(argv=None):
         from vnext.company_runtime_install import install_runtime
         result = install_runtime(output_root=args.output_root, kind=args.kind)
     elif args.command == 'results' and (args.state_root/'company-task.json').is_file():
-        from vnext.company_current_records import read_current_company
-        result = read_current_company(state_root=args.state_root, company_id=args.company)
+        from vnext.company_result_view import read_company_results
+        result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                     defects_file=args.defects_file)
     else:
         if args.trust_root is None:
             parser.error('Retained native state requires --trust-root and its original runtime')

@@ -90,3 +90,22 @@ See native-parse-before/after.json and shared-parse-tests.log. The tested parent
 abf6d3bc plus listed uncommitted changes is accurately recorded, not labelled
 as execution on the next committed SHA. Shared default parser signatures,
 return type/content and _binding functions stay unchanged.
+
+## Common result reader and subset retention
+
+The existing company_result_view.read_company_results now selects an ordinary
+record adapter only when company-task.json declares the new task. Other native
+states retain their previous behavior. Ordinary reading shares the writer's
+company lock and consumes complete saved records; no source preparation or
+update is run. A later subset execution does not hide another metric's stored
+current result: requested_in_latest_execution distinguishes it. This is a
+format adapter at the common reader, not a competing metric selector.
+
+Actual B02-only reentry with calculation factory set to raise passes
+NO_SOURCE_CONTENT_CHANGE. The common reader, with old native recovery set to
+raise, reads B02 and retained B01 in0.00257s in-process; the earlier0.4474s CLI
+number includes imports and is a different measurement. Final33 targeted tests
+pass3.450s, including the new subset-retention and common-dispatch check.
+No unrelated real-company long chain is rerun. The latest test uses0cd4c3ea
+plus the declared reader/CLI/test difference; a later commit preserves those
+bytes. This does not add historical five-year extraction or acceptance.

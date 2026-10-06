@@ -155,6 +155,21 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(self.rows(result)[0]['value'],'')
         self.assertEqual(json.loads((self.work/'updates/B01/current-result.json').read_text())['version'],'first')
 
+    def test_common_company_reader_keeps_other_metric_after_subset_run(self):
+        from vnext.company_result_view import read_company_results
+        self.run_company()
+        for metric in ('B01','B02'):
+            pointer=self.work/'updates'/metric/'current-result.json'
+            pointer.write_text(json.dumps({'version':'first','company_id':'marriott_international',
+                'metric_id':metric,'result_id':metric+'-result'}))
+        self.run_company(['B02'])
+        with patch('vnext.company_result_view.recover_for_read',side_effect=AssertionError('No old trust')):
+            view=read_company_results(state_root=self.work,company_id='marriott_international',defects_file=self.registry)
+        rows={m['metric_id']:m for m in view['metrics']}
+        self.assertEqual(set(rows),{'B01','B02'})
+        self.assertFalse(rows['B01']['requested_in_latest_execution'])
+        self.assertTrue(rows['B02']['requested_in_latest_execution'])
+
 
 class SavedSourceCompanyEntryTest(unittest.TestCase):
     """One real source/Calculator preparation shared across read/reentry checks."""

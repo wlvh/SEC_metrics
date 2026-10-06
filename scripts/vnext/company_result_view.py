@@ -299,6 +299,9 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
 
 
 def read_company_results(*, state_root, company_id, defects_file=None, runtime_roots=()):
+    if (Path(state_root)/'company-task.json').is_file():
+        from .company_current_records import read_current_company
+        return read_current_company(state_root=state_root, company_id=company_id, defects_file=defects_file)
     from .company_handoff import locked_company, recover_import
     with locked_company(state_root) as root:
         current = recover_for_read(root, runtime_roots)

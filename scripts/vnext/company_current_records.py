@@ -159,17 +159,34 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
         return report
 
 
-def read_current_company(*, state_root, company_id):
+def read_current_company(*, state_root, company_id, defects_file=None):
     """Read ordinary records without parsing sources or running an update."""
     root = Path(state_root).resolve()
+    with (root/'company.lock').open('a+b') as lock:
+        fcntl.flock(lock, fcntl.LOCK_SH)
+        return _read_current_company(root, company_id, defects_file)
+
+
+def _read_current_company(root, company_id, defects_file):
     task = strict_json_file(path=root/'company-task.json')
     _need(task['record_type'] == 'ORDINARY_COMPANY_TASK_V1' and task['company_id'] == company_id,
           'COMPANY_CURRENT_WRONG_TASK')
-    registry = strict_json_file(path=ROOT/'docs/evidence/issue28_continuous/known_result_defects.json')
+    registry = strict_json_file(path=Path(defects_file) if defects_file else
+                               ROOT/'docs/evidence/issue28_continuous/known_result_defects.json')
     report = strict_json_file(path=root/'latest-execution.json')
     _need(report['company_id'] == company_id, 'COMPANY_CURRENT_WRONG_EXECUTION')
+    observations = {m['metric_id']: {**m, 'requested_in_latest_execution': True} for m in report['metrics']}
+    for pointer in sorted((root/'updates').glob('*/current-result.json')):
+        metric = pointer.parent.name
+        if metric not in observations:
+            state = strict_json_file(path=pointer)
+            _need(state['company_id'] == company_id and state['metric_id'] == metric,
+                  'COMPANY_CURRENT_READ_POINTER_COORDINATE_CHANGED')
+            observations[metric] = {'metric_id': metric, 'status': 'NOT_REQUESTED_IN_LATEST_EXECUTION',
+                'record_root': str(pointer.parent/'results'/state['version']),
+                'read_result_id': state['result_id'], 'requested_in_latest_execution': False}
     rows = []
-    for observation in report['metrics']:
+    for observation in observations.values():
         record = observation.get('record_root')
         if record:
             record = Path(record).resolve()
@@ -184,10 +201,12 @@ def read_current_company(*, state_root, company_id):
                 'value': None if holds else result.get('value'), 'unit': None if holds else result.get('unit'),
                 'result_validity': 'CONFIRMED_INVALID' if holds else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED',
                 'defect_holds': holds, 'latest_observation': observation['status'],
+                'requested_in_latest_execution': observation['requested_in_latest_execution'],
                 'record_root': str(record)})
         else:
             rows.append({'metric_id': observation['metric_id'], 'value': None,
-                         'result_validity': 'NO_CURRENT_RESULT', 'latest_observation': observation['status']})
+                         'result_validity': 'NO_CURRENT_RESULT', 'latest_observation': observation['status'],
+                         'requested_in_latest_execution': observation['requested_in_latest_execution']})
     return {'record_type': 'ORDINARY_COMPANY_RESULT_VIEW_V1', 'company_id': company_id,
         'source_root': task['source_root'], 'metrics': rows, 'source_freshness': 'NOT_CHECKED_BY_SAVED_READER',
         'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
