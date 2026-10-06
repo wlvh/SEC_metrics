@@ -137,10 +137,10 @@ def _status_tables(output, company, rows, summary):
         (output/'metric_evidence.csv').write_bytes(_csv_bytes(rows=[], fieldnames=EVIDENCE_FIELDS))
 
 
-def _export_current(program, work, output, company, key, environment, processing):
+def _export_current(program, work, output, company, key, environment, processing, state_root=None):
     """Existing native readback also serves failed acquisition's old results."""
     destination = work/'result-exports'/key
-    args = ['export-results', '--state-root', work/'company-state', '--output-root', destination,
+    args = ['export-results', '--state-root', state_root or work/'company-state', '--output-root', destination,
             '--trust-root', work/'trust/company', '--company', company]
     for runtime in sorted((work/'programs').iterdir()):
         if not runtime.name.startswith('.'):
@@ -150,7 +150,9 @@ def _export_current(program, work, output, company, key, environment, processing
             args.extend(['--runtime-root', absolute(processing[field])])
     if processing.get('trust_root'):
         args.extend(['--processing-trust-root', absolute(processing['trust_root'])])
-    controller = strict_json_file(path=work/'local-company.json').get('preparation_program_root')
+    configuration = work/'local-company.json'
+    controller = (strict_json_file(path=configuration).get('preparation_program_root')
+                  if configuration.exists() and state_root is None else None)
     exported = _invoke(absolute(controller) if controller else program, args,
         report_file=output/'stages/export-results.json', environment=environment)
     if destination.is_dir():
@@ -161,9 +163,16 @@ def _export_current(program, work, output, company, key, environment, processing
 
 
 def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
-              metric_ids=None, max_sec_requests=120, sec_allowance=120):
+              metric_ids=None, max_sec_requests=120, sec_allowance=120,
+              fiscal_year_start=None, fiscal_year_end=None, source_root=None):
     """One finite invocation, not a scheduler or authorization to publish."""
-    need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED: use latest-complete-fy; historical periods retain their separate entry')
+    if period == 'fiscal-years':
+        return _run_history(company_id=company_id, work_dir=work_dir, output_dir=output_dir,
+            metric_ids=metric_ids, fiscal_year_start=fiscal_year_start,
+            fiscal_year_end=fiscal_year_end, source_root=source_root)
+    need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED')
+    need(all(value is None for value in (fiscal_year_start, fiscal_year_end, source_root)),
+         'LOCAL_HISTORY_ARGUMENTS_REQUIRE_FISCAL_YEARS')
     configured = configured_scope(company_id)
     selected = configured if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
@@ -321,5 +330,184 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         summary['elapsed_seconds'] = format(time.monotonic()-start, '.6f')
         _status_tables(output, company_id, rows, summary)
         summary['outputs'] = {name: str(output/name) for name in ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}
+        _atomic_json(output/'run_summary.json', summary)
+    return summary
+
+
+def _history_program(work, company_id):
+    """Pin a historical tree without changing an existing current-year task."""
+    from .company_runtime_install import SUCCESSOR_MODULES, install_runtime
+    from .company_handoff import binding
+    configuration = work/'historical-company.json'
+    if configuration.exists():
+        saved = strict_json_file(path=configuration)
+        program = absolute(saved['program_root'])
+        need(saved['company_id'] == company_id and program.parent == work/'programs'
+             and (program/'requirements/issue_54_v3').is_dir(), 'LOCAL_HISTORY_FIXED_PROGRAM_CHANGED')
+        return program
+    paths = ['tools/vnext_company.py', 'requirements/issue_47_v1/baseline_manifest.json',
+             *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES)]
+    version = 'historical-'+content_hash(value={p: binding(ROOT/p) for p in paths})[7:]
+    program = work/'programs'/version
+    staging = program.with_name('.'+version+'-'+uuid4().hex)
+    install_runtime(output_root=staging, kind='historical')
+    for path in [*staging.rglob('*'), staging]:
+        path.chmod(path.stat().st_mode & ~0o222)
+    os.rename(staging, program)
+    _atomic_json(configuration, {'company_id': company_id, 'program_root': str(program),
+        'requirement_id': 'issue_54_v3', 'new_business_calls': [0, 0, 0]})
+    return program
+
+
+def _history_tables(output, company, outcomes, summary):
+    """Keep a status for every requested coordinate, including unavailable years."""
+    from .publication import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
+    path = output/'metrics_matrix.csv'
+    if path.exists():
+        reader = csv.DictReader(io.StringIO(path.read_text(encoding='utf-8-sig')))
+        fields, rows = reader.fieldnames, list(reader)
+    else:
+        fields, rows = METRIC_FIELDS, []
+    by_end = {(row.get('requested_report_end'), row['metric_id']): row
+              for row in outcomes if row.get('requested_report_end')}
+    covered = set()
+    extras = ('company_id', 'local_run_id', 'local_run_status', 'local_metric_status',
+              'requested_in_local_run', 'requested_fiscal_year', 'local_source_status')
+    for row in rows:
+        match = by_end.get((row.get('period_end'), row['metric_id']))
+        if match:
+            covered.add((match['requested_fiscal_year'], match['metric_id']))
+        row.update(company_id=company, local_run_id=summary['run_id'],
+            local_run_status=summary['status'], requested_in_local_run=bool(match),
+            requested_fiscal_year=match['requested_fiscal_year'] if match else '',
+            local_metric_status=match['status'] if match else 'NOT_REQUESTED',
+            local_source_status=summary.get('source_status', 'SOURCE_PREPARATION_FAILED'))
+    for outcome in outcomes:
+        if (outcome['requested_fiscal_year'], outcome['metric_id']) in covered:
+            continue
+        rows.append({**dict.fromkeys(fields, ''), 'company_id': company,
+            'metric_id': outcome['metric_id'], 'fiscal_year': outcome['requested_fiscal_year'],
+            'period_end': outcome.get('requested_report_end', ''), 'status': outcome['status'],
+            'notes': outcome.get('reason', ''), 'local_run_id': summary['run_id'],
+            'local_run_status': summary['status'], 'local_metric_status': outcome['status'],
+            'requested_in_local_run': True, 'requested_fiscal_year': outcome['requested_fiscal_year'],
+            'local_source_status': summary.get('source_status', 'SOURCE_PREPARATION_FAILED')})
+    fields = (*fields, *(name for name in (*extras, 'fiscal_year', 'period_end', 'notes') if name not in fields))
+    rows = [{**dict.fromkeys(fields, ''), **row} for row in rows]
+    path.write_bytes(_csv_bytes(rows=rows, fieldnames=fields))
+    if not (output/'metric_evidence.csv').exists():
+        (output/'metric_evidence.csv').write_bytes(_csv_bytes(rows=[], fieldnames=EVIDENCE_FIELDS))
+
+
+def _run_history(*, company_id, work_dir, output_dir, metric_ids,
+                 fiscal_year_start, fiscal_year_end, source_root):
+    """The delivered company flow with saved preparation and native history APIs."""
+    from .company_compute import fiscal_year_range
+    years = fiscal_year_range(fiscal_year_start, fiscal_year_end)
+    configured = configured_scope(company_id)
+    selected = configured if metric_ids is None else list(metric_ids)
+    need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
+         'LOCAL_METRIC_SCOPE_INVALID')
+    need(source_root is not None, 'LOCAL_HISTORY_PREPARED_SOURCE_REQUIRED')
+    source = external(absolute(source_root))
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+    need(all(a != b and a not in b.parents and b not in a.parents
+             for a, b in ((work, outputs), (source, work), (source, outputs))),
+         'LOCAL_HISTORY_PATH_OVERLAP')
+    from .normal_run_v3 import update_metric_ids
+    supported = [metric for metric in selected if metric in update_metric_ids()]
+    key = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid4().hex[:8]
+    output = outputs/key
+    output.mkdir(parents=True)
+    started = time.monotonic()
+    summary = {'record_type': 'LOCAL_COMPANY_HISTORICAL_RUN_SUMMARY_V1',
+        'company_id': company_id, 'run_id': key, 'period_request': 'fiscal-years',
+        'fiscal_year_start': fiscal_year_start, 'fiscal_year_end': fiscal_year_end,
+        'selected_metrics': selected, 'configured_metrics': configured,
+        'output_root': str(output), 'preparation_program_root': str(ROOT),
+        'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False,
+        'stages': {}, 'source_root': str(source), 'source_status': 'SAVED_SOURCE_NOT_YET_VERIFIED'}
+    outcomes = {(year, metric): {'requested_fiscal_year': year, 'metric_id': metric,
+        'status': 'SOURCE_INPUT_REQUIRED', 'business_metric_completed': False}
+        for year in years for metric in selected}
+    for (year, metric), row in outcomes.items():
+        if metric not in supported:
+            row.update(status='IMPLEMENTATION_GAP', owner_issue=28,
+                       reason='No company handoff/complete native entry for this metric')
+    with locked_company(work):
+        program = None
+        state = work/'historical-company-state'
+        environment = {'SEC_METRICS_SOURCE_TRUST_ROOT': str(work/'trust/company')}
+        try:
+            program = _history_program(work, company_id)
+            summary['program_root'] = str(program)
+            package = work/'handoffs'/key
+            args = ['export', '--source-root', source, '--output-root', package,
+                    '--trust-root', work/'trust/company', '--company', company_id, '--history-years', 5]
+            for metric in supported:
+                args.extend(['--metric', metric])
+            need(bool(supported), 'LOCAL_HISTORY_METRIC_IMPLEMENTATION_REQUIRED')
+            handoff = _invoke(ROOT, args, report_file=output/'stages/handoff.json', environment=environment)
+            summary['stages']['handoff'] = handoff
+            need(handoff['returncode'] == 0, 'LOCAL_HISTORY_SOURCE_HANDOFF_FAILED')
+            summary['source_status'] = 'SAVED_SOURCE_VERIFIED'
+            installed = _invoke(program, ['install', '--package-root', package, '--state-root', state,
+                '--trust-root', work/'trust/company', '--company', company_id],
+                report_file=output/'stages/install.json', environment=environment)
+            summary['stages']['install'] = installed
+            need(installed['returncode'] == 0, 'LOCAL_HISTORY_SOURCE_INSTALL_FAILED')
+            args = ['compute-range', '--state-root', state, '--trust-root', work/'trust/company',
+                    '--company', company_id, '--fiscal-year-start', fiscal_year_start,
+                    '--fiscal-year-end', fiscal_year_end]
+            for metric in supported:
+                args.extend(['--metric', metric])
+            compute = _invoke(program, args, report_file=output/'stages/compute.json',
+                environment={**environment, 'COMPANY_DENY_READ_ROOTS': os.pathsep.join(
+                    map(str, (ROOT/'evidence', source)))})
+            summary['stages']['compute'] = compute
+            executed = compute['result']
+            summary['periods'] = executed.get('periods', [])
+            for row in executed.get('metrics', []):
+                outcomes[(row['requested_fiscal_year'], row['metric_id'])] = row
+            need(bool(executed.get('metrics')), 'LOCAL_HISTORY_RANGE_COMPUTE_FAILED')
+            exported, destination = _export_current(ROOT, work, output, company_id, key,
+                environment, {}, state_root=state)
+            summary['stages']['export-results'] = exported
+            need(destination.is_dir(), 'LOCAL_HISTORY_RESULT_EXPORT_FAILED')
+            view = strict_json_file(path=destination/'company-results.json')
+            summary['source_checkpoint_id'] = view['source_checkpoint_id']
+            summary['result_view'] = [{k: row.get(k) for k in ('metric_id', 'run_id', 'result_id',
+                'period', 'requirement_id', 'requirement_closure_hash', 'replay_status',
+                'result_validity', 'current_input_matches')} for row in view.get('metrics', [])]
+        except Exception as error:
+            summary['failure'] = {'reason': str(error), 'error_type': type(error).__name__}
+            for row in outcomes.values():
+                if row['status'] == 'SOURCE_INPUT_REQUIRED':
+                    row['reason'] = str(error)
+            if program is not None and (state/'current_source.json').exists():
+                try:
+                    preserved, _ = _export_current(ROOT, work, output, company_id, key+'-preserved',
+                        environment, {}, state_root=state)
+                    summary['stages']['preserved-results'] = preserved
+                except Exception as read_error:
+                    summary['preserved_result_error'] = str(read_error)
+        summary['flow_completed'] = not summary.get('failure') and (output/'company-results.json').is_file()
+        limited = any(row['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
+                      for row in outcomes.values())
+        limited |= any(row.get('replay_status') == 'FAILED' or row.get('result_validity') in
+                       {'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED'}
+                       for row in summary.get('result_view', []))
+        summary['status'] = ('FLOW_COMPLETED_WITH_LIMITATIONS' if limited else 'FLOW_COMPLETED') \
+            if summary['flow_completed'] else 'FLOW_INCOMPLETE'
+        summary['all_configured_business_metrics_completed'] = False
+        summary['metrics'] = [{k: v for k, v in row.items() if k != 'last_verified_candidate'}
+                              for row in outcomes.values()]
+        for name, stage in summary['stages'].items():
+            summary['stages'][name] = {k: stage.get(k) for k in
+                                      ('returncode', 'elapsed_seconds', 'command', 'report_file')}
+        summary['elapsed_seconds'] = format(time.monotonic()-started, '.6f')
+        _history_tables(output, company_id, list(outcomes.values()), summary)
+        summary['outputs'] = {name: str(output/name) for name in
+                             ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}
         _atomic_json(output/'run_summary.json', summary)
     return summary

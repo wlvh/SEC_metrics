@@ -164,7 +164,8 @@ def export_company(*, source_root, output_root, trust_root, company_id,
     rows = parse_request_log_rows(text=(source/'evidence/requests_log.csv').read_text())
     paths = {'config/company_registry.csv', 'evidence/requests_log.csv',
              'evidence/requests_log_manifest.json'}
-    urls, paths = c02_consumer_dependencies(source, company_id, metrics, urls, paths)
+    if declared_frame is None:
+        urls, paths = c02_consumer_dependencies(source, company_id, metrics, urls, paths)
     for row in rows:
         if row['source_url'] in urls:
             paths.update(row[field] for field in ('repo_relative_path', 'headers_repo_relative_path')

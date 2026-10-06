@@ -17,7 +17,10 @@ def main(argv=None):
     sub = parser.add_subparsers(dest='command', required=True)
     run = sub.add_parser('run', help='Discover SEC sources, compute and export one configured company')
     run.add_argument('--company', required=True)
-    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy'])
+    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy', 'fiscal-years'])
+    run.add_argument('--fiscal-year-start', type=int)
+    run.add_argument('--fiscal-year-end', type=int)
+    run.add_argument('--source-root', type=Path, help='Prepared authenticated saved SEC history; historical mode never fetches')
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
     run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
@@ -64,6 +67,13 @@ def main(argv=None):
     period = compute.add_mutually_exclusive_group()
     period.add_argument('--report-end')
     period.add_argument('--fiscal-year', type=int)
+    compute_range = sub.add_parser('compute-range', help='Compute one issuer fiscal-year range from one installed source version')
+    compute_range.add_argument('--state-root', required=True, type=Path)
+    compute_range.add_argument('--trust-root', required=True, type=Path)
+    compute_range.add_argument('--company', required=True)
+    compute_range.add_argument('--metric', required=True, action='append')
+    compute_range.add_argument('--fiscal-year-start', required=True, type=int)
+    compute_range.add_argument('--fiscal-year-end', required=True, type=int)
     results = sub.add_parser('export-results', help='Export native rows, evidence and replay inputs')
     results.add_argument('--state-root', required=True, type=Path)
     results.add_argument('--output-root', required=True, type=Path)
@@ -84,9 +94,13 @@ def main(argv=None):
     start = time.monotonic()
     if args.command == 'run':
         from vnext.company_local import run_local
+        if args.period == 'latest-complete-fy' and any(value is not None for value in (
+                args.fiscal_year_start, args.fiscal_year_end, args.source_root)):
+            parser.error('Historical range/source arguments require --period fiscal-years')
         result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
             period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-            sec_allowance=args.sec_allowance)
+            sec_allowance=args.sec_allowance, fiscal_year_start=args.fiscal_year_start,
+            fiscal_year_end=args.fiscal_year_end, source_root=args.source_root)
     elif args.command == 'acquire':
         from vnext.company_local import absolute, configure_task, configured_scope, _invoke
         from vnext.company_handoff import external, locked_company
@@ -139,6 +153,13 @@ def main(argv=None):
             from vnext.company_handoff import install_company
             result = install_company(package_root=args.package_root, state_root=args.state_root,
                                      company_id=args.company)
+        elif args.command == 'compute-range':
+            from vnext.company_worker_guard import install_worker_guards
+            install_worker_guards(ROOT)
+            from vnext.company_compute import compute_company_range
+            result = compute_company_range(state_root=args.state_root, company_id=args.company,
+                metric_ids=args.metric, fiscal_year_start=args.fiscal_year_start,
+                fiscal_year_end=args.fiscal_year_end)
         elif args.command == 'compute':
             if (ROOT/'requirements/issue_54_v4').is_dir():
                 from vnext.company_worker_guard import install_worker_guards
@@ -166,7 +187,7 @@ def main(argv=None):
         return 0 if result['status'] == 'FLOW_COMPLETED' else 2
     if args.command == 'acquire':
         return 0 if result.get('status') == 'SOURCES_READY' else 2
-    if args.command == 'compute':
+    if args.command in {'compute', 'compute-range'}:
         return 0 if all(m['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                         for m in result['metrics']) else 2
     return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0

@@ -31,6 +31,11 @@ jobs:
         # Keep each selected case's existing 30-second limit, with two workers.
         run: python3 tools/run_fast_tests_v2.py --jobs 2
 
+      - name: Verify delivered company entry and historical range consumers
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tests/required_unittests.py tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local tests.vnext.test_company_historical_range
+
   source_material_parts:
     name: vNext saved-source material (shard ${{ matrix.shard_index }})
     runs-on: ubuntu-latest
