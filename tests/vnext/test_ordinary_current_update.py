@@ -130,4 +130,53 @@ class CurrentProcessingConfigurationTest(unittest.TestCase):
         self.assertNotEqual(before['processing_files'].get('scripts/vnext/deterministic_router.py'),
                             after['processing_files'].get('scripts/vnext/deterministic_router.py'))
 
+
+class SelectedPeriodUpdateTest(unittest.TestCase):
+    setUp = CurrentUpdateTest.setUp
+
+    def factory(self, *,repo_root,company_id,metric_id,fiscal_year):
+        self.factory_calls=getattr(self,'factory_calls',0)+1
+        return {'target_period':{'fiscal_year':fiscal_year}}
+
+    def selected(self,year,factory=None):
+        def save(**kwargs):
+            y=kwargs['case']['target_period']['fiscal_year'];path=kwargs['output_root'];path.mkdir(parents=True)
+            value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[self.proof]},
+                'result':{'company_id':'marriott_international','metric_id':'B01','publication':'PUBLISHED',
+                          'period_end':str(y)+'-12-31','result_id':'result-'+str(y)}}
+            self.records[str(path)]=value
+            return value
+        with patch.object(update,'save_calculated_case',side_effect=save):
+            return update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
+                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory)
+
+    def test_two_selected_periods_have_separate_pointers_and_current_layout_stays(self):
+        first=self.selected(2024);second=self.selected(2025)
+        self.assertEqual(first['status'],'CANDIDATE_READY');self.assertEqual(second['status'],'CANDIDATE_READY')
+        for year in (2024,2025):
+            self.assertEqual(json.loads((self.root/'periods'/('FY'+str(year))/'current-result.json').read_text())['requested_fiscal_year'],year)
+        self.assertFalse((self.root/'current-result.json').exists())
+
+    def test_unchanged_selected_period_does_not_invoke_case_factory(self):
+        self.selected(2024)
+        before=self.factory_calls
+        with patch.object(update,'save_calculated_case',side_effect=AssertionError('No recalc')):
+            again=update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
+                metric_id='B01',fiscal_year=2024,case_factory=self.factory)
+        self.assertEqual(again['status'],'NO_SOURCE_CONTENT_CHANGE')
+        self.assertEqual(again['requested_fiscal_year'],2024)
+        self.assertEqual(self.factory_calls,before)
+
+    def test_wrong_selected_year_preserves_previous_pointer(self):
+        self.selected(2024);pointer=self.root/'periods/FY2024/current-result.json';old=pointer.read_bytes()
+        def wrong(**kwargs):return {'target_period':{'fiscal_year':2023}}
+        result=self.selected(2024,factory=wrong)
+        self.assertEqual(result['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertIn('CASE_FISCAL_YEAR_CHANGED',result['reason']);self.assertEqual(pointer.read_bytes(),old)
+
+    def test_selected_period_without_factory_never_selects_latest(self):
+        with self.assertRaisesRegex(ValueError,'REQUIRES_CASE_FACTORY'):
+            update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
+                            metric_id='B01',fiscal_year=2024)
+
 if __name__=='__main__':unittest.main()

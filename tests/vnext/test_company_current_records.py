@@ -29,10 +29,11 @@ class CurrentCompanyTest(unittest.TestCase):
             row = {**{f: '' for f in METRIC_FIELDS}, 'company': 'Marriott International',
                    'metric_id': metric, 'value': '100', 'unit': 'USD', 'status': 'OK',
                    'period_start': '2025-01-01', 'period_end': '2025-12-31', 'fiscal_year': '2025'}
-            self.values[str(record)] = {'result': result, 'files': {
+            self.values[str(record)] = {'result': result, 'manifest':{'target_period':{'fiscal_year':2025}}, 'files': {
                 'metrics_matrix.csv': _csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
                 'metric_evidence.csv': _csv_bytes(rows=[],fieldnames=EVIDENCE_FIELDS)}}
-            (controller/'current-result.json').write_text('{"version":"first"}')
+            (controller/'current-result.json').write_text(json.dumps({'version':'first',
+                'company_id':'marriott_international','metric_id':metric,'result_id':metric+'-result'}))
             self.updates.append(metric)
             return {'status': 'CANDIDATE_READY', 'result_root': str(record)}
         for name, kwargs in [('run_once', {'side_effect': update}),
@@ -146,6 +147,7 @@ class CurrentCompanyTest(unittest.TestCase):
         row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':'B01',
              'status':'WITHHELD','period_start':'2026-01-01','period_end':'2026-12-31','fiscal_year':'2026'}
         self.values[str(record)]={'result':{**old['result'],'period_end':'2026-12-31','result_id':'new-withheld'},
+            'manifest':{'target_period':{'fiscal_year':2026}},
             'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
                      'metric_evidence.csv':old['files']['metric_evidence.csv']}}
         with patch.object(current,'run_once',return_value={'status':'CANDIDATE_WITHHELD','result_root':str(record)}):
@@ -184,6 +186,22 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(rows['B01']['status'],'WITHHELD_KNOWN_DEFECT')
         self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
         self.assertTrue((output/'metric_evidence.csv').exists())
+
+    def test_same_metric_two_period_pointers_are_both_visible(self):
+        import copy
+        self.run_company(['B01'])
+        old=self.work/'updates/B01/results/first'
+        record=self.work/'updates/B01/periods/FY2024/results/first';record.mkdir(parents=True)
+        value=copy.deepcopy(self.values[str(old)])
+        value['result'].update(period_end='2024-12-31',result_id='B01-prior')
+        value['manifest']['target_period']['fiscal_year']=2024
+        self.values[str(record)]=value
+        (record.parent.parent/'current-result.json').write_text(json.dumps({'version':'first',
+            'company_id':'marriott_international','metric_id':'B01','result_id':'B01-prior',
+            'requested_fiscal_year':2024}))
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(len(view['metrics']),2)
+        self.assertEqual({v['result_id'] for v in view['metrics']},{'B01-result','B01-prior'})
 
 
 class SavedSourceCompanyEntryTest(unittest.TestCase):

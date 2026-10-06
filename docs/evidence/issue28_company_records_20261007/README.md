@@ -205,3 +205,33 @@ through actual calculation/save/CSV. Code/source separation of these remaining
 rule reads is not claimed complete. Final73 directed tests5.625s pass after
 source verifier integration; untouched large material/cold runs were not repeated.
 Old request ledgers, original source files and project claim counts stay intact.
+
+## Selected-period controller and common reader seam
+
+Public ordinary_current_update.run_once now accepts optional fiscal_year and
+case_factory. Default current path/layout remains; selected years use the
+existing per-metric state root's periods/FYyyyy namespace, not a separate
+history pipeline. The consumer supplies its existing source selection and
+calculation factory(repo_root,company_id,metric_id,fiscal_year); this library
+checks returned fiscal label and persists through save_calculated_case.
+Producer file/module/name are recorded in processing identity; no clean-tree
+permission or trust approval is introduced. Source/config unchanged skips the
+factory entirely. Wrong year or source error keeps that period's old pointer.
+No arbitrary report-end alias or AI/paid producer is newly authorized.
+
+Common reader scans current and selected-period pointers and keys observations
+by metric/fiscal container, so one metric's two periods do not overwrite each
+other. It normalizes update report result_root/result_id into existing record
+references and retains measurement dates/fiscal label. Same company read/write
+lock and ordinary per-result integrity checks remain. Old native states keep
+the original reader. Small selected-period tests prove two pointers/reuse/no
+factory/latest-fallback/wrong-year failure and dual-period common reading.
+Initial mock pointers omitted real mandatory coordinates; fixtures were made
+consistent with actual state rather than weakening reader checks. Final78
+combined directed tests5.659s pass on the stated working-tree delta.
+
+Actual historical range/selection/CSV consumer integration is #47's next check;
+the parent does not claim that its small fixtures or earlier constructed
+FY2024 case establish the whole history pipeline. The latest-only normal
+company CLI does not silently acquire a five-year expansion. New source
+permissions, quotas and production scope remain unchanged.

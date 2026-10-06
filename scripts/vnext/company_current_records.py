@@ -183,16 +183,30 @@ def _read_current_company(root, company_id, defects_file, output_root):
     registry = _registry(defects_file)
     report = strict_json_file(path=root/'latest-execution.json')
     _need(report['company_id'] == company_id, 'COMPANY_CURRENT_WRONG_EXECUTION')
-    observations = {m['metric_id']: {**m, 'requested_in_latest_execution': True} for m in report['metrics']}
-    for pointer in sorted((root/'updates').glob('*/current-result.json')):
-        metric = pointer.parent.name
-        if metric not in observations:
-            state = strict_json_file(path=pointer)
-            _need(state['company_id'] == company_id and state['metric_id'] == metric,
-                  'COMPANY_CURRENT_READ_POINTER_COORDINATE_CHANGED')
-            observations[metric] = {'metric_id': metric, 'status': 'NOT_REQUESTED_IN_LATEST_EXECUTION',
-                'record_root': str(pointer.parent/'results'/state['version']),
-                'read_result_id': state['result_id'], 'requested_in_latest_execution': False}
+    def normalize(observation):
+        value = dict(observation)
+        value.setdefault('record_root',value.get('result_root'))
+        value.setdefault('read_result_id',value.get('result_id'))
+        return value
+
+    def coordinate(observation):
+        year = observation.get('requested_fiscal_year')
+        path = observation.get('record_root')
+        if path and (Path(path)/'manifest.json').is_file():
+            year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+        return observation['metric_id'],year
+
+    observations = {coordinate(normalize(m)): {**normalize(m), 'requested_in_latest_execution': True}
+                    for m in report['metrics']}
+    for pointer in sorted((root/'updates').glob('**/current-result.json')):
+        state = strict_json_file(path=pointer)
+        metric = state['metric_id']
+        _need(state['company_id'] == company_id, 'COMPANY_CURRENT_READ_POINTER_COORDINATE_CHANGED')
+        stored = {'metric_id': metric, 'status': 'NOT_REQUESTED_IN_LATEST_EXECUTION',
+            'record_root': str(pointer.parent/'results'/state['version']), 'read_result_id': state['result_id'],
+            'requested_fiscal_year':state.get('requested_fiscal_year'), 'requested_in_latest_execution': False}
+        key = coordinate(stored)
+        if key not in observations:observations[key] = stored
     rows, matrix, evidence = [], [], []
     shared_record_cache = {}
     for observation in observations.values():
@@ -208,6 +222,7 @@ def _read_current_company(root, company_id, defects_file, output_root):
             scope_ready = result['metric_id'] in CURRENT_METRICS
             rows.append({'metric_id': result['metric_id'], 'result_id': result['result_id'],
                 'period_start': result.get('period_start'), 'period_end': result['period_end'],
+                'fiscal_year':saved['manifest']['target_period']['fiscal_year'],
                 'value': None if holds or not scope_ready else result.get('value'),
                 'unit': None if holds or not scope_ready else result.get('unit'),
                 'result_validity': ('CONFIRMED_INVALID' if holds else 'CURRENT_SCOPE_NOT_READY' if not scope_ready

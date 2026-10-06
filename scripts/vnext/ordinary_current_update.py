@@ -8,12 +8,13 @@ import json
 from pathlib import Path
 from uuid import uuid4
 import re
+import inspect
 from urllib.parse import urlsplit
 
 from .annual_sources import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, create_saved_result, read_saved_result
+from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, create_saved_result, read_saved_result, save_calculated_case
 from .traits import repository_company_ciks
 
 
@@ -108,10 +109,17 @@ def _recover(root):
     return current
 
 
-def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None):
+def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
+             fiscal_year=None, case_factory=None):
     """One current deterministic update; identical raw input never calculates."""
     _need(metric_id in SAVED_METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
+    _need(fiscal_year is None or type(fiscal_year) is int and 1900<=fiscal_year<=9998,
+          'CURRENT_UPDATE_REQUESTED_FISCAL_YEAR_INVALID')
+    _need(fiscal_year is None or callable(case_factory), 'CURRENT_UPDATE_SELECTED_PERIOD_REQUIRES_CASE_FACTORY')
+    _need(fiscal_year is not None or case_factory is None, 'CURRENT_UPDATE_CASE_FACTORY_REQUIRES_FISCAL_YEAR')
     root,source = Path(state_root).resolve(),Path(source_root).resolve()
+    if fiscal_year is not None:
+        root = root/'periods'/('FY'+str(fiscal_year))
     _need(root != source and root not in source.parents and source not in root.parents,
           'CURRENT_UPDATE_STATE_SOURCE_OVERLAP')
     root.mkdir(parents=True,exist_ok=True)
@@ -128,6 +136,12 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                                     'previous_result':previous})
         try:
             configuration = _configuration(source,company_id,metric_id)
+            if fiscal_year is not None:
+                producer_path = inspect.getsourcefile(case_factory)
+                _need(producer_path is not None, 'CURRENT_UPDATE_CASE_PRODUCER_VERSION_UNAVAILABLE')
+                configuration = {**configuration, 'requested_fiscal_year':fiscal_year,
+                    'case_producer':{'module':case_factory.__module__, 'name':case_factory.__qualname__,
+                                     'sha256':sha256_file(path=Path(producer_path))}}
             census = _source_census(source,company_id)
             source_errors = [r for r in census if r['status_code']!='200' or r['error']]
             if previous:
@@ -144,23 +158,34 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+                    if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
                     _write(attempt/'terminal.json',report); _write(root/'latest-check.json',report)
                     return report
             # Full selection/period/subject checks only run for changed/new
             # input. A newly selected filing necessarily changes submissions.
             version = uuid4().hex
-            saved = create_saved_result(source_root=source,output_root=root/'results'/version,
-                company_id=company_id,metric_id=metric_id, shared_input_root=shared_input_root)
+            if fiscal_year is None:
+                saved = create_saved_result(source_root=source,output_root=root/'results'/version,
+                    company_id=company_id,metric_id=metric_id, shared_input_root=shared_input_root)
+            else:
+                case = case_factory(repo_root=source, company_id=company_id, metric_id=metric_id,
+                                    fiscal_year=fiscal_year)
+                _need(case['target_period']['fiscal_year']==fiscal_year,
+                      'CURRENT_UPDATE_CASE_FISCAL_YEAR_CHANGED')
+                saved = save_calculated_case(source_root=source,output_root=root/'results'/version,
+                    company_id=company_id,metric_id=metric_id,case=case,shared_input_root=shared_input_root)
             if previous:
                 _need(saved['result']['period_end']>=previous['period_end'], 'CURRENT_UPDATE_PERIOD_REGRESSED')
             state={'company_id':company_id,'metric_id':metric_id,'version':version,
                    'period_end':saved['result']['period_end'],'configuration':configuration,
                    'result_id':saved['result']['result_id'],'source_census':census}
+            if fiscal_year is not None:state['requested_fiscal_year']=fiscal_year
             report={'status':'CANDIDATE_READY' if saved['result']['publication']=='PUBLISHED' else 'CANDIDATE_WITHHELD',
                     'attempt_id':identity,'version':version,'result_id':saved['result']['result_id'],
                     'result_root':str(root/'results'/version),'calculation_performed':True,'new_candidate_created':True,
                     'source_observation_errors':source_errors,
                     'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+            if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
             if report['status']=='CANDIDATE_READY': report['completed_state']=state
             _write(attempt/'terminal.json',report)
             if report['status']=='CANDIDATE_READY': _write(pointer,state)
