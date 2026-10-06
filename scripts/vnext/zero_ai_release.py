@@ -30,6 +30,7 @@ from git_workspace import sanitized_git_environment
 from .batch_workflow import build_release_input_plan, request_attempt_binding
 from .canonical import atomic_write_bytes, canonical_json_bytes, content_hash
 from .canonical import parse_utc_timestamp, sha256_bytes, sha256_file
+from .deterministic_catalog import ZeroAiReleaseError
 from .cutover import _freeze_structured_run
 from .deterministic_router import adapt_accession_xbrl
 from .deterministic_router import build_multi_source_release_input_plan
@@ -62,8 +63,6 @@ R1_EXPECTED_NEW_KEYS = 2
 R1_EXPECTED_PUBLIC_ROWS = 232
 ZERO_AI_NOTE_START = "<!-- zero-ai-formal-publication:start -->"
 ZERO_AI_NOTE_END = "<!-- zero-ai-formal-publication:end -->"
-class ZeroAiReleaseError(ValueError):
-    """Report a source, result, compatibility, or publication invariant."""
 
 
 def _source_commit_binding(

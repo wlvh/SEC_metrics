@@ -12,7 +12,7 @@ from .canonical import strict_json_file
 from .deterministic_router import _compiled_event_spec, load_event_route_catalog
 from .normal_source_authority import ROOT
 from .specs import SPEC_FIELDS, compile_spec, compile_spec_file
-from .zero_ai_r2 import _compiled_deterministic_spec, _load_deterministic_catalog
+from .deterministic_catalog import _compiled_deterministic_spec, _load_deterministic_catalog
 
 
 DIRECT_PATHS = {"B01":"catalog/metrics/B01_revenue.md", "B03":"catalog/metrics/B03_ebitda_margin.md"}

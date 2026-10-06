@@ -20,7 +20,7 @@ def main(argv=None):
     run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy', 'fiscal-years'])
     run.add_argument('--fiscal-year-start', type=int)
     run.add_argument('--fiscal-year-end', type=int)
-    run.add_argument('--source-root', type=Path, help='Prepared authenticated saved SEC history; historical mode never fetches')
+    run.add_argument('--source-root', type=Path, help='Saved SEC sources for current mode or prepared history; never fetches when supplied')
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
     run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
@@ -101,7 +101,7 @@ def main(argv=None):
     results.add_argument('--c02-review-trust-root', type=Path)
     view = sub.add_parser('results', help='Read all native company metric/period references')
     view.add_argument('--state-root', required=True, type=Path)
-    view.add_argument('--trust-root', required=True, type=Path)
+    view.add_argument('--trust-root', type=Path, help='Required only for retained native source histories')
     view.add_argument('--company', required=True)
     view.add_argument('--defects-file', type=Path)
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
@@ -112,8 +112,8 @@ def main(argv=None):
     if args.command == 'run':
         from vnext.company_local import run_local
         if args.period == 'latest-complete-fy' and any(value is not None for value in (
-                args.fiscal_year_start, args.fiscal_year_end, args.source_root)):
-            parser.error('Historical range/source arguments require --period fiscal-years')
+                args.fiscal_year_start, args.fiscal_year_end)):
+            parser.error('Fiscal-year range arguments require --period fiscal-years')
         result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
             period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
             sec_allowance=args.sec_allowance, fiscal_year_start=args.fiscal_year_start,
@@ -170,7 +170,15 @@ def main(argv=None):
     elif args.command == 'install-runtime':
         from vnext.company_runtime_install import install_runtime
         result = install_runtime(output_root=args.output_root, kind=args.kind)
+    elif args.command == 'results' and (args.state_root/'company-task.json').is_file():
+        from vnext.company_result_view import read_company_results
+        if args.output_root is not None:
+            parser.error('Ordinary saved results currently read JSON; CSV is exported by run')
+        result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                     defects_file=args.defects_file)
     else:
+        if args.trust_root is None:
+            parser.error('Retained native state requires --trust-root and its original runtime')
         from vnext.company_source_authority import TRUST_VARIABLE
         os.environ[TRUST_VARIABLE] = str(args.trust_root)
         if getattr(args, 'c02_review_trust_root', None):

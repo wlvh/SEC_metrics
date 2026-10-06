@@ -9,7 +9,7 @@ from .financial_results import (RESOLVER,_ROLES,FinancialResultError,_need,_inst
 from .calculator import calculate_metric,calculate_observation_metric,metric_is_applicable,withheld_metric_result
 from .batch_workflow import BatchWorkflowError
 from .annual_input import AnnualInputError
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .canonical import content_hash,sha256_bytes,sha256_file
 from .deterministic_router import source_set_manifest
 from .normal_annual_input import prepare_saved_annual_input

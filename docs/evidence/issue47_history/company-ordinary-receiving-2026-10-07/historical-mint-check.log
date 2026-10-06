@@ -1,0 +1,67 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile_v12.py", line 92, in load_profile_requirement_snapshot
+    need(path.is_file() and not path.is_symlink()
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=path) == binding["sha256"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=code_root / relative) == binding["sha256"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and path.stat().st_size == binding["size"],
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         "Normal candidate rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile_v12.py", line 19, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tools/vnext_mint_historical_requirement.py", line 510, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tools/vnext_mint_historical_requirement.py", line 416, in main
+    parent = load_requirement_snapshot(snapshot_dir=REPO_ROOT / "requirements" / PARENT_ID)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile_v14.py", line 34, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root / "requirements" / PARENT_ID)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirement_profile_v13.py", line 34, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root / "requirements" / PARENT_ID)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py

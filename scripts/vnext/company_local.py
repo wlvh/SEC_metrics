@@ -167,8 +167,12 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
             metric_ids=metric_ids, fiscal_year_start=fiscal_year_start,
             fiscal_year_end=fiscal_year_end, source_root=source_root)
     need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED')
-    need(all(value is None for value in (fiscal_year_start, fiscal_year_end, source_root)),
+    need(all(value is None for value in (fiscal_year_start, fiscal_year_end)),
          'LOCAL_HISTORY_ARGUMENTS_REQUIRE_FISCAL_YEARS')
+    if source_root is not None:
+        from .company_current_records import run_saved_company
+        return run_saved_company(company_id=company_id, source_root=source_root,
+            work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids)
     configured = configured_scope(company_id)
     selected = configured if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
