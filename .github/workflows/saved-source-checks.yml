@@ -1,0 +1,28 @@
+name: Ordinary saved source checks
+"on":
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'tests/vnext/test_saved_source_checks.py'
+      - 'tests/vnext/test_batch_workflow.py'
+      - 'config/**'
+      - 'catalog/**'
+      - 'evidence/**'
+      - '.github/workflows/saved-source-checks.yml'
+permissions:
+  contents: read
+jobs:
+  saved-source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - name: Real saved inputs, corruption and existing request identity checks
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_batch_workflow.BatchWorkflowTest.test_request_binding_prefers_verified_immutable_attempt tests.vnext.test_batch_workflow.BatchWorkflowTest.test_request_binding_rejects_claimed_immutable_locator_tamper tests.vnext.test_batch_workflow.BatchWorkflowTest.test_legacy_request_binding_binds_and_rechecks_exact_bytes tests.vnext.test_batch_workflow.BatchWorkflowTest.test_legacy_request_binding_rejects_non_regular_locator tests.vnext.test_batch_workflow.BatchWorkflowTest.test_pinned_request_binding_survives_append_only_ledger_tail -v
