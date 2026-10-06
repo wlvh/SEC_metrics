@@ -127,7 +127,14 @@ def write_daily_results(*, state_root, output_root, company_id, runtime_roots=()
             entry.update(source_import_status=source_import.get('status','NOT_AVAILABLE'),
                          source_freshness='SAVED_VERSION_ONLY_NOT_ONLINE_CHECKED')
             if not entry.get('run_id'):
+                period = entry.get('period_request') or {}
+                latest = view.get('latest_execution') or {}
+                entry.update(period_role='REQUESTED_WITHOUT_RESULT',
+                    requested_in_latest_execution=entry['metric_id'] in latest.get('metric_ids',
+                        [m['metric_id'] for m in latest.get('metrics',[])])
+                        and period == (latest.get('period_request') or {}))
                 metric_rows.append({'metric_id': entry['metric_id'], 'status':entry['latest_attempt_status'],
+                    'fiscal_year':period.get('fiscal_year',''), 'period_end':period.get('report_end',''),
                     'notes':entry.get('reason'), **{k:entry.get(k) for k in DAILY_FIELDS}})
                 continue
             # A different code-package identity alone is no longer a content

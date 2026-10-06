@@ -98,7 +98,7 @@ class CompanyDailyResultsTest(unittest.TestCase):
             'period_request':None,'metrics':[outcome]})
         return work
 
-    def read(self, *, defects=None, suffix='daily'):
+    def read(self, *, defects=None, suffix='daily', row_year=None):
         @contextmanager
         def locked(root): yield Path(root)
         registry = self.root.parent/'defects.json'
@@ -109,7 +109,8 @@ class CompanyDailyResultsTest(unittest.TestCase):
             result = daily.write_daily_results(state_root=self.root,output_root=self.root.parent/suffix,
                 company_id=self.company, defects_file=registry if defects else None)
         output = self.root.parent/suffix
-        row, = csv.DictReader(io.StringIO((output/'metrics_matrix.csv').read_text()))
+        rows=list(csv.DictReader(io.StringIO((output/'metrics_matrix.csv').read_text())))
+        row, = [r for r in rows if row_year is None or r['fiscal_year']==str(row_year)]
         return result,row,output
 
     def test_calculated_value_and_source_links_without_replay_or_copy(self):
@@ -135,10 +136,14 @@ class CompanyDailyResultsTest(unittest.TestCase):
         save_execution(root=self.root,report={'record_type':'COMPANY_COMPUTATION_REFERENCES_V1',
             'company_id':self.company,'source_checkpoint_id':self.current['checkpoint_id'],
             'period_request':{'fiscal_year':2024},'metrics':[{'metric_id':'B01','status':'INPUT_FAILED'}]})
-        _,row,out=self.read()
+        _,row,out=self.read(row_year=2025)
         self.assertEqual(row['requested_in_latest_execution'],'False')
         self.assertEqual(row['period_role'],'RUN_ARCHIVE_COORDINATE')
         self.assertEqual(row['fiscal_year'],'2025')
+        rows=list(csv.DictReader(io.StringIO((out/'metrics_matrix.csv').read_text())))
+        pending=next(r for r in rows if r['fiscal_year']=='2024')
+        self.assertEqual((pending['status'],pending['period_role'],pending['requested_in_latest_execution']),
+                         ('INPUT_FAILED','REQUESTED_WITHOUT_RESULT','True'))
 
     def test_known_defect_release_of_another_result_does_not_release_this_result(self):
         self.saved()

@@ -59,3 +59,11 @@ including an old FY2025 row outside a new FY2024 request. This is receiver-
 reported evidence of the missing columns plus our direct CSV regression,
 not a claim that we reran their historical company. Business20/18columns are
 unchanged; no new reading/approval object or full metadata migration added.
+
+The initial range-column test failed because its helper assumed a single row;
+the correct view contains both oldFY2025 and failed requestedFY2024. Commit
+357447f6 included that failed test and prematurely said41passed; this is
+corrected here, with its failure log retained. The final41tests pass0.388s.
+The pending requested row now retains its requested fiscal year and explicit
+REQUESTED_WITHOUT_RESULT role; the old row is not marked requested. No old
+business row/result was changed to resolve this test.
