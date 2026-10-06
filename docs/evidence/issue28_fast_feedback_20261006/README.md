@@ -36,3 +36,17 @@ source capture or paid call was run or cancelled. Existing workload/production
 permissions do not change. Source-material43 were not rerun: business code and
 assertions are unchanged, and this batch only changes their tier placement.
 Future broader checks remain necessary for actual source/runtime changes.
+
+Remote terminal for7c134942:12jobs succeeded, only inherited-source-material
+was cancelled. Actual job steps:checkout878s, Python setup0s, material test33s
+before cancellation. No material suite result was printed. This is not a
+measured slow-test failure and does not justify increasing the job limit.
+The material job alone now uses depth1, retaining all HEAD originals. The
+separate foundation/historical-object audit keeps its full-history checkout.
+A genuine shallow file-transport clone (is-shallow=true, one commit) ran the
+saved noncalendar annual input, wrong fiscal label/CIK negative and5runner
+regressions:7passed8.631s. Material test modules do not directly request old
+Git revisions. This is a representative compatibility check, not an all43
+shallow-material pass or an online clone-speed benchmark; new CI supplies the
+remaining material outcome. No requirement/old object or business assertion
+was bypassed, and no financial/provider workload was reissued.
