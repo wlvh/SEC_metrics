@@ -20,3 +20,5 @@
 新增5个短计算例和原14个短来源/DEI例，共19例0.079秒通过；wrong-unit首轮测试误预期WITHHELD，实际计算器原本抛错拒绝，修正的是断言并保留首轮失败。实际main基短分支的当期B10/B11经原case入口分别4.985/3.257秒通过；历史分支当期和指定FY2024共四项也进入同一函数，每项调用一次，FY2024为0.698 ratio/128.23 USD，期间及原格witness保留。只验证本次受影响消费者，原五年表格/旧年说明验证继续复用。详细输出在[本次主要计算记录](evidence/issue47_history/lodging-shared-calculation-2026-10-07/)。
 
 历史侧已将原resolver输出薄适配为公共case的expected_records/results/compiled_specs/source_proofs及所选prepared_input，不重新准备或造新pipeline。实测该case进入公共纯投影仍被其无条件重选最新FY2025挡住，报ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED；公共负责人负责修复这一接缝，本方未复制投影器。恢复目录原件齐全但旧来源准入要求trusted journal的失败也保留在记录中，不能标成缺原件后自动GET。公共保存writer及普通历史公司范围接线仍待，当前小PR不宣称完整公司/五年接受。
+
+代码a0685346的[CI37522373390](https://github.com/wlvh/SEC_metrics/actions/runs/37522373390)已终态failure：快测作业、inherited source material和历史兼容作业success；多项公司作业仍在旧lodging_table_source字节绑定前拒绝，另一个独立更新例为UPDATES_PARTIAL/UPDATES_INCOMPLETE断言失败，尚未证明同因。作业状态和首个失败的原日志片段在主要记录的CI-a0685346文件；不将定向通过说成整个workflow绿灯，不为这些旧路径重签快照。

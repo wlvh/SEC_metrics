@@ -1,0 +1,382 @@
+Excerpts: first failed selector per failed job. Full original log retained in local work/a068-ci-failure.log and GitHub run37522373390.
+
+JOB Company source authority, ledger and D04 wiring
+ERROR: test_current_transfer_names_actual_parent_not_old_historical_closure (tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_current_transfer_names_actual_parent_not_old_historical_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_continuous_call_policy.py", line 58, in test_current_transfer_names_actual_parent_not_old_historical_closure
+    current=load_requirement_snapshot(snapshot_dir=snapshot)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 30, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root/'requirements'/PARENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+======================================================================
+
+JOB Company remaining source Runs (jpmorgan_chase)
+ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 71, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+    self.assertFalse(root.exists());root.mkdir(parents=True);build(root,cases)
+                                                             ~~~~~^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 35, in build
+    for metric in metrics:normal.install_normal_inputs(data_root=source,company_id=company,metric_id=metric)
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+----------------------------------------------------------------------
+
+JOB Company independent metric updates
+FAIL: test_successful_metrics_survive_withheld_and_failed_neighbours (tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_ordinary_update_cycle.py", line 151, in test_successful_metrics_survive_withheld_and_failed_neighbours
+    first=check();self.assertEqual('UPDATES_PARTIAL',first['status'])
+                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UPDATES_PARTIAL' != 'UPDATES_INCOMPLETE'
+- UPDATES_PARTIAL
++ UPDATES_INCOMPLETE
+
+
+----------------------------------------------------------------------
+
+JOB Company saved D04 native Runs
+ERROR: test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_d04_run_material.py", line 128, in test_native_run_recorded_mode_exact_source_and_resigned_input_rejection
+    prepared = prepare_requests(company_id='enphase_energy', metric_id='D04', native=True,
+        reference_context=os.environ.get('D04_REFERENCE_CONTEXT') == '1',
+        complete_response_contract=os.environ.get('D04_COMPLETE_RESPONSE_CONTRACT') == '1')
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 319, in prepare_requests
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 30, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root/'requirements'/PARENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+======================================================================
+
+JOB Company native Run cold read and recorded source update
+ERROR: test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 42, in test_real_open_graphs_and_disk_rejections
+    requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/normal.REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+----------------------------------------------------------------------
+
+JOB Company C04 source-only install
+ERROR: test_authenticated_resume_mock_can_capture_declared_missing_annual (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_authenticated_resume_mock_can_capture_declared_missing_annual)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 516, in test_authenticated_resume_mock_can_capture_declared_missing_annual
+    session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 357, in recorded_sec_session
+    requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 30, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root/'requirements'/PARENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+======================================================================
+
+JOB Company remaining source Runs (marriott_international)
+ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 71, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+    self.assertFalse(root.exists());root.mkdir(parents=True);build(root,cases)
+                                                             ~~~~~^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 35, in build
+    for metric in metrics:normal.install_normal_inputs(data_root=source,company_id=company,metric_id=metric)
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+----------------------------------------------------------------------
+
+JOB Company update history and interruption recovery
+ERROR: test_real_history_idempotency_failure_and_recovery (tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_ordinary_update_cycle.py", line 26, in test_real_history_idempotency_failure_and_recovery
+    normal.install_normal_inputs(data_root=source,company_id=company,metric_id='B01')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+----------------------------------------------------------------------
+
+JOB Company acquisition session and C04 update/recovery
+ERROR: test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding (tests.vnext.test_continuous_sec_acquisition.ContinuousSecAcquisitionTest.test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+    need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+    raise v1.RequirementProfileError(reason)
+vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_continuous_sec_acquisition.py", line 37, in test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding
+    session=recorded_sec_session(root=root/'ledger',response=raw)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 357, in recorded_sec_session
+    requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 30, in load_profile_requirement_snapshot
+    parent = parent_loader(snapshot_dir=root/'requirements'/PARENT_ID)
+  File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/lodging_table_source.py
+
+======================================================================

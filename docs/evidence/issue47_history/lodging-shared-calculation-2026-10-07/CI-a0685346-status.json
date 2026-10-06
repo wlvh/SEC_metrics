@@ -1,0 +1,110 @@
+{
+  "run_id": 37522373390,
+  "head": "a06853465fa64b07c308b9d9311548d3533b5b18",
+  "conclusion": "failure",
+  "jobs": [
+    {
+      "name": "Foundation inherited source material",
+      "conclusion": "success",
+      "failed_selectors": [],
+      "legacy_lodging_binding_mentioned": false
+    },
+    {
+      "name": "Company source authority, ledger and D04 wiring",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_current_transfer_names_actual_parent_not_old_historical_closure (tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_current_transfer_names_actual_parent_not_old_historical_closure)",
+        "ERROR: test_current_wiring_rejects_stale_declared_requirement_closure (tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_current_wiring_rejects_stale_declared_requirement_closure)",
+        "ERROR: setUpClass (tests.vnext.test_native_request_construction.RequestConstructionScopeTest)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "Company remaining source Runs (jpmorgan_chase)",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "Company independent metric updates",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "FAIL: test_successful_metrics_survive_withheld_and_failed_neighbours (tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours)"
+      ],
+      "legacy_lodging_binding_mentioned": false
+    },
+    {
+      "name": "Company saved D04 native Runs",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection)",
+        "ERROR: test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "Company native Run cold read and recorded source update",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "Company C04 source-only install",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_authenticated_resume_mock_can_capture_declared_missing_annual (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_authenticated_resume_mock_can_capture_declared_missing_annual)",
+        "ERROR: test_declared_missing_annual_reaches_source_only_capture (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_declared_missing_annual_reaches_source_only_capture)",
+        "ERROR: test_failed_processing_copy_preserves_recorded_capture_for_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume)",
+        "ERROR: test_historical_b01_pointer_without_new_attempt_can_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_historical_b01_pointer_without_new_attempt_can_resume)",
+        "ERROR: test_mixed_old_root_does_not_capture_unproved_source (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_does_not_capture_unproved_source)",
+        "ERROR: test_mixed_old_root_resumes_current_rule_metric_and_c04 (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04)",
+        "ERROR: test_old_processing_files_remain_old_and_unrelated_drift_blocks (tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest.test_old_processing_files_remain_old_and_unrelated_drift_blocks)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "Main foundation audit and historical compatibility",
+      "conclusion": "success",
+      "failed_selectors": [],
+      "legacy_lodging_binding_mentioned": false
+    },
+    {
+      "name": "Company remaining source Runs (marriott_international)",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "vNext fast suite",
+      "conclusion": "success",
+      "failed_selectors": [],
+      "legacy_lodging_binding_mentioned": false
+    },
+    {
+      "name": "Company update history and interruption recovery",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_real_history_idempotency_failure_and_recovery (tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    },
+    {
+      "name": "Company acquisition session and C04 update/recovery",
+      "conclusion": "failure",
+      "failed_selectors": [
+        "ERROR: test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding (tests.vnext.test_continuous_sec_acquisition.ContinuousSecAcquisitionTest.test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding)",
+        "ERROR: test_saved_marriott_positive_creates_native_result (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_saved_marriott_positive_creates_native_result)",
+        "ERROR: test_one_prior_source_skipped_only_with_exact_ledger_and_history (tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest.test_one_prior_source_skipped_only_with_exact_ledger_and_history)",
+        "ERROR: test_c04_only_keeps_positive_provider_limit_but_mixed_does_not (tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest.test_c04_only_keeps_positive_provider_limit_but_mixed_does_not)"
+      ],
+      "legacy_lodging_binding_mentioned": true
+    }
+  ],
+  "not_all_failures_have_same_proven_cause": true
+}
