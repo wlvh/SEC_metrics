@@ -12,3 +12,5 @@
 | `jpm-proxy-image-name.patch` | JPMorgan FY2021 的 C02/C03：2022 年代理的封面名称是 logo 图片，名称改取封面之后第一块，仍须等于 SEC 记录在申报日的名称；认 Wingdings 的 `þ`/`o`。薪酬汇总表认带节号和 "(SCT)" 的标题；独立单元格里的脚注编号只在整行按原样不满足合计、去掉后满足时才去掉；"CEO CIB" 这类业务单元 CEO 不算注册人的 CEO。改 `historical_proxy_identity.py`、`historical_proxy_compensation.py` 与两份测试，`proxy-image-name/` 放量测、路线探针与注错。九份无 inline XBRL 的代理里只有 JPMorgan 移动（C03 84,428,145，与其 2023 年代理的标注一致；C02 51 条摘录），原八份的封面、人员行与 C03 答案逐个相同；注错 14/14。 | 已应用（本提交） |
 
 应用方式：逐个 `git apply`（四份不碰同一处，按表中顺序），然后 `python3 tools/vnext_mint_historical_requirement.py` 与 `--check`。落地后各自的定向重跑、阅读与缺陷释放写在各补丁对应的证据目录里，还没有做。
+
+2026-10-06现行H6接续：四份补丁均已落地，不再应用。上面“还没有做”是当时记录。后续`3fba0e84`轮已重跑并从原件阅读JPM FY2021/23/24/25 D01，四条运行页眉缺陷均为`RULE_FIXED_RESULT_RECOMPUTED_AND_READ`；FY2022原未受影响，保留`500ddf5f`原接受。JPM FY2021 C03已在同轮从代理原件核对84428145，Southwest FY2022 B06已核对8088/10687百万、比率0.7568073360157200336857864695；相应记录均在`accepted_result_content.json`绑定原结果及阅读文件，不因本轮代码变化重写或全量重跑。JPM FY2021 C02仍有独立布局/成员遗漏内容缺陷，修复49之后的Ford/Lumen等不一致继续H5；这些未完成不表示四份补丁未应用。现行剩余来源/内容/入口状态按#47 H6逐项接续，不重新造一次完整批次或重封。
