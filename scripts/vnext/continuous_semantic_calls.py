@@ -18,6 +18,7 @@ from .normal_source_authority import ROOT, verify_saved_source_proofs
 from .provider_runtime import load_provider_runtime_authority
 from .requirements import load_requirement_snapshot
 from . import invocation_control as control
+from .request_limits import DEFAULT_LIMITS, configured_limits
 
 _FACTORY = object()
 _FEASIBILITY = 'FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE'
@@ -101,7 +102,8 @@ def validate_source_unit_bytes(source):
              'CONTINUOUS_SOURCE_UNIT_SERIALIZATION_CHANGED')
 
 
-def request_body(request, policy):
+def request_body(request, policy, *, limits=None):
+    limits = configured_limits(limits)
     payload = {k:v for k,v in request.items() if k not in
         {'system_prompt','provider_request_sent','provider_tokens_measured','production_authorized'}}
     from .native_unit_index import evidence_json_bytes
@@ -109,11 +111,11 @@ def request_body(request, policy):
     return encode({'model':policy.model,'messages':[
         {'role':'system','content':request['system_prompt']},
         {'role':'user','content':json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))}],
-        'response_format':{'type':'json_object'},'temperature':0,'max_tokens':4096,
+        'response_format':{'type':'json_object'},'temperature':0,'max_tokens':limits.output_tokens,
         'stream':False,'thinking':{'type':'disabled'}})
 
 
-def request_digest(request, policy):
+def request_digest(request, policy, *, limits=None):
     """New code/provenance IDs alone do not authorize another extraction."""
     body = {'model':policy.model,'system_prompt':request['system_prompt'],
         'target_cik':request['target_cik'],'target_period':request['target_period'],
@@ -126,7 +128,7 @@ def request_digest(request, policy):
         # Semantic input IDs do not grant a redraw. Actual decoding settings
         # belong to the request, including the repaired thinking-mode setting.
         'provider_parameters':{k:v for k,v in strict_json_loads(
-            text=request_body(request,policy).decode()).items() if k not in {'messages'}}}
+            text=request_body(request,policy,limits=limits).decode()).items() if k not in {'messages'}}}
     if request['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         body['verification']={'proposals':request['proposals'],
             'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
@@ -587,7 +589,9 @@ def usage_observation(raw):
         'actual_cost':None}
 
 
-def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False):
+def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False, limits=None):
+    explicit_limits = limits is not None
+    limits = configured_limits(limits)
     observed = usage_observation(raw)
     if observed['input_tokens'] is None or observed['output_tokens'] is None:return 'USAGE_UNKNOWN'
     usage = strict_json_loads(text=raw.decode())['usage']
@@ -598,8 +602,10 @@ def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False
     for key,value in [('prompt_cache_hit_tokens',hit),('prompt_cache_miss_tokens',miss)]:
         if key in usage and value is None:return 'USAGE_UNKNOWN'
     if hit is not None and miss is not None and hit+miss!=observed['input_tokens']:return 'USAGE_UNKNOWN'
-    if observed['input_tokens'] > 200000 or (enforce_total_context and total > 200000):
+    if observed['input_tokens'] > limits.max_context_tokens or (enforce_total_context and total > limits.max_context_tokens):
         return 'CONTEXT_LIMIT'
+    if explicit_limits and observed['output_tokens'] > limits.output_tokens:
+        return 'OUTPUT_LIMIT'
     if expected_prompt_tokens is not None and observed['input_tokens'] != expected_prompt_tokens:
         return 'CONTEXT_REFERENCE_MISMATCH'
     return ''
@@ -626,7 +632,7 @@ def build_plan(prepared, *, d03_native_assessment=False):
         task_contract_hash=content_hash(value={'metric':metric_id,'prompt':request['system_prompt']}),
         output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
         provider=policy.provider,model=policy.model,api=policy.api,request_body=prepared.provider_request_body_bytes,
-        maximum_payload_bytes=policy.maximum_payload_bytes,maximum_context_tokens=200000,
+        maximum_payload_bytes=policy.maximum_payload_bytes,maximum_context_tokens=DEFAULT_LIMITS.max_context_tokens,
         estimated_context_tokens=context['context_tokens'],
         context_authority_hash=content_hash(value={'provider_runtime':runtime['context_authority_hash'],
             'bounded_chat_context':context['context_authority_hash']}),estimator_id=context['estimator_id'],
@@ -634,7 +640,7 @@ def build_plan(prepared, *, d03_native_assessment=False):
         billing_class=runtime['billing_class'],paid_call_observation_source=runtime['paid_call_observation_source'],
         pricing_snapshot_hash=content_hash(value={'provider':policy.provider,'model':policy.model,
             'status':'NON_BLOCKING_PRICE_UNAVAILABLE'}),estimated_cost=None)
-    need(plan['observability']['estimated_context_tokens']<=200000
+    need(plan['observability']['estimated_context_tokens']<=DEFAULT_LIMITS.max_context_tokens
          and len(prepared.provider_request_body_bytes)<=policy.maximum_payload_bytes,
          'CONTINUOUS_REQUEST_RESOURCE_LIMIT')
     return policy,plan
