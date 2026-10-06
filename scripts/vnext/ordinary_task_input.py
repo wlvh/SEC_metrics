@@ -34,9 +34,14 @@ class _Relations(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=False)
         self.rows=[];self.script=None;self.script_bodies=[]
+        self.svg_depth=0;self.svg_tokens=None;self.svg_subtrees=[]
 
     def handle_starttag(self,tag,attrs):
         attrs=dict(attrs)
+        if tag=='svg' and self.svg_depth==0:self.svg_tokens=[]
+        if tag=='svg':self.svg_depth+=1
+        if self.svg_depth:
+            self.svg_tokens.append({'event':'start','tag':tag,'attributes':attrs})
         relationships={k:v for k,v in attrs.items() if k in _RELATION_ATTRS}
         if tag in _MEDIA:
             self.rows.append({'tag':tag,'attributes':attrs})
@@ -46,12 +51,27 @@ class _Relations(HTMLParser):
 
     def handle_startendtag(self,tag,attrs):
         self.handle_starttag(tag,attrs)
-        if tag=='script':self.handle_endtag(tag)
+        if self.svg_depth or tag=='script':self.handle_endtag(tag)
 
     def handle_data(self,data):
+        if self.svg_depth:self.svg_tokens.append({'event':'text','text':data})
         if self.script is not None:self.script['parts'].append(data)
 
+    def handle_entityref(self,name):
+        if self.svg_depth:self.svg_tokens.append({'event':'entity','name':name})
+
+    def handle_charref(self,name):
+        if self.svg_depth:self.svg_tokens.append({'event':'charref','name':name})
+
+    def handle_comment(self,data):
+        if self.svg_depth:self.svg_tokens.append({'event':'comment','text':data})
+
     def handle_endtag(self,tag):
+        if self.svg_depth:
+            self.svg_tokens.append({'event':'end','tag':tag})
+            if tag=='svg':
+                self.svg_depth-=1
+                if self.svg_depth==0:self.svg_subtrees.append(self.svg_tokens);self.svg_tokens=None
         if tag=='script' and self.script is not None:
             body=''.join(self.script.pop('parts'))
             # Empty external script references are outside the existing D04
@@ -73,6 +93,7 @@ def parsed_d04_document(*,raw_bytes,raw_blob,source_reference,
     attrs=_FactAttributes();attrs.feed(text);attrs.close()
     relations=_Relations();relations.feed(text);relations.close()
     if relations.script is not None: raise ValueError('PARSED_D04_UNCLOSED_SCRIPT')
+    if relations.svg_depth: raise ValueError('PARSED_D04_UNCLOSED_SVG')
     grid=build_table_grid(html_bytes=raw_bytes,parent_raw_asset_ids=[raw_blob['raw_asset_id']],
                          storage_uri='derived/parsed-task-grid.json')
     dependencies=('ordinary_task_input.py','text_coverage.py','table_grid.py',
@@ -84,7 +105,8 @@ def parsed_d04_document(*,raw_bytes,raw_blob,source_reference,
         'blocks':_plain(doc['blocks'],omit_offsets=True),'sections':_plain(doc['sections'],omit_offsets=True),
         'native_contexts':_plain(parsed.contexts),'native_facts':_plain(parsed.facts),
         'native_fact_attributes':_plain(attrs.facts),'native_units':_plain(attrs.units),
-        'tables':_plain(grid['tables']),'relationships':relations.rows,'embedded_scripts':relations.script_bodies}
+        'tables':_plain(grid['tables']),'relationships':relations.rows,
+        'svg_subtrees':relations.svg_subtrees,'embedded_scripts':relations.script_bodies}
     # NFC canonical identity is not used for verbatim source content equality.
     payload=json.dumps(body,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
     return {'parsed_input_sha256':sha256_bytes(content=payload),'parsed_input':body,

@@ -38,3 +38,23 @@ accepted against a new source. This is mechanical change detection, not a
 full annual assessment, source admission, provider validation or publication.
 It does not generalize D04 equivalence to other metrics. No business calls,
 extra budget, account action or production operation.
+
+## SVG boundary repair
+
+Peer #47 found a concrete omission at parent95849b6e: changing an inline
+SVG path from L10 10 to L90 90 retained the parsed signature. The previous
+21 tests did not establish this boundary. No company update used this helper
+to create or accept a Result, so there is no generated result to re-sign.
+
+The parser now retains ordered opaque tokens of the full SVG subtree, including
+nested tags, all attributes, styles, text and character/entity references.
+An unclosed SVG is rejected. The new full-input test changes path coordinates,
+style, transform and nested text independently. Author verification:22 tests
+passed0.297s; this is not an independent review. Real c372/2068 sources were
+reparsed after the repair and remain equal (1965blocks/1229facts/68tables,
+1.7642s/2.5061s). They contain no SVG: this verifies the existing real positive,
+while the SVG regression checks the media omission.
+
+Tests used parent95849b6e plus the explicitly listed uncommitted source/test
+difference; the committed source tree will preserve those exact bytes. See
+svg-repair-tests.log and svg-repair-real-pair.json. No calls or result credit.
