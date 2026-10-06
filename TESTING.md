@@ -1,5 +1,7 @@
 # SEC_metrics 测试与验证流程
 
+当前保存来源定向验证：`python -m unittest tests.vnext.test_saved_source_checks -q`；实际无git/journal原件准备和B01计算见 `docs/evidence/issue28_source_checks_20261007/`。这不授来源获取或模型调用，旧防伪/journal专属用例只解释保留的旧运行。
+
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。真实SEC首次＋重复运行尚待许可，不把录制准入换成LIVE。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 

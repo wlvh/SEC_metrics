@@ -1,5 +1,9 @@
 # SEC_metrics Agent 工作入口
 
+## 当前工程入口（2026-10-06）
+
+按 [受信任内部工具](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)及[运行/测试减负唯一队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)接续；冲突的旧工程要求已被替代。#54/PR57已交付，#28维护公共及当期入口，#47维护历史接入与既有共用核心。下文旧PR/工作树/封存要求只解释历史。当前来源核验检查请求、原件、主体/期间和失误，不要求额外creator trust。
+
 ## 公司级边界工作（#54）
 
 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54主实现公司交接，#28/#47各自维护并验证消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。

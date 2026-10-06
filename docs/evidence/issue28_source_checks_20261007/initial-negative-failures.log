@@ -1,0 +1,22 @@
+======================================================================
+ERROR: test_later_failed_request_cannot_be_hidden_by_old_success (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_later_failed_request_cannot_be_hidden_by_old_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_saved_source_checks.py", line 64, in test_later_failed_request_cannot_be_hidden_by_old_success
+    path.write_bytes(request_log_csv_bytes(rows=[*rows,failed]));refresh_request_log_manifest(log_path=path)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: refresh_request_log_manifest() missing 1 required keyword-only argument: 'workdir'
+
+======================================================================
+FAIL: test_wrong_filing_or_document_identity_is_rejected (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_wrong_filing_or_document_identity_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_saved_source_checks.py", line 72, in test_wrong_filing_or_document_identity_is_rejected
+    with self.assertRaises(BatchWorkflowError):verify_saved_inputs(data_root=self.root,proofs=proofs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: BatchWorkflowError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.789s
+
+FAILED (failures=1, errors=1)

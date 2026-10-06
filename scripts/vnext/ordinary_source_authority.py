@@ -11,7 +11,7 @@ from pathlib import Path
 
 from git_workspace import first_symlink_in_path
 from sec_http import parse_request_log_rows,request_log_prefix_bytes,request_log_attempt_id,validate_request_log_manifest
-from .batch_workflow import validate_request_attempt_binding
+from .request_bindings import validate_request_attempt_binding
 from .canonical import canonical_json_bytes,content_hash,sha256_bytes,sha256_file,strict_json_file
 from .normal_source_authority import (ROOT,MANIFEST_PATH,_baseline_file,_git_blob_id,
                                       verify_saved_source_proofs)
@@ -154,31 +154,14 @@ def _trusted_checkpoint(data_root):
 
 
 def verify_ordinary_source_proofs(*,data_root:Path,proofs:list):
-    baseline=strict_json_file(path=ROOT/MANIFEST_PATH)
-    ledger=resolve_repository_file(repo_root=data_root,repo_relative_path='evidence/requests_log.csv').read_bytes()
-    original=baseline['files']['evidence/requests_log.csv']
-    if len(ledger)==original['size'] and _git_blob_id(ledger)==original['git_blob_id']:
-        return verify_saved_source_proofs(data_root=data_root,proofs=proofs)
-    _need(type(proofs) is list and proofs,'ORDINARY_SOURCE_PROOFS_REQUIRED')
-    checkpoint=_trusted_checkpoint(data_root)
-    _,old_ids,admitted=_validate_checkpoint(data_root,checkpoint,baseline)
-    for proof in proofs:
-        _need(proof['request_attempt_id'] in old_ids or proof['request_attempt_id'] in admitted,
-              'ORDINARY_SOURCE_UNADMITTED_ATTEMPT')
-        if proof['request_attempt_id'] in old_ids:
-            for key in ('request_repo_relative_path','request_headers_repo_relative_path'):_baseline_file(data_root,proof[key],baseline)
-        _proof(data_root,proof)
-    acquired=checkpoint.get('record_type')=='ORDINARY_SEC_ACQUISITION_CHECKPOINT'
-    selected_new=[p['request_attempt_id'] for p in proofs if p['request_attempt_id'] in admitted]
-    real_credit=checkpoint['real_sec_credit'] and bool(selected_new)
-    source_credit=(checkpoint['source_credit'] if not checkpoint['real_sec_credit'] or selected_new
-                   else 'PREEXISTING_SAVED_ACQUISITIONS_ONLY')
-    return {'record_type':'VERIFIED_ORDINARY_ACQUIRED_INPUTS' if acquired else 'VERIFIED_ORDINARY_RECORDED_INPUTS','trusted_baseline_commit':baseline['baseline_commit'],
-        'source_manifest_sha256':sha256_bytes(content=canonical_json_bytes(value=checkpoint)),
-        'checkpoint_id':checkpoint['checkpoint_id'],'request_attempt_ids':[p['request_attempt_id'] for p in proofs],
-        'source_credit':source_credit,'real_sec_credit':real_credit,
-        **({'selected_new_request_attempt_ids':selected_new} if acquired else {}),
-        'new_business_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+    """Current ordinary input checks, without a separate creator journal.
+
+    Historical installed runtimes retain their original verifier bytes. This
+    current adapter checks actual ledger/body/header identity and failures; it
+    does not create acquisition, model, acceptance or publication credit.
+    """
+    from .saved_source_checks import verify_saved_inputs
+    return verify_saved_inputs(data_root=data_root,proofs=proofs)
 
 
 def checkpoint_installation(*,source_root):
