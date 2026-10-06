@@ -1,5 +1,5 @@
 {
-  "description": "Quote-form regression projection: eight unchanged assistant contents and every block named by each answer, in original order. Unanswered blocks, full prompt, raw wire and full requests remain in the original PR52 archive; this is not a replacement model input, Run or acceptance.",
+  "description": "Quote-form regression projection: twelve unchanged assistant contents (eight failed, four contract-pass) and every block named by each answer, in original order. Unanswered blocks, full prompt, raw wire and full requests remain in the original PR52 archive; this is not a replacement model input, Run or acceptance.",
   "original_commit": "e690de25",
   "original_archive": "evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz",
   "contract_quote_characters": [
@@ -1521,6 +1521,459 @@
         "b1428": 322
       },
       "original_contract_error": "REFUSED: D02_REVIEW_QUOTE_NOT_THE_BLOCKS_OWN_WORDS:b1428"
+    }
+  ],
+  "contract_pass_cases": [
+    {
+      "name": "D02-enphase_energy-2025-12-31",
+      "original_request_member": "root/calls/0008/semantic-request.json",
+      "request": {
+        "company_id": "enphase_energy",
+        "contract": "D02_ITEM_8_LEGAL_REVIEW_V1",
+        "filing": {
+          "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+          "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+          "text_document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3"
+        },
+        "metric_id": "D02",
+        "must_decide": [
+          "b1169",
+          "b1244",
+          "b1245",
+          "b1253",
+          "b1262",
+          "b1308",
+          "b1310",
+          "b1343",
+          "b1369",
+          "b1406",
+          "b1418",
+          "b1435",
+          "b1442",
+          "b1445",
+          "b1446",
+          "b1705",
+          "b1733",
+          "b1818",
+          "b1848",
+          "b1865",
+          "b1869",
+          "b1889",
+          "b1893",
+          "b1928",
+          "b1936",
+          "b1940",
+          "b1951",
+          "b1954",
+          "b1958",
+          "b2015",
+          "b2024",
+          "b2254",
+          "b2273",
+          "b2280",
+          "b2334",
+          "b2335"
+        ],
+        "period_end": "2025-12-31",
+        "record_type": "D02_ITEM_8_LEGAL_REVIEW_REQUEST",
+        "request_id": "sha256:ae6e27b7e24e07973f026c9a9f85b9e0e8225f0f225d0b79109686ec49f2e31c",
+        "source_id": "sha256:b5fcce4398ab56440e38750fa3ba11afd4c3eee8b019e89df964a722e0780172",
+        "target_cik": "1463101",
+        "blocks": [
+          {
+            "block_id": "b1169",
+            "text": "Commitments and contingencies (Note 13)"
+          },
+          {
+            "block_id": "b1244",
+            "text": "Payment of withholding taxes related to net share settlement of equity awards— — (120,646)— — (120,646)"
+          },
+          {
+            "block_id": "b1245",
+            "text": "Settlement of convertible notes due 2023900 — 5,000 — — 5,000"
+          },
+          {
+            "block_id": "b1253",
+            "text": "Payment of withholding taxes related to net share settlement of equity awards— — (78,813)— — (78,813)"
+          },
+          {
+            "block_id": "b1262",
+            "text": "Payment of withholding taxes related to net share settlement of equity awards— — (18,026)— — (18,026)"
+          },
+          {
+            "block_id": "b1308",
+            "text": "Settlement of Notes due 2025(102,168)(7)—"
+          },
+          {
+            "block_id": "b1310",
+            "text": "Payments of withholding taxes related to net share settlement of equity awards(18,026)(78,813)(120,646)"
+          },
+          {
+            "block_id": "b1343",
+            "text": "The preparation of financial statements in conformity with U.S. GAAP requires management to make estimates and assumptions that affect the reported amounts of assets and liabilities, disclosure of contingent assets and liabilities at the date of the financial statements and the reported amounts of income and expenses during the reporting period. Significant estimates and assumptions reflected in the financial statements include revenue recognition, allowance for credit losses, stock-based compensation, income tax provision, inventory valuation, government grants, accrued warranty obligations, fair value of debt securities, convertible notes, fair value of acquired intangible assets and goodwill, useful lives of acquired intangible assets and property and equipment, incremental borrowing rate for right-of-use assets and lease liability. These estimates are based on information available as of the date of the financial statements; therefore, actual results could differ materially from those estimates due to risks and uncertainties."
+          },
+          {
+            "block_id": "b1369",
+            "text": "current assets. For the years ended December 31, 2025 and 2024, benefits recognized from AMPTC of $238.7 million and $157.5 million, respectively, were recorded as a prepaid income tax of $227.5 million and $94.9 million (included in prepaid expenses and other current assets), respectively, and reduction of income tax payable of $11.2 million and $62.7 million (included in accrued liabilities), respectively, on the consolidated balance sheets, and as a reduction to cost of revenues of $238.7 million and $157.5 million on the consolidated statements of operations for the year ended December 31, 2025 and 2024, respectively. In addition, the Company recognized a grant receivable of $76.6 million and $15.1 million included in prepaid expenses and other current assets on the consolidated balance sheets as of December 31, 2025 and 2024, respectively, for inventory on hand because it has reasonable assurance that it will comply with the grant’s conditions and that the grant will be received when sold in the following 12 months, which is equal to the reduction of the carrying cost of the inventory on the consolidated balance sheets as of December 31, 2025 and 2024, respectively. Amounts recognized in the consolidated financial statements are based on management’s judgment and interpretation of the most current guidance."
+          },
+          {
+            "block_id": "b1406",
+            "text": "Internal-use software, whether purchased or developed, is capitalized at cost and amortized on a straight-line basis over its estimated useful life. Costs associated with internally developed software are expensed until the point at which the project has reached the development stage. Subsequent additions, modifications or upgrades to internal-use software are capitalized only to the extent that they provide additional functionality. Software maintenance and training costs are expensed in the period in which they are incurred. The capitalization of internal-use software requires judgment in determining when a project has reached the development stage and the period over which the Company expects to benefit from the use of that software. Capitalized costs are recorded as part of property and equipment in the consolidated balance sheets. Capitalized internal-use software is amortized on a straight-line basis over its estimated useful life, which is generally three years, and is recorded as cost of revenue in the consolidated statements of operations."
+          },
+          {
+            "block_id": "b1418",
+            "text": "Assets acquired and liabilities assumed as part of a business acquisition are generally recorded at their fair value at the date of acquisition. The excess of purchase price over the fair value of assets acquired and liabilities assumed is recorded as goodwill. Determining fair value of identifiable assets, particularly intangibles, and liabilities acquired also requires the Company to make estimates, which are based on all available information and in some cases assumptions with respect to the timing and amount of future revenues and expenses associated with an asset. Accounting for business acquisitions requires the Company to make judgments as to whether a purchase transaction is a multiple element contract, meaning that it includes other transaction components. This judgment and determination affect the amount of consideration paid that is allocable to assets and liabilities acquired in the business purchase transaction. Additional information existing as of the acquisition date but unknown to the Company may become known during the remainder of the measurement period, not to exceed 12 months from the acquisition date, which may result in changes to the amounts and allocations recorded."
+          },
+          {
+            "block_id": "b1435",
+            "text": "Estimated Replacement Costs — Three factors are considered in the Company’s analysis of estimated replacement cost: (1) the estimated cost of replacement products; (2) the estimated cost to ship replacement products to end users; and (3) the estimated labor reimbursement expected to be paid to third-party installers, or estimated labor cost expected to be incurred for field service technicians, performing replacement services for the end user. Because the Company’s warranty provides for the replacement of defective microinverters or other products over long periods of time (between 5 years to 25 years, depending on the product and the generation of that product purchased), the estimated per unit cost of current and future product generations is considered in the estimated replacement cost. Estimated costs to ship replacement units are based on observable, market-based shipping costs paid by the Company to third-party freight carriers. The Company has a separate program that allows third-party installers to claim fixed-dollar reimbursements for labor costs they incur to replace failed products for a limited time from the date of original installation. Included in the Company’s estimated replacement cost is an analysis of the number of fixed-dollar labor reimbursements expected to be claimed by third-party installers over the limited offering period."
+          },
+          {
+            "block_id": "b1442",
+            "text": "The Company’s warranty obligations related to products sold since January 1, 2014 provide the Company the right, but not the requirement, to assign its warranty obligations to a third party. Under ASC 825, “Financial Instruments” (also referred to as “fair value option”), an entity may choose to elect the fair value option for such warranties at the time it first recognizes the eligible item. The Company made an irrevocable election to account for all eligible warranty obligations associated with products sold since January 1, 2014 at fair value. This election was made to reflect the underlying economics of the time value of money for an obligation that will be settled over an extended period of up to 25 years."
+          },
+          {
+            "block_id": "b1445",
+            "text": "Commitments and Contingencies"
+          },
+          {
+            "block_id": "b1446",
+            "text": "In the normal course of business, the Company is subject to loss contingencies, such as legal proceedings and claims arising out of its business. An accrual for a loss contingency is recognized when it is probable and the amount of loss can be reasonably estimated."
+          },
+          {
+            "block_id": "b1705",
+            "text": "Settlements(27,086)(27,611)(27,216)"
+          },
+          {
+            "block_id": "b1733",
+            "text": "•Level 1 - Valuations based on quoted prices in active markets for identical assets or liabilities that the Company is able to access. Since valuations are based on quoted prices that are readily and regularly available in an active market, valuation of such assets or liabilities do not entail a significant degree of judgment."
+          },
+          {
+            "block_id": "b1818",
+            "text": "Settlements(20,392)(21,789)"
+          },
+          {
+            "block_id": "b1848",
+            "text": "In the fourth quarter of 2023, the Company implemented a restructuring plan (the “2023 Restructuring Plan”) designed to increase operational efficiencies and execution, reduce operating costs, and better align the Company’s workforce and cost structure with current market conditions, and the Company’s business needs, strategic priorities and ongoing commitment to profitable growth. The Company completed its restructuring activities under the 2023 Restructuring Plan in the fourth quarter of 2024 and substantially all of the remaining liabilities as of December 31, 2024, were settled by year ended December 31, 2025."
+          },
+          {
+            "block_id": "b1865",
+            "text": "Non-cash settlement and other(292)(893)(881)(2,066)"
+          },
+          {
+            "block_id": "b1869",
+            "text": "Non-cash settlement and other— — — —"
+          },
+          {
+            "block_id": "b1889",
+            "text": "Non-cash settlement and other— — (3,902)(3,902)"
+          },
+          {
+            "block_id": "b1893",
+            "text": "Non-cash settlement and other(588)1,284 (1,527)(831)"
+          },
+          {
+            "block_id": "b1928",
+            "text": "The initial conversion rate for the Notes due 2028 is 3.5104 shares of common stock per $1,000 principal amount of the Notes due 2028 (which represents an initial conversion price of approximately $284.87 per share). Upon conversion, the Company will settle conversions of the Notes due 2028 through payment or delivery, as the case may be, of cash, shares of its common stock or a combination of cash and shares of its common stock, at the Company’s election."
+          },
+          {
+            "block_id": "b1936",
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions (the “2028 Warrants”) whereby the Company sold warrants to acquire approximately 2.0 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $397.91 per share. The Company received aggregate proceeds of approximately $123.4 million from the sale of the 2028 Warrants. If the market value per share of the Company’s common stock, as measured under the 2028 Warrants, exceeds the strike price of the 2028 Warrants, the 2028 Warrants will have a dilutive effect on the Company’s earnings per share, unless the Company elects, subject to certain conditions, to settle the 2028 Warrants in cash. Taken together, the purchase of the Notes due 2028 Hedge and the sale of the 2028 Warrants are intended to reduce potential dilution from the conversion of the Notes due 2028 and to effectively increase the overall conversion price from $284.87 to $397.91 per share. The 2028 Warrants are only exercisable on the applicable expiration dates in accordance with the Notes due 2028 Hedge. Subject to the other terms of the 2028 Warrants, the first expiration date applicable to the Notes due 2028 Hedge is June 1, 2028, and the final expiration date applicable to the Notes due 2028 Hedge is July 27, 2028."
+          },
+          {
+            "block_id": "b1940",
+            "text": "The initial conversion rate for the Notes due 2026 is 3.2523 shares of common stock per $1,000 principal amount of the Notes due 2026 (which represents an initial conversion price of approximately $307.47 per share). Upon conversion, the Company will settle conversions of Notes due 2026 through payment or delivery, as the case may be, of cash, shares of its common stock or a combination of cash and shares of its common stock, at the Company’s election."
+          },
+          {
+            "block_id": "b1951",
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions, including in connection with the issuance of additional Notes due 2026 upon the initial purchasers’ exercise of their over-allotment option (the “2026 Warrants”), whereby the Company sold warrants to acquire approximately 2.1 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $397.91 per share. The Company received aggregate proceeds of approximately $97.4 million from the sale of the 2026 Warrants. If the market value per share of the Company’s common stock, as measured under the 2026 Warrants, exceeds the strike price of the 2026 Warrants, the 2026 Warrants will have a dilutive effect on the Company’s earnings per share, unless the Company elects, subject to certain conditions, to settle the 2026 Warrants in cash. Taken together, the purchase of the Notes due 2026 Hedge and the sale of the 2026 Warrants are intended to reduce potential dilution from the conversion of the Notes due 2026 and to effectively increase the overall conversion price from $307.47 to $397.91 per share. The 2026 Warrants are only exercisable on the applicable expiration dates in accordance with the 2026 Warrants. Subject to the other terms of the 2026 Warrants, the first expiration date applicable to the Warrants is June 1, 2026, and the final expiration date applicable to the 2026 Warrants is July 27, 2026."
+          },
+          {
+            "block_id": "b1954",
+            "text": "The Company settled all of its outstanding 0.25% convertible senior notes due 2025 (the “Notes due 2025”) on March 1, 2025. As part of the settlement, the Company paid $102.2 million in cash towards principal amount of the Notes due 2025 and no shares were issued in connection with the settlement as the conversion value was less than the principal amount of the Notes due 2025. Following the settlement, there were no Notes due 2025 outstanding as of December 31, 2025."
+          },
+          {
+            "block_id": "b1958",
+            "text": "13. COMMITMENTS AND CONTINGENCIES"
+          },
+          {
+            "block_id": "b2015",
+            "text": "The Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. An accrual for a loss contingency is recognized when it is probable and the amount of loss or recovery can be reasonably estimated. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against the Company in a reporting period for amounts above management’s expectations, the Company’s business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. As of December 31, 2025, in the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims."
+          },
+          {
+            "block_id": "b2024",
+            "text": "On May 19, 2021, at the 2021 annual meeting of stockholders of the Company, the stockholders approved the 2021 Equity Incentive Plan (the “2021 Plan”), as the successor to the 2011 Plan. The 2021 Plan was amended and restated at the 2025 annual meeting of stockholders of the Company to increase the number of shares of common stock authorized for issuance thereunder by an additional 4,000,000 shares. The 2021 Plan provides for the grant of incentive stock options, SARS, RSAs, RSUs, PSUs and other forms of equity compensation. Eligible participants under the 2021 Plan include Company’s employees, directors and consultants. The 2021 Plan provides, among other things, that the number of shares of the Company’s common stock, $0.00001 par value per share, reserved for issuance under the 2021 Plan (subject to adjustment for certain changes in the Company’s capitalization) is equal to: (A) the sum of (i) 13,100,456 newly reserved shares of the Company’s common stock and (ii) 5,256,517 Returning Shares (as defined below) as such shares become available from time to time as set forth in the 2021 Plan. “Returning Shares” means shares subject to any outstanding award granted under the 2011 Plan (“Prior Plan Award”) that are (i) not issued because such Prior Plan Award or any portion thereof expires or otherwise terminates without all of the shares covered by such Prior Plan Award having been issued, or is settled in cash; (ii) forfeited back to or repurchased by the Company because of a failure to vest; or (iii) reacquired or withheld (or not issued) by the Company to satisfy the purchase price of, or a tax withholding obligation in connection with, a Prior Plan Award that is a Full Value Award (as defined in the 2021 Plan). As of December 31, 2025, 5,978,943 shares remained available for issuance under the 2021 Plan."
+          },
+          {
+            "block_id": "b2254",
+            "text": "The Company's accounting for deferred taxes involves the evaluation of a number of factors concerning the realizability of the Company's deferred tax assets. Assessing the realizability of deferred tax assets is dependent upon several factors, including the likelihood and amount, if any, of future taxable income in relevant jurisdictions during the periods in which those temporary differences become deductible. The Company's management forecasts taxable income by considering all available positive and negative evidence including its history of operating income or losses and its financial plans and estimates which are used to manage the business. These assumptions require significant judgment about future taxable income. The amount of deferred tax assets considered realizable is subject to adjustment in future periods if estimates of future taxable income are reduced"
+          },
+          {
+            "block_id": "b2273",
+            "text": "Decreases related to settlements with taxing authorities(6,820)— —"
+          },
+          {
+            "block_id": "b2280",
+            "text": "The Company includes interest and penalties related to unrecognized tax benefits within the income tax provision. In the years ended December 31, 2025, 2024 and 2023, the total amount of gross interest and penalties accrued was $6.6 million, $6.1 million and $2.9 million, respectively. Both the unrecognized tax benefits and the associated interest and penalties that are not expected to result in payment or receipt of cash within one year are classified as other non-current liabilities in the consolidated balance sheets. In connection with tax matters, the Company’s interest and penalty expense recognized in 2025, 2024 and 2023 in the consolidated statements of operations was $0.4 million, $2.3 million and $3.8 million, respectively."
+          },
+          {
+            "block_id": "b2334",
+            "text": "The Company under the relevant sections of the indenture, irrevocably may elect to settle principal in cash and any excess conversion value in cash or shares of the Company’s common stock for the Notes due 2028. If and when the Company makes such election, there would be no adjustment to net income and the Company would use the average share price to determine the potential number of shares issuable upon an assumed conversion to be included in the diluted share count."
+          },
+          {
+            "block_id": "b2335",
+            "text": "The Notes due 2026 are convertible at any time from September 1, 2025 until the close of business on the second scheduled trading day immediately preceding the maturity date of March 1, 2026. Upon conversion, the Company has elected, on August 28, 2025, to settle the Notes due 2026 with a combination of cash and shares of the Company’s common stock, whereby the principal amount would be settled in cash and any excess conversion value would be settled in shares of the Company's common stock. As a result, after the election date, there is no adjustment to net income and the Company uses the average share price to determine the potential number of shares issuable upon an assumed conversion to be included in the diluted share count."
+          }
+        ]
+      },
+      "raw_answer": "{\"decisions\":[{\"block_id\":\"b1169\",\"decision\":\"IN_SCOPE\",\"quote\":\"Commitments and contingencies (Note 13)\"},{\"block_id\":\"b1244\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1245\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1253\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1262\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1308\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1310\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1343\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1369\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1406\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1418\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1435\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1442\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1445\",\"decision\":\"IN_SCOPE\",\"quote\":\"Commitments and Contingencies\"},{\"block_id\":\"b1446\",\"decision\":\"IN_SCOPE\",\"quote\":\"In the normal course of business, the Company is subject to loss contingencies, such as legal proceedings and claims arising out of its business. An accrual for a loss contingency is recognized when it is probable and the amount of loss can be reasonably estimated.\"},{\"block_id\":\"b1705\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1733\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1818\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1848\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1865\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1869\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1889\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1893\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1928\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1936\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1940\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1951\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1954\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1958\",\"decision\":\"IN_SCOPE\",\"quote\":\"13. COMMITMENTS AND CONTINGENCIES\"},{\"block_id\":\"b2015\",\"decision\":\"IN_SCOPE\",\"quote\":\"The Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. An accrual for a loss contingency is recognized when it is probable and the amount of loss or recovery can be reasonably estimated.\"},{\"block_id\":\"b2024\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b2254\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b2273\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b2280\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b2334\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b2335\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null}],\"also_in_scope\":[]}",
+      "raw_answer_sha256": "51008a6ed9e1feeb91429ebb24e86a69860033bb7a10a03b1aac500db897203c",
+      "original_terminal_status": "SUCCEEDED",
+      "business_acceptance": "NOT_ESTABLISHED_BY_CONTRACT_FORM"
+    },
+    {
+      "name": "D02-ford_motor_company-2025-12-31",
+      "original_request_member": "root/calls/0009/semantic-request.json",
+      "request": {
+        "company_id": "ford_motor_company",
+        "contract": "D02_ITEM_8_LEGAL_REVIEW_V1",
+        "filing": {
+          "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+          "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+          "text_document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8"
+        },
+        "metric_id": "D02",
+        "must_decide": [],
+        "period_end": "2025-12-31",
+        "record_type": "D02_ITEM_8_LEGAL_REVIEW_REQUEST",
+        "request_id": "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+        "source_id": "sha256:81eaa388232423c92e6bc941ea19de7871797da5816b0248f41ff3dacfada835",
+        "target_cik": "37996",
+        "blocks": []
+      },
+      "raw_answer": "{\"decisions\":[],\"also_in_scope\":[]}",
+      "raw_answer_sha256": "e3023cee53826a2cc51b1c7a163205a322c72758d642fef95da326afba9fff27",
+      "original_terminal_status": "SUCCEEDED",
+      "business_acceptance": "NOT_ESTABLISHED_BY_CONTRACT_FORM"
+    },
+    {
+      "name": "D02-marriott_international-2023-12-31",
+      "original_request_member": "root/calls/0012/semantic-request.json",
+      "request": {
+        "company_id": "marriott_international",
+        "contract": "D02_ITEM_8_LEGAL_REVIEW_V1",
+        "filing": {
+          "raw_asset_id": "sha256:3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+          "source_reference_id": "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4",
+          "text_document_id": "sha256:62335c8d4994203bdc5e8e252e852432c52bbfd665208251eb3bfa3c97a57045"
+        },
+        "metric_id": "D02",
+        "must_decide": [
+          "b702",
+          "b987",
+          "b1009",
+          "b1029",
+          "b1031",
+          "b1082",
+          "b1083",
+          "b1084",
+          "b1153",
+          "b1158",
+          "b1163",
+          "b1166",
+          "b1167",
+          "b1217",
+          "b1220",
+          "b1233",
+          "b1234"
+        ],
+        "period_end": "2023-12-31",
+        "record_type": "D02_ITEM_8_LEGAL_REVIEW_REQUEST",
+        "request_id": "sha256:8d4745814b7b7b83a2b45bbe507703d603af2a33f2f1e764b81228da30999b0e",
+        "source_id": "sha256:1b1a0ab4649cbb0a64fae6945eeee5f7bc822c6cd0570a854b7b8845505217f9",
+        "target_cik": "1048286",
+        "blocks": [
+          {
+            "block_id": "b702",
+            "text": "Commitments and Contingencies"
+          },
+          {
+            "block_id": "b987",
+            "text": "Preparation of financial statements that conform with U.S. generally accepted accounting principles (“GAAP”) requires management to make estimates and assumptions that affect the reported amounts of assets and liabilities as of the date of the financial statements, the reported amounts of revenues and expenses during the reporting periods, and the disclosures of contingent liabilities. Accordingly, ultimate results could differ from those estimates."
+          },
+          {
+            "block_id": "b1009",
+            "text": "We have multi-year agreements for our co-branded credit cards associated with our Loyalty Program. Under these agreements, we have performance obligations to provide a license to the intellectual property associated with our brands and marketing lists (“Licensed IP”) to the financial institutions that issue the credit cards, to arrange for the redemption of Loyalty Program points as discussed in the preceding paragraph, and to arrange for the redemption of free night certificates and gift cards provided to cardholders. We receive fees from these agreements, including fixed amounts that are primarily payable at contract inception, and variable amounts that are paid to us monthly over the term of the agreements, generally based on: (1) the number of free night certificates issued or redeemed; (2) the number of Loyalty Program points purchased; (3) the volume of cardholder spend; and (4) the number of gift cards issued. We allocate those fees among the performance obligations, including the Licensed IP, our Loyalty Program points, free night certificates, and gift cards provided to cardholders based on their estimated standalone selling prices. The estimation of the standalone selling prices requires significant judgments based upon generally accepted valuation methodologies regarding the value of our Licensed IP, the amount of funding we will receive, and the number of Loyalty Program points, free night certificates, and gift cards cardholders will ultimately redeem. We base our estimates of these amounts on our historical experience and expectation of future cardholder behavior. We recognize the portion of the Licensed IP revenue that meets the sales-based royalty criteria as the credit cards are used and the remaining portion of the Licensed IP revenue on a straight-line basis over the contract term. In our Income Statements, we primarily recognize Licensed IP revenue in the “Franchise fees” caption, and we recognize a portion in the “Cost reimbursement revenue” caption. We recognize the revenue related to the Loyalty Program points as discussed in the preceding paragraph. We recognize the revenue related to the free night certificates and gift cards when the related service is provided. We recognize revenue net of the redemption cost, as our performance obligation is to facilitate the transaction between the Loyalty Program member and the managed or franchised property."
+          },
+          {
+            "block_id": "b1029",
+            "text": "We record the amounts of taxes payable or refundable for the current year, as well as deferred tax liabilities and assets for the future tax consequences of events we have recognized in our Financial Statements or tax returns, using judgment in assessing future profitability and the likely future tax consequences of those events. We base our estimates of deferred tax assets and liabilities on current tax laws, rates and interpretations, and, in certain cases, business plans and other expectations about future outcomes. We develop our estimates of future profitability based on our historical data and experience, industry projections, micro and macro general economic condition projections, and our expectations. We account for U.S. tax on Global Intangible Low-Taxed Income in the period incurred."
+          },
+          {
+            "block_id": "b1031",
+            "text": "For tax positions we have taken or expect to take in a tax return, we apply a more likely than not threshold (that is, a likelihood of more than 50 percent), under which we must conclude a tax position is more likely than not to be sustained, assuming that the position will be examined by the appropriate taxing authority that has full knowledge of all relevant information, to recognize the benefit. In determining our provision for income taxes, we use judgment, reflecting our estimates and assumptions, in applying the more likely than not threshold. We recognize accrued interest and penalties for our unrecognized tax benefits as a component of tax expense. See Note 6 for further information."
+          },
+          {
+            "block_id": "b1082",
+            "text": "We self-insure for certain levels of liability, workers’ compensation, property insurance, and employee medical coverage. We accrue estimated costs of these self-insurance programs at the present value of projected settlements for known and incurred but not reported claims. We use a discount rate of 4.00 percent, based upon market rates, to determine the present value of the projected settlements, which we consider to be reasonable given our history of settled claims, including payment patterns and the fixed nature of the individual settlements. We classify the current portion of our self-insurance reserve in the “Accrued expenses and other” caption and the noncurrent portion in the “Other noncurrent liabilities” caption of our Balance Sheets. The current portion of our self-insurance reserve was $172 million at December 31, 2023 and $130 million at December 31, 2022. The noncurrent portion of our self-insurance reserve was $387 million at December 31, 2023 and $287 million at December 31, 2022."
+          },
+          {
+            "block_id": "b1083",
+            "text": "Legal Contingencies"
+          },
+          {
+            "block_id": "b1084",
+            "text": "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances."
+          },
+          {
+            "block_id": "b1153",
+            "text": "Decrease attributable to settlements with taxing authorities(48)"
+          },
+          {
+            "block_id": "b1158",
+            "text": "Decrease attributable to settlements with taxing authorities(15)"
+          },
+          {
+            "block_id": "b1163",
+            "text": "Decrease attributable to settlements with taxing authorities(9)"
+          },
+          {
+            "block_id": "b1166",
+            "text": "Our unrecognized tax benefit balance included $161 million at year-end 2023, $241 million at year-end 2022, and $266 million at year-end 2021 of tax positions that, if recognized, would impact our effective tax rate. It is reasonably possible that within the next 12 months we will reach resolution of income tax examinations in one or more jurisdictions. The actual amount of any change to our unrecognized tax benefits could vary depending on the timing and nature of the settlement. Therefore, an estimate of the change cannot be provided. We recognize accrued interest and penalties for our unrecognized tax benefits as a component of tax expenses. Related interest expense (benefit) totaled $6 million in 2023, $13 million in 2022, and $(21) million in 2021. We accrued interest and penalties related to our unrecognized tax benefits of approximately $52 million at year-end 2023 and $49 million at year-end 2022."
+          },
+          {
+            "block_id": "b1167",
+            "text": "We file income tax returns, including returns for our subsidiaries, in various jurisdictions around the world. The U.S. Internal Revenue Service has examined our federal income tax returns, and as of year-end 2023, we have settled all issues for"
+          },
+          {
+            "block_id": "b1217",
+            "text": "NOTE 7. COMMITMENTS AND CONTINGENCIES"
+          },
+          {
+            "block_id": "b1220",
+            "text": "We present the maximum potential amount of our future guarantee fundings and the carrying amount of our liability for our debt service, operating profit, and other guarantees (excluding contingent purchase obligations) for which we are the primary obligor at year-end 2023 in the following table:"
+          },
+          {
+            "block_id": "b1233",
+            "text": "In conjunction with financing obtained for specific projects or properties owned by us or entities in which we have an investment, we may provide industry standard indemnifications to the lender for loss, liability, or damage occurring as a result of the actions of the entity or our own actions."
+          },
+          {
+            "block_id": "b1234",
+            "text": "Contingent Purchase Obligation"
+          }
+        ]
+      },
+      "raw_answer": "{\"decisions\":[{\"block_id\":\"b702\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b987\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1009\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1029\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1031\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1082\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1083\",\"decision\":\"IN_SCOPE\",\"quote\":\"Legal Contingencies\"},{\"block_id\":\"b1084\",\"decision\":\"IN_SCOPE\",\"quote\":\"We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss.\"},{\"block_id\":\"b1153\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1158\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1163\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1166\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1167\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1217\",\"decision\":\"IN_SCOPE\",\"quote\":\"NOTE 7. COMMITMENTS AND CONTINGENCIES\"},{\"block_id\":\"b1220\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1233\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1234\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null}],\"also_in_scope\":[]}",
+      "raw_answer_sha256": "b202bad245eef1025c932788d4851c2f0274f849378a13d8c92c716e68e338cd",
+      "original_terminal_status": "SUCCEEDED",
+      "business_acceptance": "NOT_ESTABLISHED_BY_CONTRACT_FORM"
+    },
+    {
+      "name": "D02-marriott_international-2024-12-31",
+      "original_request_member": "root/calls/0013/semantic-request.json",
+      "request": {
+        "company_id": "marriott_international",
+        "contract": "D02_ITEM_8_LEGAL_REVIEW_V1",
+        "filing": {
+          "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+          "text_document_id": "sha256:d01421aeb0e894843425109c5da931643157965668cc24d35d6ae9122f6e0e4d"
+        },
+        "metric_id": "D02",
+        "must_decide": [
+          "b732",
+          "b1018",
+          "b1042",
+          "b1061",
+          "b1063",
+          "b1066",
+          "b1111",
+          "b1112",
+          "b1113",
+          "b1184",
+          "b1189",
+          "b1194",
+          "b1197",
+          "b1198",
+          "b1249",
+          "b1265"
+        ],
+        "period_end": "2024-12-31",
+        "record_type": "D02_ITEM_8_LEGAL_REVIEW_REQUEST",
+        "request_id": "sha256:de5a7e20f0a1276e150da741a125aa8ecb175509d5b021a3c63f43ae14d689da",
+        "source_id": "sha256:c781bef519f69310bba42f83ce0649e7bd83e3d24061dcc4a429fda8e07640a6",
+        "target_cik": "1048286",
+        "blocks": [
+          {
+            "block_id": "b732",
+            "text": "Commitments and Contingencies"
+          },
+          {
+            "block_id": "b1018",
+            "text": "Preparation of financial statements that conform with U.S. generally accepted accounting principles (“GAAP”) requires management to make estimates and assumptions that affect the reported amounts of assets and liabilities as of the date of the financial statements, the reported amounts of revenues and expenses during the reporting periods, and the disclosures of contingent liabilities. Accordingly, ultimate results could differ from those estimates."
+          },
+          {
+            "block_id": "b1042",
+            "text": "We have multi-year agreements for our co-branded credit cards associated with our Loyalty Program. Under these agreements, we have performance obligations to provide a license to the intellectual property associated with our brands and marketing lists (“Licensed IP”) to the financial institutions that issue the credit cards, to arrange for the redemption of Loyalty Program points as discussed in the preceding paragraph, and to arrange for the redemption of free night certificates and gift cards provided to cardholders. We receive fees from these agreements, including fixed amounts that are primarily payable at contract inception, and variable amounts that are paid to us monthly over the term of the agreements, generally based on: (1) the number of free night certificates issued or redeemed; (2) the number of Loyalty Program points purchased; (3) the volume of cardholder spend; and (4) the number of gift cards issued. We allocate those fees among the performance obligations, including the Licensed IP, our Loyalty Program points, free night certificates, and gift cards provided to cardholders based on their estimated standalone selling prices. The estimation of the standalone selling prices requires significant judgments based upon generally accepted valuation methodologies regarding the value of our Licensed IP, the amount of funding we will receive, and the number of Loyalty Program points, free night certificates, and gift cards cardholders will ultimately redeem. We base our estimates of these amounts on our historical experience and expectation of future cardholder behavior. We recognize the portion of the Licensed IP revenue that meets the sales-based royalty criteria as the credit cards are used and the remaining portion of the Licensed IP revenue on a straight-line basis over the contract term. In our Income Statements, we primarily recognize Licensed IP revenue in the “Franchise fees” caption, and we recognize a portion in the “Cost reimbursement revenue” caption. We recognize the revenue related to the Loyalty Program points as discussed in the preceding paragraph. We recognize the revenue related to the free night certificates and gift cards when the related service is provided. We recognize revenue net of the redemption cost, as our performance obligation is to facilitate the transaction between the Loyalty Program member and the managed or franchised property."
+          },
+          {
+            "block_id": "b1061",
+            "text": "We record the amounts of taxes payable or refundable for the current year, as well as deferred tax liabilities and assets for the future tax consequences of events we have recognized in our Financial Statements or tax returns, using judgment in assessing future profitability and the likely future tax consequences of those events. We base our estimates of deferred tax assets and liabilities on current tax laws, rates and interpretations, and, in certain cases, business plans and other expectations about future outcomes. We develop our estimates of future profitability based on our historical data and experience, industry projections, micro and macro general economic condition projections, and our expectations. We account for U.S. tax on Global Intangible Low-Taxed Income in the period incurred."
+          },
+          {
+            "block_id": "b1063",
+            "text": "For tax positions we have taken or expect to take in a tax return, we apply a more likely than not threshold (that is, a likelihood of more than 50 percent), under which we must conclude a tax position is more likely than not to be sustained, assuming that the position will be examined by the appropriate taxing authority that has full knowledge of all relevant information, to recognize the benefit. In determining our provision for income taxes, we use judgment, reflecting our estimates"
+          },
+          {
+            "block_id": "b1066",
+            "text": "and assumptions, in applying the more likely than not threshold. We recognize accrued interest and penalties for our unrecognized tax benefits as a component of tax expense. See Note 6 for further information."
+          },
+          {
+            "block_id": "b1111",
+            "text": "We self-insure for certain levels of liability, workers’ compensation, property insurance, and employee medical coverage. We accrue estimated costs of these self-insurance programs at the present value of projected settlements for known and incurred but not reported claims. We use a discount rate of 4.25 percent, based upon market rates, to determine the present value of the projected settlements, which we consider to be reasonable given our history of settled claims, including payment patterns and the fixed nature of the individual settlements. We classify the current portion of our self-insurance reserve in the “Accrued expenses and other” caption and the noncurrent portion in the “Other noncurrent liabilities” caption of our Balance Sheets. The current portion of our self-insurance reserve was $198 million at December 31, 2024 and $172 million at December 31, 2023. The noncurrent portion of our self-insurance reserve was $422 million at December 31, 2024 and $387 million at December 31, 2023."
+          },
+          {
+            "block_id": "b1112",
+            "text": "Legal Contingencies"
+          },
+          {
+            "block_id": "b1113",
+            "text": "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances."
+          },
+          {
+            "block_id": "b1184",
+            "text": "Decrease attributable to settlements with taxing authorities(15)"
+          },
+          {
+            "block_id": "b1189",
+            "text": "Decrease attributable to settlements with taxing authorities(9)"
+          },
+          {
+            "block_id": "b1194",
+            "text": "Decrease attributable to settlements with taxing authorities(2)"
+          },
+          {
+            "block_id": "b1197",
+            "text": "Our unrecognized tax benefit balance included $171 million at year-end 2024, $161 million at year-end 2023, and $241 million at year-end 2022 of tax positions that, if recognized, would impact our effective tax rate. It is reasonably possible that within the next 12 months we will reach resolution of income tax examinations in one or more jurisdictions. The actual amount of any change to our unrecognized tax benefits could vary depending on the timing and nature of the settlement. Therefore, an estimate of the change cannot be provided. We recognize accrued interest and penalties for our unrecognized tax benefits as a component of tax expenses. Related interest expense totaled $14 million in 2024, $6 million in 2023, and $13 million in 2022. We accrued interest and penalties related to our unrecognized tax benefits of approximately $63 million at year-end 2024 and $52 million at year-end 2023."
+          },
+          {
+            "block_id": "b1198",
+            "text": "We file income tax returns, including returns for our subsidiaries, in various jurisdictions around the world. The U.S. Internal Revenue Service has examined our federal income tax returns, and as of year-end 2024, we have settled all issues for"
+          },
+          {
+            "block_id": "b1249",
+            "text": "NOTE 7. COMMITMENTS AND CONTINGENCIES"
+          },
+          {
+            "block_id": "b1265",
+            "text": "In conjunction with financing obtained for specific projects or properties owned by us or entities in which we have an investment, we may provide industry standard indemnifications to the lender for loss, liability, or damage occurring as a result of the actions of the entity or our own actions."
+          }
+        ]
+      },
+      "raw_answer": "{\"decisions\":[{\"block_id\":\"b732\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1018\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1042\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1061\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1063\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1066\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1111\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1112\",\"decision\":\"IN_SCOPE\",\"quote\":\"Legal Contingencies\"},{\"block_id\":\"b1113\",\"decision\":\"IN_SCOPE\",\"quote\":\"We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss.\"},{\"block_id\":\"b1184\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1189\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1194\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1197\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1198\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null},{\"block_id\":\"b1249\",\"decision\":\"IN_SCOPE\",\"quote\":\"NOTE 7. COMMITMENTS AND CONTINGENCIES\"},{\"block_id\":\"b1265\",\"decision\":\"OUT_OF_SCOPE\",\"quote\":null}],\"also_in_scope\":[]}",
+      "raw_answer_sha256": "e933b47570268d69d925f853b002317d7cec3b39d83c506508419c109faf4aa6",
+      "original_terminal_status": "SUCCEEDED",
+      "business_acceptance": "NOT_ESTABLISHED_BY_CONTRACT_FORM"
     }
   ]
 }

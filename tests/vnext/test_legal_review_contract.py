@@ -181,6 +181,26 @@ class SavedFailedResponsesTest(unittest.TestCase):
                 self.assertEqual(case["overlong_quotes"], problems)
         self.assertEqual(14, seen)
 
+    def test_four_original_contract_passes_keep_their_complete_answers(self):
+        cases = self.fixture["contract_pass_cases"]
+        self.assertEqual(4, len(cases))
+        for case in cases:
+            with self.subTest(response=case["name"]):
+                self.assertEqual("SUCCEEDED", case["original_terminal_status"])
+                self.assertEqual(case["raw_answer_sha256"], hashlib.sha256(
+                    case["raw_answer"].encode("utf-8")).hexdigest())
+                decisions, added = review.validate_answer(request=case["request"], raw_output=case["raw_answer"])
+                self.assertEqual(set(case["request"]["must_decide"]), set(decisions))
+                texts = {b["block_id"]: b["text"] for b in case["request"]["blocks"]}
+                for identity, entry in {**decisions, **added}.items():
+                    if entry.get("decision") != "OUT_OF_SCOPE":
+                        self.assertIn(entry["quote"], texts[identity])
+                # A transport/form success does not settle omissions or the
+                # definition's legal scope. In particular the two Marriott
+                # answers retain their separately recorded self-insurance gap.
+                self.assertEqual("NOT_ESTABLISHED_BY_CONTRACT_FORM", case["business_acceptance"])
+        self.assertEqual(self.original_bytes, self.path.read_bytes())
+
 
 if __name__ == "__main__":
     unittest.main()
