@@ -75,7 +75,8 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     def prepare(source):
         if metric_id in LODGING_METRIC_IDS:
             from .normal_lodging_results import prepare_ordinary_lodging_case
-            return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id)
+            return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,
+                rules_root=Path(__file__).resolve().parents[2])
         return _ordinary_case(source,company_id,metric_id)
     return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
         metric_id=metric_id, factory=prepare,

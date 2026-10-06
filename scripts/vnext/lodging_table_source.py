@@ -260,10 +260,11 @@ def read_selected_lodging_source(*,raw,blob,reference,filing,company_id,period,p
     return {**body,'component_id':content_hash(value=body)}
 
 
-def prepare_saved_lodging_source(*,repo_root:Path,company_id:str,prepared_input=None):
-    path=resolve_repository_file(repo_root=repo_root,repo_relative_path=POLICY_PATH)
+def prepare_saved_lodging_source(*,repo_root:Path,company_id:str,prepared_input=None,rules_root=None):
+    path=resolve_repository_file(repo_root=repo_root if rules_root is None else Path(rules_root),repo_relative_path=POLICY_PATH)
     _need(path.read_bytes()==(ROOT/POLICY_PATH).read_bytes() and strict_json_file(path=path)==POLICY,'LODGING_INSTALLED_POLICY_CHANGED')
-    prepared=(prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+    prepared=(prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,
+              **({} if rules_root is None else {'ordinary_registered':True}))
               if prepared_input is None else prepared_input)
     _need(prepared['company_id']==company_id,'LODGING_PREPARED_COMPANY_CONFLICT')
     _need(prepared['subject_policy']['mode']=='CONTINUOUS_PRIMARY' and not prepared['amendments'],'LODGING_SOURCE_SUBJECT_OR_AMENDMENT_UNRESOLVED')

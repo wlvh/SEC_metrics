@@ -308,3 +308,13 @@ Retained old checkpoint/export and unknown/failed terminal protection plus
 relaxation or old receipt re-signing. This addresses the4 diagnosed obsolete
 trust assertions only; ancestor byte-binding and unrelated CI failures remain
 separate work, not automatically fixed or declared green.
+
+### B10/B11 source-only input, program-owned rules (2026-10-07)
+
+Existing lodging wrappers now accept optional `rules_root=None`; omitted arguments retain the old route and return shape. The current saved-result entry explicitly supplies the program root. Registry subject agreement, period, unit, full source/table relationships and original shared calculation remain checked. Source parsing/calculation functions owned by #47 are unchanged.
+
+Actual existing company CLI used the source-only package (registry, successful request log/manifest, original bodies and headers; no code, catalog, calculation configuration, git or creator journal), an independent writable state/output root and current program rules. Marriott FY2025 B10=69.3 percent and B11=128.8 USD, FLOW_COMPLETED in6.263s; CSV/evidence and ordinary records were produced. No source retrieval or model request, no production adoption. Result identity remains separately checked; this does not establish all-family/amendment root separation or new online discovery.
+
+`lodging-source-only-rule-root.json` records exact measured base12585e75 plus file hashes of the uncommitted source delta, roots and result identities.24 targeted tests pass8.390s;90 combined affected tests pass15.598s. Default selected-lodging tests are reused in this affected run; independent old large material and D04 company runs are not repeated. The source-only fixture adds lodging calculations to its shared class preparation and proves one shared grid; it does not copy an old Result into the source package.
+
+This is wrapper/parameter adaptation for [shared-with-#47], not another selector. Remaining source/program root separation is recorded by actual family; no unconditional full-root or whole-CI acceptance.

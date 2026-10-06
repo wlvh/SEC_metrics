@@ -11,6 +11,7 @@ from vnext.normal_annual_input import prepare_saved_annual_input
 from vnext.ordinary_saved_result import create_saved_result, read_saved_result
 from vnext.normal_zero_ai_results import NormalZeroAiError
 from vnext.normal_governance_input import _Sources, _filings
+from vnext.deterministic_router import shared_xbrl_parses
 
 
 class SeparateRuleRootTest(unittest.TestCase):
@@ -37,6 +38,11 @@ class SeparateRuleRootTest(unittest.TestCase):
                 shutil.copyfile(REPO_ROOT/relative,target)
         cls.growth=create_saved_result(source_root=cls.source,output_root=cls.root/'growth',
                                       company_id='marriott_international',metric_id='B02')
+        cls.lodging={}
+        with shared_xbrl_parses():
+            for metric in ('B10','B11'):
+                cls.lodging[metric]=create_saved_result(source_root=cls.source,output_root=cls.root/metric,
+                    company_id='marriott_international',metric_id=metric,shared_input_root=cls.root/'shared-inputs')
 
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()
@@ -63,6 +69,16 @@ class SeparateRuleRootTest(unittest.TestCase):
         self.assertEqual(self.growth['manifest']['rules_root'],str(REPO_ROOT))
         self.assertFalse((self.source/'catalog').exists())
         self.assertEqual({p.name for p in (self.source/'config').iterdir()},{'company_registry.csv'})
+
+    def test_existing_shared_lodging_calculation_uses_program_rules_and_keeps_source_only(self):
+        self.assertEqual(self.lodging['B10']['result']['value'],'0.693')
+        self.assertEqual(self.lodging['B11']['result']['value'],'128.8')
+        for saved in self.lodging.values():
+            self.assertEqual(saved['manifest']['rules_root'],str(REPO_ROOT))
+            self.assertEqual(saved['manifest']['target_period']['fiscal_year'],2025)
+        self.assertFalse((self.source/'catalog').exists())
+        self.assertEqual({p.name for p in (self.source/'config').iterdir()},{'company_registry.csv'})
+        self.assertEqual(len(list((self.root/'shared-inputs').glob('*.json'))),1)
 
     def test_registry_subject_change_is_not_hidden_by_program_rules(self):
         path=self.source/'config/company_registry.csv';original=path.read_bytes()

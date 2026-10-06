@@ -86,11 +86,18 @@ def calculate_selected_lodging_metric(*, prepared, component, reference, metric_
     return {'observation':observation,'result':result,'trace':trace,'selection':selection}
 
 
-def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str):
+def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str,rules_root=None):
     _need(metric_id in SPEC_PATHS,'ORDINARY_LODGING_METRIC_UNSUPPORTED')
-    spec=_spec(repo_root,metric_id)
-    prepared=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
-    period=prepared['table_input']['target_period'];traits=repository_company_traits(repo_root=repo_root,company_id=company_id)
+    rules=repo_root if rules_root is None else Path(rules_root)
+    spec=_spec(rules,metric_id)
+    if rules_root is not None:
+        from .company_registry import _registry_rows
+        source_row=next(r for r in _registry_rows(repo_root=repo_root) if r['company_id']==company_id)
+        rule_row=next(r for r in _registry_rows(repo_root=rules) if r['company_id']==company_id)
+        _need(source_row==rule_row,'ORDINARY_LODGING_SOURCE_SUBJECT_REGISTRY_CHANGED')
+    prepared=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,
+        **({} if rules_root is None else {'ordinary_registered':True}))
+    period=prepared['table_input']['target_period'];traits=repository_company_traits(repo_root=rules,company_id=company_id)
     reader=_Sources(repo_root,company_id,prepared['entity'])
     reader.read(submissions_url(cik=int(prepared['entity'])),role='sec_submissions_inventory',media_type='application/json')
     primary=reader.primary(prepared['filing'])
@@ -107,7 +114,8 @@ def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str)
         selection={'classification':'STRUCTURAL','reason_code':'TRAIT_NOT_APPLICABLE'}
     else:
         try:
-            source_component=prepare_saved_lodging_source(repo_root=repo_root,company_id=company_id,prepared_input=prepared)
+            source_component=prepare_saved_lodging_source(repo_root=repo_root,company_id=company_id,prepared_input=prepared,
+                **({} if rules_root is None else {'rules_root':rules}))
             component=source_component['component'];fact=component['selection']['facts'][metric_id]
             _need(source_component['prepared_input']==prepared and component['source_reference']==primary['source_reference'],
                   'ORDINARY_LODGING_SOURCE_SELECTION_CHANGED')
@@ -128,4 +136,5 @@ def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str)
         'source_records':records,'references':[r for r in records if r['record_type']=='SOURCE_REFERENCE'],
         'source_proofs':proofs,'admission':admission,'spec_paths':{metric_id:SPEC_PATHS[metric_id]},
         'compiled_specs':{metric_id:spec},'target_period':period,'expected_records':[*records,*assets,*observations,trace,result],
-        'results':{metric_id:result},'traces':{metric_id:trace},'observations':observations,'selection':selection}
+        'results':{metric_id:result},'traces':{metric_id:trace},'observations':observations,'selection':selection,
+        **({} if rules_root is None else {'rules_root':str(rules)})}
