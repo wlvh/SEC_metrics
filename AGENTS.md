@@ -60,17 +60,17 @@ ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登�
 
 用户已采用[110一次恢复授权](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5775635612)，确认充值已处理；不查询账户或发探针。保持原账本/binding/锚点、240/240/80及全部旧失败。`continuous_recovery_110.py`只绑定110的HTTP402、无可用输出、终态和业务摘要；新claim消费一次机会，原件不改。新停止仍生效，D03不调用，至少39基础资源缺口暂缓决定。恢复实现/绑定/限定独审/离线入口检查完成后才能执行原业务请求，不能把授权登记写成已恢复。
 
-### 跨 Issue 协作入口（COLLAB-28-47-v1.2）
+### 跨 Issue 协作入口（COLLAB-28-47-v1.3）
 
-权威原文：[Issue #28 协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；对方同文见 [Issue #47](https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1)。当前版本COLLAB-28-47-v1.2（2026-10-03），以实时正文为准；只维护本入口，不再复制协议全文。固定对方提交、有效反例预检、本方实际接入与正常读取闭环分别核验；旧运行可用原保存字节重放不等于开发文件永不可修改。共用核心由明确一方维护，按实际差异接收；开发方法链接第5.8节，真实用途/预算/机会及生产权限保持。
+权威原文：[Issue #28 协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；对方同文见 [Issue #47](https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1)。当前版本COLLAB-28-47-v1.3（2026-10-05），以实时正文及[修订记录5995910692](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5995910692)为准；只维护本入口，不再复制协议全文。固定对方提交、有效反例预检、本方实际接入与正常读取闭环分别核验；旧运行可用原保存字节重放不等于开发文件永不可修改。共用核心由明确一方维护，按实际差异接收；开发方法链接第5.8节，真实用途/预算/机会及生产权限保持。
 
-与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的接口按 `COMPANY-SEPARATION-v2.1-20261002` 及 [#28 通知5953695606](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5953695606) 接续：#54主实现获取—计算交接和公司独立处理，#28保留当期指标、正常更新、统一生产及旧路径退出，提供B13/D04计算侧输入、C04和journal读写边界并验证自己的消费者。共用改动一方维护、各自验证，用 `[shared-with-#54]` 回链；不把旧AI/Result当来源包必带答案，不借用/拆分预算。首个平台为OpenShift，集群及内网脚本/AI另期处理；此接口工作不代替v1.2正文条款或当前唯一队列。
+与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的接口按 `COMPANY-SEPARATION-v2.1-20261002` 及 [#28 通知5953695606](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5953695606) 接续：#54已交付获取—计算交接和公司独立处理，后续#28维护当期接入、#47维护历史接入；#28保留当期指标、正常更新、统一生产及旧路径退出，提供B13/D04计算侧输入、C04和journal读写边界并验证自己的消费者。共用改动一方维护、各自验证，用 `[shared-with-#54]` 回链；不把旧AI/Result当来源包必带答案，不借用/拆分预算。首个平台为OpenShift，集群及内网脚本/AI另期处理；此接口工作不代替v1.3正文条款或当前唯一队列。
 
 
 
 ### 与 #54 的接口
 
-[#54](https://github.com/wlvh/SEC_metrics/issues/54) 独立负责获取—计算交接与按公司运行的集中集成；#47 保留全部五年历史能力与验收责任，维护历史期间、来源依赖与运行读取接口，并验证自己的消费者。本方入口、固定提交、获取会话导出与公司交接物的差别及分工见 `docs/evidence/issue47_history/collab-54/README.md`；接口变化以 `[shared-with-#54]` 回链。COMPANY-SEPARATION-v2.1 的接口关系已写进 #47 正文 §2.3 第 9 项（用户确认）。同一 README 第 5 节记录实测得到的必要适配点和读写位置：
+[#54](https://github.com/wlvh/SEC_metrics/issues/54) 已完成，公司入口通过PR57进入main（`8588ccbbb1c91d81e0fb1a89dff3575214282549`）。#47负责历史能力在该入口中的接入与验证，不等待原执行者，不另建历史公司pipeline；#28继续维护当期消费者，既有共用核心分工不变。期间、来源、安装、运行版本或读取改动同时完成必要入口适配，验证当前财年模式和旧任务/旧Run按原身份读取。本方入口、固定提交、获取会话导出与公司交接物的差别及历史分工见 `docs/evidence/issue47_history/collab-54/README.md`；下列旧实验保持其原范围，不能代替v1.3接线或五年业务验收：
 - 冻结校验和安装按整本账本处理，每个 Run 数据根都带全部成功行的获取原件（一个期间 684 MB，其中 650 MB 是这些原件）。
 - 共用的冻结安装要在代码根执行 `git ls-files`，计算端离不开 git 索引，而且 `.git` 必须是目录。
 - 恢复与计算不读 HOME，也不写代码目录。
