@@ -1,0 +1,66 @@
+{
+  "upstream_head": "95849b6eb9e4e195afa6bc0202befd3c381927cb",
+  "company_id": "macys",
+  "actual_target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-02-04",
+    "period_end": "2025-02-01"
+  },
+  "original_source_sha256": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+  "original_source_bytes": 2171242,
+  "archive_sha256": "31720f004afdce4ce2cee01aa3d29b6140be94751f9d4ee79a383edb1fce860e",
+  "synthetic_variants_only_in_isolated_temporary_roots": true,
+  "results": {
+    "external_script": {
+      "status": "PARSED_TASK_INPUT_UNCHANGED",
+      "requires_candidate_processing": false,
+      "input_authenticity_verified_by_comparison": false,
+      "production_authorized": false,
+      "elapsed_seconds": 4.587809
+    },
+    "default_raw_comparison": {
+      "status": "SOURCE_CONTENT_CHANGED",
+      "requires_candidate_processing": true,
+      "input_authenticity_verified_by_comparison": false,
+      "production_authorized": false
+    },
+    "visible_disclosure": {
+      "status": "SOURCE_CONTENT_CHANGED",
+      "requires_candidate_processing": true,
+      "input_authenticity_verified_by_comparison": false,
+      "production_authorized": false,
+      "elapsed_seconds": 4.004874
+    },
+    "native_unit": {
+      "status": "SOURCE_CONTENT_CHANGED",
+      "requires_candidate_processing": true,
+      "input_authenticity_verified_by_comparison": false,
+      "production_authorized": false,
+      "elapsed_seconds": 4.904549
+    },
+    "wrong_fiscal_label": {
+      "status": "PERIOD_INTERPRETATION_CHANGED",
+      "requires_candidate_processing": true,
+      "input_authenticity_verified_by_comparison": false,
+      "production_authorized": false
+    },
+    "wrong_subject": {
+      "error": "SOURCE_UPDATE_SUBJECT_CHANGED"
+    },
+    "missing_dependency": {
+      "status": "SOURCE_CONTENT_CHANGED",
+      "requires_candidate_processing": true,
+      "input_authenticity_verified_by_comparison": false,
+      "production_authorized": false
+    }
+  },
+  "elapsed_seconds": 13.507349,
+  "company_update_or_AI_reuse_executed": false,
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "new_acceptances": 0
+}
