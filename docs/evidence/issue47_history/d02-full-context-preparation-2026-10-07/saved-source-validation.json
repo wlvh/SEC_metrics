@@ -1,0 +1,92 @@
+{
+  "source_archive": "docs/evidence/issue47_history/marriott2023-d02-full-executor-read-2026-10-05/input-materials.tar.gz",
+  "source_raw_asset_id": "sha256:3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+  "all_1834_raw_spans_checked": true,
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "normal_responsibility_blocks": 538,
+  "complete_item8_context_blocks": 839,
+  "must_decide": 27,
+  "same_blocks_and_must_decide_as_saved_full_input": true,
+  "scope_clarification_identical_to_tested_generic_text": true,
+  "postprocessing_saved_answer_sha256": "34f176cd9ea149584c1ad6ed23c1feb6c20756486bbbc6f0b19fc4c13f8c024e",
+  "postprocessing": {
+    "in_scope": [
+      "b1081",
+      "b1082",
+      "b1083",
+      "b1084",
+      "b1217",
+      "b1244",
+      "b1245",
+      "b1246",
+      "b1247",
+      "b1248",
+      "b1249",
+      "b1250",
+      "b1253"
+    ],
+    "owned_in_scope": [
+      "b1081",
+      "b1082",
+      "b1083",
+      "b1084",
+      "b1217",
+      "b1244",
+      "b1245",
+      "b1246"
+    ],
+    "other_responsibility_in_scope": [
+      "b1247",
+      "b1248",
+      "b1249",
+      "b1250",
+      "b1253"
+    ],
+    "reason": null,
+    "unsettled": [],
+    "source_responsibility_completeness_proven": false
+  },
+  "measurement": {
+    "request_sha256": "bf898ed077d4179dd681d69d2424a56cff5c924de6483d3e27ed8e6c785e7ed5",
+    "request_bytes": 147549,
+    "rendered_prompt_sha256": "40a714e0ba8a7e6d826e45e6614c4bdc3d897a034d27bce225510f1227c69358",
+    "rendered_prompt_bytes": 139579,
+    "input_tokens": 33769,
+    "output_reserve_tokens": 4096,
+    "context_tokens": 37865,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 4096
+    }
+  },
+  "seconds": 0.22844954207539558,
+  "new_contract": "D02_ITEM_8_CONTEXT_REVIEW_V2",
+  "independent_successor_request_tested": false,
+  "ordinary_company_runtime_wired": false,
+  "not_new_response_or_run": "Only saved developer answer used for offline form/source-partition regression; it is not registered against the successor request.",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "acceptances": 0,
+  "original_v1_request_identical": true
+}
