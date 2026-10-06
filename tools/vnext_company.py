@@ -82,6 +82,7 @@ def main(argv=None):
     view.add_argument('--company', required=True)
     view.add_argument('--defects-file', type=Path)
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
+    view.add_argument('--output-root', type=Path, help='Write ordinary daily CSV/evidence without updating inputs')
     args = parser.parse_args(argv)
     start = time.monotonic()
     if args.command == 'run':
@@ -134,7 +135,7 @@ def main(argv=None):
     elif args.command == 'results' and (args.state_root/'company-task.json').is_file():
         from vnext.company_result_view import read_company_results
         result = read_company_results(state_root=args.state_root, company_id=args.company,
-                                     defects_file=args.defects_file)
+                                     defects_file=args.defects_file, output_root=args.output_root)
     else:
         if args.trust_root is None:
             parser.error('Retained native state requires --trust-root and its original runtime')
@@ -162,7 +163,8 @@ def main(argv=None):
         elif args.command == 'results':
             from vnext.company_result_view import read_company_results
             result = read_company_results(state_root=args.state_root, company_id=args.company,
-                                         defects_file=args.defects_file, runtime_roots=args.runtime_root)
+                                         defects_file=args.defects_file, runtime_roots=args.runtime_root,
+                                         output_root=args.output_root)
         else:
             from vnext.company_result_export import export_results
             result = export_results(state_root=args.state_root, output_root=args.output_root,

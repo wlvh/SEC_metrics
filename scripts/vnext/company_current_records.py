@@ -20,7 +20,7 @@ from .ordinary_saved_result import METRIC_IDS, read_saved_result
 
 EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
                 'local_metric_status', 'period_role', 'result_validity',
-                'source_observation_status', 'defect_holds')
+                'source_observation_status', 'defect_holds', 'requested_in_latest_execution')
 # Old E01 item-code counts do not satisfy the adopted content-confirmed M&A
 # definition. Keep them in old records, not the new company's current result.
 CURRENT_METRICS = METRIC_IDS - {'E01'}
@@ -33,6 +33,14 @@ def _need(condition, reason):
 
 def _rows(raw):
     return list(csv.DictReader(io.StringIO(raw.decode('utf-8-sig'))))
+
+
+def _registry(defects_file=None):
+    saved = strict_json_file(path=ROOT/'docs/evidence/issue28_continuous/known_result_defects.json')
+    if defects_file is not None:
+        other = strict_json_file(path=Path(defects_file))
+        saved = {**saved, 'defects': [*saved.get('defects', []), *other.get('defects', [])]}
+    return saved
 
 
 def _defects(result, registry):
@@ -68,9 +76,7 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
     selected = sorted(configured) if metric_ids is None else list(metric_ids)
     _need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
           'COMPANY_CURRENT_METRIC_SCOPE_INVALID')
-    registry_path = Path(defects_file) if defects_file else ROOT/'docs/evidence/issue28_continuous/known_result_defects.json'
-    _need(registry_path.is_file(), 'COMPANY_CURRENT_DEFECT_REGISTER_MISSING')
-    registry = strict_json_file(path=registry_path)
+    registry = _registry(defects_file)
     work.mkdir(parents=True, exist_ok=True)
     _need(not (work/'local-company.json').exists() and not (work/'current_source.json').exists(),
           'COMPANY_CURRENT_OLD_TASK_REQUIRES_ORIGINAL_ENTRY')
@@ -125,6 +131,7 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                             'SAVED_SOURCE_CHECKED_WITH_DISCOVERY_ERRORS' if observation.get('source_observation_errors') else
                             'SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED'),
                         defect_holds=json.dumps(holds))
+                    row['requested_in_latest_execution'] = True
                     matrix.append(row)
                     evidence.extend(_rows(saved['files']['metric_evidence.csv']))
                     observation['read_result_id'] = result['result_id']
@@ -137,7 +144,8 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                 'company': companies[company_id]['display_name'], 'company_id': company_id,
                 'metric_id': metric, 'status': observation['status'], 'notes': observation.get('reason', ''),
                 'local_metric_status': observation['status'], 'result_validity': 'NO_CURRENT_RESULT',
-                'period_role': 'REQUESTED_WITHOUT_RESULT', 'source_root': str(source)})
+                'period_role': 'REQUESTED_WITHOUT_RESULT', 'source_root': str(source),
+                'requested_in_latest_execution': True})
         complete = all(o['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                        and not o.get('defect_holds') and not o.get('saved_read_error')
                        and not o.get('source_observation_errors') for o in observations)
@@ -159,20 +167,19 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
         return report
 
 
-def read_current_company(*, state_root, company_id, defects_file=None):
+def read_current_company(*, state_root, company_id, defects_file=None, output_root=None):
     """Read ordinary records without parsing sources or running an update."""
     root = Path(state_root).resolve()
     with (root/'company.lock').open('a+b') as lock:
         fcntl.flock(lock, fcntl.LOCK_SH)
-        return _read_current_company(root, company_id, defects_file)
+        return _read_current_company(root, company_id, defects_file, output_root)
 
 
-def _read_current_company(root, company_id, defects_file):
+def _read_current_company(root, company_id, defects_file, output_root):
     task = strict_json_file(path=root/'company-task.json')
     _need(task['record_type'] == 'ORDINARY_COMPANY_TASK_V1' and task['company_id'] == company_id,
           'COMPANY_CURRENT_WRONG_TASK')
-    registry = strict_json_file(path=Path(defects_file) if defects_file else
-                               ROOT/'docs/evidence/issue28_continuous/known_result_defects.json')
+    registry = _registry(defects_file)
     report = strict_json_file(path=root/'latest-execution.json')
     _need(report['company_id'] == company_id, 'COMPANY_CURRENT_WRONG_EXECUTION')
     observations = {m['metric_id']: {**m, 'requested_in_latest_execution': True} for m in report['metrics']}
@@ -185,7 +192,7 @@ def _read_current_company(root, company_id, defects_file):
             observations[metric] = {'metric_id': metric, 'status': 'NOT_REQUESTED_IN_LATEST_EXECUTION',
                 'record_root': str(pointer.parent/'results'/state['version']),
                 'read_result_id': state['result_id'], 'requested_in_latest_execution': False}
-    rows = []
+    rows, matrix, evidence = [], [], []
     for observation in observations.values():
         record = observation.get('record_root')
         if record:
@@ -196,17 +203,55 @@ def _read_current_company(root, company_id, defects_file):
             _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']
                   and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')
             holds = _defects(result, registry)
+            scope_ready = result['metric_id'] in CURRENT_METRICS
             rows.append({'metric_id': result['metric_id'], 'result_id': result['result_id'],
                 'period_start': result.get('period_start'), 'period_end': result['period_end'],
-                'value': None if holds else result.get('value'), 'unit': None if holds else result.get('unit'),
-                'result_validity': 'CONFIRMED_INVALID' if holds else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED',
+                'value': None if holds or not scope_ready else result.get('value'),
+                'unit': None if holds or not scope_ready else result.get('unit'),
+                'result_validity': ('CONFIRMED_INVALID' if holds else 'CURRENT_SCOPE_NOT_READY' if not scope_ready
+                                    else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED'),
                 'defect_holds': holds, 'latest_observation': observation['status'],
                 'requested_in_latest_execution': observation['requested_in_latest_execution'],
                 'record_root': str(record)})
+            csv_row = _rows(saved['files']['metrics_matrix.csv'])[0]
+            if holds:
+                csv_row.update(value='', unit='', status='WITHHELD_KNOWN_DEFECT',
+                    notes=csv_row.get('notes', '')+'; '+','.join(holds))
+            elif not scope_ready:
+                csv_row.update(value='',unit='',status='WITHHELD_CURRENT_SCOPE_NOT_IMPLEMENTED')
+            csv_row.update(company_id=company_id, result_id=result['result_id'], record_root=str(record),
+                source_root=task['source_root'], local_metric_status=observation['status'],
+                period_role=('SAVED_RESULT_NOT_REQUESTED' if not observation['requested_in_latest_execution'] else
+                             'PREVIOUS_RESULT' if observation['status']=='INPUT_OR_EXECUTION_FAILED' else 'REQUESTED_RESULT'),
+                result_validity=rows[-1]['result_validity'], source_observation_status='NOT_CHECKED_BY_SAVED_READER',
+                defect_holds=json.dumps(holds), requested_in_latest_execution=observation['requested_in_latest_execution'])
+            matrix.append(csv_row)
+            evidence.extend(_rows(saved['files']['metric_evidence.csv']))
         else:
             rows.append({'metric_id': observation['metric_id'], 'value': None,
                          'result_validity': 'NO_CURRENT_RESULT', 'latest_observation': observation['status'],
                          'requested_in_latest_execution': observation['requested_in_latest_execution']})
-    return {'record_type': 'ORDINARY_COMPANY_RESULT_VIEW_V1', 'company_id': company_id,
+            matrix.append({**{f:'' for f in (*METRIC_FIELDS,*EXTRA_FIELDS)},
+                'company_id':company_id,'metric_id':observation['metric_id'],'status':observation['status'],
+                'local_metric_status':observation['status'],'result_validity':'NO_CURRENT_RESULT',
+                'period_role':'REQUESTED_WITHOUT_RESULT','source_root':task['source_root'],
+                'source_observation_status':'NOT_CHECKED_BY_SAVED_READER',
+                'requested_in_latest_execution':observation['requested_in_latest_execution']})
+    view = {'record_type': 'ORDINARY_COMPANY_RESULT_VIEW_V1', 'company_id': company_id,
         'source_root': task['source_root'], 'metrics': rows, 'source_freshness': 'NOT_CHECKED_BY_SAVED_READER',
         'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+    if output_root is not None:
+        output = Path(output_root).resolve()
+        for protected in (root,Path(task['source_root']).resolve(),ROOT.resolve()):
+            _need(output != protected and output not in protected.parents and protected not in output.parents,
+                  'COMPANY_CURRENT_EXPORT_ROOT_OVERLAP')
+        _need(not output.exists(), 'COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS')
+        output.mkdir(parents=True)
+        from sec_http import write_immutable_bytes
+        write_immutable_bytes(path=output/'metrics_matrix.csv',
+            content=_csv_bytes(rows=matrix,fieldnames=(*METRIC_FIELDS,*EXTRA_FIELDS)))
+        write_immutable_bytes(path=output/'metric_evidence.csv',
+            content=_csv_bytes(rows=evidence,fieldnames=EVIDENCE_FIELDS))
+        _atomic_json(output/'company-results.json',view)
+        view['output_root'] = str(output)
+    return view

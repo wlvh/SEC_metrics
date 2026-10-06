@@ -12,7 +12,7 @@ install a runtime, source package, trust root or native Run. Program/source root
 are shared reading locations; checks/results and CSV are written in separate
 roots. No copytree or requirement authentication is needed by this branch.
 Old local/native states are explicitly refused for in-place conversion and
-retain their original fixed entry. Existing online/native run remains available.
+retain their original fixed entry. Old online/native task commands and their original fixed runtimes are retained; new online installation from this changed tree is not yet migrated.
 
 Per-metric update uses PR64's compare-before-calculate controller. Identical
 raw inputs/config read saved records. Failure keeps the old successful pointer;
@@ -109,3 +109,26 @@ pass3.450s, including the new subset-retention and common-dispatch check.
 No unrelated real-company long chain is rerun. The latest test uses0cd4c3ea
 plus the declared reader/CLI/test difference; a later commit preserves those
 bytes. This does not add historical five-year extraction or acceptance.
+
+## Daily CSV and remaining old installation boundary
+
+Existing results --output-root now emits ordinary CSV/evidence/JSON through the
+common reader, without update/source parse/native replay. Explicit defects-file
+is consumed in addition to the canonical current register, not silently ignored.
+Scope-disabled results cannot gain current credit by merely existing in a
+pointer. Ordinary and native output routing are explicit; retained native
+CSV uses its existing export or PR63 daily-reader entry, not this new adapter.
+Actual ordinary daily CLI reads both B01/B02 with proper latest-request roles
+in0.3562s and0/0/0calls; final34 directed tests3.536s.
+
+Old installer was actually tested onb7d6787c: kind=local fails in1.3162s at
+Normal candidate rule bytes differ:normal_annual_input.py, before creating its
+output. Therefore this PR does not claim the new default online installation
+works in the changed code tree. Existing immutable native runtimes are not
+modified; the source-only record branch works. Current b7 dedicatedCI37519066279
+succeeds, broad37519066276 fails. Prior0cd4 failed logs include20 normal_annual
+byte-binding errors and one update-state assertion; these are separate from the
+new saved-record tests, and are not erased or treated as all-green. Removing
+old-proof dependencies from remaining new-online paths remains real R4 work.
+The next commit's source/test changes are listed in its diff, not falsely
+credited to b7CI. No old package, binding or ledger was rewritten.
