@@ -1,0 +1,25 @@
+{
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "fiscal_year_requested": 2024,
+  "category": "IMPLEMENTATION_GAP",
+  "reason": "ORDINARY_PERIOD_SELECTION_CANDIDATE_INPUT_UNREADABLE:2025-12-31:ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED; 2024-12-31:ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED",
+  "candidate_failures": [
+    {
+      "report_end": "2025-12-31",
+      "reason": "ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED",
+      "error_type": "OrdinarySourceAuthorityError",
+      "category": "IMPLEMENTATION_GAP"
+    },
+    {
+      "report_end": "2024-12-31",
+      "reason": "ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED",
+      "error_type": "OrdinarySourceAuthorityError",
+      "category": "IMPLEMENTATION_GAP"
+    }
+  ],
+  "seconds": 1.6252605840563774,
+  "files_present": true,
+  "new_SEC_calls": 0,
+  "selection_created": false,
+  "automatic_fetch_authorized": false
+}

@@ -172,10 +172,8 @@ def main(argv=None):
         result = install_runtime(output_root=args.output_root, kind=args.kind)
     elif args.command == 'results' and (args.state_root/'company-task.json').is_file():
         from vnext.company_result_view import read_company_results
-        if args.output_root is not None:
-            parser.error('Ordinary saved results currently read JSON; CSV is exported by run')
         result = read_company_results(state_root=args.state_root, company_id=args.company,
-                                     defects_file=args.defects_file)
+                                     defects_file=args.defects_file, output_root=args.output_root)
     else:
         if args.trust_root is None:
             parser.error('Retained native state requires --trust-root and its original runtime')

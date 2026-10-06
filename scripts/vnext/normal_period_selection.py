@@ -259,16 +259,33 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
         try:
             observed = issuer_fiscal_year(repo_root=repo_root, company_id=company_id,
                                           report_end=period["report_date"])
-        except (NormalAnnualInputError, ValueError):
-            unreadable.append(period["report_date"])
+        except (NormalAnnualInputError, ValueError) as error:
+            category = getattr(error, 'category', None)
+            if str(error) == 'ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED':
+                # Saved bytes can be present while an old admission mechanism
+                # is unavailable. Do not turn that program dependency into a
+                # missing-source reason for an automatic follow-up fetch.
+                category = 'IMPLEMENTATION_GAP'
+            unreadable.append({'report_end': period['report_date'], 'reason': str(error),
+                               'error_type': type(error).__name__,
+                               'category': category or 'SOURCE_INTEGRITY_ERROR'})
             continue
         if observed == fiscal_year:
             matched.append(period["report_date"])
     # Uniqueness is only proven when every candidate was actually read. An
     # unread neighbour is a source gap, not a reason to assume it is a
     # different year; the objective report-end request stays available.
-    _need(not unreadable, "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:"
-          + ",".join(unreadable), "SOURCE_UNAVAILABLE")
+    if unreadable:
+        categories = {failure['category'] for failure in unreadable}
+        category = next((c for c in ('SOURCE_INTEGRITY_ERROR', 'AUTHORITY_CONFLICT',
+                                     'IMPLEMENTATION_GAP') if c in categories), 'SOURCE_UNAVAILABLE')
+        reason = ('ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:'
+                  if categories == {'SOURCE_UNAVAILABLE'} else
+                  'ORDINARY_PERIOD_SELECTION_CANDIDATE_INPUT_UNREADABLE:')
+        error = PeriodSelectionError(reason + '; '.join(
+            f"{failure['report_end']}:{failure['reason']}" for failure in unreadable), category)
+        error.candidate_failures = unreadable
+        raise error
     _need(len(matched) == 1, "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_MISSING_OR_AMBIGUOUS",
           "SOURCE_UNAVAILABLE" if not matched else "SOURCE_INTEGRITY_ERROR")
     return _derive(repo_root=repo_root, company_id=company_id, report_end=matched[0],

@@ -170,6 +170,21 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertFalse(rows['B01']['requested_in_latest_execution'])
         self.assertTrue(rows['B02']['requested_in_latest_execution'])
 
+    def test_common_read_exports_csv_and_honours_supplied_defects_without_update(self):
+        from vnext.company_result_view import read_company_results
+        self.run_company()
+        self.registry.write_text(json.dumps({'defects':[{'defect_id':'held','company_id':'marriott_international',
+            'metric_id':'B01','period_end':'2025-12-31','result_id':'B01-result','released':[]}]}))
+        output=self.root/'daily'
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=read_company_results(state_root=self.work,company_id='marriott_international',
+                defects_file=self.registry,output_root=output)
+        rows={r['metric_id']:r for r in self.rows({'output_root':str(output)})}
+        self.assertEqual(rows['B01']['value'],'');self.assertEqual(rows['B02']['value'],'100')
+        self.assertEqual(rows['B01']['status'],'WITHHELD_KNOWN_DEFECT')
+        self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
+        self.assertTrue((output/'metric_evidence.csv').exists())
+
 
 class SavedSourceCompanyEntryTest(unittest.TestCase):
     """One real source/Calculator preparation shared across read/reentry checks."""

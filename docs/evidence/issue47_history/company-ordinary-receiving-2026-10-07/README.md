@@ -2,13 +2,14 @@
 
 接收公共负责人PR67的abf6d3bc普通保存记录、0cd4c3ea共享XBRL解析和b7d6787c共用公司读取。公共模块原字节接收，历史方只适配既有CLI/分派和旧更新器参数，保留本方历史期间与修订选项。必要依赖将确定性catalog和CSV格式器从旧发布核心导入中提取出来，没有整体合入PR43、公共AGENTS/CI或另造公司pipeline。当前main核对为8588ccbb，这些增量及本方历史模式仍未入main。
 
-`run --period latest-complete-fy --source-root <保存来源>`选择公共普通记录路径；历史`fiscal-years`先分派到已有范围实现，仍要求事先准备来源，不自动获取缺件。保留没有source-root的旧获取/固定任务路径。`results`通过同一company_result_view识别普通company-task.json和旧native状态；普通记录可显式使用历史缺陷登记，旧状态仍按原运行版本和身份读取。普通results目前读JSON，CSV由run导出；本方已有results --output-root的历史日常CSV功能保留，普通路径暂明确报不支持，避免静默忽略。此限制已交公共负责人，不另写竞争读口。
+`run --period latest-complete-fy --source-root <保存来源>`选择公共普通记录路径；历史`fiscal-years`先分派到已有范围实现，仍要求事先准备来源，不自动获取缺件。保留没有source-root的旧获取/固定任务路径。`results`通过同一company_result_view识别普通company-task.json和旧native状态；普通记录可显式使用历史缺陷登记，旧状态仍按原运行版本和身份读取。初接时普通results只能读JSON，本方将--output-root明确报不支持；公共后继e6b4a98f已解决这个缺口，本方接收同一公共读口的CSV/evidence/JSON输出，保留旧native日常CSV分派，没有竞争读口。公共32条已知缺陷始终检查，外加本方登记不能遮掉公共缺陷。
 
 实际结果在validation.json及原CLI输出：
 
 - Marriott FY2025 B01/B02真实来源通过同一CLI首跑3.401秒，得到26186000000 USD与0.04326693227091633466135458167 ratio；实际期间2025-01-01至2025-12-31，出处CSV保留官方链接。
 - 同目录复跑0.320秒，两个指标均NO_SOURCE_CONTENT_CHANGE、calculation_performed=False，结果指针不变。独立进程results读取0.118秒，无来源解析或更新。
 - 接b7d6787c后只重入B02，0.249秒未计算；再经公共results指定本方历史缺陷登记读取0.126秒，B01仍可读且requested_in_latest_execution=False，B02=True。没有为了读口变更重算首跑。
+- 接e6b4a98f后同一普通任务results --output-root实际0.158秒输出CSV/出处/JSON，两个数值及请求角色保留，原任务31个文件全部字节相同。37个受影响小例0.123秒通过；未重入计算，来源及程序版本检查改动另由公共负责人按指标范围接入。
 - 56个定向小例0.161秒通过，覆盖当前/历史分派、主体/期间、字节变化、解析缓存退出与恢复、同目录不重算、单项失败不污染其他成功、缺件与原记录、并发写锁以及已知错误扣留。3个共用真实来源准备/复跑/读取例3.516秒通过。另6个原确定性router例0.035秒通过，已包括在最终56例中，不重复计数。
 
 首轮44例出现漏接current_records参数和macOS临时路径/键别名问题，日志保留；补上公开接口并对夹具根resolve，未放宽生产路径/期间/计算断言。后续49例及最终56例通过。实际CLI还发现原历史参数检查挡住当期source-root，已仅去掉对source-root的排斥，财年范围参数仍须历史模式。
@@ -20,3 +21,5 @@
 本项新增DeepSeek/paid/SEC为0，没有改变原35次模型批次、EX-99原许可/账本、冻结失败、旧Run、发布或active。未全量重跑，不取消业务进程。公共CI仍由#28按实际依赖集成，以上定向通过不代表所有旧必过集合或main全部通过。
 
 保留的旧检查结果：mint --check仍在父代载入时报Normal candidate rule bytes differ: normal_annual_input.py，未进入本项业务代码；这是此前已登记的旧祖先绑定问题，未重签快照。能力合同检查提交前指出唯一未提交的历史说明与HEAD不同，代码提交15cca8d5后通过；它只证明结构对齐，不证明所有业务语义。两项检查器副产物已按检查前字节恢复，完整输出在本目录。这些旧流程检查不作为新可信内部运行的额外批准前置。
+
+恢复来源目录的历史财年准备确实存在程序依赖缺口：原件在，但旧ordinary admission要求trusted journal。旧选择器会把所有ValueError遮成SOURCE_UNAVAILABLE；现行历史入口保留逐候选底层错误及分类，旧journal依赖归IMPLEMENTATION_GAP，错主体/期间完整性及真实缺源分别保留。5个短例0.002秒通过；实际相同恢复目录1.625秒仍拒绝选择并给出两个候选的具体journal原因，未自动取源。已有Salesforce发行人财年定义/邻年缺源反例3.558秒通过，缺源仍拒绝且不由期末日期推算标签。旧Run/失败不改，本项不修旧journal或建立新trust；来源读取简化由公共负责人接入。
