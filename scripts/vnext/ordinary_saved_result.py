@@ -12,6 +12,7 @@ import time
 from sec_http import write_immutable_bytes
 from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file, strict_json_loads
 from .normal_run_inputs import prepare_ordinary_zero_ai_run_input
+from .normal_zero_ai_results import SUPPORTED_METRICS
 from .normal_run_specs import installed_ordinary_spec_documents
 from .records import validate_record
 
@@ -54,8 +55,9 @@ def _validate_records(records, company_id, metric_id, result_id):
 
 def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
+    separate_rules = metric in {'B01','B02'} or metric not in SUPPORTED_METRICS
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
-        **({'rules_root':program} if metric in {'B01','B02'} else {}))
+        **({'rules_root':program} if separate_rules else {}))
     detail = original['component']
     if 'metrics' in detail:
         detail = detail['metrics'][metric]
@@ -64,7 +66,7 @@ def _ordinary_case(source, company, metric):
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
         'admission': original['source_admission'], 'target_period': original['target_period'],
         'expected_records': original['records'], 'results': {metric: original['primary_result']},
-        'rules_root':str(program) if metric in {'B01','B02'} else str(source),
+        'rules_root':str(program) if separate_rules else str(source),
         'prepared_annual_input': original['component'].get('prepared_input'),
         'selection': detail.get('selection', detail.get('inspection'))}
 

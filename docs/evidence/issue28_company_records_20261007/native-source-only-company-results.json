@@ -1,0 +1,213 @@
+{
+  "tested_tree": {
+    "base_commit": "3587067da8302d823bbd64e023a02a7492644c80",
+    "uncommitted_source_files": {
+      "scripts/vnext/normal_accession_results.py": "8aee2c02e1f96226bba3442f2869ed7e2c9d58f847ae88ea1404af9bec550880",
+      "scripts/vnext/normal_run_inputs.py": "65e5d5447cc3c108bfa1d3cf13ef3738f71bd9caf6e74650237becdee827c27d",
+      "scripts/vnext/ordinary_saved_result.py": "d183c0e6cfdccdeeb6276aedbc47ce66fb6320c91fc92b628d89135f78eb6ebd",
+      "tests/vnext/test_separate_rule_root.py": "e629fec2205c04746def377549f8071753f9282aa1ad91a8db253a54b96b1408"
+    }
+  },
+  "peer_register_sha": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
+  "peer_register_count": 104,
+  "matching_A01_A02_B12_defects": [],
+  "reports": [
+    {
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "salesforce",
+      "run_id": "20261006T225243Z-a3a1c356",
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "selected_metrics": [
+        "B12"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B12",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "3e6765c591a0415c9ed2053dcdcb209e",
+          "version": "ea37f1cd31f7452aa7b344ace541a412",
+          "result_id": "sha256:4b0d136ff319d3a1b2b9d6bcfc322542af8fe843174bffd843ea77f7c892e364",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-separated-state-20261007/updates/B12/results/ea37f1cd31f7452aa7b344ace541a412",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "source_observation_errors": [
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml",
+              "status_code": "0",
+              "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+              "content_sha256": "",
+              "document_name": "0001108524-25-000083.hdr.sgml"
+            }
+          ],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:4b0d136ff319d3a1b2b9d6bcfc322542af8fe843174bffd843ea77f7c892e364",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-separated-state-20261007/updates/B12/results/ea37f1cd31f7452aa7b344ace541a412",
+          "program_version": {
+            "commit": "3587067da8302d823bbd64e023a02a7492644c80",
+            "has_uncommitted_changes": true
+          },
+          "actual_result": {
+            "applicability": "APPLICABLE",
+            "company_id": "salesforce",
+            "metric_id": "B12",
+            "period_end": "2026-01-31",
+            "period_start": "2026-01-31",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:4b0d136ff319d3a1b2b9d6bcfc322542af8fe843174bffd843ea77f7c892e364",
+            "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+            "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+            "trace_id": "sha256:b62f4c2af29d173d70dca4994b8c33f03feca6b58cfc39091b654b0b7168579c",
+            "unit": "USD",
+            "value": "72400000000"
+          },
+          "actual_source_rows": "company,cik,metric_id,source_url,repo_relative_path,content_sha256,accession,document_name,concept_or_section,context_or_dimension,unit,period_start,period_end,value_raw,value_normalized,evidence_quote,extraction_method,parser_version\nSalesforce,1108524,B12,https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm,evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm,d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25,0001108524-26-000060,crm-20260131.htm,us-gaap:RevenueRemainingPerformanceObligation,\"{\"\"attributes\"\": {\"\"adapter_id\"\": \"\"ACCESSION_XBRL\"\", \"\"canonical_name\"\": \"\"RevenueRemainingPerformanceObligation\"\", \"\"concept_qname\"\": [\"\"http://fasb.org/us-gaap/2025\"\", \"\"RevenueRemainingPerformanceObligation\"\"], \"\"context\"\": {\"\"context_ref\"\": \"\"c-4\"\", \"\"dimensions\"\": {}, \"\"entity_identifier\"\": \"\"0001108524\"\", \"\"period_end\"\": \"\"2026-01-31\"\", \"\"period_start\"\": \"\"2026-01-31\"\", \"\"typed_dimension_count\"\": 0}, \"\"deterministic_router_semantic_version\"\": \"\"2\"\", \"\"lexical_value\"\": \"\"72.4\"\", \"\"ordinary_policy_hash\"\": \"\"sha256:5460cecd2601a747bf43df139d5b7a13041238cdf7cc24f7851cb97dd4c0c273\"\", \"\"raw_unit_ref\"\": \"\"usd\"\", \"\"source_unit_definition\"\": {\"\"divided\"\": false, \"\"measures\"\": [[\"\"http://www.xbrl.org/2003/iso4217\"\", \"\"USD\"\"]]}, \"\"verified_context\"\": {\"\"context_ref\"\": \"\"c-4\"\", \"\"dimensions\"\": [], \"\"identifiers\"\": [{\"\"scheme\"\": \"\"http://www.sec.gov/CIK\"\", \"\"value\"\": \"\"0001108524\"\"}], \"\"period_fields\"\": [{\"\"kind\"\": \"\"instant\"\", \"\"value\"\": \"\"2026-01-31\"\"}], \"\"typed_dimension_count\"\": 0}}, \"\"locator\"\": {\"\"context_ref\"\": \"\"c-4\"\", \"\"ordinal\"\": 541, \"\"qualified_name\"\": \"\"us-gaap:RevenueRemainingPerformanceObligation\"\"}, \"\"verified_claim_id\"\": \"\"sha256:172dafd8c9a61a39f83b2566d6b65a00bead036c25a16ec3a9c0aefd752d0635\"\"}\",USD,2026-01-31,2026-01-31,,72400000000,\"Parsed source fact: {\"\"locator\"\": {\"\"context_ref\"\": \"\"c-4\"\", \"\"ordinal\"\": 541, \"\"qualified_name\"\": \"\"us-gaap:RevenueRemainingPerformanceObligation\"\"}, \"\"unit\"\": \"\"USD\"\", \"\"value\"\": \"\"72400000000\"\"}\",ordinary_native_source_projection,ordinary_projection_v1\n"
+        }
+      ],
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-source-only-20261007",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-separated-state-20261007",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-separated-output-20261007/20261006T225243Z-a3a1c356",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "elapsed_seconds": 1.571355083025992
+    },
+    {
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "company_id": "jpmorgan_chase",
+      "run_id": "20261006T225247Z-23a61887",
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "selected_metrics": [
+        "A01",
+        "A02"
+      ],
+      "metrics": [
+        {
+          "metric_id": "A01",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "7cc9436a7fe74cf6a3025dbe6a24ead9",
+          "version": "86cfe98920c94ab1b961da2ce3a69617",
+          "result_id": "sha256:f722274515ec25dac702daf2be530bfb726d42058a3589808e66cc4c85c21e93",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-separated-state-20261007/updates/A01/results/86cfe98920c94ab1b961da2ce3a69617",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "source_observation_errors": [
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+              "status_code": "0",
+              "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+              "content_sha256": "",
+              "document_name": "0000019617-25-000332.hdr.sgml"
+            }
+          ],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:f722274515ec25dac702daf2be530bfb726d42058a3589808e66cc4c85c21e93",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-separated-state-20261007/updates/A01/results/86cfe98920c94ab1b961da2ce3a69617",
+          "program_version": {
+            "commit": "3587067da8302d823bbd64e023a02a7492644c80",
+            "has_uncommitted_changes": true
+          },
+          "actual_result": {
+            "applicability": "APPLICABLE",
+            "company_id": "jpmorgan_chase",
+            "metric_id": "A01",
+            "period_end": "2025-12-31",
+            "period_start": "2025-12-31",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:f722274515ec25dac702daf2be530bfb726d42058a3589808e66cc4c85c21e93",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+            "trace_id": "sha256:c5f2cda8f1870fac16a53b5599c263ae30b618d85d436d29c2d2af00a04f8e78",
+            "unit": "ratio",
+            "value": "0.155"
+          },
+          "actual_source_rows": "company,cik,metric_id,source_url,repo_relative_path,content_sha256,accession,document_name,concept_or_section,context_or_dimension,unit,period_start,period_end,value_raw,value_normalized,evidence_quote,extraction_method,parser_version\nJPMorgan Chase,19617,A01,https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm,evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm,4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23,0001628280-26-008131,jpm-20251231.htm,us-gaap:TierOneRiskBasedCapitalToRiskWeightedAssets,\"{\"\"attributes\"\": {\"\"adapter_id\"\": \"\"ACCESSION_XBRL\"\", \"\"canonical_name\"\": \"\"TierOneRiskBasedCapitalToRiskWeightedAssets\"\", \"\"concept_qname\"\": [\"\"http://fasb.org/us-gaap/2025\"\", \"\"TierOneRiskBasedCapitalToRiskWeightedAssets\"\"], \"\"context\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"dimensions\"\": {\"\"srt:ConsolidatedEntitiesAxis\"\": \"\"srt:ParentCompanyMember\"\", \"\"us-gaap:RiskWeightedAssetsCalculationMethodologyAxis\"\": \"\"jpm:BaselIIIStandardizedMember\"\"}, \"\"entity_identifier\"\": \"\"0000019617\"\", \"\"period_end\"\": \"\"2025-12-31\"\", \"\"period_start\"\": \"\"2025-12-31\"\", \"\"typed_dimension_count\"\": 0}, \"\"deterministic_router_semantic_version\"\": \"\"2\"\", \"\"lexical_value\"\": \"\"15.5\"\", \"\"ordinary_policy_hash\"\": \"\"sha256:5460cecd2601a747bf43df139d5b7a13041238cdf7cc24f7851cb97dd4c0c273\"\", \"\"raw_unit_ref\"\": \"\"number\"\", \"\"source_unit_definition\"\": {\"\"divided\"\": false, \"\"measures\"\": [[\"\"http://www.xbrl.org/2003/instance\"\", \"\"pure\"\"]]}, \"\"verified_context\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"dimensions\"\": [{\"\"dimension_qname\"\": [\"\"http://fasb.org/us-gaap/2025\"\", \"\"RiskWeightedAssetsCalculationMethodologyAxis\"\"], \"\"dimension_raw\"\": \"\"us-gaap:RiskWeightedAssetsCalculationMethodologyAxis\"\", \"\"member_qname\"\": [\"\"http://www.jpmorganchase.com/20251231\"\", \"\"BaselIIIStandardizedMember\"\"], \"\"member_raw\"\": \"\"jpm:BaselIIIStandardizedMember\"\"}, {\"\"dimension_qname\"\": [\"\"http://fasb.org/srt/2025\"\", \"\"ConsolidatedEntitiesAxis\"\"], \"\"dimension_raw\"\": \"\"srt:ConsolidatedEntitiesAxis\"\", \"\"member_qname\"\": [\"\"http://fasb.org/srt/2025\"\", \"\"ParentCompanyMember\"\"], \"\"member_raw\"\": \"\"srt:ParentCompanyMember\"\"}], \"\"identifiers\"\": [{\"\"scheme\"\": \"\"http://www.sec.gov/CIK\"\", \"\"value\"\": \"\"0000019617\"\"}], \"\"period_fields\"\": [{\"\"kind\"\": \"\"instant\"\", \"\"value\"\": \"\"2025-12-31\"\"}], \"\"typed_dimension_count\"\": 0}}, \"\"locator\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"ordinal\"\": 7601, \"\"qualified_name\"\": \"\"us-gaap:TierOneRiskBasedCapitalToRiskWeightedAssets\"\"}, \"\"verified_claim_id\"\": \"\"sha256:426e851a017ccb310eddbf85c37cccafb4ad4e83359672d607b0e4ce0e7e4f71\"\"}\",ratio,2025-12-31,2025-12-31,,0.155,\"Parsed source fact: {\"\"locator\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"ordinal\"\": 7601, \"\"qualified_name\"\": \"\"us-gaap:TierOneRiskBasedCapitalToRiskWeightedAssets\"\"}, \"\"unit\"\": \"\"ratio\"\", \"\"value\"\": \"\"0.155\"\"}\",ordinary_native_source_projection,ordinary_projection_v1\n"
+        },
+        {
+          "metric_id": "A02",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "aa12a8990c1f485f81a1c5630e44df64",
+          "version": "89db074ab8d641f2a32811384bda244b",
+          "result_id": "sha256:9744ed5ff34de4599adb151113117878578895dc56e382b5a031eb7813ffb7c3",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-separated-state-20261007/updates/A02/results/89db074ab8d641f2a32811384bda244b",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "source_observation_errors": [
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+              "status_code": "0",
+              "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+              "content_sha256": "",
+              "document_name": "0000019617-25-000332.hdr.sgml"
+            }
+          ],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:9744ed5ff34de4599adb151113117878578895dc56e382b5a031eb7813ffb7c3",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-separated-state-20261007/updates/A02/results/89db074ab8d641f2a32811384bda244b",
+          "program_version": {
+            "commit": "3587067da8302d823bbd64e023a02a7492644c80",
+            "has_uncommitted_changes": true
+          },
+          "actual_result": {
+            "applicability": "APPLICABLE",
+            "company_id": "jpmorgan_chase",
+            "metric_id": "A02",
+            "period_end": "2025-12-31",
+            "period_start": "2025-12-31",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:9744ed5ff34de4599adb151113117878578895dc56e382b5a031eb7813ffb7c3",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+            "trace_id": "sha256:9a768ae862f722e4a943e2964b695740dddfeffcabb25c0b53c90904fd58f27c",
+            "unit": "ratio",
+            "value": "0.146"
+          },
+          "actual_source_rows": "company,cik,metric_id,source_url,repo_relative_path,content_sha256,accession,document_name,concept_or_section,context_or_dimension,unit,period_start,period_end,value_raw,value_normalized,evidence_quote,extraction_method,parser_version\nJPMorgan Chase,19617,A02,https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm,evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm,4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23,0001628280-26-008131,jpm-20251231.htm,jpm:CommonEquityTier1CapitaltoRiskWeightedAssets,\"{\"\"attributes\"\": {\"\"adapter_id\"\": \"\"ACCESSION_XBRL\"\", \"\"canonical_name\"\": \"\"CommonEquityTier1CapitaltoRiskWeightedAssets\"\", \"\"concept_qname\"\": [\"\"http://www.jpmorganchase.com/20251231\"\", \"\"CommonEquityTier1CapitaltoRiskWeightedAssets\"\"], \"\"context\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"dimensions\"\": {\"\"srt:ConsolidatedEntitiesAxis\"\": \"\"srt:ParentCompanyMember\"\", \"\"us-gaap:RiskWeightedAssetsCalculationMethodologyAxis\"\": \"\"jpm:BaselIIIStandardizedMember\"\"}, \"\"entity_identifier\"\": \"\"0000019617\"\", \"\"period_end\"\": \"\"2025-12-31\"\", \"\"period_start\"\": \"\"2025-12-31\"\", \"\"typed_dimension_count\"\": 0}, \"\"deterministic_router_semantic_version\"\": \"\"2\"\", \"\"lexical_value\"\": \"\"14.6\"\", \"\"ordinary_policy_hash\"\": \"\"sha256:5460cecd2601a747bf43df139d5b7a13041238cdf7cc24f7851cb97dd4c0c273\"\", \"\"raw_unit_ref\"\": \"\"number\"\", \"\"source_unit_definition\"\": {\"\"divided\"\": false, \"\"measures\"\": [[\"\"http://www.xbrl.org/2003/instance\"\", \"\"pure\"\"]]}, \"\"verified_context\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"dimensions\"\": [{\"\"dimension_qname\"\": [\"\"http://fasb.org/us-gaap/2025\"\", \"\"RiskWeightedAssetsCalculationMethodologyAxis\"\"], \"\"dimension_raw\"\": \"\"us-gaap:RiskWeightedAssetsCalculationMethodologyAxis\"\", \"\"member_qname\"\": [\"\"http://www.jpmorganchase.com/20251231\"\", \"\"BaselIIIStandardizedMember\"\"], \"\"member_raw\"\": \"\"jpm:BaselIIIStandardizedMember\"\"}, {\"\"dimension_qname\"\": [\"\"http://fasb.org/srt/2025\"\", \"\"ConsolidatedEntitiesAxis\"\"], \"\"dimension_raw\"\": \"\"srt:ConsolidatedEntitiesAxis\"\", \"\"member_qname\"\": [\"\"http://fasb.org/srt/2025\"\", \"\"ParentCompanyMember\"\"], \"\"member_raw\"\": \"\"srt:ParentCompanyMember\"\"}], \"\"identifiers\"\": [{\"\"scheme\"\": \"\"http://www.sec.gov/CIK\"\", \"\"value\"\": \"\"0000019617\"\"}], \"\"period_fields\"\": [{\"\"kind\"\": \"\"instant\"\", \"\"value\"\": \"\"2025-12-31\"\"}], \"\"typed_dimension_count\"\": 0}}, \"\"locator\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"ordinal\"\": 7597, \"\"qualified_name\"\": \"\"jpm:CommonEquityTier1CapitaltoRiskWeightedAssets\"\"}, \"\"verified_claim_id\"\": \"\"sha256:b7b116e4fd461291a1f358aaaaea52b2a1a3e0f1a76396171fa8be7e385afff8\"\"}\",ratio,2025-12-31,2025-12-31,,0.146,\"Parsed source fact: {\"\"locator\"\": {\"\"context_ref\"\": \"\"c-2053\"\", \"\"ordinal\"\": 7597, \"\"qualified_name\"\": \"\"jpm:CommonEquityTier1CapitaltoRiskWeightedAssets\"\"}, \"\"unit\"\": \"\"ratio\"\", \"\"value\"\": \"\"0.146\"\"}\",ordinary_native_source_projection,ordinary_projection_v1\n"
+        }
+      ],
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-source-only-20261007",
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-separated-state-20261007",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-separated-output-20261007/20261006T225247Z-23a61887",
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "elapsed_seconds": 8.94289862504229
+    }
+  ]
+}

@@ -140,17 +140,23 @@ def inspect_ordinary_accession_facts(*, raw_bytes, source_reference, source_set_
         "source_acquisition_credit":False}
 
 
-def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
+def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str, rules_root=None):
+    rules = repo_root if rules_root is None else Path(rules_root)
+    if rules_root is not None:
+        from .company_registry import _registry_rows
+        source_row = next(r for r in _registry_rows(repo_root=repo_root) if r['company_id'] == company_id)
+        rule_row = next(r for r in _registry_rows(repo_root=rules) if r['company_id'] == company_id)
+        _need(source_row == rule_row, 'NORMAL_ACCESSION_SOURCE_SUBJECT_REGISTRY_CHANGED')
     authority = {}
     for relative in _AUTHORITY:
         digest = sha256_file(path=ROOT/relative)
-        _need(sha256_file(path=resolve_repository_file(repo_root=repo_root,repo_relative_path=relative)) == digest,
+        _need(sha256_file(path=resolve_repository_file(repo_root=rules,repo_relative_path=relative)) == digest,
               "NORMAL_ACCESSION_INSTALLED_AUTHORITY_CHANGED:"+relative)
         authority[relative] = digest
-    policy = strict_json_file(path=repo_root/POLICY_PATH)
+    policy = strict_json_file(path=rules/POLICY_PATH)
     _need(policy["record_type"] == "ORDINARY_ACCESSION_METRIC_POLICY" and policy["schema_version"] == 1
           and policy["creates_run"] is False and policy["production_authorized"] is False,"NORMAL_ACCESSION_POLICY_INVALID")
-    catalog = _load_deterministic_catalog(repo_root=repo_root)
+    catalog = _load_deterministic_catalog(repo_root=rules)
     current = copy.deepcopy(catalog)
     for metric_id, item in policy["metrics"].items():
         route = current["metrics"][metric_id]
@@ -158,7 +164,8 @@ def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
         route["result_period_role"] = "current_instant"
         for branch in route["branches"]:
             for component in branch["components"]:component["unit"] = item["canonical_unit"]
-    prepared = prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+    prepared = prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,
+        **({} if rules_root is None else {'ordinary_registered': True}))
     verify_ordinary_source_proofs(data_root=repo_root,proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     reader = _Sources(repo_root,company_id,prepared["entity"])
@@ -167,7 +174,7 @@ def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
     reader.read(companyfacts_url(cik=int(prepared["entity"])),accession=prepared["filing"]["accessionNumber"],role="companyfacts",media_type="application/json")
     manifest = _exact_filing_source_set(company_id=company_id,source_role="target_accession_instance",
         reference=source["source_reference"],inventory_reference=inventory["source_reference"],inventory_bytes=inventory["raw_bytes"])
-    traits = repository_company_traits(repo_root=repo_root,company_id=company_id)
+    traits = repository_company_traits(repo_root=rules,company_id=company_id)
     rows = {}
     for metric_id,item in policy["metrics"].items():
         route = current["metrics"][metric_id]
