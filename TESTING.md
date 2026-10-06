@@ -1,5 +1,7 @@
 # SEC_metrics 测试与验证流程
 
+R1快速业务检查：`python3 -m unittest tests.vnext.test_runtime_tools -v`，小输入覆盖严格CSV字段/Unicode、目录公式/单位/维度与轻量模块导入。只为导入全局状态用一次新进程；保存来源计算API另见 `docs/evidence/issue28_runtime_tools_20261006/`，完整旧native CLI失败不记成功。后续三层测试与变化检测仍按#28当前队列实施。
+
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。#54已按其单独授权完成真实Marriott首跑／复跑，见 `docs/evidence/issue54_company/live-marriott/`、`live2/`。这证明代码路径的既有执行，不授新调用、不等于全部业务结果接受或OpenShift验收。新开发采用#28三层测试与受影响验证，旧资格／反篡改测试不作为已退出新路径的必过集合。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
