@@ -1,0 +1,39 @@
+# v1.3 current-company entry receiving and first actual C02 integration
+
+Authoritative main8588ccbb was fixed and received as26new company interfaces,
+tools, docs and original company tests. Fullmain merge preview had25conflicts
+including newer ordinary rules/bindings/old evidence; those were not rolled back.
+AGENTS only updatesv1.3short entry and deliveredcompany responsibilities.
+
+Actual current code installed ordinaryissue54v1 program, authoritye9b93ccb,
+withoutSEC/AIoriginals. Export/import of currentJPMsources used independenttrust,
+stablecompanysource path and immutableversions. FirstrealcompanyC02compute failed:
+complete-source discovery has no governance selection, so the package omitted
+the proxy actually consumed bynormalC02. It returnedINPUT_FAILEDRequest-ledger
+locator evidence isinvalid. Originalfailure andfirstCSVretained.
+
+Companyexport now addsactualconsumer-authenticatedC02sourceproof body/header
+paths, not guesses or modelanswers. Newpackage3953c412installedatthesamestable
+path; oldf429versionandfailedjournalretained. Sameactualinstalledcompanyentry
+thencreatedaC02RunandCSV/evidence. This proves sourcehandoff/entryrecovery, not
+businesscorrectness. The resulting6d1a5055/closure4931983dhasthesameconfirmed
+missingJamesDimonandStock/Executive names inrawbea52712. It is precisely registered
+andactualcompanyCSVwasre-exportedWITHHELD,emptyvalue,CONFIRMED_INVALID;original
+Run/Resultretained. Internaldeveloper50factPENDINGpackageisnotyetconsumedby
+companyentry, andmustnotbesilentlysubstitutedforthisoldbusinessroute.
+
+Sourceproofdependencyregression2PASS. Original17trust/importcasesfirstfailed
+onmacOSsymlinktempaliases; unchangedtestswithTMPDIR=/private/tmppassed17.
+Noaliascheck,coverageorassertionwasdeleted. Installation/sourceexport/import/
+compute/exportareactualCLIcalls,notmockedprobes. RelevantcompanyCIjobsfrommain
+stillneedreceivingalongsideourcurrentCI, notreplacement/droppedcoverage.
+
+Close-stateinspectionfound#28closedbyevent32476067871linkedtoPR56mergea9506758,
+althoughthatmergeexpresslyexcludes39businessacceptance/closing28. Negated
+merge-messageclose#28likelytriggeredautomaticclosing. Closedtrackingisnot390
+completion;event/history/statewerenotchanged.
+
+Next: scopedreviewofsourcehandoffadapter;companyAPI/evidenceinputfornewC02pending
+objects;newtaskandoldtaskread/resume/upgradecompatibility;preserveaffectedcompany
+CIcoverage. C02semantic/DeepSeek/full390/production remain incomplete. Call0/0/0,
+originalledger195claims143/143/52unchanged. Nohistoricalbranchorpeerruntimeoperated.

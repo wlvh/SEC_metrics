@@ -1,0 +1,308 @@
+test_alias_to_trusted_record_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_alias_to_trusted_record_is_refused) ... ok
+test_cross_company_is_refused_before_source_discovery (tests.vnext.test_company_source_authority.CompanyTrustTest.test_cross_company_is_refused_before_source_discovery) ... FAIL
+test_exact_independent_record_is_accepted (tests.vnext.test_company_source_authority.CompanyTrustTest.test_exact_independent_record_is_accepted) ... ERROR
+test_historical_census_uses_existing_verifier_after_independent_trust_check (tests.vnext.test_company_source_authority.CompanyTrustTest.test_historical_census_uses_existing_verifier_after_independent_trust_check) ... ERROR
+test_matching_id_with_changed_content_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_matching_id_with_changed_content_is_refused) ... FAIL
+test_memo_trust_dependency_must_be_an_explicit_nonalias_root (tests.vnext.test_company_source_authority.CompanyTrustTest.test_memo_trust_dependency_must_be_an_explicit_nonalias_root) ... ERROR
+test_package_cannot_supply_its_own_trust_directory (tests.vnext.test_company_source_authority.CompanyTrustTest.test_package_cannot_supply_its_own_trust_directory) ... FAIL
+test_rehashing_package_does_not_install_new_authority (tests.vnext.test_company_source_authority.CompanyTrustTest.test_rehashing_package_does_not_install_new_authority) ... ok
+test_declared_event_saved_paths_preserve_original_body_and_header_locators (tests.vnext.test_company_handoff.CompanyImportTest.test_declared_event_saved_paths_preserve_original_body_and_header_locators) ... ok
+test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) ... 
+  test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='before_source_replace') ... ERROR
+  test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='after_old_source_move') ... ERROR
+  test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='after_new_source_move') ... ERROR
+test_import_and_compute_lock_blocks_another_process (tests.vnext.test_company_handoff.CompanyImportTest.test_import_and_compute_lock_blocks_another_process) ... ERROR
+test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) ... 
+  test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='before_source_replace') ... ERROR
+  test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='after_old_source_move') ... ERROR
+  test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='after_new_source_move') ... ERROR
+test_nonprefix_history_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_nonprefix_history_cannot_replace_committed_source) ... ERROR
+test_nonroot_readonly_packages_install_update_and_recover (tests.vnext.test_company_handoff.CompanyImportTest.test_nonroot_readonly_packages_install_update_and_recover) ... ERROR
+test_symlink_paths_and_unowned_sources_are_refused (tests.vnext.test_company_handoff.CompanyImportTest.test_symlink_paths_and_unowned_sources_are_refused) ... FAIL
+test_wrong_company_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_wrong_company_cannot_replace_committed_source) ... ERROR
+test_saved_native_assessment_is_not_collected_as_a_rule (tests.vnext.test_company_handoff.SourceOnlyRulesTest.test_saved_native_assessment_is_not_collected_as_a_rule) ... ok
+
+======================================================================
+ERROR: test_exact_independent_record_is_accepted (tests.vnext.test_company_source_authority.CompanyTrustTest.test_exact_independent_record_is_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_source_authority.py", line 36, in test_exact_independent_record_is_accepted
+    self.assertEqual(self.checkpoint, trusted_checkpoint(self.source))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 36, in trusted_checkpoint
+    need(root.is_absolute() and first_symlink_in_path(path=root) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_TRUST_ROOT_ALIAS
+
+======================================================================
+ERROR: test_historical_census_uses_existing_verifier_after_independent_trust_check (tests.vnext.test_company_source_authority.CompanyTrustTest.test_historical_census_uses_existing_verifier_after_independent_trust_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_source_authority.py", line 85, in test_historical_census_uses_existing_verifier_after_independent_trust_check
+    self.assertEqual(self.checkpoint,require_company(source_root=self.source,company_id='one_company'))
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 154, in require_company
+    checkpoint = trusted_checkpoint(source_root)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 36, in trusted_checkpoint
+    need(root.is_absolute() and first_symlink_in_path(path=root) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_TRUST_ROOT_ALIAS
+
+======================================================================
+ERROR: test_memo_trust_dependency_must_be_an_explicit_nonalias_root (tests.vnext.test_company_source_authority.CompanyTrustTest.test_memo_trust_dependency_must_be_an_explicit_nonalias_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_source_authority.py", line 70, in test_memo_trust_dependency_must_be_an_explicit_nonalias_root
+    self.assertEqual((str(self.trust),), memo_read_roots())
+                                         ^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 179, in memo_read_roots
+    need(root.is_absolute() and root.is_dir() and first_symlink_in_path(path=root) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_TRUST_ROOT_ALIAS
+
+======================================================================
+ERROR: test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='before_source_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 104, in test_first_install_interruption_never_exposes_uncommitted_source
+    self.install(1, fail)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='after_old_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 104, in test_first_install_interruption_never_exposes_uncommitted_source
+    self.install(1, fail)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) (position='after_new_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 104, in test_first_install_interruption_never_exposes_uncommitted_source
+    self.install(1, fail)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_import_and_compute_lock_blocks_another_process (tests.vnext.test_company_handoff.CompanyImportTest.test_import_and_compute_lock_blocks_another_process)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 135, in test_import_and_compute_lock_blocks_another_process
+    with handoff.locked_company(self.state):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 258, in locked_company
+    root = external(state_root)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='before_source_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 51, in test_interruptions_keep_previous_result_and_source_then_allow_retry
+    first = self.install(1)
+            ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='after_old_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 51, in test_interruptions_keep_previous_result_and_source_then_allow_retry
+    first = self.install(1)
+            ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) (position='after_new_source_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 51, in test_interruptions_keep_previous_result_and_source_then_allow_retry
+    first = self.install(1)
+            ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_nonprefix_history_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_nonprefix_history_cannot_replace_committed_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 118, in test_nonprefix_history_cannot_replace_committed_source
+    self.install(1)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_nonroot_readonly_packages_install_update_and_recover (tests.vnext.test_company_handoff.CompanyImportTest.test_nonroot_readonly_packages_install_update_and_recover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 146, in test_nonroot_readonly_packages_install_update_and_recover
+    first=self.install(1)
+          ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_wrong_company_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_wrong_company_cannot_replace_committed_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 111, in test_wrong_company_cannot_replace_committed_source
+    first = self.install(1)
+            ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 44, in install
+    return handoff.install_company(package_root=self.packages[ordinal-1],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 347, in install_company
+    package = external(package_root)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+FAIL: test_cross_company_is_refused_before_source_discovery (tests.vnext.test_company_source_authority.CompanyTrustTest.test_cross_company_is_refused_before_source_discovery)
+----------------------------------------------------------------------
+ValueError: COMPANY_SOURCE_TRUST_ROOT_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_source_authority.py", line 58, in test_cross_company_is_refused_before_source_discovery
+    with self.assertRaisesRegex(ValueError, 'WRONG_COMPANY'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "WRONG_COMPANY" does not match "COMPANY_SOURCE_TRUST_ROOT_ALIAS"
+
+======================================================================
+FAIL: test_matching_id_with_changed_content_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_matching_id_with_changed_content_is_refused)
+----------------------------------------------------------------------
+ValueError: COMPANY_SOURCE_TRUST_ROOT_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_source_authority.py", line 47, in test_matching_id_with_changed_content_is_refused
+    with self.assertRaisesRegex(ValueError, 'NOT_IN_INSTALLED_TRUST'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "NOT_IN_INSTALLED_TRUST" does not match "COMPANY_SOURCE_TRUST_ROOT_ALIAS"
+
+======================================================================
+FAIL: test_package_cannot_supply_its_own_trust_directory (tests.vnext.test_company_source_authority.CompanyTrustTest.test_package_cannot_supply_its_own_trust_directory)
+----------------------------------------------------------------------
+ValueError: COMPANY_SOURCE_TRUST_ROOT_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_source_authority.py", line 54, in test_package_cannot_supply_its_own_trust_directory
+    with self.assertRaisesRegex(ValueError, 'TRUST_MUST_BE_SEPARATE'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "TRUST_MUST_BE_SEPARATE" does not match "COMPANY_SOURCE_TRUST_ROOT_ALIAS"
+
+======================================================================
+FAIL: test_symlink_paths_and_unowned_sources_are_refused (tests.vnext.test_company_handoff.CompanyImportTest.test_symlink_paths_and_unowned_sources_are_refused)
+----------------------------------------------------------------------
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_company_handoff.py", line 126, in test_symlink_paths_and_unowned_sources_are_refused
+    with self.assertRaisesRegex(ValueError, 'UNOWNED_SOURCE_ROOT'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "UNOWNED_SOURCE_ROOT" does not match "COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED"
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.044s
+
+FAILED (failures=4, errors=13)

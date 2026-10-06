@@ -1,0 +1,70 @@
+{
+  "elapsed_seconds": 2.7319560411851853,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:f429511996409d3638df1850cf2ebc39fdbb8efa1a714ad0b7f08fe458dd6a55",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-state-current-20261006/source",
+  "metric_ids": [
+    "C02"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "C02",
+      "status": "INPUT_FAILED",
+      "attempt_id": "6cb28b44ad2f414183cd92cbb764a656",
+      "latest_attempt": "6cb28b44ad2f414183cd92cbb764a656",
+      "successful_attempt": null,
+      "previous_successful_attempt": null,
+      "last_verified_candidate": null,
+      "new_candidate_created": false,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "6cb28b44ad2f414183cd92cbb764a656",
+        "configuration_id": "sha256:bf4c89cbac3ffee2c32ff6592bebdc3830ad85521cde820d0b06ae9861f0c351",
+        "intent_id": "sha256:b8ce78303fa9b4b6a2c7f79d7708a947640f287d2e57595718e7372e2df2dc92",
+        "status": "INPUT_FAILED",
+        "completed_at": "2026-10-05T18:20:40.487853+00:00",
+        "input": null,
+        "metrics": {},
+        "error": {
+          "error_type": "BatchWorkflowError",
+          "reason": "Request-ledger locator evidence is invalid"
+        },
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:c119a48baf191f1e5bdc81366c2f36a848a63f5f39d07536ed3f50f494bdefec"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "compute_seconds": "2.343448",
+  "source_installation": {
+    "checkpoint_id": "sha256:f429511996409d3638df1850cf2ebc39fdbb8efa1a714ad0b7f08fe458dd6a55",
+    "company_id": "jpmorgan_chase",
+    "package_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-source-current-20261006",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-state-current-20261006/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-protocol-current-20261006",
+  "execution_id": "fbbe22641c414be08f3e2fa96e155116",
+  "recorded_at": "2026-10-05T18:20:40.547141+00:00"
+}

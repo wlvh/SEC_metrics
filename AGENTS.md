@@ -60,11 +60,11 @@ ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登�
 
 用户已采用[110一次恢复授权](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5775635612)，确认充值已处理；不查询账户或发探针。保持原账本/binding/锚点、240/240/80及全部旧失败。`continuous_recovery_110.py`只绑定110的HTTP402、无可用输出、终态和业务摘要；新claim消费一次机会，原件不改。新停止仍生效，D03不调用，至少39基础资源缺口暂缓决定。恢复实现/绑定/限定独审/离线入口检查完成后才能执行原业务请求，不能把授权登记写成已恢复。
 
-### 跨 Issue 协作入口（COLLAB-28-47-v1.2）
+### 跨 Issue 协作入口（COLLAB-28-47-v1.3）
 
-权威原文：[Issue #28 协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；对方同文见 [Issue #47](https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1)。当前版本COLLAB-28-47-v1.2（2026-10-03），以实时正文为准；只维护本入口，不再复制协议全文。固定对方提交、有效反例预检、本方实际接入与正常读取闭环分别核验；旧运行可用原保存字节重放不等于开发文件永不可修改。共用核心由明确一方维护，按实际差异接收；开发方法链接第5.8节，真实用途/预算/机会及生产权限保持。
+权威原文：[Issue #28 协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；对方同文见 [Issue #47](https://github.com/wlvh/SEC_metrics/issues/47#collab-28-47-v1)。当前版本COLLAB-28-47-v1.3（2026-10-05），以实时正文为准；只维护本入口，不再复制协议全文。固定对方提交、有效反例预检、本方实际接入与正常读取闭环分别核验；旧运行可用原保存字节重放不等于开发文件永不可修改。共用核心由明确一方维护，按实际差异接收；开发方法链接第5.8节，真实用途/预算/机会及生产权限保持。
 
-与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的接口按 `COMPANY-SEPARATION-v2.1-20261002` 及 [#28 通知5953695606](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5953695606) 接续：#54主实现获取—计算交接和公司独立处理，#28保留当期指标、正常更新、统一生产及旧路径退出，提供B13/D04计算侧输入、C04和journal读写边界并验证自己的消费者。共用改动一方维护、各自验证，用 `[shared-with-#54]` 回链；不把旧AI/Result当来源包必带答案，不借用/拆分预算。首个平台为OpenShift，集群及内网脚本/AI另期处理；此接口工作不代替v1.2正文条款或当前唯一队列。
+[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 已通过 [PR57](https://github.com/wlvh/SEC_metrics/pull/57) 将单公司 pipeline 交付 main；按 v1.3 第1、8条及 [#28 第5.0、6节](https://github.com/wlvh/SEC_metrics/issues/28) 接续，#28负责当期入口持续集成，修改共用接口者同时完成必要适配、各消费者验证，不等待原#54执行者。相关增量核验新任务实际安装/调用、旧任务原身份读取/接续和公司 CSV/证据出口；保留单独采集/计算、旧版本及公司隔离。C02/D02共用核心分工不变；旧 [接口通知5953695606](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5953695606) 按未冲突范围保留。已有模型判断不作来源包隐藏答案，不借用/拆分预算；OpenShift部署仍另期，合并/发布权限不扩。
 
 
 
