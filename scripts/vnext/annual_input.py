@@ -13,7 +13,8 @@ from sec_http import parse_request_log_rows, validate_request_log_manifest
 from sec_pipeline import filing_rows_from_submission_payloads
 from sec_urls import accession_document_url, companyfacts_url, submissions_url
 
-from .batch_workflow import _registry_rows, request_attempt_binding
+from .company_registry import _registry_rows
+from .request_bindings import request_attempt_binding
 from .canonical import content_hash, sha256_bytes, strict_json_loads
 from .deterministic_router import parse_accession_xbrl_source
 from .sources import resolve_repository_file

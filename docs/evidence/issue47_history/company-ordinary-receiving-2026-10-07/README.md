@@ -23,3 +23,9 @@
 保留的旧检查结果：mint --check仍在父代载入时报Normal candidate rule bytes differ: normal_annual_input.py，未进入本项业务代码；这是此前已登记的旧祖先绑定问题，未重签快照。能力合同检查提交前指出唯一未提交的历史说明与HEAD不同，代码提交15cca8d5后通过；它只证明结构对齐，不证明所有业务语义。两项检查器副产物已按检查前字节恢复，完整输出在本目录。这些旧流程检查不作为新可信内部运行的额外批准前置。
 
 恢复来源目录的历史财年准备确实存在程序依赖缺口：原件在，但旧ordinary admission要求trusted journal。旧选择器会把所有ValueError遮成SOURCE_UNAVAILABLE；现行历史入口保留逐候选底层错误及分类，旧journal依赖归IMPLEMENTATION_GAP，错主体/期间完整性及真实缺源分别保留。5个短例0.002秒通过；实际相同恢复目录1.625秒仍拒绝选择并给出两个候选的具体journal原因，未自动取源。已有Salesforce发行人财年定义/邻年缺源反例3.558秒通过，缺源仍拒绝且不由期末日期推算标签。旧Run/失败不改，本项不修旧journal或建立新trust；来源读取简化由公共负责人接入。
+
+后继接收公共PR68代码399e35e1的request_bindings/company_registry/saved_source_checks及原接口兼容导出，不带公共AGENTS/CI。当前普通来源校验直接核已有CSVmanifest、指定attempt、body/header、官方URL/最新GET失败，不再要求旧journal或祖先前缀。用户指定accession与URL accession分别核对，原链式比较漏拒的公共修正同接；异常导出对象身份保留，不据此认定所有旧结果有错。
+
+37个保存来源、错件/最新失败及历史期间/公司消费者例0.764秒通过。上述完全同一个恢复source-inputs目录再次经实际FY2024选择/准备、历史B11 case与公共纯保存通过，总7.153秒（case2.697/save0.692），128.23 USD和2024区间保持。原ledger全部字节不变，没有制造journal或重新恢复整树；原失败保留为前驱。新校验标签SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED、real_sec_credit=False，只代表保存原件/请求关系已核，不重置或借用1771累计与来源调用信用。见restored-source-historical-case-after-r4.json。
+
+此处旧journal准备缺口已由公共接口解除；实际来源自动发现/补齐、已选历史期间进入公共普通状态及范围调度仍待。本方提供现有fiscal-years选择/组装及历史case，公共updater/reader索引由#28维护，避免另一套历史状态或公司pipeline。旧固定版本/Run和旧checkpoint显式接口保留，不反签历史。
