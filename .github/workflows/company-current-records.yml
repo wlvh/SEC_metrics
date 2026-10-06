@@ -6,6 +6,7 @@ name: Company saved-source records
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
       - 'tests/vnext/test_ordinary_current_update.py'
+      - 'tests/vnext/test_company_parse_reuse.py'
       - 'config/**'
       - 'catalog/**'
       - 'evidence/**'
@@ -27,4 +28,4 @@ jobs:
       - name: Saved source through calculation, records, CSV and reading
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update -v
+        run: python3 -m unittest tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse -v

@@ -6,7 +6,7 @@
 公司交接入口见 `docs/company_compute_boundary.md`。来源准备校验完整获取历史，再携带完整账本元数据和目标公司的依赖原件；计算只读固定程序/规则与独立信任登记，每公司state持有导入及计算共用锁。baseline保持原核心，实际增量/历史使用各自后继固定树，旧Run不重签。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 
-当前保存来源分支由现有公司 `run --source-root` 显式选择：`company_current_records` 调用 `ordinary_current_update`，先比较原始输入与处理配置，再运行既有来源/Calculator并保存小记录。程序根和来源根不复制到attempt，写锁、更新意图、完成末写和旧版本恢复保留。日常CSV直接读取保存结果；`results`识别普通任务后不重算、不安装trust或重放native链。原始引用与测量期间仍保留，来源失败和已知缺陷分别显示。旧native任务仍用其固定运行时，不被新记录改签。新路径当前仅离线保存来源，不代表在线新财报或39项验收完成。
+当前保存来源分支由现有公司 `run --source-root` 显式选择：`company_current_records` 调用 `ordinary_current_update`，先比较原始输入与处理配置，再运行既有来源/Calculator并保存小记录。同次运行用有界、退出即清除的不可变native解析复用，其他来源/期间/单位检查仍执行；程序根和来源根不复制到attempt，写锁、更新意图、完成末写和旧版本恢复保留。日常CSV直接读取保存结果；`results`识别普通任务后不重算、不安装trust或重放native链。原始引用与测量期间仍保留，来源失败和已知缺陷分别显示。旧native任务仍用其固定运行时，不被新记录改签。新路径当前仅离线保存来源，不代表在线新财报或39项验收完成。
 <!-- capability-anchor: CAPABILITY.current_saved_company_run -->
 
 ### 确切年度候选的正式采纳接线

@@ -66,3 +66,27 @@ Committed-tree correspondence: a6dfe53e contains the tested source/test bytes
 with no remaining code difference. Capability structure check againstmain8588
 passes on that commit; it is structural evidence only. The following evidence
 append changes no code, sources or assertions.
+
+## Scoped native parse reuse
+
+Actual before abf6d3bc: the samec372 FY2025 document entered native parsing6
+times in B01/B02; prior32a365d5 once. Parsing1.6311s/whole run7.0105s. New
+shared_xbrl_parses context in deterministic_router retains only immutable
+exact-byte ParsedAccessionXbrlSource objects during one company operation.
+Source selection/subject/period/unit/claim checks still execute per consumer;
+no Result/answer/admission is cached. Maximum16 entries, eviction falls back
+to normal parsing, exit/failure discards entries. Outside this explicit context
+the old parser behavior remains. No generic cache platform or persistent store.
+
+The same actual saved inputs after code change parse each of two source hashes
+once,0.4705s parse/6.0410s whole run; exact B01/B02 result identities match the
+before run. This is one measured scenario, not a performance guarantee.
+32 directed tests6.521s include scoped immutability, source-byte changes,
+failure/nested scope reset, bounded eviction and downstream wrong company/period
+rejection even with a cached parse, plus five-adapter and source-set negatives.
+Affected integration rerun is necessary; untouched D04/company long chains
+were not repeated. Same-batch table/CompanyFacts preparation remains incomplete.
+See native-parse-before/after.json and shared-parse-tests.log. The tested parent
+abf6d3bc plus listed uncommitted changes is accurately recorded, not labelled
+as execution on the next committed SHA. Shared default parser signatures,
+return type/content and _binding functions stay unchanged.
