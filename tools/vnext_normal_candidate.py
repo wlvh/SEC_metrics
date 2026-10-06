@@ -16,6 +16,7 @@ from vnext.normal_annual_input import _registry_rows
 from vnext.normal_run_v3 import install_normal_inputs, create_normal_run, POLICY_PATH
 from vnext.c04_registration_successor import EVENT_FORMS as C04_EVENT_FORMS
 from vnext.ordinary_projection import render_ordinary_run
+from vnext.ordinary_saved_result import METRIC_IDS as SAVED_RESULT_METRICS, create_saved_result
 
 
 METRICS = tuple(json.loads((ROOT / POLICY_PATH).read_text())["metric_ids"])
@@ -43,6 +44,8 @@ def main(argv=None):
     parser.add_argument("--output-root", required=True, type=Path)
     parser.add_argument("--source-root", type=Path,
                         help="Existing external saved-source workspace; appended requests require installed execution admission")
+    parser.add_argument('--state-root', type=Path,
+                        help='Persistent current deterministic update history; unchanged raw input reads saved result')
     parser.add_argument("--company", action="append",
                         help="Configured company ID; repeat to select several; default all ten")
     parser.add_argument("--metric", action="append", choices=(*METRICS, 'B13', 'D04'),
@@ -78,6 +81,43 @@ def main(argv=None):
                    "run_path": run.relative_to(output).as_posix(),
                    "data_path": data.relative_to(output).as_posix()}
             try:
+                if metric in SAVED_RESULT_METRICS:
+                    if args.freeze:
+                        raise ValueError('Current ordinary records are development candidates, not frozen publications')
+                    update = None
+                    if args.state_root:
+                        from vnext.ordinary_update_cycle import run_once
+                        from vnext.ordinary_saved_result import read_saved_result
+                        update = run_once(source_root=args.source_root or ROOT,
+                            state_root=args.state_root/company/metric,company_id=company,
+                            metric_ids=[metric],current_records=True)
+                        if update['status'] not in {'CANDIDATE_READY','CANDIDATE_WITHHELD','NO_SOURCE_CONTENT_CHANGE'}:
+                            raise ValueError(update.get('reason',update['status']))
+                        saved = read_saved_result(output_root=Path(update['result_root']))
+                        saved['source_admission'] = {'source_credit':'SAVED_CURRENT_RESULT_NO_NEW_ACQUISITION_CREDIT'}
+                        row['result_root'] = update['result_root']
+                        row['update'] = update
+                    else:
+                        saved = create_saved_result(source_root=args.source_root or ROOT,
+                            output_root=run, company_id=company, metric_id=metric)
+                    target = output / 'rows' / company / metric
+                    for name, raw in saved['files'].items():
+                        write_immutable_bytes(path=target / name, content=raw)
+                    _write(target / 'receipt.json', saved['receipt'])
+                    current_status = ('WITHHELD_CANDIDATE' if saved['result']['publication']=='WITHHELD' else
+                        'REUSED_CANDIDATE' if update and not update['calculation_performed'] else 'CALCULATED_CANDIDATE')
+                    row.update(status=current_status,
+                        record_type=saved['manifest']['record_type'],
+                        run_id=saved['manifest']['run_id'], run_status='CALCULATED',
+                        source_credit=saved['source_admission']['source_credit'],
+                        source_root=saved['manifest']['source_root'],
+                        result=saved['result'], target_period=saved['manifest']['target_period'],
+                        timings_seconds=saved['manifest']['timings_seconds'],
+                        public_row_status='CANDIDATE_ROW_PREPARED', production_authorized=False)
+                    coordinates.append(row)
+                    _write(output / 'coordinates' / (company + '-' + metric + '.json'), row)
+                    print(json.dumps({k: row[k] for k in ('company_id','metric_id','status')}), flush=True)
+                    continue
                 route = {'c04_event_forms': C04_EVENT_FORMS} if metric == 'C04' else {}
                 install_normal_inputs(data_root=data, company_id=company,
                     metric_id=metric, source_root=args.source_root, **route)
@@ -121,7 +161,7 @@ def main(argv=None):
             coordinates.append(row)
             _write(output / "coordinates" / (company + "-" + metric + ".json"), row)
             print(json.dumps({k: row[k] for k in ("company_id", "metric_id", "status")}), flush=True)
-    gaps = [row for row in coordinates if row["status"] not in {"FROZEN_CANDIDATE", "OPEN_CANDIDATE"}
+    gaps = [row for row in coordinates if row["status"] not in {"FROZEN_CANDIDATE", "OPEN_CANDIDATE", "CALCULATED_CANDIDATE", "REUSED_CANDIDATE"}
             or row.get("public_row_status") == "PROJECTION_FAILED"]
     complete_status = "CANDIDATES_READY" if args.freeze else "OPEN_CANDIDATES_READY"
     report = {"record_type": "NORMAL_SAVED_CANDIDATE_BATCH", "status": "COMPLETED_WITH_GAPS" if gaps else complete_status,
