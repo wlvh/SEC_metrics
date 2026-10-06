@@ -76,3 +76,12 @@ A three-row regression retains old2022=False and requested2023/2024=True;
 42directed tests pass. It does not infer membership merely from year bounds or
 metric name. Receiver's uncommitted failing test was described by them; this
 is our independent small input/output reproduction, not their full range rerun.
+
+The previous pending range test supplied an already-correct view, so it did
+not prove main's upstream grouping. Peer e419a1b7 identified that dependency:
+main used the range header as a pending key and lost one year. Received only
+requested_period/matches_period, per-period latest request and pending keys
+from that fixed source; no C02 review scan/wrapper copied. A real small-state
+save_execution→build_company_view→CSV now preserves old2022 False and child
+2023/2024 True, all missing values blank.43directed tests pass. This closes the
+upstream gap; the earlier mocked-view check remains only a CSV branch check.

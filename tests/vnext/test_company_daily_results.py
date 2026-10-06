@@ -157,6 +157,21 @@ class CompanyDailyResultsTest(unittest.TestCase):
         self.assertEqual([(r['fiscal_year'],r['requested_in_latest_execution']) for r in rows],
                          [('2022','False'),('2023','True'),('2024','True')])
 
+    def test_real_save_view_csv_preserves_each_missing_range_year(self):
+        save_execution(root=self.root,report={'record_type':'COMPANY_COMPUTATION_REFERENCES_V1',
+            'company_id':self.company,'source_checkpoint_id':self.current['checkpoint_id'],
+            'period_request':{'fiscal_year':2022},'metrics':[{'metric_id':'B01','status':'INPUT_FAILED'}]})
+        save_execution(root=self.root,report={'record_type':'COMPANY_COMPUTATION_REFERENCES_V1',
+            'company_id':self.company,'source_checkpoint_id':self.current['checkpoint_id'],
+            'period_request':{'fiscal_year_start':2023,'fiscal_year_end':2024},
+            'metrics':[{'metric_id':'B01','status':'SOURCE_INPUT_REQUIRED','period_request':{'fiscal_year':y}}
+                       for y in (2023,2024)]})
+        _,_,out=self.read(row_year=2022)
+        rows=list(csv.DictReader(io.StringIO((out/'metrics_matrix.csv').read_text())))
+        self.assertEqual([(r['fiscal_year'],r['requested_in_latest_execution']) for r in rows],
+                         [('2022','False'),('2023','True'),('2024','True')])
+        self.assertTrue(all(r['value']=='' for r in rows))
+
     def test_known_defect_release_of_another_result_does_not_release_this_result(self):
         self.saved()
         defect={'defect_id':'known-fixture-error','company_id':self.company,'metric_id':'B01','period_end':'2025-12-31',
