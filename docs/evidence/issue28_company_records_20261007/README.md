@@ -187,3 +187,21 @@ historical source-restoration old-journal gap still owned by the actual consumer
 interface; broader same-batch preparation/configuration specificity; AI input
 processing and all39 business acceptance. No provider/paid/SEC calls, allowance
 change, Ready, merge, adoption, deployment or active.
+
+## Current source checker integration
+
+Received PR68 source code399e35e1, only light request/registry checks and ordinary
+verification/consumer changes. New request/helper dependencies are explicitly
+in the current update configuration. Source-only checks no longer need creator
+journal or historical trusted prefix; selected body/header/attempt/current failed
+GET checks remain. No new acquisition or model credit is assigned.
+
+Actual saved source root has no.git/journal/code. First company B01 attempt
+failed because the existing preparer validates all ordinary Spec files before
+selecting B01 (missingA01); preserved as an implementation/package dependency.
+Only those small actual business Specs were supplied, no old answer/AI/Run or
+source recapture. Existing companyrun then gives26186000000USD/FY2025 in1.762s
+through actual calculation/save/CSV. Code/source separation of these remaining
+rule reads is not claimed complete. Final73 directed tests5.625s pass after
+source verifier integration; untouched large material/cold runs were not repeated.
+Old request ledgers, original source files and project claim counts stay intact.

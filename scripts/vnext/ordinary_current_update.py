@@ -43,7 +43,8 @@ def _configuration(source, company, metric):
     paths.update('scripts/vnext/'+name+'.py' for name in (
         'deterministic_router','calculator','canonical','records','observations',
         'specs','sources','table_grid','resource_limits','traits','projector',
-        'governance_signals','annual_input','annual_sources','deterministic_catalog'))
+        'governance_signals','annual_input','annual_sources','deterministic_catalog',
+        'saved_source_checks','request_bindings','company_registry'))
     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
                   'config/company_registry.csv'})
     return {'company_id':company,'metric_id':metric,'source_root':str(source),

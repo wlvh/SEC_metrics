@@ -8,7 +8,7 @@ does not create an acquisition receipt, reopen a budget or fetch anything.
 import hashlib
 from pathlib import Path
 
-from .batch_workflow import validate_request_attempt_binding
+from .request_bindings import validate_request_attempt_binding
 from .canonical import sha256_file, strict_json_file
 from .sources import resolve_repository_file
 
