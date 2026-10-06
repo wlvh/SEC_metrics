@@ -1,0 +1,15 @@
+UTC 2026-10-06T04:01:05.630105+00:00
+received path count=26 differs from main=['scripts/vnext/company_handoff.py', 'tests/vnext/test_company_handoff.py']
+{"checkpoint_id": "sha256:f429511996409d3638df1850cf2ebc39fdbb8efa1a714ad0b7f08fe458dd6a55", "company_id": "jpmorgan_chase", "files": 75, "ledger_sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2", "metadata_ai_state": "NOT_INCLUDED", "metric_execution": "NOT_EXECUTED", "metric_ids": ["C02"], "name": "company-c02-source-current-20261006", "new_business_calls": {"paid": 0, "provider": 0, "sec": 0}, "original_checkpoint_id": null, "production_authorized": false, "real_sec_credit": false, "rules": 184, "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY", "source_history_id": null}
+All admitted file/rule hashes checked company-c02-source-current-20261006
+{"checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964", "company_id": "jpmorgan_chase", "files": 77, "ledger_sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2", "metadata_ai_state": "NOT_INCLUDED", "metric_execution": "NOT_EXECUTED", "metric_ids": ["C02"], "name": "company-c02-source-fixed-20261006", "new_business_calls": {"paid": 0, "provider": 0, "sec": 0}, "original_checkpoint_id": null, "production_authorized": false, "real_sec_credit": false, "rules": 184, "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY", "source_history_id": null}
+All admitted file/rule hashes checked company-c02-source-fixed-20261006
+identical original history, full ledger, rule bindings, company/metric scope and credits
+ADDED_FILES {"evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm": {"sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476", "size": 2932247}, "evidence/accession_materials/jpmorgan_chase_19617_000001961726000096/jpm-20260402.htm.headers.json": {"sha256": "35125deb22ac8a22eed6fd94a1f533c876220f4408edccf9794b7fd299550702", "size": 1065}}
+REMOVED_FILES []
+MODIFIED_FILES []
+ADDED_URLS ["https://www.sec.gov/Archives/edgar/data/19617/000001961726000096/jpm-20260402.htm"]
+retained immutable version exactly equals package sha256:f429511996409d3638df1850cf2ebc39fdbb8efa1a714ad0b7f08fe458dd6a55
+retained immutable version exactly equals package sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964
+stable source exact installed repaired package; both versions remain
+repo mutable execution-state excluded from review; existing dirty at start
