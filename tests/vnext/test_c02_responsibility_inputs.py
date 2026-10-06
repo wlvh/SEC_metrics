@@ -20,6 +20,17 @@ def request(tables=6):
 
 
 class C02ResponsibilityInputTest(unittest.TestCase):
+    def test_textual_output_budget_agrees_with_the_configured_envelope(self):
+        body=json.loads(request(tables=1))
+        body['messages'][0]['content']+=' Maximum 64 facts, complete JSON within 4096 output tokens.'
+        raw=json.dumps(body,ensure_ascii=False,separators=(',',':')).encode()
+        for limit in (4096,8192):
+            result=prepare_groups(raw,limits=RequestLimits(output_tokens=limit))
+            request_body=json.loads(result['groups'][0]['request'])
+            self.assertEqual(request_body['max_tokens'],limit)
+            self.assertIn(f'complete JSON within {limit} output tokens',request_body['messages'][0]['content'])
+            self.assertEqual(json.loads(request_body['messages'][1]['content']),json.loads(body['messages'][1]['content']))
+
     def test_whole_tables_and_all_common_text_reconstruct_original_in_order(self):
         raw=request();limits=RequestLimits(output_tokens=64,max_context_tokens=650)
         original=json.loads(json.loads(raw)['messages'][1]['content']);result=prepare_groups(raw,limits=limits)

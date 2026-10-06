@@ -8,6 +8,7 @@ import argparse
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 import sys
 
@@ -25,7 +26,7 @@ def _bytes(value):
     return json.dumps(value,ensure_ascii=False,separators=(',',':')).encode('utf-8')
 
 
-def prepare_groups(raw, *, limits=None, max_groups=8):
+def prepare_groups(raw, *, limits=None, max_groups=8, clarify_determinations=False):
     limits = RequestLimits(output_tokens=8192) if limits is None else limits
     _need(type(limits) is RequestLimits and limits.max_context_tokens<=200000
           and limits.max_payload_bytes<=8*1024*1024 and limits.output_tokens<=8192,
@@ -41,6 +42,16 @@ def prepare_groups(raw, *, limits=None, max_groups=8):
     original_prompt=body['messages'][0]['content']
     _need(original_prompt.count('all HTML tables')==1,'C02_GROUP_PROMPT_FORMAT_UNSUPPORTED')
     original_prompt=original_prompt.replace('all HTML tables','the complete assigned HTML tables',1)
+    # A configured envelope must not retain a contradictory textual budget.
+    original_prompt,count=re.subn(r'complete JSON within [0-9]+ output tokens',
+        f'complete JSON within {limits.output_tokens} output tokens',original_prompt)
+    _need(count<=1,'C02_GROUP_MULTIPLE_TEXTUAL_OUTPUT_LIMITS')
+    if clarify_determinations:
+        original_prompt += ('\nFor an actual independence or qualification assessment, preserve its disclosed standards. '
+            'Keep a non-employee determination distinct from independence. Preserve explicitly stated registrant '
+            'officer capacities of Board members and the context of observed committee names; a different name '
+            'in plan mechanics does not establish another standing committee. These instructions do not '
+            'supply any missing source relationship.\n')
 
     def packet(start, end, number):
         request=copy.deepcopy(body)
@@ -100,9 +111,10 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--request',required=True,type=Path)
     parser.add_argument('--out',required=True,type=Path)
+    parser.add_argument('--clarify-determinations',action='store_true')
     args=parser.parse_args(argv)
     _need(not args.out.exists(),'C02_GROUP_OUTPUT_ALREADY_EXISTS')
-    result=prepare_groups(args.request.read_bytes())
+    result=prepare_groups(args.request.read_bytes(),clarify_determinations=args.clarify_determinations)
     args.out.mkdir(parents=True)
     for group in result['groups']:
         name=f'group-{group["number"]:02d}-request-body.json'
