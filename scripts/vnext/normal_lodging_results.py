@@ -13,7 +13,7 @@ from .observations import structured_observation,scope_key
 from .sources import resolve_repository_file
 from .specs import compile_spec_file
 from .traits import repository_company_traits
-from .zero_ai_r2 import _manual_result_trace
+from .calculator import _manual_result_trace
 
 
 SPEC_PATHS={m:'catalog/ordinary_lodging/'+m+'.md' for m in ['B10','B11']}
