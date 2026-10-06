@@ -1,0 +1,148 @@
+{
+  "head": "8ab4af87171637f2a0f6cb4f89f802e076d2b29f",
+  "run_url": "https://github.com/wlvh/SEC_metrics/actions/runs/37504961992",
+  "terminal": "FAILURE",
+  "source_material_failures": [
+    {
+      "suite": "source-material",
+      "failed": [
+        {
+          "test": "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",
+          "reason": "AssertionError: 'UPDATES_READY' != 'UPDATES_INCOMPLETE'"
+        },
+        {
+          "test": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_historical_period_results",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_r6_semantic_verification",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        }
+      ]
+    },
+    {
+      "suite": "source-material",
+      "failed": [
+        {
+          "test": "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_historical_sec_session",
+          "reason": "vnext.historical_sec_session.HistoricalSessionError: ISSUE_47_OFFLINE_WIRING_EVIDENCE_SET_CHANGED:missing=docs/evidence/issue47_history/event-attachment-declarations-v1.json,scripts/vnext/historical_event_attachments.py;extra="
+        },
+        {
+          "test": "tests.vnext.test_ordinary_e01_item_text_input",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_r6_regulatory_semantics",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        }
+      ]
+    },
+    {
+      "suite": "source-material",
+      "failed": [
+        {
+          "test": "tests.vnext.test_a05_formula_material",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",
+          "reason": "AssertionError: 'EXECUTION_FAILED' != 'UPDATE_BLOCKED'"
+        },
+        {
+          "test": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_continuous_sec_acquisition",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_continuous_semantic_calls",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_native_assessment_replay",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_r6_historical_controls",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        }
+      ]
+    },
+    {
+      "suite": "source-material",
+      "failed": [
+        {
+          "test": "tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",
+          "reason": "AssertionError: 'UPDATES_PARTIAL' != 'UPDATES_INCOMPLETE'"
+        },
+        {
+          "test": "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",
+          "reason": "AssertionError: 'UPDATES_READY' != 'UPDATES_INCOMPLETE'"
+        },
+        {
+          "test": "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",
+          "reason": "AssertionError: 'CANDIDATE_READY' != 'UPDATE_BLOCKED'"
+        },
+        {
+          "test": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_capacity_native_assessment",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        },
+        {
+          "test": "tests.vnext.test_d04_native_wiring",
+          "reason": "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_annual_input.py"
+        }
+      ]
+    }
+  ],
+  "interpretation": "24 logged source-material selectors stop at the old Normal candidate rule-byte comparison for normal_annual_input.py; five status assertions and one historical offline-wiring evidence-set error are kept distinct. No blanket business pass or all-failures-same-cause claim. No re-signing old Runs/snapshots or broad rerun."
+}
