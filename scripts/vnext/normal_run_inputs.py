@@ -42,7 +42,8 @@ def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metr
                   "ORDINARY_RUN_DEPENDENCY_SOURCE_SET_DIFFERS")
             records.extend(value["records"])
     else:
-        component = (resolve_ordinary_accession_metrics(repo_root=repo_root,company_id=company_id)
+        component = (resolve_ordinary_accession_metrics(repo_root=repo_root,company_id=company_id,
+                **({} if rules_root is None else {'rules_root':rules_root}))
             if metric_id in {"A01","A02","B12"} else
             resolve_ordinary_companyfacts_metrics(repo_root=repo_root,company_id=company_id,
                 **({} if rules_root is None else {'rules_root':rules_root})))

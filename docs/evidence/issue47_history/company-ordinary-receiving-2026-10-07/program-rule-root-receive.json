@@ -1,0 +1,24 @@
+{
+  "received_commits": [
+    "3587067da8302d823bbd64e023a02a7492644c80",
+    "27760de75c54c68417b118fe20cd8847dfd63f7e"
+  ],
+  "received_scope": "Only required source/program rules_root libraries and shared receiving tests; no runtime ownership fork.",
+  "tests": 26,
+  "seconds": 37.62,
+  "passed": 25,
+  "failures": [
+    {
+      "test": "SeparateRuleRootTest.test_no_catalog_rules_code_or_answers_required_in_source_root",
+      "actual": "/private/var/folders/.../source",
+      "expected": "/var/folders/.../source",
+      "cause": "macOS directory alias canonicalization; reported to common test maintainer; production/value assertions unchanged."
+    }
+  ],
+  "history_source_only_verified": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

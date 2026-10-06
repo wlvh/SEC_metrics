@@ -1,0 +1,18 @@
+.......................F..
+======================================================================
+FAIL: test_no_catalog_rules_code_or_answers_required_in_source_root (tests.vnext.test_separate_rule_root.SeparateRuleRootTest.test_no_catalog_rules_code_or_answers_required_in_source_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_separate_rule_root.py", line 57, in test_no_catalog_rules_code_or_answers_required_in_source_root
+    self.assertEqual(self.record['manifest']['source_root'],str(self.source))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpi8pex5sm/source' != '/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpi8pex5sm/source'
+- /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpi8pex5sm/source
+? --------
++ /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpi8pex5sm/source
+
+
+----------------------------------------------------------------------
+Ran 26 tests in 37.620s
+
+FAILED (failures=1)
