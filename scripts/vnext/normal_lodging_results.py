@@ -19,6 +19,14 @@ from .zero_ai_r2 import _manual_result_trace
 SPEC_PATHS={m:'catalog/ordinary_lodging/'+m+'.md' for m in ['B10','B11']}
 
 
+class SelectedLodgingCalculationError(ValueError):
+    """A selected component does not belong to this metric/source/period."""
+
+
+def _calculation_need(condition, reason):
+    if not condition:raise SelectedLodgingCalculationError(reason)
+
+
 def _need(condition,reason):
     if not condition:raise ValueError(reason)
 
@@ -37,6 +45,45 @@ def _spec(root,metric):
             'scope_contract','forbidden_confusions','inputs','formula','top_level_guards','dependencies']
     _need(all(semantic[k]==original['compiled'][k] for k in fields),'ORDINARY_LODGING_ECONOMIC_DEFINITION_CHANGED')
     return spec
+
+
+def calculate_selected_lodging_metric(*, prepared, component, reference, metric_id, spec, traits):
+    """Calculate one metric from the table component selected for its actual period.
+
+    Current and historical preparation own filing selection and source reading.
+    This function shares the observation binding and Calculator; it never picks
+    a newer filing, rereads a source, creates a Run, or writes a result.
+    """
+    _calculation_need(metric_id in SPEC_PATHS and spec['compiled']['metric_id']==metric_id,
+          'LODGING_CALCULATION_METRIC_CONFLICT')
+    company_id=prepared['company_id'];period=prepared['table_input']['target_period']
+    scope={k:v for k,v in spec['compiled']['required_claims'].items() if k!='period_role'}
+    fact=component['selection']['facts'][metric_id]
+    _calculation_need(component['company_id']==company_id and component['source_reference']==reference
+          and reference['company_id']==company_id
+          and reference['accession']==prepared['filing']['accessionNumber'],
+          'LODGING_CALCULATION_SOURCE_CONFLICT')
+    _calculation_need(fact['scope']==scope and fact['period']==period,
+          'LODGING_CALCULATION_SCOPE_OR_PERIOD_CONFLICT')
+    witnesses=fact['source_witnesses'];amount=witnesses['amount']
+    binding={'raw_asset_id':reference['raw_asset_id'],'source_reference_id':reference['source_reference_id'],
+        'source_role':reference['source_role'],'document_name':reference['document_name'],'accession':reference['accession'],
+        'entity':prepared['entity'],'form':prepared['filing']['form'],'filed':prepared['filing']['filingDate'],
+        'derived_asset_id':component['derived_asset']['derived_asset_id'],'table_locator':amount['locator'],
+        'reported_raw_text':amount['raw_text'],'reported_value':fact['reported_value'],'reported_unit':fact['reported_unit'],
+        'source_witnesses':witnesses,'source_component_id':component['component_id'],
+        'period_basis':fact['period_basis'],'ordinary_source_policy_hash':component['policy_hash']}
+    observation=structured_observation(metric_id=metric_id,semantic_role=fact['semantic_role'],
+        company_id=company_id,period_start=period['period_start'],period_end=period['period_end'],scope=scope,
+        value=fact['value'],unit=fact['unit'],quality='EXACT',source_binding=binding)
+    target={'company_id':company_id,'period_start':period['period_start'],'period_end':period['period_end'],
+            'scope':scope,'scope_key':scope_key(scope=scope)}
+    result,trace=calculate_observation_metric(compiled_spec=spec,target=target,company_traits=traits,observation=observation)
+    selection={'classification':'DETERMINISTIC_REPORTED_TABLE','reason_code':result['reason_code'],
+        'table_id':component['selection']['table_id'],'source_component_id':component['component_id'],
+        'source_witnesses':witnesses,'period_basis':fact['period_basis'],'ai_response_used':False,
+        'qualification_credit':False}
+    return {'observation':observation,'result':result,'trace':trace,'selection':selection}
 
 
 def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str):
@@ -60,28 +107,16 @@ def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str)
         selection={'classification':'STRUCTURAL','reason_code':'TRAIT_NOT_APPLICABLE'}
     else:
         try:
-            source_component=prepare_saved_lodging_source(repo_root=repo_root,company_id=company_id)
+            source_component=prepare_saved_lodging_source(repo_root=repo_root,company_id=company_id,prepared_input=prepared)
             component=source_component['component'];fact=component['selection']['facts'][metric_id]
             _need(source_component['prepared_input']==prepared and component['source_reference']==primary['source_reference'],
                   'ORDINARY_LODGING_SOURCE_SELECTION_CHANGED')
             _need(fact['scope']==scope and fact['period']==period,'ORDINARY_LODGING_SCOPE_OR_PERIOD_CHANGED')
-            reference=primary['source_reference'];witnesses=fact['source_witnesses'];amount=witnesses['amount']
-            binding={'raw_asset_id':reference['raw_asset_id'],'source_reference_id':reference['source_reference_id'],
-                'source_role':reference['source_role'],'document_name':reference['document_name'],'accession':reference['accession'],
-                'entity':prepared['entity'],'form':prepared['filing']['form'],'filed':prepared['filing']['filingDate'],
-                'derived_asset_id':component['derived_asset']['derived_asset_id'],'table_locator':amount['locator'],
-                'reported_raw_text':amount['raw_text'],'reported_value':fact['reported_value'],'reported_unit':fact['reported_unit'],
-                'source_witnesses':witnesses,'source_component_id':component['component_id'],
-                'period_basis':fact['period_basis'],'ordinary_source_policy_hash':component['policy_hash']}
-            observation=structured_observation(metric_id=metric_id,semantic_role=fact['semantic_role'],
-                company_id=company_id,period_start=period['period_start'],period_end=period['period_end'],scope=scope,
-                value=fact['value'],unit=fact['unit'],quality='EXACT',source_binding=binding)
-            result,trace=calculate_observation_metric(compiled_spec=spec,target=target,company_traits=traits,observation=observation)
+            calculated=calculate_selected_lodging_metric(prepared=prepared,component=component,
+                reference=primary['source_reference'],metric_id=metric_id,spec=spec,traits=traits)
+            observation,result,trace=(calculated[k] for k in ('observation','result','trace'))
             observations=[observation];assets=[component['derived_asset']]
-            selection={'classification':'DETERMINISTIC_REPORTED_TABLE','reason_code':result['reason_code'],
-                'table_id':component['selection']['table_id'],'source_component_id':component['component_id'],
-                'source_witnesses':witnesses,'period_basis':fact['period_basis'],'ai_response_used':False,
-                'qualification_credit':False}
+            selection=calculated['selection']
         except LodgingSourceError as error:
             result,trace=withheld_metric_result(compiled_spec=spec,target=target,reason_code='ORDINARY_LODGING_SOURCE_UNRESOLVED')
             selection={'classification':'SOURCE_OR_IMPLEMENTATION_UNRESOLVED','reason':str(error),'reason_code':result['reason_code']}

@@ -1,0 +1,37 @@
+{
+  "test_scope": "Targeted actual FY2024 saved source + existing selected-source calculation + public writer. Constructed case packaging; not the historical pipeline acceptance.",
+  "parent_sha": "e6b4a98f",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "source_proofs": [
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "accession": "0001628280-25-004818",
+      "document_name": "mar-20241231.htm",
+      "content_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "request_body_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "request_body_size": 2047740,
+      "request_headers_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm.91eb1545994f9c11e96630e16fbddb3e21bbdcb9dd0233c2e269195e40bddd6d.headers.json",
+      "request_headers_sha256": "91eb1545994f9c11e96630e16fbddb3e21bbdcb9dd0233c2e269195e40bddd6d",
+      "request_headers_size": 1087,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+      "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+    }
+  ],
+  "period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "value": "128.23",
+  "unit": "USD",
+  "result_id": "sha256:497d027fa46a230d8178db0ce81a567720ea2b9d6b70d4e346c87c773c2d86f5",
+  "case_result_id": "sha256:497d027fa46a230d8178db0ce81a567720ea2b9d6b70d4e346c87c773c2d86f5",
+  "elapsed_seconds": 2.875552667072043,
+  "no_latest_reselection": true,
+  "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+  }
+}

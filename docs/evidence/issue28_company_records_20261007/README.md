@@ -132,3 +132,58 @@ new saved-record tests, and are not erased or treated as all-green. Removing
 old-proof dependencies from remaining new-online paths remains real R4 work.
 The next commit's source/test changes are listed in its diff, not falsely
 credited to b7CI. No old package, binding or ledger was rewritten.
+
+## Calculated case persistence and B10/B11 company integration
+
+Public save_calculated_case consumes the existing case shape (expected_records,
+results,input_binding,compiled_specs,spec_paths,references,source_proofs,admission,
+target_period). It does not rerun extraction/Calculator, checks actual Spec/
+result/trace/company/period/unit and source proofs, then writes completion last.
+Default create_saved_result still prepares its own deterministic case. An
+explicit selected annual input is accepted by the pure renderer; old Run wrapper
+default stays unchanged. Subject registration/fiscal label/measurement interval
+are checked, no latest-year fallback can disguise a mismatch.
+
+The public adapter receives only a06853465fa64b07c308b9d9311548d3533b5b18's
+lodging source and shared calculation plus its small tests and required HTML
+fixture (initial missing-fixture setup error was fixed before tests). No historical
+registration/Run/authority module was transplanted. Both current/history calculate
+through the owner-maintained helper. B10/B11 now enter the existing company run
+controller, records, CSV/evidence and common daily view.
+
+Actual current Marriott FY2025 plain cases retain .693 ratio/128.8 USD and
+exact precomputed Result IDs; writer alone1.299s/1.211s without latest selection.
+Actual FY2024 selected original from saved submissions/log/body, existing selected
+source/calculation and constructed case packaging passes B11=128.23 USD,
+2024-01-01..2024-12-31,2.876s with latest preparer patched to raise. This is a
+targeted real-original renderer/writer check, not the historical company's
+full selection/Run acceptance. No old result, request or credit was rewritten.
+
+Actual current company first run through the shared core/records:10.339s,
+B10=69.3percent andB11=128.8USD in MDA_OK/FY2025 with original citations. A
+repeat with factory patched to raise passes1.552s. Daily CSV/evidence/JSON0.861s,
+shared grid parsed once for both records; no update was executed by daily view.
+
+A source-derived full grid is saved once at explicit company shared-inputs,
+with immutable content name. Result records keep a checked reference; old inline
+records still read unchanged. Write roots cannot overlap source/program/result;
+standalone updater defaults do not invent a shared root outside their state.
+B10/B11 result directories are30,682/30,555bytes instead of3,599,096/3,598,969,
+plus one shared3,568,995byte grid. It contains parsed source data, no AI answer.
+New independent reads recheck existence/content; one locked daily operation
+shares only that operation's parsed record. Missing/changed material is refused.
+
+Configuration excludes specifically unused lodging producer/policy/Specs from
+the22zero-AI routes. A new regression found the old inherited rule list also
+omitted the shared native parser; relevant parser/calculator/record/Spec/source
+and traits dependencies are now explicit. Unrelated lodging edit preserves B01
+configuration, consumed parser changes do not. This is a bounded family correction,
+not a complete metric-specific dependency system. The initial parser test failure
+and missing-material exception mismatch are retained; final64 tests8.751s pass.
+Source/code roots and uncommitted test delta are stated in actual records.
+
+Remaining: remove old trust/ancestor checks from new online source continuation;
+historical source-restoration old-journal gap still owned by the actual consumer
+interface; broader same-batch preparation/configuration specificity; AI input
+processing and all39 business acceptance. No provider/paid/SEC calls, allowance
+change, Ready, merge, adoption, deployment or active.
