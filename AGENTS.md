@@ -1,8 +1,12 @@
 # SEC_metrics Agent 工作入口
 
-## 公司级边界工作（#54）
+## 当前工程入口（2026-10-06）
 
-[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54主实现公司交接，#28/#47各自维护并验证消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。
+按 [Issue #28 受信任内部工具](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)及[运行/测试减负唯一队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)实施；冲突的旧工程要求已被替代。#54/PR57已交付，#28负责公共runtime和当期公司集成，#47负责历史接入及既有C02/D02共用核心。下文旧PR、封存和工作树描述只解释历史，不支配新路径。
+
+## 公司级边界工作（#54已交付）
+
+[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54/PR57已完成公司交接；#28维护公共及当期入口，#47维护历史消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。
 
 ## 0. 按任务选择阅读路径
 
@@ -51,9 +55,9 @@ architecture.md
 
 需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
 
-当前 Issue #28 工程按[实时第3节唯一队列](https://github.com/wlvh/SEC_metrics/issues/28)接续，跨路线协作以 [COLLAB-28-47-v1.2](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1) 和 [第5.8节开发方法](https://github.com/wlvh/SEC_metrics/issues/28#ai-development-20261003)为准，不将下面历史阶段的局部停点当成当前总委托。与 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 按 COMPANY-SEPARATION-v2.1 交接固定来源/程序/处理输入，预算和业务信用各自保留。
+当前工程使用上述入口；保存来源计算可从现有 `tools/vnext_company.py run --source-root <来源根>` 执行，程序、来源共用只读位置，状态与输出另存；不获取来源或发AI请求。旧native任务按原固定运行时读取，不原地迁移。具体边界和命令见 `docs/company_local_run.md`。
 
-本工作树 `task/issue28-foundation-main-candidate` 是 main 基础接收的隔离候选；固定范围、实际验证及剩余兼容缺口见 `docs/evidence/issue28_foundation_integration_20261004/README.md`。PR43 原业务现场由其原执行记录接续，不修改其他执行者工作树、账本或未提交状态。阶段接收不等于全部业务验收，不授 Merge、Ready、正式采纳、部署或 active 切换。
+历史现场：`task/issue28-foundation-main-candidate` 是当时main基础接收候选，PR43保存存量实现与证据；这些描述不是当前小PR的工作树身份。
 
 ### 开发、复核 successor vNext Ratchet
 

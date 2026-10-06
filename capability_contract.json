@@ -14,6 +14,21 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.current_saved_company_run",
+        "type": "capability",
+        "status": "active",
+        "statement": "公司run可显式指定保存来源，以共享程序/来源和独立状态根运行普通结果记录；原始输入与配置未变先比较后复用，日常CSV/results不重放计算或复制整棵来源/程序。局部失败保留旧结果的原期间，精确已知错误清空当前数值，旧native任务不原地迁移；仅保存来源，未完成在线发现/AI输入/39项业务接受。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_current_records.py::CurrentCompanyTest",
+        "test_status": "automated_partial",
+        "untested_reason": null,
+        "pending_since": null
+      },
+      {
         "anchor_id": "CAPABILITY.company_import_transaction",
         "type": "capability",
         "status": "active",

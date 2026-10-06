@@ -161,9 +161,13 @@ def _export_current(program, work, output, company, key, environment, processing
 
 
 def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
-              metric_ids=None, max_sec_requests=120, sec_allowance=120):
+              metric_ids=None, max_sec_requests=120, sec_allowance=120, source_root=None):
     """One finite invocation, not a scheduler or authorization to publish."""
     need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED: use latest-complete-fy; historical periods retain their separate entry')
+    if source_root is not None:
+        from .company_current_records import run_saved_company
+        return run_saved_company(company_id=company_id, source_root=source_root,
+            work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids)
     configured = configured_scope(company_id)
     selected = configured if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),

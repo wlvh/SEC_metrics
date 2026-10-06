@@ -1,6 +1,21 @@
 # 本地运行一家公司的当前财年
 
-这是PR55的Draft本地入口。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+公司入口已经由PR55/PR56基础及PR57交付到main；代码交付与业务结果接受是不同状态。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+
+保存来源可以使用当前普通记录路径，不安装旧Requirement/trust树：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py run \
+  --company marriott_international --source-root /fixed/company-source \
+  --work-dir /writable/company-state --output-dir /writable/company-output \
+  --metric B01 --metric B02
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company marriott_international --state-root /writable/company-state
+```
+
+这条路径仅消费已经保存的来源，不进行在线发现、获取或AI调用。程序根/来源根共享读取，状态及输出分开；状态固定公司和运行时来源位置。每项结果保存自己的记录、出处、程序版本和失败，重复输入先比较后直接读取；来源失败显示本次失败及旧结果的原期间，不冒充新财报成功。正常CSV不重放计算或复制全部来源/程序；`results`只读结果，不检查在线新来源。旧native任务保留原入口，不原地改格式。已知错误按确切Result身份扣留，旧E01计数不当作新并购口径结果，缺少AI处理不造答案。
+
+本批实测Marriott B01/B02及银行/非自然年结果见 `docs/evidence/issue28_company_records_20261007/`；程序通过与内容接受分别登记。该路径尚未完成在线发现接续、同批解析共享、AI输入消费和所有39项业务验收。以下描述的是保留的在线/native路径。
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 

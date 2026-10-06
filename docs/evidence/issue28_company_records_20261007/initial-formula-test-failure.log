@@ -1,0 +1,12 @@
+======================================================================
+FAIL: test_real_marriott_values_periods_and_source_links_reach_company_csv (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_marriott_values_periods_and_source_links_reach_company_csv)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 179, in test_real_marriott_values_periods_and_source_links_reach_company_csv
+    self.assertEqual(Decimal(rows['B02']['value']),Decimal('26186000000')/Decimal('25100000000')-1)
+AssertionError: Decimal('0.04326693227091633466135458167') != Decimal('0.043266932270916334661354582')
+
+----------------------------------------------------------------------
+Ran 25 tests in 7.736s
+
+FAILED (failures=1)

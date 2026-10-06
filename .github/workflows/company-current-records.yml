@@ -1,0 +1,30 @@
+name: Company saved-source records
+"on":
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'tools/vnext_company.py'
+      - 'tests/vnext/test_company_current_records.py'
+      - 'tests/vnext/test_ordinary_current_update.py'
+      - 'config/**'
+      - 'catalog/**'
+      - 'evidence/**'
+      - 'docs/evidence/issue28_continuous/known_result_defects.json'
+      - '.github/workflows/company-current-records.yml'
+permissions:
+  contents: read
+jobs:
+  company-current:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - name: Saved source through calculation, records, CSV and reading
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update -v

@@ -79,6 +79,9 @@ usage 缺失、矛盾、输入超200000或内容失败均停止，无额外请�
 它没有资格或正式发布信用，不更新 active，也不声称在线发现或未见材料泛化。
 <!-- capability-anchor: CAPABILITY.ordinary_annual_b10_candidate -->
 
+保存来源公司 `run --source-root` 输出普通CSV/出处及逐项状态，计算和读取共享固定来源/程序根，状态另写。输入未变复用结果；当前来源检查失败时，旧值只显示原期间及PREVIOUS_RESULT。确切已知错误清空数值并显示WITHHELD_KNOWN_DEFECT。`results`读取新普通记录不运行更新；旧native任务仍明确要求原trust/runtime。保存来源读取不声称在线发现或业务正式接受。
+<!-- capability-anchor: CAPABILITY.current_saved_company_run -->
+
 ## 1. 文档关系与读者
 
 `capability_contract.json` 是能力、限制、责任与行为承诺的机器可读真相源；本文档把这些契约翻译成业务人员、运行负责人和 reviewer 可以直接验收的 CLI 与文件行为。`docs/business_user_guide.md` 只负责首次使用教学，不得扩展本文档未声明的能力。

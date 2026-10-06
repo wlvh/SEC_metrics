@@ -8,7 +8,7 @@ this bounded prototype rather than inheriting old answers or periods.
 from pathlib import Path
 
 from sec_urls import accession_document_url, companyfacts_url, hdr_sgml_url, submissions_url, submissions_file_url
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .annual_amendment_scope import prepare_saved_amendment_input
 from .batch_workflow import BatchWorkflowError, _structured_concepts
 from .calculator import calculate_metric, withheld_metric_result, calculate_observation_metric
