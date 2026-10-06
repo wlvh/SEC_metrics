@@ -1,0 +1,38 @@
+{
+  "elapsed_seconds": 24.111140666063875,
+  "status": "EXPORTED",
+  "company_id": "macys",
+  "output_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-old-export-a0ca3a22-20261006",
+  "native_candidates": [
+    {
+      "metric_id": "B01",
+      "period": {
+        "fiscal_year": 2023,
+        "period_start": "2023-01-29",
+        "period_end": "2024-02-03"
+      },
+      "attempt_id": "a4f9b408e30741c8a12ccec0d1e498ca",
+      "run_id": "run:historical-period:40b435e6a57a903aa0494fa6e95154d7cb825875170693030d23cddcc098affd",
+      "requirement_id": "issue_54_v3",
+      "requirement_closure_hash": "sha256:9ad38924eb90f266942c2c42ede186ef34a1c9c95edcb329c3f8fcffa045545a",
+      "native_path": "native/B01/a4f9b408e30741c8a12ccec0d1e498ca",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    },
+    {
+      "metric_id": "B01",
+      "period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-02-04",
+        "period_end": "2025-02-01"
+      },
+      "attempt_id": "210b7c43d7184efcae5e565888156338",
+      "run_id": "run:historical-period:da03087254a45bfcd8afc2e6a655d34789ee7c300dd93685c88700ab82a061e0",
+      "requirement_id": "issue_54_v3",
+      "requirement_closure_hash": "sha256:9ad38924eb90f266942c2c42ede186ef34a1c9c95edcb329c3f8fcffa045545a",
+      "native_path": "native/B01/210b7c43d7184efcae5e565888156338",
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED"
+    }
+  ],
+  "failed_candidates": [],
+  "bytes": 250735129
+}
