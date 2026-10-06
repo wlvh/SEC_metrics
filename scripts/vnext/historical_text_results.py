@@ -1337,6 +1337,28 @@ def legal_review_request(*, prepared, source_arguments):
                           keyword_admitted=keyword)
 
 
+def legal_context_review_request(*, prepared, source_arguments):
+    """Prepare full Item 8 context for the explicit successor developer route.
+
+    The existing request still proves the route's original block ownership.
+    Incorporated notes, furniture and the auditor remain visible as context;
+    scope decisions belong to the model, not another language classifier.
+    This does not replace V1 registrations or consume an old model response.
+    """
+    from .legal_review_context import review_context_request
+    original = legal_review_request(prepared=prepared, source_arguments=source_arguments)
+    _, document, proposal = _d02_parts(prepared)
+    scopes = [r for r in proposal['checked_ranges']
+              if r['section_id'] in (ITEM_8, APPENDED_STATEMENTS)]
+    context = sorted({i for r in scopes
+                      for i in range(r['start_block'], r['end_block_exclusive'])})
+    return review_context_request(company_id=original['company_id'],
+        target_cik=original['target_cik'], period_end=original['period_end'], document=document,
+        context_pool=context,
+        responsibility_pool=[int(b['block_id'][1:]) for b in original['blocks']],
+        keyword_admitted=[int(b[1:]) for b in original['must_decide']])
+
+
 def apply_legal_review(*, prepared, legal_review, source_arguments):
     """The prepared D02 sources with Item 8 chosen by a registered review, when one answers.
 
