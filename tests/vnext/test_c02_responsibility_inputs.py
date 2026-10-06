@@ -30,6 +30,7 @@ class C02ResponsibilityInputTest(unittest.TestCase):
             self.assertEqual({k:data[k] for k in ('strings','block_count','geometry')},
                              {k:original[k] for k in ('strings','block_count','geometry')})
             self.assertEqual(body['max_tokens'],64)
+            self.assertIn('No group may establish global absence',body['messages'][0]['content'])
             self.assertLessEqual(g['measurement']['context_tokens'],650)
             tables.extend(data['tables'])
         self.assertEqual(tables,original['tables'])
