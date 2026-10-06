@@ -1,0 +1,53 @@
+test_actual_publication_gate_accepts_reviewed_syntax_only (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_actual_publication_gate_accepts_reviewed_syntax_only) ... ok
+test_approved_source_mutation_is_rejected (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_approved_source_mutation_is_rejected) ... ok
+test_dangling_successor_aliases_never_fall_back_to_legacy (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_dangling_successor_aliases_never_fall_back_to_legacy) ... ok
+test_non_syntax_site_cannot_be_whitelisted_by_matching_hash (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_non_syntax_site_cannot_be_whitelisted_by_matching_hash) ... ok
+test_partial_or_alias_successor_installation_fails_closed (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_partial_or_alias_successor_installation_fails_closed) ... ok
+test_real_identity_and_financial_period_are_not_excluded (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_real_identity_and_financial_period_are_not_excluded) ... ok
+test_removing_an_exemption_preserves_the_violation (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_removing_an_exemption_preserves_the_violation) ... ok
+test_scoped_registry_still_proves_all_declared_syntax_sites (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_scoped_registry_still_proves_all_declared_syntax_sites) ... ok
+test_r1_r3_historical_chain_and_root_mirrors_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28HistoricalReadBackIntegrationTest.test_r1_r3_historical_chain_and_root_mirrors_remain_exact)
+Preserve R3 active, exact R2, R1 availability and 14 mirrors. ... ok
+test_profile_snapshot_loads_with_historical_parent_fast_smoke (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke)
+Load profile authority and its exact Issue #15 parent locally. ... ok
+test_baseline_binds_exact_merged_main_and_parent_tree (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree)
+Resolve recorded Git objects without treating live HEAD as authority. ... ok
+test_contract_byte_drift_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_contract_byte_drift_fails_closed)
+Reject one changed snapshot byte before semantic evaluation. ... ok
+test_create_run_binds_explicit_successor_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_create_run_binds_explicit_successor_identity)
+Persist successor fields without changing the legacy RUN subtype. ... ok
+test_decision_fork_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_decision_fork_fails_after_outer_rebinding)
+Reject two otherwise valid children of one Decision root. ... ok
+test_extra_snapshot_file_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_extra_snapshot_file_fails_closed)
+Reject a structurally valid but unbound sixth file. ... ok
+test_incomplete_transfer_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_incomplete_transfer_fails_after_outer_rebinding)
+Require one and only one disposition for every parent Decision. ... ok
+test_invariant_profile_contains_references_not_policy_values (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_invariant_profile_contains_references_not_policy_values)
+Keep policy content in the Decision Register, not a JSON DSL. ... ok
+test_issue15_snapshot_bytes_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_issue15_snapshot_bytes_remain_exact)
+Freeze all seven Issue #15 files independently of child metadata. ... ok
+test_legacy_publication_keeps_hash_only_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity)
+Accept R3's historical shape but never relabel it as successor. ... ok
+test_parent_closure_drift_fails_after_child_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_parent_closure_drift_fails_after_child_rebinding)
+Reject a coordinated fake parent hash in baseline and transfer. ... ok
+test_parent_snapshot_symlink_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_parent_snapshot_symlink_fails_closed)
+Reject a redirected parent directory before historical dispatch. ... ok
+test_profile_dispatch_is_generation_driven_not_issue_branch (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_profile_dispatch_is_generation_driven_not_issue_branch)
+Load a later revision through a retained engine, not an Issue branch. ... ok
+test_retry_safety_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_retry_safety_fails_after_outer_rebinding)
+Reject a policy-content change that enables automatic retry. ... ok
+test_run_requirement_dispatch_requires_explicit_successor_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_run_requirement_dispatch_requires_explicit_successor_identity)
+Route new Runs by bound identity while retaining old dispatch. ... ok
+test_snapshot_symlink_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_snapshot_symlink_fails_closed)
+Reject a child file that redirects outside the five-file snapshot. ... ok
+test_successor_artifact_identity_is_all_or_nothing (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_successor_artifact_identity_is_all_or_nothing)
+Reject missing or forged identity for every successor artifact type. ... ok
+test_unknown_invariant_kind_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_unknown_invariant_kind_fails_after_outer_rebinding)
+Reject an attempted arbitrary rule-engine extension. ... ok
+test_validator_identity_drift_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_validator_identity_drift_fails_closed)
+Bind the generic evaluator implementation used by this snapshot. ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 227.115s
+
+OK

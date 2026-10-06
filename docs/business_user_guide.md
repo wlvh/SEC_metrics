@@ -1,5 +1,9 @@
 # SEC_metrics：业务人员首次使用指南
 
+单公司入口及调用方式见[公司运行说明](company_local_run.md)。来源和计算分开，旧版本及失败保留；公司CSV区分归档财年、实际测量期间、重放状态及已知内容缺陷。读取成功不等于内容已接受。保存的D04判断只能在完整来源等价成立时复用；C02开发包仍为空值待审，不会因进入CSV而获得结论或生产信用。
+<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->
+<!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
+
 已保存的两项候选可以生成完整待审核版本，用`read --publication-id`查看该版本的
 矩阵、证据与原文，正在使用的正式版本保持不变。集中审核并完成实际授权发布后，
 原有`read`入口会读取新active；未替换指标仍沿用原来的期间与证据。当前R3尚未切换，

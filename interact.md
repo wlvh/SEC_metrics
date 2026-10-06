@@ -366,6 +366,12 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 
 ## 普通保存来源候选批次
 
+公司入口可分别准备／导入来源与计算，按固定创建者读取原生CSV和证据；共同锁、不可变版本及独立信任保护旧任务。保存D04判断仅在原来源责任与完整字节等价成立时复用；缺模型判断或来源变化时明确保留缺口。本地`run`保持获取与计算独立，不因入口可用而获得新的费用或生产权限。D01当前公司调用明确选择已接入的header-v3后继及独立journal，其他指标默认、旧Run和旧程序保留。
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->
+<!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
+<!-- capability-anchor: CAPABILITY.company_result_period_and_validity -->
+<!-- capability-anchor: CAPABILITY.local_company_run -->
+
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
 

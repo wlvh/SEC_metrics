@@ -1,0 +1,17 @@
+{
+  "actual_successful_run_work": "/workspace/work/live-marriott-20261004/company-state/updates/metrics/C01/attempts/387e7c4dc14841a9bf3b2c2d3b2f6bc6",
+  "actual_run_consumed_source": {
+    "accession": "0001048286-25-000011",
+    "document_name": "0001048286-25-000011.hdr.sgml",
+    "sha256": "cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml"
+  },
+  "actual_captured_header_binding": "evidence/request_attempts/cf/cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e/0001048286-25-000011.hdr.sgml.8b210caf109409d14ac96f25b074ffffd1a50d12074fb14e93bf2ece3282e309.headers.json",
+  "source_checkpoint_id": "sha256:7050dd9ee6cfd0e50cbe3e2d694b6b1131c8fcc498d95579b41751fed7f3c896",
+  "isolated_negative_root": "/workspace/work/live-marriott-bound-header-negative",
+  "worker_returncode": 1,
+  "reason": "ValueError: COMPANY_SOURCE_BYTES_CHANGED:evidence/request_attempts/cf/cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e/0001048286-25-000011.hdr.sgml.8b210caf109409d14ac96f25b074ffffd1a50d12074fb14e93bf2ece3282e309.headers.json",
+  "elapsed_seconds": 2.0281042720016558,
+  "original_header_unchanged": true,
+  "real_calls": 0
+}

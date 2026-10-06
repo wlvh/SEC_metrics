@@ -1,0 +1,270 @@
+name: vNext fast suite
+
+"on":
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fast:
+    name: vNext fast suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.14"
+
+      - name: Verify company import transactions
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
+
+      - name: Run fast suite
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/run_foundation_ci.py --suite fast --jobs 4
+
+  inherited-source-material:
+    name: Foundation inherited source material
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Run inherited material selectors with existing limits
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/run_foundation_ci.py --suite source-material --jobs 2
+
+  main-foundation:
+    name: Main foundation audit and historical compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out fixed candidate
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Validate main audit and fixed historical objects
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: |
+          python3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
+          python3 tools/check_main_scalability.py --output /tmp/main-scalability-audit.csv
+          python3 tools/check_provider_egress.py
+          python3 tools/generate_metrics_reference.py --check
+
+  # #54 company pipeline: inherited checks restored from fixed 0bc24734 (see docs/evidence/issue54_company/live2/pr56-integration/final-integration-tree/COVERAGE-MAP.md)
+  company-source-core:
+    name: Company source authority, ledger and D04 wiring
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Source admission, sessions, storage identity, call ledger/policy and discovery
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_source_authority tests.vnext.test_ordinary_source_session tests.vnext.test_ordinary_storage_identity tests.vnext.test_continuous_call_ledger tests.vnext.test_continuous_call_policy tests.vnext.test_normal_source_requirements tests.vnext.test_prior_html_dependency tests.vnext.test_d04_native_assessment tests.vnext.test_native_request_construction
+      - name: Registered native update (one skip pre-existing in the original workflow)
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+        run: python3 tests/required_unittests.py --allow-skips 1 tests.vnext.test_registered_native_update
+
+  company-acquisition-c04:
+    name: Company acquisition session and C04 update/recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: SEC acquisition session, C04 update cycle and refresh resume
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          SEC_ACQUISITION_MATERIAL_ROOT: ${{ runner.temp }}/sec-acquisition-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 tests/required_unittests.py tests.vnext.test_continuous_sec_acquisition tests.vnext.test_c04_update_cycle tests.vnext.test_c04_refresh_resume
+
+  company-c04-source-install:
+    name: Company C04 source-only install
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: C04 source-only install from saved sources
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+        run: python3 tests/required_unittests.py tests.vnext.test_c04_source_only_install
+
+  company-native-runs:
+    name: Company native Run cold read and recorded source update
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Actual OPEN Runs and source-bound file negatives
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          NORMAL_V14_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-v14-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 tests/required_unittests.py tests.vnext.test_normal_run_v3_material
+      - name: Recorded sources through native adapters, changed graphs or histories rejected
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-updated-source-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_source_run_material
+
+  company-going-concern:
+    name: Company saved D04 native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Complete recorded D04 source assessments through native Review and Run
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          D04_REFERENCE_CONTEXT: "1"
+          D04_COMPLETE_RESPONSE_CONTRACT: "1"
+          D04_INDEXED_UNITS: "1"
+          D04_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-d04-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 tests/required_unittests.py tests.vnext.test_d04_run_material
+
+  company-remaining-source:
+    name: Company remaining source Runs (${{ matrix.company }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        company: [marriott_international, jpmorgan_chase]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Remaining current-source adapters through native Runs and source-bound rejections
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          REMAINING_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/remaining-source-${{ matrix.company }}-${{ github.run_id }}-${{ github.run_attempt }}
+          REMAINING_SOURCE_COMPANY: ${{ matrix.company }}
+        run: python3 tests/required_unittests.py tests.vnext.test_remaining_source_run_material
+
+  company-update-history:
+    name: Company update history and interruption recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Real update history, source changes and interruption recovery
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_UPDATE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-update-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest
+
+  company-partial-update:
+    name: Company independent metric updates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Independent results and historical periods through actual mixed outcomes
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-update-metrics-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest

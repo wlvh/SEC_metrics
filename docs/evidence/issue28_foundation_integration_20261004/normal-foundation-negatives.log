@@ -1,0 +1,23 @@
+{
+  "status": "PASS_LIMITED_NEGATIVES",
+  "seconds": 0.009036917006596923,
+  "cases": [
+    {
+      "case": "changed-run-period",
+      "status": "REJECTED",
+      "reason": "Run manifest record is invalid",
+      "exception": "RunStoreError"
+    },
+    {
+      "case": "concurrent-update",
+      "status": "REJECTED",
+      "reason": "UPDATE_ALREADY_RUNNING"
+    }
+  ],
+  "previous_positive_receipt": "normal-foundation-smoke-summary.json",
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

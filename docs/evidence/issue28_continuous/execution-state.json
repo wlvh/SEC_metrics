@@ -14658,5 +14658,66 @@
     "baseline": "e5682db6c440175d96138c2aa30f79c7a1600b40",
     "actual_increment": "Paramount undeclared exhibit offline refusal evidence only; no production/C02 core or defect register change",
     "no_peer_credit_copied": true
+  },
+  "main_company_entry_integration_20261006": {
+    "status": "LOCAL_MAIN_MERGE_RESOLVED_ACTUAL_D01_COMPANY_EXPORT_AND_AFFECTED_FAST_PASS_PENDING_EXACT_DIFF_REVIEW_CI",
+    "evidence": "docs/evidence/issue28_continuous/main-company-ci-integration-20261006",
+    "own_pre_merge_commit": "218e32a7c2f0efbc6ce0ac45ffcc34134f69f90d",
+    "main_fixed_commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "peer_latest_read_sha": "2d6c85cee96b7eb3da1fe41b79efcb4f40b1e462",
+    "new_company_d01_result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+    "new_result_semantics_created": false,
+    "old_checked_result_and_56_headings_reused_exactly": true,
+    "normal_current_route_no_new_manual_D01_flag_required": true,
+    "new_company_run_id": "run:ordinary-integrated:48d7de39ca42cca2d171021582b4d0727b53b08aac966e93b86a5081b1ed20f6",
+    "compute_seconds": 126.997,
+    "export_seconds": 39.107,
+    "new_company_requirement_closure": "sha256:030ea3bf7fcdb19c035f1359a048de3800ab5076ee2f7684066196dc73e6b5f7",
+    "actual_old_company_read_with_original_source_runtime": true,
+    "main_and_current_ci_coverage_preserved": true,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "remaining": "Exact merge SHA review, postcommit clean-clone evidence alignment and remote current-head CI; product goals remain incomplete.",
+    "affected_fast": {
+      "selected_cases": 160,
+      "status": "PASSED",
+      "seconds": 107.942,
+      "jobs": 2
+    },
+    "targeted_main_company_checks": 39,
+    "document_alignment": "Only clean-clone HEAD-vs-uncommitted-tree evidence mismatch; postcommit recheck required"
+  },
+  "collab_peer_increment_2d6c85ce": {
+    "peer_read_commit": "2d6c85cee96b7eb3da1fe41b79efcb4f40b1e462",
+    "previous_read_commit": "72d4d33854c8b411ddc5fca7a1d0c644ad85c121",
+    "defect_payload_changed": false,
+    "increment": "Peer reads own e0/C02 exact hold; historical company-range/preparation/attachment declaration implementations are their own scope. No code/permission/credit copied; current source export is bounded to7s already."
+  },
+  "shared_interface_changes_main_20261006": {
+    "files_functions": {
+      "scripts/vnext/company_compute.py": [
+        "compute_company: explicit D01 header-v3 consumer dispatch only"
+      ],
+      "scripts/vnext/ordinary_scalability_audit.py": [
+        "_approved_exemptions: optional policy_path same default",
+        "successor_scalability_snapshot: same full-registry default output, scoped syntax proof"
+      ],
+      "scripts/vnext/publication.py": [
+        "_execute_scalability_audit: delivered main successor tool/policy, partial/alias reject"
+      ]
+    },
+    "default_normal_run_and_update_code_bytes_preserved": true,
+    "continuous_call_policy_bytes_preserved": true,
+    "current_unfrozen_ordinary_and_successor_bindings_synchronized": true,
+    "prior_frozen_runtime_read_preserved": true,
+    "new_company_csv_d01_result": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
   }
 }

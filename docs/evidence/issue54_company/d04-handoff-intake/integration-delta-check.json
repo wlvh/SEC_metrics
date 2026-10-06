@@ -1,0 +1,42 @@
+{
+ "foundation": "7ed952bbfc0c52aee11afeb18815de86eec24017",
+ "pr55": "83db2c0284d76cfe6a1fafc8703743add05738f8",
+ "pr55_base": "0bc24734736bb1e6cb34fbcf7ab9fece6951764e",
+ "runtime_dirs": [
+  "scripts",
+  "tools",
+  "catalog",
+  "config",
+  "requirements"
+ ],
+ "runtime_files_compared": 601,
+ "composed_equals_83": true,
+ "only_in_83": [],
+ "only_in_composed": [],
+ "differ": [],
+ "evidence_dir_diff": 0,
+ "frozen_parent_v10_diff": 0,
+ "installed_runtime_trees_byte_identical": {
+  "ordinary_issue_54_v1": 749,
+  "local_issue_54_v4": 753
+ },
+ "full_pr55_delta_apply_3way": {
+  "paths": 312,
+  "clean": 307,
+  "conflicted_governance_docs": [
+   "AGENTS.md",
+   "TESTING.md",
+   "capability_contract.json",
+   "docs/business_user_guide.md",
+   "interact.md"
+  ],
+  "note": "main keeps its own versions of these documents; resolution belongs to the real retarget after the foundation enters main. Tests below used main-side versions temporarily; nothing pushed."
+ },
+ "company_tests": {
+  "modules": 6,
+  "tests": 67,
+  "pr55_83": "OK",
+  "composed": "OK",
+  "skipped": 0
+ }
+}

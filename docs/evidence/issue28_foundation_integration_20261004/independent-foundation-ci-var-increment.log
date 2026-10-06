@@ -1,0 +1,149 @@
+Limited independent original VAR classification increment
+STATIC_INCREMENT_CHECKS
+{
+  "patch_sha": "bee3b0fef6390553e980d4f5f208e3677106472a",
+  "base_sha": "8f6640bcdfddbbaa5fca42619f1bbb69ec7a50b9",
+  "started_at": "2026-10-04T15:56:53.504418+00:00",
+  "var_original_selector": "tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_var_reported_estimate_is_distinct_from_an_illustrative_table",
+  "old_counts": {
+    "fast": 95,
+    "source-material": 24
+  },
+  "new_counts": {
+    "fast": 94,
+    "source-material": 25
+  },
+  "exact_union_119_unique": true,
+  "only_selector_move": "tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_var_reported_estimate_is_distinct_from_an_illustrative_table",
+  "original_var_occurs_exactly_once": true,
+  "replacement_selectors_added": false,
+  "main_ast_unchanged": true,
+  "only_adapter_code_change": "source predicate additionally admits s == v2.REPLACED",
+  "original_var_uses_existing_material_seconds": 240,
+  "reviewed_files": {
+    "tools/run_foundation_ci.py": {
+      "sha256": "1b01f5220baff1a9bd7db40b1ab47056dbd76afca895b085aa5f3800837fd987",
+      "bytes": 2387,
+      "worktree_equals_exact_sha": true
+    },
+    "tests/test_foundation_ci.py": {
+      "sha256": "cf9380689e7d136c1390db258af5ee189b47613918ae79a53dc89c1cdd419cd2",
+      "bytes": 2805,
+      "worktree_equals_exact_sha": true
+    }
+  },
+  "diff_names": [
+    "docs/evidence/issue28_foundation_integration_20261004/README.md",
+    "docs/evidence/issue28_foundation_integration_20261004/candidate-summary.json",
+    "docs/evidence/issue28_foundation_integration_20261004/execution-state.json",
+    "docs/evidence/issue28_foundation_integration_20261004/foundation-ci-var-classification.log",
+    "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-partition.log",
+    "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-partition.md",
+    "tests/test_foundation_ci.py",
+    "tools/run_foundation_ci.py"
+  ]
+}
+COMMAND_RESULT
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.test_foundation_ci",
+    "-v"
+  ],
+  "return_code": 0,
+  "duration_seconds": 0.053329,
+  "stdout": "",
+  "stderr": "test_all_inherited_selectors_are_kept_exactly_once (tests.test_foundation_ci.FoundationCiPartitionTest.test_all_inherited_selectors_are_kept_exactly_once) ... ok\ntest_cli_uses_original_keyword_worker_and_preserves_failure (tests.test_foundation_ci.FoundationCiPartitionTest.test_cli_uses_original_keyword_worker_and_preserves_failure) ... ok\ntest_duplicate_inherited_selector_is_rejected (tests.test_foundation_ci.FoundationCiPartitionTest.test_duplicate_inherited_selector_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nOK\n"
+}
+COMMAND_RESULT
+{
+  "argv": [
+    "python3",
+    "tools/run_foundation_ci.py",
+    "--suite",
+    "fast",
+    "--list"
+  ],
+  "return_code": 0,
+  "duration_seconds": 0.038067,
+  "stdout": "{\n  \"suite\": \"fast\",\n  \"selectors\": [\n    \"tests.vnext.test_normal_run_authority\",\n    \"tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest\",\n    \"tests.vnext.test_normal_text_input_v2\",\n    \"tests.vnext.test_normal_candidate_authority\",\n    \"tests.vnext.test_normal_candidate_semantics\",\n    \"tests.vnext.test_governance_signals\",\n    \"tests.vnext.test_governance_compensation_table\",\n    \"tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest\",\n    \"tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_actual_legacy_attempt_is_pinned_without_inventing_id\",\n    \"tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_later_failed_get_never_falls_back_to_success\",\n    \"tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_preparation_reads_original_proofs_without_derived_inventories\",\n    \"tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_imported_registry_cannot_relabel_a_different_subject\",\n    \"tests.vnext.test_normal_governance_input.AuditorV2InputTest\",\n    \"tests.vnext.test_normal_source_authority\",\n    \"tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass\",\n    \"tests.vnext.test_text_coverage\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_saved_noncalendar_inputs_use_dei_fiscal_label\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_amendment_keeps_original_and_does_not_claim_current_success\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_latest_period_cannot_fall_back_when_only_amendment_is_present\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_ambiguous_columns_dates_and_relevant_shards_are_not_no_change\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_period_rechecks_entity_and_does_not_promote_quarter_to_year\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_00\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_01\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_02\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_03\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_04\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_05\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_06\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_07\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_08\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_09\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_unknown_subject_policy_isolated_without_using_predecessor\",\n    \"tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_later_source_failure_is_not_relabelled_as_old_success\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_approval_fields_and_duplicate_formula_not_part_of_proposal\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_asset_payment_wrong_year_and_entity_do_not_become_liability\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_missing_primary_or_note_is_not_zero\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_forged_matching_ledger_has_no_admission\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_reverse_subject_exclusion_and_inclusion_are_conflicts\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_tax_loan_and_credit_facility_remain_unresolved\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_added_balance_sheet_financing_row_cannot_inherit_coverage\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_primary_only_sign_conflict_is_not_whitespace\",\n    \"tests.vnext.test_b06_new_source.B06NewSourceTest.test_dynamic_amounts_are_reread_with_new_test_identity\",\n    \"tests.vnext.test_r5_b06.B06PrimaryTest\",\n    \"tests.vnext.test_r5_b06_followup\",\n    \"tests.vnext.test_r5_b06_scope\",\n    \"tests.vnext.test_annual_publication_authority\",\n    \"tests.vnext.test_annual_publication\",\n    \"tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest\",\n    \"tests.vnext.test_annual_continuity.AnnualModelConfigurationTest\",\n    \"tests.vnext.test_annual_continuity.AnnualContinuationPermissionTest\",\n    \"tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_changes_only_instruction_and_its_task_identities\",\n    \"tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_no_requirement_and_other_task_retain_original_prompt\",\n    \"tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_file_tamper_is_rejected_without_rewriting_repository\",\n    \"tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_stage_three_counts_two_closed_attempts_before_new_slots\",\n    \"tests.vnext.test_annual_update.AnnualUpdateTest.test_candidate_leading_publication_survives_discovery_failure\",\n    \"tests.vnext.test_annual_update.AnnualUpdateTest.test_publication_progress_is_explicit_and_run_specific\",\n    \"tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only\",\n    \"tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest\",\n    \"tests.vnext.test_r4_publication_boundaries\",\n    \"tests.vnext.test_r4_projection.R4ProjectionBoundaryTest.test_complete_grid_rejects_missing_duplicate_extra_and_false_applicability\",\n    \"tests.vnext.test_successor_invocation_control\",\n    \"tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest\",\n    \"tests.vnext.test_r4_live_authority.R4LiveAuthorityShapeTest\",\n    \"tests.vnext.test_r4_live_authority.R4ExecutionPrefixTest\",\n    \"tests.vnext.test_r4_live_plan.R4DraftPlanRiskTest\",\n    \"tests.vnext.test_issue28_v2.Issue28V2FastTest.test_real_five_file_revision_has_exact_parent_and_no_activation\",\n    \"tests.vnext.test_source_scope.SourceScopeTest.test_complete_native_candidate_and_evidence_are_bound\",\n    \"tests.vnext.test_scoped_reader.ScopedReaderTest.test_all_four_zero_call_classes_cannot_prepare_requests\",\n    \"tests.vnext.test_offline_execution_session.OfflineExecutionSessionTest.test_unknown_is_terminal_and_cannot_be_retried\",\n    \"tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation\",\n    \"tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free\",\n    \"tests.vnext.test_review_binding.ReviewBindingTest.test_optional_system_decision_is_auditable\",\n    \"tests.vnext.test_legacy_projector.LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs\",\n    \"tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke\",\n    \"tests.vnext.test_issue15_authority.Issue15AuthorityTest.test_reusable_producer_scopes_match_exact_base_call_graph\",\n    \"tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state\",\n    \"tests.vnext.test_deterministic_router.DeterministicRouterTest.test_e01_matched_event_key_set_has_exact_legacy_parity\",\n    \"tests.vnext.test_invocation_control\",\n    \"tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_no_credit_and_zero_current_egress\",\n    \"tests.vnext.test_table_stage_c_financial_materialization\",\n    \"tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries\",\n    \"tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_historical_stage_c_b_packet_remains_content_addressed\",\n    \"tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_occupancy_request_has_no_current_credit\",\n    \"tests.vnext.test_table_context_measurement.TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit\",\n    \"tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two\",\n    \"tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_revpar_request_has_no_current_credit\",\n    \"tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_sibling_and_financial_blockers\",\n    \"tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke\",\n    \"tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_r4_plan_uses_fast_runner_without_full_discovery\"\n  ],\n  \"total_inherited\": 119\n}\n",
+  "stderr": ""
+}
+COMMAND_RESULT
+{
+  "argv": [
+    "python3",
+    "tools/run_foundation_ci.py",
+    "--suite",
+    "source-material",
+    "--list"
+  ],
+  "return_code": 0,
+  "duration_seconds": 0.03714,
+  "stdout": "{\n  \"suite\": \"source-material\",\n  \"selectors\": [\n    \"tests.vnext.test_text_results_v2\",\n    \"tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected\",\n    \"tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected\",\n    \"tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition\",\n    \"tests.vnext.test_financial_balance_scope.AumClientFastTest.test_excluding_clients\",\n    \"tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients\",\n    \"tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients\",\n    \"tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients\",\n    \"tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_institutional_and_retail_clients\",\n    \"tests.vnext.test_financial_balance_scope.AumClientFastTest.test_unrelated_exclusion_does_not_change_aum_scope\",\n    \"tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_var_reported_estimate_is_distinct_from_an_illustrative_table\",\n    \"tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration\",\n    \"tests.vnext.test_text_results\",\n    \"tests.vnext.test_risk_signals\",\n    \"tests.vnext.test_financial_duration\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_primary_equity_amount_sign_scale_and_unit_conflicts_reject\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_borrowing_keyword_and_explicit_past_issuance_do_not_block\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_named_carrying_total_is_reconciled_but_unknown_balance_is_not\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_balance_cannot_inherit_an_unspecified_date\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_zero_clause_cannot_hide_a_positive_balance_or_unsupported_amount\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary\",\n    \"tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_newer_disclosed_credit_group_is_derived_from_table_members\"\n  ],\n  \"total_inherited\": 119\n}\n",
+  "stderr": ""
+}
+actual_VAR_or_119_execution=False
+STATIC_INCREMENT_AND_AUTHORIZED_COMMANDS_PASSED
+
+INCREMENT_FINAL_RECEIPT
+{
+  "patch_sha": "bee3b0fef6390553e980d4f5f208e3677106472a",
+  "scope_paths": [
+    "tools/run_foundation_ci.py:classify inherited v2.REPLACED as material",
+    "tests/test_foundation_ci.py:VAR intact membership"
+  ],
+  "started_at": "2026-10-04T15:55:07.025049+00:00",
+  "ended_at": "2026-10-04T15:58:15.956015+00:00",
+  "tool_calls": 10,
+  "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-var-increment.md",
+  "verdict": "PASS_FOR_ORIGINAL_VAR_CLASSIFICATION_INCREMENT_ONLY_NOT_FULL_ACCEPTANCE",
+  "remaining_agent_limits": {
+    "tool_calls": 50,
+    "ordinary_messages": 1
+  },
+  "dedup_note": "Existing purpose/module agent reused; one final only, unchanged95/24 review not repeated.",
+  "base_sha": "8f6640bcdfddbbaa5fca42619f1bbb69ec7a50b9",
+  "functions_exec_calls": 4,
+  "nested_tool_calls": 6,
+  "internal_exec_command_calls": 6,
+  "ordinary_messages": 1,
+  "questions": 0,
+  "elapsed_seconds": 188.931,
+  "cumulative_tool_calls": 40,
+  "cumulative_functions_exec_calls": 11,
+  "cumulative_nested_tool_calls": 29,
+  "cumulative_internal_exec_command_calls": 28,
+  "cumulative_internal_clock_calls": 1,
+  "cumulative_ordinary_messages": 3,
+  "cumulative_active_review_seconds": 462.728,
+  "cumulative_wall_seconds_since_first_read": 1135.956,
+  "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-var-increment.log",
+  "finding_codes": [],
+  "merge_ready": false,
+  "independent_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_foundation_ci -v",
+    "exit_code": 0,
+    "tests": 3,
+    "unittest_seconds": 0.001,
+    "process_seconds": 0.053329,
+    "list_commands": [
+      {
+        "suite": "fast",
+        "selectors": 94,
+        "exit_code": 0,
+        "process_seconds": 0.038067
+      },
+      {
+        "suite": "source-material",
+        "selectors": 25,
+        "exit_code": 0,
+        "process_seconds": 0.03714
+      }
+    ],
+    "actual_var_or_119_execution": false
+  },
+  "coverage_limit": "One existing v2.REPLACED predicate and two intact-membership assertions only; original 119 selectors and whole VAR assertion retained; prior CI review inherited, no full CI/main acceptance."
+}

@@ -1,0 +1,34 @@
+{
+  "record_type": "ISSUE54_MARRIOTT_REAL_REHEARSAL_AUTHORIZATION",
+  "authority": "Direct user message in this Codex conversation; executor transcription, not a GitHub comment authored by the user",
+  "registered_at_utc": "2026-10-03T16:32:49.535812+00:00",
+  "registered_at_asia_shanghai": "2026-10-04T00:32:49.535914+08:00",
+  "company_id": "marriott_international",
+  "period": "latest-complete-fy",
+  "fixed_task_root": "/workspace/work/live-marriott-20261004",
+  "fixed_ledger_root": "/workspace/work/live-marriott-20261004/acquisition",
+  "limits": {
+    "sec_get_cumulative": 120,
+    "provider": 0,
+    "paid": 0,
+    "sec_get_per_second": 1,
+    "automatic_retries": 0
+  },
+  "applies_to": [
+    "first run",
+    "same-root repeat",
+    "necessary repair reruns"
+  ],
+  "failed_gets_consume_allowance": true,
+  "new_recorded_to_live_rebinding_allowed": false,
+  "quote": "首次、复跑及必要修复重跑合计最多120次真实SEC GET。使用一份固定任务账本；失败请求计入。不授权任何新的业务模型调用。",
+  "excluded_permissions": [
+    "Ready",
+    "Merge",
+    "formal adoption",
+    "deployment",
+    "active switch",
+    "OpenShift work"
+  ],
+  "environment": "Codex managed Linux workspace; not the user local computer"
+}

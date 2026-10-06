@@ -1,0 +1,73 @@
+{
+ "compute-2": {
+  "elapsed_seconds": 296.13682078000005,
+  "metrics": [
+   {
+    "metric_id": "D04",
+    "status": "CANDIDATE_READY",
+    "last_verified_candidate": {
+     "attempt_id": "835499fcff874a7f991d69bc2d2b9dc5",
+     "rows_root": "/home/user/work/d04-runs/state/updates/processing/D04/0f724fa70733781ac79d2a5672a169d030b5b3994b5afe50b407c4bec3b41bd9/attempts/835499fcff874a7f991d69bc2d2b9dc5/rows",
+     "current_input_matches": true,
+     "processing_id": "sha256:f252a7a4f64c778ed5666a090c364990bcd3c648c81a0059272614f8e75f84fe",
+     "runtime_root": "/home/user/work/d04-handoff-20261004/processing-runtime"
+    },
+    "saved_processing_mode": "LIVE",
+    "new_candidate_created": true,
+    "native_assessment_completed": true,
+    "business_metric_completed": false
+   }
+  ],
+  "source_checkpoint_id": "sha256:1b436ef04e9e2e1bebf70425018096dab54d86c8014318689c04063bd0da5c03",
+  "runtime_root": "/home/user/work/d04-runs/runtime-ordinary",
+  "execution_id": "4e050103f4c54c2d9062658b7b91c7ed",
+  "recorded_at": "2026-10-04T12:23:40.599943+00:00",
+  "new_business_calls": {
+   "provider": 0,
+   "paid": 0,
+   "sec": 0
+  }
+ },
+ "compute-3-repeat": {
+  "elapsed_seconds": 123.35324430200001,
+  "metrics": [
+   {
+    "metric_id": "D04",
+    "status": "NO_SOURCE_CONTENT_CHANGE",
+    "last_verified_candidate": {
+     "attempt_id": "835499fcff874a7f991d69bc2d2b9dc5",
+     "current_input_matches": true,
+     "processing_id": "sha256:f252a7a4f64c778ed5666a090c364990bcd3c648c81a0059272614f8e75f84fe",
+     "rows_root": "/home/user/work/d04-runs/state/updates/processing/D04/0f724fa70733781ac79d2a5672a169d030b5b3994b5afe50b407c4bec3b41bd9/attempts/835499fcff874a7f991d69bc2d2b9dc5/rows",
+     "runtime_root": "/home/user/work/d04-handoff-20261004/processing-runtime"
+    },
+    "saved_processing_mode": "LIVE",
+    "new_candidate_created": false,
+    "business_metric_completed": false
+   }
+  ],
+  "source_checkpoint_id": "sha256:1b436ef04e9e2e1bebf70425018096dab54d86c8014318689c04063bd0da5c03",
+  "runtime_root": "/home/user/work/d04-runs/runtime-ordinary",
+  "execution_id": "e38f4183a9ec4f44b3f4cb957e80b988",
+  "recorded_at": "2026-10-04T12:26:03.149397+00:00",
+  "new_business_calls": {
+   "provider": 0,
+   "paid": 0,
+   "sec": 0
+  }
+ },
+ "compute-1-tokenizer-missing": {
+  "elapsed_seconds": 17.763808124000036,
+  "metrics": [
+   {
+    "metric_id": "D04",
+    "status": "PROCESSING_INPUT_REJECTED",
+    "reason": "COMPANY_PROCESSING_AUTHENTICATION_FAILED:ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE",
+    "business_metric_completed": false,
+    "last_verified_candidate": null
+   }
+  ],
+  "execution_id": "33cd765e29ab4911938ae1eb3fc81dc3",
+  "recorded_at": "2026-10-04T12:18:30.409642+00:00"
+ }
+}

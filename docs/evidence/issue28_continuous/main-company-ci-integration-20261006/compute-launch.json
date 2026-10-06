@@ -1,0 +1,21 @@
+{
+  "pid": 35313,
+  "argv": [
+    "/private/tmp/issue28-company-c02-venv-20261006/bin/python",
+    "-B",
+    "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/main-company-ci-integration-20261006/run_guarded_company_d01.py",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-integrated-runtime-20261006",
+    "compute",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-jpm-d01-task-20261006",
+    "--trust-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-source-trust-20261006",
+    "--company",
+    "jpmorgan_chase",
+    "--metric",
+    "D01"
+  ],
+  "log": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/main-company-ci-integration-20261006/actual-guarded-d01-compute.log",
+  "done": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/main-company-ci-integration-20261006/actual-guarded-d01-compute.done.json",
+  "durable_background": true
+}

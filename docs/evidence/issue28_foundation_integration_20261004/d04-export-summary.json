@@ -1,0 +1,43 @@
+{
+  "pr55_sha": "83db2c0284d76cfe6a1fafc8703743add05738f8",
+  "installed_original": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-foundation-handoff-20261004",
+  "returncode": 0,
+  "seconds": 11.185,
+  "args": [
+    "/private/tmp/issue28-tokenizers-venv/bin/python",
+    "/private/tmp/issue28-foundation-pr55-consumer-83db2c02/tools/vnext_company.py",
+    "export-processing",
+    "--installed-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-foundation-handoff-20261004/processing",
+    "--runtime-output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-foundation-handoff-20261004/processing-runtime",
+    "--trust-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-foundation-handoff-20261004/processing-trust",
+    "--company",
+    "marriott_international"
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "old_data_changed": false,
+  "result": {
+    "elapsed_seconds": 11.147110208170488,
+    "status": "SAVED_PROCESSING_EXPORTED",
+    "processing_id": "sha256:f252a7a4f64c778ed5666a090c364990bcd3c648c81a0059272614f8e75f84fe",
+    "company_id": "marriott_international",
+    "mode": "LIVE",
+    "native_requests": 4,
+    "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-foundation-handoff-20261004/processing-runtime",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-foundation-handoff-20261004/processing",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
+  }
+}

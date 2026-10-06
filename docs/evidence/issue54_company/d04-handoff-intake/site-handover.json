@@ -1,0 +1,37 @@
+{
+  "record_type": "ISSUE54_LIVE_MARRIOTT_SITE_HANDOVER_STATUS",
+  "observed_at_utc": "2026-10-04",
+  "observer": "successor #54 session (cloud container, root UID, /home/user/work); not the original Codex Linux UID1000 workspace",
+  "original_paths_visible": {
+    "/workspace/work/live-marriott-20261004": false,
+    "/workspace/work/live-marriott-outputs": false,
+    "/workspace/work/live-first-export.preserved.tar.gz": false,
+    "/workspace/work/local-python-deps": false
+  },
+  "existing_complete_backup_found": false,
+  "verdict": "SITE_NOT_RECEIVED_MATERIALS_MISSING",
+  "already_in_git_at_83db2c02": {
+    "live_ledger_copy": {"path": "docs/evidence/issue54_company/live-marriott/requests_log.csv", "rows": 31, "sha256": "d00d3bc5b05e5b1d5ab20b432a613b15766fe75925b03be1a5281089af620952"},
+    "task_claims_copy": {"path": "docs/evidence/issue54_company/live-marriott/task-claims.jsonl", "lines": 31, "sha256": "3615a0d75055cc4d9d68d7fb8808f937b6884ce98ac1ca58c19517bfe0428e6f"},
+    "source_hash_index": "docs/evidence/issue54_company/live-marriott/sec-source-index.json (31 rows, 29 distinct bodies; hashes only, no bytes)",
+    "run_manifest_hashes": "docs/evidence/issue54_company/live-marriott/first-run-manifests.json",
+    "outputs": "first/ and repeat/ CSV, run_summary, company-results copies",
+    "limitation": "Git copies and summaries cannot replace the original bodies, headers, manifest, checkpoints, journals, trust, Runs or programs."
+  },
+  "missing_and_required": [
+    {"item": "acquisition/ (LIVE ledger root)", "what": "evidence/requests_log.csv + requests_log_manifest.json, request_attempts/* (31 attempts, 13,604,999 unique body bytes, plus headers), CallLedger/claims, checkpoints", "logical_bytes": 207915913, "role": "continue the original acquisition history", "verify_on_receipt": ["requests_log.csv sha256 == d00d3bc5...620952", "every body/header sha256 == sec-source-index.json", "acquisition binding_id sha256:8ab15536...4361, root string unchanged"]},
+    {"item": "trust/ (trust/acquisition, trust/company)", "what": "acquisition and company admission records", "logical_bytes": 3019683, "role": "both", "verify_on_receipt": ["record bytes equal the admitted checkpoints for sources sha256:671a25cd... (first) and sha256:7050dd9e... (repeat)"]},
+    {"item": "programs/<version>", "what": "fixed acquisition/financial program (git 140bd8e9, closure sha256:7e577402...) and preparation/cold-export control (closure sha256:7e099cd4...; live README records git 958a1e08, preparation-identities.json records git_commit 22816168 for program_root programs/37f05e08...; both recorded as found, to be checked against the received tree)", "logical_bytes": 117563086, "role": "both", "verify_on_receipt": ["install-runtime --kind local on 83 reproduces authority sha256:792b5095... (re-verified here on Linux)", "program closure hashes above"]},
+    {"item": "company-state/", "what": "stable source path, versions/<checkpoint>, 36 native Runs, update journals/intents/terminals", "logical_bytes": 1737230058, "role": "company computation package and preserved results", "verify_on_receipt": ["30 first-run manifest SHA == first-run-manifests.json", "partial-reentry.json manifest SHA set (36)"]},
+    {"item": "handoffs/", "what": "company source handoffs per run", "logical_bytes": 55411436, "role": "company computation package"},
+    {"item": "result-exports/ and live-marriott-outputs/<run-id>/", "what": "cold export trees and stages logs", "logical_bytes": 1669560812, "role": "outputs; CSV copies already in Git"},
+    {"item": "live-first-export.preserved.tar.gz + index", "what": "archived first-run export copies (19037 files verified before archiving)", "role": "evidence of the first-run disk failure handling"}
+  ],
+  "two_kinds_distinguished": {
+    "company_computation_package": "handoffs + company-state + trust/company + fixed programs: enough to cold-read/recompute Marriott without the acquisition site",
+    "continuable_acquisition_state": "acquisition ledger root (same absolute root string /workspace/work/live-marriott-20261004/acquisition is bound in the allowance) + trust/acquisition + programs; continuing the original 31/120 history needs the original path or an explicit, documented remount at that path"
+  },
+  "rules_kept": ["no re-fetch from SEC to cover the gap (0 SEC calls this session)", "no re-signing of old Runs, no rebuilt ledger identity, no forged trust records", "no tokens/credentials committed", "original environment must not be deleted before receipt is confirmed"],
+  "requested_through": "Issue #54 comment (existing handover channel)",
+  "independent_work_continued": "D04 intake on the fixed baseline (this directory) does not depend on the missing site, except the final acquired-source equivalence against the LIVE FY2025 source (needs company-state/versions or handoffs from the site)"
+}

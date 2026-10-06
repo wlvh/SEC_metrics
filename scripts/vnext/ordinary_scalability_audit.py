@@ -23,13 +23,13 @@ _SOURCE_MARKERS = {
 POLICY_PATH = 'config/ordinary_scalability_exemptions_v1.json'
 
 
-def _approved_exemptions(runtime_root):
+def _approved_exemptions(runtime_root, *, policy_path=POLICY_PATH):
     """An exception is valid only for the exact reviewed source-file bytes."""
-    path = runtime_root / POLICY_PATH
+    path = runtime_root / policy_path
     if not path.exists():
         return {}
     policy = strict_json_file(path=resolve_repository_file(
-        repo_root=runtime_root, repo_relative_path=POLICY_PATH))
+        repo_root=runtime_root, repo_relative_path=policy_path))
     if (set(policy) != {'record_type', 'schema_version', 'scope', 'entries'}
             or policy['record_type'] != 'ORDINARY_SCALABILITY_EXACT_SOURCE_EXEMPTIONS'
             or policy['schema_version'] != 1 or type(policy['entries']) is not list):
@@ -114,9 +114,9 @@ def _authorization_date(node, parents):
                and part.value == 'delegation_source' for part in ast.walk(cursor))
 
 
-def successor_scalability_snapshot(runtime_root):
+def successor_scalability_snapshot(runtime_root, *, policy_path=POLICY_PATH):
     """Audit current code without treating source grammar as company routing."""
-    approved = _approved_exemptions(runtime_root)
+    approved = _approved_exemptions(runtime_root, policy_path=policy_path)
     used = set()
     registry = load_company_registry_from_path(
         path=runtime_root / 'config/company_registry.csv')
@@ -141,6 +141,12 @@ def successor_scalability_snapshot(runtime_root):
                 if literal is None:
                     continue
                 marker = _source_reference_prefix(node, parents)
+                # Prove each declared syntax site independently of the scoped
+                # registry. A one-company fixture need not contain the ticker
+                # whose spelling happens to coincide with a source prefix.
+                prefix_key = (relative.as_posix(), node.lineno, literal, 'ticker')
+                if marker and approved.get(prefix_key) == 'NATIVE_FACT_REFERENCE_PREFIX':
+                    used.add(prefix_key)
                 for forbidden, kind in identities:
                     key = (relative.as_posix(), node.lineno, forbidden, kind)
                     if (kind == 'ticker' and marker and literal == forbidden

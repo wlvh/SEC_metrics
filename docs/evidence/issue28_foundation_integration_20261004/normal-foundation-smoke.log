@@ -1,0 +1,52 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-foundation-integration/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922/marriott_international/data",
+  "output_root": "/private/tmp/issue28-foundation-normal-current-source-smoke",
+  "source_scope": "Original saved FY2025, no online discovery",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "requirements": {
+    "issue_28_v13": "sha256:99f07acdcc71c1bba18ce1aad9649305723a51bc3fbe2dc0ae4464326c91926d",
+    "issue_28_v14": "sha256:8f993f08702b0ccb469cc95a360f54bb1ac046e11a0e77b20eaa16522ebf1c56"
+  },
+  "processing_source": {
+    "data_root": "/private/tmp/issue28-foundation-normal-current-source-smoke/processing-input/933abbbc14c6de912a87ee49e43c8601c449cf90013eb8d769b74a84b7203dbc",
+    "snapshot_id": "sha256:933abbbc14c6de912a87ee49e43c8601c449cf90013eb8d769b74a84b7203dbc",
+    "reused": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "row": {
+    "company": "Marriott International",
+    "cik": "1048286",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "26186000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "filed_date": "2026-02-10",
+    "concept_or_section": "Revenues",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a\"], \"source_candidate_count\": 3, \"source_reported_periods\": [[\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"], [\"2025-01-01\", \"2025-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS."
+  },
+  "status": "FAIL",
+  "error": "Run manifest record is invalid",
+  "original_source_bytes_unchanged": true,
+  "seconds": 45.71450312505476
+}

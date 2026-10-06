@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/work/history-preparation/tools/vnext_company.py", line 73, in <module>
+    else:
+          
+  File "/workspace/work/history-preparation/tools/vnext_company.py", line 47, in main
+    start = time.monotonic()
+                 ^^^^^^^^^^^
+  File "/workspace/work/history-preparation/scripts/vnext/company_handoff.py", line 130, in export_company
+    history = original['captures'][0]['intent']['binding_id']
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'binding_id'

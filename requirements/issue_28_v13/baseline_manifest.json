@@ -206,8 +206,8 @@
       "size": 4861
     },
     "config/issue28_normal_results_v2.json": {
-      "sha256": "bad2abbf377edd5fd881ddbd72084db60410bbcaa5026b44fde86e54f7339a4c",
-      "size": 9386
+      "sha256": "10aa423f451fb4df194ccc3d86a6bc194dfe7e72a3976aab8bc937c1fe1908c1",
+      "size": 9436
     },
     "config/normal_accession_metrics_v1.json": {
       "sha256": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
@@ -468,6 +468,10 @@
     "scripts/vnext/ordinary_d01_header_update_v3.py": {
       "sha256": "004dacbbe5061b52099aeadd2934cc369d10a773e868293f402cad5284c5be95",
       "size": 2720
+    },
+    "config/main_scalability_exemptions_v1.json": {
+      "sha256": "fdb7fc7ee492907ffd2899a68a8ddf3fbc733f72c6f2477ddb2a7b99100eb3b0",
+      "size": 3018
     }
   },
   "execution_authority": {
@@ -817,8 +821,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "bad2abbf377edd5fd881ddbd72084db60410bbcaa5026b44fde86e54f7339a4c",
-        "size": 9386
+        "sha256": "10aa423f451fb4df194ccc3d86a6bc194dfe7e72a3976aab8bc937c1fe1908c1",
+        "size": 9436
       },
       "config/issue_15_release_plan.json": {
         "sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
@@ -1377,8 +1381,8 @@
         "size": 40475
       },
       "scripts/vnext/publication.py": {
-        "sha256": "c700a10e4620ff9127404877cc38565ef3b5a2db3abdbd886f0304c6a431b545",
-        "size": 275789
+        "sha256": "4dd32668e94c02f0e9ebe6f40dfaaf2914b67fa0a3cf7d1f4f92047ed2ca98f8",
+        "size": 276337
       },
       "scripts/vnext/publication_results.py": {
         "sha256": "99739e8993f4c3683c72fb696d4183b254f31406195c0d899e6fc4dc80d5e1ad",
@@ -2087,6 +2091,14 @@
       "scripts/vnext/ordinary_d01_header_update_v3.py": {
         "sha256": "004dacbbe5061b52099aeadd2934cc369d10a773e868293f402cad5284c5be95",
         "size": 2720
+      },
+      "config/main_scalability_exemptions_v1.json": {
+        "sha256": "fdb7fc7ee492907ffd2899a68a8ddf3fbc733f72c6f2477ddb2a7b99100eb3b0",
+        "size": 3018
+      },
+      "tools/check_main_scalability.py": {
+        "sha256": "f3a8dc414a1e3f653de9b073ccd485d884ab3db633b29e2754052ca2daa5b1a0",
+        "size": 1388
       }
     },
     "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"

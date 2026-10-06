@@ -1,0 +1,233 @@
+{
+  "scope": "Isolated main candidate review receipt only; original shared issue28 execution-state is not overwritten",
+  "source_register_checked": "24c0 read-only, no sameSHA/purpose module result",
+  "subagent_register": [
+    {
+      "task_name": "review_foundation_469d3ea",
+      "purpose": "review",
+      "module": "foundation_main_boundary",
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/records.py",
+        "scripts/vnext/run_store.py",
+        "scripts/vnext/publication.py",
+        "scripts/vnext/invocation_control.py",
+        "requirements/issue_28_v13",
+        "requirements/issue_28_v14",
+        "docs/evidence/issue28_foundation_integration_20261004"
+      ],
+      "patch_sha": "469d3ea42e2346e03976e8d4a50db1d2f7de9289",
+      "spawned_at": "2026-10-04T10:18:14.856530+00:00",
+      "ended_at": "2026-10-04T10:30:33.910273+00:00",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-boundary-review.md",
+      "verdict": "PASS_FOR_BOUNDED_INTAKE_WITH_LIMITATIONS_NOT_MERGE_READY",
+      "functions_exec_calls": 19,
+      "nested_tool_calls": 20,
+      "ordinary_messages": 2,
+      "elapsed_seconds": 672,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-boundary-review.log",
+      "finding_codes": [
+        "C1_STALE_KEPT_MAIN_TEST_HELPER_ENTRY"
+      ],
+      "independent_tests": {
+        "command": "PYTHONPATH=scripts:tools PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_normal_run_authority",
+        "exit_code": 0,
+        "tests": 4,
+        "seconds": 0.004
+      },
+      "merge_ready": false
+    },
+    {
+      "task_name": "review_mainaudit_d164888",
+      "purpose": "review",
+      "module": "main_audit_historical_fix",
+      "scope_paths": [
+        "scripts/vnext/publication.py:main audit selection",
+        "scripts/vnext/ordinary_scalability_audit.py:optional policy and syntax proof",
+        "tools/check_main_scalability.py",
+        "config/main_scalability_exemptions_v1.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_main_scalability_audit.py",
+        "tests/vnext/test_issue28_requirement_transition.py:fixed historical objects",
+        "tests/vnext/projection_fixture_support.py:successor tool copy",
+        ".github/workflows/vnext-fast.yml:main-foundation coverage"
+      ],
+      "patch_sha": "d1648880e7518f019f734a00e0a3444dab45a9bc",
+      "spawned_at": "2026-10-04T12:32:04.593145+00:00",
+      "ended_at": "2026-10-04T12:40:22.731Z",
+      "tool_calls": 29,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-increment.md",
+      "verdict": "CHANGES_REQUESTED_FOR_MAIN_SELECTOR_DANGLING_ALIAS_BOUNDARY",
+      "dedup_note": "No live match, register SHA/module or exact evidence result. Old469 boundary review ended; new audit/fixture/binding increment only, inherited unchanged source/transport findings reused.",
+      "functions_exec_calls": 11,
+      "nested_tool_calls": 17,
+      "collaboration_tool_calls": 1,
+      "ordinary_messages": 3,
+      "elapsed_seconds": 443,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-increment.log",
+      "finding_codes": [
+        "P2_MAIN_SELECTOR_DANGLING_ALIAS_FALLBACK"
+      ],
+      "merge_ready": false,
+      "independent_tests": {
+        "authorized_suite_rerun": false,
+        "small_ast_cases": 5,
+        "selector_state_model_cases": 1,
+        "no_filesystem_writes_in_counterexamples": true
+      }
+    },
+    {
+      "task_name": "review_mainauditalias_9a51b24",
+      "purpose": "review",
+      "module": "main_audit_alias_fix",
+      "scope_paths": [
+        "scripts/vnext/publication.py:exists/is_symlink predicate only",
+        "tests/vnext/test_main_scalability_audit.py:dangling cases",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json"
+      ],
+      "patch_sha": "9a51b24b95373ad4f41076e01fab55a591b193fd",
+      "spawned_at": "2026-10-04T12:46:02.343323+00:00",
+      "ended_at": "2026-10-04T12:50:33.322805+00:00",
+      "tool_calls": 20,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-alias-fix.md",
+      "verdict": "PASS_FOR_DANGLING_ALIAS_FIX_ONLY_NOT_MERGE_READY",
+      "dedup_note": "Oldd164 review ended at3 messages; new precise P2 predicate/binding diff unreviewed. No live/matching register/summary; inherit all unchanged findings, do not repeat whole audit.",
+      "functions_exec_calls": 8,
+      "nested_tool_calls": 12,
+      "internal_exec_command_calls": 11,
+      "internal_clock_calls": 1,
+      "ordinary_messages": 2,
+      "elapsed_seconds": 271,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-main-audit-alias-fix.log",
+      "finding_codes": [],
+      "closed_finding_codes": [
+        "P2_MAIN_SELECTOR_DANGLING_ALIAS_FALLBACK"
+      ],
+      "merge_ready": false,
+      "independent_tests": {
+        "command": "PYTHONPATH=scripts:tools PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest -v tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_dangling_successor_aliases_never_fall_back_to_legacy tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_partial_or_alias_successor_installation_fails_closed",
+        "exit_code": 0,
+        "tests": 2,
+        "seconds": 0.361,
+        "new_dangling_subtests": 3,
+        "existing_installation_cases": 2
+      },
+      "coverage_limit": "Alias predicate, two selected tests and changed binding/parent hashes only; previous unchanged review inherited; no whole PR/business/CI approval"
+    },
+    {
+      "task_name": "review_foundationci_8f6640b",
+      "purpose": "review",
+      "module": "inherited_ci_partition",
+      "scope_paths": [
+        "tools/run_foundation_ci.py",
+        ".github/workflows/vnext-fast.yml:95fast/24material",
+        "tests/test_foundation_ci.py",
+        "TESTING.md:CI partition row"
+      ],
+      "patch_sha": "8f6640bcdfddbbaa5fca42619f1bbb69ec7a50b9",
+      "spawned_at": "2026-10-04T15:38:26.531806+00:00",
+      "ended_at": "2026-10-04T15:43:53.796544+00:00",
+      "tool_calls": 30,
+      "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-partition.md",
+      "verdict": "PASS_FOR_INHERITED_CI_PARTITION_ONLY_NOT_FULL_ACCEPTANCE",
+      "dedup_note": "No live/register/result match. New CI-only partition diff, earliermain audit/alias reviews inherited, no repeat source or business review.",
+      "review_started_at": "2026-10-04T15:39:20+00:00",
+      "base_sha": "d71546054fa1037f8c4c4880ec61a83b5e2c43de",
+      "functions_exec_calls": 7,
+      "nested_tool_calls": 23,
+      "internal_exec_command_calls": 22,
+      "internal_clock_calls": 1,
+      "ordinary_messages": 2,
+      "questions": 0,
+      "elapsed_seconds": 273.797,
+      "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-partition.log",
+      "finding_codes": [],
+      "merge_ready": false,
+      "independent_tests": {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_foundation_ci -v",
+        "exit_code": 0,
+        "tests": 3,
+        "unittest_seconds": 0.001,
+        "process_seconds": 0.070277,
+        "list_commands": [
+          {
+            "suite": "fast",
+            "selectors": 95,
+            "exit_code": 0
+          },
+          {
+            "suite": "source-material",
+            "selectors": 24,
+            "exit_code": 0
+          }
+        ],
+        "actual_119_selectors_executed": false
+      },
+      "coverage_limit": "Exact 119 selector partition, unchanged original runners, existing 30/240 case limits, CI 5/15 minute jobs and three structural unit tests only; no new business suite, main full acceptance or remote CI green claim.",
+      "increments": [
+        {
+          "patch_sha": "bee3b0fef6390553e980d4f5f208e3677106472a",
+          "scope_paths": [
+            "tools/run_foundation_ci.py:classify inherited v2.REPLACED as material",
+            "tests/test_foundation_ci.py:VAR intact membership"
+          ],
+          "started_at": "2026-10-04T15:55:07.025049+00:00",
+          "ended_at": "2026-10-04T15:58:15.956015+00:00",
+          "tool_calls": 10,
+          "result_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-var-increment.md",
+          "verdict": "PASS_FOR_ORIGINAL_VAR_CLASSIFICATION_INCREMENT_ONLY_NOT_FULL_ACCEPTANCE",
+          "remaining_agent_limits": {
+            "tool_calls": 50,
+            "ordinary_messages": 1
+          },
+          "dedup_note": "Existing purpose/module agent reused; one final only, unchanged95/24 review not repeated.",
+          "base_sha": "8f6640bcdfddbbaa5fca42619f1bbb69ec7a50b9",
+          "functions_exec_calls": 4,
+          "nested_tool_calls": 6,
+          "internal_exec_command_calls": 6,
+          "ordinary_messages": 1,
+          "questions": 0,
+          "elapsed_seconds": 188.931,
+          "cumulative_tool_calls": 40,
+          "cumulative_functions_exec_calls": 11,
+          "cumulative_nested_tool_calls": 29,
+          "cumulative_internal_exec_command_calls": 28,
+          "cumulative_internal_clock_calls": 1,
+          "cumulative_ordinary_messages": 3,
+          "cumulative_active_review_seconds": 462.728,
+          "cumulative_wall_seconds_since_first_read": 1135.956,
+          "log_path": "docs/evidence/issue28_foundation_integration_20261004/independent-foundation-ci-var-increment.log",
+          "finding_codes": [],
+          "merge_ready": false,
+          "independent_tests": {
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_foundation_ci -v",
+            "exit_code": 0,
+            "tests": 3,
+            "unittest_seconds": 0.001,
+            "process_seconds": 0.053329,
+            "list_commands": [
+              {
+                "suite": "fast",
+                "selectors": 94,
+                "exit_code": 0,
+                "process_seconds": 0.038067
+              },
+              {
+                "suite": "source-material",
+                "selectors": 25,
+                "exit_code": 0,
+                "process_seconds": 0.03714
+              }
+            ],
+            "actual_var_or_119_execution": false
+          },
+          "coverage_limit": "One existing v2.REPLACED predicate and two intact-membership assertions only; original 119 selectors and whole VAR assertion retained; prior CI review inherited, no full CI/main acceptance."
+        }
+      ]
+    }
+  ]
+}

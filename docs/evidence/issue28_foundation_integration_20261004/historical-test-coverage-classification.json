@@ -1,0 +1,14 @@
+{
+  "main": "af1984ad5f1a3598ded3626fe999d3abeffd29b9",
+  "milestone": "0bc24734736bb1e6cb34fbcf7ab9fece6951764e",
+  "same_test_blob": "f29e9e4188c61984c5f5bcdb8a9b4a3b88aa2913",
+  "main_fast_selected_transition": [
+    "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke"
+  ],
+  "failed_methods_in_inspected_selector_set": {
+    "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree": false,
+    "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity": false
+  },
+  "classification": "PREEXISTING_HISTORICAL_TEST_ASSUMPTION_AND_INSPECTED_COVERAGE_GAP",
+  "limits": "Only this fixed main selector file inspected; not all historical CI runs"
+}

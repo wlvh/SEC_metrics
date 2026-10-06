@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-foundation-pr55-consumer-83db2c02/tools/vnext_company.py", line 176, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/issue28-foundation-pr55-consumer-83db2c02/tools/vnext_company.py", line 122, in main
+    result = export_company(source_root=args.source_root, output_root=args.output_root,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-foundation-pr55-consumer-83db2c02/scripts/vnext/company_handoff.py", line 239, in export_company
+    _validate_admission_bytes(staged, checkpoint, baseline)
+  File "/private/tmp/issue28-foundation-pr55-consumer-83db2c02/scripts/vnext/company_source_authority.py", line 146, in _validate_admission_bytes
+    need(relative in checkpoint['files']
+  File "/private/tmp/issue28-foundation-pr55-consumer-83db2c02/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_DECLARED_LOCATOR_NOT_CARRIED:evidence/submissions/CIK0001048286.json

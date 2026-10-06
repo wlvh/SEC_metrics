@@ -1,0 +1,183 @@
+{
+  "elapsed_seconds": 658.2176331739993,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:315d5e09e8ef2b400de6ba029615bb9d016a4568242b147d3b688311f532d217",
+  "source_root": "/workspace/work/company-history-export-scope-state/source",
+  "metric_ids": [
+    "A08"
+  ],
+  "period_request": {
+    "report_end": "2023-12-31",
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "A08",
+      "status": "CANDIDATE_READY",
+      "new_candidate_created": true,
+      "last_verified_candidate": {
+        "attempt_id": "695d894acbd34739be73a3b371831fc9",
+        "rows_root": "/workspace/work/company-history-export-scope-state/updates/historical/2023-12-31/A08/attempts/695d894acbd34739be73a3b371831fc9/rows",
+        "receipt": {
+          "record_type": "HISTORICAL_RUN_RECEIPT",
+          "schema_version": 1,
+          "run_directory_name": "A08",
+          "run_id": "run:historical-period:b8bb7310c405d85fdfeae07f3f68a2cc99405729914f7e398af7a7509c0437af",
+          "run_status": "FROZEN",
+          "requirement_id": "issue_54_v3",
+          "requirement_closure_hash": "sha256:f4b80ea6b7143b0130c98052e0c470e6660cdb16edda7b802b7bc631d14a6683",
+          "company_id": "jpmorgan_chase",
+          "target_period": {
+            "fiscal_year": 2023,
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "validation_status": "PASSED",
+          "results": [
+            {
+              "metric_id": "A08",
+              "result_id": "sha256:8a69de81df6436bb2d554b53d8e41d73033e766337ac756b79df2dffd5401160",
+              "value": "0.771136030111911456641312019",
+              "unit": "ratio",
+              "quality": "EXACT",
+              "publication": "PUBLISHED",
+              "reason_code": "PASS",
+              "applicability": "APPLICABLE",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+              "value_kind": null,
+              "spec_closure_hash": "sha256:7e4658f2194d7a47cb8f7db5ff517ffc1eda25bc02db87b548cf6cfea0d2b65c",
+              "filings": [
+                "0000019617-24-000225"
+              ],
+              "entities": []
+            }
+          ],
+          "manifest_file_hashes_verified": true,
+          "verified_files": [
+            "records.jsonl",
+            "review_decisions.jsonl",
+            "validation.json"
+          ],
+          "unverified_files": [],
+          "public_row": {
+            "accepted": true,
+            "refusal": null,
+            "status": "FROZEN_CANDIDATE",
+            "run_id": "run:historical-period:b8bb7310c405d85fdfeae07f3f68a2cc99405729914f7e398af7a7509c0437af",
+            "run_status": "FROZEN",
+            "requirement_id": "issue_54_v3",
+            "result_id": "sha256:8a69de81df6436bb2d554b53d8e41d73033e766337ac756b79df2dffd5401160",
+            "primary_metric_id": "A08",
+            "period_selection_id": "sha256:7bf05788956de2bce500d3fd70fb03a6412d0bdb0ac5612498d883206d077347",
+            "row_hash": "sha256:5999a21249d6c1e9843599ecac8128f81a86d2e1852cbed68974b945d994e901",
+            "evidence_hash": "sha256:c3eed3e8e48caabe450a726ef1f3d9b1eb13906db5b50772b4ab5eac00d8e2dd",
+            "evidence_count": 2,
+            "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+            "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+            "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+            "production_authorized": false,
+            "receipt_id": "sha256:d3743b6d662191afcce0fff941041e1c6336824c112ba794950b2b61f80bc7a5"
+          },
+          "replayed": false,
+          "business_content_verified": false,
+          "receipt_id": "sha256:0dc2890e6495de7613d1ec1b46e6749d320b6468940133fbad87aa3a3e7b43d0"
+        },
+        "current_input_matches": true,
+        "period_selection": {
+          "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+          "schema_version": 1,
+          "policy_id": "ordinary_period_selection_v1",
+          "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+          "company_id": "jpmorgan_chase",
+          "reporting_cik": "19617",
+          "subject_policy": {
+            "mode": "CONTINUOUS_PRIMARY",
+            "selected_cik": "19617",
+            "cross_entity_combination_authorized": false
+          },
+          "target_report_end": "2023-12-31",
+          "requested_fiscal_year": null,
+          "current_filing": {
+            "form": "10-K",
+            "reportDate": "2023-12-31",
+            "filingDate": "2024-02-16",
+            "accessionNumber": "0000019617-24-000225",
+            "primaryDocument": "jpm-20231231.htm"
+          },
+          "current_amendments": [],
+          "prior_report_end": "2022-12-31",
+          "prior_filing": {
+            "form": "10-K",
+            "reportDate": "2022-12-31",
+            "filingDate": "2023-02-21",
+            "accessionNumber": "0000019617-23-000231",
+            "primaryDocument": "jpm-20221231.htm"
+          },
+          "prior_amendments": [],
+          "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+          "dependency_filing_roles": {
+            "target_primary": "0000019617-24-000225",
+            "target_amendment_primary": [],
+            "prior_annual_primary": "0000019617-23-000231",
+            "prior_amendment_primary": []
+          },
+          "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+          "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+          "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+          "source_set_identity": "sha256:9a1ea10e04ffee5394ed8eb5e0ba492df018adf36bd8aa05db795ee40d7575ab",
+          "loaded_inventories": [
+            "CIK0000019617.json",
+            "CIK0000019617-submissions-001.json",
+            "CIK0000019617-submissions-002.json",
+            "CIK0000019617-submissions-003.json",
+            "CIK0000019617-submissions-004.json",
+            "CIK0000019617-submissions-005.json",
+            "CIK0000019617-submissions-006.json",
+            "CIK0000019617-submissions-007.json",
+            "CIK0000019617-submissions-008.json",
+            "CIK0000019617-submissions-009.json",
+            "CIK0000019617-submissions-010.json",
+            "CIK0000019617-submissions-011.json",
+            "CIK0000019617-submissions-012.json",
+            "CIK0000019617-submissions-013.json",
+            "CIK0000019617-submissions-014.json",
+            "CIK0000019617-submissions-015.json",
+            "CIK0000019617-submissions-016.json",
+            "CIK0000019617-submissions-017.json",
+            "CIK0000019617-submissions-018.json",
+            "CIK0000019617-submissions-019.json",
+            "CIK0000019617-submissions-020.json",
+            "CIK0000019617-submissions-021.json",
+            "CIK0000019617-submissions-022.json",
+            "CIK0000019617-submissions-023.json",
+            "CIK0000019617-submissions-024.json",
+            "CIK0000019617-submissions-025.json",
+            "CIK0000019617-submissions-026.json",
+            "CIK0000019617-submissions-027.json"
+          ],
+          "latest_restated_values_used": false,
+          "caller_supplied_selection_trusted": false,
+          "production_authorized": false,
+          "selection_id": "sha256:7bf05788956de2bce500d3fd70fb03a6412d0bdb0ac5612498d883206d077347"
+        }
+      }
+    }
+  ],
+  "compute_seconds": "594.690174",
+  "source_installation": {
+    "checkpoint_id": "sha256:315d5e09e8ef2b400de6ba029615bb9d016a4568242b147d3b688311f532d217",
+    "company_id": "jpmorgan_chase",
+    "package_root": "/workspace/work/company-history-jpm-source",
+    "source_root": "/workspace/work/company-history-export-scope-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

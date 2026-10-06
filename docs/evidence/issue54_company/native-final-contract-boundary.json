@@ -1,0 +1,153 @@
+{
+  "elapsed_seconds": 70.53187132699895,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:8361117d4130dcee1c4cc6078f6fae96acc22c31d8cc1f1990ebaf5900df1332",
+  "source_root": "/workspace/work/company-native-final-contract-state/source",
+  "metric_ids": [
+    "B13",
+    "D04"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "B13",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "997d22845302416c8ee07913012f16b0",
+      "latest_attempt": "997d22845302416c8ee07913012f16b0",
+      "successful_attempt": "997d22845302416c8ee07913012f16b0",
+      "previous_successful_attempt": null,
+      "last_verified_candidate": {
+        "attempt_id": "997d22845302416c8ee07913012f16b0",
+        "targets": {
+          "B13": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "B13": {
+            "applicability": "N_A_STRUCTURAL",
+            "company_id": "jpmorgan_chase",
+            "metric_id": "B13",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "NONE",
+            "reason_code": "TRAIT_NOT_APPLICABLE",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:c49050f9f9f2de8be39764f3e154d8941d4c4391aa391cb71a279552b558355c",
+            "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+            "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+            "text_payload": null,
+            "trace_id": "sha256:a0cc601d4d0eb4ffbb42db5cc993bd487a724afbfc32f22135fd9accde1bb816",
+            "unit": null,
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "rows_root": "/workspace/work/company-native-final-contract-state/updates/native-v1/metrics/B13/attempts/997d22845302416c8ee07913012f16b0/rows"
+      },
+      "new_candidate_created": true,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "997d22845302416c8ee07913012f16b0",
+        "configuration_id": "sha256:60ca95e4a5b711b5b1c1b2191d395fd51db1b956582de752d4559f217af25b43",
+        "intent_id": "sha256:8adb3e63d473798488c67661d7d284262db3911cb310aa0b7f5b33f8fc0e3126",
+        "status": "CANDIDATE_READY",
+        "completed_at": "2026-10-02T18:09:52.101301+00:00",
+        "input": {
+          "company_id": "jpmorgan_chase",
+          "metric_ids": [
+            "B13"
+          ],
+          "requirement_closure_hash": "sha256:e9797daed69bb86ede20c10e773bbdbf0ff9eb50c2eb7d6f8bb55b8303651477",
+          "targets": {
+            "B13": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "B13": {
+              "B13": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+              "accession": "0001628280-26-008131",
+              "document_name": "CIK0000019617.json",
+              "sha256": "e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+              "accession": "",
+              "document_name": "CIK0000019617.json",
+              "sha256": "36ee6cc90d5e0b240cc7b346f356a5cd8d7bf91e94f80b434884c784fcd78160"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+              "accession": "0001628280-26-008131",
+              "document_name": "jpm-20251231.htm",
+              "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+            }
+          ],
+          "content_id": "sha256:c83b33cc691ef164ea529a577727f77c72936710d05c9cc676d88310f521de47"
+        },
+        "metrics": {
+          "B13": {
+            "result_id": "sha256:c49050f9f9f2de8be39764f3e154d8941d4c4391aa391cb71a279552b558355c",
+            "publication": "PUBLISHED",
+            "source_credit": "RECORDED_TEST_ONLY",
+            "files": {
+              "metrics_matrix.csv": "405611006c0bfe98a746846ff236334052bb19c883c8aaa75d75b479354e7971",
+              "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+            },
+            "native_assessment_completed": true
+          }
+        },
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:40e0cf3f5e6c5dea0f8de05f457b9ae06f869d506d8652b2b4b1403ec402a9bb"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    },
+    {
+      "metric_id": "D04",
+      "status": "AI_PROCESSING_INPUT_REQUIRED",
+      "reason": "SEC originals and company identity are installed. This CLI does not import assessment registries; replay saved processing input with its original fixed runtime, or use a future authorized processing adapter.",
+      "business_metric_completed": false
+    }
+  ],
+  "compute_seconds": "69.514544",
+  "source_installation": {
+    "checkpoint_id": "sha256:8361117d4130dcee1c4cc6078f6fae96acc22c31d8cc1f1990ebaf5900df1332",
+    "company_id": "jpmorgan_chase",
+    "package_root": "/workspace/work/product-b-v2-source-v7",
+    "source_root": "/workspace/work/company-native-final-contract-state/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

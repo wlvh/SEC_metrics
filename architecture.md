@@ -728,6 +728,8 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
+Issue #28的main基础接收增加显式source-aware扫描入口：当前程序同时携带`tools/check_main_scalability.py`及其main policy时，Publication使用它；缺一个或出现alias时拒绝，旧程序没有这组入口则仍使用冻结旧工具。算法复用ordinary AST校验，必须同时满足确切源码hash/size、具体语法位置和完整豁免使用证明；不能把公司/财年值或任意ticker白名单化。旧扫描文件、历史Run/Publication和active字节保留，当前未冻结V13/V14执行绑定同步；此接入不授合并或生产权限。
+
 Issue #15 historical D-26保留20个fast/local并发条目；Requirement smoke现在同时加载profile-driven Issue #28与exact Issue #15 parent，R2 smoke只验证active edge和完整R2 bundle。GitHub CI执行同一fast set；`PASSED_FAST_LOCAL_ONLY`与CI green均不能升级为portable R3 integration、live或full acceptance。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。
@@ -987,6 +989,13 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 当前D04关系检查将条件、因果/让步、例证及历史原因与当前谓语分别绑定；具体实现不支持不会形成未披露。限定Chat Completions计数新增continuous_request_context，绑定完整两消息/JSON响应提示/官方分词器及格式版本，包含4096输出预留；原服务、200000/8MiB/120秒与零重试不变。新分组在source/request中显式选择，旧原请求保留身份，格式提示须经完整私有登记和原生请求重验。LIVE实际输入计数不符时封存原响应并停止受影响provider通道。材料见docs/evidence/issue28_continuous/review-5207290213/与request-context-counting/。
 
 ### 普通更新与私有完整版本的后继接线
+
+本地公司 `run` 薄编排见 `docs/company_local_run.md`：固定程序自动安装，独立子进程依次执行现有 SEC 发现/捕获、公司交接/安装、计算和原生冷出口。新任务使用仅登记/规则/空账本的 `issue_54_v4` 固定树；原获取及计算模块只在该新安装树做必要分派，不改旧执行字节、来源历史或额度。来源 journal 移至独立可写 trust，计算仍禁网和拒绝采集现场读取；原 LIVE 判断和其原 SEC 版本由各自运行树独立认证。工作目录固定公司、累积上限和程序版本，重复运行不重置；输出按本次运行保留，失败仍可原生读取旧结果并明确本次状态。
+<!-- capability-anchor: CAPABILITY.local_company_run -->
+
+公司交接入口见 `docs/company_compute_boundary.md`。来源准备校验完整获取历史，再携带完整账本元数据和目标公司的依赖原件；计算只读固定程序/规则与独立信任登记，每公司state持有导入及计算共用锁。baseline保持原核心，实际增量/历史使用各自后继固定树，旧Run不重签。
+<!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
 
 <!-- capability-anchor: CAPABILITY.b13_visible_source_role_guard -->
 
