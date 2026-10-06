@@ -1,5 +1,11 @@
 # Issue #47 historical five-year evidence
 
+当前开发入口：[#47唯一历史队列](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)，共同规则唯一正本为[#28今天的简化决定](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)。新开发按main短分支、小Draft PR及实际受影响验证接续；旧COLLAB v1.1–v1.3、同一大PR和旧防伪流程不再是新工作前置。公共AGENTS、CI、runtime及CLI由#28集成，本方维护历史说明、历史消费者和既有C02/D02共用核心。下列旧收据、失败和日志保留历史含义，不作为每个小PR必经检查。
+
+历史公司入口的实际边界：main8588已交付当期公司入口；`fiscal-years`仍在PR52存量分支（本轮读取be366047），尚未入main。已完成并复用Macy两年B01保存来源后的范围计算、复跑/缺年与当期消费者验证。历史`run`要求预备`source-root`，其中“来源准备”只代表已保存来源的公司交接/导入；它不自行发现或获取缺少的历史来源，不是完整五年自动获取到CSV。历史发现/缺件声明已有`normal_history_plan`/`declared_frame`，补齐仍经独立获取入口和具体许可；把公司/期间/指标选择传入发现、缺件报告与必要补齐，再由同一公司入口调度计算/结果表，仍属H4/H6未完成接线。新路径消费#28轻量runtime/来源/读取增量，不再另造历史pipeline；原三公司五年先导和1950位置业务验收保持。
+
+本轮不新增调用；原35模型机会不重复，SEC1771/1867。指定附件既有具体许可保留且未消费，此轮不执行。两年B01接线材料见[已保存验证](company-entry-history-2026-10-06/README.md)，不为说明修订重复运行。
+
 Immutable development evidence for the Issue #47 historical backfill. Nothing
 here is a publication, an adoption receipt or an acquisition authorization.
 

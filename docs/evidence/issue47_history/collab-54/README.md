@@ -1,6 +1,8 @@
 # 与 #54 的接口（#47 历史侧）
 
-[#54](https://github.com/wlvh/SEC_metrics/issues/54)已完成，其公司入口通过PR57进入main（`8588ccbbb1c91d81e0fb1a89dff3575214282549`）。按COLLAB-28-47-v1.3，#47负责历史能力在该入口中的接入与验证；不等待原执行者，不另建公司pipeline。后续期间、来源依赖、运行版本与读取变化同时完成必要入口适配，验证当前财年与旧任务/旧Run兼容。以下各节保留原实验、失败及固定版本证据；它们不代替新增接线或完整五年业务验收。
+当前共同规则只引用[#28今天的简化决定](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；本方按[#47 H4/H6](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)维护历史消费者和说明，公共AGENTS/CI及runtime/CLI由#28集成。#54/PR57已完成，不重开、不等待原执行者、不另建公司pipeline。下列各节保留原接口研究、失败和固定版本事实；长COLLAB协议、独立信任/封存及同一大PR不再作为新开发前置。
+
+main已有当期公司入口；存量历史分支已完成保存来源后的`fiscal-years`计算与CSV/出处，尚未进入main。`source-root`须事先准备，历史发现/补齐尚未与该run统一调度；范围计划/缺件声明及独立SEC获取工具继续作为可接入来源。本方只做必要历史增量与受影响验证，复用已认可两年B01，不把它写为五年自动取源到CSV。
 
 已读：#54 正文（2026-10-02 13:47 UTC 版本）、上述评论、COLLAB-28-47-v1.1。本方固定提交：`815c7820`（`task/sec-history-five-year`）。
 
