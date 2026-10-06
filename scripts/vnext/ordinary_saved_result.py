@@ -53,7 +53,9 @@ def _validate_records(records, company_id, metric_id, result_id):
 
 
 def _ordinary_case(source, company, metric):
-    original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric)
+    program = Path(__file__).resolve().parents[2]
+    original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
+        **({'rules_root':program} if metric in {'B01','B02'} else {}))
     detail = original['component']
     if 'metrics' in detail:
         detail = detail['metrics'][metric]
@@ -62,6 +64,7 @@ def _ordinary_case(source, company, metric):
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
         'admission': original['source_admission'], 'target_period': original['target_period'],
         'expected_records': original['records'], 'results': {metric: original['primary_result']},
+        'rules_root':str(program) if metric in {'B01','B02'} else str(source),
         'prepared_annual_input': original['component'].get('prepared_input'),
         'selection': detail.get('selection', detail.get('inspection'))}
 
@@ -120,7 +123,7 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
                           ('company_id','period_start','period_end','scope_key')), 'SAVED_CASE_TRACE_TARGET_CHANGED')
             from .specs import compile_spec_files
             from .sources import resolve_repository_file
-            actual_specs = compile_spec_files(paths=[resolve_repository_file(repo_root=source_root,
+            actual_specs = compile_spec_files(paths=[resolve_repository_file(repo_root=Path(case.get('rules_root',source_root)),
                 repo_relative_path=p) for p in case['spec_paths'].values()])
             _need(all(actual_specs[m]['spec_closure_hash'] == s['spec_closure_hash']
                       for m,s in case['compiled_specs'].items()), 'SAVED_CASE_INSTALLED_SPEC_DIFFERS')
@@ -131,7 +134,7 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
             manifest = {'record_type': 'ORDINARY_SAVED_RESULT_V1', 'run_id': 'ordinary:'+identity[7:],
                 'status': 'CALCULATED', 'company_id': company_id, 'metric_id': metric_id,
                 'target_period': period, 'result_id': result['result_id'],
-                'source_root': str(source_root), 'source_proofs': case['source_proofs'],
+                'source_root': str(source_root), 'rules_root':case.get('rules_root',str(source_root)), 'source_proofs': case['source_proofs'],
                 'source_references': case['references'], 'input_id': input_id,
                 'program_root': str(Path(__file__).resolve().parents[2]),
                 'program_version': _program_version(Path(__file__).resolve().parents[2]),

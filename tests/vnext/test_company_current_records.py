@@ -233,6 +233,12 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(rows[1]['period_start'],'')
         view=current.read_current_company(state_root=self.work,company_id='marriott_international')
         self.assertEqual(len(view['metrics']),2)
+        missing=next(r for r in view['metrics'] if r['result_validity']=='NO_CURRENT_RESULT')
+        self.assertEqual(missing['fiscal_year'],2025)
+        daily=self.root/'range-daily'
+        current.read_current_company(state_root=self.work,company_id='marriott_international',output_root=daily)
+        failed=next(r for r in self.rows({'output_root':str(daily)}) if r['value']=='')
+        self.assertEqual(failed['fiscal_year'],'2025');self.assertEqual(failed['period_end'],'')
 
     def test_range_requires_unique_bounded_years_and_existing_factory(self):
         for years in ([],[2024,2024],list(range(2020,2026))):

@@ -251,3 +251,46 @@ actual requested success period, failure isolation, two-period reading and
 rejection of missing factory/duplicate/unbounded years. Final80 combined
 tests5.777s pass. No new code platform, ledger, model permission or five-year
 business credit is granted by this shared orchestration seam.
+
+## Program rules versus source-only data for B01/B02
+
+Optional rules_root on existing prepare_ordinary_zero_ai_run_input and source
+resolvers preserves omitted-argument behavior. The current record factory
+explicitly uses its program root for B01/B02 Specs/catalogs/traits/fiscal-label
+policy; source root supplies registry/request ledger/actual originals. Source
+registry row must agree with installed subject registration, so rules cannot
+hide a different CIK. Actual Spec validation reads the declared rule root;
+manifest states program/rules/source roots separately. Source/Calculator and
+Spec/period/unit/quote checks remain; no virtual links or runtime tree copying.
+
+Actual source-only B01 root contains9 files (registry,log/manifest,three saved
+bodies/headers), no catalog/processing config/code/git/journal/old answer.
+Existing companyB01 completes1.4116s,26186000000USD/FY2025. B02 initial source
+limitation is correctly WITHHELD because the prior raw document is missing,
+not because rules are absent. Added only the already-saved FY2024 original
+and header referenced in the unchanged log, no GET/journal/answer. Company
+B01/B02 then completes2.153s: same revenue and0.04326693227091633466135458167
+ratio. Source directory still has only config/company_registry.csv plus source
+evidence. SourceRoot latest remains saved-only, not online discovery.
+
+Separate-rule-root tests use one real package/preparation: no computing files
+in source, exact result/unit/dates/source evidence, B02 comparative actual
+original and changed registry CIK rejection before completion. Final87 combined
+checks8.604s. Broader root separation is incomplete (other deterministic
+families, lodging rule reads and amendment branches remain to integrate);
+the new B01 separate zero-AI root is explicitly limited to its supported route,
+not silently used for unimplemented peers. No39-coordinate acceptance claim.
+
+## Missing requested FY and declared producer dependencies
+
+A real consumer discovered missingFY2026 lost in common-read JSON/CSV. No-result
+read rows now retain requested_fiscal_year as fiscal_year, dates blank; updater
+failures retain requested year/error_type and existing exception category.
+Consumers may supply processing_files as a finite unique tuple/list of repo
+relative files under the actual program ROOT. Public updater hashes actual
+bytes into configuration; it does not trust caller hashes or build a recursive
+permission tree. Related declared dependency changes trigger calculation,
+unrelated file changes preserve reuse, bad paths preserve old pointer.
+run_saved_company forwards this list for the owner-maintained historical
+factory. Small positive/negative tests pass; actual restored/range consumer
+will only re-read the affected missing-year task, not recalculate prior results.

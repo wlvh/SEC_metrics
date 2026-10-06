@@ -55,7 +55,8 @@ def _defects(result, registry):
 
 
 def run_saved_company(*, company_id, source_root, work_dir, output_dir,
-                      metric_ids=None, defects_file=None, fiscal_years=None, case_factory=None):
+                      metric_ids=None, defects_file=None, fiscal_years=None, case_factory=None,
+                      processing_files=()):
     """Calculate changed inputs and read durable results into ordinary CSVs."""
     from .normal_annual_input import _registry_rows
     from .deterministic_router import shared_xbrl_parses
@@ -109,7 +110,8 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                 try:
                     observation = {'metric_id': metric, **run_once(state_root=controller,
                         source_root=source, company_id=company_id, metric_id=metric,
-                        shared_input_root=work/'shared-inputs',fiscal_year=year,case_factory=case_factory)}
+                        shared_input_root=work/'shared-inputs',fiscal_year=year,case_factory=case_factory,
+                        processing_files=processing_files)}
                 except Exception as error:
                     observation = {'metric_id': metric, 'status': 'INPUT_OR_EXECUTION_FAILED',
                                    'reason': str(error), 'error_type': type(error).__name__}
@@ -257,6 +259,7 @@ def _read_current_company(root, company_id, defects_file, output_root):
         else:
             rows.append({'metric_id': observation['metric_id'], 'value': None,
                          'result_validity': 'NO_CURRENT_RESULT', 'latest_observation': observation['status'],
+                         'fiscal_year':observation.get('requested_fiscal_year'),
                          'requested_in_latest_execution': observation['requested_in_latest_execution']})
             matrix.append({**{f:'' for f in (*METRIC_FIELDS,*EXTRA_FIELDS)},
                 'company_id':company_id,'metric_id':observation['metric_id'],'status':observation['status'],
@@ -264,6 +267,8 @@ def _read_current_company(root, company_id, defects_file, output_root):
                 'period_role':'REQUESTED_WITHOUT_RESULT','source_root':task['source_root'],
                 'source_observation_status':'NOT_CHECKED_BY_SAVED_READER',
                 'requested_in_latest_execution':observation['requested_in_latest_execution']})
+            if observation.get('requested_fiscal_year') is not None:
+                matrix[-1]['fiscal_year']=str(observation['requested_fiscal_year'])
     view = {'record_type': 'ORDINARY_COMPANY_RESULT_VIEW_V1', 'company_id': company_id,
         'source_root': task['source_root'], 'metrics': rows, 'source_freshness': 'NOT_CHECKED_BY_SAVED_READER',
         'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}

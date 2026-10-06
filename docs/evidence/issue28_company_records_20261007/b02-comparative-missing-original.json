@@ -1,0 +1,72 @@
+{
+  "elapsed_seconds": 2.4830529168248177,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261006T222148Z-edd16d42",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "a017175c077f493995af317b36e4c689",
+      "version": "eb4e38555c2b48898c96ffc486203daa",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B01/results/eb4e38555c2b48898c96ffc486203daa",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B01/results/eb4e38555c2b48898c96ffc486203daa",
+      "program_version": {
+        "commit": "72394740c3140b72119ae4627a6ce1fd5257a29e",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "1ed9788204c14103811bc1f25094a2e9",
+      "version": "74611a7433b74f51bc5fac4ee9869808",
+      "result_id": "sha256:0cfb3094f46cc93294bc07761d24ce774290fdf1e194f63a13b6eeca09d3db6f",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B02/results/74611a7433b74f51bc5fac4ee9869808",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:0cfb3094f46cc93294bc07761d24ce774290fdf1e194f63a13b6eeca09d3db6f",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B02/results/74611a7433b74f51bc5fac4ee9869808",
+      "program_version": {
+        "commit": "72394740c3140b72119ae4627a6ce1fd5257a29e",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-output-20261007/20261006T222148Z-edd16d42",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
