@@ -439,7 +439,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
              for a, b in ((work, outputs), (source, work), (source, outputs))),
          'LOCAL_HISTORY_PATH_OVERLAP')
     from .historical_lodging_results import (SUPPORTED_METRICS as saved_history_metrics,
-        prepare_historical_lodging_year_case)
+        prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
     ordinary_task = (work/'company-task.json').is_file()
     retained_native = any((work/name).exists() for name in
                           ('historical-company-state', 'local-company.json', 'current_source.json'))
@@ -450,6 +450,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
         return run_saved_company(company_id=company_id, source_root=source, work_dir=work,
             output_dir=outputs, metric_ids=selected, fiscal_years=years,
             case_factory=prepare_historical_lodging_year_case,
+            processing_files=HISTORICAL_LODGING_PROCESSING_FILES,
             defects_file=ROOT/'docs/evidence/issue47_history/known_result_defects.json')
     from .normal_run_v3 import update_metric_ids
     supported = [metric for metric in selected if metric in update_metric_ids()]

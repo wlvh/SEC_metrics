@@ -99,6 +99,24 @@ RECORD_TYPE = "HISTORICAL_LODGING_COMPONENT"
 # Result under a different identity while reading the same table.
 SPEC_PATHS = dict(ORDINARY_SPEC_PATHS)
 SUPPORTED_METRICS = tuple(sorted(SPEC_PATHS))
+# Mutable historical selection/period helpers used by the selected-year case.
+# The public updater separately tracks its shared parser/calculator and lodging
+# paths. These explicit additions avoid installing or hashing a historical tree.
+HISTORICAL_LODGING_PROCESSING_FILES = (
+    'scripts/vnext/normal_period_selection.py',
+    'scripts/vnext/normal_history_catalog.py',
+    'scripts/vnext/historical_annual_input.py',
+    'scripts/vnext/historical_dei.py',
+    'scripts/vnext/historical_fiscal_labels.py',
+    'scripts/vnext/fiscal_year_labels.py',
+    'scripts/vnext/normal_annual_input_v2.py',
+    'scripts/vnext/normal_governance_input.py',
+    'scripts/vnext/historical_amendment_admission.py',
+    'scripts/vnext/annual_amendment_scope.py',
+    'config/normal_period_selection_v1.json',
+    'config/normal_fiscal_year_labels_v1.json',
+    'config/annual_amendment_scope_v1.json',
+)
 
 
 class HistoricalLodgingError(ValueError):

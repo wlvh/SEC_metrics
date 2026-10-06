@@ -138,7 +138,7 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.factory_calls=getattr(self,'factory_calls',0)+1
         return {'target_period':{'fiscal_year':fiscal_year}}
 
-    def selected(self,year,factory=None):
+    def selected(self,year,factory=None,processing_files=()):
         def save(**kwargs):
             y=kwargs['case']['target_period']['fiscal_year'];path=kwargs['output_root'];path.mkdir(parents=True)
             value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[self.proof]},
@@ -148,7 +148,7 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
             return value
         with patch.object(update,'save_calculated_case',side_effect=save):
             return update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
-                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory)
+                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory,processing_files=processing_files)
 
     def test_two_selected_periods_have_separate_pointers_and_current_layout_stays(self):
         first=self.selected(2024);second=self.selected(2025)
@@ -178,5 +178,31 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'REQUIRES_CASE_FACTORY'):
             update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
                             metric_id='B01',fiscal_year=2024)
+
+    def test_declared_dependency_change_recalculates_but_unrelated_change_does_not(self):
+        paths=['scripts/vnext/normal_run_inputs.py'];first=self.selected(2024,processing_files=paths)
+        original=update.sha256_file
+        def unrelated(*,path):
+            return 'irrelevant-change' if path.name=='normal_governance_input.py' else original(path=path)
+        with patch.object(update,'sha256_file',side_effect=unrelated):again=self.selected(2024,processing_files=paths)
+        self.assertEqual(again['status'],'NO_SOURCE_CONTENT_CHANGE')
+        def changed(*,path):
+            return 'changed-producer-dependency' if path.name=='normal_run_inputs.py' else original(path=path)
+        with patch.object(update,'sha256_file',side_effect=changed):new=self.selected(2024,processing_files=paths)
+        self.assertEqual(new['status'],'CANDIDATE_READY');self.assertNotEqual(new['version'],first['version'])
+
+    def test_processing_dependency_path_error_preserves_previous_result(self):
+        self.selected(2024);pointer=self.root/'periods/FY2024/current-result.json';old=pointer.read_bytes()
+        result=self.selected(2024,processing_files=['../wrong.py'])
+        self.assertEqual(result['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertIn('PROCESSING_FILE_PATH_INVALID',result['reason']);self.assertEqual(pointer.read_bytes(),old)
+
+    def test_period_selection_failure_retains_year_and_category(self):
+        class MissingPeriod(ValueError):category='SOURCE_UNAVAILABLE'
+        def missing(**kwargs):raise MissingPeriod('selected year missing')
+        result=self.selected(2026,factory=missing)
+        self.assertEqual(result['requested_fiscal_year'],2026)
+        self.assertEqual(result['error_type'],'MissingPeriod')
+        self.assertEqual(result['error_category'],'SOURCE_UNAVAILABLE')
 
 if __name__=='__main__':unittest.main()

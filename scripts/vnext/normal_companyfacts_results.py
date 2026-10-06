@@ -92,20 +92,25 @@ def _filing_source(reader, prepared, filing, inventory, concepts):
     return {"reference":source["source_reference"], "manifest":manifest}, claims
 
 
-def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
+def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, rules_root=None):
     """Resolve all eleven catalog Company Facts metrics from saved originals.
 
     Current-only metrics can succeed when a required prior source for another
     metric is unavailable. No caller period, answer, filing or proof is accepted.
     """
-    authority = _authority(repo_root)
-    catalog = _load_deterministic_catalog(repo_root=repo_root)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    authority = _authority(rules)
+    catalog = _load_deterministic_catalog(repo_root=rules)
     routes = {key:value for key,value in catalog["metrics"].items() if value["adapter_id"] == "companyfacts"}
-    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id,
+        **({} if rules_root is None else {'ordinary_registered':True}))
     verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     registry = next(r for r in _registry_rows(repo_root=repo_root) if r["company_id"] == company_id)
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    if rules_root is not None:
+        rule_registry=next(r for r in _registry_rows(repo_root=rules) if r['company_id']==company_id)
+        _need(registry==rule_registry,'NORMAL_COMPANYFACTS_SOURCE_SUBJECT_REGISTRY_CHANGED')
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
     reader.primary(prepared["filing"])
@@ -149,7 +154,7 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
             periods["prior"], filings["prior"] = prior, filing
         except (*_SOURCE_ERRORS, NormalCompanyfactsError) as error:
             prior_error = {"reason":str(error), "error_type":type(error).__name__}
-    context = {"repo_root":repo_root, "deterministic_catalog":catalog,
+    context = {"repo_root":rules, "deterministic_catalog":catalog,
         "role_context":{(company_id,"companyfacts"):{"sources":sources,"claims_by_accession_role":claims_by_role}},
         "target_periods":{company_id:periods},"targets":{company_id:period},"registry":{company_id:registry},
         "filings_by_company":{company_id:{role:({"accession":filing["accessionNumber"]} if filing else None) for role,filing in filings.items()}}}

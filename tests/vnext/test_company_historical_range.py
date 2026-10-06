@@ -20,7 +20,8 @@ class HistoricalRangeTest(unittest.TestCase):
 
     def test_lodging_range_uses_the_public_company_records_and_existing_year_factory(self):
         from scripts.vnext import company_current_records as current
-        from scripts.vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        from scripts.vnext.historical_lodging_results import (
+            prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
         source = self.root/'source'; source.mkdir()
         expected = {'status': 'FLOW_COMPLETED', 'metrics': []}
         with patch.object(current, 'run_saved_company', return_value=expected) as run, \
@@ -31,6 +32,8 @@ class HistoricalRangeTest(unittest.TestCase):
         self.assertIs(actual, expected)
         self.assertEqual(run.call_args.kwargs['fiscal_years'], [2024, 2025])
         self.assertIs(run.call_args.kwargs['case_factory'], prepare_historical_lodging_year_case)
+        self.assertEqual(run.call_args.kwargs['processing_files'], HISTORICAL_LODGING_PROCESSING_FILES)
+        self.assertIn('config/normal_fiscal_year_labels_v1.json',run.call_args.kwargs['processing_files'])
 
     def test_retained_native_history_is_not_replaced_by_ordinary_storage(self):
         from scripts.vnext import company_current_records as current

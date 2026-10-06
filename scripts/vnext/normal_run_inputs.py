@@ -19,12 +19,13 @@ def _need(condition, reason):
         raise ValueError(reason)
 
 
-def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metric_id: str):
-    specifications = validate_ordinary_spec_files(repo_root=repo_root)
+def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None):
+    specifications = validate_ordinary_spec_files(repo_root=repo_root if rules_root is None else Path(rules_root))
     _need(metric_id in specifications,"ORDINARY_RUN_METRIC_NOT_IN_ZERO_AI_SET")
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
     if metric_id in SUPPORTED_METRICS:
-        component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id)
+        component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id,
+            **({} if rules_root is None else {'rules_root':rules_root}))
         specs = {metric_id:component["compiled_spec"],**component["dependency_specs"]}
         records = list(component["records"])
         if metric_id in EVENT_METRICS:
@@ -35,14 +36,16 @@ def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metr
         # evaluates revenue. Rebuild that declared dependency through its real
         # entry as well, so a complete Run never invents or omits its result.
         for dependency in sorted(expected_ids-present_results):
-            value = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=dependency)
+            value = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=dependency,
+                **({} if rules_root is None else {'rules_root':rules_root}))
             _need(value["source_records"] == source_records and value["source_proofs"] == component["source_proofs"],
                   "ORDINARY_RUN_DEPENDENCY_SOURCE_SET_DIFFERS")
             records.extend(value["records"])
     else:
         component = (resolve_ordinary_accession_metrics(repo_root=repo_root,company_id=company_id)
             if metric_id in {"A01","A02","B12"} else
-            resolve_ordinary_companyfacts_metrics(repo_root=repo_root,company_id=company_id))
+            resolve_ordinary_companyfacts_metrics(repo_root=repo_root,company_id=company_id,
+                **({} if rules_root is None else {'rules_root':rules_root})))
         metric = component["metrics"][metric_id]
         specs = {metric_id:metric["compiled_spec"]}
         source_records = component["source_records"]

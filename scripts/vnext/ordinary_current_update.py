@@ -110,7 +110,7 @@ def _recover(root):
 
 
 def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
-             fiscal_year=None, case_factory=None):
+             fiscal_year=None, case_factory=None, processing_files=()):
     """One current deterministic update; identical raw input never calculates."""
     _need(metric_id in SAVED_METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
     _need(fiscal_year is None or type(fiscal_year) is int and 1900<=fiscal_year<=9998,
@@ -136,6 +136,16 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                                     'previous_result':previous})
         try:
             configuration = _configuration(source,company_id,metric_id)
+            _need(type(processing_files) in (list,tuple) and len(processing_files)==len(set(processing_files)),
+                  'CURRENT_UPDATE_PROCESSING_FILES_INVALID')
+            extra = {}
+            for relative in processing_files:
+                _need(type(relative) is str and not Path(relative).is_absolute()
+                      and '..' not in Path(relative).parts, 'CURRENT_UPDATE_PROCESSING_FILE_PATH_INVALID')
+                from .sources import resolve_repository_file
+                path = resolve_repository_file(repo_root=ROOT,repo_relative_path=relative)
+                extra[relative]=sha256_file(path=path)
+            if extra:configuration={**configuration,'declared_processing_files':extra}
             if fiscal_year is not None:
                 producer_path = inspect.getsourcefile(case_factory)
                 _need(producer_path is not None, 'CURRENT_UPDATE_CASE_PRODUCER_VERSION_UNAVAILABLE')
@@ -195,4 +205,6 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             report={'status':'INPUT_OR_EXECUTION_FAILED','attempt_id':identity,
                     'error_type':type(error).__name__,'reason':str(error),'previous_result':previous,
                     'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+            if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
+            if getattr(error,'category',None) is not None:report['error_category']=error.category
             _write(attempt/'terminal.json',report); _write(root/'latest-check.json',report); return report
