@@ -63,3 +63,14 @@ c5修后独审仍NEEDS_FIX，详见[independent-carrier-repair](independent-carr
 现有结构索引未单列同一个div中的表前引言，真实正例曾误扣留（失败不作为业务正确结果）。修复只从原件的前一个表末至本表始的有界字节读取引言，保存区间/SHA；不固定距离、公司名或年份，不更改原件。单位读取排除XBRL资源定义/隐藏头及script/style，原始来源全部保留；不是全球删除这些元素来判输入等价。
 
 13小型原生输入测试通过0.037s，新增合法QName别名与不同命名空间负例。真实原件来源准备3.389s正例通过；scale9/两原件226000000000、表内226百万的反例经公开来源API仍UNRESOLVED/null追加额。默认完整case与main相同，新case保存/读取相同（三次准备＋写盘9.601s）；B06仍WITHHELD/null、两项完整性缺口不变。来源准备不是完整公司CSV/原生Run/生产验收。新差异待限定复核，不将父方测试记成独审。
+
+
+## 表格单位范围回修（48b之后的新差异）
+
+[48b限定复核](independent-qname-unit/conclusion.md)确认前两项QName/倍率P2已修正，但发现表前任意Euro业务词触发误扣留；原NEEDS_FIX及40工具/3消息记录保持。回修只读取本表caption/头行和明确表格引言（as follows或独立单位行），不再将普通外币债务介绍作为列报单位；不消费较早发行说明中的倍率。明确外币单位和相互矛盾的表单位仍未决。不建立通用英文判断器。
+
+16项小型完整解析器回归0.054s、零失败/错误/skip。保存Ford原件及与独审完全相同的内存派生反例共5.980s：原SHA3bbda、派生SHA8cbe均识别REPORTED_INCLUDED/追加0；两原件/原表其他事实不变，未写回原件。倍率9与XML226b但表仍百万的反例仍UNRESOLVED。默认完整case与main8588完全相同；显式case保存/读取相同，9.663s、2395954字节。初始原件探针错用结构索引table_id字段，设置错误日志保留后改用既有table_order；不将其当业务失败。
+
+日志：[小回归](table-unit-scope-tests.log)、[相同原件反例](table-unit-scope-original.json)、[倍率矛盾](table-unit-scale-conflict.json)、[默认/保存](table-unit-default.json)。本次测试树为48b加industrial_lease_relation.py及对应测试的未提交差异；提交后另记录精确SHA，不冒充先前SHA实际测试。本次默认/元组保存职责受新证据字段影响，故只重验这些短场景；旧长链复用。
+
+本差异尚待限定独审，不以父方回归提升信用。公司入口未选择此选项，无新Run/CSV/完整B06；工业权益与债务完整性仍未建立。main8588、peer d7c7ceaf仅固定读取；对方登记明确未消费旧原型，不复制对方结果信用。PR67仍adee、PR61仍86e，两者远端全部SUCCESS且Draft不变；不修改它们、不新增本批指标或业务调用。

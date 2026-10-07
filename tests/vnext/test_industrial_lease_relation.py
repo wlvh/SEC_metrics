@@ -17,7 +17,8 @@ NS = ('xmlns:xbrli="http://www.xbrl.org/2003/instance" '
 
 
 def fixture(*, scale='0', carrier='25', peer='25', lease='10', unit='usd', entity='1', end='2025-12-31',
-            duplicate_lease=False, outside_lease=False, note_entity='1', note_end='2025-12-31'):
+            duplicate_lease=False, outside_lease=False, note_entity='1', note_end='2025-12-31',
+            introduction='<p>The carrying amounts are as follows (in dollars).</p>', caption=''):
     def context(id, who, instant, extra=''):
         return ('<xbrli:context id="'+id+'"><xbrli:entity><xbrli:identifier '
           'scheme="http://www.sec.gov/CIK">'+who+'</xbrli:identifier></xbrli:entity>'
@@ -35,7 +36,7 @@ def fixture(*, scale='0', carrier='25', peer='25', lease='10', unit='usd', entit
     def f(name,ctx,value,scale='0',unit='usd'):
         return '<ix:nonFraction name="us-gaap:'+name+'" contextRef="'+ctx+'" unitRef="'+unit+'" scale="'+scale+'" decimals="INF">'+value+'</ix:nonFraction>'
     primary = ('<html '+NS+'>'+contexts+units+'<ix:nonNumeric name="us-gaap:DebtDisclosureTextBlock" contextRef="n">'
-        '<p>The carrying amounts are as follows (in dollars).</p><table><tr><td>2025</td><td>2025</td></tr>'
+        +introduction+'<table>'+caption+'<tr><td>2025</td><td>2025</td></tr>'
         '<tr><td>Other debt (including finance leases) (a)</td><td>'+f('OtherLoansPayableCurrent','k',carrier,scale,unit)+'</td></tr>'
         '<tr><td>Total current debt</td><td>'+f('LongTermDebtCurrent','c','100')+'</td></tr>'
         '<tr><td>Other debt (including finance leases) (a)</td><td>'+f('OtherLoansPayableNoncurrent','k','50')+'</td></tr>'
@@ -69,6 +70,29 @@ def fixture(*, scale='0', carrier='25', peer='25', lease='10', unit='usd', entit
 
 
 class IndustrialLeaseRelationTest(unittest.TestCase):
+    def test_foreign_business_currency_does_not_change_reporting_unit(self):
+        for introduction in (
+                '<p>Euro-denominated debt is translated into U.S. dollars for presentation.</p>'
+                '<p>The carrying amounts are as follows (in dollars).</p>',
+                '<p>Euro-denominated debt is translated for presentation; '
+                'the carrying amounts are as follows (in dollars).</p>',
+                '<p>The carrying amounts are as follows (in dollars).</p>'
+                '<p>Euro-denominated debt is translated into U.S. dollars for presentation.</p>'):
+            self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**fixture(introduction=introduction))['status'])
+
+    def test_previous_paragraph_unit_does_not_override_table_caption(self):
+        args=fixture(introduction='<p>An earlier issuance was reported (in millions).</p>'
+                     '<p>The following table reports the carrying amounts.</p>',
+                     caption='<caption>Carrying amounts (in dollars)</caption>')
+        self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**args)['status'])
+
+    def test_explicit_foreign_or_conflicting_table_units_remain_unresolved(self):
+        for introduction,caption in (
+                ('<p>The carrying amounts are as follows (in euros).</p>', ''),
+                ('<p>The carrying amounts are as follows (in millions of euros).</p>', ''),
+                ('<p>The carrying amounts are as follows (in dollars).</p>', '<caption>Amounts (in millions)</caption>')):
+            self.assertEqual('UNRESOLVED', inspect_inclusion(**fixture(introduction=introduction,caption=caption))['status'])
+
     def alter_carrier_namespace(self, args, *, alias=False):
         raw=args['sources']['xml']['raw_bytes']
         def change(match):

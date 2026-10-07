@@ -111,27 +111,49 @@ def visible_scale(*, structure, table, raw):
         'span_sha256': sha256_bytes(content=intro)}})
     found = []
     for d in declarations:
-        if re.search(r'\b(?:EUR|euros?|GBP|pounds?|JPY|yen)\b|[€£¥]', d['text'], re.I):
-            return None
-        for match in re.finditer(r'\bin (dollars|thousands|millions|billions)(?: of dollars)?(?=\s*(?:,|\)|$))', d['text'], re.I):
-            found.append({'factor': {'dollars':'1','thousands':'1000','millions':'1000000','billions':'1000000000'}[match[1].casefold()], 'proof':d['proof']})
+        # A debt's original currency is not the reporting unit of this table.
+        # Only an explicit unit declaration can contradict the native USD.
+        for match in re.finditer(r'\bin (dollars|thousands|millions|billions|euros?|pounds?|yen|USD|EUR|GBP|JPY)(?: of (dollars|euros?|pounds?|yen|USD|EUR|GBP|JPY))?(?=\s*(?:,|\)|$))', d['text'], re.I):
+            currency = (match[2] or match[1]).casefold()
+            if currency in {'euro', 'euros', 'pound', 'pounds', 'yen', 'eur', 'gbp', 'jpy'}:
+                return None
+            unit = match[1].casefold()
+            if unit == 'usd':
+                unit = 'dollars'
+            found.append({'factor': {'dollars':'1','thousands':'1000','millions':'1000000','billions':'1000000000'}[unit], 'proof':d['proof']})
     return found if len({x['factor'] for x in found}) == 1 else None
 
 
 def introductory_text(raw):
-    """Do not read XBRL resource definitions as human monetary declarations."""
+    """Find a table introduction, excluding unrelated earlier discussion."""
     class Intro(HTMLParser):
         def __init__(self):
-            super().__init__(convert_charrefs=True); self.skipped=[]; self.parts=[]
+            super().__init__(convert_charrefs=True); self.skipped=[]; self.parts=[]; self.blocks=[]
+        def boundary(self):
+            text = ' '.join(' '.join(self.parts).split())
+            if text:
+                self.blocks.append(text)
+            self.parts=[]
         def handle_starttag(self,tag,attrs):
             if tag in {'script','style','ix:header','ix:hidden','ix:resources'} or tag.split(':')[-1] in {'context','unit'}:
                 self.skipped.append(tag)
+            elif not self.skipped and tag in {'p', 'div', 'br'}:
+                self.boundary()
         def handle_endtag(self,tag):
             if self.skipped and self.skipped[-1]==tag:self.skipped.pop()
+            elif not self.skipped and tag in {'p', 'div'}:
+                self.boundary()
         def handle_data(self,data):
             if not self.skipped:self.parts.append(data)
     p=Intro();p.feed(raw.decode('utf-8-sig'));p.close()
-    return ' '.join(' '.join(p.parts).split())
+    p.boundary()
+    for text in reversed(p.blocks):
+        # An explicit table lead-in or a standalone unit line can provide
+        # the table's unit. Earlier issuance prose cannot supply that scope.
+        if (re.search(r'\bas follows\s*\(in [^)]+\)\s*[:.]?$', text, re.I)
+                or re.fullmatch(r'\(?in [^)]+\)?\s*[:.]?', text, re.I)):
+            return text
+    return ''
 
 
 def inspect_inclusion(*, primary, parsed, reported_components, lease_reports,
