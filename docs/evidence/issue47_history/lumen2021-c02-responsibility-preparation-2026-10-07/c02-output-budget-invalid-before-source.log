@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tools/prepare_c02_table_context.py", line 248, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tools/prepare_c02_table_context.py", line 243, in main
+    prepare(args.source_root.resolve(), company, end, args.out.resolve(),
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            limits=RequestLimits(output_tokens=args.output_tokens))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tools/prepare_c02_table_context.py", line 172, in prepare
+    limits = c02_request_limits(limits)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/c02_request_budget.py", line 20, in c02_request_limits
+    raise ValueError('C02_OUTPUT_BUDGET_RESOURCE_CEILING_EXCEEDED')
+ValueError: C02_OUTPUT_BUDGET_RESOURCE_CEILING_EXCEEDED
