@@ -135,6 +135,21 @@ class CurrentDaScopeTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'SELECTED_INLINE_FACT_NOT_FOUND'):
                 assess_direct_depreciation_scope(case=case,data_root=root)
 
+    def test_company_custom_same_local_name_cannot_displace_legitimate_gaap_composition(self):
+        rows=[('Depreciation','7','INF'),('AmortizationOfIntangibleAssets','13','INF')]
+        observations=[{'semantic_role':role,'value':value,'source_binding':{'concept':'us-gaap:'+concept}}
+            for role,concept,value in [('depreciation','Depreciation','7'),('amortization','AmortizationOfIntangibleAssets','13')]]
+        for value in ('7','999'):
+            raw=original([*rows,('Depreciation',value,'INF')])
+            raw=raw.replace(b'<body>',b'<body xmlns:company="https://example.invalid/company">')
+            needle=b'name="gaap:Depreciation" contextRef="c2"'
+            raw=raw.replace(needle,b'name="company:Depreciation" contextRef="c2"')
+            self.assertNotIn(needle,raw)
+            answer=inspect_depreciation_input(raw_bytes=raw,entity='195',period=PERIOD,observations=observations)
+            self.assertEqual(answer['status'],'KEEP')
+            self.assertEqual(answer['chain_input']['value'],'20')
+            self.assertEqual(len(answer['source_facts']),2)
+
 
 class CurrentB03SourceOnlyTest(unittest.TestCase):
     @classmethod

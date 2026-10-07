@@ -1,0 +1,257 @@
+diff --git a/scripts/vnext/b03_contract_amortization_scope.py b/scripts/vnext/b03_contract_amortization_scope.py
+index ee8e9ae1..b091736a 100644
+--- a/scripts/vnext/b03_contract_amortization_scope.py
++++ b/scripts/vnext/b03_contract_amortization_scope.py
+@@ -16,7 +16,7 @@ from .deterministic_router import _numeric_xbrl_value, parse_accession_xbrl_sour
+ from .financial_structured import _InlineTableIndex, _fact_cells
+ from .b06_disclosure import label as row_label
+ from .sources import resolve_repository_file
+-from .text_results_v2 import _ReportedFactMetadata
++from .text_results_v2 import _ReportedFactMetadata, _verified_context
+ 
+ 
+ def _need(condition, reason):
+@@ -31,7 +31,8 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
+         selected = roles[role]
+         values = []
+         for fact in parsed.facts:
+-            if fact['qualified_name'] != selected['source_binding']['concept']:
++            uri, local_name = metadata.facts[fact['ordinal']]['concept']
++            if local_name != selected['source_binding']['concept'].split(':', 1)[1]:
+                 continue
+             context = parsed.contexts[fact['context_ref']]
+             if (context['period_start'] != period['period_start']
+@@ -39,7 +40,6 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
+                     or context['dimensions'] or context['typed_dimension_count']
+                     or str(int(context['entity_identifier'])) != str(int(entity))):
+                 continue
+-            uri, local_name = metadata.facts[fact['ordinal']]['concept']
+             _need(local_name == selected['source_binding']['concept'].split(':', 1)[1]
+                   and re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri),
+                   'B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:' + role)
+@@ -59,26 +59,28 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
+ 
+ def _visible_revenue_deductions(*, raw, parsed, amounts, period):
+     """Prove each separate amortization line is a gross-to-net revenue deduction."""
+-    consolidated = [row for row in amounts if set(row['dimensions']) ==
++    def dimensions(row):
++        return row.get('resolved_dimensions', row['dimensions'])
++    consolidated = [row for row in amounts if set(dimensions(row)) ==
+                     {'srt:ProductOrServiceAxis'}]
+     if len(consolidated) != 1:
+         return None
+     base = consolidated[0]
+-    product = base['dimensions']['srt:ProductOrServiceAxis']
++    product = dimensions(base)['srt:ProductOrServiceAxis']
+     segments = []
+     for row in amounts:
+         if row is base:
+             continue
+-        dimensions = row['dimensions']
+-        if (set(dimensions) != {'srt:ProductOrServiceAxis',
++        resolved = dimensions(row)
++        if (set(resolved) != {'srt:ProductOrServiceAxis',
+                 'srt:ConsolidationItemsAxis',
+                 'us-gaap:StatementBusinessSegmentsAxis'}
+-                or dimensions['srt:ProductOrServiceAxis'] != product
+-                or dimensions['srt:ConsolidationItemsAxis'] !=
++                or resolved['srt:ProductOrServiceAxis'] != product
++                or resolved['srt:ConsolidationItemsAxis'] !=
+                     'us-gaap:OperatingSegmentsMember'):
+             return None
+         segments.append(row)
+-    members = [row['dimensions']['us-gaap:StatementBusinessSegmentsAxis']
++    members = [dimensions(row)['us-gaap:StatementBusinessSegmentsAxis']
+                for row in segments]
+     if (len(members) != len(set(members))
+             or sum(Decimal(row['value_usd']) for row in segments) >
+@@ -187,7 +189,8 @@ def _unreconciled_contract_amortization(*, case, data_root):
+           'B03_CONTRACT_SCOPE_NATIVE_STREAM_CHANGED')
+     amounts = []
+     for fact in parsed.facts:
+-        if fact['qualified_name'] != 'us-gaap:CapitalizedContractCostAmortization':
++        uri, concept = metadata.facts[fact['ordinal']]['concept']
++        if concept != 'CapitalizedContractCostAmortization':
+             continue
+         context = parsed.contexts[fact['context_ref']]
+         if (context['period_start'] != period['period_start']
+@@ -196,7 +199,6 @@ def _unreconciled_contract_amortization(*, case, data_root):
+                 or str(int(context['entity_identifier'])) !=
+                    str(int(bindings[0]['entity']))):
+             continue
+-        uri, concept = metadata.facts[fact['ordinal']]['concept']
+         if (concept != 'CapitalizedContractCostAmortization'
+                 or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)
+                 or metadata.units.get(fact['unit_ref']) != {
+@@ -206,9 +208,15 @@ def _unreconciled_contract_amortization(*, case, data_root):
+         amount = Decimal(str(_numeric_xbrl_value(
+             text=fact['text'], scale=fact['scale'], sign=fact['sign'])))
+         if amount > 0:
++            context_proof = _verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=metadata)
++            def name(qname):
++                uri, local = qname
++                standard = re.fullmatch(r'https?://fasb\.org/(us-gaap|srt)/[0-9]{4}',uri)
++                return standard[1]+':'+local if standard else '{'+uri+'}'+local
+             amounts.append({'ordinal': fact['ordinal'],
+                 'context_ref': fact['context_ref'],
+                 'dimensions': dict(context['dimensions']),
++                'resolved_dimensions':{name(d['dimension_qname']):name(d['member_qname']) for d in context_proof['dimensions']},
+                 'value_usd': str(amount)})
+     if not amounts:
+         return None
+diff --git a/scripts/vnext/b03_depreciation_scope.py b/scripts/vnext/b03_depreciation_scope.py
+index 0ef884d4..489f9363 100644
+--- a/scripts/vnext/b03_depreciation_scope.py
++++ b/scripts/vnext/b03_depreciation_scope.py
+@@ -18,6 +18,7 @@ from .deterministic_router import (
+     _numeric_xbrl_value, parse_accession_xbrl_source)
+ from .financial_structured import _InlineTableIndex, _fact_cells
+ from .sources import resolve_repository_file
++from .text_results_v2 import _ReportedFactMetadata
+ 
+ 
+ _NARROW = re.compile(
+@@ -211,10 +212,17 @@ def assess_direct_depreciation_scope(*, case, data_root):
+     _need(sha256_bytes(content=raw) == proof['content_sha256'],
+           'B03_SCOPE_PRIMARY_BYTES_CHANGED')
+     parsed = parse_accession_xbrl_source(raw_bytes=raw)
++    metadata = _ReportedFactMetadata()
++    metadata.feed(raw.decode('utf-8-sig')); metadata.close()
++    _need(metadata.ordinal == len(parsed.facts), 'B03_SCOPE_NATIVE_STREAM_CHANGED')
+     period = case['target_period']
+     facts = []
+     for fact in parsed.facts:
+-        if fact['qualified_name'] not in _DA_CONCEPTS:
++        uri, local_name = metadata.facts[fact['ordinal']]['concept']
++        concept = 'us-gaap:' + local_name
++        if concept not in _DA_CONCEPTS:
++            continue
++        if not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri):
+             continue
+         context = parsed.contexts[fact['context_ref']]
+         if (context['period_start'] != period['period_start']
+@@ -224,13 +232,17 @@ def assess_direct_depreciation_scope(*, case, data_root):
+                 or str(int(context['entity_identifier'])) !=
+                    str(int(binding['entity']))):
+             continue
++        if metadata.units.get(fact['unit_ref']) != {
++                'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
++                'divided': False}:
++            continue
+         try:
+             value = str(_numeric_xbrl_value(text=fact['text'],
+                 scale=fact['scale'], sign=fact['sign']))
+         except (ValueError, TypeError):
+             continue
+         facts.append({'ordinal': fact['ordinal'],
+-            'concept': fact['qualified_name'], 'value': value,
++            'concept': concept, 'value': value,
+             'context_ref': fact['context_ref']})
+     selected_rows = [fact for fact in facts
+         if fact['concept'] == binding['concept']
+diff --git a/scripts/vnext/ordinary_current_update.py b/scripts/vnext/ordinary_current_update.py
+index 09e3a74b..50382ddb 100644
+--- a/scripts/vnext/ordinary_current_update.py
++++ b/scripts/vnext/ordinary_current_update.py
+@@ -49,6 +49,7 @@ def _configuration(source, company, metric):
+     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
+                   'config/company_registry.csv'})
+     if metric == 'B03':
++        paths.add('catalog/r6/text_results_v2_policy.json')
+         paths.update('scripts/vnext/'+name+'.py' for name in (
+             'ordinary_da_scope_v1','ordinary_b03_input_scope','b03_depreciation_scope',
+             'b03_contract_amortization_scope','financial_structured','text_results_v2'))
+diff --git a/tests/vnext/test_b03_current_input_scope.py b/tests/vnext/test_b03_current_input_scope.py
+index b08a74aa..7573d651 100644
+--- a/tests/vnext/test_b03_current_input_scope.py
++++ b/tests/vnext/test_b03_current_input_scope.py
+@@ -3,6 +3,8 @@ from decimal import Decimal
+ from pathlib import Path
+ import shutil
+ import json
++from copy import deepcopy
++from unittest.mock import patch
+ import tempfile
+ import unittest
+ 
+@@ -81,6 +83,58 @@ class CurrentDaScopeTest(unittest.TestCase):
+         with self.assertRaises(ValueError):
+             self.check([('DepreciationDepletionAndAmortization','1200000000','INF',{'scheme':'https://example.invalid/company'})])
+ 
++    def test_legal_gaap_prefix_alias_composition_keeps_same_quantity(self):
++        rows=[('Depreciation','7','INF'),('AmortizationOfIntangibleAssets','13','INF')]
++        observations=[{'semantic_role':role,'value':value,'source_binding':{'concept':'us-gaap:'+concept}}
++            for role,concept,value in [('depreciation','Depreciation','7'),('amortization','AmortizationOfIntangibleAssets','13')]]
++        alias=original(rows)
++        canonical=alias.replace(b'xmlns:gaap=',b'xmlns:us-gaap=').replace(b'name="gaap:',b'name="us-gaap:')
++        args=dict(entity='195',period=PERIOD,observations=observations)
++        for raw in (alias,canonical):
++            answer=inspect_depreciation_input(raw_bytes=raw,**args)
++            self.assertEqual(answer['status'],'KEEP')
++            self.assertEqual(answer['chain_input']['value'],'20')
++
++    def test_context_policy_alone_changes_update_configuration_and_requires_calculation(self):
++        from vnext import ordinary_current_update as update
++        from vnext import text_results_v2 as context_rules
++        raw=original([('DepreciationDepletionAndAmortization','20','INF')])
++        args=dict(raw_bytes=raw,entity='195',period=PERIOD,observations=[observation('DepreciationDepletionAndAmortization','20')])
++        self.assertEqual(inspect_depreciation_input(**args)['status'],'KEEP')
++        before=update._configuration(REPO_ROOT,'marriott_international','B03')
++        self.assertIn('catalog/r6/text_results_v2_policy.json',before['processing_files'])
++        changed=deepcopy(context_rules._CAPABILITY_POLICY);changed['cik_identifier_schemes']=['https://www.sec.gov/CIK']
++        actual_hash=update.sha256_file
++        def changed_hash(*,path):
++            return 'changed-policy' if Path(path).name=='text_results_v2_policy.json' else actual_hash(path=path)
++        with patch.object(context_rules,'_CAPABILITY_POLICY',changed),patch.object(update,'sha256_file',side_effect=changed_hash):
++            with self.assertRaisesRegex(ValueError,'D02_FACT_ENTITY_SCHEME_NOT_PROVEN'):
++                inspect_depreciation_input(**args)
++            after=update._configuration(REPO_ROOT,'marriott_international','B03')
++            self.assertNotEqual(before,after)
++            previous={'company_id':'marriott_international','metric_id':'B03','version':'old','configuration':before,'source_census':[],'result_id':'old'}
++            saved={'manifest':{'company_id':'marriott_international','metric_id':'B03','source_proofs':[]},'result':{'result_id':'old'}}
++            with tempfile.TemporaryDirectory() as temporary,patch.object(update,'_recover',return_value=previous),patch.object(update,'_source_census',return_value=[]),patch.object(update,'read_saved_result',return_value=saved),patch.object(update,'create_saved_result',side_effect=ValueError('TEST_NEW_POLICY_REQUIRES_CURRENT_CALCULATION')) as calculate:
++                report=update.run_once(state_root=Path(temporary)/'state',source_root=REPO_ROOT,company_id='marriott_international',metric_id='B03')
++                calculate.assert_called_once()
++                self.assertNotEqual(report['status'],'NO_SOURCE_CONTENT_CHANGE')
++
++    def test_existing_direct_scope_uses_namespace_alias_and_retains_usd_check(self):
++        from vnext.b03_depreciation_scope import assess_direct_depreciation_scope
++        from vnext.canonical import sha256_bytes
++        with tempfile.TemporaryDirectory() as temporary:
++            root=Path(temporary);path=root/'primary.htm'
++            raw=original([('DepreciationDepletionAndAmortization','20','INF')]);path.write_bytes(raw)
++            selected={'semantic_role':'depreciation_and_amortization','value':'20',
++                'source_binding':{'concept':'us-gaap:DepreciationDepletionAndAmortization','entity':'195','accession':'fixture'}}
++            case={'primary_metric_id':'B03','results':{'B03':{'publication':'PUBLISHED','reason_code':'PASS'}},
++                'observations':[selected],'target_period':PERIOD,'source_proofs':[{'accession':'fixture','document_name':'primary.htm','request_repo_relative_path':'primary.htm','content_sha256':sha256_bytes(content=raw)}]}
++            self.assertFalse(assess_direct_depreciation_scope(case=case,data_root=root)['blocked'])
++            foreign=original([('DepreciationDepletionAndAmortization','20','INF',{'unit':'GBP'})]);path.write_bytes(foreign)
++            case['source_proofs'][0]['content_sha256']=sha256_bytes(content=foreign)
++            with self.assertRaisesRegex(ValueError,'SELECTED_INLINE_FACT_NOT_FOUND'):
++                assess_direct_depreciation_scope(case=case,data_root=root)
++
+ 
+ class CurrentB03SourceOnlyTest(unittest.TestCase):
+     @classmethod
+@@ -147,5 +201,21 @@ class CurrentB03SourceOnlyTest(unittest.TestCase):
+                 read_saved_result(output_root=path.parent)
+         finally:path.write_bytes(original)
+ 
++    def test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias(self):
++        from vnext.b03_contract_amortization_scope import assess_current_b03_scope
++        from vnext.canonical import sha256_bytes
++        saved=self.saved['marriott_international'];records=[json.loads(s) for s in (self.root/'marriott_international-result/records.jsonl').read_text().splitlines()]
++        observations=[r for r in records if r['record_type']=='VERIFIED_OBSERVATION']
++        proof=next(p for p in saved['manifest']['source_proofs'] if p['document_name'].endswith('.htm'))
++        raw=(self.sources['marriott_international']/proof['request_repo_relative_path']).read_bytes()
++        alias=raw.replace(b'xmlns:us-gaap=',b'xmlns:gaap=').replace(b'us-gaap:',b'gaap:')
++        path=self.root/'alias-primary.htm';path.write_bytes(alias)
++        case={'primary_metric_id':'B03','results':{'B03':saved['result']},'observations':observations,
++              'target_period':saved['manifest']['target_period'],'source_proofs':[{**proof,'document_name':'alias-primary.htm','request_repo_relative_path':'alias-primary.htm','content_sha256':sha256_bytes(content=alias)}]}
++        scope=assess_current_b03_scope(case=case,data_root=self.root)
++        self.assertFalse(scope['blocked'])
++        self.assertEqual(scope['status'],'COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED')
++        self.assertTrue(any(Decimal(r['value_usd'])==Decimal('135000000') for r in scope['excluded_facts']))
++
+ 
+ if __name__=='__main__':unittest.main()

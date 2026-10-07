@@ -1,0 +1,13 @@
+RepairProbes (unittest.loader._FailedTest.RepairProbes) ... ERROR
+
+======================================================================
+ERROR: RepairProbes (unittest.loader._FailedTest.RepairProbes)
+----------------------------------------------------------------------
+AttributeError: module '__main__' has no attribute 'RepairProbes'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Independent confirmation: same original probe, issuer:Depreciation amount changed 9 -> 7; it now agrees with selected FASB quantity.
+Review patch: 44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf

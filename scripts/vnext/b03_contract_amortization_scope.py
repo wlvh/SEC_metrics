@@ -32,7 +32,9 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
         values = []
         for fact in parsed.facts:
             uri, local_name = metadata.facts[fact['ordinal']]['concept']
-            if local_name != selected['source_binding']['concept'].split(':', 1)[1]:
+            if (local_name != selected['source_binding']['concept'].split(':', 1)[1]
+                    or not isinstance(uri, str)
+                    or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)):
                 continue
             context = parsed.contexts[fact['context_ref']]
             if (context['period_start'] != period['period_start']
