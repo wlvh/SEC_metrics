@@ -1,0 +1,168 @@
+{
+  "record_type": "ISSUE47_SIMPLIFICATION_CLOSEOUT",
+  "main_observed": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "public_base": "7944bc96",
+  "historical_branch_origin": "3ff39361; bounded scope repair22c851e1",
+  "code_combination": "PR67 public candidate plus task/issue47-history-consumers committed increment",
+  "state_tests": {
+    "final_tests": 58,
+    "seconds": 6.482,
+    "passed": true,
+    "initial_public_fixture_failure": "4 alias failures on /var vs /private/var; resolved by public7944, initial and canonical-temp logs preserved"
+  },
+  "prior_results_reused": {
+    "H1": "PR58 15 tests;8 failed and4 contract-pass originals; requests unchanged; not repeated",
+    "H3": "PR59 shared table/calculation tests19 .079s plus old current/history source evidence",
+    "H2": "PR62 15 short examples .005s and saved JPM complete-source exclusion9.249s; not repeated",
+    "unaffected_two_year_B01_and_full_frame_reading": "Not repeated"
+  },
+  "actual_company": {
+    "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-company-production-20261008",
+    "operations": [
+      {
+        "operation": "production-cli-first",
+        "seconds": 16.537885665893555,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "operation": "production-cli-repeat",
+        "seconds": 2.34162566694431,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "operation": "production-cli-independent-read",
+        "seconds": 0.918714459054172,
+        "status": null
+      },
+      {
+        "operation": "retained-task-independent-read",
+        "seconds": 0.9346000000368804,
+        "status": null
+      }
+    ],
+    "factory_forbidden_on_repeat_and_reads": true,
+    "result_and_pointer_files_unchanged": 32,
+    "old_task_protected_files": 42,
+    "production_case_factory_used": true,
+    "business_outcomes_not_mocked": true,
+    "calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "tree_copies": 0
+  },
+  "constructed_state": {
+    "record_type": "HISTORICAL_SHARED_COMPANY_CONSUMER_CLOSEOUT",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+    "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-consumer-closeout-20261008-1",
+    "operations": [
+      {
+        "label": "real-history-first",
+        "seconds": 16.556413542013615,
+        "factory_calls": 4,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "label": "real-history-repeat",
+        "seconds": 2.220062542008236,
+        "factory_calls": 0,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "label": "constructed-withheld-first",
+        "seconds": 4.455927124945447,
+        "factory_calls": 4,
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+      },
+      {
+        "label": "constructed-withheld-repeat",
+        "seconds": 2.2684319170657545,
+        "factory_calls": 0,
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+      },
+      {
+        "label": "read-with-current-withheld",
+        "seconds": 0.8093664168845862,
+        "factory_calls": 0,
+        "status": null
+      }
+    ],
+    "actual_values": [
+      {
+        "metric": "B10",
+        "year": "2024",
+        "value": "69.8"
+      },
+      {
+        "metric": "B11",
+        "year": "2024",
+        "value": "128.23"
+      },
+      {
+        "metric": "B10",
+        "year": "2025",
+        "value": "69.3"
+      },
+      {
+        "metric": "B11",
+        "year": "2025",
+        "value": "128.8"
+      }
+    ],
+    "constructed_withholding_not_financial_conclusion": true,
+    "repeat_success_factory_calls": 0,
+    "repeat_withheld_factory_calls": 0,
+    "repeat_and_read_result_bytes_unchanged": true,
+    "last_success_retained_current_withheld_null": true,
+    "source_tree_copies": 0,
+    "rule_tree_copies": 0,
+    "source_files_unchanged": true,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+    "automatic_historical_source_acquisition": false,
+    "full_five_year_business_acceptance": false
+  },
+  "ex99": {
+    "status": "NOT_CALLED",
+    "reason_before_fix": "Later extension replaced general FISCAL_EVENT_FILING scope; capture failed to pass the separately approved exact bounded attachment into scope admission. Original broad grant is not restored.",
+    "fix_commit": "22c851e1",
+    "scope_preflight": "8 tests passed, 0.023s; actual capture method reached the patched no-HTTP/no-claim boundary; count 1772 blocks.",
+    "remaining_legacy_blocker": "ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED:scripts/vnext/historical_event_sources.py",
+    "remaining_blocker_observed_with": "verify_offline_wiring on the existing limited known-resume receipt; read-only, no ledger or socket",
+    "ledger_rows": 1547,
+    "conservative_count": 224,
+    "actual_cumulative_sec": 1771,
+    "original_limit": 1867,
+    "specific_attachment_maximum_after": 1772,
+    "retry_count": 0,
+    "new_sec_calls": 0,
+    "new_provider_calls": 0,
+    "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+    "requested_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+    "no_empty_ledger_or_reforged_snapshot": true
+  },
+  "paramount_conflict": {
+    "public_source": "883f04b; included in PR67 candidate",
+    "visible_start": "2025-08-07",
+    "native_context_start": "2025-08-08",
+    "dates_confirmed": false,
+    "historical_receiving_slice_affected": false,
+    "why": "This new slice only dispatches B10/B11; it does not add the old historical B01/B03 income adapter. It cannot accept Paramount income or convert the conflict to annual-length-only rejection. Existing historical income adapter not yet received; no all-Paramount replay."
+  },
+  "main_received": false,
+  "online_historical_discovery_or_fill": false,
+  "amended_lodging_adapter_received": false,
+  "other_historical_families_received": false,
+  "full_five_year_business_accepted": false,
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

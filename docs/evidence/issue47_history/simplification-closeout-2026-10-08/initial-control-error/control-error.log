@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics/docs/evidence/issue47_history/simplification-closeout-2026-10-08/check_company_receiving.py", line 167, in <module>
+    record = run()
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics/docs/evidence/issue47_history/simplification-closeout-2026-10-08/check_company_receiving.py", line 133, in run
+    held = invoke('constructed-withheld-first', common)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics/docs/evidence/issue47_history/simplification-closeout-2026-10-08/check_company_receiving.py", line 90, in invoke
+    assert code == 0, (label, code, raw[:400])
+           ^^^^^^^^^
+AssertionError: ('constructed-withheld-first', 2, '{\n  "elapsed_seconds": 3.9161172080785036,\n  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",\n  "company_id": "marriott_international",\n  "run_id": "20261007T182530Z-690fb31b",\n  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",\n  "selected_metrics": [\n    "B10",\n    "B11"\n  ],\n  "metrics": [\n    {\n      "metric_id": "B10",\n      "status": "INPUT_OR_EXECUTION_FAILED",\n      "attempt_id": "3149df6bbd644d')
