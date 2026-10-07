@@ -1,0 +1,407 @@
+﻿2026-10-07T19:43:07.8031044Z Current runner version: '2.337.0'
+2026-10-07T19:43:07.8050939Z ##[group]Runner Image Provisioner
+2026-10-07T19:43:07.8051671Z Hosted Compute Agent
+2026-10-07T19:43:07.8052165Z Version: 20261002.596
+2026-10-07T19:43:07.8052703Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-07T19:43:07.8053337Z Build Date: 2026-10-02T22:28:27Z
+2026-10-07T19:43:07.8053915Z Worker ID: {9d5c147b-ffb3-43cc-81aa-042c2e5db0de}
+2026-10-07T19:43:07.8054562Z Region: mexicocentral
+2026-10-07T19:43:07.8055040Z Cloud: Azure
+2026-10-07T19:43:07.8055500Z ##[endgroup]
+2026-10-07T19:43:07.8056577Z ##[group]Operating System
+2026-10-07T19:43:07.8057079Z Ubuntu
+2026-10-07T19:43:07.8057489Z 24.04.5
+2026-10-07T19:43:07.8057968Z LTS
+2026-10-07T19:43:07.8058418Z ##[endgroup]
+2026-10-07T19:43:07.8058933Z ##[group]Runner Image
+2026-10-07T19:43:07.8059427Z Image: ubuntu-24.04
+2026-10-07T19:43:07.8059912Z Version: 20261004.327.1
+2026-10-07T19:43:07.8061055Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-07T19:43:07.8062341Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-07T19:43:07.8063157Z ##[endgroup]
+2026-10-07T19:43:07.8064079Z ##[group]GITHUB_TOKEN Permissions
+2026-10-07T19:43:07.8065625Z Contents: read
+2026-10-07T19:43:07.8066086Z Metadata: read
+2026-10-07T19:43:07.8066635Z ##[endgroup]
+2026-10-07T19:43:07.8068235Z Secret source: Actions
+2026-10-07T19:43:07.8069045Z Cache mode: write
+2026-10-07T19:43:07.8069658Z Prepare workflow directory
+2026-10-07T19:43:07.8335271Z Prepare all required actions
+2026-10-07T19:43:07.8388673Z Getting action download info
+2026-10-07T19:43:08.1369333Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-10-07T19:43:08.3006559Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+2026-10-07T19:43:08.6348546Z Complete job name: Main foundation audit and historical compatibility
+2026-10-07T19:43:08.6957915Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-10-07T19:43:08.6958774Z with:
+2026-10-07T19:43:08.6959167Z   persist-credentials: false
+2026-10-07T19:43:08.6959610Z   fetch-depth: 0
+2026-10-07T19:43:08.6960142Z   repository: wlvh/SEC_metrics
+2026-10-07T19:43:08.6963325Z   token: ***
+2026-10-07T19:43:08.6963706Z   ssh-strict: true
+2026-10-07T19:43:08.6964087Z   ssh-user: git
+2026-10-07T19:43:08.6964452Z   clean: true
+2026-10-07T19:43:08.6964837Z   sparse-checkout-cone-mode: true
+2026-10-07T19:43:08.6965292Z   fetch-tags: false
+2026-10-07T19:43:08.6965680Z   show-progress: true
+2026-10-07T19:43:08.6966081Z   lfs: false
+2026-10-07T19:43:08.6966454Z   submodules: false
+2026-10-07T19:43:08.6966843Z   set-safe-directory: true
+2026-10-07T19:43:08.6967411Z ##[endgroup]
+2026-10-07T19:43:08.7765023Z Syncing repository: wlvh/SEC_metrics
+2026-10-07T19:43:08.7766543Z ##[group]Getting Git version info
+2026-10-07T19:43:08.7767320Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-07T19:43:08.7768212Z [command]/usr/bin/git version
+2026-10-07T19:43:08.7877784Z git version 2.55.0
+2026-10-07T19:43:08.7897977Z ##[endgroup]
+2026-10-07T19:43:08.7909402Z Temporarily overriding HOME='/home/runner/work/_temp/e4585b8f-3580-4b14-b9b1-d8527e5ee6ba' before making global git config changes
+2026-10-07T19:43:08.7911284Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T19:43:08.7914220Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-07T19:43:08.7962264Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-07T19:43:08.7965391Z ##[group]Initializing the repository
+2026-10-07T19:43:08.7969695Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-07T19:43:08.9032087Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-07T19:43:08.9033395Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-07T19:43:08.9034703Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-07T19:43:08.9035634Z hint: call:
+2026-10-07T19:43:08.9036005Z hint:
+2026-10-07T19:43:08.9036487Z hint: 	git config --global init.defaultBranch <name>
+2026-10-07T19:43:08.9037291Z hint:
+2026-10-07T19:43:08.9038064Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-07T19:43:08.9039057Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-07T19:43:08.9039698Z hint:
+2026-10-07T19:43:08.9040199Z hint: 	git branch -m <name>
+2026-10-07T19:43:08.9040627Z hint:
+2026-10-07T19:43:08.9041171Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-07T19:43:08.9042070Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+2026-10-07T19:43:08.9044073Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+2026-10-07T19:43:08.9370221Z ##[endgroup]
+2026-10-07T19:43:08.9370929Z ##[group]Disabling automatic garbage collection
+2026-10-07T19:43:08.9373036Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-07T19:43:08.9749280Z ##[endgroup]
+2026-10-07T19:43:08.9750550Z ##[group]Setting up auth
+2026-10-07T19:43:08.9751371Z Removing SSH command configuration
+2026-10-07T19:43:08.9755580Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T19:43:08.9787676Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T19:43:09.1028946Z Removing HTTP extra header
+2026-10-07T19:43:09.1034998Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T19:43:09.1067230Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T19:43:09.1253504Z Removing includeIf entries pointing to credentials config files
+2026-10-07T19:43:09.1254455Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T19:43:09.1284269Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T19:43:09.1474781Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-07T19:43:09.1509075Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:43:09.1540142Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:43:09.1780926Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:43:09.1816847Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:43:09.1841748Z ##[endgroup]
+2026-10-07T19:43:09.1842406Z ##[group]Fetching the repository
+2026-10-07T19:43:09.1848577Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +31fb3b289a1180a21eaff8ea66c0ed24d999da3f:refs/remotes/pull/67/merge
+2026-10-07T19:49:33.8052071Z From https://github.com/wlvh/SEC_metrics
+2026-10-07T19:49:33.8052915Z  * [new branch]        agent/close-provenance-authority-gap     -> origin/agent/close-provenance-authority-gap
+2026-10-07T19:49:33.8054165Z  * [new branch]        agent/dedupe-project-guide               -> origin/agent/dedupe-project-guide
+2026-10-07T19:49:33.8054984Z  * [new branch]        agent/issue-12-vnext-formal-cutover      -> origin/agent/issue-12-vnext-formal-cutover
+2026-10-07T19:49:33.8055834Z  * [new branch]        agent/issue-12-vnext-recorded-shadow     -> origin/agent/issue-12-vnext-recorded-shadow
+2026-10-07T19:49:33.8056579Z  * [new branch]        agent/issue-15-ai-half                   -> origin/agent/issue-15-ai-half
+2026-10-07T19:49:33.8057288Z  * [new branch]        agent/issue-15-final-delivery            -> origin/agent/issue-15-final-delivery
+2026-10-07T19:49:33.8058240Z  * [new branch]        agent/issue-15-lodging-exact-context-attestation -> origin/agent/issue-15-lodging-exact-context-attestation
+2026-10-07T19:49:33.8059237Z  * [new branch]        agent/issue-15-stage-c-evidence          -> origin/agent/issue-15-stage-c-evidence
+2026-10-07T19:49:33.8060373Z  * [new branch]        agent/issue-15-table-stage-b-investigation -> origin/agent/issue-15-table-stage-b-investigation
+2026-10-07T19:49:33.8061166Z  * [new branch]        agent/issue-15-wb1                       -> origin/agent/issue-15-wb1
+2026-10-07T19:49:33.8061883Z  * [new branch]        agent/issue-15-zero-ai-half              -> origin/agent/issue-15-zero-ai-half
+2026-10-07T19:49:33.8062808Z  * [new branch]        agent/issue-28-r4-live-release           -> origin/agent/issue-28-r4-live-release
+2026-10-07T19:49:33.8063362Z  * [new branch]        agent/issue-28-r4-offline-implementation -> origin/agent/issue-28-r4-offline-implementation
+2026-10-07T19:49:33.8063996Z  * [new branch]        agent/issue-28-requirement-transition    -> origin/agent/issue-28-requirement-transition
+2026-10-07T19:49:33.8064589Z  * [new branch]        agent/r3-baseline-stabilization          -> origin/agent/r3-baseline-stabilization
+2026-10-07T19:49:33.8065333Z  * [new branch]        agent/repair-legacy-request-baseline     -> origin/agent/repair-legacy-request-baseline
+2026-10-07T19:49:33.8065910Z  * [new branch]        agent/sync-guides-and-databricks-plan    -> origin/agent/sync-guides-and-databricks-plan
+2026-10-07T19:49:33.8066454Z  * [new branch]        agent/validation-evidence-integrity      -> origin/agent/validation-evidence-integrity
+2026-10-07T19:49:33.8066999Z  * [new branch]        agent/validation-snapshot-provenance     -> origin/agent/validation-snapshot-provenance
+2026-10-07T19:49:33.8067530Z  * [new branch]        archive/pr22-r4-development-62678e3      -> origin/archive/pr22-r4-development-62678e3
+2026-10-07T19:49:33.8067999Z  * [new branch]        ci/vnext-fast-suite                      -> origin/ci/vnext-fast-suite
+2026-10-07T19:49:33.8068444Z  * [new branch]        claude/brave-cori-zbxo2v                 -> origin/claude/brave-cori-zbxo2v
+2026-10-07T19:49:33.8068990Z  * [new branch]        claude/sec-metrics-issue-47-mk226z       -> origin/claude/sec-metrics-issue-47-mk226z
+2026-10-07T19:49:33.8069814Z  * [new branch]        claude/vibrant-heisenberg-iiw9o1         -> origin/claude/vibrant-heisenberg-iiw9o1
+2026-10-07T19:49:33.8070901Z  * [new branch]        codex/complete-metrics-matrix-field-dictionary -> origin/codex/complete-metrics-matrix-field-dictionary
+2026-10-07T19:49:33.8071507Z  * [new branch]        codex/metrics-csv-delivery-design        -> origin/codex/metrics-csv-delivery-design
+2026-10-07T19:49:33.8072173Z  * [new branch]        docs/add-sec-metrics-process-guides      -> origin/docs/add-sec-metrics-process-guides
+2026-10-07T19:49:33.8072678Z  * [new branch]        docs/sync-workflow-docs                  -> origin/docs/sync-workflow-docs
+2026-10-07T19:49:33.8073307Z  * [new branch]        fix/r4-label-representation-finalization -> origin/fix/r4-label-representation-finalization
+2026-10-07T19:49:33.8073950Z  * [new branch]        fix/r4-scoped-reader-responsibilities    -> origin/fix/r4-scoped-reader-responsibilities
+2026-10-07T19:49:33.8074406Z  * [new branch]        main                                     -> origin/main
+2026-10-07T19:49:33.8074955Z  * [new branch]        release/issue-28-r4-v3-live              -> origin/release/issue-28-r4-v3-live
+2026-10-07T19:49:33.8075458Z  * [new branch]        repair/sec-metrics-matrix-scope          -> origin/repair/sec-metrics-matrix-scope
+2026-10-07T19:49:33.8076028Z  * [new branch]        task/annual-candidate-formal-adoption    -> origin/task/annual-candidate-formal-adoption
+2026-10-07T19:49:33.8076570Z  * [new branch]        task/annual-candidate-publication        -> origin/task/annual-candidate-publication
+2026-10-07T19:49:33.8077078Z  * [new branch]        task/annual-update-continuity            -> origin/task/annual-update-continuity
+2026-10-07T19:49:33.8077525Z  * [new branch]        task/b06-new-source                      -> origin/task/b06-new-source
+2026-10-07T19:49:33.8077977Z  * [new branch]        task/issue28-b10-live-candidate          -> origin/task/issue28-b10-live-candidate
+2026-10-07T19:49:33.8078477Z  * [new branch]        task/issue28-company-records             -> origin/task/issue28-company-records
+2026-10-07T19:49:33.8078967Z  * [new branch]        task/issue28-daily-results               -> origin/task/issue28-daily-results
+2026-10-07T19:49:33.8079457Z  * [new branch]        task/issue28-fast-feedback               -> origin/task/issue28-fast-feedback
+2026-10-07T19:49:33.8080171Z  * [new branch]        task/issue28-foundation-main-candidate   -> origin/task/issue28-foundation-main-candidate
+2026-10-07T19:49:33.8080746Z  * [new branch]        task/issue28-input-change                -> origin/task/issue28-input-change
+2026-10-07T19:49:33.8081271Z  * [new branch]        task/issue28-marriott-annual-update      -> origin/task/issue28-marriott-annual-update
+2026-10-07T19:49:33.8081814Z  * [new branch]        task/issue28-parsed-task-input           -> origin/task/issue28-parsed-task-input
+2026-10-07T19:49:33.8082315Z  * [new branch]        task/issue28-raw-input-local             -> origin/task/issue28-raw-input-local
+2026-10-07T19:49:33.8082924Z  * [new branch]        task/issue28-request-limits              -> origin/task/issue28-request-limits
+2026-10-07T19:49:33.8083424Z  * [new branch]        task/issue28-runtime-tools               -> origin/task/issue28-runtime-tools
+2026-10-07T19:49:33.8083902Z  * [new branch]        task/issue28-source-checks               -> origin/task/issue28-source-checks
+2026-10-07T19:49:33.8152519Z  * [new branch]        task/issue47-c02-responsibility-inputs   -> origin/task/issue47-c02-responsibility-inputs
+2026-10-07T19:49:33.8153400Z  * [new branch]        task/issue47-d02-full-context            -> origin/task/issue47-d02-full-context
+2026-10-07T19:49:33.8153948Z  * [new branch]        task/issue47-d02-quote-errors            -> origin/task/issue47-d02-quote-errors
+2026-10-07T19:49:33.8154517Z  * [new branch]        task/issue47-history-business-boundaries -> origin/task/issue47-history-business-boundaries
+2026-10-07T19:49:33.8155204Z  * [new branch]        task/issue47-history-consumers           -> origin/task/issue47-history-consumers
+2026-10-07T19:49:33.8155797Z  * [new branch]        task/issue47-lodging-selected-source     -> origin/task/issue47-lodging-selected-source
+2026-10-07T19:49:33.8156352Z  * [new branch]        task/issue54-main-integration            -> origin/task/issue54-main-integration
+2026-10-07T19:49:33.8156905Z  * [new branch]        task/marriott-annual-candidate-runtime   -> origin/task/marriott-annual-candidate-runtime
+2026-10-07T19:49:33.8157483Z  * [new branch]        task/metric-reference-owner-scope        -> origin/task/metric-reference-owner-scope
+2026-10-07T19:49:33.8158028Z  * [new branch]        task/metrics-reference-bank-b06          -> origin/task/metrics-reference-bank-b06
+2026-10-07T19:49:33.8158548Z  * [new branch]        task/metrics-reference-tables            -> origin/task/metrics-reference-tables
+2026-10-07T19:49:33.8159059Z  * [new branch]        task/r5-b06-structured                   -> origin/task/r5-b06-structured
+2026-10-07T19:49:33.8159720Z  * [new branch]        task/sec-company-compute                 -> origin/task/sec-company-compute
+2026-10-07T19:49:33.8160601Z  * [new branch]        task/sec-history-five-year               -> origin/task/sec-history-five-year
+2026-10-07T19:49:33.8161265Z  * [new tag]           issue-15-foundation-v1                   -> issue-15-foundation-v1
+2026-10-07T19:49:33.8161852Z  * [new ref]           31fb3b289a1180a21eaff8ea66c0ed24d999da3f -> pull/67/merge
+2026-10-07T19:49:33.8163274Z ##[endgroup]
+2026-10-07T19:49:33.8163726Z ##[group]Determining the checkout info
+2026-10-07T19:49:33.8164201Z ##[endgroup]
+2026-10-07T19:49:33.8164513Z [command]/usr/bin/git sparse-checkout disable
+2026-10-07T19:49:33.8191768Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-07T19:49:33.8194223Z ##[group]Checking out the ref
+2026-10-07T19:49:33.8195417Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/67/merge
+2026-10-07T19:49:34.8457831Z Updating files:  60% (4715/7750)
+2026-10-07T19:49:34.9241160Z Updating files:  61% (4728/7750)
+2026-10-07T19:49:34.9617349Z Updating files:  62% (4805/7750)
+2026-10-07T19:49:34.9807997Z Updating files:  63% (4883/7750)
+2026-10-07T19:49:34.9993015Z Updating files:  64% (4960/7750)
+2026-10-07T19:49:35.2000510Z Updating files:  65% (5038/7750)
+2026-10-07T19:49:35.2028305Z Updating files:  66% (5115/7750)
+2026-10-07T19:49:35.2151309Z Updating files:  67% (5193/7750)
+2026-10-07T19:49:35.2268505Z Updating files:  68% (5270/7750)
+2026-10-07T19:49:35.2379814Z Updating files:  69% (5348/7750)
+2026-10-07T19:49:35.2483662Z Updating files:  70% (5425/7750)
+2026-10-07T19:49:35.2553035Z Updating files:  71% (5503/7750)
+2026-10-07T19:49:35.2881681Z Updating files:  72% (5580/7750)
+2026-10-07T19:49:35.3097207Z Updating files:  73% (5658/7750)
+2026-10-07T19:49:35.3186589Z Updating files:  74% (5735/7750)
+2026-10-07T19:49:35.3242252Z Updating files:  75% (5813/7750)
+2026-10-07T19:49:35.3536912Z Updating files:  76% (5890/7750)
+2026-10-07T19:49:35.3778974Z Updating files:  77% (5968/7750)
+2026-10-07T19:49:35.3871782Z Updating files:  78% (6045/7750)
+2026-10-07T19:49:35.3944523Z Updating files:  79% (6123/7750)
+2026-10-07T19:49:35.4127954Z Updating files:  80% (6200/7750)
+2026-10-07T19:49:35.4305009Z Updating files:  81% (6278/7750)
+2026-10-07T19:49:35.4397418Z Updating files:  82% (6355/7750)
+2026-10-07T19:49:35.4478979Z Updating files:  83% (6433/7750)
+2026-10-07T19:49:35.4540041Z Updating files:  84% (6510/7750)
+2026-10-07T19:49:35.4580509Z Updating files:  85% (6588/7750)
+2026-10-07T19:49:35.4659789Z Updating files:  86% (6665/7750)
+2026-10-07T19:49:35.4834736Z Updating files:  87% (6743/7750)
+2026-10-07T19:49:35.5000105Z Updating files:  88% (6820/7750)
+2026-10-07T19:49:35.5072362Z Updating files:  89% (6898/7750)
+2026-10-07T19:49:35.5211504Z Updating files:  90% (6975/7750)
+2026-10-07T19:49:35.5269532Z Updating files:  91% (7053/7750)
+2026-10-07T19:49:35.5353535Z Updating files:  92% (7130/7750)
+2026-10-07T19:49:35.5416573Z Updating files:  93% (7208/7750)
+2026-10-07T19:49:35.5493518Z Updating files:  94% (7285/7750)
+2026-10-07T19:49:35.5560166Z Updating files:  95% (7363/7750)
+2026-10-07T19:49:35.5624057Z Updating files:  96% (7440/7750)
+2026-10-07T19:49:35.5697130Z Updating files:  97% (7518/7750)
+2026-10-07T19:49:35.5756987Z Updating files:  98% (7595/7750)
+2026-10-07T19:49:35.5810175Z Updating files:  99% (7673/7750)
+2026-10-07T19:49:35.5810529Z Updating files: 100% (7750/7750)
+2026-10-07T19:49:35.5810853Z Updating files: 100% (7750/7750), done.
+2026-10-07T19:49:35.5907981Z Note: switching to 'refs/remotes/pull/67/merge'.
+2026-10-07T19:49:35.5908316Z 
+2026-10-07T19:49:35.5908572Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-07T19:49:35.5909108Z changes and commit them, and you can discard any commits you make in this
+2026-10-07T19:49:35.5909706Z state without impacting any branches by switching back to a branch.
+2026-10-07T19:49:35.5910202Z 
+2026-10-07T19:49:35.5910478Z If you want to create a new branch to retain commits you create, you may
+2026-10-07T19:49:35.5911301Z do so (now or later) by using -c with the switch command. Example:
+2026-10-07T19:49:35.5911614Z 
+2026-10-07T19:49:35.5911745Z   git switch -c <new-branch-name>
+2026-10-07T19:49:35.5911983Z 
+2026-10-07T19:49:35.5912105Z Or undo this operation with:
+2026-10-07T19:49:35.5912303Z 
+2026-10-07T19:49:35.5912413Z   git switch -
+2026-10-07T19:49:35.5912556Z 
+2026-10-07T19:49:35.5912821Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-07T19:49:35.5913196Z 
+2026-10-07T19:49:35.5913634Z HEAD is now at 31fb3b28 Merge a4a568b1c135cdfd9390126e49e873e66c474bb9 into 8588ccbbb1c91d81e0fb1a89dff3575214282549
+2026-10-07T19:49:35.5961943Z ##[endgroup]
+2026-10-07T19:49:35.5998472Z [command]/usr/bin/git log -1 --format=%H
+2026-10-07T19:49:35.6022735Z 31fb3b289a1180a21eaff8ea66c0ed24d999da3f
+2026-10-07T19:49:35.6031644Z ##[group]Removing auth
+2026-10-07T19:49:35.6032022Z Removing SSH command configuration
+2026-10-07T19:49:35.6035195Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T19:49:35.6066292Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T19:49:35.6268225Z Removing HTTP extra header
+2026-10-07T19:49:35.6271639Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T19:49:35.6303558Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T19:49:35.6510586Z Removing includeIf entries pointing to credentials config files
+2026-10-07T19:49:35.6514080Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T19:49:35.6535735Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-07T19:49:35.6536745Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-07T19:49:35.6537137Z includeif.gitdir:/github/workspace/.git.path
+2026-10-07T19:49:35.6537441Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-07T19:49:35.6543968Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-07T19:49:35.6564758Z /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6574553Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6611447Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-07T19:49:35.6634443Z /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6642238Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6677696Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-07T19:49:35.6697963Z /github/runner_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6704259Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6766313Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-07T19:49:35.6786172Z /github/runner_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6791669Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config
+2026-10-07T19:49:35.6823811Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T19:49:35.7019084Z Removing credentials config '/home/runner/work/_temp/git-credentials-58f39847-7cc2-49da-afcd-0385c8ffec99.config'
+2026-10-07T19:49:35.7027695Z ##[endgroup]
+2026-10-07T19:49:35.7240396Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+2026-10-07T19:49:35.7240735Z with:
+2026-10-07T19:49:35.7240915Z   python-version: 3.14
+2026-10-07T19:49:35.7241107Z   check-latest: false
+2026-10-07T19:49:35.7242956Z   token: ***
+2026-10-07T19:49:35.7243152Z   update-environment: true
+2026-10-07T19:49:35.7243361Z   allow-prereleases: false
+2026-10-07T19:49:35.7243550Z   freethreaded: false
+2026-10-07T19:49:35.7243752Z ##[endgroup]
+2026-10-07T19:49:35.8249242Z ##[group]Installed versions
+2026-10-07T19:49:35.8322276Z Successfully set up CPython (3.14.8)
+2026-10-07T19:49:35.8322792Z ##[endgroup]
+2026-10-07T19:49:35.8465213Z ##[group]Run python3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
+2026-10-07T19:49:35.8466580Z [36;1mpython3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition[0m
+2026-10-07T19:49:35.8467609Z [36;1mpython3 tools/check_main_scalability.py --output /tmp/main-scalability-audit.csv[0m
+2026-10-07T19:49:35.8468218Z [36;1mpython3 tools/check_provider_egress.py[0m
+2026-10-07T19:49:35.8468679Z [36;1mpython3 tools/generate_metrics_reference.py --check[0m
+2026-10-07T19:49:35.8861970Z shell: /usr/bin/bash -e {0}
+2026-10-07T19:49:35.8862214Z env:
+2026-10-07T19:49:35.8862450Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-07T19:49:35.8862826Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-07T19:49:35.8863192Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-07T19:49:35.8863542Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-07T19:49:35.8863834Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-07T19:49:35.8864127Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-07T19:49:35.8864397Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-07T19:49:35.8864602Z   PYTHONPATH: scripts:tools
+2026-10-07T19:49:35.8864794Z ##[endgroup]
+2026-10-07T19:49:39.8386388Z test_all_inherited_selectors_are_active_or_explicitly_retired_once (tests.test_foundation_ci.FoundationCiPartitionTest.test_all_inherited_selectors_are_active_or_explicitly_retired_once) ... ok
+2026-10-07T19:49:39.8407859Z test_assertion_error_missing_selector_and_skip_remain_explicit (tests.test_foundation_ci.FoundationCiPartitionTest.test_assertion_error_missing_selector_and_skip_remain_explicit) ... ok
+2026-10-07T19:49:39.8425415Z test_cli_preserves_fast_or_material_failure (tests.test_foundation_ci.FoundationCiPartitionTest.test_cli_preserves_fast_or_material_failure) ... ok
+2026-10-07T19:49:39.8428662Z test_duplicate_inherited_selector_is_rejected (tests.test_foundation_ci.FoundationCiPartitionTest.test_duplicate_inherited_selector_is_rejected) ... ok
+2026-10-07T19:49:39.8432457Z test_material_checkout_is_shallow_but_old_object_reader_keeps_history (tests.test_foundation_ci.FoundationCiPartitionTest.test_material_checkout_is_shallow_but_old_object_reader_keeps_history) ... ok
+2026-10-07T19:49:39.8440420Z test_shared_class_preparation_runs_once_and_every_test_executes (tests.test_foundation_ci.FoundationCiPartitionTest.test_shared_class_preparation_runs_once_and_every_test_executes) ... ok
+2026-10-07T19:49:59.9834523Z test_actual_publication_gate_accepts_reviewed_syntax_only (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_actual_publication_gate_accepts_reviewed_syntax_only) ... ok
+2026-10-07T19:50:00.0222980Z test_approved_source_mutation_is_rejected (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_approved_source_mutation_is_rejected) ... ok
+2026-10-07T19:50:00.1349255Z test_dangling_successor_aliases_never_fall_back_to_legacy (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_dangling_successor_aliases_never_fall_back_to_legacy) ... ok
+2026-10-07T19:50:20.0467415Z test_non_syntax_site_cannot_be_whitelisted_by_matching_hash (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_non_syntax_site_cannot_be_whitelisted_by_matching_hash) ... ok
+2026-10-07T19:50:20.1239170Z test_partial_or_alias_successor_installation_fails_closed (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_partial_or_alias_successor_installation_fails_closed) ... ok
+2026-10-07T19:51:00.7290369Z test_real_identity_and_financial_period_are_not_excluded (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_real_identity_and_financial_period_are_not_excluded) ... ok
+2026-10-07T19:51:20.7498801Z test_removing_an_exemption_preserves_the_violation (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_removing_an_exemption_preserves_the_violation) ... ok
+2026-10-07T19:51:29.9460684Z test_scoped_registry_still_proves_all_declared_syntax_sites (tests.vnext.test_main_scalability_audit.MainScalabilityAuditTest.test_scoped_registry_still_proves_all_declared_syntax_sites) ... ok
+2026-10-07T19:52:44.8843777Z test_r1_r3_historical_chain_and_root_mirrors_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28HistoricalReadBackIntegrationTest.test_r1_r3_historical_chain_and_root_mirrors_remain_exact)
+2026-10-07T19:52:45.3344600Z Preserve R3 active, exact R2, R1 availability and 14 mirrors. ... ok
+2026-10-07T19:52:45.3345427Z test_profile_snapshot_loads_with_historical_parent_fast_smoke (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke)
+2026-10-07T19:52:45.4657812Z Load profile authority and its exact Issue #15 parent locally. ... ok
+2026-10-07T19:52:45.4659134Z test_baseline_binds_exact_merged_main_and_parent_tree (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_baseline_binds_exact_merged_main_and_parent_tree)
+2026-10-07T19:52:45.4722341Z Resolve recorded Git objects without treating live HEAD as authority. ... ok
+2026-10-07T19:52:45.4723204Z test_contract_byte_drift_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_contract_byte_drift_fails_closed)
+2026-10-07T19:52:45.7337334Z Reject one changed snapshot byte before semantic evaluation. ... ok
+2026-10-07T19:52:45.7338603Z test_create_run_binds_explicit_successor_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_create_run_binds_explicit_successor_identity)
+2026-10-07T19:52:45.8473561Z Persist successor fields without changing the legacy RUN subtype. ... ok
+2026-10-07T19:52:45.8474773Z test_decision_fork_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_decision_fork_fails_after_outer_rebinding)
+2026-10-07T19:52:45.8993601Z Reject two otherwise valid children of one Decision root. ... ok
+2026-10-07T19:52:45.8994611Z test_extra_snapshot_file_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_extra_snapshot_file_fails_closed)
+2026-10-07T19:52:45.9364062Z Reject a structurally valid but unbound sixth file. ... ok
+2026-10-07T19:52:45.9365228Z test_incomplete_transfer_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_incomplete_transfer_fails_after_outer_rebinding)
+2026-10-07T19:52:46.0894286Z Require one and only one disposition for every parent Decision. ... ok
+2026-10-07T19:52:46.0895609Z test_invariant_profile_contains_references_not_policy_values (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_invariant_profile_contains_references_not_policy_values)
+2026-10-07T19:52:46.0897268Z Keep policy content in the Decision Register, not a JSON DSL. ... ok
+2026-10-07T19:52:46.0898299Z test_issue15_snapshot_bytes_remain_exact (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_issue15_snapshot_bytes_remain_exact)
+2026-10-07T19:52:46.0903952Z Freeze all seven Issue #15 files independently of child metadata. ... ok
+2026-10-07T19:52:46.0905104Z test_legacy_publication_keeps_hash_only_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_legacy_publication_keeps_hash_only_identity)
+2026-10-07T19:52:46.0955799Z Accept R3's historical shape but never relabel it as successor. ... ok
+2026-10-07T19:52:46.0956676Z test_parent_closure_drift_fails_after_child_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_parent_closure_drift_fails_after_child_rebinding)
+2026-10-07T19:52:46.2094702Z Reject a coordinated fake parent hash in baseline and transfer. ... ok
+2026-10-07T19:52:46.2096282Z test_parent_snapshot_symlink_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_parent_snapshot_symlink_fails_closed)
+2026-10-07T19:52:46.3239542Z Reject a redirected parent directory before historical dispatch. ... ok
+2026-10-07T19:52:46.3240979Z test_profile_dispatch_is_generation_driven_not_issue_branch (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_profile_dispatch_is_generation_driven_not_issue_branch)
+2026-10-07T19:52:46.8918798Z Load a later revision through a retained engine, not an Issue branch. ... ok
+2026-10-07T19:52:46.8920138Z test_retry_safety_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_retry_safety_fails_after_outer_rebinding)
+2026-10-07T19:52:47.1601523Z Reject a policy-content change that enables automatic retry. ... ok
+2026-10-07T19:52:47.3709269Z test_run_requirement_dispatch_requires_explicit_successor_identity (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_run_requirement_dispatch_requires_explicit_successor_identity)
+2026-10-07T19:52:47.3710317Z Route new Runs by bound identity while retaining old dispatch. ... ok
+2026-10-07T19:52:47.3710946Z test_snapshot_symlink_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_snapshot_symlink_fails_closed)
+2026-10-07T19:52:47.4074470Z Reject a child file that redirects outside the five-file snapshot. ... ok
+2026-10-07T19:52:47.4075235Z test_successor_artifact_identity_is_all_or_nothing (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_successor_artifact_identity_is_all_or_nothing)
+2026-10-07T19:52:47.5125624Z Reject missing or forged identity for every successor artifact type. ... ok
+2026-10-07T19:52:47.5126446Z test_unknown_invariant_kind_fails_after_outer_rebinding (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_unknown_invariant_kind_fails_after_outer_rebinding)
+2026-10-07T19:52:47.6010567Z Reject an attempted arbitrary rule-engine extension. ... ok
+2026-10-07T19:52:47.6011633Z test_validator_identity_drift_fails_closed (tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionTest.test_validator_identity_drift_fails_closed)
+2026-10-07T19:52:47.6459069Z Bind the generic evaluator implementation used by this snapshot. ... ok
+2026-10-07T19:52:47.6459505Z 
+2026-10-07T19:52:47.6459695Z ----------------------------------------------------------------------
+2026-10-07T19:52:47.6460259Z Ran 34 tests in 187.808s
+2026-10-07T19:52:47.6460442Z 
+2026-10-07T19:52:47.6460544Z OK
+2026-10-07T19:53:08.1164769Z Main source-aware scalability audit: PASS
+2026-10-07T19:53:11.1844282Z {
+2026-10-07T19:53:11.1844620Z   "egress_capability_references": [
+2026-10-07T19:53:11.1845137Z     "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+2026-10-07T19:53:11.1846287Z     "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+2026-10-07T19:53:11.1846934Z     "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+2026-10-07T19:53:11.1847560Z     "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send",
+2026-10-07T19:53:11.1848110Z     "scripts/vnext/ai_adapter.py::_open_provider_request",
+2026-10-07T19:53:11.1848607Z     "scripts/vnext/continuous_semantic_calls.py::_Transport.send"
+2026-10-07T19:53:11.1849010Z   ],
+2026-10-07T19:53:11.1849456Z   "gate_receipt_id": "sha256:95317983f682f54a0c689dbaa914e828550821a32f1b5f6dc72db47e61f407ad",
+2026-10-07T19:53:11.1850194Z   "provider_boundary_callers": [
+2026-10-07T19:53:11.1850684Z     "scripts/vnext/ai_adapter.py::_DeepSeekChatCompletionsTransport.complete",
+2026-10-07T19:53:11.1851310Z     "scripts/vnext/ai_adapter.py::_OpenAIResponsesTransport.complete"
+2026-10-07T19:53:11.1851744Z   ],
+2026-10-07T19:53:11.1851995Z   "provider_opener_allowed_call_sites": [
+2026-10-07T19:53:11.1852424Z     "scripts/vnext/ai_adapter.py::_open_provider_request"
+2026-10-07T19:53:11.1852997Z   ],
+2026-10-07T19:53:11.1853278Z   "record_type": "PROVIDER_EGRESS_CALL_GRAPH_GATE",
+2026-10-07T19:53:11.1853661Z   "remote_adapter_constructors": [
+2026-10-07T19:53:11.1854109Z     "scripts/vnext/ai_adapter.py::build_annual_candidate_transport_adapter",
+2026-10-07T19:53:11.1854721Z     "scripts/vnext/ai_adapter.py::build_invocation_controlled_transport_adapter",
+2026-10-07T19:53:11.1855350Z     "scripts/vnext/ai_adapter.py::build_scoped_qualification_transport_adapter",
+2026-10-07T19:53:11.1855966Z     "scripts/vnext/ai_adapter.py::build_table_context_measurement_transport",
+2026-10-07T19:53:11.1856357Z     "scripts/vnext/ai_adapter.py::build_table_qualification_transport_adapter"
+2026-10-07T19:53:11.1856647Z   ],
+2026-10-07T19:53:11.1856818Z   "repository_transport_callers": [
+2026-10-07T19:53:11.1857112Z     "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+2026-10-07T19:53:11.1857485Z     "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send"
+2026-10-07T19:53:11.1857771Z   ],
+2026-10-07T19:53:11.1857943Z   "repository_transport_factories": [
+2026-10-07T19:53:11.1858282Z     "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+2026-10-07T19:53:11.1858718Z     "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+2026-10-07T19:53:11.1859083Z     "scripts/vnext/continuous_semantic_calls.py::_Transport.send"
+2026-10-07T19:53:11.1859341Z   ],
+2026-10-07T19:53:11.1859507Z   "scanned_file_count": 353,
+2026-10-07T19:53:11.1859873Z   "scanned_source_set_hash": "sha256:ad5a44c980ccedda1255d97718071ddeed44d6eacd69cc3dfe4dbc9af3663919",
+2026-10-07T19:53:11.1860416Z   "schema_version": 1,
+2026-10-07T19:53:11.1860601Z   "status": "PASS"
+2026-10-07T19:53:11.1860770Z }
+2026-10-07T19:53:11.6034643Z CHECK PASS: generated reference tables match committed inputs
+2026-10-07T19:53:11.7875871Z ##[error]The operation was canceled.
+2026-10-07T19:53:11.7979223Z Post job cleanup.
+2026-10-07T19:53:11.8720618Z [command]/usr/bin/git version
+2026-10-07T19:53:11.8747221Z git version 2.55.0
+2026-10-07T19:53:11.8779762Z Temporarily overriding HOME='/home/runner/work/_temp/2a7206e3-d5d5-4692-bbff-25ec41e6c4c7' before making global git config changes
+2026-10-07T19:53:11.8780911Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T19:53:11.8784935Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-07T19:53:11.8815223Z Removing SSH command configuration
+2026-10-07T19:53:11.8821189Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T19:53:11.8854209Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T19:53:11.9093105Z Removing HTTP extra header
+2026-10-07T19:53:11.9099697Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T19:53:11.9124109Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T19:53:11.9367539Z Removing includeIf entries pointing to credentials config files
+2026-10-07T19:53:11.9374168Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T19:53:11.9411602Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T19:53:11.9757762Z Cleaning up orphan processes
