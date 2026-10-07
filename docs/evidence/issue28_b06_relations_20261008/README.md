@@ -32,3 +32,12 @@ python docs/evidence/issue28_b06_relations_20261008/verify_default_and_persisten
 10项小测试通过0.001s；实际默认完整case仍与main完全相同，原件正例及保存重读通过（三次准备＋读写合计9.001s），B06仍WITHHELD/null。修复后的原结构反例只是内存派生测试，无原件写回或获取信用。反例探针先因XML标签大小写筛选失败，错误保留；后改用既有metadata概念的casefold处理。这是探针设置修复，不改业务事实。
 
 修后差异尚待限定复核，不据父方测试改写为独审通过；普通公司入口／原生Run尚未接入，不计新增完整公司结果。
+
+
+## 当前终态：推算倍率路线停止，显式入口关闭
+
+c5修后独审仍NEEDS_FIX，详见[independent-carrier-repair](independent-carrier-repair/conclusion.md)：包含行自身scale6→3且XML对应226000，两原件一致，初版仍借用总额scale6误确认136000000租赁已含。前一个金额反例确已修复，但没有解决含行自身单位／金额读取职责。原31工具/3消息/275秒记录保留。
+
+不继续修猜测倍率规则。显式reported_relations=True现在在来源处理之前以REPORTED_RELATIONS_SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED拒绝；旧False默认不变。11小测通过，包含关闭入口反例；它不证明不足的低层原型已变正确。既有正例/源case保存证据只保留当时程序事实，不能授现行关系信用。没有新增完整B06结果、公司CSV接入或生产信用。
+
+后续必要改进是通过既有原生解析器和单元格绑定直接读取包含行自身事实、上下文、单位、倍率及HTML/XML对应值；不再从总额或邻格推断，不重读全部财报。此代码保留为独立开发分支，未加入PR67、未合并。

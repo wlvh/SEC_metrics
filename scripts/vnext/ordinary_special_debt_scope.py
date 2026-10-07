@@ -48,6 +48,7 @@ def native(source, annual):
 def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
                           reported_relations=False):
     need(type(reported_relations) is bool, 'REPORTED_RELATIONS_OPTION_INVALID')
+    need(not reported_relations, 'REPORTED_RELATIONS_SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED')
     sources = {'primary': primary, 'xml': xml}
     native_sources = {kind: native(source, annual) for kind, source in sources.items()}
     end = annual['table_input']['target_period']['period_end']
@@ -162,6 +163,8 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
 
 
 def prepare_special_debt_case(*, repo_root: Path, company_id: str, reported_relations=False):
+    need(type(reported_relations) is bool, 'REPORTED_RELATIONS_OPTION_INVALID')
+    need(not reported_relations, 'REPORTED_RELATIONS_SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED')
     rules = strict_json_file(path=repo_root / POLICY_PATH)
     need(rules == strict_json_file(path=ROOT / POLICY_PATH) and rules['full_ratio_enabled'] is False,
          'INSTALLED_RULES_CHANGED')

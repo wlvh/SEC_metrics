@@ -4,6 +4,7 @@ from types import SimpleNamespace
 import unittest
 
 from vnext.industrial_lease_relation import inspect_inclusion
+from vnext.ordinary_special_debt_scope import inspect_special_scope, prepare_special_debt_case
 
 
 def fixture():
@@ -38,6 +39,13 @@ def fixture():
 
 
 class IndustrialLeaseRelationTest(unittest.TestCase):
+    def test_explicit_unproved_route_is_suspended_before_source_processing(self):
+        with self.assertRaisesRegex(ValueError, 'SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED'):
+            inspect_special_scope(primary={}, xml={}, annual={}, financial_institution=False,
+                                  rules={}, reported_relations=True)
+        with self.assertRaisesRegex(ValueError, 'SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED'):
+            prepare_special_debt_case(repo_root=None, company_id='TEST_ONLY', reported_relations=True)
+
     def test_included_lease_is_not_an_additive_balance(self):
         result = inspect_inclusion(**fixture())
         self.assertEqual('REPORTED_INCLUDED', result['status'])
