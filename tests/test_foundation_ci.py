@@ -14,6 +14,13 @@ import run_foundation_ci as ci
 
 
 class FoundationCiPartitionTest(unittest.TestCase):
+    def test_material_checkout_is_shallow_but_old_object_reader_keeps_history(self):
+        body=(ROOT/'.github/workflows/vnext-fast.yml').read_text()
+        material=body.split('  inherited-source-material:',1)[1].split('  main-foundation:',1)[0]
+        reader=body.split('  main-foundation:',1)[1].split('  # #54',1)[0]
+        self.assertIn('fetch-depth: 1',material)
+        self.assertIn('fetch-depth: 0',reader)
+
     def test_all_inherited_selectors_are_active_or_explicitly_retired_once(self):
         result=ci.partition()
         self.assertEqual(set(ci.inherited.FAST_TESTS),

@@ -16,7 +16,7 @@ class CurrentCompanyTest(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
-        self.root = Path(temp.name)
+        self.root = Path(temp.name).resolve()
         self.source = self.root/'source'; self.source.mkdir()
         self.work = self.root/'state'; self.outputs = self.root/'output'
         self.registry = self.root/'defects.json'; self.registry.write_text('{"defects":[]}')

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class CurrentUpdateTest(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
-        self.root=Path(self.temp.name)/'state'
+        self.root=(Path(self.temp.name)/'state').resolve()
         self.config={'processing_version':'one'}
         self.census=[{'source_url':'source-a','content_sha256':'a','status_code':'200','error':''}]
         self.proof={'source_url':'source-a','accession':'filing-a','document_name':'a.json','content_sha256':'a'}
