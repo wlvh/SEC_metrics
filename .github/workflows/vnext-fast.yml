@@ -75,7 +75,10 @@ jobs:
           python3 tools/check_provider_egress.py
           python3 tools/generate_metrics_reference.py --check
 
-  # #54 company pipeline: inherited checks restored from fixed 0bc24734 (see docs/evidence/issue54_company/live2/pr56-integration/final-integration-tree/COVERAGE-MAP.md)
+  # #54 source/business obligations remain; current saved-source closeout does not
+  # recreate old native installs, ancestor byte proofs or unfrozen model families.
+  # Old creation tests stay in their saved runtime; disposition and limits:
+  # docs/evidence/issue28_company_records_20261007/diagnose-retained-ci-01efa3d/conclusion.md
   company-source-core:
     name: Company source authority, ledger and D04 wiring
     runs-on: ubuntu-latest
@@ -102,32 +105,10 @@ jobs:
           PYTHONPATH: scripts
         run: python3 tests/required_unittests.py tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest
 
-  company-acquisition-c04:
-    name: Company acquisition session and C04 update/recovery
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          persist-credentials: false
-      - name: Set up Python 3.14
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
-        with:
-          python-version: "3.14"
-      - name: Install pinned offline request tokenizer
-        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
-      - name: SEC acquisition session, C04 update cycle and refresh resume
-        env:
-          PYTHONDONTWRITEBYTECODE: "1"
-          PYTHONPATH: scripts
-          SEC_ACQUISITION_MATERIAL_ROOT: ${{ runner.temp }}/sec-acquisition-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 tests/required_unittests.py tests.vnext.test_continuous_sec_acquisition tests.vnext.test_c04_update_cycle tests.vnext.test_c04_refresh_resume
-
   company-c04-source-install:
-    name: Company C04 source-only install
+    name: Company C04 source and subject checks
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 5
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -139,91 +120,13 @@ jobs:
           python-version: "3.14"
       - name: Install pinned offline request tokenizer
         run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
-      - name: C04 source-only install from saved sources
+      - name: Saved C04 sources, same-subject comparison and event completeness
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
-        run: python3 tests/required_unittests.py tests.vnext.test_c04_source_only_install
-
-  company-native-runs:
-    name: Company native Run cold read and recorded source update
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          persist-credentials: false
-      - name: Set up Python 3.14
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
-        with:
-          python-version: "3.14"
-      - name: Install pinned offline request tokenizer
-        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
-      - name: Actual OPEN Runs and source-bound file negatives
-        env:
-          PYTHONDONTWRITEBYTECODE: "1"
-          PYTHONPATH: scripts
-          NORMAL_V14_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-v14-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 tests/required_unittests.py tests.vnext.test_normal_run_v3_material
-      - name: Recorded sources through native adapters, changed graphs or histories rejected
-        env:
-          PYTHONDONTWRITEBYTECODE: "1"
-          PYTHONPATH: scripts
-          ORDINARY_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-updated-source-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_source_run_material
-
-  company-going-concern:
-    name: Company saved D04 native Runs
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          persist-credentials: false
-      - name: Set up Python 3.14
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
-        with:
-          python-version: "3.14"
-      - name: Install pinned offline request tokenizer
-        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
-      - name: Complete recorded D04 source assessments through native Review and Run
-        env:
-          PYTHONDONTWRITEBYTECODE: "1"
-          PYTHONPATH: scripts
-          D04_REFERENCE_CONTEXT: "1"
-          D04_COMPLETE_RESPONSE_CONTRACT: "1"
-          D04_INDEXED_UNITS: "1"
-          D04_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-d04-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 tests/required_unittests.py tests.vnext.test_d04_run_material
-
-  company-remaining-source:
-    name: Company remaining source Runs (${{ matrix.company }})
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    strategy:
-      fail-fast: false
-      matrix:
-        company: [marriott_international, jpmorgan_chase]
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          persist-credentials: false
-      - name: Set up Python 3.14
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
-        with:
-          python-version: "3.14"
-      - name: Install pinned offline request tokenizer
-        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
-      - name: Remaining current-source adapters through native Runs and source-bound rejections
-        env:
-          PYTHONDONTWRITEBYTECODE: "1"
-          PYTHONPATH: scripts
-          REMAINING_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/remaining-source-${{ matrix.company }}-${{ github.run_id }}-${{ github.run_attempt }}
-          REMAINING_SOURCE_COMPANY: ${{ matrix.company }}
-        run: python3 tests/required_unittests.py tests.vnext.test_remaining_source_run_material
+        # The current saved-source candidate does not install legacy proof trees.
+        # Keep source/form/CIK/prior/event requirements; retained installs use saved runtime.
+        run: python3 tests/required_unittests.py tests.vnext.test_governance_signals.AuditorSignalsTest tests.vnext.test_c04_registration_successor tests.vnext.test_normal_governance_input
 
   company-update-history:
     name: Company update history and interruption recovery

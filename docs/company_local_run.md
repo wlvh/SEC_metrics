@@ -22,6 +22,17 @@ B03还保存只读的`input-assessments.json`，保留原件数量比较及收�
 
 本批实测Marriott B01/B02、B10/B11及银行/非自然年结果见 `docs/evidence/issue28_company_records_20261007/`；程序通过与内容接受分别登记。该路径尚未完成在线发现接续、同批表格/CompanyFacts解析共享、AI输入消费和所有39项业务验收。以下描述的是旧固定版本的在线/native路径；本变更树的新在线安装仍受旧字节绑定阻断，尚未迁移，不把接口保留当作新安装已通过。
 
+旧native任务的只读兼容需要其原固定程序与原来源登记位置，当前入口可明确指定：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company jpmorgan_chase --state-root /saved/old-company-state \
+  --runtime-root /saved/original-runtime --trust-root /saved/original-source-trust
+```
+
+这不是重新安装或计算：本批已用现有JPM D01任务实际验证，原Run的manifest/records不变。旧任务的来源/程序/登记位置须取自它自己的保存记录；不能以任意新目录代替，也不将只读成功升级为本期业务接受。旧完整审计导出仍显式使用`export-results`；新普通任务用上面的`run --source-root`和`results --output-root`，当前默认在线新安装尚未交付。
+
+
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
 ```bash
