@@ -7,3 +7,9 @@
 完整参考阅读现完成23包全部4630文字，必要整表35提名/61矩阵/122当前成员表已全读；合并expanded输出一次截断，两个完整表全origin（含blank/raw/text/span/header）复读补齐。参考12当前姓名/18principal+6specific正向关系、10提名qualificationhighlights、已发生与条件性变更分别保存并在独立回答前冻结。仍不授全媒介或完整指标接受；计划9nonemployee与当前11独立上下文差异保持，不自行修复。正常准备得到的精确169870/8192请求不改任务语义，不给独立上下文参考、旧答或结论。frozen-reference-and-exact-input.tar.gz及frozen-input-validation.json供接续；初测后至多一次实质修正。
 
 初测52事实/3未决、4033≤8192，原52陈述有支持；12当前姓名/24委员会正向关系反向相符，10提名/两退休/死亡及Jan2024任命/条件性未来角色、expert不等membership、计划9口径未决保持。独立执行68工具且完整源直接读、六处显示截断补齐；全壁钟未测量。仍漏CMDC非雇员例外及Audit专业实践限制，A/B时间需同时保留current表/2023legend；旧答/旧Run不改。唯一修正只加通用状态/限制/实际QualificationHighlights及时间/未决保存指示，无正确姓名/数值/块号/参考，完整user及预算不变；一次结束后不第三试。
+
+## 有界验证终态
+
+初测52事实、3未决，唯一实质修正61事实、4未决；原答分别保留。修正答经原C02结构检查通过，引用和陈述逐项与调用前参考核对：12当前姓名、24个正向委员会关系及10份提名资格说明均相符。修正补回前高管/非雇员例外、财务专家实践限制及A/B时间边界；初答中有来源支持的72岁提名说明在修正中丢失，已登记，不拼答补信用。
+
+修正输出参考token为5119，8192预留内；代理59次总工具调用，实测359.423秒。参考token不是provider实耗。图片矩阵、其他委员会成员/主席、计划9人时间与资格评价政策仍未解决，终态为 `PARTIAL_EXTRACTION_NOT_READY_FOR_COMPLETE_METRIC`。本组初测加一次修正结束，无第三次；没有DeepSeek/SEC调用、新Run或完整指标接受。主要记录为 `revision1-comparison.json`，完整回答及执行说明为 `revision1-answer-and-notes.tar.gz`。
