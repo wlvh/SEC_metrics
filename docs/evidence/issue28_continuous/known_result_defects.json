@@ -1164,6 +1164,36 @@
       "original_record_retained": true,
       "scope_limit": "Actual current normal API identity and one actual archived index/evidence identity only; no claim of all historical scans or current 390 acceptance.",
       "run_id": "run:cutover:6e9c015ffb9418a7f85175720dbe1aa768a910175fb6be26084a596d9b8acff5"
+    },
+    {
+      "defect_id": "PARAMOUNT_FY2025_B01_SUCCESSOR_VISIBLE_NATIVE_PERIOD_CONFLICT",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:c3d535b65ac4d34ba6929e9428371904cd5c568494ce67b1ed2009cec033bc05",
+      "current_credit": "WITHDRAWN_SOURCE_PERIOD_CONFLICT",
+      "repair_state": "NAMED_SOURCE_PERIOD_CONFLICT_PENDING_LIMITED_REVIEW",
+      "summary": "Same original successor revenue columns show Aug7 start while inline/native context c-6 says Aug8. Null annual-length state does not settle the actual period. Do not choose either date or annualize.",
+      "evidence": [
+        "docs/evidence/issue28_company_records_20261007/independent-successor-c5487b7/conclusion.md"
+      ],
+      "original_record_retained": true,
+      "released": []
+    },
+    {
+      "defect_id": "PARAMOUNT_FY2025_B03_SUCCESSOR_VISIBLE_NATIVE_PERIOD_CONFLICT",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B03",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7",
+      "current_credit": "WITHDRAWN_SOURCE_PERIOD_CONFLICT",
+      "repair_state": "NAMED_SOURCE_PERIOD_CONFLICT_PENDING_LIMITED_REVIEW",
+      "summary": "Same original successor revenue columns show Aug7 start while inline/native context c-6 says Aug8. Null annual-length state does not settle the actual period. Do not choose either date or annualize.",
+      "evidence": [
+        "docs/evidence/issue28_company_records_20261007/independent-successor-c5487b7/conclusion.md"
+      ],
+      "original_record_retained": true,
+      "released": []
     }
   ],
   "purpose": "Current company read: precise known defects from this Issue; no copied result count or content acceptance summary.",

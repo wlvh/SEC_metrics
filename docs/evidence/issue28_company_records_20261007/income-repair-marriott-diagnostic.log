@@ -1,0 +1,61 @@
+{
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261007T161842Z-b39ece29",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "2c0a6fdb259e4dd294f903e3e1391375",
+      "version": "8ee3c892b4174cc1b8e6c5e7d8d0c001",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "result_root": "/private/tmp/tmp4hjrhk9h/state/updates/B01/results/8ee3c892b4174cc1b8e6c5e7d8d0c001",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "record_root": "/private/tmp/tmp4hjrhk9h/state/updates/B01/results/8ee3c892b4174cc1b8e6c5e7d8d0c001",
+      "program_version": {
+        "commit": "c5487b73961b12fb336f7e59d59e6164ce32eb65",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B02",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "89d907d4cce04db1be390544ce0a5331",
+      "error_type": "AttributeError",
+      "reason": "'NoneType' object has no attribute 'get'",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "record_root": "/private/tmp/tmp4hjrhk9h/state",
+  "output_root": "/private/tmp/tmp4hjrhk9h/output/20261007T161842Z-b39ece29",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

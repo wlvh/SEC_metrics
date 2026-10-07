@@ -1,0 +1,470 @@
+Bounded independent review c5487b73961b12fb336f7e59d59e6164ce32eb65 vs 22cfc2a6
+Tool accounting, including final write/check: {"functions":22,"exec_command":21,"web":1,"apply_patch":1,"write_stdin":6,"wait":0}
+Ordinary messages: 1 final report. No process message or question.
+Commands/results below are reviewer execution; parent full-company logs are comparison inputs only.
+
+===== state-and-diff =====
+RESULT
+{
+  "status": "fulfilled",
+  "value": {
+    "label": "state-and-diff",
+    "result": {
+      "chunk_id": "3a81e3",
+      "wall_time_seconds": 0.004374834,
+      "exit_code": 0,
+      "original_token_count": 2097,
+      "output": "c5487b73961b12fb336f7e59d59e6164ce32eb65\n .github/workflows/company-current-records.yml      |   4 +-\n .../issue28_company_records_20261007/README.md     |  12 ++\n .../paramount-source-only-company.json             | 210 +++++++++++++++++++++\n .../paramount-source-only-company.log              |   5 +\n .../paramount-source-only-fixed-company.log        |   5 +\n ...aramount-source-only-income-binding-company.log |   5 +\n .../successor-income-final-regression-v2.log       |   4 +\n .../successor-income-projection-fixed-tests.log    |   4 +\n .../successor-income-projection-tests.log          |  22 +++\n scripts/vnext/ordinary_projection.py               |  18 +-\n scripts/vnext/ordinary_saved_result.py             |   4 +\n tests/vnext/test_successor_income_projection.py    |  62 ++++++\n 12 files changed, 353 insertions(+), 2 deletions(-)\ndiff --git a/scripts/vnext/ordinary_projection.py b/scripts/vnext/ordinary_projection.py\nindex 68930980..85fbb599 100644\n--- a/scripts/vnext/ordinary_projection.py\n+++ b/scripts/vnext/ordinary_projection.py\n@@ -101,6 +101,18 @@ def render_ordinary_records(*, data_root, manifest, records, case,\n               if prepared_annual_input is None else prepared_annual_input)\n     period = annual[\"table_input\"][\"target_period\"]\n     _need(period[\"fiscal_year\"] == manifest[\"target_period\"][\"fiscal_year\"],\"ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED\")\n+    income = case.get('prepared_income_input')\n+    income_period_proven = False\n+    if income is not None:\n+        income_period_proven = (metric in {'B01','B03'}\n+            and income['company_id'] == manifest['company_id']\n+            and income['annual_input'] == annual.get('original_input',annual)\n+            and income['statement_period'] == manifest['target_period']\n+            and all(result[key] == income['statement_period'][key]\n+                    for key in ('period_start','period_end'))\n+            and income['financial_cross_entity_combination_authorized'] is False\n+            and period['period_start'] <= result['period_start'] < result['period_end'] == period['period_end'])\n+        _need(income_period_proven, 'ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED')\n     if prepared_annual_input is not None:\n         from .traits import repository_company_ciks\n         _need(annual['company_id'] == manifest['company_id']\n@@ -110,10 +122,14 @@ def render_ordinary_records(*, data_root, manifest, records, case,\n         _need(annual['filing']['reportDate'] == period['period_end']\n               and result['period_end'] == period['period_end']\n               and (result['period_start'] == period['period_start'] or\n-                   result['period_start'] == result['period_end']),\n+                   result['period_start'] == result['period_end'] or income_period_proven),\n               'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')\n     indexes = projector._record_indexes(runs=[(manifest,records)])\n     trace = indexes[\"traces\"][result[\"trace_id\"]]\n+    if income_period_proven and result.get('value') is not None:\n+        checked = {c['observation_id'] for c in case.get('income_observation_checks',[])}\n+        _need(set(trace['input_observation_ids']) <= checked,\n+              'ORDINARY_PROJECTION_INCOME_OBSERVATION_PROOF_MISSING')\n     ordered,_ = projector._ordered_observations(trace=trace,observations=indexes[\"observations\"],projection=projection)\n     presentation = case.get('presentation_policy')\n     _need(presentation in {None, A05_FORMULA_POLICY},\ndiff --git a/scripts/vnext/ordinary_saved_result.py b/scripts/vnext/ordinary_saved_result.py\nindex 2d7ac351..01095143 100644\n--- a/scripts/vnext/ordinary_saved_result.py\n+++ b/scripts/vnext/ordinary_saved_result.py\n@@ -59,6 +59,7 @@ def _ordinary_case(source, company, metric):\n     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,\n         **({'validate_depreciation_scope':True} if metric=='B03' else {}),\n         **({'rules_root':program} if separate_rules else {}))\n+    income_binding = original['component'].get('input_binding',{})\n     detail = original['component']\n     if 'metrics' in detail:\n         detail = detail['metrics'][metric]\n@@ -71,6 +72,9 @@ def _ordinary_case(source, company, metric):\n         **({'input_assessments':{'depreciation_scope':detail['selection']['depreciation_scope']}}\n            if metric == 'B03' and detail.get('selection',{}).get('depreciation_scope') is not None else {}),\n         'prepared_annual_input': original['component'].get('prepared_input'),\n+        **({'prepared_income_input':income_binding['current_income_input'],\n+            'income_observation_checks':income_binding['income_observation_checks']}\n+           if income_binding.get('current_income_input') is not None else {}),\n         'selection': detail.get('selection', detail.get('inspection'))}\n \n \ndiff --git a/tests/vnext/test_successor_income_projection.py b/tests/vnext/test_successor_income_projection.py\nnew file mode 100644\nindex 00000000..7c9a6edc\n--- /dev/null\n+++ b/tests/vnext/test_successor_income_projection.py\n@@ -0,0 +1,62 @@\n+\"\"\"Successor short-period input is projected, without pretending it is annual.\"\"\"\n+import copy\n+import unittest\n+\n+from tests.vnext.common import REPO_ROOT\n+from vnext.ordinary_saved_result import _ordinary_case\n+from vnext.ordinary_projection import render_ordinary_records\n+\n+COMPANY='paramount_skydance_paramount_global'\n+\n+\n+class SuccessorIncomeProjectionTest(unittest.TestCase):\n+    @classmethod\n+    def setUpClass(cls):\n+        cls.case=_ordinary_case(REPO_ROOT,COMPANY,'B01')\n+        cls.manifest={'company_id':COMPANY,'target_period':cls.case['target_period'],\n+            'source_references':cls.case['references'],'run_id':'ordinary:source-test','status':'CALCULATED'}\n+\n+    def render(self,case=None):\n+        c=case or self.case\n+        return render_ordinary_records(data_root=REPO_ROOT,manifest=self.manifest,\n+            records=c['expected_records'],case=c,receipt_status='RECORDED_SOURCE_TEST',\n+            source_validation='EXISTING_SOURCE_AND_STATEMENT_CHECKS',prepared_annual_input=c['prepared_annual_input'])\n+\n+    def test_short_period_state_has_actual_dates_and_preserves_annual_guard(self):\n+        output=self.render();result=self.case['results']['B01']\n+        self.assertEqual(result['period_start'],'2025-08-08')\n+        self.assertEqual(result['period_end'],'2025-12-31')\n+        self.assertEqual(result['reason_code'],'ANNUAL_DURATION_OUT_OF_RANGE')\n+        self.assertIsNone(result['value'])\n+        self.assertIn(b'2025-08-08',output['files']['metrics_matrix.csv'])\n+        self.assertFalse(self.case['prepared_income_input']['financial_cross_entity_combination_authorized'])\n+\n+    def test_missing_proof_does_not_allow_an_arbitrary_shorter_period(self):\n+        c=copy.deepcopy(self.case);c.pop('prepared_income_input');c.pop('income_observation_checks')\n+        with self.assertRaisesRegex(ValueError,'PREPARED_PERIOD_CHANGED'):self.render(c)\n+\n+    def test_wrong_subject_or_statement_period_still_rejected(self):\n+        for change in ('company','period','combination'):\n+            c=copy.deepcopy(self.case);income=c['prepared_income_input']\n+            if change=='company':income['company_id']='other_company'\n+            elif change=='period':income['statement_period']['period_start']='2025-08-09'\n+            else:income['financial_cross_entity_combination_authorized']=True\n+            with self.subTest(change=change),self.assertRaisesRegex(ValueError,'INCOME_PERIOD_PROOF_CHANGED'):\n+                self.render(c)\n+\n+    def test_result_cannot_claim_a_different_short_period(self):\n+        c=copy.deepcopy(self.case)\n+        result=next(r for r in c['expected_records'] if r['record_type']=='METRIC_RESULT')\n+        result['period_start']='2025-08-09'\n+        with self.assertRaisesRegex(ValueError,'INCOME_PERIOD_PROOF_CHANGED'):\n+            self.render(c)\n+\n+    def test_numeric_result_requires_checked_source_observations(self):\n+        c=copy.deepcopy(self.case)\n+        result=next(r for r in c['expected_records'] if r['record_type']=='METRIC_RESULT')\n+        result['value']='1'\n+        c['income_observation_checks']=[]\n+        with self.assertRaisesRegex(ValueError,'INCOME_OBSERVATION_PROOF_MISSING'):\n+            self.render(c)\n+\n+if __name__=='__main__':unittest.main()\n"
+    }
+  }
+}
+
+===== specified-regression =====
+RESULT
+{
+  "status": "fulfilled",
+  "value": {
+    "label": "specified-regression",
+    "result": {
+      "chunk_id": "a89ad5",
+      "wall_time_seconds": 1.001171791,
+      "session_id": 41664,
+      "original_token_count": 0,
+      "output": ""
+    }
+  }
+}
+
+===== specified-regression-completion =====
+RESULT
+{
+  "status": "fulfilled",
+  "value": {
+    "label": "specified-regression-completion",
+    "result": {
+      "chunk_id": "52bf44",
+      "wall_time_seconds": 5.00352875,
+      "session_id": 41664,
+      "original_token_count": 0,
+      "output": ""
+    }
+  }
+}
+
+===== specified-regression-final =====
+RESULT
+{
+  "status": "fulfilled",
+  "value": {
+    "chunk_id": "efe12b",
+    "wall_time_seconds": 0.0000085,
+    "exit_code": 0,
+    "original_token_count": 25,
+    "output": "----------------------------------------------------------------------\nRan 14 tests in 22.108s\n\nOK\n"
+  }
+}
+
+===== focused-period-and-source-proof-read =====
+RESULT
+{
+  "status": "fulfilled",
+  "value": {
+    "chunk_id": "0473a8",
+    "wall_time_seconds": 0.000006958,
+    "exit_code": 0,
+    "original_token_count": 3289,
+    "output": "    48\t\n    49\tdef native_income_reports(source,annual,concepts):\n    50\t    raw=source['raw_bytes'];ref=source['source_reference']\n    51\t    need(ref['raw_asset_id']=='sha256:'+sha256_bytes(content=raw)\n    52\t         and ref['accession']==annual['filing']['accessionNumber']\n    53\t         and ref['company_id']==annual['company_id'],'ORIGINAL_BINDING_CHANGED')\n    54\t    need(annual_period(raw=raw,cik=annual['entity'],filing=annual['filing'])\n    55\t         ==annual['table_input']['target_period'],'ORIGINAL_ANNUAL_IDENTITY_CHANGED')\n    56\t    parsed=parse_accession_xbrl_source(raw_bytes=raw)\n    57\t    meta=_ReportedFactMetadata();meta.feed(raw.decode('utf-8-sig'));meta.close()\n    58\t    need(meta.ordinal==len(parsed.facts),'NATIVE_STREAM_CHANGED')\n    59\t    names={c.split(':')[-1].casefold() for c in concepts}\n    60\t    period=annual['table_input']['target_period'];rows=[]\n    61\t    for fact in parsed.facts:\n    62\t        info=meta.facts[fact['ordinal']];uri,name=info['concept']\n    63\t        if name.casefold() not in names:continue\n    64\t        context=parsed.contexts[fact['context_ref']]\n    65\t        if (context['period_end']!=period['period_end']\n    66\t                or not period['period_start']<=context['period_start']<context['period_end']\n    67\t                or context['dimensions'] or context['typed_dimension_count']):continue\n    68\t        need(str(int(context['entity_identifier']))==annual['entity'],'NATIVE_ENTITY_CHANGED')\n    69\t        need(re.fullmatch(r'https?://fasb\\.org/us-gaap/[0-9]{4}',uri) is not None,'OFFICIAL_CONCEPT_REQUIRED')\n    70\t        need(meta.units.get(fact['unit_ref'])=={'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False},\n    71\t             'NATIVE_USD_REQUIRED')\n    72\t        proof=_verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=meta)\n    73\t        rows.append({'concept':'us-gaap:'+name,'value':_source_value(fact,info),'unit':'USD',\n    74\t            'period_start':context['period_start'],'period_end':context['period_end'],\n    75\t            'decimals':info['attrs'].get('decimals'),'ordinal':fact['ordinal'],\n    76\t            'context_ref':fact['context_ref'],'context':{**context,'dimensions':dict(context['dimensions'])},\n    77\t            'context_proof':proof,'source_reference':ref})\n    78\t    return rows\n    79\t\n    80\t\n    81\tdef prepare_current_income_input(*,repo_root,company_id,rules_root=None):\n    82\t    policy_root=repo_root if rules_root is None else Path(rules_root)\n    83\t    rules=strict_json_file(path=policy_root/POLICY_PATH)\n    84\t    need(rules==strict_json_file(path=ROOT/POLICY_PATH),'INSTALLED_RULES_CHANGED')\n    85\t    prepared=_prepare_b06(repo_root=repo_root,company_id=company_id)\n    86\t    annual=prepared['input_binding']['prepared_annual_input']\n    87\t    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id,\n    88\t        **({} if rules_root is None else {'rules_root':rules_root}))\n    89\t    blobs={r['raw_asset_id']:r for r in amendments['source_records'] if r['record_type']=='RAW_BLOB'}\n    90\t    checks=[]\n    91\t    for scope in amendments['scopes']:\n    92\t        ref=scope['amendment']['document']['source_reference']\n    93\t        raw=(repo_root/blobs[ref['raw_asset_id']]['storage_uri']).read_bytes()\n    94\t        checks.append(inspect_income_amendment(scope,raw,rules))\n    95\t    from .batch_workflow import _structured_concepts\n    96\t    b01=compile_spec_file(path=policy_root/'catalog/metrics/B01_revenue.md',dependency_specs={})\n    97\t    b03=compile_spec_file(path=policy_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})\n    98\t    concepts=sorted(set(_structured_concepts(compiled_spec=b01))|set(_structured_concepts(compiled_spec=b03)))\n    99\t    reports={kind:native_income_reports(prepared[kind],annual,concepts) for kind in ['primary','xml']}\n   100\t    revenue=b01['compiled']['inputs']['revenue']['structured_role']['approved_concepts']\n   101\t    selected=None\n   102\t    for concept in revenue:\n   103\t        candidates={kind:[r for r in rows if r['concept'].casefold()==concept.casefold()] for kind,rows in reports.items()}\n   104\t        if not any(candidates.values()):continue\n   105\t        need(all(candidates.values()),'REVENUE_PRIMARY_XML_MISSING')\n   106\t        periods={kind:{(r['period_start'],r['period_end']) for r in rows} for kind,rows in candidates.items()}\n   107\t        need(periods['primary']==periods['xml'],'REVENUE_PERIOD_CONFLICT')\n   108\t        start,end=min(periods['primary'])\n   109\t        values=[r for rows in candidates.values() for r in rows if (r['period_start'],r['period_end'])==(start,end)]\n   110\t        amount=precision_choice(values)\n   111\t        selected={'period_start':start,'period_end':end,'concept':concept,'reported_value':amount['value'],\n   112\t                  'original_reports':values,'other_current_end_periods':sorted(periods['primary'])}\n   113\t        break\n   114\t    need(selected is not None,'CURRENT_REVENUE_PERIOD_UNPROVEN')\n   115\t    proofs=[*prepared['input_binding']['source_proofs'],*annual['source_proofs'],*amendments['source_proofs']]\n   116\t    proofs=list({content_hash(value=p):p for p in proofs}.values())\n   117\t    records=list({content_hash(value=r):r for r in [*prepared['records'],*amendments['source_records']]}.values())\n   118\t    body=exact_json_value({'record_type':'ORDINARY_CURRENT_INCOME_INPUT','company_id':company_id,'annual_input':annual,\n   119\t        'statement_period':{'fiscal_year':annual['table_input']['target_period']['fiscal_year'],\n   120\t                            'period_start':selected['period_start'],'period_end':selected['period_end']},\n   121\t        'revenue_period_proof':selected,'original_reports':reports,'amendment_input':amendments,\n   122\t        'amendment_checks':checks,'source_proofs':proofs,'source_records':records,\n   123\t        'source_admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),\n   124\t        'policy_sha256':sha256_file(path=policy_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,\n   125\t        'native_result_created':False,'production_authorized':False})\n   126\t    return {**body,'income_input_id':content_hash(value=body)}\n   127\t\n   128\t\n   129\tdef verify_income_observations(packet,observations):\n   130\t    annual=packet['annual_input'];period=packet['statement_period'];checks=[]\n   131\t    for observation in observations:\n   132\t        b=observation['source_binding']\n   133\t        need(b['entity']==annual['entity'] and b['accession']==annual['filing']['accessionNumber']\n   134\t             and observation['unit']=='USD'\n   135\t             and all(observation[k]==period[k] for k in ['period_start','period_end']),\n   136\t             'SELECTED_OBSERVATION_SCOPE_CHANGED')\n   137\t        by_kind={kind:[r for r in rows if r['concept'].casefold()==b['concept'].casefold()\n   138\t            and all(r[k]==period[k] for k in ['period_start','period_end'])] for kind,rows in packet['original_reports'].items()}\n   139\t        need(all(by_kind.values()),'SELECTED_ORIGINAL_FACT_MISSING:'+b['concept'])\n   140\t        chosen=precision_choice([r for rows in by_kind.values() for r in rows])\n   141\t        need(observation['value']==chosen['value'],'SELECTED_COMPANYFACTS_AMOUNT_DIFFERS:'+b['concept'])\n   142\t        checks.append({'observation_id':observation['observation_id'],'original_reports':by_kind})\n   143\t    return checks\n               and isinstance(item[\"table_input\"].get(\"target_period\"), dict)]\n    unique = {content_hash(value=item): item for item in matches}\n    _need(len(unique) == 1, \"PRESENTATION_ANNUAL_GROUP_NOT_UNIQUE\")\n    return next(iter(unique.values()))\n\n\ndef _period_label(result, annual):\n    if result[\"applicability\"] == \"N_A_STRUCTURAL\":\n        return \"STRUCTURAL\", \"No financial measurement is asserted; dates retain the filing group.\"\n    if result[\"publication\"] == \"WITHHELD\":\n        return \"TARGET_PERIOD\", \"No accepted value is asserted for this target period.\"\n    start, end = date.fromisoformat(result[\"period_start\"]), date.fromisoformat(result[\"period_end\"])\n    if start == end:\n        return \"INSTANT\", \"Measurement is as of \" + end.isoformat() + \".\"\n    if result[\"period_start\"] == annual[\"period_start\"] and result[\"period_end\"] == annual[\"period_end\"]:\n        return \"ANNUAL\", \"Measurement covers the source fiscal-year interval.\"\n    months = (end.year - start.year) * 12 + end.month - start.month + 1\n    if months == 3 and start.day == 1 and end.day == calendar.monthrange(end.year, end.month)[1]:\n        return \"QUARTER\", \"Measurement is the disclosed quarter, not an annualized value.\"\n    return \"DURATION\", \"Measurement retains its exact disclosed start and end dates.\"\n\n\ndef _selected_financial_locators(metric, selection):\n    fact = selection.get(\"source_fact\") if isinstance(selection, dict) else None\n    if not isinstance(fact, dict):\n        return []\n    if metric == \"A03\":\n        values = [x[\"locator\"] for x in fact.get(\"selected\", [])]\n    elif metric == \"A04\":\n        values = [x[\"rate_locator\"] for x in fact.get(\"relations\", [])]\n    elif metric in {\"A11\", \"A12\"}:\n        values = [x[\"value\"][\"locator\"] for x in fact.get(\"disclosures\", fact.get(\"totals\", []))]\n    elif metric == \"A13\":\n\n    Returns:\n        Legacy status string.\n    \"\"\"\n    if result[\"applicability\"] == \"N_A_STRUCTURAL\":\n        return \"N_A_STRUCTURAL\"\n    quality = str(result[\"quality\"])\n    field_by_quality = {\n        \"EXACT\": \"status_exact\",\n        \"APPROX\": \"status_approx\",\n        \"NOT_MEANINGFUL\": \"status_not_meaningful\",\n    }\n    if quality not in field_by_quality:\n        raise ProjectionError(\"Result quality has no legacy status mapping\")\n    field = field_by_quality[quality]\n    if field in projection:\n        return str(projection[field])\n    if quality == \"EXACT\" and \"status\" in projection:\n        return str(projection[\"status\"])\n    if quality == \"NOT_MEANINGFUL\":\n        return \"NOT_MEANINGFUL\"\n    raise ProjectionError(\"MetricSpec lacks a legacy status mapping\")\n\n\ndef _ordered_observations(\n    *,\n    trace: Mapping[str, object],\n    observations: Mapping[object, Mapping[str, object]],\n    projection: Mapping[str, object],\n) -> Tuple[List[Mapping[str, object]], int]:\n    \"\"\"Order contributing evidence before supporting validation evidence.\n\n    Args:\n        trace: Verified ExecutionTrace.\n        observations: Batch Observation index.\n        projection: Declarative evidence ordering.\n\n    Returns:\n        Ordered observations and the contributing prefix length.\n    \"\"\"\n    input_ids = [str(value) for value in trace[\"input_observation_ids\"]]\n    if any(identity not in observations for identity in input_ids):\n        raise ProjectionError(\"Projection Trace observation is absent\")\n    role_order = (\n        list(projection[\"evidence_role_order\"])\n        if \"evidence_role_order\" in projection\n        else []\n    )\n    if any(type(role) is not str or not role for role in role_order):\n        raise ProjectionError(\"Evidence role order is invalid\")\n    contributors: List[str] = []\n    for role in role_order:\n        derived_ids = []\n        for step in trace[\"steps\"]:\n            if (\n                step[\"event\"] == \"DERIVED_BRANCH_SELECTED\"\n                and step[\"role\"] == role\n            ):\n                derived_ids.extend(\n                    str(value) for value in step[\"component_observation_ids\"]\n                )\n        role_ids = (\n            derived_ids\n            if derived_ids\n            else [\n                identity\n                for identity in input_ids\n                if observations[identity][\"semantic_role\"] == role\n            ]\n        )\n        for identity in role_ids:\n            if identity in input_ids and identity not in contributors:\n                contributors.append(identity)\n    if not role_order:\n        contributors = list(input_ids)\n    supporting = [\n        identity for identity in input_ids if identity not in contributors\n    ]\n    ordered = contributors + supporting\n    return [observations[identity] for identity in ordered], len(contributors)\n\n\ndef _context_text(\n    *,\n    style: str,\n    observation: Mapping[str, object],\n    fiscal_year: str,\n    constant: str,\n) -> str:\n    \"\"\"Render one Spec-selected legacy context representation.\n\n    Args:\n        style: Declarative context style.\n        observation: Source observation.\n        fiscal_year: Run fiscal-year label.\n        constant: Spec-provided constant context.\n\n    Returns:\n        Legacy context text.\n    \"\"\"\n    if style == \"constant\":\n        return constant\n    if style == \"text_source_span\":\n        if observation.get(\"value_kind\") != \"TEXT_V1\":\n            raise ProjectionError(\"Text context requires a text Observation\")\n        binding = observation[\"source_binding\"][\"text_binding\"]\n        return \"{}:bytes:{}-{}:sha256:{}\".format(\n            binding[\"section_id\"], binding[\"raw_start_byte\"],\n            binding[\"raw_end_byte\"], binding[\"raw_span_sha256\"])\nc5487b73961b12fb336f7e59d59e6164ce32eb65\n"
+  }
+}
+
+===== independent-source-only-period-and-original-probes =====
+RESULT
+{
+  "chunk_id": "c5c1dc",
+  "wall_time_seconds": 1.002729625,
+  "session_id": 90660,
+  "original_token_count": 0,
+  "output": ""
+}
+
+===== exact-delta-line-and-annual-spec-comparison =====
+RESULT
+{
+  "chunk_id": "e1f6c2",
+  "wall_time_seconds": 0.000008833,
+  "exit_code": 0,
+  "original_token_count": 2515,
+  "output": "10:paramount_skydance_paramount_global,Paramount Skydance / Paramount Global,2041610,PSKY,4833,Television Broadcasting Stations,media,1231,latest_10k,successor_predecessor,813828,successor:2041610;predecessor:813828\n    96\t        and spec[\"compiled\"][\"legacy_projection\"].get(\"value_multiplier\") == \"100\")\n    97\t    _need(same_unit or percent_unit,\n    98\t          \"ORDINARY_PROJECTION_UNIT_CHANGED\")\n    99\t    company = next(c for c in projector._load_registry(repo_root=data_root) if c[\"company_id\"] == manifest[\"company_id\"])\n   100\t    annual = (prepare_saved_annual_input(repo_root=data_root,company_id=manifest[\"company_id\"])\n   101\t              if prepared_annual_input is None else prepared_annual_input)\n   102\t    period = annual[\"table_input\"][\"target_period\"]\n   103\t    _need(period[\"fiscal_year\"] == manifest[\"target_period\"][\"fiscal_year\"],\"ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED\")\n   104\t    income = case.get('prepared_income_input')\n   105\t    income_period_proven = False\n   106\t    if income is not None:\n   107\t        income_period_proven = (metric in {'B01','B03'}\n   108\t            and income['company_id'] == manifest['company_id']\n   109\t            and income['annual_input'] == annual.get('original_input',annual)\n   110\t            and income['statement_period'] == manifest['target_period']\n   111\t            and all(result[key] == income['statement_period'][key]\n   112\t                    for key in ('period_start','period_end'))\n   113\t            and income['financial_cross_entity_combination_authorized'] is False\n   114\t            and period['period_start'] <= result['period_start'] < result['period_end'] == period['period_end'])\n   115\t        _need(income_period_proven, 'ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED')\n   116\t    if prepared_annual_input is not None:\n   117\t        from .traits import repository_company_ciks\n   118\t        _need(annual['company_id'] == manifest['company_id']\n   119\t              and str(int(annual['entity'])) in {str(int(c)) for c in\n   120\t                  repository_company_ciks(repo_root=data_root, company_id=manifest['company_id'])},\n   121\t              'ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED')\n   122\t        _need(annual['filing']['reportDate'] == period['period_end']\n   123\t              and result['period_end'] == period['period_end']\n   124\t              and (result['period_start'] == period['period_start'] or\n   125\t                   result['period_start'] == result['period_end'] or income_period_proven),\n   126\t              'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')\n   127\t    indexes = projector._record_indexes(runs=[(manifest,records)])\n   128\t    trace = indexes[\"traces\"][result[\"trace_id\"]]\n   129\t    if income_period_proven and result.get('value') is not None:\n   130\t        checked = {c['observation_id'] for c in case.get('income_observation_checks',[])}\n   131\t        _need(set(trace['input_observation_ids']) <= checked,\n   132\t              'ORDINARY_PROJECTION_INCOME_OBSERVATION_PROOF_MISSING')\n   133\t    ordered,_ = projector._ordered_observations(trace=trace,observations=indexes[\"observations\"],projection=projection)\n   134\t    presentation = case.get('presentation_policy')\n   135\t    _need(presentation in {None, A05_FORMULA_POLICY},\n   136\t          'ORDINARY_PRESENTATION_SUCCESSOR_UNKNOWN')\n   137\t    if presentation is not None:\n   138\t        _need(metric == 'A05' and projection.get('formula','') == '' and\n   139\t              spec['compiled']['canonical_unit'] == 'ratio',\n   140\t              'ORDINARY_A05_PRESENTATION_SCOPE_CHANGED')\n   141\t        route = strict_json_file(path=data_root/'catalog/deterministic_metrics.json')['metrics']['A05']\n   142\t        branches = route['branches']\n   143\t        _need(len(branches) == 1 and branches[0]['branch_id'] == 'average_assets'\n    traces = [r for r in records if r['record_type'] == 'EXECUTION_TRACE'\n              and r['trace_id'] == results[0]['trace_id']]\n    _need(len(traces) == 1, 'SAVED_RESULT_TRACE_MISSING')\n    return results[0]\n\n\ndef _ordinary_case(source, company, metric):\n    program = Path(__file__).resolve().parents[2]\n    separate_rules = metric in {'B01','B02','B03'} or metric not in SUPPORTED_METRICS\n    original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,\n        **({'validate_depreciation_scope':True} if metric=='B03' else {}),\n        **({'rules_root':program} if separate_rules else {}))\n    detail = original['component']\n    if 'metrics' in detail:\n        detail = detail['metrics'][metric]\n    return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,\n        'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],\n        'references': original['source_references'], 'source_proofs': original['source_proofs'],\n        'admission': original['source_admission'], 'target_period': original['target_period'],\n        'expected_records': original['records'], 'results': {metric: original['primary_result']},\n        'rules_root':str(program) if separate_rules else str(source),\n        **({'input_assessments':{'depreciation_scope':detail['selection']['depreciation_scope']}}\n           if metric == 'B03' and detail.get('selection',{}).get('depreciation_scope') is not None else {}),\n        'prepared_annual_input': original['component'].get('prepared_input'),\n        'selection': detail.get('selection', detail.get('inspection'))}\n\n\ndef create_saved_result(*, source_root, output_root, company_id, metric_id, shared_input_root=None):\n    \"\"\"Prepare through the existing Calculator and save its actual records.\"\"\"\n    _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')\n    def prepare(source):\n        if metric_id in LODGING_METRIC_IDS:\n        and projection[\"value_multiplier\"] == \"100\" and spec[\"compiled\"][\"legacy_projection\"].get(\"unit\") == \"percent\"\n        and spec[\"compiled\"][\"legacy_projection\"].get(\"value_multiplier\") == \"100\")\n    _need(same_unit or percent_unit,\n          \"ORDINARY_PROJECTION_UNIT_CHANGED\")\n    company = next(c for c in projector._load_registry(repo_root=data_root) if c[\"company_id\"] == manifest[\"company_id\"])\n    annual = (prepare_saved_annual_input(repo_root=data_root,company_id=manifest[\"company_id\"])\n              if prepared_annual_input is None else prepared_annual_input)\n    period = annual[\"table_input\"][\"target_period\"]\n    _need(period[\"fiscal_year\"] == manifest[\"target_period\"][\"fiscal_year\"],\"ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED\")\n    if prepared_annual_input is not None:\n        from .traits import repository_company_ciks\n        _need(annual['company_id'] == manifest['company_id']\n              and str(int(annual['entity'])) in {str(int(c)) for c in\n                  repository_company_ciks(repo_root=data_root, company_id=manifest['company_id'])},\n              'ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED')\n        _need(annual['filing']['reportDate'] == period['period_end']\n              and result['period_end'] == period['period_end']\n              and (result['period_start'] == period['period_start'] or\n                   result['period_start'] == result['period_end']),\n              'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')\n    indexes = projector._record_indexes(runs=[(manifest,records)])\n    trace = indexes[\"traces\"][result[\"trace_id\"]]\n    ordered,_ = projector._ordered_observations(trace=trace,observations=indexes[\"observations\"],projection=projection)\n    presentation = case.get('presentation_policy')\n    _need(presentation in {None, A05_FORMULA_POLICY},\n          'ORDINARY_PRESENTATION_SUCCESSOR_UNKNOWN')\n    if presentation is not None:\n        _need(metric == 'A05' and projection.get('formula','') == '' and\n              spec['compiled']['canonical_unit'] == 'ratio',\n              'ORDINARY_A05_PRESENTATION_SCOPE_CHANGED')\n        route = strict_json_file(path=data_root/'catalog/deterministic_metrics.json')['metrics']['A05']\n        branches = route['branches']\n        _need(len(branches) == 1 and branches[0]['branch_id'] == 'average_assets'\n{\n  \"record_type\": \"ORDINARY_CURRENT_INCOME_INPUT_RULES\",\n  \"schema_version\": 1,\n  \"metric_ids\": [\"B01\", \"B03\"],\n  \"input_class\": \"CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES\",\n  \"income_subject_pattern\": \"\\\\b(?:revenues?|operating income|operating losses?|depreciation|amortization|statements? of (?:income|operations|cash flows))\\\\b\",\n  \"statement_heading_pattern\": \"^(?:Consolidated )?Statements? of (?:Income|Operations|Cash Flows)(?:\\\\s*\\\\(.*\\\\))?$\",\n  \"period_selection\": \"EARLIEST_NATIVE_UNDIMENSIONED_REVENUE_START_WITHIN_REPORTING_YEAR_AT_CURRENT_END\",\n  \"financial_cross_entity_combination_authorized\": false,\n  \"production_authorized\": false\n}\ncatalog/metrics/B01_revenue.md-29-  \"formula\": \"revenue\",\ncatalog/metrics/B01_revenue.md-30-  \"top_level_guards\": [\ncatalog/metrics/B01_revenue.md-31-    \"same_entity\",\ncatalog/metrics/B01_revenue.md:32:    {\"annual_duration\": [300, 400]}\ncatalog/metrics/B01_revenue.md-33-  ],\ncatalog/metrics/B01_revenue.md-34-  \"quality_rule\": {\ncatalog/metrics/B01_revenue.md-35-    \"structured_direct\": \"EXACT\"\ncatalog/metrics/B01_revenue.md-36-  },\ncatalog/metrics/B01_revenue.md-37-  \"legacy_projection\": {\ncatalog/metrics/B01_revenue.md-38-    \"status\": \"OK\",\ncatalog/metrics/B01_revenue.md-39-    \"source_class\": \"STD_XBRL\",\n--\ncatalog/metrics/B03_ebitda_margin.md-117-    \"same_period\",\ncatalog/metrics/B03_ebitda_margin.md-118-    \"same_entity\",\ncatalog/metrics/B03_ebitda_margin.md-119-    \"compatible_units\",\ncatalog/metrics/B03_ebitda_margin.md:120:    {\"annual_duration\": [300, 400]},\ncatalog/metrics/B03_ebitda_margin.md-121-    \"denominator_nonzero\"\ncatalog/metrics/B03_ebitda_margin.md-122-  ],\ncatalog/metrics/B03_ebitda_margin.md-123-  \"formula\": {\ncatalog/metrics/B03_ebitda_margin.md-124-    \"op\": \"divide\",\ncatalog/metrics/B03_ebitda_margin.md-125-    \"args\": [\ncatalog/metrics/B03_ebitda_margin.md-126-      {\ncatalog/metrics/B03_ebitda_margin.md-127-        \"op\": \"add\",\n"
+}
+
+===== independent-probes-first-completion =====
+RESULT
+{
+  "chunk_id": "4b7bfd",
+  "wall_time_seconds": 0.000006958,
+  "exit_code": 1,
+  "original_token_count": 493,
+  "output": "Traceback (most recent call last):\nREVIEW_PROBE source=/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007\nPASS B01 source-only Calculator/render {\"entity\": \"2041610\", \"evidence_count\": 1, \"filing\": \"0002041610-26-000011\", \"observations_checked\": 1, \"period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-08-08\"}, \"reason\": \"ANNUAL_DURATION_OUT_OF_RANGE\", \"result_id\": \"sha256:c3d535b65ac4d34ba6929e9428371904cd5c568494ce67b1ed2009cec033bc05\"}\nPASS B01 income_company reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 income_annual reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 income_fiscal reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 statement_start reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 combination reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 result_start reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 result_end reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 annual_cik reject=ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED\nPASS B01 annual_company reject=ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED\nPASS B01 annual_report_end reject=ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED\nPASS B01 outside_annual reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 instant reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 missing_proof reject=ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED\nPASS B01 wrong_metric reject=ORDINARY_PROJECTION_UNIT_CHANGED\nPASS B01 numeric_missing_check reject=ORDINARY_PROJECTION_INCOME_OBSERVATION_PROOF_MISSING\nPASS B01 preexisting saved record independent read, no recompute /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/2723bdc7a1d942008d059e9f8c62ca2a\n  File \"<stdin>\", line 74, in <module>\nAssertionError\n"
+}
+
+===== independent-probes-corrected-rerun =====
+COMMAND
+TMPDIR=/private/tmp /private/tmp/issue28-company-c02-venv-20261006/bin/python -B - <<'PY'
+import copy, csv, io, json, re, sys
+from pathlib import Path
+from unittest.mock import patch
+ROOT=Path.cwd();sys.path.insert(0,str(ROOT/'scripts'))
+from vnext.ordinary_saved_result import _ordinary_case, read_saved_result
+from vnext.ordinary_projection import render_ordinary_records
+from vnext.canonical import sha256_file
+SOURCE=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007')
+report=json.loads((ROOT/'docs/evidence/issue28_company_records_20261007/paramount-source-only-company.json').read_text())
+print('REVIEW_PROBE source='+str(SOURCE))
+checks=0
+with patch('urllib.request.urlopen',side_effect=AssertionError('Offline review')), patch('socket.create_connection',side_effect=AssertionError('Offline review')):
+ for metric in ('B01','B03'):
+  case=_ordinary_case(SOURCE,report['company_id'],metric)
+  annual=case['prepared_annual_input'];income=case['prepared_income_input']
+  manifest={'company_id':report['company_id'],'target_period':case['target_period'],'source_references':case['references'],'run_id':'ordinary:independent-short-period-probe','status':'CALCULATED'}
+  def render(c,m=None):
+   return render_ordinary_records(data_root=SOURCE,manifest=m or manifest,records=c['expected_records'],case=c,receipt_status='INDEPENDENT_OFFLINE_PROBE',source_validation='BOUNDED_REVIEW_SOURCE_PREPARATION',prepared_annual_input=c['prepared_annual_input'])
+  output=render(case);r=case['results'][metric]
+  expected=next(item for item in report['metrics'] if item['metric_id']==metric)
+  assert r==expected['actual_result'],(metric,'actual_result differs')
+  assert r['value'] is None and r['reason_code']=='ANNUAL_DURATION_OUT_OF_RANGE'
+  assert output['row']['period_start']=='2025-08-08' and output['row']['period_end']=='2025-12-31'
+  assert output['row']['fiscal_period']=='DURATION'
+  assert json.loads(output['row']['context_or_dimension'])['annual_filing_period']['period_start']=='2025-01-01'
+  assert {e['period_start'] for e in output['evidence']}=={'2025-08-08'}
+  assert set(next(x for x in case['expected_records'] if x.get('trace_id')==r['trace_id'] and x['record_type']=='EXECUTION_TRACE')['input_observation_ids']) <= {x['observation_id'] for x in case['income_observation_checks']}
+  checks+=1
+  print('PASS',metric,'source-only Calculator/render',json.dumps({'result_id':r['result_id'],'reason':r['reason_code'],'period':case['target_period'],'entity':annual['entity'],'filing':annual['filing']['accessionNumber'],'observations_checked':len(case['income_observation_checks']),'evidence_count':len(output['evidence'])},sort_keys=True))
+  for name in ('income_company','income_annual','income_fiscal','statement_start','combination','result_start','result_end','annual_cik','annual_company','annual_report_end','outside_annual','instant','missing_proof','wrong_metric','numeric_missing_check'):
+   c=copy.deepcopy(case);m=copy.deepcopy(manifest);p=c['prepared_income_input'];a=c['prepared_annual_input'];primary=next(x for x in c['expected_records'] if x['record_type']=='METRIC_RESULT' and x['metric_id']==metric)
+   if name=='income_company':p['company_id']='other_company'
+   elif name=='income_annual':p['annual_input']['filing']['accessionNumber']='unrelated-accession'
+   elif name=='income_fiscal':p['statement_period']['fiscal_year']=2024
+   elif name=='statement_start':p['statement_period']['period_start']='2025-08-09'
+   elif name=='combination':p['financial_cross_entity_combination_authorized']=True
+   elif name=='result_start':primary['period_start']='2025-08-09'
+   elif name=='result_end':primary['period_end']='2025-12-30'
+   elif name in ('annual_cik','annual_company','annual_report_end'):
+    if name=='annual_cik':a['entity']='19617'
+    elif name=='annual_company':a['company_id']='other_company'
+    else:a['filing']['reportDate']='2025-12-30'
+    p['annual_input']=copy.deepcopy(a.get('original_input',a))
+   elif name in ('outside_annual','instant'):
+    date='2024-12-31' if name=='outside_annual' else '2025-12-31'
+    p['statement_period']['period_start']=date;m['target_period']['period_start']=date;primary['period_start']=date
+   elif name=='missing_proof':c.pop('prepared_income_input');c.pop('income_observation_checks')
+   elif name=='wrong_metric':
+    other='B12' if metric=='B01' else 'B02'
+    c['primary_metric_id']=other;c['compiled_specs'][other]=c['compiled_specs'][metric];c['spec_paths'][other]=c['spec_paths'][metric];primary['metric_id']=other
+   else:primary['value']='1';c['income_observation_checks']=c['income_observation_checks'][1:]
+   try:render(c,m)
+   except ValueError as error:
+    assert 'ORDINARY_PROJECTION_' in str(error),(name,error)
+    if name=='wrong_metric':assert str(error)=='ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED',str(error)
+    checks+=1;print('PASS',metric,name,'reject='+str(error))
+   else:raise AssertionError(metric+' accepted '+name)
+  result_root=Path(expected['result_root'])
+  with patch('vnext.ordinary_saved_result.prepare_ordinary_zero_ai_run_input',side_effect=AssertionError('Read must not recalculate')):
+   old=read_saved_result(output_root=result_root)
+  assert old['result']==r
+  rows=list(csv.DictReader(io.StringIO(old['files']['metrics_matrix.csv'].decode())))
+  assert len(rows)==1 and rows[0]['period_start']=='2025-08-08' and rows[0]['period_end']=='2025-12-31'
+  checks+=1;print('PASS',metric,'preexisting saved record independent read, no recompute',str(result_root))
+  if metric=='B01':
+   for kind in ('primary','xml'):
+    fact=next(x for x in income['original_reports'][kind] if x['concept']==income['revenue_period_proof']['concept'] and x['period_start']=='2025-08-08')
+    ref=fact['source_reference'];raw_id=ref['raw_asset_id']
+    blob=next(x for x in income['source_records'] if x['record_type']=='RAW_BLOB' and x['raw_asset_id']==raw_id)
+    path=SOURCE/blob['storage_uri'];raw=path.read_text();context_id=fact['context_ref']
+    cm=re.search(r'<(?:[A-Za-z_][\w.-]*:)?context\b[^>]*\bid=["\']'+re.escape(context_id)+r'["\'][^>]*>.*?</(?:[A-Za-z_][\w.-]*:)?context>',raw,re.S)
+    assert cm is not None,(kind,context_id)
+    context=cm.group(0)
+    em=re.search(r'<(?:[A-Za-z_][\w.-]*:)?identifier\b[^>]*>(\d+)</(?:[A-Za-z_][\w.-]*:)?identifier>',context)
+    assert em is not None and int(em.group(1))==int(annual['entity']),(kind,context)
+    assert '2025-08-08' in context and '2025-12-31' in context
+    assert sha256_file(path=path)==raw_id[7:]
+    checks+=1
+    print('PASS original-context',kind,'path='+str(path),'context_ref='+context_id,'reported_revenue='+fact['value'],'sha256='+raw_id[7:])
+    print('ORIGINAL_CONTEXT',re.sub(r'\s+',' ',context)[:1200])
+print('PROBE_TOTAL',checks,'PASS')
+PY
+RESULT
+{
+  "chunk_id": "70c9bb",
+  "wall_time_seconds": 1.003028083,
+  "session_id": 20492,
+  "original_token_count": 0,
+  "output": ""
+}
+
+===== independent-probes-corrected-completion =====
+RESULT
+{
+  "chunk_id": "11bde5",
+  "wall_time_seconds": 0.000010083,
+  "exit_code": 1,
+  "original_token_count": 662,
+  "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 67, in <module>\nREVIEW_PROBE source=/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007\nPASS B01 source-only Calculator/render {\"entity\": \"2041610\", \"evidence_count\": 1, \"filing\": \"0002041610-26-000011\", \"observations_checked\": 1, \"period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-08-08\"}, \"reason\": \"ANNUAL_DURATION_OUT_OF_RANGE\", \"result_id\": \"sha256:c3d535b65ac4d34ba6929e9428371904cd5c568494ce67b1ed2009cec033bc05\"}\nPASS B01 income_company reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 income_annual reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 income_fiscal reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 statement_start reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 combination reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 result_start reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 result_end reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 annual_cik reject=ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED\nPASS B01 annual_company reject=ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED\nPASS B01 annual_report_end reject=ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED\nPASS B01 outside_annual reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 instant reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 missing_proof reject=ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED\nPASS B01 wrong_metric reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B01 numeric_missing_check reject=ORDINARY_PROJECTION_INCOME_OBSERVATION_PROOF_MISSING\nPASS B01 preexisting saved record independent read, no recompute /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/2723bdc7a1d942008d059e9f8c62ca2a\nPASS original-context primary path=/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007/evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm context_ref=c-6 reported_revenue=12269000000 sha256=4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d\nORIGINAL_CONTEXT <xbrli:context id=\"c-6\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0002041610</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2025-08-08</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>\nStopIteration\n"
+}
+
+===== existing-source-proof-storage-locations =====
+RESULT
+{
+  "chunk_id": "3cc718",
+  "wall_time_seconds": 0.000010541,
+  "exit_code": 0,
+  "original_token_count": 1534,
+  "output": "{\"accession\": \"\", \"content_sha256\": \"322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103\", \"document_name\": \"CIK0002041610.json\", \"request_attempt_id\": \"request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb\", \"request_body_sha256\": \"322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103\", \"request_body_size\": 32702, \"request_headers_repo_relative_path\": \"evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json.01be7271ae96e4466114270e71ce847e6de928ff5b1b933a6c76747284d2fea8.headers.json\", \"request_headers_sha256\": \"01be7271ae96e4466114270e71ce847e6de928ff5b1b933a6c76747284d2fea8\", \"request_headers_size\": 718, \"request_locator_kind\": \"IMMUTABLE_ATTEMPT\", \"request_repo_relative_path\": \"evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json\", \"source_url\": \"https://data.sec.gov/submissions/CIK0002041610.json\"}\n{\"accession\": \"0002041610-26-000011\", \"content_sha256\": \"4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d\", \"document_name\": \"psky-20251231.htm\", \"request_attempt_id\": \"request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd\", \"request_body_sha256\": \"4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d\", \"request_body_size\": 4570770, \"request_headers_repo_relative_path\": \"evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm.0015f0344c98afec10685ed77f874cdb0afd4d05cb3eaae164cbf9f1c7dcb32e.headers.json\", \"request_headers_sha256\": \"0015f0344c98afec10685ed77f874cdb0afd4d05cb3eaae164cbf9f1c7dcb32e\", \"request_headers_size\": 1068, \"request_locator_kind\": \"IMMUTABLE_ATTEMPT\", \"request_repo_relative_path\": \"evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm\"}\n{\"accession\": \"0002041610-26-000011\", \"content_sha256\": \"19dd254e15903395dc75f8ab9e58822d2737275f9fc93a869a68f5b5fcec52bf\", \"document_name\": \"CIK0002041610.json\", \"request_attempt_id\": \"request:attempt:e6e256328eb75c4b1db4eafde1643cfd8f432ced9c0d0338747d01c9eb54bd9e\", \"request_body_sha256\": \"19dd254e15903395dc75f8ab9e58822d2737275f9fc93a869a68f5b5fcec52bf\", \"request_body_size\": 396792, \"request_headers_repo_relative_path\": \"evidence/request_attempts/19/19dd254e15903395dc75f8ab9e58822d2737275f9fc93a869a68f5b5fcec52bf/CIK0002041610.json.03c6176fb919dd0c9ff9cbd9f3c7b35c4c6af207f530efa981dd8269acafa421.headers.json\", \"request_headers_sha256\": \"03c6176fb919dd0c9ff9cbd9f3c7b35c4c6af207f530efa981dd8269acafa421\", \"request_headers_size\": 706, \"request_locator_kind\": \"IMMUTABLE_ATTEMPT\", \"request_repo_relative_path\": \"evidence/request_attempts/19/19dd254e15903395dc75f8ab9e58822d2737275f9fc93a869a68f5b5fcec52bf/CIK0002041610.json\", \"source_url\": \"https://data.sec.gov/api/xbrl/companyfacts/CIK0002041610.json\"}\n{\"accession\": \"0001140361-26-016758\", \"content_sha256\": \"10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0\", \"document_name\": \"ef20071103_10ka.htm\", \"request_attempt_id\": \"request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71\", \"request_body_sha256\": \"10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0\", \"request_body_size\": 776505, \"request_headers_repo_relative_path\": \"evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm.4b87c7ec11d2889a0a16d0bc8036ee7eeb2d2444ed1f3c30c1b2cb5451c812ce.headers.json\", \"request_headers_sha256\": \"4b87c7ec11d2889a0a16d0bc8036ee7eeb2d2444ed1f3c30c1b2cb5451c812ce\", \"request_headers_size\": 1089, \"request_locator_kind\": \"IMMUTABLE_ATTEMPT\", \"request_repo_relative_path\": \"evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm\"}\n{\"accession\": \"0002041610-26-000011\", \"content_sha256\": \"40cc57cfc73d94eeb4290220723bef6f2e632ec4f9d669ee4013f3531b5ba91d\", \"document_name\": \"index.json\", \"request_attempt_id\": \"request:attempt:b776657c9a3d9c21d66b4f464c5d9c908657f52d206f15d228ec323319070dda\", \"request_body_sha256\": \"40cc57cfc73d94eeb4290220723bef6f2e632ec4f9d669ee4013f3531b5ba91d\", \"request_body_size\": 16277, \"request_headers_repo_relative_path\": \"evidence/request_attempts/40/40cc57cfc73d94eeb4290220723bef6f2e632ec4f9d669ee4013f3531b5ba91d/index.json.e770eaee2a3cfb9a0e04d0aefc73a9e8cfdf73253c4595572b0b6de9d988f046.headers.json\", \"request_headers_sha256\": \"e770eaee2a3cfb9a0e04d0aefc73a9e8cfdf73253c4595572b0b6de9d988f046\", \"request_headers_size\": 663, \"request_locator_kind\": \"IMMUTABLE_ATTEMPT\", \"request_repo_relative_path\": \"evidence/request_attempts/40/40cc57cfc73d94eeb4290220723bef6f2e632ec4f9d669ee4013f3531b5ba91d/index.json\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/index.json\"}\n{\"accession\": \"0002041610-26-000011\", \"content_sha256\": \"e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83\", \"document_name\": \"psky-20251231_htm.xml\", \"request_attempt_id\": \"request:attempt:9250a974f15194addd55b7892f3d9d8ea7ff682888f48e969666f201b12a6e68\", \"request_body_sha256\": \"e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83\", \"request_body_size\": 4912822, \"request_headers_repo_relative_path\": \"evidence/request_attempts/e2/e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83/psky-20251231_htm.xml.0532ec5a1a047d4d054265a18dae1334eeeee6085d13bf5e28eaf84daedc1c26.headers.json\", \"request_headers_sha256\": \"0532ec5a1a047d4d054265a18dae1334eeeee6085d13bf5e28eaf84daedc1c26\", \"request_headers_size\": 1148, \"request_locator_kind\": \"IMMUTABLE_ATTEMPT\", \"request_repo_relative_path\": \"evidence/request_attempts/e2/e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83/psky-20251231_htm.xml\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231_htm.xml\"}\n"
+}
+
+===== independent-b03-and-direct-original-completion =====
+COMMAND
+TMPDIR=/private/tmp /private/tmp/issue28-company-c02-venv-20261006/bin/python -B - <<'PY'
+import copy, csv, io, json, re, sys
+from pathlib import Path
+from unittest.mock import patch
+ROOT=Path.cwd();sys.path.insert(0,str(ROOT/'scripts'))
+from vnext.ordinary_saved_result import _ordinary_case, read_saved_result
+from vnext.ordinary_projection import render_ordinary_records
+from vnext.canonical import sha256_file
+SOURCE=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007')
+report=json.loads((ROOT/'docs/evidence/issue28_company_records_20261007/paramount-source-only-company.json').read_text())
+print('REVIEW_PROBE source='+str(SOURCE))
+checks=0
+with patch('urllib.request.urlopen',side_effect=AssertionError('Offline review')), patch('socket.create_connection',side_effect=AssertionError('Offline review')):
+ for metric in ('B03',):
+  case=_ordinary_case(SOURCE,report['company_id'],metric)
+  annual=case['prepared_annual_input'];income=case['prepared_income_input']
+  manifest={'company_id':report['company_id'],'target_period':case['target_period'],'source_references':case['references'],'run_id':'ordinary:independent-short-period-probe','status':'CALCULATED'}
+  def render(c,m=None):
+   return render_ordinary_records(data_root=SOURCE,manifest=m or manifest,records=c['expected_records'],case=c,receipt_status='INDEPENDENT_OFFLINE_PROBE',source_validation='BOUNDED_REVIEW_SOURCE_PREPARATION',prepared_annual_input=c['prepared_annual_input'])
+  output=render(case);r=case['results'][metric]
+  expected=next(item for item in report['metrics'] if item['metric_id']==metric)
+  assert r==expected['actual_result'],(metric,'actual_result differs')
+  assert r['value'] is None and r['reason_code']=='ANNUAL_DURATION_OUT_OF_RANGE'
+  assert output['row']['period_start']=='2025-08-08' and output['row']['period_end']=='2025-12-31'
+  assert output['row']['fiscal_period']=='DURATION'
+  assert json.loads(output['row']['context_or_dimension'])['annual_filing_period']['period_start']=='2025-01-01'
+  assert {e['period_start'] for e in output['evidence']}=={'2025-08-08'}
+  assert set(next(x for x in case['expected_records'] if x.get('trace_id')==r['trace_id'] and x['record_type']=='EXECUTION_TRACE')['input_observation_ids']) <= {x['observation_id'] for x in case['income_observation_checks']}
+  checks+=1
+  print('PASS',metric,'source-only Calculator/render',json.dumps({'result_id':r['result_id'],'reason':r['reason_code'],'period':case['target_period'],'entity':annual['entity'],'filing':annual['filing']['accessionNumber'],'observations_checked':len(case['income_observation_checks']),'evidence_count':len(output['evidence'])},sort_keys=True))
+  for name in ('income_company','income_annual','income_fiscal','statement_start','combination','result_start','result_end','annual_cik','annual_company','annual_report_end','outside_annual','instant','missing_proof','wrong_metric','numeric_missing_check'):
+   c=copy.deepcopy(case);m=copy.deepcopy(manifest);p=c['prepared_income_input'];a=c['prepared_annual_input'];primary=next(x for x in c['expected_records'] if x['record_type']=='METRIC_RESULT' and x['metric_id']==metric)
+   if name=='income_company':p['company_id']='other_company'
+   elif name=='income_annual':p['annual_input']['filing']['accessionNumber']='unrelated-accession'
+   elif name=='income_fiscal':p['statement_period']['fiscal_year']=2024
+   elif name=='statement_start':p['statement_period']['period_start']='2025-08-09'
+   elif name=='combination':p['financial_cross_entity_combination_authorized']=True
+   elif name=='result_start':primary['period_start']='2025-08-09'
+   elif name=='result_end':primary['period_end']='2025-12-30'
+   elif name in ('annual_cik','annual_company','annual_report_end'):
+    if name=='annual_cik':a['entity']='19617'
+    elif name=='annual_company':a['company_id']='other_company'
+    else:a['filing']['reportDate']='2025-12-30'
+    p['annual_input']=copy.deepcopy(a.get('original_input',a))
+   elif name in ('outside_annual','instant'):
+    date='2024-12-31' if name=='outside_annual' else '2025-12-31'
+    p['statement_period']['period_start']=date;m['target_period']['period_start']=date;primary['period_start']=date
+   elif name=='missing_proof':c.pop('prepared_income_input');c.pop('income_observation_checks')
+   elif name=='wrong_metric':
+    other='B12' if metric=='B01' else 'B02'
+    c['primary_metric_id']=other;c['compiled_specs'][other]=c['compiled_specs'][metric];c['spec_paths'][other]=c['spec_paths'][metric];primary['metric_id']=other
+   else:primary['value']='1';c['income_observation_checks']=c['income_observation_checks'][1:]
+   try:render(c,m)
+   except ValueError as error:
+    assert 'ORDINARY_PROJECTION_' in str(error),(name,error)
+    if name=='wrong_metric':assert str(error)=='ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED',str(error)
+    checks+=1;print('PASS',metric,name,'reject='+str(error))
+   else:raise AssertionError(metric+' accepted '+name)
+  result_root=Path(expected['result_root'])
+  with patch('vnext.ordinary_saved_result.prepare_ordinary_zero_ai_run_input',side_effect=AssertionError('Read must not recalculate')):
+   old=read_saved_result(output_root=result_root)
+  assert old['result']==r
+  rows=list(csv.DictReader(io.StringIO(old['files']['metrics_matrix.csv'].decode())))
+  assert len(rows)==1 and rows[0]['period_start']=='2025-08-08' and rows[0]['period_end']=='2025-12-31'
+  checks+=1;print('PASS',metric,'preexisting saved record independent read, no recompute',str(result_root))
+
+ # Directly read the XML and XHTML paths from the preexisting manifest proofs.
+manifest_on_disk=json.loads((Path(report['metrics'][0]['result_root'])/'manifest.json').read_text())
+proofs={p['document_name']:p for p in manifest_on_disk['source_proofs']}
+import xml.etree.ElementTree as ET
+from decimal import Decimal
+from lxml import html
+XBRLI='{http://www.xbrl.org/2003/instance}'
+xml_proof=proofs['psky-20251231_htm.xml'];xml_path=SOURCE/xml_proof['request_repo_relative_path']
+xml=ET.fromstring(xml_path.read_bytes())
+ctx=next(c for c in xml.findall(XBRLI+'context') if c.attrib['id']=='c-6')
+assert ctx.find('.//'+XBRLI+'identifier').text=='0002041610'
+assert ctx.find('.//'+XBRLI+'startDate').text=='2025-08-08'
+assert ctx.find('.//'+XBRLI+'endDate').text=='2025-12-31'
+native=[f for f in xml if f.attrib.get('contextRef')=='c-6' and 'RevenueFromContractWithCustomer' in f.tag]
+assert native and all(Decimal(f.text)==Decimal('12269000000') for f in native)
+assert sha256_file(path=xml_path)==xml_proof['content_sha256']
+checks+=1
+print('PASS direct-native-XML',str(xml_path),'context=c-6 CIK=0002041610 start=2025-08-08 end=2025-12-31 revenue='+str(native[0].text),'concept='+native[0].tag)
+primary_proof=proofs['psky-20251231.htm'];primary_path=SOURCE/primary_proof['request_repo_relative_path']
+tree=html.fromstring(primary_path.read_bytes())
+revenues=[f for f in tree.iter() if f.attrib.get('contextref')=='c-6' and 'RevenueFromContractWithCustomer' in f.attrib.get('name','')]
+assert revenues
+amount=Decimal(''.join(revenues[0].itertext()).replace(',','').strip())*(Decimal(10)**int(revenues[0].attrib.get('scale','0')))
+assert amount==Decimal('12269000000') and sha256_file(path=primary_path)==primary_proof['content_sha256']
+table=next(revenues[0].iterancestors('table'))
+text=re.sub(r'\s+',' ',table.text_content())
+assert 'Successor' in text and 'August 8' in text and 'December 31, 2025' in text
+checks+=1
+print('PASS direct-primary-XHTML',str(primary_path),'context=c-6 revenue='+str(amount))
+print('ORIGINAL_INCOME_STATEMENT',text[:1800])
+print('PROBE_TOTAL',checks,'PASS (B03 17 cases plus 2 direct originals; B01 17 cases already completed in preceding log)')
+PY
+RESULT
+{
+  "chunk_id": "590afc",
+  "wall_time_seconds": 1.001304,
+  "session_id": 66869,
+  "original_token_count": 0,
+  "output": ""
+}
+
+===== independent-b03-and-original-final-result =====
+RESULT
+{
+  "chunk_id": "97ee8d",
+  "wall_time_seconds": 5.001990667,
+  "session_id": 66869,
+  "original_token_count": 0,
+  "output": ""
+}
+
+===== final-exact-reviewed-bytes-and-unchanged-calculator-specs =====
+RESULT
+{
+  "chunk_id": "6461ed",
+  "wall_time_seconds": 0.112860333,
+  "exit_code": 0,
+  "original_token_count": 11,
+  "output": "c5487b73961b12fb336f7e59d59e6164ce32eb65\n"
+}
+
+===== independent-b03-and-original-completion =====
+RESULT
+{
+  "chunk_id": "0d58a2",
+  "wall_time_seconds": 0.000015084,
+  "exit_code": 1,
+  "original_token_count": 504,
+  "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 71, in <module>\nREVIEW_PROBE source=/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007\nPASS B03 source-only Calculator/render {\"entity\": \"2041610\", \"evidence_count\": 3, \"filing\": \"0002041610-26-000011\", \"observations_checked\": 3, \"period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-08-08\"}, \"reason\": \"ANNUAL_DURATION_OUT_OF_RANGE\", \"result_id\": \"sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7\"}\nPASS B03 income_company reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 income_annual reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 income_fiscal reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 statement_start reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 combination reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 result_start reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 result_end reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 annual_cik reject=ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED\nPASS B03 annual_company reject=ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED\nPASS B03 annual_report_end reject=ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED\nPASS B03 outside_annual reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 instant reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 missing_proof reject=ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED\nPASS B03 wrong_metric reject=ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED\nPASS B03 numeric_missing_check reject=ORDINARY_PROJECTION_INCOME_OBSERVATION_PROOF_MISSING\nPASS B03 preexisting saved record independent read, no recompute /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B03/results/ba61205a124c48659b4038314ae0bdfb\nModuleNotFoundError: No module named 'lxml'\n"
+}
+
+===== independent-direct-original-stdlib-completion =====
+COMMAND
+TMPDIR=/private/tmp /private/tmp/issue28-company-c02-venv-20261006/bin/python -B - <<'PY'
+import html, json, re
+import xml.etree.ElementTree as ET
+from decimal import Decimal
+from pathlib import Path
+import hashlib
+SOURCE=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007')
+RESULT=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/2723bdc7a1d942008d059e9f8c62ca2a')
+proofs={p['document_name']:p for p in json.loads((RESULT/'manifest.json').read_text())['source_proofs']}
+xml_proof=proofs['psky-20251231_htm.xml'];xml_path=SOURCE/xml_proof['request_repo_relative_path'];xml_raw=xml_path.read_bytes()
+assert hashlib.sha256(xml_raw).hexdigest()==xml_proof['content_sha256']
+xml=ET.fromstring(xml_raw);X='{http://www.xbrl.org/2003/instance}'
+ctx=next(c for c in xml.findall(X+'context') if c.attrib['id']=='c-6')
+assert ctx.find('.//'+X+'identifier').text=='0002041610'
+assert ctx.find('.//'+X+'startDate').text=='2025-08-08'
+assert ctx.find('.//'+X+'endDate').text=='2025-12-31'
+native=[f for f in xml if f.attrib.get('contextRef')=='c-6' and 'RevenueFromContractWithCustomer' in f.tag]
+assert native and all(Decimal(f.text)==Decimal('12269000000') for f in native)
+print('PASS direct-original-XML',str(xml_path),'context=c-6 CIK=0002041610 start=2025-08-08 end=2025-12-31 revenue='+str(native[0].text),'concept='+native[0].tag)
+p=proofs['psky-20251231.htm'];path=SOURCE/p['request_repo_relative_path'];raw_bytes=path.read_bytes();raw=raw_bytes.decode()
+assert hashlib.sha256(raw_bytes).hexdigest()==p['content_sha256']
+tags=list(re.finditer(r'<ix:nonFraction\b(?P<attrs>[^>]*)>(?P<body>.*?)</ix:nonFraction>',raw,re.S|re.I))
+revenue=[]
+for m in tags:
+ attrs=dict(re.findall(r'(\w+)="([^"]*)"',m['attrs']))
+ if attrs.get('contextRef')=='c-6' and 'RevenueFromContractWithCustomer' in attrs.get('name',''):
+  revenue.append((m,attrs))
+assert revenue
+m,attrs=revenue[0]
+text=html.unescape(re.sub(r'<[^>]+>','',m['body'])).strip().replace(',','')
+amount=Decimal(text)*(Decimal(10)**int(attrs.get('scale','0')))
+assert amount==Decimal('12269000000')
+table_start=raw.rfind('<table',0,m.start());table_end=raw.find('</table>',m.end())
+table=html.unescape(re.sub(r'<[^>]+>',' ',raw[table_start:table_end]))
+table=re.sub(r'\s+',' ',table)
+assert 'Successor' in table and 'August 8' in table and 'December 31, 2025' in table
+print('PASS direct-original-XHTML',str(path),'context=c-6 scaled-revenue='+str(amount),'raw='+text,'scale='+attrs.get('scale','0'))
+print('ORIGINAL_TABLE',table[:2200])
+print('DIRECT_ORIGINAL_TOTAL 2 PASS')
+PY
+RESULT
+{
+  "chunk_id": "0f628a",
+  "wall_time_seconds": 0.000006791,
+  "exit_code": 1,
+  "original_token_count": 129,
+  "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 35, in <module>\nAssertionError\nPASS direct-original-XML /Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007/evidence/request_attempts/e2/e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83/psky-20251231_htm.xml context=c-6 CIK=0002041610 start=2025-08-08 end=2025-12-31 revenue=12269000000 concept={http://fasb.org/us-gaap/2025}RevenueFromContractWithCustomerExcludingAssessedTax\n"
+}
+
+===== direct-primary-layout-inspection =====
+RESULT
+{
+  "chunk_id": "360789",
+  "wall_time_seconds": 0.000006791,
+  "exit_code": 0,
+  "original_token_count": 971,
+  "output": "RAW_FACT 1 {'unitRef': 'usd', 'contextRef': 'c-6', 'decimals': '-6', 'name': 'us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax', 'format': 'ixt:num-dot-decimal', 'scale': '6', 'id': 'f-59'} 12,269\nLOCAL_TABLE  Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues $ 12,269 $ 16,622 $ 29,213 $ 29,652 Costs and expenses: Operating 8,408 11,287 19,437 20,017 Programming charges 41 — 1,118 2,371 Selling, general and administrative 2,594 3,526 6,658 7,245 Depreciation and amortization 590 204 392 418 Impairment charges — 157 6,130 83 Restructuring, transaction-related items and other corporate matters 731 454 747 ( 31 ) Total costs and expenses 12,364 15,628 34,482 30,103 Gain on dispositions — 35 — — Operating income (loss) ( 95 ) 1,029 ( 5,269 ) ( 451 ) Interest expense ( 366 ) ( 516 ) ( 860 ) ( 920 ) Interest income 64 83 151 137 Gain (loss) from investments ( 40 ) — ( 17 ) 168 Gain on extinguishment of debt — — — 29 Other items, net ( 39 ) ( 92 ) ( 182 ) ( 216 ) Earnings (loss) from continuing operations before income taxes and equity in loss of investee companies ( 476 ) 504 ( 6,177 ) ( 1,253 ) Benefit from income taxes 40 79 305 361 Equity in loss of investee companies, net of tax ( 104 ) ( 171 ) ( 291 ) ( 360 ) Net earnings (loss) from continuing operations ( 540 ) 412 ( 6,163 ) ( 1,252 ) Net earnings from discontinued operations, net of tax — — 14 676 Net earnings (loss) (Parent and noncontrolling interests) ( 540 ) 412 ( 6,149 ) ( 576 ) Net earnings attributable to noncontrolling interests ( 46 ) ( 447 ) ( 41 ) ( 32 ) Net loss attributable to Parent $ ( 586 ) $ ( 35 ) $ ( 6,190 ) $ ( 608 ) Amounts attributable to Parent: Net loss from continuing operations $ ( 586 ) $ ( 35 ) $ ( 6,204 )\nRAW_FACT 2 {'unitRef': 'usd', 'contextRef': 'c-6', 'decimals': '-6', 'name': 'us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax', 'format': 'ixt:num-dot-decimal', 'scale': '6', 'id': 'f-1235'} 12,269\nLOCAL_TABLE  Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues by Type: Advertising $ 3,803 $ 5,329 $ 10,295 $ 9,989 Affiliate and subscription 5,429 8,242 13,153 13,018 Theatrical 154 475 813 813 Licensing and other 2,883 2,576 4,952 5,832 Total Revenues $ 12,269 $ 16,622 $ 29,213 $ 29,652 \nRAW_FACT 3 {'unitRef': 'usd', 'contextRef': 'c-6', 'decimals': '-6', 'name': 'us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax', 'format': 'ixt:num-dot-decimal', 'scale': '6', 'id': 'f-2603'} 12,269\nLOCAL_TABLE  Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues: Advertising $ 2,952 $ 4,180 $ 8,180 $ 8,188 Affiliate and subscription 2,786 4,302 7,647 8,085 Licensing and other 1,344 1,495 2,952 3,812 TV Media 7,082 9,977 18,779 20,085 Advertising 853 1,146 2,114 1,795 Subscription 2,643 3,940 5,506 4,933 Licensing 1 1 12 8 Direct-to-Consumer 3,497 5,087 7,632 6,736 Theatrical 154 475 813 813 Licensing and other 1,579 1,112 2,126 2,120 Advertising 3 6 16 24 Filmed Entertainment 1,736 1,593 2,955 2,957 Eliminations ( 46 ) ( 35 ) ( 153 ) ( 126 ) Total Revenues $ 12,269 $ 16,622 $ 29,213 $ 29,652 \nRAW_FACT 4 {'unitRef': 'usd', 'contextRef': 'c-6', 'decimals': '-6', 'name': 'us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax', 'format': 'ixt:num-dot-decimal', 'scale': '6', 'id': 'f-2794'} 12,269\nLOCAL_TABLE  Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues: (a) United States $ 9,966 $ 13,376 $ 23,688 $ 23,962 International 2,303 3,246 5,525 5,690 Total Revenues $ 12,269 $ 16,622 $ 29,213 $ 29,652 \nREVENUE_FACT_COUNT 4\n"
+}
+
+===== confirmed-source-period-conflict-reproducer =====
+COMMAND
+TMPDIR=/private/tmp /private/tmp/issue28-company-c02-venv-20261006/bin/python -B - <<'PY'
+import hashlib, html, json, re
+import xml.etree.ElementTree as ET
+from pathlib import Path
+SOURCE=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007')
+RESULT=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/2723bdc7a1d942008d059e9f8c62ca2a')
+proofs={p['document_name']:p for p in json.loads((RESULT/'manifest.json').read_text())['source_proofs']}
+p=proofs['psky-20251231.htm'];raw=(SOURCE/p['request_repo_relative_path']).read_bytes()
+assert hashlib.sha256(raw).hexdigest()==p['content_sha256']
+text=raw.decode();headers=[]
+for m in re.finditer(r'<ix:nonFraction\b(?P<attrs>[^>]*)>(?P<body>.*?)</ix:nonFraction>',text,re.S|re.I):
+ attrs=dict(re.findall(r'(\w+)="([^"]*)"',m['attrs']))
+ if attrs.get('contextRef')=='c-6' and 'RevenueFromContractWithCustomer' in attrs.get('name',''):
+  start=text.rfind('<table',0,m.start());end=text.find('</table>',m.end())
+  table=re.sub(r'\s+',' ',html.unescape(re.sub(r'<[^>]+>',' ',text[start:end]))).strip()
+  assert table.startswith('Successor Predecessor Period From August 7 - December 31,')
+  headers.append(table[:180])
+assert len(headers)==4
+X='{http://www.xbrl.org/2003/instance}'
+p=proofs['psky-20251231_htm.xml'];raw=(SOURCE/p['request_repo_relative_path']).read_bytes()
+assert hashlib.sha256(raw).hexdigest()==p['content_sha256']
+xml=ET.fromstring(raw);ctx=next(c for c in xml.findall(X+'context') if c.attrib['id']=='c-6')
+assert ctx.find('.//'+X+'identifier').text=='0002041610'
+assert ctx.find('.//'+X+'startDate').text=='2025-08-08'
+assert ctx.find('.//'+X+'endDate').text=='2025-12-31'
+print('REPRODUCED_CONTENT_CONFLICT visible_successor_start=2025-08-07 xbrl_c6_start=2025-08-08 same_revenue=12269000000 same_CIK=2041610 same_accession=0002041610-26-000011')
+for i,h in enumerate(headers,1):print('VISIBLE_HEADER',i,h)
+for metric in ('B01','B03'):
+ root=RESULT if metric=='B01' else Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B03/results/ba61205a124c48659b4038314ae0bdfb')
+ results=[json.loads(l) for l in (root/'records.jsonl').read_text().splitlines()]
+ result=next(r for r in results if r['record_type']=='METRIC_RESULT' and r['metric_id']==metric)
+ assert result['period_start']=='2025-08-08'
+ assert result['reason_code']=='ANNUAL_DURATION_OUT_OF_RANGE'
+ print('SAVED_ROW',metric,'start='+result['period_start'],'reason='+result['reason_code'],'source_header_conflict_unreported')
+print('CONTENT_REPRODUCTION_PASS: conflicting originals and emitted dates demonstrated; this is a review finding, not acceptance.')
+PY
+RESULT
+{
+  "chunk_id": "89153d",
+  "wall_time_seconds": 0.000007375,
+  "exit_code": 0,
+  "original_token_count": 321,
+  "output": "REPRODUCED_CONTENT_CONFLICT visible_successor_start=2025-08-07 xbrl_c6_start=2025-08-08 same_revenue=12269000000 same_CIK=2041610 same_accession=0002041610-26-000011\nVISIBLE_HEADER 1 Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues $ 12,269 $ 16,622 $ 29,213 $ 29,652\nVISIBLE_HEADER 2 Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues by Type: Advertising $ 3,803 $ 5,32\nVISIBLE_HEADER 3 Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues: Advertising $ 2,952 $ 4,180 $ 8,18\nVISIBLE_HEADER 4 Successor Predecessor Period From August 7 - December 31, Period From January 1 - August 6, Year Ended December 31, 2025 2025 2024 2023 Revenues: (a) United States $ 9,966 $ 13,376\nSAVED_ROW B01 start=2025-08-08 reason=ANNUAL_DURATION_OUT_OF_RANGE source_header_conflict_unreported\nSAVED_ROW B03 start=2025-08-08 reason=ANNUAL_DURATION_OUT_OF_RANGE source_header_conflict_unreported\nCONTENT_REPRODUCTION_PASS: conflicting originals and emitted dates demonstrated; this is a review finding, not acceptance.\n"
+}
+

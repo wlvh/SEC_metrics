@@ -63,14 +63,19 @@ def _ordinary_case(source, company, metric):
     detail = original['component']
     if 'metrics' in detail:
         detail = detail['metrics'][metric]
+    selection = detail.get('selection') or {}
+    assessments = {}
+    if metric == 'B03' and selection.get('depreciation_scope') is not None:
+        assessments['depreciation_scope'] = selection['depreciation_scope']
+    if selection.get('income_period') is not None:
+        assessments['income_period'] = selection['income_period']
     return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,
         'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
         'admission': original['source_admission'], 'target_period': original['target_period'],
         'expected_records': original['records'], 'results': {metric: original['primary_result']},
         'rules_root':str(program) if separate_rules else str(source),
-        **({'input_assessments':{'depreciation_scope':detail['selection']['depreciation_scope']}}
-           if metric == 'B03' and detail.get('selection',{}).get('depreciation_scope') is not None else {}),
+        **({'input_assessments':assessments} if assessments else {}),
         'prepared_annual_input': original['component'].get('prepared_input'),
         **({'prepared_income_input':income_binding['current_income_input'],
             'income_observation_checks':income_binding['income_observation_checks']}

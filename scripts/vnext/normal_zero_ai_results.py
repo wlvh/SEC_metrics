@@ -325,9 +325,14 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError, IncomeInputError) as error:
         reason = str(error)
         category = getattr(error, "category", "SOURCE_ACCESS_FAILED" if reason.startswith("LATEST_SOURCE_REQUEST_FAILED") else "SOURCE_INTEGRITY_ERROR")
-        result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code="NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED")
+        reason_code=('ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT'
+                     if reason.startswith('ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT:')
+                     else 'NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED')
+        result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code=reason_code)
         observations = []
         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
+        if isinstance(error,IncomeInputError) and error.details is not None:
+            selection['income_period']=error.details
     if depreciation_scope is not None:
         selection['depreciation_scope'] = depreciation_scope
     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
