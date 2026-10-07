@@ -1,0 +1,309 @@
+{
+  "record_type": "JPM2024_C02_REFERENCE_PREPARATION_IN_PROGRESS",
+  "source_metadata": {
+    "record_type": "ISSUE_47_C02_TABLE_CONTEXT_DEVELOPMENT",
+    "position": "jpmorgan_chase:2024-12-31",
+    "source_reference_id": "sha256:9b194d23d66fd5ac34456a61424b4be39fe0856084ed5a7cb906bb3b212d7aec",
+    "raw_asset_id": "sha256:085b92bd183a1c52fadf2e93d8921e6d90bf5fce93e8a1f99bb3794aea015e8c",
+    "document_id": "sha256:aecc5aa6852181c1dfc70327fc6acbad329cd6c8eea06aa743e260826f822d2c",
+    "filing": {
+      "accessionNumber": "0000019617-25-000321",
+      "filingDate": "2025-04-07",
+      "reportDate": "2025-04-07",
+      "acceptanceDateTime": "2025-04-07T10:08:34.000Z",
+      "act": "34",
+      "form": "DEF 14A",
+      "fileNumber": "001-05805",
+      "filmNumber": "25816280",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 64698681,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "jpm-20250405.htm",
+      "primaryDocDescription": "DEF 14A",
+      "metadata_origin": {
+        "inventory_name": "CIK0000019617-submissions-005.json",
+        "row_index": 1898
+      }
+    },
+    "representation": "C02_BLOCKS_AND_TABLE_TEXT_HEADER_GRID_V2",
+    "blocks": 3993,
+    "tables": 402,
+    "expanded_cells": 39504,
+    "block_text_and_expanded_text_header_grids_identical": true,
+    "full_raw_grid_round_trip_claimed": false,
+    "task_sha256": "eb9ac6f4592dc8ea93d92a99198a4f1a53ae12c42545d376a8f31e134370203b",
+    "artifacts": {
+      "view.json": "4425bbf1ae0dea8f8e178270967541af19193a8b5da50954e12acb667e2d8c9c",
+      "table-grid.json": "d367b84a92828d185350abafc291abad1e0984fe6d19c78a02b7c12be1c49751",
+      "document.json": "b7d2cf368a10f2a4d372789e2330bb3a69481e57de0da5f393cdf0674a4d5a8b",
+      "prompt.txt": "32ff2bca300339fad53495e4abb570902463d0cf45993e0d169166b925c11a60",
+      "request-body.json": "1f24038fc66eb04a2dac153b36aceb72b3b7dd3670c3d5a6c7fb0ef1b25b287c"
+    },
+    "input_tokens": 126892,
+    "fits": true,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "model_answer_tested": false,
+    "production_authorized": false,
+    "request_limits": {
+      "output_tokens": 8192,
+      "max_context_tokens": 200000,
+      "max_payload_bytes": 8388608
+    }
+  },
+  "complete_request_measurement": {
+    "request_sha256": "1f24038fc66eb04a2dac153b36aceb72b3b7dd3670c3d5a6c7fb0ef1b25b287c",
+    "request_bytes": 517769,
+    "rendered_prompt_sha256": "4b96d607db3581f4aa68014699b8b77acebfbd87332128d09ff94d1aa66669ba",
+    "rendered_prompt_bytes": 502963,
+    "input_tokens": 126892,
+    "output_reserve_tokens": 8192,
+    "context_tokens": 135084,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:4211df72fd08c669213ba143fc488a0636e97ddb12f2f144cfdea5c94c248d2d",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 8192,
+      "request_limits": {
+        "output_tokens": 8192,
+        "max_context_tokens": 200000,
+        "max_payload_bytes": 8388608
+      }
+    }
+  },
+  "normal_source_prepare_seconds": 32.83756020781584,
+  "unfiltered_read_packets": [
+    {
+      "file": "part-00.txt",
+      "first_block": 0,
+      "last_block": 199,
+      "blocks": 200,
+      "sha256": "95333b7cdcc9e7dc8ef9351ad8b989f49d6aabdb8b5fb74b1cb8190ae30fabb4"
+    },
+    {
+      "file": "part-01.txt",
+      "first_block": 200,
+      "last_block": 399,
+      "blocks": 200,
+      "sha256": "6f798791d9ad81b3425bfc73d88568aa541dc60307d176489b311a57a298436d"
+    },
+    {
+      "file": "part-02.txt",
+      "first_block": 400,
+      "last_block": 599,
+      "blocks": 200,
+      "sha256": "d359f23ad8e344454c7397643ff5f44e65ef63cfa9174ed1697fafc8ba05483a"
+    },
+    {
+      "file": "part-03.txt",
+      "first_block": 600,
+      "last_block": 799,
+      "blocks": 200,
+      "sha256": "5c0b78b1b70038c01e548f02b487566c1d796e007d3579605bd79657b5978af3"
+    },
+    {
+      "file": "part-04.txt",
+      "first_block": 800,
+      "last_block": 999,
+      "blocks": 200,
+      "sha256": "1fc0b603d44786df3a872094ecdd05838b56319c35e06a1f56bc1557f933fb1e"
+    },
+    {
+      "file": "part-05.txt",
+      "first_block": 1000,
+      "last_block": 1199,
+      "blocks": 200,
+      "sha256": "033878faae0bfbac46e671779f5005f2826c4d95cf781e4d4ce02cec9326b01b"
+    },
+    {
+      "file": "part-06.txt",
+      "first_block": 1200,
+      "last_block": 1399,
+      "blocks": 200,
+      "sha256": "a1c1aaf7bef7d3e57173f236435f955b6921c52bb21a9f07bf13b26872ce19b6"
+    },
+    {
+      "file": "part-07.txt",
+      "first_block": 1400,
+      "last_block": 1546,
+      "blocks": 147,
+      "sha256": "20fd316d368dc743657887f819068d2c5ffc6a78d7c161b689cdb28f4511b357"
+    },
+    {
+      "file": "part-08.txt",
+      "first_block": 1547,
+      "last_block": 1746,
+      "blocks": 200,
+      "sha256": "05db66de8e78e6d87146059e8f16b75b758466edc53b8a928fa8bcfac37c8695"
+    },
+    {
+      "file": "part-09.txt",
+      "first_block": 1747,
+      "last_block": 1946,
+      "blocks": 200,
+      "sha256": "15c03bf6e6a765b8bde516703118c4ad6d2638259bd42058a465e66728b54479"
+    },
+    {
+      "file": "part-10.txt",
+      "first_block": 1947,
+      "last_block": 2146,
+      "blocks": 200,
+      "sha256": "fd404ccf0030c1c17c796b0ec7f80ea5ce64bc1f71461acbf7f9d598408363d9"
+    },
+    {
+      "file": "part-11.txt",
+      "first_block": 2147,
+      "last_block": 2346,
+      "blocks": 200,
+      "sha256": "ef10bf358fc3c3f3eb42a8bb69b0f432ed8affa0dcbb157502e0be734c3f044e"
+    },
+    {
+      "file": "part-12.txt",
+      "first_block": 2347,
+      "last_block": 2546,
+      "blocks": 200,
+      "sha256": "0588725018db8557d90a9f93832de9baeb078d362fe34bd6653b1536d0560fa0"
+    },
+    {
+      "file": "part-13.txt",
+      "first_block": 2547,
+      "last_block": 2746,
+      "blocks": 200,
+      "sha256": "1f7027d51351f128f6328cd0808d7711927f16200afad67c6b8ea502f0381eaf"
+    },
+    {
+      "file": "part-14.txt",
+      "first_block": 2747,
+      "last_block": 2946,
+      "blocks": 200,
+      "sha256": "c9883c90fd21fb572ae01136b5ad69a5d819d85f3e718e4e99a5d2ca573095e1"
+    },
+    {
+      "file": "part-15.txt",
+      "first_block": 2947,
+      "last_block": 3146,
+      "blocks": 200,
+      "sha256": "80b816dbacc92527bfa95ae12a4a9662347b0e2d656a012615a273fa716bd37a"
+    },
+    {
+      "file": "part-16.txt",
+      "first_block": 3147,
+      "last_block": 3346,
+      "blocks": 200,
+      "sha256": "5caa15f651871b8a4bb0fa1cf7df4c7e33745a693dbdefbe9bfeb72f8ac9d381"
+    },
+    {
+      "file": "part-17.txt",
+      "first_block": 3347,
+      "last_block": 3474,
+      "blocks": 128,
+      "sha256": "d87e3da1f991bf37322510347a7725fd000e7a1cc64f789db098ebac3742c727"
+    },
+    {
+      "file": "part-18.txt",
+      "first_block": 3475,
+      "last_block": 3583,
+      "blocks": 109,
+      "sha256": "4bed5504f0af5ae4fca4b76972d867b6831c3a562734eee940c5842e1896e05e"
+    },
+    {
+      "file": "part-19.txt",
+      "first_block": 3584,
+      "last_block": 3736,
+      "blocks": 153,
+      "sha256": "3ae153cd25cbcc97f0fd0b16fe133e0db5c3f2998c07c5aa9d27afd8cd0fa425"
+    },
+    {
+      "file": "part-20.txt",
+      "first_block": 3737,
+      "last_block": 3936,
+      "blocks": 200,
+      "sha256": "0126d1f8d4db92d19ac0611f085fc62b18a8baba14bd943a5ad427035bacb759"
+    },
+    {
+      "file": "part-21.txt",
+      "first_block": 3937,
+      "last_block": 3992,
+      "blocks": 56,
+      "sha256": "a021082b1231f2100fd5bcb9c3de72f29b8deaf64026c386559fee4f13ece409"
+    }
+  ],
+  "all3993_blocks_supplied": true,
+  "executor_directly_read_blocks": [
+    [
+      0,
+      199
+    ]
+  ],
+  "reference_frozen": false,
+  "independent_answer_started": false,
+  "all_source_media_interpreted": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "full_metric_accepted": false,
+  "current_reading_notes": [
+    {
+      "blocks": [
+        34,
+        36,
+        44,
+        62,
+        69,
+        79,
+        81,
+        179
+      ],
+      "finding": "ProxyApril7/2025,meetingMay20/2025,recordMarch21/2025; FY2024annualcontainer isnot year-endBoardmeasurement."
+    },
+    {
+      "blocks": [
+        40,
+        41,
+        43,
+        46,
+        57,
+        58
+      ],
+      "finding": "JamesDimonChairmanandCEO;StephenBurkeLeadIndependentDirector currentletter identities."
+    },
+    {
+      "blocks": [
+        50,
+        51
+      ],
+      "finding": "ManagementOC/successionroles andconditionalPintoend2026retirement distinctfromBoardcomposition; noBoardroles inferred."
+    },
+    {
+      "blocks": [
+        52,
+        54
+      ],
+      "finding": "BradSmith/MicheleBuck nominatedforelection; introductorynewdirectors wording alone doesnotestablishcompletedBoardentry,current12or2024endBoard."
+    }
+  ]
+}
