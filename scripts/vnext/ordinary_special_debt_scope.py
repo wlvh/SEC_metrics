@@ -45,7 +45,9 @@ def native(source, annual):
     return parsed, meta
 
 
-def inspect_special_scope(*, primary, xml, annual, financial_institution, rules):
+def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
+                          reported_relations=False):
+    need(type(reported_relations) is bool, 'REPORTED_RELATIONS_OPTION_INVALID')
     sources = {'primary': primary, 'xml': xml}
     native_sources = {kind: native(source, annual) for kind, source in sources.items()}
     end = annual['table_input']['target_period']['period_end']
@@ -146,10 +148,18 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules)
             if n in {c.casefold() for c in rules['finance_lease_concepts']}} for kind, values in reports.items()},
         'limitations': limitations, 'missing_concept_proves_absence': False,
         'definition_complete': False, 'ratio': None, 'production_authorized': False})
+    if reported_relations:
+        from .industrial_lease_relation import inspect_inclusion
+        body['record_type'] = 'ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2'
+        body['lease_inclusion'] = (inspect_inclusion(primary=primary, parsed=parsed,
+            reported_components=chosen, lease_reports=body['native_finance_lease_reports'])
+            if scope_class == 'industrial' else {'status': 'NOT_APPLICABLE_TO_BANK_SCOPE'})
+        if scope_class == 'industrial' and 'INDUSTRIAL_DEBT_SET_COMPLETENESS_NOT_ESTABLISHED' not in body['limitations']:
+            body['limitations'].append('INDUSTRIAL_DEBT_SET_COMPLETENESS_NOT_ESTABLISHED')
     return {**body, 'scope_source_id': content_hash(value=body)}
 
 
-def prepare_special_debt_case(*, repo_root: Path, company_id: str):
+def prepare_special_debt_case(*, repo_root: Path, company_id: str, reported_relations=False):
     rules = strict_json_file(path=repo_root / POLICY_PATH)
     need(rules == strict_json_file(path=ROOT / POLICY_PATH) and rules['full_ratio_enabled'] is False,
          'INSTALLED_RULES_CHANGED')
@@ -157,7 +167,8 @@ def prepare_special_debt_case(*, repo_root: Path, company_id: str):
     annual = preparation['input_binding']['prepared_annual_input']
     company = next(c for c in _registry_rows(repo_root=repo_root) if c['company_id'] == company_id)
     inspected = inspect_special_scope(primary=preparation['primary'], xml=preparation['xml'], annual=annual,
-        financial_institution=company['industry_profile'] == 'financial_institution', rules=rules)
+        financial_institution=company['industry_profile'] == 'financial_institution', rules=rules,
+        reported_relations=reported_relations)
     if inspected is None:
         return None
     proofs = [*preparation['input_binding']['source_proofs'], *annual['source_proofs']]
@@ -173,8 +184,15 @@ def prepare_special_debt_case(*, repo_root: Path, company_id: str):
     selection = {'classification': 'SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION',
         'scope_class': inspected['scope_class'], 'reasons': inspected['limitations'],
         'scope_source': inspected, 'reported_subtotal': inspected['reported_subtotal'], 'ratio': None}
+    original_binding = preparation['input_binding']
+    if reported_relations:
+        original_binding = {**original_binding, 'reported_relations': True,
+            'relation_processing_files': {p: sha256_file(path=ROOT / p) for p in (
+                'scripts/vnext/ordinary_special_debt_scope.py',
+                'scripts/vnext/industrial_lease_relation.py',
+                'scripts/vnext/b06_inclusive_table.py')}}
     return {'kind': 'STRUCTURED', 'primary_metric_id': 'B06',
-        'input_binding': {'original_source_input': preparation['input_binding'], 'scope_source': inspected,
+        'input_binding': {'original_source_input': original_binding, 'scope_source': inspected,
                           'source_proofs': proofs, 'policy_sha256': sha256_file(path=repo_root / POLICY_PATH)},
         'source_records': records, 'references': [r for r in records if r['record_type'] == 'SOURCE_REFERENCE'],
         'source_proofs': proofs, 'admission': admission, 'spec_paths': {'B06': spec_path},
