@@ -16,7 +16,7 @@ from .deterministic_router import _numeric_xbrl_value, parse_accession_xbrl_sour
 from .financial_structured import _InlineTableIndex, _fact_cells
 from .b06_disclosure import label as row_label
 from .sources import resolve_repository_file
-from .text_results_v2 import _ReportedFactMetadata
+from .text_results_v2 import _ReportedFactMetadata, _verified_context
 
 
 def _need(condition, reason):
@@ -59,26 +59,28 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
 
 def _visible_revenue_deductions(*, raw, parsed, amounts, period):
     """Prove each separate amortization line is a gross-to-net revenue deduction."""
-    consolidated = [row for row in amounts if set(row['dimensions']) ==
+    def dimensions(row):
+        return row.get('resolved_dimensions', row['dimensions'])
+    consolidated = [row for row in amounts if set(dimensions(row)) ==
                     {'srt:ProductOrServiceAxis'}]
     if len(consolidated) != 1:
         return None
     base = consolidated[0]
-    product = base['dimensions']['srt:ProductOrServiceAxis']
+    product = dimensions(base)['srt:ProductOrServiceAxis']
     segments = []
     for row in amounts:
         if row is base:
             continue
-        dimensions = row['dimensions']
-        if (set(dimensions) != {'srt:ProductOrServiceAxis',
+        resolved = dimensions(row)
+        if (set(resolved) != {'srt:ProductOrServiceAxis',
                 'srt:ConsolidationItemsAxis',
                 'us-gaap:StatementBusinessSegmentsAxis'}
-                or dimensions['srt:ProductOrServiceAxis'] != product
-                or dimensions['srt:ConsolidationItemsAxis'] !=
+                or resolved['srt:ProductOrServiceAxis'] != product
+                or resolved['srt:ConsolidationItemsAxis'] !=
                     'us-gaap:OperatingSegmentsMember'):
             return None
         segments.append(row)
-    members = [row['dimensions']['us-gaap:StatementBusinessSegmentsAxis']
+    members = [dimensions(row)['us-gaap:StatementBusinessSegmentsAxis']
                for row in segments]
     if (len(members) != len(set(members))
             or sum(Decimal(row['value_usd']) for row in segments) >
@@ -206,9 +208,15 @@ def _unreconciled_contract_amortization(*, case, data_root):
         amount = Decimal(str(_numeric_xbrl_value(
             text=fact['text'], scale=fact['scale'], sign=fact['sign'])))
         if amount > 0:
+            context_proof = _verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=metadata)
+            def name(qname):
+                uri, local = qname
+                standard = re.fullmatch(r'https?://fasb\.org/(us-gaap|srt)/[0-9]{4}',uri)
+                return standard[1]+':'+local if standard else '{'+uri+'}'+local
             amounts.append({'ordinal': fact['ordinal'],
                 'context_ref': fact['context_ref'],
                 'dimensions': dict(context['dimensions']),
+                'resolved_dimensions':{name(d['dimension_qname']):name(d['member_qname']) for d in context_proof['dimensions']},
                 'value_usd': str(amount)})
     if not amounts:
         return None
