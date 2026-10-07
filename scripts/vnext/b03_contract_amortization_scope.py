@@ -17,6 +17,7 @@ from .financial_structured import _InlineTableIndex, _fact_cells
 from .b06_disclosure import label as row_label
 from .sources import resolve_repository_file
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
+from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
 
 
 def _need(condition, reason):
@@ -24,7 +25,7 @@ def _need(condition, reason):
         raise ValueError(reason)
 
 
-def _selected_original_facts(*, parsed, metadata, roles, period, entity):
+def _selected_original_facts(*, parsed, metadata, roles, period, entity, namespace_policy=YEAR_ONLY):
     """Recheck the chosen Company Facts components against the annual primary."""
     checked = {}
     for role in ('depreciation', 'amortization'):
@@ -34,7 +35,7 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
             uri, local_name = metadata.facts[fact['ordinal']]['concept']
             if (local_name != selected['source_binding']['concept'].split(':', 1)[1]
                     or not isinstance(uri, str)
-                    or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)):
+                    or not is_fasb_namespace(uri,namespace_policy=namespace_policy)):
                 continue
             context = parsed.contexts[fact['context_ref']]
             if (context['period_start'] != period['period_start']
@@ -43,7 +44,7 @@ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
                     or str(int(context['entity_identifier'])) != str(int(entity))):
                 continue
             _need(local_name == selected['source_binding']['concept'].split(':', 1)[1]
-                  and re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri),
+                  and is_fasb_namespace(uri,namespace_policy=namespace_policy),
                   'B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:' + role)
             if metadata.units.get(fact['unit_ref']) != {
                     'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
@@ -155,7 +156,7 @@ def _visible_revenue_deductions(*, raw, parsed, amounts, period):
     return proofs
 
 
-def _unreconciled_contract_amortization(*, case, data_root):
+def _unreconciled_contract_amortization(*, case, data_root, namespace_policy=YEAR_ONLY):
     selected = [row for row in case['observations'] if row['metric_id'] == 'B03'
                 and row['semantic_role'] in {'depreciation', 'amortization'}]
     if not selected:
@@ -202,7 +203,7 @@ def _unreconciled_contract_amortization(*, case, data_root):
                    str(int(bindings[0]['entity']))):
             continue
         if (concept != 'CapitalizedContractCostAmortization'
-                or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)
+                or not is_fasb_namespace(uri,namespace_policy=namespace_policy)
                 or metadata.units.get(fact['unit_ref']) != {
                     'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
                     'divided': False}):
@@ -213,8 +214,10 @@ def _unreconciled_contract_amortization(*, case, data_root):
             context_proof = _verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=metadata)
             def name(qname):
                 uri, local = qname
-                standard = re.fullmatch(r'https?://fasb\.org/(us-gaap|srt)/[0-9]{4}',uri)
-                return standard[1]+':'+local if standard else '{'+uri+'}'+local
+                for taxonomy in ('us-gaap','srt'):
+                    if is_fasb_namespace(uri,taxonomy=taxonomy,namespace_policy=namespace_policy):
+                        return taxonomy+':'+local
+                return '{'+uri+'}'+local
             amounts.append({'ordinal': fact['ordinal'],
                 'context_ref': fact['context_ref'],
                 'dimensions': dict(context['dimensions']),
@@ -223,7 +226,7 @@ def _unreconciled_contract_amortization(*, case, data_root):
     if not amounts:
         return None
     selected_originals = _selected_original_facts(parsed=parsed,
-        metadata=metadata, roles=roles, period=period, entity=bindings[0]['entity'])
+        metadata=metadata, roles=roles, period=period, entity=bindings[0]['entity'],namespace_policy=namespace_policy)
     revenue_deductions = _visible_revenue_deductions(raw=raw, parsed=parsed,
         amounts=amounts, period=period)
     if revenue_deductions is not None:
@@ -246,10 +249,10 @@ def _unreconciled_contract_amortization(*, case, data_root):
         'amount_added_or_result_recomputed': False}
 
 
-def assess_current_b03_scope(*, case, data_root):
+def assess_current_b03_scope(*, case, data_root, namespace_policy=YEAR_ONLY):
     """Keep V13's direct-fact checks; extend only the V14 current path."""
-    inherited = assess_direct_depreciation_scope(case=case, data_root=data_root)
+    inherited = assess_direct_depreciation_scope(case=case, data_root=data_root,namespace_policy=namespace_policy)
     if inherited['blocked'] or inherited['status'] != 'NO_DIRECT_DEPRECIATION_SELECTION':
         return inherited
     return _unreconciled_contract_amortization(
-        case=case, data_root=data_root) or inherited
+        case=case, data_root=data_root,namespace_policy=namespace_policy) or inherited

@@ -19,6 +19,7 @@ from .deterministic_router import (
 from .financial_structured import _InlineTableIndex, _fact_cells
 from .sources import resolve_repository_file
 from .text_results_v2 import _ReportedFactMetadata
+from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
 
 
 _NARROW = re.compile(
@@ -184,7 +185,7 @@ def _selected_impairment_inclusion(raw, parsed, selected_rows):
     return None
 
 
-def assess_direct_depreciation_scope(*, case, data_root):
+def assess_direct_depreciation_scope(*, case, data_root, namespace_policy=YEAR_ONLY):
     """Return a source-bound conflict, never an inferred replacement amount."""
     _need(case['primary_metric_id'] == 'B03',
           'B03_SCOPE_WRONG_METRIC')
@@ -222,7 +223,7 @@ def assess_direct_depreciation_scope(*, case, data_root):
         concept = 'us-gaap:' + local_name
         if concept not in _DA_CONCEPTS:
             continue
-        if not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri):
+        if not is_fasb_namespace(uri,namespace_policy=namespace_policy):
             continue
         context = parsed.contexts[fact['context_ref']]
         if (context['period_start'] != period['period_start']

@@ -14,9 +14,11 @@ from .deterministic_router import parse_accession_xbrl_source, _numeric_xbrl_val
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
 from .b03_contract_amortization_scope import _selected_original_facts
 from .canonical import sha256_bytes
+from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
 
 
-def inspect_depreciation_input(*, raw_bytes, entity, period, observations):
+def inspect_depreciation_input(*, raw_bytes, entity, period, observations, namespace_policy=YEAR_ONLY):
+    is_fasb_namespace(None,namespace_policy=namespace_policy)
     parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes)
     metadata = _ReportedFactMetadata()
     metadata.feed(raw_bytes.decode('utf-8-sig')); metadata.close()
@@ -29,7 +31,7 @@ def inspect_depreciation_input(*, raw_bytes, entity, period, observations):
         if concept not in DIRECT + COMPOSITION:
             continue
         context = parsed.contexts[fact['context_ref']]
-        if (not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)
+        if (not is_fasb_namespace(uri,namespace_policy=namespace_policy)
                 or context['period_start'] != period['period_start']
                 or context['period_end'] != period['period_end']
                 or context['dimensions'] or context['typed_dimension_count']
@@ -61,7 +63,7 @@ def inspect_depreciation_input(*, raw_bytes, entity, period, observations):
             return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,
                     'why':'CHAIN_DIRECT_OR_COMPOSITION_NOT_SUPPORTED_BY_PRIMARY'}
         originals = _selected_original_facts(parsed=parsed,metadata=metadata,
-            roles={o['semantic_role']:o for o in composed},period=period,entity=entity)
+            roles={o['semantic_role']:o for o in composed},period=period,entity=entity,namespace_policy=namespace_policy)
         return {**body,'status':'KEEP','composition_originals':originals,'why':answer['why']}
     selected = answer['selected']
     if len(direct)!=1:
