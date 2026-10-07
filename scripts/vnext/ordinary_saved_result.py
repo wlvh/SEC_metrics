@@ -55,10 +55,9 @@ def _validate_records(records, company_id, metric_id, result_id):
 
 def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
-    separate_rules = metric in {'B01','B02','B03'} or metric not in SUPPORTED_METRICS
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
         **({'validate_depreciation_scope':True} if metric=='B03' else {}),
-        **({'rules_root':program} if separate_rules else {}))
+        rules_root=program)
     income_binding = original['component'].get('input_binding',{})
     detail = original['component']
     if 'metrics' in detail:
@@ -74,7 +73,7 @@ def _ordinary_case(source, company, metric):
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
         'admission': original['source_admission'], 'target_period': original['target_period'],
         'expected_records': original['records'], 'results': {metric: original['primary_result']},
-        'rules_root':str(program) if separate_rules else str(source),
+        'rules_root':str(program),
         **({'input_assessments':assessments} if assessments else {}),
         'prepared_annual_input': original['component'].get('prepared_input'),
         **({'prepared_income_input':income_binding['current_income_input'],

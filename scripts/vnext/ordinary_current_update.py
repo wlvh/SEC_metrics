@@ -11,7 +11,7 @@ import re
 import inspect
 from urllib.parse import urlsplit
 
-from .annual_sources import saved_source
+from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
 from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, create_saved_result, read_saved_result, save_calculated_case
@@ -60,14 +60,23 @@ def _configuration(source, company, metric):
 
 
 def _current_sources(source, proofs):
+    from sec_http import request_log_attempt_id
+    from .request_bindings import validate_request_attempt_binding
+    latest = {row['source_url']:(i,row) for i,row in enumerate(_rows(source)) if row['method']=='GET'}
     rows = []
     for old in proofs:
-        # Latest GET failure is raised here, before reuse. Exact source bytes
-        # and headers are checked by the existing saved-source reader.
-        item = saved_source(repo_root=source,url=old['source_url'],accession=old['accession'])
-        _need(item is not None,'CURRENT_UPDATE_SOURCE_MISSING:'+old['source_url'])
-        p = item['proof']
-        rows.append({k:p[k] for k in ('source_url','accession','document_name','content_sha256')})
+        current=latest.get(old['source_url'])
+        _need(current is not None,'CURRENT_UPDATE_SOURCE_MISSING:'+old['source_url'])
+        index,row=current
+        _need(row['status_code']=='200' and not row['error'],'LATEST_SOURCE_REQUEST_FAILED:'+old['source_url'])
+        # Pin the actual latest row. Repeated identical legacy GETs are valid,
+        # but the convenience selector deliberately cannot disambiguate them.
+        # This verifier still checks that row's exact body and header bytes.
+        validate_request_attempt_binding(repo_root=source,source_url=old['source_url'],
+            accession=old['accession'],document_name=row['document_name'],content_sha256=row['content_sha256'],
+            request_attempt_id=request_log_attempt_id(row_index=index,row=row),require_immutable=False)
+        rows.append({'source_url':old['source_url'],'accession':old['accession'],
+                     'document_name':row['document_name'],'content_sha256':row['content_sha256']})
     return rows
 
 

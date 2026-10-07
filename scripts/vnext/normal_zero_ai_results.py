@@ -63,7 +63,7 @@ def _exact_set(prepared, inventory, source, role):
         inventory_bytes=inventory["raw_bytes"])
 
 
-def _event_sources(*, repo_root, reader, prepared, inventory):
+def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True):
     """Discover only the actual annual event window, including history shards."""
     period = prepared["table_input"]["target_period"]
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
@@ -118,9 +118,10 @@ def _event_sources(*, repo_root, reader, prepared, inventory):
     # development gap, never permission to report a smaller successful count.
     acquired = _acquired_event_filings(repo_root=repo_root, company_id=prepared["company_id"],
         allowed_ciks=[prepared["entity"]], period_start=period["period_start"], period_end=period["period_end"])
-    installed_acquired = _acquired_event_filings(repo_root=ROOT, company_id=prepared["company_id"],
-        allowed_ciks=[prepared["entity"]], period_start=period["period_start"], period_end=period["period_end"])
-    _need(acquired == installed_acquired, "NORMAL_EVENT_ACQUISITION_CENSUS_DIFFERS_FROM_INSTALLED_INPUT", "SOURCE_COVERAGE_CONFLICT")
+    if installed_census_required:
+        installed_acquired = _acquired_event_filings(repo_root=ROOT, company_id=prepared["company_id"],
+            allowed_ciks=[prepared["entity"]], period_start=period["period_start"], period_end=period["period_end"])
+        _need(acquired == installed_acquired, "NORMAL_EVENT_ACQUISITION_CENSUS_DIFFERS_FROM_INSTALLED_INPUT", "SOURCE_COVERAGE_CONFLICT")
     missing = [f for f in acquired if f["accession"] not in seen]
     _need(not missing, "NORMAL_EVENT_ACQUIRED_SUPPLEMENT_NOT_IMPLEMENTED:" + ",".join(f["accession"] for f in missing))
     collection = _event_collection_manifest(company_id=prepared["company_id"], target=period,
@@ -128,10 +129,11 @@ def _event_sources(*, repo_root, reader, prepared, inventory):
     return claims, [s["manifest"] for s in sets] + [collection], filing_rows
 
 
-def _registered_event_sources(*, repo_root, reader, prepared, inventory, period):
+def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None):
     """Rebuild the approved union from each registered CIK's actual sources."""
     from .traits import repository_company_ciks
-    ciks=repository_company_ciks(repo_root=repo_root,company_id=prepared['company_id'])
+    rules=repo_root if rules_root is None else Path(rules_root)
+    ciks=repository_company_ciks(repo_root=rules,company_id=prepared['company_id'])
     all_claims=[];all_manifests=[];all_filings=[];event_sets=[];scopes=[];seen=set()
     for cik in ciks:
         current=reader if cik==prepared['entity'] else _Sources(repo_root,prepared['company_id'],cik)
@@ -140,7 +142,8 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
                 role='sec_submissions_inventory',media_type='application/json'))
             # This is a source-discovery context, not a rewritten annual identity.
             context={'company_id':prepared['company_id'],'entity':cik,'table_input':{'target_period':period}}
-            claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory)
+            claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory,
+                installed_census_required=rules_root is None)
             accessions={f['accessionNumber'] for f in filings}
             _need(not seen.intersection(accessions),'NORMAL_REGISTERED_EVENT_CIK_ACCESSION_OVERLAP','SOURCE_COVERAGE_CONFLICT')
             seen.update(accessions)
@@ -160,7 +163,7 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
         inventory_reference=inventory['source_reference'],event_sets=event_sets,ordered_accessions=sorted(seen))
     all_manifests.append(collection)
     evidence={'registered_ciks':ciks,'window':period,'per_cik_sources':scopes,
-        'event_projection_catalog_sha256':sha256_file(path=repo_root/'catalog/zero_ai_public_projection.json'),
+        'event_projection_catalog_sha256':sha256_file(path=rules/'catalog/zero_ai_public_projection.json'),
         'company_registry_sha256':sha256_file(path=repo_root/'config/company_registry.csv'),
         'financial_cross_entity_combination_authorized':False}
     return all_claims,all_manifests,all_filings,evidence
@@ -177,7 +180,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
     rules = repo_root if rules_root is None else Path(rules_root)
-    _need(rules_root is None or metric_id in {'B01','B03'},'NORMAL_ZERO_AI_SEPARATE_RULE_ROOT_ROUTE_NOT_READY')
+    _need(rules_root is None or metric_id!='E01','NORMAL_ZERO_AI_E01_CONTENT_CONFIRMED_ROUTE_REQUIRED')
     authority = _authority(rules)
     if rules_root is not None:
         from .company_registry import _registry_rows
@@ -193,9 +196,9 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     if registered_event:
         from .public_projection import event_target_period
         from .traits import repository_company_ciks
-        projection_catalog = strict_json_loads(text=(repo_root/"catalog/zero_ai_public_projection.json").read_text())
+        projection_catalog = strict_json_loads(text=(rules/"catalog/zero_ai_public_projection.json").read_text())
         period = event_target_period(target_period=period,continuity_status="successor_predecessor",catalog=projection_catalog)
-        registered_scope = {"registered_ciks":repository_company_ciks(repo_root=repo_root,company_id=company_id),
+        registered_scope = {"registered_ciks":repository_company_ciks(repo_root=rules,company_id=company_id),
             "window":period,"status":"SOURCE_RECONSTRUCTION_PENDING","financial_cross_entity_combination_authorized":False}
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
@@ -217,7 +220,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         spec = compile_spec_file(path=rules / spec_path, dependency_specs=dependency_specs)
         scope = {"entity_scope":"registrant", "period_basis":"source_annual_duration"}
     else:
-        catalog = load_event_route_catalog(repo_root=repo_root)
+        catalog = load_event_route_catalog(repo_root=rules)
         spec_path, spec_origin = None, {"catalog_path":"catalog/event_routes.json", "metric_id":metric_id}
         spec = _compiled_event_spec(metric_id=metric_id, route=catalog["routes"][metric_id])
         scope = {"coverage":"fiscal_year_source_set", "fiscal_year":period["fiscal_year"],
@@ -303,9 +306,10 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         else:
             if registered_event:
                 claims, source_sets, events, registered_scope = _registered_event_sources(
-                    repo_root=repo_root,reader=reader,prepared=prepared,inventory=inventory,period=period)
+                    repo_root=repo_root,reader=reader,prepared=prepared,inventory=inventory,period=period,rules_root=rules_root)
             else:
-                claims, source_sets, events = _event_sources(repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
+                claims, source_sets, events = _event_sources(repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory,
+                    installed_census_required=rules_root is None)
             filing_rows.extend(events)
             graph = project_event_result(metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"], target_period=period, catalog=catalog)
