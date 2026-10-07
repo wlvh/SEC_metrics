@@ -5,6 +5,7 @@ The caller has already checked each original's subject, period, USD, dimensions,
 amount and visible industrial column. Missing evidence stays unresolved.
 """
 from decimal import Decimal
+from html.parser import HTMLParser
 import re
 
 from .b06_disclosure import label
@@ -13,17 +14,26 @@ from .financial_structured import _fact_cells
 from .governance_signals import _source_value
 from .r5_b06_scope import precision_choice
 from .text_results_v2 import _verified_context
+from .composite_scope import index_source_structure
+from .constraints import parse_numeric_claim
+from .canonical import sha256_bytes
 
 
-def _scope_matches(context, parent):
+def _scope_matches(context, parent, metadata, parent_proof):
     if (context['period_start'], context['period_end'], context['entity_identifier']) != (
             parent['period_start'], parent['period_end'], parent['entity_identifier']):
         return False
-    if context['typed_dimension_count'] or any(context['dimensions'].get(k) != v
-                                             for k, v in parent['dimensions'].items()):
+    if context['typed_dimension_count']:
         return False
-    extra = set(context['dimensions']) - set(parent['dimensions'])
-    return all(k.split(':')[-1].casefold() == 'longtermdebttypeaxis' for k in extra)
+    proof = _verified_context(native={**context, 'dimensions': dict(context['dimensions'])}, metadata=metadata)
+    dims = {tuple(d['dimension_qname']): tuple(d['member_qname']) for d in proof['dimensions']}
+    inherited = {tuple(d['dimension_qname']): tuple(d['member_qname']) for d in parent_proof['dimensions']}
+    if any(dims.get(k) != v for k, v in inherited.items()):
+        return False
+    extra = set(dims) - set(inherited)
+    return all(re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', axis[0])
+               and axis[1].casefold() == 'longtermdebttypeaxis'
+               and dims[axis][0] == axis[0] for axis in extra)
 
 
 def _context_key(context):
@@ -33,11 +43,11 @@ def _context_key(context):
                          for x in context['dimensions'])))
 
 
-def carrier_reports(*, native_sources, index, table_id, row_index, column, span, parent, sources):
+def carrier_reports(*, native_sources, index, table_id, row_index, column, span, parent, parent_proof, sources):
     """Read the carrier cell's own facts; no multiplier is borrowed."""
     parsed, meta = native_sources['primary']
     eligible = [f for f in parsed.facts if f['unit_ref']
-                and _scope_matches(parsed.contexts[f['context_ref']], parent)]
+                and _scope_matches(parsed.contexts[f['context_ref']], parent, meta, parent_proof)]
     cells = _fact_cells(index, parsed, {f['ordinal'] for f in eligible})
     selected = []
     for fact in eligible:
@@ -53,10 +63,6 @@ def carrier_reports(*, native_sources, index, table_id, row_index, column, span,
             continue
         context = parsed.contexts[fact['context_ref']]
         proof = _verified_context(native={**context, 'dimensions': dict(context['dimensions'])}, metadata=meta)
-        extras = [d for d in proof['dimensions'] if d['dimension_raw'] not in parent['dimensions']]
-        if any(not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', d['dimension_qname'][0])
-               or d['member_qname'][0] != d['dimension_qname'][0] for d in extras):
-            continue
         concept = meta.facts[fact['ordinal']]['concept']
         row = {'ordinal': fact['ordinal'], 'value': _source_value(fact, meta.facts[fact['ordinal']]),
                'decimals': meta.facts[fact['ordinal']]['attrs'].get('decimals'),
@@ -70,7 +76,7 @@ def carrier_reports(*, native_sources, index, table_id, row_index, column, span,
             if (qname[0], qname[1].casefold()) != (concept[0], concept[1].casefold()):
                 continue
             c = other_parsed.contexts[other['context_ref']]
-            if not _scope_matches(c, parent) or other_meta.units.get(other['unit_ref']) != {
+            if not _scope_matches(c, parent, other_meta, parent_proof) or other_meta.units.get(other['unit_ref']) != {
                     'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')], 'divided': False}:
                 continue
             p = _verified_context(native={**c, 'dimensions': dict(c['dimensions'])}, metadata=other_meta)
@@ -87,6 +93,47 @@ def carrier_reports(*, native_sources, index, table_id, row_index, column, span,
     return selected[0] if len(selected) == 1 else None
 
 
+def visible_scale(*, structure, table, raw):
+    """The selected table's explicit unit, including its preceding introduction."""
+    span = structure['tables'][table['order']]
+    previous = max((s['end_byte'] for s in structure['tables']
+                    if s['end_byte'] <= span['start_byte']), default=0)
+    declarations = [{'text': c['text'], 'proof': c} for r in table['rows'][:4]
+                    for c in r['cells'] if c['is_origin'] and c['text']]
+    if table.get('caption_raw_text'):
+        declarations.append({'text': table['caption_raw_text'], 'proof': {'table_id': table['table_id']}})
+    # A filing can put the introduction inside the same div as its table.
+    # The existing block index then has no separate introduction block. Read
+    # the bounded original gap between tables instead of guessing a distance.
+    intro = raw[previous:span['start_byte']]
+    declarations.append({'text': introductory_text(intro), 'proof': {
+        'start_byte': previous, 'end_byte': span['start_byte'],
+        'span_sha256': sha256_bytes(content=intro)}})
+    found = []
+    for d in declarations:
+        if re.search(r'\b(?:EUR|euros?|GBP|pounds?|JPY|yen)\b|[€£¥]', d['text'], re.I):
+            return None
+        for match in re.finditer(r'\bin (dollars|thousands|millions|billions)(?: of dollars)?(?=\s*(?:,|\)|$))', d['text'], re.I):
+            found.append({'factor': {'dollars':'1','thousands':'1000','millions':'1000000','billions':'1000000000'}[match[1].casefold()], 'proof':d['proof']})
+    return found if len({x['factor'] for x in found}) == 1 else None
+
+
+def introductory_text(raw):
+    """Do not read XBRL resource definitions as human monetary declarations."""
+    class Intro(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True); self.skipped=[]; self.parts=[]
+        def handle_starttag(self,tag,attrs):
+            if tag in {'script','style','ix:header','ix:hidden','ix:resources'} or tag.split(':')[-1] in {'context','unit'}:
+                self.skipped.append(tag)
+        def handle_endtag(self,tag):
+            if self.skipped and self.skipped[-1]==tag:self.skipped.pop()
+        def handle_data(self,data):
+            if not self.skipped:self.parts.append(data)
+    p=Intro();p.feed(raw.decode('utf-8-sig'));p.close()
+    return ' '.join(' '.join(p.parts).split())
+
+
 def inspect_inclusion(*, primary, parsed, reported_components, lease_reports,
                       native_sources, index, sources):
     notes = _InclusiveInlineNotes()
@@ -98,6 +145,7 @@ def inspect_inclusion(*, primary, parsed, reported_components, lease_reports,
     unresolved = {'status': 'UNRESOLVED', 'additional_debt_amount': None,
                   'reason': 'REPORTED_LEASE_INCLUSION_NOT_ESTABLISHED', 'relationships': []}
     relationships = []
+    structure = index_source_structure(source_bytes=primary['raw_bytes'])
     for role, concept in [('current_debt', 'financeleaseliabilitycurrent'),
                           ('noncurrent_debt', 'financeleaseliabilitynoncurrent')]:
         parent = reported_components.get(role)
@@ -127,10 +175,19 @@ def inspect_inclusion(*, primary, parsed, reported_components, lease_reports,
                 continue
             row_index, row = rows[-1]
             parent_context = parent['source_reports']['primary'][0]['context']
+            parent_proof = _verified_context(native={**parent_context, 'dimensions': dict(parent_context['dimensions'])},
+                metadata=native_sources['primary'][1])
             carrier = carrier_reports(native_sources=native_sources, index=index,
                 table_id=table['table_id'], row_index=row_index, column=cell['column_index'],
-                span=cell['colspan'], parent=parent_context, sources=sources)
+                span=cell['colspan'], parent=parent_context, parent_proof=parent_proof, sources=sources)
             if carrier is None or value > Decimal(carrier['value']):
+                continue
+            scale = visible_scale(structure=structure, table=table, raw=primary['raw_bytes'])
+            if scale is None:
+                continue
+            visible = parse_numeric_claim(raw_value=carrier['primary']['cell']['text'], reported_unit='USD')
+            visible *= Decimal(scale[0]['factor'])
+            if visible != Decimal(carrier['primary']['value']):
                 continue
             # The same original note must contain the proved parent and the
             # lease facts. A similarly named balance elsewhere is insufficient.
@@ -149,6 +206,7 @@ def inspect_inclusion(*, primary, parsed, reported_components, lease_reports,
                 'table_id': table['table_id'], 'inclusive_row_index': row_index,
                 'inclusive_label': label(row), 'total_cell': cell,
                 'inclusive_amount': carrier['value'], 'carrier_reports': carrier,
+                'visible_reporting_unit': scale,
                 'source_reference': primary['source_reference'],
                 'parent_ordinal': evidence['ordinal'],
                 'component_reports': {**component, 'primary': [r for r in component['primary']

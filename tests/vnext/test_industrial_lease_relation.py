@@ -1,5 +1,6 @@
 """Small real parser inputs, plus exact source-relation controls; no installation."""
 from copy import deepcopy
+import re
 import unittest
 
 from vnext.canonical import sha256_bytes
@@ -34,7 +35,7 @@ def fixture(*, scale='0', carrier='25', peer='25', lease='10', unit='usd', entit
     def f(name,ctx,value,scale='0',unit='usd'):
         return '<ix:nonFraction name="us-gaap:'+name+'" contextRef="'+ctx+'" unitRef="'+unit+'" scale="'+scale+'" decimals="INF">'+value+'</ix:nonFraction>'
     primary = ('<html '+NS+'>'+contexts+units+'<ix:nonNumeric name="us-gaap:DebtDisclosureTextBlock" contextRef="n">'
-        '<table><tr><td>2025</td><td>2025</td></tr>'
+        '<p>The carrying amounts are as follows (in dollars).</p><table><tr><td>2025</td><td>2025</td></tr>'
         '<tr><td>Other debt (including finance leases) (a)</td><td>'+f('OtherLoansPayableCurrent','k',carrier,scale,unit)+'</td></tr>'
         '<tr><td>Total current debt</td><td>'+f('LongTermDebtCurrent','c','100')+'</td></tr>'
         '<tr><td>Other debt (including finance leases) (a)</td><td>'+f('OtherLoansPayableNoncurrent','k','50')+'</td></tr>'
@@ -68,6 +69,28 @@ def fixture(*, scale='0', carrier='25', peer='25', lease='10', unit='usd', entit
 
 
 class IndustrialLeaseRelationTest(unittest.TestCase):
+    def alter_carrier_namespace(self, args, *, alias=False):
+        raw=args['sources']['xml']['raw_bytes']
+        def change(match):
+            part=match[0]
+            if alias:
+                part=part.replace(b'<xbrli:context id="k">', b'<xbrli:context id="k" xmlns:g="http://fasb.org/us-gaap/2025" xmlns:ff="urn:test-company">')
+                return part.replace(b'us-gaap:StatementBusinessSegmentsAxis',b'g:StatementBusinessSegmentsAxis').replace(b'f:CompanyExcludingCreditMember',b'ff:CompanyExcludingCreditMember')
+            return part.replace(b'<xbrli:context id="k">', b'<xbrli:context id="k" xmlns:f="urn:other-company">')
+        raw,n=re.subn(rb'<xbrli:context id="k">.*?</xbrli:context>',change,raw,flags=re.S)
+        self.assertEqual(1,n)
+        p=parse_accession_xbrl_source(raw_bytes=raw);m=_ReportedFactMetadata();m.feed(raw.decode());m.close()
+        args['native_sources']['xml']=(p,m);args['sources']['xml']['raw_bytes']=raw
+        args['sources']['xml']['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=raw)
+
+    def test_same_member_qname_with_different_prefix_is_preserved(self):
+        args=fixture();self.alter_carrier_namespace(args,alias=True)
+        self.assertEqual('REPORTED_INCLUDED',inspect_inclusion(**args)['status'])
+
+    def test_same_member_text_with_wrong_namespace_is_not_same_scope(self):
+        args=fixture();self.alter_carrier_namespace(args)
+        self.assertEqual('UNRESOLVED',inspect_inclusion(**args)['status'])
+
     def test_direct_own_amount_and_scale_support_inclusion(self):
         result=inspect_inclusion(**fixture())
         self.assertEqual('REPORTED_INCLUDED',result['status']);self.assertEqual('0',result['additional_debt_amount'])
@@ -76,8 +99,10 @@ class IndustrialLeaseRelationTest(unittest.TestCase):
         self.assertFalse(result['complete_B06'])
 
     def test_own_carrier_scale_not_parent_scale(self):
-        self.assertEqual('REPORTED_INCLUDED',inspect_inclusion(**fixture(scale='3',carrier='0.025',peer='25'))['status'])
+        # Native agreement cannot override the table's explicit dollars.
+        self.assertEqual('UNRESOLVED',inspect_inclusion(**fixture(scale='3',carrier='0.025',peer='25'))['status'])
         self.assertEqual('UNRESOLVED',inspect_inclusion(**fixture(scale='-3',carrier='25',peer='0.025'))['status'])
+        self.assertEqual('UNRESOLVED',inspect_inclusion(**fixture(scale='3',carrier='25',peer='25000'))['status'])
 
     def test_containing_row_smaller_than_lease_even_below_parent_total(self):
         self.assertEqual('UNRESOLVED',inspect_inclusion(**fixture(lease='30'))['status'])
