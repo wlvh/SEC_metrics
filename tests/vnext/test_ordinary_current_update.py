@@ -23,7 +23,7 @@ class CurrentUpdateTest(unittest.TestCase):
         self.records={};self.calculations=0
         def create(**kwargs):
             self.calculations+=1; path=kwargs['output_root'];path.mkdir(parents=True)
-            result={'company_id':'marriott_international','metric_id':'B01','publication':'PUBLISHED',
+            result={'company_id':'marriott_international','metric_id':'B01','publication':getattr(self,'publication','PUBLISHED'),
                     'period_end':'2025-12-31','result_id':'result-'+str(self.calculations)}
             value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[self.proof]},
                    'result':result}
@@ -109,6 +109,54 @@ class CurrentUpdateTest(unittest.TestCase):
 CurrentUpdateTest.original_census = staticmethod(update._source_census)
 
 
+class CompletedWithheldUpdateTest(unittest.TestCase):
+    setUp=CurrentUpdateTest.setUp
+    run_update=CurrentUpdateTest.run_update
+    def test_first_withheld_repeats_without_factory_or_another_result(self):
+        self.publication='WITHHELD';first=self.run_update()
+        self.assertEqual(first['status'],'CANDIDATE_WITHHELD')
+        before=set((self.root/'results').iterdir())
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated withheld calculation')):
+            again=self.run_update()
+        self.assertEqual(again['status'],'PREVIOUS_INPUT_WITHHELD')
+        self.assertFalse(again['calculation_performed']);self.assertEqual(again['result_id'],first['result_id'])
+        self.assertEqual(set((self.root/'results').iterdir()),before)
+        self.assertFalse((self.root/'current-result.json').exists())
+
+    def test_withheld_replaces_current_conclusion_but_preserves_success_history(self):
+        success=self.run_update();old=(self.root/'current-result.json').read_bytes()
+        self.config['processing_version']='changed';self.publication='WITHHELD';held=self.run_update()
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated calculation')):
+            again=self.run_update()
+        self.assertEqual(again['status'],'PREVIOUS_INPUT_WITHHELD');self.assertEqual(again['result_id'],held['result_id'])
+        self.assertNotEqual(again['result_id'],success['result_id'])
+        self.assertEqual((self.root/'current-result.json').read_bytes(),old)
+        self.assertEqual(self.records[success['result_root']]['result']['publication'],'PUBLISHED')
+
+    def test_source_and_configuration_changes_reprocess_stable_withheld(self):
+        self.publication='WITHHELD';first=self.run_update()
+        self.proof['content_sha256']='new';self.census[0]['content_sha256']='new'
+        second=self.run_update();self.assertNotEqual(second['version'],first['version'])
+        self.config['processing_version']='new-calculation-or-prompt';third=self.run_update()
+        self.assertNotEqual(third['version'],second['version']);self.assertEqual(self.calculations,3)
+
+    def test_completed_withheld_recovers_interrupted_pointer_write(self):
+        self.publication='WITHHELD';write=update._write
+        def interrupted(path,value):
+            if path.name=='completed-check.json':raise KeyboardInterrupt('Crash after terminal commit')
+            write(path,value)
+        with patch.object(update,'_write',side_effect=interrupted),self.assertRaises(KeyboardInterrupt):self.run_update()
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated calculation')):
+            again=self.run_update()
+        self.assertEqual(again['status'],'PREVIOUS_INPUT_WITHHELD');self.assertEqual(self.calculations,1)
+
+    def test_program_exception_does_not_become_reusable_withheld(self):
+        with patch.object(update,'create_saved_result',side_effect=RuntimeError('Program error')):
+            failed=self.run_update()
+        self.assertEqual(failed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertEqual(self.run_update()['status'],'CANDIDATE_READY');self.assertEqual(self.calculations,1)
+
+
 class CurrentProcessingConfigurationTest(unittest.TestCase):
     def test_lodging_only_changes_do_not_change_b01_processing_identity(self):
         original=update.sha256_file
@@ -142,7 +190,7 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         def save(**kwargs):
             y=kwargs['case']['target_period']['fiscal_year'];path=kwargs['output_root'];path.mkdir(parents=True)
             value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[self.proof]},
-                'result':{'company_id':'marriott_international','metric_id':'B01','publication':'PUBLISHED',
+                'result':{'company_id':'marriott_international','metric_id':'B01','publication':getattr(self,'publication','PUBLISHED'),
                           'period_end':str(y)+'-12-31','result_id':'result-'+str(y)}}
             self.records[str(path)]=value
             return value
@@ -204,5 +252,18 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.assertEqual(result['requested_fiscal_year'],2026)
         self.assertEqual(result['error_type'],'MissingPeriod')
         self.assertEqual(result['error_category'],'SOURCE_UNAVAILABLE')
+
+    def test_completed_withheld_periods_do_not_override_current_or_each_other(self):
+        CurrentUpdateTest.run_update(self)
+        old=(self.root/'current-result.json').read_bytes()
+        self.publication='WITHHELD';first=self.selected(2024);second=self.selected(2025)
+        before=self.factory_calls
+        again=self.selected(2024)
+        self.assertEqual(again['status'],'PREVIOUS_INPUT_WITHHELD')
+        self.assertEqual(again['result_id'],first['result_id'])
+        self.assertNotEqual(again['result_id'],second['result_id'])
+        self.assertEqual(self.factory_calls,before)
+        self.assertEqual((self.root/'current-result.json').read_bytes(),old)
+        self.assertFalse((self.root/'periods/FY2024/current-result.json').exists())
 
 if __name__=='__main__':unittest.main()

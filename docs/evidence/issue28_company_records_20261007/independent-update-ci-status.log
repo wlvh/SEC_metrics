@@ -1,0 +1,274 @@
+Company independent metric updates	UNKNOWN STEP	﻿2026-10-07T16:46:45.8186598Z Current runner version: '2.337.0'
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8208957Z ##[group]Runner Image Provisioner
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8209684Z Hosted Compute Agent
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8210047Z Version: 20261002.596
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8210428Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8210924Z Build Date: 2026-10-02T22:28:27Z
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8211415Z Worker ID: {e1d64168-61fb-444d-9865-1c4b34fc829a}
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8211874Z Region: westus3
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8212534Z Cloud: Azure
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8212881Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8213923Z ##[group]Operating System
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8214358Z Ubuntu
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8214720Z 24.04.5
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8215056Z LTS
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8215387Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8215767Z ##[group]Runner Image
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8216192Z Image: ubuntu-24.04
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8216532Z Version: 20261004.327.1
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8217420Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8218401Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8219018Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8219768Z ##[group]GITHUB_TOKEN Permissions
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8221380Z Contents: read
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8221754Z Metadata: read
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8222517Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8224648Z Secret source: Actions
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8225368Z Cache mode: write
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8226120Z Prepare workflow directory
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8464309Z Prepare all required actions
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:45.8499177Z Getting action download info
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.2040040Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.3064877Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5016091Z Complete job name: Company independent metric updates
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5541160Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5541759Z with:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5542178Z   persist-credentials: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5542486Z   repository: wlvh/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5544910Z   token: ***
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5545174Z   ssh-strict: true
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5545441Z   ssh-user: git
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5545698Z   clean: true
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5545973Z   sparse-checkout-cone-mode: true
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5546284Z   fetch-depth: 1
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5546545Z   fetch-tags: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5546809Z   show-progress: true
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5547076Z   lfs: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5547316Z   submodules: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5547583Z   set-safe-directory: true
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.5547946Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6302558Z Syncing repository: wlvh/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6303908Z ##[group]Getting Git version info
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6304640Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6305569Z [command]/usr/bin/git version
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6404609Z git version 2.55.0
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6432315Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6445172Z Temporarily overriding HOME='/home/runner/work/_temp/840dc422-5ff5-4670-8b65-f2719d2e1930' before making global git config changes
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6446387Z Adding repository directory to the temporary git global config as a safe directory
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6450475Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6512527Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6516420Z ##[group]Initializing the repository
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6521248Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6640243Z hint: Using 'master' as the name for the initial branch. This default branch name
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6642254Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6643665Z hint: to use in all of your new repositories, which will suppress this warning,
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6644405Z hint: call:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6644738Z hint:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6645208Z hint: 	git config --global init.defaultBranch <name>
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6645717Z hint:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6646195Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6646973Z hint: 'development'. The just-created branch can be renamed via this command:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6647598Z hint:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6647966Z hint: 	git branch -m <name>
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6648358Z hint:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6648934Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6649852Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6653813Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6717605Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6718377Z ##[group]Disabling automatic garbage collection
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6721764Z [command]/usr/bin/git config --local gc.auto 0
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6761633Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6763063Z ##[group]Setting up auth
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6763575Z Removing SSH command configuration
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6773009Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.6811381Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7183113Z Removing HTTP extra header
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7189668Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7229173Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7460126Z Removing includeIf entries pointing to credentials config files
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7466211Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7503057Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7756681Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7818398Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7857638Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7938062Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.7986148Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.8021060Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.8021765Z ##[group]Fetching the repository
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:46:46.8028944Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +488e05f883a5c7357cdeb7bd440ba1523c75b128:refs/remotes/pull/67/merge
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7015109Z From https://github.com/wlvh/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7015710Z  * [new ref]         488e05f883a5c7357cdeb7bd440ba1523c75b128 -> pull/67/merge
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7020250Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7024052Z ##[group]Determining the checkout info
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7025785Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7026376Z [command]/usr/bin/git sparse-checkout disable
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7180071Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7216332Z ##[group]Checking out the ref
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:56.7220431Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/67/merge
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.7407113Z Updating files:  62% (4829/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.7612384Z Updating files:  63% (4861/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.7755304Z Updating files:  64% (4938/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.9595499Z Updating files:  65% (5015/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.9619456Z Updating files:  66% (5092/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.9742621Z Updating files:  67% (5170/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.9846915Z Updating files:  68% (5247/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:57.9943177Z Updating files:  69% (5324/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0040642Z Updating files:  70% (5401/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0170041Z Updating files:  71% (5478/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0268503Z Updating files:  72% (5555/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0377003Z Updating files:  73% (5632/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0456056Z Updating files:  74% (5710/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0579992Z Updating files:  75% (5787/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.0820549Z Updating files:  76% (5864/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1042901Z Updating files:  77% (5941/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1130281Z Updating files:  78% (6018/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1210143Z Updating files:  79% (6095/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1420555Z Updating files:  80% (6172/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1587266Z Updating files:  81% (6250/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1663338Z Updating files:  82% (6327/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1708127Z Updating files:  83% (6404/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1738544Z Updating files:  84% (6481/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1774361Z Updating files:  85% (6558/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.1854163Z Updating files:  86% (6635/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2038735Z Updating files:  87% (6713/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2226465Z Updating files:  88% (6790/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2301105Z Updating files:  89% (6867/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2403699Z Updating files:  90% (6944/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2448478Z Updating files:  91% (7021/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2523371Z Updating files:  92% (7098/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2579291Z Updating files:  93% (7175/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2645814Z Updating files:  94% (7253/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2703953Z Updating files:  95% (7330/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2767302Z Updating files:  96% (7407/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2827461Z Updating files:  97% (7484/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2880694Z Updating files:  98% (7561/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2932862Z Updating files:  99% (7638/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2933134Z Updating files: 100% (7715/7715)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.2933394Z Updating files: 100% (7715/7715), done.
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3016803Z Note: switching to 'refs/remotes/pull/67/merge'.
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3017027Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3017784Z You are in 'detached HEAD' state. You can look around, make experimental
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3018187Z changes and commit them, and you can discard any commits you make in this
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3018627Z state without impacting any branches by switching back to a branch.
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3018894Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3019072Z If you want to create a new branch to retain commits you create, you may
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3019447Z do so (now or later) by using -c with the switch command. Example:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3019669Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3019773Z   git switch -c <new-branch-name>
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3019970Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3020091Z Or undo this operation with:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3020232Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3020309Z   git switch -
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3020487Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3020678Z Turn off this advice by setting config variable advice.detachedHead to false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3020951Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3021274Z HEAD is now at 488e05f Merge 24155225a9cf6c2949e0ee8b1be6395641c86d47 into 8588ccbbb1c91d81e0fb1a89dff3575214282549
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3113876Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3151021Z [command]/usr/bin/git log -1 --format=%H
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3179814Z 488e05f883a5c7357cdeb7bd440ba1523c75b128
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3192707Z ##[group]Removing auth
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3192919Z Removing SSH command configuration
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3193201Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3227708Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3451196Z Removing HTTP extra header
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3454585Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3491776Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3702807Z Removing includeIf entries pointing to credentials config files
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3706494Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3737572Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3738137Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3738577Z includeif.gitdir:/github/workspace/.git.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3738961Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3747976Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3775045Z /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3786708Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3832367Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3859402Z /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3873192Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3913826Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3942078Z /github/runner_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3953038Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.3993150Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4022649Z /github/runner_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4030567Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4068291Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4274301Z Removing credentials config '/home/runner/work/_temp/git-credentials-f30fcdc0-4497-4819-9414-5fa6fe7cd5a7.config'
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4286040Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4567468Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4567698Z with:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4567818Z   python-version: 3.14
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4568081Z   check-latest: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4569425Z   token: ***
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4569549Z   update-environment: true
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4569689Z   allow-prereleases: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4569824Z   freethreaded: false
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.4569947Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.5550580Z ##[group]Installed versions
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.5625195Z Successfully set up CPython (3.14.8)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.5625669Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.5879382Z ##[group]Run python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.5880148Z ^[[36;1mpython3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt^[[0m
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6233123Z shell: /usr/bin/bash -e {0}
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6233331Z env:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6233524Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6233799Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6234056Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6234267Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6234478Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6234694Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:47:58.6234880Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:00.6673480Z Collecting tokenizers==0.22.2 (from -r requirements-continuous-context.txt (line 2))
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:00.7057260Z   Downloading tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:00.7493601Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 119.8 MB/s  0:00:00
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:00.8533759Z Installing collected packages: tokenizers
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:00.9276420Z Successfully installed tokenizers-0.22.2
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0165707Z ##[group]Run python3 tests/required_unittests.py tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0166179Z ^[[36;1mpython3 tests/required_unittests.py tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest^[[0m
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0223611Z shell: /usr/bin/bash -e {0}
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0223785Z env:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0223962Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0224207Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0224438Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0224649Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0224857Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0225069Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0225260Z   PYTHONDONTWRITEBYTECODE: 1
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0225465Z   PYTHONPATH: scripts
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0225710Z   ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT: /home/runner/work/_temp/ordinary-update-metrics-37654560493-1
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:01.0225984Z ##[endgroup]
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5793703Z test_successful_metrics_survive_withheld_and_failed_neighbours (tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours) ... FAIL
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5794545Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5794842Z ======================================================================
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5795622Z FAIL: test_successful_metrics_survive_withheld_and_failed_neighbours (tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5796428Z ----------------------------------------------------------------------
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5796767Z Traceback (most recent call last):
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5803615Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_ordinary_update_cycle.py", line 151, in test_successful_metrics_survive_withheld_and_failed_neighbours
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5804376Z     first=check();self.assertEqual('UPDATES_PARTIAL',first['status'])
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5805274Z                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5805593Z AssertionError: 'UPDATES_PARTIAL' != 'UPDATES_INCOMPLETE'
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5805883Z - UPDATES_PARTIAL
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806080Z + UPDATES_INCOMPLETE
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806202Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806206Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806338Z ----------------------------------------------------------------------
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806629Z Ran 1 test in 5.298s
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806747Z 
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5806823Z FAILED (failures=1)
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.5807397Z {"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest"]}
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.6393303Z ##[error]Process completed with exit code 1.
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.6503415Z Post job cleanup.
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7063137Z [command]/usr/bin/git version
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7090104Z git version 2.55.0
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7115457Z Temporarily overriding HOME='/home/runner/work/_temp/9fc5bdc5-8d71-49d4-bde1-9eb210349a1d' before making global git config changes
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7116319Z Adding repository directory to the temporary git global config as a safe directory
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7121612Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7147574Z Removing SSH command configuration
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7152184Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7180124Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7431775Z Removing HTTP extra header
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7432648Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7469408Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7700400Z Removing includeIf entries pointing to credentials config files
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7707208Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.7748362Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Company independent metric updates	UNKNOWN STEP	2026-10-07T16:48:07.8133923Z Cleaning up orphan processes

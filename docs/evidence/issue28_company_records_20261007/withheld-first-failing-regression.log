@@ -1,0 +1,36 @@
+======================================================================
+FAIL: test_first_withheld_repeats_without_factory_or_another_result (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_first_withheld_repeats_without_factory_or_another_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 119, in test_first_withheld_repeats_without_factory_or_another_result
+    self.assertEqual(again['status'],'PREVIOUS_INPUT_WITHHELD')
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'PREVIOUS_INPUT_WITHHELD'
+- INPUT_OR_EXECUTION_FAILED
++ PREVIOUS_INPUT_WITHHELD
+
+
+======================================================================
+FAIL: test_withheld_replaces_current_conclusion_but_preserves_success_history (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_withheld_replaces_current_conclusion_but_preserves_success_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 129, in test_withheld_replaces_current_conclusion_but_preserves_success_history
+    self.assertEqual(again['status'],'PREVIOUS_INPUT_WITHHELD');self.assertEqual(again['result_id'],held['result_id'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'PREVIOUS_INPUT_WITHHELD'
+- INPUT_OR_EXECUTION_FAILED
++ PREVIOUS_INPUT_WITHHELD
+
+
+======================================================================
+FAIL: test_completed_withheld_recovers_interrupted_pointer_write (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_completed_withheld_recovers_interrupted_pointer_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 146, in test_completed_withheld_recovers_interrupted_pointer_write
+    with patch.object(update,'_write',side_effect=interrupted),self.assertRaises(KeyboardInterrupt):self.run_update()
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: KeyboardInterrupt not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.011s
+
+FAILED (failures=3)

@@ -150,8 +150,11 @@ class CurrentCompanyTest(unittest.TestCase):
             'manifest':{'target_period':{'fiscal_year':2026}},
             'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
                      'metric_evidence.csv':old['files']['metric_evidence.csv']}}
-        with patch.object(current,'run_once',return_value={'status':'CANDIDATE_WITHHELD','result_root':str(record)}):
-            result=self.run_company(['B01'])
+        for status in ('CANDIDATE_WITHHELD','PREVIOUS_INPUT_WITHHELD'):
+            with patch.object(current,'run_once',return_value={'status':status,'result_root':str(record)}):
+                result=self.run_company(['B01'])
+            self.assertEqual(self.rows(result)[0]['period_role'],'REQUESTED_RESULT')
+            self.assertEqual(self.rows(result)[0]['value'],'')
         self.assertEqual(self.rows(result)[0]['period_role'],'REQUESTED_RESULT')
         self.assertEqual(self.rows(result)[0]['period_end'],'2026-12-31')
         self.assertEqual(self.rows(result)[0]['value'],'')
