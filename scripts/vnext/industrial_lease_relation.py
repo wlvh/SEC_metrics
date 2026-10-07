@@ -9,6 +9,7 @@ import re
 
 from .b06_disclosure import label
 from .b06_inclusive_table import _InclusiveInlineNotes
+from .deterministic_router import _numeric_xbrl_value
 from .r5_b06_scope import precision_choice
 
 
@@ -50,6 +51,24 @@ def inspect_inclusion(*, primary, parsed, reported_components, lease_reports):
             if not rows:
                 continue
             row_index, row = rows[-1]
+            parent_reports = [r for r in parent['source_reports']['primary']
+                              if r['ordinal'] == evidence['ordinal'] and r['unit'] == 'USD']
+            carrier_cells = [c for c in row['cells'] if c['is_origin']
+                             and c['column_index'] == cell['column_index']
+                             and c['colspan'] == cell['colspan']]
+            if len(parent_reports) != 1 or len(carrier_cells) != 1:
+                continue
+            scale = parent_reports[0].get('reported_scale')
+            if scale is None:
+                continue
+            try:
+                parent_visible = _numeric_xbrl_value(text=cell['text'], scale=scale, sign='')
+                carrier_amount = _numeric_xbrl_value(text=carrier_cells[0]['text'], scale=scale, sign='')
+            except ValueError:
+                continue
+            if (Decimal(parent_visible) != Decimal(parent_reports[0]['value'])
+                    or value > Decimal(carrier_amount)):
+                continue
             # The same original note must contain the proved parent and the
             # lease facts. A similarly named balance elsewhere is insufficient.
             lease_ordinals = {r['ordinal'] for r in component['primary']}
@@ -66,6 +85,8 @@ def inspect_inclusion(*, primary, parsed, reported_components, lease_reports):
                 'component_amount': choice['value'], 'unit': 'USD',
                 'table_id': table['table_id'], 'inclusive_row_index': row_index,
                 'inclusive_label': label(row), 'total_cell': cell,
+                'inclusive_amount': carrier_amount, 'inclusive_cell': carrier_cells[0],
+                'reporting_scale': scale,
                 'source_reference': primary['source_reference'],
                 'parent_ordinal': evidence['ordinal'],
                 'component_reports': {**component, 'primary': [r for r in component['primary']

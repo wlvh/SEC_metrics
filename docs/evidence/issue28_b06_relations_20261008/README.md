@@ -21,3 +21,14 @@ python docs/evidence/issue28_b06_relations_20261008/verify_default_and_persisten
 ```
 
 共享范围：ordinary_special_debt_scope.inspect_special_scope、prepare_special_debt_case，新选项默认False；旧返回对象通过实际原件比较完全相同，未修改任何 `_binding()`、旧Requirement、Spec或冻结快照。#47如要消费须明确选择和本方验证，不复制本方验收信用。新B06来源case未接收进当前公司候选；不合并/Ready/采纳/部署/active。
+
+
+## 508c限定独审及包含行金额修复
+
+[原独审](independent-review/conclusion.md)为NEEDS_FIX：原表结构反例把当前租赁改为1,000m、包含行仍226m，总债务5,550m，初版错误确认包含。旧结论不改，原代理25工具/3消息/7分35秒已结束，不再续发。
+
+修复只读取对应当期工业列的包含行金额。倍率来自同列原生总债务事实，并先将其可见数与已确认原生数核对；包含行不能用附加单位后缀放大，缺倍率/错列/数值矛盾均未决。关系证据保留包含行单元格、USD金额和倍率。实际当前包含行226m、长期1,210m；原136m/754m继续通过，1,000m反例改为UNRESOLVED/追加额null。
+
+10项小测试通过0.001s；实际默认完整case仍与main完全相同，原件正例及保存重读通过（三次准备＋读写合计9.001s），B06仍WITHHELD/null。修复后的原结构反例只是内存派生测试，无原件写回或获取信用。反例探针先因XML标签大小写筛选失败，错误保留；后改用既有metadata概念的casefold处理。这是探针设置修复，不改业务事实。
+
+修后差异尚待限定复核，不据父方测试改写为独审通过；普通公司入口／原生Run尚未接入，不计新增完整公司结果。

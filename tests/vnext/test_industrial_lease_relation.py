@@ -11,7 +11,8 @@ def fixture():
     labels = ['2025', 'Other debt (including finance leases) (a)', 'Total current debt',
               'Other debt (including finance leases) (a)', 'Total noncurrent debt']
     table = {'table_id': 'table_1', 'rows': [{'cells': [{'is_origin': True,
-        'text': x, 'column_index': 0}]} for x in labels]}
+        'text': x, 'column_index': 0}, {'is_origin': True, 'column_index': 1,
+        'colspan': 1, 'text': amount}]} for x, amount in zip(labels, ('2025','25','100','50','200'))]}
     body = ('<ix:nonnumeric name="us-gaap:DebtDisclosureTextBlock" contextref="n">'
             '<ix:nonfraction contextref="c">100</ix:nonfraction>'
             '<ix:nonfraction contextref="c">10</ix:nonfraction>'
@@ -24,9 +25,11 @@ def fixture():
         ('current_debt', 'financeleaseliabilitycurrent', 2, 3, 2, '100', '10'),
         ('noncurrent_debt', 'financeleaseliabilitynoncurrent', 4, 5, 4, '200', '20')):
         parents[role] = {'value': parent_value,
-            'source_reports': {'primary': [{'context': context}]},
+            'source_reports': {'primary': [{'context': context, 'ordinal': parent_ord,
+                'unit': 'USD', 'value': parent_value, 'reported_scale': '0'}]},
             'visible_table_evidence': [{'ordinal': parent_ord, 'table': table,
-                'cell': {'origin_row_index': row}, 'column_headers': [{'row_index': 0}]}]}
+                'cell': {'origin_row_index': row, 'column_index': 1, 'colspan': 1,
+                    'text': parent_value}, 'column_headers': [{'row_index': 0}]}]}
         for kind in leases:
             leases[kind][concept] = [{'ordinal': lease_ord, 'value': lease_value, 'decimals': 'INF'}]
     return {'primary': {'raw_bytes': body, 'source_reference': {'source': 'TEST_ONLY'}},
@@ -86,6 +89,20 @@ class IndustrialLeaseRelationTest(unittest.TestCase):
         args['lease_reports']['primary']['financeleaseliabilitycurrent'].append({**original, 'ordinal': 6})
         args['primary']['raw_bytes'] += b'<ix:nonfraction contextref="c">10</ix:nonfraction>'
         self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**args)['status'])
+
+    def test_component_exceeding_inclusive_row_even_below_total_is_unresolved(self):
+        args = fixture()
+        for kind in args['lease_reports']:
+            args['lease_reports'][kind]['financeleaseliabilitycurrent'][0]['value'] = '30'
+        self.assertEqual('UNRESOLVED', inspect_inclusion(**args)['status'])
+
+    def test_scale_missing_changed_or_unit_suffix_cannot_inflate_carrier(self):
+        for change in ('missing', 'different', 'suffix'):
+            args = fixture(); parent = args['reported_components']['current_debt']
+            if change == 'missing': parent['source_reports']['primary'][0].pop('reported_scale')
+            elif change == 'different': parent['source_reports']['primary'][0]['reported_scale'] = '6'
+            else: parent['visible_table_evidence'][0]['table']['rows'][1]['cells'][1]['text'] = '25 million'
+            self.assertEqual('UNRESOLVED', inspect_inclusion(**args)['status'])
 
 
 if __name__ == '__main__':

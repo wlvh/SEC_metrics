@@ -87,6 +87,8 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
                    'ordinal': fact['ordinal'], 'context_ref': fact['context_ref'],
                    'context': {**c, 'dimensions': dict(c['dimensions'])}, 'context_proof': context_proof,
                    'decimals': item['attrs'].get('decimals'), 'source_reference': sources[kind]['source_reference']}
+            if reported_relations and kind == 'primary':
+                row['reported_scale'] = fact['scale']
             reports[kind].setdefault(name.casefold(), []).append(row)
     parsed = native_sources['primary'][0]
     index = _InlineTableIndex(primary['raw_bytes'])
