@@ -247,7 +247,28 @@
     "production_source_changed": false,
     "local_scope_tests": 6,
     "public_new_ci": "37678715800",
-    "public_new_ci_terminal_confirmed": false,
-    "prior_61_and_company_source_validation_reused": true
+    "public_new_ci_terminal_confirmed": true,
+    "prior_61_and_company_source_validation_reused": true,
+    "public_new_ci_terminal": {
+      "run_id": "37678715800",
+      "head_sha": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": {
+        "Company C04 source and subject checks": "success",
+        "Main foundation audit and historical compatibility": "success",
+        "vNext fast suite": "success",
+        "Company source authority, ledger and D04 wiring": "success",
+        "Company update history and interruption recovery": "success",
+        "Foundation inherited source material": "success",
+        "Company independent metric updates": "success"
+      },
+      "historical_job_seconds": 179.0,
+      "historical_steps_seconds": {
+        "Check out fixed candidate": 14.0,
+        "Fetch the declared historical baseline only": 1.0,
+        "Validate main audit and fixed historical objects": 160.0
+      }
+    }
   }
 }
