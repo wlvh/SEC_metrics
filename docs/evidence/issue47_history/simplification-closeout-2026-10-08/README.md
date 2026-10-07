@@ -2,7 +2,7 @@
 
 本轮唯一主验证记录为 [verification.json](verification.json)。能力结构检查通过（6.868秒），检查器两个副产物按检查前字节恢复；这只证明结构对齐。实际 main 仍为 `8588ccbb`；这里是分支交付，尚未入 main，也不是完整五年业务接受。
 
-可取得的组合是 PR67 的公共候选 `7944bc96` 加本分支 `task/issue47-history-consumers`。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
+可取得的组合是 PR67 的公共候选 `8805777d`（承接7944） 加本分支 `task/issue47-history-consumers`。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
 
 ## 实际公司入口
 
@@ -32,7 +32,9 @@ Marriott FY2024/FY2025 实际结果为 B10 69.8%/69.3%、B11 128.23/128.8 USD，
 
 真实 Marriott 来源上的扣留是明确标记的 `CONSTRUCTED_CONTROL_BUSINESS_WITHHELD` 测试替身，**不是财报结论**。它通过公共 Calculator 的扣留结果、公共保存器、公司 CLI 和日常 CSV 验证上述行为。见 [company-consumer.json](company-consumer.json)；成功和扣留重复分别2.220/2.268秒、factory=0，读取0.809秒。首次构造控制误读了 Result 中不存在的 `scope` 字段，失败保存在 `initial-control-error/`；改为使用实际 Trace target 后完成。该错误属于测试控制，不被写成业务来源错误。
 
-新增一项“同年成功→扣留→仅运行其他指标→日常读取”的构造反例在公共7944失败：公共读口回到最后成功pointer，忽略该坐标completed-check，实际显示100/PUBLISHED而应null/WITHHELD。见 [subset-withheld-read.log](subset-withheld-read.log) 及 `test_completed_withheld_survives_read_after_another_metric_subset`。这是一项剩余公共读口缺陷，已交#28唯一实现者修复；本方不写第二控制器。上面的当前请求读口及稳定复跑结果仍成立，**整项历史状态验收尚未完成**。
+新增一项“同年成功→扣留→仅运行其他指标→日常读取”的构造反例在公共7944失败：公共读口回到最后成功pointer，忽略该坐标completed-check，实际显示100/PUBLISHED而应null/WITHHELD。见 [subset-withheld-read.log](subset-withheld-read.log) 及 `test_completed_withheld_survives_read_after_another_metric_subset`。#28唯一实现者在8805777d修复，本方a00480df接收；不写第二控制器。此前失败保留。**本接收矩阵现已通过：61项6.398秒**，见 [shared-state-after-8805777d.log](shared-state-after-8805777d.log)。公共读口逐坐标优先completed记录，检查其声明与Result publication一致；不会改变requested标记或跨财年分组。
+
+还在既有真实Marriott来源/保存结果上，显式构造“后续仅请求B11/FY2025”的latest-execution控制，独立进程读到B10/FY2024仍WITHHELD/null且requested=False，其他三个值保持，读取0.859秒；禁止来源选择和update仍通过，56个结果/pointer文件不变，测试执行元数据随后还原。见 [saved-source-subset-read-verification.json](saved-source-subset-read-verification.json)。扣留和子集执行都是测试控制，未改原财报结论；没有重新计算真实来源。
 
 当期模式使用同一原公共分派，新增参数不会改变默认期间。已完成两年B01、酒店原文及全帧核对直接复用；未重新联网或重新调模型。
 

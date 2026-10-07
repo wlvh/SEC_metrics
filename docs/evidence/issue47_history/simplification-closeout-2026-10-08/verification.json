@@ -1,15 +1,18 @@
 {
   "record_type": "ISSUE47_SIMPLIFICATION_CLOSEOUT",
   "main_observed": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
-  "public_base": "7944bc96",
+  "public_base": "8805777d",
   "historical_branch_origin": "3ff39361; bounded scope repair22c851e1",
   "code_combination": "PR67 public candidate plus task/issue47-history-consumers committed increment",
   "state_tests": {
-    "final_tests": 58,
-    "seconds": 6.482,
+    "final_tests": 61,
+    "seconds": 6.398,
     "initial_public_fixture_failure": "4 alias failures on /var vs /private/var; resolved by public7944, initial and canonical-temp logs preserved",
     "previous_58_passed": true,
-    "overall_history_state_acceptance_complete": false
+    "overall_history_state_acceptance_complete": true,
+    "passed": true,
+    "previous_58_seconds": 6.482,
+    "scope": "The receiving case matrix described here, not all five-year business positions"
   },
   "prior_results_reused": {
     "H1": "PR58 15 tests;8 failed and4 contract-pass originals; requests unchanged; not repeated",
@@ -180,9 +183,35 @@
     "expected_value": null,
     "actual_uses": "last successful pointer after only another metric is executed",
     "expected_uses": "latest completed check for the same metric/year; WITHHELD even when not requested in latest execution",
-    "status": "FAIL",
+    "status": "RESOLVED_BY_PUBLIC_8805777d",
     "constructed_control": true,
     "seconds": 0.049,
-    "public_owner_notified": true
+    "public_owner_notified": true,
+    "failure_preserved": true,
+    "received": true
+  },
+  "public_receiving_merge": "a00480df",
+  "saved_source_subset_read": {
+    "public_fix": "8805777d",
+    "seconds": 0.8592867080587894,
+    "constructed_subset_and_withholding_controls": true,
+    "financial_conclusion": false,
+    "same_saved_real_marriott_sources_and_results": true,
+    "selected_latest_subset": [
+      "B11/FY2025"
+    ],
+    "held_coordinate": "B10/FY2024",
+    "held_value": null,
+    "held_publication": "WITHHELD",
+    "held_not_requested_in_latest_execution": true,
+    "source_selection_and_update_forbidden": true,
+    "protected_result_pointer_file_count": 56,
+    "bytes_unchanged": true,
+    "original_latest_execution_restored": true,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
   }
 }
