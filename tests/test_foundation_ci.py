@@ -14,13 +14,14 @@ import run_foundation_ci as ci
 
 
 class FoundationCiPartitionTest(unittest.TestCase):
-    def test_all_inherited_selectors_are_kept_exactly_once(self):
+    def test_all_inherited_selectors_are_active_or_explicitly_retired_once(self):
         result=ci.partition()
         self.assertEqual(set(ci.inherited.FAST_TESTS),
-                         set(result['fast']) | set(result['source-material']))
+                         set(result['fast']) | set(result['source-material']) | set(result['retired']))
         self.assertFalse(set(result['fast']) & set(result['source-material']))
         self.assertEqual(len(ci.inherited.FAST_TESTS),
-                         len(result['fast'])+len(result['source-material']))
+                         len(result['fast'])+len(result['source-material'])+len(result['retired']))
+        self.assertEqual(result['retired'],('tests.vnext.test_normal_candidate_authority',))
         self.assertIn('tests.vnext.test_financial_duration',result['source-material'])
         # v2 already recognizes this whole-table original as needing a
         # different execution shape. Preserve it whole under material limits.

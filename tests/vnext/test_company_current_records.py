@@ -296,4 +296,41 @@ class SavedSourceCompanyEntryTest(unittest.TestCase):
         self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
 
 
+class MixedSavedBusinessOutcomeTest(unittest.TestCase):
+    """Actual non-calendar sources: stable scope hold cannot erase neighbours."""
+    @classmethod
+    def setUpClass(cls):
+        cls.temp=tempfile.TemporaryDirectory();cls.root=Path(cls.temp.name)
+        cls.work=cls.root/'state';cls.output=cls.root/'output'
+        cls.first=current.run_saved_company(company_id='salesforce',source_root=REPO_ROOT,
+            work_dir=cls.work,output_dir=cls.output,metric_ids=['B01','B03','B12'])
+
+    @classmethod
+    def tearDownClass(cls):cls.temp.cleanup()
+
+    def test_actual_scope_withheld_preserves_two_successful_numeric_results(self):
+        metrics={m['metric_id']:m for m in self.first['metrics']}
+        self.assertEqual([metrics[k]['status'] for k in ('B01','B03','B12')],
+            ['CANDIDATE_READY','CANDIDATE_WITHHELD','CANDIDATE_READY'])
+        view=current.read_current_company(state_root=self.work,company_id='salesforce')
+        rows={m['metric_id']:m for m in view['metrics']}
+        self.assertEqual(rows['B01']['value'],'41525000000')
+        self.assertEqual(rows['B12']['value'],'72400000000')
+        self.assertIsNone(rows['B03']['value'])
+        self.assertEqual(rows['B03']['reason_code'],'B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN')
+        self.assertEqual(rows['B01']['fiscal_year'],2026)
+        self.assertEqual(rows['B01']['period_start'],'2025-02-01')
+        self.assertEqual(rows['B01']['period_end'],'2026-01-31')
+
+    def test_repeated_mixed_inputs_reuse_success_and_hold_without_factory(self):
+        before={k:m['result_id'] for k,m in ((m['metric_id'],m) for m in self.first['metrics'])}
+        with patch('vnext.ordinary_current_update.create_saved_result',side_effect=AssertionError('No repeated mixed calculation')):
+            again=current.run_saved_company(company_id='salesforce',source_root=REPO_ROOT,
+                work_dir=self.work,output_dir=self.output,metric_ids=['B01','B03','B12'])
+        metrics={m['metric_id']:m for m in again['metrics']}
+        self.assertEqual([metrics[k]['status'] for k in ('B01','B03','B12')],
+            ['NO_SOURCE_CONTENT_CHANGE','PREVIOUS_INPUT_WITHHELD','NO_SOURCE_CONTENT_CHANGE'])
+        self.assertEqual({k:m['result_id'] for k,m in metrics.items()},before)
+
+
 if __name__=='__main__':unittest.main()

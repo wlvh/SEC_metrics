@@ -18,19 +18,24 @@ import run_fast_tests_v2 as v2
 # These methods parse full originals across several companies. They are not
 # small-input tests and cannot meaningfully use the old 30-second unit budget.
 MATERIAL_PREFIXES = ('tests.vnext.test_normal_annual_input.NormalAnnualInputTest.',)
+# Only ancestor/creator anti-forgery checks, retired by trusted-internal-20261006.
+# Their old source and runner remain available in the saved historical version.
+RETIRED_SELECTORS = ('tests.vnext.test_normal_candidate_authority',)
 
 
 def partition():
     original = tuple(inherited.FAST_TESTS)
-    source = tuple(s for s in original
+    retired = tuple(s for s in original if s in RETIRED_SELECTORS)
+    active = tuple(s for s in original if s not in retired)
+    source = tuple(s for s in active
                    if s == v2.REPLACED
                    or any(s.startswith(prefix) for prefix in (*v2.SOURCE_PREFIXES, *MATERIAL_PREFIXES)))
-    fast = tuple(s for s in original if s not in source)
+    fast = tuple(s for s in active if s not in source)
     if (len(set(original)) != len(original) or set(fast) & set(source)
-            or set(fast) | set(source) != set(original)
-            or len(fast) + len(source) != len(original)):
+            or set(fast) | set(source) | set(retired) != set(original)
+            or len(fast) + len(source) + len(retired) != len(original)):
         raise inherited.FastTestError('FOUNDATION_CI_SELECTOR_COVERAGE_CHANGED')
-    return {'fast':fast, 'source-material':source}
+    return {'fast':fast, 'source-material':source, 'retired':retired}
 
 
 def run_fast_suite(selected):
@@ -62,6 +67,7 @@ def main():
     selected = suites[args.suite]
     if args.list:
         print(json.dumps({'suite':args.suite, 'selectors':selected,
+                          'retired_selectors':suites['retired'],
                           'total_inherited':len(inherited.FAST_TESTS)}, indent=2))
         return 0
     if not 1 <= args.jobs <= len(selected):
@@ -76,6 +82,7 @@ def main():
     print(json.dumps({'suite':args.suite, 'status':status,
         'duration_seconds':time.monotonic()-start,
         'jobs':1 if args.suite == 'fast' else args.jobs, 'selected_selectors': selected,
+        'retired_selectors':suites.get('retired',()),
         'total_inherited':len(inherited.FAST_TESTS), 'tests':results}, sort_keys=True))
     return 0 if status == 'PASSED' else 1
 
