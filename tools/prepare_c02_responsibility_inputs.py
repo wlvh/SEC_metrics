@@ -8,13 +8,13 @@ import argparse
 import copy
 import hashlib
 import json
-import re
 from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from vnext.continuous_request_context import measure_request, with_request_limits
+from vnext.continuous_request_context import measure_request
+from vnext.c02_request_budget import with_c02_output_budget
 from vnext.request_limits import RequestLimits
 
 
@@ -32,7 +32,7 @@ def prepare_groups(raw, *, limits=None, max_groups=8, clarify_determinations=Fal
           and limits.max_payload_bytes<=8*1024*1024 and limits.output_tokens<=8192,
           'C02_GROUP_RESOURCE_CEILING_EXCEEDED')
     _need(type(max_groups) is int and 1<=max_groups<=8,'C02_GROUP_COUNT_BOUND_INVALID')
-    body=json.loads(with_request_limits(raw,limits=limits))
+    body=json.loads(with_c02_output_budget(raw,limits=limits))
     data=json.loads(body['messages'][1]['content'])
     _need(set(data)=={'strings','block_count','geometry','tables'},'C02_GROUP_INPUT_FORMAT_UNSUPPORTED')
     _need(type(data['block_count']) is int and 0<=data['block_count']<=len(data['strings'])
@@ -42,10 +42,6 @@ def prepare_groups(raw, *, limits=None, max_groups=8, clarify_determinations=Fal
     original_prompt=body['messages'][0]['content']
     _need(original_prompt.count('all HTML tables')==1,'C02_GROUP_PROMPT_FORMAT_UNSUPPORTED')
     original_prompt=original_prompt.replace('all HTML tables','the complete assigned HTML tables',1)
-    # A configured envelope must not retain a contradictory textual budget.
-    original_prompt,count=re.subn(r'complete JSON within [0-9]+ output tokens',
-        f'complete JSON within {limits.output_tokens} output tokens',original_prompt)
-    _need(count<=1,'C02_GROUP_MULTIPLE_TEXTUAL_OUTPUT_LIMITS')
     if clarify_determinations:
         original_prompt += ('\nFor an actual independence or qualification assessment, preserve its disclosed standards. '
             'Keep a non-employee determination distinct from independence. Preserve explicitly stated registrant '
