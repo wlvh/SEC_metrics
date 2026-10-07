@@ -1,0 +1,17 @@
+test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
+Constructed history control: a later subset cannot revive old success. ... FAIL
+
+======================================================================
+FAIL: test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
+Constructed history control: a later subset cannot revive old success.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 112, in test_completed_withheld_survives_read_after_another_metric_subset
+    self.assertIsNone(row['value'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: '100' is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.049s
+
+FAILED (failures=1)

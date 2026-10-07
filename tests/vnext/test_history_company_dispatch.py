@@ -65,3 +65,49 @@ class HistoryCompanyDispatchTest(TestCase):
                 '--output-dir', str(self.root/'outputs'), '--metric', 'B10']))
         self.assertEqual(2024, selected.call_args.kwargs['fiscal_year_start'])
         self.assertEqual(2025, selected.call_args.kwargs['fiscal_year_end'])
+
+    def test_completed_withheld_survives_read_after_another_metric_subset(self):
+        """Constructed history control: a later subset cannot revive old success."""
+        import copy
+        import json
+        from tests.vnext.test_company_current_records import CurrentCompanyTest
+        from vnext import company_current_records as current
+        from vnext.csv_output import METRIC_FIELDS, _csv_bytes
+        fixture = CurrentCompanyTest()
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        fixture.run_company(['B01'])
+        prior = fixture.work/'updates/B01/results/first'
+        state = fixture.work/'updates/B01/periods/FY2024'
+        success = state/'results/success'; success.mkdir(parents=True)
+        held = state/'results/held'; held.mkdir()
+        old = copy.deepcopy(fixture.values[str(prior)])
+        old['result'].update(period_start='2024-01-01', period_end='2024-12-31',
+            result_id='constructed-old-success', value='100', publication='PUBLISHED')
+        old['manifest']['target_period']['fiscal_year'] = 2024
+        old['files']['metrics_matrix.csv'] = _csv_bytes(rows=[{
+            **{f: '' for f in METRIC_FIELDS}, 'metric_id': 'B01', 'fiscal_year': '2024',
+            'period_start': '2024-01-01', 'period_end': '2024-12-31',
+            'value': '100', 'unit': 'USD', 'status': 'OK'}], fieldnames=METRIC_FIELDS)
+        fixture.values[str(success)] = old
+        new = copy.deepcopy(old)
+        new['result'].update(result_id='constructed-current-withheld', value=None,
+            publication='WITHHELD', unit=None, reason_code='CONSTRUCTED_CONTROL_BUSINESS_WITHHELD')
+        new['files']['metrics_matrix.csv'] = _csv_bytes(rows=[{
+            **{f: '' for f in METRIC_FIELDS}, 'metric_id': 'B01', 'fiscal_year': '2024',
+            'period_start': '2024-01-01', 'period_end': '2024-12-31', 'status': 'WITHHELD'}],
+            fieldnames=METRIC_FIELDS)
+        fixture.values[str(held)] = new
+        common = {'company_id': 'marriott_international', 'metric_id': 'B01',
+            'requested_fiscal_year': 2024, 'period_end': '2024-12-31',
+            'configuration': {'constructed_control': True}, 'source_census': []}
+        (state/'current-result.json').write_text(json.dumps({**common,
+            'version': 'success', 'result_id': old['result']['result_id']}))
+        (state/'completed-check.json').write_text(json.dumps({**common,
+            'version': 'held', 'result_id': new['result']['result_id'], 'status': 'CANDIDATE_WITHHELD'}))
+        fixture.run_company(['B02'])
+        view = current.read_current_company(state_root=fixture.work, company_id='marriott_international')
+        row = next(r for r in view['metrics'] if r['metric_id'] == 'B01' and r['fiscal_year'] == 2024)
+        self.assertFalse(row['requested_in_latest_execution'])
+        self.assertIsNone(row['value'])
+        self.assertEqual('WITHHELD', row['publication'])

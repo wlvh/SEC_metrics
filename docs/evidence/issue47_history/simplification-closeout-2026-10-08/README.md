@@ -20,9 +20,9 @@ python tools/vnext_company.py results --company marriott_international \
 
 Marriott FY2024/FY2025 实际结果为 B10 69.8%/69.3%、B11 128.23/128.8 USD，期间各为 1月1日至12月31日。保存来源后，生产 case 工厂首跑 16.538秒，复跑 2.342秒且工厂禁止计算仍成功。独立进程读取 0.919秒；32个结果/指针文件保持不变。旧任务独立读取 0.935秒，42个旧文件保持不变。见 [production-cli.json](production-cli.json)、[独立进程复现脚本](check_production_company.py)及对应 stdout/stderr；没有复制来源树或程序树。耗时包含公司命令、检查和出口，不将它写成单独表格计算耗时。
 
-## 公共状态的历史表现
+## 公共状态的历史表现与新发现的读口缺口
 
-58项状态/分派/公司测试 6.482秒全部通过，命令及结果在 [shared-state-and-dispatch-final.log](shared-state-and-dispatch-final.log)。新增5项历史状态及6项分派小例；其余复用公共测试，不另建 runner。早先默认 macOS 临时路径的四项失败是夹具 `/var` 与 `/private/var` 键不一致，原日志保留；公共方 `7944bc96` 修复后在默认路径通过，没有放宽业务断言。
+此前58项状态/分派/公司测试 6.482秒全部通过，命令及结果在 [shared-state-and-dispatch-final.log](shared-state-and-dispatch-final.log)。新增5项历史状态及6项分派小例；其余复用公共测试，不另建 runner。早先默认 macOS 临时路径的四项失败是夹具 `/var` 与 `/private/var` 键不一致，原日志保留；公共方 `7944bc96` 修复后在默认路径通过，没有放宽业务断言。
 
 - 不同年份的同指标各自保存、读取；成功同输入复跑 factory=0。
 - 稳定扣留由 `completed-check.json` 记录，复跑为 `PREVIOUS_INPUT_WITHHELD`、factory=0、不新增同结果目录。
@@ -31,6 +31,8 @@ Marriott FY2024/FY2025 实际结果为 B10 69.8%/69.3%、B11 128.23/128.8 USD，
 - 缺失年份及局部指标失败保留其他期间和指标；小状态恢复无需重新计算。
 
 真实 Marriott 来源上的扣留是明确标记的 `CONSTRUCTED_CONTROL_BUSINESS_WITHHELD` 测试替身，**不是财报结论**。它通过公共 Calculator 的扣留结果、公共保存器、公司 CLI 和日常 CSV 验证上述行为。见 [company-consumer.json](company-consumer.json)；成功和扣留重复分别2.220/2.268秒、factory=0，读取0.809秒。首次构造控制误读了 Result 中不存在的 `scope` 字段，失败保存在 `initial-control-error/`；改为使用实际 Trace target 后完成。该错误属于测试控制，不被写成业务来源错误。
+
+新增一项“同年成功→扣留→仅运行其他指标→日常读取”的构造反例在公共7944失败：公共读口回到最后成功pointer，忽略该坐标completed-check，实际显示100/PUBLISHED而应null/WITHHELD。见 [subset-withheld-read.log](subset-withheld-read.log) 及 `test_completed_withheld_survives_read_after_another_metric_subset`。这是一项剩余公共读口缺陷，已交#28唯一实现者修复；本方不写第二控制器。上面的当前请求读口及稳定复跑结果仍成立，**整项历史状态验收尚未完成**。
 
 当期模式使用同一原公共分派，新增参数不会改变默认期间。已完成两年B01、酒店原文及全帧核对直接复用；未重新联网或重新调模型。
 

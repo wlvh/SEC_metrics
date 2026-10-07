@@ -7,8 +7,9 @@
   "state_tests": {
     "final_tests": 58,
     "seconds": 6.482,
-    "passed": true,
-    "initial_public_fixture_failure": "4 alias failures on /var vs /private/var; resolved by public7944, initial and canonical-temp logs preserved"
+    "initial_public_fixture_failure": "4 alias failures on /var vs /private/var; resolved by public7944, initial and canonical-temp logs preserved",
+    "previous_58_passed": true,
+    "overall_history_state_acceptance_complete": false
   },
   "prior_results_reused": {
     "H1": "PR58 15 tests;8 failed and4 contract-pass originals; requests unchanged; not repeated",
@@ -172,5 +173,16 @@
     "base_ref": "7944bc96",
     "check": "Capability structural alignment only; not business/full acceptance"
   },
-  "receiving_code_commit": "c5e7afc2"
+  "receiving_code_commit": "c5e7afc2",
+  "remaining_subset_read_defect": {
+    "test": "test_completed_withheld_survives_read_after_another_metric_subset",
+    "actual_value": "100",
+    "expected_value": null,
+    "actual_uses": "last successful pointer after only another metric is executed",
+    "expected_uses": "latest completed check for the same metric/year; WITHHELD even when not requested in latest execution",
+    "status": "FAIL",
+    "constructed_control": true,
+    "seconds": 0.062,
+    "public_owner_notified": true
+  }
 }
