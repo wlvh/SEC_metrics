@@ -14,12 +14,16 @@ import run_foundation_ci as ci
 
 
 class FoundationCiPartitionTest(unittest.TestCase):
-    def test_material_checkout_is_shallow_but_old_object_reader_keeps_history(self):
+    def test_material_and_old_object_readers_fetch_only_needed_versions(self):
         body=(ROOT/'.github/workflows/vnext-fast.yml').read_text()
         material=body.split('  inherited-source-material:',1)[1].split('  main-foundation:',1)[0]
         reader=body.split('  main-foundation:',1)[1].split('  # #54',1)[0]
         self.assertIn('fetch-depth: 1',material)
-        self.assertIn('fetch-depth: 0',reader)
+        self.assertIn('fetch-depth: 1',reader)
+        self.assertIn('git fetch --no-tags --depth=1 origin',reader)
+        self.assertIn('requirements/issue_28_v1/baseline_manifest.json',reader)
+        self.assertIn('git show',reader)
+        self.assertNotIn('fetch-depth: 0',reader)
 
     def test_all_inherited_selectors_are_active_or_explicitly_retired_once(self):
         result=ci.partition()
