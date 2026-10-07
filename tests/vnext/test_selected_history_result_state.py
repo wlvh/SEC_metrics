@@ -59,7 +59,7 @@ class SelectedHistoryResultStateTest(TestCase):
                 fiscal_year=year, case_factory=self.factory)
 
     def period_root(self, year, metric="B10"):
-        return self.root / metric / "periods" / ("FY" + str(year))
+        return self.root.resolve() / metric / "periods" / ("FY" + str(year))
 
     def test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates(self):
         self.outcomes[2025, "B11"] = "WITHHELD"
@@ -71,7 +71,9 @@ class SelectedHistoryResultStateTest(TestCase):
         directories = sorted(str(p) for p in self.root.rglob("results/*") if p.is_dir())
         self.forbid_factory = True
         again = [self.run_control(2024), self.run_control(2025, "B11")]
-        self.assertEqual(["NO_SOURCE_CONTENT_CHANGE"] * 2, [r["status"] for r in again])
+        self.assertEqual(["NO_SOURCE_CONTENT_CHANGE", "PREVIOUS_INPUT_WITHHELD"],
+                         [r["status"] for r in again])
+        self.assertEqual("CONSTRUCTED_CONTROL_BUSINESS_WITHHELD", again[1]["result_reason_code"])
         self.assertEqual(counts, len(self.factory_calls))
         self.assertEqual(directories, sorted(str(p) for p in self.root.rglob("results/*") if p.is_dir()))
 
@@ -81,12 +83,14 @@ class SelectedHistoryResultStateTest(TestCase):
         self.outcomes[2024, "B10"] = "WITHHELD"
         held = self.run_control(2024)
         self.assertEqual("CANDIDATE_WITHHELD", held["status"])
-        pointer = json.loads((self.period_root(2024) / "current-result.json").read_text())
+        pointer = json.loads((self.period_root(2024) / "completed-check.json").read_text())
         self.assertEqual(held["version"], pointer["version"])
         self.assertIsNone(self.records[str(self.period_root(2024) / "results" / pointer["version"])]["result"]["value"])
         self.assertEqual("0.698", self.records[str(self.period_root(2024) / "results" / first["version"])]["result"]["value"])
+        self.assertEqual(first["version"], json.loads(
+            (self.period_root(2024) / "current-result.json").read_text())["version"])
         count = len(self.factory_calls)
-        self.assertEqual("NO_SOURCE_CONTENT_CHANGE", self.run_control(2024)["status"])
+        self.assertEqual("PREVIOUS_INPUT_WITHHELD", self.run_control(2024)["status"])
         self.assertEqual(count, len(self.factory_calls))
 
     def test_dependency_source_and_processing_changes_reprocess_withheld_once(self):
@@ -97,13 +101,13 @@ class SelectedHistoryResultStateTest(TestCase):
         source_change = self.run_control(2024)
         self.assertNotEqual(first["version"], source_change["version"])
         count = len(self.factory_calls)
-        self.assertEqual("NO_SOURCE_CONTENT_CHANGE", self.run_control(2024)["status"])
+        self.assertEqual("PREVIOUS_INPUT_WITHHELD", self.run_control(2024)["status"])
         self.assertEqual(count, len(self.factory_calls))
         self.config["processing_version"] = "two"
         config_change = self.run_control(2024)
         self.assertNotEqual(source_change["version"], config_change["version"])
         count = len(self.factory_calls)
-        self.assertEqual("NO_SOURCE_CONTENT_CHANGE", self.run_control(2024)["status"])
+        self.assertEqual("PREVIOUS_INPUT_WITHHELD", self.run_control(2024)["status"])
         self.assertEqual(count, len(self.factory_calls))
 
     def test_missing_year_and_one_metric_failure_preserve_other_periods(self):
@@ -123,11 +127,11 @@ class SelectedHistoryResultStateTest(TestCase):
     def test_completed_withheld_recovers_pointer_without_recalculation(self):
         self.outcomes[2024, "B10"] = "WITHHELD"
         first = self.run_control(2024)
-        pointer = self.period_root(2024) / "current-result.json"
+        pointer = self.period_root(2024) / "completed-check.json"
         self.assertTrue(pointer.is_file())
         pointer.unlink()  # Own tiny temporary state only; emulate interrupted commit.
         count = len(self.factory_calls)
         again = self.run_control(2024)
-        self.assertEqual("NO_SOURCE_CONTENT_CHANGE", again["status"])
+        self.assertEqual("PREVIOUS_INPUT_WITHHELD", again["status"])
         self.assertEqual(first["version"], json.loads(pointer.read_text())["version"])
         self.assertEqual(count, len(self.factory_calls))

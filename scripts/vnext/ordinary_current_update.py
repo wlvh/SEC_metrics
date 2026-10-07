@@ -109,6 +109,35 @@ def _recover(root):
     return current
 
 
+def _recover_completed_check(root):
+    """Recover a finished conclusion separately from the last good result."""
+    pointer=root/'completed-check.json'
+    current=strict_json_file(path=pointer) if pointer.is_file() else None
+    pending=[]
+    for path in (root/'checks').glob('*/intent.json'):
+        terminal=path.with_name('terminal.json')
+        if terminal.is_file():
+            report=strict_json_file(path=terminal)
+            if report.get('completed_check') is not None:
+                pending.append((strict_json_file(path=path),report))
+    while True:
+        following=[(i,r) for i,r in pending if i.get('previous_check')==current
+                   and r['completed_check']!=current]
+        if not following:break
+        _need(len(following)==1,'CURRENT_UPDATE_COMPLETED_CHECK_BRANCH')
+        intent,report=following[0];state=report['completed_check']
+        saved=read_saved_result(output_root=root/'results'/state['version'])
+        expected='PUBLISHED' if state['status']=='CANDIDATE_READY' else 'WITHHELD'
+        _need(state['status'] in {'CANDIDATE_READY','CANDIDATE_WITHHELD'}
+              and saved['result']['publication']==expected
+              and saved['result']['result_id']==state['result_id']
+              and saved['manifest']['company_id']==state['company_id']
+              and saved['manifest']['metric_id']==state['metric_id'],
+              'CURRENT_UPDATE_COMPLETED_CHECK_RECORD_CHANGED')
+        _write(pointer,state);current=state;pending.remove((intent,report))
+    return current
+
+
 def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
              fiscal_year=None, case_factory=None, processing_files=()):
     """One current deterministic update; identical raw input never calculates."""
@@ -128,12 +157,17 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
         _need(not (root/'configuration.json').exists(), 'CURRENT_UPDATE_OLD_NATIVE_HISTORY_REQUIRES_ORIGINAL_CONTROLLER')
         pointer = root/'current-result.json'
         previous = _recover(root)
+        completed = _recover_completed_check(root)
+        comparison = completed or previous
+        if completed:
+            _need(completed['company_id']==company_id and completed['metric_id']==metric_id,
+                  'CURRENT_UPDATE_WRONG_COMPLETED_COORDINATE')
         if previous:
             _need(previous['company_id']==company_id and previous['metric_id']==metric_id,
                   'CURRENT_UPDATE_WRONG_HISTORY_COORDINATE')
         identity = uuid4().hex; attempt = root/'checks'/identity
         _write(attempt/'intent.json',{'attempt_id':identity,'company_id':company_id,'metric_id':metric_id,
-                                    'previous_result':previous})
+                                    'previous_result':previous,'previous_check':completed})
         try:
             configuration = _configuration(source,company_id,metric_id)
             _need(type(processing_files) in (list,tuple) and len(processing_files)==len(set(processing_files)),
@@ -154,17 +188,22 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                                      'sha256':sha256_file(path=Path(producer_path))}}
             census = _source_census(source,company_id)
             source_errors = [r for r in census if r['status_code']!='200' or r['error']]
-            if previous:
-                saved = read_saved_result(output_root=root/'results'/previous['version'])
+            if comparison:
+                saved = read_saved_result(output_root=root/'results'/comparison['version'])
                 _need(saved['manifest']['company_id']==company_id and saved['manifest']['metric_id']==metric_id,
                       'CURRENT_UPDATE_SAVED_COORDINATE_CHANGED')
+                _need(saved['result']['result_id']==comparison['result_id'],
+                      'CURRENT_UPDATE_COMPLETED_RESULT_ID_CHANGED')
                 current = _current_sources(source,saved['manifest']['source_proofs'])
                 old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
-                if configuration==previous['configuration'] and census==previous.get('source_census') and current==old:
-                    report = {'status':'NO_SOURCE_CONTENT_CHANGE','attempt_id':identity,
-                        'version':previous['version'],'result_id':saved['result']['result_id'],
-                        'result_root':str(root/'results'/previous['version']),
+                if configuration==comparison['configuration'] and census==comparison.get('source_census') and current==old:
+                    status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
+                            else 'NO_SOURCE_CONTENT_CHANGE')
+                    report = {'status':status,'attempt_id':identity,
+                        'version':comparison['version'],'result_id':saved['result']['result_id'],
+                        'result_root':str(root/'results'/comparison['version']),
+                        'result_reason_code':saved['result'].get('reason_code'),
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
@@ -193,18 +232,22 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             report={'status':'CANDIDATE_READY' if saved['result']['publication']=='PUBLISHED' else 'CANDIDATE_WITHHELD',
                     'attempt_id':identity,'version':version,'result_id':saved['result']['result_id'],
                     'result_root':str(root/'results'/version),'calculation_performed':True,'new_candidate_created':True,
+                    'result_reason_code':saved['result'].get('reason_code'),
                     'source_observation_errors':source_errors,
                     'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
             if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
             if report['status']=='CANDIDATE_READY': report['completed_state']=state
+            report['completed_check']={**state,'status':report['status']}
             _write(attempt/'terminal.json',report)
             if report['status']=='CANDIDATE_READY': _write(pointer,state)
+            _write(root/'completed-check.json',report['completed_check'])
             _write(root/'latest-check.json',report)
-            return {k:v for k,v in report.items() if k!='completed_state'}
+            return {k:v for k,v in report.items() if k not in {'completed_state','completed_check'}}
         except Exception as error:
             report={'status':'INPUT_OR_EXECUTION_FAILED','attempt_id':identity,
                     'error_type':type(error).__name__,'reason':str(error),'previous_result':previous,
                     'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
             if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
             if getattr(error,'category',None) is not None:report['error_category']=error.category
-            _write(attempt/'terminal.json',report); _write(root/'latest-check.json',report); return report
+            if not (attempt/'terminal.json').exists():_write(attempt/'terminal.json',report)
+            _write(root/'latest-check.json',report); return report

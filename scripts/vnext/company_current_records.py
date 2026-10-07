@@ -119,7 +119,8 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
             if year is not None:observation['requested_fiscal_year']=year
             pointer = period_controller/'current-result.json'
             previous = observation['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
-            new_record = observation.get('result_root') if observation['status'] == 'CANDIDATE_WITHHELD' else None
+            new_record = (observation.get('result_root')
+                          if observation['status'] in {'CANDIDATE_WITHHELD','PREVIOUS_INPUT_WITHHELD'} else None)
             if pointer.is_file() or new_record:
                 try:
                     state = strict_json_file(path=pointer) if pointer.is_file() else None
@@ -237,6 +238,8 @@ def _read_current_company(root, company_id, defects_file, output_root):
                 'fiscal_year':saved['manifest']['target_period']['fiscal_year'],
                 'value': None if holds or not scope_ready else result.get('value'),
                 'unit': None if holds or not scope_ready else result.get('unit'),
+                'publication':result.get('publication'),'quality':result.get('quality'),
+                'reason_code':result.get('reason_code'),
                 'result_validity': ('CONFIRMED_INVALID' if holds else 'CURRENT_SCOPE_NOT_READY' if not scope_ready
                                     else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED'),
                 'defect_holds': holds, 'latest_observation': observation['status'],
