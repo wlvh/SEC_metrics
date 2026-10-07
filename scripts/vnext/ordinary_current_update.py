@@ -49,6 +49,7 @@ def _configuration(source, company, metric):
     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
                   'config/company_registry.csv'})
     if metric == 'B03':
+        paths.add('catalog/r6/text_results_v2_policy.json')
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'ordinary_da_scope_v1','ordinary_b03_input_scope','b03_depreciation_scope',
             'b03_contract_amortization_scope','financial_structured','text_results_v2'))

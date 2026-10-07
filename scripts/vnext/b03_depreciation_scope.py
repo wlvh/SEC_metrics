@@ -18,6 +18,7 @@ from .deterministic_router import (
     _numeric_xbrl_value, parse_accession_xbrl_source)
 from .financial_structured import _InlineTableIndex, _fact_cells
 from .sources import resolve_repository_file
+from .text_results_v2 import _ReportedFactMetadata
 
 
 _NARROW = re.compile(
@@ -211,10 +212,17 @@ def assess_direct_depreciation_scope(*, case, data_root):
     _need(sha256_bytes(content=raw) == proof['content_sha256'],
           'B03_SCOPE_PRIMARY_BYTES_CHANGED')
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
+    metadata = _ReportedFactMetadata()
+    metadata.feed(raw.decode('utf-8-sig')); metadata.close()
+    _need(metadata.ordinal == len(parsed.facts), 'B03_SCOPE_NATIVE_STREAM_CHANGED')
     period = case['target_period']
     facts = []
     for fact in parsed.facts:
-        if fact['qualified_name'] not in _DA_CONCEPTS:
+        uri, local_name = metadata.facts[fact['ordinal']]['concept']
+        concept = 'us-gaap:' + local_name
+        if concept not in _DA_CONCEPTS:
+            continue
+        if not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri):
             continue
         context = parsed.contexts[fact['context_ref']]
         if (context['period_start'] != period['period_start']
@@ -224,13 +232,17 @@ def assess_direct_depreciation_scope(*, case, data_root):
                 or str(int(context['entity_identifier'])) !=
                    str(int(binding['entity']))):
             continue
+        if metadata.units.get(fact['unit_ref']) != {
+                'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
+                'divided': False}:
+            continue
         try:
             value = str(_numeric_xbrl_value(text=fact['text'],
                 scale=fact['scale'], sign=fact['sign']))
         except (ValueError, TypeError):
             continue
         facts.append({'ordinal': fact['ordinal'],
-            'concept': fact['qualified_name'], 'value': value,
+            'concept': concept, 'value': value,
             'context_ref': fact['context_ref']})
     selected_rows = [fact for fact in facts
         if fact['concept'] == binding['concept']

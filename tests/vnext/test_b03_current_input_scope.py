@@ -3,6 +3,8 @@ from decimal import Decimal
 from pathlib import Path
 import shutil
 import json
+from copy import deepcopy
+from unittest.mock import patch
 import tempfile
 import unittest
 
@@ -81,6 +83,58 @@ class CurrentDaScopeTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.check([('DepreciationDepletionAndAmortization','1200000000','INF',{'scheme':'https://example.invalid/company'})])
 
+    def test_legal_gaap_prefix_alias_composition_keeps_same_quantity(self):
+        rows=[('Depreciation','7','INF'),('AmortizationOfIntangibleAssets','13','INF')]
+        observations=[{'semantic_role':role,'value':value,'source_binding':{'concept':'us-gaap:'+concept}}
+            for role,concept,value in [('depreciation','Depreciation','7'),('amortization','AmortizationOfIntangibleAssets','13')]]
+        alias=original(rows)
+        canonical=alias.replace(b'xmlns:gaap=',b'xmlns:us-gaap=').replace(b'name="gaap:',b'name="us-gaap:')
+        args=dict(entity='195',period=PERIOD,observations=observations)
+        for raw in (alias,canonical):
+            answer=inspect_depreciation_input(raw_bytes=raw,**args)
+            self.assertEqual(answer['status'],'KEEP')
+            self.assertEqual(answer['chain_input']['value'],'20')
+
+    def test_context_policy_alone_changes_update_configuration_and_requires_calculation(self):
+        from vnext import ordinary_current_update as update
+        from vnext import text_results_v2 as context_rules
+        raw=original([('DepreciationDepletionAndAmortization','20','INF')])
+        args=dict(raw_bytes=raw,entity='195',period=PERIOD,observations=[observation('DepreciationDepletionAndAmortization','20')])
+        self.assertEqual(inspect_depreciation_input(**args)['status'],'KEEP')
+        before=update._configuration(REPO_ROOT,'marriott_international','B03')
+        self.assertIn('catalog/r6/text_results_v2_policy.json',before['processing_files'])
+        changed=deepcopy(context_rules._CAPABILITY_POLICY);changed['cik_identifier_schemes']=['https://www.sec.gov/CIK']
+        actual_hash=update.sha256_file
+        def changed_hash(*,path):
+            return 'changed-policy' if Path(path).name=='text_results_v2_policy.json' else actual_hash(path=path)
+        with patch.object(context_rules,'_CAPABILITY_POLICY',changed),patch.object(update,'sha256_file',side_effect=changed_hash):
+            with self.assertRaisesRegex(ValueError,'D02_FACT_ENTITY_SCHEME_NOT_PROVEN'):
+                inspect_depreciation_input(**args)
+            after=update._configuration(REPO_ROOT,'marriott_international','B03')
+            self.assertNotEqual(before,after)
+            previous={'company_id':'marriott_international','metric_id':'B03','version':'old','configuration':before,'source_census':[],'result_id':'old'}
+            saved={'manifest':{'company_id':'marriott_international','metric_id':'B03','source_proofs':[]},'result':{'result_id':'old'}}
+            with tempfile.TemporaryDirectory() as temporary,patch.object(update,'_recover',return_value=previous),patch.object(update,'_source_census',return_value=[]),patch.object(update,'read_saved_result',return_value=saved),patch.object(update,'create_saved_result',side_effect=ValueError('TEST_NEW_POLICY_REQUIRES_CURRENT_CALCULATION')) as calculate:
+                report=update.run_once(state_root=Path(temporary)/'state',source_root=REPO_ROOT,company_id='marriott_international',metric_id='B03')
+                calculate.assert_called_once()
+                self.assertNotEqual(report['status'],'NO_SOURCE_CONTENT_CHANGE')
+
+    def test_existing_direct_scope_uses_namespace_alias_and_retains_usd_check(self):
+        from vnext.b03_depreciation_scope import assess_direct_depreciation_scope
+        from vnext.canonical import sha256_bytes
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary);path=root/'primary.htm'
+            raw=original([('DepreciationDepletionAndAmortization','20','INF')]);path.write_bytes(raw)
+            selected={'semantic_role':'depreciation_and_amortization','value':'20',
+                'source_binding':{'concept':'us-gaap:DepreciationDepletionAndAmortization','entity':'195','accession':'fixture'}}
+            case={'primary_metric_id':'B03','results':{'B03':{'publication':'PUBLISHED','reason_code':'PASS'}},
+                'observations':[selected],'target_period':PERIOD,'source_proofs':[{'accession':'fixture','document_name':'primary.htm','request_repo_relative_path':'primary.htm','content_sha256':sha256_bytes(content=raw)}]}
+            self.assertFalse(assess_direct_depreciation_scope(case=case,data_root=root)['blocked'])
+            foreign=original([('DepreciationDepletionAndAmortization','20','INF',{'unit':'GBP'})]);path.write_bytes(foreign)
+            case['source_proofs'][0]['content_sha256']=sha256_bytes(content=foreign)
+            with self.assertRaisesRegex(ValueError,'SELECTED_INLINE_FACT_NOT_FOUND'):
+                assess_direct_depreciation_scope(case=case,data_root=root)
+
 
 class CurrentB03SourceOnlyTest(unittest.TestCase):
     @classmethod
@@ -146,6 +200,22 @@ class CurrentB03SourceOnlyTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'SAVED_RESULT_FILE_CHANGED:input-assessments.json'):
                 read_saved_result(output_root=path.parent)
         finally:path.write_bytes(original)
+
+    def test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias(self):
+        from vnext.b03_contract_amortization_scope import assess_current_b03_scope
+        from vnext.canonical import sha256_bytes
+        saved=self.saved['marriott_international'];records=[json.loads(s) for s in (self.root/'marriott_international-result/records.jsonl').read_text().splitlines()]
+        observations=[r for r in records if r['record_type']=='VERIFIED_OBSERVATION']
+        proof=next(p for p in saved['manifest']['source_proofs'] if p['document_name'].endswith('.htm'))
+        raw=(self.sources['marriott_international']/proof['request_repo_relative_path']).read_bytes()
+        alias=raw.replace(b'xmlns:us-gaap=',b'xmlns:gaap=').replace(b'us-gaap:',b'gaap:')
+        path=self.root/'alias-primary.htm';path.write_bytes(alias)
+        case={'primary_metric_id':'B03','results':{'B03':saved['result']},'observations':observations,
+              'target_period':saved['manifest']['target_period'],'source_proofs':[{**proof,'document_name':'alias-primary.htm','request_repo_relative_path':'alias-primary.htm','content_sha256':sha256_bytes(content=alias)}]}
+        scope=assess_current_b03_scope(case=case,data_root=self.root)
+        self.assertFalse(scope['blocked'])
+        self.assertEqual(scope['status'],'COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED')
+        self.assertTrue(any(Decimal(r['value_usd'])==Decimal('135000000') for r in scope['excluded_facts']))
 
 
 if __name__=='__main__':unittest.main()
