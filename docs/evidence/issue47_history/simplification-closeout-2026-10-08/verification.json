@@ -213,5 +213,17 @@
       "paid": 0,
       "sec": 0
     }
+  },
+  "ci_receiving": {
+    "public_commit": "a4a568b1c135cdfd9390126e49e873e66c474bb9",
+    "received_merge_commit": "d22f49dfe945dc467a21ff85424b22dccfca592e",
+    "production_and_test_source_delta": false,
+    "prior_61_and_real_history_validation_reused": true,
+    "retired_current_candidate_jobs": "old complete native creation/install cohorts; original tests/runtime retained and not relabelled PASS",
+    "retained_c04": "26 source/form/CIK/prior/event checks, public actual7.768s, no skip",
+    "diagnosis": "6 old jobs,20 tests/16errors stopped at issue_28_v11 ancestor source byte guard; downstream business not reached",
+    "other_current_checks_retained": "fast, source material, count/stop, recovery/mixed results, old saved-runtime object reading",
+    "public_ci_run": "37676590569",
+    "last_observed_state": "IN_PROGRESS"
   }
 }
