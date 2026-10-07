@@ -159,13 +159,17 @@ as unresolved. The extraction task and output contract above still apply.
 """
 
 
-def prepare(source_root, company, end, out):
+def prepare(source_root, company, end, out, *, limits=None):
     from vnext.historical_text_input import prepare_historical_business_text_input
     from vnext.historical_text_results import prepare_business_text_sources
     from vnext.normal_history_plan import checkpoint_replayed_once
     from vnext.normal_period_selection import resolve_period_selection
     from vnext.table_grid import build_table_grid
     from vnext.continuous_request_context import measure_request
+    from vnext.c02_request_budget import with_c02_output_budget, c02_request_limits
+    from vnext.request_limits import DEFAULT_LIMITS
+
+    limits = c02_request_limits(limits)
     from vnext.historical_xbrl_parse import xbrl_parsed_once
 
     with checkpoint_replayed_once(), xbrl_parsed_once():
@@ -197,7 +201,9 @@ def prepare(source_root, company, end, out):
         {"role": "system", "content": prompt}, {"role": "user", "content": wire(view).decode()}],
         "response_format": {"type": "json_object"}, "temperature": 0, "max_tokens": 4096,
         "stream": False, "thinking": {"type": "disabled"}}
-    measurement = measure_request(wire(request), require_reference=True)
+    request = json.loads(with_c02_output_budget(wire(request), limits=limits))
+    prompt = request["messages"][0]["content"]
+    measurement = measure_request(wire(request), require_reference=True, limits=limits)
     destination = out / (company + "-" + end)
     destination.mkdir(parents=True, exist_ok=False)
     for name, value in (("view.json", view), ("table-grid.json", derived),
@@ -218,6 +224,8 @@ def prepare(source_root, company, end, out):
                               for n in ("view.json", "table-grid.json", "document.json", "prompt.txt", "request-body.json")},
                 "input_tokens": measurement["input_tokens"], "fits": measurement["fits"],
                 "calls": [0, 0, 0], "model_answer_tested": False, "production_authorized": False}
+    if limits != DEFAULT_LIMITS:
+        metadata["request_limits"] = limits.as_dict()
     (destination / "metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=1) + "\n")
     print(json.dumps({k: metadata[k] for k in ("position", "blocks", "tables", "input_tokens", "fits")}), flush=True)
 
@@ -227,10 +235,13 @@ def main():
     parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--position", action="append", required=True)
+    parser.add_argument("--output-tokens", type=int, default=4096)
     args = parser.parse_args()
     for position in args.position:
         company, end = position.rsplit(":", 1)
-        prepare(args.source_root.resolve(), company, end, args.out.resolve())
+        from vnext.request_limits import RequestLimits
+        prepare(args.source_root.resolve(), company, end, args.out.resolve(),
+                limits=RequestLimits(output_tokens=args.output_tokens))
 
 
 if __name__ == "__main__":
