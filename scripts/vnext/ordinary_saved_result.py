@@ -59,6 +59,7 @@ def _ordinary_case(source, company, metric):
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
         **({'validate_depreciation_scope':True} if metric=='B03' else {}),
         **({'rules_root':program} if separate_rules else {}))
+    income_binding = original['component'].get('input_binding',{})
     detail = original['component']
     if 'metrics' in detail:
         detail = detail['metrics'][metric]
@@ -71,6 +72,9 @@ def _ordinary_case(source, company, metric):
         **({'input_assessments':{'depreciation_scope':detail['selection']['depreciation_scope']}}
            if metric == 'B03' and detail.get('selection',{}).get('depreciation_scope') is not None else {}),
         'prepared_annual_input': original['component'].get('prepared_input'),
+        **({'prepared_income_input':income_binding['current_income_input'],
+            'income_observation_checks':income_binding['income_observation_checks']}
+           if income_binding.get('current_income_input') is not None else {}),
         'selection': detail.get('selection', detail.get('inspection'))}
 
 

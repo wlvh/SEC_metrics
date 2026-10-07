@@ -101,6 +101,18 @@ def render_ordinary_records(*, data_root, manifest, records, case,
               if prepared_annual_input is None else prepared_annual_input)
     period = annual["table_input"]["target_period"]
     _need(period["fiscal_year"] == manifest["target_period"]["fiscal_year"],"ORDINARY_PROJECTION_FISCAL_LABEL_CHANGED")
+    income = case.get('prepared_income_input')
+    income_period_proven = False
+    if income is not None:
+        income_period_proven = (metric in {'B01','B03'}
+            and income['company_id'] == manifest['company_id']
+            and income['annual_input'] == annual.get('original_input',annual)
+            and income['statement_period'] == manifest['target_period']
+            and all(result[key] == income['statement_period'][key]
+                    for key in ('period_start','period_end'))
+            and income['financial_cross_entity_combination_authorized'] is False
+            and period['period_start'] <= result['period_start'] < result['period_end'] == period['period_end'])
+        _need(income_period_proven, 'ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED')
     if prepared_annual_input is not None:
         from .traits import repository_company_ciks
         _need(annual['company_id'] == manifest['company_id']
@@ -110,10 +122,14 @@ def render_ordinary_records(*, data_root, manifest, records, case,
         _need(annual['filing']['reportDate'] == period['period_end']
               and result['period_end'] == period['period_end']
               and (result['period_start'] == period['period_start'] or
-                   result['period_start'] == result['period_end']),
+                   result['period_start'] == result['period_end'] or income_period_proven),
               'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')
     indexes = projector._record_indexes(runs=[(manifest,records)])
     trace = indexes["traces"][result["trace_id"]]
+    if income_period_proven and result.get('value') is not None:
+        checked = {c['observation_id'] for c in case.get('income_observation_checks',[])}
+        _need(set(trace['input_observation_ids']) <= checked,
+              'ORDINARY_PROJECTION_INCOME_OBSERVATION_PROOF_MISSING')
     ordered,_ = projector._ordered_observations(trace=trace,observations=indexes["observations"],projection=projection)
     presentation = case.get('presentation_policy')
     _need(presentation in {None, A05_FORMULA_POLICY},
