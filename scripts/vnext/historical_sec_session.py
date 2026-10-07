@@ -887,7 +887,8 @@ class HistoricalSecSession:
             admitted = request_is_in_scope(allowance=self.allowance,
                                            company_id=company_id,
                                            dependency=dependency, purpose=purpose,
-                                           frame_report_dates=frame["target_report_dates"])
+                                           frame_report_dates=frame["target_report_dates"],
+                                           bounded_capture=limited)
             receipt, terminal = self._capture_one(company_id=company_id, url=url,
                                                   dependency=dependency,
                                                   admitted=admitted, reclaim=reclaim)

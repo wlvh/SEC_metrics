@@ -725,7 +725,7 @@ def register_approval(*, repo_root: Path, comment_url, reader):
 
 
 def request_is_in_scope(*, allowance, company_id, dependency, purpose,
-                       frame_report_dates=None):
+                       frame_report_dates=None, bounded_capture=None):
     """Whether this exact request is one the approval covers.
 
     A URL being a real dependency is not the same as this grant allowing it to
@@ -772,6 +772,18 @@ def request_is_in_scope(*, allowance, company_id, dependency, purpose,
                       and dependency["dependency_class"] in grant["dependency_classes"]
                       and all(grant["earliest_report_end"] <= period <= grant["latest_report_end"]
                               for period in periods))
+    # A later extension replaces the broad collection scope. An owner's
+    # separately resumed exact capture is narrower than those grants: one
+    # company/URL, one attempt, zero retries. Keep the ordinary company,
+    # purpose, class and date checks above; do not restore the earlier broad
+    # grant or infer permission from the remaining ledger balance.
+    exact = (bounded_capture is not None
+             and bounded_capture.get("company_id") == company_id
+             and bounded_capture.get("source_url") == dependency["source_url"]
+             and bounded_capture.get("maximum_additional_sec_calls") == 1
+             and bounded_capture.get("retry_count") == 0)
+    if not covering and exact:
+        covering = ["OWNER_APPROVED_BOUNDED_CAPTURE"]
     _need(covering, "ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT:" + company_id + ":"
           + str(dependency["dependency_class"]) + ":" + ",".join(periods))
     return {"company_id": company_id, "purpose": purpose,
