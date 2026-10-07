@@ -48,7 +48,6 @@ def native(source, annual):
 def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
                           reported_relations=False):
     need(type(reported_relations) is bool, 'REPORTED_RELATIONS_OPTION_INVALID')
-    need(not reported_relations, 'REPORTED_RELATIONS_SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED')
     sources = {'primary': primary, 'xml': xml}
     native_sources = {kind: native(source, annual) for kind, source in sources.items()}
     end = annual['table_input']['target_period']['period_end']
@@ -88,8 +87,6 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
                    'ordinal': fact['ordinal'], 'context_ref': fact['context_ref'],
                    'context': {**c, 'dimensions': dict(c['dimensions'])}, 'context_proof': context_proof,
                    'decimals': item['attrs'].get('decimals'), 'source_reference': sources[kind]['source_reference']}
-            if reported_relations and kind == 'primary':
-                row['reported_scale'] = fact['scale']
             reports[kind].setdefault(name.casefold(), []).append(row)
     parsed = native_sources['primary'][0]
     index = _InlineTableIndex(primary['raw_bytes'])
@@ -155,16 +152,17 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules,
         from .industrial_lease_relation import inspect_inclusion
         body['record_type'] = 'ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2'
         body['lease_inclusion'] = (inspect_inclusion(primary=primary, parsed=parsed,
-            reported_components=chosen, lease_reports=body['native_finance_lease_reports'])
+            reported_components=chosen, lease_reports=body['native_finance_lease_reports'],
+            native_sources=native_sources, index=index, sources=sources)
             if scope_class == 'industrial' else {'status': 'NOT_APPLICABLE_TO_BANK_SCOPE'})
         if scope_class == 'industrial' and 'INDUSTRIAL_DEBT_SET_COMPLETENESS_NOT_ESTABLISHED' not in body['limitations']:
             body['limitations'].append('INDUSTRIAL_DEBT_SET_COMPLETENESS_NOT_ESTABLISHED')
+        body = exact_json_value(body)
     return {**body, 'scope_source_id': content_hash(value=body)}
 
 
 def prepare_special_debt_case(*, repo_root: Path, company_id: str, reported_relations=False):
     need(type(reported_relations) is bool, 'REPORTED_RELATIONS_OPTION_INVALID')
-    need(not reported_relations, 'REPORTED_RELATIONS_SUSPENDED_CARRIER_NATIVE_UNIT_UNVERIFIED')
     rules = strict_json_file(path=repo_root / POLICY_PATH)
     need(rules == strict_json_file(path=ROOT / POLICY_PATH) and rules['full_ratio_enabled'] is False,
          'INSTALLED_RULES_CHANGED')
