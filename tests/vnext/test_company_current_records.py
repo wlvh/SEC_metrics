@@ -160,6 +160,37 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(self.rows(result)[0]['value'],'')
         self.assertEqual(json.loads((self.work/'updates/B01/current-result.json').read_text())['version'],'first')
 
+    def test_completed_withheld_survives_a_later_different_metric_request(self):
+        self.run_company(['B01'])
+        controller=self.work/'updates/B01';record=controller/'results/held';record.mkdir()
+        old=self.values[str(controller/'results/first')]
+        old['result'].update(value='100',unit='USD',publication='PUBLISHED')
+        row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':'B01',
+             'status':'WITHHELD','period_start':'2025-01-01','period_end':'2025-12-31','fiscal_year':'2025'}
+        self.values[str(record)]={'result':{**old['result'],'value':None,'publication':'WITHHELD',
+            'result_id':'held-result','reason_code':'CONSTRUCTED_SCOPE_CONFLICT'},
+            'manifest':{'target_period':{'fiscal_year':2025}},
+            'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                     'metric_evidence.csv':old['files']['metric_evidence.csv']}}
+        (controller/'completed-check.json').write_text(json.dumps({'company_id':'marriott_international',
+            'metric_id':'B01','status':'CANDIDATE_WITHHELD','version':'held','result_id':'held-result'}))
+        self.run_company(['B02'])
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        held=next(m for m in view['metrics'] if m['metric_id']=='B01')
+        self.assertIsNone(held['value']);self.assertEqual(held['publication'],'WITHHELD')
+        self.assertEqual(held['result_id'],'held-result');self.assertFalse(held['requested_in_latest_execution'])
+        self.assertEqual(json.loads((controller/'current-result.json').read_text())['version'],'first')
+
+    def test_completed_pointer_cannot_label_a_success_record_as_withheld(self):
+        self.run_company(['B01'])
+        controller=self.work/'updates/B01';old=self.values[str(controller/'results/first')]
+        old['result']['publication']='PUBLISHED'
+        (controller/'completed-check.json').write_text(json.dumps({'company_id':'marriott_international',
+            'metric_id':'B01','status':'CANDIDATE_WITHHELD','version':'first','result_id':'B01-result'}))
+        self.run_company(['B02'])
+        with self.assertRaisesRegex(ValueError,'COMPLETED_PUBLICATION_CHANGED'):
+            current.read_current_company(state_root=self.work,company_id='marriott_international')
+
     def test_common_company_reader_keeps_other_metric_after_subset_run(self):
         from vnext.company_result_view import read_company_results
         self.run_company()

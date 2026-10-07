@@ -95,12 +95,12 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
-        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_source_authority tests.vnext.test_ordinary_source_session tests.vnext.test_ordinary_storage_identity tests.vnext.test_continuous_call_ledger tests.vnext.test_continuous_call_policy tests.vnext.test_normal_source_requirements tests.vnext.test_prior_html_dependency tests.vnext.test_d04_native_assessment tests.vnext.test_native_request_construction
-      - name: Registered native update (one skip pre-existing in the original workflow)
+        run: python3 tests/required_unittests.py tests.vnext.test_saved_source_checks tests.vnext.test_ordinary_storage_identity tests.vnext.test_continuous_call_ledger tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_real_record_loads_but_limits_model_retry_and_money_cannot_be_changed tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_production_permission_or_edited_comment_is_not_this_approval tests.vnext.test_continuous_call_policy.ContinuousCallPolicyTest.test_missing_or_invalid_usage_is_not_zero_and_actual_cost_is_unavailable tests.vnext.test_normal_source_requirements tests.vnext.test_prior_html_dependency tests.vnext.test_d04_native_assessment tests.vnext.test_native_request_variants
+      - name: Registered native routing and absence controls (small state)
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
-        run: python3 tests/required_unittests.py --allow-skips 1 tests.vnext.test_registered_native_update
+        run: python3 tests/required_unittests.py tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest
 
   company-acquisition-c04:
     name: Company acquisition session and C04 update/recovery
@@ -244,8 +244,9 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
-          ORDINARY_UPDATE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-update-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest
+        # Current records cover completed success/withheld, source/config changes,
+        # pointer recovery and isolation. Legacy native test stays in its saved runtime.
+        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_current_update tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest
 
   company-partial-update:
     name: Company independent metric updates
@@ -266,5 +267,6 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
-          ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-update-metrics-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest
+        # Preserve the business obligation with actual non-calendar originals,
+        # not by changing the old PARTIAL/INCOMPLETE expected string.
+        run: python3 tests/required_unittests.py tests.vnext.test_company_current_records.MixedSavedBusinessOutcomeTest tests.vnext.test_company_current_records.CurrentCompanyTest

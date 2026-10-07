@@ -211,13 +211,21 @@ def _read_current_company(root, company_id, defects_file, output_root):
 
     observations = {coordinate(normalize(m)): {**normalize(m), 'requested_in_latest_execution': True}
                     for m in report['metrics']}
-    for pointer in sorted((root/'updates').glob('**/current-result.json')):
+    controllers={p.parent for name in ('current-result.json','completed-check.json')
+                 for p in (root/'updates').glob('**/'+name)}
+    for controller in sorted(controllers):
+        completed=controller/'completed-check.json'
+        pointer=completed if completed.is_file() else controller/'current-result.json'
         state = strict_json_file(path=pointer)
         metric = state['metric_id']
         _need(state['company_id'] == company_id, 'COMPANY_CURRENT_READ_POINTER_COORDINATE_CHANGED')
+        if pointer==completed:
+            _need(state['status'] in {'CANDIDATE_READY','CANDIDATE_WITHHELD'},
+                  'COMPANY_CURRENT_READ_COMPLETED_STATUS_INVALID')
         stored = {'metric_id': metric, 'status': 'NOT_REQUESTED_IN_LATEST_EXECUTION',
             'record_root': str(pointer.parent/'results'/state['version']), 'read_result_id': state['result_id'],
             'requested_fiscal_year':state.get('requested_fiscal_year'), 'requested_in_latest_execution': False}
+        if pointer==completed:stored['completed_conclusion']=state['status']
         key = coordinate(stored)
         if key not in observations:observations[key] = stored
     rows, matrix, evidence = [], [], []
@@ -231,6 +239,10 @@ def _read_current_company(root, company_id, defects_file, output_root):
             result = saved['result']
             _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']
                   and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')
+            conclusion=observation.get('completed_conclusion')
+            if conclusion is not None:
+                _need(result.get('publication')==('PUBLISHED' if conclusion=='CANDIDATE_READY' else 'WITHHELD'),
+                      'COMPANY_CURRENT_READ_COMPLETED_PUBLICATION_CHANGED')
             holds = _defects(result, registry)
             scope_ready = result['metric_id'] in CURRENT_METRICS
             rows.append({'metric_id': result['metric_id'], 'result_id': result['result_id'],

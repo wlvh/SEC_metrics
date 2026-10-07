@@ -1,0 +1,133 @@
+{
+  "subset_seconds": 7.864557875087485,
+  "independent_read_seconds": 0.011882832972332835,
+  "subset": {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "paramount_skydance_paramount_global",
+    "run_id": "20261007T184953Z-7a58e964",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B08"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B08",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "595d826981b542818de9ddee4abf4602",
+        "version": "63769acfcd6b4963a94938a593964e38",
+        "result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B08/results/63769acfcd6b4963a94938a593964e38",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B08/results/63769acfcd6b4963a94938a593964e38",
+        "program_version": {
+          "commit": "7944bc96e7996e6b7b70253ae3c65e08ae0a1105",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-output-20261007/20261007T184953Z-7a58e964",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "view": {
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "paramount_skydance_paramount_global",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007",
+    "metrics": [
+      {
+        "metric_id": "B08",
+        "result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "1.256722332295499575431644495",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "CANDIDATE_READY",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B08/results/63769acfcd6b4963a94938a593964e38"
+      },
+      {
+        "metric_id": "B01",
+        "result_id": "sha256:b1a42a049d8eacd5554f63dddb2ed5c762b7d1cb80a84adab2e3ccb7b4255c80",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/ecdd48088f19439b988b11e2e9aa1821"
+      },
+      {
+        "metric_id": "B02",
+        "result_id": "sha256:cbab8165ffac6c5cbe9c4ea0b56a037980e46574a68419bb1916ba8f8a5299ef",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B02/results/69482b5e5be649fa8b83e60ae24e729e"
+      },
+      {
+        "metric_id": "B03",
+        "result_id": "sha256:cc9436e5edcb3e0911de091c386702de6434b1cd8d6b384a170f3c4c46c5f77e",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B03/results/3496024e54cf43338810fe5d0ec18352"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  }
+}
