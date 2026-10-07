@@ -113,6 +113,9 @@ def visible_scale(*, structure, table, raw):
     for d in declarations:
         # A debt's original currency is not the reporting unit of this table.
         # Only an explicit unit declaration can contradict the native USD.
+        if (re.search(r'(?:\bin\s+|\()\s*(?:(?:thousands|millions|billions)\s*(?:of\s*)?)?[€£¥]\s*(?:[,)]|$)', d['text'], re.I)
+                or re.fullmatch(r'\s*[€£¥]\s*', d['text'])):
+            return None
         for match in re.finditer(r'\bin (dollars|thousands|millions|billions|euros?|pounds?|yen|USD|EUR|GBP|JPY)(?: of (dollars|euros?|pounds?|yen|USD|EUR|GBP|JPY))?(?=\s*(?:,|\)|$))', d['text'], re.I):
             currency = (match[2] or match[1]).casefold()
             if currency in {'euro', 'euros', 'pound', 'pounds', 'yen', 'eur', 'gbp', 'jpy'}:

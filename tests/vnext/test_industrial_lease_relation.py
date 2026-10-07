@@ -93,6 +93,12 @@ class IndustrialLeaseRelationTest(unittest.TestCase):
                 ('<p>The carrying amounts are as follows (in dollars).</p>', '<caption>Amounts (in millions)</caption>')):
             self.assertEqual('UNRESOLVED', inspect_inclusion(**fixture(introduction=introduction,caption=caption))['status'])
 
+    def test_explicit_foreign_currency_symbols_cannot_be_ignored(self):
+        for symbol in ('€', '£', '¥'):
+            for unit in ('in '+symbol, symbol, 'in millions of '+symbol):
+                self.assertEqual('UNRESOLVED', inspect_inclusion(**fixture(
+                    caption='<caption>Amounts ('+unit+')</caption>'))['status'])
+
     def alter_carrier_namespace(self, args, *, alias=False):
         raw=args['sources']['xml']['raw_bytes']
         def change(match):

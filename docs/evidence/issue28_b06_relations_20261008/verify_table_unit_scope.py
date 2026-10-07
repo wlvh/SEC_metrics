@@ -39,10 +39,21 @@ assert result['lease_inclusion']['status'] == 'REPORTED_INCLUDED'
 assert result['lease_inclusion']['additional_debt_amount'] == '0'
 assert result['reported_subtotal'] == original['reported_subtotal'] == '21919000000'
 assert result['definition_complete'] is False and result['ratio'] is None
+caption = b'<caption>Amounts (in \xe2\x82\xac)</caption>'
+tag_end = raw.index(b'>', start) + 1
+foreign_bytes = raw[:tag_end] + caption + raw[tag_end:]
+foreign = deepcopy(prepared['primary'])
+foreign['raw_bytes'] = foreign_bytes
+foreign['source_reference']['raw_asset_id'] = 'sha256:' + sha256_bytes(content=foreign_bytes)
+conflict = inspect(foreign)
+assert conflict['lease_inclusion']['status'] == 'UNRESOLVED'
+assert conflict['lease_inclusion']['additional_debt_amount'] is None
 print(json.dumps({'seconds': time.monotonic() - started, 'code_root': str(ROOT),
     'source_root': str(source.resolve()), 'source_kind': 'MEMORY_DERIVED_TEST_ONLY',
     'original_primary_sha256': sha256_bytes(content=raw),
     'derived_primary_sha256': sha256_bytes(content=derived),
+    'foreign_caption_primary_sha256': sha256_bytes(content=foreign_bytes),
+    'foreign_caption_relation': conflict['lease_inclusion']['status'],
     'table_id': table_id, 'insertion_byte': start,
     'original_relation': original['lease_inclusion']['status'],
     'derived_relation': result['lease_inclusion']['status'], 'additional_debt_amount': '0',

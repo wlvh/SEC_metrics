@@ -1,0 +1,23 @@
+command: ['/private/tmp/issue28-company-c02-venv-20261006/bin/python', 'docs/evidence/issue28_b06_relations_20261008/verify_table_unit_scope.py', '/Users/lyuhongwang/Developer/SEC_metrics']
+returncode: 0
+wall_seconds: 6.423090584110469
+{
+  "seconds": 6.106751249870285,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "source_kind": "MEMORY_DERIVED_TEST_ONLY",
+  "original_primary_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+  "derived_primary_sha256": "8cbe0387ace33813443cbe4462e0869dfda89a4f773ca97dbad6f26db89dd40d",
+  "table_id": "table_000136",
+  "insertion_byte": 4511248,
+  "original_relation": "REPORTED_INCLUDED",
+  "derived_relation": "REPORTED_INCLUDED",
+  "additional_debt_amount": "0",
+  "complete_B06": false,
+  "ratio": null,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

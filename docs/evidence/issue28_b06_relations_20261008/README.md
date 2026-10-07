@@ -74,3 +74,12 @@ c5修后独审仍NEEDS_FIX，详见[independent-carrier-repair](independent-carr
 日志：[小回归](table-unit-scope-tests.log)、[相同原件反例](table-unit-scope-original.json)、[倍率矛盾](table-unit-scale-conflict.json)、[默认/保存](table-unit-default.json)。本次测试树为48b加industrial_lease_relation.py及对应测试的未提交差异；提交后另记录精确SHA，不冒充先前SHA实际测试。本次默认/元组保存职责受新证据字段影响，故只重验这些短场景；旧长链复用。
 
 本差异尚待限定独审，不以父方回归提升信用。公司入口未选择此选项，无新Run/CSV/完整B06；工业权益与债务完整性仍未建立。main8588、peer d7c7ceaf仅固定读取；对方登记明确未消费旧原型，不复制对方结果信用。PR67仍adee、PR61仍86e，两者远端全部SUCCESS且Draft不变；不修改它们、不新增本批指标或业务调用。
+
+
+## 明确外币符号回归修复
+
+[487b限定独审](independent-unit-scope/conclusion.md)保留NEEDS_FIX：完整原表caption写Amounts(in €)仍被忽略。只补明确单位表达中的€/£/¥，不恢复整段任意外币关键词拒绝。17小解析器测试0.070s；原件、Euro业务介绍与明确Euro caption三控制8.509s，派生SHA与审阅原反例一致：8cbe合法通过、74797外币冲突UNRESOLVED/null追加。旧原件无修改。
+
+同审阅还记录既有范围限制：较早发行说明也用as follows(in millions)时仍可能被选中并扣留；不冒称已经排除所有较早发行说明。这是仍未解决的范围绑定限制，来源能力不计完整验收。当前不据此生成比值/完整公司结果。此前“只读明确引言”仅指有限支持的结构，不表示程序已理解所有段落归属。
+
+默认/保存对象机制未再改，复用table-unit-default证据；不是复用同一case身份，当前显式处理文件摘要随源码改变。实际新差异待原限定代理在剩余工具/时间/消息内复核，历史NEEDS_FIX不改。
