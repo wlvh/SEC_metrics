@@ -233,6 +233,21 @@
       "Company independent metric updates": "success",
       "Company source authority, ledger and D04 wiring": "success",
       "Company update history and interruption recovery": "success"
-    }
+    },
+    "public_ci_a4_terminal": "CANCELLED",
+    "public_ci_a4_boundary": "34 selectors187.808s all passed plus scalability/egress/reference checks; full history checkout consumed about385s, job hit unchanged10-minute deadline; not whole-CI success"
+  },
+  "ci_fetch_receiving": {
+    "public_commit": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+    "merge_commit": "d17e24391c896cce59abcb7d6a0a33d0543dc0a4",
+    "candidate_checkout_depth": 1,
+    "declared_baseline_explicit_full_object_fetch": "requirements/issue_28_v1/baseline_manifest.json repository.commit, depth1, no-tags",
+    "lazy_fetch": false,
+    "selectors_and_job_timeout_unchanged": true,
+    "production_source_changed": false,
+    "local_scope_tests": 6,
+    "public_new_ci": "37678715800",
+    "public_new_ci_terminal_confirmed": false,
+    "prior_61_and_company_source_validation_reused": true
   }
 }
