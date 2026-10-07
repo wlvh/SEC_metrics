@@ -1,0 +1,48 @@
+{
+  "record_type": "ISSUE47_B03_SHARED_CORE_RECEIVING",
+  "upstream_commit": "22cfc2a6142226976cdb2550e17d0ed8bd3667cd",
+  "initial_scope_commit": "01a007f9fa2a76339c5b81c0e1c18a8612c8ca26",
+  "received_libraries": {
+    "scripts/vnext/ordinary_da_scope_v1.py": "784000b23e9075d35bd2752300fd60bb36b624dadce44b035eefa8ca9b5f626e",
+    "scripts/vnext/ordinary_b03_input_scope.py": "ff796c346c92ec44c2838d1c1df2bef8b6fa53397924321118245dbcc3107214",
+    "scripts/vnext/b03_contract_amortization_scope.py": "0df29313b78eeb10c69c8db6ce5c02834c68233b82a263fe45bb7937035c4d25",
+    "scripts/vnext/b03_depreciation_scope.py": "e213c201c3cf925a03dc0d2c8ae293dacd2c918459f4fbaba41136aea7738e28",
+    "scripts/vnext/xbrl_namespace_policy.py": "23cd0290485b9ae9e5a58d4ccffc10ebfe1bb8f8e8969fed99f0442a4d09f5bc"
+  },
+  "producer_owner": 28,
+  "consumer_owner": 47,
+  "historical_changes": [
+    "Use shared entity/namespace/period/USD/precision and candidate comparison instead of legacy local-name-only pool.",
+    "Use verified primary ordinals for existing impairment relation; XML prefix aliases cannot bypass it.",
+    "Recheck after at most one retake; unsupported retake remains withheld.",
+    "Translate shared original-component failures to the existing named historical source-error class.",
+    "Explicit YEAR_OR_DATE_RELEASE for direct and composition/contract checks; shared current default YEAR_ONLY unchanged; no new dynamic wrapper."
+  ],
+  "verification": {
+    "small_tests": 13,
+    "small_wall_seconds": 0.018,
+    "saved_year_only_sources": "saved-source-check.json",
+    "year_only_source_times_reused_after_namespace_change": true,
+    "reuse_basis": "Four real checks exercised unchanged year-only form; public namespace change is identical on that form. Added actual dated primaries and local direct/composition/current-default negatives validate the affected difference.",
+    "actual_dated_sources": "dated-originals-check.json",
+    "main_company_current_regression_reused": "Upstream22cfc2a6 actual28tests5.313s; not rerun as own result.",
+    "initial_harness_failures": [
+      "Minimal synthetic probe first omitted namespace declarations then observation entity; repaired realistic fixture passes.",
+      "First four-source harness compared1200000000 vs1200000000.0 string formatting, failed after status checks; original failure retained; compare exact Decimal amounts, no weakened conflict/status assertion."
+    ]
+  },
+  "limitations": [
+    "Historical zero-AI consumer remains absent main; this receiving commit does not add a new company pipeline.",
+    "Actual source selection/original-fact consumer tested; complete B03 same-company CLI calculation/save/read under ordinary lightweight runtime remains H4 work.",
+    "MarriottFY2021 source has only class-dimensioned amortization and no selected-accession CompanyFacts annual amortization; constructed165m candidate must not silently support an undimensioned composition. No old result is called wrong or withdrawn on this probe alone.",
+    "Limited KEEP is not full depreciation/amortization scope or business acceptance.",
+    "Existing standalonelegacy helpers and old snapshots retained; old Run/response/call records not re-signed."
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "full_metric_accepted": false
+}

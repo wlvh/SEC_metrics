@@ -1,0 +1,616 @@
+{
+  "record_type": "HISTORICAL_SHARED_B03_SAVED_INPUT_CHECK",
+  "rows": [
+    {
+      "position": "marriott-2024",
+      "source_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+      "source_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "entity": "1048286",
+      "period": {
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "observations": [
+        {
+          "semantic_role": "depreciation",
+          "value": "128000000",
+          "source_binding": {
+            "concept": "us-gaap:Depreciation",
+            "entity": "1048286"
+          }
+        },
+        {
+          "semantic_role": "amortization",
+          "value": "255000000",
+          "source_binding": {
+            "concept": "us-gaap:AmortizationOfIntangibleAssets",
+            "entity": "1048286"
+          }
+        }
+      ],
+      "expected_status": "KEEP",
+      "wall_seconds": 0.517035166034475,
+      "answer": {
+        "filing_answer": {
+          "status": "NO_DIRECT_CANDIDATE",
+          "why": "THE_APPROVED_COMPOSITION_APPLIES",
+          "candidates": []
+        },
+        "chain_input": {
+          "concept": "Depreciation+AmortizationOfIntangibleAssets",
+          "value": "383000000"
+        },
+        "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "entity": "1048286",
+        "period": {
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31"
+        },
+        "source_facts": [
+          {
+            "concept": "AmortizationOfIntangibleAssets",
+            "fact_ordinal": 888,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "255000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          {
+            "concept": "Depreciation",
+            "fact_ordinal": 936,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "128000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2024-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "complete_business_scope_proven": false,
+        "status": "KEEP",
+        "composition_originals": {
+          "depreciation": {
+            "concept": "us-gaap:Depreciation",
+            "value_usd": "128000000",
+            "primary_fact_ordinals": [
+              936
+            ]
+          },
+          "amortization": {
+            "concept": "us-gaap:AmortizationOfIntangibleAssets",
+            "value_usd": "255000000",
+            "primary_fact_ordinals": [
+              888
+            ]
+          }
+        },
+        "why": "THE_APPROVED_COMPOSITION_APPLIES"
+      },
+      "source_bytes_unchanged": true
+    },
+    {
+      "position": "marriott-2025",
+      "source_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "entity": "1048286",
+      "period": {
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "observations": [
+        {
+          "semantic_role": "depreciation",
+          "value": "145000000",
+          "source_binding": {
+            "concept": "us-gaap:Depreciation",
+            "entity": "1048286"
+          }
+        },
+        {
+          "semantic_role": "amortization",
+          "value": "313000000",
+          "source_binding": {
+            "concept": "us-gaap:AmortizationOfIntangibleAssets",
+            "entity": "1048286"
+          }
+        }
+      ],
+      "expected_status": "KEEP",
+      "wall_seconds": 0.5481197920162231,
+      "answer": {
+        "filing_answer": {
+          "status": "NO_DIRECT_CANDIDATE",
+          "why": "THE_APPROVED_COMPOSITION_APPLIES",
+          "candidates": []
+        },
+        "chain_input": {
+          "concept": "Depreciation+AmortizationOfIntangibleAssets",
+          "value": "458000000"
+        },
+        "primary_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "entity": "1048286",
+        "period": {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "source_facts": [
+          {
+            "concept": "AmortizationOfIntangibleAssets",
+            "fact_ordinal": 925,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "313000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          {
+            "concept": "Depreciation",
+            "fact_ordinal": 973,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "145000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "complete_business_scope_proven": false,
+        "status": "KEEP",
+        "composition_originals": {
+          "depreciation": {
+            "concept": "us-gaap:Depreciation",
+            "value_usd": "145000000",
+            "primary_fact_ordinals": [
+              973
+            ]
+          },
+          "amortization": {
+            "concept": "us-gaap:AmortizationOfIntangibleAssets",
+            "value_usd": "313000000",
+            "primary_fact_ordinals": [
+              925
+            ]
+          }
+        },
+        "why": "THE_APPROVED_COMPOSITION_APPLIES"
+      },
+      "source_bytes_unchanged": true
+    },
+    {
+      "position": "ford-2025",
+      "source_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+      "source_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "entity": "37996",
+      "period": {
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "observations": [
+        {
+          "semantic_role": "depreciation_and_amortization",
+          "value": "15974000000",
+          "source_binding": {
+            "concept": "us-gaap:DepreciationDepletionAndAmortization",
+            "entity": "37996"
+          }
+        }
+      ],
+      "expected_status": "WITHHOLD",
+      "wall_seconds": 3.624141291016713,
+      "answer": {
+        "filing_answer": {
+          "status": "TAKE",
+          "selected": {
+            "concept": "DepreciationDepletionAndAmortization",
+            "fact_ordinal": 3180,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "15974000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0000037996",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          "candidates": [
+            {
+              "concept": "DepreciationDepletionAndAmortization",
+              "fact_ordinal": 3180,
+              "context_ref": "c-1",
+              "unit_ref": "usd",
+              "value": "15974000000",
+              "decimals": "-6",
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000037996",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2025-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              }
+            }
+          ],
+          "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+        },
+        "chain_input": {
+          "concept": "DepreciationDepletionAndAmortization",
+          "value": "15974000000"
+        },
+        "primary_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "entity": "37996",
+        "period": {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "source_facts": [
+          {
+            "concept": "Depreciation",
+            "fact_ordinal": 306,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "7834000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0000037996",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          {
+            "concept": "DepreciationDepletionAndAmortization",
+            "fact_ordinal": 3180,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "15974000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0000037996",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "complete_business_scope_proven": false,
+        "status": "WITHHOLD",
+        "why": "THE_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION",
+        "impairment_inclusion": {
+          "selected_fact": {
+            "ordinal": 3180,
+            "concept": "us-gaap:DepreciationDepletionAndAmortization",
+            "value": "15974000000",
+            "context_ref": "c-1"
+          },
+          "table_id": "table_000148",
+          "table_grid_sha256": "sha256:e5f4240976efe7db5e27d1af68da9e8d6646c599fbfca24f7b6dfb414f0d5ab9",
+          "selected_visible_total": "15,974",
+          "included_component": {
+            "visible_value": "8,235",
+            "column_index": 28,
+            "marker": "g"
+          },
+          "footnote_text": "(g)Includes $8.1 billion of depreciation related to the Model e asset impairment (see Note 13).",
+          "footnote_span_sha256": "ec9bc58141f6e006e6bf928207bc6c5741a525c88b6152d210b2e1ccf35ae1f0"
+        },
+        "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN"
+      },
+      "source_bytes_unchanged": true
+    },
+    {
+      "position": "salesforce-2026",
+      "source_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+      "source_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+      "entity": "1108524",
+      "period": {
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "observations": [
+        {
+          "semantic_role": "depreciation_and_amortization",
+          "value": "1200000000",
+          "source_binding": {
+            "concept": "us-gaap:DepreciationDepletionAndAmortization",
+            "entity": "1108524"
+          }
+        }
+      ],
+      "expected_status": "WITHHOLD",
+      "wall_seconds": 0.5774606659542769,
+      "answer": {
+        "filing_answer": {
+          "status": "WITHHOLD",
+          "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+          "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT",
+          "candidates": [
+            {
+              "concept": "DepreciationDepletionAndAmortization",
+              "fact_ordinal": 809,
+              "context_ref": "c-1",
+              "unit_ref": "usd",
+              "value": "1200000000",
+              "decimals": "-8",
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0001108524",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-02-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2026-01-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              }
+            },
+            {
+              "concept": "DepreciationAndAmortization",
+              "fact_ordinal": 337,
+              "context_ref": "c-1",
+              "unit_ref": "usd",
+              "value": "3631000000",
+              "decimals": "-6",
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0001108524",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-02-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2026-01-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              }
+            }
+          ],
+          "composition": []
+        },
+        "chain_input": {
+          "concept": "DepreciationDepletionAndAmortization",
+          "value": "1200000000"
+        },
+        "primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+        "entity": "1108524",
+        "period": {
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31"
+        },
+        "source_facts": [
+          {
+            "concept": "DepreciationAndAmortization",
+            "fact_ordinal": 337,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "3631000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001108524",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-02-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2026-01-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          {
+            "concept": "DepreciationDepletionAndAmortization",
+            "fact_ordinal": 809,
+            "context_ref": "c-1",
+            "unit_ref": "usd",
+            "value": "1200000000",
+            "decimals": "-8",
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001108524",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-02-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2026-01-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "complete_business_scope_proven": false,
+        "status": "WITHHOLD",
+        "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+        "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
+      },
+      "source_bytes_unchanged": true
+    }
+  ],
+  "source_reparsing_shared_per_case": true,
+  "company_installs": 0,
+  "copied_source_bytes": 0,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "complete_metric_accepted": false,
+  "scope": "Actual historical input consumer plus full primary parser; not company CLI/save/read validation."
+}

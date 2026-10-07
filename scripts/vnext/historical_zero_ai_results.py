@@ -182,6 +182,50 @@ def depreciation_scope(*, raw_bytes, period, observations):
     return {**body, "status": "KEEP", "why": answer["why"]}
 
 
+def inspect_selected_historical_depreciation_input(*, raw_bytes, entity, period, observations):
+    """Use the shared original-fact check, then the existing historical exclusion.
+
+    The shared core owns entity/namespace/unit/precision and D&A comparison.
+    This historical adapter keeps its existing impairment treatment and uses
+    the shared core's verified fact ordinals, so legal XML prefix aliases do
+    not bypass it. It creates
+    no Run and does not import current-company orchestration or source fetching.
+    """
+    from .ordinary_b03_input_scope import inspect_depreciation_input
+    from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+    try:
+        answer = inspect_depreciation_input(raw_bytes=raw_bytes, entity=entity,
+            period=period, observations=observations,
+            namespace_policy=YEAR_OR_DATE_RELEASE)
+    except ValueError as error:
+        # The historical consumer turns source failures into this metric's
+        # named withheld state and keeps other metrics processing.
+        raise NormalZeroAiError(str(error), "SOURCE_INTEGRITY_ERROR") from error
+    direct = [o for o in observations if o["semantic_role"] == "depreciation_and_amortization"]
+    if answer["status"] == "KEEP" and len(direct) == 1:
+        from .b03_depreciation_scope import _selected_impairment_inclusion
+        from .deterministic_router import parse_accession_xbrl_source
+        concept = direct[0]["source_binding"]["concept"].split(":")[-1]
+        rows = [{"ordinal": row["fact_ordinal"],
+                 "concept": "us-gaap:" + row["concept"],
+                 "value": row["value"], "context_ref": row["context_ref"]}
+                for row in answer["source_facts"] if row["concept"] == concept]
+        parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes)
+        proof = _selected_impairment_inclusion(raw_bytes, parsed, rows)
+        if proof is not None:
+            included = {"selected_fact": proof["selected_fact"],
+                "table_id": proof["table_id"],
+                "table_grid_sha256": proof["table_grid_sha256"],
+                "selected_visible_total": proof["selected_visible_total"],
+                "included_component": proof["included_component"],
+                "footnote_text": " ".join(proof["footnote"]["text"].split()),
+                "footnote_span_sha256": proof["footnote"]["span_sha256"]}
+            return {**answer, "status": "WITHHOLD", "impairment_inclusion": included,
+                    "reason_code": DA_SCOPE_REASON,
+                    "why": "THE_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION"}
+    return answer
+
+
 def impairment_included(*, raw_bytes, period, observation):
     """The filing's own proof that the kept D&A total includes impairment-related depreciation, or None.
 
@@ -233,8 +277,8 @@ def impairment_included(*, raw_bytes, period, observation):
             "footnote_span_sha256": proof["footnote"]["span_sha256"]}
 
 
-# #28's check, seen through the release-aware view (historical_dei): it asks
-# whether a fact's concept is US GAAP in the year-only namespace form.
+# Retained legacy reference; the current historical consumer below passes the
+# finite namespace policy directly to the shared check.
 _UNRECONCILED_CONTRACT_AMORTIZATION = release_aware(
     _contract_scope._unreconciled_contract_amortization)
 
@@ -261,15 +305,15 @@ def contract_amortization_unreconciled(*, repo_root, prepared, period, observati
     pinned input's source proofs, the target period and the route's B03
     observations, and it reads the same primary document the pinned input
     admitted. A direct D&A total is not its question and gets None, as there.
-    The caller acts on ``blocked``, as #28's own consumers do. Through the
-    release-aware view: #28's check asks whether a fact's concept is US GAAP
-    with the frozen year-only namespace, which a FY2021 report's dated release
-    fails.
+    The caller acts on ``blocked``, as #28's own consumers do. It explicitly
+    allows FASB year or date-release namespaces; the shared default remains
+    year-only for current consumers. This path needs no dynamic wrapper.
     """
-    return _UNRECONCILED_CONTRACT_AMORTIZATION(
+    from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+    return _contract_scope._unreconciled_contract_amortization(
         case={"observations": observations, "target_period": period,
               "source_proofs": prepared["source_proofs"]},
-        data_root=Path(repo_root))
+        data_root=Path(repo_root), namespace_policy=YEAR_OR_DATE_RELEASE)
 
 
 def event_measurement_window(*, repo_root: Path, company_id: str, pinned, registered_event):
@@ -630,8 +674,9 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         # such as a first period shorter than a year does not depend on it.
         if (metric_id == "B03" and result["publication"] == "PUBLISHED"
                 and result["reason_code"] == "PASS"):
-            da_scope = depreciation_scope(raw_bytes=reader.primary(prepared["filing"])["raw_bytes"],
-                                       period=period, observations=observations)
+            da_scope = inspect_selected_historical_depreciation_input(
+                raw_bytes=reader.primary(prepared["filing"])["raw_bytes"], entity=prepared["entity"],
+                period=period, observations=observations)
             if da_scope["status"] == "WITHHOLD":
                 raise _DepreciationScopeUnproven(da_scope)
             if da_scope["status"] == "KEEP":
@@ -657,17 +702,18 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                 result, trace, observations = calculate_metric(
                     compiled_spec=spec, target=execution_target, company_traits=traits,
                     structured_facts=facts, verified_observations=reusable)
-                # The retaken total is asked the question a kept one is.
-                retaken = [o for o in observations
-                           if o["semantic_role"] == "depreciation_and_amortization"]
-                included = (impairment_included(
-                    raw_bytes=reader.primary(prepared["filing"])["raw_bytes"], period=period,
-                    observation=retaken[0]) if result["publication"] == "PUBLISHED" and retaken
-                    else None)
-                if included is not None:
-                    raise _DepreciationScopeUnproven({
-                        **da_scope, "status": "WITHHOLD", "impairment_inclusion": included,
-                        "why": "THE_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION"})
+                # Recheck the new observations through the same shared input
+                # check. One retake does not permit another guessed amount.
+                if result["publication"] == "PUBLISHED" and result["reason_code"] == "PASS":
+                    rechecked = inspect_selected_historical_depreciation_input(
+                        raw_bytes=reader.primary(prepared["filing"])["raw_bytes"],
+                        entity=prepared["entity"], period=period, observations=observations)
+                    if rechecked["status"] != "KEEP":
+                        raise _DepreciationScopeUnproven({
+                            **rechecked, "status": "WITHHOLD", "before_retake": da_scope,
+                            "why": rechecked["why"] if rechecked["status"] == "WITHHOLD"
+                            else "THE_ONE_RETAKE_DID_NOT_MATCH_THE_PRIMARY_SELECTION"})
+                    da_scope = {**rechecked, "before_retake": da_scope}
         selection = {"source_candidate_count": len(facts),
                      "selected_fact_ids": [o["source_binding"]["fact_id"] for o in observations],
                      "source_reported_periods": sorted({(f["period_start"], f["period_end"])
