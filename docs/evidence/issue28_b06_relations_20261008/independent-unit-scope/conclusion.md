@@ -34,3 +34,17 @@
 - 工具总数 **29**：10次外层 functions.exec、18次嵌套 exec_command、1次 clock；无 write_stdin、spawn 或其他代理。普通消息 **1**（仅最终报告），问题0、过程消息0；低于80工具/3消息上限。
 - 新 provider/paid/SEC/账户操作各0；GitHub仅只读 Issue28一次；无 #47 工作树/运行根/账本操作，无源码/测试/旧材料/原件修改，无 commit/push、tar 或长演练。
 - 仅新增本目录一份 conclusion.md 与八份必要日志。终检 tracked diff为空，三个初始指定文件 SHA不变。精确最终文件清单与资源记录见 `final-byte-and-resource-verification.log`。
+
+
+## 89d2d64 明确外币符号修复的差异补充（沿原资源累计）
+
+**补充结论：本次符号修复差异 PASS，487b053 新增 P2 已修正。** 上文 NEEDS_FIX 是对原 SHA 的历史结论，原文字及八份旧日志完整保留；本次不重审未变全模块、原 QName/金额算法、完整财报或公司长链。
+
+- 精确 patch `89d2d64960e895dc52466af5dedd1f71b1ed7cd9`；base `487b0531d80bb028c2784a5ef5cf4bac42abdfdf`。新增源码仅对选定单位声明里的 `€/£/¥` 及独立符号作拒绝；`introductory_text` 与原单位词组读取未改。读取新测试/原件日志及脚本增量，执行前后 HEAD 和三份指定源文件字节不变。
+- 指定小套件 **17/17通过，0.073秒，零失败/错误/skip**，进程墙钟0.393秒，returncode0；见 `unit-tests-89d2.log`。新增一个测试方法含三个符号 × `in 符号`、单独括号符号、`in millions of 符号` 共9个控制，全部未决。原分段、同段和后置 Euro 业务介绍正例继续通过，没有恢复对任意外币词的全间隔拒绝。
+- 指定 `verify_table_unit_scope.py <原件根>` **returncode0**，脚本计时8.462秒，进程墙钟8.783秒，见 `saved-unit-scope-control-89d2.log`。原 primary SHA3bbda 与业务介绍派生 SHA8cbe 都保留 `REPORTED_INCLUDED/追加0`。上一轮实际外币 caption 反例 SHA `74797e6c318a7f2015fde88d009b13d73386c57c3197f471f26e93c3f076bfde` 完全相同，现在为 `UNRESOLVED/null追加额`。因此修正的是旧反例的错误接受，未通过更换派生输入清除问题。
+- **具体未覆盖限制仍保留：** 较早发行文本自身以 `as follows (in millions)` 结尾时可能被选作当前表引言，尽管当前 caption 明确 dollars，造成误拦。该路径未改且本次不重跑；按上文 base/patch 同结果控制继承，不能把 PASS 扩为所有表前文本范围或任意财报语法保证。只验证既有三种符号及上述明确声明格式，没有增加通用语义处理能力。
+- 局部包含关系正例仍 `complete_B06=false/ratio=null`。工业权益和债务完整性仍未建立；没有新 Run、CSV、完整 B06、公司结果、合并/发布/部署/active 或生产信用。未变 default/JSON/长链只复用旧记录，没有追加演练。
+- 补充起始 UTC `2026-10-07T22:57:09Z`；终检 UTC `2026-10-07T23:01:26.010943+00:00`；补充区间 `257.011` 秒。原起始 UTC `2026-10-07T22:51:15Z`，累计区间 `611.011` 秒，未触90分钟。
+- 本次8工具/1最终消息；累计 **37工具/2普通消息**（13次 functions.exec、22次 exec_command、2次 clock；问题0、过程消息0、spawn0），未触80工具/3消息上限。只跑指定17项 unittest 与指定保存原件脚本，各一次；无业务/账户/#47请求或操作，新增 provider/paid/SEC各0，无源码编辑或 commit/push。
+- 仅对本 conclusion.md 末尾追加本段，新增4份带 `89d2` 后缀的必要日志。旧结论前缀逐字节不变、八份旧日志 SHA均不变，见 `final-byte-and-resource-verification-89d2.log`。
