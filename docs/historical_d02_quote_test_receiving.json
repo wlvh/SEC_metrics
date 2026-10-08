@@ -1,0 +1,25 @@
+{
+  "public_base": "86e63816d00e2f241f626c59f58041d04d9064cd",
+  "shared_runner": "tools/run_foundation_ci.py::run_fast_suite",
+  "result": {
+    "return_code": 0,
+    "duration_seconds": 0.0027082921005785465,
+    "test_count": 15,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "diagnostics": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.003s\n\nOK\n"
+  },
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "original_business_bytes_unchanged": {
+    "scripts/vnext/legal_review_contract.py": true,
+    "tests/fixtures/d02_saved_quote_failures.json": true,
+    "tests/vnext/test_legal_review_contract.py": true
+  },
+  "CI_registration_patch_author": "Issue28 Codex shared-short-selectors-20261008/h1.patch",
+  "no_runner_function_changes": true
+}

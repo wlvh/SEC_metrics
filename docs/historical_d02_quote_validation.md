@@ -15,3 +15,5 @@
 这份共用模块及历史适配尚待各自 PR 合入，不表示 main 的公司 CLI 已完成 D02 历史业务接入。这里修复报因，未改变法律范围判断或引文合同；Pfizer 税务误纳、Marriott 自保遗漏等内容缺陷仍在原队列。后续确需改变回答合同，应另列具体差异及受影响验证。
 
 自动CI的fast作业[37474922205/job/112307725659](https://github.com/wlvh/SEC_metrics/actions/runs/37474922205/job/112307725659)已失败：119个既有入口中，`test_invalid_source_fiscal_label_and_cik_are_integrity_failures`和`test_registry_company_04`各达到原30秒时限（exit 124），不是D02业务断言失败。未改公共CI、放宽时限或手工全量重跑；公共测试分层由#28 T1接收，本地定向通过不写成整条CI通过。PR59另提供小DEI期间/主体反例。
+
+2026-10-09收口：接固定PR61/86e63816共享准备作为测试基础依赖，业务三文件与原f321e554逐字节相同。公共runner函数实际调用15短例0.002708秒、无skip/错误；记录见[基础接收](historical_d02_quote_test_receiving.json)。#28提供的最小selector和显式CI短步骤已接收，函数体不改、不另建runner；两个原30秒完整年报超时归因保留，不放宽时限。原PR58保留，base排在PR61之后，合并及最终CI仍待实际终态，不写main已修复或公司D02完整接受。
