@@ -1,0 +1,7 @@
+# Consumed deterministic graph in update identity
+
+Peer receiving identified that B02/B04/B05 invoke `_deterministic_metric_graph` from zero_ai_r2.py. Parent independently traced normal_companyfacts_results and actually read `_configuration` for B01/B02/B04/B05/B10: zero_ai_r2.py was absent, so edits to a consumed formula could be mistaken for unchanged processing. The new small regression fails on the old code; original log retained.
+
+The ordinary Spec-backed metrics now include this actual dependency in their processing identity. Lodging-only path remains separate; controller/storage/default formulas and legacy identities are unchanged. A small actual-controller scenario holds raw inputs fixed, changes only this processing identity, generates a new version, then forbids a third computation and reuses it. Synthetic computation/storage is labelled and does not produce a financial conclusion. All26existing controller/config/recovery/period controls pass0.112s. No full company material is repeated for this hashing-only change; actual calculator/formula bytes stay unchanged. No new business calls, permission or blanket result withdrawal.
+
+The historical producer already explicitly names its own consumed dependencies, so its completed fixed batch is not reopened. Public follow-up is an existing PR67 correctness fix, not a new metric family, dependency inventory platform or old binding re-sign.

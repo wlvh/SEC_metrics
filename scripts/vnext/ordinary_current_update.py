@@ -34,6 +34,7 @@ def _configuration(source, company, metric):
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.
     if metric in METRIC_IDS:
+        paths.add('scripts/vnext/zero_ai_r2.py')
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
