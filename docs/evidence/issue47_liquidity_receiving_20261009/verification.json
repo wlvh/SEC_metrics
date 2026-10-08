@@ -1,0 +1,88 @@
+{
+  "status": "DEVELOPMENT_RECEIVING_NOT_DRAFT_DELIVERY",
+  "scope": "Saved unamended continuous-primary B08/B09, actual balance date with issuer fiscal-year container; common controller/writer/read",
+  "parent": "PR75/5272797e",
+  "macys_five_years": {
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "positions": 10,
+    "first_seconds": 57.242733791004866,
+    "reference_differences": 0,
+    "repeat_seconds": 1.7484210419934243,
+    "repeat_calculation_calls": 0,
+    "saved_files_unchanged": true,
+    "saved_file_count": 70,
+    "independent_read_seconds": 0.07530083390884101,
+    "version_note": "First five-year execution preceded the later named calculation-gap handling; final producer revalidated on the affected FY2023, not blindly rerun across ten positions"
+  },
+  "bank_structural": {
+    "company": "jpmorgan_chase",
+    "fiscal_year": 2021,
+    "first_seconds": 96.94798887497745,
+    "status": "FLOW_COMPLETED",
+    "metric_basis": "Existing non_financial applicability rule, no cash/current-ratio value claimed"
+  },
+  "final_producer": {
+    "year": 2023,
+    "first_seconds": 8.971121417125687,
+    "repeat_seconds": 0.441478458000347,
+    "repeat_calculation_calls": 0,
+    "saved_files_unchanged": true,
+    "independent_read_seconds": 0.06175125017762184
+  },
+  "constructed_calculation_gap": {
+    "constructed_control": true,
+    "actual_financial_conclusion": false,
+    "seconds": 5.500830540899187,
+    "result": {
+      "period_start": "2024-02-03",
+      "period_end": "2024-02-03",
+      "value": null,
+      "unit": null,
+      "publication": "WITHHELD",
+      "reason_code": "HISTORICAL_LIQUIDITY_ROUTE_UNRESOLVED"
+    },
+    "input_assessment": {
+      "historical_liquidity": {
+        "category": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+        "error_type": "ZeroAiReleaseError",
+        "reason": "CONSTRUCTED_CALCULATION_SOURCE_GAP"
+      }
+    },
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "small_tests": {
+    "count": 12,
+    "seconds": 0.017,
+    "skip": 0
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false,
+  "not_added_to_PR71_or_PR75": true,
+  "remaining": [
+    "stable withheld rerun and subset/changed-source receiving on final producer",
+    "mixed real statement/liquidity reuse",
+    "broader company receiving",
+    "main integration and online historical source preparation",
+    "amendment/successor adapter"
+  ],
+  "archive": {
+    "members": 111,
+    "bytes": 83314,
+    "sha256": "231cf2ebd447478ca2a0b22ca5786bdefefd5c447d67f1ac6a0a3dfa287d1138"
+  }
+}

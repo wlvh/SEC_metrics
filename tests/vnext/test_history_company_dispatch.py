@@ -72,6 +72,19 @@ class HistoryCompanyDispatchTest(TestCase):
             self.assertEqual(HISTORICAL_LODGING_PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertFalse((self.root/'outputs').exists())
 
+    def test_liquidity_keeps_the_statement_and_lodging_original_factories(self):
+        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(metric_ids=['B08', 'B09', 'B04', 'B10'])
+        args = shared.call_args.kwargs
+        for metric in ['B08', 'B09']:
+            self.assertIs(prepare_historical_liquidity_year_case, args['case_factories'][metric])
+            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
+        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+
     def test_current_mode_keeps_the_existing_public_route(self):
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
             self.run_history(period='latest-complete-fy', fiscal_year_start=None, fiscal_year_end=None)
