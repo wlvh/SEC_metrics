@@ -7,3 +7,22 @@
 后续增加计算来源缺口的具名扣留，调用现有Calculator，不吞未知异常或宣称原件没披露。完整来源的构造控制5.501秒验证WITHHELD/null与明确SOURCE_OR_IMPLEMENTATION_UNRESOLVED；人为制造的缺口不是Macy’s财报结论。补此分支后只重验受影响FY2023的真实两个位置，首/禁止计算复跑/另进程读取见verification.json；没有盲目重跑十个位置。12项短测试0.017秒过，包括同一控制器分派、原酒店/收入factory保持及未接修订/继承前置拒绝。
 
 主要实际记录在[verification.json](verification.json)，原样CLI、控制驱动、CSV/出处与普通结果在[consumer-materials.tar.gz](consumer-materials.tar.gz)，不复制整棵来源/程序。新增provider/paid/SEC=0，无新旧式Run或接受。年度选择与正值已验证；最终扣留复跑/来源变化/真实混合复用和更广公司接收继续做，完成前不写为最终交付。已验证阅读直接复用，其他期间/主体/单位/缺件要求保持。
+
+后续接收成立，准备独立Draft候选：Ford FY2021–FY2025两指标10位置首62.537秒，原业务阅读的值/单位/余额日零差异；禁止选源/计算复跑1.825秒、计算0、70结果/指针未变，独立读耗时见verification.json。最终共享控制器的构造小状态接收：只给B08增加明确的测试处理依赖并制造计算源缺口，4.838秒当前B08具名扣留，B09原值复用；同输入复跑0.329秒、selector0、无新结果目录；后续只请求B09，独立读B08仍null/WITHHELD且requested=False，旧成功保存文件留存。这是构造控制，不是财报缺披露。
+
+真实Macy’s FY2023同CLI混合B04/B08/B09 9.040秒：两余额指标新算，B04直接复用、原选源0、65旧B04结果/指针文件不变。共同控制器现有源/配置变化、期间隔离与恢复反例连同本历史case/分派共36项0.100秒、零skip；未写第二个控制器或复制整棵来源。能力合同结构检查通过、两个副产物恢复。原代码测试边界保持；下一个Draft只接这段B08/B09流动性范围，不借此声称main、全部五年或在线取源已完成。
+
+使用同一入口，最多五个发行人财年：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py run \
+  --company ford_motor_company --period fiscal-years \
+  --fiscal-year-start 2021 --fiscal-year-end 2025 --metric B08 --metric B09 \
+  --source-root /saved/sec/source-inputs \
+  --work-dir /writable/ford-state --output-dir /writable/ford-csv
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company ford_motor_company --state-root /writable/ford-state \
+  --output-root /writable/daily-csv
+```
+
+Macy’s改为macys、仍2021–2025；余额时点以原件年度末日为准，实际年度容器和来源URL/申报/单位留在CSV与出处。当前模式分派保持，其他家族的原factory/处理依赖未改；旧Run仍由原版本读取。两家公司20位置没有重新阅读或重建旧native Run，只验证新公司消费者。其余公司接收、修订/继承及在线历史来源准备继续是实际缺口，原完整目标不缩小。

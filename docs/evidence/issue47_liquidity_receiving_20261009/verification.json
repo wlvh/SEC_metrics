@@ -1,5 +1,5 @@
 {
-  "status": "DEVELOPMENT_RECEIVING_NOT_DRAFT_DELIVERY",
+  "status": "BRANCH_CONSUMER_VALIDATED_NOT_MAIN",
   "scope": "Saved unamended continuous-primary B08/B09, actual balance date with issuer fiscal-year container; common controller/writer/read",
   "parent": "PR75/5272797e",
   "macys_five_years": {
@@ -61,9 +61,10 @@
     }
   },
   "small_tests": {
-    "count": 12,
-    "seconds": 0.017,
-    "skip": 0
+    "count": 36,
+    "seconds": 0.1,
+    "skip": 0,
+    "scope": "Existing common update/recovery/source/config/period controls plus historical case/dispatch"
   },
   "new_calls": {
     "provider": 0,
@@ -74,15 +75,78 @@
   "new_acceptance": false,
   "not_added_to_PR71_or_PR75": true,
   "remaining": [
-    "stable withheld rerun and subset/changed-source receiving on final producer",
-    "mixed real statement/liquidity reuse",
-    "broader company receiving",
     "main integration and online historical source preparation",
-    "amendment/successor adapter"
+    "amendment/successor adapter",
+    "remaining companies receiving at this entry; existing business readings remain available"
   ],
   "archive": {
-    "members": 111,
-    "bytes": 83314,
-    "sha256": "231cf2ebd447478ca2a0b22ca5786bdefefd5c447d67f1ac6a0a3dfa287d1138"
-  }
+    "members": 186,
+    "bytes": 113805,
+    "sha256": "2b150dcb1120e6cb877e882c462bff379f0b5e578ccc1bfbf5edcc247c8706a3"
+  },
+  "ford_five_years": {
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "positions": 10,
+    "first_seconds": 62.53693008283153,
+    "reference_differences": 0,
+    "repeat_seconds": 1.8248268328607082,
+    "repeat_calculation_calls": 0,
+    "saved_files_unchanged": true,
+    "saved_file_count": 70,
+    "independent_read_seconds": 0.08246312499977648
+  },
+  "stable_withheld_control": {
+    "constructed_control": true,
+    "actual_financial_conclusion": false,
+    "source_backed_small_state_copy": true,
+    "hold_seconds": 4.838226374937221,
+    "repeat_seconds": 0.3294449590612203,
+    "hold_statuses": {
+      "B08": "CANDIDATE_WITHHELD",
+      "B09": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    "repeat_statuses": {
+      "B08": "PREVIOUS_INPUT_WITHHELD",
+      "B09": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    "repeat_selection_calls": 0,
+    "saved_files_unchanged_on_repeat": true,
+    "old_result_files_retained": true,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "read_values": {
+      "B09": {
+        "value": "1034000000",
+        "publication": "PUBLISHED",
+        "requested_in_latest_execution": true
+      },
+      "B08": {
+        "value": null,
+        "publication": "WITHHELD",
+        "requested_in_latest_execution": false
+      }
+    }
+  },
+  "real_mixed": {
+    "exit_code": 0,
+    "seconds": 9.040287333074957,
+    "old_statement_selection_calls": 0,
+    "old_statement_files_unchanged": true,
+    "old_statement_files": 65,
+    "statuses": {
+      "B04": "NO_SOURCE_CONTENT_CHANGE",
+      "B08": "CANDIDATE_READY",
+      "B09": "CANDIDATE_READY"
+    }
+  },
+  "capability_alignment": "PASS; outputs restored"
 }
