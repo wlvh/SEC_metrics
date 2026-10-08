@@ -73,3 +73,9 @@ PYTHONPATH=scripts:. python docs/evidence/issue47_history/historical-income-rece
 源发现/在线补齐尚未接同一公司入口，也没有将全部历史能力接入main；本次新增SEC/provider/paid=0/0/0、无新native Run或完整五年接受。Marriott三年B03原件位置、XML的SOURCE_REFERENCE/请求proof已补[b03-source-locations.json](b03-source-locations.json)，供#28从实际已选原件实现共用源适配；本方三个null保持。
 
 同脚本加`--source-only`可只复现规则根隔离检查。实现提交621034e6后，原必读`mint --check`在旧祖先normal_source_authority字节门禁先拒绝（catalog-postcommit-mint.log），不重新铸造旧Requirement。结构检查先因已推进的peer base b3f7新增CAPABILITY.local_company_run缺失而失败；9506a0ed只补这条已交付入口声明并写清本方范围/未main/仍缺，不接入peer新E01或B06代码。再检查20.302秒PASS，两个副产物按检查前字节还原。结构PASS不作业务或全CI通过。
+
+## 来源入口的实际剩余边界
+
+现有normal_history_plan在同一实际恢复源根只读检查十公司各五个报告末日及计划声明的必要前期/修订，22.403秒。全过程禁止读取来源包的程序/规则目录，仅允许公司registry；年度目录、primary/index和CompanyFacts的十份计划均READY，新增GET需求0。完整计划lossless保存[annual-source-plans.json.gz](annual-source-plans.json.gz)，[摘要](annual-source-plan-summary.json)列全部公司/末日、类别和限定范围。没有重算任何历史指标或复制来源树。
+
+这证明年度基础来源这一层已经存在；接到同一公司入口仍是实现工作。它没有检查代理文件、D04图片、EX99、收入/债务集合或业务完整性，也没有从报告末日推出发行人FY标签。JPM当前41历史分片在本次元数据检查中一致，Paramount两主体各自目录保留；原日期冲突与其他语义限制继续成立，五十报告末日不等于1950交付。
