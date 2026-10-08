@@ -79,3 +79,9 @@ PYTHONPATH=scripts:. python docs/evidence/issue47_history/historical-income-rece
 现有normal_history_plan在同一实际恢复源根只读检查十公司各五个报告末日及计划声明的必要前期/修订，22.403秒。全过程禁止读取来源包的程序/规则目录，仅允许公司registry；年度目录、primary/index和CompanyFacts的十份计划均READY，新增GET需求0。完整计划lossless保存[annual-source-plans.json.gz](annual-source-plans.json.gz)，[摘要](annual-source-plan-summary.json)列全部公司/末日、类别和限定范围。没有重算任何历史指标或复制来源树。
 
 这证明年度基础来源这一层已经存在；接到同一公司入口仍是实现工作。它没有检查代理文件、D04图片、EX99、收入/债务集合或业务完整性，也没有从报告末日推出发行人FY标签。JPM当前41历史分片在本次元数据检查中一致，Paramount两主体各自目录保留；原日期冲突与其他语义限制继续成立，五十报告末日不等于1950交付。
+
+## B03后续显式来源接口接收，未接计算
+
+只接#28固定PR73/9a7f340a的ordinary_depreciation_sources及其11小例，旧ordinary_income_input、历史Calculator和三个旧年null未改。11项0.014秒过；三年已选primary/XML共用解析检查2.146秒，分别取得原165/62/138/49m、197/83/114/35m、226/122/122/37m四对候选，主体/实际期间/USD/来源字节一致，issues为空。传入的DEI/FASB URI来自这三份原件，FY2021为2021q4与日期版US-GAAP，不用财年拼URI或改变旧默认。
+
+接口给两个CONTEXT_SCOPE_SPECIALIZATION，均明确additive_relationship_established=false；原文of-which关系沿前面的冻结阅读核对，不将维度包含当金额包含。definition_complete=false、metric_result_created=false逐项保留；完整D&A角色、取得/履约合同成本、租赁和减值范围仍须完成。没有把候选金额手工灌入Calc或产生B03接受。结果见[b03-native-source-receiving.json](b03-native-source-receiving.json)，完整候选及引用lossless在b03-native-source-candidates.json.gz；这只在历史开发分支供消费者排错，不扩PR71公共收口范围。
