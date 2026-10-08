@@ -1,0 +1,174 @@
+{
+  "record_type": "ISSUE47_STATEMENT_COMPANY_RECEIVING",
+  "status": "BRANCH_VALIDATED_NOT_MAIN",
+  "main_observed": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "parent_candidate": "PR71/2b289bf699f7cfd73ee0784f0e0713660fcb19b7",
+  "public_mapping_dependency": "PR74/5a0352d1fa2ca19c66f99de6c2338fe7a07c1b92; company_current_records.py exact received bytes",
+  "scope": "Saved unamended continuous-primary B01/B02/B04/B05, at most five issuer fiscal years; shared controller/store/read/CSV",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_runs": 0,
+  "business_acceptance_added": false,
+  "companies": {
+    "ford_motor_company": {
+      "fiscal_years": [
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "actual_period_ends": [
+        "2021-12-31",
+        "2022-12-31",
+        "2023-12-31",
+        "2024-12-31",
+        "2025-12-31"
+      ],
+      "coordinates": 20,
+      "old_reading_value_unit_period_differences": [],
+      "first_seconds": 129.83542241714895,
+      "processing_change_seconds": 139.66594904102385,
+      "processing_change_reason": "Four actual selected-source/shared-calculation files added to declared processing dependencies; input unchanged, old versions retained",
+      "processing_change_recalculated": true,
+      "repeat_seconds": 4.05750395799987,
+      "repeat_selection_calls": 0,
+      "repeat_calculation_calls": 0,
+      "repeat_statuses": [
+        "NO_SOURCE_CONTENT_CHANGE"
+      ],
+      "repeat_and_read_saved_files_unchanged": true,
+      "saved_files_checked": 260,
+      "independent_read_seconds": 0.17633737507276237,
+      "independent_read_selection_calls": 0,
+      "independent_read_update_calls": 0,
+      "csv_evidence_rows": 30
+    },
+    "salesforce": {
+      "fiscal_years": [
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "actual_period_ends": [
+        "2022-01-31",
+        "2023-01-31",
+        "2024-01-31",
+        "2025-01-31",
+        "2026-01-31"
+      ],
+      "coordinates": 20,
+      "old_reading_value_unit_period_differences": [],
+      "first_seconds": 100.8059313329868,
+      "processing_change_seconds": 107.27467483305372,
+      "processing_change_reason": "Four actual selected-source/shared-calculation files added to declared processing dependencies; input unchanged, old versions retained",
+      "processing_change_recalculated": true,
+      "repeat_seconds": 4.665988041087985,
+      "repeat_selection_calls": 0,
+      "repeat_calculation_calls": 0,
+      "repeat_statuses": [
+        "NO_SOURCE_CONTENT_CHANGE"
+      ],
+      "repeat_and_read_saved_files_unchanged": true,
+      "saved_files_checked": 260,
+      "independent_read_seconds": 0.17204458313062787,
+      "independent_read_selection_calls": 0,
+      "independent_read_update_calls": 0,
+      "csv_evidence_rows": 30
+    },
+    "macys": {
+      "fiscal_years": [
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "actual_period_ends": [
+        "2022-01-29",
+        "2023-01-28",
+        "2024-02-03",
+        "2025-02-01",
+        "2026-01-31"
+      ],
+      "coordinates": 20,
+      "old_reading_value_unit_period_differences": [],
+      "first_seconds": 116.65604012506083,
+      "processing_change_seconds": 122.52158041694202,
+      "processing_change_reason": "Four actual selected-source/shared-calculation files added to declared processing dependencies; input unchanged, old versions retained",
+      "processing_change_recalculated": true,
+      "repeat_seconds": 3.9797166669741273,
+      "repeat_selection_calls": 0,
+      "repeat_calculation_calls": 0,
+      "repeat_statuses": [
+        "NO_SOURCE_CONTENT_CHANGE"
+      ],
+      "repeat_and_read_saved_files_unchanged": true,
+      "saved_files_checked": 260,
+      "independent_read_seconds": 0.17144900001585484,
+      "independent_read_selection_calls": 0,
+      "independent_read_update_calls": 0,
+      "csv_evidence_rows": 30
+    }
+  },
+  "checks": {
+    "short_tests": 40,
+    "short_seconds": 0.107,
+    "skipped": 0
+  },
+  "unreceived": [
+    "online historical discovery and missing-source acquisition",
+    "target/prior amendment adaptation",
+    "successor/predecessor statement case",
+    "remaining metric families including complete B03 and B06"
+  ],
+  "mixed_hotel": {
+    "elapsed_seconds": 4.649629791965708,
+    "exit_code": 0,
+    "hotel_preparation_calls": 0,
+    "hotel_files_unchanged": true,
+    "hotel_saved_file_count": 28,
+    "statuses": {
+      "B04": "CANDIDATE_READY",
+      "B10": "NO_SOURCE_CONTENT_CHANGE",
+      "B11": "NO_SOURCE_CONTENT_CHANGE"
+    }
+  },
+  "local_failure_control": {
+    "constructed_control": true,
+    "actual_financial_conclusion": false,
+    "first_seconds": 13.200487791094929,
+    "repeat_seconds": 0.4994878340512514,
+    "read_seconds": 0.007023165933787823,
+    "repeat_preparation_calls": 0,
+    "saved_files_unchanged": true,
+    "saved_file_count": 21,
+    "first_statuses": {
+      "B02": "CANDIDATE_WITHHELD",
+      "B04": "CANDIDATE_READY",
+      "B05": "CANDIDATE_READY"
+    },
+    "repeat_statuses": {
+      "B02": "PREVIOUS_INPUT_WITHHELD",
+      "B04": "NO_SOURCE_CONTENT_CHANGE",
+      "B05": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    "read_values": {
+      "B02": null,
+      "B04": "105000000",
+      "B05": "674000000"
+    }
+  },
+  "evidence_archive": {
+    "path": "consumer-results.tar.gz",
+    "members": 816,
+    "bytes": 338812,
+    "sha256": "ebe196258494c5e97287f181450cfbd529979ce82db25eff5b3366b7ad1c2805",
+    "contents": "Raw CLI outputs/commands, same-company CSV/evidence, current and earlier ordinary records; sources remain shared saved inputs"
+  }
+}

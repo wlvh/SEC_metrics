@@ -45,8 +45,32 @@ class HistoryCompanyDispatchTest(TestCase):
     def test_unsupported_family_uses_no_fabricated_historical_case(self):
         with patch('vnext.company_current_records.run_saved_company') as shared:
             with self.assertRaisesRegex(ValueError, 'SAVED_FAMILY_NOT_IMPLEMENTED'):
-                self.run_history(metric_ids=['B01'])
+                self.run_history(metric_ids=['D03'])
         shared.assert_not_called()
+
+    def test_statement_pilot_uses_original_per_metric_factories_and_dependencies(self):
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case, PROCESSING_FILES
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='macys', metric_ids=['B01', 'B02', 'B04', 'B05'],
+                             fiscal_year_start=2021, fiscal_year_end=2025)
+        args = shared.call_args.kwargs
+        self.assertEqual([2021, 2022, 2023, 2024, 2025], args['fiscal_years'])
+        self.assertNotIn('case_factory', args)
+        self.assertTrue(all(f is prepare_historical_statement_year_case for f in args['case_factories'].values()))
+        self.assertTrue(all(p == PROCESSING_FILES for p in args['processing_files_by_metric'].values()))
+        self.assertFalse((self.root/'state').exists())
+
+    def test_mixed_lodging_keeps_its_previous_factory_and_tuple(self):
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(metric_ids=['B01', 'B10', 'B11'])
+        args = shared.call_args.kwargs
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        for metric in ['B10', 'B11']:
+            self.assertIs(prepare_historical_lodging_year_case, args['case_factories'][metric])
+            self.assertEqual(HISTORICAL_LODGING_PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertFalse((self.root/'outputs').exists())
 
     def test_current_mode_keeps_the_existing_public_route(self):
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
