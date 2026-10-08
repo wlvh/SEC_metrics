@@ -1,0 +1,38 @@
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -164,13 +164,10 @@
+ SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
+ SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
+ FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
+-<<<<<<< 372f4b74c6abe9f2340bba5396264168b0445885
+ FAST_TESTS += ("tests.vnext.test_legal_review_contract",)
+-=======
+ FAST_TESTS += ("tests.vnext.test_history_business_boundaries.BankScopeBusinessTest",)
+ FAST_TESTS += ("tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest",)
+ FAST_TESTS += ("tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest",)
+->>>>>>> 09563892cc170a45c7ee558d1bf3f436c69e5ce1
+ SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
+ SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
+ SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -32,19 +32,16 @@
+           PYTHONDONTWRITEBYTECODE: "1"
+         run: python3 tools/run_foundation_ci.py --suite fast --jobs 4
+
+-<<<<<<< 372f4b74c6abe9f2340bba5396264168b0445885
+       - name: Verify H1 short business boundaries
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+         run: python3 -m unittest -v tests.vnext.test_legal_review_contract
+-=======
+       - name: Verify H2 short business boundaries
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+         run: python3 -m unittest -v tests.vnext.test_history_business_boundaries.BankScopeBusinessTest tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest
+->>>>>>> 09563892cc170a45c7ee558d1bf3f436c69e5ce1
+
+   inherited-source-material:
+     name: Foundation inherited source material

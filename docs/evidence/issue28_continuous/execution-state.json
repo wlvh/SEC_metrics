@@ -16217,6 +16217,16 @@
         0,
         0
       ]
+    },
+    "pr58_pr62_joint_receiving": {
+      "fixed_heads": [
+        "372f4b74c6abe9f2340bba5396264168b0445885",
+        "09563892cc170a45c7ee558d1bf3f436c69e5ce1"
+      ],
+      "patch": "docs/evidence/issue28_continuous/shared-short-selectors-20261008/pr58-pr62-merge-resolution.patch",
+      "virtual_tree": "621ce1b50051ab5559e3579422fb578209fe143e",
+      "preserves_4selectors_and_both_steps": true,
+      "actual_joint_test_execution": false
     }
   },
   "peer_increment_20261009": {
@@ -16385,14 +16395,14 @@
   "amendment_source_layout_20261009": {
     "pr": 79,
     "base": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
-    "published_head": "1cc80525a8189c942ad50922337515ff41da5fa7",
+    "published_head": "6691ab8fa4fff8043f4cce4079d88aa2ada4aebd",
     "source_sha": "b2d84a3c4f8770698c43d9cb95fd16c030d33f24",
     "explicit_api": "inspect_instant_balance_amendment(note_layout=inline-paragraphs-v2)",
     "default_behavior": "blocks-v1 unchanged, known original limitations retained",
     "source_modules": [
       "scripts/vnext/amendment_note_layout.py",
-      "scripts/vnext/annual_amendment_scope.py",
-      "scripts/vnext/instant_balance_amendment.py"
+      "scripts/vnext/annual_amendment_scope_v2.py",
+      "scripts/vnext/instant_balance_amendment_v2.py"
     ],
     "small_tests": {
       "count": 16,
@@ -16414,7 +16424,7 @@
       "993d3fb",
       "5cc8bfc"
     ],
-    "ci_initial": "14checks running/queued, not terminal",
+    "ci_initial": "6691: source/reference/ledger/source-material SUCCESS;10 remaining jobs still running, not overall terminal",
     "company_receiving": "Issue47 owner must verify its actual Paramount24 B08/B09/CSV and reuse; own source evidence does not accept it",
     "evidence": "docs/evidence/issue28_amendment_note_20261009/README.md",
     "new_calls": [
@@ -16422,6 +16432,74 @@
       0,
       0
     ],
-    "pr67_scope_unchanged": true
+    "pr67_scope_unchanged": true,
+    "legacy_files_exact_main": true,
+    "reviewed_semantic_functions_moved_without_change": true,
+    "representative_old_neighbour_update": {
+      "test": "OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours",
+      "passed": true,
+      "seconds": 325.51,
+      "expected_status_unchanged": true,
+      "tested_dirty_tree_later_committed_in": "6691ab8f"
+    },
+    "new_short_tests": {
+      "count": 22,
+      "source_methods": 17,
+      "seconds": 3.421
+    },
+    "first_ci": {
+      "head": "1cc80525a8189c942ad50922337515ff41da5fa7",
+      "run": 37847079996,
+      "conclusion": "failure",
+      "source_and_fast_pass": true,
+      "diagnosed_jobs": [
+        "source authority normal-binding error",
+        "ordinary update history normal-binding error",
+        "independent company UPDATES_INCOMPLETE"
+      ],
+      "not_all_old_jobs_independently_diagnosed": true
+    },
+    "receiver": {
+      "fixed_sha": "3eb0c244f9c873c63f28351ed7897288c6f83648",
+      "reported_actual_company_results": [
+        "B08FY2024",
+        "B09FY2024"
+      ],
+      "receiver_acceptance": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "replay_forbidden_repeat_seconds": 0.6274405000731349,
+      "parent_source_check": "3 same-subject same-instant native facts matched existing B08/B09 formulas; not whole company acceptance",
+      "old_receiver_processing_version_retained": true,
+      "versioned_path_adaptation_pending": false,
+      "fixed_v2_receiver_sha": "32e1f70e",
+      "public_three_modules_byte_equal_checked": true,
+      "source_scope_complete_equal": true,
+      "configuration_only_reprocessing_seconds": 16.751313583925366,
+      "repeat_seconds": 0.5822178751695901,
+      "repeat_calculation_calls": 0,
+      "files_unchanged_on_repeat": 100,
+      "independent_read_seconds": 0.074,
+      "evidence_read_not_parent_rerun": true
+    }
+  },
+  "pr67_pr61_receiving_seam_20261009": {
+    "old_head": "5f35cca27be29b152b84d9dc693be08248975d63",
+    "new_head": "5496164a9099c99d9c4ec5aec2040b949794371a",
+    "actual_parent_received": "86e63816d00e2f241f626c59f58041d04d9064cd",
+    "old_merge_conflicts": [
+      "TESTING.md",
+      "tools/run_foundation_ci.py"
+    ],
+    "new_merge_tree_clean": true,
+    "production_tool_test_workflow_bytes_exactly_5f": true,
+    "actual_short_tests": 34,
+    "short_seconds": 0.146,
+    "unchanged_long_evidence_reused": true,
+    "current_ci": "newhead still running, old5f SUCCESS not transferred",
+    "scope_unchanged": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
