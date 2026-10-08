@@ -1,0 +1,29 @@
+name: Amendment note source checks
+"on":
+  pull_request:
+    paths:
+      - 'scripts/vnext/amendment_note_layout.py'
+      - 'scripts/vnext/annual_amendment_scope.py'
+      - 'scripts/vnext/instant_balance_amendment.py'
+      - 'tests/vnext/test_amendment_note_layout.py'
+      - 'tests/vnext/test_instant_amendment_paragraph_api.py'
+      - 'docs/evidence/issue28_amendment_note_20261009/**'
+      - '.github/workflows/amendment-note.yml'
+permissions:
+  contents: read
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - name: Small source parsing and complete API boundaries
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_amendment_note_layout tests.vnext.test_instant_amendment_paragraph_api

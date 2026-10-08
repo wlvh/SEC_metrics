@@ -55,14 +55,18 @@ def _correction_flag(raw,scope):
     return found[0]
 
 
-def _cover_matches(blocks, raw, pattern, note_layout):
+def _text_units(blocks, raw, note_layout):
     if note_layout=='inline-paragraphs-v2':
         from .amendment_note_layout import paragraph_blocks
         groups=paragraph_blocks(blocks,raw)
         return [{'text':' '.join(b['text'] for b in group),'source_blocks':group,
                  'block_indices':[b['block_index'] for b in group]}
-                for group in groups if re.fullmatch(pattern,' '.join(b['text'] for b in group))]
-    return [b for b in blocks if re.fullmatch(pattern,b['text'])]
+                for group in groups]
+    return blocks
+
+
+def _cover_matches(blocks, raw, pattern, note_layout):
+    return [b for b in _text_units(blocks,raw,note_layout) if re.fullmatch(pattern,b['text'])]
 
 
 def _part_iii_details(scope,raw):
@@ -111,14 +115,15 @@ def _part_iii_details(scope,raw):
         from .amendment_note_layout import conditional_recovery_patterns
         conditional_patterns=conditional_recovery_patterns(conditional_patterns)
     conflicts=[];conditionals=[]
-    for block in blocks:
-        if block['block_index'] in correction_indices:continue
+    for block in _text_units(blocks,raw,layout):
+        indices=block.get('block_indices',[block.get('block_index')])
+        if set(indices)<=set(correction_indices):continue
         text=block['text']
         if re.search(POLICY['balance_statement_pattern'],text,re.I):
             conflicts.append(block);continue
         if not financial.search(text) or not revision.search(text):continue
         remaining=text
-        conditional_block=(block['block_index'] not in quoted and any(
+        conditional_block=(not (set(indices)&quoted) and any(
             re.fullmatch(pattern,text,re.I) for pattern in conditional_patterns))
         if not conditional_block:
             conflicts.append(block);continue
@@ -130,7 +135,7 @@ def _part_iii_details(scope,raw):
                 remaining=remaining[:m.start()]+remaining[m.end():]
         if financial.search(remaining) and revision.search(remaining):conflicts.append(block)
     _need(not conflicts,'INSTANT_AMENDMENT_FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED:'+
-          ','.join(str(b['block_index']) for b in conflicts))
+          ','.join(str(i) for b in conflicts for i in b.get('block_indices',[b.get('block_index')])))
     return {'note_identity':dict(match.groupdict()),'correction_cover':corrections[0],'restatement_cover':restatements[0],
             'native_correction_flag':flag,'no_new_statements_declaration':declarations[0],
             'conditional_compensation_references':conditionals,'unresolved_correction_blocks':conflicts}

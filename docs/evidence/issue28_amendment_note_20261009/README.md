@@ -13,3 +13,13 @@ Paramount FY2025 default output is separately compared against executing exact85
 Current/history consumers must explicitly select the successor and name amendment_note_layout.py plus both changed source readers among their consumed processing dependencies. A direct source proof does not mean its company Result/CSV, automatic update or all amendment types are accepted. #47 owns its existing historical B08/B09 adapter and receiving verification; #28 maintains this shared source interface. No annual continuity, C04, B06, model or acquisition approval is granted. PR67's closed delivery scope is not expanded; this is an independent source fix.
 
 Commands are in probe_saved_source.py; pass an existing `--source-root`, optionally `--case 2025 --compare-legacy`. Network is forbidden. New provider/paid/SEC0/0/0; no Ready/merge/adoption/deployment/active.
+
+## First limited review: correction-scope P1
+
+Independent review of9f3145fe rejects the candidate. It reproduced a full-API wrong acceptance when a current financial correction's verb/object or current/assets was split by ordinary inline divs.9small tests passing did not cover this necessary boundary. Original review/32tools/3messages is retained and capped; its unchanged-source and default-output findings are reused, not relabelled as post-fix approval. No new consumer may use9f input credit.
+
+### Same-paragraph correction repair
+
+The successor now uses the same conservative inline paragraph groups throughout the existing full-document correction check. It does not add financial keywords or guess time/subject: it applies the old financial/revision/conditional rules to the complete same paragraph, preserving source_blocks/block_indices and requiring every quoted block to remain accounted for. Oldblocks-v1 still uses its original units. Three actual full-API failures are reproduced on9f with a small, explicitly constructed complete filing; repaired12tests pass0.031s. Unsplit correction, inline split correction/current assets and newly disclosed split current assets all refuse by the specific correction reason; the clean small filing completes. Original clean2024still INPUT_PROPERTY_PROVEN4.485s, original13note blocks/3paragraphs retained. No Run/Result/accepted company or new source call is created.
+
+New dedicated existing-unittest CI runs only the two short modules in one process; no full annual installer or business secrets. Inherited CI remains separately observed, never transferred from this short step. Post-fix independent review is still required and will cover only this new difference, preserving the failed9f review.
