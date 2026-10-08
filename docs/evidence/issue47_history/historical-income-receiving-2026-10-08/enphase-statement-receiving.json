@@ -1,0 +1,46 @@
+{
+  "status": "SAVED_SOURCE_COMPANY_CONSUMER_VALIDATED_NOT_MAIN",
+  "executed_program_branch": "task/issue47-statement-pilot-20261009",
+  "executed_program_commit": "5272797e0bc79ddb007fc021d8243f2ad46cf7d7",
+  "production_changes": false,
+  "company": "enphase_energy",
+  "years": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "metrics": [
+    "B01",
+    "B02",
+    "B04",
+    "B05"
+  ],
+  "positions": 20,
+  "first_seconds": 93.19979316694662,
+  "repeat": {
+    "exit_code": 0,
+    "elapsed_seconds": 3.806107083102688,
+    "selection_calls": 0,
+    "calculation_calls": 0,
+    "saved_file_count": 140,
+    "saved_files_unchanged": true
+  },
+  "independent_read_seconds": 0.09234937489964068,
+  "old_reading_positions": 20,
+  "value_unit_window_primary_sha_differences": [],
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_business_acceptance": false,
+  "archive": {
+    "members": 132,
+    "bytes": 376097,
+    "sha256": "86d556f78ab42609bf3158877a0efb52c08c89d75bfd3b9b7fad7004c2953d21"
+  },
+  "limitation": "Saved sources only; not online acquisition or all metrics. Prior existing original readings reused; old match does not grant new business acceptance."
+}
