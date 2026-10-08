@@ -63,6 +63,36 @@ def impairment_document(*, note="Includes depreciation related to an asset impai
 
 
 class HistoricalSharedB03InputTest(TestCase):
+    def test_wrong_inline_namespace_is_not_a_confirmed_historical_amount(self):
+        raw = document('<p>' + fact() + '</p>',
+                       namespace="http://fasb.org/us-gaap/2021-01-31")
+        raw = raw.replace(b'<ix:nonFraction ',
+            b'<wrong:nonFraction xmlns:wrong="https://example.invalid/not-inline" ')
+        raw = raw.replace(b'</ix:nonFraction>', b'</wrong:nonFraction>')
+        checked = inspect(raw)
+        self.assertEqual("WITHHOLD", checked["status"])
+        self.assertEqual("SOURCE_NUMERIC_VALUES_UNRESOLVED", checked["why"])
+        self.assertTrue(any('NUMERIC_TAG_NOT_SUPPORTED' in row['reason']
+                            for row in checked['source_numeric_issues']))
+
+    def test_unformatted_comma_cannot_confirm_a_historical_chain_amount(self):
+        checked = inspect(document('<p>' + fact(value="1,00") + '</p>',
+            namespace="http://fasb.org/us-gaap/2021-01-31"))
+        self.assertEqual("WITHHOLD", checked["status"])
+        self.assertTrue(any('NUMERIC_LEXICAL_FORM_NOT_SUPPORTED' in row['reason']
+                            for row in checked['source_numeric_issues']))
+
+    def test_declared_decimal_transform_keeps_dated_release_amount(self):
+        raw = document('<p>' + fact(value="1,000") + '</p>',
+                       namespace="http://fasb.org/us-gaap/2021-01-31")
+        raw = raw.replace(b'<html ',
+            b'<html xmlns:num="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" ')
+        raw = raw.replace(b'<ix:nonFraction ', b'<ix:nonFraction format="num:num-dot-decimal" ')
+        checked = inspect(raw, [observation(value="1000")])
+        self.assertEqual("KEEP", checked["status"])
+        self.assertEqual("1000", checked['source_facts'][0]['value'])
+        self.assertFalse(checked['complete_business_scope_proven'])
+
     def test_custom_same_local_name_cannot_create_a_gaap_conflict(self):
         checked = inspect(document('<p>' + fact() + '</p><p>'
             + fact("corp:DepreciationAndAmortization", "999") + '</p>'))

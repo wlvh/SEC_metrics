@@ -13,7 +13,7 @@ from .canonical import content_hash, sha256_bytes
 from .composite_scope import index_source_structure
 from .deterministic_router import parse_accession_xbrl_source
 from .financial_structured import _InlineTableIndex
-from .governance_signals import _qname, _source_value
+from .reported_monetary_literal import reported_monetary_value
 from .r5_b06_scope import precision_choice
 from .text_results_v2 import _CAPABILITY_POLICY, _ReportedFactMetadata, _verified_context
 
@@ -39,28 +39,6 @@ def _scope(context):
                      for x in context['dimensions'])))
 
 
-def _numeric_value(fact, info):
-    """Check the source representation before the shared amount normalizer."""
-    tag_uri, tag_name = _qname(info['tag'], info['namespaces'])
-    inline = tag_uri in NUMERIC_POLICY['numeric_inline_namespaces'] and tag_name == 'nonfraction'
-    xml = (tag_uri == info['concept'][0]
-           and tag_name.casefold() == info['concept'][1].casefold())
-    _need(inline or xml, 'NUMERIC_TAG_NOT_SUPPORTED')
-    nil = [v for k, v in info['attrs'].items()
-           if _qname(k, info['namespaces']) == ('http://www.w3.org/2001/XMLSchema-instance', 'nil')]
-    _need(not nil or nil == ['false'] or nil == ['0'], 'NIL_OR_INVALID_SOURCE_VALUE')
-    transform = info['attrs'].get('format', '')
-    if xml:
-        _need(not transform and info['attrs'].get('scale', '0') == '0'
-              and not info['attrs'].get('sign'), 'XML_NUMERIC_ATTRIBUTES_NOT_SUPPORTED')
-    local = _qname(transform, info['namespaces'])[1] if transform else ''
-    if local not in {'fixed-zero', 'numdash'}:
-        pattern = NUMERIC_POLICY['dot_decimal_supported_lexical_pattern'] if transform else NUMERIC_POLICY['unformatted_decimal_lexical_pattern']
-        _need(re.fullmatch(pattern, str(fact['text']).strip()) is not None, 'NUMERIC_LEXICAL_FORM_NOT_SUPPORTED')
-    try:
-        return _source_value(fact, info)
-    except ValueError as error:
-        raise ValueError('DEPRECIATION_SOURCE_NUMERIC_VALUE_NOT_SUPPORTED:' + str(error)) from error
 
 
 def _annual_identity(parsed, meta, *, filing, entity, period, namespaces):
@@ -121,7 +99,7 @@ def _read(source, *, source_kind, company_id, filing, entity, period, namespace_
             issues.append({'ordinal': f['ordinal'], 'reason': 'TYPED_SCOPE_OR_NON_USD'}); continue
         try:
             proof = _verified_context(native={**c, 'dimensions': dict(c['dimensions'])}, metadata=meta)
-            value = _numeric_value(f, info)
+            value = reported_monetary_value(fact=f, metadata=info, policy=NUMERIC_POLICY)
         except ValueError as error:
             issues.append({'ordinal': f['ordinal'], 'reason': str(error)}); continue
         reports.append({'ordinal': f['ordinal'], 'concept': [uri, name],

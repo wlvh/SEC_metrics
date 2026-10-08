@@ -95,3 +95,9 @@ Marriott FY2021 B02仍有具体前期适配缺口：当前0001628280-22-002666�
 两份原件各81张物理表，73张的全部原格文字、表头、caption和span几何完全相同；变化表5/25为目录页码，8/9涉及酒店行跨页，77/78为附件/认证列表，79/80签名有所变化。完整收入相关表11/31/58/67逐格和范围相同，保留2020收入10,571m、2019 20,972m、2018 20,758m USD。这里只断言这些四张收入表，不把其相同推广为全部正文或签名相同。修订件重刊完整财务报表可见文字，未保留原1173个可读非DEI行内数值；原件另34个表示问题也原样保留，不能将“修订件没有行内数值”说成“没有财务内容”或伪称两份全部数值标签相同。
 
 现有共同修订检查返回UNCLASSIFIED及两项实现/段落边界问题；历史前期walk又一律报NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED。实际已有消费者5.411s返回WITHHELD/null，未生成新Run或接受。完整说明段、全部表格比较、四表原格、行内候选比较、期间选择及现行case保存在[7成员材料包](marriott2020-prior-amendment-materials.tar.gz)，[准确范围与待接接口](marriott2020-prior-amendment-reference.json)已交#28共同来源负责人。需要按指标接收普通来源属性，而不是放宽任意修订、回铸旧收据或注入人工收入。完整可见正文转储虽已保存，本项不声称逐段读完全部304k字符；上述说明及表格关系已经针对核对。本路线新增真实调用0，当前B02扣留保持，适配与最终正确值交付责任继续。
+
+## B03后续共享数值表示修复接收
+
+接#28固定f78d7e60的ordinary_b03_input_scope和reported_monetary_literal，以及844dd2fc的ordinary_depreciation_sources；三个公共文件逐字节取回，不重写核心。历史真实调用的inspect_selected_historical_depreciation_input新增两个负例实际返回KEEP：错误行内标签命名空间、没有声明转换的1,00被读成100。原16例的两项失败保存；接共享修复后，33项历史case/来源API/原件范围短例0.052秒通过，零skip。合法声明num-dot-decimal的1,000及显式历史日期版GAAP URI仍按1000读取，完整业务范围标记仍false。历史B03分派补实际helper、解析及政策依赖，后续变化由原公共控制器触发处理，不另改控制器或旧Run。
+
+只重验受影响的Marriott FY2021原HTML/XML：0.613秒，完整候选返回与此前保存结果完全同一，165/62/138/49m、关系及ID不变，definition_complete=false、metric_result_created=false。另选真实Marriott FY2024，经现有历史case→公共writer→read，4.683秒，B03=0.1653386454183266932270916335 ratio，期间/值/单位/Result ID与此前保存结果同一。没有重跑两年公司全链或三旧年计算，没有新增调用/Run/接受。候选核对初始脚本漏filingDate、writer探测初始漏三个必填参数的开发错误均如实列入摘要，修正的是调用参数，不修改原件、金额或期望值。[主要接收摘要](b03-numeric-peer-receiving.json)、[原失败](b03-numeric-historical-before.log)、[定向通过](b03-numeric-historical-after.log)。三个旧年度B03的完整D&A范围仍未证明，null不释放；此业务修复保留在历史开发分支，不扩PR71/PR75公共收口候选。

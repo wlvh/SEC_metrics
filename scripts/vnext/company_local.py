@@ -459,7 +459,9 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
                     'historical_saved_case', 'historical_zero_ai_results',
                     'historical_da_scope_candidate', 'ordinary_b03_input_scope',
                     'b03_contract_amortization_scope', 'b03_depreciation_scope',
-                    'ordinary_da_scope_v1', 'xbrl_namespace_policy'))}))
+                    'ordinary_da_scope_v1', 'xbrl_namespace_policy',
+                    'reported_monetary_literal', 'financial_structured', 'text_results_v2')),
+                'catalog/r6/text_results_v2_policy.json'}))
         else:
             need(set(selected) <= SAVED_DETERMINISTIC_METRICS,
                  'LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED')

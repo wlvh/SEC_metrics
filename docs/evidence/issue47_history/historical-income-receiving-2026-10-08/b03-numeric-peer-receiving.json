@@ -1,0 +1,88 @@
+{
+  "public_code_consumed": {
+    "ordinary_b03_input_scope.py": "f78d7e60",
+    "reported_monetary_literal.py": "f78d7e60",
+    "ordinary_depreciation_sources.py": "844dd2fc"
+  },
+  "shared_core_implemented_here": false,
+  "historical_changes": [
+    "three small representation cases",
+    "declared actual monetary/helper/policy dependencies for historical B03"
+  ],
+  "before": {
+    "tests": 16,
+    "failures": 2,
+    "scope": "Historical inspector actually returned KEEP for wrong numeric tag and unformatted comma"
+  },
+  "after": {
+    "tests": 33,
+    "seconds": 0.052,
+    "skipped": 0
+  },
+  "native_source": {
+    "year": 2021,
+    "seconds": 0.6126017500646412,
+    "candidate_pairs": [
+      [
+        "AmortizationOfIntangibleAssets",
+        "165000000"
+      ],
+      [
+        "AmortizationOfIntangibleAssets",
+        "62000000"
+      ],
+      [
+        "Depreciation",
+        "138000000"
+      ],
+      [
+        "Depreciation",
+        "49000000"
+      ]
+    ],
+    "issues": [],
+    "definition_complete": false,
+    "metric_result_created": false,
+    "complete_response_same_as_previous": true,
+    "source_candidates_id": "sha256:25b4c2835533860cd62d7ed74ce0e7102e06504941ceadddd680fa30dc2d5443",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "ordinary_historical_consumer": {
+    "year": 2024,
+    "seconds": 4.682849874952808,
+    "period": {
+      "fiscal_year": 2024,
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01"
+    },
+    "value": "0.1653386454183266932270916335",
+    "unit": "ratio",
+    "publication": "PUBLISHED",
+    "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+    "same_value_unit_period_and_id_as_saved_previous": true,
+    "no_new_native_run": true,
+    "new_acceptance": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "developer_harness_corrections": [
+    "Source comparison initially omitted filingDate, changing only the candidate-set envelope ID; exact previous source identity restored, complete response identical",
+    "Initial writer probe omitted required source_root/company_id/metric_id; corrected API call succeeded"
+  ],
+  "older_year_values_released": false,
+  "PR71_or_PR75_scope_expanded": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false
+}
