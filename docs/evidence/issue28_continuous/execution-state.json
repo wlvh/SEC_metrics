@@ -33,7 +33,7 @@
     "sec": 52,
     "unknown": 0
   },
-  "current_work": "C02 fix46 core NEEDS_FIX and prewrite gate PASS_ONLY retained; #54 saved mixed source consumer demonstrated Marriott C04 candidate/reentry/rejected-import recovery and B13/D04 missing processing input; E01 layout counterexample held for explicit shared successor receipt.",
+  "current_work": "PR67 saved-source closeout5f35cca2 complete stable-success/withheld reuse and all9CI SUCCESS; no new family/model/online scope. Independent PR79 source layout fix1cc80525 is pushed and limited-review deltas passed, company receiving still separate; prepare shared PR77/78 short test selectors.",
   "next": [
     "Marriott B03 current private candidate now follows the user-selected USD458m two-component scope; separate USD135m revenue deduction proven, initial URI review NEEDS_FIX preserved and 2bbd769 repair review PASS_WITH_BOUNDS. Unquantified fulfillment-cost amortization is an explicit final economic-scope limit. Do not rerun unchanged long evidence.",
     "E01 content-confirmed M&A is the adopted cross-Issue target; count unit and deduplication require checking existing decisions and exact remaining product gaps. The current ten-company window has 41 Item 8.01 claims; the opt-in source parser binds two sections, including a Paramount notice about an already reported transaction. No current E01 result is changed by keyword hits; Salesforce header and primary are already verified in the #28 cumulative root, so do not request them again.",
@@ -5116,6 +5116,138 @@
       "ended_at_basis": "review artifact write recorded in review.log; final verified before parent observation17:19:03Z",
       "messages": 1,
       "resource_cap_compliant": true
+    },
+    {
+      "task_name": "review_amendmentnote_9f3145f",
+      "purpose": "limited_independent_review",
+      "module": "amendmentnote",
+      "scope_paths": [
+        "scripts/vnext/amendment_note_layout.py",
+        "scripts/vnext/annual_amendment_scope.py",
+        "scripts/vnext/instant_balance_amendment.py",
+        "tests/vnext/test_amendment_note_layout.py"
+      ],
+      "patch_sha": "9f3145fe6b8974346c431568736680026d19e926",
+      "spawned_at": "2026-10-08T20:21:49Z",
+      "ended_at": "2026-10-08T20:31:47Z",
+      "tool_calls": 32,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/docs/evidence/issue28_amendment_note_20261009/independent/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "limits": {
+        "tools_including_nested": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "No live samepurpose agent, no sameSHA register or independent evidence; old b03 review touched root forwarding only, not this note/cover delta",
+      "messages": 3,
+      "review_started_at": "2026-10-08T20:24:37Z",
+      "current_input_credit": false
+    },
+    {
+      "task_name": "review_amendmentnote_993d3fb",
+      "purpose": "limited_independent_review",
+      "module": "amendmentnote",
+      "scope_paths": [
+        "scripts/vnext/instant_balance_amendment.py",
+        "tests/vnext/test_instant_amendment_paragraph_api.py",
+        ".github/workflows/amendment-note.yml"
+      ],
+      "patch_sha": "993d3fbb4ea6c7d767f6f757b57f3bb360c1a7a3",
+      "scope_base_sha": "9f3145fe6b8974346c431568736680026d19e926",
+      "spawned_at": "2026-10-08T20:45:53Z",
+      "ended_at": "2026-10-08T20:52:50Z",
+      "tool_calls": 23,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/docs/evidence/issue28_amendment_note_20261009/independent-p1-fix/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "limits": {
+        "tools_including_nested": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "No live/sameSHA review/result; previous9f reviewer ended at3messages, new uncovered P1 repair only under latest explicit permission, original failure retained",
+      "messages": 3,
+      "review_started_at": "2026-10-08T20:47:08Z",
+      "current_input_credit": false
+    },
+    {
+      "task_name": "review_amendmentnote_5cc8bfc",
+      "purpose": "limited_independent_review",
+      "module": "amendmentnote",
+      "scope_paths": [
+        "scripts/vnext/amendment_note_layout.py",
+        "scripts/vnext/annual_amendment_scope.py",
+        "scripts/vnext/instant_balance_amendment.py",
+        "tests/vnext/test_amendment_note_layout.py",
+        "tests/vnext/test_instant_amendment_paragraph_api.py"
+      ],
+      "patch_sha": "5cc8bfcd36a5184dc7dba4982235ffadaff6eb88",
+      "scope_base_sha": "9a66f77a69fd40a750a8c85111327d0b778e0792",
+      "spawned_at": "2026-10-08T21:03:45.043364+00:00",
+      "ended_at": "2026-10-08T21:13:47Z",
+      "tool_calls": 49,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/docs/evidence/issue28_amendment_note_20261009/independent-word-fix/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "limits": {
+        "tools_including_nested": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "list_agents previous two reviews completed at 3 messages; register and existing evidence no same SHA; review only genuinely uncovered word-preservation delta, inherit both failures",
+      "current_input_credit": false,
+      "review_started_at": "2026-10-08T21:04:19Z",
+      "messages": 2
+    },
+    {
+      "task_name": "review_amendmentnote_5cc8bfc",
+      "purpose": "limited_independent_review",
+      "module": "amendmentnote",
+      "scope_paths": [
+        "scripts/vnext/amendment_note_layout.py",
+        "tests/vnext/test_amendment_note_layout.py",
+        "tests/vnext/test_instant_amendment_paragraph_api.py"
+      ],
+      "patch_sha": "77e3bca3698d03ac006e7bd23abdee54e799864a",
+      "scope_base_sha": "a5467fed3d30927da28cbae45f183bdf481f2346",
+      "spawned_at": "2026-10-08T21:15:35.268496+00:00",
+      "ended_at": "2026-10-08T21:19:34Z",
+      "tool_calls": 68,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/docs/evidence/issue28_amendment_note_20261009/independent-word-fix/hidden-gap-followup.md",
+      "verdict": "PASS_LIMITED_HIDDEN_GAP",
+      "limits": {
+        "tools_including_nested": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "Same completed agent still has31tools/onefinal message within original90min; followup only hidden-gap delta, no new agent; earlier SHA failure kept separately",
+      "messages_before": 2,
+      "current_input_credit": false,
+      "messages": 3,
+      "review_started_at": "2026-10-08T21:15:57Z"
+    },
+    {
+      "task_name": "review_amendmentnote_b2d84a3",
+      "purpose": "limited_independent_review",
+      "module": "amendmentnote",
+      "scope_paths": [
+        "scripts/vnext/amendment_note_layout.py",
+        "tests/vnext/test_instant_amendment_paragraph_api.py"
+      ],
+      "patch_sha": "b2d84a3c4f8770698c43d9cb95fd16c030d33f24",
+      "scope_base_sha": "77e3bca3698d03ac006e7bd23abdee54e799864a",
+      "spawned_at": "2026-10-08T21:21:28.666262+00:00",
+      "ended_at": "2026-10-08T21:26:14Z",
+      "tool_calls": 13,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/docs/evidence/issue28_amendment_note_20261009/independent-quoted-fragment/conclusion.md",
+      "verdict": "PASS_LIMITED_QUOTED_FRAGMENT",
+      "limits": {
+        "tools_including_nested": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "all same-module agents ended and capped at3ordinary messages; no sameSHA/result; only actual new q-inline two-line difference and finite full API test, previous hidden/word findings inherited",
+      "current_input_credit": false,
+      "review_started_at": "2026-10-08T21:22:22Z",
+      "messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -15596,7 +15728,7 @@
     "peer_read": "0bc22a45b09b5bddb1b67a0df4edcf63b5c51807"
   },
   "current_company_records_closeout": {
-    "head": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+    "head": "5f35cca27be29b152b84d9dc693be08248975d63",
     "branch": "task/issue28-company-records",
     "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
     "pr": 67,
@@ -15623,28 +15755,28 @@
       "tested_head": "b23f16a7; before two completed-reader regression cases"
     },
     "latest_ci": {
-      "head_sha": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+      "head_sha": "5f35cca27be29b152b84d9dc693be08248975d63",
       "main": {
-        "run_id": 37822214210,
+        "run_id": 37826155089,
         "status": "completed",
         "conclusion": "success",
-        "jobs_successful": 7,
+        "successful_jobs": 7,
         "fast_tests": 271,
-        "fast_test_seconds": 111.915950032,
-        "fast_command_seconds": 113.930482349,
-        "longest_command_seconds": 322.562387604,
-        "longest_job_seconds": 340
+        "fast_test_seconds": 203.639192421,
+        "fast_command_seconds": 206.506516505,
+        "longest_material_command_seconds": 296.509043787,
+        "longest_material_job_seconds": 318
       },
       "dedicated": {
-        "run_id": 37822214191,
+        "run_id": 37826155293,
         "status": "completed",
         "conclusion": "success",
-        "tests": 145,
-        "test_seconds": 154.408,
-        "job_seconds": 177
+        "tests": 147,
+        "test_seconds": 165.763,
+        "job_seconds": 184
       },
       "reference": {
-        "run_id": 37822214181,
+        "run_id": 37826155191,
         "status": "completed",
         "conclusion": "success"
       }
@@ -15660,7 +15792,7 @@
       "count": 42,
       "seconds": 0.157
     },
-    "current_head_ci": "8819dbff main37822214210/dedicated37822214191/reference37822214181 allSUCCESS",
+    "current_head_ci": "5f35cca2 exact main37826155089/dedicated37826155293/reference37826155191 allSUCCESS9checks",
     "subset_read_fix": "completed-check chosen per coordinate even after other metric request",
     "subset_read": {
       "seconds": 0.011882833,
@@ -15705,7 +15837,7 @@
       "conclusion": "failure",
       "remaining_failures": "sixoldnativejobs:16errors/20tests before business assertions at retiredissue_28_v11sourcebyteguard; diagnosiscomplete"
     },
-    "code_head": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+    "code_head": "5f35cca27be29b152b84d9dc693be08248975d63",
     "main_head": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
     "peer_read_sha": "f8b3db7db43ff17628ab7363bf6fc8bd6027bcc8",
     "candidate_scope": "existing saved-source current company entry only; no new C04/D04/remaining12family/online installation",
@@ -15752,6 +15884,81 @@
       "sec": 52,
       "claims": 195,
       "claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb"
+    },
+    "b02_paired_guard_dependency": {
+      "file": "scripts/vnext/ordinary_current_update.py",
+      "function": "_configuration",
+      "dependency": "scripts/vnext/paired_measure_v1.py",
+      "scope": "B02only; original guard/formula/source policy unchanged; no affected current Result established",
+      "before": {
+        "tests": 2,
+        "failures": 2,
+        "seconds": 0.026
+      },
+      "after": {
+        "controller_tests": 28,
+        "seconds": 0.135,
+        "company_entry_tests": 25,
+        "company_entry_seconds": 6.401
+      },
+      "synthetic_case": "Guard version changes, actual controller recalculates and retains old success; new hold then reused with factory forbidden",
+      "committed_tested_delta_equal": true,
+      "evidence": "docs/evidence/issue28_company_records_20261007/paired-dependency/README.md",
+      "historical_receiver_guard_already_declared": true,
+      "fixed_receiver_sha": "46c30d29712c7db05a4550417fa5f9bccc3c97f7",
+      "new_business_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "current_ci_observer": {
+      "run_id": 37826155089,
+      "session_id": 5017,
+      "pid": 5747,
+      "interval_seconds": 120,
+      "maximum_observation_seconds": 1800,
+      "directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/closeout-ci-20261009",
+      "meaning": "Watch only, no rerun; timeout or transient observation error is not remote terminal",
+      "status": "EXITED",
+      "exit_code": 0,
+      "remote_terminal": "SUCCESS",
+      "tail_read_once_after_exit": true
+    },
+    "pure_old_ci_cancel": {
+      "run_id": 37824648163,
+      "head": "451338bb298e6e05f3bb52683c698209fbe0c7f0",
+      "reason": "Superseded PR43 evidence-only CI, no business secrets/transport; status QUEUED before cancel",
+      "state": "Cancellation request submitted; not yet claimed terminal",
+      "current_head": "3e0d7064dfa8df56f5122adbe79d913f795e86d0",
+      "no_business_process_cancelled": true
+    },
+    "latest_prior_ci": {
+      "head_sha": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+      "main": {
+        "run_id": 37822214210,
+        "status": "completed",
+        "conclusion": "success",
+        "jobs_successful": 7,
+        "fast_tests": 271,
+        "fast_test_seconds": 111.915950032,
+        "fast_command_seconds": 113.930482349,
+        "longest_command_seconds": 322.562387604,
+        "longest_job_seconds": 340
+      },
+      "dedicated": {
+        "run_id": 37822214191,
+        "status": "completed",
+        "conclusion": "success",
+        "tests": 145,
+        "test_seconds": 154.408,
+        "job_seconds": 177
+      },
+      "reference": {
+        "run_id": 37822214181,
+        "status": "completed",
+        "conclusion": "success"
+      }
     }
   },
   "b06_reported_lease_relations_20261008": {
@@ -15895,7 +16102,8 @@
     "exact_quotes": 3,
     "native_result_created": false,
     "deepseek_validated": false,
-    "archived_commit": "b3f7c15b"
+    "archived_commit": "b3f7c15b",
+    "next_dependency": "Existing batch already has1positive+2negative matches; do not manufacture another same-method experiment. New target-model purpose/actual lightweight execution receiving remains separate from current PR67 closeout; no native metric credit."
   },
   "b03_original_candidates_20261008": {
     "status": "PASS_LIMITED_SOURCE_API_NOT_COMPLETE_B03",
@@ -15956,7 +16164,60 @@
       0,
       0,
       0
-    ]
+    ],
+    "pr75_receiving": {
+      "provided_commit": "3e0d7064dfa8df56f5122adbe79d913f795e86d0",
+      "base_sha": "46c30d29712c7db05a4550417fa5f9bccc3c97f7",
+      "patch_sha256": "8f226a48af7e96f3a7de45c51608be5cda4119638e2aa100611049d110620e9b",
+      "receiver_sha": "5272797e0bc79ddb007fc021d8243f2ad46cf7d7",
+      "both_received_files_equal_provided_patch": true,
+      "business_source_and_all3test_files_unchanged": true,
+      "local_tests": {
+        "count": 16,
+        "seconds": 0.018,
+        "log_read_not_parent_rerun": true
+      },
+      "new_ci": {
+        "head": "5272797e0bc79ddb007fc021d8243f2ad46cf7d7",
+        "main": 37825698130,
+        "dedicated": 37825698139,
+        "reference": 37825698135,
+        "all_workflows": "SUCCESS",
+        "business_acceptance": false
+      },
+      "evidence": "docs/evidence/issue28_continuous/shared-short-selectors-20261008/README.md"
+    },
+    "pr70_receiving": {
+      "head": "cf02fc6514721e56db721da45c2033c890227a81",
+      "base": "task/issue28-fast-feedback",
+      "local_short_tests_reported": 6,
+      "local_seconds_reported": 0.011,
+      "new_ci": "All13checks SUCCESS at exact cf02fc6514721e56db721da45c2033c890227a81; actual server read2026-10-09; no business credit",
+      "business_code_change": false,
+      "authority": "read owner message and actual remote head, not parent content acceptance"
+    },
+    "pr77_pr78_provided": {
+      "fixed_candidates": [
+        "e3339f463171eab68a7ad25415c721051fb61396",
+        "a457040ac7578a751b3d86b7951dfda18db1225f"
+      ],
+      "patches": [
+        "docs/evidence/issue28_continuous/shared-short-selectors-20261008/pr77-small-selectors.patch",
+        "docs/evidence/issue28_continuous/shared-short-selectors-20261008/pr78-small-selectors.patch"
+      ],
+      "test_methods": [
+        25,
+        32
+      ],
+      "runner_functions_unchanged": true,
+      "cached_index_apply_validated": true,
+      "actual_consumer_execution": false,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    }
   },
   "peer_increment_20261009": {
     "fixed_peer_sha": "23c895bac1388b813083a37d7f4f38879cad0605",
@@ -16120,5 +16381,47 @@
       0,
       0
     ]
+  },
+  "amendment_source_layout_20261009": {
+    "pr": 79,
+    "base": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "published_head": "1cc80525a8189c942ad50922337515ff41da5fa7",
+    "source_sha": "b2d84a3c4f8770698c43d9cb95fd16c030d33f24",
+    "explicit_api": "inspect_instant_balance_amendment(note_layout=inline-paragraphs-v2)",
+    "default_behavior": "blocks-v1 unchanged, known original limitations retained",
+    "source_modules": [
+      "scripts/vnext/amendment_note_layout.py",
+      "scripts/vnext/annual_amendment_scope.py",
+      "scripts/vnext/instant_balance_amendment.py"
+    ],
+    "small_tests": {
+      "count": 16,
+      "seconds": 0.097
+    },
+    "saved2024": {
+      "decision": "INPUT_PROPERTY_PROVEN",
+      "original_blocks": 13,
+      "actual_paragraphs": 3,
+      "seconds": 4.617872582981363,
+      "result_created": false
+    },
+    "limited_reviews": [
+      "77e3 hidden-gap PASS_LIMITED",
+      "b2d84 quoted-fragment PASS_LIMITED"
+    ],
+    "old_failed_reviews_retained": [
+      "9f3145f",
+      "993d3fb",
+      "5cc8bfc"
+    ],
+    "ci_initial": "14checks running/queued, not terminal",
+    "company_receiving": "Issue47 owner must verify its actual Paramount24 B08/B09/CSV and reuse; own source evidence does not accept it",
+    "evidence": "docs/evidence/issue28_amendment_note_20261009/README.md",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "pr67_scope_unchanged": true
   }
 }

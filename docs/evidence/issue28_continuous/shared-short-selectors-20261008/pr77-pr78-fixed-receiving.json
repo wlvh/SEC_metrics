@@ -1,0 +1,72 @@
+[
+  {
+    "candidate": "PR77",
+    "read_sha": "e3339f463171eab68a7ad25415c721051fb61396",
+    "prerequisites": [],
+    "patches": [
+      {
+        "path": "pr77-small-selectors.patch",
+        "sha256": "0cb636532fa2357a192a7b4ed15873f7a2340d398bea2e0496a0982caeb2fb69"
+      }
+    ],
+    "unchanged_runner_functions": true,
+    "cached_index_apply_checked": true,
+    "class_test_counts": {
+      "HistoricalStatementScopeTest": 2,
+      "ABlockIsHeldToThePriorYearWalksChecks": 5,
+      "HistoryCompanyDispatchTest": 11,
+      "HistoricalLiquidityScopeTest": 2,
+      "HistoricalCapitalSourceTest": 5
+    },
+    "method_count": 25,
+    "expected_files": {
+      "tools/run_fast_tests_v2.py": "e57ea7ef3d614b28ce974dbb4f632e2ece7a048042a6507af084abeab90d6f4a",
+      ".github/workflows/vnext-fast.yml": "9ffe9c98d9c9e277cc97c9f07323b1d619da656a28bd6cbe4cdd593f09ab1416"
+    },
+    "actual_consumer_execution": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "candidate": "PR78",
+    "read_sha": "a457040ac7578a751b3d86b7951dfda18db1225f",
+    "prerequisites": [
+      "pr77-small-selectors.patch"
+    ],
+    "patches": [
+      {
+        "path": "pr77-small-selectors.patch",
+        "sha256": "0cb636532fa2357a192a7b4ed15873f7a2340d398bea2e0496a0982caeb2fb69"
+      },
+      {
+        "path": "pr78-small-selectors.patch",
+        "sha256": "ceff89ff7408296f684b7dc3388437571b3d2414cc9124c0697284ab20fd16b4"
+      }
+    ],
+    "unchanged_runner_functions": true,
+    "cached_index_apply_checked": true,
+    "class_test_counts": {
+      "HistoricalStatementScopeTest": 2,
+      "ABlockIsHeldToThePriorYearWalksChecks": 5,
+      "HistoryCompanyDispatchTest": 12,
+      "HistoricalLiquidityScopeTest": 2,
+      "HistoricalCapitalSourceTest": 5,
+      "BankSourceRoleTest": 2,
+      "BankPairedMeasureTest": 4
+    },
+    "method_count": 32,
+    "expected_files": {
+      "tools/run_fast_tests_v2.py": "f4e8abe384e9ac374f3528679fdbd97c05c4dfa00a04f4e00cb413d44b9e6284",
+      ".github/workflows/vnext-fast.yml": "c6a50ddaa049b10382fa25d38e3b91514acf255e44f832954ec48bdcbbd1fe2b"
+    },
+    "actual_consumer_execution": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  }
+]

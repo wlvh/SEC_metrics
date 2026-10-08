@@ -13,3 +13,7 @@ Use `PYTHONPATH=scripts:tools`, `PYTHONDONTWRITEBYTECODE=1`, and `TMPDIR=/privat
 ## PR76 existing liquidity checks
 
 Fixed580667f2 requires only its new two-method HistoricalLiquidityScopeTest in the existing selector list/explicit CI command. HistoryCompanyDispatchTest is already selected as a whole class and now has10methods, so no duplicate per-method registration is added. The actual source classes count2+5+10+2=19. Parent compared unchanged runner function AST and checked cached patch application on that exact tree; actual tests/CI are the receiver's next action, not parentPASS. No controller/source/Result change or rerun of existing historical materials.
+
+## PR77 capital and PR78 bank boundary controls
+
+Fixed PR77 e3339f46 receives only its five-method capital class. Fixed PR78 a457040a first receives that same patch, then two bank classes (2+4methods). The existing whole dispatch class automatically covers11/12methods; no per-method duplicate is added. Totals are25 and32 respectively. Each patch appends v2 selectors and extends the existing single-process CI step; runner function ASTs are unchanged. Temporary indexes verified exact fixed-source patch application and expected resulting two-file bytes; no peer worktree or runtime was edited. This is static coverage/application validation, not a parent rerun of historical inputs or new acceptance. The receiver runs the command and observes its real new head CI.

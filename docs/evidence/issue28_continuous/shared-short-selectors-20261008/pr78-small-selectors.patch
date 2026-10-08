@@ -1,0 +1,22 @@
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -172,6 +172,8 @@
+ SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
+ SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+ FAST_TESTS += ('tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest',)
++FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest',)
++FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest',)
+ SOURCE_TIMEOUT_SECONDS = 240
+ SOURCE_TIMEOUT_OVERRIDES = {
+     # The unchanged full original-source module passed on head 698b9a45 in
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -31,7 +31,7 @@
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+-        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest
++        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest
+
+       - name: Run fast suite
+         env:
