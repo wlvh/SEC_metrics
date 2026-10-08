@@ -1,5 +1,7 @@
 # SEC_metrics 测试与验证流程
 
+当前公司候选采用PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 1`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，当前公司候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
+
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。既有Marriott真实SEC首次与重复运行已按其原许可完成；录制测试不转成LIVE信用，业务结果仍分别等待接受。
 已退出的creator journal/伪造sidecar/冻结前缀拒绝不再作为当前来源必过测试；原版本在Git历史保留。原件/header/attempt/申报/最新失败检查见test_saved_source_checks，旧checkpoint导出及UNKNOWN保护仍保留。
 
