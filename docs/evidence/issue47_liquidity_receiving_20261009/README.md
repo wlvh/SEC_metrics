@@ -52,3 +52,11 @@ JPM22–25补8个已选年度位置真实读取234.356秒，按同一既定行�
 复跑0.628s，源准备/graph调用0、86保存文件不变；另一进程公司results/CSV0.075s。原FY2024两份WITHHELD/null普通结果仍可读；未请求的FY2021–23及FY2025八个当前结果的ID/保存根/值/单位/窗口与前次公司读一致，未重算其他98位置。已成功的FY2025继任主体最终任务按原版本保留，本轮只更新原FY2024所在任务，不跨任务手工拼结果。
 
 [本次主要增量记录](paramount2024-paragraph-receiving.json)和[实际新旧普通结果、CSV/出处及检查日志](paramount2024-paragraph-receiving-materials.tar.gz)已保存。仍为分支接收、未main、无正式接受或新Run；新provider/paid/SEC=0。实际main接续需公共PR79源码和PR76本消费者组合，不用来源属性评估代替公司数值，也不借用公共方接受信用。
+
+## 显式v2模块接续与旧模块保留
+
+公共PR79后继6691ab8f把已审新方法放到annual_amendment_scope_v2/instant_balance_amendment_v2。旧两模块在本分支恢复到接收前1e原字节，保留已有rules_root接口；三个新方法模块逐字节等于公共固定提交，历史余额factory直接导入instant_v2，并声明new/legacy/helper的实际处理依赖。公共17来源小例0.115s与本方36消费者例0.107s通过、零skip，能力结构对实际父分支过。
+
+真实原件来源检查4.576s，完整显式scope对象与3eb逐字段相同，instant_scope_id=e75d765f…、original_scope_id=2aad479a…保持；13块/3段及所有原跨度不变，旧默认仍具名拒绝同一排版。因为实际处理模块路径/依赖变化，仅原公司FY24两个余额重处理16.751s；再复跑0.582s准备/计算0、100保存文件不变，另进程读取0.074s。两Result ID/值/单位/日期均与3eb相同；76个之前结果文件逐字节保持，未请求四年八个ID/保存根/值/窗口不变。新保存目录如实保留，不改签或覆写旧对象，不重跑其他98位。
+
+本方新记录中实际原生claims为同813828/2024-12-31/USD：AssetsCurrent=12,542m、LiabilitiesCurrent=9,631m，原比率；CashAndCashEquivalentsAtCarryingValue=2,661m，B09不是营运资本。仍不授年度连续性/债务完整性或全指标接受，Aug7/Aug8年度冲突保持。原3eb材料、旧扣留与公共旧CI失败保存，新CI终态单列待核。[本次必要接缝记录](paramount2024-v2-receiving.json)及[增量实际结果/CSV/日志](paramount2024-v2-receiving-materials.tar.gz)是同一主记录的后继，不重新打包前39成员材料；新真实调用/Run/接受0。

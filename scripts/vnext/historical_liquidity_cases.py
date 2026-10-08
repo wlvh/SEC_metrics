@@ -6,7 +6,7 @@ from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import content_hash
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_filing_inventory import filing_inventory
-from .instant_balance_amendment import inspect_instant_balance_amendment, InstantAmendmentError
+from .instant_balance_amendment_v2 import inspect_instant_balance_amendment, InstantAmendmentError
 from .annual_amendment_scope import AmendmentScopeError
 from .normal_annual_input import _registry_rows
 from .normal_companyfacts_results import _filing_source, _SOURCE_ERRORS, NormalCompanyfactsError
@@ -25,7 +25,8 @@ PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
     'historical_fiscal_labels', 'historical_filing_inventory', 'normal_period_selection',
     'normal_history_catalog', 'normal_governance_input', 'normal_annual_input',
     'normal_companyfacts_results', 'zero_ai_r2', 'instant_balance_amendment',
-    'annual_amendment_scope', 'amendment_note_layout', 'composite_scope', 'text_results_v2')) + (
+    'annual_amendment_scope', 'instant_balance_amendment_v2', 'annual_amendment_scope_v2',
+    'amendment_note_layout', 'composite_scope', 'text_results_v2')) + (
         'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
         'catalog/deterministic_metrics.json', 'config/instant_balance_amendment_v1.json',
         'config/annual_amendment_scope_v1.json', 'catalog/r6/text_results_v2_policy.json')
