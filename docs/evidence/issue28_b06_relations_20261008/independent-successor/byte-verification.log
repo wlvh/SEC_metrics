@@ -1,0 +1,48 @@
+Actual first clock: 2026-10-08 13:28:50 UTC
+Actual first HEAD: 41bb544fc9800ed4e686f49b41338efa9e36cf0e
+Byte audit clock: 2026-10-08 13:30:19 UTC
+Returncode: 0
+{
+  "head": "41bb544fc9800ed4e686f49b41338efa9e36cf0e",
+  "rows": [
+    {
+      "path": "scripts/vnext/ordinary_reported_lease_scope.py",
+      "sha256": "d25a97510f2a68d34e160c76a830c57c319add18b1671a2a7bb9d0632eb2d903",
+      "current_matches_patch": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_special_debt_scope.py",
+      "sha256": "9c2bc47b455fd6a6deedfc52fc5f6bc406f35725f5f3f58b90482b78962d50c0",
+      "current_matches_patch": true,
+      "matches_main8588": true
+    },
+    {
+      "path": "scripts/vnext/industrial_lease_relation.py",
+      "sha256": "a8d00f12ad5341905a048060002aab35d1944ecaf0609e8e25fa48f790f6cde0",
+      "current_matches_patch": true,
+      "matches_prior930": true
+    },
+    {
+      "path": "scripts/vnext/b06_inclusive_table.py",
+      "sha256": "86737168913971dc62ad11123998dc1d0e538aa58116b4f2928dea55d38d1f57",
+      "current_matches_patch": true
+    },
+    {
+      "path": "tests/vnext/test_reported_lease_successor.py",
+      "sha256": "308827d602b0df5edbc564ea89b36e96bc33c83a70cf0c3e015358cfdb58c963",
+      "current_matches_patch": true
+    },
+    {
+      "path": "tests/vnext/test_industrial_lease_relation.py",
+      "sha256": "1283a20fdc54d58d1a58aff73f10b378d1b2a769c564256dccbe4b81e7feb999",
+      "current_matches_patch": true,
+      "matches_prior930": true
+    },
+    {
+      "path": "docs/evidence/issue28_b06_relations_20261008/verify_default_and_persistence.py",
+      "sha256": "33416466395de7e8ae2e7f0a50689e93225edd095ea18959d49c09d0d2726f1a",
+      "current_matches_patch": true
+    }
+  ]
+}
+
