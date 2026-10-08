@@ -10,7 +10,7 @@ A05/A06只用全年净利润与两期末平均，不用季度/年度平均；A07
 
 构造的前期缺源仅影响A05/A06/A07，实际控制157.282s：三项当前WITHHELD/null，A08/A10仍NO_SOURCE_CONTENT_CHANGE正确值。稳定扣留复跑8.242s准备0、保存文件不变、旧成功留存，独立读仍扣留。这是人为控制，不是真实JPM缺源结论；只复制已完成FY21的小状态，没有复制整树来源/程序或读取在途年度写入。38短例0.099s/零skip，包含公共控制器源/配置变化、恢复、期间隔离和历史分派，能力结构检查PASS/副产物恢复。
 
-本分支尚未新建Draft PR，main仍未接，金融修订/继任主体拒绝及更多反例/真实混合接收继续。现有公司命令选择五年或单年与指标即可，无需先跑其他公司或手工拼内部结果；示例：
+本分支形成独立Draft候选，base为PR77资本分支，main仍未接。金融修订/继任主体继续明确拒绝，不扩PR71/75/76/77。现有公司命令选择五年或单年与指标即可，无需先跑其他公司或手工拼内部结果；示例：
 
 ```bash
 python /path/to/SEC_metrics/tools/vnext_company.py run \
@@ -22,3 +22,9 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 ```
 
 [主要记录](verification.json)、[原样CLI/控制驱动/原件操作数/CSV/出处及普通结果](consumer-materials.tar.gz)已提交。新provider/paid/SEC=0，无新native Run/接受，原35模型、SEC账本、失败与旧Run保持。此25位置不替代全部1950或正式采纳，Goal完整目标继续。
+
+真实混合接收在已有资本公司任务只新增FY2025 A08，15.775s：原A01/A02准备与计算均0、80结果文件不变；整体稳定复跑1.416s，银行准备/graph0、三项结果文件不变。另一进程同一公司results读取0.100s，FY2025资本0.155/0.146 ratio、A08=0.9115807340506899405928145595 ratio和原银行B08结构NA共存，未请求其他年度/指标仍可读。当前模式代码和factory未改，已有真实当期结果复用；当前分派短例仍过，没有重跑两年B01或酒店。
+
+四项构造口径反例通过真实shared paired_measure：无目标申报桥接、前期重述金额改变、单位/窗口/申报错误和桥接冲突都拒绝；完整原前期值在当前概念下报告才可桥接。连同原两source-role、历史分派与公共状态42项0.100s，零skip。另对已保存JPM FY2025 A07原件作一次明确构造guard失败，case→共同writer已完成，当前WITHHELD/null、MEASURE_NOT_COMPARABLE保留。驱动在JSON输出CSV bytes时报TypeError，初错误log保留，修驱动后只从已保存结果恢复读取0.001s，不重复准备/计算；首段耗时未成功保存，不补造。该测试不宣称JPM真的有口径冲突，也不修改原成功任务。
+
+能力结构检查对实际main和父PR77均PASS。按旧b06大分支作base的检查FAIL因公共简化已移除的无关CAPABILITY anchors，原失败log保存；不重铸旧快照或扩大本批以满足旧分支门禁。副产物已恢复。本候选的新bank短class尚待#28统一selector/显式CI接收，本地42通过不能写成CI已选中。上述新增混合/构造原始结果、驱动、CSV和出处在[增量材料](mixed-and-measure-materials.tar.gz)，不重新打包原175成员或复制来源/程序整树。

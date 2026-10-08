@@ -1,5 +1,5 @@
 {
-  "status": "DEVELOPMENT_RECEIVING_NOT_DRAFT_DELIVERY",
+  "status": "BRANCH_CONSUMER_VALIDATED_DRAFT_CANDIDATE",
   "scope": "Saved historical A05/A06/A07/A08/A10 via common catalog graph and company controller; no new formula/core",
   "parent": "PR77/e3339f46",
   "jpm": {
@@ -513,9 +513,20 @@
   "tests": {
     "count": 38,
     "seconds": 0.099,
-    "skip": 0
+    "skip": 0,
+    "final": {
+      "count": 42,
+      "seconds": 0.1,
+      "skip": 0,
+      "scope": "Six bank source/measure checks plus history dispatch and shared ordinary state tests"
+    }
   },
-  "capability_alignment": "PASS; outputs restored",
+  "capability_alignment": {
+    "actual_main": "PASS",
+    "actual_parent_PR77": "PASS",
+    "legacy_b06_base": "FAIL: unrelated removed CAPABILITY anchors from old larger branch, not current main/parent regression; full log retained",
+    "checker_outputs_restored": true
+  },
   "not_added_to_other_candidates": true,
   "new_calls": {
     "provider": 0,
@@ -525,14 +536,116 @@
   "new_native_run": false,
   "new_acceptance": false,
   "remaining": [
-    "more source-year/measure mismatch cases",
-    "current-mode and real mixed-family receiving",
+    "public CI selector/explicit short step integration for new bank classes",
     "main and historical online sources",
-    "amended/successor financial subjects"
+    "amended/successor financial subjects",
+    "complete ten-company five-year business acceptance"
   ],
   "archive": {
     "members": 175,
     "bytes": 397369,
     "sha256": "266cfcb91913baa0ecd803c30d66a874c6eef1c2603b37fd2191f693513a8d0d"
+  },
+  "mixed_capital_bank": {
+    "first_seconds": 15.775460333097726,
+    "repeat_seconds": 1.4157548330258578,
+    "exit_code": 0,
+    "repeat_exit_code": 0,
+    "capital_preparation_calls": 0,
+    "capital_calculation_calls": 0,
+    "capital_files": 80,
+    "capital_files_unchanged": true,
+    "stable_files_unchanged": true,
+    "repeat_bank_preparation_calls": 0,
+    "repeat_bank_graph_calls": 0,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "command": [
+      "run",
+      "--company",
+      "jpmorgan_chase",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2025",
+      "--fiscal-year-end",
+      "2025",
+      "--metric",
+      "A01",
+      "--metric",
+      "A02",
+      "--metric",
+      "A08",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/capital-jpm-20261009/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/capital-jpm-20261009/outputs"
+    ],
+    "independent_read_seconds": 0.09997308300808072,
+    "FY2025": [
+      {
+        "metric_id": "A01",
+        "fiscal_year": 2025,
+        "value": "0.155",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      {
+        "metric_id": "A02",
+        "fiscal_year": 2025,
+        "value": "0.146",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      {
+        "metric_id": "A08",
+        "fiscal_year": 2025,
+        "value": "0.9115807340506899405928145595",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      {
+        "metric_id": "B08",
+        "fiscal_year": 2025,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      }
+    ]
+  },
+  "measure_receiving": {
+    "constructed_control": true,
+    "actual_financial_conclusion": false,
+    "category": "MEASURE_NOT_COMPARABLE",
+    "reason_code": "NORMAL_PAIRED_MEASURE_NOT_COMPARABLE",
+    "publication": "WITHHELD",
+    "value": null,
+    "initial_driver_error": "TypeError: CSV bytes in JSON; calculation and persistence complete, no repeated calculation",
+    "recovery_read_seconds": 0.001126707997173071,
+    "repeated_calculation": false,
+    "note": "Case preparation/save completed before JSON driver serialization failure; recovery read only, original failure log retained; no fabricated first timing"
+  },
+  "current_mode_receiving": {
+    "company_local_changes": "Only _run_saved_history changed against PR77; ordinary current-mode branch and factories unchanged",
+    "current_dispatch_test": "PASS in 42 tests",
+    "real_unaffected_current_runs": "Previously completed saved-source current consumers reused, not replayed"
+  },
+  "additional_archive": {
+    "members": 26,
+    "bytes": 40080,
+    "sha256": "4f17e3f0263deff2ef24187f388865ec194609157733ef6e660eb8bd48a6ed5f"
   }
 }
