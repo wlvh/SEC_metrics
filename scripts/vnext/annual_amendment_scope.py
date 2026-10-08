@@ -104,14 +104,22 @@ def _source(*, raw, blob, reference, filing, company_id, cik, period_end):
         'raw_sha256':sha256_bytes(content=raw),'filing':filing,'source_reference':reference}
 
 
-def _note(doc):
+def _note(doc, raw=None):
     blocks=doc['blocks'];indices=[i for i,b in enumerate(blocks) if not b['linked'] and re.fullmatch(POLICY['explanatory_heading_pattern'],b['text'],re.I)]
     _need(len(indices)==1,"AMENDMENT_EXPLANATORY_NOTE_NOT_UNIQUE")
     start=indices[0]
     end=next((i for i in range(start+1,len(blocks)) if re.fullmatch(POLICY['part_heading_pattern'],blocks[i]['text'],re.I)
         or blocks[i]['text'].upper().startswith('CAUTIONARY NOTE')),len(blocks))
-    _need(start+1<end and end-start<=8,"AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED")
-    return {'start':start,'end':end,'blocks':blocks[start:end],'text':' '.join(b['text'] for b in blocks[start+1:end])}
+    count = end-start
+    if raw is not None:
+        from .amendment_note_layout import paragraph_blocks
+        count = 1 + len(paragraph_blocks(blocks[start+1:end], raw))
+    _need(start+1<end and count<=8,"AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED")
+    text=' '.join(b['text'] for b in blocks[start+1:end])
+    if raw is not None:
+        from .amendment_note_layout import paragraph_text
+        text=' '.join(paragraph_text(group,raw) for group in paragraph_blocks(blocks[start+1:end],raw))
+    return {'start':start,'end':end,'blocks':blocks[start:end],'text':text}
 
 
 def _item15(doc):
@@ -158,8 +166,10 @@ def _link_note_identity(first, purpose, source):
             and banners == ['Amendment No. ' + intro['amendment_number']])
 
 
-def inspect_annual_amendment_scope(*, original, amendment, company_id, cik):
+def inspect_annual_amendment_scope(*, original, amendment, company_id, cik,
+                                   note_layout='blocks-v1'):
     """Inspect hash-bound source arguments; this pure API grants no acquisition."""
+    _need(note_layout in {'blocks-v1','inline-paragraphs-v2'}, 'AMENDMENT_NOTE_LAYOUT_UNSUPPORTED')
     _need(original['filing']['form']=='10-K' and amendment['filing']['form']=='10-K/A',"AMENDMENT_SOURCE_FORMS_REQUIRED")
     end=original['filing']['reportDate']
     _need(amendment['filing']['reportDate']==end and amendment['filing']['filingDate']>=original['filing']['filingDate'],
@@ -167,12 +177,16 @@ def inspect_annual_amendment_scope(*, original, amendment, company_id, cik):
     old=_source(**original,company_id=company_id,cik=cik,period_end=end)
     new=_source(**amendment,company_id=company_id,cik=cik,period_end=end)
     period_equal=old['period']==new['period']
-    note=_note(new['document']);text=note['text']
+    note=_note(new['document'], **({'raw':amendment['raw']} if note_layout!='blocks-v1' else {}));text=note['text']
     unquoted=not (set(range(note['start'],note['end'])) & set(new['quoted_block_indices']))
     has_no_change=any(re.search(pattern,text,re.I) for pattern in POLICY['no_change_patterns'])
     rule='UNRESOLVED';details={};issues=[]
     link=re.search(POLICY['link_purpose_pattern'],text,re.I)
-    part3=re.search(POLICY['part_iii_purpose_pattern'],text,re.I)
+    part3_pattern=POLICY['part_iii_purpose_pattern']
+    if note_layout!='blocks-v1':
+        from .amendment_note_layout import part_iii_pattern
+        part3_pattern=part_iii_pattern(part3_pattern)
+    part3=re.search(part3_pattern,text,re.I)
     if link and has_no_change and unquoted:
         a,b=_item15(old['document']),_item15(new['document'])
         texts_equal=[x['text'] for x in a['blocks']]==[x['text'] for x in b['blocks']]
@@ -248,6 +262,7 @@ def inspect_annual_amendment_scope(*, original, amendment, company_id, cik):
         'original_statement_admission_requires_further_review':not (permitted and rule=='EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15'),
         'not_covered_metric_ids':POLICY['not_covered_metric_ids'],'policy_hash':content_hash(value=POLICY),
         'source_acquisition_credit':False,'native_run_created':False,'production_authorized':False}
+    if note_layout!='blocks-v1':body['note_layout']=note_layout
     body=exact_json_value(body)
     return {**body,'scope_id':content_hash(value=body)}
 
