@@ -269,5 +269,14 @@
       "archive_bytes": 34509,
       "archive_sha256": "eec1623ade8cc0215961352b8660e57261e8cefc47862c647e59ea9852bbae5c"
     }
+  },
+  "legacy_fast_ci": {
+    "run": "37788307281",
+    "job": "113348692624",
+    "result": "FAILURE",
+    "report_entries": 191,
+    "nonzero_entries": 8,
+    "scope": "old recursive authority/changed-path/parser-byte/enrollment claims; local new business checks do not turn this CI green",
+    "summary": "legacy-fast-ci-summary.json"
   }
 }

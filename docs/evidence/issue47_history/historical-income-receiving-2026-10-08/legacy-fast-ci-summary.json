@@ -1,0 +1,71 @@
+{
+  "total_entries": 191,
+  "failed_entries": [
+    {
+      "test": "tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest",
+      "return_code": 1,
+      "seconds": 2.72,
+      "reasons": [
+        "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest",
+      "return_code": 1,
+      "seconds": 4.442,
+      "reasons": [
+        "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_continuous_call_policy",
+      "return_code": 1,
+      "seconds": 3.936,
+      "reasons": [
+        "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_historical_requirement_snapshot",
+      "return_code": 1,
+      "seconds": 11.5,
+      "reasons": [
+        "AssertionError: Lists differ: ['scripts/vnext/b03_contract_amortization_scope.py', 'scr[128 chars].py'] != ['scripts/vnext/annual_sources.py', 'scripts/vnext/b03_co[352 chars].py']"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_native_request_construction",
+      "return_code": 1,
+      "seconds": 2.604,
+      "reasons": [
+        "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_normal_candidate_authority",
+      "return_code": 1,
+      "seconds": 1.944,
+      "reasons": [
+        "vnext.requirement_profile_v1.RequirementProfileError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py",
+        "vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_ordinary_source_authority",
+      "return_code": 1,
+      "seconds": 9.893,
+      "reasons": [
+        "AssertionError: OrdinarySourceAuthorityError not raised",
+        "AssertionError: OrdinarySourceAuthorityError not raised"
+      ]
+    },
+    {
+      "test": "tests.vnext.test_registration_event_discovery",
+      "return_code": 1,
+      "seconds": 0.659,
+      "reasons": [
+        "AssertionError: {'sha256': 'e6b4e3f2b5e80ac4fa63346e56faab4ab249443de[35 chars]7385} != {'sha256': '9fbc6b0339d7223d3b31304f2625a800e706241f0[35 chars]6070}"
+      ]
+    }
+  ]
+}

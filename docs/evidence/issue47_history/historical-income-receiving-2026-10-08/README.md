@@ -44,3 +44,5 @@ Marriott两年实际原件支撑及数值：
 新普通B03 factory目前只接已保存、未修订、连续主体，修订/继承主体和其他族的普通适配明确IMPLEMENTATION_GAP。原历史组件对同一最新继承主体的日期冲突修复已完成，但不等于继承主体的普通公司B03接入。历史在线发现/补齐、模型验证和完整五年业务继续未完。公开公司结果仍为开发候选，不是正式采纳；原源码/原回答/旧Run/失败和固定模型运行包不改。新SEC/provider/paid调用均0，账本仍1547行＋224保守计数＝1771/1867。
 
 能力结构检查在实现提交后通过，16.873秒，两个检查器副产物按检查前字节还原。提交前因HEAD仍为旧测试字节的失败保存在capability-alignment-before-commit.log；不把结构检查当业务或模型接受。
+
+当前历史PR52原CI37788307281快测FAILURE，191入口中8个非零，见[精确摘要](legacy-fast-ci-summary.json)。五项旧authority加载被normal_source_authority祖先字节先挡；其余为历史exact变更集合、旧enrollment/resign拒绝和parser字节断言。没有新H4业务断言失败由这个日志证明，也不能把本地39＋5通过写成全CI通过。公共runner/CI一方集成，旧来源/Run/快照不重签。
