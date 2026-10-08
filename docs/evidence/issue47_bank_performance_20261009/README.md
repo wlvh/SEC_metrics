@@ -27,4 +27,6 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 
 四项构造口径反例通过真实shared paired_measure：无目标申报桥接、前期重述金额改变、单位/窗口/申报错误和桥接冲突都拒绝；完整原前期值在当前概念下报告才可桥接。连同原两source-role、历史分派与公共状态42项0.100s，零skip。另对已保存JPM FY2025 A07原件作一次明确构造guard失败，case→共同writer已完成，当前WITHHELD/null、MEASURE_NOT_COMPARABLE保留。驱动在JSON输出CSV bytes时报TypeError，初错误log保留，修驱动后只从已保存结果恢复读取0.001s，不重复准备/计算；首段耗时未成功保存，不补造。该测试不宣称JPM真的有口径冲突，也不修改原成功任务。
 
-能力结构检查对实际main和父PR77均PASS。按旧b06大分支作base的检查FAIL因公共简化已移除的无关CAPABILITY anchors，原失败log保存；不重铸旧快照或扩大本批以满足旧分支门禁。副产物已恢复。本候选的新bank短class尚待#28统一selector/显式CI接收，本地42通过不能写成CI已选中。上述新增混合/构造原始结果、驱动、CSV和出处在[增量材料](mixed-and-measure-materials.tar.gz)，不重新打包原175成员或复制来源/程序整树。
+能力结构检查对实际main和父PR77均PASS。按旧b06大分支作base的检查FAIL因公共简化已移除的无关CAPABILITY anchors，原失败log保存；不重铸旧快照或扩大本批以满足旧分支门禁。副产物已恢复。本候选的新bank短class初时待公共selector，后继已按下述固定补丁接收；本地42通过与新CI终态分别记录。上述新增混合/构造原始结果、驱动、CSV和出处在[增量材料](mixed-and-measure-materials.tar.gz)，不重新打包原175成员或复制来源/程序整树。
+
+公共c459422d固定a457补丁已接收，前置合入PR77的bfeea6b1短CI登记。bank2+4新增class同时进入v2和显式CI，原dispatch整class自然执行12例；全部32例实测0.026s通过，runner函数/类AST未改。原25银行计算不重跑。原a457 CI状态保留，新head终态待核。[实际短测试log](public-short-selectors-received.log)。

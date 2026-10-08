@@ -172,6 +172,8 @@ SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
 SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
 FAST_TESTS += ('tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest',)
+FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest',)
+FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
