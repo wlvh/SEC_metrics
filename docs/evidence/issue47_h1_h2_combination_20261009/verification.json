@@ -1,0 +1,92 @@
+{
+  "status": "FIXED_H1_H2_COMBINATION_VALIDATED_NOT_MAIN",
+  "parents": {
+    "H1": "372f4b74c6abe9f2340bba5396264168b0445885",
+    "H2": "09563892cc170a45c7ee558d1bf3f436c69e5ce1"
+  },
+  "public_resolution_source": "a48f0e79",
+  "patch_sha256": "39165a7f1617404ec448df0854c1d42eb14fad658eb1e1dcef099bedb403cf51",
+  "only_conflicts": [
+    "tools/run_fast_tests_v2.py",
+    ".github/workflows/vnext-fast.yml"
+  ],
+  "resolved_hashes": {
+    "tools/run_fast_tests_v2.py": "a9e5c347ab289d3fba666f95b3b98d358ce870f3b5c2bdd8809b435c14647a70",
+    ".github/workflows/vnext-fast.yml": "90edf70563c7e571a54e50b5f0829a96f03cacc4f4ef837a8b8b10e2d1bf7223"
+  },
+  "runner_function_asts_equal_to_both_parents": true,
+  "selectors_once": [
+    "tests.vnext.test_legal_review_contract",
+    "tests.vnext.test_history_business_boundaries.BankScopeBusinessTest",
+    "tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest",
+    "tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest"
+  ],
+  "both_original_explicit_ci_steps_retained": true,
+  "business_files_unchanged": {
+    "scripts/vnext/legal_review_contract.py": {
+      "source": "372f4b74c6abe9f2340bba5396264168b0445885",
+      "sha256": "21a397036dcb7a4d9490a970241a4cb13f69f6259ab5588f7a3db830b52ee861"
+    },
+    "tests/vnext/test_legal_review_contract.py": {
+      "source": "372f4b74c6abe9f2340bba5396264168b0445885",
+      "sha256": "d69e44af847db76d98a0ac34ba6aea76ffc169e5399098fb379e32a8944d13f8"
+    },
+    "tests/fixtures/d02_saved_quote_failures.json": {
+      "source": "372f4b74c6abe9f2340bba5396264168b0445885",
+      "sha256": "5207e5547c92506bdf9bd1e996ca046780cfdbc53346eaa4d6454a5e63092047"
+    },
+    "tests/vnext/test_history_business_boundaries.py": {
+      "source": "09563892cc170a45c7ee558d1bf3f436c69e5ce1",
+      "sha256": "109181172e4c229d44a0c5e0de8e9d381d8fa787a55bfb990b8f553e68258253"
+    },
+    "tests/fixtures/jpm_bank_scope_fragments.json": {
+      "source": "09563892cc170a45c7ee558d1bf3f436c69e5ce1",
+      "sha256": "2a8b8364fbc232f5475dfad4a491ed93add83fa11cc0ad526d39bfb0368faccb"
+    }
+  },
+  "fixed_verifier": {
+    "fixed_merged_tree": "621ce1b50051ab5559e3579422fb578209fe143e",
+    "source58": "372f4b74",
+    "source62": "09563892",
+    "tests": 30,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "fixture_source": "exact combined-tree five fixed files in temporary readonly input layout",
+    "project_imports_byte_checked": 66,
+    "actual_combined_execution": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "actual_merged_tests": {
+    "count": 30,
+    "seconds": 0.005,
+    "skip": 0
+  },
+  "historical_consumer": {
+    "original_adapter_used": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/historical_legal_review.py",
+    "same_shared_function": true,
+    "case_count": 12,
+    "contract_successes": 4,
+    "original_length_failures": 8,
+    "requests_equal": true,
+    "registration_executed": false
+  },
+  "public_PR67_549_receiving": "All production/config/tool/test/workflow bytes same as5f; prior historical source tests reused, not rerun",
+  "limits": [
+    "No ordinary company D02 model route added",
+    "Mechanical checks do not establish legal semantics or full metric acceptance",
+    "Original Marriott self-insurance gaps and other defects remain",
+    "No main/Ready/merge/deploy/active permission change"
+  ],
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "new_run": false,
+  "new_business_acceptance": false
+}
