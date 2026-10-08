@@ -82,6 +82,9 @@ usage 缺失、矛盾、输入超200000或内容失败均停止，无额外请�
 保存来源公司 `run --source-root` 输出普通CSV/出处及逐项状态，计算和读取共享固定来源/程序根，状态另写。输入未变复用结果；当前来源检查失败时，旧值只显示原期间及PREVIOUS_RESULT。确切已知错误清空数值并显示WITHHELD_KNOWN_DEFECT。`results`读取新普通记录不运行更新；旧native任务仍明确要求原trust/runtime。保存来源读取不声称在线发现或业务正式接受。
 <!-- capability-anchor: CAPABILITY.current_saved_company_run -->
 
+旧独立普通更新journal可直接交给 `results --state-root`，读取原Run引用；无需新建公司checkpoint、提供trust或重算。输出标明RETAINED_ORDINARY_JOURNAL、归档期间、NOT_RECHECKED/NOT_ASSESSED；最新输入失败仍显示，精确已知缺陷不清除。该分支不生成新普通CSV或授予当前成功，原native完整审核仍用其原运行版本。
+<!-- capability-anchor: CAPABILITY.retained_ordinary_journal_read -->
+
 ## 1. 文档关系与读者
 
 `capability_contract.json` 是能力、限制、责任与行为承诺的机器可读真相源；本文档把这些契约翻译成业务人员、运行负责人和 reviewer 可以直接验收的 CLI 与文件行为。`docs/business_user_guide.md` 只负责首次使用教学，不得扩展本文档未声明的能力。

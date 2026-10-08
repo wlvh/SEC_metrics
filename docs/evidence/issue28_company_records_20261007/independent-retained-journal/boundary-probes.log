@@ -1,0 +1,22 @@
+[
+  {
+    "probe": "exact_result_defect_same_runtime_release_does_not_clear_exact_hold",
+    "status": "PASS",
+    "result_validity": "CONFIRMED_INVALID"
+  },
+  {
+    "probe": "coordinate_same_runtime_release_removes_hold_but_does_not_accept_result",
+    "status": "PASS",
+    "result_validity": "NOT_ASSESSED"
+  },
+  {
+    "probe": "busy_update_lock_rejected",
+    "status": "PASS",
+    "reason": "UPDATE_ALREADY_RUNNING"
+  },
+  {
+    "probe": "retained_branch_does_not_create_new_daily_csv",
+    "status": "PASS",
+    "reason": "NATIVE_DAILY_OUTPUT_REQUIRES_SAVED_READER_OR_EXPLICIT_EXPORT_ENTRY"
+  }
+]

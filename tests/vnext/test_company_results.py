@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 from scripts.vnext import company_compute, company_result_export as export
-from scripts.vnext.company_result_view import build_company_view, save_execution
+from scripts.vnext.company_result_view import build_company_view, save_execution, read_company_results
 from scripts.vnext.company_handoff import _atomic_json
 from scripts.vnext.ordinary_update_cycle import _record
 from scripts.vnext.publication import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
@@ -17,6 +17,65 @@ from scripts.vnext.canonical import sha256_file
 
 
 class CompanyResultsTest(unittest.TestCase):
+    def test_retained_standalone_journal_reads_without_checkpoint_or_replay(self):
+        self.journal('C04')
+        root = self.root/'updates/metrics/C04'
+        before = {str(p):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+        with patch('scripts.vnext.normal_run_v3.replay_case', side_effect=AssertionError('REPLAY_FORBIDDEN')), \
+             patch('scripts.vnext.ordinary_update_cycle.run_once', side_effect=AssertionError('CALCULATION_FORBIDDEN')):
+            view = read_company_results(state_root=root, company_id='test_company')
+        row, = view['metrics']
+        self.assertEqual('RETAINED_ORDINARY_JOURNAL', view['state_kind'])
+        self.assertIsNone(view['source_checkpoint_id'])
+        self.assertEqual('NOT_ASSESSED', row['result_validity'])
+        self.assertEqual('NOT_RECHECKED', row['current_input_status'])
+        self.assertEqual('NOT_REPLAYED', row['replay_status'])
+        self.assertFalse((root/'company-results.json').exists())
+        self.assertEqual(before, {str(p):p.read_bytes() for p in root.rglob('*') if p.is_file() and p.name!='update.lock'})
+
+    def test_retained_standalone_failed_input_keeps_old_result_as_history(self):
+        self.journal('C04'); self.journal('C04', fail=True)
+        view = read_company_results(state_root=self.root/'updates/metrics/C04', company_id='test_company')
+        row, = view['metrics']
+        self.assertEqual('result-C04-2025-12-31', row['result_id'])
+        self.assertEqual('INPUT_FAILED', view['latest_journal_terminal']['status'])
+        self.assertIs(row['current_input_matches'], False)
+        self.assertEqual('MISMATCH_OR_FAILED', row['current_input_status'])
+
+    def test_retained_standalone_wrong_company_still_rejected(self):
+        self.journal('C04')
+        with self.assertRaisesRegex(ValueError, 'JOURNAL_WRONG_COMPANY'):
+            read_company_results(state_root=self.root/'updates/metrics/C04', company_id='wrong')
+
+    def test_retained_standalone_exact_defect_and_other_runtime_release_stay_visible(self):
+        self.journal('C04')
+        root = self.root/'updates/metrics/C04'
+        defect = {'defect_id': 'held', 'company_id': 'test_company', 'metric_id': 'C04',
+                  'period_end': '2025-12-31', 'result_id': 'result-C04-2025-12-31'}
+        file = self.root/'defects.json'; file.write_text(json.dumps({'defects': [defect]}))
+        row, = read_company_results(state_root=root, company_id='test_company', defects_file=file)['metrics']
+        self.assertEqual('CONFIRMED_INVALID', row['result_validity'])
+        defect['released'] = [{'result_id': defect['result_id'], 'requirement_closure_hash': 'other-runtime'}]
+        file.write_text(json.dumps({'defects': [defect]}))
+        row, = read_company_results(state_root=root, company_id='test_company', defects_file=file)['metrics']
+        self.assertEqual('CURRENT_RUNTIME_RELEASE_REQUIRED', row['result_validity'])
+        self.assertEqual(['held'], row['confirmed_defects'])
+
+    def test_retained_standalone_first_failure_does_not_invent_result(self):
+        self.journal('C04', fail=True)
+        view = read_company_results(state_root=self.root/'updates/metrics/C04', company_id='test_company')
+        self.assertEqual([], view['metrics'])
+        self.assertEqual('INPUT_FAILED', view['latest_journal_terminal']['status'])
+
+    def test_retained_standalone_disconnected_success_pointer_is_rejected(self):
+        self.journal('C04')
+        root = self.root/'updates/metrics/C04'
+        state = json.loads((root/'current.json').read_text())
+        state['successful_attempt'] = 'f'*32
+        _atomic_json(root/'current.json', state)
+        with self.assertRaisesRegex(ValueError, 'SUCCESSFUL_POINTER_CHANGED'):
+            read_company_results(state_root=root, company_id='test_company')
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)/'state'; self.root.mkdir()
