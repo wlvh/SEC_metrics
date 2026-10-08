@@ -1,4 +1,4 @@
-import json,time,hashlib,socket
+import json,time,hashlib,socket,gzip
 from pathlib import Path
 from unittest.mock import patch
 from vnext.normal_period_selection import resolve_period_selection
@@ -12,13 +12,12 @@ with patch.object(socket.socket,'connect',side_effect=AssertionError('No busines
  selection=resolve_period_selection(repo_root=root,company_id=company,fiscal_year=2025)
  out={}
  for m in ['B01','B03']:
-  target=base/(m+'-component.json')
-  if target.exists():out[m]=json.loads(target.read_text())
+  target=base/(m+'-component.json.gz')
+  if target.exists():out[m]=json.loads(gzip.decompress(target.read_bytes()))
   else:
    out[m]=resolve_historical_zero_ai_metric(repo_root=root,company_id=company,metric_id=m,period_selection=selection)
-   target.write_text(json.dumps(out[m],ensure_ascii=False,indent=2)+'\n')
+   target.write_bytes(gzip.compress((json.dumps(out[m],ensure_ascii=False,indent=2)+'\n').encode(),mtime=0))
 for m,c in out.items():
- (base/(m+'-component.json')).write_text(json.dumps(c,ensure_ascii=False,indent=2)+'\n')
  assert c['result']['publication']=='WITHHELD' and c['result']['value'] is None,(m,c['result'])
  assert c['result']['reason_code']=='ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT',c['selection']
  assert c['selection']['category']=='SOURCE_PERIOD_CONFLICT'

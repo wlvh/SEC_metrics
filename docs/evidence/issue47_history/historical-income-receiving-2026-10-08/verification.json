@@ -248,9 +248,26 @@
   "source_acquisition_integrated": false,
   "scope": "saved-source unamended continuous-registrant B03; old successor component corrects exact-filing date conflict; unsupported amendment/successor saved-case dispatch explicit; mixed B03/hotel invocation not received",
   "capability_alignment": {
-    "exit_code": 1,
-    "seconds": 17.15032691601664,
+    "exit_code": 0,
+    "seconds": 16.872730416012928,
     "protected_outputs_restored": true,
-    "scope": "structural capability alignment, not business acceptance"
+    "after_implementation_commit": "b96a9c9e0cc134b0758dfbe5dcef6190514dd3a1",
+    "scope": "structural only; initial before-commit HEAD comparison failure preserved"
+  },
+  "raw_component_archives": {
+    "B01-component.json": {
+      "raw_bytes": 827117,
+      "raw_sha256": "989485ed53d75e47841040136f2b14ce48e2bc563ef49281c411165c8b1de34e",
+      "archive": "B01-component.json.gz",
+      "archive_bytes": 32212,
+      "archive_sha256": "507e5a67e6c0c387a864e179ba3280063682ad59c84aad00e71e8b2957279dd8"
+    },
+    "B03-component.json": {
+      "raw_bytes": 839000,
+      "raw_sha256": "0d5b88f1ab0b70f4a2871c9d4a42ae5886436b26baf9e3511daa0618a2467e55",
+      "archive": "B03-component.json.gz",
+      "archive_bytes": 34509,
+      "archive_sha256": "eec1623ade8cc0215961352b8660e57261e8cefc47862c647e59ea9852bbae5c"
+    }
   }
 }

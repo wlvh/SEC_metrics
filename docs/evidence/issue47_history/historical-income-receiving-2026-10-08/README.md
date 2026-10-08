@@ -1,6 +1,6 @@
 # H4 后续：历史收入期间冲突与 B03 普通 case 接收
 
-接续已交付 PR71，不扩大该酒店/公共测试收口 PR。本次代码在原历史分支开发，尚未 main；主记录为 [verification.json](verification.json)。复用公共 adee3036 的收入期间检查、原件准备及保存/读取函数；没有新增计算器、controller、runner、来源获取或模型试验。
+接续已交付 PR71，不扩大该酒店/公共测试收口 PR。本次代码在原历史分支开发，尚未 main；主记录为 [verification.json](verification.json)。两份完整源组件以逐字节可还原的gzip归档保存，原始SHA/大小及归档SHA见[component-archives.json](component-archives.json)，源内容未裁剪；case测试一次解码共享准备。复用公共 adee3036 的收入期间检查、原件准备及保存/读取函数；没有新增计算器、controller、runner、来源获取或模型试验。
 
 ## Paramount FY2025 的实际影响
 
@@ -42,3 +42,5 @@ Marriott两年实际原件支撑及数值：
 39项受影响小例0.209秒通过，包含历史收入跨accession拒用、冲突证据/依赖、case重复/缺依赖/错公司/期间/Spec、B03分派、原酒店factory、旧native分流、历史D&A共享检查及状态复用。五项真实Paramount源检查8.873秒通过；旧实际日期成功断言转为同来源负例，XML与原生同值不能覆盖可见表头矛盾。未把机械格式/来源case保存提升为语义完整接受。
 
 新普通B03 factory目前只接已保存、未修订、连续主体，修订/继承主体和其他族的普通适配明确IMPLEMENTATION_GAP。原历史组件对同一最新继承主体的日期冲突修复已完成，但不等于继承主体的普通公司B03接入。历史在线发现/补齐、模型验证和完整五年业务继续未完。公开公司结果仍为开发候选，不是正式采纳；原源码/原回答/旧Run/失败和固定模型运行包不改。新SEC/provider/paid调用均0，账本仍1547行＋224保守计数＝1771/1867。
+
+能力结构检查在实现提交后通过，16.873秒，两个检查器副产物按检查前字节还原。提交前因HEAD仍为旧测试字节的失败保存在capability-alignment-before-commit.log；不把结构检查当业务或模型接受。

@@ -1,19 +1,20 @@
 """Small record-grain checks using the saved, known-conflicting source case."""
 import copy
 import json
+import gzip
 from pathlib import Path
 from unittest import TestCase
 
 from vnext.historical_saved_case import case_from_historical_component
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURE = ROOT/'docs/evidence/issue47_history/historical-income-receiving-2026-10-08/B03-component.json'
+FIXTURE = ROOT/'docs/evidence/issue47_history/historical-income-receiving-2026-10-08/B03-component.json.gz'
 
 
 class HistoricalSavedCaseTest(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.original = json.loads(FIXTURE.read_text())
+        cls.original = json.loads(gzip.decompress(FIXTURE.read_bytes()))
 
     def case(self, component=None):
         return case_from_historical_component(component=component or self.original, rules_root=ROOT)

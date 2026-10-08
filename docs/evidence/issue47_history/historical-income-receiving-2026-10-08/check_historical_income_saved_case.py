@@ -1,4 +1,4 @@
-import json,time,hashlib,socket
+import json,time,hashlib,socket,gzip
 from pathlib import Path
 from unittest.mock import patch
 from vnext.historical_saved_case import case_from_historical_component
@@ -11,7 +11,7 @@ for n in range(100):
 start=time.monotonic();summary={}
 with patch.object(socket.socket,'connect',side_effect=AssertionError('No business network')),patch('vnext.normal_annual_input_v2.prepare_saved_annual_input',side_effect=AssertionError('Already selected input must not be replaced by latest')):
  for m in ['B01','B03']:
-  c=json.loads((base/(m+'-component.json')).read_text());case=case_from_historical_component(component=c,rules_root=root)
+  c=json.loads(gzip.decompress((base/(m+'-component.json.gz')).read_bytes()));case=case_from_historical_component(component=c,rules_root=root)
   r=save_calculated_case(source_root=root,output_root=out/m,company_id=c['company_id'],metric_id=m,case=case)
   held=read_saved_result(output_root=out/m)
   assert held['result']['result_id']==c['result']['result_id'] and held['result']['value'] is None
