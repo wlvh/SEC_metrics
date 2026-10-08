@@ -1,0 +1,106 @@
+{
+  "elapsed_seconds": 14.631110124988481,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "macys",
+  "run_id": "20261008T152307Z-f700132a",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B02",
+    "B04",
+    "B05"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "63681955036944838ce3f91c27c0b53c",
+      "version": "ffed032745b248af9af635637c0770b8",
+      "result_id": "sha256:69eedd59b8da1090eccc8fa87f60e74688a7593c208cf99f04a4888916667916",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior/updates/B02/periods/FY2023/results/ffed032745b248af9af635637c0770b8",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2023,
+      "defect_holds": [],
+      "read_result_id": "sha256:69eedd59b8da1090eccc8fa87f60e74688a7593c208cf99f04a4888916667916",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior/updates/B02/periods/FY2023/results/ffed032745b248af9af635637c0770b8",
+      "program_version": {
+        "commit": "b4b57e7cba3d2f8ea82a22b7510d5aba27bb9b05",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B04",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "71459906526f42efa7b10c363b07a6b6",
+      "version": "9c807d6fc6854c1daaa761adce1be16f",
+      "result_id": "sha256:c57ef63f0c2f15657e91be644eb0d1539f21980842092c794b3a745878da37bd",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior/updates/B04/periods/FY2023/results/9c807d6fc6854c1daaa761adce1be16f",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2023,
+      "defect_holds": [],
+      "read_result_id": "sha256:c57ef63f0c2f15657e91be644eb0d1539f21980842092c794b3a745878da37bd",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior/updates/B04/periods/FY2023/results/9c807d6fc6854c1daaa761adce1be16f",
+      "program_version": {
+        "commit": "b4b57e7cba3d2f8ea82a22b7510d5aba27bb9b05",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B05",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "070540f44c524f798a82cca8508931f6",
+      "version": "db488920302b43a89a2179aef6ddc349",
+      "result_id": "sha256:c78a30c9a8516b625680a141cd2964abe2a646eaee24eecdcfe2116cd299ca2b",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior/updates/B05/periods/FY2023/results/db488920302b43a89a2179aef6ddc349",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2023,
+      "defect_holds": [],
+      "read_result_id": "sha256:c78a30c9a8516b625680a141cd2964abe2a646eaee24eecdcfe2116cd299ca2b",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior/updates/B05/periods/FY2023/results/db488920302b43a89a2179aef6ddc349",
+      "program_version": {
+        "commit": "b4b57e7cba3d2f8ea82a22b7510d5aba27bb9b05",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/constructed-missing-prior",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/controlled-outputs/20261008T152307Z-f700132a",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2023
+  ]
+}

@@ -54,3 +54,20 @@ Marriott两年实际原件支撑及数值：
 这里证明有来源，并未证明全批准D&A集合。完整原生候选/维度/QName/单位/context、原段跨度/SHA和接口预期见[b03-source-adapter-request.json](b03-source-adapter-request.json)、[候选普查](older-native-da-census.json)及[全部相关段落](older-da-wording.json)。已交#28共用普通源实现负责人：输入已选认证原件/实体/实际期间/明确namespace政策，输出有源候选与包含/子集关系或准确未决；不接调用者金额、不暴露正则或公司/年度特判，不因此生成新完整B03信用。本方只维护历史选择和消费者，没有另写D&A内核。旧年度三个null保持。
 
 公共c56旧独立journal兼容已只读核对：build_company_view/候选枚举AST及ordinary controller/store均与adee相同，company-task H4路由优先；本方暂不消费、不重开已经通过的H4验证。新c56自身CI由其实际终态解释，不继承adee绿灯。
+
+## 已保存来源的B02/B04/B05消费者接续
+
+后续增量只改历史选源和薄case分派，公共normal_companyfacts_results、Calculator、controller、writer和runner均未改。历史CompanyFacts适配可从程序根读规则、从来源根读原件，并限定本次指标；B04/B05不再为另一个指标准备无关前期。新ordinary slice限定未修订连续主体，旧默认历史路径保留。B01与B02/B04/B05可同一范围命令选择；B03已有独立适配/结果继续承接，跨酒店/收入族混合与修订仍未接收。此项留在PR52，不扩已通过PR71的首个酒店slice。
+
+真实Macy's FY2023为53周：2023-01-29至2024-02-03。当前原accession0001628280-24-012734，前期0001628280-23-009154；23092m/24442m−1得到B02=-0.0552327960068734146141886916 ratio，B04=105m USD，经营现金1305m−资本支出631m得到B05=674m USD。原生数值/期间、两来源accession和计算记录保留；不年化53周或改用最新申报的前期值。完整已计算组件以Macy-FY2023-companyfacts-component.json.gz保存，短例按类共享解包。
+
+同一公司CLI三项首跑15.333秒、禁止选源/计算的复跑0.969秒、另一进程读取0.214秒，24结果/指针文件逐字节不变，CSV及证据均由公共writer/reader导出。明确构造的前期源读取失败仅扣留B02，B04/B05正确值仍保存；同输入扣留复跑0.864秒，B02为PREVIOUS_INPUT_WITHHELD、另两项NO_SOURCE_CONTENT_CHANGE，24文件不变。这个故障替身不是Macy's真实缺披露或缺件结论。
+
+41项受影响短例0.371秒通过，包含保存53周/两accession、金额/单位/公式、错主体/期间、缺记录、Spec和未接修订/继承主体分类，以及已有真实paired-measure正反例。单独B04来源隔离核对5.944秒，禁止读取来源包所有程序/规则目录（仅允许公司registry），仍取得同一个105m结果，无复制程序或来源树。三公司60位置、已有两年B01及酒店全帧没有重算。[同CLI主结果](catalog-cli-verification.json)、[短测试](catalog-affected-short-tests.log)、[来源隔离](catalog-source-only-check.json)，复现命令：
+
+```bash
+PYTHONPATH=scripts:. python docs/evidence/issue47_history/historical-income-receiving-2026-10-08/check_historical_catalog_cli.py \
+  --source-root <已保存原件根> --state-parent <源码与来源树外的开发状态父目录>
+```
+
+源发现/在线补齐尚未接同一公司入口，也没有将全部历史能力接入main；本次新增SEC/provider/paid=0/0/0、无新native Run或完整五年接受。Marriott三年B03原件位置、XML的SOURCE_REFERENCE/请求proof已补[b03-source-locations.json](b03-source-locations.json)，供#28从实际已选原件实现共用源适配；本方三个null保持。

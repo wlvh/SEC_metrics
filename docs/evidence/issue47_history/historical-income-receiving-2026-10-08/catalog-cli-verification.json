@@ -1,0 +1,68 @@
+{
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "operations": [
+    {
+      "label": "catalog-cli-first",
+      "seconds": 15.332644041860476,
+      "status": "FLOW_COMPLETED",
+      "exit_code": 0
+    },
+    {
+      "label": "catalog-cli-repeat",
+      "seconds": 0.9690327909775078,
+      "status": "FLOW_COMPLETED",
+      "exit_code": 0
+    },
+    {
+      "label": "catalog-cli-independent-read",
+      "seconds": 0.21438154089264572,
+      "status": null,
+      "exit_code": 0
+    },
+    {
+      "label": "catalog-cli-constructed-prior-failure",
+      "seconds": 14.804956291103736,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "exit_code": 2
+    },
+    {
+      "label": "catalog-cli-constructed-hold-repeat",
+      "seconds": 0.8643509999383241,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "exit_code": 2
+    }
+  ],
+  "actual_values": {
+    "B02": [
+      "-0.0552327960068734146141886916",
+      "ratio"
+    ],
+    "B04": [
+      "105000000",
+      "USD"
+    ],
+    "B05": [
+      "674000000",
+      "USD"
+    ]
+  },
+  "actual_period": [
+    "2023-01-29",
+    "2024-02-03"
+  ],
+  "actual_fiscal_year": 2023,
+  "protected_file_count": 24,
+  "constructed_protected_file_count": 24,
+  "protected_bytes_unchanged_on_repeat_and_read": true,
+  "repeat_and_read_factory_forbidden": true,
+  "source_and_program_tree_copies": 0,
+  "constructed_control": "Prior source reader failure; not a Macy financial finding",
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "scope": "Three saved-source historical catalog consumers; not the full five-year business acceptance",
+  "already_completed_pilot_or_two_year_B01_not_recomputed": true
+}

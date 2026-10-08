@@ -1,0 +1,67 @@
+{
+  "elapsed_seconds": 0.013111958047375083,
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "macys",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "metrics": [
+    {
+      "metric_id": "B02",
+      "result_id": "sha256:db609edd1f286ee1bf61e51126b8084fea1f0817b03847d8010e02cd1b1e81b7",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": 2023,
+      "value": "-0.0552327960068734146141886916",
+      "unit": "ratio",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/state/updates/B02/periods/FY2023/results/0a2828d1760a41aeb3ef7f1bf69ebee9"
+    },
+    {
+      "metric_id": "B04",
+      "result_id": "sha256:c57ef63f0c2f15657e91be644eb0d1539f21980842092c794b3a745878da37bd",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": 2023,
+      "value": "105000000",
+      "unit": "USD",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/state/updates/B04/periods/FY2023/results/a94336831c6d456aa86b4c08925e3c6c"
+    },
+    {
+      "metric_id": "B05",
+      "result_id": "sha256:c78a30c9a8516b625680a141cd2964abe2a646eaee24eecdcfe2116cd299ca2b",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": 2023,
+      "value": "674000000",
+      "unit": "USD",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/state/updates/B05/periods/FY2023/results/96614ebf4b984d4ab9fbff6ac832cda5"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008/daily"
+}

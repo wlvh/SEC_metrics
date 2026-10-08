@@ -278,5 +278,100 @@
     "nonzero_entries": 8,
     "scope": "old recursive authority/changed-path/parser-byte/enrollment claims; local new business checks do not turn this CI green",
     "summary": "legacy-fast-ci-summary.json"
+  },
+  "catalog_saved_consumers": {
+    "small_tests": {
+      "tests": 41,
+      "seconds": 0.371,
+      "result": "PASS"
+    },
+    "cli": {
+      "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-catalog-cli-20261008",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "operations": [
+        {
+          "label": "catalog-cli-first",
+          "seconds": 15.332644041860476,
+          "status": "FLOW_COMPLETED",
+          "exit_code": 0
+        },
+        {
+          "label": "catalog-cli-repeat",
+          "seconds": 0.9690327909775078,
+          "status": "FLOW_COMPLETED",
+          "exit_code": 0
+        },
+        {
+          "label": "catalog-cli-independent-read",
+          "seconds": 0.21438154089264572,
+          "status": null,
+          "exit_code": 0
+        },
+        {
+          "label": "catalog-cli-constructed-prior-failure",
+          "seconds": 14.804956291103736,
+          "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+          "exit_code": 2
+        },
+        {
+          "label": "catalog-cli-constructed-hold-repeat",
+          "seconds": 0.8643509999383241,
+          "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+          "exit_code": 2
+        }
+      ],
+      "actual_values": {
+        "B02": [
+          "-0.0552327960068734146141886916",
+          "ratio"
+        ],
+        "B04": [
+          "105000000",
+          "USD"
+        ],
+        "B05": [
+          "674000000",
+          "USD"
+        ]
+      },
+      "actual_period": [
+        "2023-01-29",
+        "2024-02-03"
+      ],
+      "actual_fiscal_year": 2023,
+      "protected_file_count": 24,
+      "constructed_protected_file_count": 24,
+      "protected_bytes_unchanged_on_repeat_and_read": true,
+      "repeat_and_read_factory_forbidden": true,
+      "source_and_program_tree_copies": 0,
+      "constructed_control": "Prior source reader failure; not a Macy financial finding",
+      "calls": {
+        "sec": 0,
+        "provider": 0,
+        "paid": 0
+      },
+      "scope": "Three saved-source historical catalog consumers; not the full five-year business acceptance",
+      "already_completed_pilot_or_two_year_B01_not_recomputed": true
+    },
+    "source_only": {
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "metric": "B04",
+      "fiscal_year": 2023,
+      "source_program_config_reads_forbidden": true,
+      "only_source_company_registry_permitted": true,
+      "source_or_program_tree_copy_count": 0,
+      "seconds": 5.944117582868785,
+      "result_id": "sha256:c57ef63f0c2f15657e91be644eb0d1539f21980842092c794b3a745878da37bd",
+      "new_calls": {
+        "sec": 0,
+        "provider": 0,
+        "paid": 0
+      }
+    },
+    "source_component_probe_seconds": 5.027784915873781,
+    "public_controller_or_formula_changes": false,
+    "prior_pilot_or_two_year_B01_recomputed": false,
+    "main_received": false,
+    "new_business_acceptance": false
   }
 }

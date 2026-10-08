@@ -1,0 +1,266 @@
+{
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "remote_branches": [
+    "task/sec-history-five-year",
+    "claude/sec-metrics-issue-47-mk226z"
+  ],
+  "cases": [
+    {
+      "year": 2021,
+      "primary_path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+      "primary_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+      "auditor_sources": [
+        {
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+            "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+            "company_id": "marriott_international",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+            "accession": "0001628280-22-002666",
+            "document_name": "mar-20211231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+          },
+          "request_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+          "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+            "accession": "0001628280-22-002666",
+            "document_name": "mar-20211231.htm",
+            "content_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+            "request_body_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+            "request_body_size": 2562434,
+            "request_headers_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm.e467a6217cbb78188fe5bd22f4eec924bbff0eda1cedae8535c851f5952c12c6.headers.json",
+            "request_headers_sha256": "e467a6217cbb78188fe5bd22f4eec924bbff0eda1cedae8535c851f5952c12c6",
+            "request_headers_size": 1659,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+            "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+          }
+        },
+        {
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9",
+            "raw_asset_id": "sha256:abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+            "company_id": "marriott_international",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+            "accession": "0001628280-22-002666",
+            "document_name": "mar-20211231_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:b6adc5726bdca15f11851a87c5ebb16fe2d084d93757770d0a7ccb5aab5e9aa1"
+          },
+          "request_repo_relative_path": "evidence/request_attempts/ab/abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b/mar-20211231_htm.xml",
+          "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/ab/abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b/mar-20211231_htm.xml",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+            "accession": "0001628280-22-002666",
+            "document_name": "mar-20211231_htm.xml",
+            "content_sha256": "abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+            "request_body_sha256": "abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+            "request_body_size": 1967879,
+            "request_headers_repo_relative_path": "evidence/request_attempts/ab/abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b/mar-20211231_htm.xml.8584d1a8f321dd0b695bc78893cb19d3693fedc019e216daa3aaa387af771ba4.headers.json",
+            "request_headers_sha256": "8584d1a8f321dd0b695bc78893cb19d3693fedc019e216daa3aaa387af771ba4",
+            "request_headers_size": 1680,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/ab/abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b/mar-20211231_htm.xml",
+            "request_attempt_id": "request:attempt:b6adc5726bdca15f11851a87c5ebb16fe2d084d93757770d0a7ccb5aab5e9aa1"
+          }
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2021-12-31",
+          "filingDate": "2022-02-15",
+          "accessionNumber": "0001628280-22-002666",
+          "primaryDocument": "mar-20211231.htm"
+        },
+        "index_source_reference_id": "sha256:7718849066b9ad05121e9ef79a05acfa9151524ad2c7e734c8afc9e2a9514856",
+        "expected_xml_documents": [
+          "mar-20211231_htm.xml"
+        ],
+        "primary_saved": true,
+        "missing_primary_treatment": null,
+        "source_reference_ids": [
+          "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+          "sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9"
+        ]
+      }
+    },
+    {
+      "year": 2022,
+      "primary_path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+      "primary_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+      "auditor_sources": [
+        {
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+            "raw_asset_id": "sha256:c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+            "company_id": "marriott_international",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+            "accession": "0001628280-23-003485",
+            "document_name": "mar-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924"
+          },
+          "request_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+          "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+            "accession": "0001628280-23-003485",
+            "document_name": "mar-20221231.htm",
+            "content_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+            "request_body_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+            "request_body_size": 2403362,
+            "request_headers_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm.31b82ed62b8c28f67fa15dc85ee92f0274718449e062e9b1cb291d97f3342d9f.headers.json",
+            "request_headers_sha256": "31b82ed62b8c28f67fa15dc85ee92f0274718449e062e9b1cb291d97f3342d9f",
+            "request_headers_size": 1685,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+            "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924"
+          }
+        },
+        {
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c959a45a340da9916489efeb6c8cc78a2c89a08ad53b469b40a25e9c95a1a00f",
+            "raw_asset_id": "sha256:03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac",
+            "company_id": "marriott_international",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231_htm.xml",
+            "accession": "0001628280-23-003485",
+            "document_name": "mar-20221231_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:488b75ce463c9d857207978983b05af18ca8401163de3e1cee1a26f4d642201e"
+          },
+          "request_repo_relative_path": "evidence/request_attempts/03/03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac/mar-20221231_htm.xml",
+          "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/03/03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac/mar-20221231_htm.xml",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231_htm.xml",
+            "accession": "0001628280-23-003485",
+            "document_name": "mar-20221231_htm.xml",
+            "content_sha256": "03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac",
+            "request_body_sha256": "03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac",
+            "request_body_size": 1872845,
+            "request_headers_repo_relative_path": "evidence/request_attempts/03/03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac/mar-20221231_htm.xml.e4760eb815c6c26bdd7a7f96c0a34f0ba454103ac9573a7c4d5423611c60035e.headers.json",
+            "request_headers_sha256": "e4760eb815c6c26bdd7a7f96c0a34f0ba454103ac9573a7c4d5423611c60035e",
+            "request_headers_size": 1992,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/03/03a39943bc3a454e90bc7bcb2af2cf54e49c0cf5095debbccbc52bd848b3e5ac/mar-20221231_htm.xml",
+            "request_attempt_id": "request:attempt:488b75ce463c9d857207978983b05af18ca8401163de3e1cee1a26f4d642201e"
+          }
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2022-12-31",
+          "filingDate": "2023-02-14",
+          "accessionNumber": "0001628280-23-003485",
+          "primaryDocument": "mar-20221231.htm"
+        },
+        "index_source_reference_id": "sha256:2cfa8e22f878904ba4e76fda770806aef5850aef5575c84202f7840c149ce1fe",
+        "expected_xml_documents": [
+          "mar-20221231_htm.xml"
+        ],
+        "primary_saved": true,
+        "missing_primary_treatment": null,
+        "source_reference_ids": [
+          "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+          "sha256:c959a45a340da9916489efeb6c8cc78a2c89a08ad53b469b40a25e9c95a1a00f"
+        ]
+      }
+    },
+    {
+      "year": 2023,
+      "primary_path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+      "primary_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+      "auditor_sources": [
+        {
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4",
+            "raw_asset_id": "sha256:3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+            "company_id": "marriott_international",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+            "accession": "0001628280-24-004372",
+            "document_name": "mar-20231231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79"
+          },
+          "request_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+          "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+            "accession": "0001628280-24-004372",
+            "document_name": "mar-20231231.htm",
+            "content_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+            "request_body_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+            "request_body_size": 1949041,
+            "request_headers_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm.d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee.headers.json",
+            "request_headers_sha256": "d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee",
+            "request_headers_size": 1087,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+            "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79"
+          }
+        },
+        {
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:79e06655e482136c976afbb4f64af60399ff8720811ceada0ed6911970bb168e",
+            "raw_asset_id": "sha256:096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f",
+            "company_id": "marriott_international",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231_htm.xml",
+            "accession": "0001628280-24-004372",
+            "document_name": "mar-20231231_htm.xml",
+            "source_role": "auditor_facts",
+            "request_attempt_id": "request:attempt:34e6014cb68c063f0617f787b7ca2271055c6a923667204c597a5a8bdd0ea86d"
+          },
+          "request_repo_relative_path": "evidence/request_attempts/09/096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f/mar-20231231_htm.xml",
+          "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/09/096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f/mar-20231231_htm.xml",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231_htm.xml",
+            "accession": "0001628280-24-004372",
+            "document_name": "mar-20231231_htm.xml",
+            "content_sha256": "096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f",
+            "request_body_sha256": "096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f",
+            "request_body_size": 1398590,
+            "request_headers_repo_relative_path": "evidence/request_attempts/09/096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f/mar-20231231_htm.xml.f479442fe7aae78c4ef994f68b9ea7a873bee375bd84edbf053c3b0c77c42553.headers.json",
+            "request_headers_sha256": "f479442fe7aae78c4ef994f68b9ea7a873bee375bd84edbf053c3b0c77c42553",
+            "request_headers_size": 1706,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/09/096989bd096ca777513f287244373004e7378029515483ba3f701c040cbc2a6f/mar-20231231_htm.xml",
+            "request_attempt_id": "request:attempt:34e6014cb68c063f0617f787b7ca2271055c6a923667204c597a5a8bdd0ea86d"
+          }
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2023-12-31",
+          "filingDate": "2024-02-13",
+          "accessionNumber": "0001628280-24-004372",
+          "primaryDocument": "mar-20231231.htm"
+        },
+        "index_source_reference_id": "sha256:71afedc392ecfe24fec6cd6bc9fc83d50d50f196d263bf0edb06ddc15e24a229",
+        "expected_xml_documents": [
+          "mar-20231231_htm.xml"
+        ],
+        "primary_saved": true,
+        "missing_primary_treatment": null,
+        "source_reference_ids": [
+          "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4",
+          "sha256:79e06655e482136c976afbb4f64af60399ff8720811ceada0ed6911970bb168e"
+        ]
+      }
+    }
+  ],
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

@@ -137,20 +137,48 @@ def _need(condition, reason):
         raise NormalCompanyfactsError(reason)
 
 
-def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str, period_selection):
+def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str, period_selection,
+                                            rules_root=None, metric_ids=None):
     """Resolve the Company Facts catalog metrics for one pinned period.
 
     Current values come from the selected filing's own accession; prior values
     come from the filing immediately preceding it, each from its own selected
     report. That is the frozen first-report semantics, applied to a past target
     rather than to the latest one, and it is not a restated view.
+
+    ``rules_root`` separates installed rules from saved originals for the
+    ordinary company consumer. That slice accepts unamended continuous
+    subjects; legacy callers without it retain their existing adapters.
+    ``metric_ids`` limits the source roles read to the requested routes, so a
+    current-only metric does not require an unrelated prior dependency.
     """
-    authority = _authority(repo_root)
-    catalog = _load_deterministic_catalog(repo_root=repo_root)
+    rules = Path(repo_root) if rules_root is None else Path(rules_root)
+    authority = _authority(rules)
+    catalog = _load_deterministic_catalog(repo_root=rules)
     routes = {key: value for key, value in catalog["metrics"].items()
               if value["adapter_id"] == "companyfacts"}
+    if metric_ids is not None:
+        _need(type(metric_ids) in (list, tuple) and bool(metric_ids)
+              and all(type(m) is str for m in metric_ids)
+              and len(metric_ids) == len(set(metric_ids)) and set(metric_ids) <= set(routes),
+              "HISTORICAL_COMPANYFACTS_SELECTED_METRIC_SET_INVALID")
+        routes = {m: routes[m] for m in metric_ids}
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
-                                               period_selection=period_selection)
+        period_selection=period_selection,
+        **({} if rules_root is None else {'rules_root': rules}))
+    if rules_root is not None:
+        source_company = next(r for r in _registry_rows(repo_root=repo_root)
+                              if r['company_id'] == company_id)
+        rule_company = next(r for r in _registry_rows(repo_root=rules)
+                            if r['company_id'] == company_id)
+        _need(source_company == rule_company,
+              "HISTORICAL_COMPANYFACTS_SOURCE_SUBJECT_REGISTRY_CHANGED")
+        # This receiving slice does not port the amendment or successor
+        # preparation. Existing callers keep those paths below unchanged.
+        if prepared['amendments'] or prepared['subject_policy']['mode'] != 'CONTINUOUS_PRIMARY':
+            from .normal_annual_input import NormalAnnualInputError
+            raise NormalAnnualInputError('HISTORICAL_COMPANYFACTS_SAVED_CASE_SCOPE_NOT_RECEIVED',
+                                         'IMPLEMENTATION_GAP')
     verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     # A period carrying a 10-K/A used to refuse outright. The approved policy in
     # config/annual_amendment_scope_v1.json already decides these shapes, and
@@ -158,7 +186,7 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
     # bytes, so this asks rather than refusing. The target stays the original
     # filing either way: the amendment is evidence about whether the original's
     # inputs still stand, never a source of values.
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     # Structural applicability is prior to the amendment question and is asked
     # first. A metric this company's traits exclude reads no input at all, so
     # no input class can be in doubt for it; refusing it because an amendment
@@ -273,7 +301,7 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
             periods["prior"], filings["prior"] = prior, filing
         except (*_SOURCE_ERRORS, NormalCompanyfactsError) as error:
             prior_error = {"reason": str(error), "error_type": type(error).__name__}
-    context = {"repo_root": repo_root, "deterministic_catalog": catalog,
+    context = {"repo_root": rules, "deterministic_catalog": catalog,
                "role_context": {(company_id, "companyfacts"):
                                 {"sources": sources, "claims_by_accession_role": claims_by_role}},
                "target_periods": {company_id: periods}, "targets": {company_id: period},
@@ -401,6 +429,8 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
             "calls": {"provider": 0, "paid": 0, "sec": 0},
             "native_run_status": "NOT_CREATED", "current_latest_verified": False,
             "latest_restated_values_used": False, "production_authorized": False}
+    if metric_ids is not None:
+        body['requested_metric_ids'] = list(metric_ids)
     body = exact_json_value(body)
     return {**body, "component_id": content_hash(value=body)}
 

@@ -440,7 +440,8 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
          'LOCAL_HISTORY_PATH_OVERLAP')
     from .historical_lodging_results import (SUPPORTED_METRICS as hotel_metrics,
         prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
-    saved_history_metrics = {*hotel_metrics, 'B03'}
+    from .historical_saved_case import SAVED_DETERMINISTIC_METRICS
+    saved_history_metrics = {*hotel_metrics, *SAVED_DETERMINISTIC_METRICS, 'B03'}
     ordinary_task = (work/'company-task.json').is_file()
     retained_native = any((work/name).exists() for name in
                           ('historical-company-state', 'local-company.json', 'current_source.json'))
@@ -450,8 +451,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
         if set(selected) <= set(hotel_metrics):
             factory = prepare_historical_lodging_year_case
             processing_files = HISTORICAL_LODGING_PROCESSING_FILES
-        else:
-            need(set(selected) == {'B03'}, 'LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED')
+        elif set(selected) == {'B03'}:
             from .historical_saved_case import prepare_historical_income_year_case
             factory = prepare_historical_income_year_case
             processing_files = tuple(sorted({*HISTORICAL_LODGING_PROCESSING_FILES,
@@ -460,6 +460,19 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
                     'historical_da_scope_candidate', 'ordinary_b03_input_scope',
                     'b03_contract_amortization_scope', 'b03_depreciation_scope',
                     'ordinary_da_scope_v1', 'xbrl_namespace_policy'))}))
+        else:
+            need(set(selected) <= SAVED_DETERMINISTIC_METRICS,
+                 'LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED')
+            from .historical_saved_case import prepare_historical_deterministic_year_case
+            factory = prepare_historical_deterministic_year_case
+            processing_files = tuple(sorted({
+                p for p in HISTORICAL_LODGING_PROCESSING_FILES
+                if 'lodging' not in p and '/B10.' not in p and '/B11.' not in p} | {
+                'scripts/vnext/historical_saved_case.py',
+                'scripts/vnext/historical_results.py',
+                'scripts/vnext/historical_filing_inventory.py',
+                'scripts/vnext/historical_zero_ai_results.py',
+                'catalog/deterministic_metrics.json'}))
         from .company_current_records import run_saved_company
         return run_saved_company(company_id=company_id, source_root=source, work_dir=work,
             output_dir=outputs, metric_ids=selected, fiscal_years=years,

@@ -56,6 +56,23 @@ class HistoricalRangeTest(unittest.TestCase):
                 fiscal_year_start=2024, fiscal_year_end=2025, source_root=source)
         self.assertFalse((self.root/'work').exists())
 
+    def test_pilot_metrics_use_one_shared_controller_and_existing_selected_year_case(self):
+        from scripts.vnext import company_current_records as current
+        from scripts.vnext.historical_saved_case import prepare_historical_deterministic_year_case
+        source = self.root/'source'; source.mkdir()
+        with patch.object(current, 'run_saved_company', return_value={'metrics': []}) as run, \
+             patch.object(local, '_history_program', side_effect=AssertionError('No native installation')):
+            local.run_local(company_id='macys', work_dir=self.root/'work',
+                output_dir=self.root/'output', period='fiscal-years',
+                metric_ids=['B01', 'B02', 'B04', 'B05'], fiscal_year_start=2021,
+                fiscal_year_end=2025, source_root=source)
+        self.assertIs(prepare_historical_deterministic_year_case, run.call_args.kwargs['case_factory'])
+        self.assertEqual([2021, 2022, 2023, 2024, 2025], run.call_args.kwargs['fiscal_years'])
+        self.assertEqual(['B01', 'B02', 'B04', 'B05'], run.call_args.kwargs['metric_ids'])
+        self.assertIn('scripts/vnext/historical_filing_inventory.py',
+                      run.call_args.kwargs['processing_files'])
+        self.assertFalse((self.root/'work').exists())
+
     def test_retained_native_history_is_not_replaced_by_ordinary_storage(self):
         from scripts.vnext import company_current_records as current
         source = self.root/'source'; source.mkdir()
