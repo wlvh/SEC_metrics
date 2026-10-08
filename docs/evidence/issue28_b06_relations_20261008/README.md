@@ -99,3 +99,10 @@ c5修后独审仍NEEDS_FIX，详见[independent-carrier-repair](independent-carr
 18项完整小型解析器回归0.075s/无skip；四个保存Ford结构控制11.801s（原件、Euro业务介绍正例、同SHA外币caption冲突及较早billions＋本表millions正例），全在内存派生、无原件写回/获取信用。默认case与main8588整个对象相同，新源case保存读取相同，10.131s；代码根/来源根与日志一致。表内明确单位缺失时，既有有界引言搜索仍是有限支持，不能把本次局部回修扩为任意表前文本归属证明。
 
 被测树为7ae99dfd加industrial_lease_relation.py、新小回归及verify_table_unit_scope.py差异；提交后记录精确补丁SHA供限定复核。原NEEDS_FIX与89d局部PASS均保持历史范围。工业权益及B06债务完整性仍未建立，公司入口没有消费本选项，不生成新比值/Run/公司CSV。PR67范围和源码不变，新增provider/paid/SEC=0。
+
+
+## 930a3df 限定结案
+
+[相邻引言差异独审](independent-adjacency/conclusion.md)PASS：18小测0.077s、Ford四控制11.550s、11个base/patch完整解析器控制由新代理实际执行。显式本表单位下的旧as-follows误拦已修复；缺表内单位的旧有限支持不扩大。新代理35工具/1消息/373.476s，先核实际UTC并在90分钟内结束。原代理第三次接续跨空闲累计时间超90m，未执行本差异测试，停止记录原样归档，不能替新独审赋信用。
+
+本分支提交小Draft仅交显式B06来源关系能力及默认兼容，未进PR67/公司入口。当前小回归加入现有fast workflow独立步骤，在旧cohort之前报告实际结果，不删除旧断言、修改required-check或将旧失败记PASS。旧cohort仍按各自实际终态解释；本源码被测版本930a3df，后继仅CI命令/证据归档。main/T1基础接收由原PR61/PR67承担，不搬入旧大分支或冻结/发布系统。

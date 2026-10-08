@@ -1,0 +1,42 @@
+{
+  "status": "NOT_COMPLETED_RESOURCE_LIMIT",
+  "patch": "930a3df29df8dbc8cd519044a23aeb682c09f80c",
+  "base": "7ae99dfdca49ead83fdee669d158083c85714233",
+  "original_spawn_utc": "2026-10-07T22:50:46+00:00",
+  "first_resumed_clock_utc": "2026-10-08T09:56:49Z",
+  "stop_record_utc": "2026-10-08T09:58:03.557308+00:00",
+  "cumulative_wall_seconds": 40037.557308,
+  "wall_limit_seconds": 5400,
+  "cumulative_tools": {
+    "functions_exec": 15,
+    "exec_command": 25,
+    "clock": 3,
+    "total": 43
+  },
+  "cumulative_ordinary_messages_including_final": 3,
+  "unittest_run_on_current_patch": false,
+  "saved_source_script_run_on_current_patch": false,
+  "prior_conclusion_prefix_bytes": 9654,
+  "prior_conclusion_prefix_sha256": "7e5a1149165693f213be4f89160a86d8d4698fd5f79ff11747e25824eb58d6bb",
+  "prior_prefix_and_logs_unchanged": true,
+  "old_log_hashes": {
+    "initial-byte-verification.log": "0d38543c9f0f70afde577aea35d896f8aaf8ca7b1840a36bc56aeb9cd878d2b7",
+    "independent-unit-controls.log": "e16aeb5d03a7c1ff45a38dbbe6c1ccb6496dd818d9bc415386588c03cd8303ea",
+    "unit-tests-89d2.log": "1bfed6263dbe022b4f05024e7c32ed94f5678cffdf08d4dcc1bfdd6322df49e0",
+    "saved-currency-control-setup-error.log": "309cb746bc9b95150e3ad87a4ccc8abe214309bb69612e4c3404693bbe30698d",
+    "saved-introduction-control.log": "5c484813de1126fe0910d5bc850478e57582acd0a454c8e059856cf3b1c95f1b",
+    "base-versus-patch-controls.log": "26417b75eeb1c1209ef185fa271e3d4b1634c663b2e2e7e0804fd5b7c2b71661",
+    "unit-tests.log": "01ae4df67ccb4c947db6c1ac337c5db6d3e7a6ddbdc8646befd977faa86c3849",
+    "final-byte-and-resource-verification.log": "ab01d8af480e7bff10b6c89632fa122fe7bbbede2f68412a5223c1ef9a240e82",
+    "saved-unit-scope-control-89d2.log": "32a30169a3b1d6e175677699af0c9f1150bac78a332c21f2a377c4b0e507a4c9",
+    "saved-explicit-currency-control.log": "fcd0384f6f11f44aae9d8a49d49773ea773ba12c33cfbdb4b96621dabd41d957",
+    "final-byte-and-resource-verification-89d2.log": "b4bca7fee346e79d5ff812863c96e44b9228807a54aa09fcdb49f01ada0c3574",
+    "initial-byte-verification-89d2.log": "8dbdac7ad54b13e177d7f3540e9ab3d868def8e9295dde72fd2583a8e91b4e27"
+  },
+  "new_provider_paid_sec_account_calls": [
+    0,
+    0,
+    0,
+    0
+  ]
+}
