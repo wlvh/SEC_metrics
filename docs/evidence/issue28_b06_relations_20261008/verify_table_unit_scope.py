@@ -48,12 +48,24 @@ foreign['source_reference']['raw_asset_id'] = 'sha256:' + sha256_bytes(content=f
 conflict = inspect(foreign)
 assert conflict['lease_inclusion']['status'] == 'UNRESOLVED'
 assert conflict['lease_inclusion']['additional_debt_amount'] is None
+prior = (b'<p>The earlier issuance amounts were as follows (in billions).</p>'
+         b'<p>The following table reports the carrying amounts.</p>')
+caption_millions = b'<caption>Carrying amounts (in millions)</caption>'
+local_bytes = raw[:start] + prior + raw[start:tag_end] + caption_millions + raw[tag_end:]
+local = deepcopy(prepared['primary'])
+local['raw_bytes'] = local_bytes
+local['source_reference']['raw_asset_id'] = 'sha256:' + sha256_bytes(content=local_bytes)
+local_result = inspect(local)
+assert local_result['lease_inclusion']['status'] == 'REPORTED_INCLUDED'
+assert local_result['lease_inclusion']['additional_debt_amount'] == '0'
 print(json.dumps({'seconds': time.monotonic() - started, 'code_root': str(ROOT),
     'source_root': str(source.resolve()), 'source_kind': 'MEMORY_DERIVED_TEST_ONLY',
     'original_primary_sha256': sha256_bytes(content=raw),
     'derived_primary_sha256': sha256_bytes(content=derived),
     'foreign_caption_primary_sha256': sha256_bytes(content=foreign_bytes),
     'foreign_caption_relation': conflict['lease_inclusion']['status'],
+    'local_caption_primary_sha256': sha256_bytes(content=local_bytes),
+    'local_caption_relation': local_result['lease_inclusion']['status'],
     'table_id': table_id, 'insertion_byte': start,
     'original_relation': original['lease_inclusion']['status'],
     'derived_relation': result['lease_inclusion']['status'], 'additional_debt_amount': '0',

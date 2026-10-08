@@ -86,6 +86,12 @@ class IndustrialLeaseRelationTest(unittest.TestCase):
                      caption='<caption>Carrying amounts (in dollars)</caption>')
         self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**args)['status'])
 
+    def test_earlier_as_follows_unit_cannot_cross_current_table_introduction(self):
+        args=fixture(introduction='<p>The earlier issuance amounts were as follows (in millions).</p>'
+                     '<p>The following table reports the carrying amounts.</p>',
+                     caption='<caption>Carrying amounts (in dollars)</caption>')
+        self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**args)['status'])
+
     def test_explicit_foreign_or_conflicting_table_units_remain_unresolved(self):
         for introduction,caption in (
                 ('<p>The carrying amounts are as follows (in euros).</p>', ''),

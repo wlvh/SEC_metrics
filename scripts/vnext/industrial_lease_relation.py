@@ -106,28 +106,44 @@ def visible_scale(*, structure, table, raw):
     # The existing block index then has no separate introduction block. Read
     # the bounded original gap between tables instead of guessing a distance.
     intro = raw[previous:span['start_byte']]
-    declarations.append({'text': introductory_text(intro), 'proof': {
-        'start_byte': previous, 'end_byte': span['start_byte'],
-        'span_sha256': sha256_bytes(content=intro)}})
     found = []
     for d in declarations:
-        # A debt's original currency is not the reporting unit of this table.
-        # Only an explicit unit declaration can contradict the native USD.
-        if (re.search(r'(?:\bin\s+|\()\s*(?:(?:thousands|millions|billions)\s*(?:of\s*)?)?[€£¥]\s*(?:[,)]|$)', d['text'], re.I)
-                or re.fullmatch(r'\s*[€£¥]\s*', d['text'])):
+        factors = reporting_factors(d['text'])
+        if factors is None:
             return None
-        for match in re.finditer(r'\bin (dollars|thousands|millions|billions|euros?|pounds?|yen|USD|EUR|GBP|JPY)(?: of (dollars|euros?|pounds?|yen|USD|EUR|GBP|JPY))?(?=\s*(?:,|\)|$))', d['text'], re.I):
-            currency = (match[2] or match[1]).casefold()
-            if currency in {'euro', 'euros', 'pound', 'pounds', 'yen', 'eur', 'gbp', 'jpy'}:
-                return None
-            unit = match[1].casefold()
-            if unit == 'usd':
-                unit = 'dollars'
-            found.append({'factor': {'dollars':'1','thousands':'1000','millions':'1000000','billions':'1000000000'}[unit], 'proof':d['proof']})
+        found.extend({'factor': factor, 'proof': d['proof']} for factor in factors)
+    # An explicit table unit binds this table. Inspect the adjacent visible
+    # introduction for contradictions, but never borrow a declaration across
+    # an intervening block from an earlier disclosure.
+    factors = reporting_factors(introductory_text(intro, adjacent_only=bool(found)))
+    if factors is None:
+        return None
+    proof = {'start_byte': previous, 'end_byte': span['start_byte'],
+             'span_sha256': sha256_bytes(content=intro)}
+    found.extend({'factor': factor, 'proof': proof} for factor in factors)
     return found if len({x['factor'] for x in found}) == 1 else None
 
 
-def introductory_text(raw):
+def reporting_factors(text):
+    """Recognise the supported explicit monetary unit declarations."""
+    # A debt's original currency is not the reporting unit of this table.
+    # Only an explicit unit declaration can contradict the native USD.
+    if (re.search(r'(?:\bin\s+|\()\s*(?:(?:thousands|millions|billions)\s*(?:of\s*)?)?[€£¥]\s*(?:[,)]|$)', text, re.I)
+            or re.fullmatch(r'\s*[€£¥]\s*', text)):
+        return None
+    factors = []
+    for match in re.finditer(r'\bin (dollars|thousands|millions|billions|euros?|pounds?|yen|USD|EUR|GBP|JPY)(?: of (dollars|euros?|pounds?|yen|USD|EUR|GBP|JPY))?(?=\s*(?:,|\)|$))', text, re.I):
+        currency = (match[2] or match[1]).casefold()
+        if currency in {'euro', 'euros', 'pound', 'pounds', 'yen', 'eur', 'gbp', 'jpy'}:
+            return None
+        unit = match[1].casefold()
+        if unit == 'usd':
+            unit = 'dollars'
+        factors.append({'dollars':'1','thousands':'1000','millions':'1000000','billions':'1000000000'}[unit])
+    return factors
+
+
+def introductory_text(raw, *, adjacent_only=False):
     """Find a table introduction, excluding unrelated earlier discussion."""
     class Intro(HTMLParser):
         def __init__(self):
@@ -150,7 +166,7 @@ def introductory_text(raw):
             if not self.skipped:self.parts.append(data)
     p=Intro();p.feed(raw.decode('utf-8-sig'));p.close()
     p.boundary()
-    for text in reversed(p.blocks):
+    for text in reversed(p.blocks[-1:] if adjacent_only else p.blocks):
         # An explicit table lead-in or a standalone unit line can provide
         # the table's unit. Earlier issuance prose cannot supply that scope.
         if (re.search(r'\bas follows\s*\(in [^)]+\)\s*[:.]?$', text, re.I)

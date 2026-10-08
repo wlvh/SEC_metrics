@@ -90,3 +90,12 @@ c5修后独审仍NEEDS_FIX，详见[independent-carrier-repair](independent-carr
 89d2d649的符号回修增量由同一代理在剩余资源内复核PASS（累计37工具/2消息/611s）；补充结论追加于原记录，原487b NEEDS_FIX及所有旧日志保留。17测试0.073s、相同Ford原件派生正负控制8.462s由代理实际执行；未变默认/JSON证据只读取复用，不称重新独立全模块验收。代码树与89d2一致，后继归档提交仅记录证据。
 
 表前as-follows范围误拦仍为具体限制，本分支未接公司CSV，没有完整B06结果或正式接受；不把局部包含关系当债务完整性证明。该限制不影响PR67已交的保存来源公司范围。PR67 adee与PR61 86e仍为可审查的Draft候选，远端终态SUCCESS；本B06分支单独保留，不扩本批组合。新增provider/paid/SEC仍0；旧来源、失败、Run、Result身份不变。
+
+
+## 显式本表单位下的相邻引言回修
+
+接续89d符号限定PASS之后的已知误拦，不重审旧修复。先增加原反例：较早发行as follows(in millions)，随后独立当前表说明、当前caption明确dollars；旧代码完整解析路径UNRESOLVED，失败日志保留。新读取先核所选表caption/头行的明确单位；该表已有单位时，引言只检查紧邻可见块的矛盾，不跨中间块回取更早披露单位。单位识别词表原样提为reporting_factors函数复用，没有新增英文主体/业务关键词。直接caption/邻接引言单位矛盾、外币、原生倍率冲突继续未决。
+
+18项完整小型解析器回归0.075s/无skip；四个保存Ford结构控制11.801s（原件、Euro业务介绍正例、同SHA外币caption冲突及较早billions＋本表millions正例），全在内存派生、无原件写回/获取信用。默认case与main8588整个对象相同，新源case保存读取相同，10.131s；代码根/来源根与日志一致。表内明确单位缺失时，既有有界引言搜索仍是有限支持，不能把本次局部回修扩为任意表前文本归属证明。
+
+被测树为7ae99dfd加industrial_lease_relation.py、新小回归及verify_table_unit_scope.py差异；提交后记录精确补丁SHA供限定复核。原NEEDS_FIX与89d局部PASS均保持历史范围。工业权益及B06债务完整性仍未建立，公司入口没有消费本选项，不生成新比值/Run/公司CSV。PR67范围和源码不变，新增provider/paid/SEC=0。
