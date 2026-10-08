@@ -1,0 +1,44 @@
+{
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-cli-20261008",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "operations": [
+    {
+      "label": "b03-cli-first",
+      "seconds": 6.308620374882594,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "label": "b03-cli-repeat",
+      "seconds": 0.4311029580421746,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "label": "b03-cli-independent-read",
+      "seconds": 0.20995112508535385,
+      "status": null
+    }
+  ],
+  "actual_values": [
+    {
+      "year": "2024",
+      "value": "0.1653386454183266932270916335",
+      "unit": "ratio"
+    },
+    {
+      "year": "2025",
+      "value": "0.1756281982738868097456656229",
+      "unit": "ratio"
+    }
+  ],
+  "repeat_and_read_factory_forbidden": true,
+  "protected_file_count": 18,
+  "protected_bytes_unchanged": true,
+  "source_and_program_tree_copies": 0,
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "scope": "unamended continuous registrant B03 saved-source range; not full five-year business",
+  "existing_hotel_or_two_year_B01_not_recomputed": true
+}

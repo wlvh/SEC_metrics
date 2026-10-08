@@ -1,0 +1,105 @@
+{
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261008T133658Z-5b45aeb1",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B03"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "ae897b1aac914244bb2a8cef9b355b28",
+      "version": "89710c8fa3a84a889313500e9dc8001e",
+      "result_id": "sha256:bafe01e1e307a3f33597024eb4da8f3ab94139278aa1c9dba97e3c4e04372e19",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state/updates/B03/periods/FY2021/results/89710c8fa3a84a889313500e9dc8001e",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "ALL_BRANCHES_REJECTED",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2021,
+      "defect_holds": [],
+      "read_result_id": "sha256:bafe01e1e307a3f33597024eb4da8f3ab94139278aa1c9dba97e3c4e04372e19",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state/updates/B03/periods/FY2021/results/89710c8fa3a84a889313500e9dc8001e",
+      "program_version": {
+        "commit": "c371d5681fdafa3563728978b6d892c70a0e607f",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "40858e6756ea49d998ec042fd46b4442",
+      "version": "b1cd27cab14742d499f4ef645c994335",
+      "result_id": "sha256:d71d27f004b2711c94afaba3ce21e4ff3d18ff8fac1c98207eecc6661e498ad1",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state/updates/B03/periods/FY2022/results/b1cd27cab14742d499f4ef645c994335",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "ALL_BRANCHES_REJECTED",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2022,
+      "defect_holds": [],
+      "read_result_id": "sha256:d71d27f004b2711c94afaba3ce21e4ff3d18ff8fac1c98207eecc6661e498ad1",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state/updates/B03/periods/FY2022/results/b1cd27cab14742d499f4ef645c994335",
+      "program_version": {
+        "commit": "c371d5681fdafa3563728978b6d892c70a0e607f",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "1d58ada9fb11412b8252ef90bb9318f6",
+      "version": "dd9565a302cd4d89945842c37f1354e0",
+      "result_id": "sha256:630ca52c14d29af635f4c685ede6ef116ce288a8b79d42a6c82c02ffc85f8fc3",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state/updates/B03/periods/FY2023/results/dd9565a302cd4d89945842c37f1354e0",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "ALL_BRANCHES_REJECTED",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2023,
+      "defect_holds": [],
+      "read_result_id": "sha256:630ca52c14d29af635f4c685ede6ef116ce288a8b79d42a6c82c02ffc85f8fc3",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state/updates/B03/periods/FY2023/results/dd9565a302cd4d89945842c37f1354e0",
+      "program_version": {
+        "commit": "c371d5681fdafa3563728978b6d892c70a0e607f",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-older-years-20261008/outputs/20261008T133658Z-5b45aeb1",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2021,
+    2022,
+    2023
+  ]
+}

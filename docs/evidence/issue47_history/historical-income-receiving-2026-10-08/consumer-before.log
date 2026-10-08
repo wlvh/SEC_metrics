@@ -1,0 +1,59 @@
+test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence) ...
+  test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence) (metric='B01') ... ERROR
+test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence) ... ERROR
+test_current_conflict_cannot_be_assigned_to_a_different_selected_filing (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_current_conflict_cannot_be_assigned_to_a_different_selected_filing) ... FAIL
+test_non_income_and_continuous_subjects_do_not_prepare_successor_income (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_non_income_and_continuous_subjects_do_not_prepare_successor_income) ... ok
+
+======================================================================
+ERROR: test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence) (metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_historical_income_period_conflict.py", line 55, in test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence
+    component = history.resolve_historical_zero_ai_metric(repo_root=ROOT,
+        company_id=PREPARED['company_id'], metric_id=metric, period_selection={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/historical_zero_ai_results.py", line 444, in resolve_historical_zero_ai_metric
+    income_input = _successor_income_input(repo_root=repo_root, company_id=company_id,
+                                           metric_id=metric_id, prepared=prepared)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+vnext.ordinary_income_input.IncomeInputError: ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT
+
+======================================================================
+ERROR: test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_historical_income_period_conflict.py", line 57, in test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence
+    self.assertEqual('WITHHELD', component['result']['publication'])
+                                 ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'component' where it is not associated with a value
+
+======================================================================
+FAIL: test_current_conflict_cannot_be_assigned_to_a_different_selected_filing (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_current_conflict_cannot_be_assigned_to_a_different_selected_filing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_historical_income_period_conflict.py", line 31, in test_current_conflict_cannot_be_assigned_to_a_different_selected_filing
+    result = history._successor_income_input(repo_root=ROOT,
+        company_id=PREPARED['company_id'], metric_id='B01', prepared=other)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/historical_zero_ai_results.py", line 372, in _successor_income_input
+    income_input = release_aware(ordinary_income_input).prepare_current_income_input(
+        repo_root=repo_root, company_id=company_id)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Do not inspect an unrelated current filing
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=1, errors=2)

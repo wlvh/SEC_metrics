@@ -438,19 +438,32 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
     need(all(a != b and a not in b.parents and b not in a.parents
              for a, b in ((work, outputs), (source, work), (source, outputs))),
          'LOCAL_HISTORY_PATH_OVERLAP')
-    from .historical_lodging_results import (SUPPORTED_METRICS as saved_history_metrics,
+    from .historical_lodging_results import (SUPPORTED_METRICS as hotel_metrics,
         prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
+    saved_history_metrics = {*hotel_metrics, 'B03'}
     ordinary_task = (work/'company-task.json').is_file()
     retained_native = any((work/name).exists() for name in
                           ('historical-company-state', 'local-company.json', 'current_source.json'))
     if ordinary_task:
         need(set(selected) <= set(saved_history_metrics), 'LOCAL_HISTORY_ORDINARY_CASE_NOT_IMPLEMENTED')
     if not retained_native and set(selected) <= set(saved_history_metrics):
+        if set(selected) <= set(hotel_metrics):
+            factory = prepare_historical_lodging_year_case
+            processing_files = HISTORICAL_LODGING_PROCESSING_FILES
+        else:
+            need(set(selected) == {'B03'}, 'LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED')
+            from .historical_saved_case import prepare_historical_income_year_case
+            factory = prepare_historical_income_year_case
+            processing_files = tuple(sorted({*HISTORICAL_LODGING_PROCESSING_FILES,
+                *('scripts/vnext/'+name+'.py' for name in (
+                    'historical_saved_case', 'historical_zero_ai_results',
+                    'historical_da_scope_candidate', 'ordinary_b03_input_scope',
+                    'b03_contract_amortization_scope', 'b03_depreciation_scope',
+                    'ordinary_da_scope_v1', 'xbrl_namespace_policy'))}))
         from .company_current_records import run_saved_company
         return run_saved_company(company_id=company_id, source_root=source, work_dir=work,
             output_dir=outputs, metric_ids=selected, fiscal_years=years,
-            case_factory=prepare_historical_lodging_year_case,
-            processing_files=HISTORICAL_LODGING_PROCESSING_FILES,
+            case_factory=factory, processing_files=processing_files,
             defects_file=ROOT/'docs/evidence/issue47_history/known_result_defects.json')
     from .normal_run_v3 import update_metric_ids
     supported = [metric for metric in selected if metric in update_metric_ids()]

@@ -35,6 +35,27 @@ class HistoricalRangeTest(unittest.TestCase):
         self.assertEqual(run.call_args.kwargs['processing_files'], HISTORICAL_LODGING_PROCESSING_FILES)
         self.assertIn('config/normal_fiscal_year_labels_v1.json',run.call_args.kwargs['processing_files'])
 
+    def test_b03_range_uses_existing_component_case_and_public_controller(self):
+        from scripts.vnext import company_current_records as current
+        from scripts.vnext.historical_saved_case import prepare_historical_income_year_case
+        source = self.root/'source'; source.mkdir()
+        with patch.object(current, 'run_saved_company', return_value={'metrics': []}) as run:
+            local.run_local(company_id='marriott_international', work_dir=self.root/'work',
+                output_dir=self.root/'output', period='fiscal-years', metric_ids=['B03'],
+                fiscal_year_start=2024, fiscal_year_end=2025, source_root=source)
+        self.assertEqual([2024, 2025], run.call_args.kwargs['fiscal_years'])
+        self.assertIs(prepare_historical_income_year_case, run.call_args.kwargs['case_factory'])
+        self.assertIn('scripts/vnext/historical_zero_ai_results.py', run.call_args.kwargs['processing_files'])
+        self.assertFalse((self.root/'work').exists())
+
+    def test_mixed_new_saved_families_are_rejected_before_writes(self):
+        source = self.root/'source'; source.mkdir()
+        with self.assertRaisesRegex(ValueError, 'MIXED_SAVED_FAMILY_NOT_RECEIVED'):
+            local.run_local(company_id='marriott_international', work_dir=self.root/'work',
+                output_dir=self.root/'output', period='fiscal-years', metric_ids=['B03', 'B10'],
+                fiscal_year_start=2024, fiscal_year_end=2025, source_root=source)
+        self.assertFalse((self.root/'work').exists())
+
     def test_retained_native_history_is_not_replaced_by_ordinary_storage(self):
         from scripts.vnext import company_current_records as current
         source = self.root/'source'; source.mkdir()

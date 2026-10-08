@@ -4,7 +4,7 @@ import re
 
 from .annual_amendment_scope import prepare_saved_amendment_scopes
 from .instant_balance_amendment import _part_iii_details, POLICY as AMENDMENT_RULE
-from .normal_candidates import _prepare_b06
+from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
 from .normal_annual_input import annual_period
 from .normal_source_authority import ROOT
 from .normal_annual_input_v2 import exact_json_value
@@ -22,9 +22,13 @@ POLICY_PATH='config/ordinary_income_input_v1.json'
 class IncomeInputError(ValueError):
     category='CURRENT_SOURCE_SCOPE_UNRESOLVED'
 
+    def __init__(self,reason,details=None):
+        super().__init__(reason)
+        self.details=details
 
-def need(condition,reason):
-    if not condition:raise IncomeInputError('ORDINARY_INCOME_'+reason)
+
+def need(condition,reason,details=None):
+    if not condition:raise IncomeInputError('ORDINARY_INCOME_'+reason,details)
 
 
 def inspect_income_amendment(scope,raw,rules):
@@ -46,7 +50,43 @@ def inspect_income_amendment(scope,raw,rules):
             'income_correction_blocks':conflicts,'input_class':rules['input_class']}
 
 
-def native_income_reports(source,annual,concepts):
+def visible_income_periods(raw, parsed, rows):
+    """Compare an inline fact's own column date range, never a nearby column."""
+    from .financial_structured import _InlineTableIndex, _fact_cells
+    from .financial_duration import _column_period, _cell_proof, _MONTH, _date
+    index=_InlineTableIndex(raw);index.feed(raw.decode('utf-8-sig'));index.close()
+    cells=_fact_cells(index,parsed,{row['ordinal'] for row in rows})
+    pattern=re.compile(r'\bperiod\s+from\s+('+_MONTH+r')\s+([0-9]{1,2})\s*[-–—]\s*('
+                       +_MONTH+r')\s+([0-9]{1,2}),?\s*$',re.I)
+    checks={}
+    for row in rows:
+        bound=cells.get(row['ordinal']);evidence=[];intervals=set()
+        if bound:
+            table,cell=bound
+            column,year_headers,reason=_column_period(table=table,selected=cell)
+            if not reason:
+                for table_row in table['rows'][:cell['row_index']]:
+                    for header in table_row['cells']:
+                        if not header['is_origin'] or not (header['column_index']<=cell['column_index']
+                                <header['column_index']+header['colspan']):continue
+                        match=pattern.search(' '.join(header['text'].split()))
+                        if match:
+                            try:
+                                end=_date(year=column['year'],month=match[3],day=int(match[4]))
+                                start=_date(year=end.year,month=match[1],day=int(match[2]))
+                                if start>end:start=start.replace(year=start.year-1)
+                            except ValueError:continue
+                            intervals.add((start.isoformat(),end.isoformat()))
+                            evidence.append({'range_header':_cell_proof(table=table,cell=header),
+                                'year_headers':[_cell_proof(table=table,cell=h) for h,_,_ in year_headers]})
+        expected=(row['period_start'],row['period_end'])
+        checks[row['ordinal']]={'native_period':list(expected),'visible_periods':[list(p) for p in sorted(intervals)],
+            'status':'MATCH' if intervals=={expected} else 'CONFLICT' if intervals else 'UNRESOLVED',
+            'headers':evidence,'source_reference':row['source_reference']}
+    return checks
+
+
+def native_income_reports(source,annual,concepts,*,check_visible_short_period=False):
     raw=source['raw_bytes'];ref=source['source_reference']
     need(ref['raw_asset_id']=='sha256:'+sha256_bytes(content=raw)
          and ref['accession']==annual['filing']['accessionNumber']
@@ -75,15 +115,21 @@ def native_income_reports(source,annual,concepts):
             'decimals':info['attrs'].get('decimals'),'ordinal':fact['ordinal'],
             'context_ref':fact['context_ref'],'context':{**context,'dimensions':dict(context['dimensions'])},
             'context_proof':proof,'source_reference':ref})
+    if check_visible_short_period:
+        short=[row for row in rows if row['period_start']!=period['period_start']]
+        visible=visible_income_periods(raw,parsed,short) if short else {}
+        for row in short:row['visible_period_check']=visible[row['ordinal']]
     return rows
 
 
-def prepare_current_income_input(*,repo_root,company_id):
-    rules=strict_json_file(path=repo_root/POLICY_PATH)
+def prepare_current_income_input(*,repo_root,company_id,rules_root=None):
+    policy_root=repo_root if rules_root is None else Path(rules_root)
+    rules=strict_json_file(path=policy_root/POLICY_PATH)
     need(rules==strict_json_file(path=ROOT/POLICY_PATH),'INSTALLED_RULES_CHANGED')
     prepared=_prepare_b06(repo_root=repo_root,company_id=company_id)
     annual=prepared['input_binding']['prepared_annual_input']
-    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id)
+    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id,
+        **({} if rules_root is None else {'rules_root':rules_root}))
     blobs={r['raw_asset_id']:r for r in amendments['source_records'] if r['record_type']=='RAW_BLOB'}
     checks=[]
     for scope in amendments['scopes']:
@@ -91,10 +137,11 @@ def prepare_current_income_input(*,repo_root,company_id):
         raw=(repo_root/blobs[ref['raw_asset_id']]['storage_uri']).read_bytes()
         checks.append(inspect_income_amendment(scope,raw,rules))
     from .batch_workflow import _structured_concepts
-    b01=compile_spec_file(path=repo_root/'catalog/metrics/B01_revenue.md',dependency_specs={})
-    b03=compile_spec_file(path=repo_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})
+    b01=compile_spec_file(path=policy_root/'catalog/metrics/B01_revenue.md',dependency_specs={})
+    b03=compile_spec_file(path=policy_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})
     concepts=sorted(set(_structured_concepts(compiled_spec=b01))|set(_structured_concepts(compiled_spec=b03)))
-    reports={kind:native_income_reports(prepared[kind],annual,concepts) for kind in ['primary','xml']}
+    reports={kind:native_income_reports(prepared[kind],annual,concepts,
+        check_visible_short_period=kind=='primary') for kind in ['primary','xml']}
     revenue=b01['compiled']['inputs']['revenue']['structured_role']['approved_concepts']
     selected=None
     for concept in revenue:
@@ -105,6 +152,12 @@ def prepare_current_income_input(*,repo_root,company_id):
         need(periods['primary']==periods['xml'],'REVENUE_PERIOD_CONFLICT')
         start,end=min(periods['primary'])
         values=[r for rows in candidates.values() for r in rows if (r['period_start'],r['period_end'])==(start,end)]
+        for row in candidates['primary']:
+            if (row['period_start'],row['period_end'])!=(start,end):continue
+            check=row.get('visible_period_check')
+            if check is not None:
+                need(check['status']=='MATCH','VISIBLE_PERIOD_'+check['status']+':'+str(check['visible_periods'])
+                     +' != '+str(check['native_period'])+'; context='+row['context_ref'],details=check)
         amount=precision_choice(values)
         selected={'period_start':start,'period_end':end,'concept':concept,'reported_value':amount['value'],
                   'original_reports':values,'other_current_end_periods':sorted(periods['primary'])}
@@ -119,7 +172,7 @@ def prepare_current_income_input(*,repo_root,company_id):
         'revenue_period_proof':selected,'original_reports':reports,'amendment_input':amendments,
         'amendment_checks':checks,'source_proofs':proofs,'source_records':records,
         'source_admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),
-        'policy_sha256':sha256_file(path=repo_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,
+        'policy_sha256':sha256_file(path=policy_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,
         'native_result_created':False,'production_authorized':False})
     return {**body,'income_input_id':content_hash(value=body)}
 
@@ -135,6 +188,8 @@ def verify_income_observations(packet,observations):
         by_kind={kind:[r for r in rows if r['concept'].casefold()==b['concept'].casefold()
             and all(r[k]==period[k] for k in ['period_start','period_end'])] for kind,rows in packet['original_reports'].items()}
         need(all(by_kind.values()),'SELECTED_ORIGINAL_FACT_MISSING:'+b['concept'])
+        need(all(row.get('visible_period_check',{}).get('status','MATCH')=='MATCH'
+                 for row in by_kind['primary']),'SELECTED_VISIBLE_PERIOD_UNRESOLVED:'+b['concept'])
         chosen=precision_choice([r for rows in by_kind.values() for r in rows])
         need(observation['value']==chosen['value'],'SELECTED_COMPANYFACTS_AMOUNT_DIFFERS:'+b['concept'])
         checks.append({'observation_id':observation['observation_id'],'original_reports':by_kind})

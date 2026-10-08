@@ -58,6 +58,7 @@ from .normal_zero_ai_results import (B01_SPEC_PATH, B03_SPEC_PATH, EVENT_METRICS
 from .observations import structured_observation
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
+from .ordinary_income_input import IncomeInputError
 from .normal_source_authority import ROOT
 from .sources import companyfacts_structured_facts, resolve_repository_file, SourceError
 from .specs import compile_spec_file
@@ -369,6 +370,13 @@ def _successor_income_input(*, repo_root: Path, company_id: str, metric_id: str,
             or prepared["subject_policy"]["mode"] != "SUCCESSOR_REGISTRANT_ONLY"):
         return None
     from . import ordinary_income_input
+    from . import normal_annual_input_v2 as current_annual
+    # A current filing's failed date check is also specific to that filing.
+    # Select first, so it cannot be assigned to another historical accession.
+    current = release_aware(current_annual).prepare_saved_annual_input(
+        repo_root=repo_root, company_id=company_id)
+    if current['filing']['accessionNumber'] != prepared['filing']['accessionNumber']:
+        return None
     income_input = release_aware(ordinary_income_input).prepare_current_income_input(
         repo_root=repo_root, company_id=company_id)
     proved = income_input["annual_input"]["filing"]["accessionNumber"]
@@ -404,7 +412,7 @@ def e01_confirmation_request(*, repo_root: Path, company_id: str, period_selecti
 
 def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str,
                                       period_selection, confirmation_mode=None,
-                                      _build_request_only=False):
+                                      _build_request_only=False, rules_root=None):
     """Resolve revenue, or EBITDA margin with its rebuilt revenue dependency.
 
     Values come from the selected filing's own accession, which is the same
@@ -414,7 +422,10 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
           "HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:" + metric_id, "IMPLEMENTATION_GAP")
     _need(confirmation_mode is None or metric_id in SUCCESSOR_EVENT_ROUTES,
           "HISTORICAL_CONFIRMATION_MODE_WITHOUT_CONFIRMATION", "IMPLEMENTATION_GAP")
-    authority = _authority(repo_root)
+    rules = Path(repo_root) if rules_root is None else Path(rules_root)
+    _need(rules_root is None or metric_id in INCOME_STATEMENT_METRICS,
+          'HISTORICAL_SEPARATE_RULES_EVENT_ADAPTER_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    authority = _authority(rules)
     if metric_id in SUCCESSOR_EVENT_ROUTES:
         # The successor route is read from the data root the Run is built in;
         # it must be the code tree's own, as every frozen authority file is.
@@ -424,7 +435,13 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
               == expected, "HISTORICAL_EVENT_SUCCESSOR_ROUTE_NOT_INSTALLED:" + relative, "AUTHORITY_CONFLICT")
         authority = {**authority, relative: expected}
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
-                                               period_selection=period_selection)
+        period_selection=period_selection,
+        **({} if rules_root is None else {'rules_root': rules}))
+    if rules_root is not None:
+        _need(prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
+              'HISTORICAL_SAVED_INCOME_SUCCESSOR_ADAPTER_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+        _need(not prepared['amendments'],
+              'HISTORICAL_SAVED_INCOME_AMENDMENT_ADAPTER_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     # See historical_amendment_admission: the approved policy decides these
     # shapes per input class, so an event metric and a statement metric can get
@@ -441,16 +458,20 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     # actually reports, and a Part III revenue-correction check - so where it
     # describes this target it applies verbatim, and where it does not the gap
     # stands and says so. An event window needs none of it.
-    income_input = _successor_income_input(repo_root=repo_root, company_id=company_id,
-                                           metric_id=metric_id, prepared=prepared)
+    income_input, income_failure = None, None
+    try:
+        income_input = _successor_income_input(repo_root=repo_root, company_id=company_id,
+                                               metric_id=metric_id, prepared=prepared)
+    except IncomeInputError as error:
+        income_failure = error
     _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event
-          or income_input is not None,
+          or income_input is not None or income_failure is not None,
           "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
     # Asked after the income input, because that input is the narrower proof
     # for exactly this case and the ordinary route uses it in place of the
     # family question. Every other shape still asks the family question first.
     amendment_refusal, per_filing = None, []
-    if prepared["amendments"] and income_input is None:
+    if prepared["amendments"] and income_input is None and income_failure is None:
         from .historical_amendment_admission import (AmendmentAdmissionError,
                                                      amendment_admission,
                                                      per_filing_admissions)
@@ -475,7 +496,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     facts_source = reader.read(companyfacts_url(cik=int(prepared["entity"])),
                                accession=prepared["filing"]["accessionNumber"],
                                role="companyfacts", media_type="application/json")
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     dependency_specs = {}
     catalog = None
     if metric_id in EVENT_METRICS:
@@ -503,9 +524,9 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
         spec_origin = {"spec_path": spec_path}
         if metric_id == "B03":
-            dependency_specs["B01"] = compile_spec_file(path=repo_root / B01_SPEC_PATH,
+            dependency_specs["B01"] = compile_spec_file(path=rules / B01_SPEC_PATH,
                                                         dependency_specs={})
-        spec = compile_spec_file(path=repo_root / spec_path, dependency_specs=dependency_specs)
+        spec = compile_spec_file(path=rules / spec_path, dependency_specs=dependency_specs)
         scope = {"entity_scope": "registrant", "period_basis": "source_annual_duration"}
     if income_input is not None:
         # The successor reports its own statement period, not the pinned
@@ -524,6 +545,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     selection = {}
     confirmation = None
     try:
+        if income_failure is not None:
+            raise income_failure
         if amendment_refusal is not None:
             raise _AmendmentRefused
         if metric_id in EVENT_METRICS:
@@ -774,6 +797,16 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         selection = {"reason_code": result["reason_code"], "reason": amendment_refusal,
                      "category": "APPROVED_AMENDMENT_POLICY_REFUSAL",
                      "amendment_policy_decision": amendment_refusal}
+    except IncomeInputError as error:
+        reason_code = str(error).split(':', 1)[0]
+        result, trace = withheld_metric_result(compiled_spec=spec, target=target,
+                                               reason_code=reason_code)
+        observations = []
+        selection = {'reason_code': reason_code, 'reason': str(error),
+                     'category': ('SOURCE_PERIOD_CONFLICT' if reason_code ==
+                                  'ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT' else
+                                  'INCOME_SOURCE_SCOPE_UNRESOLVED'),
+                     'income_period_evidence': error.details}
     except _SOURCE_ERRORS as error:
         reason = str(error)
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
@@ -861,6 +894,11 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             "native_run_status": "NOT_CREATED", "current_latest_verified": False,
             "latest_restated_values_used": False,
             "calls": {"provider": 0, "paid": 0, "sec": 0}, "production_authorized": False}
+    if income_input is not None:
+        # The shared ordinary renderer needs the actual statement-period
+        # proof when it differs from the annual container, not just its ID.
+        body['prepared_income_input'] = income_input
+        body['income_observation_checks'] = selection.get('income_observation_checks', [])
     if confirmation is not None and confirmation.get("registered_record") is not None:
         body["registered_confirmation"] = confirmation["registered_record"]
     body = exact_json_value(body)

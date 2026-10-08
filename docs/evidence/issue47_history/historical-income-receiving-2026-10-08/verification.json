@@ -1,0 +1,256 @@
+{
+  "record_type": "ISSUE47_HISTORICAL_INCOME_CONSUMER_RECEIVING",
+  "base_historical_commit": "c371d568",
+  "public_source_commit": "adee3036",
+  "shared_received": "ordinary_income_input + existing original-financial preparation; only _save_case/read_saved_result IO functions. Current _ordinary_case and public controller unchanged.",
+  "small_tests": {
+    "tests": 39,
+    "seconds": 0.209,
+    "result": "PASS"
+  },
+  "actual_income_source_tests": {
+    "tests": 5,
+    "seconds": 8.873,
+    "result": "PASS",
+    "obsolete_gold_replaced": "same actual visible/native conflict is now a negative; original test/source/history retained in Git"
+  },
+  "paramount": {
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+    "selection_accession": "0002041610-26-000011",
+    "seconds": 8.712914667092264,
+    "metrics": {
+      "B01": {
+        "publication": "WITHHELD",
+        "value": null,
+        "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "coordinate": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "evidence_count": 5
+      },
+      "B03": {
+        "publication": "WITHHELD",
+        "value": null,
+        "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "coordinate": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "evidence_count": 5
+      }
+    },
+    "new_calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+    "old_results_or_runs_modified": false,
+    "B01_saved_component_reused_after_record_writer_error": true,
+    "seconds_scope": "B03 necessary completion and record checks only; earlier full pair time not saved"
+  },
+  "paramount_saved_case": {
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-income-conflict-cases-20261008",
+    "metrics": {
+      "B01": {
+        "result_id": "sha256:b1a42a049d8eacd5554f63dddb2ed5c762b7d1cb80a84adab2e3ccb7b4255c80",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-income-conflict-cases-20261008/B01",
+        "publication": "WITHHELD",
+        "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "record_bytes": 19663
+      },
+      "B03": {
+        "result_id": "sha256:cc9436e5edcb3e0911de091c386702de6434b1cd8d6b384a170f3c4c46c5f77e",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-income-conflict-cases-20261008/B03",
+        "publication": "WITHHELD",
+        "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "record_bytes": 25781
+      }
+    },
+    "seconds": 0.44789516692981124,
+    "case_writer_not_selecting_or_calculating": true,
+    "new_calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "new_native_run": false,
+    "old_runs_modified": false
+  },
+  "paramount_independent_read": {
+    "seconds": 0.25361704104579985,
+    "metrics": {
+      "B01": {
+        "result_id": "sha256:b1a42a049d8eacd5554f63dddb2ed5c762b7d1cb80a84adab2e3ccb7b4255c80",
+        "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "native_start": "2025-08-08",
+        "visible_start": "2025-08-07"
+      },
+      "B03": {
+        "result_id": "sha256:cc9436e5edcb3e0911de091c386702de6434b1cd8d6b384a170f3c4c46c5f77e",
+        "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+        "native_start": "2025-08-08",
+        "visible_start": "2025-08-07"
+      }
+    },
+    "protected_files": 14,
+    "files_unchanged": true,
+    "calculation_and_source_selection": false,
+    "calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    }
+  },
+  "B03_company": {
+    "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-cli-20261008",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+    "operations": [
+      {
+        "label": "b03-cli-first",
+        "seconds": 6.308620374882594,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "label": "b03-cli-repeat",
+        "seconds": 0.4311029580421746,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "label": "b03-cli-independent-read",
+        "seconds": 0.20995112508535385,
+        "status": null
+      }
+    ],
+    "actual_values": [
+      {
+        "year": "2024",
+        "value": "0.1653386454183266932270916335",
+        "unit": "ratio"
+      },
+      {
+        "year": "2025",
+        "value": "0.1756281982738868097456656229",
+        "unit": "ratio"
+      }
+    ],
+    "repeat_and_read_factory_forbidden": true,
+    "protected_file_count": 18,
+    "protected_bytes_unchanged": true,
+    "source_and_program_tree_copies": 0,
+    "calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "scope": "unamended continuous registrant B03 saved-source range; not full five-year business",
+    "existing_hotel_or_two_year_B01_not_recomputed": true
+  },
+  "B03_missing_year": {
+    "missing_year_exit": 2,
+    "missing_year": 2026,
+    "missing_category": "SOURCE_UNAVAILABLE",
+    "existing_year_reused": 2025,
+    "calculation_forbidden": true,
+    "result_pointer_bytes_unchanged": 18,
+    "missing_request_seconds": 0.39422962511889637,
+    "read_seconds": 0.2069934590253979,
+    "old_years_preserved": [
+      2024,
+      2025
+    ],
+    "calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    }
+  },
+  "B03_older_years": [
+    {
+      "year": 2021,
+      "B03": "ALL_BRANCHES_REJECTED",
+      "B01_dependency_value": "13857000000",
+      "rejected_roles": [
+        {
+          "branch_index": 0,
+          "details": "No approved structured fact matched the target context",
+          "event": "CHOOSE_FIRST_REJECTED",
+          "reason_code": "MISSING_CANDIDATE",
+          "role": "depreciation_and_amortization"
+        },
+        {
+          "branch_index": 1,
+          "details": "No approved structured fact matched the target context",
+          "event": "CHOOSE_FIRST_REJECTED",
+          "reason_code": "MISSING_CANDIDATE",
+          "role": "depreciation_and_amortization"
+        }
+      ],
+      "does_not_prove_no_financial_disclosure": true
+    },
+    {
+      "year": 2022,
+      "B03": "ALL_BRANCHES_REJECTED",
+      "B01_dependency_value": "20773000000",
+      "rejected_roles": [
+        {
+          "branch_index": 0,
+          "details": "No approved structured fact matched the target context",
+          "event": "CHOOSE_FIRST_REJECTED",
+          "reason_code": "MISSING_CANDIDATE",
+          "role": "depreciation_and_amortization"
+        },
+        {
+          "branch_index": 1,
+          "details": "No approved structured fact matched the target context",
+          "event": "CHOOSE_FIRST_REJECTED",
+          "reason_code": "MISSING_CANDIDATE",
+          "role": "depreciation_and_amortization"
+        }
+      ],
+      "does_not_prove_no_financial_disclosure": true
+    },
+    {
+      "year": 2023,
+      "B03": "ALL_BRANCHES_REJECTED",
+      "B01_dependency_value": "23713000000",
+      "rejected_roles": [
+        {
+          "branch_index": 0,
+          "details": "No approved structured fact matched the target context",
+          "event": "CHOOSE_FIRST_REJECTED",
+          "reason_code": "MISSING_CANDIDATE",
+          "role": "depreciation_and_amortization"
+        },
+        {
+          "branch_index": 1,
+          "details": "No approved structured fact matched the target context",
+          "event": "CHOOSE_FIRST_REJECTED",
+          "reason_code": "MISSING_CANDIDATE",
+          "role": "depreciation_and_amortization"
+        }
+      ],
+      "does_not_prove_no_financial_disclosure": true
+    }
+  ],
+  "original_known_defects": 104,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "not_added_to_PR71": true,
+  "main_received": false,
+  "full_five_year_business_accepted": false,
+  "source_acquisition_integrated": false,
+  "scope": "saved-source unamended continuous-registrant B03; old successor component corrects exact-filing date conflict; unsupported amendment/successor saved-case dispatch explicit; mixed B03/hotel invocation not received",
+  "capability_alignment": {
+    "exit_code": 1,
+    "seconds": 17.15032691601664,
+    "protected_outputs_restored": true,
+    "scope": "structural capability alignment, not business acceptance"
+  }
+}
