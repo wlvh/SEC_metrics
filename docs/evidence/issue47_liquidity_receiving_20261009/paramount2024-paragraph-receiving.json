@@ -1,0 +1,230 @@
+{
+  "status": "BRANCH_COMPANY_RECEIVED_NOT_MAIN_OR_FORMAL_ACCEPTANCE",
+  "dependency": {
+    "pull_request": 79,
+    "head": "1cc80525a8189c942ad50922337515ff41da5fa7",
+    "public_source_delta": "b2d84a3c",
+    "modules": [
+      "scripts/vnext/amendment_note_layout.py",
+      "scripts/vnext/annual_amendment_scope.py",
+      "scripts/vnext/instant_balance_amendment.py"
+    ],
+    "received_via": "Only original main-to-PR79 source delta; preserved prior local optional rules_root adapters",
+    "consumer_parameter": {
+      "note_layout": "inline-paragraphs-v2"
+    },
+    "processing_dependencies_declared": true,
+    "default_public_path": "blocks-v1 unchanged"
+  },
+  "company": "paramount_skydance_paramount_global",
+  "cik": "813828",
+  "fiscal_year": 2024,
+  "balance_date": "2024-12-31",
+  "scope": "Selected predecessor CIK current instantaneous B08/B09 only",
+  "annual_continuity_proven": false,
+  "debt_completeness_proven": false,
+  "annual_August7_August8_conflict": "Preserved; not resolved or annualized by this point-balance receiving",
+  "first_seconds": 16.81953216716647,
+  "repeat": {
+    "exit_code": 0,
+    "elapsed_seconds": 0.6274405000731349,
+    "selection_calls": 0,
+    "calculation_calls": 0,
+    "saved_file_count": 86,
+    "saved_files_unchanged": true
+  },
+  "independent_read_seconds": 0.07527662510983646,
+  "results": [
+    {
+      "metric_id": "B08",
+      "result_id": "sha256:bfb0504eccf717815f66972f612d80539b38dbee7c65a80b0ef1e7f55c4256f8",
+      "period_start": "2024-12-31",
+      "period_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "value": "1.302253140899179732115045167",
+      "unit": "ratio",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-paramount-20261009/state/updates/B08/periods/FY2024/results/9703d38cdc44402c85a37387ddf8d90f"
+    },
+    {
+      "metric_id": "B09",
+      "result_id": "sha256:e55a21d6d627caf9b28b9a9e83ba0393591ba9e7f5965d81d17dadc36f456333",
+      "period_start": "2024-12-31",
+      "period_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "value": "2661000000",
+      "unit": "USD",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-paramount-20261009/state/updates/B09/periods/FY2024/results/f24ae6dcbd7d4606800c8ad30073a08e"
+    }
+  ],
+  "old_value_unit_period_and_original_bytes_differences": [],
+  "preservation": {
+    "old_FY2024_withheld": [
+      {
+        "metric": "B08",
+        "root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-paramount-20261009/state/updates/B08/periods/FY2024/results/4bda4790ec324ef6a1db82dcc74d474a",
+        "value": null,
+        "publication": "WITHHELD",
+        "exists": true
+      },
+      {
+        "metric": "B09",
+        "root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-paramount-20261009/state/updates/B09/periods/FY2024/results/b3de85ee046a4cb196fa683f29778f2d",
+        "value": null,
+        "publication": "WITHHELD",
+        "exists": true
+      }
+    ],
+    "remaining_FY2025_task_separate": "Previously validated successor FY2025 retained in its original final task; not rerun here",
+    "unrequested_current_rows_compared": [
+      {
+        "year": 2021,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2022,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2023,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2025,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2021,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2022,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2023,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2025,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "record_root": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      }
+    ],
+    "comparison_scope": "Existing archived prior company read values/identities/roots; no claim of whole earlier file byte audit"
+  },
+  "public_small_tests": {
+    "count": 16,
+    "seconds": 0.099,
+    "skip": 0
+  },
+  "affected_consumer_tests": {
+    "count": 36,
+    "seconds": 0.118,
+    "skip": 0
+  },
+  "capability_alignment": "PASS against actual PR75 parent",
+  "source_hashes": {
+    "scripts/vnext/amendment_note_layout.py": "cd5d92770dc865aa39b069be48fa8814fe362557eb0315025438d1f93a93d66f",
+    "scripts/vnext/annual_amendment_scope.py": "6aa0b715d364113ac63ce1fb02f3e6bf7f296b802e23fb93bcae19b19bb2ce23",
+    "scripts/vnext/instant_balance_amendment.py": "b7150ab94f7f5e882aa1165c3b5ddae71d363cb832ece6f58f496ac9f97b9711",
+    "scripts/vnext/historical_liquidity_cases.py": "3c8d442edc04301bea53433c43a68cb8781d0ce335bbbe8547a5f039a4f28ec8"
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false,
+  "other_98_coordinates_reprocessed": false,
+  "archive": {
+    "members": 39,
+    "bytes": 35104,
+    "sha256": "c3aff3877e369031d4b0f0a254d80d3c9871fe7ad889bd4a10f1b13c1b4c6ae8"
+  }
+}

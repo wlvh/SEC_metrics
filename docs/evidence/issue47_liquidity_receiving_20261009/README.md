@@ -42,3 +42,13 @@ Paramount前身21–23六项同年自身CIK已成功，24两项仍具名扣留�
 未重做已有业务阅读。Salesforce、Marriott、Pfizer、Lumen、Enphase各五年10位置同公司命令成功，现行值/单位/余额时点与原阅读零差异；首次分别49.010、39.261、68.320、52.025、47.552秒。Salesforce、Marriott、Pfizer未变输入复跑分别2.186、1.934、1.905秒，计算0、70文件不变；随后新增修订scope元数据不用于重开这些无修订年度批次。Southwest首47.602秒，前四年8位置成功且0差异，25两项初拒绝后以共同即期检查定向接收成功，见上一节。
 
 JPM22–25补8个已选年度位置真实读取234.356秒，按同一既定行业规则N_A_STRUCTURAL；连此前21共五年10位置，独立公司读取保持无数值。Paramount21–23来自813828自身申报的六个余额值，25来自2041610两余额值，各与旧阅读同一；24两项因共同说明解析缺口具名扣留，不以状态行数宣称完整交付。该家族十家公司年度均已触达，不能当作100个位置全部业务完成或1950完成；仍须修复Paramount24、接入main和历史在线来源准备。阶段版本、旧拒绝、结果及正常CSV出处保存在[接收摘要](broader-company-receiving.json)与[完整消费者材料](broader-company-materials.tar.gz)，只结果/日志而非来源/程序整树。原35模型调用、SEC账本、旧Run及接受登记没有改写。
+
+## Paramount FY2024公司消费者接收（后继PR79依赖）
+
+公共PR79/1cc80525的限定修复已交付，本文前述“FY24仍扣留”描述此前真实终态，原结果和失败继续保留。消费其main→候选的三源模块差异，保留本分支既有rules_root可选适配；没有整支合入公共开发或拷新控制器。历史余额适配明确传note_layout=inline-paragraphs-v2并登记三个实际处理依赖；公共默认blocks-v1未变，不按公司/年份写特例。16个公共完整API/排版小例0.099s和36个受影响消费者/状态/期间小例0.118s通过，零skip。
+
+只对原公司任务FY2024 B08/B09重新处理，首16.820s，得到流动比率1.302253140899179732115045167 ratio和现金储备2,661,000,000 USD，2024-12-31时点；所选CIK为813828，两值/单位/测量期和原primary bytes与已保存原阅读一致。新版INPUT_PROPERTY_PROVEN说明、原13块和实际段落/原始跨度、条件补偿说明及原件身份通过共同input-assessments保存。它仅证明这一余额输入范围，annual_continuity_proven=false、debt_completeness_proven=false；August7/August8年度流量冲突没有解决。
+
+复跑0.628s，源准备/graph调用0、86保存文件不变；另一进程公司results/CSV0.075s。原FY2024两份WITHHELD/null普通结果仍可读；未请求的FY2021–23及FY2025八个当前结果的ID/保存根/值/单位/窗口与前次公司读一致，未重算其他98位置。已成功的FY2025继任主体最终任务按原版本保留，本轮只更新原FY2024所在任务，不跨任务手工拼结果。
+
+[本次主要增量记录](paramount2024-paragraph-receiving.json)和[实际新旧普通结果、CSV/出处及检查日志](paramount2024-paragraph-receiving-materials.tar.gz)已保存。仍为分支接收、未main、无正式接受或新Run；新provider/paid/SEC=0。实际main接续需公共PR79源码和PR76本消费者组合，不用来源属性评估代替公司数值，也不借用公共方接受信用。
