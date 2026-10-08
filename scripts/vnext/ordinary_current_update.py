@@ -49,6 +49,8 @@ def _configuration(source, company, metric):
         'saved_source_checks','request_bindings','company_registry'))
     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
                   'config/company_registry.csv'})
+    if metric == 'B02':
+        paths.add('scripts/vnext/paired_measure_v1.py')
     if metric == 'B03':
         paths.add('catalog/r6/text_results_v2_policy.json')
         paths.update('scripts/vnext/'+name+'.py' for name in (

@@ -486,3 +486,8 @@ Marriott old C04temporary CLI/refresh states were found absent; their previousex
 ### Retained journal receiving terminal
 
 Patch497e045 limited review PASS: independent21tests0.182s, actual CLI0.330s,927original files/set unchanged (includes old lock; parent926 excludes lock),4independent lock/defect-release/CSV-refusal controls pass. It grants archived-reference access only, not C04current contents/source credit. Final affected company reference/current-record suite46tests6.522s passes with TMPDIR=/private/tmp; capability structure checkerPASS after codecommit, not semantic acceptance. Source/test bytes after497are unchanged;6b onlykeeps preexistingcapabilityJSON formatting. Remaining previous receipt/CI atadee stays its exacthead; newcompatibilityhead requires its ownCI.
+
+
+### B02 paired-measure dependency at closeout
+
+The consumed B02 paired_measure_v1.py guard was absent from the actual processing identity. Two regressions fail on8819: guard-only changes are invisible and an old success is reused instead of the controlled new withheld conclusion. Two code lines add the actual helper only forB02; source selection, guard meaning, old record and formula are unchanged.28controller/config/recovery tests pass0.135s and25company-entry/source/read/repeat tests pass6.401s. The updater scenario is explicitly synthetic: changed guard reprocesses, old success remains history, stable new hold repeats with factory forbidden. B01 is unchanged by helper-only edits. [Primary delta logs and tested-tree identity](paired-dependency/README.md) retain the dirty8819+two-file hashes and original failures; newhead remoteCI is separate. No all-company rerun or business call, no new revenue label policy.
