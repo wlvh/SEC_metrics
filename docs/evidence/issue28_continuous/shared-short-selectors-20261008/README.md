@@ -9,3 +9,7 @@ python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalSta
 ```
 
 Use `PYTHONPATH=scripts:tools`, `PYTHONDONTWRITEBYTECODE=1`, and `TMPDIR=/private/tmp` for the receiver's existing macOS fixture rules. Patch and exact hashes are adjacent; previous PR58/62 shared test-foundation records remain under their original paths and credit.
+
+## PR76 existing liquidity checks
+
+Fixed580667f2 requires only its new two-method HistoricalLiquidityScopeTest in the existing selector list/explicit CI command. HistoryCompanyDispatchTest is already selected as a whole class and now has10methods, so no duplicate per-method registration is added. The actual source classes count2+5+10+2=19. Parent compared unchanged runner function AST and checked cached patch application on that exact tree; actual tests/CI are the receiver's next action, not parentPASS. No controller/source/Result change or rerun of existing historical materials.
