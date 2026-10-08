@@ -115,7 +115,11 @@ def _note(doc, raw=None):
         from .amendment_note_layout import paragraph_blocks
         count = 1 + len(paragraph_blocks(blocks[start+1:end], raw))
     _need(start+1<end and count<=8,"AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED")
-    return {'start':start,'end':end,'blocks':blocks[start:end],'text':' '.join(b['text'] for b in blocks[start+1:end])}
+    text=' '.join(b['text'] for b in blocks[start+1:end])
+    if raw is not None:
+        from .amendment_note_layout import paragraph_text
+        text=' '.join(paragraph_text(group,raw) for group in paragraph_blocks(blocks[start+1:end],raw))
+    return {'start':start,'end':end,'blocks':blocks[start:end],'text':text}
 
 
 def _item15(doc):

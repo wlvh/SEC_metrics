@@ -1,6 +1,7 @@
 """Keep original note blocks while distinguishing inline fragments from paragraphs."""
 from html.parser import HTMLParser
 import re
+from .text_coverage import _Blocks
 
 LAYOUT = 'inline-paragraphs-v2'
 
@@ -57,6 +58,17 @@ def paragraph_blocks(blocks, raw):
             groups.append([block])
         previous = end
     return groups
+
+
+def paragraph_text(blocks, raw):
+    """Reuse the visible-text parser without inserting spaces at inline cuts."""
+    class Joined(_Blocks):
+        def _flush(self):
+            pass
+    fragment=raw[blocks[0]['raw_start_byte']:blocks[-1]['raw_end_byte']].decode('utf-8')
+    text='<html><body>'+fragment+'</body></html>'
+    parser=Joined(text);parser.feed(text);parser.close()
+    return ' '.join(''.join(part[2] for part in parser.parts).split())
 
 
 def part_iii_pattern(pattern):

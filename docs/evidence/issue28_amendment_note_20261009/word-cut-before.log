@@ -1,0 +1,47 @@
+test_clean_small_complete_filing_can_complete (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_clean_small_complete_filing_can_complete) ... ok
+test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) ... 
+  test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>We have corrected our finan<div style="display:inline">cial statements</div>.</div>') ... FAIL
+  test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>We have cor<div style="display:inline">rected</div> our financial statements.</div>') ... FAIL
+test_new_balance_disclosure_cannot_hide_in_inline_words (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_new_balance_disclosure_cannot_hide_in_inline_words) ... 
+  test_new_balance_disclosure_cannot_hide_in_inline_words (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_new_balance_disclosure_cannot_hide_in_inline_words) (text='<div>Our cur<div style="display:inline">rent assets</div> are $42 million.</div>') ... FAIL
+
+======================================================================
+FAIL: test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>We have corrected our finan<div style="display:inline">cial statements</div>.</div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 51, in test_current_correction_plain_and_inline_split_have_same_refusal
+    result=self.inspect(text);self.assertEqual(result['decision'],'WITHHELD')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+======================================================================
+FAIL: test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>We have cor<div style="display:inline">rected</div> our financial statements.</div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 51, in test_current_correction_plain_and_inline_split_have_same_refusal
+    result=self.inspect(text);self.assertEqual(result['decision'],'WITHHELD')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+======================================================================
+FAIL: test_new_balance_disclosure_cannot_hide_in_inline_words (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_new_balance_disclosure_cannot_hide_in_inline_words) (text='<div>Our cur<div style="display:inline">rent assets</div> are $42 million.</div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 59, in test_new_balance_disclosure_cannot_hide_in_inline_words
+    self.assertEqual(result['decision'],'WITHHELD')
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.053s
+
+FAILED (failures=3)
+Expected3oldword-cut errors confirmed, no source/Result credit

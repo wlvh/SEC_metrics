@@ -4,7 +4,7 @@ import re
 import unittest
 
 from vnext import annual_amendment_scope as scope
-from vnext.amendment_note_layout import paragraph_blocks, part_iii_pattern, conditional_recovery_patterns
+from vnext.amendment_note_layout import paragraph_blocks, paragraph_text, part_iii_pattern, conditional_recovery_patterns
 from vnext.instant_balance_amendment import POLICY as INSTANT_POLICY, _cover_matches
 from vnext.text_coverage import _Blocks
 
@@ -52,6 +52,14 @@ class AmendmentNoteLayoutTest(unittest.TestCase):
         for blocks in ([{'raw_start_byte':0,'raw_end_byte':20}],
                        [{'raw_start_byte':1,'raw_end_byte':5},{'raw_start_byte':4,'raw_end_byte':7}]):
             with self.assertRaisesRegex(ValueError,'SOURCE_RANGE'):paragraph_blocks(blocks,b'original')
+
+    def test_inline_word_cuts_and_original_whitespace_are_preserved(self):
+        for text in ('<div>finan<div style="display:inline">cial statements</div></div>',
+                     '<div>financial <div style="display:inline">statements</div></div>'):
+            raw,doc=document(text)
+            groups=paragraph_blocks(doc['blocks'],raw)
+            self.assertEqual(len(groups),1)
+            self.assertEqual(paragraph_text(groups[0],raw),'financial statements')
 
     def test_legacy_short_note_has_the_same_shape_text_and_blocks(self):
         raw,doc=document('<p>EXPLANATORY NOTE</p><p>Only a governance addition.</p><p>PART III</p>')

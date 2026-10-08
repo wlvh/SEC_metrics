@@ -57,9 +57,9 @@ def _correction_flag(raw,scope):
 
 def _text_units(blocks, raw, note_layout):
     if note_layout=='inline-paragraphs-v2':
-        from .amendment_note_layout import paragraph_blocks
+        from .amendment_note_layout import paragraph_blocks, paragraph_text
         groups=paragraph_blocks(blocks,raw)
-        return [{'text':' '.join(b['text'] for b in group),'source_blocks':group,
+        return [{'text':paragraph_text(group,raw),'source_blocks':group,
                  'block_indices':[b['block_index'] for b in group]}
                 for group in groups]
     return blocks

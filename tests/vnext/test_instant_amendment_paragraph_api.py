@@ -44,12 +44,17 @@ class InstantParagraphApiTest(unittest.TestCase):
     def test_current_correction_plain_and_inline_split_have_same_refusal(self):
         for text in ('<div>We have corrected our financial statements.</div>',
                      '<div>We have corrected our <div style="display:inline">financial statements</div>.</div>',
+                     '<div>We have corrected our finan<div style="display:inline">cial statements</div>.</div>',
+                     '<div>We have cor<div style="display:inline">rected</div> our financial statements.</div>',
                      '<div>Our current <div style="display:inline">assets</div> have been restated.</div>'):
             with self.subTest(text=text):
                 result=self.inspect(text);self.assertEqual(result['decision'],'WITHHELD')
                 self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',result['issues'][0]['reason'])
 
     def test_new_balance_disclosure_cannot_hide_in_inline_words(self):
-        result=self.inspect('<div>Our current <div style="display:inline">assets</div> are $42 million.</div>')
-        self.assertEqual(result['decision'],'WITHHELD')
-        self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',result['issues'][0]['reason'])
+        for text in ('<div>Our current <div style="display:inline">assets</div> are $42 million.</div>',
+                     '<div>Our cur<div style="display:inline">rent assets</div> are $42 million.</div>'):
+            with self.subTest(text=text):
+                result=self.inspect(text)
+                self.assertEqual(result['decision'],'WITHHELD')
+                self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',result['issues'][0]['reason'])
