@@ -1,0 +1,49 @@
+{
+  "status": "PASS_DEVELOPMENT_LIMITED",
+  "request_id": "sha256:bccfda8803a7b0db6a076a153b553d082aab8b972351a40aefa63276f4a15346",
+  "contract_source_sha256": "2d2df6a79691ec323de911ebb27919705bdc9dbbc83bc5d784d9498ae03d047a",
+  "raw_response_sha256": "3395e9f34028f2d95ce7ff138cf5da7a9efa21918c5d33fcae7b371ed3cfbb72",
+  "items": [
+    {
+      "item_id": "0000078003-25-000159#8.01@2679",
+      "reference_decision": "REPORTS_A_TRANSACTION",
+      "actual_decision": "REPORTS_A_TRANSACTION",
+      "matches": true,
+      "quote_exact": true,
+      "quote_characters": 162
+    },
+    {
+      "item_id": "0001193125-25-122480#8.01@2214",
+      "reference_decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "actual_decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "matches": true,
+      "quote_exact": true,
+      "quote_characters": 114
+    },
+    {
+      "item_id": "0001193125-25-291406#8.01@2685",
+      "reference_decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "actual_decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "matches": true,
+      "quote_exact": true,
+      "quote_characters": 180
+    }
+  ],
+  "pure_contract_diagnostic": {
+    "confirmed_item_count": 1,
+    "reason": null,
+    "item_ids": [
+      "0000078003-25-000159#8.01@2679"
+    ],
+    "not_metric_result": true
+  },
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "deepseek_validated": false,
+  "native_run_created": false,
+  "revision_consumed": false,
+  "harness_note": "First invocation used nonexistent validate_confirmation; corrected to actual validate_answer, no model response edited or rerun."
+}
