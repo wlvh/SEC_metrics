@@ -21,3 +21,5 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 ```
 
 [主要验证记录](verification.json)和[原样CLI/控制驱动/CSV/出处/普通结果材料](consumer-materials.tar.gz)已提交。原模型35调用、SEC账本、旧Run/错误不改，provider/paid/SEC新增0，无新native Run或接受；不拿十个旧值一致代替整个#47完成。公共测试selector/CI由#28集成，不写第二套runner。
+
+后续稳定扣留/局部失败接收：只复制已保存小状态（不复制来源/程序），以明确测试处理依赖触发A01重处理并构造源scope未决。15.182秒得到当前A01 CANDIDATE_WITHHELD，A02未变复用；相同输入复跑0.923秒PREVIOUS_INPUT_WITHHELD、准备0、保存文件不变。后续只选A02，独立读A01仍null/WITHHELD、requested=False，全部旧成功结果/指针文件留存，邻居A02=.146 ratio不受影响。该小状态人为冲突不代表JPM原件错误，不给金融结论信用。已消费原公共控制器/恢复/子集视图，没有新存储核心；此范围接收成立，main/线上来源/修订金融主体仍待。

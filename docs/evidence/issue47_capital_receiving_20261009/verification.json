@@ -1,5 +1,5 @@
 {
-  "status": "BRANCH_RECEIVING_NOT_MAIN",
+  "status": "BRANCH_CONSUMER_VALIDATED_NOT_MAIN",
   "scope": "Historical A01/A02 parent standardized capital ratios, selected saved filing at actual end date; no new source/provider calls",
   "parent": "PR76/1e538643",
   "actual_jpm": {
@@ -114,13 +114,59 @@
   "new_acceptance": false,
   "not_added_to_PR71_PR75_PR76": true,
   "remaining": [
-    "additional actual selected-year source-change/withheld receiving",
     "main integration and online historical source preparation",
-    "amended or successor financial subject handling"
+    "amended or successor financial subject handling",
+    "additional nonfinancial years receiving"
   ],
   "archive": {
-    "members": 108,
-    "bytes": 188327,
-    "sha256": "083c46073a0f4d900b3682c0ef7bc7ba7749c82b99d486b8ed72ce0aeae3e7f0"
+    "members": 111,
+    "bytes": 191444,
+    "sha256": "69bc3d7a3ecf03e6c4547dc426e3584424dde1c70c019c55b8719ccd35f58c28"
+  },
+  "stable_withheld_control": {
+    "constructed_control": true,
+    "actual_financial_conclusion": false,
+    "copied_small_state_not_sources_or_program": true,
+    "held_seconds": 15.181919041788206,
+    "repeat_seconds": 0.9229970420710742,
+    "held_statuses": {
+      "A01": "CANDIDATE_WITHHELD",
+      "A02": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    "repeat_statuses": {
+      "A01": "PREVIOUS_INPUT_WITHHELD",
+      "A02": "NO_SOURCE_CONTENT_CHANGE"
+    },
+    "repeat_preparation_calls": 0,
+    "saved_files_unchanged": true,
+    "old_success_files_retained": true,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "read_values": [
+      {
+        "metric_id": "A02",
+        "fiscal_year": 2025,
+        "value": "0.146",
+        "publication": "PUBLISHED",
+        "requested_in_latest_execution": true
+      },
+      {
+        "metric_id": "A01",
+        "fiscal_year": 2025,
+        "value": null,
+        "publication": "WITHHELD",
+        "requested_in_latest_execution": false
+      },
+      {
+        "metric_id": "B08",
+        "fiscal_year": 2025,
+        "value": null,
+        "publication": "PUBLISHED",
+        "requested_in_latest_execution": false
+      }
+    ]
   }
 }
