@@ -1,0 +1,404 @@
+test_archive_coordinate_and_wider_measurement_window_stay_distinct (tests.vnext.test_company_results.CompanyResultsTest.test_archive_coordinate_and_wider_measurement_window_stay_distinct) ... ERROR
+test_compute_partial_request_preserves_native_D01_and_exports_both (tests.vnext.test_company_results.CompanyResultsTest.test_compute_partial_request_preserves_native_D01_and_exports_both) ... ERROR
+test_confirmed_defect_keeps_native_but_withholds_company_value (tests.vnext.test_company_results.CompanyResultsTest.test_confirmed_defect_keeps_native_but_withholds_company_value) ... ERROR
+test_failed_metric_keeps_old_result_without_claiming_current_success (tests.vnext.test_company_results.CompanyResultsTest.test_failed_metric_keeps_old_result_without_claiming_current_success) ... ERROR
+test_failed_other_historical_period_remains_visible (tests.vnext.test_company_results.CompanyResultsTest.test_failed_other_historical_period_remains_visible) ... ERROR
+test_historical_two_periods_and_partial_third_request (tests.vnext.test_company_results.CompanyResultsTest.test_historical_two_periods_and_partial_third_request) ... ERROR
+test_legacy_report_subset_does_not_limit_journal_view (tests.vnext.test_company_results.CompanyResultsTest.test_legacy_report_subset_does_not_limit_journal_view) ... ERROR
+test_one_replay_failure_does_not_hide_other_metrics (tests.vnext.test_company_results.CompanyResultsTest.test_one_replay_failure_does_not_hide_other_metrics) ... ERROR
+test_ordinary_prior_year_remains_in_view (tests.vnext.test_company_results.CompanyResultsTest.test_ordinary_prior_year_remains_in_view) ... ERROR
+test_other_runtime_release_explains_hold_without_releasing_current_result (tests.vnext.test_company_results.CompanyResultsTest.test_other_runtime_release_explains_hold_without_releasing_current_result) ... ERROR
+test_processing_arguments_cannot_be_silently_ignored (tests.vnext.test_company_results.CompanyResultsTest.test_processing_arguments_cannot_be_silently_ignored) ... ok
+test_processing_result_exposes_original_mode_and_runtime (tests.vnext.test_company_results.CompanyResultsTest.test_processing_result_exposes_original_mode_and_runtime) ... ERROR
+test_retained_standalone_disconnected_success_pointer_is_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_disconnected_success_pointer_is_rejected) ... FAIL
+test_retained_standalone_failed_input_keeps_old_result_as_history (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_failed_input_keeps_old_result_as_history) ... ERROR
+test_retained_standalone_first_failure_does_not_invent_result (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_first_failure_does_not_invent_result) ... ERROR
+test_retained_standalone_journal_reads_without_checkpoint_or_replay (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_journal_reads_without_checkpoint_or_replay) ... ERROR
+test_retained_standalone_wrong_company_still_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_wrong_company_still_rejected) ... FAIL
+test_source_switch_does_not_claim_untouched_results_match (tests.vnext.test_company_results.CompanyResultsTest.test_source_switch_does_not_claim_untouched_results_match) ... ERROR
+test_successful_pointer_cannot_be_changed_to_an_earlier_candidate (tests.vnext.test_company_results.CompanyResultsTest.test_successful_pointer_cannot_be_changed_to_an_earlier_candidate) ... FAIL
+test_wrong_company_run_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_wrong_company_run_rejected) ... FAIL
+
+======================================================================
+ERROR: test_archive_coordinate_and_wider_measurement_window_stay_distinct (tests.vnext.test_company_results.CompanyResultsTest.test_archive_coordinate_and_wider_measurement_window_stay_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 232, in test_archive_coordinate_and_wider_measurement_window_stay_distinct
+    self.observe([outcome]); entry=self.view()['metrics'][0]
+                                   ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_compute_partial_request_preserves_native_D01_and_exports_both (tests.vnext.test_company_results.CompanyResultsTest.test_compute_partial_request_preserves_native_D01_and_exports_both)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 142, in test_compute_partial_request_preserves_native_D01_and_exports_both
+    company_compute.compute_company(state_root=self.root,company_id='test_company',metric_ids=['B01','D01'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_compute.py", line 114, in compute_company
+    _atomic_json(root/'company-results.json', build_company_view(
+                                              ^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_confirmed_defect_keeps_native_but_withholds_company_value (tests.vnext.test_company_results.CompanyResultsTest.test_confirmed_defect_keeps_native_but_withholds_company_value)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 216, in test_confirmed_defect_keeps_native_but_withholds_company_value
+    result, rows, _ = self.exported(registry=registry)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 129, in exported
+    result = export.export_results(state_root=self.root, output_root=output, company_id='test_company',
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_export.py", line 68, in export_results
+    output = external(output_root)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_failed_metric_keeps_old_result_without_claiming_current_success (tests.vnext.test_company_results.CompanyResultsTest.test_failed_metric_keeps_old_result_without_claiming_current_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 181, in test_failed_metric_keeps_old_result_without_claiming_current_success
+    _, rows, _ = self.exported()
+                 ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 129, in exported
+    result = export.export_results(state_root=self.root, output_root=output, company_id='test_company',
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_export.py", line 68, in export_results
+    output = external(output_root)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_failed_other_historical_period_remains_visible (tests.vnext.test_company_results.CompanyResultsTest.test_failed_other_historical_period_remains_visible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 283, in test_failed_other_historical_period_remains_visible
+    view=self.view(); self.assertEqual(2,len(view['metrics']))
+         ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_historical_two_periods_and_partial_third_request (tests.vnext.test_company_results.CompanyResultsTest.test_historical_two_periods_and_partial_third_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 203, in test_historical_two_periods_and_partial_third_request
+    _, rows, _ = self.exported()
+                 ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 129, in exported
+    result = export.export_results(state_root=self.root, output_root=output, company_id='test_company',
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_export.py", line 68, in export_results
+    output = external(output_root)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_legacy_report_subset_does_not_limit_journal_view (tests.vnext.test_company_results.CompanyResultsTest.test_legacy_report_subset_does_not_limit_journal_view)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 291, in test_legacy_report_subset_does_not_limit_journal_view
+    self.assertEqual({'B01','D01'}, {e['metric_id'] for e in self.view()['metrics']})
+                                                             ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_one_replay_failure_does_not_hide_other_metrics (tests.vnext.test_company_results.CompanyResultsTest.test_one_replay_failure_does_not_hide_other_metrics)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 269, in test_one_replay_failure_does_not_hide_other_metrics
+    result, rows, _ = self.exported()
+                      ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 129, in exported
+    result = export.export_results(state_root=self.root, output_root=output, company_id='test_company',
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_export.py", line 68, in export_results
+    output = external(output_root)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_handoff.py", line 34, in external
+    need(path.is_absolute() and first_symlink_in_path(path=path) is None,
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_HANDOFF_ABSOLUTE_NONALIAS_PATH_REQUIRED
+
+======================================================================
+ERROR: test_ordinary_prior_year_remains_in_view (tests.vnext.test_company_results.CompanyResultsTest.test_ordinary_prior_year_remains_in_view)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 210, in test_ordinary_prior_year_remains_in_view
+    self.assertEqual(2,len(self.view()['metrics']))
+                           ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_other_runtime_release_explains_hold_without_releasing_current_result (tests.vnext.test_company_results.CompanyResultsTest.test_other_runtime_release_explains_hold_without_releasing_current_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 251, in test_other_runtime_release_explains_hold_without_releasing_current_result
+    registry={'defects':[defect]}; entry=self.view(registry)['metrics'][0]
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_processing_result_exposes_original_mode_and_runtime (tests.vnext.test_company_results.CompanyResultsTest.test_processing_result_exposes_original_mode_and_runtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 314, in test_processing_result_exposes_original_mode_and_runtime
+    view=self.view();self.assertEqual('processing',view['metrics'][0]['row_layout'])
+         ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 218, in build_company_view
+    candidates = [_historical_candidate(root, pointer, company_id)]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 128, in _historical_candidate
+    manifest = _manifest(root, work, metric, company)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 69, in _manifest
+    need(root in work.parents and not any(p.is_symlink() for p in [work, *work.parents]),
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_RESULT_CANDIDATE_PATH_CHANGED
+
+======================================================================
+ERROR: test_retained_standalone_failed_input_keeps_old_result_as_history (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_failed_input_keeps_old_result_as_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 38, in test_retained_standalone_failed_input_keeps_old_result_as_history
+    view = read_company_results(state_root=self.root/'updates/metrics/C04', company_id='test_company')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 347, in read_company_results
+    return _read_retained_ordinary_journal(Path(state_root), company_id, registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 309, in _read_retained_ordinary_journal
+    with _locked(root):
+         ^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 48, in _locked
+    _need(first_symlink_in_path(path=root) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_retained_standalone_first_failure_does_not_invent_result (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_first_failure_does_not_invent_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 52, in test_retained_standalone_first_failure_does_not_invent_result
+    view = read_company_results(state_root=self.root/'updates/metrics/C04', company_id='test_company')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 347, in read_company_results
+    return _read_retained_ordinary_journal(Path(state_root), company_id, registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 309, in _read_retained_ordinary_journal
+    with _locked(root):
+         ^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 48, in _locked
+    _need(first_symlink_in_path(path=root) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_retained_standalone_journal_reads_without_checkpoint_or_replay (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_journal_reads_without_checkpoint_or_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 26, in test_retained_standalone_journal_reads_without_checkpoint_or_replay
+    view = read_company_results(state_root=root, company_id='test_company')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 347, in read_company_results
+    return _read_retained_ordinary_journal(Path(state_root), company_id, registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 309, in _read_retained_ordinary_journal
+    with _locked(root):
+         ^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 48, in _locked
+    _need(first_symlink_in_path(path=root) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+ERROR: test_source_switch_does_not_claim_untouched_results_match (tests.vnext.test_company_results.CompanyResultsTest.test_source_switch_does_not_claim_untouched_results_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 191, in test_source_switch_does_not_claim_untouched_results_match
+    d = next(e for e in self.view()['metrics'] if e['metric_id']=='D01')
+                        ^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 115, in view
+    return build_company_view(root=self.root, company_id='test_company', current=self.current, defect_registry=registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 221, in build_company_view
+    for candidate in candidates:
+                     ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 83, in _ordinary_candidates
+    configuration = _read(target/'configuration.json')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+======================================================================
+FAIL: test_retained_standalone_disconnected_success_pointer_is_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_disconnected_success_pointer_is_rejected)
+----------------------------------------------------------------------
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 62, in test_retained_standalone_disconnected_success_pointer_is_rejected
+    with self.assertRaisesRegex(ValueError, 'SUCCESSFUL_POINTER_CHANGED'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SUCCESSFUL_POINTER_CHANGED" does not match "UPDATE_STATE_PATH_ALIAS"
+
+======================================================================
+FAIL: test_retained_standalone_wrong_company_still_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_wrong_company_still_rejected)
+----------------------------------------------------------------------
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 47, in test_retained_standalone_wrong_company_still_rejected
+    with self.assertRaisesRegex(ValueError, 'JOURNAL_WRONG_COMPANY'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "JOURNAL_WRONG_COMPANY" does not match "UPDATE_STATE_PATH_ALIAS"
+
+======================================================================
+FAIL: test_successful_pointer_cannot_be_changed_to_an_earlier_candidate (tests.vnext.test_company_results.CompanyResultsTest.test_successful_pointer_cannot_be_changed_to_an_earlier_candidate)
+----------------------------------------------------------------------
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 297, in test_successful_pointer_cannot_be_changed_to_an_earlier_candidate
+    with self.assertRaisesRegex(ValueError,'SUCCESSFUL_POINTER_CHANGED'):self.view()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SUCCESSFUL_POINTER_CHANGED" does not match "UPDATE_STATE_PATH_ALIAS"
+
+======================================================================
+FAIL: test_wrong_company_run_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_wrong_company_run_rejected)
+----------------------------------------------------------------------
+scripts.vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_results.py", line 278, in test_wrong_company_run_rejected
+    with self.assertRaisesRegex(ValueError,'WRONG_COMPANY'):self.view()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "WRONG_COMPANY" does not match "UPDATE_STATE_PATH_ALIAS"
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.124s
+
+FAILED (failures=4, errors=15)
