@@ -108,3 +108,13 @@ class AmendmentNoteLayoutTest(unittest.TestCase):
         self.assertTrue(any(re.fullmatch(p,expanded,re.I) for p in patterns))
         for wrong in (expanded+' We have restated cash.',expanded.replace('in the event of a','following our current'),expanded.replace('Securities Exchange Act of 1934','Another Act of 1934')):
             self.assertFalse(any(re.fullmatch(p,wrong,re.I) for p in patterns))
+
+    def test_hidden_gap_and_self_closing_hidden_element_keep_visible_word(self):
+        for gap in ('<span hidden>draft</span>', '<span style="display:none">draft</span>',
+                    '<span style="visibility:hidden">draft</span>', '<span hidden/>',
+                    '<div hidden><p>draft</p></div>'):
+            with self.subTest(gap=gap):
+                raw,doc=document('<div>cor'+gap+'<div style="display:inline">rected</div></div>')
+                groups=paragraph_blocks(doc['blocks'],raw)
+                self.assertEqual(len(groups),1)
+                self.assertEqual(paragraph_text(groups[0],raw),'corrected')

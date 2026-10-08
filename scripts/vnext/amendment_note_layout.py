@@ -1,7 +1,7 @@
 """Keep original note blocks while distinguishing inline fragments from paragraphs."""
 from html.parser import HTMLParser
 import re
-from .text_coverage import _Blocks
+from .text_coverage import _Blocks, _HIDDEN, _VOID
 
 LAYOUT = 'inline-paragraphs-v2'
 
@@ -15,25 +15,37 @@ class _Gap(HTMLParser):
     def handle_starttag(self, tag, attrs):
         allowed = {'font','span','b','i','u','strong','em','sub','sup','a',
                    'ix:nonnumeric','ix:nonfraction'}
-        style = dict(attrs).get('style', '')
+        attrs = dict(attrs)
+        style = attrs.get('style', '')
+        # Same visibility rule as the existing source parser. Hidden data
+        # cannot split a visible word or create a visible paragraph boundary.
+        hidden = (tag in _HIDDEN or 'hidden' in attrs or
+                  re.search(r'(?:display\s*:\s*none|visibility\s*:\s*hidden)', style, re.I) is not None)
+        hidden = hidden or any(entry[2] for entry in self.stack)
         display = re.search(r'(?:^|;)\s*display\s*:\s*([^;]+)', style, re.I)
         value = display[1].strip().casefold() if display else None
         inline = (tag in allowed or tag == 'div' and value == 'inline') and value in (None,'inline')
-        self.stack.append((tag, inline))
-        if not inline:
+        if tag not in _VOID:
+            self.stack.append((tag, inline, hidden))
+        if not inline and not hidden:
             self.inline = False
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in _VOID:
+            self.handle_endtag(tag)
 
     def handle_endtag(self, tag):
         matches = [i for i, entry in enumerate(self.stack) if entry[0] == tag]
         if matches:
             index = matches[-1]
-            if not self.stack[index][1]:self.inline = False
+            if not self.stack[index][1] and not self.stack[index][2]:self.inline = False
             del self.stack[index:]
         elif tag not in {'font','span','b','i','u','strong','em','sub','sup','a','ix:nonnumeric','ix:nonfraction'}:
             self.inline = False
 
     def handle_data(self, text):
-        if text.strip():
+        if text.strip() and not any(entry[2] for entry in self.stack):
             self.inline = False
 
 

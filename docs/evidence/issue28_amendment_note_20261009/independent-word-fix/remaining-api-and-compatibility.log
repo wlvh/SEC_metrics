@@ -1,0 +1,15 @@
+{"case": "quoted_conditional_same_source_block", "decision": "WITHHELD", "issues": [{"error_type": "InstantAmendmentError", "reason": "INSTANT_AMENDMENT_FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED:14"}], "synthetic_in_memory": true}
+{"case": "conditional_plus_current", "decision": "WITHHELD", "issues": [{"error_type": "InstantAmendmentError", "reason": "INSTANT_AMENDMENT_FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED:14,15,16"}], "synthetic_in_memory": true}
+{"case": "current_status", "decision": "WITHHELD", "issues": [{"error_type": "InstantAmendmentError", "reason": "INSTANT_AMENDMENT_FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED:14"}], "synthetic_in_memory": true}
+{"case": "note_word_cut", "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+{"case": "note_hidden_word_cut", "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+{"case": "note_extra_purpose", "decision": "WITHHELD", "issues": [{"error_type": "InstantAmendmentError", "reason": "INSTANT_AMENDMENT_SOURCE_SCOPE_UNRESOLVED"}], "synthetic_in_memory": true}
+{"case": "cover_word_cut", "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+{"case": "cover_word_cut_extra_current", "decision": "WITHHELD", "issues": [{"error_type": "InstantAmendmentError", "reason": "INSTANT_AMENDMENT_FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED:16,17,18"}], "synthetic_in_memory": true}
+{"case": "default_clean", "entire_saved_object_equal_to_baseline": true, "instant_scope_id": "sha256:4ccad45612b9bd6746bfb3ad0b74aede7975b5f6add7d50b8dc88e428ad6f75c", "no_layout_field": true}
+{"case": "default_conditional", "entire_saved_object_equal_to_baseline": true, "instant_scope_id": "sha256:c78abc7be1d358993cdfca1f92afe6bfee09a3ebfb7bbe9537a05be0d761ed76", "no_layout_field": true}
+{"case": "default_original", "error_type": "AmendmentScopeError", "module": "baseline", "reason": "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED"}
+{"case": "default_original", "error_type": "AmendmentScopeError", "module": "current", "reason": "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED"}
+{"case": "hidden_gap_word_cut_original", "decision": "INPUT_PROPERTY_PROVEN", "html": "<div>We have cor<span hidden>formatting draft</span><div style=\"display:inline\">rected</div> our financial statements.</div>", "instant_scope_id": "sha256:33f54d49a998cb9b2efcf03dae7a2020245a9400fcc7e9d79c8c63b338c6e71f", "issues": [], "module": "baseline", "synthetic_in_memory": true}
+{"case": "hidden_gap_word_cut_original", "decision": "INPUT_PROPERTY_PROVEN", "html": "<div>We have cor<span hidden>formatting draft</span><div style=\"display:inline\">rected</div> our financial statements.</div>", "instant_scope_id": "sha256:33f54d49a998cb9b2efcf03dae7a2020245a9400fcc7e9d79c8c63b338c6e71f", "issues": [], "module": "current", "synthetic_in_memory": true}
+{"all_assertions_passed": true, "case": "completion", "provider_paid_sec": [0, 0, 0]}

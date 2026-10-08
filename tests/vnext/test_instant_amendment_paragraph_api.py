@@ -58,3 +58,12 @@ class InstantParagraphApiTest(unittest.TestCase):
                 result=self.inspect(text)
                 self.assertEqual(result['decision'],'WITHHELD')
                 self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',result['issues'][0]['reason'])
+
+    def test_hidden_inline_gap_does_not_break_visible_correction(self):
+        for hidden in ('hidden', 'style="display:none"', 'style="visibility:hidden"'):
+            with self.subTest(hidden=hidden):
+                result=self.inspect('<div>We have cor<span '+hidden+'>draft</span><div style="display:inline">rected</div> our financial statements.</div>')
+                self.assertEqual(result['decision'],'WITHHELD')
+                self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',result['issues'][0]['reason'])
+                hidden_only=self.inspect('<div><span '+hidden+'>We have corrected our financial statements.</span>Governance only.</div>')
+                self.assertEqual(hidden_only['decision'],'INPUT_PROPERTY_PROVEN')
