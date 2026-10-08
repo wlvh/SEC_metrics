@@ -25,7 +25,7 @@ PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
     'historical_fiscal_labels', 'historical_filing_inventory', 'normal_period_selection',
     'normal_history_catalog', 'normal_governance_input', 'normal_annual_input',
     'normal_companyfacts_results', 'zero_ai_r2', 'instant_balance_amendment',
-    'annual_amendment_scope', 'composite_scope', 'text_results_v2')) + (
+    'annual_amendment_scope', 'amendment_note_layout', 'composite_scope', 'text_results_v2')) + (
         'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
         'catalog/deterministic_metrics.json', 'config/instant_balance_amendment_v1.json',
         'config/annual_amendment_scope_v1.json', 'catalog/r6/text_results_v2_policy.json')
@@ -91,7 +91,8 @@ def prepare_historical_liquidity_year_case(*, repo_root, company_id, metric_id, 
                          'reference': amended['source_reference'], 'filing': filing}
             try:
                 check = inspect_instant_balance_amendment(original=original,
-                    amendment=amendment, company_id=company_id, cik=prepared['entity'])
+                    amendment=amendment, company_id=company_id, cik=prepared['entity'],
+                    note_layout='inline-paragraphs-v2')
             except (AmendmentScopeError, InstantAmendmentError) as error:
                 check = {'decision': 'WITHHELD', 'metric_ids': [metric_id],
                     'original_accession': prepared['filing']['accessionNumber'],
