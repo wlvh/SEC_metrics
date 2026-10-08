@@ -1,0 +1,64 @@
+{
+  "selected": [
+    "tests.vnext.test_governance_signals",
+    "tests.vnext.test_governance_compensation_table",
+    "tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest",
+    "tests.vnext.test_text_coverage",
+    "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state",
+    "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free"
+  ],
+  "before_seconds": 2.72728179092519,
+  "before": [
+    {
+      "test": "tests.vnext.test_governance_signals",
+      "return_code": 0,
+      "duration_seconds": 0.199,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 22 tests in 0.050s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "test": "tests.vnext.test_governance_compensation_table",
+      "return_code": 0,
+      "duration_seconds": 0.209,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 14 tests in 0.074s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "test": "tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest",
+      "return_code": 0,
+      "duration_seconds": 0.347,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "test": "tests.vnext.test_text_coverage",
+      "return_code": 0,
+      "duration_seconds": 0.149,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 0.019s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "test": "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state",
+      "return_code": 0,
+      "duration_seconds": 1.544,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.148s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "test": "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free",
+      "return_code": 0,
+      "duration_seconds": 0.28,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nOK\n",
+      "stdout_tail": ""
+    }
+  ],
+  "after": {
+    "return_code": 0,
+    "duration_seconds": 1.0164185410831124,
+    "test_count": 59,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "diagnostics": "...........................................................\n----------------------------------------------------------------------\nRan 59 tests in 1.016s\n\nOK\n"
+  }
+}
