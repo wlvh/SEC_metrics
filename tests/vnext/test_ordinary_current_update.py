@@ -158,6 +158,44 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_consumed_deterministic_graph_is_part_of_processing_identity(self):
+        original=update.sha256_file
+        for metric in ('B02','B04','B05'):
+            before=update._configuration(ROOT,'marriott_international',metric)
+            self.assertIn('scripts/vnext/zero_ai_r2.py',before['processing_files'])
+            def changed(*,path):
+                return 'changed-consumed-formula' if path.name=='zero_ai_r2.py' else original(path=path)
+            with patch.object(update,'sha256_file',side_effect=changed):
+                after=update._configuration(ROOT,'marriott_international',metric)
+            self.assertNotEqual(before,after)
+
+    def test_changed_graph_reprocesses_same_input_instead_of_reusing_old_result(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B04')
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-formula' if path.name=='zero_ai_r2.py' else original(path=path)):
+            after=update._configuration(ROOT,'marriott_international','B04')
+        records={};calls=[]
+        def create(**kw):
+            calls.append(kw);path=kw['output_root'];path.mkdir(parents=True)
+            record={'manifest':{'company_id':'marriott_international','metric_id':'B04','source_proofs':[]},
+                'result':{'company_id':'marriott_international','metric_id':'B04','publication':'PUBLISHED',
+                          'period_end':'2025-12-31','result_id':'synthetic-'+str(len(calls))}}
+            records[str(path)]=record;return record
+        with tempfile.TemporaryDirectory() as folder,patch.object(update,'_source_census',return_value=[]), \
+             patch.object(update,'_current_sources',return_value=[]),patch.object(update,'create_saved_result',side_effect=create), \
+             patch.object(update,'read_saved_result',side_effect=lambda **kw:records[str(kw['output_root'])]):
+            args=dict(state_root=Path(folder)/'state',source_root=ROOT,company_id='marriott_international',metric_id='B04')
+            with patch.object(update,'_configuration',return_value=before):first=update.run_once(**args)
+            with patch.object(update,'_configuration',return_value=after):second=update.run_once(**args)
+            with patch.object(update,'_configuration',return_value=after), \
+                 patch.object(update,'create_saved_result',side_effect=AssertionError('No third calculation')):
+                repeated=update.run_once(**args)
+            self.assertEqual(second['status'],'CANDIDATE_READY')
+            self.assertNotEqual(first['version'],second['version'])
+            self.assertEqual(repeated['status'],'NO_SOURCE_CONTENT_CHANGE')
+            self.assertEqual(len(calls),2)
+
     def test_lodging_only_changes_do_not_change_b01_processing_identity(self):
         original=update.sha256_file
         before=update._configuration(ROOT,'marriott_international','B01')
