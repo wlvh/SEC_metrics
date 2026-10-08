@@ -7,7 +7,7 @@
   "resolution": "Keep both independent short CI steps and all4 appended selectors once; source/tests not altered",
   "temporary_index_verified": true,
   "runner_function_asts_equal": true,
-  "actual_joint_test_execution": false,
+  "actual_joint_test_execution": true,
   "expected_files": {
     "tools/run_fast_tests_v2.py": "a9e5c347ab289d3fba666f95b3b98d358ce870f3b5c2bdd8809b435c14647a70",
     ".github/workflows/vnext-fast.yml": "90edf70563c7e571a54e50b5f0829a96f03cacc4f4ef837a8b8b10e2d1bf7223"
@@ -16,5 +16,12 @@
     0,
     0,
     0
-  ]
+  ],
+  "actual_test_count": 30,
+  "actual_seconds": 0.006,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "project_imports_byte_checked": 66,
+  "execution_boundary": "Exact combined source/tests loaded in one process against byte-checked main project dependencies; five exact fixed fixtures, no company install or network"
 }
