@@ -39,3 +39,17 @@
 - 本次 **35工具**（10次functions.exec、22次exec_command、2次clock、1次write_stdin；包含本结论写入工具），**1普通消息**（此后唯一最终报告）；问题/过程消息/spawn均0。未触80工具/3消息上限。没有继承旧代理累计或重置旧记录。
 - 只执行上述两个指定短验证各一次、一个11控制短对照；没有完整公司/默认/JSON长演练。新增provider/paid/SEC/账户请求各0，无#47工作树/账本/运行根操作，无源码、测试、旧原件/旧资料编辑，无commit/push或tar。
 - 本次只写本目录一个conclusion及必要日志。开工已有的旧conclusion修改和资源停止日志按原样保留；已读README、旧结论、全部 `adjacent-table-unit-*` bytes与开工快照相同。
+
+
+## 4b16b4d 原件重开与包装接缝：累计时限停止记录
+
+**结论：NOT_COMPLETED_RESOURCE_LIMIT。新包装差异尚未完成独审；不能登记PASS。** 本次沿原spawn `2026-10-08T09:59:27Z`、35工具/1消息累计接续，截止 `2026-10-08T11:29:27Z`。首批实际clock为 `2026-10-08T11:10:29Z`，当时尚在期限内；随后同一只读批次的主机UTC记录已为 `2026-10-08T13:21:29.816688Z`，再读clock确认 `2026-10-08T13:21:45Z`，已经超过期限。发现后不再执行测试或实质复核，仅保存本停止/缺项记录。空闲或未知间隔没有扣除、重置或另起生命周期。
+
+- 当前HEAD确为patch `4b16b4d8513be47d9b108da5cd44205f07073e4c`，指定base `adc9c85d3b1713fd198f630e8725d61082e74dd7`。已静态读取两者间新 `ordinary_reported_lease_scope.py`、新 `test_reported_lease_successor.py` 与 `ordinary_special_debt_scope.py` 差异，以及同根README末段、succcessor四控制/默认保存JSON/父方23测试日志、旧native及路径resolver必要上下文。
+- 静态字节对照确认 `ordinary_special_debt_scope.py` 与main `8588ccbbb1c91d81e0fb1a89dff3575214282549` 整个文件相同；`industrial_lease_relation.py` 及18解析器测试与原930逐字节相同，继承上文有限PASS。当前新模块、旧恢复模块、新测试及指定默认/保存脚本均与patch Git字节一致，见 `initial-byte-state-4b16.log`。此静态对照不替代新包装动态检验。
+- 新包装静态路径为：复用继承partial case，按原SourceReference及URL/申报/SHA匹配唯一证明路径，重开原件后由旧native再核字节/年度身份，再调用未变包含关系；Result/Trace等沿原case保存。**这里只描述已读代码，不构成已验证正确性或新接口接受结论。**
+- **本次未执行**指定23项combined unittest、指定 `verify_default_and_persistence.py`；没有重跑新入口原件控制。已读23项0.079秒、四控制19.667秒与默认/保存11.897秒是父方日志，未记为本代理动态验证。新包装的数据/程序根分离、正确原件重开、跨URL/申报或多路径误选、原件检查后变化、保存结构及Result不变的最终独立接缝判断仍缺。
+- 文件发现第一次用不存在的 `successor-original.json` / `successor-default.json` 读取失败；随后按rg实际返回的 `successor-original-controls.json` / `successor-default-and-persistence.json` 读取。此项是读取设置错误，不是业务失败。
+- 完整B06仍无新的独审信用，公司入口未由本次验证；不得将930有限PASS扩成新包装/完整B06 PASS。未新增模型/SEC/账户请求或#47操作，无spawn、源码/测试/旧原件修改、commit/push或tar。
+- 停止记录UTC `2026-10-08T13:22:50.798291+00:00`；自原spawn实际墙钟 `12203.798`秒，超过5400秒。此次接续17工具/1最终消息；累计 **52工具/2普通消息**（15次functions.exec、32次exec_command、4次clock、1次write_stdin），问题/过程消息/spawn均0。工具/消息未超额度，时间超限，因此停止。
+- 仅追加本节及必要suffix日志。上文930结论前缀6825字节、SHA `06a79c3f0191108c8e9aa244f90d23b1cdf2142b35fe8517b68cc2e9126e03fe` 与全部旧审阅日志保持原字节。
