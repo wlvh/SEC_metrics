@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Set up Python 3.14
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
@@ -60,7 +60,15 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
+      - name: Fetch the declared historical baseline only
+        # Historical readers need this fixed tree, not every branch/tag/ancestor.
+        # Full objects are fetched here, before tests; no lazy network reads.
+        run: |
+          old_commit=$(python3 -c 'import json; print(json.load(open("requirements/issue_28_v1/baseline_manifest.json"))["repository"]["commit"])')
+          git fetch --no-tags --depth=1 origin "$old_commit"
+          git cat-file -e "$old_commit^{commit}"
+          git show "$old_commit:outputs/active_publication.json" > /tmp/historical-active-publication.json
       - name: Set up Python 3.14
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
