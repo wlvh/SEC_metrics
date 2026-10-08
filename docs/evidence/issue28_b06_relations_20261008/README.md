@@ -106,3 +106,14 @@ c5修后独审仍NEEDS_FIX，详见[independent-carrier-repair](independent-carr
 [相邻引言差异独审](independent-adjacency/conclusion.md)PASS：18小测0.077s、Ford四控制11.550s、11个base/patch完整解析器控制由新代理实际执行。显式本表单位下的旧as-follows误拦已修复；缺表内单位的旧有限支持不扩大。新代理35工具/1消息/373.476s，先核实际UTC并在90分钟内结束。原代理第三次接续跨空闲累计时间超90m，未执行本差异测试，停止记录原样归档，不能替新独审赋信用。
 
 本分支提交小Draft仅交显式B06来源关系能力及默认兼容，未进PR67/公司入口。当前小回归加入现有fast workflow独立步骤，在旧cohort之前报告实际结果，不删除旧断言、修改required-check或将旧失败记PASS。旧cohort仍按各自实际终态解释；本源码被测版本930a3df，后继仅CI命令/证据归档。main/T1基础接收由原PR61/PR67承担，不搬入旧大分支或冻结/发布系统。
+
+
+## PR72新入口：保留旧默认原字节，显式模块承接关系
+
+PR72 adc9的远端旧native创建实际在业务断言前失败：Normal successor rule bytes differ:ordinary_special_debt_scope.py，日志已取得并保留；首次下载代理错误与CLI转义保护不是业务失败。不是将所有CI失败概括为此项。相应修复把新显式入口移为ordinary_reported_lease_scope.py，旧ordinary_special_debt_scope.py整个文件与main8588逐字节相同、原签名/默认case相同；不删除原校验、重绑冻结快照或再建信任平台。
+
+新prepare_reported_lease_case复用原partial case、Calculator/Result/Trace；只从该case的原SourceReference与source_proofs重开唯一同URL/申报/SHA的primary/XML，再以旧native认证和既有行自身关系检查补V2来源body。重复同路径证明可复用，多个不同路径/错误URL或申报拒绝；重开后原件字节变化仍被拒。原Result保持WITHHELD/null及原主体/期间/范围，debug处理文件含新模块。数据/程序根继续分开，未新选财报或网络获取。
+
+23短测0.079s（18解析器＋5原件重开/银行边界）通过。当前新入口四原件结构控制19.667s通过；默认整个case与main相同、新case保存/读相同11.897s、2396080字节。本模块在base准备后重读/解析该确切原件以获取额外含行事实，未宣称更快；这是当前显式来源 API，不是日常未变重算、模型调用或完整公司Run。
+
+旧930单位差异已独审PASS，原件重开/包装的新差异需另限定复核；不把该旧PASS自动转作新包装信用。23回归单列在原CI，旧继承作业保留，当前主CI37761974002仍看其实际终态；现已证实18原检查远端成功，不冒称整条全绿。旧reported_relations可选参数原型只按其旧提交/日志保留，不是现行旧默认的新接口。

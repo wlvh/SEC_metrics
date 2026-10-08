@@ -1,0 +1,292 @@
+﻿2026-10-08T10:12:49.4642251Z Current runner version: '2.337.0'
+2026-10-08T10:12:49.4661264Z ##[group]Runner Image Provisioner
+2026-10-08T10:12:49.4661809Z Hosted Compute Agent
+2026-10-08T10:12:49.4662227Z Version: 20260901.588
+2026-10-08T10:12:49.4662610Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-08T10:12:49.4663067Z Build Date: 2026-09-01T19:56:44Z
+2026-10-08T10:12:49.4663525Z Worker ID: {af2ae009-0d5c-4a53-a6c3-f62aabfb1f87}
+2026-10-08T10:12:49.4663943Z Azure Region: westus3
+2026-10-08T10:12:49.4664320Z ##[endgroup]
+2026-10-08T10:12:49.4665333Z ##[group]Operating System
+2026-10-08T10:12:49.4665717Z Ubuntu
+2026-10-08T10:12:49.4666090Z 24.04.5
+2026-10-08T10:12:49.4666401Z LTS
+2026-10-08T10:12:49.4666735Z ##[endgroup]
+2026-10-08T10:12:49.4667077Z ##[group]Runner Image
+2026-10-08T10:12:49.4667466Z Image: ubuntu-24.04
+2026-10-08T10:12:49.4667846Z Version: 20260927.320.1
+2026-10-08T10:12:49.4668624Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-08T10:12:49.4669535Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-08T10:12:49.4670119Z ##[endgroup]
+2026-10-08T10:12:49.4670828Z ##[group]GITHUB_TOKEN Permissions
+2026-10-08T10:12:49.4672049Z Contents: read
+2026-10-08T10:12:49.4672448Z Metadata: read
+2026-10-08T10:12:49.4672812Z ##[endgroup]
+2026-10-08T10:12:49.4674194Z Secret source: Actions
+2026-10-08T10:12:49.4674923Z Cache mode: write
+2026-10-08T10:12:49.4675342Z Prepare workflow directory
+2026-10-08T10:12:49.4887403Z Prepare all required actions
+2026-10-08T10:12:49.4919747Z Getting action download info
+2026-10-08T10:12:49.7651758Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-10-08T10:12:49.8778189Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+2026-10-08T10:12:50.1494461Z Complete job name: Company native Run cold read and recorded source update
+2026-10-08T10:12:50.1993678Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-10-08T10:12:50.1994193Z with:
+2026-10-08T10:12:50.1994440Z   persist-credentials: false
+2026-10-08T10:12:50.1994727Z   repository: wlvh/SEC_metrics
+2026-10-08T10:12:50.1996870Z   token: ***
+2026-10-08T10:12:50.1997110Z   ssh-strict: true
+2026-10-08T10:12:50.1997351Z   ssh-user: git
+2026-10-08T10:12:50.1997582Z   clean: true
+2026-10-08T10:12:50.1997825Z   sparse-checkout-cone-mode: true
+2026-10-08T10:12:50.1998110Z   fetch-depth: 1
+2026-10-08T10:12:50.1998344Z   fetch-tags: false
+2026-10-08T10:12:50.1998587Z   show-progress: true
+2026-10-08T10:12:50.1998830Z   lfs: false
+2026-10-08T10:12:50.1999055Z   submodules: false
+2026-10-08T10:12:50.1999298Z   set-safe-directory: true
+2026-10-08T10:12:50.1999640Z ##[endgroup]
+2026-10-08T10:12:50.2709363Z Syncing repository: wlvh/SEC_metrics
+2026-10-08T10:12:50.2710985Z ##[group]Getting Git version info
+2026-10-08T10:12:50.2711736Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-08T10:12:50.2712653Z [command]/usr/bin/git version
+2026-10-08T10:12:50.2739146Z git version 2.55.0
+2026-10-08T10:12:50.2755684Z ##[endgroup]
+2026-10-08T10:12:50.2772584Z Temporarily overriding HOME='/home/runner/work/_temp/109fd7bd-cfb5-4805-86ae-97093d267f67' before making global git config changes
+2026-10-08T10:12:50.2773928Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-08T10:12:50.2775111Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-08T10:12:50.2824244Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-08T10:12:50.2827826Z ##[group]Initializing the repository
+2026-10-08T10:12:50.2831695Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-08T10:12:50.2920217Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-08T10:12:50.2921472Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-08T10:12:50.2922761Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-08T10:12:50.2923406Z hint: call:
+2026-10-08T10:12:50.2923922Z hint:
+2026-10-08T10:12:50.2924439Z hint: 	git config --global init.defaultBranch <name>
+2026-10-08T10:12:50.2925021Z hint:
+2026-10-08T10:12:50.2925454Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-08T10:12:50.2926076Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-08T10:12:50.2926599Z hint:
+2026-10-08T10:12:50.2926942Z hint: 	git branch -m <name>
+2026-10-08T10:12:50.2927310Z hint:
+2026-10-08T10:12:50.2927770Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-08T10:12:50.2928591Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+2026-10-08T10:12:50.2930662Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+2026-10-08T10:12:50.2977532Z ##[endgroup]
+2026-10-08T10:12:50.2978073Z ##[group]Disabling automatic garbage collection
+2026-10-08T10:12:50.2980542Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-08T10:12:50.3011540Z ##[endgroup]
+2026-10-08T10:12:50.3012008Z ##[group]Setting up auth
+2026-10-08T10:12:50.3014966Z Removing SSH command configuration
+2026-10-08T10:12:50.3017474Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T10:12:50.3049102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T10:12:50.3330143Z Removing HTTP extra header
+2026-10-08T10:12:50.3335481Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T10:12:50.3367753Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T10:12:50.3540647Z Removing includeIf entries pointing to credentials config files
+2026-10-08T10:12:50.3545833Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T10:12:50.3575601Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T10:12:50.3754280Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-08T10:12:50.3788170Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:12:50.3817893Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:12:50.3848232Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:12:50.3877924Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:12:50.3902576Z ##[endgroup]
+2026-10-08T10:12:50.3903020Z ##[group]Fetching the repository
+2026-10-08T10:12:50.3908755Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8bc85781acce19a53e02cfacec93eacea86ebf01:refs/remotes/pull/72/merge
+2026-10-08T10:13:00.4422724Z From https://github.com/wlvh/SEC_metrics
+2026-10-08T10:13:00.4423337Z  * [new ref]         8bc85781acce19a53e02cfacec93eacea86ebf01 -> pull/72/merge
+2026-10-08T10:13:00.4427081Z ##[endgroup]
+2026-10-08T10:13:00.4427785Z ##[group]Determining the checkout info
+2026-10-08T10:13:00.4428111Z ##[endgroup]
+2026-10-08T10:13:00.4431893Z [command]/usr/bin/git sparse-checkout disable
+2026-10-08T10:13:00.4475158Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-08T10:13:00.4500235Z ##[group]Checking out the ref
+2026-10-08T10:13:00.4502466Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/72/merge
+2026-10-08T10:13:01.5722114Z Updating files:  65% (5043/7675)
+2026-10-08T10:13:01.5742857Z Updating files:  66% (5066/7675)
+2026-10-08T10:13:01.5848010Z Updating files:  67% (5143/7675)
+2026-10-08T10:13:01.5922514Z Updating files:  68% (5219/7675)
+2026-10-08T10:13:01.6012805Z Updating files:  69% (5296/7675)
+2026-10-08T10:13:01.6098738Z Updating files:  70% (5373/7675)
+2026-10-08T10:13:01.6155555Z Updating files:  71% (5450/7675)
+2026-10-08T10:13:01.6266463Z Updating files:  72% (5526/7675)
+2026-10-08T10:13:01.6387344Z Updating files:  73% (5603/7675)
+2026-10-08T10:13:01.6469092Z Updating files:  74% (5680/7675)
+2026-10-08T10:13:01.6525606Z Updating files:  75% (5757/7675)
+2026-10-08T10:13:01.6741142Z Updating files:  76% (5833/7675)
+2026-10-08T10:13:01.6874580Z Updating files:  77% (5910/7675)
+2026-10-08T10:13:01.7039435Z Updating files:  78% (5987/7675)
+2026-10-08T10:13:01.7076188Z Updating files:  79% (6064/7675)
+2026-10-08T10:13:01.7231374Z Updating files:  80% (6140/7675)
+2026-10-08T10:13:01.7364957Z Updating files:  81% (6217/7675)
+2026-10-08T10:13:01.7491274Z Updating files:  82% (6294/7675)
+2026-10-08T10:13:01.7525927Z Updating files:  83% (6371/7675)
+2026-10-08T10:13:01.7559083Z Updating files:  84% (6447/7675)
+2026-10-08T10:13:01.7588942Z Updating files:  85% (6524/7675)
+2026-10-08T10:13:01.7626387Z Updating files:  86% (6601/7675)
+2026-10-08T10:13:01.7821837Z Updating files:  87% (6678/7675)
+2026-10-08T10:13:01.8018323Z Updating files:  88% (6754/7675)
+2026-10-08T10:13:01.8092708Z Updating files:  89% (6831/7675)
+2026-10-08T10:13:01.8130360Z Updating files:  90% (6908/7675)
+2026-10-08T10:13:01.8217998Z Updating files:  91% (6985/7675)
+2026-10-08T10:13:01.8276092Z Updating files:  92% (7061/7675)
+2026-10-08T10:13:01.8338932Z Updating files:  93% (7138/7675)
+2026-10-08T10:13:01.8403403Z Updating files:  94% (7215/7675)
+2026-10-08T10:13:01.8456978Z Updating files:  95% (7292/7675)
+2026-10-08T10:13:01.8511200Z Updating files:  96% (7368/7675)
+2026-10-08T10:13:01.8570825Z Updating files:  97% (7445/7675)
+2026-10-08T10:13:01.8621024Z Updating files:  98% (7522/7675)
+2026-10-08T10:13:01.8668296Z Updating files:  99% (7599/7675)
+2026-10-08T10:13:01.8668542Z Updating files: 100% (7675/7675)
+2026-10-08T10:13:01.8668857Z Updating files: 100% (7675/7675), done.
+2026-10-08T10:13:01.9016436Z Note: switching to 'refs/remotes/pull/72/merge'.
+2026-10-08T10:13:01.9016664Z 
+2026-10-08T10:13:01.9016946Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-08T10:13:01.9017345Z changes and commit them, and you can discard any commits you make in this
+2026-10-08T10:13:01.9017829Z state without impacting any branches by switching back to a branch.
+2026-10-08T10:13:01.9018350Z 
+2026-10-08T10:13:01.9018505Z If you want to create a new branch to retain commits you create, you may
+2026-10-08T10:13:01.9018875Z do so (now or later) by using -c with the switch command. Example:
+2026-10-08T10:13:01.9019088Z 
+2026-10-08T10:13:01.9019187Z   git switch -c <new-branch-name>
+2026-10-08T10:13:01.9019339Z 
+2026-10-08T10:13:01.9019437Z Or undo this operation with:
+2026-10-08T10:13:01.9019572Z 
+2026-10-08T10:13:01.9019650Z   git switch -
+2026-10-08T10:13:01.9019763Z 
+2026-10-08T10:13:01.9019982Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-08T10:13:01.9020319Z 
+2026-10-08T10:13:01.9020614Z HEAD is now at 8bc8578 Merge adc9c85d3b1713fd198f630e8725d61082e74dd7 into 8588ccbbb1c91d81e0fb1a89dff3575214282549
+2026-10-08T10:13:01.9080373Z ##[endgroup]
+2026-10-08T10:13:01.9432181Z [command]/usr/bin/git log -1 --format=%H
+2026-10-08T10:13:01.9458014Z 8bc85781acce19a53e02cfacec93eacea86ebf01
+2026-10-08T10:13:01.9466188Z ##[group]Removing auth
+2026-10-08T10:13:01.9466371Z Removing SSH command configuration
+2026-10-08T10:13:01.9469429Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T10:13:01.9494578Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T10:13:01.9673225Z Removing HTTP extra header
+2026-10-08T10:13:01.9676444Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T10:13:01.9702189Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T10:13:01.9872233Z Removing includeIf entries pointing to credentials config files
+2026-10-08T10:13:01.9874659Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T10:13:01.9896623Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-08T10:13:01.9897061Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-08T10:13:01.9897327Z includeif.gitdir:/github/workspace/.git.path
+2026-10-08T10:13:01.9897527Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-08T10:13:01.9902966Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-08T10:13:01.9922608Z /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:01.9929679Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.0129004Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-08T10:13:02.0149100Z /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.0155615Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.0625705Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-08T10:13:02.0648237Z /github/runner_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.0653648Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.1512469Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-08T10:13:02.1536093Z /github/runner_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.1542239Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config
+2026-10-08T10:13:02.2510678Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T10:13:02.2692354Z Removing credentials config '/home/runner/work/_temp/git-credentials-fe299ca1-6fb1-493b-8176-2ee315a25f9b.config'
+2026-10-08T10:13:02.2893474Z ##[endgroup]
+2026-10-08T10:13:02.3417997Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+2026-10-08T10:13:02.3418215Z with:
+2026-10-08T10:13:02.3418330Z   python-version: 3.14
+2026-10-08T10:13:02.3418452Z   check-latest: false
+2026-10-08T10:13:02.3419631Z   token: ***
+2026-10-08T10:13:02.3419749Z   update-environment: true
+2026-10-08T10:13:02.3419882Z   allow-prereleases: false
+2026-10-08T10:13:02.3420188Z   freethreaded: false
+2026-10-08T10:13:02.3420305Z ##[endgroup]
+2026-10-08T10:13:02.4235023Z ##[group]Installed versions
+2026-10-08T10:13:02.4823414Z Successfully set up CPython (3.14.7)
+2026-10-08T10:13:02.4823844Z ##[endgroup]
+2026-10-08T10:13:02.5426074Z ##[group]Run python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+2026-10-08T10:13:02.5426768Z python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+2026-10-08T10:13:02.6291149Z shell: /usr/bin/bash -e {0}
+2026-10-08T10:13:02.6291346Z env:
+2026-10-08T10:13:02.6291518Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:02.6291775Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+2026-10-08T10:13:02.6291998Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:02.6292201Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:02.6292401Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:02.6292614Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+2026-10-08T10:13:02.6292789Z ##[endgroup]
+2026-10-08T10:13:08.2758856Z Collecting tokenizers==0.22.2 (from -r requirements-continuous-context.txt (line 2))
+2026-10-08T10:13:08.3363499Z   Downloading tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+2026-10-08T10:13:08.5504375Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 17.0 MB/s  0:00:00
+2026-10-08T10:13:08.9337317Z Installing collected packages: tokenizers
+2026-10-08T10:13:08.9850205Z Successfully installed tokenizers-0.22.2
+2026-10-08T10:13:09.0335055Z ##[group]Run python3 tests/required_unittests.py tests.vnext.test_normal_run_v3_material
+2026-10-08T10:13:09.0335408Z python3 tests/required_unittests.py tests.vnext.test_normal_run_v3_material
+2026-10-08T10:13:09.0388948Z shell: /usr/bin/bash -e {0}
+2026-10-08T10:13:09.0389081Z env:
+2026-10-08T10:13:09.0389252Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:09.0389479Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+2026-10-08T10:13:09.0389700Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:09.0389898Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:09.0390096Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T10:13:09.0390296Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+2026-10-08T10:13:09.0390476Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-08T10:13:09.0390610Z   PYTHONPATH: scripts
+2026-10-08T10:13:09.0390818Z   NORMAL_V14_MATERIAL_ROOT: /home/runner/work/_temp/ordinary-v14-37761974002-1
+2026-10-08T10:13:09.0391021Z ##[endgroup]
+2026-10-08T10:13:12.5852070Z test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections) ... ERROR
+2026-10-08T10:13:12.5887319Z 
+2026-10-08T10:13:12.5887657Z ======================================================================
+2026-10-08T10:13:12.5888416Z ERROR: test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections)
+2026-10-08T10:13:12.5888899Z ----------------------------------------------------------------------
+2026-10-08T10:13:12.5889126Z Traceback (most recent call last):
+2026-10-08T10:13:12.5894720Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+2026-10-08T10:13:12.5895436Z     return load_profile_requirement_snapshot(
+2026-10-08T10:13:12.5895720Z         snapshot_dir=snapshot_dir,
+2026-10-08T10:13:12.5895969Z         parent_loader=load_requirement_snapshot,
+2026-10-08T10:13:12.5896198Z     )
+2026-10-08T10:13:12.5896512Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+2026-10-08T10:13:12.5897177Z     return engine.load_profile_requirement_snapshot(
+2026-10-08T10:13:12.5897358Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+2026-10-08T10:13:12.5897549Z         snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+2026-10-08T10:13:12.5897745Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-08T10:13:12.5897895Z     )
+2026-10-08T10:13:12.5897993Z     ^
+2026-10-08T10:13:12.5898290Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 70, in load_profile_requirement_snapshot
+2026-10-08T10:13:12.5898699Z     need(sha256_file(path=here) == binding["sha256"] == sha256_file(path=source)
+2026-10-08T10:13:12.5898930Z     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-08T10:13:12.5899191Z          and here.stat().st_size == binding["size"], "Normal successor rule bytes differ: " + relative)
+2026-10-08T10:13:12.5899456Z          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-08T10:13:12.5899772Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirement_profile_v14.py", line 18, in need
+2026-10-08T10:13:12.5900074Z     raise v1.RequirementProfileError(reason)
+2026-10-08T10:13:12.5900408Z vnext.requirement_profile_v1.RequirementProfileError: Normal successor rule bytes differ: scripts/vnext/ordinary_special_debt_scope.py
+2026-10-08T10:13:12.5900677Z 
+2026-10-08T10:13:12.5900781Z The above exception was the direct cause of the following exception:
+2026-10-08T10:13:12.5900928Z 
+2026-10-08T10:13:12.5900987Z Traceback (most recent call last):
+2026-10-08T10:13:12.5901549Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 42, in test_real_open_graphs_and_disk_rejections
+2026-10-08T10:13:12.5902097Z     requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/normal.REQUIREMENT_ID)
+2026-10-08T10:13:12.5902613Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+2026-10-08T10:13:12.5903037Z     raise RequirementError(str(error)) from error
+2026-10-08T10:13:12.5903443Z vnext.requirements.RequirementError: Normal successor rule bytes differ: scripts/vnext/ordinary_special_debt_scope.py
+2026-10-08T10:13:12.5903688Z 
+2026-10-08T10:13:12.5903774Z ----------------------------------------------------------------------
+2026-10-08T10:13:12.5903961Z Ran 1 test in 1.746s
+2026-10-08T10:13:12.5904057Z 
+2026-10-08T10:13:12.5904107Z FAILED (errors=1)
+2026-10-08T10:13:12.5904419Z {"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_normal_run_v3_material"]}
+2026-10-08T10:13:12.6235687Z ##[error]Process completed with exit code 1.
+2026-10-08T10:13:12.6334656Z Post job cleanup.
+2026-10-08T10:13:12.6888580Z [command]/usr/bin/git version
+2026-10-08T10:13:12.6921277Z git version 2.55.0
+2026-10-08T10:13:12.6949942Z Temporarily overriding HOME='/home/runner/work/_temp/924d0624-71f8-4b9d-84f4-e1032d4ecd30' before making global git config changes
+2026-10-08T10:13:12.6950700Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-08T10:13:12.6952295Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-08T10:13:12.6979960Z Removing SSH command configuration
+2026-10-08T10:13:12.6984096Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T10:13:12.7012782Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T10:13:12.7226010Z Removing HTTP extra header
+2026-10-08T10:13:12.7241470Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T10:13:12.7270614Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T10:13:12.7481139Z Removing includeIf entries pointing to credentials config files
+2026-10-08T10:13:12.7487175Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T10:13:12.7517783Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T10:13:12.7815071Z Cleaning up orphan processes

@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from vnext.canonical import sha256_bytes, strict_json_file
 from vnext.normal_candidates import _prepare_b06
-from vnext.ordinary_special_debt_scope import inspect_special_scope, POLICY_PATH
+from vnext.ordinary_special_debt_scope import POLICY_PATH
+from vnext.ordinary_reported_lease_scope import inspect_reported_lease_scope
 from vnext.composite_scope import index_source_structure
 
 source = Path(sys.argv[1])
@@ -17,9 +18,8 @@ started = time.monotonic()
 prepared = _prepare_b06(repo_root=source, company_id='ford_motor_company')
 annual = prepared['input_binding']['prepared_annual_input']
 def inspect(primary):
-    return inspect_special_scope(primary=primary, xml=prepared['xml'], annual=annual,
-        financial_institution=False, rules=strict_json_file(path=source / POLICY_PATH),
-        reported_relations=True)
+    return inspect_reported_lease_scope(primary=primary, xml=prepared['xml'], annual=annual,
+        financial_institution=False, rules=strict_json_file(path=source / POLICY_PATH))
 original = inspect(prepared['primary'])
 assert original['lease_inclusion']['status'] == 'REPORTED_INCLUDED'
 table_id = original['lease_inclusion']['relationships'][0]['evidence'][0]['table_id']

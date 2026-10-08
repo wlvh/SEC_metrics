@@ -3,6 +3,7 @@ import json,subprocess,sys,types,time
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'scripts'))
 from vnext.ordinary_special_debt_scope import prepare_special_debt_case
+from vnext.ordinary_reported_lease_scope import prepare_reported_lease_case
 from vnext.canonical import content_hash,atomic_write_json,strict_json_file
 import argparse
 p=argparse.ArgumentParser();p.add_argument('--source-root',type=Path,required=True);src=p.parse_args().source_root.resolve()
@@ -11,7 +12,7 @@ exec(subprocess.check_output(['git','show','8588ccbbb1c91d81e0fb1a89dff357521428
 start=time.monotonic();a=old.prepare_special_debt_case(repo_root=src,company_id='ford_motor_company')
 b=prepare_special_debt_case(repo_root=src,company_id='ford_motor_company')
 assert a==b
-c=prepare_special_debt_case(repo_root=src,company_id='ford_motor_company',reported_relations=True)
+c=prepare_reported_lease_case(repo_root=src,company_id='ford_motor_company')
 p=Path('/private/tmp/issue28-b06-v2-source-case.json');atomic_write_json(path=p,value=c)
 loaded=strict_json_file(path=p)
 assert loaded==c

@@ -8,11 +8,12 @@ import time
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'scripts'))
 from vnext.ordinary_special_debt_scope import prepare_special_debt_case
+from vnext.ordinary_reported_lease_scope import prepare_reported_lease_case
 from vnext.canonical import sha256_file
 
 p=argparse.ArgumentParser();p.add_argument('--source-root',type=Path,required=True)
 a=p.parse_args();start=time.monotonic()
-c=prepare_special_debt_case(repo_root=a.source_root,company_id='ford_motor_company',reported_relations=True)
+c=prepare_reported_lease_case(repo_root=a.source_root,company_id='ford_motor_company')
 s=c['selection']['scope_source'];r=c['results']['B06']
 assert s['reported_subtotal']=='21919000000'
 assert s['lease_inclusion']['status']=='REPORTED_INCLUDED'
