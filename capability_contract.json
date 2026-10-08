@@ -1164,6 +1164,21 @@
         "test_anchor": "tests/vnext/test_capacity_visible_source_roles.py::VisibleSourceRoleTest.test_complete_response_preserves_plan_with_unrelated_debt_denial",
         "test_status": "automated_recorded",
         "since": "2026-09-23"
+      },
+      {
+        "anchor_id": "CAPABILITY.local_company_run",
+        "type": "capability",
+        "status": "active",
+        "statement": "Draft同一公司CLI保留latest-complete-fy及旧任务入口，并在fiscal-years模式消费已保存来源、指定发行人财年、公共普通controller/writer/reader。历史酒店B10/B11、B03及B01/B02/B04/B05薄适配在分支可用，只有酒店首个小slice进入待审PR71；其余尚未main。未修订连续主体的有限范围可计算/复跑/读取/CSV证据，稳定业务扣留保留null与旧版本；来源缺件或一个指标失败不抹相邻成果。来源发现/在线补齐、修订和继承主体普通case及跨族混合尚未接收，有限CLI验证不代表十公司五年完整业务。原Run、原调用和明确失败保留，不授新费用、合并、正式采纳、发布、部署或active。主要证据docs/evidence/issue47_history/historical-income-receiving-2026-10-08和simplification-closeout-2026-10-08；短测试验证分派，真实来源验证各按记录解释。",
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_local.py::CompanyLocalTest",
+        "test_status": "automated_partial_scenario",
+        "since": "2026-10-03"
       }
     ],
     "capability_boundaries": [
