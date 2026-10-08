@@ -4,7 +4,9 @@ name: Amendment note source checks
     paths:
       - 'scripts/vnext/amendment_note_layout.py'
       - 'scripts/vnext/annual_amendment_scope.py'
+      - 'scripts/vnext/annual_amendment_scope_v2.py'
       - 'scripts/vnext/instant_balance_amendment.py'
+      - 'scripts/vnext/instant_balance_amendment_v2.py'
       - 'tests/vnext/test_amendment_note_layout.py'
       - 'tests/vnext/test_instant_amendment_paragraph_api.py'
       - 'docs/evidence/issue28_amendment_note_20261009/**'

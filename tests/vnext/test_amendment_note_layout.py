@@ -3,9 +3,9 @@ from hashlib import sha256
 import re
 import unittest
 
-from vnext import annual_amendment_scope as scope
+from vnext import annual_amendment_scope_v2 as scope
 from vnext.amendment_note_layout import paragraph_blocks, paragraph_text, part_iii_pattern, conditional_recovery_patterns
-from vnext.instant_balance_amendment import POLICY as INSTANT_POLICY, _cover_matches
+from vnext.instant_balance_amendment_v2 import POLICY as INSTANT_POLICY, _cover_matches
 from vnext.text_coverage import _Blocks
 
 

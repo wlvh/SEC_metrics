@@ -11,9 +11,10 @@ import types
 from unittest.mock import patch
 
 from vnext.annual_update import saved_source
-from vnext.annual_amendment_scope import AmendmentScopeError, _source, _note
+from vnext.annual_amendment_scope import AmendmentScopeError, _source
+from vnext.annual_amendment_scope_v2 import _note
 from vnext.amendment_note_layout import paragraph_blocks
-from vnext.instant_balance_amendment import inspect_instant_balance_amendment
+from vnext.instant_balance_amendment_v2 import inspect_instant_balance_amendment
 from vnext.sources import raw_blob_record, source_reference_record
 
 parser=argparse.ArgumentParser();parser.add_argument('--source-root',type=Path,required=True)

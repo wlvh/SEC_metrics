@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from vnext.instant_balance_amendment import POLICY, inspect_instant_balance_amendment
+from vnext.instant_balance_amendment_v2 import POLICY, inspect_instant_balance_amendment
 from vnext.sources import raw_blob_record, source_reference_record
 
 
@@ -25,7 +25,7 @@ def filing_html(amended,extra=''):
 
 
 class InstantParagraphApiTest(unittest.TestCase):
-    def inspect(self,extra):
+    def inspect(self,extra,layout="inline-paragraphs-v2"):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder);sources=[]
             for amended in (False,True):
@@ -35,7 +35,7 @@ class InstantParagraphApiTest(unittest.TestCase):
                 reference=source_reference_record(raw_blob=blob,company_id='constructed',source_url='https://www.sec.gov/Archives/edgar/data/1/'+accession.replace('-','')+'/'+name,accession=accession,document_name=name,source_role='target_primary',request_attempt_id='constructed-no-acquisition-credit')
                 filing={'form':'10-K/A' if amended else '10-K','reportDate':'2024-12-31','filingDate':'2025-04-25' if amended else '2025-02-26','accessionNumber':accession,'primaryDocument':name}
                 sources.append({'raw':raw,'blob':blob,'reference':reference,'filing':filing})
-            return inspect_instant_balance_amendment(original=sources[0],amendment=sources[1],company_id='constructed',cik='1',note_layout='inline-paragraphs-v2')
+            return inspect_instant_balance_amendment(original=sources[0],amendment=sources[1],company_id='constructed',cik='1',note_layout=layout)
 
     def test_clean_small_complete_filing_can_complete(self):
         result=self.inspect('');self.assertEqual(result['decision'],'INPUT_PROPERTY_PROVEN')
@@ -78,3 +78,14 @@ class InstantParagraphApiTest(unittest.TestCase):
         quoted=self.inspect('<div>'+text.replace('financial','finan<q><div style="display:inline">cial</div></q>')+'</div>')
         self.assertEqual(quoted['decision'],'WITHHELD')
         self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',quoted['issues'][0]['reason'])
+
+    def test_default_successor_entry_preserves_legacy_saved_object(self):
+        from unittest.mock import patch
+        from vnext import instant_balance_amendment_v2 as successor
+        original=successor.legacy.inspect_instant_balance_amendment
+        with patch.object(successor.legacy,'inspect_instant_balance_amendment',wraps=original) as old:
+            result=self.inspect('',layout='blocks-v1')
+            old.assert_called_once()
+        self.assertEqual(result['decision'],'INPUT_PROPERTY_PROVEN')
+        self.assertNotIn('note_layout',result)
+        self.assertEqual(original(**old.call_args.kwargs),result)
