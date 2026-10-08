@@ -9,3 +9,5 @@
 main短PR只含V1必要库、V2纯模块及小测试/保存请求夹具；真实存量历史准备调用在原分支验证，需要已有历史来源准备，不整体带入旧注册/授权/发布系统。公共普通公司模型运行与完整D02聚合尚未接，Pfizer税务行政事项业务未决不由机械API解决。此项不是公司D02完整修复或接受。
 
 原请求、旧回答、原35调用、失败、Run和账本均保持；新增DeepSeek/paid/SEC为0，无新Run、接受或active变化。
+
+后续测试接收：原38532113 CI仅两个NormalAnnualInput完整原件方法在旧30秒形态超时（30.044/30.043s），原195.775s失败保留。接公共PR61固定86e的按类共享准备/材料分层，base接task/issue28-fast-feedback；只登记既有LegalContextTest和SavedDeveloperAnswerTest短selector、明确六项CI步骤，公共runner函数不改。公共c56的只取声明历史对象stanza也原样接收，原验证命令/时限不变，不重新铸造旧快照。两生产模块、原90行测试及65KB保存上下文夹具逐字节同38532113；同共享runner六项0.011s、显式CI六项0.011s、零skip。代码/输入/合同和开发试验范围不扩，后继CI按实际终态核，不将本地小例外推为D02法律内容或公司业务接受。[本次唯一接收记录](test-receiving.json)、[显式命令](test-receiving-command.log)。

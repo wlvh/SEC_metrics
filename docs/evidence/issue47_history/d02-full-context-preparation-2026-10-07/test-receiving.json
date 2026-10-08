@@ -1,0 +1,50 @@
+{
+  "dependency": "PR61/86e63816d00e2f241f626c59f58041d04d9064cd",
+  "base_ref": "task/issue28-fast-feedback",
+  "production_and_original_test_fixture_bytes_unchanged": {
+    "scripts/vnext/legal_review_context.py": true,
+    "scripts/vnext/legal_review_contract.py": true,
+    "tests/vnext/test_legal_review_context.py": true,
+    "tests/fixtures/d02-context/marriott2023-saved-context.tar.gz": true
+  },
+  "shared_runner": {
+    "return_code": 0,
+    "duration_seconds": 0.011150958947837353,
+    "test_count": 6,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "diagnostics": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.011s\n\nOK\n"
+  },
+  "old_ci_failures": {
+    "duration_seconds": 195.774555852,
+    "failed": [
+      {
+        "duration_seconds": 30.044,
+        "return_code": 124,
+        "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures"
+      },
+      {
+        "duration_seconds": 30.043,
+        "return_code": 124,
+        "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_04"
+      }
+    ]
+  },
+  "changes": [
+    "Two existing short class selectors",
+    "Explicit 6-test CI command",
+    "Public c56 declared-old-object checkout stanza, commands and time limit unchanged"
+  ],
+  "new_runner_implemented": false,
+  "new_methods_or_model_calls": false,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
