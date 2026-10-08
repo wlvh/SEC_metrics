@@ -51,6 +51,54 @@ class CurrentDaScopeTest(unittest.TestCase):
         self.assertEqual(answer['reason_code'],'B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN')
         self.assertFalse(answer['complete_business_scope_proven'])
 
+    def test_unsupported_numeric_tag_cannot_confirm_chain_amount(self):
+        raw=original([('DepreciationDepletionAndAmortization','138','INF')])
+        raw=raw.replace(b'<ix:nonFraction ', b'<wrong:nonFraction xmlns:wrong="http://example.com/not-inline" ')
+        raw=raw.replace(b'</ix:nonFraction>', b'</wrong:nonFraction>')
+        answer=inspect_depreciation_input(raw_bytes=raw,entity='195',period=PERIOD,
+            observations=[observation('DepreciationDepletionAndAmortization','138')])
+        self.assertEqual(answer['status'],'WITHHOLD')
+        self.assertEqual(answer['why'],'SOURCE_NUMERIC_VALUES_UNRESOLVED')
+        self.assertTrue(any('NUMERIC_TAG_NOT_SUPPORTED' in i['reason'] for i in answer['source_numeric_issues']))
+
+    def test_unformatted_comma_is_not_silently_removed_to_confirm_chain(self):
+        answer=self.check([('DepreciationDepletionAndAmortization','1,38','INF')],value='138')
+        self.assertEqual(answer['status'],'WITHHOLD')
+        self.assertTrue(any('NUMERIC_LEXICAL_FORM_NOT_SUPPORTED' in i['reason'] for i in answer['source_numeric_issues']))
+
+    def test_declared_numeric_transform_remains_supported(self):
+        raw=original([('DepreciationDepletionAndAmortization','1,200','INF')])
+        raw=raw.replace(b'<html ', b'<html xmlns:num="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" ')
+        raw=raw.replace(b'<ix:nonFraction ', b'<ix:nonFraction format="num:num-dot-decimal" ')
+        answer=inspect_depreciation_input(raw_bytes=raw,entity='195',period=PERIOD,
+            observations=[observation('DepreciationDepletionAndAmortization','1200')])
+        self.assertEqual(answer['status'],'KEEP')
+        self.assertEqual(answer['source_facts'][0]['value'],'1200')
+
+    def test_nil_keeps_other_evidence_and_gives_a_named_withhold(self):
+        raw=original([('DepreciationDepletionAndAmortization','138','INF'),
+                      ('DepreciationAndAmortization','','INF')])
+        raw=raw.replace(b'<html ', b'<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ')
+        raw=raw.replace(b'decimals="INF"></ix:nonFraction>', b'decimals="INF" xsi:nil="true"></ix:nonFraction>')
+        answer=inspect_depreciation_input(raw_bytes=raw,entity='195',period=PERIOD,
+            observations=[observation('DepreciationDepletionAndAmortization','138')])
+        self.assertEqual(answer['status'],'WITHHOLD')
+        self.assertEqual([f['value'] for f in answer['source_facts']],['138'])
+        self.assertTrue(any('NIL_OR_INVALID_SOURCE_VALUE' in i['reason'] for i in answer['source_numeric_issues']))
+
+    def test_numeric_helper_change_affects_b03_configuration_but_not_b01(self):
+        from vnext import ordinary_current_update as update
+        name='scripts/vnext/reported_monetary_literal.py'
+        before={m:update._configuration(REPO_ROOT,'marriott_international',m) for m in ('B01','B03')}
+        self.assertIn(name,before['B03']['processing_files'])
+        self.assertNotIn(name,before['B01']['processing_files'])
+        original_hash=update.sha256_file
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-literal-parser' if Path(path).name=='reported_monetary_literal.py' else original_hash(path=path)):
+            after={m:update._configuration(REPO_ROOT,'marriott_international',m) for m in ('B01','B03')}
+        self.assertNotEqual(before['B03'],after['B03'])
+        self.assertEqual(before['B01'],after['B01'])
+
     def test_reported_precision_agreement_keeps_chain_not_exact_numeric_equality(self):
         answer=self.check([('DepreciationDepletionAndAmortization','1200000000','-8'),
                            ('DepreciationAndAmortization','1234000000','-6')])

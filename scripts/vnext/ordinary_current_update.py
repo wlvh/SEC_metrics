@@ -52,7 +52,7 @@ def _configuration(source, company, metric):
         paths.add('catalog/r6/text_results_v2_policy.json')
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
-            'b03_contract_amortization_scope','financial_structured','text_results_v2'))
+            'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),

@@ -1,0 +1,29 @@
+test_unsupported_numeric_tag_cannot_confirm_chain_amount (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_unsupported_numeric_tag_cannot_confirm_chain_amount) ... FAIL
+test_unformatted_comma_is_not_silently_removed_to_confirm_chain (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_unformatted_comma_is_not_silently_removed_to_confirm_chain) ... FAIL
+
+======================================================================
+FAIL: test_unsupported_numeric_tag_cannot_confirm_chain_amount (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_unsupported_numeric_tag_cannot_confirm_chain_amount)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 60, in test_unsupported_numeric_tag_cannot_confirm_chain_amount
+    self.assertEqual(answer['status'],'WITHHOLD')
+AssertionError: 'KEEP' != 'WITHHOLD'
+- KEEP
++ WITHHOLD
+
+
+======================================================================
+FAIL: test_unformatted_comma_is_not_silently_removed_to_confirm_chain (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_unformatted_comma_is_not_silently_removed_to_confirm_chain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 66, in test_unformatted_comma_is_not_silently_removed_to_confirm_chain
+    self.assertEqual(answer['status'],'WITHHOLD')
+AssertionError: 'KEEP' != 'WITHHOLD'
+- KEEP
++ WITHHOLD
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

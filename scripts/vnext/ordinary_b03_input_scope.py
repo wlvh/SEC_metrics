@@ -10,8 +10,9 @@ from decimal import Decimal
 import re
 
 from .ordinary_da_scope_v1 import DIRECT, COMPOSITION, WITHHELD_REASON, agree, da_scope_answer
-from .deterministic_router import parse_accession_xbrl_source, _numeric_xbrl_value
-from .text_results_v2 import _ReportedFactMetadata, _verified_context
+from .deterministic_router import parse_accession_xbrl_source
+from .text_results_v2 import _CAPABILITY_POLICY, _ReportedFactMetadata, _verified_context
+from .reported_monetary_literal import reported_monetary_value
 from .b03_contract_amortization_scope import _selected_original_facts
 from .canonical import sha256_bytes
 from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
@@ -24,7 +25,7 @@ def inspect_depreciation_input(*, raw_bytes, entity, period, observations, names
     metadata.feed(raw_bytes.decode('utf-8-sig')); metadata.close()
     if metadata.ordinal != len(parsed.facts):
         raise ValueError('B03_SCOPE_NATIVE_STREAM_CHANGED')
-    candidates = []
+    candidates = []; numeric_issues = []
     for fact in parsed.facts:
         info = metadata.facts[fact['ordinal']]
         uri, concept = info['concept']
@@ -42,9 +43,14 @@ def inspect_depreciation_input(*, raw_bytes, entity, period, observations, names
                     'divided': False}):
             continue
         context_proof = _verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=metadata)
+        try:
+            value=reported_monetary_value(fact=fact,metadata=info,policy=_CAPABILITY_POLICY)
+        except ValueError as error:
+            numeric_issues.append({'fact_ordinal':fact['ordinal'],'concept':concept,'reason':str(error)})
+            continue
         candidates.append({'concept':concept, 'fact_ordinal':fact['ordinal'],
             'context_ref':fact['context_ref'], 'unit_ref':fact['unit_ref'],
-            'value':str(_numeric_xbrl_value(text=fact['text'],scale=fact['scale'],sign=fact['sign'])),
+            'value':value,
             'decimals':info['attrs'].get('decimals'),'context_proof':context_proof})
     answer = da_scope_answer(facts=candidates)
     direct = [o for o in observations if o['semantic_role']=='depreciation_and_amortization']
@@ -56,6 +62,9 @@ def inspect_depreciation_input(*, raw_bytes, entity, period, observations, names
     body = {'filing_answer':answer,'chain_input':chain,'primary_sha256':sha256_bytes(content=raw_bytes),
             'entity':str(entity),'period':dict(period),'source_facts':candidates,
             'complete_business_scope_proven':False}
+    if numeric_issues:
+        return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,
+                'why':'SOURCE_NUMERIC_VALUES_UNRESOLVED','source_numeric_issues':numeric_issues}
     if answer['status']=='WITHHOLD':
         return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,'why':answer['why']}
     if answer['status']=='NO_DIRECT_CANDIDATE':
