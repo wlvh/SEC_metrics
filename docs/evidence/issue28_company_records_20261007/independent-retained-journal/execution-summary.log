@@ -1,0 +1,84 @@
+{
+  "observed_at_utc": "2026-10-08T14:45:28.601885+00:00",
+  "head": "6b2b8d925fb357a449b582e9f9b2a96f3d8467ae",
+  "tests": {
+    "command": [
+      "/private/tmp/issue28-company-c02-venv-20261006/bin/python",
+      "-m",
+      "unittest",
+      "tests.vnext.test_company_results.CompanyResultsTest",
+      "-v"
+    ],
+    "environment_overrides": {
+      "TMPDIR": "/private/tmp",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "scripts:tools"
+    },
+    "exit_code": 0,
+    "seconds": 0.5159342079423368,
+    "tail": [
+      "",
+      "----------------------------------------------------------------------",
+      "Ran 21 tests in 0.182s",
+      "",
+      "OK"
+    ]
+  },
+  "cli": {
+    "command": [
+      "/private/tmp/issue28-company-c02-venv-20261006/bin/python",
+      "-B",
+      "tools/vnext_company.py",
+      "results",
+      "--company",
+      "southwest_airlines",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/private-c04-southwest-20260927"
+    ],
+    "exit_code": 0,
+    "seconds": 0.3300362501759082,
+    "view_summary": {
+      "record_type": "COMPANY_RESULT_VIEW_V2",
+      "state_kind": "RETAINED_ORDINARY_JOURNAL",
+      "company_id": "southwest_airlines",
+      "source_checkpoint_id": null,
+      "latest_execution": null,
+      "defect_registry_supplied": false,
+      "production_authorized": false,
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "latest_status": "CANDIDATE_READY",
+    "metrics": [
+      {
+        "metric_id": "C04",
+        "result_id": "sha256:2f06895d80507148edfd7602427abffb8f6918323a48689c26345345c8170fe6",
+        "run_id": "run:ordinary-integrated:5380223a8a2f23271dce778cf1766958e297f12da66d200771acce571e328069",
+        "run_status": "OPEN",
+        "period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "measurement_period": null,
+        "measurement_period_status": "NOT_AVAILABLE",
+        "current_input_matches": null,
+        "current_input_status": "NOT_RECHECKED",
+        "result_validity": "NOT_ASSESSED",
+        "replay_status": "NOT_REPLAYED",
+        "period_role": "RUN_ARCHIVE_COORDINATE",
+        "requested_in_latest_execution": false,
+        "confirmed_defects": []
+      }
+    ]
+  },
+  "state_files_before": 927,
+  "state_files_after": 927,
+  "files_unchanged": true,
+  "added_files": [],
+  "removed_files": [],
+  "changed_files": []
+}

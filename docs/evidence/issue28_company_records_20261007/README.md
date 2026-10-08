@@ -481,3 +481,8 @@ The real old installed review CLI still reads its OPEN Run0.267s, but that alone
 20 affected journal/company reference tests pass0.177s, with replay/calculation functions made forbidden for the new branch; wrong company, disconnectedsuccess pointer, first failure and latestfailure+oldsuccess are covered. Initial run usedmacOS aliasTMPDIR and stopped at oldUPDATE_STATE_PATH_ALIAS; its failure is preserved, then repository's existing TMPDIR=/private/tmp setting was applied. Source/compiler/metric implementations and old snapshots are unchanged. Record/manifest views are read only; full audit export remains explicit. Exact newSHA limited review and newheadCI follow separately.
 
 Marriott old C04temporary CLI/refresh states were found absent; their previousexecution/coldread reports remain historical, not current entry proof. No oldRun was reconstructed to manufacture a pass. The persistent Southwest record supplies this actual retained-read scenario. New business calls0/0/0; private ledger/active unchanged.
+
+
+### Retained journal receiving terminal
+
+Patch497e045 limited review PASS: independent21tests0.182s, actual CLI0.330s,927original files/set unchanged (includes old lock; parent926 excludes lock),4independent lock/defect-release/CSV-refusal controls pass. It grants archived-reference access only, not C04current contents/source credit. Final affected company reference/current-record suite46tests6.522s passes with TMPDIR=/private/tmp; capability structure checkerPASS after codecommit, not semantic acceptance. Source/test bytes after497are unchanged;6b onlykeeps preexistingcapabilityJSON formatting. Remaining previous receipt/CI atadee stays its exacthead; newcompatibilityhead requires its ownCI.
