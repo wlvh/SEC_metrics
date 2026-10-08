@@ -1,9 +1,15 @@
 """One bounded fixed-source unittest execution, not a persistent test framework."""
-import hashlib,json,subprocess,sys,tempfile,types,unittest,socket
+import argparse,hashlib,json,subprocess,sys,tempfile,types,unittest,socket
 from pathlib import Path
 from unittest.mock import patch
-repo=Path('/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics')
-objects=Path('/Users/lyuhongwang/Developer/SEC_metrics');tree='621ce1b50051ab5559e3579422fb578209fe143e'
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--code-root',type=Path,required=True,help='Existing clean main code tree; every imported project file is compared with the fixed receiving version')
+parser.add_argument('--objects-root',type=Path,default=Path(__file__).resolve().parents[3],help='Existing repo containing both fixed commits; no fetch is performed')
+args=parser.parse_args();repo=args.code_root.resolve();objects=args.objects_root.resolve()
+left='372f4b74c6abe9f2340bba5396264168b0445885';right='09563892cc170a45c7ee558d1bf3f436c69e5ce1'
+merged=subprocess.run(['git','merge-tree','--write-tree',left,right],cwd=objects,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+assert merged.returncode in (0,1),merged.stderr
+tree=merged.stdout.splitlines()[0]
 sys.path[:0]=[str(repo/'scripts'),str(repo/'tools')]
 def raw(path):return subprocess.check_output(['git','show',tree+':'+path],cwd=objects)
 def module(name,path,file):
