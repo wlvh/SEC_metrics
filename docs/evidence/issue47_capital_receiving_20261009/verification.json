@@ -1,0 +1,126 @@
+{
+  "status": "BRANCH_RECEIVING_NOT_MAIN",
+  "scope": "Historical A01/A02 parent standardized capital ratios, selected saved filing at actual end date; no new source/provider calls",
+  "parent": "PR76/1e538643",
+  "actual_jpm": {
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "positions": 10,
+    "values": [
+      {
+        "metric": "A01",
+        "year": 2022,
+        "value": "0.149",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A02",
+        "year": 2022,
+        "value": "0.132",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A01",
+        "year": 2023,
+        "value": "0.166",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A02",
+        "year": 2023,
+        "value": "0.15",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A01",
+        "year": 2024,
+        "value": "0.168",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A02",
+        "year": 2024,
+        "value": "0.157",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A01",
+        "year": 2025,
+        "value": "0.155",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A02",
+        "year": 2025,
+        "value": "0.146",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A01",
+        "year": 2021,
+        "value": "0.15",
+        "unit": "ratio"
+      },
+      {
+        "metric": "A02",
+        "year": 2021,
+        "value": "0.131",
+        "unit": "ratio"
+      }
+    ],
+    "original_reading_differences": 0,
+    "first_2021_seconds": 95.47553504118696,
+    "remaining_four_years_seconds": 240.33944354206324,
+    "remaining_repeat_seconds": 7.56607741699554,
+    "repeat_selection_calls": 0,
+    "repeat_calculation_calls": 0,
+    "saved_files_unchanged": true,
+    "saved_file_count": 80,
+    "independent_read_seconds": 0.09657204197719693,
+    "first_version_note": "FY2021 first inspection always supplied the constrained historical namespace patterns; later adapter preserves original year-only policy on modern sources. FY2021 produced same constrained policy and values, so old source run not repeated"
+  },
+  "real_mixed": {
+    "seconds": 15.181355957873166,
+    "exit_code": 0,
+    "capital_selection_calls": 0,
+    "capital_files_unchanged": true,
+    "capital_files": 80
+  },
+  "non_financial": {
+    "company": "marriott_international",
+    "year": 2025,
+    "status": "N_A_STRUCTURAL",
+    "first_seconds": 3.942774875089526,
+    "basis": "Existing financial applicability; never zero or absent source"
+  },
+  "small_tests": {
+    "count": 16,
+    "seconds": 0.031,
+    "skip": 0,
+    "real_inspector_boundary_cases": 5
+  },
+  "capability_alignment": "PASS; outputs restored",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false,
+  "not_added_to_PR71_PR75_PR76": true,
+  "remaining": [
+    "additional actual selected-year source-change/withheld receiving",
+    "main integration and online historical source preparation",
+    "amended or successor financial subject handling"
+  ],
+  "archive": {
+    "members": 108,
+    "bytes": 188327,
+    "sha256": "083c46073a0f4d900b3682c0ef7bc7ba7749c82b99d486b8ed72ce0aeae3e7f0"
+  }
+}
