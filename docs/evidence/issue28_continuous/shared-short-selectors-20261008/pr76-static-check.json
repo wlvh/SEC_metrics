@@ -1,6 +1,6 @@
 {
   "receiver_base": "580667f2cb1596104f6ee7c963d660def65c8abd",
-  "patch_sha256": "5f8b9c89e668e601e5f4b564e1ec1385122aa8402a457b44eb85d6bda17a0e4c",
+  "patch_sha256": "7f333f5b1cce2476d2953962b56a3a15db3575965e24c43294b325470bd4a183",
   "changes": {
     "v2": "append1existingclass",
     "workflow": "extend existing single-process command; no new job"
@@ -14,5 +14,11 @@
     0,
     0,
     0
-  ]
+  ],
+  "previous_patch_sha256": "5f8b9c89e668e601e5f4b564e1ec1385122aa8402a457b44eb85d6bda17a0e4c",
+  "blank_context_line_format": "GNU-compatible unprefixed blank context; only patch-container whitespace changes",
+  "generated_source_bytes_identical": {
+    "tools/run_fast_tests_v2.py": "39d4b376c522dc448c4aafe40c626db75056e00a7a54a4d3efb597fc9201b3af",
+    ".github/workflows/vnext-fast.yml": "739ec26c86f7b5ef54317686247124382b53cf0150f43255da9e447acd62affa"
+  }
 }
