@@ -9,6 +9,8 @@
 当前保存来源分支由现有公司 `run --source-root` 显式选择：`company_current_records` 调用 `ordinary_current_update`，先比较原始输入与处理配置，再运行既有来源/Calculator并保存小记录。公共save_calculated_case可保存已计算case；B01/B02显式规则根与来源根分开，旧共享准备器未传新参数时保持原行为，manifest分别记录rules_root/source_root。显式年报输入沿原已选主体/期间投影，不重选最新。B10/B11消费既有共用来源/计算，派生网格在独立公司shared-inputs保存一次，各结果仅持普通引用、独立回读校验内容。此格式的旧内联记录仍可读。同次运行用有界、退出即清除的不可变native解析复用，其他来源/期间/单位检查仍执行；程序根和来源根不复制到attempt，写锁、更新意图、完成末写和旧版本恢复保留。日常CSV直接读取保存结果，results --output-root可只出表不更新来源；共用company_result_view识别普通任务后调用记录适配器；`results`不重算、不安装trust或重放native链，读写使用同一公司锁，保留子集执行未请求的已存结果。原始引用与测量期间仍保留，来源失败和已知缺陷分别显示。旧native任务仍用其固定运行时，不被新记录改签。新路径当前仅离线保存来源，不代表在线新财报或39项验收完成。
 <!-- capability-anchor: CAPABILITY.current_saved_company_run -->
 
+显式历史接收可在同一个`run_saved_company`循环分别指定每指标的原计算函数及其依赖文件；默认单函数路径保持。它只透传到原控制器，不合并各指标依赖、不新增计算内核；新混合历史原件验收仍由接收者完成。
+
 B03普通来源比较先通过轻量`reported_monetary_literal`检查数值标签及原始数字写法，再使用已有金额正规化；未证明的来源值保留事实级原因并具名扣留，不用正规化后碰巧相等来确认。新辅助文件计入B03处理配置，B01不受其单独变动影响。
 
 独立旧普通更新目录已有configuration/current journal时，`results --state-root`复用原journal链和manifest引用读取，持原update锁，不需要伪造公司checkpoint或安装trust。返回归档Run/Result引用、原期间、失败及精确缺陷；当前输入明确未重验，不重放、计算或写回公司视图。它不提供新普通CSV、原生完整审核或当前业务接受；后两者仍使用原运行版本及明确审核入口。
