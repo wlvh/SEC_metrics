@@ -46,3 +46,11 @@ Marriott两年实际原件支撑及数值：
 能力结构检查在实现提交后通过，16.873秒，两个检查器副产物按检查前字节还原。提交前因HEAD仍为旧测试字节的失败保存在capability-alignment-before-commit.log；不把结构检查当业务或模型接受。
 
 当前历史PR52原CI37788307281快测FAILURE，191入口中8个非零，见[精确摘要](legacy-fast-ci-summary.json)。五项旧authority加载被normal_source_authority祖先字节先挡；其余为历史exact变更集合、旧enrollment/resign拒绝和parser字节断言。没有新H4业务断言失败由这个日志证明，也不能把本地39＋5通过写成全CI通过。公共runner/CI一方集成，旧来源/Run/快照不重签。
+
+## 旧年度来源缺口的最小适配需求
+
+后续只读原件普查11.463秒，未重建公司或Run。原生事实和完整必要段落证明：FY2021/22/23摊销165/197/226m分别已包含62/83/122m费用报销项；折旧138/114/122m已包含49/35/37m报销项。不能将这些子项再加一次。2021跨页折旧段紧邻续句明确所述减值年份2020/2019，完整续文单独保存；不据此扩大为本次已审核所有减值。资本化取得合同成本另有75/89/88m候选及收入/费用位置说明，仍需按既有Scope核对，不盲目相加。
+
+这里证明有来源，并未证明全批准D&A集合。完整原生候选/维度/QName/单位/context、原段跨度/SHA和接口预期见[b03-source-adapter-request.json](b03-source-adapter-request.json)、[候选普查](older-native-da-census.json)及[全部相关段落](older-da-wording.json)。已交#28共用普通源实现负责人：输入已选认证原件/实体/实际期间/明确namespace政策，输出有源候选与包含/子集关系或准确未决；不接调用者金额、不暴露正则或公司/年度特判，不因此生成新完整B03信用。本方只维护历史选择和消费者，没有另写D&A内核。旧年度三个null保持。
+
+公共c56旧独立journal兼容已只读核对：build_company_view/候选枚举AST及ordinary controller/store均与adee相同，company-task H4路由优先；本方暂不消费、不重开已经通过的H4验证。新c56自身CI由其实际终态解释，不继承adee绿灯。

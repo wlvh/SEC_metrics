@@ -1,0 +1,1699 @@
+{
+  "record_type": "B03_OLDER_PRIMARY_NATIVE_INPUT_CENSUS",
+  "company": "marriott_international",
+  "seconds": 11.463367416989058,
+  "years": {
+    "2021": {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2021-12-31",
+        "filingDate": "2022-02-15",
+        "accessionNumber": "0001628280-22-002666",
+        "primaryDocument": "mar-20211231.htm"
+      },
+      "period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+        "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+        "accession": "0001628280-22-002666",
+        "document_name": "mar-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+      },
+      "rows": [
+        {
+          "ordinal": 67,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "75000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i922278aaa1eb496b90dffcdf511f95b2_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "i922278aaa1eb496b90dffcdf511f95b2_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "75",
+          "cell": {
+            "row_index": 7,
+            "column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(75)",
+            "raw_text": "(75)",
+            "table_id": "table_000028"
+          }
+        },
+        {
+          "ordinal": 925,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "AmortizationOfIntangibleAssets"
+          ],
+          "value": "165000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i0bba544382824d16b852f57036bcc95e_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "i0bba544382824d16b852f57036bcc95e_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "ContractBasedIntangibleAssetsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "165"
+        },
+        {
+          "ordinal": 928,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "AmortizationOfIntangibleAssets"
+          ],
+          "value": "62000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "iff354faf5ff949f2924ec813098b975f_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "iff354faf5ff949f2924ec813098b975f_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                "member_raw": "mar:ReimbursedExpensesMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "IncomeStatementLocationAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "ReimbursedExpensesMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "ContractBasedIntangibleAssetsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "62"
+        },
+        {
+          "ordinal": 964,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "Depreciation"
+          ],
+          "value": "138000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "icca842ba47474dceb98fbc4534480e17_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "icca842ba47474dceb98fbc4534480e17_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "138"
+        },
+        {
+          "ordinal": 967,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "Depreciation"
+          ],
+          "value": "49000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i979089d25b5e40e19ddab18a3605efc4_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "i979089d25b5e40e19ddab18a3605efc4_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                "member_raw": "mar:ReimbursedCostsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "IncomeStatementLocationAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "ReimbursedCostsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "49"
+        },
+        {
+          "ordinal": 1058,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "55000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i5a34f19ff9704101852377178e48bcc7_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "i5a34f19ff9704101852377178e48bcc7_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "OperatingSegmentsMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                "member_raw": "mar:USAndCanadaSegmentMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "StatementBusinessSegmentsAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "USAndCanadaSegmentMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "55",
+          "cell": {
+            "row_index": 4,
+            "column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(55)",
+            "raw_text": "(55)",
+            "table_id": "table_000055"
+          }
+        },
+        {
+          "ordinal": 1059,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "20000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i7a9de73cd0fc47b6b7079e789395df94_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "i7a9de73cd0fc47b6b7079e789395df94_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "OperatingSegmentsMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                "member_raw": "mar:InternationalSegmentMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "StatementBusinessSegmentsAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "InternationalSegmentMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "20",
+          "cell": {
+            "row_index": 4,
+            "column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(20)",
+            "raw_text": "(20)",
+            "table_id": "table_000055"
+          }
+        },
+        {
+          "ordinal": 1060,
+          "concept": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "75000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "id5e2ea49078642f096588354be364512_D20210101-20211231",
+          "context_proof": {
+            "context_ref": "id5e2ea49078642f096588354be364512_D20210101-20211231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2021-01-31",
+                  "OperatingSegmentsMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2021-01-31",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20211231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "75",
+          "cell": {
+            "row_index": 4,
+            "column_index": 15,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(75)",
+            "raw_text": "(75)",
+            "table_id": "table_000055"
+          }
+        }
+      ]
+    },
+    "2022": {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2022-12-31",
+        "filingDate": "2023-02-14",
+        "accessionNumber": "0001628280-23-003485",
+        "primaryDocument": "mar-20221231.htm"
+      },
+      "period": {
+        "fiscal_year": 2022,
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c",
+        "raw_asset_id": "sha256:c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+        "accession": "0001628280-23-003485",
+        "document_name": "mar-20221231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924"
+      },
+      "rows": [
+        {
+          "ordinal": 62,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "89000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i9276604af3d142a99fdec5199e232d99_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "i9276604af3d142a99fdec5199e232d99_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "89",
+          "cell": {
+            "row_index": 7,
+            "column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(89)",
+            "raw_text": "(89)",
+            "table_id": "table_000026"
+          }
+        },
+        {
+          "ordinal": 877,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "AmortizationOfIntangibleAssets"
+          ],
+          "value": "197000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "if35c5ec00d1945e8bdf88a0dded4f6b8_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "if35c5ec00d1945e8bdf88a0dded4f6b8_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "ContractBasedIntangibleAssetsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "197"
+        },
+        {
+          "ordinal": 880,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "AmortizationOfIntangibleAssets"
+          ],
+          "value": "83000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i6179ba2a704341e0afd1093c8cf0f7ac_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "i6179ba2a704341e0afd1093c8cf0f7ac_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                "member_raw": "mar:ReimbursedExpensesMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "IncomeStatementLocationAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "ReimbursedExpensesMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "ContractBasedIntangibleAssetsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "83"
+        },
+        {
+          "ordinal": 916,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "Depreciation"
+          ],
+          "value": "114000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "ibaf0fd9f3f5b41649a46ca07be058e34_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "ibaf0fd9f3f5b41649a46ca07be058e34_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "114"
+        },
+        {
+          "ordinal": 919,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "Depreciation"
+          ],
+          "value": "35000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i5523512bfa9a4664a37e1a61b09680ce_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "i5523512bfa9a4664a37e1a61b09680ce_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                "member_raw": "mar:ReimbursedCostsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "IncomeStatementLocationAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "ReimbursedCostsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "35"
+        },
+        {
+          "ordinal": 1014,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "60000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i67708465916e4196a6d9a510d57736f1_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "i67708465916e4196a6d9a510d57736f1_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "OperatingSegmentsMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "FeeServiceMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                "member_raw": "mar:USAndCanadaSegmentMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "StatementBusinessSegmentsAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "USAndCanadaSegmentMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "60",
+          "cell": {
+            "row_index": 4,
+            "column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(60)",
+            "raw_text": "(60)",
+            "table_id": "table_000052"
+          }
+        },
+        {
+          "ordinal": 1015,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "29000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "iac8e974463594b33b0aa8cafe5f55eeb_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "iac8e974463594b33b0aa8cafe5f55eeb_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "OperatingSegmentsMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "FeeServiceMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                "member_raw": "mar:InternationalSegmentMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "StatementBusinessSegmentsAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "InternationalSegmentMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "29",
+          "cell": {
+            "row_index": 4,
+            "column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(29)",
+            "raw_text": "(29)",
+            "table_id": "table_000052"
+          }
+        },
+        {
+          "ordinal": 1016,
+          "concept": [
+            "http://fasb.org/us-gaap/2022",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "89000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "i4b726e5b665f4eb293661575154b61c8_D20220101-20221231",
+          "context_proof": {
+            "context_ref": "i4b726e5b665f4eb293661575154b61c8_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2022",
+                  "OperatingSegmentsMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2022",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20221231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "89",
+          "cell": {
+            "row_index": 4,
+            "column_index": 15,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(89)",
+            "raw_text": "(89)",
+            "table_id": "table_000052"
+          }
+        }
+      ]
+    },
+    "2023": {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2023-12-31",
+        "filingDate": "2024-02-13",
+        "accessionNumber": "0001628280-24-004372",
+        "primaryDocument": "mar-20231231.htm"
+      },
+      "period": {
+        "fiscal_year": 2023,
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4",
+        "raw_asset_id": "sha256:3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+        "accession": "0001628280-24-004372",
+        "document_name": "mar-20231231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79"
+      },
+      "rows": [
+        {
+          "ordinal": 62,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "88000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-13",
+          "context_proof": {
+            "context_ref": "c-13",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "FeeServiceMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "88",
+          "cell": {
+            "row_index": 7,
+            "column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(88)",
+            "raw_text": "(88)",
+            "table_id": "table_000026"
+          }
+        },
+        {
+          "ordinal": 873,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "AmortizationOfIntangibleAssets"
+          ],
+          "value": "226000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-170",
+          "context_proof": {
+            "context_ref": "c-170",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "ContractBasedIntangibleAssetsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "226"
+        },
+        {
+          "ordinal": 876,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "AmortizationOfIntangibleAssets"
+          ],
+          "value": "122000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-173",
+          "context_proof": {
+            "context_ref": "c-173",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "ContractBasedIntangibleAssetsMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                "member_raw": "mar:ReimbursedExpensesMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "IncomeStatementLocationAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "ReimbursedExpensesMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "122"
+        },
+        {
+          "ordinal": 912,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "Depreciation"
+          ],
+          "value": "122000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-1",
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "122"
+        },
+        {
+          "ordinal": 915,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "Depreciation"
+          ],
+          "value": "37000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-190",
+          "context_proof": {
+            "context_ref": "c-190",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                "member_raw": "mar:ReimbursedCostsMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "IncomeStatementLocationAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "ReimbursedCostsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "37"
+        },
+        {
+          "ordinal": 1007,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "65000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-214",
+          "context_proof": {
+            "context_ref": "c-214",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                "member_raw": "mar:USAndCanadaSegmentMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "StatementBusinessSegmentsAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "USAndCanadaSegmentMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "FeeServiceMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "OperatingSegmentsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "65",
+          "cell": {
+            "row_index": 4,
+            "column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(65)",
+            "raw_text": "(65)",
+            "table_id": "table_000052"
+          }
+        },
+        {
+          "ordinal": 1008,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "22000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-215",
+          "context_proof": {
+            "context_ref": "c-215",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "FeeServiceMember"
+                ]
+              },
+              {
+                "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                "member_raw": "mar:InternationalSegmentMember",
+                "dimension_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "StatementBusinessSegmentsAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "InternationalSegmentMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "OperatingSegmentsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "22",
+          "cell": {
+            "row_index": 4,
+            "column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(22)",
+            "raw_text": "(22)",
+            "table_id": "table_000052"
+          }
+        },
+        {
+          "ordinal": 1009,
+          "concept": [
+            "http://fasb.org/us-gaap/2023",
+            "CapitalizedContractCostAmortization"
+          ],
+          "value": "87000000",
+          "scale": "6",
+          "decimals": "-6",
+          "context_ref": "c-216",
+          "context_proof": {
+            "context_ref": "c-216",
+            "identifiers": [
+              {
+                "value": "0001048286",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimension_raw": "srt:ProductOrServiceAxis",
+                "member_raw": "mar:FeeServiceMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ProductOrServiceAxis"
+                ],
+                "member_qname": [
+                  "http://www.marriott.com/20231231",
+                  "FeeServiceMember"
+                ]
+              },
+              {
+                "dimension_raw": "srt:ConsolidationItemsAxis",
+                "member_raw": "us-gaap:OperatingSegmentsMember",
+                "dimension_qname": [
+                  "http://fasb.org/srt/2023",
+                  "ConsolidationItemsAxis"
+                ],
+                "member_qname": [
+                  "http://fasb.org/us-gaap/2023",
+                  "OperatingSegmentsMember"
+                ]
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "unit": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          },
+          "text": "87",
+          "cell": {
+            "row_index": 4,
+            "column_index": 15,
+            "rowspan": 1,
+            "colspan": 2,
+            "text": "(87)",
+            "raw_text": "(87)",
+            "table_id": "table_000052"
+          }
+        }
+      ]
+    }
+  },
+  "classification": "candidate census only; dimensions/rows do not by themselves prove additive full-scope D&A",
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
