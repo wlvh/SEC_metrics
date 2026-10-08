@@ -1,0 +1,75 @@
+{
+  "purpose": "Saved-source reference and existing consumer gap, not B02 acceptance or a new amendment policy",
+  "original_accession": "0001628280-21-002433",
+  "amendment_accession": "0001628280-21-006440",
+  "current_accession": "0001628280-22-002666",
+  "prior_report_end": "2020-12-31",
+  "current_report_end": "2021-12-31",
+  "amendment_business_scope": "Financial statement audit opinion cross-reference to ICFR changed adverse to unqualified; other disclosures speak as of original filing date",
+  "physical_table_count_each": 81,
+  "exact_table_count": 73,
+  "changed_table_orders": [
+    5,
+    8,
+    9,
+    25,
+    77,
+    78,
+    79,
+    80
+  ],
+  "income_table_orders_exact": [
+    11,
+    31,
+    58,
+    67
+  ],
+  "income_table_revenues_usd_millions": {
+    "2020": "10571",
+    "2019": "20972",
+    "2018": "20758"
+  },
+  "native_inline_numeric_comparison_scope": "Non-DEI readable facts: original1173, amendment0; original34 representation issues retained. Amendment visible financial statements remain complete",
+  "existing_shared_classification": "UNCLASSIFIED",
+  "existing_scope_issues": [
+    "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED",
+    "AMENDMENT_NOTE_PARAGRAPHS_OUT_OF_BOUND:33"
+  ],
+  "existing_B02": {
+    "seconds": 5.410674334038049,
+    "result": {
+      "publication": "WITHHELD",
+      "value": null,
+      "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED"
+    },
+    "selection": {
+      "reason": "NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED",
+      "error_type": "NormalCompanyfactsError",
+      "category": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED",
+      "amendment_policy_decision": null
+    },
+    "prior_error": {
+      "reason": "NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED",
+      "error_type": "NormalCompanyfactsError"
+    },
+    "calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    }
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_run": false,
+  "new_acceptance": false,
+  "required_shared_adaptation": "Metric-relevant source property for an auditor-opinion-only amendment, without changing unrelated governance/signatures or treating every amendment as unchanged",
+  "archive": {
+    "path": "marriott2020-prior-amendment-materials.tar.gz",
+    "members": 7,
+    "bytes": 97867,
+    "sha256": "01bc3609cfea317dd33c812d22faa02d2a9dabbfb5062376d425fc82ee557407"
+  }
+}

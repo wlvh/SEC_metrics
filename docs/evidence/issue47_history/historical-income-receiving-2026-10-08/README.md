@@ -85,3 +85,13 @@ PYTHONPATH=scripts:. python docs/evidence/issue47_history/historical-income-rece
 只接#28固定PR73/9a7f340a的ordinary_depreciation_sources及其11小例，旧ordinary_income_input、历史Calculator和三个旧年null未改。11项0.014秒过；三年已选primary/XML共用解析检查2.146秒，分别取得原165/62/138/49m、197/83/114/35m、226/122/122/37m四对候选，主体/实际期间/USD/来源字节一致，issues为空。传入的DEI/FASB URI来自这三份原件，FY2021为2021q4与日期版US-GAAP，不用财年拼URI或改变旧默认。
 
 接口给两个CONTEXT_SCOPE_SPECIALIZATION，均明确additive_relationship_established=false；原文of-which关系沿前面的冻结阅读核对，不将维度包含当金额包含。definition_complete=false、metric_result_created=false逐项保留；完整D&A角色、取得/履约合同成本、租赁和减值范围仍须完成。没有把候选金额手工灌入Calc或产生B03接受。结果见[b03-native-source-receiving.json](b03-native-source-receiving.json)，完整候选及引用lossless在b03-native-source-candidates.json.gz；这只在历史开发分支供消费者排错，不扩PR71公共收口范围。
+
+## 后续三公司入口交付与Marriott前期修订
+
+四指标的最小下一批已从PR71提取到[Draft PR75](https://github.com/wlvh/SEC_metrics/pull/75)，提交46c30d29，原样消费公共PR74每指标映射。Ford FY2021–25、Salesforce FY2022–26、Macy’s FY2021–25共60位置的同CLI计算/复跑/独立读取/CSV出处已在新接缝上验证，与原业务阅读值、单位、实际期间零差异；没有重做这些旧阅读或旧native Run。PR71仍只接酒店；新交付与调用计数以[PR75唯一主要记录](https://github.com/wlvh/SEC_metrics/blob/task/issue47-statement-pilot-20261009/docs/evidence/issue47_statement_pilot_20261009/README.md)为准，不在本处重复日志。
+
+Marriott FY2021 B02仍有具体前期适配缺口：当前0001628280-22-002666，前期原10-K为0001628280-21-002433，FY2020修订0001628280-21-006440。完整Explanatory Note明确仅更正EY财务报表审计意见对另一份内控鉴证意见的交叉引用，从adverse改为unqualified；原管理层及EY内控鉴证本已认定有效，其他披露按原申报日保留。它不是收入重述，也不能据此给全部审计/治理指标相同结论。
+
+两份原件各81张物理表，73张的全部原格文字、表头、caption和span几何完全相同；变化表5/25为目录页码，8/9涉及酒店行跨页，77/78为附件/认证列表，79/80签名有所变化。完整收入相关表11/31/58/67逐格和范围相同，保留2020收入10,571m、2019 20,972m、2018 20,758m USD。这里只断言这些四张收入表，不把其相同推广为全部正文或签名相同。修订件重刊完整财务报表可见文字，未保留原1173个可读非DEI行内数值；原件另34个表示问题也原样保留，不能将“修订件没有行内数值”说成“没有财务内容”或伪称两份全部数值标签相同。
+
+现有共同修订检查返回UNCLASSIFIED及两项实现/段落边界问题；历史前期walk又一律报NORMAL_COMPANYFACTS_PRIOR_AMENDMENT_REPLAY_NOT_IMPLEMENTED。实际已有消费者5.411s返回WITHHELD/null，未生成新Run或接受。完整说明段、全部表格比较、四表原格、行内候选比较、期间选择及现行case保存在[7成员材料包](marriott2020-prior-amendment-materials.tar.gz)，[准确范围与待接接口](marriott2020-prior-amendment-reference.json)已交#28共同来源负责人。需要按指标接收普通来源属性，而不是放宽任意修订、回铸旧收据或注入人工收入。完整可见正文转储虽已保存，本项不声称逐段读完全部304k字符；上述说明及表格关系已经针对核对。本路线新增真实调用0，当前B02扣留保持，适配与最终正确值交付责任继续。
